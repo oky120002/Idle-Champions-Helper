@@ -64,6 +64,11 @@ npm run lint
 │   └── workflows/
 │       └── deploy.yml
 ├── docs/
+│   ├── investigations/
+│   ├── modules/
+│   ├── product/
+│   ├── research/
+│   └── README.md
 ├── public/
 │   └── data/
 │       ├── version.json
@@ -118,10 +123,14 @@ npm run lint
 
 ## 文档导航
 
-- `docs/idle-champions-research-roadmap.md`：项目价值、范围、阶段路线、核心数据模型
-- `docs/static-data-storage-research.md`：静态数据存储与版本化策略
-- `docs/static-hosting-research.md`：GitHub Pages 部署方案与路由策略
-- `docs/china-static-hosting-research.md`：国内访问体验研究存档，仅作背景参考，不作为正式发布路线依据
+- `docs/README.md`：`docs/` 目录结构说明、归档规则与当前索引
+- `docs/product/idle-champions-roadmap.md`：项目价值、范围、阶段路线、核心数据模型
+- `docs/research/data/static-data-storage-research.md`：静态数据存储与版本化策略
+- `docs/investigations/repository/github-directory-commit-investigation.md`：`.github` 目录无法提交的本地原因排查
+- `docs/investigations/runtime/local-run-verification.md`：本地构建与预览可用性验证记录
+- `docs/modules/user-data/user-data-import-design.md`：本地优先的个人数据导入方案与安全边界
+- `docs/research/deployment/static-hosting-research.md`：GitHub Pages 部署方案与路由策略
+- `docs/research/deployment/china-static-hosting-research.md`：国内访问体验研究存档，仅作背景参考，不作为正式发布路线依据
 
 ## 下一步建议
 
