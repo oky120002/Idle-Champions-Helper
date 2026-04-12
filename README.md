@@ -1,107 +1,171 @@
-# Idle Champions
+# Idle Champions 辅助站
 
-《Idle Champions of the Forgotten Realms》辅助网站的调研与规划目录。
+《Idle Champions of the Forgotten Realms》辅助网站的开发仓库。
 
-当前目标不是做一个“大而全百科”，而是逐步落地一个更偏“个人成长导向的阵型决策台”的工具站，优先服务资料查询、限制筛选、阵型编辑、候选英雄校验和方案保存。
+当前方向不是做“大而全百科”，而是先做一个更偏**个人成长导向的阵型决策台**：围绕资料查询、限制筛选、阵型编辑、候选英雄校验和方案保存，建立一条清晰、可解释、可维护的使用闭环。
+
+仓库级强制规范见 `AGENTS.md`；本文件仅承载现状、结构、使用方式与文档导航。
 
 ## 当前状态
 
-- 当前目录以调研文档为主，尚未初始化前端工程、数据脚本或部署配置。
-- 现阶段已经完成产品方向、静态部署、数据存储和国内托管备选方案的初步整理。
-- 还没有可执行的 `dev`、`build`、`test` 命令；如果开始编码，应先确认 MVP 范围和技术路线，再补最小可运行骨架。
+- 已确认技术路线：`Vite + React + TypeScript`
+- 已落地最小可运行工程骨架
+- 已补基础路由、页面壳层、公共数据目录与部署脚本
+- 当前公共数据仍是占位文件，真实游戏数据待补充
+- 个人数据本地存储方案已确定为 `IndexedDB`，但还未正式接入页面
+- 已补官方 definitions 抓取 / 归一化脚本骨架，方便后续接真实公共数据
+- 当前仍处于早期阶段，完整规则体系与测试体系尚未完善
 
-## 项目方向
+## 当前技术路线
 
-- 产品定位：个人成长导向的阵型决策台
-- 第一阶段重点：
-  - 英雄/冒险/限制条件查询
-  - Patron / Variant 等限制下的候选英雄筛选
-  - 阵型编辑与 seat 冲突校验
-  - 阵容保存与对比
-- 当前不优先做：
-  - 全自动最优阵容求解器
-  - 完整伤害模拟器
-  - 大而全百科式页面矩阵
+- 前端：`Vite + React + TypeScript`
+- 路由：`HashRouter`（MVP 默认方案）
+- 部署：`GitHub Pages + GitHub Actions`
+- 公共数据：`public/data/version.json + public/data/v1/*.json`
+- 个人数据：浏览器本地优先，后续接 `IndexedDB`
+- 规则层：集中放在 `src/rules/`，不把规则判断散落到页面组件里
 
-## 当前目录
+## 本地开发
+
+安装依赖：
+
+```bash
+npm install
+```
+
+启动开发环境：
+
+```bash
+npm run dev
+```
+
+构建生产版本：
+
+```bash
+npm run build
+```
+
+预览构建结果：
+
+```bash
+npm run preview
+```
+
+检查基础代码规范：
+
+```bash
+npm run lint
+```
+
+拉取官方 definitions 原始快照：
+
+```bash
+npm run data:fetch
+```
+
+把原始快照归一化为前端公共数据：
+
+```bash
+npm run data:normalize -- --input tmp/idle-champions-api/<your-snapshot>.json
+```
+
+一键执行“抓取 + 归一化”：
+
+```bash
+npm run data:build
+```
+
+说明：
+
+- 原始 definitions 快照默认输出到 `tmp/idle-champions-api/`
+- 手工补充层默认读取 `scripts/data/manual-overrides.json`
+- 详细调研结论见 `docs/game-data-source-investigation.md`
+
+## 当前目录结构
 
 ```text
 .
+├── .github/
+│   └── workflows/
+│       └── deploy.yml
+├── docs/
+├── scripts/
+│   ├── data/
+│   ├── fixtures/
+│   ├── build-idle-champions-data.mjs
+│   ├── fetch-idle-champions-definitions.mjs
+│   └── normalize-idle-champions-definitions.mjs
+├── public/
+│   └── data/
+│       ├── version.json
+│       └── v1/
+│           ├── champions.json
+│           ├── formations.json
+│           └── variants.json
+├── src/
+│   ├── app/
+│   ├── components/
+│   ├── data/
+│   ├── domain/
+│   ├── pages/
+│   ├── rules/
+│   └── styles/
 ├── AGENTS.md
 ├── README.md
-└── docs/
-    ├── china-static-hosting-research.md
-    ├── idle-champions-research-roadmap.md
-    ├── static-data-storage-research.md
-    └── static-hosting-research.md
+├── index.html
+├── package.json
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+└── vite.config.ts
 ```
+
+## 当前已经落地的内容
+
+### 页面骨架
+
+- `总览`
+- `英雄筛选`
+- `变体限制`
+- `阵型编辑`
+- `方案存档`
+
+这些页面目前先承担结构验证与信息架构验证，不声称已经完成真实业务能力。
+
+### 数据层约定
+
+- `src/data/client.ts`：统一处理版本读取、路径拼接和基础缓存
+- `src/domain/types.ts`：放数据类型定义
+- `public/data/version.json`：声明当前数据版本
+- `public/data/v1/*.json`：当前版本的数据文件
+- `scripts/fetch-idle-champions-definitions.mjs`：拉取官方 definitions 原始快照
+- `scripts/normalize-idle-champions-definitions.mjs`：把原始快照转换为前端数据
+- `scripts/data/manual-overrides.json`：维护自动抓取之外的补充数据
+
+### 部署约定
+
+- GitHub Pages 项目站
+- GitHub Actions 官方 Pages 工作流
+- 生产环境 `base` 路径按仓库名处理
+- 第一阶段默认使用 `HashRouter`，避免 SPA 刷新 404 复杂度
 
 ## 文档导航
 
-### `docs/idle-champions-research-roadmap.md`
+- `docs/idle-champions-research-roadmap.md`：项目价值、范围、阶段路线、核心数据模型
+- `docs/static-data-storage-research.md`：静态数据存储与版本化策略
+- `docs/game-data-source-investigation.md`：基础游戏数据来源、接口链路与推荐方案
+- `docs/static-hosting-research.md`：GitHub Pages 部署方案与路由策略
+- `docs/china-static-hosting-research.md`：国内访问体验研究存档，仅作背景参考，不作为正式发布路线依据
 
-项目主路线文档，包含：
+## 下一步建议
 
-- 项目价值判断
-- 竞品拆解
-- MVP 边界
-- 分阶段实施路线
-- 建议优先建设的数据模型
+1. 补第一版真实 `Champion`、`Variant`、`FormationLayout` 数据结构
+2. 先完成英雄筛选页的过滤闭环
+3. 再接阵型编辑页的 seat 冲突校验
+4. 最后补本地方案保存与个人画像能力
 
-适合在开始编码、定义范围、排第一版页面时优先阅读。
+## 说明
 
-### `docs/static-data-storage-research.md`
-
-用于约束数据层方向，当前结论是：
-
-- 公共游戏数据优先使用版本化 JSON 文件
-- 前端优先运行时加载数据
-- 个人数据优先 local-first，存储在浏览器本地
-
-适合在定义 `Champion`、`Adventure`、`Variant`、`UserProfile` 等结构时参考。
-
-### `docs/static-hosting-research.md`
-
-用于约束静态部署方案，当前调研默认围绕 `Vite + React` 静态站展开，主推荐方案为：
-
-- GitHub Pages
-- GitHub Actions 自动部署
-- 处理好 GitHub Pages Project 站的 `base` 路径
-- 处理好 SPA 路由回退问题
-
-适合在初始化前端工程、补部署流程时参考。
-
-### `docs/china-static-hosting-research.md`
-
-用于评估国内访问体验和替代托管平台，当前结论是：
-
-- 默认仍优先 GitHub Pages
-- 如果后续访问质量不足，再评估 Cloudflare Pages 或国内方案
-
-适合在上线前或需要优化国内访问时参考。
-
-## 当前技术倾向
-
-以下内容来自现有调研结论，属于当前默认方向，不代表已经落地：
-
-- 前端：静态站方向，优先考虑 `Vite + React`
-- 部署：`GitHub Pages + GitHub Actions`
-- 公共数据：版本化静态 JSON
-- 个人数据：浏览器本地存储，优先 IndexedDB
-- 规则层：集中维护，不把 Patron、Variant、阵位限制散落到页面组件里
-
-如果后续确认改用其他框架或部署方式，应同步更新本目录文档和 `AGENTS.md`。
-
-## 继续推进时的建议顺序
-
-1. 从 `docs/idle-champions-research-roadmap.md` 收敛第一版页面范围
-2. 明确核心实体和字段：`Champion`、`Adventure`、`Variant`、`FormationLayout`、`UserProfile`
-3. 初始化最小可运行前端骨架
-4. 搭建公共数据目录和版本号策略
-5. 再补规则层、筛选逻辑和阵型编辑器
-
-## 文档维护约定
-
-- 技术路线、目录结构、部署方案或数据方案发生实质变化时，应同步更新对应调研文档。
-- 如果后续新增实际工程文件，应补充启动、构建、数据更新和部署说明。
-- 在没有仓库事实支撑前，不要把 README 写成“已实现”的状态说明。
+- 当前仓库里所有中文文案、页面标题、README 和调研文档默认使用中文。
+- 游戏术语或技术名词在没有稳定中文叫法时可保留原文；只要存在稳定中文叫法，就优先中文。
+- 当前还没有真实游戏数据和完整业务逻辑，因此页面内容应视为工程骨架，而不是完成品。

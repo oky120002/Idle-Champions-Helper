@@ -1,210 +1,287 @@
-# 静态网站数据存储方案调研
+# 静态站数据存储方案（Vite + React + TypeScript）
 
 - 调研日期：2026-04-12
-- 背景：Idle Champions 辅助网站（Vite + React + GitHub Pages）的数据层选型
-- 核心约束：数据更新频率低（每 2-3 周）、不需要服务端动态处理、部署在静态托管平台
+- 背景：Idle Champions 辅助站已确认采用 `Vite + React + TypeScript` 静态站路线，默认部署到 GitHub Pages。
+- 核心约束：数据更新频率低、没有后端服务、第一阶段优先保证结构清晰和可维护。
+- 当前结论：**公共游戏数据使用版本化 JSON 文件；个人数据使用浏览器本地存储；第一阶段不引入数据库、不引入服务端。**
 
 ---
 
-## 1. 方案对比
+## 1. 结论先行
 
-### 1.1 JSON 文件（推荐 ✅）
+### 1.1 公共数据
 
-**最适合本项目的方案。**
+- 存放位置：`public/data/`
+- 组织方式：`version.json + 版本目录`
+- 加载方式：前端运行时 `fetch`
+- 推荐原因：
+  - 适合静态托管
+  - 与 Git 版本管理天然契合
+  - 数据更新与页面代码可以分开演进
+  - 对当前项目规模来说足够简单、足够稳
 
-- 零依赖，不需要数据库引擎
-- 和 Git 工作流天然契合（数据变更 = PR → review → merge）
-- 前端直接 `fetch('/data/champions.json')` 加载
-- 游戏英雄数量约 130-150 个，完整 JSON 数据预计 200-500 KB，完全可控
+### 1.2 个人数据
 
-**组织方式建议：按实体拆分**
+- 存储位置：浏览器本地
+- 推荐方案：`IndexedDB`
+- 适合内容：拥有英雄、装备、保存的阵容、偏好设置、个人目标清单
 
-```
-public/data/
-  champions.json        # 所有英雄数据（~200KB）
-  adventures.json       # 冒险/变体数据
-  formations.json       # 阵型布局数据
-  patron-restrictions.json  # Patron 限制规则
-  tags.json             # 标签/种族/阵营等枚举
-  version.json          # 数据版本号 + 更新日期
-```
+### 1.3 第一阶段明确不做
 
-**前端加载方式：**
-
-- 构建时打包：Vite 的 `import` 直接导入 JSON → 打包进 JS bundle → 首屏更快，但每次更新需要重新构建
-- 运行时 fetch：`fetch('/data/champions.json')` → 独立缓存控制 → 更新数据不需要重新构建前端
-
-**推荐：运行时 fetch**。理由：
-- 数据更新和前端部署解耦
-- 可以通过 `version.json` 检测数据版本，触发缓存刷新
-- 用户浏览器天然缓存 JSON 文件，二次访问极快
-
-### 1.2 SQLite WASM
-
-- 在浏览器端运行完整 SQL 查询
-- 适合复杂关联查询场景
-- **不推荐本项目**：英雄数据量太小，杀鸡用牛刀；增加 ~1MB WASM 依赖；开发复杂度明显上升
-
-### 1.3 YAML/Markdown + 构建时转换
-
-- 数据用 YAML 或 Markdown 维护，构建时转成 JSON
-- 适合"内容为主"的场景（博客、文档站）
-- **不推荐本项目**：游戏数据是结构化的，YAML/Markdown 反而增加维护成本，不如直接写 JSON
-
-### 1.4 IndexedDB 缓存
-
-- 浏览器端本地数据库，适合存用户个人数据
-- **适合作为补充方案**：用户导入的英雄拥有情况、保存的阵容模板等个人数据存 IndexedDB
-- 不替代服务端 JSON 数据源
-
-### 1.5 GraphQL 层
-
-- Astro 等框架提供构建时 GraphQL
-- **不推荐**：本站不需要 GraphQL 的灵活性，Vite + React + fetch JSON 更简单
+- 不上 PostgreSQL
+- 不上 Prisma
+- 不上 GraphQL
+- 不上浏览器端 SQLite WASM
+- 不把所有 JSON 在构建时直接打进应用包里
 
 ---
 
-## 2. 推荐方案：JSON 文件 + 运行时加载 + IndexedDB 个人数据
+## 2. 为什么选择版本化 JSON
 
-### 2.1 架构
+### 2.1 这类数据天然适合静态文件
 
-```
-┌─────────────────────────────────────────┐
-│  Git 仓库（数据源）                       │
-│  public/data/                            │
-│    champions.json                        │
-│    adventures.json                       │
-│    formations.json                       │
-│    ...                                   │
-│    version.json   ← 数据版本号            │
-└──────────────┬──────────────────────────┘
-               │ GitHub Actions 自动部署
-               ↓
-┌─────────────────────────────────────────┐
-│  GitHub Pages（静态托管）                  │
-│  /data/*.json  ← 浏览器 fetch 加载        │
-└─────────────────────────────────────────┘
+本项目第一阶段的公共数据主要是：
 
-浏览器端：
-- 公共数据：fetch JSON → 内存缓存（Session 内）+ Service Worker 缓存
-- 个人数据：用户手动导入 → IndexedDB 存储
-```
+- 英雄基础信息
+- 冒险 / 变体限制
+- 阵型布局
+- 枚举与规则标签
 
-### 2.2 数据目录结构
+这些数据有几个共同特点：
 
-```
-idle-champions-site/
-├── public/
-│   └── data/
-│       ├── champions.json          # 英雄数据
-│       ├── adventures.json         # 冒险/变体
-│       ├── formations.json         # 阵型布局
-│       ├── patron-restrictions.json # Patron 限制
-│       ├── enums.json              # 枚举值（race, role, tag 等）
-│       └── version.json            # {"version": "2026.04.1", "date": "2026-04-12"}
-├── src/
-│   ├── data/
-│   │   ├── loader.ts               # 数据加载 + 缓存逻辑
-│   │   └── schema.ts               # TypeScript 类型定义
-│   ├── components/
-│   └── ...
-├── vite.config.ts
-└── package.json
-```
+- 更新频率低
+- 读取远多于写入
+- 数据量可控
+- 可以通过脚本或人工维护稳定产出
 
-### 2.3 数据更新工作流
+因此，`JSON 文件 + 运行时加载` 比数据库更符合当前阶段。
 
-```
-游戏更新了新英雄/新活动
-       ↓
-编辑 public/data/ 下的 JSON 文件
-       ↓
-更新 version.json 版本号
-       ↓
-git commit + push（或 PR → merge）
-       ↓
-GitHub Actions 自动触发：
-  1. npm run build
-  2. 部署到 gh-pages 分支
-       ↓
-用户访问时：
-  1. 检查 version.json
-  2. 版本变化 → 清除旧缓存 → 重新 fetch
-  3. 版本未变 → 使用缓存
+### 2.2 相比构建时直接导入 JSON，运行时加载更合适
+
+构建时直接 `import` JSON 的问题：
+
+- 数据会进入 JavaScript 包
+- 只要数据一变就要重新构建整个前端
+- 不利于后续做数据版本切换与缓存控制
+
+运行时 `fetch` 的优势：
+
+- 数据与页面构建解耦
+- 浏览器能独立缓存数据文件
+- 后续要拆分页、分实体或加版本目录更自然
+
+---
+
+## 3. 推荐目录结构
+
+```text
+public/
+  data/
+    version.json
+    v1/
+      champions.json
+      variants.json
+      formations.json
+      enums.json
 ```
 
-### 2.4 前端数据加载示例
+其中：
 
-```typescript
-// src/data/loader.ts
-let cache: Map<string, any> = new Map();
+- `version.json`：描述当前启用的数据版本
+- `v1/`：当前版本的数据目录
+- 后续如果结构变化较大，可以新增 `v2/`、`v3/`
 
-export async function loadData<T>(name: string): Promise<T> {
-  if (cache.has(name)) return cache.get(name);
-  
-  const version = await getVersion();
-  const url = `/data/${name}.json?v=${version}`;
-  const res = await fetch(url);
-  const data = await res.json();
-  
-  cache.set(name, data);
-  return data;
-}
+推荐的 `version.json` 结构：
 
-async function getVersion(): Promise<string> {
-  const res = await fetch('/data/version.json', { cache: 'no-store' });
-  const { version } = await res.json();
-  return version;
+```json
+{
+  "current": "v1",
+  "updatedAt": "2026-04-12",
+  "notes": [
+    "当前为工程骨架阶段，正式游戏数据待补充。"
+  ]
 }
 ```
 
----
+推荐的集合文件结构：
 
-## 3. 个人数据存储
-
-用户个人数据（拥有的英雄、装备等级、保存的阵容等）使用 **IndexedDB** 存储：
-
-- 纯本地，不上传服务器
-- 浏览器关闭后持久保存
-- 支持 structured clone，适合存复杂对象
-- 可用 `idb` 库简化操作
-
-```typescript
-// 个人数据结构
-interface UserProfile {
-  ownedChampions: string[];        // 拥有的英雄 ID 列表
-  championGear: Record<string, number[]>; // 英雄装备等级
-  savedFormations: SavedFormation[];     // 保存的阵容
-  preferences: UserPreferences;          // 用户偏好
+```json
+{
+  "items": [],
+  "updatedAt": "2026-04-12"
 }
 ```
 
----
+这样做的好处：
 
-## 4. 性能预估
-
-| 数据文件 | 预估大小 | 加载时间（国内 CDN） |
-|---------|---------|-------------------|
-| champions.json | ~200-300 KB | < 500ms |
-| adventures.json | ~50-100 KB | < 200ms |
-| formations.json | ~30-50 KB | < 100ms |
-| 其他枚举数据 | ~20 KB | < 50ms |
-| **合计** | **~300-500 KB** | **首次 < 1s，缓存后 0** |
-
-- 300-500 KB 的 JSON 数据量完全在合理范围内
-- 首次加载后浏览器自动缓存
-- Service Worker 可进一步保证离线可用
+- 版本切换明确
+- 缓存失效策略简单
+- 文档与代码都容易理解
 
 ---
 
-## 5. 总结
+## 4. 前端加载约定
+
+### 4.1 不要写死绝对路径 `/data/...`
+
+当前默认部署是 GitHub Pages 的项目站，生产地址会带仓库名路径。
+
+因此，下面这种写法 **不适合作为默认示例**：
+
+```ts
+fetch('/data/champions.json')
+```
+
+这会在项目站环境下绕过 `base` 路径，导致资源地址错误。
+
+### 4.2 正确做法：始终基于 `import.meta.env.BASE_URL`
+
+推荐示例：
+
+```ts
+function buildDataUrl(relativePath: string): string {
+  const base = import.meta.env.BASE_URL.endsWith('/')
+    ? import.meta.env.BASE_URL
+    : `${import.meta.env.BASE_URL}/`
+
+  return `${base}data/${relativePath}`
+}
+```
+
+加载版本文件：
+
+```ts
+const version = await fetch(buildDataUrl('version.json'), { cache: 'no-store' }).then((res) => res.json())
+```
+
+加载具体集合：
+
+```ts
+const data = await fetch(buildDataUrl(`${version.current}/champions.json`)).then((res) => res.json())
+```
+
+### 4.3 建议保留一层数据访问封装
+
+建议目录：
+
+```text
+src/
+  domain/
+    types.ts
+  data/
+    client.ts
+```
+
+职责建议：
+
+- `src/domain/types.ts`：定义 TypeScript 类型
+- `src/data/client.ts`：处理版本读取、路径拼接、内存缓存
+- 页面侧按需使用 `useEffect + useState` 处理异步状态，避免把简单加载逻辑过早抽成复杂基础设施
+
+这样可以避免以后把 `fetch` 逻辑散落到页面里。
+
+---
+
+## 5. 数据更新工作流
+
+推荐工作流：
+
+```text
+抓取官方 definitions 原始快照
+  ↓
+归一化并补充手工 overrides
+  ↓
+更新 public/data/v1/*.json
+  ↓
+必要时调整 version.json
+  ↓
+运行数据校验 / 构建检查
+  ↓
+提交代码并推送
+  ↓
+GitHub Actions 构建并发布到 GitHub Pages
+```
+
+当前仓库里对应的最小骨架：
+
+- `scripts/fetch-idle-champions-definitions.mjs`
+- `scripts/normalize-idle-champions-definitions.mjs`
+- `scripts/data/manual-overrides.json`
+- `docs/game-data-source-investigation.md`
+
+这里有一个需要统一的点：
+
+- 当前项目的部署路线是 **GitHub Pages 官方 Actions 发布**
+- **不是** 通过 `gh-pages` 分支手工托管构建产物
+
+所以后续文档和脚本都应围绕 `GitHub Actions -> Pages Artifact -> GitHub Pages` 这一条链路设计。
+
+---
+
+## 6. 个人数据存储
+
+### 6.1 为什么是 IndexedDB
+
+适合原因：
+
+- 数据只和当前用户有关
+- 不需要上传服务器
+- 可以持久保存
+- 结构比 `localStorage` 更灵活
+
+### 6.2 适合放进 IndexedDB 的内容
+
+- 已拥有英雄
+- 装备等级
+- 已保存阵容
+- 个人偏好设置
+- 自定义目标或备注
+
+### 6.3 第一阶段的边界
+
+第一阶段只需要把接口和目录留好，不需要一开始就把所有本地存储能力做满。
+
+建议顺序：
+
+1. 先落公共数据加载
+2. 再补阵容保存
+3. 再补完整个人画像
+
+---
+
+## 7. 缓存策略建议
+
+### 7.1 第一阶段默认策略
+
+- 浏览器 HTTP 缓存
+- 应用内会话级内存缓存
+- `version.json` 使用 `no-store` 读取最新版本号
+
+这一层就足够支撑 MVP。
+
+### 7.2 暂不把 Service Worker 当作第一阶段前提
+
+Service Worker 能做离线缓存，但当前阶段不是必须项。
+
+原因：
+
+- 会增加调试复杂度
+- 容易让缓存问题更难排查
+- 在数据结构和页面仍在快速变化时，收益不一定高于成本
+
+建议：**等数据结构和页面稳定后，再评估是否接入 PWA / Service Worker。**
+
+---
+
+## 8. 当前推荐结论
 
 | 维度 | 方案 |
-|------|------|
-| 公共游戏数据 | JSON 文件 + 运行时 fetch + 版本化缓存 |
-| 个人用户数据 | IndexedDB（纯本地存储） |
-| 数据维护 | Git 仓库 + PR 流程 |
-| 数据更新 | 编辑 JSON → push → Actions 自动部署 |
-| 部署依赖 | 零服务端依赖，完美适配 GitHub Pages |
+| --- | --- |
+| 公共游戏数据 | `public/data/version.json + public/data/v1/*.json` |
+| 公共数据加载 | 运行时 `fetch`，路径基于 `import.meta.env.BASE_URL` |
+| 类型定义 | `TypeScript` 类型放在 `src/domain/types.ts` |
+| 个人用户数据 | `IndexedDB` |
+| 部署链路 | `GitHub Actions -> GitHub Pages` |
+| 第一阶段不做 | 数据库、GraphQL、SQLite WASM、Service Worker 强依赖 |
 
-**不需要数据库。JSON 文件就是这个项目的最优解。**
+> 对当前项目来说，版本化 JSON 不是妥协方案，而是第一阶段最稳、最省成本、最容易维护的方案。

@@ -345,30 +345,27 @@ MVP 不追求：
 
 建议使用：
 
-- Next.js + TypeScript
-- React Query
-- Zustand 或 Jotai
-- Tailwind CSS 或你熟悉的组件体系
-- 拖拽库用于阵型编辑（如 dnd-kit）
+- Vite + React + TypeScript
+- React Router（MVP 阶段优先 HashRouter）
+- 轻量状态管理优先；先用 React 自身状态，确有需要再补 Zustand 或 Jotai
+- 你熟悉且可维护的样式方案
+- 阵型编辑阶段再引入拖拽库（如 dnd-kit）
 
 理由：
 
-- 页面型工具站适合 React 生态。
-- 后续如果需要 SSR、静态生成、SEO、分享链接，Next.js 比较稳。
-- 阵型编辑和复杂筛选会需要较强的前端状态管理。
+- 当前产品是静态工具站，Vite 路线更轻、更直接，也更贴合 GitHub Pages 部署。
+- 第一阶段重点是数据模型、规则层和任务闭环，不需要先为 SSR 或完整内容站能力买复杂度。
+- 阵型编辑和复杂筛选确实会需要较强的前端交互，但不代表一开始就要把状态体系做重。
 
 #### 数据层
 
 建议使用：
 
-- PostgreSQL 存结构化业务数据。
-- Prisma 之类 ORM 做模型管理。
-- 定时导入脚本维护 champions / adventures / variants / formations / tags。
+- 第一阶段先用版本化 JSON 文件维护公共数据
+- 通过脚本维护 champions / adventures / variants / formations / tags
+- 个人数据坚持本地优先，放在浏览器本地存储
 
-如果第一版想更轻，也可以：
-
-- 先用版本化 JSON 文件做只读数据源。
-- 等规则稳定后再迁移到数据库。
+后续如果规则稳定、数据规模明显扩大，再评估是否迁移到数据库。
 
 #### 规则层
 
@@ -505,7 +502,7 @@ MVP 不追求：
 
 ### 议题 C：技术选型与项目骨架
 
-确认是否直接用 Next.js + TypeScript + JSON/DB 双层方案起步，并把目录结构搭起来。
+确认是否直接用 Vite + React + TypeScript + 版本化 JSON 方案起步，并把目录结构搭起来。
 
 ---
 
