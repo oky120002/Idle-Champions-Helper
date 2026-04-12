@@ -100,6 +100,7 @@ npm run data:build
 │       ├── version.json
 │       └── v1/
 │           ├── champions.json
+│           ├── enums.json
 │           ├── formations.json
 │           └── variants.json
 ├── src/
