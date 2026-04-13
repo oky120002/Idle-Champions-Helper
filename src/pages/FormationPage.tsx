@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useI18n } from '../app/i18n'
+import { LocalizedText } from '../components/LocalizedText'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollectionAtVersion, loadVersion } from '../data/client'
 import {
@@ -16,10 +17,10 @@ import {
 } from '../data/formationDraftStore'
 import { saveFormationPreset } from '../data/formationPresetStore'
 import {
+  formatSeatLabel,
   getLocalizedTextPair,
   getPrimaryLocalizedText,
   getRoleLabel,
-  getSecondaryLocalizedText,
 } from '../domain/localizedText'
 import type {
   Champion,
@@ -425,9 +426,7 @@ export function FormationPage() {
   }
 
   function getChampionOptionLabel(champion: Champion): string {
-    const seatLabel = locale === 'zh-CN' ? `${champion.seat} 号位` : `Seat ${champion.seat}`
-
-    return `${seatLabel} · ${getLocalizedTextPair(champion.name, locale)}`
+    return `${formatSeatLabel(champion.seat, locale)} · ${getLocalizedTextPair(champion.name, locale)}`
   }
 
   function getPresetPriorityLabel(priority: PresetPriority): string {
@@ -989,19 +988,20 @@ export function FormationPage() {
         ) : (
           <div className="results-grid">
             {selectedChampions.map(({ slotId, champion }) => {
-              const primaryName = getPrimaryLocalizedText(champion.name, locale)
-              const secondaryName = getSecondaryLocalizedText(champion.name, locale)
-
               return (
                 <article key={`${slotId}-${champion.id}`} className="result-card">
                   <div className="result-card__header">
                     <span className="result-card__eyebrow">{slotId}</span>
-                    <h3 className="result-card__title">{primaryName}</h3>
+                    <LocalizedText
+                      text={champion.name}
+                      mode="stacked"
+                      primaryAs="h3"
+                      primaryClassName="result-card__title"
+                      secondaryAs="p"
+                      secondaryClassName="result-card__secondary"
+                    />
                   </div>
-                  {secondaryName ? <p className="result-card__secondary">{secondaryName}</p> : null}
-                  <p className="supporting-text">
-                    {locale === 'zh-CN' ? `${champion.seat} 号位` : `Seat ${champion.seat}`}
-                  </p>
+                  <p className="supporting-text">{formatSeatLabel(champion.seat, locale)}</p>
                   {champion.affiliations.length > 0 ? (
                     <p className="supporting-text">
                       {t({ zh: '联动队伍', en: 'Affiliation' })}：

@@ -33,6 +33,10 @@ export function getLocalizedTextPair(value: LocalizedText, locale: AppLocale, se
   return secondary ? `${primary}${separator}${secondary}` : primary
 }
 
+export function formatSeatLabel(seat: number, locale: AppLocale): string {
+  return locale === 'zh-CN' ? `${seat} 号位` : `Seat ${seat}`
+}
+
 const ROLE_LABELS: Record<string, { 'zh-CN': string; 'en-US': string }> = {
   breaking: {
     'zh-CN': '破阵',

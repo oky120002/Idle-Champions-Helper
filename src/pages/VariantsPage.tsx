@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useI18n } from '../app/i18n'
+import { LocalizedText } from '../components/LocalizedText'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollection } from '../data/client'
 import {
   getLocalizedTextPair,
-  getPrimaryLocalizedText,
   getSecondaryLocalizedText,
   matchesLocalizedText,
 } from '../domain/localizedText'
@@ -243,16 +243,24 @@ export function VariantsPage() {
 
                 <div className="results-grid">
                   {visibleVariants.map((variant) => {
-                    const primaryName = getPrimaryLocalizedText(variant.name, locale)
                     const secondaryName = getSecondaryLocalizedText(variant.name, locale)
-                    const primaryCampaign = getPrimaryLocalizedText(variant.campaign, locale)
                     const secondaryCampaign = getSecondaryLocalizedText(variant.campaign, locale)
 
                     return (
                       <article key={variant.id} className="result-card">
                         <div className="result-card__header">
-                          <span className="result-card__eyebrow">{primaryCampaign}</span>
-                          <h3 className="result-card__title">{primaryName}</h3>
+                          <LocalizedText
+                            text={variant.campaign}
+                            mode="primary"
+                            as="span"
+                            className="result-card__eyebrow"
+                          />
+                          <LocalizedText
+                            text={variant.name}
+                            mode="primary"
+                            as="h3"
+                            className="result-card__title"
+                          />
                         </div>
 
                         {secondaryName || secondaryCampaign ? (
@@ -269,7 +277,7 @@ export function VariantsPage() {
                             <ul className="bullet-list">
                               {variant.restrictions.slice(0, 4).map((restriction) => (
                                 <li key={`${variant.id}-${restriction.original}-${restriction.display}`}>
-                                  {getPrimaryLocalizedText(restriction, locale)}
+                                  <LocalizedText text={restriction} mode="primary" />
                                 </li>
                               ))}
                             </ul>
@@ -289,7 +297,7 @@ export function VariantsPage() {
                             <ul className="bullet-list">
                               {variant.rewards.slice(0, 3).map((reward) => (
                                 <li key={`${variant.id}-${reward.original}-${reward.display}`}>
-                                  {getPrimaryLocalizedText(reward, locale)}
+                                  <LocalizedText text={reward} mode="primary" />
                                 </li>
                               ))}
                             </ul>
