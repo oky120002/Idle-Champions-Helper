@@ -35,6 +35,7 @@ export interface FormationSlot {
 export interface FormationLayout {
   id: string
   name: string
+  notes?: string
   slots: FormationSlot[]
 }
 
