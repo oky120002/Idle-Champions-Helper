@@ -328,6 +328,10 @@ textarea {
   margin-bottom: 0.8rem;
 }
 
+.result-card__section {
+  margin-top: 1rem;
+}
+
 .result-card__eyebrow {
   display: inline-block;
   margin-bottom: 0.45rem;
@@ -439,6 +443,14 @@ textarea {
 .action-button:hover {
   transform: translateY(-1px);
   border-color: rgba(200, 167, 127, 0.4);
+}
+
+.segmented-control__button:disabled,
+.action-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.52;
+  transform: none;
+  border-color: rgba(227, 214, 193, 0.12);
 }
 
 .segmented-control__button--active {

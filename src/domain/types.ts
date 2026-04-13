@@ -59,6 +59,23 @@ export interface FormationDraft {
   updatedAt: string
 }
 
+export type PresetPriority = 'low' | 'medium' | 'high'
+
+export interface FormationPreset {
+  id: string
+  schemaVersion: 1
+  dataVersion: string
+  name: string
+  description: string
+  layoutId: string
+  placements: Record<string, string>
+  scenarioRef: ScenarioRef | null
+  scenarioTags: string[]
+  priority: PresetPriority
+  createdAt: string
+  updatedAt: string
+}
+
 export type UserImportMethod = 'supportUrl' | 'manual' | 'webRequestLog'
 
 export interface UserCredentials {

@@ -1,16 +1,38 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollectionAtVersion, loadVersion } from '../data/client'
+import {
+  buildFormationSnapshotPrompt,
+  buildRestoreStatusDetail,
+  type FormationSnapshotPrompt,
+  type FormationSnapshotPreview,
+} from '../data/formationPersistence'
 import {
   deleteRecentFormationDraft,
   readRecentFormationDraft,
   saveRecentFormationDraft,
 } from '../data/formationDraftStore'
-import type { Champion, FormationDraft, FormationLayout, ScenarioRef } from '../domain/types'
+import { saveFormationPreset } from '../data/formationPresetStore'
+import type {
+  Champion,
+  FormationDraft,
+  FormationLayout,
+  FormationPreset,
+  PresetPriority,
+  ScenarioRef,
+} from '../domain/types'
 import { findSeatConflicts } from '../rules/seat'
 
 const DRAFT_SCHEMA_VERSION = 1
+const PRESET_SCHEMA_VERSION = 1
 const DRAFT_SAVE_DELAY_MS = 600
+
+const PRESET_PRIORITY_OPTIONS: Array<{ value: PresetPriority; label: string }> = [
+  { value: 'medium', label: '常用' },
+  { value: 'high', label: '高优先' },
+  { value: 'low', label: '备用' },
+]
 
 type FormationState =
   | { status: 'loading' }
@@ -25,46 +47,26 @@ type FormationState =
       message: string
     }
 
-type DraftRestoreMode = 'exact' | 'compatible'
+type StatusTone = 'info' | 'success' | 'error'
 
-type DraftStatusTone = 'info' | 'success' | 'error'
-
-interface DraftStatusMessage {
-  tone: DraftStatusTone
+interface StatusMessage {
+  tone: StatusTone
   title: string
   detail: string
 }
 
-interface DraftRestorePreview {
-  draft: FormationDraft
-  layoutName: string
-  dataVersion: string
-  restoreMode: DraftRestoreMode
-  formations: FormationLayout[]
-  champions: Champion[]
-  placements: Record<string, string>
-  invalidSlotIds: string[]
-  invalidChampionIds: string[]
+interface PresetFormState {
+  name: string
+  description: string
+  scenarioTagsInput: string
+  priority: PresetPriority
 }
 
-type DraftPrompt =
-  | {
-      kind: 'restore'
-      preview: DraftRestorePreview
-    }
-  | {
-      kind: 'invalid'
-      draft: FormationDraft
-      title: string
-      detail: string
-    }
-
-interface ValidatedDraftPlacements {
-  layout: FormationLayout
-  placements: Record<string, string>
-  invalidSlotIds: string[]
-  invalidChampionIds: string[]
+interface FormationPageLocationState {
+  pendingPresetRestore?: FormationPreset
 }
+
+type DraftPrompt = FormationSnapshotPrompt<FormationDraft>
 
 function getErrorMessage(error: unknown): string {
   return error instanceof Error ? error.message : '未知错误'
@@ -82,155 +84,7 @@ function formatDateTime(value: string): string {
   })
 }
 
-function validateDraftPlacements(
-  draft: FormationDraft,
-  formations: FormationLayout[],
-  champions: Champion[],
-): ValidatedDraftPlacements | null {
-  const layout = formations.find((item) => item.id === draft.layoutId)
-
-  if (!layout) {
-    return null
-  }
-
-  const validSlotIds = new Set(layout.slots.map((slot) => slot.id))
-  const validChampionIds = new Set(champions.map((champion) => champion.id))
-  const placements: Record<string, string> = {}
-  const invalidSlotIds: string[] = []
-  const invalidChampionIds: string[] = []
-
-  Object.entries(draft.placements).forEach(([slotId, championId]) => {
-    if (!validSlotIds.has(slotId)) {
-      invalidSlotIds.push(slotId)
-      return
-    }
-
-    if (!validChampionIds.has(championId)) {
-      invalidChampionIds.push(championId)
-      return
-    }
-
-    placements[slotId] = championId
-  })
-
-  return {
-    layout,
-    placements,
-    invalidSlotIds,
-    invalidChampionIds,
-  }
-}
-
-function buildDroppedReferenceDetail(invalidSlotIds: string[], invalidChampionIds: string[]): string {
-  const parts: string[] = []
-
-  if (invalidSlotIds.length > 0) {
-    parts.push(`${invalidSlotIds.length} 个槽位引用已失效`)
-  }
-
-  if (invalidChampionIds.length > 0) {
-    parts.push(`${invalidChampionIds.length} 个英雄引用已失效`)
-  }
-
-  return parts.join('；')
-}
-
-async function buildDraftPrompt(
-  draft: FormationDraft,
-  currentDataVersion: string,
-  currentFormations: FormationLayout[],
-  currentChampions: Champion[],
-): Promise<DraftPrompt> {
-  if (draft.schemaVersion !== DRAFT_SCHEMA_VERSION) {
-    return {
-      kind: 'invalid',
-      draft,
-      title: '最近草稿版本过旧，当前不能直接恢复',
-      detail: `当前只识别 schemaVersion=${DRAFT_SCHEMA_VERSION} 的草稿；检测到旧草稿版本为 ${draft.schemaVersion}。`,
-    }
-  }
-
-  let restoreMode: DraftRestoreMode = 'exact'
-  let dataVersion = draft.dataVersion
-  let formations = currentFormations
-  let champions = currentChampions
-
-  if (draft.dataVersion !== currentDataVersion) {
-    try {
-      const [formationCollection, championCollection] = await Promise.all([
-        loadCollectionAtVersion<FormationLayout>(draft.dataVersion, 'formations'),
-        loadCollectionAtVersion<Champion>(draft.dataVersion, 'champions'),
-      ])
-
-      formations = formationCollection.items
-      champions = championCollection.items
-    } catch {
-      restoreMode = 'compatible'
-      dataVersion = currentDataVersion
-    }
-  }
-
-  const validated = validateDraftPlacements(draft, formations, champions)
-
-  if (!validated) {
-    return {
-      kind: 'invalid',
-      draft,
-      title: '最近草稿引用的布局已不存在，当前不能安全恢复',
-      detail:
-        restoreMode === 'compatible'
-          ? `保存时的数据版本 ${draft.dataVersion} 已不可读，且当前版本 ${currentDataVersion} 中也找不到布局 ${draft.layoutId}。`
-          : `保存版本 ${draft.dataVersion} 中已找不到布局 ${draft.layoutId}。`,
-    }
-  }
-
-  const originalPlacementCount = Object.keys(draft.placements).length
-  const validPlacementCount = Object.keys(validated.placements).length
-
-  if (originalPlacementCount === 0 || validPlacementCount === 0) {
-    const droppedDetail = buildDroppedReferenceDetail(validated.invalidSlotIds, validated.invalidChampionIds)
-
-    return {
-      kind: 'invalid',
-      draft,
-      title: '最近草稿没有可恢复的有效放置结果',
-      detail: droppedDetail || '草稿中没有任何可用的槽位与英雄映射。',
-    }
-  }
-
-  return {
-    kind: 'restore',
-    preview: {
-      draft,
-      layoutName: validated.layout.name,
-      dataVersion,
-      restoreMode,
-      formations,
-      champions,
-      placements: validated.placements,
-      invalidSlotIds: validated.invalidSlotIds,
-      invalidChampionIds: validated.invalidChampionIds,
-    },
-  }
-}
-
-function buildRestoreStatusDetail(preview: DraftRestorePreview): string {
-  const parts = [
-    preview.restoreMode === 'compatible'
-      ? `保存版本 ${preview.draft.dataVersion} 已不可读，当前按 ${preview.dataVersion} 兼容恢复。`
-      : `已按数据版本 ${preview.dataVersion} 恢复。`,
-  ]
-
-  const droppedDetail = buildDroppedReferenceDetail(preview.invalidSlotIds, preview.invalidChampionIds)
-
-  if (droppedDetail) {
-    parts.push(droppedDetail)
-  }
-
-  return parts.join(' ')
-}
-
-function getStatusBannerClassName(tone: DraftStatusTone): string {
+function getStatusBannerClassName(tone: StatusTone): string {
   if (tone === 'success') {
     return 'status-banner status-banner--success'
   }
@@ -242,15 +96,69 @@ function getStatusBannerClassName(tone: DraftStatusTone): string {
   return 'status-banner status-banner--info'
 }
 
+function parseScenarioTags(value: string): string[] {
+  return Array.from(
+    new Set(
+      value
+        .split(/[，,\n]/)
+        .map((item) => item.trim())
+        .filter(Boolean),
+    ),
+  )
+}
+
+function buildPresetId(): string {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID()
+  }
+
+  return `preset-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
+}
+
+function convertPresetToDraft(preset: FormationPreset): FormationDraft {
+  return {
+    schemaVersion: DRAFT_SCHEMA_VERSION,
+    dataVersion: preset.dataVersion,
+    layoutId: preset.layoutId,
+    scenarioRef: preset.scenarioRef,
+    placements: preset.placements,
+    updatedAt: preset.updatedAt,
+  }
+}
+
+function buildRestoredDraftFromPreview(preview: FormationSnapshotPreview<FormationDraft>): FormationDraft {
+  return {
+    schemaVersion: DRAFT_SCHEMA_VERSION,
+    dataVersion: preview.dataVersion,
+    layoutId: preview.snapshot.layoutId,
+    scenarioRef: preview.snapshot.scenarioRef,
+    placements: preview.placements,
+    updatedAt: new Date().toISOString(),
+  }
+}
+
 export function FormationPage() {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const routeState = location.state as FormationPageLocationState | null
+  const pendingPresetRestoreRef = useRef<FormationPreset | null>(routeState?.pendingPresetRestore ?? null)
+
   const [state, setState] = useState<FormationState>({ status: 'loading' })
   const [selectedLayoutId, setSelectedLayoutId] = useState<string>('')
   const [placements, setPlacements] = useState<Record<string, string>>({})
   const [scenarioRef, setScenarioRef] = useState<ScenarioRef | null>(null)
   const [draftPrompt, setDraftPrompt] = useState<DraftPrompt | null>(null)
-  const [draftStatus, setDraftStatus] = useState<DraftStatusMessage | null>(null)
+  const [draftStatus, setDraftStatus] = useState<StatusMessage | null>(null)
+  const [presetStatus, setPresetStatus] = useState<StatusMessage | null>(null)
   const [isDraftPersistenceArmed, setIsDraftPersistenceArmed] = useState(false)
   const [editRevision, setEditRevision] = useState(0)
+  const [isSavingPreset, setIsSavingPreset] = useState(false)
+  const [presetForm, setPresetForm] = useState<PresetFormState>({
+    name: '',
+    description: '',
+    scenarioTagsInput: '',
+    priority: 'medium',
+  })
 
   useEffect(() => {
     let disposed = false
@@ -267,18 +175,87 @@ export function FormationPage() {
           return
         }
 
-        setState({
+        const baseState: Extract<FormationState, { status: 'ready' }> = {
           status: 'ready',
           dataVersion: version.current,
           formations: formationCollection.items,
           champions: championCollection.items,
-        })
+        }
+
+        setState(baseState)
         setSelectedLayoutId(formationCollection.items[0]?.id ?? '')
         setDraftStatus({
           tone: 'info',
           title: '最近草稿会自动保存在当前浏览器',
           detail: '介质为 IndexedDB；只保存在本地，不上传到外部服务。',
         })
+
+        if (pendingPresetRestoreRef.current) {
+          navigate('/formation', { replace: true, state: null })
+
+          const pendingPresetRestore = pendingPresetRestoreRef.current
+          const pendingDraft = convertPresetToDraft(pendingPresetRestore)
+          const pendingPrompt = await buildFormationSnapshotPrompt(
+            pendingDraft,
+            version.current,
+            formationCollection.items,
+            championCollection.items,
+            '方案',
+            PRESET_SCHEMA_VERSION,
+          )
+
+          if (disposed) {
+            return
+          }
+
+          if (pendingPrompt.kind === 'restore') {
+            const restoredDraft = buildRestoredDraftFromPreview(pendingPrompt.preview)
+
+            try {
+              await saveRecentFormationDraft(restoredDraft)
+            } catch (error: unknown) {
+              if (disposed) {
+                return
+              }
+
+              setIsDraftPersistenceArmed(true)
+              setDraftStatus({
+                tone: 'error',
+                title: '方案已恢复，但最近草稿回写失败',
+                detail: getErrorMessage(error),
+              })
+            }
+
+            if (disposed) {
+              return
+            }
+
+            setState({
+              status: 'ready',
+              dataVersion: pendingPrompt.preview.dataVersion,
+              formations: pendingPrompt.preview.formations,
+              champions: pendingPrompt.preview.champions,
+            })
+            setSelectedLayoutId(restoredDraft.layoutId)
+            setPlacements(restoredDraft.placements)
+            setScenarioRef(restoredDraft.scenarioRef)
+            setIsDraftPersistenceArmed(true)
+            setDraftStatus({
+              tone: 'success',
+              title: `已从方案“${pendingPresetRestore.name}”恢复到阵型页`,
+              detail: buildRestoreStatusDetail(pendingPrompt.preview),
+            })
+            return
+          }
+
+          setIsDraftPersistenceArmed(true)
+          setDraftStatus({
+            tone: 'error',
+            title: `方案“${pendingPresetRestore.name}”当前不能恢复`,
+            detail: pendingPrompt.detail,
+          })
+          return
+        }
 
         try {
           const storedDraft = await readRecentFormationDraft()
@@ -292,11 +269,13 @@ export function FormationPage() {
             return
           }
 
-          const prompt = await buildDraftPrompt(
+          const prompt = await buildFormationSnapshotPrompt(
             storedDraft,
             version.current,
             formationCollection.items,
             championCollection.items,
+            '最近草稿',
+            DRAFT_SCHEMA_VERSION,
           )
 
           if (disposed) {
@@ -333,7 +312,7 @@ export function FormationPage() {
     return () => {
       disposed = true
     }
-  }, [])
+  }, [navigate])
 
   useEffect(() => {
     if (state.status !== 'ready' || !isDraftPersistenceArmed || editRevision === 0 || !selectedLayoutId) {
@@ -430,6 +409,8 @@ export function FormationPage() {
     [selectedChampions],
   )
 
+  const canSavePreset = selectedChampions.length > 0 && presetForm.name.trim().length > 0 && !isSavingPreset
+
   function bumpEditRevision() {
     setEditRevision((current) => current + 1)
   }
@@ -443,6 +424,7 @@ export function FormationPage() {
       title: '已切换布局',
       detail: '当前布局变化后会重新生成最近草稿；旧的场景上下文不会被沿用。',
     })
+    setPresetStatus(null)
     bumpEditRevision()
   }
 
@@ -459,6 +441,7 @@ export function FormationPage() {
         [slotId]: championId,
       }
     })
+    setPresetStatus(null)
     bumpEditRevision()
   }
 
@@ -469,6 +452,7 @@ export function FormationPage() {
       title: '当前阵型已清空',
       detail: '如果保持为空，最近草稿会从浏览器本地一起清理。',
     })
+    setPresetStatus(null)
     bumpEditRevision()
   }
 
@@ -477,24 +461,25 @@ export function FormationPage() {
       return
     }
 
-    const { preview } = draftPrompt
+    const restoredDraft = buildRestoredDraftFromPreview(draftPrompt.preview)
 
     setState({
       status: 'ready',
-      dataVersion: preview.dataVersion,
-      formations: preview.formations,
-      champions: preview.champions,
+      dataVersion: draftPrompt.preview.dataVersion,
+      formations: draftPrompt.preview.formations,
+      champions: draftPrompt.preview.champions,
     })
-    setSelectedLayoutId(preview.draft.layoutId)
-    setPlacements(preview.placements)
-    setScenarioRef(preview.draft.scenarioRef)
+    setSelectedLayoutId(restoredDraft.layoutId)
+    setPlacements(restoredDraft.placements)
+    setScenarioRef(restoredDraft.scenarioRef)
     setDraftPrompt(null)
     setIsDraftPersistenceArmed(true)
     setDraftStatus({
       tone: 'success',
       title: '最近草稿已恢复',
-      detail: buildRestoreStatusDetail(preview),
+      detail: buildRestoreStatusDetail(draftPrompt.preview),
     })
+    void saveRecentFormationDraft(restoredDraft)
     bumpEditRevision()
   }
 
@@ -536,6 +521,72 @@ export function FormationPage() {
     void discardDraft()
   }
 
+  function updatePresetForm<K extends keyof PresetFormState>(key: K, value: PresetFormState[K]) {
+    setPresetForm((current) => ({
+      ...current,
+      [key]: value,
+    }))
+  }
+
+  function handlePriorityChange(priority: PresetPriority) {
+    updatePresetForm('priority', priority)
+  }
+
+  function handleOpenPresetsPage() {
+    navigate('/presets')
+  }
+
+  function handleSavePreset() {
+    if (state.status !== 'ready' || !selectedLayout || !canSavePreset) {
+      return
+    }
+
+    const savePreset = async () => {
+      setIsSavingPreset(true)
+
+      try {
+        const timestamp = new Date().toISOString()
+        const preset: FormationPreset = {
+          id: buildPresetId(),
+          schemaVersion: PRESET_SCHEMA_VERSION,
+          dataVersion: state.dataVersion,
+          name: presetForm.name.trim(),
+          description: presetForm.description.trim(),
+          layoutId: selectedLayout.id,
+          placements,
+          scenarioRef,
+          scenarioTags: parseScenarioTags(presetForm.scenarioTagsInput),
+          priority: presetForm.priority,
+          createdAt: timestamp,
+          updatedAt: timestamp,
+        }
+
+        await saveFormationPreset(preset)
+        setPresetForm({
+          name: '',
+          description: '',
+          scenarioTagsInput: '',
+          priority: 'medium',
+        })
+        setPresetStatus({
+          tone: 'success',
+          title: `方案“${preset.name}”已保存`,
+          detail: '现在可以去“方案存档”页继续编辑、删除，或重新恢复回阵型页。',
+        })
+      } catch (error: unknown) {
+        setPresetStatus({
+          tone: 'error',
+          title: '保存方案失败',
+          detail: getErrorMessage(error),
+        })
+      } finally {
+        setIsSavingPreset(false)
+      }
+    }
+
+    void savePreset()
+  }
+
   return (
     <div className="page-stack">
       <SurfaceCard
@@ -554,21 +605,25 @@ export function FormationPage() {
         {state.status === 'ready' ? (
           <>
             {draftPrompt ? (
-              <div className={draftPrompt.kind === 'restore' ? 'status-banner status-banner--info' : 'status-banner status-banner--error'}>
+              <div
+                className={
+                  draftPrompt.kind === 'restore' ? 'status-banner status-banner--info' : 'status-banner status-banner--error'
+                }
+              >
                 <div className="status-banner__content">
                   <strong className="status-banner__title">
                     {draftPrompt.kind === 'restore' ? '检测到最近草稿，是否恢复？' : draftPrompt.title}
                   </strong>
                   <p className="status-banner__detail">
                     {draftPrompt.kind === 'restore'
-                      ? `${formatDateTime(draftPrompt.preview.draft.updatedAt)} · ${Object.keys(draftPrompt.preview.placements).length} 名英雄 · ${draftPrompt.preview.layoutName}`
+                      ? `${formatDateTime(draftPrompt.preview.snapshot.updatedAt)} · ${Object.keys(draftPrompt.preview.placements).length} 名英雄 · ${draftPrompt.preview.layoutName}`
                       : draftPrompt.detail}
                   </p>
                   {draftPrompt.kind === 'restore' ? (
                     <>
                       <p className="status-banner__detail">{buildRestoreStatusDetail(draftPrompt.preview)}</p>
                       <div className="tag-row status-banner__meta">
-                        <span className="tag-pill tag-pill--muted">保存版本：{draftPrompt.preview.draft.dataVersion}</span>
+                        <span className="tag-pill tag-pill--muted">保存版本：{draftPrompt.preview.snapshot.dataVersion}</span>
                         <span className="tag-pill tag-pill--muted">恢复版本：{draftPrompt.preview.dataVersion}</span>
                         <span className="tag-pill tag-pill--muted">
                           {draftPrompt.preview.restoreMode === 'compatible' ? '兼容恢复' : '原样恢复'}
@@ -587,10 +642,18 @@ export function FormationPage() {
                       恢复最近草稿
                     </button>
                   ) : null}
-                  <button type="button" className="action-button action-button--ghost" onClick={handleKeepDraftWithoutRestore}>
+                  <button
+                    type="button"
+                    className="action-button action-button--ghost"
+                    onClick={handleKeepDraftWithoutRestore}
+                  >
                     先保留不恢复
                   </button>
-                  <button type="button" className="action-button action-button--ghost" onClick={handleDiscardRecentDraft}>
+                  <button
+                    type="button"
+                    className="action-button action-button--ghost"
+                    onClick={handleDiscardRecentDraft}
+                  >
                     丢弃旧草稿
                   </button>
                 </div>
@@ -709,11 +772,124 @@ export function FormationPage() {
 
       <SurfaceCard
         eyebrow="阵型摘要"
-        title="先把当前工作草稿看清楚，再考虑命名方案"
-        description="这一页只承接正在编辑的最近草稿；后续“保存为方案”会继续交给方案存档页。"
+        title="把工作草稿保存成命名方案，再交给方案存档页管理"
+        description="最近草稿继续留在阵型页自动保存；命名方案会进入方案存档页，后续可编辑、删除并恢复回阵型页。"
       >
+        <div className="split-grid">
+          <div className="form-stack">
+            <div className="form-field">
+              <label className="field-label" htmlFor="preset-name">
+                方案名称
+              </label>
+              <input
+                id="preset-name"
+                className="text-input"
+                type="text"
+                value={presetForm.name}
+                onChange={(event) => updatePresetForm('name', event.target.value)}
+                placeholder="例如：速刷常用 10 槽波形"
+              />
+            </div>
+
+            <div className="form-field">
+              <label className="field-label" htmlFor="preset-description">
+                方案备注
+              </label>
+              <textarea
+                id="preset-description"
+                className="text-area"
+                rows={4}
+                value={presetForm.description}
+                onChange={(event) => updatePresetForm('description', event.target.value)}
+                placeholder="记录这套阵容适合什么目标、还有哪些待补位。"
+              />
+            </div>
+
+            <div className="form-field">
+              <label className="field-label" htmlFor="preset-tags">
+                场景标签
+              </label>
+              <input
+                id="preset-tags"
+                className="text-input"
+                type="text"
+                value={presetForm.scenarioTagsInput}
+                onChange={(event) => updatePresetForm('scenarioTagsInput', event.target.value)}
+                placeholder="例如：推图，速刷，Time Gate"
+              />
+              <span className="field-hint">仅作用户可读标签，不作为恢复主键；可用中英文逗号分隔。</span>
+            </div>
+
+            <div className="form-field">
+              <span className="field-label">优先级</span>
+              <div className="segmented-control">
+                {PRESET_PRIORITY_OPTIONS.map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    className={
+                      presetForm.priority === option.value
+                        ? 'segmented-control__button segmented-control__button--active'
+                        : 'segmented-control__button'
+                    }
+                    onClick={() => handlePriorityChange(option.value)}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="button-row">
+              <button
+                type="button"
+                className="action-button action-button--secondary"
+                onClick={handleSavePreset}
+                disabled={!canSavePreset}
+              >
+                {isSavingPreset ? '保存中…' : '保存为方案'}
+              </button>
+              <button type="button" className="action-button action-button--ghost" onClick={handleOpenPresetsPage}>
+                查看方案存档
+              </button>
+            </div>
+
+            {presetStatus ? (
+              <div className={getStatusBannerClassName(presetStatus.tone)}>
+                <div className="status-banner__content">
+                  <strong className="status-banner__title">{presetStatus.title}</strong>
+                  <p className="status-banner__detail">{presetStatus.detail}</p>
+                </div>
+              </div>
+            ) : null}
+          </div>
+
+          <div className="preview-grid">
+            <article className="preview-card">
+              <span className="preview-card__label">当前布局</span>
+              <strong className="preview-card__value">{selectedLayout?.name ?? '未选择'}</strong>
+            </article>
+            <article className="preview-card">
+              <span className="preview-card__label">可保存英雄数</span>
+              <strong className="preview-card__value">{selectedChampions.length}</strong>
+            </article>
+            <article className="preview-card">
+              <span className="preview-card__label">seat 冲突</span>
+              <strong className="preview-card__value">
+                {conflictingSeats.length > 0 ? conflictingSeats.join(', ') : '无'}
+              </strong>
+            </article>
+            <article className="preview-card">
+              <span className="preview-card__label">场景上下文</span>
+              <strong className="preview-card__value">{scenarioRef ? `${scenarioRef.kind}:${scenarioRef.id}` : '当前未绑定'}</strong>
+            </article>
+          </div>
+        </div>
+
         {selectedChampions.length === 0 ? (
-          <p className="supporting-text">当前还没有放置英雄。先选一个布局，再逐格选择英雄，页面会自动保存最近草稿并实时提示 seat 冲突。</p>
+          <p className="supporting-text">
+            当前还没有放置英雄。先选一个布局，再逐格选择英雄，页面会自动保存最近草稿；至少放置 1 名英雄后才可保存为命名方案。
+          </p>
         ) : (
           <div className="results-grid">
             {selectedChampions.map(({ slotId, champion }) => (
