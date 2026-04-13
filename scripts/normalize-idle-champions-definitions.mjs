@@ -140,9 +140,9 @@ function normalizeChampion(definition, affiliationMap, override = {}) {
   ]).sort((left, right) => left.localeCompare(right))
 
   const affiliations = uniqueStrings([
-    ...toStringList(definition.affiliation_tags).map(
-      (tag) => affiliationMap.get(tag) ?? tag,
-    ),
+    ...tags
+      .filter((tag) => affiliationMap.has(tag))
+      .map((tag) => affiliationMap.get(tag) ?? tag),
     ...toStringList(override.affiliations),
   ]).sort((left, right) => left.localeCompare(right))
 
@@ -222,6 +222,7 @@ function normalizeFormations(formations = []) {
     .map((formation) => ({
       id: String(formation.id),
       name: String(formation.name ?? formation.id),
+      notes: typeof formation.notes === 'string' ? formation.notes : undefined,
       slots: Array.isArray(formation.slots)
         ? formation.slots.map((slot) => ({
             id: String(slot.id),
