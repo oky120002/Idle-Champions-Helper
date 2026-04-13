@@ -1,4 +1,6 @@
 :root {
+  --layout-max-width: 1400px;
+  --layout-inline-gap: clamp(1rem, 2vw, 1.75rem);
   color-scheme: dark;
   font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   line-height: 1.5;
@@ -29,6 +31,11 @@ body {
   min-width: 320px;
 }
 
+html,
+body {
+  overflow-anchor: none;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -44,7 +51,8 @@ textarea {
 .app-shell {
   position: relative;
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .background-orb {
@@ -76,7 +84,7 @@ textarea {
   z-index: 10;
   display: grid;
   gap: 0.9rem;
-  width: min(1120px, calc(100% - 2rem));
+  width: min(var(--layout-max-width), calc(100% - (var(--layout-inline-gap) * 2)));
   margin: 0 auto;
   padding: 1.5rem 0 1rem;
   backdrop-filter: blur(18px);
@@ -220,7 +228,7 @@ html[data-ui-locale='en-US'] .site-subtitle {
 }
 
 .site-main {
-  width: min(1120px, calc(100% - 2rem));
+  width: min(var(--layout-max-width), calc(100% - (var(--layout-inline-gap) * 2)));
   margin: 0 auto;
   padding: 1rem 0 4rem;
 }
@@ -274,6 +282,10 @@ html[data-ui-locale='en-US'] .site-subtitle {
 .surface-card__description,
 .supporting-text {
   margin: 0.75rem 0 0;
+}
+
+.supporting-text--placeholder {
+  visibility: hidden;
 }
 
 .metric-grid,
@@ -357,6 +369,11 @@ html[data-ui-locale='en-US'] .site-subtitle {
   margin-top: 1rem;
 }
 
+.filter-panel--sidebar {
+  margin-top: 0;
+  gap: 1.1rem;
+}
+
 .filter-panel--compact {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
@@ -406,6 +423,15 @@ html[data-ui-locale='en-US'] .site-subtitle {
   border-radius: 22px;
   border: 1px solid rgba(227, 214, 193, 0.1);
   background: rgba(255, 255, 255, 0.03);
+}
+
+.active-filter-bar--sidebar {
+  margin-top: 0;
+  padding: 0.9rem;
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.032), rgba(255, 255, 255, 0.018)),
+    rgba(6, 11, 17, 0.36);
 }
 
 .active-filter-bar__header,
@@ -1820,8 +1846,8 @@ html[data-ui-locale='en-US'] .site-subtitle {
 
 @media (min-width: 1080px) {
   .champions-workspace {
-    grid-template-columns: minmax(20rem, 23rem) minmax(0, 1fr);
-    align-items: start;
+    grid-template-columns: minmax(19rem, 22rem) minmax(0, 1fr);
+    align-items: stretch;
   }
 
   .champions-sidebar__sticky {
