@@ -152,6 +152,15 @@ type ChampionFilterContext =
 - 联动队伍
   - 来自 `enums.affiliations`
   - 支持多选
+- 种族
+  - 当前基于 `tags` 归类得到
+  - 支持多选
+- 性别
+  - 当前基于 `tags` 归类得到
+  - 支持多选
+- 职业
+  - 当前基于 `tags` 归类得到
+  - 支持多选
 
 ### 4.2 模块 MVP 必补条件
 
@@ -183,6 +192,9 @@ matches = matchesSearch
   AND matchesAnySelectedSeat
   AND matchesAnySelectedRole
   AND matchesAnySelectedAffiliation
+  AND matchesAnySelectedRace
+  AND matchesAnySelectedGender
+  AND matchesAnySelectedProfession
 ```
 
 在模块 MVP 阶段，还需要补成：
