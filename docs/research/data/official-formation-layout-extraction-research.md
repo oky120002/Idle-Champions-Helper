@@ -143,10 +143,11 @@ adventure_defines[].game_changes[].formation
 
 - 官方自动提取的唯一布局集合
 - 每个布局保留：
+  - `name.original / name.display`
+  - `notes.original / notes.display`
   - `slots`
   - `applicableContexts`
   - `sourceContexts`
-  - `notes`
 
 ### 5.2 `scripts/data/manual-overrides.json`
 
