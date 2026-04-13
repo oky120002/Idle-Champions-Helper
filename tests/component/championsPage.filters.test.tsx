@@ -114,8 +114,10 @@ describe('ChampionsPage filters', () => {
 
     renderChampionsPage()
 
-    expect(await screen.findByText('阿尔法')).toBeInTheDocument()
+    const alphaName = await screen.findByText('阿尔法')
+    expect(alphaName).toBeInTheDocument()
     expect(screen.getByRole('link', { name: '查看详情：阿尔法' })).toHaveAttribute('href', '/champions/alpha')
+    expect(alphaName.closest('a')).toHaveAttribute('href', '/champions/alpha')
 
     await user.click(screen.getByRole('button', { name: '1 号位' }))
     await user.click(screen.getByRole('button', { name: '2 号位' }))
