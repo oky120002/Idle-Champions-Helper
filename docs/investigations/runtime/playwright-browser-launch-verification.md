@@ -7,9 +7,9 @@
 
 ## 1. 环境前提
 
-- 工作树：`/Users/rain/.worktrees/Idle-Champions-Helper/recent-draft-save-restore`
-- Playwright 浏览器目录：`/Users/rain/.playwright-browsers`
-- 已验证 `PLAYWRIGHT_BROWSERS_PATH` 已指向上述长期目录
+- 工作树：当次独立任务工作树；具体路径会随 Codex 会话变化，不作为长期文档约束
+- Playwright 浏览器目录：长期共享浏览器目录
+- 已验证 `PLAYWRIGHT_BROWSERS_PATH` 已指向该长期目录
 
 ---
 
@@ -56,6 +56,8 @@
 - 当前工作树内的代码级验证可继续依赖：
   - `npm run build`
   - `npm run lint`
+  - `npm run typecheck`
+  - `npm run test:run`
 - 若要完成真实页面自动化验收，应改在更宽松的会话环境中运行，而不是继续依赖当前受限会话
 
 ---
@@ -84,7 +86,7 @@
 - `firefox / chromium / webkit` 最小启动验证：全部通过
 - 完整页面验收脚本：通过
 - 结果标记：`VERIFICATION_OK`
-- 验证截图目录：`/tmp/idle-champions-helper-shots`
+- 验证截图目录：本地临时输出目录（会随会话变化，不作为仓库契约）
 
 ---
 

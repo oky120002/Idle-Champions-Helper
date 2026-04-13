@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useI18n } from '../app/i18n'
 import { FieldGroup } from '../components/FieldGroup'
+import { ChampionIdentity } from '../components/ChampionIdentity'
 import { LocalizedText } from '../components/LocalizedText'
 import { StatusBanner } from '../components/StatusBanner'
 import { SurfaceCard } from '../components/SurfaceCard'
@@ -244,9 +245,9 @@ export function ChampionsPage() {
                     className={selectedSeats.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
                     aria-pressed={selectedSeats.length === 0}
                     onClick={() => setSelectedSeats([])}
-                  >
-                    {t({ zh: '全部', en: 'All' })}
-                  </button>
+                    >
+                      {t({ zh: '全部', en: 'All' })}
+                    </button>
                   {seatOptions.map((seat) => (
                     <button
                       key={seat}
@@ -359,17 +360,7 @@ export function ChampionsPage() {
                   {visibleChampions.map((champion) => {
                     return (
                       <article key={champion.id} className="result-card">
-                        <div className="result-card__header">
-                          <span className="result-card__eyebrow">{formatSeatLabel(champion.seat, locale)}</span>
-                          <LocalizedText
-                            text={champion.name}
-                            mode="stacked"
-                            primaryAs="h3"
-                            primaryClassName="result-card__title"
-                            secondaryAs="p"
-                            secondaryClassName="result-card__secondary"
-                          />
-                        </div>
+                        <ChampionIdentity champion={champion} locale={locale} eyebrow={formatSeatLabel(champion.seat, locale)} />
 
                         <div className="tag-row">
                           {champion.roles.map((role) => (
