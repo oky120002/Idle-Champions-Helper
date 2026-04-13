@@ -123,9 +123,9 @@ type ChampionFilterContext =
    - 联动队伍标签数
 3. 筛选区
    - 关键词输入
-   - seat 选择
-   - 定位选择
-   - 联动队伍选择
+   - seat 多选
+   - 定位多选
+   - 联动队伍多选
 4. 结果区
    - 空态提示
    - 当前展示数提示
@@ -145,10 +145,13 @@ type ChampionFilterContext =
   - 命中 `affiliations`
 - seat
   - `1..12`
+  - 支持多选
 - 定位
   - 来自 `enums.roles`
+  - 支持多选
 - 联动队伍
   - 来自 `enums.affiliations`
+  - 支持多选
 
 ### 4.2 模块 MVP 必补条件
 
@@ -170,15 +173,16 @@ type ChampionFilterContext =
 
 - 所有筛选条件统一采用“AND”组合
 - 关键词内部采用“OR”命中
+- `seat / 定位 / 联动队伍` 在各自维度内采用“OR”命中
 - “全部”视为该维度不过滤
 
 统一表达：
 
 ```text
 matches = matchesSearch
-  AND matchesSeat
-  AND matchesRole
-  AND matchesAffiliation
+  AND matchesAnySelectedSeat
+  AND matchesAnySelectedRole
+  AND matchesAnySelectedAffiliation
 ```
 
 在模块 MVP 阶段，还需要补成：

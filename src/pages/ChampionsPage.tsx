@@ -7,9 +7,9 @@ import {
   getPrimaryLocalizedText,
   getRoleLabel,
   getSecondaryLocalizedText,
-  matchesLocalizedText,
 } from '../domain/localizedText'
 import type { Champion, LocalizedText } from '../domain/types'
+import { filterChampions, toggleFilterValue } from '../rules/championFilter'
 
 interface StringEnumGroup {
   id: string
@@ -21,7 +21,6 @@ interface LocalizedEnumGroup {
   values: LocalizedText[]
 }
 
-const ALL_FILTER = '__all__'
 const seatOptions = Array.from({ length: 12 }, (_, index) => index + 1)
 const MAX_VISIBLE_RESULTS = 48
 
@@ -75,9 +74,9 @@ export function ChampionsPage() {
   const { locale, t } = useI18n()
   const [state, setState] = useState<ChampionState>({ status: 'loading' })
   const [search, setSearch] = useState('')
-  const [selectedSeat, setSelectedSeat] = useState<number | null>(null)
-  const [selectedRole, setSelectedRole] = useState<string>(ALL_FILTER)
-  const [selectedAffiliation, setSelectedAffiliation] = useState<string>(ALL_FILTER)
+  const [selectedSeats, setSelectedSeats] = useState<number[]>([])
+  const [selectedRoles, setSelectedRoles] = useState<string[]>([])
+  const [selectedAffiliations, setSelectedAffiliations] = useState<string[]>([])
 
   useEffect(() => {
     let disposed = false
@@ -121,31 +120,23 @@ export function ChampionsPage() {
       return []
     }
 
-    const query = search.trim().toLowerCase()
-
-    return state.champions.filter((champion) => {
-      const matchesSearch =
-        !query ||
-        matchesLocalizedText(champion.name, query) ||
-        champion.tags.some((tag) => tag.toLowerCase().includes(query)) ||
-        champion.affiliations.some((affiliation) => matchesLocalizedText(affiliation, query))
-
-      const matchesSeat = selectedSeat === null || champion.seat === selectedSeat
-      const matchesRole = selectedRole === ALL_FILTER || champion.roles.includes(selectedRole)
-      const matchesAffiliation =
-        selectedAffiliation === ALL_FILTER ||
-        champion.affiliations.some((affiliation) => affiliation.original === selectedAffiliation)
-
-      return matchesSearch && matchesSeat && matchesRole && matchesAffiliation
+    return filterChampions(state.champions, {
+      search,
+      seats: selectedSeats,
+      roles: selectedRoles,
+      affiliations: selectedAffiliations,
     })
-  }, [search, selectedAffiliation, selectedRole, selectedSeat, state])
+  }, [search, selectedAffiliations, selectedRoles, selectedSeats, state])
 
   const visibleChampions = filteredChampions.slice(0, MAX_VISIBLE_RESULTS)
   const matchedSeats = new Set(filteredChampions.map((champion) => champion.seat)).size
-  const selectedAffiliationLabel =
+  const orderedSelectedSeats = seatOptions.filter((seat) => selectedSeats.includes(seat))
+  const orderedSelectedRoles =
+    state.status === 'ready' ? state.roles.filter((role) => selectedRoles.includes(role)) : []
+  const orderedSelectedAffiliations =
     state.status === 'ready'
-      ? state.affiliations.find((affiliation) => affiliation.original === selectedAffiliation) ?? null
-      : null
+      ? state.affiliations.filter((affiliation) => selectedAffiliations.includes(affiliation.original))
+      : []
   const activeFilters = [
     search.trim()
       ? t({
@@ -153,17 +144,22 @@ export function ChampionsPage() {
           en: `Keyword: ${search.trim()}`,
         })
       : null,
-    selectedSeat !== null ? (locale === 'zh-CN' ? `${selectedSeat} 号位` : `Seat ${selectedSeat}`) : null,
-    selectedRole !== ALL_FILTER
+    orderedSelectedSeats.length > 0
       ? t({
-          zh: `定位：${getRoleLabel(selectedRole, locale)}`,
-          en: `Role: ${getRoleLabel(selectedRole, locale)}`,
+          zh: `座位：${orderedSelectedSeats.map((seat) => `${seat} 号位`).join('、')}`,
+          en: `Seats: ${orderedSelectedSeats.join(', ')}`,
         })
       : null,
-    selectedAffiliationLabel
+    orderedSelectedRoles.length > 0
       ? t({
-          zh: `联动队伍：${getLocalizedTextPair(selectedAffiliationLabel, locale)}`,
-          en: `Affiliation: ${getLocalizedTextPair(selectedAffiliationLabel, locale)}`,
+          zh: `定位：${orderedSelectedRoles.map((role) => getRoleLabel(role, locale)).join('、')}`,
+          en: `Roles: ${orderedSelectedRoles.map((role) => getRoleLabel(role, locale)).join(', ')}`,
+        })
+      : null,
+    orderedSelectedAffiliations.length > 0
+      ? t({
+          zh: `联动队伍：${orderedSelectedAffiliations.map((affiliation) => getLocalizedTextPair(affiliation, locale)).join('、')}`,
+          en: `Affiliations: ${orderedSelectedAffiliations.map((affiliation) => getLocalizedTextPair(affiliation, locale)).join(', ')}`,
         })
       : null,
   ].filter((item): item is string => Boolean(item))
@@ -238,8 +234,9 @@ export function ChampionsPage() {
                 <div className="filter-chip-grid">
                   <button
                     type="button"
-                    className={selectedSeat === null ? 'filter-chip filter-chip--active' : 'filter-chip'}
-                    onClick={() => setSelectedSeat(null)}
+                    className={selectedSeats.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
+                    aria-pressed={selectedSeats.length === 0}
+                    onClick={() => setSelectedSeats([])}
                   >
                     {t({ zh: '全部', en: 'All' })}
                   </button>
@@ -247,13 +244,20 @@ export function ChampionsPage() {
                     <button
                       key={seat}
                       type="button"
-                      className={selectedSeat === seat ? 'filter-chip filter-chip--active' : 'filter-chip'}
-                      onClick={() => setSelectedSeat(seat)}
+                      className={selectedSeats.includes(seat) ? 'filter-chip filter-chip--active' : 'filter-chip'}
+                      aria-pressed={selectedSeats.includes(seat)}
+                      onClick={() => setSelectedSeats((current) => toggleFilterValue(current, seat))}
                     >
                       {locale === 'zh-CN' ? `${seat} 号位` : `Seat ${seat}`}
                     </button>
                   ))}
                 </div>
+                <span className="field-hint">
+                  {t({
+                    zh: '支持多选；同一维度按“或”命中。',
+                    en: 'Multi-select is supported, and matches within this group use OR.',
+                  })}
+                </span>
               </div>
 
               <div className="filter-group">
@@ -261,8 +265,9 @@ export function ChampionsPage() {
                 <div className="filter-chip-grid">
                   <button
                     type="button"
-                    className={selectedRole === ALL_FILTER ? 'filter-chip filter-chip--active' : 'filter-chip'}
-                    onClick={() => setSelectedRole(ALL_FILTER)}
+                    className={selectedRoles.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
+                    aria-pressed={selectedRoles.length === 0}
+                    onClick={() => setSelectedRoles([])}
                   >
                     {t({ zh: '全部', en: 'All' })}
                   </button>
@@ -270,13 +275,20 @@ export function ChampionsPage() {
                     <button
                       key={role}
                       type="button"
-                      className={selectedRole === role ? 'filter-chip filter-chip--active' : 'filter-chip'}
-                      onClick={() => setSelectedRole(role)}
+                      className={selectedRoles.includes(role) ? 'filter-chip filter-chip--active' : 'filter-chip'}
+                      aria-pressed={selectedRoles.includes(role)}
+                      onClick={() => setSelectedRoles((current) => toggleFilterValue(current, role))}
                     >
                       {getRoleLabel(role, locale)}
                     </button>
                   ))}
                 </div>
+                <span className="field-hint">
+                  {t({
+                    zh: '支持多选；会匹配任一已选定位。',
+                    en: 'Multi-select is supported, and champions can match any selected role.',
+                  })}
+                </span>
               </div>
 
               <div className="filter-group">
@@ -284,10 +296,9 @@ export function ChampionsPage() {
                 <div className="filter-chip-grid">
                   <button
                     type="button"
-                    className={
-                      selectedAffiliation === ALL_FILTER ? 'filter-chip filter-chip--active' : 'filter-chip'
-                    }
-                    onClick={() => setSelectedAffiliation(ALL_FILTER)}
+                    className={selectedAffiliations.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
+                    aria-pressed={selectedAffiliations.length === 0}
+                    onClick={() => setSelectedAffiliations([])}
                   >
                     {t({ zh: '全部', en: 'All' })}
                   </button>
@@ -296,16 +307,25 @@ export function ChampionsPage() {
                       key={affiliation.original}
                       type="button"
                       className={
-                        selectedAffiliation === affiliation.original
+                        selectedAffiliations.includes(affiliation.original)
                           ? 'filter-chip filter-chip--active'
                           : 'filter-chip'
                       }
-                      onClick={() => setSelectedAffiliation(affiliation.original)}
+                      aria-pressed={selectedAffiliations.includes(affiliation.original)}
+                      onClick={() =>
+                        setSelectedAffiliations((current) => toggleFilterValue(current, affiliation.original))
+                      }
                     >
                       {getPrimaryLocalizedText(affiliation, locale)}
                     </button>
                   ))}
                 </div>
+                <span className="field-hint">
+                  {t({
+                    zh: '支持多选；适合同时看多个联动队伍候选。',
+                    en: 'Multi-select is supported for comparing multiple affiliations at once.',
+                  })}
+                </span>
               </div>
             </div>
 
@@ -329,8 +349,8 @@ export function ChampionsPage() {
 
                 <p className="supporting-text">
                   {t({
-                    zh: `当前展示 ${visibleChampions.length} / ${filteredChampions.length} 名英雄。如果结果过多，优先加关键词、座位或定位缩小范围。`,
-                    en: `Showing ${visibleChampions.length} / ${filteredChampions.length} champions. Narrow things down with a keyword, seat, or role if the list feels too broad.`,
+                    zh: `当前展示 ${visibleChampions.length} / ${filteredChampions.length} 名英雄。如果结果过多，优先加关键词、座位、定位或联动队伍缩小范围。`,
+                    en: `Showing ${visibleChampions.length} / ${filteredChampions.length} champions. Narrow things down with a keyword, seat, role, or affiliation if the list feels too broad.`,
                   })}
                 </p>
 
