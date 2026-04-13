@@ -6,6 +6,12 @@ export interface ChampionFilters {
   seats: number[]
   roles: string[]
   affiliations: string[]
+  races: string[]
+  genders: string[]
+  professions: string[]
+  alignments: string[]
+  acquisitions: string[]
+  mechanics: string[]
 }
 
 export function toggleFilterValue<T>(values: T[], value: T): T[] {
@@ -29,7 +35,32 @@ export function filterChampions(champions: Champion[], filters: ChampionFilters)
       filters.affiliations.some((selectedAffiliation) =>
         champion.affiliations.some((affiliation) => affiliation.original === selectedAffiliation),
       )
+    const matchesRace = filters.races.length === 0 || filters.races.some((race) => champion.tags.includes(race))
+    const matchesGender =
+      filters.genders.length === 0 || filters.genders.some((gender) => champion.tags.includes(gender))
+    const matchesProfession =
+      filters.professions.length === 0 ||
+      filters.professions.some((profession) => champion.tags.includes(profession))
+    const matchesAlignment =
+      filters.alignments.length === 0 ||
+      filters.alignments.some((alignment) => champion.tags.includes(alignment))
+    const matchesAcquisition =
+      filters.acquisitions.length === 0 ||
+      filters.acquisitions.some((acquisition) => champion.tags.includes(acquisition))
+    const matchesMechanic =
+      filters.mechanics.length === 0 || filters.mechanics.some((mechanic) => champion.tags.includes(mechanic))
 
-    return matchesSearch && matchesSeat && matchesRole && matchesAffiliation
+    return (
+      matchesSearch &&
+      matchesSeat &&
+      matchesRole &&
+      matchesAffiliation &&
+      matchesRace &&
+      matchesGender &&
+      matchesProfession &&
+      matchesAlignment &&
+      matchesAcquisition &&
+      matchesMechanic
+    )
   })
 }
