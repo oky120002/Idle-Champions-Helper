@@ -61,21 +61,21 @@ export function HomePage() {
         setVersionState({
           status: 'error',
           data: null,
-          errorMessage: error instanceof Error ? error.message : t({ zh: '未知错误', en: 'Unknown error' }),
+          errorMessage: error instanceof Error ? error.message : null,
         })
       })
 
     return () => {
       disposed = true
     }
-  }, [t])
+  }, [])
 
   let versionText = t({ zh: '正在读取数据版本…', en: 'Loading data version…' })
 
   if (versionState.status === 'ready') {
     versionText = `${versionState.data?.current ?? t({ zh: '未知版本', en: 'Unknown version' })} · ${versionState.data?.updatedAt ?? t({ zh: '未知日期', en: 'Unknown date' })}`
   } else if (versionState.status === 'error') {
-    versionText = `${t({ zh: '读取失败', en: 'Load failed' })}: ${versionState.errorMessage}`
+    versionText = `${t({ zh: '读取失败', en: 'Load failed' })}: ${versionState.errorMessage ?? t({ zh: '未知错误', en: 'Unknown error' })}`
   }
 
   return (
