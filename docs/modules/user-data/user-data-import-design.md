@@ -113,5 +113,5 @@
 
 - `src/pages/UserDataPage.tsx`
 - `src/data/userImport.ts`
-- 数据来源调研文档应统一放在 `docs/research/data/`
+- `docs/research/data/game-data-source-investigation.md`
 - 当前设计稿路径：`docs/modules/user-data/user-data-import-design.md`
