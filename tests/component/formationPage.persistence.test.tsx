@@ -35,7 +35,10 @@ const formationsFixture: DataCollection<FormationLayout> = {
   items: [
     {
       id: 'layout-a',
-      name: '布局 A',
+      name: {
+        original: 'Layout A',
+        display: '布局 A',
+      },
       slots: [
         { id: 'slot-1', row: 1, column: 1 },
         { id: 'slot-2', row: 1, column: 2 },
