@@ -2,13 +2,20 @@
 
 本目录按“文档用途优先、主题次级归类”的原则组织，不再把所有 Markdown 文档平铺在 `docs/` 根目录。
 
+`docs/README.md` 是 `docs/` 的唯一总索引；`README.md` 只保留高频入口，不再重复维护完整清单。
+
+## 文档治理入口
+
+- `docs/product/documentation-governance.md`：文档扫描、修复、合并、删除与归档的常规流程。
+- `docs/troubleshooting-log.md`：流程、环境、部署、认证等非代码问题的摘要台账。
+
 ## 高频入口
 
 如果你当前最关心的是“怎么启动”和“怎么部署”，先看这几份：
 
-- `README.md`：仓库首页，最先看；顶部已经放了本地启动与部署现状说明。
+- `README.md`：仓库首页，最先看；只保留现状摘要、常用命令与高频入口。
 - `docs/troubleshooting-log.md`：统一的问题排查台账，优先收录已发生问题的摘要、根因、解法和引用信息。
-- `docs/investigations/runtime/local-run-verification.md`：本地运行方式、可访问地址和当前 `preview` 白屏背景。
+- `docs/investigations/runtime/local-run-verification.md`：本地开发、`preview` 与 `preview:pages` 的适用边界与验证结果。
 - `docs/research/deployment/static-hosting-research.md`：正式部署路线、GitHub Pages 与 GitHub Actions 工作流设计。
 - `docs/research/deployment/china-static-hosting-research.md`：国内访问体验和后续托管备选背景。
 
@@ -43,24 +50,26 @@
 - 调研类文件统一使用 `主题-research.md`。
 - 排查或确认类文件统一使用 `主题-investigation.md` 或 `主题-verification.md`。
 - 模块设计稿统一放在 `docs/modules/<module>/` 下，文件名优先使用 `<module>-design.md`。
+- 历史性排查文档要在标题、开头说明或索引描述里标明“当前是否仍有效”，避免把旧结论误读为现状。
 - 普通新文档不直接放在 `docs/` 根目录；根目录只保留跨主题入口文档，例如 `docs/README.md` 与 `docs/troubleshooting-log.md`。
 
 ## 当前索引
 
 - `docs/troubleshooting-log.md`：通用问题排查台账，沉淀问题描述、排查摘要、根因、解法与引用信息。
+- `docs/product/documentation-governance.md`：文档治理方案，定义扫描触发条件、修复策略与单一事实源。
 - `docs/product/idle-champions-roadmap.md`：项目价值、范围、阶段路线与核心模型。
 - `docs/research/data/game-data-source-investigation.md`：基础游戏数据与个人数据来源调研。
 - `docs/research/data/language-id-7-chinese-definitions-research.md`：`language_id=7` 官方中文 definitions 链路与字段覆盖核实。
 - `docs/research/data/static-data-storage-research.md`：静态数据存储与版本化策略。
 - `docs/research/testing/regression-testing-research.md`：主分支整体回归测试框架设计。
-- `docs/research/deployment/static-hosting-research.md`：GitHub Pages 部署方案与路由策略。
 - `docs/research/deployment/china-static-hosting-research.md`：国内访问体验与托管备选方案。
+- `docs/research/deployment/static-hosting-research.md`：GitHub Pages 部署方案与路由策略。
 - `docs/modules/champions/champions-filter-design.md`：英雄筛选模块设计稿。
 - `docs/modules/formation/formation-editor-design.md`：阵型编辑模块设计稿。
 - `docs/modules/presets/presets-design.md`：方案存档模块设计稿。
 - `docs/modules/user-data/user-data-import-design.md`：本地优先的个人数据导入设计稿。
-- `docs/investigations/repository/github-directory-commit-investigation.md`：`.github` 目录无法提交的本地原因排查。
-- `docs/investigations/runtime/local-run-verification.md`：本地构建、开发预览与生产预览差异验证。
+- `docs/investigations/repository/github-directory-commit-investigation.md`：`.github` 空目录不被 Git 跟踪的历史排查归档。
+- `docs/investigations/runtime/local-run-verification.md`：本地构建、开发预览、Vite `preview` 与 GitHub Pages 预览差异验证。
 - `docs/investigations/runtime/playwright-browser-launch-verification.md`：当前 Codex CLI 环境下 Playwright 浏览器启动受限的确认记录。
 
 ## 后续新增文档的放置建议
