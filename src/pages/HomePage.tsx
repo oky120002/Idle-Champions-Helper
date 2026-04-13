@@ -9,12 +9,13 @@ const shippedItems: LocaleText[] = [
   { zh: '基于 `import.meta.env.BASE_URL` 的数据读取约定', en: 'Data loading based on `import.meta.env.BASE_URL`' },
   { zh: '`public/data/version.json + public/data/v1/` 版本化公共数据目录', en: 'Versioned shared data under `public/data/version.json + public/data/v1/`' },
   { zh: '官方原文 + `language_id=7` 中文展示双字段数据', en: 'Dual-field data from official source text plus `language_id=7` Chinese labels' },
+  { zh: '官方 definitions 自动提取的阵型布局库', en: 'Formation layouts extracted from official definitions' },
   { zh: '`IndexedDB` 最近草稿与命名方案保存 / 恢复', en: '`IndexedDB` recent-draft and named-preset save / restore flow' },
   { zh: '`Vitest + Playwright` 本地回归基线', en: '`Vitest + Playwright` local regression baseline' },
 ]
 
 const nextSteps: LocaleText[] = [
-  { zh: '补阵型布局的适用场景和上下文绑定', en: 'Add formation layout applicability and context binding' },
+  { zh: '给阵型页补场景筛选、搜索与来源定位', en: 'Add scenario filtering, search, and source targeting to the formation page' },
   { zh: '完善 seat 冲突校验与候选英雄约束提示', en: 'Tighten seat-conflict validation and candidate champion guidance' },
   { zh: '把个人数据导入结果安全写入 `IndexedDB` 并接到页面状态', en: 'Persist imported user data into `IndexedDB` and wire it into page state' },
   { zh: '扩展方案管理：删除、覆盖保存与更细标签', en: 'Expand preset management with delete, overwrite, and richer tags' },
@@ -86,14 +87,14 @@ export function HomePage() {
           <p className="hero-panel__eyebrow">{t({ zh: '当前阶段', en: 'Current stage' })}</p>
           <h2 className="hero-panel__title">
             {t({
-              zh: '真实数据、本地持久化和回归骨架已经接上，下一步补规则闭环。',
-              en: 'Real data, local persistence, and the regression baseline are in place; next comes tighter rule loops.',
+              zh: '真实数据、本地持久化和回归骨架已经接上，下一步补阵型规则与上下文体验。',
+              en: 'Real data, local persistence, and the regression baseline are in place; next comes tighter formation rules and context UX.',
             })}
           </h2>
           <p className="hero-panel__description">
             {t({
-              zh: '当前站点已经接上官方 definitions 公共数据、`language_id=7` 中文展示层、最近草稿 / 命名方案的 IndexedDB 持久化，以及本地回归测试基线。接下来优先补阵型规则、上下文约束和个人数据映射。',
-              en: 'The site now uses official definitions data, the `language_id=7` Chinese display layer, IndexedDB-backed recent drafts and presets, plus a local regression baseline. Next up are formation rules, context constraints, and user-data mapping.',
+              zh: '当前站点已经接上官方 definitions 公共数据、`language_id=7` 中文展示层、157 个唯一官方阵型布局、最近草稿 / 命名方案的 IndexedDB 持久化，以及本地回归测试基线。接下来优先补阵型规则、场景筛选和个人数据映射。',
+              en: 'The site now uses official definitions data, the `language_id=7` Chinese display layer, 157 unique official formation layouts, IndexedDB-backed recent drafts and presets, plus a local regression baseline. Next up are formation rules, scenario filtering, and user-data mapping.',
             })}
           </p>
         </div>
