@@ -2,7 +2,7 @@
 
 - 验证时间：2026-04-13
 - 验证对象：`英雄筛选` 页在长结果列表下的筛选交互
-- 当前结论：**原问题不是单一原因。除了浏览器根滚动锚定带来的随机跳动外，长结果列表在被快速收窄时还会因为页面总高度骤减而把整页滚动位置直接夹回顶部。当前修复采用“两层稳定”方案：禁用根滚动锚定；同时在英雄结果区收窄时临时锁住旧高度，并在必要时平滑把视口带回结果区顶部，避免整页被瞬间夹回去。**
+- 当前结论：**原问题不是单一原因。除了浏览器根滚动锚定带来的随机跳动外，长结果列表在被快速收窄时还会因为页面总高度骤减而把整页滚动位置直接夹回顶部。当前修复采用“三层稳定”方案：禁用根滚动锚定；在英雄结果区收窄时临时锁住旧高度，并在必要时平滑把视口带回结果区顶部；同时在桌面宽度下把筛选区做成粘性侧栏，减少视线来回跳。**
 
 ---
 
@@ -63,7 +63,21 @@ overflow-anchor: none;
 - 滚动方向与目标更可预期
 - 体感从“惊一下”改成“被带回结果区继续看”
 
-### 2.4 首次出现“当前筛选”时预留占位
+### 2.4 桌面端筛选区改为粘性侧栏
+
+在 `src/pages/ChampionsPage.tsx` 和 `src/styles/global.css` 中，把英雄筛选页在桌面宽度下改为“两栏工作区”：
+
+- 左侧为筛选区
+- 右侧为结果区
+- 左侧筛选区在向下浏览结果时保持 `sticky`
+
+目的：
+
+- 让大量筛选条件始终停留在视线附近
+- 选择条件后，不需要频繁把视线在页面最上方和结果区之间来回拉扯
+- 保留结果区的自然高度，避免固定小窗牺牲大屏可见卡片数量
+
+### 2.5 首次出现“当前筛选”时预留占位
 
 `当前筛选：...` 这行摘要在无筛选条件时仍保留占位，只是隐藏文本。
 
@@ -82,6 +96,7 @@ overflow-anchor: none;
   - 在长列表场景下收窄到少量结果时，页面会被带回结果区而不是被夹到页面顶部
 - `tests/e2e/filter-layout-stability.spec.ts`
   - 英雄筛选页首次出现“当前筛选”摘要时，不会把结果说明段落向下推挤
+  - 英雄筛选页在桌面宽度下向下滚动时，筛选区会保持粘性位置
 
 ---
 
@@ -100,6 +115,7 @@ overflow-anchor: none;
 - `src/styles/global.css`
 - `tests/e2e/champions.scroll-stability.spec.ts`
 - `tests/e2e/filter-layout-stability.spec.ts`
+- 本地命令：`npx playwright test tests/e2e/filter-layout-stability.spec.ts --config=.playwright.page-ux.config.ts`
 - 本地命令：`npm run lint`
 - 本地命令：`npx vitest run --project component tests/component/championsPage.filters.test.tsx`
 - 本地命令：`npm run build`

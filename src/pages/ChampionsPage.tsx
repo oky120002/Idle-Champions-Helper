@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import { useI18n } from '../app/i18n'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollection } from '../data/client'
@@ -23,8 +23,9 @@ interface LocalizedEnumGroup {
 
 const seatOptions = Array.from({ length: 12 }, (_, index) => index + 1)
 const MAX_VISIBLE_RESULTS = 48
-const RESULTS_HEIGHT_TRANSITION_MS = 260
+const RESULTS_HEIGHT_TRANSITION_MS = 320
 const RESULTS_RELOCATE_THRESHOLD = 12
+const RESULTS_SCROLL_DURATION_MS = 340
 
 type ChampionState =
   | { status: 'loading' }
@@ -80,6 +81,7 @@ export function ChampionsPage() {
   const [selectedRoles, setSelectedRoles] = useState<string[]>([])
   const [selectedAffiliations, setSelectedAffiliations] = useState<string[]>([])
   const [resultsShellHeight, setResultsShellHeight] = useState<number | null>(null)
+  const [stickyTop, setStickyTop] = useState(160)
   const resultsShellRef = useRef<HTMLElement | null>(null)
   const resultsContentRef = useRef<HTMLDivElement | null>(null)
   const pendingResultsTransitionRef = useRef<{
@@ -88,6 +90,7 @@ export function ChampionsPage() {
     targetTop: number
   } | null>(null)
   const releaseResultsHeightTimeoutRef = useRef<number | null>(null)
+  const scrollAnimationFrameRef = useRef<number | null>(null)
 
   useEffect(() => {
     let disposed = false
@@ -131,6 +134,44 @@ export function ChampionsPage() {
       if (releaseResultsHeightTimeoutRef.current !== null) {
         window.clearTimeout(releaseResultsHeightTimeoutRef.current)
       }
+
+      if (scrollAnimationFrameRef.current !== null) {
+        window.cancelAnimationFrame(scrollAnimationFrameRef.current)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    const siteHeader = document.querySelector('.site-header')
+
+    if (!(siteHeader instanceof HTMLElement)) {
+      return
+    }
+
+    const updateStickyTop = () => {
+      setStickyTop(Math.ceil(siteHeader.getBoundingClientRect().height) + 16)
+    }
+
+    updateStickyTop()
+
+    if (typeof ResizeObserver === 'undefined') {
+      window.addEventListener('resize', updateStickyTop)
+
+      return () => {
+        window.removeEventListener('resize', updateStickyTop)
+      }
+    }
+
+    const resizeObserver = new ResizeObserver(() => {
+      updateStickyTop()
+    })
+
+    resizeObserver.observe(siteHeader)
+    window.addEventListener('resize', updateStickyTop)
+
+    return () => {
+      resizeObserver.disconnect()
+      window.removeEventListener('resize', updateStickyTop)
     }
   }, [])
 
@@ -190,6 +231,48 @@ export function ChampionsPage() {
     return Math.max(Math.round(shell.getBoundingClientRect().top + window.scrollY - headerHeight - 16), 0)
   }
 
+  function scrollWindowTo(targetTop: number) {
+    if (scrollAnimationFrameRef.current !== null) {
+      window.cancelAnimationFrame(scrollAnimationFrameRef.current)
+      scrollAnimationFrameRef.current = null
+    }
+
+    if (typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      window.scrollTo({
+        top: targetTop,
+        behavior: 'auto',
+      })
+      return
+    }
+
+    const startTop = window.scrollY
+    const distance = targetTop - startTop
+
+    if (Math.abs(distance) < 2) {
+      return
+    }
+
+    const startTime = performance.now()
+    const easeOutQuart = (progress: number) => 1 - (1 - progress) ** 4
+
+    const step = (now: number) => {
+      const progress = Math.min((now - startTime) / RESULTS_SCROLL_DURATION_MS, 1)
+
+      window.scrollTo({
+        top: startTop + distance * easeOutQuart(progress),
+        behavior: 'auto',
+      })
+
+      if (progress < 1) {
+        scrollAnimationFrameRef.current = window.requestAnimationFrame(step)
+      } else {
+        scrollAnimationFrameRef.current = null
+      }
+    }
+
+    scrollAnimationFrameRef.current = window.requestAnimationFrame(step)
+  }
+
   function prepareResultsViewportTransition() {
     const shell = resultsShellRef.current
 
@@ -239,10 +322,7 @@ export function ChampionsPage() {
       setResultsShellHeight(nextHeight)
 
       if (shouldRelocate) {
-        window.scrollTo({
-          top: pendingTransition.targetTop,
-          behavior: 'smooth',
-        })
+        scrollWindowTo(pendingTransition.targetTop)
       }
 
       releaseResultsHeightTimeoutRef.current = window.setTimeout(() => {
@@ -255,6 +335,10 @@ export function ChampionsPage() {
       window.cancelAnimationFrame(animationFrameId)
     }
   }, [filteredChampions.length, resultsShellHeight, search, selectedAffiliations, selectedRoles, selectedSeats])
+
+  const championsWorkspaceStyle = {
+    '--champions-sticky-top': `${stickyTop}px`,
+  } as CSSProperties
 
   return (
     <div className="page-stack">
@@ -300,235 +384,269 @@ export function ChampionsPage() {
               </article>
             </div>
 
-            <div className="filter-panel">
-              <label className="form-field">
-                <span className="field-label">{t({ zh: '关键词', en: 'Keyword' })}</span>
-                <input
-                  className="text-input"
-                  type="text"
-                  placeholder={t({
-                    zh: '搜英雄名、标签、联动队伍',
-                    en: 'Search names, tags, or affiliations',
-                  })}
-                  value={search}
-                  onChange={(event) => {
-                    prepareResultsViewportTransition()
-                    setSearch(event.target.value)
-                  }}
-                />
-                <span className="field-hint">
-                  {t({
-                    zh: '支持中英混搜；切换界面语言时，当前关键词和筛选不会被清空。',
-                    en: 'Chinese and English queries both work here, and switching UI language keeps the current filters.',
-                  })}
-                </span>
-              </label>
+            <div className="champions-workspace" style={championsWorkspaceStyle}>
+              <aside className="champions-sidebar">
+                <div className="champions-sidebar__sticky">
+                  <div className="champions-sidebar__surface">
+                    <div className="champions-sidebar__header">
+                      <div>
+                        <h3 className="section-heading champions-sidebar__title">
+                          {t({ zh: '筛选条件', en: 'Filter controls' })}
+                        </h3>
+                        <p className="champions-sidebar__hint">
+                          {t({
+                            zh: '往下浏览卡片时，筛选区会稳稳留在视线附近。',
+                            en: 'The filters stay close while you keep browsing deeper results.',
+                          })}
+                        </p>
+                      </div>
+                      <span className="champions-sidebar__badge">
+                        {activeFilters.length > 0
+                          ? t({
+                              zh: `${activeFilters.length} 项已启用`,
+                              en: `${activeFilters.length} active`,
+                            })
+                          : t({ zh: '未启用', en: 'Idle' })}
+                      </span>
+                    </div>
 
-              <div className="filter-group">
-                <span className="field-label">{t({ zh: '座位', en: 'Seat' })}</span>
-                <div className="filter-chip-grid">
-                  <button
-                    type="button"
-                    className={selectedSeats.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
-                    aria-pressed={selectedSeats.length === 0}
-                    onClick={() => {
-                      prepareResultsViewportTransition()
-                      setSelectedSeats([])
-                    }}
-                  >
-                    {t({ zh: '全部', en: 'All' })}
-                  </button>
-                  {seatOptions.map((seat) => (
-                    <button
-                      key={seat}
-                      type="button"
-                      className={selectedSeats.includes(seat) ? 'filter-chip filter-chip--active' : 'filter-chip'}
-                      aria-pressed={selectedSeats.includes(seat)}
-                      onClick={() => {
-                        prepareResultsViewportTransition()
-                        setSelectedSeats((current) => toggleFilterValue(current, seat))
-                      }}
-                    >
-                      {locale === 'zh-CN' ? `${seat} 号位` : `Seat ${seat}`}
-                    </button>
-                  ))}
+                    <div className="filter-panel filter-panel--sidebar">
+                      <label className="form-field">
+                        <span className="field-label">{t({ zh: '关键词', en: 'Keyword' })}</span>
+                        <input
+                          className="text-input"
+                          type="text"
+                          placeholder={t({
+                            zh: '搜英雄名、标签、联动队伍',
+                            en: 'Search names, tags, or affiliations',
+                          })}
+                          value={search}
+                          onChange={(event) => {
+                            prepareResultsViewportTransition()
+                            setSearch(event.target.value)
+                          }}
+                        />
+                        <span className="field-hint">
+                          {t({
+                            zh: '支持中英混搜；切换界面语言时，当前关键词和筛选不会被清空。',
+                            en: 'Chinese and English queries both work here, and switching UI language keeps the current filters.',
+                          })}
+                        </span>
+                      </label>
+
+                      <div className="filter-group">
+                        <span className="field-label">{t({ zh: '座位', en: 'Seat' })}</span>
+                        <div className="filter-chip-grid">
+                          <button
+                            type="button"
+                            className={selectedSeats.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
+                            aria-pressed={selectedSeats.length === 0}
+                            onClick={() => {
+                              prepareResultsViewportTransition()
+                              setSelectedSeats([])
+                            }}
+                          >
+                            {t({ zh: '全部', en: 'All' })}
+                          </button>
+                          {seatOptions.map((seat) => (
+                            <button
+                              key={seat}
+                              type="button"
+                              className={selectedSeats.includes(seat) ? 'filter-chip filter-chip--active' : 'filter-chip'}
+                              aria-pressed={selectedSeats.includes(seat)}
+                              onClick={() => {
+                                prepareResultsViewportTransition()
+                                setSelectedSeats((current) => toggleFilterValue(current, seat))
+                              }}
+                            >
+                              {locale === 'zh-CN' ? `${seat} 号位` : `Seat ${seat}`}
+                            </button>
+                          ))}
+                        </div>
+                        <span className="field-hint">
+                          {t({
+                            zh: '支持多选；同一维度按“或”命中。',
+                            en: 'Multi-select is supported, and matches within this group use OR.',
+                          })}
+                        </span>
+                      </div>
+
+                      <div className="filter-group">
+                        <span className="field-label">{t({ zh: '定位', en: 'Role' })}</span>
+                        <div className="filter-chip-grid">
+                          <button
+                            type="button"
+                            className={selectedRoles.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
+                            aria-pressed={selectedRoles.length === 0}
+                            onClick={() => {
+                              prepareResultsViewportTransition()
+                              setSelectedRoles([])
+                            }}
+                          >
+                            {t({ zh: '全部', en: 'All' })}
+                          </button>
+                          {state.roles.map((role) => (
+                            <button
+                              key={role}
+                              type="button"
+                              className={selectedRoles.includes(role) ? 'filter-chip filter-chip--active' : 'filter-chip'}
+                              aria-pressed={selectedRoles.includes(role)}
+                              onClick={() => {
+                                prepareResultsViewportTransition()
+                                setSelectedRoles((current) => toggleFilterValue(current, role))
+                              }}
+                            >
+                              {getRoleLabel(role, locale)}
+                            </button>
+                          ))}
+                        </div>
+                        <span className="field-hint">
+                          {t({
+                            zh: '支持多选；会匹配任一已选定位。',
+                            en: 'Multi-select is supported, and champions can match any selected role.',
+                          })}
+                        </span>
+                      </div>
+
+                      <div className="filter-group">
+                        <span className="field-label">{t({ zh: '联动队伍', en: 'Affiliation' })}</span>
+                        <div className="filter-chip-grid">
+                          <button
+                            type="button"
+                            className={
+                              selectedAffiliations.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'
+                            }
+                            aria-pressed={selectedAffiliations.length === 0}
+                            onClick={() => {
+                              prepareResultsViewportTransition()
+                              setSelectedAffiliations([])
+                            }}
+                          >
+                            {t({ zh: '全部', en: 'All' })}
+                          </button>
+                          {state.affiliations.map((affiliation) => (
+                            <button
+                              key={affiliation.original}
+                              type="button"
+                              className={
+                                selectedAffiliations.includes(affiliation.original)
+                                  ? 'filter-chip filter-chip--active'
+                                  : 'filter-chip'
+                              }
+                              aria-pressed={selectedAffiliations.includes(affiliation.original)}
+                              onClick={() => {
+                                prepareResultsViewportTransition()
+                                setSelectedAffiliations((current) => toggleFilterValue(current, affiliation.original))
+                              }}
+                            >
+                              {getPrimaryLocalizedText(affiliation, locale)}
+                            </button>
+                          ))}
+                        </div>
+                        <span className="field-hint">
+                          {t({
+                            zh: '支持多选；适合同时看多个联动队伍候选。',
+                            en: 'Multi-select is supported for comparing multiple affiliations at once.',
+                          })}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <span className="field-hint">
-                  {t({
-                    zh: '支持多选；同一维度按“或”命中。',
-                    en: 'Multi-select is supported, and matches within this group use OR.',
-                  })}
-                </span>
-              </div>
+              </aside>
 
-              <div className="filter-group">
-                <span className="field-label">{t({ zh: '定位', en: 'Role' })}</span>
-                <div className="filter-chip-grid">
-                  <button
-                    type="button"
-                    className={selectedRoles.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
-                    aria-pressed={selectedRoles.length === 0}
-                    onClick={() => {
-                      prepareResultsViewportTransition()
-                      setSelectedRoles([])
-                    }}
-                  >
-                    {t({ zh: '全部', en: 'All' })}
-                  </button>
-                  {state.roles.map((role) => (
-                    <button
-                      key={role}
-                      type="button"
-                      className={selectedRoles.includes(role) ? 'filter-chip filter-chip--active' : 'filter-chip'}
-                      aria-pressed={selectedRoles.includes(role)}
-                      onClick={() => {
-                        prepareResultsViewportTransition()
-                        setSelectedRoles((current) => toggleFilterValue(current, role))
-                      }}
-                    >
-                      {getRoleLabel(role, locale)}
-                    </button>
-                  ))}
-                </div>
-                <span className="field-hint">
-                  {t({
-                    zh: '支持多选；会匹配任一已选定位。',
-                    en: 'Multi-select is supported, and champions can match any selected role.',
-                  })}
-                </span>
-              </div>
+              <section className="champions-results">
+                <section
+                  ref={resultsShellRef}
+                  className="results-panel-shell"
+                  aria-label={t({ zh: '英雄筛选结果', en: 'Champion filter results' })}
+                  style={resultsShellHeight !== null ? { height: `${resultsShellHeight}px` } : undefined}
+                >
+                  <div ref={resultsContentRef} className="results-panel">
+                    <div className="results-panel__meta">
+                      <p
+                        className={
+                          activeFilters.length > 0
+                            ? 'supporting-text'
+                            : 'supporting-text supporting-text--placeholder'
+                        }
+                        aria-hidden={activeFilters.length === 0}
+                      >
+                        {activeFilters.length > 0
+                          ? `${t({ zh: '当前筛选：', en: 'Active filters: ' })}${activeFilters.join(' · ')}`
+                          : t({ zh: '当前筛选：', en: 'Active filters: ' })}
+                      </p>
 
-              <div className="filter-group">
-                <span className="field-label">{t({ zh: '联动队伍', en: 'Affiliation' })}</span>
-                <div className="filter-chip-grid">
-                  <button
-                    type="button"
-                    className={selectedAffiliations.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
-                    aria-pressed={selectedAffiliations.length === 0}
-                    onClick={() => {
-                      prepareResultsViewportTransition()
-                      setSelectedAffiliations([])
-                    }}
-                  >
-                    {t({ zh: '全部', en: 'All' })}
-                  </button>
-                  {state.affiliations.map((affiliation) => (
-                    <button
-                      key={affiliation.original}
-                      type="button"
-                      className={
-                        selectedAffiliations.includes(affiliation.original)
-                          ? 'filter-chip filter-chip--active'
-                          : 'filter-chip'
-                      }
-                      aria-pressed={selectedAffiliations.includes(affiliation.original)}
-                      onClick={() => {
-                        prepareResultsViewportTransition()
-                        setSelectedAffiliations((current) => toggleFilterValue(current, affiliation.original))
-                      }}
-                    >
-                      {getPrimaryLocalizedText(affiliation, locale)}
-                    </button>
-                  ))}
-                </div>
-                <span className="field-hint">
-                  {t({
-                    zh: '支持多选；适合同时看多个联动队伍候选。',
-                    en: 'Multi-select is supported for comparing multiple affiliations at once.',
-                  })}
-                </span>
-              </div>
-            </div>
+                      <p className="supporting-text">
+                        {filteredChampions.length > 0
+                          ? t({
+                              zh: `当前展示 ${visibleChampions.length} / ${filteredChampions.length} 名英雄。如果结果过多，优先加关键词、座位、定位或联动队伍缩小范围。`,
+                              en: `Showing ${visibleChampions.length} / ${filteredChampions.length} champions. Narrow things down with a keyword, seat, role, or affiliation if the list feels too broad.`,
+                            })
+                          : t({
+                              zh: '当前筛选条件下没有匹配英雄，可以先清空座位、定位或联动队伍过滤。',
+                              en: 'No champions match this filter set yet. Try clearing seat, role, or affiliation filters first.',
+                            })}
+                      </p>
+                    </div>
 
-            <section
-              ref={resultsShellRef}
-              className="results-panel-shell"
-              aria-label={t({ zh: '英雄筛选结果', en: 'Champion filter results' })}
-              style={resultsShellHeight !== null ? { height: `${resultsShellHeight}px` } : undefined}
-            >
-              <div ref={resultsContentRef} className="results-panel">
-                <div className="results-panel__meta">
-                  <p
-                    className={
-                      activeFilters.length > 0
-                        ? 'supporting-text'
-                        : 'supporting-text supporting-text--placeholder'
-                    }
-                    aria-hidden={activeFilters.length === 0}
-                  >
-                    {activeFilters.length > 0
-                      ? `${t({ zh: '当前筛选：', en: 'Active filters: ' })}${activeFilters.join(' · ')}`
-                      : t({ zh: '当前筛选：', en: 'Active filters: ' })}
-                  </p>
+                    {filteredChampions.length > 0 ? (
+                      <div className="results-grid results-grid--stable">
+                        {visibleChampions.map((champion) => {
+                          const primaryName = getPrimaryLocalizedText(champion.name, locale)
+                          const secondaryName = getSecondaryLocalizedText(champion.name, locale)
 
-                  <p className="supporting-text">
-                    {filteredChampions.length > 0
-                      ? t({
-                          zh: `当前展示 ${visibleChampions.length} / ${filteredChampions.length} 名英雄。如果结果过多，优先加关键词、座位、定位或联动队伍缩小范围。`,
-                          en: `Showing ${visibleChampions.length} / ${filteredChampions.length} champions. Narrow things down with a keyword, seat, role, or affiliation if the list feels too broad.`,
-                        })
-                      : t({
-                          zh: '当前筛选条件下没有匹配英雄，可以先清空座位、定位或联动队伍过滤。',
-                          en: 'No champions match this filter set yet. Try clearing seat, role, or affiliation filters first.',
+                          return (
+                            <article key={champion.id} className="result-card">
+                              <div className="result-card__header">
+                                <span className="result-card__eyebrow">
+                                  {locale === 'zh-CN' ? `${champion.seat} 号位` : `Seat ${champion.seat}`}
+                                </span>
+                                <h3 className="result-card__title">{primaryName}</h3>
+                              </div>
+
+                              {secondaryName ? <p className="result-card__secondary">{secondaryName}</p> : null}
+
+                              <div className="tag-row">
+                                {champion.roles.map((role) => (
+                                  <span key={role} className="tag-pill">
+                                    {getRoleLabel(role, locale)}
+                                  </span>
+                                ))}
+                              </div>
+
+                              <p className="supporting-text">
+                                {t({ zh: '联动队伍', en: 'Affiliation' })}：
+                                {champion.affiliations.length > 0
+                                  ? champion.affiliations
+                                      .map((affiliation) => getLocalizedTextPair(affiliation, locale))
+                                      .join(' / ')
+                                  : t({ zh: '暂无', en: 'None yet' })}
+                              </p>
+
+                              <div className="tag-row">
+                                {champion.tags.slice(0, 6).map((tag) => (
+                                  <span key={tag} className="tag-pill tag-pill--muted">
+                                    {tag}
+                                  </span>
+                                ))}
+                              </div>
+                            </article>
+                          )
                         })}
-                  </p>
-                </div>
-
-                {filteredChampions.length > 0 ? (
-                  <div className="results-grid results-grid--stable">
-                    {visibleChampions.map((champion) => {
-                      const primaryName = getPrimaryLocalizedText(champion.name, locale)
-                      const secondaryName = getSecondaryLocalizedText(champion.name, locale)
-
-                      return (
-                        <article key={champion.id} className="result-card">
-                          <div className="result-card__header">
-                            <span className="result-card__eyebrow">
-                              {locale === 'zh-CN' ? `${champion.seat} 号位` : `Seat ${champion.seat}`}
-                            </span>
-                            <h3 className="result-card__title">{primaryName}</h3>
-                          </div>
-
-                          {secondaryName ? <p className="result-card__secondary">{secondaryName}</p> : null}
-
-                          <div className="tag-row">
-                            {champion.roles.map((role) => (
-                              <span key={role} className="tag-pill">
-                                {getRoleLabel(role, locale)}
-                              </span>
-                            ))}
-                          </div>
-
-                          <p className="supporting-text">
-                            {t({ zh: '联动队伍', en: 'Affiliation' })}：
-                            {champion.affiliations.length > 0
-                              ? champion.affiliations
-                                  .map((affiliation) => getLocalizedTextPair(affiliation, locale))
-                                  .join(' / ')
-                              : t({ zh: '暂无', en: 'None yet' })}
-                          </p>
-
-                          <div className="tag-row">
-                            {champion.tags.slice(0, 6).map((tag) => (
-                              <span key={tag} className="tag-pill tag-pill--muted">
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        </article>
-                      )
-                    })}
+                      </div>
+                    ) : (
+                      <div className="status-banner status-banner--info results-panel__empty">
+                        {t({
+                          zh: '暂时没有可展示的英雄结果。先放宽一个过滤维度，再继续缩小范围会更顺手。',
+                          en: 'There are no champions to show right now. Loosen one filter group first, then narrow it back down.',
+                        })}
+                      </div>
+                    )}
                   </div>
-                ) : (
-                  <div className="status-banner status-banner--info results-panel__empty">
-                    {t({
-                      zh: '暂时没有可展示的英雄结果。先放宽一个过滤维度，再继续缩小范围会更顺手。',
-                      en: 'There are no champions to show right now. Loosen one filter group first, then narrow it back down.',
-                    })}
-                  </div>
-                )}
-              </div>
-            </section>
+                </section>
+              </section>
+            </div>
           </>
         ) : null}
       </SurfaceCard>
