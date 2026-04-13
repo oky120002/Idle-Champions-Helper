@@ -361,7 +361,15 @@ export function ChampionsPage() {
                 <div className="results-grid">
                   {visibleChampions.map((champion) => {
                     return (
-                      <article key={champion.id} className="result-card">
+                      <Link
+                        key={champion.id}
+                        className="result-card result-card--link"
+                        to={`/champions/${champion.id}`}
+                        aria-label={t({
+                          zh: `查看详情：${getPrimaryLocalizedText(champion.name, locale)}`,
+                          en: `Open details for ${getPrimaryLocalizedText(champion.name, locale)}`,
+                        })}
+                      >
                         <ChampionIdentity champion={champion} locale={locale} eyebrow={formatSeatLabel(champion.seat, locale)} />
 
                         <div className="tag-row">
@@ -390,18 +398,11 @@ export function ChampionsPage() {
                         </div>
 
                         <div className="result-card__section">
-                          <Link
-                            className="result-card__link"
-                            to={`/champions/${champion.id}`}
-                            aria-label={t({
-                              zh: `查看详情：${getPrimaryLocalizedText(champion.name, locale)}`,
-                              en: `Open details for ${getPrimaryLocalizedText(champion.name, locale)}`,
-                            })}
-                          >
-                            {t({ zh: '查看详情', en: 'View details' })}
-                          </Link>
+                          <span className="result-card__link">
+                            {t({ zh: '点击卡片查看详情', en: 'Open details from the card' })}
+                          </span>
                         </div>
-                      </article>
+                      </Link>
                     )
                   })}
                 </div>

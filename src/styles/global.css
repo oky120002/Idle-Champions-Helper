@@ -454,6 +454,17 @@ html[data-ui-locale='en-US'] .site-subtitle {
   border: 1px solid rgba(227, 214, 193, 0.08);
 }
 
+.result-card--link {
+  display: block;
+  transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease;
+}
+
+.result-card--link:hover {
+  transform: translateY(-2px);
+  border-color: rgba(200, 167, 127, 0.38);
+  background: rgba(255, 255, 255, 0.045);
+}
+
 .result-card__identity {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
