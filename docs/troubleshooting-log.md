@@ -43,3 +43,13 @@
 - 解决：把 `docs/README.md` 收敛为 `docs/` 总索引，新增 `docs/product/documentation-governance.md` 约束扫描流程，回填本地预览和测试门禁现状，并把历史性排查标为归档。
 - 验证：`npm run build` 通过；`npm run preview:pages` 能正确返回 `/Idle-Champions-Helper/` 与静态资源；本地 Markdown 链接检查通过。
 - 引用：`README.md`、`docs/README.md`、`docs/product/documentation-governance.md`、`docs/investigations/runtime/local-run-verification.md`、`docs/research/testing/regression-testing-research.md`
+
+## 记录 004：旧工作树残留的预览服务会污染当前浏览器回归
+
+- 状态：已解决；时间：`2026-04-13`
+- 影响：当前工作树执行 `Playwright` 或手工浏览器验收时，可能实际命中另一个工作树残留的 `preview:pages` 服务，导致页面结构、路由行为和本地源码不一致。
+- 排查摘要：先发现 `#/champions/7` 在浏览器里落回首页、筛选卡 DOM 也和当前源码不一致；随后检查 `4173` 端口监听进程，确认占用者来自另一条工作树。
+- 根因：`playwright.config.ts` 与本地预览默认都使用 `127.0.0.1:4173`；当旧工作树的预览进程未退出时，当前会话会误复用旧服务，读到过期 `dist/`。
+- 解决：先用 `lsof -nP -iTCP:4173 -sTCP:LISTEN` 确认占用进程，再关闭旧服务，随后在当前工作树重新执行 `npm run build` 与 `Playwright` 回归。
+- 验证：关闭旧服务后，`tests/e2e/smoke/navigation.spec.ts` 与 `tests/e2e/smoke/champion-detail.spec.ts` 都能在当前工作树产物上通过。
+- 引用：`playwright.config.ts`、`scripts/serve-github-pages-preview.mjs`

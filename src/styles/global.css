@@ -999,6 +999,63 @@ html[data-ui-locale='en-US'] .site-subtitle {
   border-radius: 24px;
 }
 
+.champion-detail-sidebar__progress {
+  display: grid;
+  gap: 0.6rem;
+  padding: 0.95rem 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(227, 214, 193, 0.08);
+  background:
+    radial-gradient(circle at top right, rgba(200, 167, 127, 0.14), transparent 32%),
+    rgba(7, 12, 18, 0.34);
+}
+
+.champion-detail-sidebar__progress-head {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.champion-detail-sidebar__progress-label,
+.champion-detail-sidebar__progress-copy {
+  margin: 0;
+}
+
+.champion-detail-sidebar__progress-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(242, 239, 230, 0.54);
+}
+
+.champion-detail-sidebar__progress-copy {
+  margin-top: 0.28rem;
+  color: rgba(242, 239, 230, 0.76);
+  font-size: 0.9rem;
+}
+
+.champion-detail-sidebar__progress-value {
+  color: #fff7ea;
+  font-size: 1.05rem;
+  white-space: nowrap;
+}
+
+.champion-detail-sidebar__progress-track {
+  position: relative;
+  height: 0.42rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.champion-detail-sidebar__progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(200, 167, 127, 0.7), rgba(231, 209, 171, 0.96));
+}
+
 .champion-detail-sidebar__nav,
 .champion-detail-sidebar__facts {
   display: grid;
@@ -1006,7 +1063,67 @@ html[data-ui-locale='en-US'] .site-subtitle {
 }
 
 .champion-detail-sidebar__button {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.75rem;
   justify-content: flex-start;
+  align-items: center;
+  text-align: left;
+}
+
+.champion-detail-sidebar__button[data-progress-state='completed'] {
+  border-color: rgba(200, 167, 127, 0.2);
+  background: rgba(200, 167, 127, 0.06);
+}
+
+.champion-detail-sidebar__button[data-progress-state='upcoming'] {
+  border-color: rgba(227, 214, 193, 0.12);
+}
+
+.champion-detail-sidebar__button-index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.25rem;
+  padding: 0.34rem 0.46rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(242, 239, 230, 0.64);
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
+}
+
+.champion-detail-sidebar__button-copy {
+  display: grid;
+  gap: 0.12rem;
+  min-width: 0;
+}
+
+.champion-detail-sidebar__button-label {
+  color: #fff6e9;
+}
+
+.champion-detail-sidebar__button-state {
+  color: rgba(242, 239, 230, 0.58);
+  font-size: 0.8rem;
+}
+
+.champion-detail-sidebar__button[data-progress-state='completed'] .champion-detail-sidebar__button-index {
+  background: rgba(200, 167, 127, 0.12);
+  color: rgba(255, 243, 223, 0.86);
+}
+
+.champion-detail-sidebar__button[data-progress-state='active'] .champion-detail-sidebar__button-index {
+  background: rgba(255, 248, 230, 0.12);
+  color: #fff9ef;
+}
+
+.champion-detail-sidebar__button[data-progress-state='active'] .champion-detail-sidebar__button-state {
+  color: #fff1d8;
+}
+
+.champion-detail-sidebar__button[data-progress-state='upcoming'] .champion-detail-sidebar__button-label {
+  color: rgba(242, 239, 230, 0.78);
 }
 
 .detail-section-anchor {

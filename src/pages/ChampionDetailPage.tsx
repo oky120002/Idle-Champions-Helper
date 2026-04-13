@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import { type AppLocale, useI18n } from '../app/i18n'
 import { ChampionAvatar } from '../components/ChampionAvatar'
 import { SurfaceCard } from '../components/SurfaceCard'
@@ -24,6 +24,7 @@ import type {
 const DETAIL_SECTION_IDS = ['overview', 'character-sheet', 'combat', 'upgrades', 'feats', 'skins', 'raw'] as const
 
 type DetailSectionId = (typeof DETAIL_SECTION_IDS)[number]
+type DetailSectionProgressState = 'completed' | 'active' | 'upcoming'
 
 type ChampionDetailState =
   | { status: 'idle' }
@@ -388,10 +389,25 @@ function isDetailSectionId(value: string): value is DetailSectionId {
   return DETAIL_SECTION_IDS.includes(value as DetailSectionId)
 }
 
-function resolveSectionIdFromHash(hash: string): DetailSectionId | null {
-  const normalizedHash = hash.startsWith('#') ? hash.slice(1) : hash
+function resolveSectionIdFromHashValue(hashValue: string): DetailSectionId | null {
+  const normalizedHash = hashValue.startsWith('#') ? hashValue.slice(1) : hashValue
 
   return isDetailSectionId(normalizedHash) ? normalizedHash : null
+}
+
+function resolveSectionIdFromBrowserHash(hash: string): DetailSectionId | null {
+  const normalizedHash = hash.startsWith('#') ? hash.slice(1) : hash
+  const lastHashIndex = normalizedHash.lastIndexOf('#')
+
+  if (lastHashIndex === -1) {
+    return resolveSectionIdFromHashValue(normalizedHash)
+  }
+
+  return resolveSectionIdFromHashValue(normalizedHash.slice(lastHashIndex + 1))
+}
+
+function buildSectionHash(pathname: string, search: string, sectionId: DetailSectionId): string {
+  return `#${pathname}${search}#${sectionId}`
 }
 
 function resolveActiveSectionId(): DetailSectionId {
@@ -418,7 +434,6 @@ function resolveActiveSectionId(): DetailSectionId {
 export function ChampionDetailPage() {
   const { championId } = useParams<{ championId: string }>()
   const location = useLocation()
-  const navigate = useNavigate()
   const { locale, t } = useI18n()
   const [state, setState] = useState<ChampionDetailState>({ status: 'idle' })
   const [activeSectionId, setActiveSectionId] = useState<DetailSectionId>(DETAIL_SECTION_IDS[0])
@@ -509,7 +524,38 @@ export function ChampionDetailPage() {
     { id: 'skins', label: t({ zh: '皮肤', en: 'Skins' }) },
     { id: 'raw', label: t({ zh: '原始字段', en: 'Raw fields' }) },
   ]
-  const hashSectionId = resolveSectionIdFromHash(location.hash)
+  const activeSectionIndex = Math.max(
+    sectionLinks.findIndex((section) => section.id === activeSectionId),
+    0,
+  )
+  const activeSectionLabel = sectionLinks[activeSectionIndex]?.label ?? sectionLinks[0].label
+  const sectionProgressValue = `${((activeSectionIndex + 1) / sectionLinks.length) * 100}%`
+  const getSectionProgressState = (index: number): DetailSectionProgressState => {
+    if (index < activeSectionIndex) {
+      return 'completed'
+    }
+
+    if (index === activeSectionIndex) {
+      return 'active'
+    }
+
+    return 'upcoming'
+  }
+  const getSectionProgressText = (state: DetailSectionProgressState): string => {
+    if (state === 'completed') {
+      return t({ zh: '已读', en: 'Seen' })
+    }
+
+    if (state === 'active') {
+      return t({ zh: '当前', en: 'Current' })
+    }
+
+    return t({ zh: '未读', en: 'Ahead' })
+  }
+  const hashSectionId =
+    typeof window === 'undefined'
+      ? resolveSectionIdFromHashValue(location.hash)
+      : resolveSectionIdFromBrowserHash(window.location.hash) ?? resolveSectionIdFromHashValue(location.hash)
 
   useEffect(() => {
     if (!detail || typeof window === 'undefined') {
@@ -517,7 +563,18 @@ export function ChampionDetailPage() {
     }
 
     const updateActiveSection = () => {
-      setActiveSectionId(resolveActiveSectionId())
+      const nextSectionId = resolveActiveSectionId()
+
+      if (pendingHashSectionIdRef.current) {
+        if (nextSectionId === pendingHashSectionIdRef.current) {
+          pendingHashSectionIdRef.current = null
+          setActiveSectionId(nextSectionId)
+        }
+
+        return
+      }
+
+      setActiveSectionId(nextSectionId)
     }
 
     updateActiveSection()
@@ -547,37 +604,43 @@ export function ChampionDetailPage() {
   }, [activeSectionId, detail, hashSectionId])
 
   useEffect(() => {
-    if (!detail) {
+    if (!detail || typeof window === 'undefined') {
       return
     }
 
-    if (pendingHashSectionIdRef.current) {
-      if (pendingHashSectionIdRef.current === activeSectionId) {
-        pendingHashSectionIdRef.current = null
-      }
-
+    if (pendingHashSectionIdRef.current && pendingHashSectionIdRef.current !== activeSectionId) {
       return
     }
 
-    const nextHash = `#${activeSectionId}`
+    const nextHash = buildSectionHash(location.pathname, location.search, activeSectionId)
 
-    if (location.hash === nextHash) {
+    if (window.location.hash === nextHash) {
       return
     }
 
-    navigate(
-      {
-        pathname: location.pathname,
-        search: location.search,
-        hash: nextHash,
-      },
-      { replace: true },
+    window.history.replaceState(
+      window.history.state,
+      '',
+      `${window.location.pathname}${window.location.search}${nextHash}`,
     )
-  }, [activeSectionId, detail, location.hash, location.pathname, location.search, navigate])
+  }, [activeSectionId, detail, location.pathname, location.search])
 
   const scrollToSection = (id: string) => {
     if (isDetailSectionId(id)) {
+      pendingHashSectionIdRef.current = id
       setActiveSectionId(id)
+
+      if (typeof window !== 'undefined') {
+        const nextHash = buildSectionHash(location.pathname, location.search, id)
+
+        if (window.location.hash !== nextHash) {
+          window.history.replaceState(
+            window.history.state,
+            '',
+            `${window.location.pathname}${window.location.search}${nextHash}`,
+          )
+        }
+      }
     }
 
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -953,22 +1016,51 @@ export function ChampionDetailPage() {
             <aside className="champion-detail-sidebar">
               <div className="champion-detail-sidebar__panel">
                 <p className="champion-detail-sidebar__eyebrow">{t({ zh: '快速索引', en: 'Quick index' })}</p>
+                <section className="champion-detail-sidebar__progress" aria-label={t({ zh: '卷宗进度', en: 'Dossier progress' })}>
+                  <div className="champion-detail-sidebar__progress-head">
+                    <div>
+                      <p className="champion-detail-sidebar__progress-label">{t({ zh: '卷宗进度', en: 'Dossier progress' })}</p>
+                      <p className="champion-detail-sidebar__progress-copy">
+                        {t({ zh: '当前浏览', en: 'Currently reading' })} · {activeSectionLabel}
+                      </p>
+                    </div>
+                    <strong className="champion-detail-sidebar__progress-value">
+                      {activeSectionIndex + 1} / {sectionLinks.length}
+                    </strong>
+                  </div>
+                  <div className="champion-detail-sidebar__progress-track" aria-hidden="true">
+                    <span className="champion-detail-sidebar__progress-fill" style={{ width: sectionProgressValue }} />
+                  </div>
+                </section>
+
                 <div className="champion-detail-sidebar__nav">
-                  {sectionLinks.map((section) => (
-                    <button
-                      key={section.id}
-                      type="button"
-                      className={
-                        activeSectionId === section.id
-                          ? 'champion-detail-sidebar__button champion-detail-sidebar__button--active'
-                          : 'champion-detail-sidebar__button'
-                      }
-                      aria-pressed={activeSectionId === section.id}
-                      onClick={() => scrollToSection(section.id)}
-                    >
-                      {section.label}
-                    </button>
-                  ))}
+                  {sectionLinks.map((section, index) => {
+                    const progressState = getSectionProgressState(index)
+
+                    return (
+                      <button
+                        key={section.id}
+                        type="button"
+                        data-testid={`sidebar-section-${section.id}`}
+                        data-progress-state={progressState}
+                        className={
+                          activeSectionId === section.id
+                            ? 'champion-detail-sidebar__button champion-detail-sidebar__button--active'
+                            : 'champion-detail-sidebar__button'
+                        }
+                        aria-label={section.label}
+                        aria-pressed={activeSectionId === section.id}
+                        aria-current={progressState === 'active' ? 'step' : undefined}
+                        onClick={() => scrollToSection(section.id)}
+                      >
+                        <span className="champion-detail-sidebar__button-index">{String(index + 1).padStart(2, '0')}</span>
+                        <span className="champion-detail-sidebar__button-copy">
+                          <span className="champion-detail-sidebar__button-label">{section.label}</span>
+                          <span className="champion-detail-sidebar__button-state">{getSectionProgressText(progressState)}</span>
+                        </span>
+                      </button>
+                    )
+                  })}
                 </div>
 
                 <div className="champion-detail-sidebar__facts">
