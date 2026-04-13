@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import {
   getChampionAttributeGroups,
   getChampionAttributeTags,
+  getChampionTagsForGroup,
   getChampionTagLabel,
 } from '../../../src/domain/championTags'
 
@@ -48,6 +49,14 @@ describe('championTags', () => {
   it('未归类标签会落到其他分组', () => {
     expect(getChampionAttributeGroups(['support', 'mystery_flag'])).toEqual([
       { id: 'other', tags: ['mystery_flag'] },
+    ])
+  })
+
+  it('可以按分组提取指定属性标签', () => {
+    expect(getChampionTagsForGroup(['support', 'human', 'male', 'warlock'], 'race')).toEqual(['human'])
+    expect(getChampionTagsForGroup(['support', 'human', 'male', 'warlock'], 'gender')).toEqual(['male'])
+    expect(getChampionTagsForGroup(['support', 'human', 'male', 'warlock'], 'profession')).toEqual([
+      'warlock',
     ])
   })
 })

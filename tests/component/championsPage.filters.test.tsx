@@ -47,7 +47,7 @@ const championsFixture: DataCollection<Champion> = {
       seat: 2,
       roles: ['healing'],
       affiliations: [hall],
-      tags: ['healer'],
+      tags: ['healing', 'elf', 'female', 'cleric'],
     },
     {
       id: 'gamma',
@@ -55,7 +55,7 @@ const championsFixture: DataCollection<Champion> = {
       seat: 2,
       roles: ['dps'],
       affiliations: [adversaries],
-      tags: ['damage'],
+      tags: ['dps', 'drow', 'male', 'rogue'],
     },
     {
       id: 'delta',
@@ -63,7 +63,7 @@ const championsFixture: DataCollection<Champion> = {
       seat: 3,
       roles: ['tank'],
       affiliations: [oxventurers],
-      tags: ['frontline'],
+      tags: ['tank', 'human', 'female', 'fighter'],
     },
   ],
 }
@@ -184,5 +184,38 @@ describe('ChampionsPage filters', () => {
     expect(alphaScope.getByText('起始英雄')).toBeInTheDocument()
     expect(alphaScope.getByText('机制')).toBeInTheDocument()
     expect(alphaScope.getByText('减速控制')).toBeInTheDocument()
+  })
+
+  it('支持按种族、性别和职业筛选英雄', async () => {
+    const user = userEvent.setup()
+
+    renderChampionsPage()
+
+    expect(await screen.findByText('阿尔法')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: '人类' }))
+    await user.click(screen.getByRole('button', { name: '卓尔精灵' }))
+    await user.click(screen.getByRole('button', { name: '男性' }))
+    await user.click(screen.getByRole('button', { name: '邪术师' }))
+    await user.click(screen.getByRole('button', { name: '盗贼' }))
+
+    expect(screen.getByText('阿尔法')).toBeInTheDocument()
+    expect(screen.getByText('伽马')).toBeInTheDocument()
+    expect(screen.queryByText('贝塔')).not.toBeInTheDocument()
+    expect(screen.queryByText('德尔塔')).not.toBeInTheDocument()
+    expect(
+      screen.getByText((content) => {
+        return (
+          content.includes('当前筛选：') &&
+          content.includes('种族：') &&
+          content.includes('人类') &&
+          content.includes('卓尔精灵') &&
+          content.includes('性别：男性') &&
+          content.includes('职业：') &&
+          content.includes('邪术师') &&
+          content.includes('盗贼')
+        )
+      }),
+    ).toBeInTheDocument()
   })
 })

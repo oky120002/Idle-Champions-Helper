@@ -11,6 +11,7 @@ import {
 import {
   getChampionAttributeGroupLabel,
   getChampionAttributeGroups,
+  getChampionTagsForGroup,
   getChampionTagLabel,
 } from '../domain/championTags'
 import type { Champion, LocalizedText } from '../domain/types'
@@ -75,6 +76,16 @@ function isStringEnumGroup(value: unknown): value is StringEnumGroup {
   )
 }
 
+function collectAttributeFilterOptions(
+  champions: Champion[],
+  groupId: 'race' | 'gender' | 'profession',
+  locale: 'zh-CN' | 'en-US',
+): string[] {
+  return Array.from(new Set(champions.flatMap((champion) => getChampionTagsForGroup(champion.tags, groupId)))).sort(
+    (left, right) => getChampionTagLabel(left, locale).localeCompare(getChampionTagLabel(right, locale)),
+  )
+}
+
 export function ChampionsPage() {
   const { locale, t } = useI18n()
   const [state, setState] = useState<ChampionState>({ status: 'loading' })
@@ -82,6 +93,9 @@ export function ChampionsPage() {
   const [selectedSeats, setSelectedSeats] = useState<number[]>([])
   const [selectedRoles, setSelectedRoles] = useState<string[]>([])
   const [selectedAffiliations, setSelectedAffiliations] = useState<string[]>([])
+  const [selectedRaces, setSelectedRaces] = useState<string[]>([])
+  const [selectedGenders, setSelectedGenders] = useState<string[]>([])
+  const [selectedProfessions, setSelectedProfessions] = useState<string[]>([])
 
   useEffect(() => {
     let disposed = false
@@ -130,8 +144,11 @@ export function ChampionsPage() {
       seats: selectedSeats,
       roles: selectedRoles,
       affiliations: selectedAffiliations,
+      races: selectedRaces,
+      genders: selectedGenders,
+      professions: selectedProfessions,
     })
-  }, [search, selectedAffiliations, selectedRoles, selectedSeats, state])
+  }, [search, selectedAffiliations, selectedGenders, selectedProfessions, selectedRaces, selectedRoles, selectedSeats, state])
 
   const visibleChampions = filteredChampions.slice(0, MAX_VISIBLE_RESULTS)
   const matchedSeats = new Set(filteredChampions.map((champion) => champion.seat)).size
@@ -142,6 +159,15 @@ export function ChampionsPage() {
     state.status === 'ready'
       ? state.affiliations.filter((affiliation) => selectedAffiliations.includes(affiliation.original))
       : []
+  const raceOptions =
+    state.status === 'ready' ? collectAttributeFilterOptions(state.champions, 'race', locale) : []
+  const genderOptions =
+    state.status === 'ready' ? collectAttributeFilterOptions(state.champions, 'gender', locale) : []
+  const professionOptions =
+    state.status === 'ready' ? collectAttributeFilterOptions(state.champions, 'profession', locale) : []
+  const orderedSelectedRaces = raceOptions.filter((race) => selectedRaces.includes(race))
+  const orderedSelectedGenders = genderOptions.filter((gender) => selectedGenders.includes(gender))
+  const orderedSelectedProfessions = professionOptions.filter((profession) => selectedProfessions.includes(profession))
   const activeFilters = [
     search.trim()
       ? t({
@@ -165,6 +191,26 @@ export function ChampionsPage() {
       ? t({
           zh: `联动队伍：${orderedSelectedAffiliations.map((affiliation) => getLocalizedTextPair(affiliation, locale)).join('、')}`,
           en: `Affiliations: ${orderedSelectedAffiliations.map((affiliation) => getLocalizedTextPair(affiliation, locale)).join(', ')}`,
+        })
+      : null,
+    orderedSelectedRaces.length > 0
+      ? t({
+          zh: `种族：${orderedSelectedRaces.map((race) => getChampionTagLabel(race, locale)).join('、')}`,
+          en: `Races: ${orderedSelectedRaces.map((race) => getChampionTagLabel(race, locale)).join(', ')}`,
+        })
+      : null,
+    orderedSelectedGenders.length > 0
+      ? t({
+          zh: `性别：${orderedSelectedGenders.map((gender) => getChampionTagLabel(gender, locale)).join('、')}`,
+          en: `Genders: ${orderedSelectedGenders.map((gender) => getChampionTagLabel(gender, locale)).join(', ')}`,
+        })
+      : null,
+    orderedSelectedProfessions.length > 0
+      ? t({
+          zh: `职业：${orderedSelectedProfessions.map((profession) => getChampionTagLabel(profession, locale)).join('、')}`,
+          en: `Professions: ${orderedSelectedProfessions
+            .map((profession) => getChampionTagLabel(profession, locale))
+            .join(', ')}`,
         })
       : null,
   ].filter((item): item is string => Boolean(item))
@@ -332,13 +378,108 @@ export function ChampionsPage() {
                   })}
                 </span>
               </div>
+
+              <div className="filter-group">
+                <span className="field-label">{getChampionAttributeGroupLabel('race', locale)}</span>
+                <div className="filter-chip-grid">
+                  <button
+                    type="button"
+                    className={selectedRaces.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
+                    aria-pressed={selectedRaces.length === 0}
+                    onClick={() => setSelectedRaces([])}
+                  >
+                    {t({ zh: '全部', en: 'All' })}
+                  </button>
+                  {raceOptions.map((race) => (
+                    <button
+                      key={race}
+                      type="button"
+                      className={selectedRaces.includes(race) ? 'filter-chip filter-chip--active' : 'filter-chip'}
+                      aria-pressed={selectedRaces.includes(race)}
+                      onClick={() => setSelectedRaces((current) => toggleFilterValue(current, race))}
+                    >
+                      {getChampionTagLabel(race, locale)}
+                    </button>
+                  ))}
+                </div>
+                <span className="field-hint">
+                  {t({
+                    zh: '支持多选；适合快速收窄到特定种族组合。',
+                    en: 'Multi-select is supported for narrowing the pool to specific races.',
+                  })}
+                </span>
+              </div>
+
+              <div className="filter-group">
+                <span className="field-label">{getChampionAttributeGroupLabel('gender', locale)}</span>
+                <div className="filter-chip-grid">
+                  <button
+                    type="button"
+                    className={selectedGenders.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
+                    aria-pressed={selectedGenders.length === 0}
+                    onClick={() => setSelectedGenders([])}
+                  >
+                    {t({ zh: '全部', en: 'All' })}
+                  </button>
+                  {genderOptions.map((gender) => (
+                    <button
+                      key={gender}
+                      type="button"
+                      className={selectedGenders.includes(gender) ? 'filter-chip filter-chip--active' : 'filter-chip'}
+                      aria-pressed={selectedGenders.includes(gender)}
+                      onClick={() => setSelectedGenders((current) => toggleFilterValue(current, gender))}
+                    >
+                      {getChampionTagLabel(gender, locale)}
+                    </button>
+                  ))}
+                </div>
+                <span className="field-hint">
+                  {t({
+                    zh: '支持多选；同一维度内仍按“或”命中。',
+                    en: 'Multi-select is supported, and matches within this group still use OR.',
+                  })}
+                </span>
+              </div>
+
+              <div className="filter-group">
+                <span className="field-label">{getChampionAttributeGroupLabel('profession', locale)}</span>
+                <div className="filter-chip-grid">
+                  <button
+                    type="button"
+                    className={selectedProfessions.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
+                    aria-pressed={selectedProfessions.length === 0}
+                    onClick={() => setSelectedProfessions([])}
+                  >
+                    {t({ zh: '全部', en: 'All' })}
+                  </button>
+                  {professionOptions.map((profession) => (
+                    <button
+                      key={profession}
+                      type="button"
+                      className={
+                        selectedProfessions.includes(profession) ? 'filter-chip filter-chip--active' : 'filter-chip'
+                      }
+                      aria-pressed={selectedProfessions.includes(profession)}
+                      onClick={() => setSelectedProfessions((current) => toggleFilterValue(current, profession))}
+                    >
+                      {getChampionTagLabel(profession, locale)}
+                    </button>
+                  ))}
+                </div>
+                <span className="field-hint">
+                  {t({
+                    zh: '支持多选；便于按职业组合快速找候选英雄。',
+                    en: 'Multi-select is supported for filtering by profession combinations.',
+                  })}
+                </span>
+              </div>
             </div>
 
             {filteredChampions.length === 0 ? (
               <div className="status-banner status-banner--info">
                 {t({
-                  zh: '当前筛选条件下没有匹配英雄，可以先清空座位、定位或联动队伍过滤。',
-                  en: 'No champions match this filter set yet. Try clearing seat, role, or affiliation filters first.',
+                  zh: '当前筛选条件下没有匹配英雄，可以先清空座位、定位、联动队伍、种族、性别或职业过滤。',
+                  en: 'No champions match this filter set yet. Try clearing seat, role, affiliation, race, gender, or profession filters first.',
                 })}
               </div>
             ) : null}
@@ -354,8 +495,8 @@ export function ChampionsPage() {
 
                 <p className="supporting-text">
                   {t({
-                    zh: `当前展示 ${visibleChampions.length} / ${filteredChampions.length} 名英雄。如果结果过多，优先加关键词、座位、定位或联动队伍缩小范围。`,
-                    en: `Showing ${visibleChampions.length} / ${filteredChampions.length} champions. Narrow things down with a keyword, seat, role, or affiliation if the list feels too broad.`,
+                    zh: `当前展示 ${visibleChampions.length} / ${filteredChampions.length} 名英雄。如果结果过多，优先加关键词、座位、定位、联动队伍、种族、性别或职业缩小范围。`,
+                    en: `Showing ${visibleChampions.length} / ${filteredChampions.length} champions. Narrow things down with a keyword, seat, role, affiliation, race, gender, or profession if the list feels too broad.`,
                   })}
                 </p>
 
