@@ -7,16 +7,7 @@ function buildCountLabel(count: number, singular: string, plural: string): strin
 }
 
 export function getFormationLayoutLabel(layout: FormationLayout, locale: AppLocale): string {
-  const primaryContext = layout.sourceContexts?.[0]
-
-  if (!primaryContext?.name) {
-    return layout.name
-  }
-
-  const slotLabel =
-    locale === 'zh-CN' ? `${layout.slots.length} 槽` : `${layout.slots.length} slots`
-
-  return `${getPrimaryLocalizedText(primaryContext.name, locale)} · ${slotLabel}`
+  return getPrimaryLocalizedText(layout.name, locale)
 }
 
 export function getFormationLayoutContextSummary(
@@ -26,7 +17,7 @@ export function getFormationLayoutContextSummary(
   const sourceContexts = layout.sourceContexts ?? []
 
   if (sourceContexts.length === 0) {
-    return layout.notes ?? null
+    return layout.notes ? getPrimaryLocalizedText(layout.notes, locale) : null
   }
 
   const primaryContext = sourceContexts[0]

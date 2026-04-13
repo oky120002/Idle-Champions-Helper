@@ -30,7 +30,10 @@ function createChampion(id: string, seat: number, name = id): Champion {
 function createLayout(id: string, slotIds: string[]): FormationLayout {
   return {
     id,
-    name: `布局 ${id}`,
+    name: {
+      original: `Layout ${id}`,
+      display: `布局 ${id}`,
+    },
     slots: slotIds.map((slotId, index) => ({
       id: slotId,
       row: 1,
@@ -160,7 +163,10 @@ describe('formationPersistence helpers', () => {
       return
     }
 
-    expect(prompt.preview.layoutName).toBe('布局 layout-a')
+    expect(prompt.preview.layoutName).toEqual({
+      original: 'Layout layout-a',
+      display: '布局 layout-a',
+    })
     expect(prompt.preview.dataVersion).toBe('v0')
     expect(prompt.preview.restoreMode).toBe('exact')
     expect(prompt.preview.formations).toEqual([oldLayout])

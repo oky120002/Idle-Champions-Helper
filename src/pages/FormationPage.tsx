@@ -25,6 +25,7 @@ import {
   getLocalizedTextPair,
   getPrimaryLocalizedText,
   getRoleLabel,
+  matchesLocalizedText,
 } from '../domain/localizedText'
 import { getFormationLayoutContextSummary, getFormationLayoutLabel } from '../domain/formationLayout'
 import { buildOrderedChampionsFromPlacements } from '../domain/championPlacement'
@@ -43,6 +44,9 @@ const PRESET_SCHEMA_VERSION = 1
 const DRAFT_SAVE_DELAY_MS = 600
 
 const PRESET_PRIORITY_OPTIONS: PresetPriority[] = ['medium', 'high', 'low']
+const LAYOUT_FILTER_OPTIONS = ['all', 'campaign', 'adventure', 'variant'] as const
+
+type LayoutFilterKind = (typeof LAYOUT_FILTER_OPTIONS)[number]
 
 type FormationState =
   | { status: 'loading' }
@@ -133,6 +137,26 @@ function buildRestoredDraftFromPreview(preview: FormationSnapshotPreview<Formati
   }
 }
 
+function matchesLayoutSearch(layout: FormationLayout, query: string): boolean {
+  if (!query.trim()) {
+    return true
+  }
+
+  return (
+    matchesLocalizedText(layout.name, query) ||
+    (layout.notes ? matchesLocalizedText(layout.notes, query) : false) ||
+    (layout.sourceContexts ?? []).some((context) => matchesLocalizedText(context.name, query))
+  )
+}
+
+function matchesLayoutContextKind(layout: FormationLayout, selectedKind: LayoutFilterKind): boolean {
+  if (selectedKind === 'all') {
+    return true
+  }
+
+  return (layout.sourceContexts ?? []).some((context) => context.kind === selectedKind)
+}
+
 export function FormationPage() {
   const { locale, t } = useI18n()
   const navigate = useNavigate()
@@ -150,6 +174,8 @@ export function FormationPage() {
   const [isDraftPersistenceArmed, setIsDraftPersistenceArmed] = useState(false)
   const [editRevision, setEditRevision] = useState(0)
   const [isSavingPreset, setIsSavingPreset] = useState(false)
+  const [layoutSearch, setLayoutSearch] = useState('')
+  const [selectedContextKind, setSelectedContextKind] = useState<LayoutFilterKind>('all')
   const [presetForm, setPresetForm] = useState<PresetFormState>({
     name: '',
     description: '',
@@ -369,6 +395,18 @@ export function FormationPage() {
   const selectedLayoutContextSummary = selectedLayout
     ? getFormationLayoutContextSummary(selectedLayout, locale)
     : null
+  const filteredLayouts = useMemo(() => {
+    if (state.status !== 'ready') {
+      return []
+    }
+
+    return state.formations.filter(
+      (layout) => matchesLayoutContextKind(layout, selectedContextKind) && matchesLayoutSearch(layout, layoutSearch),
+    )
+  }, [layoutSearch, selectedContextKind, state])
+  const isSelectedLayoutVisible = selectedLayout
+    ? filteredLayouts.some((layout) => layout.id === selectedLayout.id)
+    : false
 
   const championOptions = useMemo(() => {
     if (state.status !== 'ready') {
@@ -442,6 +480,22 @@ export function FormationPage() {
     }
 
     return t({ zh: '常用', en: 'Regular' })
+  }
+
+  function getLayoutFilterLabel(kind: LayoutFilterKind): string {
+    if (kind === 'campaign') {
+      return t({ zh: '战役', en: 'Campaign' })
+    }
+
+    if (kind === 'adventure') {
+      return t({ zh: '冒险', en: 'Adventure' })
+    }
+
+    if (kind === 'variant') {
+      return t({ zh: '变体', en: 'Variant' })
+    }
+
+    return t({ zh: '全部', en: 'All' })
   }
 
   function handleSelectLayout(layoutId: string) {
@@ -659,7 +713,7 @@ export function FormationPage() {
                         locale === 'zh-CN'
                           ? `${Object.keys(draftPrompt.preview.placements).length} 名英雄`
                           : `${Object.keys(draftPrompt.preview.placements).length} champions`
-                      } · ${draftPrompt.preview.layoutName}`
+                      } · ${getLocalizedTextPair(draftPrompt.preview.layoutName, locale)}`
                     : draftPrompt.detail
                 }
                 actions={
@@ -720,19 +774,71 @@ export function FormationPage() {
               <StatusBanner tone={draftStatus.tone} title={draftStatus.title} detail={draftStatus.detail} />
             ) : null}
 
-            <FieldGroup label={t({ zh: '布局选择', en: 'Layout' })} className="filter-group">
-              <div className="filter-chip-grid">
-                {state.formations.map((layout) => (
-                  <button
-                    key={layout.id}
-                    type="button"
-                    className={selectedLayout?.id === layout.id ? 'filter-chip filter-chip--active' : 'filter-chip'}
-                    onClick={() => handleSelectLayout(layout.id)}
-                  >
-                    {getFormationLayoutLabel(layout, locale)}
-                  </button>
-                ))}
+            <FieldGroup label={t({ zh: '布局筛选', en: 'Layout filters' })} className="filter-group">
+              <div className="filter-panel filter-panel--compact">
+                <FieldGroup
+                  label={t({ zh: '关键词', en: 'Keyword' })}
+                  hint={t({
+                    zh: '支持搜索布局名、布局备注和来源场景名称，保留中英混搜。',
+                    en: 'Search layout names, notes, and source context names with mixed Chinese and English.',
+                  })}
+                  labelFor="formation-layout-search"
+                  className="filter-group"
+                >
+                  <input
+                    id="formation-layout-search"
+                    className="text-input"
+                    type="text"
+                    value={layoutSearch}
+                    onChange={(event) => setLayoutSearch(event.target.value)}
+                    placeholder={t({
+                      zh: '搜布局名、来源战役、冒险或变体',
+                      en: 'Search layouts, campaigns, adventures, or variants',
+                    })}
+                  />
+                </FieldGroup>
+
+                <FieldGroup
+                  label={t({ zh: '场景类型', en: 'Scenario type' })}
+                  hint={t({
+                    zh: '筛选只影响上方布局选择区，不会自动清空正在编辑的布局。',
+                    en: 'Filters only affect the layout picker and never clear the layout you are editing.',
+                  })}
+                  className="filter-group"
+                >
+                  <div className="filter-chip-grid">
+                    {LAYOUT_FILTER_OPTIONS.map((kind) => (
+                      <button
+                        key={kind}
+                        type="button"
+                        className={
+                          selectedContextKind === kind ? 'filter-chip filter-chip--active' : 'filter-chip'
+                        }
+                        onClick={() => setSelectedContextKind(kind)}
+                      >
+                        {getLayoutFilterLabel(kind)}
+                      </button>
+                    ))}
+                  </div>
+                </FieldGroup>
               </div>
+            </FieldGroup>
+
+            <FieldGroup label={t({ zh: '布局选择', en: 'Layout' })} className="filter-group">
+              {filteredLayouts.length > 0 ? (
+                <div className="filter-chip-grid">
+                  {filteredLayouts.map((layout) => (
+                    <button
+                      key={layout.id}
+                      type="button"
+                      className={selectedLayout?.id === layout.id ? 'filter-chip filter-chip--active' : 'filter-chip'}
+                      onClick={() => handleSelectLayout(layout.id)}
+                    >
+                      {getFormationLayoutLabel(layout, locale)}
+                    </button>
+                  ))}
+                </div>
+              ) : null}
             </FieldGroup>
 
             {selectedLayout ? (
@@ -755,6 +861,10 @@ export function FormationPage() {
                     <strong className="metric-card__value">{state.formations.length}</strong>
                   </article>
                   <article className="metric-card">
+                    <span className="metric-card__label">{t({ zh: '当前匹配布局', en: 'Matching layouts' })}</span>
+                    <strong className="metric-card__value">{filteredLayouts.length}</strong>
+                  </article>
+                  <article className="metric-card">
                     <span className="metric-card__label">{t({ zh: '已放置英雄', en: 'Placed champions' })}</span>
                     <strong className="metric-card__value">{selectedChampions.length}</strong>
                   </article>
@@ -766,10 +876,33 @@ export function FormationPage() {
                   </article>
                 </div>
 
+                {!isSelectedLayoutVisible ? (
+                  <StatusBanner
+                    tone="info"
+                    title={t({
+                      zh: '当前正在编辑的布局不在筛选结果中',
+                      en: 'The layout you are editing is outside the current filter results',
+                    })}
+                    detail={t({
+                      zh: '筛选只影响上方布局选择区；当前布局和已放置英雄会继续保留，放宽条件后可再次看到它。',
+                      en: 'Filters only affect the layout picker. Your current layout and placed champions stay intact and will appear again once you broaden the filters.',
+                    })}
+                  />
+                ) : null}
+
+                {filteredLayouts.length === 0 ? (
+                  <StatusBanner tone="info">
+                    {t({
+                      zh: '当前筛选条件下没有匹配布局，可以先放宽关键词或场景类型。',
+                      en: 'No layouts match these filters yet. Try broadening the keyword or scenario type.',
+                    })}
+                  </StatusBanner>
+                ) : null}
+
                 {selectedLayoutContextSummary ? (
                   <StatusBanner tone="info">{selectedLayoutContextSummary}</StatusBanner>
                 ) : selectedLayout.notes ? (
-                  <StatusBanner tone="info">{selectedLayout.notes}</StatusBanner>
+                  <StatusBanner tone="info">{getLocalizedTextPair(selectedLayout.notes, locale)}</StatusBanner>
                 ) : null}
 
                 {conflictingSeats.length > 0 ? (
@@ -961,7 +1094,7 @@ export function FormationPage() {
             <article className="preview-card">
               <span className="preview-card__label">{t({ zh: '当前布局', en: 'Current layout' })}</span>
               <strong className="preview-card__value">
-                {selectedLayout?.name ?? t({ zh: '未选择', en: 'Not selected' })}
+                {selectedLayout ? getFormationLayoutLabel(selectedLayout, locale) : t({ zh: '未选择', en: 'Not selected' })}
               </strong>
             </article>
             <article className="preview-card">

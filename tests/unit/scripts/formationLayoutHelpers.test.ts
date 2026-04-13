@@ -114,7 +114,10 @@ describe('formation layout helpers', () => {
     expect(layouts).toHaveLength(2)
 
     expect(layouts[0]).toMatchObject({
-      name: '战役一 · 3 槽',
+      name: {
+        original: 'Campaign One · 3 slots',
+        display: '战役一 · 3 槽',
+      },
       applicableContexts: [
         { kind: 'campaign', id: '1' },
         { kind: 'adventure', id: '10' },
@@ -140,7 +143,10 @@ describe('formation layout helpers', () => {
     })
 
     expect(layouts[1]).toMatchObject({
-      name: '变体一 · 3 槽',
+      name: {
+        original: 'Variant One · 3 slots',
+        display: '变体一 · 3 槽',
+      },
       applicableContexts: [{ kind: 'variant', id: '11' }],
       sourceContexts: [
         {

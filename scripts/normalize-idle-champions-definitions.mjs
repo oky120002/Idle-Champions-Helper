@@ -747,7 +747,6 @@ function normalizeChampionDetail(
     },
   }
 }
-
 function normalizeVariant(originalDefinition, localizedDefinition, campaignMap) {
   const originalRestrictions = uniqueStrings([
     ...toTextList(originalDefinition.requirements_text),
@@ -818,60 +817,75 @@ function mergeVariants(autoVariants, manualVariants) {
 
 function normalizeManualFormations(formations = []) {
   return formations
-    .map((formation) => ({
-      id: String(formation.id),
-      name: String(formation.name ?? formation.id),
-      notes: typeof formation.notes === 'string' ? formation.notes : undefined,
-      slots: Array.isArray(formation.slots)
-        ? formation.slots.map((slot) => ({
-            id: String(slot.id),
-            row: Number(slot.row),
-            column: Number(slot.column),
-            x: Number.isFinite(Number(slot.x)) ? Number(slot.x) : undefined,
-            y: Number.isFinite(Number(slot.y)) ? Number(slot.y) : undefined,
-            adjacentSlotIds: Array.isArray(slot.adjacentSlotIds)
-              ? slot.adjacentSlotIds.map((value) => String(value))
-              : undefined,
-          }))
-        : [],
-      applicableContexts: Array.isArray(formation.applicableContexts)
-        ? formation.applicableContexts
-            .filter((context) => context?.kind && context?.id !== undefined)
-            .map((context) => ({
-              kind: String(context.kind),
-              id: String(context.id),
+    .map((formation) => {
+      const name =
+        typeof formation.name === 'object' && formation.name !== null
+          ? normalizeLocalizedText(
+              formation.name.original,
+              formation.name.display,
+              formation.id,
+            )
+          : normalizeLocalizedText(formation.name, formation.name, formation.id)
+
+      return {
+        id: String(formation.id),
+        name,
+        notes:
+          typeof formation.notes === 'object' && formation.notes !== null
+            ? normalizeLocalizedText(formation.notes.original, formation.notes.display)
+            : normalizeLocalizedText(formation.notes, formation.notes),
+        slots: Array.isArray(formation.slots)
+          ? formation.slots.map((slot) => ({
+              id: String(slot.id),
+              row: Number(slot.row),
+              column: Number(slot.column),
+              x: Number.isFinite(Number(slot.x)) ? Number(slot.x) : undefined,
+              y: Number.isFinite(Number(slot.y)) ? Number(slot.y) : undefined,
+              adjacentSlotIds: Array.isArray(slot.adjacentSlotIds)
+                ? slot.adjacentSlotIds.map((value) => String(value))
+                : undefined,
             }))
-        : undefined,
-      sourceContexts: Array.isArray(formation.sourceContexts)
-        ? formation.sourceContexts
-            .filter((context) => context?.kind && context?.id !== undefined && context?.name)
-            .map((context) => {
-              const name = normalizeLocalizedText(
-                context.name.original,
-                context.name.display,
-                `${context.kind}-${context.id}`,
-              )
-
-              if (!name) {
-                return null
-              }
-
-              return {
+          : [],
+        applicableContexts: Array.isArray(formation.applicableContexts)
+          ? formation.applicableContexts
+              .filter((context) => context?.kind && context?.id !== undefined)
+              .map((context) => ({
                 kind: String(context.kind),
                 id: String(context.id),
-                name,
-                campaignId:
-                  context.campaignId !== undefined ? String(context.campaignId) : undefined,
-                variantAdventureId:
-                  context.variantAdventureId !== undefined
-                    ? String(context.variantAdventureId)
-                    : undefined,
-              }
-            })
-            .filter(Boolean)
-        : undefined,
-    }))
-    .sort((left, right) => left.name.localeCompare(right.name))
+              }))
+          : undefined,
+        sourceContexts: Array.isArray(formation.sourceContexts)
+          ? formation.sourceContexts
+              .filter((context) => context?.kind && context?.id !== undefined && context?.name)
+              .map((context) => {
+                const contextName = normalizeLocalizedText(
+                  context.name.original,
+                  context.name.display,
+                  `${context.kind}-${context.id}`,
+                )
+
+                if (!contextName) {
+                  return null
+                }
+
+                return {
+                  kind: String(context.kind),
+                  id: String(context.id),
+                  name: contextName,
+                  campaignId:
+                    context.campaignId !== undefined ? String(context.campaignId) : undefined,
+                  variantAdventureId:
+                    context.variantAdventureId !== undefined
+                      ? String(context.variantAdventureId)
+                      : undefined,
+                }
+              })
+              .filter(Boolean)
+          : undefined,
+      }
+    })
+    .filter((formation) => formation.name)
+    .sort((left, right) => compareLocalizedText(left.name, right.name))
 }
 
 function mergeFormations(autoFormations, manualFormations) {
@@ -1060,7 +1074,7 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
       '名称展示层同时保留官方原文与 language_id=7 返回的中文展示名。',
       '英雄头像资源来自官方 mobile_assets，并按数据版本写入 public/data/<version>/champion-portraits/。',
       '英雄详情页数据按 public/data/<version>/champion-details/<hero-id>.json 输出，包含结构化字段与原始快照片段。',
-      '阵型布局已从官方 definitions 的 campaign / adventure game_changes 自动提取；变体说明与中文补充建议通过 scripts/data/manual-overrides.json 维护，手工覆写仅用于必要补充。',
+      '阵型布局已从官方 definitions 的 campaign / adventure game_changes 自动提取；手工补充层只用于必要覆写。',
     ],
   })
 
