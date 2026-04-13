@@ -292,6 +292,18 @@ function renderChampionDetailPage() {
   )
 }
 
+function renderChampionDetailPageWithSearch() {
+  return render(
+    <I18nProvider>
+      <MemoryRouter initialEntries={['/champions/7?q=alpha&seat=1&role=support']}>
+        <Routes>
+          <Route path="/champions/:championId" element={<ChampionDetailPage />} />
+        </Routes>
+      </MemoryRouter>
+    </I18nProvider>,
+  )
+}
+
 afterEach(() => {
   mockedLoadChampionDetail.mockReset()
 })
@@ -317,5 +329,16 @@ describe('ChampionDetailPage', () => {
     renderChampionDetailPage()
 
     expect(await screen.findByRole('heading', { level: 2, name: '没有找到这个英雄' })).toBeInTheDocument()
+  })
+
+  it('返回链接会带回筛选页查询参数', async () => {
+    mockedLoadChampionDetail.mockResolvedValue(detailFixture)
+
+    renderChampionDetailPageWithSearch()
+
+    expect(await screen.findByRole('link', { name: '← 返回英雄筛选' })).toHaveAttribute(
+      'href',
+      '/champions?q=alpha&seat=1&role=support',
+    )
   })
 })

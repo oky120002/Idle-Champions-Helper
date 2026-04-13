@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
 
 vi.mock('../../src/data/client', () => ({
@@ -84,10 +84,10 @@ const enumsFixture: DataCollection<StringEnumGroup | LocalizedEnumGroup> = {
 
 const mockedLoadCollection = vi.mocked(loadCollection)
 
-function renderChampionsPage() {
+function renderChampionsPage(initialEntries: string[] = ['/champions']) {
   return render(
     <I18nProvider>
-      <MemoryRouter>
+      <MemoryRouter initialEntries={initialEntries}>
         <ChampionsPage />
       </MemoryRouter>
     </I18nProvider>,
@@ -95,6 +95,7 @@ function renderChampionsPage() {
 }
 
 beforeEach(() => {
+  window.sessionStorage.clear()
   mockedLoadCollection.mockImplementation(async (name) => {
     if (name === 'champions') {
       return championsFixture
@@ -106,6 +107,10 @@ beforeEach(() => {
 
     throw new Error(`unexpected collection: ${name}`)
   })
+})
+
+afterEach(() => {
+  vi.restoreAllMocks()
 })
 
 describe('ChampionsPage filters', () => {
@@ -160,5 +165,24 @@ describe('ChampionsPage filters', () => {
         '当前筛选：定位：辅助、输出 · 联动队伍：大厅伙伴团 · Companions of the Hall、绝对宿敌 · Absolute Adversaries',
       ),
     ).toBeInTheDocument()
+  })
+
+  it('支持从 URL 恢复筛选条件，并恢复上次滚动位置', async () => {
+    const scrollToSpy = vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
+    window.sessionStorage.setItem('champions-page-scroll:?q=alpha&seat=1&role=support', '640')
+
+    renderChampionsPage(['/champions?q=alpha&seat=1&role=support'])
+
+    expect(await screen.findByDisplayValue('alpha')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '1 号位' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('button', { name: '辅助' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByText('阿尔法')).toBeInTheDocument()
+    expect(screen.queryByText('贝塔')).not.toBeInTheDocument()
+
+    await waitFor(() => {
+      expect(scrollToSpy).toHaveBeenCalledWith({ top: 640, left: 0, behavior: 'auto' })
+    })
+
+    expect(window.sessionStorage.getItem('champions-page-scroll:?q=alpha&seat=1&role=support')).toBeNull()
   })
 })
