@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Link, useLocation, useParams } from 'react-router-dom'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { type AppLocale, useI18n } from '../app/i18n'
 import { ChampionAvatar } from '../components/ChampionAvatar'
 import { SurfaceCard } from '../components/SurfaceCard'
@@ -388,6 +388,12 @@ function isDetailSectionId(value: string): value is DetailSectionId {
   return DETAIL_SECTION_IDS.includes(value as DetailSectionId)
 }
 
+function resolveSectionIdFromHash(hash: string): DetailSectionId | null {
+  const normalizedHash = hash.startsWith('#') ? hash.slice(1) : hash
+
+  return isDetailSectionId(normalizedHash) ? normalizedHash : null
+}
+
 function resolveActiveSectionId(): DetailSectionId {
   const activationOffset = 196
   let activeSectionId: DetailSectionId = DETAIL_SECTION_IDS[0]
@@ -412,9 +418,11 @@ function resolveActiveSectionId(): DetailSectionId {
 export function ChampionDetailPage() {
   const { championId } = useParams<{ championId: string }>()
   const location = useLocation()
+  const navigate = useNavigate()
   const { locale, t } = useI18n()
   const [state, setState] = useState<ChampionDetailState>({ status: 'idle' })
   const [activeSectionId, setActiveSectionId] = useState<DetailSectionId>(DETAIL_SECTION_IDS[0])
+  const pendingHashSectionIdRef = useRef<DetailSectionId | null>(null)
   const isMissingChampionId = !championId
 
   useEffect(() => {
@@ -501,6 +509,7 @@ export function ChampionDetailPage() {
     { id: 'skins', label: t({ zh: '皮肤', en: 'Skins' }) },
     { id: 'raw', label: t({ zh: '原始字段', en: 'Raw fields' }) },
   ]
+  const hashSectionId = resolveSectionIdFromHash(location.hash)
 
   useEffect(() => {
     if (!detail || typeof window === 'undefined') {
@@ -520,6 +529,51 @@ export function ChampionDetailPage() {
       window.removeEventListener('resize', updateActiveSection)
     }
   }, [detail])
+
+  useEffect(() => {
+    if (!detail || !hashSectionId || hashSectionId === activeSectionId || typeof window === 'undefined') {
+      return
+    }
+
+    pendingHashSectionIdRef.current = hashSectionId
+    const frameId = window.requestAnimationFrame(() => {
+      setActiveSectionId(hashSectionId)
+      document.getElementById(hashSectionId)?.scrollIntoView({ behavior: 'auto', block: 'start' })
+    })
+
+    return () => {
+      window.cancelAnimationFrame(frameId)
+    }
+  }, [activeSectionId, detail, hashSectionId])
+
+  useEffect(() => {
+    if (!detail) {
+      return
+    }
+
+    if (pendingHashSectionIdRef.current) {
+      if (pendingHashSectionIdRef.current === activeSectionId) {
+        pendingHashSectionIdRef.current = null
+      }
+
+      return
+    }
+
+    const nextHash = `#${activeSectionId}`
+
+    if (location.hash === nextHash) {
+      return
+    }
+
+    navigate(
+      {
+        pathname: location.pathname,
+        search: location.search,
+        hash: nextHash,
+      },
+      { replace: true },
+    )
+  }, [activeSectionId, detail, location.hash, location.pathname, location.search, navigate])
 
   const scrollToSection = (id: string) => {
     if (isDetailSectionId(id)) {
