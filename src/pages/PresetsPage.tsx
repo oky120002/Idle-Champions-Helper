@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { type AppLocale, useI18n } from '../app/i18n'
+import { ChampionAvatar } from '../components/ChampionAvatar'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollectionAtVersion, loadVersion } from '../data/client'
 import {
@@ -112,7 +113,7 @@ function buildEditorState(preset: FormationPreset): PresetEditorState {
   }
 }
 
-function buildChampionSummary(view: PresetView, locale: AppLocale): string[] {
+function buildChampionSummary(view: PresetView, locale: AppLocale): Champion[] {
   if (view.prompt.kind !== 'restore') {
     return []
   }
@@ -126,12 +127,8 @@ function buildChampionSummary(view: PresetView, locale: AppLocale): string[] {
       (left, right) =>
         left.seat - right.seat ||
         getPrimaryLocalizedText(left.name, locale).localeCompare(getPrimaryLocalizedText(right.name, locale)) ||
-        left.name.original.localeCompare(right.name.original),
-    )
-    .map((champion) =>
-      locale === 'zh-CN'
-        ? `${champion.seat} 号位 · ${getLocalizedTextPair(champion.name, locale)}`
-        : `Seat ${champion.seat} · ${getLocalizedTextPair(champion.name, locale)}`,
+        left.name.original.localeCompare(right.name.original) ||
+        left.id.localeCompare(right.id),
     )
 }
 
@@ -497,9 +494,18 @@ export function PresetsPage() {
 
                   {championSummary.length > 0 ? (
                     <div className="tag-row result-card__section">
-                      {championSummary.map((item) => (
-                        <span key={item} className="tag-pill tag-pill--muted">
-                          {item}
+                      {championSummary.map((champion, index) => (
+                        <span key={`${champion.id}-${index}`} className="champion-pill">
+                          <ChampionAvatar
+                            champion={champion}
+                            locale={locale}
+                            className="champion-avatar--pill"
+                          />
+                          <span className="champion-pill__label">
+                            {locale === 'zh-CN'
+                              ? `${champion.seat} 号位 · ${getLocalizedTextPair(champion.name, locale)}`
+                              : `Seat ${champion.seat} · ${getLocalizedTextPair(champion.name, locale)}`}
+                          </span>
                         </span>
                       ))}
                     </div>

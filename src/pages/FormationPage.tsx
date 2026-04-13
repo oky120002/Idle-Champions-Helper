@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useI18n } from '../app/i18n'
+import { ChampionAvatar } from '../components/ChampionAvatar'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollectionAtVersion, loadVersion } from '../data/client'
 import {
@@ -800,17 +801,28 @@ export function FormationPage() {
                               </option>
                             ))}
                           </select>
-                          <span className="formation-slot__hint">
-                            {champion
-                              ? t({
+                          {champion ? (
+                            <div className="formation-slot__current">
+                              <ChampionAvatar
+                                champion={champion}
+                                locale={locale}
+                                className="champion-avatar--slot"
+                              />
+                              <span className="formation-slot__hint">
+                                {t({
                                   zh: `当前：${getLocalizedTextPair(champion.name, locale)}`,
                                   en: `Current: ${getLocalizedTextPair(champion.name, locale)}`,
-                                })
-                              : t({
-                                  zh: `坐标 ${slot.row}-${slot.column}`,
-                                  en: `Position ${slot.row}-${slot.column}`,
                                 })}
-                          </span>
+                              </span>
+                            </div>
+                          ) : (
+                            <span className="formation-slot__hint">
+                              {t({
+                                zh: `坐标 ${slot.row}-${slot.column}`,
+                                en: `Position ${slot.row}-${slot.column}`,
+                              })}
+                            </span>
+                          )}
                         </div>
                       )
                     })}
@@ -994,9 +1006,12 @@ export function FormationPage() {
 
               return (
                 <article key={`${slotId}-${champion.id}`} className="result-card">
-                  <div className="result-card__header">
-                    <span className="result-card__eyebrow">{slotId}</span>
-                    <h3 className="result-card__title">{primaryName}</h3>
+                  <div className="result-card__identity">
+                    <ChampionAvatar champion={champion} locale={locale} className="champion-avatar--card" />
+                    <div className="result-card__header">
+                      <span className="result-card__eyebrow">{slotId}</span>
+                      <h3 className="result-card__title">{primaryName}</h3>
+                    </div>
                   </div>
                   {secondaryName ? <p className="result-card__secondary">{secondaryName}</p> : null}
                   <p className="supporting-text">
