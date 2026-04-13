@@ -60,6 +60,7 @@
 - `docs/modules/user-data/user-data-import-design.md`：本地优先的个人数据导入设计稿。
 - `docs/investigations/repository/github-directory-commit-investigation.md`：`.github` 目录无法提交的本地原因排查。
 - `docs/investigations/runtime/local-run-verification.md`：本地构建、开发预览与生产预览差异验证。
+- `docs/investigations/runtime/playwright-browser-launch-verification.md`：当前 Codex CLI 环境下 Playwright 浏览器启动受限的确认记录。
 
 ## 后续新增文档的放置建议
 
