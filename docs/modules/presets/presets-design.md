@@ -58,6 +58,11 @@
 ### 3.1 MVP 方案模型
 
 ```ts
+interface ScenarioRef {
+  kind: 'campaign' | 'adventure' | 'variant' | 'trial' | 'timeGate'
+  id: string
+}
+
 interface FormationPreset {
   id: string
   schemaVersion: 1
@@ -66,6 +71,7 @@ interface FormationPreset {
   description: string
   layoutId: string
   placements: Record<string, string>
+  scenarioRef: ScenarioRef | null
   scenarioTags: string[]
   priority: 'low' | 'medium' | 'high'
   createdAt: string
@@ -82,7 +88,8 @@ interface FormationPreset {
 - `description`：备注或用途说明
 - `layoutId`：对应阵型布局
 - `placements`：槽位到英雄的映射
-- `scenarioTags`：例如“推图 / 速刷 / 试炼”
+- `scenarioRef`：用于恢复规则上下文的正式场景身份；当前手工联调方案可为 `null`
+- `scenarioTags`：例如“推图 / 速刷 / 试炼”，只作为用户可读标签，不作为恢复主键
 - `priority`：仅作为个人排序辅助
 - `createdAt`：方案创建时间
 - `updatedAt`：排序和最近编辑时间
@@ -127,6 +134,7 @@ interface FormationPreset {
 
 - `dataVersion` 是否仍可识别
 - `layoutId` 是否仍存在
+- `scenarioRef` 若存在，其对应场景 / 规则上下文是否仍可识别
 - `slotId` 是否仍属于对应布局
 - `championId` 是否仍能被当前数据解析
 
@@ -184,6 +192,7 @@ interface FormationPreset {
 
 - `layoutId`
 - `placements`
+- `scenarioRef`
 - 当前数据版本 `dataVersion`
 
 ### 6.2 来自英雄筛选模块
@@ -224,6 +233,8 @@ MVP 至少支持：
   ↓
 填写名称、备注、场景标签
   ↓
+保留当前 `scenarioRef`
+  ↓
 写入本地存储
   ↓
 方案存档页可见并可再次打开
@@ -237,6 +248,7 @@ MVP 至少支持：
 
 - 用户能把至少一套阵型草稿保存到本地
 - 刷新页面后仍能看到已保存方案
+- 已保存方案再次打开时，能恢复对应布局与场景上下文，或明确提示当前方案没有绑定场景
 - 空态、列表态、删除态都明确可用
 - 公共数据版本变化后，旧方案不会静默坏掉
 - 数据结构可以继续承接筛选快照和个人画像扩展

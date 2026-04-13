@@ -89,11 +89,22 @@
 ### 4.1 当前已存在模型
 
 ```ts
+interface ScenarioRef {
+  kind: 'campaign' | 'adventure' | 'variant' | 'trial' | 'timeGate'
+  id: string
+}
+
 interface FormationLayout {
   id: string
   name: string
   notes?: string
   slots: FormationSlot[]
+  applicableContexts?: ScenarioRef[]
+  laneHints?: {
+    front?: string[]
+    middle?: string[]
+    back?: string[]
+  }
 }
 
 interface FormationSlot {
@@ -102,6 +113,11 @@ interface FormationSlot {
   column: number
 }
 ```
+
+补充说明：
+
+- 当前 `public/data/v1/formations.json` 还只有手工联调布局，可以暂时不填 `applicableContexts / laneHints`
+- 但布局合同应预留这两个可选字段，避免后续补“适用战役 / 模式”“前后排关系”时再重定义 `FormationLayout`
 
 ### 4.2 阵型草稿建议模型
 
@@ -112,6 +128,7 @@ interface FormationDraft {
   schemaVersion: 1
   dataVersion: string
   layoutId: string
+  scenarioRef: ScenarioRef | null
   placements: Record<string, string>
   updatedAt: string
 }
@@ -122,6 +139,7 @@ interface FormationDraft {
 - `schemaVersion`：草稿结构版本，便于后续迁移
 - `dataVersion`：保存时对应的公共数据版本，例如 `v1`
 - `layoutId`：当前采用的布局
+- `scenarioRef`：当前草稿绑定的真实场景上下文；对现有手工联调布局可为 `null`
 - `placements[slotId] = championId`
 - `updatedAt`：用于“最近编辑”排序和存档同步
 
@@ -131,6 +149,7 @@ interface FormationDraft {
 
 - `dataVersion` 是否仍可识别
 - `layoutId` 是否仍存在
+- `scenarioRef` 若存在，其对应场景 / 规则上下文是否仍可识别
 - `slotId` 是否仍属于该布局
 - `championId` 是否仍能在当前英雄数据中找到
 
@@ -242,6 +261,13 @@ interface FormationDraft {
 - 用户补充备注
 - 当前场景标签
 
+其中需要区分两层：
+
+- `scenarioRef`：用于恢复和校验的正式场景身份
+- 场景标签：用于卡片展示或用户理解的可读文案
+
+不要只把“推图 / 试炼 / 某变体”写成自由文本标签，否则后续恢复时无法唯一定位规则上下文。
+
 也就是说，阵型页后续最自然的下一步不是“更复杂的编辑器”，而是“把当前草稿安全保存下来”。
 
 “保存为方案”应由阵型页发起，但写入结果进入方案存档模块管理；“最近草稿”本身不应和命名方案库混为一层。
@@ -259,6 +285,7 @@ interface FormationDraft {
 - 最近草稿能被保存并恢复
 - 最近草稿的读写介质与时机明确，不再留给实现阶段临时决定
 - 旧草稿在公共数据变动后不会静默损坏
+- 草稿若绑定了场景上下文，恢复时不会把 `scenarioRef` 悄悄降级成纯文本标签
 - 后续接方案存档时，不需要推翻当前数据结构
 
 ---
