@@ -71,6 +71,7 @@
 - `docs/modules/user-data/user-data-import-design.md`：本地优先的个人数据导入设计稿。
 - `docs/investigations/repository/github-directory-commit-investigation.md`：`.github` 空目录不被 Git 跟踪的历史排查归档。
 - `docs/investigations/runtime/local-run-verification.md`：本地构建、开发预览、Vite `preview` 与 GitHub Pages 预览差异验证。
+- `docs/investigations/runtime/champions-filter-scroll-stability-investigation.md`：英雄筛选页长列表筛选时的滚动跳动与页面回顶问题排查。
 - `docs/investigations/runtime/playwright-browser-launch-verification.md`：当前 Codex CLI 环境下 Playwright 浏览器启动受限的确认记录。
 
 ## 后续新增文档的放置建议

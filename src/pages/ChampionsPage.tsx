@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useI18n } from '../app/i18n'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollection } from '../data/client'
@@ -77,6 +77,7 @@ export function ChampionsPage() {
   const [selectedSeats, setSelectedSeats] = useState<number[]>([])
   const [selectedRoles, setSelectedRoles] = useState<string[]>([])
   const [selectedAffiliations, setSelectedAffiliations] = useState<string[]>([])
+  const resultsBodyRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     let disposed = false
@@ -114,6 +115,24 @@ export function ChampionsPage() {
       disposed = true
     }
   }, [])
+
+  useEffect(() => {
+    const resultsBody = resultsBodyRef.current
+
+    if (!resultsBody) {
+      return
+    }
+
+    if (typeof resultsBody.scrollTo === 'function') {
+      resultsBody.scrollTo({
+        top: 0,
+        behavior: 'auto',
+      })
+      return
+    }
+
+    resultsBody.scrollTop = 0
+  }, [search, selectedAffiliations, selectedRoles, selectedSeats])
 
   const filteredChampions = useMemo(() => {
     if (state.status !== 'ready') {
@@ -329,77 +348,90 @@ export function ChampionsPage() {
               </div>
             </div>
 
-            {filteredChampions.length === 0 ? (
-              <div className="status-banner status-banner--info">
-                {t({
-                  zh: '当前筛选条件下没有匹配英雄，可以先清空座位、定位或联动队伍过滤。',
-                  en: 'No champions match this filter set yet. Try clearing seat, role, or affiliation filters first.',
-                })}
-              </div>
-            ) : null}
-
-            {filteredChampions.length > 0 ? (
-              <>
-                {activeFilters.length > 0 ? (
-                  <p className="supporting-text">
-                    {t({ zh: '当前筛选：', en: 'Active filters: ' })}
-                    {activeFilters.join(' · ')}
-                  </p>
-                ) : null}
-
-                <p className="supporting-text">
-                  {t({
-                    zh: `当前展示 ${visibleChampions.length} / ${filteredChampions.length} 名英雄。如果结果过多，优先加关键词、座位、定位或联动队伍缩小范围。`,
-                    en: `Showing ${visibleChampions.length} / ${filteredChampions.length} champions. Narrow things down with a keyword, seat, role, or affiliation if the list feels too broad.`,
-                  })}
+            <section className="results-panel" aria-label={t({ zh: '英雄筛选结果', en: 'Champion filter results' })}>
+              <div className="results-panel__meta">
+                <p
+                  className={
+                    activeFilters.length > 0
+                      ? 'supporting-text'
+                      : 'supporting-text supporting-text--placeholder'
+                  }
+                  aria-hidden={activeFilters.length === 0}
+                >
+                  {activeFilters.length > 0
+                    ? `${t({ zh: '当前筛选：', en: 'Active filters: ' })}${activeFilters.join(' · ')}`
+                    : t({ zh: '当前筛选：', en: 'Active filters: ' })}
                 </p>
 
-                <div className="results-grid">
-                  {visibleChampions.map((champion) => {
-                    const primaryName = getPrimaryLocalizedText(champion.name, locale)
-                    const secondaryName = getSecondaryLocalizedText(champion.name, locale)
+                <p className="supporting-text">
+                  {filteredChampions.length > 0
+                    ? t({
+                        zh: `当前展示 ${visibleChampions.length} / ${filteredChampions.length} 名英雄。如果结果过多，优先加关键词、座位、定位或联动队伍缩小范围。`,
+                        en: `Showing ${visibleChampions.length} / ${filteredChampions.length} champions. Narrow things down with a keyword, seat, role, or affiliation if the list feels too broad.`,
+                      })
+                    : t({
+                        zh: '当前筛选条件下没有匹配英雄，可以先清空座位、定位或联动队伍过滤。',
+                        en: 'No champions match this filter set yet. Try clearing seat, role, or affiliation filters first.',
+                      })}
+                </p>
+              </div>
 
-                    return (
-                      <article key={champion.id} className="result-card">
-                        <div className="result-card__header">
-                          <span className="result-card__eyebrow">
-                            {locale === 'zh-CN' ? `${champion.seat} 号位` : `Seat ${champion.seat}`}
-                          </span>
-                          <h3 className="result-card__title">{primaryName}</h3>
-                        </div>
+              <div ref={resultsBodyRef} className="results-panel__body">
+                {filteredChampions.length > 0 ? (
+                  <div className="results-grid results-grid--stable">
+                    {visibleChampions.map((champion) => {
+                      const primaryName = getPrimaryLocalizedText(champion.name, locale)
+                      const secondaryName = getSecondaryLocalizedText(champion.name, locale)
 
-                        {secondaryName ? <p className="result-card__secondary">{secondaryName}</p> : null}
-
-                        <div className="tag-row">
-                          {champion.roles.map((role) => (
-                            <span key={role} className="tag-pill">
-                              {getRoleLabel(role, locale)}
+                      return (
+                        <article key={champion.id} className="result-card">
+                          <div className="result-card__header">
+                            <span className="result-card__eyebrow">
+                              {locale === 'zh-CN' ? `${champion.seat} 号位` : `Seat ${champion.seat}`}
                             </span>
-                          ))}
-                        </div>
+                            <h3 className="result-card__title">{primaryName}</h3>
+                          </div>
 
-                        <p className="supporting-text">
-                          {t({ zh: '联动队伍', en: 'Affiliation' })}：
-                          {champion.affiliations.length > 0
-                            ? champion.affiliations
-                                .map((affiliation) => getLocalizedTextPair(affiliation, locale))
-                                .join(' / ')
-                            : t({ zh: '暂无', en: 'None yet' })}
-                        </p>
+                          {secondaryName ? <p className="result-card__secondary">{secondaryName}</p> : null}
 
-                        <div className="tag-row">
-                          {champion.tags.slice(0, 6).map((tag) => (
-                            <span key={tag} className="tag-pill tag-pill--muted">
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      </article>
-                    )
-                  })}
-                </div>
-              </>
-            ) : null}
+                          <div className="tag-row">
+                            {champion.roles.map((role) => (
+                              <span key={role} className="tag-pill">
+                                {getRoleLabel(role, locale)}
+                              </span>
+                            ))}
+                          </div>
+
+                          <p className="supporting-text">
+                            {t({ zh: '联动队伍', en: 'Affiliation' })}：
+                            {champion.affiliations.length > 0
+                              ? champion.affiliations
+                                  .map((affiliation) => getLocalizedTextPair(affiliation, locale))
+                                  .join(' / ')
+                              : t({ zh: '暂无', en: 'None yet' })}
+                          </p>
+
+                          <div className="tag-row">
+                            {champion.tags.slice(0, 6).map((tag) => (
+                              <span key={tag} className="tag-pill tag-pill--muted">
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </article>
+                      )
+                    })}
+                  </div>
+                ) : (
+                  <div className="status-banner status-banner--info results-panel__empty">
+                    {t({
+                      zh: '暂时没有可展示的英雄结果。先放宽一个过滤维度，再继续缩小范围会更顺手。',
+                      en: 'There are no champions to show right now. Loosen one filter group first, then narrow it back down.',
+                    })}
+                  </div>
+                )}
+              </div>
+            </section>
           </>
         ) : null}
       </SurfaceCard>
