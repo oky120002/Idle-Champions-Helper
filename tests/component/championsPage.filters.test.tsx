@@ -206,6 +206,27 @@ describe('ChampionsPage filters', () => {
     expect(alphaScope.getByText('减速控制')).toBeInTheDocument()
   })
 
+  it('默认把低频标签筛选折叠收纳，展开后才显示补充条件', async () => {
+    const user = userEvent.setup()
+
+    renderChampionsPage()
+
+    expect(await screen.findByText('阿尔法')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: '人类' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: '活动英雄' })).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: /身份画像/ }))
+
+    expect(screen.getByRole('button', { name: '人类' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '善良' })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: '活动英雄' })).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: /来源与机制/ }))
+
+    expect(screen.getByRole('button', { name: '活动英雄' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '减速控制' })).toBeInTheDocument()
+  })
+
   it('支持按种族、性别和职业筛选英雄', async () => {
     const user = userEvent.setup()
 
@@ -213,6 +234,8 @@ describe('ChampionsPage filters', () => {
 
     expect(await screen.findByText('阿尔法')).toBeInTheDocument()
 
+    await user.click(screen.getByRole('button', { name: /身份画像/ }))
+    await user.click(screen.getByRole('button', { name: /来源与机制/ }))
     await user.click(screen.getByRole('button', { name: '人类' }))
     await user.click(screen.getByRole('button', { name: '卓尔精灵' }))
     await user.click(screen.getByRole('button', { name: '男性' }))
@@ -246,6 +269,8 @@ describe('ChampionsPage filters', () => {
 
     expect(await screen.findByText('阿尔法')).toBeInTheDocument()
 
+    await user.click(screen.getByRole('button', { name: /身份画像/ }))
+    await user.click(screen.getByRole('button', { name: /来源与机制/ }))
     await user.click(screen.getByRole('button', { name: '善良' }))
     await user.click(screen.getByRole('button', { name: '活动英雄' }))
     await user.click(screen.getByRole('button', { name: '减速控制' }))

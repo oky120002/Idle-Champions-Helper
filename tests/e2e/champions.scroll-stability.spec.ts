@@ -84,6 +84,10 @@ test('英雄筛选页结果快捷按钮应支持一键到底和返回顶部', as
 
   await page.goto('./#/champions')
   await expect(page.getByRole('heading', { level: 2, name: '先用真实公共数据把查询入口跑起来' })).toBeVisible()
+
+  await page.evaluate(() => window.scrollTo({ top: 360, behavior: 'instant' }))
+  await page.waitForTimeout(120)
+
   await expect(page.getByRole('button', { name: '跳到结果底部' })).toBeVisible()
 
   const targetBottom = await getResultsTargetBottom(page)
@@ -95,6 +99,7 @@ test('英雄筛选页结果快捷按钮应支持一键到底和返回顶部', as
 
   expect(bottomScrollY).toBeGreaterThan(200)
   expect(Math.abs(bottomScrollY - targetBottom)).toBeLessThanOrEqual(36)
+  await expect(page.getByRole('button', { name: '返回结果顶部' })).toBeVisible()
 
   const targetTop = await getResultsTargetTop(page)
 
@@ -104,4 +109,5 @@ test('英雄筛选页结果快捷按钮应支持一键到底和返回顶部', as
   const topScrollY = await getScrollY(page)
 
   expect(Math.abs(topScrollY - targetTop)).toBeLessThanOrEqual(36)
+  await expect(page.getByRole('button', { name: '跳到结果底部' })).toBeVisible()
 })
