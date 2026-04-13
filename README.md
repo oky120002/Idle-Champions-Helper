@@ -139,7 +139,24 @@ npm run data:portraits -- --input tmp/idle-champions-api/<english-snapshot>.json
 npm run data:build
 ```
 
+推荐作为后续统一入口的一键命令：
+
+```bash
+npm run data:official
+```
+
+当前该命令会同步拉取并更新：
+
+- 官方原文 definitions 快照
+- `language_id=7` 中文 definitions 快照
+- `champions / variants / formations / enums` 归一化公共数据
+- 官方英雄头像资源
+
 说明：
+
+- 这是当前“所有可公开拉取的官方基座数据”的统一入口
+- 个人账号数据仍需要用户凭证，不在这个命令里
+- `data:build` 当前仍保留，和 `data:official` 指向同一条数据流水线
 
 - `npm run preview` 只适合确认 `dist/` 已被预览服务拉起，不适合作为 GitHub Pages 路径验收入口
 - `npm run preview:pages` 会按 `/Idle-Champions-Helper/` 基线路径提供更贴近生产的本地预览
