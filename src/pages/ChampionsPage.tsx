@@ -359,8 +359,14 @@ export function ChampionsPage() {
                 <div className="results-grid">
                   {visibleChampions.map((champion) => {
                     return (
-                      <article key={champion.id} className="result-card">
-                        <ChampionIdentity champion={champion} locale={locale} eyebrow={formatSeatLabel(champion.seat, locale)} />
+                      <article key={champion.id} className="result-card result-card--champion">
+                        <ChampionIdentity
+                          champion={champion}
+                          locale={locale}
+                          eyebrow={formatSeatLabel(champion.seat, locale)}
+                          avatarClassName="champion-avatar--spotlight"
+                          variant="spotlight"
+                        />
 
                         <div className="tag-row">
                           {champion.roles.map((role) => (
