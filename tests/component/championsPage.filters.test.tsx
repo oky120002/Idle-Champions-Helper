@@ -47,7 +47,7 @@ const championsFixture: DataCollection<Champion> = {
       seat: 2,
       roles: ['healing'],
       affiliations: [hall],
-      tags: ['healing', 'elf', 'female', 'cleric'],
+      tags: ['healing', 'elf', 'female', 'good', 'cleric', 'event', 'spec_gold'],
     },
     {
       id: 'gamma',
@@ -55,7 +55,7 @@ const championsFixture: DataCollection<Champion> = {
       seat: 2,
       roles: ['dps'],
       affiliations: [adversaries],
-      tags: ['dps', 'drow', 'male', 'rogue'],
+      tags: ['dps', 'drow', 'male', 'evil', 'rogue', 'event', 'control_stun'],
     },
     {
       id: 'delta',
@@ -63,7 +63,7 @@ const championsFixture: DataCollection<Champion> = {
       seat: 3,
       roles: ['tank'],
       affiliations: [oxventurers],
-      tags: ['tank', 'human', 'female', 'fighter'],
+      tags: ['tank', 'human', 'female', 'lawful', 'fighter', 'core', 'positional'],
     },
   ],
 }
@@ -217,5 +217,40 @@ describe('ChampionsPage filters', () => {
         )
       }),
     ).toBeInTheDocument()
+  })
+
+  it('支持按阵营、获取方式和机制筛选，并可单独清空已选维度', async () => {
+    const user = userEvent.setup()
+
+    renderChampionsPage()
+
+    expect(await screen.findByText('阿尔法')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: '善良' }))
+    await user.click(screen.getByRole('button', { name: '活动英雄' }))
+    await user.click(screen.getByRole('button', { name: '减速控制' }))
+
+    expect(screen.getByText('阿尔法')).toBeInTheDocument()
+    expect(screen.queryByText('贝塔')).not.toBeInTheDocument()
+    expect(screen.queryByText('伽马')).not.toBeInTheDocument()
+    expect(screen.queryByText('德尔塔')).not.toBeInTheDocument()
+
+    expect(screen.getByRole('button', { name: '清空阵营：善良' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '清空获取方式：活动英雄' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '清空机制：减速控制' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '清空全部' })).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: '清空机制：减速控制' }))
+
+    await waitFor(() => {
+      expect(screen.getByText('贝塔')).toBeInTheDocument()
+    })
+
+    expect(screen.getByText('阿尔法')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: '清空机制：减速控制' })).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '清空阵营：善良' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '清空获取方式：活动英雄' })).toBeInTheDocument()
+    expect(screen.queryByText('伽马')).not.toBeInTheDocument()
+    expect(screen.queryByText('德尔塔')).not.toBeInTheDocument()
   })
 })

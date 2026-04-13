@@ -29,6 +29,14 @@ interface LocalizedEnumGroup {
 
 const seatOptions = Array.from({ length: 12 }, (_, index) => index + 1)
 const MAX_VISIBLE_RESULTS = 48
+type AttributeFilterGroupId = 'race' | 'gender' | 'alignment' | 'profession' | 'acquisition' | 'mechanics'
+
+interface ActiveFilterChip {
+  id: string
+  label: string
+  clearLabel: string
+  onClear: () => void
+}
 
 type ChampionState =
   | { status: 'loading' }
@@ -78,7 +86,7 @@ function isStringEnumGroup(value: unknown): value is StringEnumGroup {
 
 function collectAttributeFilterOptions(
   champions: Champion[],
-  groupId: 'race' | 'gender' | 'profession',
+  groupId: AttributeFilterGroupId,
   locale: 'zh-CN' | 'en-US',
 ): string[] {
   return Array.from(new Set(champions.flatMap((champion) => getChampionTagsForGroup(champion.tags, groupId)))).sort(
@@ -96,6 +104,9 @@ export function ChampionsPage() {
   const [selectedRaces, setSelectedRaces] = useState<string[]>([])
   const [selectedGenders, setSelectedGenders] = useState<string[]>([])
   const [selectedProfessions, setSelectedProfessions] = useState<string[]>([])
+  const [selectedAlignments, setSelectedAlignments] = useState<string[]>([])
+  const [selectedAcquisitions, setSelectedAcquisitions] = useState<string[]>([])
+  const [selectedMechanics, setSelectedMechanics] = useState<string[]>([])
 
   useEffect(() => {
     let disposed = false
@@ -147,8 +158,23 @@ export function ChampionsPage() {
       races: selectedRaces,
       genders: selectedGenders,
       professions: selectedProfessions,
+      alignments: selectedAlignments,
+      acquisitions: selectedAcquisitions,
+      mechanics: selectedMechanics,
     })
-  }, [search, selectedAffiliations, selectedGenders, selectedProfessions, selectedRaces, selectedRoles, selectedSeats, state])
+  }, [
+    search,
+    selectedAcquisitions,
+    selectedAffiliations,
+    selectedAlignments,
+    selectedGenders,
+    selectedMechanics,
+    selectedProfessions,
+    selectedRaces,
+    selectedRoles,
+    selectedSeats,
+    state,
+  ])
 
   const visibleChampions = filteredChampions.slice(0, MAX_VISIBLE_RESULTS)
   const matchedSeats = new Set(filteredChampions.map((champion) => champion.seat)).size
@@ -163,57 +189,209 @@ export function ChampionsPage() {
     state.status === 'ready' ? collectAttributeFilterOptions(state.champions, 'race', locale) : []
   const genderOptions =
     state.status === 'ready' ? collectAttributeFilterOptions(state.champions, 'gender', locale) : []
+  const alignmentOptions =
+    state.status === 'ready' ? collectAttributeFilterOptions(state.champions, 'alignment', locale) : []
   const professionOptions =
     state.status === 'ready' ? collectAttributeFilterOptions(state.champions, 'profession', locale) : []
+  const acquisitionOptions =
+    state.status === 'ready' ? collectAttributeFilterOptions(state.champions, 'acquisition', locale) : []
+  const mechanicOptions =
+    state.status === 'ready' ? collectAttributeFilterOptions(state.champions, 'mechanics', locale) : []
   const orderedSelectedRaces = raceOptions.filter((race) => selectedRaces.includes(race))
   const orderedSelectedGenders = genderOptions.filter((gender) => selectedGenders.includes(gender))
+  const orderedSelectedAlignments = alignmentOptions.filter((alignment) => selectedAlignments.includes(alignment))
   const orderedSelectedProfessions = professionOptions.filter((profession) => selectedProfessions.includes(profession))
-  const activeFilters = [
+  const orderedSelectedAcquisitions = acquisitionOptions.filter((acquisition) =>
+    selectedAcquisitions.includes(acquisition),
+  )
+  const orderedSelectedMechanics = mechanicOptions.filter((mechanic) => selectedMechanics.includes(mechanic))
+  const clearAllFilters = () => {
+    setSearch('')
+    setSelectedSeats([])
+    setSelectedRoles([])
+    setSelectedAffiliations([])
+    setSelectedRaces([])
+    setSelectedGenders([])
+    setSelectedAlignments([])
+    setSelectedProfessions([])
+    setSelectedAcquisitions([])
+    setSelectedMechanics([])
+  }
+  const activeFilterChips = [
     search.trim()
-      ? t({
-          zh: `关键词：${search.trim()}`,
-          en: `Keyword: ${search.trim()}`,
-        })
+      ? {
+          id: 'search',
+          label: t({
+            zh: `关键词：${search.trim()}`,
+            en: `Keyword: ${search.trim()}`,
+          }),
+          clearLabel: t({
+            zh: `清空关键词：${search.trim()}`,
+            en: `Clear keyword: ${search.trim()}`,
+          }),
+          onClear: () => setSearch(''),
+        }
       : null,
     orderedSelectedSeats.length > 0
-      ? t({
-          zh: `座位：${orderedSelectedSeats.map((seat) => `${seat} 号位`).join('、')}`,
-          en: `Seats: ${orderedSelectedSeats.join(', ')}`,
-        })
+      ? {
+          id: 'seats',
+          label: t({
+            zh: `座位：${orderedSelectedSeats.map((seat) => `${seat} 号位`).join('、')}`,
+            en: `Seats: ${orderedSelectedSeats.join(', ')}`,
+          }),
+          clearLabel: t({
+            zh: `清空座位：${orderedSelectedSeats.map((seat) => `${seat} 号位`).join('、')}`,
+            en: `Clear seats: ${orderedSelectedSeats.join(', ')}`,
+          }),
+          onClear: () => setSelectedSeats([]),
+        }
       : null,
     orderedSelectedRoles.length > 0
-      ? t({
-          zh: `定位：${orderedSelectedRoles.map((role) => getRoleLabel(role, locale)).join('、')}`,
-          en: `Roles: ${orderedSelectedRoles.map((role) => getRoleLabel(role, locale)).join(', ')}`,
-        })
+      ? {
+          id: 'roles',
+          label: t({
+            zh: `定位：${orderedSelectedRoles.map((role) => getRoleLabel(role, locale)).join('、')}`,
+            en: `Roles: ${orderedSelectedRoles.map((role) => getRoleLabel(role, locale)).join(', ')}`,
+          }),
+          clearLabel: t({
+            zh: `清空定位：${orderedSelectedRoles.map((role) => getRoleLabel(role, locale)).join('、')}`,
+            en: `Clear roles: ${orderedSelectedRoles.map((role) => getRoleLabel(role, locale)).join(', ')}`,
+          }),
+          onClear: () => setSelectedRoles([]),
+        }
       : null,
     orderedSelectedAffiliations.length > 0
-      ? t({
-          zh: `联动队伍：${orderedSelectedAffiliations.map((affiliation) => getLocalizedTextPair(affiliation, locale)).join('、')}`,
-          en: `Affiliations: ${orderedSelectedAffiliations.map((affiliation) => getLocalizedTextPair(affiliation, locale)).join(', ')}`,
-        })
+      ? {
+          id: 'affiliations',
+          label: t({
+            zh: `联动队伍：${orderedSelectedAffiliations.map((affiliation) => getLocalizedTextPair(affiliation, locale)).join('、')}`,
+            en: `Affiliations: ${orderedSelectedAffiliations
+              .map((affiliation) => getLocalizedTextPair(affiliation, locale))
+              .join(', ')}`,
+          }),
+          clearLabel: t({
+            zh: `清空联动队伍：${orderedSelectedAffiliations
+              .map((affiliation) => getLocalizedTextPair(affiliation, locale))
+              .join('、')}`,
+            en: `Clear affiliations: ${orderedSelectedAffiliations
+              .map((affiliation) => getLocalizedTextPair(affiliation, locale))
+              .join(', ')}`,
+          }),
+          onClear: () => setSelectedAffiliations([]),
+        }
       : null,
     orderedSelectedRaces.length > 0
-      ? t({
-          zh: `种族：${orderedSelectedRaces.map((race) => getChampionTagLabel(race, locale)).join('、')}`,
-          en: `Races: ${orderedSelectedRaces.map((race) => getChampionTagLabel(race, locale)).join(', ')}`,
-        })
+      ? {
+          id: 'races',
+          label: t({
+            zh: `种族：${orderedSelectedRaces.map((race) => getChampionTagLabel(race, locale)).join('、')}`,
+            en: `Races: ${orderedSelectedRaces.map((race) => getChampionTagLabel(race, locale)).join(', ')}`,
+          }),
+          clearLabel: t({
+            zh: `清空种族：${orderedSelectedRaces.map((race) => getChampionTagLabel(race, locale)).join('、')}`,
+            en: `Clear races: ${orderedSelectedRaces.map((race) => getChampionTagLabel(race, locale)).join(', ')}`,
+          }),
+          onClear: () => setSelectedRaces([]),
+        }
       : null,
     orderedSelectedGenders.length > 0
-      ? t({
-          zh: `性别：${orderedSelectedGenders.map((gender) => getChampionTagLabel(gender, locale)).join('、')}`,
-          en: `Genders: ${orderedSelectedGenders.map((gender) => getChampionTagLabel(gender, locale)).join(', ')}`,
-        })
+      ? {
+          id: 'genders',
+          label: t({
+            zh: `性别：${orderedSelectedGenders.map((gender) => getChampionTagLabel(gender, locale)).join('、')}`,
+            en: `Genders: ${orderedSelectedGenders.map((gender) => getChampionTagLabel(gender, locale)).join(', ')}`,
+          }),
+          clearLabel: t({
+            zh: `清空性别：${orderedSelectedGenders.map((gender) => getChampionTagLabel(gender, locale)).join('、')}`,
+            en: `Clear genders: ${orderedSelectedGenders
+              .map((gender) => getChampionTagLabel(gender, locale))
+              .join(', ')}`,
+          }),
+          onClear: () => setSelectedGenders([]),
+        }
+      : null,
+    orderedSelectedAlignments.length > 0
+      ? {
+          id: 'alignments',
+          label: t({
+            zh: `阵营：${orderedSelectedAlignments.map((alignment) => getChampionTagLabel(alignment, locale)).join('、')}`,
+            en: `Alignments: ${orderedSelectedAlignments
+              .map((alignment) => getChampionTagLabel(alignment, locale))
+              .join(', ')}`,
+          }),
+          clearLabel: t({
+            zh: `清空阵营：${orderedSelectedAlignments
+              .map((alignment) => getChampionTagLabel(alignment, locale))
+              .join('、')}`,
+            en: `Clear alignments: ${orderedSelectedAlignments
+              .map((alignment) => getChampionTagLabel(alignment, locale))
+              .join(', ')}`,
+          }),
+          onClear: () => setSelectedAlignments([]),
+        }
       : null,
     orderedSelectedProfessions.length > 0
-      ? t({
-          zh: `职业：${orderedSelectedProfessions.map((profession) => getChampionTagLabel(profession, locale)).join('、')}`,
-          en: `Professions: ${orderedSelectedProfessions
-            .map((profession) => getChampionTagLabel(profession, locale))
-            .join(', ')}`,
-        })
+      ? {
+          id: 'professions',
+          label: t({
+            zh: `职业：${orderedSelectedProfessions.map((profession) => getChampionTagLabel(profession, locale)).join('、')}`,
+            en: `Professions: ${orderedSelectedProfessions
+              .map((profession) => getChampionTagLabel(profession, locale))
+              .join(', ')}`,
+          }),
+          clearLabel: t({
+            zh: `清空职业：${orderedSelectedProfessions
+              .map((profession) => getChampionTagLabel(profession, locale))
+              .join('、')}`,
+            en: `Clear professions: ${orderedSelectedProfessions
+              .map((profession) => getChampionTagLabel(profession, locale))
+              .join(', ')}`,
+          }),
+          onClear: () => setSelectedProfessions([]),
+        }
       : null,
-  ].filter((item): item is string => Boolean(item))
+    orderedSelectedAcquisitions.length > 0
+      ? {
+          id: 'acquisitions',
+          label: t({
+            zh: `获取方式：${orderedSelectedAcquisitions
+              .map((acquisition) => getChampionTagLabel(acquisition, locale))
+              .join('、')}`,
+            en: `Availability: ${orderedSelectedAcquisitions
+              .map((acquisition) => getChampionTagLabel(acquisition, locale))
+              .join(', ')}`,
+          }),
+          clearLabel: t({
+            zh: `清空获取方式：${orderedSelectedAcquisitions
+              .map((acquisition) => getChampionTagLabel(acquisition, locale))
+              .join('、')}`,
+            en: `Clear availability: ${orderedSelectedAcquisitions
+              .map((acquisition) => getChampionTagLabel(acquisition, locale))
+              .join(', ')}`,
+          }),
+          onClear: () => setSelectedAcquisitions([]),
+        }
+      : null,
+    orderedSelectedMechanics.length > 0
+      ? {
+          id: 'mechanics',
+          label: t({
+            zh: `机制：${orderedSelectedMechanics.map((mechanic) => getChampionTagLabel(mechanic, locale)).join('、')}`,
+            en: `Mechanics: ${orderedSelectedMechanics
+              .map((mechanic) => getChampionTagLabel(mechanic, locale))
+              .join(', ')}`,
+          }),
+          clearLabel: t({
+            zh: `清空机制：${orderedSelectedMechanics.map((mechanic) => getChampionTagLabel(mechanic, locale)).join('、')}`,
+            en: `Clear mechanics: ${orderedSelectedMechanics
+              .map((mechanic) => getChampionTagLabel(mechanic, locale))
+              .join(', ')}`,
+          }),
+          onClear: () => setSelectedMechanics([]),
+        }
+      : null,
+  ].filter((item): item is ActiveFilterChip => Boolean(item))
+  const activeFilters = activeFilterChips.map((chip) => chip.label)
 
   return (
     <div className="page-stack">
@@ -442,6 +620,39 @@ export function ChampionsPage() {
               </div>
 
               <div className="filter-group">
+                <span className="field-label">{getChampionAttributeGroupLabel('alignment', locale)}</span>
+                <div className="filter-chip-grid">
+                  <button
+                    type="button"
+                    className={selectedAlignments.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
+                    aria-pressed={selectedAlignments.length === 0}
+                    onClick={() => setSelectedAlignments([])}
+                  >
+                    {t({ zh: '全部', en: 'All' })}
+                  </button>
+                  {alignmentOptions.map((alignment) => (
+                    <button
+                      key={alignment}
+                      type="button"
+                      className={
+                        selectedAlignments.includes(alignment) ? 'filter-chip filter-chip--active' : 'filter-chip'
+                      }
+                      aria-pressed={selectedAlignments.includes(alignment)}
+                      onClick={() => setSelectedAlignments((current) => toggleFilterValue(current, alignment))}
+                    >
+                      {getChampionTagLabel(alignment, locale)}
+                    </button>
+                  ))}
+                </div>
+                <span className="field-hint">
+                  {t({
+                    zh: '支持多选；适合先看善恶 / 秩序倾向的英雄池。',
+                    en: 'Multi-select is supported for comparing alignment tendencies in one pass.',
+                  })}
+                </span>
+              </div>
+
+              <div className="filter-group">
                 <span className="field-label">{getChampionAttributeGroupLabel('profession', locale)}</span>
                 <div className="filter-chip-grid">
                   <button
@@ -473,13 +684,116 @@ export function ChampionsPage() {
                   })}
                 </span>
               </div>
+
+              <div className="filter-group">
+                <span className="field-label">{getChampionAttributeGroupLabel('acquisition', locale)}</span>
+                <div className="filter-chip-grid">
+                  <button
+                    type="button"
+                    className={selectedAcquisitions.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
+                    aria-pressed={selectedAcquisitions.length === 0}
+                    onClick={() => setSelectedAcquisitions([])}
+                  >
+                    {t({ zh: '全部', en: 'All' })}
+                  </button>
+                  {acquisitionOptions.map((acquisition) => (
+                    <button
+                      key={acquisition}
+                      type="button"
+                      className={
+                        selectedAcquisitions.includes(acquisition) ? 'filter-chip filter-chip--active' : 'filter-chip'
+                      }
+                      aria-pressed={selectedAcquisitions.includes(acquisition)}
+                      onClick={() => setSelectedAcquisitions((current) => toggleFilterValue(current, acquisition))}
+                    >
+                      {getChampionTagLabel(acquisition, locale)}
+                    </button>
+                  ))}
+                </div>
+                <span className="field-hint">
+                  {t({
+                    zh: '支持多选；可以区分起始、常驻、活动或 Tales 等来源。',
+                    en: 'Multi-select is supported for comparing starter, evergreen, event, or Tales availability.',
+                  })}
+                </span>
+              </div>
+
+              <div className="filter-group">
+                <span className="field-label">{getChampionAttributeGroupLabel('mechanics', locale)}</span>
+                <div className="filter-chip-grid">
+                  <button
+                    type="button"
+                    className={selectedMechanics.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
+                    aria-pressed={selectedMechanics.length === 0}
+                    onClick={() => setSelectedMechanics([])}
+                  >
+                    {t({ zh: '全部', en: 'All' })}
+                  </button>
+                  {mechanicOptions.map((mechanic) => (
+                    <button
+                      key={mechanic}
+                      type="button"
+                      className={
+                        selectedMechanics.includes(mechanic) ? 'filter-chip filter-chip--active' : 'filter-chip'
+                      }
+                      aria-pressed={selectedMechanics.includes(mechanic)}
+                      onClick={() => setSelectedMechanics((current) => toggleFilterValue(current, mechanic))}
+                    >
+                      {getChampionTagLabel(mechanic, locale)}
+                    </button>
+                  ))}
+                </div>
+                <span className="field-hint">
+                  {t({
+                    zh: '支持多选；适合按控制、站位联动或专精机制组合筛候选。',
+                    en: 'Multi-select is supported for control, positional, or specialization-based mechanics.',
+                  })}
+                </span>
+              </div>
             </div>
+
+            {activeFilterChips.length > 0 ? (
+              <div className="active-filter-bar">
+                <div className="active-filter-bar__header">
+                  <div className="active-filter-bar__copy">
+                    <strong className="active-filter-bar__title">
+                      {t({ zh: '已选条件', en: 'Selected filters' })}
+                    </strong>
+                    <p className="active-filter-bar__hint">
+                      {t({
+                        zh: '点击任一条件即可单独清空对应维度，也可以一键清空全部。',
+                        en: 'Click any filter chip to clear that dimension only, or clear everything at once.',
+                      })}
+                    </p>
+                  </div>
+                  <button type="button" className="action-button action-button--ghost" onClick={clearAllFilters}>
+                    {t({ zh: '清空全部', en: 'Clear all' })}
+                  </button>
+                </div>
+                <div className="active-filter-bar__chips">
+                  {activeFilterChips.map((chip) => (
+                    <button
+                      key={chip.id}
+                      type="button"
+                      className="active-filter-chip"
+                      aria-label={chip.clearLabel}
+                      onClick={chip.onClear}
+                    >
+                      <span>{chip.label}</span>
+                      <span aria-hidden="true" className="active-filter-chip__dismiss">
+                        ×
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : null}
 
             {filteredChampions.length === 0 ? (
               <div className="status-banner status-banner--info">
                 {t({
-                  zh: '当前筛选条件下没有匹配英雄，可以先清空座位、定位、联动队伍、种族、性别或职业过滤。',
-                  en: 'No champions match this filter set yet. Try clearing seat, role, affiliation, race, gender, or profession filters first.',
+                  zh: '当前筛选条件下没有匹配英雄，可以先清空上方已选条件，或放宽座位、定位、联动队伍、种族、性别、阵营、职业、获取方式或机制过滤。',
+                  en: 'No champions match this filter set yet. Try clearing the selected chips above or widening seat, role, affiliation, race, gender, alignment, profession, availability, or mechanic filters.',
                 })}
               </div>
             ) : null}
@@ -495,8 +809,8 @@ export function ChampionsPage() {
 
                 <p className="supporting-text">
                   {t({
-                    zh: `当前展示 ${visibleChampions.length} / ${filteredChampions.length} 名英雄。如果结果过多，优先加关键词、座位、定位、联动队伍、种族、性别或职业缩小范围。`,
-                    en: `Showing ${visibleChampions.length} / ${filteredChampions.length} champions. Narrow things down with a keyword, seat, role, affiliation, race, gender, or profession if the list feels too broad.`,
+                    zh: `当前展示 ${visibleChampions.length} / ${filteredChampions.length} 名英雄。如果结果过多，优先加关键词、座位、定位、联动队伍、种族、性别、阵营、职业、获取方式或机制缩小范围。`,
+                    en: `Showing ${visibleChampions.length} / ${filteredChampions.length} champions. Narrow things down with a keyword, seat, role, affiliation, race, gender, alignment, profession, availability, or mechanic if the list feels too broad.`,
                   })}
                 </p>
 
