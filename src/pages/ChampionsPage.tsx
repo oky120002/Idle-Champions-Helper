@@ -8,6 +8,7 @@ import {
   getRoleLabel,
   getSecondaryLocalizedText,
 } from '../domain/localizedText'
+import { getChampionAttributeTags, getChampionTagLabel } from '../domain/championTags'
 import type { Champion, LocalizedText } from '../domain/types'
 import { filterChampions, toggleFilterValue } from '../rules/championFilter'
 
@@ -358,6 +359,7 @@ export function ChampionsPage() {
                   {visibleChampions.map((champion) => {
                     const primaryName = getPrimaryLocalizedText(champion.name, locale)
                     const secondaryName = getSecondaryLocalizedText(champion.name, locale)
+                    const attributeTags = getChampionAttributeTags(champion.tags)
 
                     return (
                       <article key={champion.id} className="result-card">
@@ -387,12 +389,26 @@ export function ChampionsPage() {
                             : t({ zh: '暂无', en: 'None yet' })}
                         </p>
 
-                        <div className="tag-row">
-                          {champion.tags.slice(0, 6).map((tag) => (
-                            <span key={tag} className="tag-pill tag-pill--muted">
-                              {tag}
-                            </span>
-                          ))}
+                        <div className="result-block">
+                          <strong className="result-block__title">
+                            {t({ zh: '属性标签', en: 'Attribute tags' })}
+                          </strong>
+                          {attributeTags.length > 0 ? (
+                            <div className="tag-row">
+                              {attributeTags.map((tag) => (
+                                <span key={tag} className="tag-pill tag-pill--muted">
+                                  {getChampionTagLabel(tag, locale)}
+                                </span>
+                              ))}
+                            </div>
+                          ) : (
+                            <p className="supporting-text">
+                              {t({
+                                zh: '当前数据里还没有更多属性标签。',
+                                en: 'No extra attribute tags are exposed in the current dataset yet.',
+                              })}
+                            </p>
+                          )}
                         </div>
                       </article>
                     )

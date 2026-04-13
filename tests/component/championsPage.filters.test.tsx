@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
@@ -39,7 +39,7 @@ const championsFixture: DataCollection<Champion> = {
       seat: 1,
       roles: ['support'],
       affiliations: [hall],
-      tags: ['starter'],
+      tags: ['support', 'human', 'male', 'good', 'lawful', 'event', 'y2', 'control_slow', 'starter'],
     },
     {
       id: 'beta',
@@ -157,5 +157,26 @@ describe('ChampionsPage filters', () => {
         '当前筛选：定位：辅助、输出 · 联动队伍：大厅伙伴团 · Companions of the Hall、绝对宿敌 · Absolute Adversaries',
       ),
     ).toBeInTheDocument()
+  })
+
+  it('结果卡会展示完整属性标签，而不是只截取前几个 tags', async () => {
+    renderChampionsPage()
+
+    const alphaTitle = await screen.findByRole('heading', { level: 3, name: '阿尔法' })
+    const alphaCard = alphaTitle.closest('article')
+
+    expect(alphaCard).not.toBeNull()
+
+    const alphaScope = within(alphaCard as HTMLElement)
+
+    expect(alphaScope.getByText('属性标签')).toBeInTheDocument()
+    expect(alphaScope.getByText('人类')).toBeInTheDocument()
+    expect(alphaScope.getByText('男性')).toBeInTheDocument()
+    expect(alphaScope.getByText('善良')).toBeInTheDocument()
+    expect(alphaScope.getByText('守序')).toBeInTheDocument()
+    expect(alphaScope.getByText('活动英雄')).toBeInTheDocument()
+    expect(alphaScope.getByText('第 2 年活动')).toBeInTheDocument()
+    expect(alphaScope.getByText('减速控制')).toBeInTheDocument()
+    expect(alphaScope.getByText('starter')).toBeInTheDocument()
   })
 })
