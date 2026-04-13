@@ -9,6 +9,9 @@ export interface ChampionFilters {
   races: string[]
   genders: string[]
   professions: string[]
+  alignments: string[]
+  acquisitions: string[]
+  mechanics: string[]
 }
 
 export function toggleFilterValue<T>(values: T[], value: T): T[] {
@@ -38,6 +41,14 @@ export function filterChampions(champions: Champion[], filters: ChampionFilters)
     const matchesProfession =
       filters.professions.length === 0 ||
       filters.professions.some((profession) => champion.tags.includes(profession))
+    const matchesAlignment =
+      filters.alignments.length === 0 ||
+      filters.alignments.some((alignment) => champion.tags.includes(alignment))
+    const matchesAcquisition =
+      filters.acquisitions.length === 0 ||
+      filters.acquisitions.some((acquisition) => champion.tags.includes(acquisition))
+    const matchesMechanic =
+      filters.mechanics.length === 0 || filters.mechanics.some((mechanic) => champion.tags.includes(mechanic))
 
     return (
       matchesSearch &&
@@ -46,7 +57,10 @@ export function filterChampions(champions: Champion[], filters: ChampionFilters)
       matchesAffiliation &&
       matchesRace &&
       matchesGender &&
-      matchesProfession
+      matchesProfession &&
+      matchesAlignment &&
+      matchesAcquisition &&
+      matchesMechanic
     )
   })
 }

@@ -18,6 +18,7 @@ describe('championTags', () => {
   it('会把常见标签转换成更易读的中文文案', () => {
     expect(getChampionTagLabel('male', 'zh-CN')).toBe('男性')
     expect(getChampionTagLabel('control_slow', 'zh-CN')).toBe('减速控制')
+    expect(getChampionTagLabel('spec_gold', 'zh-CN')).toBe('金币专精')
     expect(getChampionTagLabel('y2', 'zh-CN')).toBe('第 2 年活动')
     expect(getChampionTagLabel('starter', 'zh-CN')).toBe('起始英雄')
   })
@@ -55,8 +56,15 @@ describe('championTags', () => {
   it('可以按分组提取指定属性标签', () => {
     expect(getChampionTagsForGroup(['support', 'human', 'male', 'warlock'], 'race')).toEqual(['human'])
     expect(getChampionTagsForGroup(['support', 'human', 'male', 'warlock'], 'gender')).toEqual(['male'])
+    expect(getChampionTagsForGroup(['support', 'good', 'event', 'control_slow'], 'alignment')).toEqual(['good'])
     expect(getChampionTagsForGroup(['support', 'human', 'male', 'warlock'], 'profession')).toEqual([
       'warlock',
+    ])
+    expect(getChampionTagsForGroup(['support', 'good', 'event', 'control_slow'], 'acquisition')).toEqual([
+      'event',
+    ])
+    expect(getChampionTagsForGroup(['support', 'good', 'event', 'control_slow'], 'mechanics')).toEqual([
+      'control_slow',
     ])
   })
 })
