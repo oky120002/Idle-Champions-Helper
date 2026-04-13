@@ -1,6 +1,6 @@
 import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
 
 vi.mock('../../src/data/client', () => ({
@@ -82,12 +82,24 @@ const enumsFixture: DataCollection<StringEnumGroup | LocalizedEnumGroup> = {
   ],
 }
 
+const manyChampionsFixture: DataCollection<Champion> = {
+  updatedAt: '2026-04-13',
+  items: Array.from({ length: 60 }, (_, index) => ({
+    id: `generated-${index + 1}`,
+    name: localized(`Generated Hero ${index + 1}`, `测试英雄 ${index + 1}`),
+    seat: (index % 12) + 1,
+    roles: [['support'], ['healing'], ['dps'], ['tank']][index % 4],
+    affiliations: [[hall], [adversaries], [oxventurers]][index % 3],
+    tags: [`tag-${index + 1}`],
+  })),
+}
+
 const mockedLoadCollection = vi.mocked(loadCollection)
 
-function renderChampionsPage() {
+function renderChampionsPage(initialEntries: string[] = ['/champions']) {
   return render(
     <I18nProvider>
-      <MemoryRouter>
+      <MemoryRouter initialEntries={initialEntries}>
         <ChampionsPage />
       </MemoryRouter>
     </I18nProvider>,
@@ -95,6 +107,7 @@ function renderChampionsPage() {
 }
 
 beforeEach(() => {
+  window.sessionStorage.clear()
   mockedLoadCollection.mockImplementation(async (name) => {
     if (name === 'champions') {
       return championsFixture
@@ -108,13 +121,20 @@ beforeEach(() => {
   })
 })
 
+afterEach(() => {
+  vi.restoreAllMocks()
+})
+
 describe('ChampionsPage filters', () => {
   it('支持座位多选，并且再次点击已选项会取消选择', async () => {
     const user = userEvent.setup()
 
     renderChampionsPage()
 
-    expect(await screen.findByText('阿尔法')).toBeInTheDocument()
+    const alphaName = await screen.findByText('阿尔法')
+    expect(alphaName).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: '查看详情：阿尔法' })).toHaveAttribute('href', '/champions/alpha')
+    expect(alphaName.closest('a')).toHaveAttribute('href', '/champions/alpha')
 
     await user.click(screen.getByRole('button', { name: '1 号位' }))
     await user.click(screen.getByRole('button', { name: '2 号位' }))
@@ -163,7 +183,7 @@ describe('ChampionsPage filters', () => {
     renderChampionsPage()
 
     const alphaTitle = await screen.findByRole('heading', { level: 3, name: '阿尔法' })
-    const alphaCard = alphaTitle.closest('article')
+    const alphaCard = alphaTitle.closest('a')
 
     expect(alphaCard).not.toBeNull()
 
@@ -238,7 +258,7 @@ describe('ChampionsPage filters', () => {
     expect(screen.getByRole('button', { name: '清空阵营：善良' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '清空获取方式：活动英雄' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '清空机制：减速控制' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: '清空全部' })).toBeInTheDocument()
+    expect(screen.getAllByRole('button', { name: '清空全部' })).toHaveLength(2)
 
     await user.click(screen.getByRole('button', { name: '清空机制：减速控制' }))
 
@@ -252,5 +272,104 @@ describe('ChampionsPage filters', () => {
     expect(screen.getByRole('button', { name: '清空获取方式：活动英雄' })).toBeInTheDocument()
     expect(screen.queryByText('伽马')).not.toBeInTheDocument()
     expect(screen.queryByText('德尔塔')).not.toBeInTheDocument()
+  })
+
+  it('无匹配时提供放开筛选和清空全部的快捷操作', async () => {
+    const user = userEvent.setup()
+
+    renderChampionsPage()
+
+    expect(await screen.findByText('阿尔法')).toBeInTheDocument()
+
+    await user.type(screen.getByPlaceholderText('搜英雄名、标签、联动队伍'), '德')
+    await user.click(screen.getByRole('button', { name: '1 号位' }))
+
+    expect(
+      screen.getByText(
+        '当前筛选条件下没有匹配英雄，可以先放开座位、定位、联动队伍、种族、性别、阵营、职业、获取方式或机制，或一键清空全部条件。',
+      ),
+    ).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: '一键放开全部筛选' }))
+
+    await waitFor(() => {
+      expect(screen.getByText('德尔塔')).toBeInTheDocument()
+    })
+
+    expect(screen.getByDisplayValue('德')).toBeInTheDocument()
+    expect(screen.queryByText('阿尔法')).not.toBeInTheDocument()
+
+    await user.click(within(screen.getByRole('group', { name: '筛选快捷操作' })).getByRole('button', { name: '清空全部' }))
+
+    await waitFor(() => {
+      expect(screen.getByText('阿尔法')).toBeInTheDocument()
+    })
+
+    expect(screen.getByPlaceholderText('搜英雄名、标签、联动队伍')).toHaveValue('')
+  })
+
+  it('支持从 URL 恢复筛选条件，并恢复上次滚动位置', async () => {
+    const scrollToSpy = vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
+    const search = '?q=alpha&seat=1&role=support&race=human&mechanic=control_slow'
+    window.sessionStorage.setItem(`champions-page-scroll:${search}`, '640')
+
+    renderChampionsPage([`/champions${search}`])
+
+    expect(await screen.findByDisplayValue('alpha')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '1 号位' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('button', { name: '辅助' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('button', { name: '人类' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('button', { name: '减速控制' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByText('阿尔法')).toBeInTheDocument()
+    expect(screen.queryByText('贝塔')).not.toBeInTheDocument()
+
+    await waitFor(() => {
+      expect(scrollToSpy).toHaveBeenCalledWith({ top: 640, left: 0, behavior: 'auto' })
+    })
+
+    expect(window.sessionStorage.getItem(`champions-page-scroll:${search}`)).toBeNull()
+    expect(screen.getByRole('link', { name: '查看详情：阿尔法' })).toHaveAttribute(
+      'href',
+      '/champions/alpha?q=alpha&seat=1&role=support&race=human&mechanic=control_slow',
+    )
+  })
+
+  it('默认先展示 48 名英雄，并支持切换到显示全部再收起', async () => {
+    const user = userEvent.setup()
+
+    mockedLoadCollection.mockImplementation(async (name) => {
+      if (name === 'champions') {
+        return manyChampionsFixture
+      }
+
+      if (name === 'enums') {
+        return enumsFixture
+      }
+
+      throw new Error(`unexpected collection: ${name}`)
+    })
+
+    renderChampionsPage()
+
+    expect(await screen.findByText('测试英雄 1')).toBeInTheDocument()
+    expect(screen.getByText('默认先展示 48 名英雄')).toBeInTheDocument()
+    expect(screen.getByText(/^当前展示 48 \/ 60 名英雄/)).toBeInTheDocument()
+    expect(screen.queryByText('测试英雄 60')).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: '显示全部 60 名' }))
+
+    await waitFor(() => {
+      expect(screen.getByText('测试英雄 60')).toBeInTheDocument()
+    })
+
+    expect(screen.getByText(/^当前展示 60 \/ 60 名英雄/)).toBeInTheDocument()
+
+    await user.click(screen.getAllByRole('button', { name: '收起到默认 48 名' })[0])
+
+    await waitFor(() => {
+      expect(screen.queryByText('测试英雄 60')).not.toBeInTheDocument()
+    })
+
+    expect(screen.getByText(/^当前展示 48 \/ 60 名英雄/)).toBeInTheDocument()
   })
 })

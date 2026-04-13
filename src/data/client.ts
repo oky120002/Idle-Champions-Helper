@@ -1,4 +1,4 @@
-import type { DataCollection, DataVersion } from '../domain/types'
+import type { ChampionDetail, DataCollection, DataVersion } from '../domain/types'
 
 const memoryCache = new Map<string, unknown>()
 
@@ -49,6 +49,27 @@ export async function loadCollectionAtVersion<T>(version: string, name: string):
 export async function loadCollection<T>(name: string): Promise<DataCollection<T>> {
   const version = await loadVersion()
   return loadCollectionAtVersion<T>(version.current, name)
+}
+
+export async function loadChampionDetailAtVersion(
+  version: string,
+  championId: string,
+): Promise<ChampionDetail> {
+  const cacheKey = `${version}:champion-details:${championId}`
+  const cached = memoryCache.get(cacheKey)
+
+  if (cached) {
+    return cached as ChampionDetail
+  }
+
+  const detail = await fetchJson<ChampionDetail>(`${version}/champion-details/${championId}.json`)
+  memoryCache.set(cacheKey, detail)
+  return detail
+}
+
+export async function loadChampionDetail(championId: string): Promise<ChampionDetail> {
+  const version = await loadVersion()
+  return loadChampionDetailAtVersion(version.current, championId)
 }
 
 export function clearDataCache(): void {

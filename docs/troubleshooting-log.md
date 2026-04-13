@@ -54,3 +54,13 @@
 - 处理：与 GitHub 远端交互时，优先使用 `gh` / `gh api` 完成 ref 查询、PR、发布或必要的远端更新；不要默认先跑 `git push`、`git fetch`、`git ls-remote`。
 - 补充：若通过 `gh api` 更新了远端分支引用，本地分支与 `origin/*` 可能会出现“内容等价但 SHA 不同”的暂时分叉；后续应先 `git fetch origin`，再按远端最新 SHA 对齐本地分支。
 - 引用：`AGENTS.md`
+
+## 记录 005：旧工作树残留的预览服务会污染当前浏览器回归
+
+- 状态：已解决；时间：`2026-04-13`
+- 影响：当前工作树执行 `Playwright` 或手工浏览器验收时，可能实际命中另一个工作树残留的 `preview:pages` 服务，导致页面结构、路由行为和本地源码不一致。
+- 排查摘要：先发现 `#/champions/7` 在浏览器里落回首页、筛选卡 DOM 也和当前源码不一致；随后检查 `4173` 端口监听进程，确认占用者来自另一条工作树。
+- 根因：`playwright.config.ts` 与本地预览默认都使用 `127.0.0.1:4173`；当旧工作树的预览进程未退出时，当前会话会误复用旧服务，读到过期 `dist/`。
+- 解决：先用 `lsof -nP -iTCP:4173 -sTCP:LISTEN` 确认占用进程，再关闭旧服务，随后在当前工作树重新执行 `npm run build` 与 `Playwright` 回归。
+- 验证：关闭旧服务后，`tests/e2e/smoke/navigation.spec.ts` 与 `tests/e2e/smoke/champion-detail.spec.ts` 都能在当前工作树产物上通过。
+- 引用：`playwright.config.ts`、`scripts/serve-github-pages-preview.mjs`
