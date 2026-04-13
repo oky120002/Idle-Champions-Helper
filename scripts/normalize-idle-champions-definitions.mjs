@@ -20,6 +20,89 @@ const ROLE_TAGS = new Set([
   'tanking',
 ])
 
+function toText(value) {
+  if (typeof value === 'string') {
+    const trimmed = value.trim()
+    return trimmed || null
+  }
+
+  if (typeof value === 'number') {
+    return String(value)
+  }
+
+  return null
+}
+
+function compareLocalizedText(left, right) {
+  return left.display.localeCompare(right.display) || left.original.localeCompare(right.original)
+}
+
+function normalizeLocalizedText(originalValue, displayValue, fallbackValue = '') {
+  const fallback = toText(fallbackValue) ?? ''
+  const original = toText(originalValue) ?? toText(displayValue) ?? fallback
+  const display = toText(displayValue) ?? original
+
+  if (!original || !display) {
+    return null
+  }
+
+  return {
+    original,
+    display,
+  }
+}
+
+function normalizeLocalizedTextList(originalValues, displayValues) {
+  const items = []
+  const maxLength = Math.max(originalValues.length, displayValues.length)
+
+  for (let index = 0; index < maxLength; index += 1) {
+    const item = normalizeLocalizedText(originalValues[index], displayValues[index])
+
+    if (item) {
+      items.push(item)
+    }
+  }
+
+  return uniqueLocalizedTexts(items)
+}
+
+function uniqueLocalizedTexts(values) {
+  const unique = new Map()
+
+  for (const value of values) {
+    if (!value?.original || !value?.display) {
+      continue
+    }
+
+    unique.set(`${value.original}\u0000${value.display}`, value)
+  }
+
+  return Array.from(unique.values())
+}
+
+function toLocalizedOverrideList(value) {
+  if (Array.isArray(value)) {
+    return value.flatMap((item) => toLocalizedOverrideList(item))
+  }
+
+  if (typeof value === 'string' || typeof value === 'number') {
+    const text = toText(value)
+    return text ? [{ original: text, display: text }] : []
+  }
+
+  if (typeof value === 'object' && value !== null) {
+    const item = normalizeLocalizedText(value.original, value.display)
+    return item ? [item] : []
+  }
+
+  return []
+}
+
+function getDefinitionName(definition = {}) {
+  return definition.name ?? definition.label ?? definition.campaign_name
+}
+
 async function readJson(filePath) {
   return JSON.parse(await readFile(filePath, 'utf8'))
 }
@@ -94,43 +177,127 @@ function getUpdatedAt(rawDefinitions) {
   return new Date().toISOString().slice(0, 10)
 }
 
-function buildAffiliationMap(affiliationDefinitions = []) {
-  const entries = affiliationDefinitions
-    .map((definition) => {
-      const tag = definition.affiliation_tag ?? definition.tag ?? definition.key
-      const name = definition.name ?? definition.label ?? tag
+function buildAffiliationMap(originalDefinitions = [], localizedDefinitions = []) {
+  const originalByTag = new Map()
+  const localizedByTag = new Map()
 
-      if (!tag || !name) {
-        return null
-      }
+  for (const definition of originalDefinitions) {
+    const tag = definition.affiliation_tag ?? definition.tag ?? definition.key
 
-      return [String(tag), String(name)]
-    })
-    .filter(Boolean)
+    if (!tag) {
+      continue
+    }
 
-  return new Map(entries)
+    originalByTag.set(String(tag), definition)
+  }
+
+  for (const definition of localizedDefinitions) {
+    const tag = definition.affiliation_tag ?? definition.tag ?? definition.key
+
+    if (!tag) {
+      continue
+    }
+
+    localizedByTag.set(String(tag), definition)
+  }
+
+  const tags = Array.from(new Set([...originalByTag.keys(), ...localizedByTag.keys()]))
+
+  return new Map(
+    tags
+      .map((tag) => {
+        const originalDefinition = originalByTag.get(tag) ?? {}
+        const localizedDefinition = localizedByTag.get(tag) ?? {}
+        const name = normalizeLocalizedText(
+          getDefinitionName(originalDefinition),
+          getDefinitionName(localizedDefinition),
+          tag,
+        )
+
+        if (!name) {
+          return null
+        }
+
+        return [tag, name]
+      })
+      .filter(Boolean),
+  )
 }
 
-function buildCampaignMap(campaignDefinitions = []) {
-  const entries = campaignDefinitions
-    .map((definition) => {
-      const id = definition.id ?? definition.campaign_id
-      const name = definition.name ?? definition.campaign_name ?? definition.label
+function buildCampaignMap(originalDefinitions = [], localizedDefinitions = []) {
+  const originalById = new Map()
+  const localizedById = new Map()
 
-      if (id === undefined || !name) {
-        return null
-      }
+  for (const definition of originalDefinitions) {
+    const id = definition.id ?? definition.campaign_id
 
-      return [String(id), String(name)]
-    })
-    .filter(Boolean)
+    if (id === undefined) {
+      continue
+    }
 
-  return new Map(entries)
+    originalById.set(String(id), definition)
+  }
+
+  for (const definition of localizedDefinitions) {
+    const id = definition.id ?? definition.campaign_id
+
+    if (id === undefined) {
+      continue
+    }
+
+    localizedById.set(String(id), definition)
+  }
+
+  const ids = Array.from(new Set([...originalById.keys(), ...localizedById.keys()]))
+
+  return new Map(
+    ids
+      .map((id) => {
+        const originalDefinition = originalById.get(id) ?? {}
+        const localizedDefinition = localizedById.get(id) ?? {}
+        const name = normalizeLocalizedText(
+          getDefinitionName(originalDefinition),
+          getDefinitionName(localizedDefinition),
+          `Campaign ${id}`,
+        )
+
+        if (!name) {
+          return null
+        }
+
+        return [
+          id,
+          {
+            id,
+            ...name,
+          },
+        ]
+      })
+      .filter(Boolean),
+  )
 }
 
-function normalizeChampion(definition, affiliationMap, override = {}) {
+function getAffiliationTags(definition, affiliationMap) {
+  return uniqueStrings([
+    ...toStringList(definition.affiliation_tags),
+    ...toStringList(definition.tags).filter((tag) => affiliationMap.has(tag)),
+  ])
+}
+
+function normalizeChampion(originalDefinition, localizedDefinition, affiliationMap, override = {}) {
+  const originalName =
+    originalDefinition.name ??
+    originalDefinition.english_name ??
+    originalDefinition.character_sheet_details?.full_name ??
+    `Champion ${originalDefinition.id}`
+  const displayName =
+    override.displayName ??
+    override.name ??
+    localizedDefinition?.name ??
+    localizedDefinition?.character_sheet_details?.full_name ??
+    originalName
   const tags = uniqueStrings([
-    ...toStringList(definition.tags),
+    ...toStringList(originalDefinition.tags),
     ...toStringList(override.tags),
   ]).sort((left, right) => left.localeCompare(right))
 
@@ -139,21 +306,17 @@ function normalizeChampion(definition, affiliationMap, override = {}) {
     ...toStringList(override.roles),
   ]).sort((left, right) => left.localeCompare(right))
 
-  const affiliations = uniqueStrings([
-    ...tags
-      .filter((tag) => affiliationMap.has(tag))
-      .map((tag) => affiliationMap.get(tag) ?? tag),
-    ...toStringList(override.affiliations),
-  ]).sort((left, right) => left.localeCompare(right))
+  const affiliations = uniqueLocalizedTexts([
+    ...getAffiliationTags(originalDefinition, affiliationMap)
+      .map((tag) => affiliationMap.get(tag))
+      .filter(Boolean),
+    ...toLocalizedOverrideList(override.affiliations),
+  ]).sort(compareLocalizedText)
 
   return {
-    id: String(definition.id),
-    name:
-      override.name ??
-      definition.name ??
-      definition.character_sheet_details?.full_name ??
-      `Champion ${definition.id}`,
-    seat: Number(definition.seat_id ?? definition.seat ?? 0),
+    id: String(originalDefinition.id),
+    name: normalizeLocalizedText(originalName, displayName, `Champion ${originalDefinition.id}`),
+    seat: Number(originalDefinition.seat_id ?? originalDefinition.seat ?? 0),
     roles,
     affiliations,
     tags,
@@ -174,23 +337,48 @@ function looksLikeVariant(definition) {
   )
 }
 
-function normalizeVariant(definition, campaignMap) {
+function normalizeVariant(originalDefinition, localizedDefinition, campaignMap) {
+  const originalRestrictions = uniqueStrings([
+    ...toTextList(originalDefinition.requirements_text),
+    ...toTextList(originalDefinition.requirements_description),
+    ...toTextList(originalDefinition.restrictions_text),
+    ...toTextList(originalDefinition.restrictions),
+  ])
+  const displayRestrictions = uniqueStrings([
+    ...toTextList(localizedDefinition?.requirements_text),
+    ...toTextList(localizedDefinition?.requirements_description),
+    ...toTextList(localizedDefinition?.restrictions_text),
+    ...toTextList(localizedDefinition?.restrictions),
+  ])
+  const originalRewards = uniqueStrings([
+    ...toTextList(originalDefinition.reward_description),
+    ...toTextList(originalDefinition.reward_descriptions),
+    ...toTextList(originalDefinition.rewards_text),
+    ...toTextList(originalDefinition.rewards),
+  ])
+  const displayRewards = uniqueStrings([
+    ...toTextList(localizedDefinition?.reward_description),
+    ...toTextList(localizedDefinition?.reward_descriptions),
+    ...toTextList(localizedDefinition?.rewards_text),
+    ...toTextList(localizedDefinition?.rewards),
+  ])
+  const campaign =
+    campaignMap.get(String(originalDefinition.campaign_id ?? '')) ?? {
+      id: String(originalDefinition.campaign_id ?? ''),
+      original: String(originalDefinition.campaign_id ?? ''),
+      display: String(originalDefinition.campaign_id ?? ''),
+    }
+
   return {
-    id: String(definition.id),
-    name: definition.name ?? `Variant ${definition.id}`,
-    campaign: campaignMap.get(String(definition.campaign_id ?? '')) ?? String(definition.campaign_id ?? ''),
-    restrictions: uniqueStrings([
-      ...toTextList(definition.requirements_text),
-      ...toTextList(definition.requirements_description),
-      ...toTextList(definition.restrictions_text),
-      ...toTextList(definition.restrictions),
-    ]),
-    rewards: uniqueStrings([
-      ...toTextList(definition.reward_description),
-      ...toTextList(definition.reward_descriptions),
-      ...toTextList(definition.rewards_text),
-      ...toTextList(definition.rewards),
-    ]),
+    id: String(originalDefinition.id),
+    name: normalizeLocalizedText(
+      originalDefinition.name,
+      localizedDefinition?.name,
+      `Variant ${originalDefinition.id}`,
+    ),
+    campaign,
+    restrictions: normalizeLocalizedTextList(originalRestrictions, displayRestrictions),
+    rewards: normalizeLocalizedTextList(originalRewards, displayRewards),
   }
 }
 
@@ -203,13 +391,13 @@ function mergeVariants(autoVariants, manualVariants) {
       ...merged.get(id),
       ...variant,
       id,
-      restrictions: uniqueStrings([
-        ...toTextList(merged.get(id)?.restrictions),
-        ...toTextList(variant.restrictions),
+      restrictions: uniqueLocalizedTexts([
+        ...(merged.get(id)?.restrictions ?? []),
+        ...toLocalizedOverrideList(variant.restrictions),
       ]),
-      rewards: uniqueStrings([
-        ...toTextList(merged.get(id)?.rewards),
-        ...toTextList(variant.rewards),
+      rewards: uniqueLocalizedTexts([
+        ...(merged.get(id)?.rewards ?? []),
+        ...toLocalizedOverrideList(variant.rewards),
       ]),
     })
   }
@@ -236,7 +424,7 @@ function normalizeFormations(formations = []) {
 
 function normalizeEnums(champions, affiliationMap, campaignMap) {
   const campaigns = Array.from(campaignMap.entries())
-    .map(([id, name]) => ({ id, name }))
+    .map(([, value]) => value)
     .sort((left, right) => Number(left.id) - Number(right.id))
 
   return [
@@ -248,9 +436,7 @@ function normalizeEnums(champions, affiliationMap, campaignMap) {
     },
     {
       id: 'affiliations',
-      values: uniqueStrings(Array.from(affiliationMap.values())).sort((left, right) =>
-        left.localeCompare(right),
-      ),
+      values: uniqueLocalizedTexts(Array.from(affiliationMap.values())).sort(compareLocalizedText),
     },
     {
       id: 'campaigns',
@@ -285,25 +471,48 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
   )
 
   const rawDefinitions = await readJson(input)
+  const localizedDefinitions = options.localizedInput
+    ? await readJson(path.resolve(options.localizedInput))
+    : rawDefinitions
   const manualOverrides = await readManualOverrides(manualOverridesFile)
   const updatedAt = getUpdatedAt(rawDefinitions)
-  const affiliationMap = buildAffiliationMap(rawDefinitions.affiliation_defines)
-  const campaignMap = buildCampaignMap(rawDefinitions.campaign_defines)
+  const affiliationMap = buildAffiliationMap(
+    rawDefinitions.affiliation_defines,
+    localizedDefinitions.affiliation_defines,
+  )
+  const campaignMap = buildCampaignMap(
+    rawDefinitions.campaign_defines,
+    localizedDefinitions.campaign_defines,
+  )
+  const localizedChampionsById = new Map(
+    (localizedDefinitions.hero_defines ?? []).map((definition) => [String(definition.id), definition]),
+  )
+  const localizedVariantsById = new Map(
+    (localizedDefinitions.adventure_defines ?? []).map((definition) => [String(definition.id), definition]),
+  )
 
   const champions = (rawDefinitions.hero_defines ?? [])
     .filter((definition) => isPlayableChampion(definition))
     .map((definition) =>
       normalizeChampion(
         definition,
+        localizedChampionsById.get(String(definition.id)),
         affiliationMap,
         manualOverrides.championOverrides?.[String(definition.id)] ?? {},
       ),
     )
-    .sort((left, right) => left.seat - right.seat || Number(left.id) - Number(right.id))
+    .sort(
+      (left, right) =>
+        left.seat - right.seat ||
+        left.name.display.localeCompare(right.name.display) ||
+        Number(left.id) - Number(right.id),
+    )
 
   const autoVariants = (rawDefinitions.adventure_defines ?? [])
     .filter((definition) => looksLikeVariant(definition))
-    .map((definition) => normalizeVariant(definition, campaignMap))
+    .map((definition) =>
+      normalizeVariant(definition, localizedVariantsById.get(String(definition.id)), campaignMap),
+    )
 
   const variants = mergeVariants(autoVariants, manualOverrides.variants ?? [])
   const formations = normalizeFormations(manualOverrides.formations ?? [])
@@ -330,6 +539,7 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
     updatedAt,
     notes: [
       '公共数据来源：Idle Champions 官方客户端 definitions 接口。',
+      '名称展示层同时保留官方原文与 language_id=7 返回的中文展示名。',
       '阵型布局、变体说明与中文补充建议通过 scripts/data/manual-overrides.json 维护。',
     ],
   })
@@ -352,7 +562,8 @@ function printUsage() {
   node scripts/normalize-idle-champions-definitions.mjs --input <raw-json>
 
 可选参数：
-  --input <file>             原始 definitions 快照 JSON
+  --input <file>             官方原文 definitions 快照 JSON
+  --localizedInput <file>    中文 definitions 快照 JSON；缺省时回退到 --input
   --outputDir <dir>          归一化集合输出目录，默认 ${DEFAULT_OUTPUT_DIR}
   --versionFile <file>       version.json 输出位置，默认 ${DEFAULT_VERSION_FILE}
   --currentVersion <name>    version.json 中的 current 字段，默认 ${DEFAULT_CURRENT_VERSION}
@@ -365,6 +576,7 @@ async function main() {
   const { values } = parseArgs({
     options: {
       input: { type: 'string' },
+      localizedInput: { type: 'string' },
       outputDir: { type: 'string' },
       versionFile: { type: 'string' },
       currentVersion: { type: 'string' },

@@ -1,11 +1,17 @@
 import { useEffect, useMemo, useState } from 'react'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollection } from '../data/client'
-import type { Champion } from '../domain/types'
+import { getLocalizedOriginal, matchesLocalizedText } from '../domain/localizedText'
+import type { Champion, LocalizedText } from '../domain/types'
 
 interface StringEnumGroup {
   id: string
   values: string[]
+}
+
+interface LocalizedEnumGroup {
+  id: string
+  values: LocalizedText[]
 }
 
 const seatOptions = Array.from({ length: 12 }, (_, index) => index + 1)
@@ -17,12 +23,34 @@ type ChampionState =
       status: 'ready'
       champions: Champion[]
       roles: string[]
-      affiliations: string[]
+      affiliations: LocalizedText[]
     }
   | {
       status: 'error'
       message: string
     }
+
+function isLocalizedText(value: unknown): value is LocalizedText {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'original' in value &&
+    typeof value.original === 'string' &&
+    'display' in value &&
+    typeof value.display === 'string'
+  )
+}
+
+function isLocalizedEnumGroup(value: unknown): value is LocalizedEnumGroup {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'id' in value &&
+    'values' in value &&
+    Array.isArray(value.values) &&
+    value.values.every((item) => isLocalizedText(item))
+  )
+}
 
 function isStringEnumGroup(value: unknown): value is StringEnumGroup {
   return (
@@ -51,9 +79,10 @@ export function ChampionsPage() {
           return
         }
 
-        const groups = enumCollection.items.filter(isStringEnumGroup)
-        const roles = groups.find((group) => group.id === 'roles')?.values ?? []
-        const affiliations = groups.find((group) => group.id === 'affiliations')?.values ?? []
+        const stringGroups = enumCollection.items.filter(isStringEnumGroup)
+        const localizedGroups = enumCollection.items.filter(isLocalizedEnumGroup)
+        const roles = stringGroups.find((group) => group.id === 'roles')?.values ?? []
+        const affiliations = localizedGroups.find((group) => group.id === 'affiliations')?.values ?? []
 
         setState({
           status: 'ready',
@@ -88,14 +117,15 @@ export function ChampionsPage() {
     return state.champions.filter((champion) => {
       const matchesSearch =
         !query ||
-        champion.name.toLowerCase().includes(query) ||
+        matchesLocalizedText(champion.name, query) ||
         champion.tags.some((tag) => tag.toLowerCase().includes(query)) ||
-        champion.affiliations.some((affiliation) => affiliation.toLowerCase().includes(query))
+        champion.affiliations.some((affiliation) => matchesLocalizedText(affiliation, query))
 
       const matchesSeat = selectedSeat === null || champion.seat === selectedSeat
       const matchesRole = selectedRole === '全部' || champion.roles.includes(selectedRole)
       const matchesAffiliation =
-        selectedAffiliation === '全部' || champion.affiliations.includes(selectedAffiliation)
+        selectedAffiliation === '全部' ||
+        champion.affiliations.some((affiliation) => affiliation.original === selectedAffiliation)
 
       return matchesSearch && matchesSeat && matchesRole && matchesAffiliation
     })
@@ -109,7 +139,7 @@ export function ChampionsPage() {
       <SurfaceCard
         eyebrow="英雄筛选"
         title="先用真实公共数据把查询入口跑起来"
-        description="当前版本先接官方 definitions 归一化后的英雄数据，优先把座位、定位、联动队伍和标签过滤闭环做通。"
+        description="当前版本先接官方 definitions 归一化后的英雄数据，并保留官方原文与 `language_id=7` 中文展示名，优先把座位、定位、联动队伍和标签过滤闭环做通。"
       >
         {state.status === 'loading' ? (
           <div className="status-banner status-banner--info">正在读取英雄数据…</div>
@@ -212,16 +242,16 @@ export function ChampionsPage() {
                   </button>
                   {state.affiliations.map((affiliation) => (
                     <button
-                      key={affiliation}
+                      key={affiliation.original}
                       type="button"
                       className={
-                        selectedAffiliation === affiliation
+                        selectedAffiliation === affiliation.original
                           ? 'filter-chip filter-chip--active'
                           : 'filter-chip'
                       }
-                      onClick={() => setSelectedAffiliation(affiliation)}
+                      onClick={() => setSelectedAffiliation(affiliation.original)}
                     >
-                      {affiliation}
+                      {affiliation.display}
                     </button>
                   ))}
                 </div>
@@ -246,8 +276,12 @@ export function ChampionsPage() {
                     <article key={champion.id} className="result-card">
                       <div className="result-card__header">
                         <span className="result-card__eyebrow">Seat {champion.seat}</span>
-                        <h3 className="result-card__title">{champion.name}</h3>
+                        <h3 className="result-card__title">{champion.name.display}</h3>
                       </div>
+
+                      {getLocalizedOriginal(champion.name) ? (
+                        <p className="supporting-text">{champion.name.original}</p>
+                      ) : null}
 
                       <div className="tag-row">
                         {champion.roles.map((role) => (
@@ -259,7 +293,9 @@ export function ChampionsPage() {
 
                       <p className="supporting-text">
                         联动队伍：
-                        {champion.affiliations.length > 0 ? champion.affiliations.join(' / ') : '暂无'}
+                        {champion.affiliations.length > 0
+                          ? champion.affiliations.map((affiliation) => affiliation.display).join(' / ')
+                          : '暂无'}
                       </p>
 
                       <div className="tag-row">

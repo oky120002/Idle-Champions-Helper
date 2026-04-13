@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollection } from '../data/client'
+import { getLocalizedOriginal } from '../domain/localizedText'
 import type { Champion, FormationLayout } from '../domain/types'
 import { findSeatConflicts } from '../rules/seat'
 
@@ -64,7 +65,12 @@ export function FormationPage() {
       return []
     }
 
-    return [...state.champions].sort((left, right) => left.seat - right.seat || left.name.localeCompare(right.name))
+    return [...state.champions].sort(
+      (left, right) =>
+        left.seat - right.seat ||
+        left.name.display.localeCompare(right.name.display) ||
+        left.name.original.localeCompare(right.name.original),
+    )
   }, [state])
 
   const selectedChampions = useMemo(() => {
@@ -199,12 +205,12 @@ export function FormationPage() {
                             <option value="">未放置</option>
                             {championOptions.map((item) => (
                               <option key={item.id} value={item.id}>
-                                {`Seat ${item.seat} · ${item.name}`}
+                                {`Seat ${item.seat} · ${item.name.display}`}
                               </option>
                             ))}
                           </select>
                           <span className="formation-slot__hint">
-                            {champion ? `当前：${champion.name}` : `坐标 ${slot.row}-${slot.column}`}
+                            {champion ? `当前：${champion.name.display}` : `坐标 ${slot.row}-${slot.column}`}
                           </span>
                         </div>
                       )
@@ -240,8 +246,11 @@ export function FormationPage() {
               <article key={`${slotId}-${champion.id}`} className="result-card">
                 <div className="result-card__header">
                   <span className="result-card__eyebrow">{slotId}</span>
-                  <h3 className="result-card__title">{champion.name}</h3>
+                  <h3 className="result-card__title">{champion.name.display}</h3>
                 </div>
+                {getLocalizedOriginal(champion.name) ? (
+                  <p className="supporting-text">{champion.name.original}</p>
+                ) : null}
                 <p className="supporting-text">Seat {champion.seat}</p>
                 <div className="tag-row">
                   {champion.roles.map((role) => (
