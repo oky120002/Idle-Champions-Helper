@@ -26,7 +26,14 @@ async function main() {
   node scripts/build-idle-champions-data.mjs [--outDir <raw-dir>] [--outputDir <data-dir>]
 
 说明：
-  同时抓取官方原文 definitions 与 language_id=7 中文 definitions，再归一化写入 public/data。`)
+  一次拉取当前所有可公开获取的官方基座数据：
+  1. 官方原文 definitions
+  2. language_id=7 中文 definitions
+  3. champions / variants / formations / enums 归一化数据
+  4. 官方英雄头像资源
+
+推荐入口：
+  npm run data:official`)
     return
   }
 
@@ -56,7 +63,8 @@ async function main() {
     masterApiUrl: values.masterApiUrl,
   })
 
-  console.log(`数据流水线完成：`)
+  console.log(`官方基座数据流水线完成：`)
+  console.log(`- included: definitions(source + zh) + normalized collections + champion portraits`)
   console.log(`- source raw: ${fetched.rawFile}`)
   console.log(`- display raw: ${localizedFetched.rawFile}`)
   console.log(`- normalized dir: ${normalized.outputDir}`)
