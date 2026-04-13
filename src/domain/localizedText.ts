@@ -26,6 +26,13 @@ export function getSecondaryLocalizedText(value: LocalizedText, locale: AppLocal
   return primary === secondary ? null : secondary
 }
 
+export function getLocalizedTextPair(value: LocalizedText, locale: AppLocale, separator = ' · '): string {
+  const primary = getPrimaryLocalizedText(value, locale)
+  const secondary = getSecondaryLocalizedText(value, locale)
+
+  return secondary ? `${primary}${separator}${secondary}` : primary
+}
+
 const ROLE_LABELS: Record<string, { 'zh-CN': string; 'en-US': string }> = {
   breaking: {
     'zh-CN': '破阵',
