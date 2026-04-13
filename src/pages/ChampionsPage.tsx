@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import { useI18n } from '../app/i18n'
 import { FieldGroup } from '../components/FieldGroup'
 import { ChampionIdentity } from '../components/ChampionIdentity'
@@ -28,6 +28,11 @@ interface LocalizedEnumGroup {
 
 const seatOptions = Array.from({ length: 12 }, (_, index) => index + 1)
 const MAX_VISIBLE_RESULTS = 48
+const SEARCH_PARAM_QUERY = 'q'
+const SEARCH_PARAM_SEAT = 'seat'
+const SEARCH_PARAM_ROLE = 'role'
+const SEARCH_PARAM_AFFILIATION = 'affiliation'
+const DEFAULT_SCROLL_KEY = '__default__'
 
 type ChampionState =
   | { status: 'loading' }
@@ -75,13 +80,88 @@ function isStringEnumGroup(value: unknown): value is StringEnumGroup {
   )
 }
 
+function readSearchValue(searchParams: URLSearchParams): string {
+  return searchParams.get(SEARCH_PARAM_QUERY)?.trim() ?? ''
+}
+
+function readSeatValues(searchParams: URLSearchParams): number[] {
+  return Array.from(
+    new Set(
+      searchParams
+        .getAll(SEARCH_PARAM_SEAT)
+        .map((value) => Number.parseInt(value, 10))
+        .filter((value) => seatOptions.includes(value)),
+    ),
+  ).sort((left, right) => left - right)
+}
+
+function readStringValues(searchParams: URLSearchParams, key: string): string[] {
+  return Array.from(
+    new Set(
+      searchParams
+        .getAll(key)
+        .map((value) => value.trim())
+        .filter(Boolean),
+    ),
+  )
+}
+
+function buildFilterSearchParams(filters: {
+  search: string
+  seats: number[]
+  roles: string[]
+  affiliations: string[]
+}): URLSearchParams {
+  const searchParams = new URLSearchParams()
+  const normalizedSearch = filters.search.trim()
+
+  if (normalizedSearch) {
+    searchParams.set(SEARCH_PARAM_QUERY, normalizedSearch)
+  }
+
+  filters.seats
+    .slice()
+    .sort((left, right) => left - right)
+    .forEach((seat) => searchParams.append(SEARCH_PARAM_SEAT, String(seat)))
+  filters.roles
+    .slice()
+    .sort((left, right) => left.localeCompare(right))
+    .forEach((role) => searchParams.append(SEARCH_PARAM_ROLE, role))
+  filters.affiliations
+    .slice()
+    .sort((left, right) => left.localeCompare(right))
+    .forEach((affiliation) => searchParams.append(SEARCH_PARAM_AFFILIATION, affiliation))
+
+  return searchParams
+}
+
+function buildScrollRestoreKey(search: string): string {
+  return `champions-page-scroll:${search || DEFAULT_SCROLL_KEY}`
+}
+
+function saveChampionListScroll(search: string): void {
+  if (typeof window === 'undefined') {
+    return
+  }
+
+  window.sessionStorage.setItem(buildScrollRestoreKey(search), String(window.scrollY))
+}
+
 export function ChampionsPage() {
+  const location = useLocation()
+  const [, setSearchParams] = useSearchParams()
+  const initialSearchParams = useMemo(() => new URLSearchParams(location.search), [location.search])
   const { locale, t } = useI18n()
   const [state, setState] = useState<ChampionState>({ status: 'loading' })
-  const [search, setSearch] = useState('')
-  const [selectedSeats, setSelectedSeats] = useState<number[]>([])
-  const [selectedRoles, setSelectedRoles] = useState<string[]>([])
-  const [selectedAffiliations, setSelectedAffiliations] = useState<string[]>([])
+  const [search, setSearch] = useState(() => readSearchValue(initialSearchParams))
+  const [selectedSeats, setSelectedSeats] = useState<number[]>(() => readSeatValues(initialSearchParams))
+  const [selectedRoles, setSelectedRoles] = useState<string[]>(() =>
+    readStringValues(initialSearchParams, SEARCH_PARAM_ROLE),
+  )
+  const [selectedAffiliations, setSelectedAffiliations] = useState<string[]>(() =>
+    readStringValues(initialSearchParams, SEARCH_PARAM_AFFILIATION),
+  )
+  const hasAttemptedScrollRestoreRef = useRef(false)
 
   useEffect(() => {
     let disposed = false
@@ -119,6 +199,48 @@ export function ChampionsPage() {
       disposed = true
     }
   }, [])
+
+  useEffect(() => {
+    const nextSearchParams = buildFilterSearchParams({
+      search,
+      seats: selectedSeats,
+      roles: selectedRoles,
+      affiliations: selectedAffiliations,
+    })
+    const nextSearch = nextSearchParams.toString()
+    const currentSearch = new URLSearchParams(location.search).toString()
+
+    if (nextSearch !== currentSearch) {
+      setSearchParams(nextSearchParams, { replace: true })
+    }
+  }, [location.search, search, selectedAffiliations, selectedRoles, selectedSeats, setSearchParams])
+
+  useEffect(() => {
+    if (state.status !== 'ready' || hasAttemptedScrollRestoreRef.current || typeof window === 'undefined') {
+      return
+    }
+
+    hasAttemptedScrollRestoreRef.current = true
+    const key = buildScrollRestoreKey(location.search)
+    const stored = window.sessionStorage.getItem(key)
+
+    if (!stored) {
+      return
+    }
+
+    window.sessionStorage.removeItem(key)
+    const scrollY = Number.parseFloat(stored)
+
+    if (!Number.isFinite(scrollY)) {
+      return
+    }
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: scrollY, left: 0, behavior: 'auto' })
+      })
+    })
+  }, [location.search, state.status])
 
   const filteredChampions = useMemo(() => {
     if (state.status !== 'ready') {
@@ -364,11 +486,15 @@ export function ChampionsPage() {
                       <Link
                         key={champion.id}
                         className="result-card result-card--link"
-                        to={`/champions/${champion.id}`}
+                        to={{
+                          pathname: `/champions/${champion.id}`,
+                          search: location.search,
+                        }}
                         aria-label={t({
                           zh: `查看详情：${getPrimaryLocalizedText(champion.name, locale)}`,
                           en: `Open details for ${getPrimaryLocalizedText(champion.name, locale)}`,
                         })}
+                        onClick={() => saveChampionListScroll(location.search)}
                       >
                         <ChampionIdentity champion={champion} locale={locale} eyebrow={formatSeatLabel(champion.seat, locale)} />
 

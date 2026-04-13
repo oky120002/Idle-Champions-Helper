@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import { type AppLocale, useI18n } from '../app/i18n'
 import { ChampionAvatar } from '../components/ChampionAvatar'
 import { SurfaceCard } from '../components/SurfaceCard'
@@ -382,6 +382,7 @@ function RawEntriesDisclosure({ title, entries }: RawEntriesDisclosureProps) {
 
 export function ChampionDetailPage() {
   const { championId } = useParams<{ championId: string }>()
+  const location = useLocation()
   const { locale, t } = useI18n()
   const [state, setState] = useState<ChampionDetailState>({ status: 'idle' })
   const isMissingChampionId = !championId
@@ -478,7 +479,13 @@ export function ChampionDetailPage() {
   return (
     <div className="page-stack champion-detail-page">
       <div className="page-backlink-row">
-        <Link className="page-backlink" to="/champions">
+        <Link
+          className="page-backlink"
+          to={{
+            pathname: '/champions',
+            search: location.search,
+          }}
+        >
           {t({ zh: '← 返回英雄筛选', en: '← Back to champions' })}
         </Link>
       </div>
