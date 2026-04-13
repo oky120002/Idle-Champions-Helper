@@ -1,16 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollection } from '../data/client'
-import type { Variant } from '../domain/types'
-
-interface CampaignOption {
-  id: string
-  name: string
-}
+import { getLocalizedOriginal, matchesLocalizedText } from '../domain/localizedText'
+import type { LocalizedOption, Variant } from '../domain/types'
 
 interface CampaignEnumGroup {
   id: 'campaigns'
-  values: CampaignOption[]
+  values: LocalizedOption[]
 }
 
 const MAX_VISIBLE_VARIANTS = 60
@@ -20,7 +16,7 @@ type VariantState =
   | {
       status: 'ready'
       variants: Variant[]
-      campaigns: CampaignOption[]
+      campaigns: LocalizedOption[]
     }
   | {
       status: 'error'
@@ -54,11 +50,12 @@ export function VariantsPage() {
 
         const campaigns =
           enumCollection.items.find(isCampaignEnumGroup)?.values.filter(
-            (item): item is CampaignOption =>
+            (item): item is LocalizedOption =>
               typeof item === 'object' &&
               item !== null &&
               typeof item.id === 'string' &&
-              typeof item.name === 'string',
+              typeof item.original === 'string' &&
+              typeof item.display === 'string',
           ) ?? []
 
         setState({
@@ -92,28 +89,28 @@ export function VariantsPage() {
 
     return state.variants.filter((variant) => {
       const matchesCampaign =
-        selectedCampaign === '全部战役' || variant.campaign === selectedCampaign
+        selectedCampaign === '全部战役' || variant.campaign.original === selectedCampaign
 
       const matchesSearch =
         !query ||
-        variant.name.toLowerCase().includes(query) ||
-        variant.campaign.toLowerCase().includes(query) ||
-        variant.restrictions.some((item) => item.toLowerCase().includes(query)) ||
-        variant.rewards.some((item) => item.toLowerCase().includes(query))
+        matchesLocalizedText(variant.name, query) ||
+        matchesLocalizedText(variant.campaign, query) ||
+        variant.restrictions.some((item) => matchesLocalizedText(item, query)) ||
+        variant.rewards.some((item) => matchesLocalizedText(item, query))
 
       return matchesCampaign && matchesSearch
     })
   }, [search, selectedCampaign, state])
 
   const visibleVariants = filteredVariants.slice(0, MAX_VISIBLE_VARIANTS)
-  const campaignsWithResults = new Set(filteredVariants.map((variant) => variant.campaign)).size
+  const campaignsWithResults = new Set(filteredVariants.map((variant) => variant.campaign.original)).size
 
   return (
     <div className="page-stack">
       <SurfaceCard
         eyebrow="变体限制"
-        title="先把官方原始限制文本稳定读出来"
-        description="当前先接官方 definitions 归一化后的变体数据，优先解决“我想快速搜到哪个变体、看见哪些限制”的第一步。"
+        title="先把官方中文展示和原文回退一起接上"
+        description="当前先接官方 definitions 归一化后的变体数据，名称、战役和限制文本都优先显示 `language_id=7` 中文，并保留官方原文用于检索和回退。"
       >
         {state.status === 'loading' ? (
           <div className="status-banner status-banner--info">正在读取变体数据…</div>
@@ -165,8 +162,8 @@ export function VariantsPage() {
                 >
                   <option value="全部战役">全部战役</option>
                   {state.campaigns.map((campaign) => (
-                    <option key={campaign.id} value={campaign.name}>
-                      {campaign.name}
+                    <option key={campaign.id} value={campaign.original}>
+                      {campaign.display}
                     </option>
                   ))}
                 </select>
@@ -183,44 +180,57 @@ export function VariantsPage() {
               <>
                 <p className="supporting-text">
                   当前展示 {visibleVariants.length} / {filteredVariants.length} 条变体记录。
-                  这一页目前仍是“原文优先”，中文规则拆解会放到后续规则层。
+                  当前先优先展示官方中文；更细的规则拆解仍会放到后续规则层。
                 </p>
 
                 <div className="results-grid">
-                  {visibleVariants.map((variant) => (
-                    <article key={variant.id} className="result-card">
-                      <div className="result-card__header">
-                        <span className="result-card__eyebrow">{variant.campaign}</span>
-                        <h3 className="result-card__title">{variant.name}</h3>
-                      </div>
+                  {visibleVariants.map((variant) => {
+                    const originalLine = [variant.name, variant.campaign]
+                      .map((item) => getLocalizedOriginal(item))
+                      .filter((item): item is string => Boolean(item))
+                      .join(' · ')
 
-                      <div className="result-block">
-                        <strong className="result-block__title">限制条件</strong>
-                        {variant.restrictions.length > 0 ? (
-                          <ul className="bullet-list">
-                            {variant.restrictions.slice(0, 4).map((restriction) => (
-                              <li key={restriction}>{restriction}</li>
-                            ))}
-                          </ul>
-                        ) : (
-                          <p className="supporting-text">当前还没解析到明确限制文本。</p>
-                        )}
-                      </div>
+                    return (
+                      <article key={variant.id} className="result-card">
+                        <div className="result-card__header">
+                          <span className="result-card__eyebrow">{variant.campaign.display}</span>
+                          <h3 className="result-card__title">{variant.name.display}</h3>
+                        </div>
 
-                      <div className="result-block">
-                        <strong className="result-block__title">奖励</strong>
-                        {variant.rewards.length > 0 ? (
-                          <ul className="bullet-list">
-                            {variant.rewards.slice(0, 3).map((reward) => (
-                              <li key={reward}>{reward}</li>
-                            ))}
-                          </ul>
-                        ) : (
-                          <p className="supporting-text">当前官方返回里没有显式奖励文本。</p>
-                        )}
-                      </div>
-                    </article>
-                  ))}
+                        {originalLine ? <p className="supporting-text">{originalLine}</p> : null}
+
+                        <div className="result-block">
+                          <strong className="result-block__title">限制条件</strong>
+                          {variant.restrictions.length > 0 ? (
+                            <ul className="bullet-list">
+                              {variant.restrictions.slice(0, 4).map((restriction) => (
+                                <li key={`${variant.id}-${restriction.original}-${restriction.display}`}>
+                                  {restriction.display}
+                                </li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <p className="supporting-text">当前还没解析到明确限制文本。</p>
+                          )}
+                        </div>
+
+                        <div className="result-block">
+                          <strong className="result-block__title">奖励</strong>
+                          {variant.rewards.length > 0 ? (
+                            <ul className="bullet-list">
+                              {variant.rewards.slice(0, 3).map((reward) => (
+                                <li key={`${variant.id}-${reward.original}-${reward.display}`}>
+                                  {reward.display}
+                                </li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <p className="supporting-text">当前官方返回里没有显式奖励文本。</p>
+                          )}
+                        </div>
+                      </article>
+                    )
+                  })}
                 </div>
               </>
             ) : null}
