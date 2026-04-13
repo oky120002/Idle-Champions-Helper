@@ -14,7 +14,7 @@ async function fetchJson<T>(relativePath: string, init?: RequestInit): Promise<T
   const response = await fetch(buildDataUrl(relativePath), init)
 
   if (!response.ok) {
-    throw new Error(`读取数据失败：${response.status}`)
+    throw new Error(`HTTP ${response.status}`)
   }
 
   return (await response.json()) as T

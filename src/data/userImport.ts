@@ -8,6 +8,28 @@ import type {
 const USER_ID_PATTERN = /^\d{1,12}$/
 const HASH_PATTERN = /^[a-f0-9]{8,64}$/i
 
+export interface UserImportMessages {
+  invalidUserId: string
+  invalidHash: string
+  missingSupportUrl: string
+  invalidSupportUrl: string
+  missingManualCredentials: string
+  missingLogText: string
+  logMissingCredentials: string
+  logIncompleteCredentials: string
+}
+
+const DEFAULT_MESSAGES: UserImportMessages = {
+  invalidUserId: 'User ID 格式不对，当前仅接受纯数字。',
+  invalidHash: 'Hash 格式不对，当前仅接受十六进制字符串。',
+  missingSupportUrl: '请先粘贴 Support URL。',
+  invalidSupportUrl: 'Support URL 不是合法链接。',
+  missingManualCredentials: '请同时填写 User ID 和 Hash。',
+  missingLogText: '请先粘贴日志文本。',
+  logMissingCredentials: '没在日志里找到 user_id 和 hash/device_hash。',
+  logIncompleteCredentials: '日志里提取到的凭证不完整。',
+}
+
 export const SUPPORT_URL_SAMPLE =
   'https://help.idlechampions.com/?page=help&network=mobile&user_id=123456789&device_hash=abcdef1234567890abcdef1234567890&mcv=385'
 
@@ -19,21 +41,25 @@ function normalizeHash(value: string): string {
   return value.trim().toLowerCase()
 }
 
-function validateCredentials(userId: string, hash: string): UserImportParseResult {
+function validateCredentials(
+  userId: string,
+  hash: string,
+  messages: UserImportMessages,
+): UserImportParseResult {
   const normalizedUserId = userId.trim()
   const normalizedHash = normalizeHash(hash)
 
   if (!USER_ID_PATTERN.test(normalizedUserId)) {
     return {
       ok: false,
-      error: 'User ID 格式不对，当前仅接受纯数字。',
+      error: messages.invalidUserId,
     }
   }
 
   if (!HASH_PATTERN.test(normalizedHash)) {
     return {
       ok: false,
-      error: 'Hash 格式不对，当前仅接受十六进制字符串。',
+      error: messages.invalidHash,
     }
   }
 
@@ -46,13 +72,16 @@ function validateCredentials(userId: string, hash: string): UserImportParseResul
   }
 }
 
-export function parseSupportUrl(value: string): UserImportParseResult {
+export function parseSupportUrl(
+  value: string,
+  messages: UserImportMessages = DEFAULT_MESSAGES,
+): UserImportParseResult {
   const trimmed = value.trim()
 
   if (!trimmed) {
     return {
       ok: false,
-      error: '请先粘贴 Support URL。',
+      error: messages.missingSupportUrl,
     }
   }
 
@@ -63,14 +92,14 @@ export function parseSupportUrl(value: string): UserImportParseResult {
   } catch {
     return {
       ok: false,
-      error: 'Support URL 不是合法链接。',
+      error: messages.invalidSupportUrl,
     }
   }
 
   const userId = url.searchParams.get('user_id') ?? ''
   const hash = url.searchParams.get('device_hash') ?? url.searchParams.get('hash') ?? ''
 
-  return validateCredentials(userId, hash)
+  return validateCredentials(userId, hash, messages)
 }
 
 export function getSupportUrlNetwork(value: string): string | null {
@@ -87,24 +116,31 @@ export function getSupportUrlNetwork(value: string): string | null {
   }
 }
 
-export function parseManualCredentials(userId: string, hash: string): UserImportParseResult {
+export function parseManualCredentials(
+  userId: string,
+  hash: string,
+  messages: UserImportMessages = DEFAULT_MESSAGES,
+): UserImportParseResult {
   if (!userId.trim() || !hash.trim()) {
     return {
       ok: false,
-      error: '请同时填写 User ID 和 Hash。',
+      error: messages.missingManualCredentials,
     }
   }
 
-  return validateCredentials(userId, hash)
+  return validateCredentials(userId, hash, messages)
 }
 
-export function parseWebRequestLog(value: string): UserImportParseResult {
+export function parseWebRequestLog(
+  value: string,
+  messages: UserImportMessages = DEFAULT_MESSAGES,
+): UserImportParseResult {
   const trimmed = value.trim()
 
   if (!trimmed) {
     return {
       ok: false,
-      error: '请先粘贴日志文本。',
+      error: messages.missingLogText,
     }
   }
 
@@ -115,14 +151,14 @@ export function parseWebRequestLog(value: string): UserImportParseResult {
   if (!directMatch) {
     return {
       ok: false,
-      error: '没在日志里找到 user_id 和 hash/device_hash。',
+      error: messages.logMissingCredentials,
     }
   }
 
   if (directMatch.length < 3) {
     return {
       ok: false,
-      error: '日志里提取到的凭证不完整。',
+      error: messages.logIncompleteCredentials,
     }
   }
 
@@ -130,7 +166,7 @@ export function parseWebRequestLog(value: string): UserImportParseResult {
   const userId = USER_ID_PATTERN.test(first) ? first : second
   const hash = USER_ID_PATTERN.test(first) ? second : first
 
-  return validateCredentials(userId, hash)
+  return validateCredentials(userId, hash, messages)
 }
 
 export function buildMaskedCredentials(credentials: UserCredentials): MaskedUserCredentials {
