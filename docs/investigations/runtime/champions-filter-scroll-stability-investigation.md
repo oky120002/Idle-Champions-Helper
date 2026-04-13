@@ -85,6 +85,50 @@ overflow-anchor: none;
 
 - 避免第一次选中筛选项时，结果说明文字被整体向下推一行，造成轻微抖动感
 
+### 2.6 结果默认先展示 48 名，并提供“显示全部 / 收起”切换
+
+英雄筛选结果保持默认先展示 `48` 名，但在结果说明区和列表尾部都提供：
+
+- `显示全部 N 名`
+- `收起到默认 48 名`
+
+目的：
+
+- 保留首屏信息密度，避免一上来铺太长
+- 在需要时仍能快速切到完整浏览，不强迫用户回到顶部再操作
+- 收起时仍沿用结果区高度过渡，减少长列表骤然变短时的不适感
+
+### 2.7 空结果时补“放开筛选 / 一键清空”快捷操作
+
+当当前筛选无匹配英雄时，除了提示文案外，结果区会直接给出：
+
+- `放开座位 / 定位 / 联动`
+- `一键清空全部条件`
+
+同时，筛选侧栏顶部也补了：
+
+- `全部放开`
+- `清空全部`
+
+目的：
+
+- 让用户在“无结果”时不用自己回想该点哪一组条件
+- 把“空选即全开”的规则变成可点击的快捷操作，而不是隐含逻辑
+
+### 2.8 增加结果区快捷滚动按钮，并放宽桌面端页面宽度
+
+当前在英雄筛选页结果区增加了两个固定快捷按钮：
+
+- `顶部`
+- `到底`
+
+同时把桌面端主内容区宽度由原先的窄版提升到更舒展的宽度。
+
+目的：
+
+- 长列表下快速回到结果顶部或直接跳到当前结果底部
+- 在大屏下同时容纳更多卡片列数，降低“页面窄窄的”压迫感
+
 ---
 
 ## 3. 当前验证范围
@@ -94,9 +138,14 @@ overflow-anchor: none;
 - `tests/e2e/champions.scroll-stability.spec.ts`
   - 连续点击座位筛选时，整页 `scrollY` 保持稳定
   - 在长列表场景下收窄到少量结果时，页面会被带回结果区而不是被夹到页面顶部
+  - 结果区快捷按钮可一键跳到底部，再返回结果顶部
 - `tests/e2e/filter-layout-stability.spec.ts`
   - 英雄筛选页首次出现“当前筛选”摘要时，不会把结果说明段落向下推挤
   - 英雄筛选页在桌面宽度下向下滚动时，筛选区会保持粘性位置
+  - 英雄筛选页桌面宽度下主内容区已放宽，不再维持旧版窄布局
+- `tests/component/championsPage.filters.test.tsx`
+  - 无匹配时可直接放开结构筛选或一键清空全部条件
+  - 默认先展示 `48` 名英雄，并支持切换到显示全部再收起
 
 ---
 
@@ -115,9 +164,8 @@ overflow-anchor: none;
 - `src/styles/global.css`
 - `tests/e2e/champions.scroll-stability.spec.ts`
 - `tests/e2e/filter-layout-stability.spec.ts`
-- 本地命令：`npx playwright test tests/e2e/filter-layout-stability.spec.ts --config=.playwright.page-ux.config.ts`
+- `tests/component/championsPage.filters.test.tsx`
 - 本地命令：`npm run lint`
 - 本地命令：`npx vitest run --project component tests/component/championsPage.filters.test.tsx`
 - 本地命令：`npm run build`
-- 本地命令：`npx playwright test tests/e2e/champions.scroll-stability.spec.ts --config=.playwright.page-ux.config.ts`
-- 本地命令：`npx playwright test tests/e2e/filter-layout-stability.spec.ts --config=.playwright.page-ux.config.ts`
+- 本地命令：`npx playwright test tests/e2e/champions.scroll-stability.spec.ts tests/e2e/filter-layout-stability.spec.ts`
