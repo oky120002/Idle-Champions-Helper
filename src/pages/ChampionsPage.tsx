@@ -8,7 +8,11 @@ import {
   getRoleLabel,
   getSecondaryLocalizedText,
 } from '../domain/localizedText'
-import { getChampionAttributeTags, getChampionTagLabel } from '../domain/championTags'
+import {
+  getChampionAttributeGroupLabel,
+  getChampionAttributeGroups,
+  getChampionTagLabel,
+} from '../domain/championTags'
 import type { Champion, LocalizedText } from '../domain/types'
 import { filterChampions, toggleFilterValue } from '../rules/championFilter'
 
@@ -359,7 +363,7 @@ export function ChampionsPage() {
                   {visibleChampions.map((champion) => {
                     const primaryName = getPrimaryLocalizedText(champion.name, locale)
                     const secondaryName = getSecondaryLocalizedText(champion.name, locale)
-                    const attributeTags = getChampionAttributeTags(champion.tags)
+                    const attributeGroups = getChampionAttributeGroups(champion.tags)
 
                     return (
                       <article key={champion.id} className="result-card">
@@ -391,14 +395,23 @@ export function ChampionsPage() {
 
                         <div className="result-block">
                           <strong className="result-block__title">
-                            {t({ zh: '属性标签', en: 'Attribute tags' })}
+                            {t({ zh: '属性概览', en: 'Attributes' })}
                           </strong>
-                          {attributeTags.length > 0 ? (
-                            <div className="tag-row">
-                              {attributeTags.map((tag) => (
-                                <span key={tag} className="tag-pill tag-pill--muted">
-                                  {getChampionTagLabel(tag, locale)}
-                                </span>
+                          {attributeGroups.length > 0 ? (
+                            <div className="result-attribute-grid">
+                              {attributeGroups.map((group) => (
+                                <div key={group.id} className="result-block result-block--compact">
+                                  <strong className="result-block__title result-block__title--small">
+                                    {getChampionAttributeGroupLabel(group.id, locale)}
+                                  </strong>
+                                  <div className="tag-row tag-row--tight">
+                                    {group.tags.map((tag) => (
+                                      <span key={tag} className="tag-pill tag-pill--muted">
+                                        {getChampionTagLabel(tag, locale)}
+                                      </span>
+                                    ))}
+                                  </div>
+                                </div>
                               ))}
                             </div>
                           ) : (
