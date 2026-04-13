@@ -51,6 +51,7 @@
 - `docs/product/idle-champions-roadmap.md`：项目价值、范围、阶段路线与核心模型。
 - `docs/research/data/game-data-source-investigation.md`：基础游戏数据与个人数据来源调研。
 - `docs/research/data/static-data-storage-research.md`：静态数据存储与版本化策略。
+- `docs/research/testing/regression-testing-research.md`：主分支整体回归测试框架设计。
 - `docs/research/deployment/static-hosting-research.md`：GitHub Pages 部署方案与路由策略。
 - `docs/research/deployment/china-static-hosting-research.md`：国内访问体验与托管备选方案。
 - `docs/modules/user-data/user-data-import-design.md`：本地优先的个人数据导入设计稿。
