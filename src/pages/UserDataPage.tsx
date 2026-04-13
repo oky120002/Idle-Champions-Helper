@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useI18n } from '../app/i18n'
+import { FieldGroup } from '../components/FieldGroup'
+import { StatusBanner } from '../components/StatusBanner'
 import { SurfaceCard } from '../components/SurfaceCard'
 import {
   buildMaskedCredentials,
@@ -243,8 +245,14 @@ export function UserDataPage() {
 
         <div className="form-stack">
           {method === 'supportUrl' ? (
-            <label className="form-field">
-              <span className="field-label">Support URL</span>
+            <FieldGroup
+              label="Support URL"
+              hint={t({
+                zh: '当前只在浏览器本地解析 `user_id` 和 `device_hash/hash`，不会出站。',
+                en: 'This only extracts `user_id` and `device_hash/hash` locally in the browser. Nothing is sent out.',
+              })}
+              as="label"
+            >
               <textarea
                 className="text-area"
                 rows={5}
@@ -255,19 +263,12 @@ export function UserDataPage() {
                 value={supportUrl}
                 onChange={(event) => setSupportUrl(event.target.value)}
               />
-              <span className="field-hint">
-                {t({
-                  zh: '当前只在浏览器本地解析 `user_id` 和 `device_hash/hash`，不会出站。',
-                  en: 'This only extracts `user_id` and `device_hash/hash` locally in the browser. Nothing is sent out.',
-                })}
-              </span>
-            </label>
+            </FieldGroup>
           ) : null}
 
           {method === 'manual' ? (
             <div className="split-grid">
-              <label className="form-field">
-                <span className="field-label">User ID</span>
+              <FieldGroup label="User ID" as="label">
                 <input
                   className="text-input"
                   type="text"
@@ -276,10 +277,9 @@ export function UserDataPage() {
                   value={manualUserId}
                   onChange={(event) => setManualUserId(event.target.value)}
                 />
-              </label>
+              </FieldGroup>
 
-              <label className="form-field">
-                <span className="field-label">Hash</span>
+              <FieldGroup label="Hash" as="label">
                 <input
                   className="text-input"
                   type="text"
@@ -290,13 +290,19 @@ export function UserDataPage() {
                   value={manualHash}
                   onChange={(event) => setManualHash(event.target.value)}
                 />
-              </label>
+              </FieldGroup>
             </div>
           ) : null}
 
           {method === 'webRequestLog' ? (
-            <label className="form-field">
-              <span className="field-label">{t({ zh: '日志文本', en: 'Log text' })}</span>
+            <FieldGroup
+              label={t({ zh: '日志文本', en: 'Log text' })}
+              hint={t({
+                zh: '当前阶段先支持文本粘贴，避免一上来就把真实文件导入和持久化绑死。',
+                en: 'Text paste comes first so file import and persistence do not get coupled too early.',
+              })}
+              as="label"
+            >
               <textarea
                 className="text-area text-area--tall"
                 rows={8}
@@ -307,36 +313,28 @@ export function UserDataPage() {
                 value={webRequestLog}
                 onChange={(event) => setWebRequestLog(event.target.value)}
               />
-              <span className="field-hint">
-                {t({
-                  zh: '当前阶段先支持文本粘贴，避免一上来就把真实文件导入和持久化绑死。',
-                  en: 'Text paste comes first so file import and persistence do not get coupled too early.',
-                })}
-              </span>
-            </label>
+            </FieldGroup>
           ) : null}
         </div>
 
         {parseState.status === 'success' ? (
-          <div className="status-banner status-banner--success">
+          <StatusBanner tone="success">
             {t({
               zh: '已在本地解析出一组合法凭证，当前页面仅展示脱敏结果，不会自动保存。',
               en: 'A valid credential pair was parsed locally. This page only shows the masked result and does not save it automatically.',
             })}
-          </div>
+          </StatusBanner>
         ) : null}
 
-        {parseState.status === 'error' ? (
-          <div className="status-banner status-banner--error">{parseState.message}</div>
-        ) : null}
+        {parseState.status === 'error' ? <StatusBanner tone="error">{parseState.message}</StatusBanner> : null}
 
         {parseState.status === 'idle' ? (
-          <div className="status-banner status-banner--info">
+          <StatusBanner tone="info">
             {t({
               zh: '这里适合先用脱敏样本验证格式，再考虑接真实导入和本地同步。',
               en: 'Use masked samples here to validate the format first, then move on to real imports and local sync.',
             })}
-          </div>
+          </StatusBanner>
         ) : null}
 
         {parseState.status === 'success' && maskedCredentials ? (

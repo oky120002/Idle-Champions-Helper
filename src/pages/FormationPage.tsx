@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useI18n } from '../app/i18n'
+import { FieldGroup } from '../components/FieldGroup'
 import { LocalizedText } from '../components/LocalizedText'
+import { StatusBanner, type StatusTone } from '../components/StatusBanner'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollectionAtVersion, loadVersion } from '../data/client'
 import {
@@ -51,8 +53,6 @@ type FormationState =
       message: string
     }
 
-type StatusTone = 'info' | 'success' | 'error'
-
 interface StatusMessage {
   tone: StatusTone
   title: string
@@ -86,18 +86,6 @@ function formatDateTime(value: string): string {
   return date.toLocaleString('zh-CN', {
     hour12: false,
   })
-}
-
-function getStatusBannerClassName(tone: StatusTone): string {
-  if (tone === 'success') {
-    return 'status-banner status-banner--success'
-  }
-
-  if (tone === 'error') {
-    return 'status-banner status-banner--error'
-  }
-
-  return 'status-banner status-banner--info'
 }
 
 function parseScenarioTags(value: string): string[] {
@@ -627,96 +615,90 @@ export function FormationPage() {
         })}
       >
         {state.status === 'loading' ? (
-          <div className="status-banner status-banner--info">
+          <StatusBanner tone="info">
             {t({ zh: '正在读取阵型布局和英雄数据…', en: 'Loading layouts and champion data…' })}
-          </div>
+          </StatusBanner>
         ) : null}
 
         {state.status === 'error' ? (
-          <div className="status-banner status-banner--error">
-            {t({ zh: '阵型数据读取失败', en: 'Formation data failed to load' })}：{state.message}
-          </div>
+          <StatusBanner
+            tone="error"
+            title={t({ zh: '阵型数据读取失败', en: 'Formation data failed to load' })}
+            detail={state.message}
+          />
         ) : null}
 
         {state.status === 'ready' ? (
           <>
             {draftPrompt ? (
-              <div
-                className={
-                  draftPrompt.kind === 'restore' ? 'status-banner status-banner--info' : 'status-banner status-banner--error'
+              <StatusBanner
+                tone={draftPrompt.kind === 'restore' ? 'info' : 'error'}
+                title={
+                  draftPrompt.kind === 'restore'
+                    ? t({ zh: '检测到最近草稿，是否恢复？', en: 'Recent draft detected. Restore it?' })
+                    : draftPrompt.title
                 }
-              >
-                <div className="status-banner__content">
-                  <strong className="status-banner__title">
-                    {draftPrompt.kind === 'restore'
-                      ? t({ zh: '检测到最近草稿，是否恢复？', en: 'Recent draft detected. Restore it?' })
-                      : draftPrompt.title}
-                  </strong>
-                  <p className="status-banner__detail">
-                    {draftPrompt.kind === 'restore'
-                      ? `${formatDateTime(draftPrompt.preview.snapshot.updatedAt)} · ${
-                          locale === 'zh-CN'
-                            ? `${Object.keys(draftPrompt.preview.placements).length} 名英雄`
-                            : `${Object.keys(draftPrompt.preview.placements).length} champions`
-                        } · ${draftPrompt.preview.layoutName}`
-                      : draftPrompt.detail}
-                  </p>
-                  {draftPrompt.kind === 'restore' ? (
-                    <>
-                      <p className="status-banner__detail">{buildRestoreStatusDetail(draftPrompt.preview)}</p>
-                      <div className="tag-row status-banner__meta">
-                        <span className="tag-pill tag-pill--muted">
-                          {t({ zh: '保存版本', en: 'Saved version' })}：{draftPrompt.preview.snapshot.dataVersion}
-                        </span>
-                        <span className="tag-pill tag-pill--muted">
-                          {t({ zh: '恢复版本', en: 'Restore version' })}：{draftPrompt.preview.dataVersion}
-                        </span>
-                        <span className="tag-pill tag-pill--muted">
-                          {draftPrompt.preview.restoreMode === 'compatible'
-                            ? t({ zh: '兼容恢复', en: 'Compatible restore' })
-                            : t({ zh: '原样恢复', en: 'Exact restore' })}
-                        </span>
-                      </div>
-                    </>
-                  ) : null}
-                </div>
-                <div className="status-banner__actions">
-                  {draftPrompt.kind === 'restore' ? (
+                detail={
+                  draftPrompt.kind === 'restore'
+                    ? `${formatDateTime(draftPrompt.preview.snapshot.updatedAt)} · ${
+                        locale === 'zh-CN'
+                          ? `${Object.keys(draftPrompt.preview.placements).length} 名英雄`
+                          : `${Object.keys(draftPrompt.preview.placements).length} champions`
+                      } · ${draftPrompt.preview.layoutName}`
+                    : draftPrompt.detail
+                }
+                actions={
+                  <>
+                    {draftPrompt.kind === 'restore' ? (
+                      <button
+                        type="button"
+                        className="action-button action-button--secondary"
+                        onClick={handleRestoreRecentDraft}
+                      >
+                        {t({ zh: '恢复最近草稿', en: 'Restore draft' })}
+                      </button>
+                    ) : null}
                     <button
                       type="button"
-                      className="action-button action-button--secondary"
-                      onClick={handleRestoreRecentDraft}
+                      className="action-button action-button--ghost"
+                      onClick={handleKeepDraftWithoutRestore}
                     >
-                      {t({ zh: '恢复最近草稿', en: 'Restore draft' })}
+                      {t({ zh: '先保留不恢复', en: 'Keep for now' })}
                     </button>
-                  ) : null}
-                  <button
-                    type="button"
-                    className="action-button action-button--ghost"
-                    onClick={handleKeepDraftWithoutRestore}
-                  >
-                    {t({ zh: '先保留不恢复', en: 'Keep for now' })}
-                  </button>
-                  <button
-                    type="button"
-                    className="action-button action-button--ghost"
-                    onClick={handleDiscardRecentDraft}
-                  >
-                    {t({ zh: '丢弃旧草稿', en: 'Discard draft' })}
-                  </button>
-                </div>
-              </div>
+                    <button
+                      type="button"
+                      className="action-button action-button--ghost"
+                      onClick={handleDiscardRecentDraft}
+                    >
+                      {t({ zh: '丢弃旧草稿', en: 'Discard draft' })}
+                    </button>
+                  </>
+                }
+              >
+                {draftPrompt.kind === 'restore' ? (
+                  <>
+                    <p className="status-banner__detail">{buildRestoreStatusDetail(draftPrompt.preview)}</p>
+                    <div className="tag-row">
+                      <span className="tag-pill tag-pill--muted">
+                        {t({ zh: '保存版本', en: 'Saved version' })}：{draftPrompt.preview.snapshot.dataVersion}
+                      </span>
+                      <span className="tag-pill tag-pill--muted">
+                        {t({ zh: '恢复版本', en: 'Restore version' })}：{draftPrompt.preview.dataVersion}
+                      </span>
+                      <span className="tag-pill tag-pill--muted">
+                        {draftPrompt.preview.restoreMode === 'compatible'
+                          ? t({ zh: '兼容恢复', en: 'Compatible restore' })
+                          : t({ zh: '原样恢复', en: 'Exact restore' })}
+                      </span>
+                    </div>
+                  </>
+                ) : null}
+              </StatusBanner>
             ) : draftStatus ? (
-              <div className={getStatusBannerClassName(draftStatus.tone)}>
-                <div className="status-banner__content">
-                  <strong className="status-banner__title">{draftStatus.title}</strong>
-                  <p className="status-banner__detail">{draftStatus.detail}</p>
-                </div>
-              </div>
+              <StatusBanner tone={draftStatus.tone} title={draftStatus.title} detail={draftStatus.detail} />
             ) : null}
 
-            <div className="filter-group">
-              <span className="field-label">{t({ zh: '布局选择', en: 'Layout' })}</span>
+            <FieldGroup label={t({ zh: '布局选择', en: 'Layout' })} className="filter-group">
               <div className="filter-chip-grid">
                 {state.formations.map((layout) => (
                   <button
@@ -729,7 +711,7 @@ export function FormationPage() {
                   </button>
                 ))}
               </div>
-            </div>
+            </FieldGroup>
 
             {selectedLayout ? (
               <>
@@ -758,17 +740,15 @@ export function FormationPage() {
                   </article>
                 </div>
 
-                {selectedLayout.notes ? (
-                  <div className="status-banner status-banner--info">{selectedLayout.notes}</div>
-                ) : null}
+                {selectedLayout.notes ? <StatusBanner tone="info">{selectedLayout.notes}</StatusBanner> : null}
 
                 {conflictingSeats.length > 0 ? (
-                  <div className="status-banner status-banner--error">
+                  <StatusBanner tone="error">
                     {t({
                       zh: `当前阵型里出现 seat 冲突：${conflictingSeats.join(', ')}。同一 seat 只能放一名英雄。`,
                       en: `Seat conflicts found in this formation: ${conflictingSeats.join(', ')}. Only one champion may occupy each seat.`,
                     })}
-                  </div>
+                  </StatusBanner>
                 ) : null}
 
                 <div className="formation-board-wrap">
@@ -823,12 +803,12 @@ export function FormationPage() {
                 </div>
               </>
             ) : (
-              <div className="status-banner status-banner--info">
+              <StatusBanner tone="info">
                 {t({
                   zh: '当前还没有可用布局，请先补 `scripts/data/manual-overrides.json`。',
                   en: 'No layouts are available yet. Add one to `scripts/data/manual-overrides.json` first.',
                 })}
-              </div>
+              </StatusBanner>
             )}
           </>
         ) : null}
@@ -847,10 +827,7 @@ export function FormationPage() {
       >
         <div className="split-grid">
           <div className="form-stack">
-            <div className="form-field">
-              <label className="field-label" htmlFor="preset-name">
-                {t({ zh: '方案名称', en: 'Preset name' })}
-              </label>
+            <FieldGroup label={t({ zh: '方案名称', en: 'Preset name' })} labelFor="preset-name">
               <input
                 id="preset-name"
                 className="text-input"
@@ -862,12 +839,9 @@ export function FormationPage() {
                   en: 'Example: Speed farm core wave 10',
                 })}
               />
-            </div>
+            </FieldGroup>
 
-            <div className="form-field">
-              <label className="field-label" htmlFor="preset-description">
-                {t({ zh: '方案备注', en: 'Preset notes' })}
-              </label>
+            <FieldGroup label={t({ zh: '方案备注', en: 'Preset notes' })} labelFor="preset-description">
               <textarea
                 id="preset-description"
                 className="text-area"
@@ -879,12 +853,16 @@ export function FormationPage() {
                   en: 'Describe what this formation is for and what still needs tuning.',
                 })}
               />
-            </div>
+            </FieldGroup>
 
-            <div className="form-field">
-              <label className="field-label" htmlFor="preset-tags">
-                {t({ zh: '场景标签', en: 'Scenario tags' })}
-              </label>
+            <FieldGroup
+              label={t({ zh: '场景标签', en: 'Scenario tags' })}
+              labelFor="preset-tags"
+              hint={t({
+                zh: '仅作用户可读标签，不作为恢复主键；可用中英文逗号分隔。',
+                en: 'These are reader-friendly tags only, not restore keys. Use commas to separate them.',
+              })}
+            >
               <input
                 id="preset-tags"
                 className="text-input"
@@ -896,16 +874,9 @@ export function FormationPage() {
                   en: 'Example: Push, speed, Time Gate',
                 })}
               />
-              <span className="field-hint">
-                {t({
-                  zh: '仅作用户可读标签，不作为恢复主键；可用中英文逗号分隔。',
-                  en: 'These are reader-friendly tags only, not restore keys. Use commas to separate them.',
-                })}
-              </span>
-            </div>
+            </FieldGroup>
 
-            <div className="form-field">
-              <span className="field-label">{t({ zh: '优先级', en: 'Priority' })}</span>
+            <FieldGroup label={t({ zh: '优先级', en: 'Priority' })}>
               <div className="segmented-control">
                 {PRESET_PRIORITY_OPTIONS.map((option) => (
                   <button
@@ -922,7 +893,7 @@ export function FormationPage() {
                   </button>
                 ))}
               </div>
-            </div>
+            </FieldGroup>
 
             <div className="button-row">
               <button
@@ -941,12 +912,7 @@ export function FormationPage() {
             </div>
 
             {presetStatus ? (
-              <div className={getStatusBannerClassName(presetStatus.tone)}>
-                <div className="status-banner__content">
-                  <strong className="status-banner__title">{presetStatus.title}</strong>
-                  <p className="status-banner__detail">{presetStatus.detail}</p>
-                </div>
-              </div>
+              <StatusBanner tone={presetStatus.tone} title={presetStatus.title} detail={presetStatus.detail} />
             ) : null}
           </div>
 

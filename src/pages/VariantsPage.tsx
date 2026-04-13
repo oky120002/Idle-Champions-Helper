@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useI18n } from '../app/i18n'
+import { FieldGroup } from '../components/FieldGroup'
 import { LocalizedText } from '../components/LocalizedText'
+import { StatusBanner } from '../components/StatusBanner'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollection } from '../data/client'
 import {
@@ -145,16 +147,15 @@ export function VariantsPage() {
         })}
       >
         {state.status === 'loading' ? (
-          <div className="status-banner status-banner--info">
-            {t({ zh: '正在读取变体数据…', en: 'Loading variant data…' })}
-          </div>
+          <StatusBanner tone="info">{t({ zh: '正在读取变体数据…', en: 'Loading variant data…' })}</StatusBanner>
         ) : null}
 
         {state.status === 'error' ? (
-          <div className="status-banner status-banner--error">
-            {t({ zh: '变体数据读取失败', en: 'Variant data failed to load' })}：
-            {state.message || t({ zh: '未知错误', en: 'Unknown error' })}
-          </div>
+          <StatusBanner
+            tone="error"
+            title={t({ zh: '变体数据读取失败', en: 'Variant data failed to load' })}
+            detail={state.message || t({ zh: '未知错误', en: 'Unknown error' })}
+          />
         ) : null}
 
         {state.status === 'ready' ? (
@@ -179,8 +180,14 @@ export function VariantsPage() {
             </div>
 
             <div className="filter-panel filter-panel--compact">
-              <label className="form-field">
-                <span className="field-label">{t({ zh: '关键词', en: 'Keyword' })}</span>
+              <FieldGroup
+                label={t({ zh: '关键词', en: 'Keyword' })}
+                hint={t({
+                  zh: '变体名、战役、限制文本和奖励文本都支持中英混搜。',
+                  en: 'Names, campaigns, restriction text, and rewards all support mixed Chinese and English search.',
+                })}
+                as="label"
+              >
                 <input
                   className="text-input"
                   type="text"
@@ -191,16 +198,9 @@ export function VariantsPage() {
                   value={search}
                   onChange={(event) => setSearch(event.target.value)}
                 />
-                <span className="field-hint">
-                  {t({
-                    zh: '变体名、战役、限制文本和奖励文本都支持中英混搜。',
-                    en: 'Names, campaigns, restriction text, and rewards all support mixed Chinese and English search.',
-                  })}
-                </span>
-              </label>
+              </FieldGroup>
 
-              <label className="form-field">
-                <span className="field-label">{t({ zh: '战役', en: 'Campaign' })}</span>
+              <FieldGroup label={t({ zh: '战役', en: 'Campaign' })} as="label">
                 <select
                   className="text-input"
                   value={selectedCampaign}
@@ -213,16 +213,16 @@ export function VariantsPage() {
                     </option>
                   ))}
                 </select>
-              </label>
+              </FieldGroup>
             </div>
 
             {filteredVariants.length === 0 ? (
-              <div className="status-banner status-banner--info">
+              <StatusBanner tone="info">
                 {t({
                   zh: '当前筛选条件下没有匹配变体，可以先放宽战役或关键词条件。',
                   en: 'No variants match these filters yet. Try broadening the campaign or keyword first.',
                 })}
-              </div>
+              </StatusBanner>
             ) : null}
 
             {filteredVariants.length > 0 ? (
