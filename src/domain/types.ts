@@ -18,6 +18,12 @@ export interface LocalizedOption extends LocalizedText {
   id: string
 }
 
+export interface ChampionPortrait {
+  path: string
+  sourceGraphic: string
+  sourceVersion: number | null
+}
+
 export interface Champion {
   id: string
   name: LocalizedText
@@ -25,6 +31,7 @@ export interface Champion {
   roles: string[]
   affiliations: LocalizedText[]
   tags: string[]
+  portrait?: ChampionPortrait | null
 }
 
 export interface Variant {

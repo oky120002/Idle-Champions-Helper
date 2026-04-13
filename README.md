@@ -19,6 +19,7 @@
 - 已补基础路由、页面壳层、公共数据目录与部署脚本
 - 已落第一版真实公共数据：`champions`、`variants`、`enums` 已由官方 definitions 生成，并补了手工维护的 `formations` MVP 布局数据
 - 已补第一版官方中文映射层：`champions / affiliations / campaigns / variants` 保留“官方原文 + 中文展示名”双字段
+- 已把 161 名可上阵英雄的官方头像按版本写入 `public/data/v1/champion-portraits/`，并在英雄相关卡片里接入展示
 - 已补第一版界面语言切换，页面可在中文 / 英文界面之间切换
 - 已落最小测试基础设施：`Vitest`、`React Testing Library`、`Playwright`
 - 阵型页已接入“最近草稿”本地自动保存 / 恢复，持久化介质为 `IndexedDB`
@@ -126,7 +127,13 @@ npm run data:fetch
 npm run data:normalize -- --input tmp/idle-champions-api/<english-snapshot>.json --localizedInput tmp/idle-champions-api/<zh-snapshot>.json
 ```
 
-一键执行“官方原文抓取 + `language_id=7` 中文抓取 + 归一化”：
+把官方头像资源同步到版本化公共目录：
+
+```bash
+npm run data:portraits -- --input tmp/idle-champions-api/<english-snapshot>.json
+```
+
+一键执行“官方原文抓取 + `language_id=7` 中文抓取 + 头像同步 + 归一化”：
 
 ```bash
 npm run data:build
@@ -140,6 +147,7 @@ npm run data:build
 - 手工补充层默认读取 `scripts/data/manual-overrides.json`
 - 详细调研结论见 `docs/research/data/game-data-source-investigation.md`
 - `language_id=7` 官方中文覆盖结论见 `docs/research/data/language-id-7-chinese-definitions-research.md`
+- 官方头像字段与资源尺寸核实见 `docs/research/data/champion-portrait-asset-research.md`
 
 ## 当前目录结构
 
@@ -159,11 +167,13 @@ npm run data:build
 │   ├── fixtures/
 │   ├── build-idle-champions-data.mjs
 │   ├── fetch-idle-champions-definitions.mjs
-│   └── normalize-idle-champions-definitions.mjs
+│   ├── normalize-idle-champions-definitions.mjs
+│   └── sync-idle-champions-portraits.mjs
 ├── public/
 │   └── data/
 │       ├── version.json
 │       └── v1/
+│           ├── champion-portraits/
 │           ├── champions.json
 │           ├── enums.json
 │           ├── formations.json
@@ -209,8 +219,10 @@ npm run data:build
 - `src/domain/types.ts`：放数据类型定义
 - `public/data/version.json`：声明当前数据版本
 - `public/data/v1/*.json`：当前版本的数据文件
+- `public/data/v1/champion-portraits/`：当前版本的官方英雄头像 PNG 资源
 - `scripts/fetch-idle-champions-definitions.mjs`：拉取官方 definitions 原始快照
 - `scripts/normalize-idle-champions-definitions.mjs`：把原始快照转换为前端数据
+- `scripts/sync-idle-champions-portraits.mjs`：把官方 mobile assets 里的英雄头像拉到版本化公共目录
 - `scripts/data/manual-overrides.json`：维护自动抓取之外的补充数据
 
 ### 部署约定
@@ -234,7 +246,9 @@ npm run data:build
   - `docs/research/data/game-data-source-investigation.md`
   - `docs/research/data/static-data-storage-research.md`
   - `docs/research/data/language-id-7-chinese-definitions-research.md`
+  - `docs/research/data/champion-portrait-asset-research.md`
   - `docs/research/deployment/static-hosting-research.md`
+  - `docs/research/deployment/china-static-hosting-research.md`
   - `docs/research/testing/regression-testing-research.md`
 - 模块设计：
   - `docs/modules/champions/champions-filter-design.md`

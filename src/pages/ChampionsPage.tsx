@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useI18n } from '../app/i18n'
+import { ChampionIdentity } from '../components/ChampionIdentity'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollection } from '../data/client'
 import {
   getLocalizedTextPair,
   getPrimaryLocalizedText,
   getRoleLabel,
-  getSecondaryLocalizedText,
 } from '../domain/localizedText'
 import type { Champion, LocalizedText } from '../domain/types'
 import { filterChampions, toggleFilterValue } from '../rules/championFilter'
@@ -356,19 +356,13 @@ export function ChampionsPage() {
 
                 <div className="results-grid">
                   {visibleChampions.map((champion) => {
-                    const primaryName = getPrimaryLocalizedText(champion.name, locale)
-                    const secondaryName = getSecondaryLocalizedText(champion.name, locale)
-
                     return (
                       <article key={champion.id} className="result-card">
-                        <div className="result-card__header">
-                          <span className="result-card__eyebrow">
-                            {locale === 'zh-CN' ? `${champion.seat} 号位` : `Seat ${champion.seat}`}
-                          </span>
-                          <h3 className="result-card__title">{primaryName}</h3>
-                        </div>
-
-                        {secondaryName ? <p className="result-card__secondary">{secondaryName}</p> : null}
+                        <ChampionIdentity
+                          champion={champion}
+                          locale={locale}
+                          eyebrow={locale === 'zh-CN' ? `${champion.seat} 号位` : `Seat ${champion.seat}`}
+                        />
 
                         <div className="tag-row">
                           {champion.roles.map((role) => (

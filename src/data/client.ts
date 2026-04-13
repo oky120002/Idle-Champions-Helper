@@ -2,7 +2,7 @@ import type { DataCollection, DataVersion } from '../domain/types'
 
 const memoryCache = new Map<string, unknown>()
 
-function buildDataUrl(relativePath: string): string {
+export function resolveDataUrl(relativePath: string): string {
   const base = import.meta.env.BASE_URL.endsWith('/')
     ? import.meta.env.BASE_URL
     : `${import.meta.env.BASE_URL}/`
@@ -11,7 +11,7 @@ function buildDataUrl(relativePath: string): string {
 }
 
 async function fetchJson<T>(relativePath: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(buildDataUrl(relativePath), init)
+  const response = await fetch(resolveDataUrl(relativePath), init)
 
   if (!response.ok) {
     throw new Error(`HTTP ${response.status}`)

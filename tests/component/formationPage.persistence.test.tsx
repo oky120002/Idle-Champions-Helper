@@ -5,11 +5,16 @@ import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
 
-vi.mock('../../src/data/client', () => ({
-  loadCollection: vi.fn(),
-  loadCollectionAtVersion: vi.fn(),
-  loadVersion: vi.fn(),
-}))
+vi.mock('../../src/data/client', async () => {
+  const actual = await vi.importActual<typeof import('../../src/data/client')>('../../src/data/client')
+
+  return {
+    ...actual,
+    loadCollection: vi.fn(),
+    loadCollectionAtVersion: vi.fn(),
+    loadVersion: vi.fn(),
+  }
+})
 
 import { I18nProvider } from '../../src/app/i18n'
 import { FormationPage } from '../../src/pages/FormationPage'
@@ -52,6 +57,11 @@ const championsFixture: DataCollection<Champion> = {
       roles: ['support'],
       affiliations: [],
       tags: [],
+      portrait: {
+        path: 'v1/champion-portraits/bruenor.png',
+        sourceGraphic: 'Portraits/Portrait_Bruenor',
+        sourceVersion: 7,
+      },
     },
     {
       id: 'celeste',
@@ -63,6 +73,11 @@ const championsFixture: DataCollection<Champion> = {
       roles: ['healing'],
       affiliations: [],
       tags: [],
+      portrait: {
+        path: 'v1/champion-portraits/celeste.png',
+        sourceGraphic: 'Portraits/Portrait_Celeste',
+        sourceVersion: 7,
+      },
     },
   ],
 }
@@ -158,6 +173,7 @@ describe('FormationPage persistence flow', () => {
     renderFormationPage()
 
     expect(await screen.findByText('检测到最近草稿，是否恢复？')).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: '布鲁诺头像' })).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: '恢复最近草稿' }))
 
@@ -185,6 +201,7 @@ describe('FormationPage persistence flow', () => {
     }, { timeout: 2000 })
 
     expect(await screen.findByText('最近草稿已自动保存')).toBeInTheDocument()
+    expect(screen.getAllByRole('img', { name: '布鲁诺头像' })).toHaveLength(2)
   })
 
   it('可以把当前阵型保存为命名方案', async () => {
