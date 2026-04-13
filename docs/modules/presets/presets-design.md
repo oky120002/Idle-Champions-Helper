@@ -253,6 +253,31 @@ MVP 至少支持：
 - 公共数据版本变化后，旧方案不会静默坏掉
 - 数据结构可以继续承接筛选快照和个人画像扩展
 
+### 8.1 当前实现更新（2026-04-13）
+
+当前仓库已落下列 MVP 能力：
+
+- 阵型页可把当前工作草稿保存为命名方案，字段包含名称、备注、场景标签、优先级和 `scenarioRef`。
+- 方案存档页已支持按最近编辑排序展示本地方案列表。
+- 方案存档页已支持编辑名称、备注、标签与优先级。
+- 方案存档页已支持删除方案，并可把方案恢复回阵型页继续编辑。
+- 方案恢复与最近草稿共用一套版本校验逻辑；若只能兼容恢复，页面会显式提示，不做静默恢复。
+
+当前对应实现文件：
+
+- `src/pages/PresetsPage.tsx`
+- `src/pages/FormationPage.tsx`
+- `src/data/formationPresetStore.ts`
+- `src/data/formationPersistence.ts`
+- `src/data/localDatabase.ts`
+- `src/domain/types.ts`
+
+### 8.2 当前验证结果（2026-04-13）
+
+- `npm run build`：通过
+- `npm run lint`：通过
+- 浏览器自动化验收：在当前 Codex CLI 沙箱内未完成；Playwright 浏览器启动受环境权限限制，详见 `docs/investigations/runtime/playwright-browser-launch-verification.md`
+
 ---
 
 ## 9. 当前明确不做

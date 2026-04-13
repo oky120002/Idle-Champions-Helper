@@ -19,6 +19,8 @@
 - 已补基础路由、页面壳层、公共数据目录与部署脚本
 - 已落第一版真实公共数据：`champions`、`variants`、`enums` 已由官方 definitions 生成
 - 个人数据本地存储方案已确定为 `IndexedDB`，但还未正式接入页面
+- 阵型页已接入“最近草稿”本地自动保存 / 恢复，持久化介质为 `IndexedDB`
+- 方案存档页已落第一版命名方案库：支持保存、编辑、删除、恢复回阵型页
 - 已补官方 definitions 抓取 / 归一化脚本骨架，方便后续接真实公共数据
 - 当前仍处于早期阶段，完整规则体系与测试体系尚未完善
 
@@ -173,6 +175,7 @@ npm run data:build
 - `docs/research/data/game-data-source-investigation.md`：基础游戏数据、个人数据凭证与第三方站点更新链路调研
 - `docs/research/testing/regression-testing-research.md`：主分支整体回归测试框架设计
 - `docs/investigations/runtime/local-run-verification.md`：本地构建与预览行为验证记录
+- `docs/investigations/runtime/playwright-browser-launch-verification.md`：当前 Codex CLI 环境下 Playwright 浏览器启动受限的确认记录
 - `docs/investigations/repository/github-directory-commit-investigation.md`：`.github` 目录无法提交的本地原因排查
 - `docs/troubleshooting-log.md`：通用问题排查台账，沉淀部署、认证、网络、运行等问题的排查记录
 - `docs/modules/champions/champions-filter-design.md`：英雄筛选模块设计稿
@@ -184,9 +187,9 @@ npm run data:build
 
 ## 下一步建议
 
-1. 补 `Patron / 模式过滤` 的规则表达与英雄筛选闭环
-2. 接阵型编辑页的最近草稿保存 / 恢复
-3. 完成方案存档页的命名方案库 MVP
+1. 补浏览器端手工 / 自动化验收，补齐当前 CLI 沙箱下未完成的真实页面回归
+2. 把 `scenarioRef` 从占位字段接成真实场景上下文
+3. 补 `Patron / 模式过滤` 的规则表达与英雄筛选闭环
 4. 最后补个人画像与非阵型类本地数据能力
 
 ## 说明

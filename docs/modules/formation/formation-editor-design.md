@@ -288,6 +288,31 @@ interface FormationDraft {
 - 草稿若绑定了场景上下文，恢复时不会把 `scenarioRef` 悄悄降级成纯文本标签
 - 后续接方案存档时，不需要推翻当前数据结构
 
+### 8.1 当前实现更新（2026-04-13）
+
+当前仓库已落下列实现：
+
+- 阵型页会在初始化时读取最近草稿，并提供“恢复 / 先保留不恢复 / 丢弃旧草稿”三种处理入口。
+- `layoutId / placements / scenarioRef` 变化后，会以防抖方式把最近草稿写入 `IndexedDB`。
+- 恢复逻辑已经支持“优先按保存时 `dataVersion` 原样恢复；旧版本不可读时退回兼容恢复并显式提示”。
+- 清空阵型且阵型为空时，会同步清理最近草稿记录，避免残留脏状态。
+- 阵型页已新增“保存为方案”入口，把当前工作草稿转成命名方案并交给方案存档模块管理。
+
+当前对应实现文件：
+
+- `src/pages/FormationPage.tsx`
+- `src/data/formationDraftStore.ts`
+- `src/data/formationPersistence.ts`
+- `src/data/localDatabase.ts`
+- `src/data/client.ts`
+- `src/domain/types.ts`
+
+### 8.2 当前验证结果（2026-04-13）
+
+- `npm run build`：通过
+- `npm run lint`：通过
+- 浏览器自动化验收：在当前 Codex CLI 沙箱内未完成；Playwright 浏览器启动受环境权限限制，详见 `docs/investigations/runtime/playwright-browser-launch-verification.md`
+
 ---
 
 ## 9. 当前明确不做

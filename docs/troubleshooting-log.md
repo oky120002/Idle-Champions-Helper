@@ -22,3 +22,13 @@
 - 验证：第二次运行中 `build` 与 `deploy` 均成功，站点已可访问：`https://oky120002.github.io/Idle-Champions-Helper/`
 - 引用：`.github/workflows/deploy.yml`、`docs/research/deployment/static-hosting-research.md`、`docs/investigations/runtime/local-run-verification.md`
 - 记录：成功运行页 `https://github.com/oky120002/Idle-Champions-Helper/actions/runs/24312930707`
+
+## 记录 002：Codex CLI 内 Playwright 浏览器无法正常启动
+
+- 状态：已确认环境限制；时间：`2026-04-13`
+- 影响：当前仓库的浏览器端自动化验收无法在 Codex CLI 自带沙箱内完成，尽管 Playwright 浏览器已安装成功。
+- 排查摘要：先确认 `PLAYWRIGHT_BROWSERS_PATH` 指向长期目录，再分别测试 `firefox / chromium / webkit` 的 `playwright.launch()`；随后补做“直接启动浏览器二进制”的对照验证。
+- 现象：`firefox.launch()` 在 `-juggler-pipe` 模式下启动后直接 `SIGABRT`；`chromium.launch()` 在 `--remote-debugging-pipe` 阶段报 `MachPortRendezvousServer ... Permission denied (1100)`；`webkit` 同样无法在当前环境内完成启动。
+- 结论：安装本身不是主因，主要受当前 Codex CLI 运行环境的权限/沙箱限制影响；浏览器二进制可直接启动，但 Playwright 控制链路无法在此环境中稳定建立。
+- 处理：本轮先以 `npm run build` + `npm run lint` 完成最小充分验证；如需真实页面自动化验收，应改在用户本机常规终端环境运行。
+- 引用：`docs/investigations/runtime/playwright-browser-launch-verification.md`
