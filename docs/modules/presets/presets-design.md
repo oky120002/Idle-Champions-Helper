@@ -276,7 +276,8 @@ MVP 至少支持：
 
 - `npm run build`：通过
 - `npm run lint`：通过
-- 浏览器自动化验收：在当前 Codex CLI 沙箱内未完成；Playwright 浏览器启动受环境权限限制，详见 `docs/investigations/runtime/playwright-browser-launch-verification.md`
+- 浏览器自动化验收：已在 `danger-full-access` 会话中通过，覆盖“保存方案 -> 列表展示 -> 编辑 -> 恢复到阵型页 -> 删除”主链路
+- 受限会话里的 Playwright 启动失败记录仍保留在 `docs/investigations/runtime/playwright-browser-launch-verification.md`
 
 ---
 
