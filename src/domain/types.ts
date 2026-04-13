@@ -9,21 +9,30 @@ export interface DataCollection<T> {
   updatedAt: string
 }
 
+export interface LocalizedText {
+  original: string
+  display: string
+}
+
+export interface LocalizedOption extends LocalizedText {
+  id: string
+}
+
 export interface Champion {
   id: string
-  name: string
+  name: LocalizedText
   seat: number
   roles: string[]
-  affiliations: string[]
+  affiliations: LocalizedText[]
   tags: string[]
 }
 
 export interface Variant {
   id: string
-  name: string
-  campaign: string
-  restrictions: string[]
-  rewards: string[]
+  name: LocalizedText
+  campaign: LocalizedOption
+  restrictions: LocalizedText[]
+  rewards: LocalizedText[]
 }
 
 export interface FormationSlot {
