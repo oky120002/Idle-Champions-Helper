@@ -3,6 +3,7 @@ import { useI18n } from '../app/i18n'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollection } from '../data/client'
 import {
+  getLocalizedTextPair,
   getPrimaryLocalizedText,
   getRoleLabel,
   getSecondaryLocalizedText,
@@ -52,14 +53,14 @@ export function FormationPage() {
 
         setState({
           status: 'error',
-          message: error instanceof Error ? error.message : t({ zh: '未知错误', en: 'Unknown error' }),
+          message: error instanceof Error ? error.message : '',
         })
       })
 
     return () => {
       disposed = true
     }
-  }, [t])
+  }, [])
 
   const selectedLayout =
     state.status === 'ready'
@@ -96,6 +97,12 @@ export function FormationPage() {
     () => findSeatConflicts(selectedChampions.map((item) => item.champion.seat)),
     [selectedChampions],
   )
+
+  function getChampionOptionLabel(champion: Champion): string {
+    const seatLabel = locale === 'zh-CN' ? `${champion.seat} 号位` : `Seat ${champion.seat}`
+
+    return `${seatLabel} · ${getLocalizedTextPair(champion.name, locale)}`
+  }
 
   function handleSelectLayout(layoutId: string) {
     setSelectedLayoutId(layoutId)
@@ -142,7 +149,8 @@ export function FormationPage() {
 
         {state.status === 'error' ? (
           <div className="status-banner status-banner--error">
-            {t({ zh: '阵型数据读取失败', en: 'Formation data failed to load' })}：{state.message}
+            {t({ zh: '阵型数据读取失败', en: 'Formation data failed to load' })}：
+            {state.message || t({ zh: '未知错误', en: 'Unknown error' })}
           </div>
         ) : null}
 
@@ -226,17 +234,15 @@ export function FormationPage() {
                             <option value="">{t({ zh: '未放置', en: 'Empty' })}</option>
                             {championOptions.map((item) => (
                               <option key={item.id} value={item.id}>
-                                {locale === 'zh-CN'
-                                  ? `${item.seat} 号位 · ${getPrimaryLocalizedText(item.name, locale)}`
-                                  : `Seat ${item.seat} · ${getPrimaryLocalizedText(item.name, locale)}`}
+                                {getChampionOptionLabel(item)}
                               </option>
                             ))}
                           </select>
                           <span className="formation-slot__hint">
                             {champion
                               ? t({
-                                  zh: `当前：${getPrimaryLocalizedText(champion.name, locale)}`,
-                                  en: `Current: ${getPrimaryLocalizedText(champion.name, locale)}`,
+                                  zh: `当前：${getLocalizedTextPair(champion.name, locale)}`,
+                                  en: `Current: ${getLocalizedTextPair(champion.name, locale)}`,
                                 })
                               : t({
                                   zh: `坐标 ${slot.row}-${slot.column}`,
@@ -301,6 +307,12 @@ export function FormationPage() {
                   <p className="supporting-text">
                     {locale === 'zh-CN' ? `${champion.seat} 号位` : `Seat ${champion.seat}`}
                   </p>
+                  {champion.affiliations.length > 0 ? (
+                    <p className="supporting-text">
+                      {t({ zh: '联动队伍', en: 'Affiliation' })}：
+                      {champion.affiliations.map((affiliation) => getLocalizedTextPair(affiliation, locale)).join(' / ')}
+                    </p>
+                  ) : null}
                   <div className="tag-row">
                     {champion.roles.map((role) => (
                       <span key={role} className="tag-pill">
