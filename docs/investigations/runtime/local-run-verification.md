@@ -1,8 +1,8 @@
-# 本地运行验证
+# 本地运行与预览验证
 
 - 验证时间：2026-04-13
-- 验证对象：`/Users/rain/Workspaces/Idle-Champions-Helper`
-- 当前结论：**项目当前可以在本地构建，并且可以通过 Vite 开发服务器正常查看页面；直接查看当前生产预览地址会白屏。**
+- 验证对象：当前仓库工作树
+- 当前结论：**项目当前可以本地构建；日常开发应使用 `npm run dev`；GitHub Pages 路径校验应使用 `npm run preview:pages`；直接访问 `npm run preview` 的根路径仍会因为生产 `base` 为 `/Idle-Champions-Helper/` 而拿到错位资源。**
 
 ---
 
@@ -25,12 +25,12 @@ npm run build
 构建摘要：
 
 ```text
-dist/index.html                   0.63 kB
-dist/assets/index--28uTBvw.css    6.03 kB
-dist/assets/index-CbnY9ifo.js   250.94 kB
+dist/index.html                   0.63 kB │ gzip:  0.45 kB
+dist/assets/index-CXHGC9pO.css   10.28 kB │ gzip:  2.79 kB
+dist/assets/index-CprSRZTR.js   306.48 kB │ gzip: 93.66 kB
 ```
 
-### 1.2 生产预览结果
+### 1.2 `npm run preview` 结果
 
 执行：
 
@@ -38,37 +38,54 @@ dist/assets/index-CbnY9ifo.js   250.94 kB
 npm run preview -- --host 127.0.0.1 --port 4173
 ```
 
-服务可以启动，但当前访问效果有问题。
+服务可以启动，但它只适合确认“预览服务拉起了 `dist/`”，不适合作为 GitHub Pages 路径验收入口。
 
-服务启动后输出：
-
-```text
-Local: http://127.0.0.1:4173/
-```
-
-随后检查首页与静态资源返回时发现：
+检查：
 
 ```bash
-curl -I http://127.0.0.1:4173/
-curl -s http://127.0.0.1:4173/Idle-Champions-Helper/assets/index-CbnY9ifo.js | sed -n '1,10p'
+curl -s http://127.0.0.1:4173/ | sed -n '1,20p'
+curl -s http://127.0.0.1:4173/Idle-Champions-Helper/assets/index-CprSRZTR.js | sed -n '1,5p'
 ```
 
-返回：
+结果显示：
 
-```text
-HTTP/1.1 200 OK
-<!doctype html>
-```
+- 根路径返回的 HTML 里，脚本和样式都指向 `/Idle-Champions-Helper/assets/...`
+- 但访问 `/Idle-Champions-Helper/assets/index-CprSRZTR.js` 时，返回的仍是 HTML 而不是 JS
 
 说明：
 
-- 首页 HTML 能返回
-- 但 JS / CSS 资源请求返回的也是 HTML，而不是真正的静态资源
-- 浏览器因此无法加载前端脚本，打开页面会出现白屏
+- 生产 `base` 路径已经写进构建产物
+- 默认 `vite preview` 没有按 GitHub Pages 项目站的基线路径正确托管这些资源
+- 因此它不能代表“生产路径是否正确”
 
-这个问题和当前 `vite.config.ts` 里的生产 `base` 配置有关：生产构建使用 `/${repoName}/`，而本地直接用当前预览地址查看时，不适合作为“本地效果预览”的主入口。
+### 1.3 `npm run preview:pages` 结果
 
-### 1.3 开发服务器结果
+执行：
+
+```bash
+npm run preview:pages -- --host 127.0.0.1 --port 4173
+```
+
+检查：
+
+```bash
+curl -I http://127.0.0.1:4173/
+curl -s http://127.0.0.1:4173/Idle-Champions-Helper/ | sed -n '1,20p'
+curl -s http://127.0.0.1:4173/Idle-Champions-Helper/assets/index-CprSRZTR.js | sed -n '1,5p'
+```
+
+结果显示：
+
+- 根路径会 `302` 跳到 `/Idle-Champions-Helper/`
+- 基线路径能返回正确的首页 HTML
+- 资源路径会返回真实的 JS 文件内容，而不是 HTML
+
+说明：
+
+- `preview:pages` 更贴近 GitHub Pages 项目站的真实访问方式
+- 后续验证构建产物、静态资源路径、`HashRouter` 路由时，应优先使用这个入口
+
+### 1.4 开发服务器结果
 
 执行：
 
@@ -76,17 +93,11 @@ HTTP/1.1 200 OK
 npm run dev -- --host 127.0.0.1 --port 4174
 ```
 
-服务启动后输出：
-
-```text
-Local: http://127.0.0.1:4174/
-```
-
-随后检查首页与模块资源：
+检查：
 
 ```bash
-curl -I http://127.0.0.1:4174/
-curl -s http://127.0.0.1:4174/src/main.tsx | sed -n '1,20p'
+curl -s http://127.0.0.1:4174/ | sed -n '1,20p'
+curl -s http://127.0.0.1:4174/src/main.tsx | sed -n '1,10p'
 ```
 
 结果显示：
@@ -94,13 +105,16 @@ curl -s http://127.0.0.1:4174/src/main.tsx | sed -n '1,20p'
 - 首页返回正常 HTML
 - `/src/main.tsx` 能返回实际模块内容
 
-说明当前开发服务器可作为本地查看页面效果的正确入口。
+说明：
+
+- `npm run dev` 仍是日常开发与页面联调的正确入口
+- 它验证的是开发态行为，不等同于 GitHub Pages 构建产物行为
 
 ---
 
 ## 2. 当前页面形态
 
-从代码结构和预览入口可确认，当前站点已经具备以下页面入口：
+从代码结构和本次预览入口可确认，当前站点已经具备以下页面入口：
 
 - `总览`
 - `英雄筛选`
@@ -121,27 +135,39 @@ curl -s http://127.0.0.1:4174/src/main.tsx | sed -n '1,20p'
 
 ---
 
-## 3. 注意事项
+## 3. 当前建议入口
 
-- 本次验证确认了“能构建”
-- 也确认了“能通过开发服务器正常访问”
-- 但同时确认“当前生产预览地址会白屏”
-- 但没有证明所有业务页面都已完整实现
-- 当前仓库仍存在未提交修改，运行结果基于当前工作区状态，不等同于远端 `main`
-- 在当前 CLI 沙箱里，直接启动本地监听会受限，因此本次本地服务验证是通过沙箱外启动完成
+- 日常开发与联调：`npm run dev`
+- 构建产物与 GitHub Pages 路径校验：`npm run preview:pages`
+- 仅确认 `dist/` 是否能被本地服务拉起：`npm run preview`
 
 ---
 
-## 4. 本次验证依据
+## 4. 注意事项
+
+- 本次验证确认了“能构建”
+- 也确认了“能通过开发服务器正常访问”
+- 还确认了“默认 `vite preview` 不能替代 GitHub Pages 路径验收”
+- `preview:pages` 已经是当前仓库里验证项目站基线路径的推荐入口
+- 这些结论只说明运行与预览链路可用，不代表所有业务页面都已完整实现
+
+---
+
+## 5. 本次验证依据
 
 - `package.json`
+- `scripts/serve-github-pages-preview.mjs`
 - `vite.config.ts`
 - `src/app/App.tsx`
 - `src/pages/HomePage.tsx`
 - 本地命令：`npm run build`
 - 本地命令：`npm run preview -- --host 127.0.0.1 --port 4173`
+- 本地命令：`curl -s http://127.0.0.1:4173/`
+- 本地命令：`curl -s http://127.0.0.1:4173/Idle-Champions-Helper/assets/index-CprSRZTR.js`
+- 本地命令：`npm run preview:pages -- --host 127.0.0.1 --port 4173`
 - 本地命令：`curl -I http://127.0.0.1:4173/`
-- 本地命令：`curl -s http://127.0.0.1:4173/Idle-Champions-Helper/assets/index-CbnY9ifo.js`
+- 本地命令：`curl -s http://127.0.0.1:4173/Idle-Champions-Helper/`
+- 本地命令：`curl -s http://127.0.0.1:4173/Idle-Champions-Helper/assets/index-CprSRZTR.js`
 - 本地命令：`npm run dev -- --host 127.0.0.1 --port 4174`
-- 本地命令：`curl -I http://127.0.0.1:4174/`
+- 本地命令：`curl -s http://127.0.0.1:4174/`
 - 本地命令：`curl -s http://127.0.0.1:4174/src/main.tsx`

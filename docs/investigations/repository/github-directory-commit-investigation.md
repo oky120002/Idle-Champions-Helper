@@ -1,8 +1,8 @@
 # `.github` 目录无法提交问题排查
 
 - 排查时间：2026-04-13
-- 排查对象：`/Users/rain/Workspaces/Idle-Champions-Helper/.github`
-- 当前结论：**这是本地 Git 跟踪规则导致的问题，不是当前必须去 GitHub 配置什么东西。**
+- 排查对象：仓库内 `.github/` 目录（历史问题）
+- 当前结论：**当 `.github/` 下只有被忽略文件时，Git 不会跟踪这个目录；当前仓库已存在 `.github/workflows/deploy.yml`，本文仅保留原理说明，不代表现状仍有阻塞。**
 
 ---
 

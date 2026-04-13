@@ -22,7 +22,9 @@
 
 ### 1.1 生产门禁必须放在部署前，而不是部署后
 
-当前仓库已经有 `GitHub Pages` 部署工作流，但它在 `push main` 后会直接构建并部署，缺少测试门禁。
+当前仓库已经把生产门禁放到了部署前：`.github/workflows/deploy.yml` 会先执行完整回归与构建，只有成功后才会部署 GitHub Pages。
+
+这一节保留，是为了明确这条链路为什么必须继续保持，并说明后续还要把门禁从 `push main` 继续前移到 `pull_request -> main`。
 
 如果目标是“**不能把有问题的东西提交到生产**”，最关键的调整不是先写很多测试，而是先把工作流改成下面这条强依赖链：
 
@@ -74,8 +76,14 @@ Pages 部署
 
 - 技术栈已固定为 `Vite + React + TypeScript`
 - 已有 GitHub Pages 自定义工作流：`.github/workflows/deploy.yml`
-- 已有基础质量脚本：
+- 已有质量与回归脚本：
   - `npm run lint`
+  - `npm run typecheck`
+  - `npm run test:run`
+  - `npm run test:unit`
+  - `npm run test:component`
+  - `npm run test:e2e`
+  - `npm run test:regression`
   - `npm run build`
 - 页面骨架已具备：
   - `总览`
@@ -87,16 +95,19 @@ Pages 部署
 
 ### 2.2 当前缺口
 
-- `package.json` 里还没有 `typecheck`、单元测试、组件测试、端到端测试脚本
-- 仓库里还没有 `Vitest`、`Playwright`、`React Testing Library` 等测试基础设施
-- 当前部署工作流没有把“测试通过”作为部署前置条件
-- 当前本地 `preview` 与 GitHub Pages 的 `base` 路径存在差异，直接访问根路径时会出现白屏，这意味着回归测试不能只测“本地根路径是否打开”，而必须测**贴近 GitHub Pages 的真实访问路径**
+- `package.json` 已经补上 `typecheck`、`test:unit`、`test:component`、`test:e2e`、`test:regression` 等脚本，但还没有把数据回归单独拆成 `test:data`
+- 仓库已经接入 `Vitest`、`Playwright`、`React Testing Library`，但业务规则、数据校验和页面流程覆盖面仍需继续补齐
+- 当前部署工作流已经把“完整回归通过”作为部署前置条件，但 `pull_request -> main` 的快速门禁还未拆成独立 workflow
+- 当前本地 `preview` 与 GitHub Pages 的 `base` 路径仍存在差异；页面级回归和产物验收应优先使用 `npm run preview:pages` 这类贴近项目站路径的入口
 
 ### 2.3 本阶段设计边界
 
-本次先完成“框架设计”，不在这一轮直接把所有测试基础设施全部落地。
+本次文档维护不再把已经落地的基础设施继续写成待办；本文同时承担两层角色：
 
-本轮设计输出应当回答清楚：
+1. 记录已经落地的 `main -> 完整回归 -> 部署` 决策。
+2. 说明后续仍需补齐的 PR 门禁、覆盖范围和测试分层演进目标。
+
+当前文档应继续回答清楚：
 
 - 用什么测试分层
 - 哪些内容进入 `main` 的完整回归
@@ -275,7 +286,21 @@ tests/
 
 ## 5. `main` 分支完整回归的建议定义
 
-每次 `push main` 时，建议把“完整回归”定义为以下作业全部通过：
+当前仓库已经落地的“完整回归”定义是：
+
+1. `lint`
+2. `typecheck`
+3. `test:run`
+4. `test:e2e`
+5. `build`（由 `pretest:e2e` 触发）
+
+然后才允许：
+
+6. `deploy`
+
+也就是说，**部署不是完整回归的一部分，而是完整回归通过后的后续动作。**
+
+后续如需把失败信号拆得更细，再演进为：
 
 1. `lint`
 2. `typecheck`
@@ -284,12 +309,7 @@ tests/
 5. `test:component`
 6. `test:e2e:regression`
 7. `build`
-
-然后才允许：
-
 8. `deploy`
-
-也就是说，**部署不是完整回归的一部分，而是完整回归通过后的后续动作。**
 
 ---
 
@@ -441,6 +461,23 @@ playwright.config.ts
 
 ### 8.2 推荐脚本清单
 
+当前仓库已落地：
+
+```json
+{
+  "scripts": {
+    "typecheck": "tsc -b --pretty false",
+    "test:run": "vitest run",
+    "test:unit": "vitest run --project unit",
+    "test:component": "vitest run --project component",
+    "test:e2e": "playwright test",
+    "test:regression": "npm run lint && npm run typecheck && npm run test:run && npm run test:e2e"
+  }
+}
+```
+
+如果后续要把数据回归、smoke 与 regression 信号拆开，可以继续演进为：
+
 ```json
 {
   "scripts": {
@@ -492,9 +529,9 @@ playwright.config.ts
 
 ## 10. 分阶段落地建议
 
-### 阶段一：测试基础设施
+### 阶段一：测试基础设施（已完成）
 
-先补：
+已完成：
 
 - `Vitest`
 - `React Testing Library`
@@ -502,28 +539,28 @@ playwright.config.ts
 - `typecheck` / `test:*` 脚本
 - 回归目录骨架
 
-### 阶段二：最小可用回归
+### 阶段二：最小可用回归（已完成）
 
-先补：
+已完成或已具备等价能力：
 
 - 规则单元测试
 - 数据路径与版本测试
 - 首页与导航组件测试
-- Playwright smoke
+- Playwright 浏览器级基础回归
 
-目标：
+当前结果：
 
-- 让 `push main` 至少具备“不会白屏、不会路径错、不会核心规则直接坏掉”的门禁能力
+- `push main` 已经具备“先回归、后部署”的最小门禁能力
 
-### 阶段三：完整部署门禁
+### 阶段三：完整部署门禁（已完成）
 
-把现有 Pages workflow 改成：
+当前已改成：
 
 - 回归通过后才构建
 - 构建通过后才上传 artifact
 - artifact 上传成功后才部署
 
-### 阶段四：主分支治理增强
+### 阶段四：主分支治理增强（下一步）
 
 如果后续要进一步做到“坏东西尽量不要进 `main`”，再补：
 
