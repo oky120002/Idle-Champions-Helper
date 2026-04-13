@@ -2,7 +2,7 @@
 
 - 设计日期：2026-04-13
 - 模块目标：基于官方 definitions 归一化后的公共数据，提供一个可组合、可解释、可继续扩展的英雄筛选入口。
-- 当前结论：产品级 MVP 仍需包含 `Patron / 模式过滤`；当前页面子阶段先完成“关键词 + seat + 定位 + 联动队伍”的基础闭环，并为 `Patron / 模式过滤` 预留规则与验收入口。
+- 当前结论：产品级 MVP 仍需包含 `Patron / 模式过滤`；当前页面子阶段已完成“关键词 + seat + 定位 + 联动队伍 + 属性分组筛选”的基础闭环，并为 `Patron / 模式过滤` 预留规则与验收入口。
 
 ---
 
@@ -126,8 +126,11 @@ type ChampionFilterContext =
    - seat 多选
    - 定位多选
    - 联动队伍多选
+   - 属性分组多选（种族 / 性别 / 阵营 / 职业 / 获取方式 / 机制）
+   - 已选条件条，支持单独清空某个维度或一键清空全部
 4. 结果区
    - 空态提示
+   - 当前已选条件摘要
    - 当前展示数提示
    - 英雄结果卡片列表
 
@@ -159,6 +162,15 @@ type ChampionFilterContext =
   - 当前基于 `tags` 归类得到
   - 支持多选
 - 职业
+  - 当前基于 `tags` 归类得到
+  - 支持多选
+- 阵营
+  - 当前基于 `tags` 归类得到
+  - 支持多选
+- 获取方式
+  - 当前基于 `tags` 归类得到
+  - 支持多选
+- 机制
   - 当前基于 `tags` 归类得到
   - 支持多选
 
@@ -194,7 +206,10 @@ matches = matchesSearch
   AND matchesAnySelectedAffiliation
   AND matchesAnySelectedRace
   AND matchesAnySelectedGender
+  AND matchesAnySelectedAlignment
   AND matchesAnySelectedProfession
+  AND matchesAnySelectedAcquisition
+  AND matchesAnySelectedMechanic
 ```
 
 在模块 MVP 阶段，还需要补成：
