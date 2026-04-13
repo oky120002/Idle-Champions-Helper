@@ -50,6 +50,7 @@
 - 调研类文件统一使用 `主题-research.md`。
 - 排查或确认类文件统一使用 `主题-investigation.md` 或 `主题-verification.md`。
 - 模块设计稿统一放在 `docs/modules/<module>/` 下，文件名优先使用 `<module>-design.md`。
+- 文档里引用仓库内文件时统一使用项目相对路径，不写绑定某个工作树或本机用户名的绝对路径。
 - 历史性排查文档要在标题、开头说明或索引描述里标明“当前是否仍有效”，避免把旧结论误读为现状。
 - 普通新文档不直接放在 `docs/` 根目录；根目录只保留跨主题入口文档，例如 `docs/README.md` 与 `docs/troubleshooting-log.md`。
 

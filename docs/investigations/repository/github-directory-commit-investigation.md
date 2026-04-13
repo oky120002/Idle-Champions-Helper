@@ -4,18 +4,20 @@
 - 排查对象：仓库内 `.github/` 目录（历史问题）
 - 当前结论：**当 `.github/` 下只有被忽略文件时，Git 不会跟踪这个目录；当前仓库已存在 `.github/workflows/deploy.yml`，本文仅保留原理说明，不代表现状仍有阻塞。**
 
+下文中的“当前”均指**当次排查时的仓库状态**。
+
 ---
 
 ## 1. 结论
 
-当前仓库里的 `.github` 目录只有一个文件：
+当次排查时，`.github` 目录只有一个文件：
 
 - `.github/.DS_Store`
 
 而这个文件被以下规则忽略：
 
 - 仓库内 `.gitignore` 第 20 行：`.DS_Store`
-- 用户全局忽略文件 `~/.gitignore_global`：`.DS_Store`
+- Git 全局忽略规则：`.DS_Store`
 
 因此 Git 看到的实际效果是：
 
@@ -48,15 +50,15 @@
 
 ### 2.3 当前提交树里没有 `.github`
 
-执行 `git ls-tree -r --name-only HEAD .github` 没有返回结果，说明当前已提交历史中也没有被 Git 跟踪的 `.github` 内容。
+执行 `git ls-tree -r --name-only HEAD .github` 没有返回结果，说明当时的已提交历史中也没有被 Git 跟踪的 `.github` 内容。
 
 ---
 
 ## 3. 为什么会误以为“提交不上去”
 
-当前 `README.md` 里把 `.github/workflows/deploy.yml` 写进了目录结构和部署说明，但工作区里实际上没有这个文件。
+在当次排查时，`README.md` 把 `.github/workflows/deploy.yml` 写进了目录结构和部署说明，但工作区里实际上没有这个文件。
 
-所以现状是：
+所以当时的现状是：
 
 - 文档把 `.github/workflows/deploy.yml` 当成“应存在”
 - 本地目录里实际上没有任何可提交的工作流文件
@@ -78,7 +80,7 @@
 - 仓库是否开启了限制工作流变更的权限策略
 - 如果你用的是权限受限的 Personal Access Token，是否具备更新 workflow 的权限
 
-但就这次排查结果看，**你现在还没到 GitHub 配置这一步**。
+但就那次排查结果看，**当时还没到 GitHub 配置这一步**。
 
 ---
 
@@ -121,5 +123,5 @@
 
 - 仓库文件系统：`.github` 目录实际内容
 - 仓库忽略规则：`.gitignore`
-- 用户全局忽略规则：`~/.gitignore_global`
+- Git 全局忽略规则
 - Git 当前树状态：`git ls-tree -r --name-only HEAD .github`
