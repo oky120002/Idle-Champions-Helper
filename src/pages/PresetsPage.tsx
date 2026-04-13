@@ -9,7 +9,7 @@ import {
   type FormationSnapshotPrompt,
 } from '../data/formationPersistence'
 import { deleteFormationPreset, listFormationPresets, saveFormationPreset } from '../data/formationPresetStore'
-import { getLocalizedTextPair, getPrimaryLocalizedText } from '../domain/localizedText'
+import { formatSeatLabel, getLocalizedTextPair, getPrimaryLocalizedText } from '../domain/localizedText'
 import type {
   Champion,
   FormationLayout,
@@ -128,11 +128,7 @@ function buildChampionSummary(view: PresetView, locale: AppLocale): string[] {
         getPrimaryLocalizedText(left.name, locale).localeCompare(getPrimaryLocalizedText(right.name, locale)) ||
         left.name.original.localeCompare(right.name.original),
     )
-    .map((champion) =>
-      locale === 'zh-CN'
-        ? `${champion.seat} 号位 · ${getLocalizedTextPair(champion.name, locale)}`
-        : `Seat ${champion.seat} · ${getLocalizedTextPair(champion.name, locale)}`,
-    )
+    .map((champion) => `${formatSeatLabel(champion.seat, locale)} · ${getLocalizedTextPair(champion.name, locale)}`)
 }
 
 async function buildPresetViews(

@@ -58,6 +58,8 @@
 - `docs/modules/champions/champions-filter-design.md`：英雄筛选模块设计稿。
 - `docs/modules/formation/formation-editor-design.md`：阵型编辑模块设计稿。
 - `docs/modules/presets/presets-design.md`：方案存档模块设计稿。
+- `docs/modules/shared-components/shared-components-design.md`：共享组件治理规则、抽取准入条件与测试规范。
+- `docs/modules/shared-components/shared-components-catalog.md`：当前可复用组件与相关 helper 索引。
 - `docs/modules/user-data/user-data-import-design.md`：本地优先的个人数据导入设计稿。
 - `docs/investigations/repository/github-directory-commit-investigation.md`：`.github` 目录无法提交的本地原因排查。
 - `docs/investigations/runtime/local-run-verification.md`：本地构建、开发预览与生产预览差异验证。

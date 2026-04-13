@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useI18n } from '../app/i18n'
+import { LocalizedText } from '../components/LocalizedText'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollection } from '../data/client'
 import {
+  formatSeatLabel,
   getLocalizedTextPair,
-  getPrimaryLocalizedText,
   getRoleLabel,
-  getSecondaryLocalizedText,
 } from '../domain/localizedText'
-import type { Champion, LocalizedText } from '../domain/types'
+import type { Champion, LocalizedText as LocalizedTextValue } from '../domain/types'
 import { filterChampions, toggleFilterValue } from '../rules/championFilter'
 
 interface StringEnumGroup {
@@ -18,7 +18,7 @@ interface StringEnumGroup {
 
 interface LocalizedEnumGroup {
   id: string
-  values: LocalizedText[]
+  values: LocalizedTextValue[]
 }
 
 const seatOptions = Array.from({ length: 12 }, (_, index) => index + 1)
@@ -30,14 +30,14 @@ type ChampionState =
       status: 'ready'
       champions: Champion[]
       roles: string[]
-      affiliations: LocalizedText[]
+      affiliations: LocalizedTextValue[]
     }
   | {
       status: 'error'
       message: string
     }
 
-function isLocalizedText(value: unknown): value is LocalizedText {
+function isLocalizedText(value: unknown): value is LocalizedTextValue {
   return (
     typeof value === 'object' &&
     value !== null &&
@@ -248,7 +248,7 @@ export function ChampionsPage() {
                       aria-pressed={selectedSeats.includes(seat)}
                       onClick={() => setSelectedSeats((current) => toggleFilterValue(current, seat))}
                     >
-                      {locale === 'zh-CN' ? `${seat} 号位` : `Seat ${seat}`}
+                      {formatSeatLabel(seat, locale)}
                     </button>
                   ))}
                 </div>
@@ -316,7 +316,7 @@ export function ChampionsPage() {
                         setSelectedAffiliations((current) => toggleFilterValue(current, affiliation.original))
                       }
                     >
-                      {getPrimaryLocalizedText(affiliation, locale)}
+                      <LocalizedText text={affiliation} mode="primary" />
                     </button>
                   ))}
                 </div>
@@ -356,19 +356,19 @@ export function ChampionsPage() {
 
                 <div className="results-grid">
                   {visibleChampions.map((champion) => {
-                    const primaryName = getPrimaryLocalizedText(champion.name, locale)
-                    const secondaryName = getSecondaryLocalizedText(champion.name, locale)
-
                     return (
                       <article key={champion.id} className="result-card">
                         <div className="result-card__header">
-                          <span className="result-card__eyebrow">
-                            {locale === 'zh-CN' ? `${champion.seat} 号位` : `Seat ${champion.seat}`}
-                          </span>
-                          <h3 className="result-card__title">{primaryName}</h3>
+                          <span className="result-card__eyebrow">{formatSeatLabel(champion.seat, locale)}</span>
+                          <LocalizedText
+                            text={champion.name}
+                            mode="stacked"
+                            primaryAs="h3"
+                            primaryClassName="result-card__title"
+                            secondaryAs="p"
+                            secondaryClassName="result-card__secondary"
+                          />
                         </div>
-
-                        {secondaryName ? <p className="result-card__secondary">{secondaryName}</p> : null}
 
                         <div className="tag-row">
                           {champion.roles.map((role) => (
