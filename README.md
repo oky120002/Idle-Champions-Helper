@@ -18,14 +18,16 @@
 - 已落地最小可运行工程骨架
 - 已补基础路由、页面壳层、公共数据目录与部署脚本
 - 已落第一版真实公共数据：`champions`、`variants`、`enums` 已由官方 definitions 生成
+- 已落最小测试基础设施：`Vitest`、`React Testing Library`、`Playwright`
 - 个人数据本地存储方案已确定为 `IndexedDB`，但还未正式接入页面
 - 已补官方 definitions 抓取 / 归一化脚本骨架，方便后续接真实公共数据
-- 当前仍处于早期阶段，完整规则体系与测试体系尚未完善
+- 当前仍处于早期阶段，测试覆盖与完整规则体系都还在逐步补齐
 
 ## 当前技术路线
 
 - 前端：`Vite + React + TypeScript`
 - 路由：`HashRouter`（MVP 默认方案）
+- 测试：`Vitest + React Testing Library + Playwright`
 - 部署：`GitHub Pages + GitHub Actions`
 - 公共数据：`public/data/version.json + public/data/v1/*.json`
 - 个人数据：浏览器本地优先，后续接 `IndexedDB`
@@ -57,10 +59,53 @@ npm run build
 npm run preview
 ```
 
+按 GitHub Pages 基线路径预览构建结果：
+
+```bash
+npm run preview:pages
+```
+
 检查基础代码规范：
 
 ```bash
 npm run lint
+```
+
+执行类型检查：
+
+```bash
+npm run typecheck
+```
+
+执行 Vitest 回归：
+
+```bash
+npm run test:run
+```
+
+分别执行单元 / 组件测试：
+
+```bash
+npm run test:unit
+npm run test:component
+```
+
+首次安装 Playwright 浏览器：
+
+```bash
+npm run playwright:install
+```
+
+执行浏览器级回归：
+
+```bash
+npm run test:e2e
+```
+
+执行完整回归（本地 lint + typecheck + Vitest + Playwright）：
+
+```bash
+npm run test:regression
 ```
 
 拉取官方 definitions 原始快照：
@@ -94,6 +139,11 @@ npm run data:build
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml
+├── tests/
+│   ├── component/
+│   ├── e2e/
+│   ├── setup/
+│   └── unit/
 ├── docs/
 │   ├── investigations/
 │   ├── modules/
@@ -126,10 +176,13 @@ npm run data:build
 ├── README.md
 ├── index.html
 ├── package.json
+├── playwright.config.ts
 ├── tsconfig.app.json
 ├── tsconfig.json
 ├── tsconfig.node.json
-└── vite.config.ts
+├── tsconfig.test.json
+├── vite.config.ts
+└── vitest.config.ts
 ```
 
 说明：
@@ -161,7 +214,7 @@ npm run data:build
 ### 部署约定
 
 - GitHub Pages 项目站
-- GitHub Actions 官方 Pages 工作流
+- GitHub Actions 官方 Pages 工作流，部署严格依赖完整回归
 - 生产环境 `base` 路径按仓库名处理
 - 第一阶段默认使用 `HashRouter`，避免 SPA 刷新 404 复杂度
 
