@@ -173,6 +173,7 @@ describe('FormationPage persistence flow', () => {
     renderFormationPage()
 
     expect(await screen.findByText('检测到最近草稿，是否恢复？')).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: '布鲁诺头像' })).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: '恢复最近草稿' }))
 
