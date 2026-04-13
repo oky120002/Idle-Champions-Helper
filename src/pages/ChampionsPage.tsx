@@ -1,7 +1,13 @@
 import { useEffect, useMemo, useState } from 'react'
+import { useI18n } from '../app/i18n'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollection } from '../data/client'
-import { getLocalizedOriginal, matchesLocalizedText } from '../domain/localizedText'
+import {
+  getPrimaryLocalizedText,
+  getRoleLabel,
+  getSecondaryLocalizedText,
+  matchesLocalizedText,
+} from '../domain/localizedText'
 import type { Champion, LocalizedText } from '../domain/types'
 
 interface StringEnumGroup {
@@ -14,6 +20,7 @@ interface LocalizedEnumGroup {
   values: LocalizedText[]
 }
 
+const ALL_FILTER = '__all__'
 const seatOptions = Array.from({ length: 12 }, (_, index) => index + 1)
 const MAX_VISIBLE_RESULTS = 48
 
@@ -64,11 +71,12 @@ function isStringEnumGroup(value: unknown): value is StringEnumGroup {
 }
 
 export function ChampionsPage() {
+  const { locale, t } = useI18n()
   const [state, setState] = useState<ChampionState>({ status: 'loading' })
   const [search, setSearch] = useState('')
   const [selectedSeat, setSelectedSeat] = useState<number | null>(null)
-  const [selectedRole, setSelectedRole] = useState<string>('全部')
-  const [selectedAffiliation, setSelectedAffiliation] = useState<string>('全部')
+  const [selectedRole, setSelectedRole] = useState<string>(ALL_FILTER)
+  const [selectedAffiliation, setSelectedAffiliation] = useState<string>(ALL_FILTER)
 
   useEffect(() => {
     let disposed = false
@@ -98,14 +106,14 @@ export function ChampionsPage() {
 
         setState({
           status: 'error',
-          message: error instanceof Error ? error.message : '未知错误',
+          message: error instanceof Error ? error.message : t({ zh: '未知错误', en: 'Unknown error' }),
         })
       })
 
     return () => {
       disposed = true
     }
-  }, [])
+  }, [t])
 
   const filteredChampions = useMemo(() => {
     if (state.status !== 'ready') {
@@ -122,9 +130,9 @@ export function ChampionsPage() {
         champion.affiliations.some((affiliation) => matchesLocalizedText(affiliation, query))
 
       const matchesSeat = selectedSeat === null || champion.seat === selectedSeat
-      const matchesRole = selectedRole === '全部' || champion.roles.includes(selectedRole)
+      const matchesRole = selectedRole === ALL_FILTER || champion.roles.includes(selectedRole)
       const matchesAffiliation =
-        selectedAffiliation === '全部' ||
+        selectedAffiliation === ALL_FILTER ||
         champion.affiliations.some((affiliation) => affiliation.original === selectedAffiliation)
 
       return matchesSearch && matchesSeat && matchesRole && matchesAffiliation
@@ -137,60 +145,70 @@ export function ChampionsPage() {
   return (
     <div className="page-stack">
       <SurfaceCard
-        eyebrow="英雄筛选"
-        title="先用真实公共数据把查询入口跑起来"
-        description="当前版本先接官方 definitions 归一化后的英雄数据，并保留官方原文与 `language_id=7` 中文展示名，优先把座位、定位、联动队伍和标签过滤闭环做通。"
+        eyebrow={t({ zh: '英雄筛选', en: 'Champion filters' })}
+        title={t({ zh: '先用真实公共数据把查询入口跑起来', en: 'Make the real-data entry point feel instant' })}
+        description={t({
+          zh: '当前版本先接官方 definitions 归一化后的英雄数据，并保留官方原文与 `language_id=7` 中文展示名，优先把座位、定位、联动队伍和标签过滤闭环做通。',
+          en: 'This pass uses normalized official definitions, keeps both official source names and `language_id=7` Chinese labels, and focuses on closing the loop on seat, role, affiliation, and tag filtering.',
+        })}
       >
         {state.status === 'loading' ? (
-          <div className="status-banner status-banner--info">正在读取英雄数据…</div>
+          <div className="status-banner status-banner--info">
+            {t({ zh: '正在读取英雄数据…', en: 'Loading champion data…' })}
+          </div>
         ) : null}
 
         {state.status === 'error' ? (
-          <div className="status-banner status-banner--error">英雄数据读取失败：{state.message}</div>
+          <div className="status-banner status-banner--error">
+            {t({ zh: '英雄数据读取失败', en: 'Champion data failed to load' })}：{state.message}
+          </div>
         ) : null}
 
         {state.status === 'ready' ? (
           <>
             <div className="metric-grid">
               <article className="metric-card">
-                <span className="metric-card__label">英雄总数</span>
+                <span className="metric-card__label">{t({ zh: '英雄总数', en: 'Champions' })}</span>
                 <strong className="metric-card__value">{state.champions.length}</strong>
               </article>
               <article className="metric-card">
-                <span className="metric-card__label">当前匹配</span>
+                <span className="metric-card__label">{t({ zh: '当前匹配', en: 'Matches' })}</span>
                 <strong className="metric-card__value">{filteredChampions.length}</strong>
               </article>
               <article className="metric-card">
-                <span className="metric-card__label">覆盖座位</span>
+                <span className="metric-card__label">{t({ zh: '覆盖座位', en: 'Seats covered' })}</span>
                 <strong className="metric-card__value">{matchedSeats}</strong>
               </article>
               <article className="metric-card">
-                <span className="metric-card__label">联动队伍标签</span>
+                <span className="metric-card__label">{t({ zh: '联动队伍标签', en: 'Affiliations' })}</span>
                 <strong className="metric-card__value">{state.affiliations.length}</strong>
               </article>
             </div>
 
             <div className="filter-panel">
               <label className="form-field">
-                <span className="field-label">关键词</span>
+                <span className="field-label">{t({ zh: '关键词', en: 'Keyword' })}</span>
                 <input
                   className="text-input"
                   type="text"
-                  placeholder="搜英雄名、标签、联动队伍"
+                  placeholder={t({
+                    zh: '搜英雄名、标签、联动队伍',
+                    en: 'Search names, tags, or affiliations',
+                  })}
                   value={search}
                   onChange={(event) => setSearch(event.target.value)}
                 />
               </label>
 
               <div className="filter-group">
-                <span className="field-label">座位</span>
+                <span className="field-label">{t({ zh: '座位', en: 'Seat' })}</span>
                 <div className="filter-chip-grid">
                   <button
                     type="button"
                     className={selectedSeat === null ? 'filter-chip filter-chip--active' : 'filter-chip'}
                     onClick={() => setSelectedSeat(null)}
                   >
-                    全部
+                    {t({ zh: '全部', en: 'All' })}
                   </button>
                   {seatOptions.map((seat) => (
                     <button
@@ -199,21 +217,21 @@ export function ChampionsPage() {
                       className={selectedSeat === seat ? 'filter-chip filter-chip--active' : 'filter-chip'}
                       onClick={() => setSelectedSeat(seat)}
                     >
-                      Seat {seat}
+                      {locale === 'zh-CN' ? `${seat} 号位` : `Seat ${seat}`}
                     </button>
                   ))}
                 </div>
               </div>
 
               <div className="filter-group">
-                <span className="field-label">定位</span>
+                <span className="field-label">{t({ zh: '定位', en: 'Role' })}</span>
                 <div className="filter-chip-grid">
                   <button
                     type="button"
-                    className={selectedRole === '全部' ? 'filter-chip filter-chip--active' : 'filter-chip'}
-                    onClick={() => setSelectedRole('全部')}
+                    className={selectedRole === ALL_FILTER ? 'filter-chip filter-chip--active' : 'filter-chip'}
+                    onClick={() => setSelectedRole(ALL_FILTER)}
                   >
-                    全部
+                    {t({ zh: '全部', en: 'All' })}
                   </button>
                   {state.roles.map((role) => (
                     <button
@@ -222,23 +240,23 @@ export function ChampionsPage() {
                       className={selectedRole === role ? 'filter-chip filter-chip--active' : 'filter-chip'}
                       onClick={() => setSelectedRole(role)}
                     >
-                      {role}
+                      {getRoleLabel(role, locale)}
                     </button>
                   ))}
                 </div>
               </div>
 
               <div className="filter-group">
-                <span className="field-label">联动队伍</span>
+                <span className="field-label">{t({ zh: '联动队伍', en: 'Affiliation' })}</span>
                 <div className="filter-chip-grid">
                   <button
                     type="button"
                     className={
-                      selectedAffiliation === '全部' ? 'filter-chip filter-chip--active' : 'filter-chip'
+                      selectedAffiliation === ALL_FILTER ? 'filter-chip filter-chip--active' : 'filter-chip'
                     }
-                    onClick={() => setSelectedAffiliation('全部')}
+                    onClick={() => setSelectedAffiliation(ALL_FILTER)}
                   >
-                    全部
+                    {t({ zh: '全部', en: 'All' })}
                   </button>
                   {state.affiliations.map((affiliation) => (
                     <button
@@ -251,7 +269,7 @@ export function ChampionsPage() {
                       }
                       onClick={() => setSelectedAffiliation(affiliation.original)}
                     >
-                      {affiliation.display}
+                      {getPrimaryLocalizedText(affiliation, locale)}
                     </button>
                   ))}
                 </div>
@@ -260,53 +278,65 @@ export function ChampionsPage() {
 
             {filteredChampions.length === 0 ? (
               <div className="status-banner status-banner--info">
-                当前筛选条件下没有匹配英雄，可以先清空座位、定位或联动队伍过滤。
+                {t({
+                  zh: '当前筛选条件下没有匹配英雄，可以先清空座位、定位或联动队伍过滤。',
+                  en: 'No champions match this filter set yet. Try clearing seat, role, or affiliation filters first.',
+                })}
               </div>
             ) : null}
 
             {filteredChampions.length > 0 ? (
               <>
                 <p className="supporting-text">
-                  当前展示 {visibleChampions.length} / {filteredChampions.length} 名英雄。
-                  如果结果过多，优先加关键词、座位或定位缩小范围。
+                  {t({
+                    zh: `当前展示 ${visibleChampions.length} / ${filteredChampions.length} 名英雄。如果结果过多，优先加关键词、座位或定位缩小范围。`,
+                    en: `Showing ${visibleChampions.length} / ${filteredChampions.length} champions. Narrow things down with a keyword, seat, or role if the list feels too broad.`,
+                  })}
                 </p>
 
                 <div className="results-grid">
-                  {visibleChampions.map((champion) => (
-                    <article key={champion.id} className="result-card">
-                      <div className="result-card__header">
-                        <span className="result-card__eyebrow">Seat {champion.seat}</span>
-                        <h3 className="result-card__title">{champion.name.display}</h3>
-                      </div>
+                  {visibleChampions.map((champion) => {
+                    const primaryName = getPrimaryLocalizedText(champion.name, locale)
+                    const secondaryName = getSecondaryLocalizedText(champion.name, locale)
 
-                      {getLocalizedOriginal(champion.name) ? (
-                        <p className="supporting-text">{champion.name.original}</p>
-                      ) : null}
-
-                      <div className="tag-row">
-                        {champion.roles.map((role) => (
-                          <span key={role} className="tag-pill">
-                            {role}
+                    return (
+                      <article key={champion.id} className="result-card">
+                        <div className="result-card__header">
+                          <span className="result-card__eyebrow">
+                            {locale === 'zh-CN' ? `${champion.seat} 号位` : `Seat ${champion.seat}`}
                           </span>
-                        ))}
-                      </div>
+                          <h3 className="result-card__title">{primaryName}</h3>
+                        </div>
 
-                      <p className="supporting-text">
-                        联动队伍：
-                        {champion.affiliations.length > 0
-                          ? champion.affiliations.map((affiliation) => affiliation.display).join(' / ')
-                          : '暂无'}
-                      </p>
+                        {secondaryName ? <p className="result-card__secondary">{secondaryName}</p> : null}
 
-                      <div className="tag-row">
-                        {champion.tags.slice(0, 6).map((tag) => (
-                          <span key={tag} className="tag-pill tag-pill--muted">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </article>
-                  ))}
+                        <div className="tag-row">
+                          {champion.roles.map((role) => (
+                            <span key={role} className="tag-pill">
+                              {getRoleLabel(role, locale)}
+                            </span>
+                          ))}
+                        </div>
+
+                        <p className="supporting-text">
+                          {t({ zh: '联动队伍', en: 'Affiliation' })}：
+                          {champion.affiliations.length > 0
+                            ? champion.affiliations
+                                .map((affiliation) => getPrimaryLocalizedText(affiliation, locale))
+                                .join(' / ')
+                            : t({ zh: '暂无', en: 'None yet' })}
+                        </p>
+
+                        <div className="tag-row">
+                          {champion.tags.slice(0, 6).map((tag) => (
+                            <span key={tag} className="tag-pill tag-pill--muted">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </article>
+                    )
+                  })}
                 </div>
               </>
             ) : null}
