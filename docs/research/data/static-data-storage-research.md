@@ -216,7 +216,7 @@ GitHub Actions 构建并发布到 GitHub Pages
 npm run data:official
 ```
 
-它当前等价于执行整条官方基座数据流水线；`data:build` 保留为兼容别名。
+它就是当前整条官方基座数据流水线的唯一 npm 入口。
 
 这里有一个需要统一的点：
 
