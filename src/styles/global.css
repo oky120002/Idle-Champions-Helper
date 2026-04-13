@@ -419,10 +419,15 @@ html[data-ui-locale='en-US'] .site-subtitle {
   align-content: start;
 }
 
+.results-panel-shell {
+  margin-top: 1rem;
+  overflow: clip;
+  transition: height 260ms ease;
+}
+
 .results-panel {
   display: grid;
   gap: 0.85rem;
-  margin-top: 1rem;
 }
 
 .results-panel__meta {
@@ -432,17 +437,8 @@ html[data-ui-locale='en-US'] .site-subtitle {
   min-height: 4.4rem;
 }
 
-.results-panel__body {
-  height: clamp(22rem, 58vh, 42rem);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  padding-right: 0.15rem;
-  scrollbar-gutter: stable;
-}
-
 .results-panel__empty {
   margin-top: 0;
-  min-height: 100%;
 }
 
 .result-card {

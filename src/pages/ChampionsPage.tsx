@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useI18n } from '../app/i18n'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollection } from '../data/client'
@@ -23,6 +23,8 @@ interface LocalizedEnumGroup {
 
 const seatOptions = Array.from({ length: 12 }, (_, index) => index + 1)
 const MAX_VISIBLE_RESULTS = 48
+const RESULTS_HEIGHT_TRANSITION_MS = 260
+const RESULTS_RELOCATE_THRESHOLD = 12
 
 type ChampionState =
   | { status: 'loading' }
@@ -77,7 +79,15 @@ export function ChampionsPage() {
   const [selectedSeats, setSelectedSeats] = useState<number[]>([])
   const [selectedRoles, setSelectedRoles] = useState<string[]>([])
   const [selectedAffiliations, setSelectedAffiliations] = useState<string[]>([])
-  const resultsBodyRef = useRef<HTMLDivElement | null>(null)
+  const [resultsShellHeight, setResultsShellHeight] = useState<number | null>(null)
+  const resultsShellRef = useRef<HTMLElement | null>(null)
+  const resultsContentRef = useRef<HTMLDivElement | null>(null)
+  const pendingResultsTransitionRef = useRef<{
+    previousCount: number
+    shouldRelocate: boolean
+    targetTop: number
+  } | null>(null)
+  const releaseResultsHeightTimeoutRef = useRef<number | null>(null)
 
   useEffect(() => {
     let disposed = false
@@ -117,22 +127,12 @@ export function ChampionsPage() {
   }, [])
 
   useEffect(() => {
-    const resultsBody = resultsBodyRef.current
-
-    if (!resultsBody) {
-      return
+    return () => {
+      if (releaseResultsHeightTimeoutRef.current !== null) {
+        window.clearTimeout(releaseResultsHeightTimeoutRef.current)
+      }
     }
-
-    if (typeof resultsBody.scrollTo === 'function') {
-      resultsBody.scrollTo({
-        top: 0,
-        behavior: 'auto',
-      })
-      return
-    }
-
-    resultsBody.scrollTop = 0
-  }, [search, selectedAffiliations, selectedRoles, selectedSeats])
+  }, [])
 
   const filteredChampions = useMemo(() => {
     if (state.status !== 'ready') {
@@ -182,6 +182,79 @@ export function ChampionsPage() {
         })
       : null,
   ].filter((item): item is string => Boolean(item))
+
+  function getResultsTargetTop(shell: HTMLElement): number {
+    const siteHeader = document.querySelector('.site-header')
+    const headerHeight = siteHeader instanceof HTMLElement ? siteHeader.getBoundingClientRect().height : 0
+
+    return Math.max(Math.round(shell.getBoundingClientRect().top + window.scrollY - headerHeight - 16), 0)
+  }
+
+  function prepareResultsViewportTransition() {
+    const shell = resultsShellRef.current
+
+    if (!shell) {
+      return
+    }
+
+    const targetTop = getResultsTargetTop(shell)
+    const shouldRelocate = window.scrollY > targetTop + 48
+
+    if (!shouldRelocate) {
+      pendingResultsTransitionRef.current = null
+      return
+    }
+
+    if (releaseResultsHeightTimeoutRef.current !== null) {
+      window.clearTimeout(releaseResultsHeightTimeoutRef.current)
+      releaseResultsHeightTimeoutRef.current = null
+    }
+
+    pendingResultsTransitionRef.current = {
+      previousCount: filteredChampions.length,
+      shouldRelocate,
+      targetTop,
+    }
+
+    setResultsShellHeight(Math.ceil(shell.getBoundingClientRect().height))
+  }
+
+  useLayoutEffect(() => {
+    const pendingTransition = pendingResultsTransitionRef.current
+    const content = resultsContentRef.current
+
+    if (!pendingTransition || !content || resultsShellHeight === null) {
+      return
+    }
+
+    pendingResultsTransitionRef.current = null
+
+    const nextHeight = Math.ceil(content.getBoundingClientRect().height)
+    const shouldRelocate =
+      pendingTransition.shouldRelocate &&
+      filteredChampions.length < pendingTransition.previousCount &&
+      filteredChampions.length <= RESULTS_RELOCATE_THRESHOLD
+
+    const animationFrameId = window.requestAnimationFrame(() => {
+      setResultsShellHeight(nextHeight)
+
+      if (shouldRelocate) {
+        window.scrollTo({
+          top: pendingTransition.targetTop,
+          behavior: 'smooth',
+        })
+      }
+
+      releaseResultsHeightTimeoutRef.current = window.setTimeout(() => {
+        setResultsShellHeight(null)
+        releaseResultsHeightTimeoutRef.current = null
+      }, RESULTS_HEIGHT_TRANSITION_MS)
+    })
+
+    return () => {
+      window.cancelAnimationFrame(animationFrameId)
+    }
+  }, [filteredChampions.length, resultsShellHeight, search, selectedAffiliations, selectedRoles, selectedSeats])
 
   return (
     <div className="page-stack">
@@ -238,7 +311,10 @@ export function ChampionsPage() {
                     en: 'Search names, tags, or affiliations',
                   })}
                   value={search}
-                  onChange={(event) => setSearch(event.target.value)}
+                  onChange={(event) => {
+                    prepareResultsViewportTransition()
+                    setSearch(event.target.value)
+                  }}
                 />
                 <span className="field-hint">
                   {t({
@@ -255,7 +331,10 @@ export function ChampionsPage() {
                     type="button"
                     className={selectedSeats.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
                     aria-pressed={selectedSeats.length === 0}
-                    onClick={() => setSelectedSeats([])}
+                    onClick={() => {
+                      prepareResultsViewportTransition()
+                      setSelectedSeats([])
+                    }}
                   >
                     {t({ zh: '全部', en: 'All' })}
                   </button>
@@ -265,7 +344,10 @@ export function ChampionsPage() {
                       type="button"
                       className={selectedSeats.includes(seat) ? 'filter-chip filter-chip--active' : 'filter-chip'}
                       aria-pressed={selectedSeats.includes(seat)}
-                      onClick={() => setSelectedSeats((current) => toggleFilterValue(current, seat))}
+                      onClick={() => {
+                        prepareResultsViewportTransition()
+                        setSelectedSeats((current) => toggleFilterValue(current, seat))
+                      }}
                     >
                       {locale === 'zh-CN' ? `${seat} 号位` : `Seat ${seat}`}
                     </button>
@@ -286,7 +368,10 @@ export function ChampionsPage() {
                     type="button"
                     className={selectedRoles.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
                     aria-pressed={selectedRoles.length === 0}
-                    onClick={() => setSelectedRoles([])}
+                    onClick={() => {
+                      prepareResultsViewportTransition()
+                      setSelectedRoles([])
+                    }}
                   >
                     {t({ zh: '全部', en: 'All' })}
                   </button>
@@ -296,7 +381,10 @@ export function ChampionsPage() {
                       type="button"
                       className={selectedRoles.includes(role) ? 'filter-chip filter-chip--active' : 'filter-chip'}
                       aria-pressed={selectedRoles.includes(role)}
-                      onClick={() => setSelectedRoles((current) => toggleFilterValue(current, role))}
+                      onClick={() => {
+                        prepareResultsViewportTransition()
+                        setSelectedRoles((current) => toggleFilterValue(current, role))
+                      }}
                     >
                       {getRoleLabel(role, locale)}
                     </button>
@@ -317,7 +405,10 @@ export function ChampionsPage() {
                     type="button"
                     className={selectedAffiliations.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
                     aria-pressed={selectedAffiliations.length === 0}
-                    onClick={() => setSelectedAffiliations([])}
+                    onClick={() => {
+                      prepareResultsViewportTransition()
+                      setSelectedAffiliations([])
+                    }}
                   >
                     {t({ zh: '全部', en: 'All' })}
                   </button>
@@ -331,9 +422,10 @@ export function ChampionsPage() {
                           : 'filter-chip'
                       }
                       aria-pressed={selectedAffiliations.includes(affiliation.original)}
-                      onClick={() =>
+                      onClick={() => {
+                        prepareResultsViewportTransition()
                         setSelectedAffiliations((current) => toggleFilterValue(current, affiliation.original))
-                      }
+                      }}
                     >
                       {getPrimaryLocalizedText(affiliation, locale)}
                     </button>
@@ -348,35 +440,40 @@ export function ChampionsPage() {
               </div>
             </div>
 
-            <section className="results-panel" aria-label={t({ zh: '英雄筛选结果', en: 'Champion filter results' })}>
-              <div className="results-panel__meta">
-                <p
-                  className={
-                    activeFilters.length > 0
-                      ? 'supporting-text'
-                      : 'supporting-text supporting-text--placeholder'
-                  }
-                  aria-hidden={activeFilters.length === 0}
-                >
-                  {activeFilters.length > 0
-                    ? `${t({ zh: '当前筛选：', en: 'Active filters: ' })}${activeFilters.join(' · ')}`
-                    : t({ zh: '当前筛选：', en: 'Active filters: ' })}
-                </p>
+            <section
+              ref={resultsShellRef}
+              className="results-panel-shell"
+              aria-label={t({ zh: '英雄筛选结果', en: 'Champion filter results' })}
+              style={resultsShellHeight !== null ? { height: `${resultsShellHeight}px` } : undefined}
+            >
+              <div ref={resultsContentRef} className="results-panel">
+                <div className="results-panel__meta">
+                  <p
+                    className={
+                      activeFilters.length > 0
+                        ? 'supporting-text'
+                        : 'supporting-text supporting-text--placeholder'
+                    }
+                    aria-hidden={activeFilters.length === 0}
+                  >
+                    {activeFilters.length > 0
+                      ? `${t({ zh: '当前筛选：', en: 'Active filters: ' })}${activeFilters.join(' · ')}`
+                      : t({ zh: '当前筛选：', en: 'Active filters: ' })}
+                  </p>
 
-                <p className="supporting-text">
-                  {filteredChampions.length > 0
-                    ? t({
-                        zh: `当前展示 ${visibleChampions.length} / ${filteredChampions.length} 名英雄。如果结果过多，优先加关键词、座位、定位或联动队伍缩小范围。`,
-                        en: `Showing ${visibleChampions.length} / ${filteredChampions.length} champions. Narrow things down with a keyword, seat, role, or affiliation if the list feels too broad.`,
-                      })
-                    : t({
-                        zh: '当前筛选条件下没有匹配英雄，可以先清空座位、定位或联动队伍过滤。',
-                        en: 'No champions match this filter set yet. Try clearing seat, role, or affiliation filters first.',
-                      })}
-                </p>
-              </div>
+                  <p className="supporting-text">
+                    {filteredChampions.length > 0
+                      ? t({
+                          zh: `当前展示 ${visibleChampions.length} / ${filteredChampions.length} 名英雄。如果结果过多，优先加关键词、座位、定位或联动队伍缩小范围。`,
+                          en: `Showing ${visibleChampions.length} / ${filteredChampions.length} champions. Narrow things down with a keyword, seat, role, or affiliation if the list feels too broad.`,
+                        })
+                      : t({
+                          zh: '当前筛选条件下没有匹配英雄，可以先清空座位、定位或联动队伍过滤。',
+                          en: 'No champions match this filter set yet. Try clearing seat, role, or affiliation filters first.',
+                        })}
+                  </p>
+                </div>
 
-              <div ref={resultsBodyRef} className="results-panel__body">
                 {filteredChampions.length > 0 ? (
                   <div className="results-grid results-grid--stable">
                     {visibleChampions.map((champion) => {
