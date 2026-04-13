@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
@@ -39,7 +39,7 @@ const championsFixture: DataCollection<Champion> = {
       seat: 1,
       roles: ['support'],
       affiliations: [hall],
-      tags: ['starter'],
+      tags: ['support', 'human', 'male', 'good', 'lawful', 'warlock', 'event', 'y2', 'control_slow', 'starter'],
     },
     {
       id: 'beta',
@@ -47,7 +47,7 @@ const championsFixture: DataCollection<Champion> = {
       seat: 2,
       roles: ['healing'],
       affiliations: [hall],
-      tags: ['healer'],
+      tags: ['healing', 'elf', 'female', 'good', 'cleric', 'event', 'spec_gold'],
     },
     {
       id: 'gamma',
@@ -55,7 +55,7 @@ const championsFixture: DataCollection<Champion> = {
       seat: 2,
       roles: ['dps'],
       affiliations: [adversaries],
-      tags: ['damage'],
+      tags: ['dps', 'drow', 'male', 'evil', 'rogue', 'event', 'control_stun'],
     },
     {
       id: 'delta',
@@ -63,7 +63,7 @@ const championsFixture: DataCollection<Champion> = {
       seat: 3,
       roles: ['tank'],
       affiliations: [oxventurers],
-      tags: ['frontline'],
+      tags: ['tank', 'human', 'female', 'lawful', 'fighter', 'core', 'positional'],
     },
   ],
 }
@@ -157,5 +157,100 @@ describe('ChampionsPage filters', () => {
         '当前筛选：定位：辅助、输出 · 联动队伍：大厅伙伴团 · Companions of the Hall、绝对宿敌 · Absolute Adversaries',
       ),
     ).toBeInTheDocument()
+  })
+
+  it('结果卡会把属性拆成结构化分组展示', async () => {
+    renderChampionsPage()
+
+    const alphaTitle = await screen.findByRole('heading', { level: 3, name: '阿尔法' })
+    const alphaCard = alphaTitle.closest('article')
+
+    expect(alphaCard).not.toBeNull()
+
+    const alphaScope = within(alphaCard as HTMLElement)
+
+    expect(alphaScope.getByText('种族')).toBeInTheDocument()
+    expect(alphaScope.getByText('人类')).toBeInTheDocument()
+    expect(alphaScope.getByText('性别')).toBeInTheDocument()
+    expect(alphaScope.getByText('男性')).toBeInTheDocument()
+    expect(alphaScope.getByText('阵营')).toBeInTheDocument()
+    expect(alphaScope.getByText('善良')).toBeInTheDocument()
+    expect(alphaScope.getByText('守序')).toBeInTheDocument()
+    expect(alphaScope.getByText('职业')).toBeInTheDocument()
+    expect(alphaScope.getByText('邪术师')).toBeInTheDocument()
+    expect(alphaScope.getByText('获取方式')).toBeInTheDocument()
+    expect(alphaScope.getByText('活动英雄')).toBeInTheDocument()
+    expect(alphaScope.getByText('第 2 年活动')).toBeInTheDocument()
+    expect(alphaScope.getByText('起始英雄')).toBeInTheDocument()
+    expect(alphaScope.getByText('机制')).toBeInTheDocument()
+    expect(alphaScope.getByText('减速控制')).toBeInTheDocument()
+  })
+
+  it('支持按种族、性别和职业筛选英雄', async () => {
+    const user = userEvent.setup()
+
+    renderChampionsPage()
+
+    expect(await screen.findByText('阿尔法')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: '人类' }))
+    await user.click(screen.getByRole('button', { name: '卓尔精灵' }))
+    await user.click(screen.getByRole('button', { name: '男性' }))
+    await user.click(screen.getByRole('button', { name: '邪术师' }))
+    await user.click(screen.getByRole('button', { name: '盗贼' }))
+
+    expect(screen.getByText('阿尔法')).toBeInTheDocument()
+    expect(screen.getByText('伽马')).toBeInTheDocument()
+    expect(screen.queryByText('贝塔')).not.toBeInTheDocument()
+    expect(screen.queryByText('德尔塔')).not.toBeInTheDocument()
+    expect(
+      screen.getByText((content) => {
+        return (
+          content.includes('当前筛选：') &&
+          content.includes('种族：') &&
+          content.includes('人类') &&
+          content.includes('卓尔精灵') &&
+          content.includes('性别：男性') &&
+          content.includes('职业：') &&
+          content.includes('邪术师') &&
+          content.includes('盗贼')
+        )
+      }),
+    ).toBeInTheDocument()
+  })
+
+  it('支持按阵营、获取方式和机制筛选，并可单独清空已选维度', async () => {
+    const user = userEvent.setup()
+
+    renderChampionsPage()
+
+    expect(await screen.findByText('阿尔法')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: '善良' }))
+    await user.click(screen.getByRole('button', { name: '活动英雄' }))
+    await user.click(screen.getByRole('button', { name: '减速控制' }))
+
+    expect(screen.getByText('阿尔法')).toBeInTheDocument()
+    expect(screen.queryByText('贝塔')).not.toBeInTheDocument()
+    expect(screen.queryByText('伽马')).not.toBeInTheDocument()
+    expect(screen.queryByText('德尔塔')).not.toBeInTheDocument()
+
+    expect(screen.getByRole('button', { name: '清空阵营：善良' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '清空获取方式：活动英雄' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '清空机制：减速控制' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '清空全部' })).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: '清空机制：减速控制' }))
+
+    await waitFor(() => {
+      expect(screen.getByText('贝塔')).toBeInTheDocument()
+    })
+
+    expect(screen.getByText('阿尔法')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: '清空机制：减速控制' })).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '清空阵营：善良' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '清空获取方式：活动英雄' })).toBeInTheDocument()
+    expect(screen.queryByText('伽马')).not.toBeInTheDocument()
+    expect(screen.queryByText('德尔塔')).not.toBeInTheDocument()
   })
 })
