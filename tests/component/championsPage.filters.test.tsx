@@ -39,7 +39,7 @@ const championsFixture: DataCollection<Champion> = {
       seat: 1,
       roles: ['support'],
       affiliations: [hall],
-      tags: ['support', 'human', 'male', 'good', 'lawful', 'event', 'y2', 'control_slow', 'starter'],
+      tags: ['support', 'human', 'male', 'good', 'lawful', 'warlock', 'event', 'y2', 'control_slow', 'starter'],
     },
     {
       id: 'beta',
@@ -159,7 +159,7 @@ describe('ChampionsPage filters', () => {
     ).toBeInTheDocument()
   })
 
-  it('结果卡会展示完整属性标签，而不是只截取前几个 tags', async () => {
+  it('结果卡会把属性拆成结构化分组展示', async () => {
     renderChampionsPage()
 
     const alphaTitle = await screen.findByRole('heading', { level: 3, name: '阿尔法' })
@@ -169,14 +169,20 @@ describe('ChampionsPage filters', () => {
 
     const alphaScope = within(alphaCard as HTMLElement)
 
-    expect(alphaScope.getByText('属性标签')).toBeInTheDocument()
+    expect(alphaScope.getByText('种族')).toBeInTheDocument()
     expect(alphaScope.getByText('人类')).toBeInTheDocument()
+    expect(alphaScope.getByText('性别')).toBeInTheDocument()
     expect(alphaScope.getByText('男性')).toBeInTheDocument()
+    expect(alphaScope.getByText('阵营')).toBeInTheDocument()
     expect(alphaScope.getByText('善良')).toBeInTheDocument()
     expect(alphaScope.getByText('守序')).toBeInTheDocument()
+    expect(alphaScope.getByText('职业')).toBeInTheDocument()
+    expect(alphaScope.getByText('邪术师')).toBeInTheDocument()
+    expect(alphaScope.getByText('获取方式')).toBeInTheDocument()
     expect(alphaScope.getByText('活动英雄')).toBeInTheDocument()
     expect(alphaScope.getByText('第 2 年活动')).toBeInTheDocument()
+    expect(alphaScope.getByText('起始英雄')).toBeInTheDocument()
+    expect(alphaScope.getByText('机制')).toBeInTheDocument()
     expect(alphaScope.getByText('减速控制')).toBeInTheDocument()
-    expect(alphaScope.getByText('starter')).toBeInTheDocument()
   })
 })
