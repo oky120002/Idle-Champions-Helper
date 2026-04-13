@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { type AppLocale, useI18n } from '../app/i18n'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollectionAtVersion, loadVersion } from '../data/client'
 import {
@@ -8,6 +9,7 @@ import {
   type FormationSnapshotPrompt,
 } from '../data/formationPersistence'
 import { deleteFormationPreset, listFormationPresets, saveFormationPreset } from '../data/formationPresetStore'
+import { getLocalizedTextPair, getPrimaryLocalizedText } from '../domain/localizedText'
 import type {
   Champion,
   FormationLayout,
@@ -17,11 +19,7 @@ import type {
 
 const PRESET_SCHEMA_VERSION = 1
 
-const PRESET_PRIORITY_OPTIONS: Array<{ value: PresetPriority; label: string }> = [
-  { value: 'high', label: '高优先' },
-  { value: 'medium', label: '常用' },
-  { value: 'low', label: '备用' },
-]
+const PRESET_PRIORITY_OPTIONS: PresetPriority[] = ['high', 'medium', 'low']
 
 type StatusTone = 'info' | 'success' | 'error'
 
@@ -58,14 +56,14 @@ function getErrorMessage(error: unknown): string {
   return error instanceof Error ? error.message : '未知错误'
 }
 
-function formatDateTime(value: string): string {
+function formatDateTime(value: string, locale: AppLocale): string {
   const date = new Date(value)
 
   if (Number.isNaN(date.getTime())) {
     return value
   }
 
-  return date.toLocaleString('zh-CN', {
+  return date.toLocaleString(locale, {
     hour12: false,
   })
 }
@@ -93,9 +91,16 @@ function parseScenarioTags(value: string): string[] {
   )
 }
 
-function buildPriorityLabel(priority: PresetPriority): string {
-  const option = PRESET_PRIORITY_OPTIONS.find((item) => item.value === priority)
-  return option?.label ?? priority
+function buildPriorityLabel(priority: PresetPriority, locale: AppLocale): string {
+  if (priority === 'high') {
+    return locale === 'zh-CN' ? '高优先' : 'High'
+  }
+
+  if (priority === 'low') {
+    return locale === 'zh-CN' ? '备用' : 'Fallback'
+  }
+
+  return locale === 'zh-CN' ? '常用' : 'Regular'
 }
 
 function buildEditorState(preset: FormationPreset): PresetEditorState {
@@ -107,7 +112,7 @@ function buildEditorState(preset: FormationPreset): PresetEditorState {
   }
 }
 
-function buildChampionSummary(view: PresetView): string[] {
+function buildChampionSummary(view: PresetView, locale: AppLocale): string[] {
   if (view.prompt.kind !== 'restore') {
     return []
   }
@@ -117,8 +122,17 @@ function buildChampionSummary(view: PresetView): string[] {
   return Object.values(view.prompt.preview.placements)
     .map((championId) => championsById.get(championId) ?? null)
     .filter((champion): champion is Champion => champion !== null)
-    .sort((left, right) => left.seat - right.seat || left.name.localeCompare(right.name))
-    .map((champion) => `Seat ${champion.seat} · ${champion.name}`)
+    .sort(
+      (left, right) =>
+        left.seat - right.seat ||
+        getPrimaryLocalizedText(left.name, locale).localeCompare(getPrimaryLocalizedText(right.name, locale)) ||
+        left.name.original.localeCompare(right.name.original),
+    )
+    .map((champion) =>
+      locale === 'zh-CN'
+        ? `${champion.seat} 号位 · ${getLocalizedTextPair(champion.name, locale)}`
+        : `Seat ${champion.seat} · ${getLocalizedTextPair(champion.name, locale)}`,
+    )
 }
 
 async function buildPresetViews(
@@ -144,6 +158,7 @@ async function buildPresetViews(
 }
 
 export function PresetsPage() {
+  const { locale, t } = useI18n()
   const navigate = useNavigate()
 
   const [state, setState] = useState<PresetsState>({ status: 'loading' })
@@ -336,16 +351,26 @@ export function PresetsPage() {
   return (
     <div className="page-stack">
       <SurfaceCard
-        eyebrow="方案存档"
-        title="把命名方案留在本地，再从这里恢复回阵型页"
-        description="命名方案与最近草稿分层管理；这里的所有内容都只保存在当前浏览器，不上传到外部服务。"
+        eyebrow={t({ zh: '方案存档', en: 'Presets' })}
+        title={t({
+          zh: '把命名方案留在本地，再从这里恢复回阵型页',
+          en: 'Keep named presets locally and restore them from here',
+        })}
+        description={t({
+          zh: '命名方案与最近草稿分层管理；这里的所有内容都只保存在当前浏览器，不上传到外部服务。',
+          en: 'Named presets are managed separately from recent drafts. Everything here stays in the current browser and never uploads elsewhere.',
+        })}
       >
         {state.status === 'loading' ? (
-          <div className="status-banner status-banner--info">正在读取本地方案存档…</div>
+          <div className="status-banner status-banner--info">
+            {t({ zh: '正在读取本地方案存档…', en: 'Loading local presets…' })}
+          </div>
         ) : null}
 
         {state.status === 'error' ? (
-          <div className="status-banner status-banner--error">方案列表读取失败：{state.message}</div>
+          <div className="status-banner status-banner--error">
+            {t({ zh: '方案列表读取失败', en: 'Preset list failed to load' })}：{state.message}
+          </div>
         ) : null}
 
         {state.status === 'ready' ? (
@@ -361,33 +386,36 @@ export function PresetsPage() {
 
             <div className="metric-grid">
               <article className="metric-card">
-                <span className="metric-card__label">命名方案总数</span>
+                <span className="metric-card__label">{t({ zh: '命名方案总数', en: 'Named presets' })}</span>
                 <strong className="metric-card__value">{metrics.total}</strong>
               </article>
               <article className="metric-card">
-                <span className="metric-card__label">可恢复方案</span>
+                <span className="metric-card__label">{t({ zh: '可恢复方案', en: 'Restorable presets' })}</span>
                 <strong className="metric-card__value">{metrics.recoverable}</strong>
               </article>
               <article className="metric-card">
-                <span className="metric-card__label">需注意方案</span>
+                <span className="metric-card__label">{t({ zh: '需注意方案', en: 'Risky presets' })}</span>
                 <strong className="metric-card__value">{metrics.risky}</strong>
               </article>
             </div>
 
             <div className="split-grid">
               <div>
-                <h3 className="section-heading">当前范围</h3>
+                <h3 className="section-heading">{t({ zh: '当前范围', en: 'What works now' })}</h3>
                 <ul className="bullet-list">
-                  <li>查看命名方案列表</li>
-                  <li>编辑方案名、备注、标签与优先级</li>
-                  <li>删除不再需要的方案</li>
-                  <li>把方案恢复回阵型页继续编辑</li>
+                  <li>{t({ zh: '查看命名方案列表', en: 'Browse named presets' })}</li>
+                  <li>{t({ zh: '编辑方案名、备注、标签与优先级', en: 'Edit names, notes, tags, and priority' })}</li>
+                  <li>{t({ zh: '删除不再需要的方案', en: 'Delete presets you no longer need' })}</li>
+                  <li>{t({ zh: '把方案恢复回阵型页继续编辑', en: 'Restore a preset back to the formation page' })}</li>
                 </ul>
               </div>
               <div>
-                <h3 className="section-heading">当前边界</h3>
+                <h3 className="section-heading">{t({ zh: '当前边界', en: 'Current boundary' })}</h3>
                 <p className="supporting-text">
-                  最近草稿继续留在阵型页自动保存；这里管理的是已命名方案。若要新增方案，请回到阵型页点击“保存为方案”。
+                  {t({
+                    zh: '最近草稿继续留在阵型页自动保存；这里管理的是已命名方案。若要新增方案，请回到阵型页点击“保存为方案”。',
+                    en: 'Recent drafts remain on the formation page for auto-save; this page manages only named presets. To add one, go back to the formation page and choose “Save as preset.”',
+                  })}
                 </p>
               </div>
             </div>
@@ -396,20 +424,29 @@ export function PresetsPage() {
       </SurfaceCard>
 
       <SurfaceCard
-        eyebrow="已保存方案"
-        title="按最近编辑排序管理你的本地阵型方案"
-        description="恢复时会优先按保存时的数据版本校验；如果只能做兼容恢复，页面会明确提示。"
+        eyebrow={t({ zh: '已保存方案', en: 'Saved presets' })}
+        title={t({
+          zh: '按最近编辑排序管理你的本地阵型方案',
+          en: 'Manage local formation presets sorted by latest edit',
+        })}
+        description={t({
+          zh: '恢复时会优先按保存时的数据版本校验；如果只能做兼容恢复，页面会明确提示。',
+          en: 'Restore first validates against the saved data version, and the page clearly warns when only a compatible restore is possible.',
+        })}
       >
         {state.status === 'ready' && state.items.length === 0 ? (
           <div className="status-banner status-banner--info">
-            这里还没有命名方案。先去阵型页摆出一套阵容，再点击“保存为方案”。
+            {t({
+              zh: '这里还没有命名方案。先去阵型页摆出一套阵容，再点击“保存为方案”。',
+              en: 'There are no named presets yet. Build a formation first, then click “Save as preset.”',
+            })}
           </div>
         ) : null}
 
         {state.status === 'ready' && state.items.length > 0 ? (
           <div className="results-grid">
             {state.items.map((view) => {
-              const championSummary = buildChampionSummary(view)
+              const championSummary = buildChampionSummary(view, locale)
               const hasDroppedReferences =
                 view.prompt.kind === 'restore' &&
                 (view.prompt.preview.invalidSlotIds.length > 0 || view.prompt.preview.invalidChampionIds.length > 0)
@@ -419,24 +456,32 @@ export function PresetsPage() {
               return (
                 <article key={view.preset.id} className="result-card">
                   <div className="result-card__header">
-                    <span className="result-card__eyebrow">{buildPriorityLabel(view.preset.priority)}</span>
+                    <span className="result-card__eyebrow">{buildPriorityLabel(view.preset.priority, locale)}</span>
                     <h3 className="result-card__title">{view.preset.name}</h3>
                   </div>
 
                   <p className="supporting-text">
-                    {view.preset.description || '当前还没有备注，可在这里补充这套阵容适合的目标和限制。'}
+                    {view.preset.description ||
+                      t({
+                        zh: '当前还没有备注，可在这里补充这套阵容适合的目标和限制。',
+                        en: 'There are no notes yet. Add what this formation is for and what constraints matter.',
+                      })}
                   </p>
 
                   <div className="tag-row">
                     <span className="tag-pill tag-pill--muted">
                       {view.prompt.kind === 'restore' ? view.prompt.preview.layoutName : view.preset.layoutId}
                     </span>
-                    <span className="tag-pill tag-pill--muted">保存版本：{view.preset.dataVersion}</span>
-                    <span className="tag-pill tag-pill--muted">更新于：{formatDateTime(view.preset.updatedAt)}</span>
+                    <span className="tag-pill tag-pill--muted">
+                      {t({ zh: '保存版本', en: 'Saved version' })}：{view.preset.dataVersion}
+                    </span>
+                    <span className="tag-pill tag-pill--muted">
+                      {t({ zh: '更新于', en: 'Updated' })}：{formatDateTime(view.preset.updatedAt, locale)}
+                    </span>
                     <span className="tag-pill tag-pill--muted">
                       {view.preset.scenarioRef
                         ? `${view.preset.scenarioRef.kind}:${view.preset.scenarioRef.id}`
-                        : '未绑定正式场景'}
+                        : t({ zh: '未绑定正式场景', en: 'No formal scenario linked' })}
                     </span>
                   </div>
 
@@ -472,7 +517,9 @@ export function PresetsPage() {
                   {view.prompt.kind === 'restore' && (isCompatibleRestore || hasDroppedReferences) ? (
                     <div className="status-banner status-banner--info">
                       <div className="status-banner__content">
-                        <strong className="status-banner__title">恢复时会带兼容处理</strong>
+                        <strong className="status-banner__title">
+                          {t({ zh: '恢复时会带兼容处理', en: 'Restore will apply compatibility handling' })}
+                        </strong>
                         <p className="status-banner__detail">{buildRestoreStatusDetail(view.prompt.preview)}</p>
                       </div>
                     </div>
@@ -485,10 +532,14 @@ export function PresetsPage() {
                       disabled={view.prompt.kind !== 'restore'}
                       onClick={() => handleRestorePreset(view)}
                     >
-                      恢复到阵型页
+                      {t({ zh: '恢复到阵型页', en: 'Restore to formation' })}
                     </button>
-                    <button type="button" className="action-button action-button--ghost" onClick={() => startEditingPreset(view.preset)}>
-                      编辑
+                    <button
+                      type="button"
+                      className="action-button action-button--ghost"
+                      onClick={() => startEditingPreset(view.preset)}
+                    >
+                      {t({ zh: '编辑', en: 'Edit' })}
                     </button>
                     {deleteConfirmId === view.preset.id ? (
                       <>
@@ -497,14 +548,14 @@ export function PresetsPage() {
                           className="action-button"
                           onClick={() => handleDeletePreset(view.preset)}
                         >
-                          确认删除
+                          {t({ zh: '确认删除', en: 'Confirm delete' })}
                         </button>
                         <button
                           type="button"
                           className="action-button action-button--ghost"
                           onClick={() => setDeleteConfirmId(null)}
                         >
-                          取消
+                          {t({ zh: '取消', en: 'Cancel' })}
                         </button>
                       </>
                     ) : (
@@ -513,7 +564,7 @@ export function PresetsPage() {
                         className="action-button action-button--ghost"
                         onClick={() => setDeleteConfirmId(view.preset.id)}
                       >
-                        删除
+                        {t({ zh: '删除', en: 'Delete' })}
                       </button>
                     )}
                   </div>
@@ -522,7 +573,7 @@ export function PresetsPage() {
                     <div className="form-stack result-card__section">
                       <div className="form-field">
                         <label className="field-label" htmlFor={`preset-name-${view.preset.id}`}>
-                          方案名称
+                          {t({ zh: '方案名称', en: 'Preset name' })}
                         </label>
                         <input
                           id={`preset-name-${view.preset.id}`}
@@ -535,7 +586,7 @@ export function PresetsPage() {
 
                       <div className="form-field">
                         <label className="field-label" htmlFor={`preset-description-${view.preset.id}`}>
-                          方案备注
+                          {t({ zh: '方案备注', en: 'Preset notes' })}
                         </label>
                         <textarea
                           id={`preset-description-${view.preset.id}`}
@@ -548,7 +599,7 @@ export function PresetsPage() {
 
                       <div className="form-field">
                         <label className="field-label" htmlFor={`preset-tags-${view.preset.id}`}>
-                          场景标签
+                          {t({ zh: '场景标签', en: 'Scenario tags' })}
                         </label>
                         <input
                           id={`preset-tags-${view.preset.id}`}
@@ -560,20 +611,20 @@ export function PresetsPage() {
                       </div>
 
                       <div className="form-field">
-                        <span className="field-label">优先级</span>
+                        <span className="field-label">{t({ zh: '优先级', en: 'Priority' })}</span>
                         <div className="segmented-control">
                           {PRESET_PRIORITY_OPTIONS.map((option) => (
                             <button
-                              key={option.value}
+                              key={option}
                               type="button"
                               className={
-                                editor.priority === option.value
+                                editor.priority === option
                                   ? 'segmented-control__button segmented-control__button--active'
                                   : 'segmented-control__button'
                               }
-                              onClick={() => updateEditor('priority', option.value)}
+                              onClick={() => updateEditor('priority', option)}
                             >
-                              {option.label}
+                              {buildPriorityLabel(option, locale)}
                             </button>
                           ))}
                         </div>
@@ -586,10 +637,14 @@ export function PresetsPage() {
                           disabled={editor.name.trim().length === 0}
                           onClick={() => handleSavePresetEdit(view.preset)}
                         >
-                          保存修改
+                          {t({ zh: '保存修改', en: 'Save changes' })}
                         </button>
-                        <button type="button" className="action-button action-button--ghost" onClick={cancelEditingPreset}>
-                          取消编辑
+                        <button
+                          type="button"
+                          className="action-button action-button--ghost"
+                          onClick={cancelEditingPreset}
+                        >
+                          {t({ zh: '取消编辑', en: 'Cancel edit' })}
                         </button>
                       </div>
                     </div>

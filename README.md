@@ -18,6 +18,7 @@
 - 已落地最小可运行工程骨架
 - 已补基础路由、页面壳层、公共数据目录与部署脚本
 - 已落第一版真实公共数据：`champions`、`variants`、`enums` 已由官方 definitions 生成
+- 已补第一版官方中文映射层：`champions / affiliations / campaigns / variants` 保留“官方原文 + 中文展示名”双字段
 - 个人数据本地存储方案已确定为 `IndexedDB`，但还未正式接入页面
 - 阵型页已接入“最近草稿”本地自动保存 / 恢复，持久化介质为 `IndexedDB`
 - 方案存档页已落第一版命名方案库：支持保存、编辑、删除、恢复回阵型页
@@ -74,10 +75,10 @@ npm run data:fetch
 把原始快照归一化为前端公共数据：
 
 ```bash
-npm run data:normalize -- --input tmp/idle-champions-api/<your-snapshot>.json
+npm run data:normalize -- --input tmp/idle-champions-api/<english-snapshot>.json --localizedInput tmp/idle-champions-api/<zh-snapshot>.json
 ```
 
-一键执行“抓取 + 归一化”：
+一键执行“官方原文抓取 + `language_id=7` 中文抓取 + 归一化”：
 
 ```bash
 npm run data:build
@@ -88,6 +89,7 @@ npm run data:build
 - 原始 definitions 快照默认输出到 `tmp/idle-champions-api/`
 - 手工补充层默认读取 `scripts/data/manual-overrides.json`
 - 详细调研结论见 `docs/research/data/game-data-source-investigation.md`
+- `language_id=7` 官方中文覆盖结论见 `docs/research/data/language-id-7-chinese-definitions-research.md`
 
 ## 当前目录结构
 
@@ -173,6 +175,7 @@ npm run data:build
 - `docs/product/idle-champions-roadmap.md`：项目价值、范围、阶段路线、核心数据模型
 - `docs/research/data/static-data-storage-research.md`：静态数据存储与版本化策略
 - `docs/research/data/game-data-source-investigation.md`：基础游戏数据、个人数据凭证与第三方站点更新链路调研
+- `docs/research/data/language-id-7-chinese-definitions-research.md`：`language_id=7` 官方中文 definitions 覆盖范围与字段缺口核实
 - `docs/research/testing/regression-testing-research.md`：主分支整体回归测试框架设计
 - `docs/investigations/runtime/local-run-verification.md`：本地构建与预览行为验证记录
 - `docs/investigations/runtime/playwright-browser-launch-verification.md`：Playwright 浏览器启动与页面验收记录，包含受限会话失败与完全访问权限会话成功两种结果

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useI18n } from '../app/i18n'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollectionAtVersion, loadVersion } from '../data/client'
 import {
@@ -14,6 +15,12 @@ import {
   saveRecentFormationDraft,
 } from '../data/formationDraftStore'
 import { saveFormationPreset } from '../data/formationPresetStore'
+import {
+  getLocalizedTextPair,
+  getPrimaryLocalizedText,
+  getRoleLabel,
+  getSecondaryLocalizedText,
+} from '../domain/localizedText'
 import type {
   Champion,
   FormationDraft,
@@ -28,11 +35,7 @@ const DRAFT_SCHEMA_VERSION = 1
 const PRESET_SCHEMA_VERSION = 1
 const DRAFT_SAVE_DELAY_MS = 600
 
-const PRESET_PRIORITY_OPTIONS: Array<{ value: PresetPriority; label: string }> = [
-  { value: 'medium', label: '常用' },
-  { value: 'high', label: '高优先' },
-  { value: 'low', label: '备用' },
-]
+const PRESET_PRIORITY_OPTIONS: PresetPriority[] = ['medium', 'high', 'low']
 
 type FormationState =
   | { status: 'loading' }
@@ -138,6 +141,7 @@ function buildRestoredDraftFromPreview(preview: FormationSnapshotPreview<Formati
 }
 
 export function FormationPage() {
+  const { locale, t } = useI18n()
   const navigate = useNavigate()
   const location = useLocation()
   const routeState = location.state as FormationPageLocationState | null
@@ -374,8 +378,13 @@ export function FormationPage() {
       return []
     }
 
-    return [...state.champions].sort((left, right) => left.seat - right.seat || left.name.localeCompare(right.name))
-  }, [state])
+    return [...state.champions].sort(
+      (left, right) =>
+        left.seat - right.seat ||
+        getPrimaryLocalizedText(left.name, locale).localeCompare(getPrimaryLocalizedText(right.name, locale)) ||
+        left.name.original.localeCompare(right.name.original),
+    )
+  }, [locale, state])
 
   const selectedChampions = useMemo(() => {
     if (state.status !== 'ready' || !selectedLayout) {
@@ -413,6 +422,24 @@ export function FormationPage() {
 
   function bumpEditRevision() {
     setEditRevision((current) => current + 1)
+  }
+
+  function getChampionOptionLabel(champion: Champion): string {
+    const seatLabel = locale === 'zh-CN' ? `${champion.seat} 号位` : `Seat ${champion.seat}`
+
+    return `${seatLabel} · ${getLocalizedTextPair(champion.name, locale)}`
+  }
+
+  function getPresetPriorityLabel(priority: PresetPriority): string {
+    if (priority === 'high') {
+      return t({ zh: '高优先', en: 'High' })
+    }
+
+    if (priority === 'low') {
+      return t({ zh: '备用', en: 'Fallback' })
+    }
+
+    return t({ zh: '常用', en: 'Regular' })
   }
 
   function handleSelectLayout(layoutId: string) {
@@ -590,16 +617,26 @@ export function FormationPage() {
   return (
     <div className="page-stack">
       <SurfaceCard
-        eyebrow="阵型编辑"
-        title="把最近草稿保存 / 恢复接回阵型页闭环"
-        description="当前继续使用手工维护的 MVP 布局；最近草稿会自动写入当前浏览器的 IndexedDB，不上传到外部。"
+        eyebrow={t({ zh: '阵型编辑', en: 'Formation editor' })}
+        title={t({
+          zh: '把最近草稿保存 / 恢复接回阵型页闭环',
+          en: 'Close the loop on recent-draft save and restore',
+        })}
+        description={t({
+          zh: '当前继续使用手工维护的 MVP 布局；最近草稿会自动写入当前浏览器的 IndexedDB，不上传到外部。',
+          en: 'This page still uses manually maintained MVP layouts, and recent drafts are auto-saved to IndexedDB in the current browser only.',
+        })}
       >
         {state.status === 'loading' ? (
-          <div className="status-banner status-banner--info">正在读取阵型布局和英雄数据…</div>
+          <div className="status-banner status-banner--info">
+            {t({ zh: '正在读取阵型布局和英雄数据…', en: 'Loading layouts and champion data…' })}
+          </div>
         ) : null}
 
         {state.status === 'error' ? (
-          <div className="status-banner status-banner--error">阵型数据读取失败：{state.message}</div>
+          <div className="status-banner status-banner--error">
+            {t({ zh: '阵型数据读取失败', en: 'Formation data failed to load' })}：{state.message}
+          </div>
         ) : null}
 
         {state.status === 'ready' ? (
@@ -612,21 +649,33 @@ export function FormationPage() {
               >
                 <div className="status-banner__content">
                   <strong className="status-banner__title">
-                    {draftPrompt.kind === 'restore' ? '检测到最近草稿，是否恢复？' : draftPrompt.title}
+                    {draftPrompt.kind === 'restore'
+                      ? t({ zh: '检测到最近草稿，是否恢复？', en: 'Recent draft detected. Restore it?' })
+                      : draftPrompt.title}
                   </strong>
                   <p className="status-banner__detail">
                     {draftPrompt.kind === 'restore'
-                      ? `${formatDateTime(draftPrompt.preview.snapshot.updatedAt)} · ${Object.keys(draftPrompt.preview.placements).length} 名英雄 · ${draftPrompt.preview.layoutName}`
+                      ? `${formatDateTime(draftPrompt.preview.snapshot.updatedAt)} · ${
+                          locale === 'zh-CN'
+                            ? `${Object.keys(draftPrompt.preview.placements).length} 名英雄`
+                            : `${Object.keys(draftPrompt.preview.placements).length} champions`
+                        } · ${draftPrompt.preview.layoutName}`
                       : draftPrompt.detail}
                   </p>
                   {draftPrompt.kind === 'restore' ? (
                     <>
                       <p className="status-banner__detail">{buildRestoreStatusDetail(draftPrompt.preview)}</p>
                       <div className="tag-row status-banner__meta">
-                        <span className="tag-pill tag-pill--muted">保存版本：{draftPrompt.preview.snapshot.dataVersion}</span>
-                        <span className="tag-pill tag-pill--muted">恢复版本：{draftPrompt.preview.dataVersion}</span>
                         <span className="tag-pill tag-pill--muted">
-                          {draftPrompt.preview.restoreMode === 'compatible' ? '兼容恢复' : '原样恢复'}
+                          {t({ zh: '保存版本', en: 'Saved version' })}：{draftPrompt.preview.snapshot.dataVersion}
+                        </span>
+                        <span className="tag-pill tag-pill--muted">
+                          {t({ zh: '恢复版本', en: 'Restore version' })}：{draftPrompt.preview.dataVersion}
+                        </span>
+                        <span className="tag-pill tag-pill--muted">
+                          {draftPrompt.preview.restoreMode === 'compatible'
+                            ? t({ zh: '兼容恢复', en: 'Compatible restore' })
+                            : t({ zh: '原样恢复', en: 'Exact restore' })}
                         </span>
                       </div>
                     </>
@@ -639,7 +688,7 @@ export function FormationPage() {
                       className="action-button action-button--secondary"
                       onClick={handleRestoreRecentDraft}
                     >
-                      恢复最近草稿
+                      {t({ zh: '恢复最近草稿', en: 'Restore draft' })}
                     </button>
                   ) : null}
                   <button
@@ -647,14 +696,14 @@ export function FormationPage() {
                     className="action-button action-button--ghost"
                     onClick={handleKeepDraftWithoutRestore}
                   >
-                    先保留不恢复
+                    {t({ zh: '先保留不恢复', en: 'Keep for now' })}
                   </button>
                   <button
                     type="button"
                     className="action-button action-button--ghost"
                     onClick={handleDiscardRecentDraft}
                   >
-                    丢弃旧草稿
+                    {t({ zh: '丢弃旧草稿', en: 'Discard draft' })}
                   </button>
                 </div>
               </div>
@@ -668,7 +717,7 @@ export function FormationPage() {
             ) : null}
 
             <div className="filter-group">
-              <span className="field-label">布局选择</span>
+              <span className="field-label">{t({ zh: '布局选择', en: 'Layout' })}</span>
               <div className="filter-chip-grid">
                 {state.formations.map((layout) => (
                   <button
@@ -687,25 +736,25 @@ export function FormationPage() {
               <>
                 <div className="metric-grid">
                   <article className="metric-card">
-                    <span className="metric-card__label">当前布局</span>
+                    <span className="metric-card__label">{t({ zh: '当前布局', en: 'Current layout' })}</span>
                     <strong className="metric-card__value">{selectedLayout.name}</strong>
                   </article>
                   <article className="metric-card">
-                    <span className="metric-card__label">槽位数</span>
+                    <span className="metric-card__label">{t({ zh: '槽位数', en: 'Slots' })}</span>
                     <strong className="metric-card__value">{selectedLayout.slots.length}</strong>
                   </article>
                   <article className="metric-card">
-                    <span className="metric-card__label">数据版本</span>
+                    <span className="metric-card__label">{t({ zh: '数据版本', en: 'Data version' })}</span>
                     <strong className="metric-card__value">{state.dataVersion}</strong>
                   </article>
                   <article className="metric-card">
-                    <span className="metric-card__label">已放置英雄</span>
+                    <span className="metric-card__label">{t({ zh: '已放置英雄', en: 'Placed champions' })}</span>
                     <strong className="metric-card__value">{selectedChampions.length}</strong>
                   </article>
                   <article className="metric-card">
-                    <span className="metric-card__label">seat 冲突</span>
+                    <span className="metric-card__label">{t({ zh: 'seat 冲突', en: 'Seat conflicts' })}</span>
                     <strong className="metric-card__value">
-                      {conflictingSeats.length > 0 ? conflictingSeats.join(', ') : '无'}
+                      {conflictingSeats.length > 0 ? conflictingSeats.join(', ') : t({ zh: '无', en: 'None' })}
                     </strong>
                   </article>
                 </div>
@@ -716,7 +765,10 @@ export function FormationPage() {
 
                 {conflictingSeats.length > 0 ? (
                   <div className="status-banner status-banner--error">
-                    当前阵型里出现 seat 冲突：{conflictingSeats.join(', ')}。同一 seat 只能放一名英雄。
+                    {t({
+                      zh: `当前阵型里出现 seat 冲突：${conflictingSeats.join(', ')}。同一 seat 只能放一名英雄。`,
+                      en: `Seat conflicts found in this formation: ${conflictingSeats.join(', ')}. Only one champion may occupy each seat.`,
+                    })}
                   </div>
                 ) : null}
 
@@ -733,21 +785,31 @@ export function FormationPage() {
                           className={hasConflict ? 'formation-slot formation-slot--conflict' : 'formation-slot'}
                           style={{ gridColumn: slot.column, gridRow: slot.row }}
                         >
-                          <span className="formation-slot__label">槽位 {index + 1}</span>
+                          <span className="formation-slot__label">
+                            {locale === 'zh-CN' ? `槽位 ${index + 1}` : `Slot ${index + 1}`}
+                          </span>
                           <select
                             className="slot-select"
                             value={championId}
                             onChange={(event) => handleAssignChampion(slot.id, event.target.value)}
                           >
-                            <option value="">未放置</option>
+                            <option value="">{t({ zh: '未放置', en: 'Empty' })}</option>
                             {championOptions.map((item) => (
                               <option key={item.id} value={item.id}>
-                                {`Seat ${item.seat} · ${item.name}`}
+                                {getChampionOptionLabel(item)}
                               </option>
                             ))}
                           </select>
                           <span className="formation-slot__hint">
-                            {champion ? `当前：${champion.name}` : `坐标 ${slot.row}-${slot.column}`}
+                            {champion
+                              ? t({
+                                  zh: `当前：${getLocalizedTextPair(champion.name, locale)}`,
+                                  en: `Current: ${getLocalizedTextPair(champion.name, locale)}`,
+                                })
+                              : t({
+                                  zh: `坐标 ${slot.row}-${slot.column}`,
+                                  en: `Position ${slot.row}-${slot.column}`,
+                                })}
                           </span>
                         </div>
                       )
@@ -757,13 +819,16 @@ export function FormationPage() {
 
                 <div className="button-row">
                   <button type="button" className="action-button action-button--ghost" onClick={handleClear}>
-                    清空当前阵型
+                    {t({ zh: '清空当前阵型', en: 'Clear this formation' })}
                   </button>
                 </div>
               </>
             ) : (
               <div className="status-banner status-banner--info">
-                当前还没有可用布局，请先补 `scripts/data/manual-overrides.json`。
+                {t({
+                  zh: '当前还没有可用布局，请先补 `scripts/data/manual-overrides.json`。',
+                  en: 'No layouts are available yet. Add one to `scripts/data/manual-overrides.json` first.',
+                })}
               </div>
             )}
           </>
@@ -771,15 +836,21 @@ export function FormationPage() {
       </SurfaceCard>
 
       <SurfaceCard
-        eyebrow="阵型摘要"
-        title="把工作草稿保存成命名方案，再交给方案存档页管理"
-        description="最近草稿继续留在阵型页自动保存；命名方案会进入方案存档页，后续可编辑、删除并恢复回阵型页。"
+        eyebrow={t({ zh: '阵型摘要', en: 'Formation summary' })}
+        title={t({
+          zh: '把工作草稿保存成命名方案，再交给方案存档页管理',
+          en: 'Turn the working draft into a named preset',
+        })}
+        description={t({
+          zh: '最近草稿继续留在阵型页自动保存；命名方案会进入方案存档页，后续可编辑、删除并恢复回阵型页。',
+          en: 'Recent drafts stay on this page for auto-save, while named presets move into the preset library for later edit, delete, and restore.',
+        })}
       >
         <div className="split-grid">
           <div className="form-stack">
             <div className="form-field">
               <label className="field-label" htmlFor="preset-name">
-                方案名称
+                {t({ zh: '方案名称', en: 'Preset name' })}
               </label>
               <input
                 id="preset-name"
@@ -787,13 +858,16 @@ export function FormationPage() {
                 type="text"
                 value={presetForm.name}
                 onChange={(event) => updatePresetForm('name', event.target.value)}
-                placeholder="例如：速刷常用 10 槽波形"
+                placeholder={t({
+                  zh: '例如：速刷常用 10 槽波形',
+                  en: 'Example: Speed farm core wave 10',
+                })}
               />
             </div>
 
             <div className="form-field">
               <label className="field-label" htmlFor="preset-description">
-                方案备注
+                {t({ zh: '方案备注', en: 'Preset notes' })}
               </label>
               <textarea
                 id="preset-description"
@@ -801,13 +875,16 @@ export function FormationPage() {
                 rows={4}
                 value={presetForm.description}
                 onChange={(event) => updatePresetForm('description', event.target.value)}
-                placeholder="记录这套阵容适合什么目标、还有哪些待补位。"
+                placeholder={t({
+                  zh: '记录这套阵容适合什么目标、还有哪些待补位。',
+                  en: 'Describe what this formation is for and what still needs tuning.',
+                })}
               />
             </div>
 
             <div className="form-field">
               <label className="field-label" htmlFor="preset-tags">
-                场景标签
+                {t({ zh: '场景标签', en: 'Scenario tags' })}
               </label>
               <input
                 id="preset-tags"
@@ -815,26 +892,34 @@ export function FormationPage() {
                 type="text"
                 value={presetForm.scenarioTagsInput}
                 onChange={(event) => updatePresetForm('scenarioTagsInput', event.target.value)}
-                placeholder="例如：推图，速刷，Time Gate"
+                placeholder={t({
+                  zh: '例如：推图，速刷，Time Gate',
+                  en: 'Example: Push, speed, Time Gate',
+                })}
               />
-              <span className="field-hint">仅作用户可读标签，不作为恢复主键；可用中英文逗号分隔。</span>
+              <span className="field-hint">
+                {t({
+                  zh: '仅作用户可读标签，不作为恢复主键；可用中英文逗号分隔。',
+                  en: 'These are reader-friendly tags only, not restore keys. Use commas to separate them.',
+                })}
+              </span>
             </div>
 
             <div className="form-field">
-              <span className="field-label">优先级</span>
+              <span className="field-label">{t({ zh: '优先级', en: 'Priority' })}</span>
               <div className="segmented-control">
                 {PRESET_PRIORITY_OPTIONS.map((option) => (
                   <button
-                    key={option.value}
+                    key={option}
                     type="button"
                     className={
-                      presetForm.priority === option.value
+                      presetForm.priority === option
                         ? 'segmented-control__button segmented-control__button--active'
                         : 'segmented-control__button'
                     }
-                    onClick={() => handlePriorityChange(option.value)}
+                    onClick={() => handlePriorityChange(option)}
                   >
-                    {option.label}
+                    {getPresetPriorityLabel(option)}
                   </button>
                 ))}
               </div>
@@ -847,10 +932,12 @@ export function FormationPage() {
                 onClick={handleSavePreset}
                 disabled={!canSavePreset}
               >
-                {isSavingPreset ? '保存中…' : '保存为方案'}
+                {isSavingPreset
+                  ? t({ zh: '保存中…', en: 'Saving…' })
+                  : t({ zh: '保存为方案', en: 'Save as preset' })}
               </button>
               <button type="button" className="action-button action-button--ghost" onClick={handleOpenPresetsPage}>
-                查看方案存档
+                {t({ zh: '查看方案存档', en: 'Open preset library' })}
               </button>
             </div>
 
@@ -866,48 +953,71 @@ export function FormationPage() {
 
           <div className="preview-grid">
             <article className="preview-card">
-              <span className="preview-card__label">当前布局</span>
-              <strong className="preview-card__value">{selectedLayout?.name ?? '未选择'}</strong>
-            </article>
-            <article className="preview-card">
-              <span className="preview-card__label">可保存英雄数</span>
-              <strong className="preview-card__value">{selectedChampions.length}</strong>
-            </article>
-            <article className="preview-card">
-              <span className="preview-card__label">seat 冲突</span>
+              <span className="preview-card__label">{t({ zh: '当前布局', en: 'Current layout' })}</span>
               <strong className="preview-card__value">
-                {conflictingSeats.length > 0 ? conflictingSeats.join(', ') : '无'}
+                {selectedLayout?.name ?? t({ zh: '未选择', en: 'Not selected' })}
               </strong>
             </article>
             <article className="preview-card">
-              <span className="preview-card__label">场景上下文</span>
-              <strong className="preview-card__value">{scenarioRef ? `${scenarioRef.kind}:${scenarioRef.id}` : '当前未绑定'}</strong>
+              <span className="preview-card__label">{t({ zh: '可保存英雄数', en: 'Savable champions' })}</span>
+              <strong className="preview-card__value">{selectedChampions.length}</strong>
+            </article>
+            <article className="preview-card">
+              <span className="preview-card__label">{t({ zh: 'seat 冲突', en: 'Seat conflicts' })}</span>
+              <strong className="preview-card__value">
+                {conflictingSeats.length > 0 ? conflictingSeats.join(', ') : t({ zh: '无', en: 'None' })}
+              </strong>
+            </article>
+            <article className="preview-card">
+              <span className="preview-card__label">{t({ zh: '场景上下文', en: 'Scenario context' })}</span>
+              <strong className="preview-card__value">
+                {scenarioRef
+                  ? `${scenarioRef.kind}:${scenarioRef.id}`
+                  : t({ zh: '当前未绑定', en: 'Not linked yet' })}
+              </strong>
             </article>
           </div>
         </div>
 
         {selectedChampions.length === 0 ? (
           <p className="supporting-text">
-            当前还没有放置英雄。先选一个布局，再逐格选择英雄，页面会自动保存最近草稿；至少放置 1 名英雄后才可保存为命名方案。
+            {t({
+              zh: '当前还没有放置英雄。先选一个布局，再逐格选择英雄，页面会自动保存最近草稿；至少放置 1 名英雄后才可保存为命名方案。',
+              en: 'No champions are placed yet. Pick a layout, fill the slots, and the page will auto-save a recent draft. Place at least one champion before saving a named preset.',
+            })}
           </p>
         ) : (
           <div className="results-grid">
-            {selectedChampions.map(({ slotId, champion }) => (
-              <article key={`${slotId}-${champion.id}`} className="result-card">
-                <div className="result-card__header">
-                  <span className="result-card__eyebrow">{slotId}</span>
-                  <h3 className="result-card__title">{champion.name}</h3>
-                </div>
-                <p className="supporting-text">Seat {champion.seat}</p>
-                <div className="tag-row">
-                  {champion.roles.map((role) => (
-                    <span key={role} className="tag-pill">
-                      {role}
-                    </span>
-                  ))}
-                </div>
-              </article>
-            ))}
+            {selectedChampions.map(({ slotId, champion }) => {
+              const primaryName = getPrimaryLocalizedText(champion.name, locale)
+              const secondaryName = getSecondaryLocalizedText(champion.name, locale)
+
+              return (
+                <article key={`${slotId}-${champion.id}`} className="result-card">
+                  <div className="result-card__header">
+                    <span className="result-card__eyebrow">{slotId}</span>
+                    <h3 className="result-card__title">{primaryName}</h3>
+                  </div>
+                  {secondaryName ? <p className="result-card__secondary">{secondaryName}</p> : null}
+                  <p className="supporting-text">
+                    {locale === 'zh-CN' ? `${champion.seat} 号位` : `Seat ${champion.seat}`}
+                  </p>
+                  {champion.affiliations.length > 0 ? (
+                    <p className="supporting-text">
+                      {t({ zh: '联动队伍', en: 'Affiliation' })}：
+                      {champion.affiliations.map((affiliation) => getLocalizedTextPair(affiliation, locale)).join(' / ')}
+                    </p>
+                  ) : null}
+                  <div className="tag-row">
+                    {champion.roles.map((role) => (
+                      <span key={role} className="tag-pill">
+                        {getRoleLabel(role, locale)}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+              )
+            })}
           </div>
         )}
       </SurfaceCard>

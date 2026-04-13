@@ -1,18 +1,21 @@
 import { useEffect, useMemo, useState } from 'react'
+import { useI18n } from '../app/i18n'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollection } from '../data/client'
-import type { Variant } from '../domain/types'
-
-interface CampaignOption {
-  id: string
-  name: string
-}
+import {
+  getLocalizedTextPair,
+  getPrimaryLocalizedText,
+  getSecondaryLocalizedText,
+  matchesLocalizedText,
+} from '../domain/localizedText'
+import type { LocalizedOption, Variant } from '../domain/types'
 
 interface CampaignEnumGroup {
   id: 'campaigns'
-  values: CampaignOption[]
+  values: LocalizedOption[]
 }
 
+const ALL_CAMPAIGNS = '__all__'
 const MAX_VISIBLE_VARIANTS = 60
 
 type VariantState =
@@ -20,7 +23,7 @@ type VariantState =
   | {
       status: 'ready'
       variants: Variant[]
-      campaigns: CampaignOption[]
+      campaigns: LocalizedOption[]
     }
   | {
       status: 'error'
@@ -39,9 +42,10 @@ function isCampaignEnumGroup(value: unknown): value is CampaignEnumGroup {
 }
 
 export function VariantsPage() {
+  const { locale, t } = useI18n()
   const [state, setState] = useState<VariantState>({ status: 'loading' })
   const [search, setSearch] = useState('')
-  const [selectedCampaign, setSelectedCampaign] = useState<string>('全部战役')
+  const [selectedCampaign, setSelectedCampaign] = useState<string>(ALL_CAMPAIGNS)
 
   useEffect(() => {
     let disposed = false
@@ -54,11 +58,12 @@ export function VariantsPage() {
 
         const campaigns =
           enumCollection.items.find(isCampaignEnumGroup)?.values.filter(
-            (item): item is CampaignOption =>
+            (item): item is LocalizedOption =>
               typeof item === 'object' &&
               item !== null &&
               typeof item.id === 'string' &&
-              typeof item.name === 'string',
+              typeof item.original === 'string' &&
+              typeof item.display === 'string',
           ) ?? []
 
         setState({
@@ -74,7 +79,7 @@ export function VariantsPage() {
 
         setState({
           status: 'error',
-          message: error instanceof Error ? error.message : '未知错误',
+          message: error instanceof Error ? error.message : '',
         })
       })
 
@@ -92,81 +97,119 @@ export function VariantsPage() {
 
     return state.variants.filter((variant) => {
       const matchesCampaign =
-        selectedCampaign === '全部战役' || variant.campaign === selectedCampaign
+        selectedCampaign === ALL_CAMPAIGNS || variant.campaign.original === selectedCampaign
 
       const matchesSearch =
         !query ||
-        variant.name.toLowerCase().includes(query) ||
-        variant.campaign.toLowerCase().includes(query) ||
-        variant.restrictions.some((item) => item.toLowerCase().includes(query)) ||
-        variant.rewards.some((item) => item.toLowerCase().includes(query))
+        matchesLocalizedText(variant.name, query) ||
+        matchesLocalizedText(variant.campaign, query) ||
+        variant.restrictions.some((item) => matchesLocalizedText(item, query)) ||
+        variant.rewards.some((item) => matchesLocalizedText(item, query))
 
       return matchesCampaign && matchesSearch
     })
   }, [search, selectedCampaign, state])
 
   const visibleVariants = filteredVariants.slice(0, MAX_VISIBLE_VARIANTS)
-  const campaignsWithResults = new Set(filteredVariants.map((variant) => variant.campaign)).size
+  const campaignsWithResults = new Set(filteredVariants.map((variant) => variant.campaign.original)).size
+  const selectedCampaignLabel =
+    state.status === 'ready'
+      ? state.campaigns.find((campaign) => campaign.original === selectedCampaign) ?? null
+      : null
+  const activeFilters = [
+    search.trim()
+      ? t({
+          zh: `关键词：${search.trim()}`,
+          en: `Keyword: ${search.trim()}`,
+        })
+      : null,
+    selectedCampaignLabel
+      ? t({
+          zh: `战役：${getLocalizedTextPair(selectedCampaignLabel, locale)}`,
+          en: `Campaign: ${getLocalizedTextPair(selectedCampaignLabel, locale)}`,
+        })
+      : null,
+  ].filter((item): item is string => Boolean(item))
 
   return (
     <div className="page-stack">
       <SurfaceCard
-        eyebrow="变体限制"
-        title="先把官方原始限制文本稳定读出来"
-        description="当前先接官方 definitions 归一化后的变体数据，优先解决“我想快速搜到哪个变体、看见哪些限制”的第一步。"
+        eyebrow={t({ zh: '变体限制', en: 'Variant restrictions' })}
+        title={t({
+          zh: '先把官方中文展示和原文回退一起接上',
+          en: 'Show official Chinese labels while keeping source-text fallback',
+        })}
+        description={t({
+          zh: '当前先接官方 definitions 归一化后的变体数据，名称、战役和限制文本都优先显示 `language_id=7` 中文，并保留官方原文用于检索和回退。',
+          en: 'This page uses normalized official definitions, prefers `language_id=7` Chinese for names, campaigns, and restriction text, and still keeps the original strings for search and fallback.',
+        })}
       >
         {state.status === 'loading' ? (
-          <div className="status-banner status-banner--info">正在读取变体数据…</div>
+          <div className="status-banner status-banner--info">
+            {t({ zh: '正在读取变体数据…', en: 'Loading variant data…' })}
+          </div>
         ) : null}
 
         {state.status === 'error' ? (
-          <div className="status-banner status-banner--error">变体数据读取失败：{state.message}</div>
+          <div className="status-banner status-banner--error">
+            {t({ zh: '变体数据读取失败', en: 'Variant data failed to load' })}：
+            {state.message || t({ zh: '未知错误', en: 'Unknown error' })}
+          </div>
         ) : null}
 
         {state.status === 'ready' ? (
           <>
             <div className="metric-grid">
               <article className="metric-card">
-                <span className="metric-card__label">变体总数</span>
+                <span className="metric-card__label">{t({ zh: '变体总数', en: 'Variants' })}</span>
                 <strong className="metric-card__value">{state.variants.length}</strong>
               </article>
               <article className="metric-card">
-                <span className="metric-card__label">当前匹配</span>
+                <span className="metric-card__label">{t({ zh: '当前匹配', en: 'Matches' })}</span>
                 <strong className="metric-card__value">{filteredVariants.length}</strong>
               </article>
               <article className="metric-card">
-                <span className="metric-card__label">覆盖战役</span>
+                <span className="metric-card__label">{t({ zh: '覆盖战役', en: 'Campaigns covered' })}</span>
                 <strong className="metric-card__value">{campaignsWithResults}</strong>
               </article>
               <article className="metric-card">
-                <span className="metric-card__label">战役枚举</span>
+                <span className="metric-card__label">{t({ zh: '战役枚举', en: 'Campaign options' })}</span>
                 <strong className="metric-card__value">{state.campaigns.length}</strong>
               </article>
             </div>
 
             <div className="filter-panel filter-panel--compact">
               <label className="form-field">
-                <span className="field-label">关键词</span>
+                <span className="field-label">{t({ zh: '关键词', en: 'Keyword' })}</span>
                 <input
                   className="text-input"
                   type="text"
-                  placeholder="搜变体名、限制文本、奖励文本"
+                  placeholder={t({
+                    zh: '搜变体名、限制文本、奖励文本',
+                    en: 'Search names, restriction text, or rewards',
+                  })}
                   value={search}
                   onChange={(event) => setSearch(event.target.value)}
                 />
+                <span className="field-hint">
+                  {t({
+                    zh: '变体名、战役、限制文本和奖励文本都支持中英混搜。',
+                    en: 'Names, campaigns, restriction text, and rewards all support mixed Chinese and English search.',
+                  })}
+                </span>
               </label>
 
               <label className="form-field">
-                <span className="field-label">战役</span>
+                <span className="field-label">{t({ zh: '战役', en: 'Campaign' })}</span>
                 <select
                   className="text-input"
                   value={selectedCampaign}
                   onChange={(event) => setSelectedCampaign(event.target.value)}
                 >
-                  <option value="全部战役">全部战役</option>
+                  <option value={ALL_CAMPAIGNS}>{t({ zh: '全部战役', en: 'All campaigns' })}</option>
                   {state.campaigns.map((campaign) => (
-                    <option key={campaign.id} value={campaign.name}>
-                      {campaign.name}
+                    <option key={campaign.id} value={campaign.original}>
+                      {getLocalizedTextPair(campaign, locale)}
                     </option>
                   ))}
                 </select>
@@ -175,52 +218,93 @@ export function VariantsPage() {
 
             {filteredVariants.length === 0 ? (
               <div className="status-banner status-banner--info">
-                当前筛选条件下没有匹配变体，可以先放宽战役或关键词条件。
+                {t({
+                  zh: '当前筛选条件下没有匹配变体，可以先放宽战役或关键词条件。',
+                  en: 'No variants match these filters yet. Try broadening the campaign or keyword first.',
+                })}
               </div>
             ) : null}
 
             {filteredVariants.length > 0 ? (
               <>
+                {activeFilters.length > 0 ? (
+                  <p className="supporting-text">
+                    {t({ zh: '当前筛选：', en: 'Active filters: ' })}
+                    {activeFilters.join(' · ')}
+                  </p>
+                ) : null}
+
                 <p className="supporting-text">
-                  当前展示 {visibleVariants.length} / {filteredVariants.length} 条变体记录。
-                  这一页目前仍是“原文优先”，中文规则拆解会放到后续规则层。
+                  {t({
+                    zh: `当前展示 ${visibleVariants.length} / ${filteredVariants.length} 条变体记录。名称会双语展示，但长段限制文本只跟随当前界面语言显示。`,
+                    en: `Showing ${visibleVariants.length} / ${filteredVariants.length} variants. Names stay bilingual in key places, while long restriction copy follows the active UI language.`,
+                  })}
                 </p>
 
                 <div className="results-grid">
-                  {visibleVariants.map((variant) => (
-                    <article key={variant.id} className="result-card">
-                      <div className="result-card__header">
-                        <span className="result-card__eyebrow">{variant.campaign}</span>
-                        <h3 className="result-card__title">{variant.name}</h3>
-                      </div>
+                  {visibleVariants.map((variant) => {
+                    const primaryName = getPrimaryLocalizedText(variant.name, locale)
+                    const secondaryName = getSecondaryLocalizedText(variant.name, locale)
+                    const primaryCampaign = getPrimaryLocalizedText(variant.campaign, locale)
+                    const secondaryCampaign = getSecondaryLocalizedText(variant.campaign, locale)
 
-                      <div className="result-block">
-                        <strong className="result-block__title">限制条件</strong>
-                        {variant.restrictions.length > 0 ? (
-                          <ul className="bullet-list">
-                            {variant.restrictions.slice(0, 4).map((restriction) => (
-                              <li key={restriction}>{restriction}</li>
-                            ))}
-                          </ul>
-                        ) : (
-                          <p className="supporting-text">当前还没解析到明确限制文本。</p>
-                        )}
-                      </div>
+                    return (
+                      <article key={variant.id} className="result-card">
+                        <div className="result-card__header">
+                          <span className="result-card__eyebrow">{primaryCampaign}</span>
+                          <h3 className="result-card__title">{primaryName}</h3>
+                        </div>
 
-                      <div className="result-block">
-                        <strong className="result-block__title">奖励</strong>
-                        {variant.rewards.length > 0 ? (
-                          <ul className="bullet-list">
-                            {variant.rewards.slice(0, 3).map((reward) => (
-                              <li key={reward}>{reward}</li>
-                            ))}
-                          </ul>
-                        ) : (
-                          <p className="supporting-text">当前官方返回里没有显式奖励文本。</p>
-                        )}
-                      </div>
-                    </article>
-                  ))}
+                        {secondaryName || secondaryCampaign ? (
+                          <p className="result-card__secondary">
+                            {[secondaryName, secondaryCampaign].filter(Boolean).join(' · ')}
+                          </p>
+                        ) : null}
+
+                        <div className="result-block">
+                          <strong className="result-block__title">
+                            {t({ zh: '限制条件', en: 'Restrictions' })}
+                          </strong>
+                          {variant.restrictions.length > 0 ? (
+                            <ul className="bullet-list">
+                              {variant.restrictions.slice(0, 4).map((restriction) => (
+                                <li key={`${variant.id}-${restriction.original}-${restriction.display}`}>
+                                  {getPrimaryLocalizedText(restriction, locale)}
+                                </li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <p className="supporting-text">
+                              {t({
+                                zh: '当前还没解析到明确限制文本。',
+                                en: 'No explicit restriction text is available yet.',
+                              })}
+                            </p>
+                          )}
+                        </div>
+
+                        <div className="result-block">
+                          <strong className="result-block__title">{t({ zh: '奖励', en: 'Rewards' })}</strong>
+                          {variant.rewards.length > 0 ? (
+                            <ul className="bullet-list">
+                              {variant.rewards.slice(0, 3).map((reward) => (
+                                <li key={`${variant.id}-${reward.original}-${reward.display}`}>
+                                  {getPrimaryLocalizedText(reward, locale)}
+                                </li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <p className="supporting-text">
+                              {t({
+                                zh: '当前官方返回里没有显式奖励文本。',
+                                en: 'The official payload does not expose reward copy here yet.',
+                              })}
+                            </p>
+                          )}
+                        </div>
+                      </article>
+                    )
+                  })}
                 </div>
               </>
             ) : null}
