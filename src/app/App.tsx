@@ -34,18 +34,8 @@ export function App() {
       <div className="background-orb background-orb--two" />
 
       <header className="site-header">
-        <div className="site-header__content">
+        <div className="site-header__topbar">
           <p className="site-kicker">{t({ zh: 'Idle Champions 辅助站', en: 'Idle Champions Helper' })}</p>
-          <h1 className="site-title">{t({ zh: '个人成长决策台', en: 'Growth-Oriented Formation Desk' })}</h1>
-          <p className="site-subtitle">
-            {t({
-              zh: '先把查询、筛选、阵型和保存做扎实，再逐步扩到推荐层。',
-              en: 'Nail search, filtering, formations, and saves first, then grow into explainable recommendations.',
-            })}
-          </p>
-        </div>
-
-        <div className="site-header__actions">
           <div
             className="locale-switcher"
             role="group"
@@ -69,20 +59,30 @@ export function App() {
               ))}
             </div>
           </div>
-
-          <nav className="site-nav" aria-label={t({ zh: '主导航', en: 'Primary navigation' })}>
-            {navigation.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                end={item.to === '/'}
-                className={({ isActive }) => getNavClassName(isActive)}
-              >
-                {t(item.label)}
-              </NavLink>
-            ))}
-          </nav>
         </div>
+
+        <div className="site-header__content">
+          <h1 className="site-title">{t({ zh: '个人成长决策台', en: 'Growth-Oriented Formation Desk' })}</h1>
+          <p className="site-subtitle">
+            {t({
+              zh: '先把查询、筛选、阵型和保存做扎实，再逐步扩到推荐层。',
+              en: 'Nail search, filtering, formations, and saves first, then grow into explainable recommendations.',
+            })}
+          </p>
+        </div>
+
+        <nav className="site-nav" aria-label={t({ zh: '主导航', en: 'Primary navigation' })}>
+          {navigation.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.to === '/'}
+              className={({ isActive }) => getNavClassName(isActive)}
+            >
+              {t(item.label)}
+            </NavLink>
+          ))}
+        </nav>
       </header>
 
       <main className="site-main">
