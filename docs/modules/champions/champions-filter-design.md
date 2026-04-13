@@ -201,7 +201,7 @@ matches = 基础过滤结果
 - seat
 - roles
 - affiliations
-- 前 6 个 tags
+- 完整属性标签（当前基于 `tags` 展示）
 
 当前页面子阶段不在卡片内展示：
 
