@@ -444,10 +444,30 @@ html[data-ui-locale='en-US'] .site-subtitle {
   margin-top: 1rem;
 }
 
+.result-block--compact + .result-block--compact {
+  margin-top: 0;
+}
+
 .result-block__title {
   display: block;
   margin-bottom: 0.5rem;
   color: #fff4e0;
+}
+
+.result-block__title--small {
+  margin-bottom: 0.4rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+}
+
+.result-attribute-grid {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+.tag-row--tight {
+  gap: 0.45rem;
 }
 
 .tag-pill {

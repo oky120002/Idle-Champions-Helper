@@ -13,7 +13,77 @@ const ROLE_TAGS = new Set([
   'tanking',
 ])
 
+const RACE_TAGS = new Set([
+  'aasimar',
+  'aarakocra',
+  'bullywug',
+  'centaur',
+  'companion',
+  'dragonborn',
+  'drow',
+  'dwarf',
+  'eladrin',
+  'elf',
+  'genasi',
+  'gith',
+  'gnome',
+  'halfling',
+  'half-elf',
+  'half-orc',
+  'human',
+  'kobold',
+  'lizardfolk',
+  'lycanthrope',
+  'tabaxi',
+  'tiefling',
+  'tortle',
+  'undead',
+  'warforged',
+  'yuan-ti',
+])
+
+const GENDER_TAGS = new Set(['male', 'female'])
+const ALIGNMENT_TAGS = new Set(['chaotic', 'evil', 'geneutral', 'good', 'lawful', 'lcneutral', 'neutral'])
+const PROFESSION_TAGS = new Set([
+  'artificer',
+  'barbarian',
+  'bard',
+  'cleric',
+  'druid',
+  'fighter',
+  'hunter',
+  'monk',
+  'paladin',
+  'ranger',
+  'rogue',
+  'samurai',
+  'sorcerer',
+  'warlock',
+  'wizard',
+])
+const ACQUISITION_TAGS = new Set(['cneoriginal', 'core', 'event', 'evergreen', 'starter', 'tales'])
+
 const TAG_LABELS: Record<string, { 'zh-CN': string; 'en-US': string }> = {
+  aasimar: {
+    'zh-CN': '亚斯玛',
+    'en-US': 'Aasimar',
+  },
+  artificer: {
+    'zh-CN': '奇械师',
+    'en-US': 'Artificer',
+  },
+  barbarian: {
+    'zh-CN': '野蛮人',
+    'en-US': 'Barbarian',
+  },
+  bard: {
+    'zh-CN': '吟游诗人',
+    'en-US': 'Bard',
+  },
+  cleric: {
+    'zh-CN': '牧师',
+    'en-US': 'Cleric',
+  },
   cneoriginal: {
     'zh-CN': 'CNE 原创',
     'en-US': 'CNE Original',
@@ -38,6 +108,22 @@ const TAG_LABELS: Record<string, { 'zh-CN': string; 'en-US': string }> = {
     'zh-CN': '核心英雄',
     'en-US': 'Core Champion',
   },
+  dragonborn: {
+    'zh-CN': '龙裔',
+    'en-US': 'Dragonborn',
+  },
+  druid: {
+    'zh-CN': '德鲁伊',
+    'en-US': 'Druid',
+  },
+  drow: {
+    'zh-CN': '卓尔精灵',
+    'en-US': 'Drow',
+  },
+  dwarf: {
+    'zh-CN': '矮人',
+    'en-US': 'Dwarf',
+  },
   elf: {
     'zh-CN': '精灵',
     'en-US': 'Elf',
@@ -58,21 +144,45 @@ const TAG_LABELS: Record<string, { 'zh-CN': string; 'en-US': string }> = {
     'zh-CN': '女性',
     'en-US': 'Female',
   },
+  fighter: {
+    'zh-CN': '战士',
+    'en-US': 'Fighter',
+  },
   geneutral: {
     'zh-CN': '善恶中立',
     'en-US': 'Neutral (Good/Evil)',
+  },
+  gnome: {
+    'zh-CN': '侏儒',
+    'en-US': 'Gnome',
   },
   good: {
     'zh-CN': '善良',
     'en-US': 'Good',
   },
+  halfling: {
+    'zh-CN': '半身人',
+    'en-US': 'Halfling',
+  },
   'half-elf': {
     'zh-CN': '半精灵',
     'en-US': 'Half-Elf',
   },
+  'half-orc': {
+    'zh-CN': '半兽人',
+    'en-US': 'Half-Orc',
+  },
+  hunter: {
+    'zh-CN': '猎手',
+    'en-US': 'Hunter',
+  },
   human: {
     'zh-CN': '人类',
     'en-US': 'Human',
+  },
+  kobold: {
+    'zh-CN': '狗头人',
+    'en-US': 'Kobold',
   },
   lawful: {
     'zh-CN': '守序',
@@ -86,26 +196,119 @@ const TAG_LABELS: Record<string, { 'zh-CN': string; 'en-US': string }> = {
     'zh-CN': '男性',
     'en-US': 'Male',
   },
+  monk: {
+    'zh-CN': '武僧',
+    'en-US': 'Monk',
+  },
   neutral: {
     'zh-CN': '中立',
     'en-US': 'Neutral',
+  },
+  paladin: {
+    'zh-CN': '圣武士',
+    'en-US': 'Paladin',
   },
   positional: {
     'zh-CN': '站位联动',
     'en-US': 'Positional',
   },
+  ranger: {
+    'zh-CN': '游侠',
+    'en-US': 'Ranger',
+  },
+  rogue: {
+    'zh-CN': '盗贼',
+    'en-US': 'Rogue',
+  },
+  samurai: {
+    'zh-CN': '武士',
+    'en-US': 'Samurai',
+  },
+  sorcerer: {
+    'zh-CN': '术士',
+    'en-US': 'Sorcerer',
+  },
   spec_control: {
     'zh-CN': '专精控制',
     'en-US': 'Spec Control',
+  },
+  starter: {
+    'zh-CN': '起始英雄',
+    'en-US': 'Starter Champion',
   },
   tales: {
     'zh-CN': '传说堂',
     'en-US': 'Tales',
   },
+  tiefling: {
+    'zh-CN': '提夫林',
+    'en-US': 'Tiefling',
+  },
+  tortle: {
+    'zh-CN': '龟人',
+    'en-US': 'Tortle',
+  },
   unaffiliated: {
     'zh-CN': '无联动队伍',
     'en-US': 'Unaffiliated',
   },
+  warforged: {
+    'zh-CN': '战铸者',
+    'en-US': 'Warforged',
+  },
+  warlock: {
+    'zh-CN': '邪术师',
+    'en-US': 'Warlock',
+  },
+  wizard: {
+    'zh-CN': '法师',
+    'en-US': 'Wizard',
+  },
+}
+
+const ATTRIBUTE_GROUP_LABELS: Record<ChampionAttributeGroupId, { 'zh-CN': string; 'en-US': string }> = {
+  alignment: {
+    'zh-CN': '阵营',
+    'en-US': 'Alignment',
+  },
+  acquisition: {
+    'zh-CN': '获取方式',
+    'en-US': 'Availability',
+  },
+  gender: {
+    'zh-CN': '性别',
+    'en-US': 'Gender',
+  },
+  mechanics: {
+    'zh-CN': '机制',
+    'en-US': 'Mechanics',
+  },
+  other: {
+    'zh-CN': '其他',
+    'en-US': 'Other',
+  },
+  profession: {
+    'zh-CN': '职业',
+    'en-US': 'Profession',
+  },
+  race: {
+    'zh-CN': '种族',
+    'en-US': 'Race',
+  },
+}
+
+export type ChampionAttributeGroupId =
+  | 'race'
+  | 'gender'
+  | 'alignment'
+  | 'profession'
+  | 'acquisition'
+  | 'mechanics'
+  | 'other'
+
+export interface ChampionAttributeGroup {
+  id: ChampionAttributeGroupId
+  tags: string[]
 }
 
 function toTitleCase(value: string): string {
@@ -118,6 +321,52 @@ function toTitleCase(value: string): string {
 
 export function getChampionAttributeTags(tags: string[]): string[] {
   return tags.filter((tag) => !ROLE_TAGS.has(tag))
+}
+
+function isAcquisitionTag(tag: string): boolean {
+  return ACQUISITION_TAGS.has(tag) || /^y\d+$/i.test(tag)
+}
+
+function isMechanicTag(tag: string): boolean {
+  return tag === 'positional' || tag.startsWith('control_') || tag.startsWith('spec_')
+}
+
+export function getChampionAttributeGroups(tags: string[]): ChampionAttributeGroup[] {
+  const attributeTags = getChampionAttributeTags(tags)
+  const definitions: Array<{
+    id: ChampionAttributeGroupId
+    matches: (tag: string) => boolean
+  }> = [
+    { id: 'race', matches: (tag) => RACE_TAGS.has(tag) },
+    { id: 'gender', matches: (tag) => GENDER_TAGS.has(tag) },
+    { id: 'alignment', matches: (tag) => ALIGNMENT_TAGS.has(tag) },
+    { id: 'profession', matches: (tag) => PROFESSION_TAGS.has(tag) },
+    { id: 'acquisition', matches: isAcquisitionTag },
+    { id: 'mechanics', matches: isMechanicTag },
+  ]
+
+  const groups = definitions
+    .map((definition) => ({
+      id: definition.id,
+      tags: attributeTags.filter((tag) => definition.matches(tag)),
+    }))
+    .filter((group) => group.tags.length > 0)
+
+  const usedTags = new Set(groups.flatMap((group) => group.tags))
+  const otherTags = attributeTags.filter((tag) => !usedTags.has(tag))
+
+  if (otherTags.length > 0) {
+    groups.push({
+      id: 'other',
+      tags: otherTags,
+    })
+  }
+
+  return groups
+}
+
+export function getChampionAttributeGroupLabel(groupId: ChampionAttributeGroupId, locale: AppLocale): string {
+  return ATTRIBUTE_GROUP_LABELS[groupId][locale]
 }
 
 export function getChampionTagLabel(tag: string, locale: AppLocale): string {
