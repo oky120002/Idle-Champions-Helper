@@ -61,11 +61,13 @@
 - `docs/product/idle-champions-roadmap.md`：项目价值、范围、阶段路线与核心模型。
 - `docs/research/data/game-data-source-investigation.md`：基础游戏数据与个人数据来源调研。
 - `docs/research/data/champion-portrait-asset-research.md`：官方英雄头像字段、mobile assets 链路与尺寸核实。
+- `docs/research/data/champion-detail-fields-research.md`：英雄详情页所需字段、definitions 可用范围与详情数据合同建议。
 - `docs/research/data/language-id-7-chinese-definitions-research.md`：`language_id=7` 官方中文 definitions 链路与字段覆盖核实。
 - `docs/research/data/static-data-storage-research.md`：静态数据存储与版本化策略。
 - `docs/research/testing/regression-testing-research.md`：主分支整体回归测试框架设计。
 - `docs/research/deployment/china-static-hosting-research.md`：国内访问体验与托管备选方案。
 - `docs/research/deployment/static-hosting-research.md`：GitHub Pages 部署方案与路由策略。
+- `docs/modules/champions/champion-detail-design.md`：英雄详情页的信息架构、路由入口与交互设计稿。
 - `docs/modules/champions/champions-filter-design.md`：英雄筛选模块设计稿。
 - `docs/modules/formation/formation-editor-design.md`：阵型编辑模块设计稿。
 - `docs/modules/presets/presets-design.md`：方案存档模块设计稿。

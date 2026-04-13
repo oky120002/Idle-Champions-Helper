@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('../../src/data/client', async () => {
@@ -62,7 +63,9 @@ describe('ChampionsPage avatars', () => {
 
     render(
       <I18nProvider>
-        <ChampionsPage />
+        <MemoryRouter>
+          <ChampionsPage />
+        </MemoryRouter>
       </I18nProvider>,
     )
 

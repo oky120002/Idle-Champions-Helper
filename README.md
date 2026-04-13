@@ -173,6 +173,7 @@ npm run data:build
 │   └── data/
 │       ├── version.json
 │       └── v1/
+│           ├── champion-details/
 │           ├── champion-portraits/
 │           ├── champions.json
 │           ├── enums.json
@@ -218,6 +219,7 @@ npm run data:build
 - `src/data/client.ts`：统一处理版本读取、路径拼接和基础缓存
 - `src/domain/types.ts`：放数据类型定义
 - `public/data/version.json`：声明当前数据版本
+- `public/data/v1/champion-details/<hero-id>.json`：单个英雄的结构化详情与原始 definitions 快照片段
 - `public/data/v1/*.json`：当前版本的数据文件
 - `public/data/v1/champion-portraits/`：当前版本的官方英雄头像 PNG 资源
 - `scripts/fetch-idle-champions-definitions.mjs`：拉取官方 definitions 原始快照

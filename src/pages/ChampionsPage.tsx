@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useI18n } from '../app/i18n'
 import { FieldGroup } from '../components/FieldGroup'
 import { ChampionIdentity } from '../components/ChampionIdentity'
@@ -9,6 +10,7 @@ import { loadCollection } from '../data/client'
 import {
   formatSeatLabel,
   getLocalizedTextPair,
+  getPrimaryLocalizedText,
   getRoleLabel,
 } from '../domain/localizedText'
 import type { Champion, LocalizedText as LocalizedTextValue } from '../domain/types'
@@ -385,6 +387,19 @@ export function ChampionsPage() {
                               {tag}
                             </span>
                           ))}
+                        </div>
+
+                        <div className="result-card__section">
+                          <Link
+                            className="result-card__link"
+                            to={`/champions/${champion.id}`}
+                            aria-label={t({
+                              zh: `查看详情：${getPrimaryLocalizedText(champion.name, locale)}`,
+                              en: `Open details for ${getPrimaryLocalizedText(champion.name, locale)}`,
+                            })}
+                          >
+                            {t({ zh: '查看详情', en: 'View details' })}
+                          </Link>
                         </div>
                       </article>
                     )
