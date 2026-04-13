@@ -21,6 +21,10 @@ import type {
   JsonValue,
 } from '../domain/types'
 
+const DETAIL_SECTION_IDS = ['overview', 'character-sheet', 'combat', 'upgrades', 'feats', 'skins', 'raw'] as const
+
+type DetailSectionId = (typeof DETAIL_SECTION_IDS)[number]
+
 type ChampionDetailState =
   | { status: 'idle' }
   | { status: 'ready'; detail: ChampionDetail }
@@ -380,11 +384,37 @@ function RawEntriesDisclosure({ title, entries }: RawEntriesDisclosureProps) {
   )
 }
 
+function isDetailSectionId(value: string): value is DetailSectionId {
+  return DETAIL_SECTION_IDS.includes(value as DetailSectionId)
+}
+
+function resolveActiveSectionId(): DetailSectionId {
+  const activationOffset = 196
+  let activeSectionId: DetailSectionId = DETAIL_SECTION_IDS[0]
+
+  for (const sectionId of DETAIL_SECTION_IDS) {
+    const element = document.getElementById(sectionId)
+
+    if (!element) {
+      continue
+    }
+
+    if (element.getBoundingClientRect().top <= activationOffset) {
+      activeSectionId = sectionId
+    } else {
+      break
+    }
+  }
+
+  return activeSectionId
+}
+
 export function ChampionDetailPage() {
   const { championId } = useParams<{ championId: string }>()
   const location = useLocation()
   const { locale, t } = useI18n()
   const [state, setState] = useState<ChampionDetailState>({ status: 'idle' })
+  const [activeSectionId, setActiveSectionId] = useState<DetailSectionId>(DETAIL_SECTION_IDS[0])
   const isMissingChampionId = !championId
 
   useEffect(() => {
@@ -462,7 +492,7 @@ export function ChampionDetailPage() {
         !upgrade.effectDefinition,
     )
   }, [detail])
-  const sectionLinks = [
+  const sectionLinks: Array<{ id: DetailSectionId; label: string }> = [
     { id: 'overview', label: t({ zh: '概览', en: 'Overview' }) },
     { id: 'character-sheet', label: t({ zh: '角色卡', en: 'Character sheet' }) },
     { id: 'combat', label: t({ zh: '战斗', en: 'Combat' }) },
@@ -472,7 +502,30 @@ export function ChampionDetailPage() {
     { id: 'raw', label: t({ zh: '原始字段', en: 'Raw fields' }) },
   ]
 
+  useEffect(() => {
+    if (!detail || typeof window === 'undefined') {
+      return undefined
+    }
+
+    const updateActiveSection = () => {
+      setActiveSectionId(resolveActiveSectionId())
+    }
+
+    updateActiveSection()
+    window.addEventListener('scroll', updateActiveSection, { passive: true })
+    window.addEventListener('resize', updateActiveSection)
+
+    return () => {
+      window.removeEventListener('scroll', updateActiveSection)
+      window.removeEventListener('resize', updateActiveSection)
+    }
+  }, [detail])
+
   const scrollToSection = (id: string) => {
+    if (isDetailSectionId(id)) {
+      setActiveSectionId(id)
+    }
+
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
@@ -620,7 +673,12 @@ export function ChampionDetailPage() {
                 <button
                   key={section.id}
                   type="button"
-                  className="section-jump-bar__button"
+                  className={
+                    activeSectionId === section.id
+                      ? 'section-jump-bar__button section-jump-bar__button--active'
+                      : 'section-jump-bar__button'
+                  }
+                  aria-pressed={activeSectionId === section.id}
                   onClick={() => scrollToSection(section.id)}
                 >
                   {section.label}
@@ -846,7 +904,12 @@ export function ChampionDetailPage() {
                     <button
                       key={section.id}
                       type="button"
-                      className="champion-detail-sidebar__button"
+                      className={
+                        activeSectionId === section.id
+                          ? 'champion-detail-sidebar__button champion-detail-sidebar__button--active'
+                          : 'champion-detail-sidebar__button'
+                      }
+                      aria-pressed={activeSectionId === section.id}
                       onClick={() => scrollToSection(section.id)}
                     >
                       {section.label}
