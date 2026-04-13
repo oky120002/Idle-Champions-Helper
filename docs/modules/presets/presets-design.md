@@ -44,6 +44,13 @@
 - 数据结构最清晰
 - 最容易验证是否真的能帮助重复使用
 
+同时明确：
+
+- 阵型页负责“最近草稿”
+- 方案存档页负责“已命名方案”
+
+未命名草稿不进入方案列表，避免把临时编辑状态和正式方案库混在一起。
+
 ---
 
 ## 3. 数据模型建议
@@ -53,13 +60,15 @@
 ```ts
 interface FormationPreset {
   id: string
+  schemaVersion: 1
+  dataVersion: string
   name: string
   description: string
   layoutId: string
   placements: Record<string, string>
-  seatSummary: number[]
   scenarioTags: string[]
   priority: 'low' | 'medium' | 'high'
+  createdAt: string
   updatedAt: string
 }
 ```
@@ -67,14 +76,18 @@ interface FormationPreset {
 字段说明：
 
 - `id`：本地唯一标识
+- `schemaVersion`：方案结构版本
+- `dataVersion`：保存时对应的公共数据版本
 - `name`：方案名
 - `description`：备注或用途说明
 - `layoutId`：对应阵型布局
 - `placements`：槽位到英雄的映射
-- `seatSummary`：方便卡片快速展示与过滤
 - `scenarioTags`：例如“推图 / 速刷 / 试炼”
 - `priority`：仅作为个人排序辅助
+- `createdAt`：方案创建时间
 - `updatedAt`：排序和最近编辑时间
+
+卡片中如果需要 `seat` 摘要，应在读取方案时由 `placements + champions` 运行时推导，而不是把它作为长期持久化源字段。
 
 ### 3.2 后续再加的对象
 
@@ -108,6 +121,27 @@ interface FormationPreset {
 - 不建议为了过渡再补一套长期 `localStorage` 方案
 - 否则后面会多出一层迁移和兼容成本
 
+### 4.3 加载校验与回退策略
+
+方案恢复时，必须先校验：
+
+- `dataVersion` 是否仍可识别
+- `layoutId` 是否仍存在
+- `slotId` 是否仍属于对应布局
+- `championId` 是否仍能被当前数据解析
+
+建议行为：
+
+1. 全部有效
+   - 正常打开与编辑
+2. 部分失效
+   - 保留有效部分
+   - 明确标记“该方案含失效引用”
+   - 允许用户进入阵型页后重新保存
+3. 大范围失效
+   - 阻止静默恢复
+   - 提示用户复制备注后删除旧方案
+
 ---
 
 ## 5. 页面结构建议
@@ -139,7 +173,7 @@ interface FormationPreset {
 
 - `layoutId`
 - `placements`
-- 自动提取的 `seatSummary`
+- 当前数据版本 `dataVersion`
 
 ### 6.2 来自英雄筛选模块
 
@@ -168,6 +202,7 @@ MVP 至少支持：
 - 编辑方案名与备注
 - 删除方案
 - 从阵型草稿生成方案
+- 识别并提示失效引用方案
 
 推荐的最小流程：
 
@@ -192,6 +227,7 @@ MVP 至少支持：
 - 用户能把至少一套阵型草稿保存到本地
 - 刷新页面后仍能看到已保存方案
 - 空态、列表态、删除态都明确可用
+- 公共数据版本变化后，旧方案不会静默坏掉
 - 数据结构可以继续承接筛选快照和个人画像扩展
 
 ---
