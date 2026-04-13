@@ -175,6 +175,9 @@ npm run data:build
 - `docs/investigations/runtime/local-run-verification.md`：本地构建与预览行为验证记录
 - `docs/investigations/repository/github-directory-commit-investigation.md`：`.github` 目录无法提交的本地原因排查
 - `docs/troubleshooting-log.md`：通用问题排查台账，沉淀部署、认证、网络、运行等问题的排查记录
+- `docs/modules/champions/champions-filter-design.md`：英雄筛选模块设计稿
+- `docs/modules/formation/formation-editor-design.md`：阵型编辑模块设计稿
+- `docs/modules/presets/presets-design.md`：方案存档模块设计稿
 - `docs/modules/user-data/user-data-import-design.md`：本地优先的个人数据导入方案与安全边界
 - `docs/research/deployment/static-hosting-research.md`：GitHub Pages 部署方案与路由策略
 - `docs/research/deployment/china-static-hosting-research.md`：国内访问体验研究存档，仅作背景参考，不作为正式发布路线依据
