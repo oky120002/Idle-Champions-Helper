@@ -26,6 +26,7 @@ import {
   getPrimaryLocalizedText,
   getRoleLabel,
 } from '../domain/localizedText'
+import { getFormationLayoutContextSummary, getFormationLayoutLabel } from '../domain/formationLayout'
 import { buildOrderedChampionsFromPlacements } from '../domain/championPlacement'
 import type {
   Champion,
@@ -364,6 +365,10 @@ export function FormationPage() {
     state.status === 'ready'
       ? state.formations.find((layout) => layout.id === selectedLayoutId) ?? state.formations[0] ?? null
       : null
+  const selectedLayoutLabel = selectedLayout ? getFormationLayoutLabel(selectedLayout, locale) : null
+  const selectedLayoutContextSummary = selectedLayout
+    ? getFormationLayoutContextSummary(selectedLayout, locale)
+    : null
 
   const championOptions = useMemo(() => {
     if (state.status !== 'ready') {
@@ -620,8 +625,8 @@ export function FormationPage() {
           en: 'Close the loop on recent-draft save and restore',
         })}
         description={t({
-          zh: '当前继续使用手工维护的 MVP 布局；最近草稿会自动写入当前浏览器的 IndexedDB，不上传到外部。',
-          en: 'This page still uses manually maintained MVP layouts, and recent drafts are auto-saved to IndexedDB in the current browser only.',
+          zh: '当前布局库已改为官方 definitions 自动提取；最近草稿会自动写入当前浏览器的 IndexedDB，不上传到外部。',
+          en: 'The layout library now comes from official definitions, and recent drafts are still auto-saved to IndexedDB in the current browser only.',
         })}
       >
         {state.status === 'loading' ? (
@@ -724,7 +729,7 @@ export function FormationPage() {
                     className={selectedLayout?.id === layout.id ? 'filter-chip filter-chip--active' : 'filter-chip'}
                     onClick={() => handleSelectLayout(layout.id)}
                   >
-                    {layout.name}
+                    {getFormationLayoutLabel(layout, locale)}
                   </button>
                 ))}
               </div>
@@ -735,7 +740,7 @@ export function FormationPage() {
                 <div className="metric-grid">
                   <article className="metric-card">
                     <span className="metric-card__label">{t({ zh: '当前布局', en: 'Current layout' })}</span>
-                    <strong className="metric-card__value">{selectedLayout.name}</strong>
+                    <strong className="metric-card__value">{selectedLayoutLabel}</strong>
                   </article>
                   <article className="metric-card">
                     <span className="metric-card__label">{t({ zh: '槽位数', en: 'Slots' })}</span>
@@ -744,6 +749,10 @@ export function FormationPage() {
                   <article className="metric-card">
                     <span className="metric-card__label">{t({ zh: '数据版本', en: 'Data version' })}</span>
                     <strong className="metric-card__value">{state.dataVersion}</strong>
+                  </article>
+                  <article className="metric-card">
+                    <span className="metric-card__label">{t({ zh: '布局库', en: 'Layout library' })}</span>
+                    <strong className="metric-card__value">{state.formations.length}</strong>
                   </article>
                   <article className="metric-card">
                     <span className="metric-card__label">{t({ zh: '已放置英雄', en: 'Placed champions' })}</span>
@@ -757,7 +766,11 @@ export function FormationPage() {
                   </article>
                 </div>
 
-                {selectedLayout.notes ? <StatusBanner tone="info">{selectedLayout.notes}</StatusBanner> : null}
+                {selectedLayoutContextSummary ? (
+                  <StatusBanner tone="info">{selectedLayoutContextSummary}</StatusBanner>
+                ) : selectedLayout.notes ? (
+                  <StatusBanner tone="info">{selectedLayout.notes}</StatusBanner>
+                ) : null}
 
                 {conflictingSeats.length > 0 ? (
                   <StatusBanner tone="error">
@@ -833,8 +846,8 @@ export function FormationPage() {
             ) : (
               <StatusBanner tone="info">
                 {t({
-                  zh: '当前还没有可用布局，请先补 `scripts/data/manual-overrides.json`。',
-                  en: 'No layouts are available yet. Add one to `scripts/data/manual-overrides.json` first.',
+                  zh: '当前还没有可用布局，请先运行官方数据构建脚本。',
+                  en: 'No layouts are available yet. Run the official data build pipeline first.',
                 })}
               </StatusBanner>
             )}
