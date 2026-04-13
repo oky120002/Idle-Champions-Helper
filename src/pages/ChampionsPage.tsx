@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useI18n } from '../app/i18n'
+import { ChampionAvatar } from '../components/ChampionAvatar'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollection } from '../data/client'
 import {
@@ -341,11 +342,14 @@ export function ChampionsPage() {
 
                     return (
                       <article key={champion.id} className="result-card">
-                        <div className="result-card__header">
-                          <span className="result-card__eyebrow">
-                            {locale === 'zh-CN' ? `${champion.seat} 号位` : `Seat ${champion.seat}`}
-                          </span>
-                          <h3 className="result-card__title">{primaryName}</h3>
+                        <div className="result-card__identity">
+                          <ChampionAvatar champion={champion} locale={locale} className="champion-avatar--card" />
+                          <div className="result-card__header">
+                            <span className="result-card__eyebrow">
+                              {locale === 'zh-CN' ? `${champion.seat} 号位` : `Seat ${champion.seat}`}
+                            </span>
+                            <h3 className="result-card__title">{primaryName}</h3>
+                          </div>
                         </div>
 
                         {secondaryName ? <p className="result-card__secondary">{secondaryName}</p> : null}

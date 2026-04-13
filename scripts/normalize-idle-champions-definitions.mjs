@@ -2,6 +2,11 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
+import {
+  buildChampionPortraitPath,
+  collectChampionPortraitSources,
+  isPlayableChampion,
+} from './data/champion-portrait-helpers.mjs'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_VERSION_FILE = 'public/data/version.json'
@@ -284,7 +289,14 @@ function getAffiliationTags(definition, affiliationMap) {
   ])
 }
 
-function normalizeChampion(originalDefinition, localizedDefinition, affiliationMap, override = {}) {
+function normalizeChampion(
+  originalDefinition,
+  localizedDefinition,
+  affiliationMap,
+  currentVersion,
+  portraitSource,
+  override = {},
+) {
   const originalName =
     originalDefinition.name ??
     originalDefinition.english_name ??
@@ -320,12 +332,14 @@ function normalizeChampion(originalDefinition, localizedDefinition, affiliationM
     roles,
     affiliations,
     tags,
+    portrait: portraitSource
+      ? {
+          path: buildChampionPortraitPath(currentVersion, String(originalDefinition.id)),
+          sourceGraphic: portraitSource.graphic,
+          sourceVersion: portraitSource.version,
+        }
+      : null,
   }
-}
-
-function isPlayableChampion(definition) {
-  const seat = Number(definition.seat_id ?? definition.seat ?? 0)
-  return seat >= 1 && seat <= 12
 }
 
 function looksLikeVariant(definition) {
@@ -490,6 +504,9 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
   const localizedVariantsById = new Map(
     (localizedDefinitions.adventure_defines ?? []).map((definition) => [String(definition.id), definition]),
   )
+  const portraitSourcesByChampionId = new Map(
+    collectChampionPortraitSources(rawDefinitions).map((source) => [source.championId, source]),
+  )
 
   const champions = (rawDefinitions.hero_defines ?? [])
     .filter((definition) => isPlayableChampion(definition))
@@ -498,6 +515,8 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
         definition,
         localizedChampionsById.get(String(definition.id)),
         affiliationMap,
+        currentVersion,
+        portraitSourcesByChampionId.get(String(definition.id)) ?? null,
         manualOverrides.championOverrides?.[String(definition.id)] ?? {},
       ),
     )
@@ -540,6 +559,7 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
     notes: [
       '公共数据来源：Idle Champions 官方客户端 definitions 接口。',
       '名称展示层同时保留官方原文与 language_id=7 返回的中文展示名。',
+      '英雄头像资源来自官方 mobile_assets，并按数据版本写入 public/data/<version>/champion-portraits/。',
       '阵型布局、变体说明与中文补充建议通过 scripts/data/manual-overrides.json 维护。',
     ],
   })
