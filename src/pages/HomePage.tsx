@@ -109,7 +109,7 @@ export function HomePage() {
             <li>补充第一版英雄与限制条件字段</li>
             <li>做英雄筛选页的条件组合逻辑</li>
             <li>补 seat 冲突校验与阵型槽位渲染</li>
-            <li>接入本地方案保存</li>
+            <li>接入个人数据导入与本地方案保存</li>
           </ol>
         </SurfaceCard>
 
