@@ -1,6 +1,10 @@
 import { expect, test } from '@playwright/test'
 
 test('GitHub Pages 基线路径下可以完成主页与个人数据 smoke 回归', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.localStorage.removeItem('idle-champions-helper.locale')
+  })
+
   await page.goto('.')
 
   await expect(page.getByRole('heading', { level: 1, name: '个人成长决策台' })).toBeVisible()

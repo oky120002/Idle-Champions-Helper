@@ -14,7 +14,7 @@ async function fetchJson<T>(relativePath: string, init?: RequestInit): Promise<T
   const response = await fetch(buildDataUrl(relativePath), init)
 
   if (!response.ok) {
-    throw new Error(`读取数据失败：${response.status}`)
+    throw new Error(`HTTP ${response.status}`)
   }
 
   return (await response.json()) as T
@@ -33,18 +33,22 @@ export async function loadVersion(): Promise<DataVersion> {
   return version
 }
 
-export async function loadCollection<T>(name: string): Promise<DataCollection<T>> {
-  const version = await loadVersion()
-  const cacheKey = `${version.current}:${name}`
+export async function loadCollectionAtVersion<T>(version: string, name: string): Promise<DataCollection<T>> {
+  const cacheKey = `${version}:${name}`
   const cached = memoryCache.get(cacheKey)
 
   if (cached) {
     return cached as DataCollection<T>
   }
 
-  const collection = await fetchJson<DataCollection<T>>(`${version.current}/${name}.json`)
+  const collection = await fetchJson<DataCollection<T>>(`${version}/${name}.json`)
   memoryCache.set(cacheKey, collection)
   return collection
+}
+
+export async function loadCollection<T>(name: string): Promise<DataCollection<T>> {
+  const version = await loadVersion()
+  return loadCollectionAtVersion<T>(version.current, name)
 }
 
 export function clearDataCache(): void {
