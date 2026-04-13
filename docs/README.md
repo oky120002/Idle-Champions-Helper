@@ -55,9 +55,13 @@
 - `docs/research/testing/regression-testing-research.md`：主分支整体回归测试框架设计。
 - `docs/research/deployment/static-hosting-research.md`：GitHub Pages 部署方案与路由策略。
 - `docs/research/deployment/china-static-hosting-research.md`：国内访问体验与托管备选方案。
+- `docs/modules/champions/champions-filter-design.md`：英雄筛选模块设计稿。
+- `docs/modules/formation/formation-editor-design.md`：阵型编辑模块设计稿。
+- `docs/modules/presets/presets-design.md`：方案存档模块设计稿。
 - `docs/modules/user-data/user-data-import-design.md`：本地优先的个人数据导入设计稿。
 - `docs/investigations/repository/github-directory-commit-investigation.md`：`.github` 目录无法提交的本地原因排查。
 - `docs/investigations/runtime/local-run-verification.md`：本地构建、开发预览与生产预览差异验证。
+- `docs/investigations/runtime/playwright-browser-launch-verification.md`：当前 Codex CLI 环境下 Playwright 浏览器启动受限的确认记录。
 
 ## 后续新增文档的放置建议
 

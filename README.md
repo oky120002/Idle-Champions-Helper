@@ -20,6 +20,8 @@
 - 已落第一版真实公共数据：`champions`、`variants`、`enums` 已由官方 definitions 生成
 - 已补第一版官方中文映射层：`champions / affiliations / campaigns / variants` 保留“官方原文 + 中文展示名”双字段
 - 个人数据本地存储方案已确定为 `IndexedDB`，但还未正式接入页面
+- 阵型页已接入“最近草稿”本地自动保存 / 恢复，持久化介质为 `IndexedDB`
+- 方案存档页已落第一版命名方案库：支持保存、编辑、删除、恢复回阵型页
 - 已补官方 definitions 抓取 / 归一化脚本骨架，方便后续接真实公共数据
 - 当前仍处于早期阶段，完整规则体系与测试体系尚未完善
 
@@ -176,18 +178,22 @@ npm run data:build
 - `docs/research/data/language-id-7-chinese-definitions-research.md`：`language_id=7` 官方中文 definitions 覆盖范围与字段缺口核实
 - `docs/research/testing/regression-testing-research.md`：主分支整体回归测试框架设计
 - `docs/investigations/runtime/local-run-verification.md`：本地构建与预览行为验证记录
+- `docs/investigations/runtime/playwright-browser-launch-verification.md`：Playwright 浏览器启动与页面验收记录，包含受限会话失败与完全访问权限会话成功两种结果
 - `docs/investigations/repository/github-directory-commit-investigation.md`：`.github` 目录无法提交的本地原因排查
 - `docs/troubleshooting-log.md`：通用问题排查台账，沉淀部署、认证、网络、运行等问题的排查记录
+- `docs/modules/champions/champions-filter-design.md`：英雄筛选模块设计稿
+- `docs/modules/formation/formation-editor-design.md`：阵型编辑模块设计稿
+- `docs/modules/presets/presets-design.md`：方案存档模块设计稿
 - `docs/modules/user-data/user-data-import-design.md`：本地优先的个人数据导入方案与安全边界
 - `docs/research/deployment/static-hosting-research.md`：GitHub Pages 部署方案与路由策略
 - `docs/research/deployment/china-static-hosting-research.md`：国内访问体验研究存档，仅作背景参考，不作为正式发布路线依据
 
 ## 下一步建议
 
-1. 补 `FormationLayout` 与必要的手工 overrides
-2. 先完成英雄筛选页的过滤闭环
-3. 再接阵型编辑页的 seat 冲突校验
-4. 最后补本地方案保存与个人画像能力
+1. 把 `scenarioRef` 从占位字段接成真实场景上下文
+2. 补 `Patron / 模式过滤` 的规则表达与英雄筛选闭环
+3. 基于已通过的 Playwright 验收继续扩充更多页面回归用例
+4. 最后补个人画像与非阵型类本地数据能力
 
 ## 说明
 

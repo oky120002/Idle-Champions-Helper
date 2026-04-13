@@ -22,3 +22,14 @@
 - 验证：第二次运行中 `build` 与 `deploy` 均成功，站点已可访问：`https://oky120002.github.io/Idle-Champions-Helper/`
 - 引用：`.github/workflows/deploy.yml`、`docs/research/deployment/static-hosting-research.md`、`docs/investigations/runtime/local-run-verification.md`
 - 记录：成功运行页 `https://github.com/oky120002/Idle-Champions-Helper/actions/runs/24312930707`
+
+## 记录 002：受限 Codex 会话内 Playwright 浏览器无法正常启动
+
+- 状态：已定位；时间：`2026-04-13`
+- 影响：在受限 Codex 会话中，浏览器端自动化验收无法完成，尽管 Playwright 浏览器已安装成功。
+- 排查摘要：先确认 `PLAYWRIGHT_BROWSERS_PATH` 指向长期目录，再分别测试 `firefox / chromium / webkit` 的 `playwright.launch()`；随后补做“直接启动浏览器二进制”的对照验证。
+- 现象：`firefox.launch()` 在 `-juggler-pipe` 模式下启动后直接 `SIGABRT`；`chromium.launch()` 在 `--remote-debugging-pipe` 阶段报 `MachPortRendezvousServer ... Permission denied (1100)`；`webkit` 同样无法在当前环境内完成启动。
+- 结论：安装本身不是主因，主要受当时会话的权限/沙箱限制影响；浏览器二进制可直接启动，但 Playwright 控制链路无法稳定建立。
+- 后续验证：切换到 `danger-full-access` 会话后，`firefox / chromium / webkit` 均可正常启动，完整页面验收也已跑通。
+- 处理：在受限会话内先用 `npm run build` + `npm run lint` 做最小充分验证；需要真实页面回归时，优先切到完全访问权限会话。
+- 引用：`docs/investigations/runtime/playwright-browser-launch-verification.md`
