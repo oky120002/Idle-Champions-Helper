@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { type AppLocale, useI18n } from '../app/i18n'
 import { FieldGroup } from '../components/FieldGroup'
+import { ChampionPill } from '../components/ChampionPill'
 import { StatusBanner, type StatusTone } from '../components/StatusBanner'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollectionAtVersion, loadVersion } from '../data/client'
@@ -11,7 +12,7 @@ import {
   type FormationSnapshotPrompt,
 } from '../data/formationPersistence'
 import { deleteFormationPreset, listFormationPresets, saveFormationPreset } from '../data/formationPresetStore'
-import { formatSeatLabel, getLocalizedTextPair, getPrimaryLocalizedText } from '../domain/localizedText'
+import { buildOrderedChampionsFromPlacements } from '../domain/championPlacement'
 import type {
   Champion,
   FormationLayout,
@@ -100,23 +101,12 @@ function buildEditorState(preset: FormationPreset): PresetEditorState {
   }
 }
 
-function buildChampionSummary(view: PresetView, locale: AppLocale): string[] {
+function buildChampionSummary(view: PresetView): Champion[] {
   if (view.prompt.kind !== 'restore') {
     return []
   }
 
-  const championsById = new Map(view.prompt.preview.champions.map((champion) => [champion.id, champion]))
-
-  return Object.values(view.prompt.preview.placements)
-    .map((championId) => championsById.get(championId) ?? null)
-    .filter((champion): champion is Champion => champion !== null)
-    .sort(
-      (left, right) =>
-        left.seat - right.seat ||
-        getPrimaryLocalizedText(left.name, locale).localeCompare(getPrimaryLocalizedText(right.name, locale)) ||
-        left.name.original.localeCompare(right.name.original),
-    )
-    .map((champion) => `${formatSeatLabel(champion.seat, locale)} · ${getLocalizedTextPair(champion.name, locale)}`)
+  return buildOrderedChampionsFromPlacements(view.prompt.preview.placements, view.prompt.preview.champions)
 }
 
 async function buildPresetViews(
@@ -423,7 +413,7 @@ export function PresetsPage() {
         {state.status === 'ready' && state.items.length > 0 ? (
           <div className="results-grid">
             {state.items.map((view) => {
-              const championSummary = buildChampionSummary(view, locale)
+              const championSummary = buildChampionSummary(view)
               const hasDroppedReferences =
                 view.prompt.kind === 'restore' &&
                 (view.prompt.preview.invalidSlotIds.length > 0 || view.prompt.preview.invalidChampionIds.length > 0)
@@ -474,10 +464,8 @@ export function PresetsPage() {
 
                   {championSummary.length > 0 ? (
                     <div className="tag-row result-card__section">
-                      {championSummary.map((item) => (
-                        <span key={item} className="tag-pill tag-pill--muted">
-                          {item}
-                        </span>
+                      {championSummary.map((champion, index) => (
+                        <ChampionPill key={`${champion.id}-${index}`} champion={champion} locale={locale} />
                       ))}
                     </div>
                   ) : null}
