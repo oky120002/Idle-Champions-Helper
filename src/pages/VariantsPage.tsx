@@ -3,6 +3,7 @@ import { useI18n } from '../app/i18n'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollection } from '../data/client'
 import {
+  getLocalizedTextPair,
   getPrimaryLocalizedText,
   getSecondaryLocalizedText,
   matchesLocalizedText,
@@ -78,14 +79,14 @@ export function VariantsPage() {
 
         setState({
           status: 'error',
-          message: error instanceof Error ? error.message : t({ zh: '未知错误', en: 'Unknown error' }),
+          message: error instanceof Error ? error.message : '',
         })
       })
 
     return () => {
       disposed = true
     }
-  }, [t])
+  }, [])
 
   const filteredVariants = useMemo(() => {
     if (state.status !== 'ready') {
@@ -111,6 +112,24 @@ export function VariantsPage() {
 
   const visibleVariants = filteredVariants.slice(0, MAX_VISIBLE_VARIANTS)
   const campaignsWithResults = new Set(filteredVariants.map((variant) => variant.campaign.original)).size
+  const selectedCampaignLabel =
+    state.status === 'ready'
+      ? state.campaigns.find((campaign) => campaign.original === selectedCampaign) ?? null
+      : null
+  const activeFilters = [
+    search.trim()
+      ? t({
+          zh: `关键词：${search.trim()}`,
+          en: `Keyword: ${search.trim()}`,
+        })
+      : null,
+    selectedCampaignLabel
+      ? t({
+          zh: `战役：${getLocalizedTextPair(selectedCampaignLabel, locale)}`,
+          en: `Campaign: ${getLocalizedTextPair(selectedCampaignLabel, locale)}`,
+        })
+      : null,
+  ].filter((item): item is string => Boolean(item))
 
   return (
     <div className="page-stack">
@@ -133,7 +152,8 @@ export function VariantsPage() {
 
         {state.status === 'error' ? (
           <div className="status-banner status-banner--error">
-            {t({ zh: '变体数据读取失败', en: 'Variant data failed to load' })}：{state.message}
+            {t({ zh: '变体数据读取失败', en: 'Variant data failed to load' })}：
+            {state.message || t({ zh: '未知错误', en: 'Unknown error' })}
           </div>
         ) : null}
 
@@ -171,6 +191,12 @@ export function VariantsPage() {
                   value={search}
                   onChange={(event) => setSearch(event.target.value)}
                 />
+                <span className="field-hint">
+                  {t({
+                    zh: '变体名、战役、限制文本和奖励文本都支持中英混搜。',
+                    en: 'Names, campaigns, restriction text, and rewards all support mixed Chinese and English search.',
+                  })}
+                </span>
               </label>
 
               <label className="form-field">
@@ -183,7 +209,7 @@ export function VariantsPage() {
                   <option value={ALL_CAMPAIGNS}>{t({ zh: '全部战役', en: 'All campaigns' })}</option>
                   {state.campaigns.map((campaign) => (
                     <option key={campaign.id} value={campaign.original}>
-                      {getPrimaryLocalizedText(campaign, locale)}
+                      {getLocalizedTextPair(campaign, locale)}
                     </option>
                   ))}
                 </select>
@@ -201,6 +227,13 @@ export function VariantsPage() {
 
             {filteredVariants.length > 0 ? (
               <>
+                {activeFilters.length > 0 ? (
+                  <p className="supporting-text">
+                    {t({ zh: '当前筛选：', en: 'Active filters: ' })}
+                    {activeFilters.join(' · ')}
+                  </p>
+                ) : null}
+
                 <p className="supporting-text">
                   {t({
                     zh: `当前展示 ${visibleVariants.length} / ${filteredVariants.length} 条变体记录。名称会双语展示，但长段限制文本只跟随当前界面语言显示。`,

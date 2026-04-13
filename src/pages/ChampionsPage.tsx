@@ -3,6 +3,7 @@ import { useI18n } from '../app/i18n'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollection } from '../data/client'
 import {
+  getLocalizedTextPair,
   getPrimaryLocalizedText,
   getRoleLabel,
   getSecondaryLocalizedText,
@@ -106,14 +107,14 @@ export function ChampionsPage() {
 
         setState({
           status: 'error',
-          message: error instanceof Error ? error.message : t({ zh: '未知错误', en: 'Unknown error' }),
+          message: error instanceof Error ? error.message : '',
         })
       })
 
     return () => {
       disposed = true
     }
-  }, [t])
+  }, [])
 
   const filteredChampions = useMemo(() => {
     if (state.status !== 'ready') {
@@ -141,6 +142,31 @@ export function ChampionsPage() {
 
   const visibleChampions = filteredChampions.slice(0, MAX_VISIBLE_RESULTS)
   const matchedSeats = new Set(filteredChampions.map((champion) => champion.seat)).size
+  const selectedAffiliationLabel =
+    state.status === 'ready'
+      ? state.affiliations.find((affiliation) => affiliation.original === selectedAffiliation) ?? null
+      : null
+  const activeFilters = [
+    search.trim()
+      ? t({
+          zh: `关键词：${search.trim()}`,
+          en: `Keyword: ${search.trim()}`,
+        })
+      : null,
+    selectedSeat !== null ? (locale === 'zh-CN' ? `${selectedSeat} 号位` : `Seat ${selectedSeat}`) : null,
+    selectedRole !== ALL_FILTER
+      ? t({
+          zh: `定位：${getRoleLabel(selectedRole, locale)}`,
+          en: `Role: ${getRoleLabel(selectedRole, locale)}`,
+        })
+      : null,
+    selectedAffiliationLabel
+      ? t({
+          zh: `联动队伍：${getLocalizedTextPair(selectedAffiliationLabel, locale)}`,
+          en: `Affiliation: ${getLocalizedTextPair(selectedAffiliationLabel, locale)}`,
+        })
+      : null,
+  ].filter((item): item is string => Boolean(item))
 
   return (
     <div className="page-stack">
@@ -160,7 +186,8 @@ export function ChampionsPage() {
 
         {state.status === 'error' ? (
           <div className="status-banner status-banner--error">
-            {t({ zh: '英雄数据读取失败', en: 'Champion data failed to load' })}：{state.message}
+            {t({ zh: '英雄数据读取失败', en: 'Champion data failed to load' })}：
+            {state.message || t({ zh: '未知错误', en: 'Unknown error' })}
           </div>
         ) : null}
 
@@ -198,6 +225,12 @@ export function ChampionsPage() {
                   value={search}
                   onChange={(event) => setSearch(event.target.value)}
                 />
+                <span className="field-hint">
+                  {t({
+                    zh: '支持中英混搜；切换界面语言时，当前关键词和筛选不会被清空。',
+                    en: 'Chinese and English queries both work here, and switching UI language keeps the current filters.',
+                  })}
+                </span>
               </label>
 
               <div className="filter-group">
@@ -287,6 +320,13 @@ export function ChampionsPage() {
 
             {filteredChampions.length > 0 ? (
               <>
+                {activeFilters.length > 0 ? (
+                  <p className="supporting-text">
+                    {t({ zh: '当前筛选：', en: 'Active filters: ' })}
+                    {activeFilters.join(' · ')}
+                  </p>
+                ) : null}
+
                 <p className="supporting-text">
                   {t({
                     zh: `当前展示 ${visibleChampions.length} / ${filteredChampions.length} 名英雄。如果结果过多，优先加关键词、座位或定位缩小范围。`,
@@ -322,7 +362,7 @@ export function ChampionsPage() {
                           {t({ zh: '联动队伍', en: 'Affiliation' })}：
                           {champion.affiliations.length > 0
                             ? champion.affiliations
-                                .map((affiliation) => getPrimaryLocalizedText(affiliation, locale))
+                                .map((affiliation) => getLocalizedTextPair(affiliation, locale))
                                 .join(' / ')
                             : t({ zh: '暂无', en: 'None yet' })}
                         </p>
