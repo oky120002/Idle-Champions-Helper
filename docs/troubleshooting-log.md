@@ -33,3 +33,13 @@
 - 后续验证：切换到 `danger-full-access` 会话后，`firefox / chromium / webkit` 均可正常启动，完整页面验收也已跑通。
 - 处理：在受限会话内先用 `npm run build` + `npm run lint` 做最小充分验证；需要真实页面回归时，优先切到完全访问权限会话。
 - 引用：`docs/investigations/runtime/playwright-browser-launch-verification.md`
+
+## 记录 003：文档索引重复与环境路径耦合导致文档老化
+
+- 状态：已解决；时间：`2026-04-13`
+- 影响：README、文档索引和部分排查/设计文档对当前仓库事实表述不一致，容易把历史信息误读为现状。
+- 排查摘要：对比了 `README.md`、`docs/README.md`、`package.json`、`.github/workflows/deploy.yml`、本地预览脚本与现有调研/排查文档。
+- 根因：同一份文档清单被多处重复维护；部分文档写入了会话专用绝对路径；测试设计文档把“已实现”和“待实现”混在一起。
+- 解决：把 `docs/README.md` 收敛为 `docs/` 总索引，新增 `docs/product/documentation-governance.md` 约束扫描流程，回填本地预览和测试门禁现状，并把历史性排查标为归档。
+- 验证：`npm run build` 通过；`npm run preview:pages` 能正确返回 `/Idle-Champions-Helper/` 与静态资源；本地 Markdown 链接检查通过。
+- 引用：`README.md`、`docs/README.md`、`docs/product/documentation-governance.md`、`docs/investigations/runtime/local-run-verification.md`、`docs/research/testing/regression-testing-research.md`
