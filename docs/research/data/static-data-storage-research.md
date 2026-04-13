@@ -98,7 +98,7 @@ public/
   "current": "v1",
   "updatedAt": "2026-04-12",
   "notes": [
-    "当前为工程骨架阶段，正式游戏数据待补充。"
+    "公共数据来源：Idle Champions 官方客户端 definitions 接口。"
   ]
 }
 ```

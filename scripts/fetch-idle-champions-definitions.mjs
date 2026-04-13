@@ -12,6 +12,17 @@ function ensureTrailingSlash(value) {
   return value.endsWith('/') ? value : `${value}/`
 }
 
+function buildFileSuffix(languageId, fileLabel) {
+  const rawValue = fileLabel ?? (languageId ? `lang-${languageId}` : '')
+  const normalized = String(rawValue)
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+
+  return normalized ? `-${normalized}` : ''
+}
+
 function buildTimestampLabel(date) {
   return date.toISOString().replaceAll(':', '-')
 }
@@ -35,6 +46,8 @@ export async function fetchDefinitionsSnapshot(options = {}) {
   const definitionsClientVersion = String(
     options.definitionsClientVersion ?? DEFAULT_DEFINITIONS_CLIENT_VERSION,
   )
+  const languageId = options.languageId ? String(options.languageId) : null
+  const fileSuffix = buildFileSuffix(languageId, options.fileLabel)
 
   const discoveryQuery = new URLSearchParams({
     call: 'getPlayServerForDefinitions',
@@ -54,6 +67,11 @@ export async function fetchDefinitionsSnapshot(options = {}) {
     new_achievements: '1',
     mobile_client_version: definitionsClientVersion,
   })
+
+  if (languageId) {
+    definitionsQuery.set('language_id', languageId)
+  }
+
   const definitionsUrl = `${playServer}post.php?${definitionsQuery.toString()}`
   const definitionsPayload = await fetchJson(definitionsUrl)
 
@@ -62,8 +80,8 @@ export async function fetchDefinitionsSnapshot(options = {}) {
 
   await mkdir(outDir, { recursive: true })
 
-  const rawFile = path.join(outDir, `definitions-${stamp}.json`)
-  const metaFile = path.join(outDir, `definitions-${stamp}.meta.json`)
+  const rawFile = path.join(outDir, `definitions-${stamp}${fileSuffix}.json`)
+  const metaFile = path.join(outDir, `definitions-${stamp}${fileSuffix}.meta.json`)
 
   const meta = {
     fetchedAt: fetchedAt.toISOString(),
@@ -72,6 +90,7 @@ export async function fetchDefinitionsSnapshot(options = {}) {
     playServer,
     playserverClientVersion,
     definitionsClientVersion,
+    languageId,
   }
 
   await writeFile(rawFile, `${JSON.stringify(definitionsPayload, null, 2)}\n`, 'utf8')
@@ -96,6 +115,8 @@ function printUsage() {
   --masterApiUrl <url>               Play server 发现接口根地址
   --playserverClientVersion <n>      getPlayServerForDefinitions 使用的客户端版本，默认 ${DEFAULT_PLAYSERVER_CLIENT_VERSION}
   --definitionsClientVersion <n>     getDefinitions 使用的客户端版本，默认 ${DEFAULT_DEFINITIONS_CLIENT_VERSION}
+  --languageId <id>                  getDefinitions 使用的 language_id，例如 7 表示官方中文
+  --fileLabel <label>                文件名附加后缀，便于区分多语言快照
   --help                             显示帮助
 `)
 }
@@ -107,6 +128,8 @@ async function main() {
       masterApiUrl: { type: 'string' },
       playserverClientVersion: { type: 'string' },
       definitionsClientVersion: { type: 'string' },
+      languageId: { type: 'string' },
+      fileLabel: { type: 'string' },
       help: { type: 'boolean' },
     },
   })
