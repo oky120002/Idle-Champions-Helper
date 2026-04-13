@@ -26,6 +26,7 @@ const MAX_VISIBLE_RESULTS = 48
 const RESULTS_HEIGHT_TRANSITION_MS = 320
 const RESULTS_RELOCATE_THRESHOLD = 12
 const RESULTS_SCROLL_DURATION_MS = 340
+const RESULTS_QUICK_NAV_THRESHOLD = 10
 
 type ChampionState =
   | { status: 'loading' }
@@ -39,6 +40,22 @@ type ChampionState =
       status: 'error'
       message: string
     }
+
+type ResultsTransitionReason = 'filters' | 'visibility'
+
+interface PendingResultsTransition {
+  previousFilteredCount: number
+  previousVisibleCount: number
+  shouldRelocate: boolean
+  targetTop: number
+  reason: ResultsTransitionReason
+}
+
+interface ResultsQuickNavigationState {
+  isVisible: boolean
+  canScrollTop: boolean
+  canScrollBottom: boolean
+}
 
 function isLocalizedText(value: unknown): value is LocalizedText {
   return (
@@ -73,6 +90,20 @@ function isStringEnumGroup(value: unknown): value is StringEnumGroup {
   )
 }
 
+function ResultsQuickNavIcon({ direction }: { direction: 'up' | 'down' }) {
+  const path =
+    direction === 'up'
+      ? 'M12 5.75l5.25 6.25h-3.25v6h-4v-6H6.75L12 5.75z'
+      : 'M10 6h4v6h3.25L12 18.25 6.75 12H10V6z'
+
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+      <path d="M4.75 12h14.5" strokeLinecap="round" strokeOpacity="0.18" />
+      <path d={path} fill="currentColor" stroke="none" />
+    </svg>
+  )
+}
+
 export function ChampionsPage() {
   const { locale, t } = useI18n()
   const [state, setState] = useState<ChampionState>({ status: 'loading' })
@@ -80,15 +111,17 @@ export function ChampionsPage() {
   const [selectedSeats, setSelectedSeats] = useState<number[]>([])
   const [selectedRoles, setSelectedRoles] = useState<string[]>([])
   const [selectedAffiliations, setSelectedAffiliations] = useState<string[]>([])
+  const [showAllResults, setShowAllResults] = useState(false)
   const [resultsShellHeight, setResultsShellHeight] = useState<number | null>(null)
   const [stickyTop, setStickyTop] = useState(160)
+  const [resultsQuickNavigation, setResultsQuickNavigation] = useState<ResultsQuickNavigationState>({
+    isVisible: false,
+    canScrollTop: false,
+    canScrollBottom: false,
+  })
   const resultsShellRef = useRef<HTMLElement | null>(null)
   const resultsContentRef = useRef<HTMLDivElement | null>(null)
-  const pendingResultsTransitionRef = useRef<{
-    previousCount: number
-    shouldRelocate: boolean
-    targetTop: number
-  } | null>(null)
+  const pendingResultsTransitionRef = useRef<PendingResultsTransition | null>(null)
   const releaseResultsHeightTimeoutRef = useRef<number | null>(null)
   const scrollAnimationFrameRef = useRef<number | null>(null)
 
@@ -188,8 +221,13 @@ export function ChampionsPage() {
     })
   }, [search, selectedAffiliations, selectedRoles, selectedSeats, state])
 
-  const visibleChampions = filteredChampions.slice(0, MAX_VISIBLE_RESULTS)
+  const visibleChampions = showAllResults ? filteredChampions : filteredChampions.slice(0, MAX_VISIBLE_RESULTS)
   const matchedSeats = new Set(filteredChampions.map((champion) => champion.seat)).size
+  const trimmedSearch = search.trim()
+  const hasStructuredFilters =
+    selectedSeats.length > 0 || selectedRoles.length > 0 || selectedAffiliations.length > 0
+  const hasActiveFilters = trimmedSearch.length > 0 || hasStructuredFilters
+  const canToggleResultVisibility = filteredChampions.length > MAX_VISIBLE_RESULTS
   const orderedSelectedSeats = seatOptions.filter((seat) => selectedSeats.includes(seat))
   const orderedSelectedRoles =
     state.status === 'ready' ? state.roles.filter((role) => selectedRoles.includes(role)) : []
@@ -198,10 +236,10 @@ export function ChampionsPage() {
       ? state.affiliations.filter((affiliation) => selectedAffiliations.includes(affiliation.original))
       : []
   const activeFilters = [
-    search.trim()
+    trimmedSearch
       ? t({
-          zh: `关键词：${search.trim()}`,
-          en: `Keyword: ${search.trim()}`,
+          zh: `关键词：${trimmedSearch}`,
+          en: `Keyword: ${trimmedSearch}`,
         })
       : null,
     orderedSelectedSeats.length > 0
@@ -224,11 +262,36 @@ export function ChampionsPage() {
       : null,
   ].filter((item): item is string => Boolean(item))
 
+  function clearStructuredFilters() {
+    prepareResultsViewportTransition('filters')
+    setShowAllResults(false)
+    setSelectedSeats([])
+    setSelectedRoles([])
+    setSelectedAffiliations([])
+  }
+
+  function clearAllFilters() {
+    prepareResultsViewportTransition('filters')
+    setShowAllResults(false)
+    setSearch('')
+    setSelectedSeats([])
+    setSelectedRoles([])
+    setSelectedAffiliations([])
+  }
+
   function getResultsTargetTop(shell: HTMLElement): number {
     const siteHeader = document.querySelector('.site-header')
     const headerHeight = siteHeader instanceof HTMLElement ? siteHeader.getBoundingClientRect().height : 0
 
     return Math.max(Math.round(shell.getBoundingClientRect().top + window.scrollY - headerHeight - 16), 0)
+  }
+
+  function getResultsTargetBottom(shell: HTMLElement): number {
+    const maxScrollTop = Math.max(document.documentElement.scrollHeight - window.innerHeight, 0)
+    const shellBottom = shell.getBoundingClientRect().bottom + window.scrollY
+    const targetTop = Math.round(shellBottom - window.innerHeight + 24)
+
+    return Math.min(Math.max(targetTop, 0), maxScrollTop)
   }
 
   function scrollWindowTo(targetTop: number) {
@@ -273,7 +336,17 @@ export function ChampionsPage() {
     scrollAnimationFrameRef.current = window.requestAnimationFrame(step)
   }
 
-  function prepareResultsViewportTransition() {
+  function scrollResultsToBoundary(direction: 'top' | 'bottom') {
+    const shell = resultsShellRef.current
+
+    if (!shell) {
+      return
+    }
+
+    scrollWindowTo(direction === 'top' ? getResultsTargetTop(shell) : getResultsTargetBottom(shell))
+  }
+
+  function prepareResultsViewportTransition(reason: ResultsTransitionReason = 'filters') {
     const shell = resultsShellRef.current
 
     if (!shell) {
@@ -294,9 +367,11 @@ export function ChampionsPage() {
     }
 
     pendingResultsTransitionRef.current = {
-      previousCount: filteredChampions.length,
+      previousFilteredCount: filteredChampions.length,
+      previousVisibleCount: visibleChampions.length,
       shouldRelocate,
       targetTop,
+      reason,
     }
 
     setResultsShellHeight(Math.ceil(shell.getBoundingClientRect().height))
@@ -313,10 +388,19 @@ export function ChampionsPage() {
     pendingResultsTransitionRef.current = null
 
     const nextHeight = Math.ceil(content.getBoundingClientRect().height)
+    const filteredCollapsedToFew =
+      filteredChampions.length < pendingTransition.previousFilteredCount &&
+      filteredChampions.length <= RESULTS_RELOCATE_THRESHOLD
+    const visibleCollapsed = visibleChampions.length < pendingTransition.previousVisibleCount
+    const collapsedBackToDefaultWindow =
+      pendingTransition.previousVisibleCount > MAX_VISIBLE_RESULTS &&
+      visibleChampions.length <= MAX_VISIBLE_RESULTS &&
+      visibleCollapsed
     const shouldRelocate =
       pendingTransition.shouldRelocate &&
-      filteredChampions.length < pendingTransition.previousCount &&
-      filteredChampions.length <= RESULTS_RELOCATE_THRESHOLD
+      (pendingTransition.reason === 'filters'
+        ? filteredCollapsedToFew || collapsedBackToDefaultWindow
+        : visibleCollapsed)
 
     const animationFrameId = window.requestAnimationFrame(() => {
       setResultsShellHeight(nextHeight)
@@ -334,7 +418,77 @@ export function ChampionsPage() {
     return () => {
       window.cancelAnimationFrame(animationFrameId)
     }
-  }, [filteredChampions.length, resultsShellHeight, search, selectedAffiliations, selectedRoles, selectedSeats])
+  }, [
+    filteredChampions.length,
+    resultsShellHeight,
+    search,
+    selectedAffiliations,
+    selectedRoles,
+    selectedSeats,
+    showAllResults,
+    visibleChampions.length,
+  ])
+
+  useEffect(() => {
+    const updateResultsQuickNavigation = () => {
+      const shell = resultsShellRef.current
+
+      if (!shell || visibleChampions.length < RESULTS_QUICK_NAV_THRESHOLD) {
+        setResultsQuickNavigation((current) => {
+          if (!current.isVisible && !current.canScrollTop && !current.canScrollBottom) {
+            return current
+          }
+
+          return {
+            isVisible: false,
+            canScrollTop: false,
+            canScrollBottom: false,
+          }
+        })
+        return
+      }
+
+      const topTarget = getResultsTargetTop(shell)
+      const bottomTarget = getResultsTargetBottom(shell)
+      const isVisible = bottomTarget - topTarget > 160
+      const canScrollTop = window.scrollY > topTarget + 24
+      const canScrollBottom = window.scrollY < bottomTarget - 24
+
+      setResultsQuickNavigation((current) => {
+        if (
+          current.isVisible === isVisible &&
+          current.canScrollTop === canScrollTop &&
+          current.canScrollBottom === canScrollBottom
+        ) {
+          return current
+        }
+
+        return {
+          isVisible,
+          canScrollTop,
+          canScrollBottom,
+        }
+      })
+    }
+
+    updateResultsQuickNavigation()
+    window.addEventListener('scroll', updateResultsQuickNavigation, { passive: true })
+    window.addEventListener('resize', updateResultsQuickNavigation)
+
+    return () => {
+      window.removeEventListener('scroll', updateResultsQuickNavigation)
+      window.removeEventListener('resize', updateResultsQuickNavigation)
+    }
+  }, [
+    filteredChampions.length,
+    resultsShellHeight,
+    search,
+    selectedAffiliations,
+    selectedRoles,
+    selectedSeats,
+    showAllResults,
+    visibleChampions.length,
+  ])
 
   const championsWorkspaceStyle = {
     '--champions-sticky-top': `${stickyTop}px`,
@@ -410,6 +564,36 @@ export function ChampionsPage() {
                       </span>
                     </div>
 
+                    <div
+                      className="champions-sidebar__actions"
+                      role="group"
+                      aria-label={t({ zh: '筛选快捷操作', en: 'Filter quick actions' })}
+                    >
+                      <button
+                        type="button"
+                        className="action-button action-button--ghost action-button--compact"
+                        onClick={clearStructuredFilters}
+                        disabled={!hasStructuredFilters}
+                      >
+                        {t({ zh: '全部放开', en: 'Open all chips' })}
+                      </button>
+                      <button
+                        type="button"
+                        className="action-button action-button--secondary action-button--compact"
+                        onClick={clearAllFilters}
+                        disabled={!hasActiveFilters}
+                      >
+                        {t({ zh: '清空全部', en: 'Clear all' })}
+                      </button>
+                    </div>
+
+                    <p className="champions-sidebar__microcopy">
+                      {t({
+                        zh: '空选即全开，所以“全部放开”会把座位、定位和联动队伍直接恢复到全量视图。',
+                        en: 'Empty selections already mean “all”, so opening all chips restores seat, role, and affiliation to the full view.',
+                      })}
+                    </p>
+
                     <div className="filter-panel filter-panel--sidebar">
                       <label className="form-field">
                         <span className="field-label">{t({ zh: '关键词', en: 'Keyword' })}</span>
@@ -422,7 +606,8 @@ export function ChampionsPage() {
                           })}
                           value={search}
                           onChange={(event) => {
-                            prepareResultsViewportTransition()
+                            prepareResultsViewportTransition('filters')
+                            setShowAllResults(false)
                             setSearch(event.target.value)
                           }}
                         />
@@ -442,7 +627,8 @@ export function ChampionsPage() {
                             className={selectedSeats.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
                             aria-pressed={selectedSeats.length === 0}
                             onClick={() => {
-                              prepareResultsViewportTransition()
+                              prepareResultsViewportTransition('filters')
+                              setShowAllResults(false)
                               setSelectedSeats([])
                             }}
                           >
@@ -455,7 +641,8 @@ export function ChampionsPage() {
                               className={selectedSeats.includes(seat) ? 'filter-chip filter-chip--active' : 'filter-chip'}
                               aria-pressed={selectedSeats.includes(seat)}
                               onClick={() => {
-                                prepareResultsViewportTransition()
+                                prepareResultsViewportTransition('filters')
+                                setShowAllResults(false)
                                 setSelectedSeats((current) => toggleFilterValue(current, seat))
                               }}
                             >
@@ -479,7 +666,8 @@ export function ChampionsPage() {
                             className={selectedRoles.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
                             aria-pressed={selectedRoles.length === 0}
                             onClick={() => {
-                              prepareResultsViewportTransition()
+                              prepareResultsViewportTransition('filters')
+                              setShowAllResults(false)
                               setSelectedRoles([])
                             }}
                           >
@@ -492,7 +680,8 @@ export function ChampionsPage() {
                               className={selectedRoles.includes(role) ? 'filter-chip filter-chip--active' : 'filter-chip'}
                               aria-pressed={selectedRoles.includes(role)}
                               onClick={() => {
-                                prepareResultsViewportTransition()
+                                prepareResultsViewportTransition('filters')
+                                setShowAllResults(false)
                                 setSelectedRoles((current) => toggleFilterValue(current, role))
                               }}
                             >
@@ -518,7 +707,8 @@ export function ChampionsPage() {
                             }
                             aria-pressed={selectedAffiliations.length === 0}
                             onClick={() => {
-                              prepareResultsViewportTransition()
+                              prepareResultsViewportTransition('filters')
+                              setShowAllResults(false)
                               setSelectedAffiliations([])
                             }}
                           >
@@ -535,7 +725,8 @@ export function ChampionsPage() {
                               }
                               aria-pressed={selectedAffiliations.includes(affiliation.original)}
                               onClick={() => {
-                                prepareResultsViewportTransition()
+                                prepareResultsViewportTransition('filters')
+                                setShowAllResults(false)
                                 setSelectedAffiliations((current) => toggleFilterValue(current, affiliation.original))
                               }}
                             >
@@ -584,57 +775,143 @@ export function ChampionsPage() {
                               en: `Showing ${visibleChampions.length} / ${filteredChampions.length} champions. Narrow things down with a keyword, seat, role, or affiliation if the list feels too broad.`,
                             })
                           : t({
-                              zh: '当前筛选条件下没有匹配英雄，可以先清空座位、定位或联动队伍过滤。',
-                              en: 'No champions match this filter set yet. Try clearing seat, role, or affiliation filters first.',
+                              zh: '当前筛选条件下没有匹配英雄，可以先放开座位、定位、联动队伍，或一键清空全部条件。',
+                              en: 'No champions match this filter set yet. Try opening seat, role, and affiliation back up, or clear everything in one step.',
                             })}
                       </p>
+
+                      {filteredChampions.length > 0 ? (
+                        <div className="results-panel__actions">
+                          <span className="results-summary-pill">
+                            {canToggleResultVisibility
+                              ? showAllResults
+                                ? t({
+                                    zh: `已展开全部 ${filteredChampions.length} 名英雄`,
+                                    en: `Showing all ${filteredChampions.length} champions`,
+                                  })
+                                : t({
+                                    zh: `默认先展示 ${MAX_VISIBLE_RESULTS} 名英雄`,
+                                    en: `Defaulting to the first ${MAX_VISIBLE_RESULTS} champions`,
+                                  })
+                              : t({
+                                  zh: '当前结果已全部展开',
+                                  en: 'The current result set is already fully visible',
+                                })}
+                          </span>
+
+                          {canToggleResultVisibility ? (
+                            <button
+                              type="button"
+                              className="results-visibility-toggle"
+                              onClick={() => {
+                                prepareResultsViewportTransition('visibility')
+                                setShowAllResults((current) => !current)
+                              }}
+                            >
+                              {showAllResults
+                                ? t({
+                                    zh: `收起到默认 ${MAX_VISIBLE_RESULTS} 名`,
+                                    en: `Collapse back to ${MAX_VISIBLE_RESULTS}`,
+                                  })
+                                : t({
+                                    zh: `显示全部 ${filteredChampions.length} 名`,
+                                    en: `Show all ${filteredChampions.length}`,
+                                  })}
+                            </button>
+                          ) : null}
+                        </div>
+                      ) : (
+                        <div className="results-empty-actions">
+                          <button
+                            type="button"
+                            className="action-button action-button--ghost"
+                            onClick={clearStructuredFilters}
+                            disabled={!hasStructuredFilters}
+                          >
+                            {t({ zh: '放开座位 / 定位 / 联动', en: 'Open seat / role / affiliation' })}
+                          </button>
+                          <button
+                            type="button"
+                            className="action-button action-button--secondary"
+                            onClick={clearAllFilters}
+                            disabled={!hasActiveFilters}
+                          >
+                            {t({ zh: '一键清空全部条件', en: 'Clear every filter' })}
+                          </button>
+                        </div>
+                      )}
                     </div>
 
                     {filteredChampions.length > 0 ? (
-                      <div className="results-grid results-grid--stable">
-                        {visibleChampions.map((champion) => {
-                          const primaryName = getPrimaryLocalizedText(champion.name, locale)
-                          const secondaryName = getSecondaryLocalizedText(champion.name, locale)
+                      <>
+                        <div className="results-grid results-grid--stable">
+                          {visibleChampions.map((champion) => {
+                            const primaryName = getPrimaryLocalizedText(champion.name, locale)
+                            const secondaryName = getSecondaryLocalizedText(champion.name, locale)
 
-                          return (
-                            <article key={champion.id} className="result-card">
-                              <div className="result-card__header">
-                                <span className="result-card__eyebrow">
-                                  {locale === 'zh-CN' ? `${champion.seat} 号位` : `Seat ${champion.seat}`}
-                                </span>
-                                <h3 className="result-card__title">{primaryName}</h3>
-                              </div>
-
-                              {secondaryName ? <p className="result-card__secondary">{secondaryName}</p> : null}
-
-                              <div className="tag-row">
-                                {champion.roles.map((role) => (
-                                  <span key={role} className="tag-pill">
-                                    {getRoleLabel(role, locale)}
+                            return (
+                              <article key={champion.id} className="result-card">
+                                <div className="result-card__header">
+                                  <span className="result-card__eyebrow">
+                                    {locale === 'zh-CN' ? `${champion.seat} 号位` : `Seat ${champion.seat}`}
                                   </span>
-                                ))}
-                              </div>
+                                  <h3 className="result-card__title">{primaryName}</h3>
+                                </div>
 
-                              <p className="supporting-text">
-                                {t({ zh: '联动队伍', en: 'Affiliation' })}：
-                                {champion.affiliations.length > 0
-                                  ? champion.affiliations
-                                      .map((affiliation) => getLocalizedTextPair(affiliation, locale))
-                                      .join(' / ')
-                                  : t({ zh: '暂无', en: 'None yet' })}
-                              </p>
+                                {secondaryName ? <p className="result-card__secondary">{secondaryName}</p> : null}
 
-                              <div className="tag-row">
-                                {champion.tags.slice(0, 6).map((tag) => (
-                                  <span key={tag} className="tag-pill tag-pill--muted">
-                                    {tag}
-                                  </span>
-                                ))}
-                              </div>
-                            </article>
-                          )
-                        })}
-                      </div>
+                                <div className="tag-row">
+                                  {champion.roles.map((role) => (
+                                    <span key={role} className="tag-pill">
+                                      {getRoleLabel(role, locale)}
+                                    </span>
+                                  ))}
+                                </div>
+
+                                <p className="supporting-text">
+                                  {t({ zh: '联动队伍', en: 'Affiliation' })}：
+                                  {champion.affiliations.length > 0
+                                    ? champion.affiliations
+                                        .map((affiliation) => getLocalizedTextPair(affiliation, locale))
+                                        .join(' / ')
+                                    : t({ zh: '暂无', en: 'None yet' })}
+                                </p>
+
+                                <div className="tag-row">
+                                  {champion.tags.slice(0, 6).map((tag) => (
+                                    <span key={tag} className="tag-pill tag-pill--muted">
+                                      {tag}
+                                    </span>
+                                  ))}
+                                </div>
+                              </article>
+                            )
+                          })}
+                        </div>
+
+                        {canToggleResultVisibility ? (
+                          <div className="results-panel__tail">
+                            <button
+                              type="button"
+                              className="results-visibility-toggle results-visibility-toggle--tail"
+                              onClick={() => {
+                                prepareResultsViewportTransition('visibility')
+                                setShowAllResults((current) => !current)
+                              }}
+                            >
+                              {showAllResults
+                                ? t({
+                                    zh: `收起到默认 ${MAX_VISIBLE_RESULTS} 名`,
+                                    en: `Collapse back to ${MAX_VISIBLE_RESULTS}`,
+                                  })
+                                : t({
+                                    zh: `继续展开剩余 ${filteredChampions.length - MAX_VISIBLE_RESULTS} 名英雄`,
+                                    en: `Reveal the remaining ${filteredChampions.length - MAX_VISIBLE_RESULTS} champions`,
+                                  })}
+                            </button>
+                          </div>
+                        ) : null}
+                      </>
                     ) : (
                       <div className="status-banner status-banner--info results-panel__empty">
                         {t({
@@ -645,6 +922,35 @@ export function ChampionsPage() {
                     )}
                   </div>
                 </section>
+
+                {resultsQuickNavigation.isVisible ? (
+                  <div
+                    className="results-quick-nav"
+                    role="group"
+                    aria-label={t({ zh: '结果列表快捷滚动', en: 'Results quick scrolling' })}
+                  >
+                    <button
+                      type="button"
+                      className="results-quick-nav__button"
+                      onClick={() => scrollResultsToBoundary('top')}
+                      aria-label={t({ zh: '返回结果顶部', en: 'Back to results top' })}
+                      disabled={!resultsQuickNavigation.canScrollTop}
+                    >
+                      <ResultsQuickNavIcon direction="up" />
+                      <span>{t({ zh: '顶部', en: 'Top' })}</span>
+                    </button>
+                    <button
+                      type="button"
+                      className="results-quick-nav__button results-quick-nav__button--accent"
+                      onClick={() => scrollResultsToBoundary('bottom')}
+                      aria-label={t({ zh: '跳到结果底部', en: 'Jump to results bottom' })}
+                      disabled={!resultsQuickNavigation.canScrollBottom}
+                    >
+                      <ResultsQuickNavIcon direction="down" />
+                      <span>{t({ zh: '到底', en: 'End' })}</span>
+                    </button>
+                  </div>
+                ) : null}
               </section>
             </div>
           </>

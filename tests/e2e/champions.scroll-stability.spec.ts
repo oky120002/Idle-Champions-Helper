@@ -13,6 +13,16 @@ async function getResultsTargetTop(page: Page): Promise<number> {
   })
 }
 
+async function getResultsTargetBottom(page: Page): Promise<number> {
+  return page.locator('.results-panel-shell').evaluate((shell) => {
+    const maxScrollTop = Math.max(document.documentElement.scrollHeight - window.innerHeight, 0)
+    const shellBottom = shell.getBoundingClientRect().bottom + window.scrollY
+    const targetTop = Math.round(shellBottom - window.innerHeight + 24)
+
+    return Math.min(Math.max(targetTop, 0), maxScrollTop)
+  })
+}
+
 test('英雄筛选页点击筛选按钮时不应发生意外滚动跳转', async ({ page }) => {
   await page.addInitScript(() => {
     window.localStorage.removeItem('idle-champions-helper.locale')
@@ -65,4 +75,33 @@ test('英雄筛选页在长结果列表中收窄条件时应平滑带回结果�
   expect(finalScrollY).toBeGreaterThan(200)
   expect(finalScrollY).toBeLessThan(baselineScrollY)
   expect(Math.abs(finalScrollY - targetTop)).toBeLessThanOrEqual(32)
+})
+
+test('英雄筛选页结果快捷按钮应支持一键到底和返回顶部', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.localStorage.removeItem('idle-champions-helper.locale')
+  })
+
+  await page.goto('./#/champions')
+  await expect(page.getByRole('heading', { level: 2, name: '先用真实公共数据把查询入口跑起来' })).toBeVisible()
+  await expect(page.getByRole('button', { name: '跳到结果底部' })).toBeVisible()
+
+  const targetBottom = await getResultsTargetBottom(page)
+
+  await page.getByRole('button', { name: '跳到结果底部' }).click()
+  await page.waitForTimeout(450)
+
+  const bottomScrollY = await getScrollY(page)
+
+  expect(bottomScrollY).toBeGreaterThan(200)
+  expect(Math.abs(bottomScrollY - targetBottom)).toBeLessThanOrEqual(36)
+
+  const targetTop = await getResultsTargetTop(page)
+
+  await page.getByRole('button', { name: '返回结果顶部' }).click()
+  await page.waitForTimeout(450)
+
+  const topScrollY = await getScrollY(page)
+
+  expect(Math.abs(topScrollY - targetTop)).toBeLessThanOrEqual(36)
 })

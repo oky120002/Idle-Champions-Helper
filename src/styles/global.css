@@ -1,4 +1,6 @@
 :root {
+  --layout-max-width: 1400px;
+  --layout-inline-gap: clamp(1rem, 2vw, 1.75rem);
   color-scheme: dark;
   font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   line-height: 1.5;
@@ -82,7 +84,7 @@ textarea {
   z-index: 10;
   display: grid;
   gap: 0.9rem;
-  width: min(1120px, calc(100% - 2rem));
+  width: min(var(--layout-max-width), calc(100% - (var(--layout-inline-gap) * 2)));
   margin: 0 auto;
   padding: 1.5rem 0 1rem;
   backdrop-filter: blur(18px);
@@ -226,7 +228,7 @@ html[data-ui-locale='en-US'] .site-subtitle {
 }
 
 .site-main {
-  width: min(1120px, calc(100% - 2rem));
+  width: min(var(--layout-max-width), calc(100% - (var(--layout-inline-gap) * 2)));
   margin: 0 auto;
   padding: 1rem 0 4rem;
 }
@@ -473,7 +475,20 @@ html[data-ui-locale='en-US'] .site-subtitle {
   text-transform: uppercase;
 }
 
+.champions-sidebar__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.champions-sidebar__microcopy {
+  margin: -0.1rem 0 0;
+  color: rgba(242, 239, 230, 0.56);
+  font-size: 0.84rem;
+}
+
 .champions-results {
+  position: relative;
   min-width: 0;
 }
 
@@ -494,8 +509,127 @@ html[data-ui-locale='en-US'] .site-subtitle {
   min-height: 4.4rem;
 }
 
+.results-panel__actions,
+.results-empty-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 0.45rem;
+}
+
+.results-summary-pill,
+.results-visibility-toggle {
+  border-radius: 999px;
+  border: 1px solid rgba(227, 214, 193, 0.14);
+}
+
+.results-summary-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.45rem;
+  padding: 0.58rem 0.9rem;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(242, 239, 230, 0.76);
+  font-size: 0.9rem;
+}
+
+.results-visibility-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.62rem 0.98rem;
+  background:
+    linear-gradient(135deg, rgba(200, 167, 127, 0.18), rgba(62, 113, 147, 0.16)),
+    rgba(9, 14, 20, 0.26);
+  color: #fff7ea;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+  box-shadow: 0 12px 28px rgba(1, 4, 9, 0.2);
+}
+
+.results-visibility-toggle:hover {
+  transform: translateY(-1px);
+  border-color: rgba(200, 167, 127, 0.38);
+  box-shadow: 0 18px 36px rgba(1, 4, 9, 0.26);
+}
+
+.results-panel__tail {
+  display: flex;
+  justify-content: center;
+}
+
+.results-visibility-toggle--tail {
+  width: 100%;
+  justify-content: center;
+}
+
 .results-panel__empty {
   margin-top: 0;
+}
+
+.results-quick-nav {
+  position: fixed;
+  right: 1.35rem;
+  bottom: 1.35rem;
+  z-index: 14;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.results-quick-nav__button {
+  display: grid;
+  justify-items: center;
+  gap: 0.28rem;
+  width: 3.65rem;
+  min-height: 3.65rem;
+  padding: 0.66rem 0.52rem 0.6rem;
+  border: 1px solid rgba(227, 214, 193, 0.16);
+  border-radius: 1.15rem;
+  background:
+    linear-gradient(180deg, rgba(17, 26, 37, 0.94), rgba(9, 14, 20, 0.94)),
+    rgba(9, 14, 20, 0.48);
+  color: #f7ecd9;
+  cursor: pointer;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 18px 42px rgba(1, 4, 9, 0.32);
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease,
+    opacity 160ms ease;
+}
+
+.results-quick-nav__button:hover {
+  transform: translateY(-2px);
+  border-color: rgba(200, 167, 127, 0.42);
+}
+
+.results-quick-nav__button:disabled {
+  cursor: default;
+  opacity: 0.44;
+  transform: none;
+}
+
+.results-quick-nav__button svg {
+  width: 1.08rem;
+  height: 1.08rem;
+}
+
+.results-quick-nav__button span {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.results-quick-nav__button--accent {
+  background:
+    linear-gradient(180deg, rgba(62, 113, 147, 0.34), rgba(13, 29, 46, 0.92)),
+    rgba(9, 14, 20, 0.48);
 }
 
 .result-card {
@@ -699,6 +833,11 @@ html[data-ui-locale='en-US'] .site-subtitle {
   padding: 0.72rem 1rem;
 }
 
+.action-button--compact {
+  padding: 0.56rem 0.88rem;
+  font-size: 0.88rem;
+}
+
 .action-button--secondary {
   background: rgba(62, 113, 147, 0.16);
 }
@@ -885,6 +1024,17 @@ html[data-ui-locale='en-US'] .site-subtitle {
   .champions-sidebar__surface {
     padding: 0.9rem;
     border-radius: 20px;
+  }
+
+  .results-quick-nav {
+    right: 0.9rem;
+    bottom: calc(0.9rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .results-quick-nav__button {
+    width: 3.2rem;
+    min-height: 3.2rem;
+    border-radius: 1rem;
   }
 }
 
