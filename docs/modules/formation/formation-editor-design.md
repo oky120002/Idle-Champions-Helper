@@ -1,7 +1,7 @@
 # 阵型编辑模块设计稿
 
 - 设计日期：2026-04-13
-- 模块目标：让用户能基于真实英雄数据和手工维护的阵型布局，完成最小可用的“选布局 -> 放英雄 -> 看 seat 冲突 -> 形成草稿”闭环。
+- 模块目标：让用户能基于真实英雄数据和官方 definitions 自动提取的阵型布局，完成最小可用的“选布局 -> 放英雄 -> 看 seat 冲突 -> 形成草稿”闭环。
 - 当前结论：第一阶段优先做阵型草稿编辑器，并把“最近草稿保存 / 恢复”纳入阵型页自身闭环；不直接追求真实战役全覆盖、拖拽交互或复杂规则模拟。
 
 ---
@@ -30,7 +30,7 @@
 ### 2.1 数据输入
 
 - `public/data/v1/formations.json`
-  - 当前只放手工维护的 MVP 布局
+  - 当前由官方 definitions 自动提取唯一布局，并保留适用上下文映射
 - `public/data/v1/champions.json`
   - 提供可选英雄及其 seat / roles
 
@@ -100,6 +100,7 @@ interface FormationLayout {
   notes?: string
   slots: FormationSlot[]
   applicableContexts?: ScenarioRef[]
+  sourceContexts?: FormationContext[]
   laneHints?: {
     front?: string[]
     middle?: string[]
@@ -111,13 +112,16 @@ interface FormationSlot {
   id: string
   row: number
   column: number
+  x?: number
+  y?: number
+  adjacentSlotIds?: string[]
 }
 ```
 
 补充说明：
 
-- 当前 `public/data/v1/formations.json` 还只有手工联调布局，可以暂时不填 `applicableContexts / laneHints`
-- 但布局合同应预留这两个可选字段，避免后续补“适用战役 / 模式”“前后排关系”时再重定义 `FormationLayout`
+- 当前 `public/data/v1/formations.json` 已包含 `applicableContexts / sourceContexts`
+- `laneHints` 仍可继续作为派生字段预留，避免后续补“前后排关系”时再重定义 `FormationLayout`
 
 ### 4.2 阵型草稿建议模型
 
@@ -139,7 +143,7 @@ interface FormationDraft {
 - `schemaVersion`：草稿结构版本，便于后续迁移
 - `dataVersion`：保存时对应的公共数据版本，例如 `v1`
 - `layoutId`：当前采用的布局
-- `scenarioRef`：当前草稿绑定的真实场景上下文；对现有手工联调布局可为 `null`
+- `scenarioRef`：当前草稿绑定的真实场景上下文；当前布局数据已经带 `applicableContexts`，但在页面完成场景筛选前仍允许为空
 - `placements[slotId] = championId`
 - `updatedAt`：用于“最近编辑”排序和存档同步
 
@@ -226,16 +230,16 @@ interface FormationDraft {
 
 ### 6.1 当前策略
 
-- 继续使用 `scripts/data/manual-overrides.json` 维护布局来源
+- 默认从官方 definitions 的 `campaign_defines / adventure_defines` 提取阵型布局
 - 归一化后输出到 `public/data/v1/formations.json`
 - 页面只消费归一化产物，不直接读脚本源文件
+- `scripts/data/manual-overrides.json` 仅用于必要的布局覆写与补充说明
 
 ### 6.2 当前注意事项
 
-当前 `formations.json` 明确写的是“手工示例”，并不对应已核实战役布局，因此阵型页文案必须继续强调：
-
-- 这是 MVP 联调布局
-- 不是正式战役映射
+- 同一布局会被多个战役 / 冒险 / 变体复用，因此 `formations.json` 需要保留 `sourceContexts / applicableContexts`
+- 页面当前还没有把这些上下文做成筛选器，所以默认先按“唯一布局库”消费
+- `language_id=7` 对部分新活动或时空门条目仍可能回退英文原文
 
 否则用户会误以为当前布局已经和游戏战役一一对应。
 

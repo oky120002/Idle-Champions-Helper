@@ -17,7 +17,7 @@
 - 已确认技术路线：`Vite + React + TypeScript`
 - 已落地最小可运行工程骨架
 - 已补基础路由、页面壳层、公共数据目录与部署脚本
-- 已落第一版真实公共数据：`champions`、`variants`、`enums` 已由官方 definitions 生成，并补了手工维护的 `formations` MVP 布局数据
+- 已落第一版真实公共数据：`champions`、`variants`、`enums`、`formations` 已由官方 definitions 自动生成，其中阵型布局已覆盖 157 个唯一官方布局
 - 已补第一版官方中文映射层：`champions / affiliations / campaigns / variants` 保留“官方原文 + 中文展示名”双字段
 - 已把 161 名可上阵英雄的官方头像按版本写入 `public/data/v1/champion-portraits/`，并在英雄相关卡片里接入展示
 - 已补第一版界面语言切换，页面可在中文 / 英文界面之间切换
@@ -144,9 +144,10 @@ npm run data:build
 - `npm run preview` 只适合确认 `dist/` 已被预览服务拉起，不适合作为 GitHub Pages 路径验收入口
 - `npm run preview:pages` 会按 `/Idle-Champions-Helper/` 基线路径提供更贴近生产的本地预览
 - 原始 definitions 快照默认输出到 `tmp/idle-champions-api/`
-- 手工补充层默认读取 `scripts/data/manual-overrides.json`
+- 手工补充层默认读取 `scripts/data/manual-overrides.json`，当前主要用于必要覆写，不再承担阵型布局主数据
 - 详细调研结论见 `docs/research/data/game-data-source-investigation.md`
 - `language_id=7` 官方中文覆盖结论见 `docs/research/data/language-id-7-chinese-definitions-research.md`
+- 官方阵型布局字段与唯一布局提取结论见 `docs/research/data/official-formation-layout-extraction-research.md`
 - 官方头像字段与资源尺寸核实见 `docs/research/data/champion-portrait-asset-research.md`
 
 ## 当前目录结构
@@ -221,9 +222,9 @@ npm run data:build
 - `public/data/v1/*.json`：当前版本的数据文件
 - `public/data/v1/champion-portraits/`：当前版本的官方英雄头像 PNG 资源
 - `scripts/fetch-idle-champions-definitions.mjs`：拉取官方 definitions 原始快照
-- `scripts/normalize-idle-champions-definitions.mjs`：把原始快照转换为前端数据
+- `scripts/normalize-idle-champions-definitions.mjs`：把原始快照转换为前端数据，并自动提取官方阵型布局
 - `scripts/sync-idle-champions-portraits.mjs`：把官方 mobile assets 里的英雄头像拉到版本化公共目录
-- `scripts/data/manual-overrides.json`：维护自动抓取之外的补充数据
+- `scripts/data/manual-overrides.json`：维护自动抓取之外的必要覆写与补充数据
 
 ### 部署约定
 
@@ -246,6 +247,7 @@ npm run data:build
   - `docs/research/data/game-data-source-investigation.md`
   - `docs/research/data/static-data-storage-research.md`
   - `docs/research/data/language-id-7-chinese-definitions-research.md`
+  - `docs/research/data/official-formation-layout-extraction-research.md`
   - `docs/research/data/champion-portrait-asset-research.md`
   - `docs/research/deployment/static-hosting-research.md`
   - `docs/research/deployment/china-static-hosting-research.md`
