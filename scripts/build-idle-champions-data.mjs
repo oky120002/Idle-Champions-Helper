@@ -14,6 +14,8 @@ async function main() {
       masterApiUrl: { type: 'string' },
       playserverClientVersion: { type: 'string' },
       definitionsClientVersion: { type: 'string' },
+      sourceLanguageId: { type: 'string' },
+      displayLanguageId: { type: 'string' },
       help: { type: 'boolean' },
     },
   })
@@ -23,13 +25,25 @@ async function main() {
   node scripts/build-idle-champions-data.mjs [--outDir <raw-dir>] [--outputDir <data-dir>]
 
 说明：
-  先抓官方 definitions 原始快照，再归一化写入 public/data。`)
+  同时抓取官方原文 definitions 与 language_id=7 中文 definitions，再归一化写入 public/data。`)
     return
   }
 
-  const fetched = await fetchDefinitionsSnapshot(values)
+  const sourceLanguageId = values.sourceLanguageId ?? '1'
+  const displayLanguageId = values.displayLanguageId ?? '7'
+  const fetched = await fetchDefinitionsSnapshot({
+    ...values,
+    languageId: sourceLanguageId,
+    fileLabel: `lang-${sourceLanguageId}-source`,
+  })
+  const localizedFetched = await fetchDefinitionsSnapshot({
+    ...values,
+    languageId: displayLanguageId,
+    fileLabel: `lang-${displayLanguageId}-display`,
+  })
   const normalized = await normalizeDefinitionsSnapshot({
     input: fetched.rawFile,
+    localizedInput: localizedFetched.rawFile,
     outputDir: values.outputDir,
     versionFile: values.versionFile,
     currentVersion: values.currentVersion,
@@ -37,7 +51,8 @@ async function main() {
   })
 
   console.log(`数据流水线完成：`)
-  console.log(`- raw: ${fetched.rawFile}`)
+  console.log(`- source raw: ${fetched.rawFile}`)
+  console.log(`- display raw: ${localizedFetched.rawFile}`)
   console.log(`- normalized dir: ${normalized.outputDir}`)
   console.log(`- version file: ${normalized.versionFile}`)
 }

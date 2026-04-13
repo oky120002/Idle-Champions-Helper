@@ -18,9 +18,11 @@
 - 已落地最小可运行工程骨架
 - 已补基础路由、页面壳层、公共数据目录与部署脚本
 - 已落第一版真实公共数据：`champions`、`variants`、`enums` 已由官方 definitions 生成
+- 已补第一版官方中文映射层：`champions / affiliations / campaigns / variants` 保留“官方原文 + 中文展示名”双字段
+- 已补第一版界面语言切换，页面可在中文 / 英文界面之间切换
 - 已落最小测试基础设施：`Vitest`、`React Testing Library`、`Playwright`
-- 个人数据本地存储方案已确定为 `IndexedDB`，但还未正式接入页面
-- 已补官方 definitions 抓取 / 归一化脚本骨架，方便后续接真实公共数据
+- 最近草稿与命名方案已接入 `IndexedDB`，支持本地自动保存、恢复与回写
+- 已补官方 definitions 原文 + `language_id=7` 中文双快照抓取 / 归一化脚本
 - 当前仍处于早期阶段，测试覆盖与完整规则体系都还在逐步补齐
 
 ## 当前技术路线
@@ -30,7 +32,7 @@
 - 测试：`Vitest + React Testing Library + Playwright`
 - 部署：`GitHub Pages + GitHub Actions`
 - 公共数据：`public/data/version.json + public/data/v1/*.json`
-- 个人数据：浏览器本地优先，后续接 `IndexedDB`
+- 个人数据：浏览器本地优先，当前以 `IndexedDB` 承载最近草稿与命名方案
 - 规则层：集中放在 `src/rules/`，不把规则判断散落到页面组件里
 
 ## 本地开发
@@ -117,10 +119,10 @@ npm run data:fetch
 把原始快照归一化为前端公共数据：
 
 ```bash
-npm run data:normalize -- --input tmp/idle-champions-api/<your-snapshot>.json
+npm run data:normalize -- --input tmp/idle-champions-api/<english-snapshot>.json --localizedInput tmp/idle-champions-api/<zh-snapshot>.json
 ```
 
-一键执行“抓取 + 归一化”：
+一键执行“官方原文抓取 + `language_id=7` 中文抓取 + 归一化”：
 
 ```bash
 npm run data:build
@@ -131,6 +133,7 @@ npm run data:build
 - 原始 definitions 快照默认输出到 `tmp/idle-champions-api/`
 - 手工补充层默认读取 `scripts/data/manual-overrides.json`
 - 详细调研结论见 `docs/research/data/game-data-source-investigation.md`
+- `language_id=7` 官方中文覆盖结论见 `docs/research/data/language-id-7-chinese-definitions-research.md`
 
 ## 当前目录结构
 
@@ -199,7 +202,7 @@ npm run data:build
 - `阵型编辑`
 - `方案存档`
 
-这些页面目前先承担结构验证与信息架构验证，不声称已经完成真实业务能力。
+这些页面已经具备第一版真实数据查询、本地导入校验和阵型草稿 / 方案保存能力；但规则深度、推荐层与完整个人进度映射仍未完成。
 
 ### 数据层约定
 
@@ -234,13 +237,13 @@ npm run data:build
 
 ## 下一步建议
 
-1. 补 `FormationLayout` 与必要的手工 overrides
-2. 先完成英雄筛选页的过滤闭环
-3. 再接阵型编辑页的 seat 冲突校验
-4. 最后补本地方案保存与个人画像能力
+1. 补 `FormationLayout` 的适用场景、上下文与必要的手工 overrides
+2. 完善阵型编辑页的 seat 冲突校验、候选英雄约束与布局提示
+3. 把个人数据导入结果安全写入 `IndexedDB`，接到页面状态与筛选闭环
+4. 扩展方案管理能力，例如删除、覆盖保存和更细的标签 / 目标描述
 
 ## 说明
 
 - 当前仓库里所有中文文案、页面标题、README 和调研文档默认使用中文。
 - 游戏术语或技术名词在没有稳定中文叫法时可保留原文；只要存在稳定中文叫法，就优先中文。
-- 当前还没有真实游戏数据和完整业务逻辑，因此页面内容应视为工程骨架，而不是完成品。
+- 当前已接入第一版真实公共数据与本地持久化闭环，但规则完整度、个人进度映射和推荐层仍处早期阶段，页面不应视为完成品。
