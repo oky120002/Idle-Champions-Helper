@@ -216,6 +216,17 @@ export function VariantsPage() {
               </label>
             </div>
 
+            <p
+              className={
+                activeFilters.length > 0 ? 'supporting-text' : 'supporting-text supporting-text--placeholder'
+              }
+              aria-hidden={activeFilters.length === 0}
+            >
+              {activeFilters.length > 0
+                ? `${t({ zh: '当前筛选：', en: 'Active filters: ' })}${activeFilters.join(' · ')}`
+                : t({ zh: '当前筛选：', en: 'Active filters: ' })}
+            </p>
+
             {filteredVariants.length === 0 ? (
               <div className="status-banner status-banner--info">
                 {t({
@@ -227,13 +238,6 @@ export function VariantsPage() {
 
             {filteredVariants.length > 0 ? (
               <>
-                {activeFilters.length > 0 ? (
-                  <p className="supporting-text">
-                    {t({ zh: '当前筛选：', en: 'Active filters: ' })}
-                    {activeFilters.join(' · ')}
-                  </p>
-                ) : null}
-
                 <p className="supporting-text">
                   {t({
                     zh: `当前展示 ${visibleVariants.length} / ${filteredVariants.length} 条变体记录。名称会双语展示，但长段限制文本只跟随当前界面语言显示。`,

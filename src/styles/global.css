@@ -281,6 +281,10 @@ html[data-ui-locale='en-US'] .site-subtitle {
   margin: 0.75rem 0 0;
 }
 
+.supporting-text--placeholder {
+  visibility: hidden;
+}
+
 .metric-grid,
 .card-grid,
 .split-grid {
@@ -408,6 +412,37 @@ html[data-ui-locale='en-US'] .site-subtitle {
   gap: 1rem;
   margin-top: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.results-grid--stable {
+  margin-top: 0;
+  align-content: start;
+}
+
+.results-panel {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.results-panel__meta {
+  display: grid;
+  gap: 0.25rem;
+  align-content: start;
+  min-height: 4.4rem;
+}
+
+.results-panel__body {
+  height: clamp(22rem, 58vh, 42rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 0.15rem;
+  scrollbar-gutter: stable;
+}
+
+.results-panel__empty {
+  margin-top: 0;
+  min-height: 100%;
 }
 
 .result-card {
