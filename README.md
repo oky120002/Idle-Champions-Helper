@@ -133,13 +133,7 @@ npm run data:normalize -- --input tmp/idle-champions-api/<english-snapshot>.json
 npm run data:portraits -- --input tmp/idle-champions-api/<english-snapshot>.json
 ```
 
-一键执行“官方原文抓取 + `language_id=7` 中文抓取 + 头像同步 + 归一化”：
-
-```bash
-npm run data:build
-```
-
-推荐作为后续统一入口的一键命令：
+一键执行当前所有可公开拉取的官方基座数据更新：
 
 ```bash
 npm run data:official
@@ -156,7 +150,6 @@ npm run data:official
 
 - 这是当前“所有可公开拉取的官方基座数据”的统一入口
 - 个人账号数据仍需要用户凭证，不在这个命令里
-- `data:build` 当前仍保留，和 `data:official` 指向同一条数据流水线
 
 - `npm run preview` 只适合确认 `dist/` 已被预览服务拉起，不适合作为 GitHub Pages 路径验收入口
 - `npm run preview:pages` 会按 `/Idle-Champions-Helper/` 基线路径提供更贴近生产的本地预览
