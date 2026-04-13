@@ -1,0 +1,6290 @@
+{
+  "updatedAt": "2026-04-13",
+  "summary": {
+    "id": "146",
+    "name": {
+      "original": "The Dark Urge",
+      "display": "邪念"
+    },
+    "seat": 11,
+    "roles": [
+      "dps"
+    ],
+    "affiliations": [
+      {
+        "original": "Absolute Adversaries",
+        "display": "绝对敌手"
+      }
+    ],
+    "tags": [
+      "absoluteadversaries",
+      "chaotic",
+      "dps",
+      "dragonborn",
+      "event",
+      "evil",
+      "male",
+      "sorcerer",
+      "spec_control",
+      "y7"
+    ],
+    "portrait": {
+      "path": "v1/champion-portraits/146.png",
+      "sourceGraphic": "Portraits/Portrait_TheDarkUrge",
+      "sourceVersion": 2
+    }
+  },
+  "englishName": "The Dark Urge",
+  "eventName": {
+    "original": "Festival of Fools",
+    "display": "愚人节"
+  },
+  "dateAvailable": "2024-03-06 13:00:00",
+  "lastReworkDate": "2024-03-06 13:00:00",
+  "popularity": 0,
+  "baseCost": "900000000000000000",
+  "baseDamage": "2500000000000",
+  "baseHealth": "41",
+  "graphicId": "22581",
+  "portraitGraphicId": "22580",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1806606000
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    120,
+    670,
+    1305,
+    2090
+  ],
+  "costCurves": {
+    "1": 1.09
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "content_set_id": 41,
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      190,
+      191,
+      192
+    ],
+    "graphic_large": 22583,
+    "graphic_xl": 22584,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      107,
+      66
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 4,
+      "gethit": 5,
+      "koed": 6,
+      "run": 7
+    },
+    "allow_time_gate": "2024-03-27 12:00:00",
+    "available_in_store": "2024-04-03 12:00:00",
+    "time_gate_adventure_id": 1538,
+    "time_gate_variants_ids": [
+      1486,
+      1487,
+      1488
+    ],
+    "companions": [
+      {
+        "graphic_id": 22582,
+        "visible": false
+      },
+      {
+        "graphic_id": 22617,
+        "visible": false
+      }
+    ],
+    "permanent_effects": [
+      {
+        "effect_string": "force_allow_hero",
+        "hero_ids": [
+          146
+        ]
+      }
+    ],
+    "can_always_buy_hero": true,
+    "time_gate_tier": 1,
+    "silver_chest_type_id": 562,
+    "gold_chest_type_id": 563,
+    "golden_epic_loot_id": 3461,
+    "golden_epic_promo_id": 469,
+    "event_logo_graphic_id": 3366,
+    "console_portrait": 22705,
+    "trials_effect_id": 839,
+    "portrait_graphic_scale": 1.35,
+    "weekly_buff": "buff_upgrade,200,14379",
+    "legendary_effect_id": [
+      54,
+      55,
+      65,
+      32,
+      89,
+      50
+    ],
+    "spotlight_url": "https://youtu.be/abzxqFy417g",
+    "notification_adjustment": {
+      "offset": [
+        56,
+        255
+      ],
+      "scale": 1.25
+    },
+    "shop_transform_graphic": 28668
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "The Dark Urge",
+      "display": "邪念"
+    },
+    "class": {
+      "original": "Sorcerer",
+      "display": "术士"
+    },
+    "race": {
+      "original": "Dragonborn",
+      "display": "龙裔"
+    },
+    "age": null,
+    "alignment": {
+      "original": "Chaotic Evil",
+      "display": "混乱邪恶"
+    },
+    "abilityScores": {
+      "str": 8,
+      "dex": 13,
+      "con": 15,
+      "int": 12,
+      "wis": 10,
+      "cha": 17
+    },
+    "backstory": {
+      "original": "The Dark Urge remembers nothing but a path paved with blood. Unimaginable cruelty whispers from within. Can he escape it? Would he even want to?",
+      "display": "邪念只记得用鲜血铺就的道路。难以想象的残酷之声由心而发。他能否逃离？甚至是否想逃离？"
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "735",
+      "name": {
+        "original": "Murderous Slash",
+        "display": "杀戮斩击"
+      },
+      "description": {
+        "original": "The Dark Urge strikes nearby enemies with a slash of his dagger.",
+        "display": "邪念会用自己的匕首斩击附近的敌人。"
+      },
+      "longDescription": null,
+      "cooldown": 5,
+      "numTargets": 1,
+      "aoeRadius": 100,
+      "damageModifier": "1",
+      "target": "front",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee",
+        "aoe"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "target_offset_x": -34,
+          "damage_frame": 9,
+          "jump_sound": 30,
+          "sound_frames": {
+            "2": 154
+          }
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "737",
+      "name": {
+        "original": "Form of the Slayer",
+        "display": "屠杀者形态"
+      },
+      "description": {
+        "original": "The Dark Urge transforms into the Slayer form for 15 seconds, dealing massive damage for the duration.",
+        "display": "邪念转为杀手形态，持续 15 秒，在此期间造成大量伤害。"
+      },
+      "longDescription": {
+        "original": "The Dark Urge transforms into the Slayer form for 15 seconds, dealing massive damage for the duration. Sceleritas Fel, immune to damage, takes his place in the formation for the duration.",
+        "display": "邪念转为杀手形态，持续 15 秒，在此期间造成大量伤害。在此期间，免疫伤害的斯克莱里塔斯·费尔会在阵型中代替他。"
+      },
+      "cooldown": 320,
+      "numTargets": 0,
+      "aoeRadius": 0,
+      "damageModifier": "0.03",
+      "target": "none",
+      "damageTypes": [],
+      "tags": [
+        "ultimate"
+      ],
+      "graphicId": "22537",
+      "animations": [
+        {
+          "type": "ultimate_attack",
+          "ultimate": "dark_urge_slayer",
+          "no_damage_display": false
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "14378",
+        "name": {
+          "original": "Dark Inheritance",
+          "display": "黑暗继承"
+        },
+        "description": null,
+        "graphicId": "22874"
+      },
+      {
+        "upgradeId": "14379",
+        "name": {
+          "original": "The Urge",
+          "display": "渴求"
+        },
+        "description": {
+          "original": "The Dark Urge increases his damage each time he defeats an enemy, count persists between adventures.",
+          "display": "邪念每次击败敌人都会提升自身伤害，计数在各冒险之间保留。"
+        },
+        "graphicId": "22528"
+      },
+      {
+        "upgradeId": "14380",
+        "name": {
+          "original": "Ceremorphosis",
+          "display": "蜕变"
+        },
+        "description": null,
+        "graphicId": "22526"
+      },
+      {
+        "upgradeId": "14381",
+        "name": {
+          "original": "Living on the Edge",
+          "display": "刀锋舔血"
+        },
+        "description": {
+          "original": "The Dark Urge deals more damage when on the formation's edge or next to other DPS Champions.",
+          "display": "位于阵型边缘或与伤害输出勇士相邻时，邪念可造成更多伤害。"
+        },
+        "graphicId": "22527"
+      }
+    ]
+  },
+  "upgrades": [
+    {
+      "id": "14378",
+      "requiredLevel": 0,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Dark Inheritance",
+        "display": "黑暗继承"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1869",
+      "effectDefinition": {
+        "id": "1869",
+        "snapshots": {
+          "original": {
+            "id": 1869,
+            "flavour_text": "",
+            "description": {
+              "desc": "The Dark Urge is eligible to start in all adventures, even if the Patron, Variant, or other restrictions would say otherwise. He also does not interact with any Champion abilities or variant effects that are based on age."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "do_nothing"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 22874,
+            "large_graphic_id": 22874,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": false
+            }
+          },
+          "display": {
+            "id": 1869,
+            "flavour_text": "",
+            "description": {
+              "desc": "即使不满足赞助者、支线任务或其他限制的要求，邪念仍有资格开始所有探险。他不适用任何基于年龄的勇士能力或支线任务效果。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "do_nothing"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 22874,
+            "large_graphic_id": 22874,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": false
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14379",
+      "requiredLevel": 30,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "The Urge",
+        "display": "渴求"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1870",
+      "effectDefinition": {
+        "id": "1870",
+        "snapshots": {
+          "original": {
+            "id": 1870,
+            "flavour_text": "",
+            "description": {
+              "desc": "Each time the Dark Urge defeats an enemy, he gains a Murder stack. The Dark Urge increases his damage by $(not_buffed amount)% for each Murder stack he has. Stacks persist between adventures."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,0.1",
+                "stack_title": "Total Murder Stacks",
+                "max_stacks": 4000000000,
+                "stacks_multiply": false,
+                "desc_forced_order": 1,
+                "show_bonus": true,
+                "stacks_on_trigger": "on_broadcast_stacks,dark_urge_murder_trigger"
+              },
+              {
+                "effect_string": "stacks_data_binder_safe,0,the_dark_urge_murder_stacks",
+                "is_instanced_stat": false,
+                "use_stat_defs": true
+              },
+              {
+                "effect_string": "expression_on_trigger,on_broadcast_stacks",
+                "trigger_params": [
+                  "dark_urge_murder_trigger"
+                ],
+                "per_trigger_expr": "AppendToSaveStat(`the_dark_urge_a_wonderful_day_for_murder`, false, trigger_count * as_int(GetUpgradeStacks(14381, 1) == 6 && is_formation_full))"
+              },
+              {
+                "effect_string": "broadcast_on_trigger,dark_urge_murder_trigger",
+                "trigger_name": "on_broadcast_stacks",
+                "trigger_params": [
+                  "dark_urge_kill"
+                ]
+              },
+              {
+                "effect_string": "broadcast_on_trigger,dark_urge_kill,owner_hit_would_kill"
+              },
+              {
+                "effect_string": "broadcast_on_trigger,dark_urge_kill,offline_monsters_killed_by_owner"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 22531,
+            "large_graphic_id": 22528,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "per_effect_index_bonuses": true,
+              "indexed_effect_properties": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 1870,
+            "flavour_text": "",
+            "description": {
+              "desc": "每次邪念击败敌人时，他获得一层杀戮堆叠。每从持有一层杀戮堆叠，邪念提升伤害 $(not_buffed amount)%。堆叠跨冒险保留。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,0.1",
+                "stack_title": "总杀戮堆叠",
+                "max_stacks": 4000000000,
+                "stacks_multiply": false,
+                "desc_forced_order": 1,
+                "show_bonus": true,
+                "stacks_on_trigger": "on_broadcast_stacks,dark_urge_murder_trigger"
+              },
+              {
+                "effect_string": "stacks_data_binder_safe,0,the_dark_urge_murder_stacks",
+                "is_instanced_stat": false,
+                "use_stat_defs": true
+              },
+              {
+                "effect_string": "expression_on_trigger,on_broadcast_stacks",
+                "trigger_params": [
+                  "dark_urge_murder_trigger"
+                ],
+                "per_trigger_expr": "AppendToSaveStat(`the_dark_urge_a_wonderful_day_for_murder`, false, trigger_count * as_int(GetUpgradeStacks(14381, 1) == 6 && is_formation_full))"
+              },
+              {
+                "effect_string": "broadcast_on_trigger,dark_urge_murder_trigger",
+                "trigger_name": "on_broadcast_stacks",
+                "trigger_params": [
+                  "dark_urge_kill"
+                ]
+              },
+              {
+                "effect_string": "broadcast_on_trigger,dark_urge_kill,owner_hit_would_kill"
+              },
+              {
+                "effect_string": "broadcast_on_trigger,dark_urge_kill,offline_monsters_killed_by_owner"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 22531,
+            "large_graphic_id": 22528,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "per_effect_index_bonuses": true,
+              "indexed_effect_properties": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "The Dark Urge increases his damage each time he defeats an enemy, with a count that persists between adventures.",
+        "display": "邪念每次击败敌人都会提升自身伤害，计数在各冒险之间保留。"
+      }
+    },
+    {
+      "id": "14655",
+      "requiredLevel": 50,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14380",
+      "requiredLevel": 70,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Ceremorphosis",
+        "display": "蜕变"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1871",
+      "effectDefinition": {
+        "id": "1871",
+        "snapshots": {
+          "original": {
+            "id": 1871,
+            "flavour_text": "",
+            "description": {
+              "desc": "Your formation gains one Ceremorphosis stack due to the mind flayer tadpole in the Dark Urge's brain. The Dark Urge increases his damage by $(amount)% for each Ceremorphosis stack, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack_amount,100"
+              },
+              {
+                "off_when_benched": true,
+                "effect_string": "hero_dps_multiplier_mult,0",
+                "amount_expr": "upgrade_amount(14380,0)",
+                "stack_func": "per_ceremorphosis_stacks",
+                "amount_func": "mult",
+                "stacks_multiply": true,
+                "show_bonus": true,
+                "stack_title": "Total Ceremorphosis Stacks",
+                "total_title": "Total Bonus",
+                "desc_forced_order": 2,
+                "amount_updated_listeners": [
+                  "upgrade_unlocked",
+                  "slot_changed",
+                  "feat_changed"
+                ]
+              },
+              {
+                "off_when_benched": true,
+                "outgoing_buffs": false,
+                "effect_string": "dark_urge_ceremorphosis_stacks,1",
+                "manual_stacking": true,
+                "stacks_multiply": false,
+                "show_stacks": true,
+                "stack_title": "The Dark Urge's Ceremorphosis Stacks",
+                "desc_forced_order": 1
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 22529,
+            "large_graphic_id": 22526,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "retain_on_slot_changed": true
+            }
+          },
+          "display": {
+            "id": 1871,
+            "flavour_text": "",
+            "description": {
+              "desc": "邪念大脑中的夺心魔蝌蚪使你的阵型获得一层蜕变堆叠。每层蜕变使邪念的伤害提升 $(amount)%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack_amount,100"
+              },
+              {
+                "off_when_benched": true,
+                "effect_string": "hero_dps_multiplier_mult,0",
+                "amount_expr": "upgrade_amount(14380,0)",
+                "stack_func": "per_ceremorphosis_stacks",
+                "amount_func": "mult",
+                "stacks_multiply": true,
+                "show_bonus": true,
+                "stack_title": "总蜕变堆叠",
+                "total_title": "总加成",
+                "desc_forced_order": 2,
+                "amount_updated_listeners": [
+                  "upgrade_unlocked",
+                  "slot_changed",
+                  "feat_changed"
+                ]
+              },
+              {
+                "off_when_benched": true,
+                "outgoing_buffs": false,
+                "effect_string": "dark_urge_ceremorphosis_stacks,1",
+                "manual_stacking": true,
+                "stacks_multiply": false,
+                "show_stacks": true,
+                "stack_title": "邪念的蜕变堆叠",
+                "desc_forced_order": 1
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 22529,
+            "large_graphic_id": 22526,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "retain_on_slot_changed": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14656",
+      "requiredLevel": 90,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14381",
+      "requiredLevel": 100,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Living on the Edge",
+        "display": "刀锋舔血"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1872",
+      "effectDefinition": {
+        "id": "1872",
+        "snapshots": {
+          "original": {
+            "id": 1872,
+            "flavour_text": "",
+            "description": {
+              "desc": "The Dark Urge has $(max_stacks___2) Outcast stacks, minus $(stack_reduction_per_champ_mult___2) stack for each adjacent Champion that does not have the DPS role. The Dark Urge increases his damage by $(amount)% for each Outcast stack, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack_amount,100"
+              },
+              {
+                "effect_string": "hero_dps_multiplier_mult,0",
+                "amount_expr": "upgrade_amount(14381,0)",
+                "amount_func": "mult",
+                "stack_func": "per_hero_attribute",
+                "per_hero_targets": [
+                  "adj"
+                ],
+                "max_stacks": 6,
+                "stack_reduction_per_champ_mult": 1,
+                "per_hero_expr": "as_int(!HasTag(`dps`))",
+                "post_process_expr": "clamp(max_stacks - (input * stack_reduction_per_champ_mult), 0, max_stacks)",
+                "show_bonus": true,
+                "stack_title": "Outcast Stacks",
+                "amount_updated_listeners": [
+                  "upgrade_unlocked",
+                  "slot_changed",
+                  "feat_changed"
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 22530,
+            "large_graphic_id": 22527,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "retain_on_slot_changed": true
+            }
+          },
+          "display": {
+            "id": 1872,
+            "flavour_text": "",
+            "description": {
+              "desc": "邪念有 $(max_stacks___2) 层放逐层数，相邻每名没有伤害输出角色的勇士扣除 $(stack_reduction_per_champ_mult___2) 层。每有一层放逐层数，邪念提升 $(amount)% 伤害，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack_amount,100"
+              },
+              {
+                "effect_string": "hero_dps_multiplier_mult,0",
+                "amount_expr": "upgrade_amount(14381,0)",
+                "amount_func": "mult",
+                "stack_func": "per_hero_attribute",
+                "per_hero_targets": [
+                  "adj"
+                ],
+                "max_stacks": 6,
+                "stack_reduction_per_champ_mult": 1,
+                "per_hero_expr": "as_int(!HasTag(`dps`))",
+                "post_process_expr": "clamp(max_stacks - (input * stack_reduction_per_champ_mult), 0, max_stacks)",
+                "show_bonus": true,
+                "stack_title": "放逐层数",
+                "amount_updated_listeners": [
+                  "upgrade_unlocked",
+                  "slot_changed",
+                  "feat_changed"
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 22530,
+            "large_graphic_id": 22527,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "retain_on_slot_changed": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "The Dark Urge deals more damage when on the formation's edge or when next to Champions with the DPS role.",
+        "display": "位于阵型边缘或与伤害输出勇士相邻时，邪念可造成更多伤害。"
+      }
+    },
+    {
+      "id": "14382",
+      "requiredLevel": 130,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Storm Sorcery",
+        "display": "风暴术士"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1873",
+      "effectDefinition": {
+        "id": "1873",
+        "snapshots": {
+          "original": {
+            "id": 1873,
+            "flavour_text": "",
+            "description": {
+              "desc": "The Dark Urge's Murderous Slash attack is empowered by lightning. This increases the range by $(amount___2)% and deals up to $(amount___3)% more damage to enemies based on how close they are to him."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "change_base_attack,739"
+              },
+              {
+                "effect_string": "increase_aoe_radius,200,739"
+              },
+              {
+                "effect_string": "increase_damage_by_distance,800,739"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "type": "upgrade",
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 2,
+              "retain_on_slot_changed": true
+            }
+          },
+          "display": {
+            "id": 1873,
+            "flavour_text": "",
+            "description": {
+              "desc": "邪念的“杀戮斩击”攻击获得闪电强化，提升射程 $(amount___2)% 并根据与敌人的距离，对敌人造成最多 $(amount___3)% 额外伤害。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "change_base_attack,739"
+              },
+              {
+                "effect_string": "increase_aoe_radius,200,739"
+              },
+              {
+                "effect_string": "increase_damage_by_distance,800,739"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "type": "upgrade",
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 2,
+              "retain_on_slot_changed": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Storm Sorcery",
+        "display": "风暴术士"
+      },
+      "specializationDescription": {
+        "original": "The Dark Urge's Storm Sorcery origin causes his normal attacks to deal more damage with a larger area of effect.",
+        "display": "邪念的“风暴术士”起源导致他的普通攻击可造成更广更大的伤害。"
+      },
+      "specializationGraphicId": "22536",
+      "tipText": null
+    },
+    {
+      "id": "14383",
+      "requiredLevel": 130,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Draconic Bloodline",
+        "display": "龙之血统"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1874",
+      "effectDefinition": {
+        "id": "1874",
+        "snapshots": {
+          "original": {
+            "id": 1874,
+            "flavour_text": "",
+            "description": {
+              "desc": "The Dark Urge's damage is increased by $(amount)% for each Dragonborn Champion in the formation, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_dps_mult_per_tagged_crusader_mult,200,dragonborn"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "type": "upgrade",
+              "formation_circle_icon": false,
+              "spec_option_post_apply_info": "Dragonborn Champions: $num_stacks"
+            }
+          },
+          "display": {
+            "id": 1874,
+            "flavour_text": "",
+            "description": {
+              "desc": "阵型中的每位龙裔勇士均使邪念的伤害提高 $(amount)%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_dps_mult_per_tagged_crusader_mult,200,dragonborn"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "type": "upgrade",
+              "formation_circle_icon": false,
+              "spec_option_post_apply_info": "龙裔勇士：$num_stacks"
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Draconic Bloodline",
+        "display": "龙之血统"
+      },
+      "specializationDescription": {
+        "original": "The Dark Urge embraces his draconic heritage and deals more damage when other Dragonborn are in the formation.",
+        "display": "邪念接受自己的龙裔遗产，在阵型中存在其他龙裔时造成更多伤害。"
+      },
+      "specializationGraphicId": "22533",
+      "tipText": null
+    },
+    {
+      "id": "14384",
+      "requiredLevel": 130,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Divine Soul",
+        "display": "神圣灵魂"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1875",
+      "effectDefinition": {
+        "id": "1875",
+        "snapshots": {
+          "original": {
+            "id": 1875,
+            "flavour_text": "",
+            "description": {
+              "desc": "The Dark Urge increases the number of The Urge's Murder stacks he gains each time he defeats an enemy by $(amount)%."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade_effect_stacks_trigger_mult,200,14379,3"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "type": "upgrade",
+              "formation_circle_icon": false
+            }
+          },
+          "display": {
+            "id": 1875,
+            "flavour_text": "",
+            "description": {
+              "desc": "邪念提升渴求每次击败敌人获得的杀戮堆叠层数 $(amount)%。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade_effect_stacks_trigger_mult,200,14379,3"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "type": "upgrade",
+              "formation_circle_icon": false
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Divine Soul",
+        "display": "神圣灵魂"
+      },
+      "specializationDescription": {
+        "original": "The Dark Urge's path of destruction draws the attention of divine powers invested in his murderous ways.",
+        "display": "邪念的破坏之路引起了投入到他杀戮手段的神圣力量的注意。"
+      },
+      "specializationGraphicId": "22532",
+      "tipText": null
+    },
+    {
+      "id": "14657",
+      "requiredLevel": 140,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14658",
+      "requiredLevel": 150,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14385",
+      "requiredLevel": 180,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Embrace the Urge",
+        "display": "拥抱渴望"
+      },
+      "upgradeType": "unlock_ultimate",
+      "effectReference": "effect_def,1876",
+      "effectDefinition": {
+        "id": "1876",
+        "snapshots": {
+          "original": {
+            "id": 1876,
+            "flavour_text": "",
+            "description": {
+              "desc": "The Dark Urge unlocks the Form of the Slayer ultimate, and deals $(not_buffed amount___2)% more damage for each Evil Champion in the formation, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "set_ultimate_attack,737"
+              },
+              {
+                "effect_string": "hero_dps_mult_per_tagged_crusader_mult,100,evil"
+              },
+              {
+                "effect_string": "dark_urge_slayer_form",
+                "buff_indicies": [
+                  3,
+                  4,
+                  5
+                ],
+                "companion_index": 0
+              },
+              {
+                "apply_manually": true,
+                "effect_string": "change_base_attack,736"
+              },
+              {
+                "apply_manually": true,
+                "effect_string": "damage_reduction,100"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "type": "upgrade",
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 1,
+              "retain_on_slot_changed": true,
+              "spec_option_post_apply_info": "Evil Champions: $num_stacks___2"
+            }
+          },
+          "display": {
+            "id": 1876,
+            "flavour_text": "",
+            "description": {
+              "desc": "邪念解锁“屠杀者形态”杀招，阵型中的每位邪恶阵营勇士均使伤害提高 $(not_buffed amount___2)%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "set_ultimate_attack,737"
+              },
+              {
+                "effect_string": "hero_dps_mult_per_tagged_crusader_mult,100,evil"
+              },
+              {
+                "effect_string": "dark_urge_slayer_form",
+                "buff_indicies": [
+                  3,
+                  4,
+                  5
+                ],
+                "companion_index": 0
+              },
+              {
+                "apply_manually": true,
+                "effect_string": "change_base_attack,736"
+              },
+              {
+                "apply_manually": true,
+                "effect_string": "damage_reduction,100"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "type": "upgrade",
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 1,
+              "retain_on_slot_changed": true,
+              "spec_option_post_apply_info": "邪恶勇士：$num_stacks___2"
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Embrace the Urge",
+        "display": "拥抱渴望"
+      },
+      "specializationDescription": {
+        "original": "The Dark Urge succumbs to his murderous impulses, delighting evil Champions and unlocking an ultimate transformation.",
+        "display": "邪念屈服于自己的杀戮冲动，令邪恶阵营的勇士感到快乐，解锁杀招变形。"
+      },
+      "specializationGraphicId": "22534",
+      "tipText": null
+    },
+    {
+      "id": "14386",
+      "requiredLevel": 180,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Resist the Urge",
+        "display": "抵抗渴望"
+      },
+      "upgradeType": "unlock_ultimate",
+      "effectReference": "effect_def,1877",
+      "effectDefinition": {
+        "id": "1877",
+        "snapshots": {
+          "original": {
+            "id": 1877,
+            "flavour_text": "",
+            "description": {
+              "desc": "The Dark Urge's alignment becomes Lawful Good, he gains the Control role and he unlocks the Withers' Resurrection ultimate, and deals $(not_buffed amount___2)% more damage for each Good Champion in the formation, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "set_ultimate_attack,738"
+              },
+              {
+                "effect_string": "hero_dps_mult_per_tagged_crusader_mult,100,good"
+              },
+              {
+                "effect_string": "dark_urge_withers_resurrection",
+                "buff_indicies": [
+                  3,
+                  6
+                ],
+                "companion_index": 1,
+                "resurrection_priority": 1200
+              },
+              {
+                "apply_manually": true,
+                "effect_string": "damage_reduction,100",
+                "targets": [
+                  "all_slots"
+                ]
+              },
+              {
+                "effect_string": "change_hero_alignment_tag,lawful,good"
+              },
+              {
+                "effect_string": "add_hero_tags,0,control"
+              },
+              {
+                "apply_manually": true,
+                "effect_string": "block_one_shot_while_applied"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "type": "upgrade",
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 1,
+              "retain_on_slot_changed": true,
+              "spec_option_post_apply_info": "Good Champions: $num_stacks___2"
+            }
+          },
+          "display": {
+            "id": 1877,
+            "flavour_text": "",
+            "description": {
+              "desc": "邪念的阵营变为守序善良，他获得控制者角色，并解锁“威瑟斯的复活”杀招，阵型中的每位善良阵营勇士均使伤害提高 $(not_buffed amount___2)%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "set_ultimate_attack,738"
+              },
+              {
+                "effect_string": "hero_dps_mult_per_tagged_crusader_mult,100,good"
+              },
+              {
+                "effect_string": "dark_urge_withers_resurrection",
+                "buff_indicies": [
+                  3,
+                  6
+                ],
+                "companion_index": 1,
+                "resurrection_priority": 1200
+              },
+              {
+                "apply_manually": true,
+                "effect_string": "damage_reduction,100",
+                "targets": [
+                  "all_slots"
+                ]
+              },
+              {
+                "effect_string": "change_hero_alignment_tag,lawful,good"
+              },
+              {
+                "effect_string": "add_hero_tags,0,control"
+              },
+              {
+                "apply_manually": true,
+                "effect_string": "block_one_shot_while_applied"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "type": "upgrade",
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 1,
+              "retain_on_slot_changed": true,
+              "spec_option_post_apply_info": "善良勇士：$num_stacks___2"
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Resist the Urge",
+        "display": "抵抗渴望"
+      },
+      "specializationDescription": {
+        "original": "The Dark Urge suppresses his violent instincts, winning the approval of good Champions and gaining assistance from an unusual ally.",
+        "display": "邪念克制自己的暴力本能，赢得善良阵营勇士的认可，获得一名非凡盟友的协助。"
+      },
+      "specializationGraphicId": "22535",
+      "tipText": null
+    },
+    {
+      "id": "14659",
+      "requiredLevel": 190,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14690",
+      "requiredLevel": 230,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,14379",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14660",
+      "requiredLevel": 250,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14661",
+      "requiredLevel": 300,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14662",
+      "requiredLevel": 310,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14663",
+      "requiredLevel": 370,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14664",
+      "requiredLevel": 440,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14665",
+      "requiredLevel": 470,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14666",
+      "requiredLevel": 510,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14691",
+      "requiredLevel": 530,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,14379",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14682",
+      "requiredLevel": 600,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14668",
+      "requiredLevel": 610,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14669",
+      "requiredLevel": 670,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14670",
+      "requiredLevel": 690,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14671",
+      "requiredLevel": 730,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14672",
+      "requiredLevel": 790,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14673",
+      "requiredLevel": 820,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14692",
+      "requiredLevel": 830,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,14379",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14675",
+      "requiredLevel": 890,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14676",
+      "requiredLevel": 980,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14677",
+      "requiredLevel": 1030,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14678",
+      "requiredLevel": 1070,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14693",
+      "requiredLevel": 1130,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,14379",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14680",
+      "requiredLevel": 1170,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14694",
+      "requiredLevel": 1200,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14681",
+      "requiredLevel": 1250,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14695",
+      "requiredLevel": 1360,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14683",
+      "requiredLevel": 1380,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14696",
+      "requiredLevel": 1430,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,14379",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14685",
+      "requiredLevel": 1590,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14686",
+      "requiredLevel": 1700,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14697",
+      "requiredLevel": 1730,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,14379",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14698",
+      "requiredLevel": 1750,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14688",
+      "requiredLevel": 1790,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14689",
+      "requiredLevel": 1800,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14387",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,14379",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14388",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,14380",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14389",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,14381",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14667",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,14379",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14674",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,14379",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14679",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,14379",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14684",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,14379",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "14687",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,14379",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    }
+  ],
+  "feats": [
+    {
+      "id": "1691",
+      "order": 0,
+      "name": {
+        "original": "Tavern Brawler",
+        "display": "旅店打手"
+      },
+      "description": {
+        "original": "Go ahead, my sanguineous master - use your claws!",
+        "display": "去吧，我的血腥大师 - 用上您的爪子吧！"
+      },
+      "rarity": "2",
+      "graphicId": "6078",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,30"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "1692",
+      "order": 1,
+      "name": {
+        "original": "Grappler",
+        "display": "擒抱者"
+      },
+      "description": {
+        "original": "Now that they're unconscious, take off their head!",
+        "display": "既然对方已经昏迷了，那就把他的头给拧下来！"
+      },
+      "rarity": "3",
+      "graphicId": "6078",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,60"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "1693",
+      "order": 2,
+      "name": {
+        "original": "Weapon Master",
+        "display": "武器大师"
+      },
+      "description": {
+        "original": "You are an exquisite artist with a blade, sire.",
+        "display": "大人啊，您真是用刃器的绝妙艺术家。"
+      },
+      "rarity": "4",
+      "graphicId": "6078",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,120"
+        }
+      ],
+      "sources": [
+        {
+          "source": "patron",
+          "patron_id": 5
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1712170800
+      },
+      "collectionsSource": {
+        "type": "patron",
+        "patron_id": 5
+      }
+    },
+    {
+      "id": "1694",
+      "order": 3,
+      "name": {
+        "original": "Selflessness",
+        "display": "无私"
+      },
+      "description": {
+        "original": "You gave coins to a beggar once. Gave me nightmares for weeks!",
+        "display": "您给乞丐施舍了一次金币，却让我做了几星期的噩梦！"
+      },
+      "rarity": "2",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "1695",
+      "order": 4,
+      "name": {
+        "original": "Inspiring Leader",
+        "display": "鼓舞人心的首领"
+      },
+      "description": {
+        "original": "It is an honor to follow your trail of gore, milord.",
+        "display": "跟随您的血肉之径是我的无上荣耀，大人。"
+      },
+      "rarity": "3",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,25"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "1696",
+      "order": 5,
+      "name": {
+        "original": "I Am The Dark Urge",
+        "display": "我就是邪念"
+      },
+      "description": {
+        "original": "Such a unique way of introducing  yourself.",
+        "display": "真是独特的自我介绍方式。"
+      },
+      "rarity": "2",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,14379"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "1697",
+      "order": 6,
+      "name": {
+        "original": "Murderous Intent",
+        "display": "杀戮意图"
+      },
+      "description": {
+        "original": "We have some free time if you want to get your hands dirty, master.",
+        "display": "大人，如果想要弄脏双手，我们还有点空闲时间。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,14379"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "1698",
+      "order": 7,
+      "name": {
+        "original": "Growing Infection",
+        "display": "增长感染"
+      },
+      "description": {
+        "original": "These tadpoles are deliciously vicious.",
+        "display": "这些蝌蚪真是恶毒得美妙。"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,14380"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "1699",
+      "order": 8,
+      "name": {
+        "original": "True Souls",
+        "display": "真实灵魂"
+      },
+      "description": {
+        "original": "Making more True Souls for your own purposes, eh, milord?",
+        "display": "大人，呃，为了您自己的目的，多制造一些真实灵魂吧？"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,14380"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "1700",
+      "order": 9,
+      "name": {
+        "original": "Murder Gang",
+        "display": "杀人团伙"
+      },
+      "description": {
+        "original": "I like the company you keep, sire. Always soaked in blood.",
+        "display": "大人，我喜欢您选的同伴 - 总是满身鲜血的，真好。"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,14381"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "1701",
+      "order": 10,
+      "name": {
+        "original": "Vicious Syndicate",
+        "display": "恶毒联合"
+      },
+      "description": {
+        "original": "They'll never delight in gore as much as you do.",
+        "display": "他们可不会像您这样对血肉如此欣喜。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,14381"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "1702",
+      "order": 11,
+      "name": {
+        "original": "Cult of Blood",
+        "display": "鲜血异教"
+      },
+      "description": {
+        "original": "Your followers crave the sight of your sanguine deeds, milord!",
+        "display": "大人，追随者们渴望看到您的欢愉之举！"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,14381"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 406
+        }
+      ],
+      "properties": {
+        "is_premium": true,
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "1703",
+      "order": 12,
+      "name": {
+        "original": "Diverging Paths",
+        "display": "分道扬镳"
+      },
+      "description": {
+        "original": "You have a purpose, sire. Don't turn away from it!",
+        "display": "大人，您是有自己目的的。不要偏离方向！"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,40,14385,14386",
+          "description": "Increases the effect of The Dark Urge's Embrace the Urge and Resist the Urge specializations by $amount%."
+        }
+      ],
+      "sources": [
+        {
+          "source": "patron",
+          "patron_id": 5
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1712170800
+      },
+      "collectionsSource": {
+        "type": "patron",
+        "patron_id": 5
+      }
+    },
+    {
+      "id": "1704",
+      "order": 13,
+      "name": {
+        "original": "Resisting the Urge",
+        "display": "抵抗渴望"
+      },
+      "description": {
+        "original": "Your restraint is curious, but I am sure you know what you're doing, sire.",
+        "display": "您的克制很奇怪，但我肯定够您知道自己是在做些什么，大人。"
+      },
+      "rarity": "4",
+      "graphicId": "6078",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,400",
+          "description": "Increases the Base DPS of The Dark Urge by $amount% and prevents roaming familiars from automatically activating The Dark Urge's ultimate attack."
+        },
+        {
+          "effect_string": "disallow_roaming_familiar_ult_trigger",
+          "description": ""
+        }
+      ],
+      "sources": [
+        {
+          "source": "event",
+          "event_id": 8
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "event",
+        "event_id": 8,
+        "tier": 3
+      }
+    },
+    {
+      "id": "2129",
+      "order": 15,
+      "name": {
+        "original": "Blazing Blood",
+        "display": "炙热之血"
+      },
+      "description": {
+        "original": "The hells themselves will quake at your passing, milord!",
+        "display": "你光是路过地狱都要抖三抖啊，大人！"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,14380"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000,
+          "start_date": "2025-07-09 12:00:00"
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 555
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1744225200
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "2303",
+      "order": 16,
+      "name": {
+        "original": "Blood Moon",
+        "display": "血月"
+      },
+      "description": {
+        "original": "Time for the final act.",
+        "display": "是时候上演最后一幕了。"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,14379"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000,
+          "start_date": "2026-01-29 12:00:00"
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 631
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1761764400
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "2440",
+      "order": 17,
+      "name": {
+        "original": "Vicious Damage",
+        "display": "恶毒伤害"
+      },
+      "description": {
+        "original": "Ooh, that's sure to leave a nasty scar, milord. Bravo!",
+        "display": "噢，那肯定会留下难看的疤痕的，老爷。好极了！"
+      },
+      "rarity": "4",
+      "graphicId": "16921",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,400"
+        },
+        {
+          "effect_string": "vicious_damage,10"
+        }
+      ],
+      "sources": [
+        {
+          "source": "promo",
+          "promotion_id": 50
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1765468800
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "657",
+        "cost": 0
+      }
+    },
+    {
+      "id": "2449",
+      "order": 18,
+      "name": {
+        "original": "Human Glitch",
+        "display": "人类变异"
+      },
+      "description": {
+        "original": "In another world - another life - would my destiny be any different?",
+        "display": "在另一个世界——另一段人生——我的命运会有所不同吗？"
+      },
+      "rarity": "4",
+      "graphicId": "21658",
+      "effects": [
+        {
+          "effect_string": "add_hero_tags,0,human",
+          "description": "The Dark Urge also counts as a Human and increases the damage of all Champions by 20% for each Ceremorphosis stack the formation has."
+        },
+        {
+          "off_when_benched": true,
+          "effect_string": "global_dps_multiplier_mult,20",
+          "stack_func": "per_ceremorphosis_stacks",
+          "amount_func": "add",
+          "listen_for_computed_changes": true,
+          "amount_updated_listeners": [
+            "upgrade_unlocked",
+            "slot_changed",
+            "feat_changed"
+          ],
+          "description": "",
+          "effect_name": "Human Glitch (Feat)",
+          "use_computed_amount_for_description": true
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000,
+          "start_date": "2026-04-28 12:00:00"
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 668
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1769630400,
+        "available_for_gems_at_time": 1777402800
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "668",
+        "cost": 1680
+      }
+    }
+  ],
+  "skins": [
+    {
+      "id": "401",
+      "name": {
+        "original": "Mind Flayer Dark Urge",
+        "display": "夺心魔邪念"
+      },
+      "cost": {
+        "req_date": "2024-03-06 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 22645,
+        "large_graphic_id": 22647,
+        "portrait_graphic_id": 22644,
+        "xl_graphic_id": 22648,
+        "sceleritas_fel_graphic_id": 22585,
+        "companion_graphic_ids": [
+          22582,
+          22617
+        ]
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 1365,
+        "odds": 72
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    },
+    {
+      "id": "420",
+      "name": {
+        "original": "Cunning Dark Urge",
+        "display": "狡猾的邪念"
+      },
+      "cost": {
+        "req_date": "2024-04-03 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 23170,
+        "large_graphic_id": 23174,
+        "portrait_graphic_id": 23163,
+        "xl_graphic_id": 23177
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "patron",
+        "patron_id": 5
+      },
+      "availabilities": {
+        "patron_id": "5",
+        "patron_shop_item_id": "142"
+      }
+    },
+    {
+      "id": "542",
+      "name": {
+        "original": "Helldusk The Dark Urge",
+        "display": "炼狱黄昏邪念"
+      },
+      "cost": {
+        "req_date": "2025-04-09 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 26182,
+        "large_graphic_id": 26186,
+        "portrait_graphic_id": 26176,
+        "xl_graphic_id": 26190
+      },
+      "rarity": "3",
+      "properties": {
+        "notification_adjustment_override": {
+          "offset": [
+            56,
+            241
+          ],
+          "scale": 1.25
+        },
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "555",
+        "cost": 1680
+      },
+      "availabilities": null
+    },
+    {
+      "id": "638",
+      "name": {
+        "original": "Cozy Dark Urge",
+        "display": "惬意的邪念"
+      },
+      "cost": {
+        "soft_currency": 20000,
+        "req_date": "2025-12-11 08:00:00"
+      },
+      "details": {
+        "base_graphic_id": 28174,
+        "large_graphic_id": 28175,
+        "portrait_graphic_id": 28170,
+        "xl_graphic_id": 28176,
+        "sceleritas_fel_graphic_id": 22585,
+        "companion_graphic_ids": [
+          28177,
+          22617
+        ],
+        "additional_shop_graphics": [
+          {
+            "graphic_id": 28179,
+            "sequence": 1,
+            "is_transform": true
+          }
+        ]
+      },
+      "rarity": "3",
+      "properties": {
+        "show_only_if_owned": true,
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "657",
+        "cost": 0
+      },
+      "availabilities": {
+        "premium_item_id": "657"
+      }
+    },
+    {
+      "id": "651",
+      "name": {
+        "original": "Scarlet Corsair Dark Urge",
+        "display": "猩红海盗邪念"
+      },
+      "cost": {
+        "req_date": "2026-01-28 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 28607,
+        "large_graphic_id": 28609,
+        "portrait_graphic_id": 28605,
+        "xl_graphic_id": 28611,
+        "sceleritas_fel_graphic_id": 22585,
+        "companion_graphic_ids": [
+          22582,
+          22617
+        ]
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "668",
+        "cost": 1680
+      },
+      "availabilities": {
+        "premium_item_id": "668"
+      }
+    }
+  ],
+  "raw": {
+    "hero": {
+      "original": {
+        "id": 146,
+        "name": "The Dark Urge",
+        "english_name": "The Dark Urge",
+        "seat_id": 11,
+        "base_cost": "900000000000000000",
+        "base_damage": "2500000000000",
+        "base_health": "41",
+        "cost_curves": {
+          "1": 1.09
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 735,
+        "ultimate_attack_id": 737,
+        "graphic_id": 22581,
+        "portrait_graphic_id": 22580,
+        "character_sheet_details": {
+          "full_name": "The Dark Urge",
+          "class": "Sorcerer",
+          "race": "Dragonborn",
+          "age_alias": "Unknown",
+          "alignment": "Chaotic Evil",
+          "ability_scores": {
+            "str": 8,
+            "dex": 13,
+            "con": 15,
+            "int": 12,
+            "wis": 10,
+            "cha": 17
+          },
+          "backstory": "The Dark Urge remembers nothing but a path paved with blood. Unimaginable cruelty whispers from within. Can he escape it? Would he even want to?",
+          "system_description": "The Dark Urge is a DPS Champion with a mind damaged beyond control. Does he embrace his murderous urges?"
+        },
+        "default_feat_slot_unlocks": [
+          120,
+          670,
+          1305,
+          2090
+        ],
+        "tags": [
+          "male",
+          "chaotic",
+          "evil",
+          "dragonborn",
+          "sorcerer",
+          "dps",
+          "absoluteadversaries",
+          "event",
+          "y7",
+          "spec_control"
+        ],
+        "properties": {
+          "content_set_id": 41,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            190,
+            191,
+            192
+          ],
+          "graphic_large": 22583,
+          "graphic_xl": 22584,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            107,
+            66
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 4,
+            "gethit": 5,
+            "koed": 6,
+            "run": 7
+          },
+          "allow_time_gate": "2024-03-27 12:00:00",
+          "available_in_store": "2024-04-03 12:00:00",
+          "time_gate_adventure_id": 1538,
+          "time_gate_variants_ids": [
+            1486,
+            1487,
+            1488
+          ],
+          "companions": [
+            {
+              "graphic_id": 22582,
+              "visible": false
+            },
+            {
+              "graphic_id": 22617,
+              "visible": false
+            }
+          ],
+          "permanent_effects": [
+            {
+              "effect_string": "force_allow_hero",
+              "hero_ids": [
+                146
+              ]
+            }
+          ],
+          "can_always_buy_hero": true,
+          "time_gate_tier": 1,
+          "silver_chest_type_id": 562,
+          "gold_chest_type_id": 563,
+          "golden_epic_loot_id": 3461,
+          "golden_epic_promo_id": 469,
+          "event_logo_graphic_id": 3366,
+          "console_portrait": 22705,
+          "trials_effect_id": 839,
+          "portrait_graphic_scale": 1.35,
+          "weekly_buff": "buff_upgrade,200,14379",
+          "legendary_effect_id": [
+            54,
+            55,
+            65,
+            32,
+            89,
+            50
+          ],
+          "spotlight_url": "https://youtu.be/abzxqFy417g",
+          "notification_adjustment": {
+            "offset": [
+              56,
+              255
+            ],
+            "scale": 1.25
+          },
+          "shop_transform_graphic": 28668
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 1485,
+            "type": "base"
+          },
+          {
+            "adventure_id": 1486,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1487,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1488,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1489,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 1538,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 0,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 14378,
+            "name": "Dark Inheritance",
+            "description": "",
+            "graphic_id": "22874"
+          },
+          {
+            "upgrade_id": 14379,
+            "name": "The Urge",
+            "description": "The Dark Urge increases his damage each time he defeats an enemy, count persists between adventures.",
+            "graphic_id": "22528"
+          },
+          {
+            "upgrade_id": 14380,
+            "name": "Ceremorphosis",
+            "description": "",
+            "graphic_id": "22526"
+          },
+          {
+            "upgrade_id": 14381,
+            "name": "Living on the Edge",
+            "description": "The Dark Urge deals more damage when on the formation's edge or next to other DPS Champions.",
+            "graphic_id": "22527"
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1806606000,
+        "event_name": "Festival of Fools",
+        "is_available": true,
+        "date_available": "2024-03-06 13:00:00",
+        "last_rework_date": "2024-03-06 13:00:00"
+      },
+      "display": {
+        "id": 146,
+        "name": "邪念",
+        "english_name": "The Dark Urge",
+        "seat_id": 11,
+        "base_cost": "900000000000000000",
+        "base_damage": "2500000000000",
+        "base_health": "41",
+        "cost_curves": {
+          "1": 1.09
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 735,
+        "ultimate_attack_id": 737,
+        "graphic_id": 22581,
+        "portrait_graphic_id": 22580,
+        "character_sheet_details": {
+          "full_name": "邪念",
+          "class": "术士",
+          "race": "龙裔",
+          "age_alias": "未知",
+          "alignment": "混乱邪恶",
+          "ability_scores": {
+            "str": 8,
+            "dex": 13,
+            "con": 15,
+            "int": 12,
+            "wis": 10,
+            "cha": 17
+          },
+          "backstory": "邪念只记得用鲜血铺就的道路。难以想象的残酷之声由心而发。他能否逃离？甚至是否想逃离？",
+          "system_description": "邪念是一名伤害输出勇士，其心智受到了超乎控制的损伤。他是否会听从自己的杀戮渴望呢？"
+        },
+        "default_feat_slot_unlocks": [
+          120,
+          670,
+          1305,
+          2090
+        ],
+        "tags": [
+          "male",
+          "chaotic",
+          "evil",
+          "dragonborn",
+          "sorcerer",
+          "dps",
+          "absoluteadversaries",
+          "event",
+          "y7",
+          "spec_control"
+        ],
+        "properties": {
+          "content_set_id": 41,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            190,
+            191,
+            192
+          ],
+          "graphic_large": 22583,
+          "graphic_xl": 22584,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            107,
+            66
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 4,
+            "gethit": 5,
+            "koed": 6,
+            "run": 7
+          },
+          "allow_time_gate": "2024-03-27 12:00:00",
+          "available_in_store": "2024-04-03 12:00:00",
+          "time_gate_adventure_id": 1538,
+          "time_gate_variants_ids": [
+            1486,
+            1487,
+            1488
+          ],
+          "companions": [
+            {
+              "graphic_id": 22582,
+              "visible": false
+            },
+            {
+              "graphic_id": 22617,
+              "visible": false
+            }
+          ],
+          "permanent_effects": [
+            {
+              "effect_string": "force_allow_hero",
+              "hero_ids": [
+                146
+              ]
+            }
+          ],
+          "can_always_buy_hero": true,
+          "time_gate_tier": 1,
+          "silver_chest_type_id": 562,
+          "gold_chest_type_id": 563,
+          "golden_epic_loot_id": 3461,
+          "golden_epic_promo_id": 469,
+          "event_logo_graphic_id": 3366,
+          "console_portrait": 22705,
+          "trials_effect_id": 839,
+          "portrait_graphic_scale": 1.35,
+          "weekly_buff": "buff_upgrade,200,14379",
+          "legendary_effect_id": [
+            54,
+            55,
+            65,
+            32,
+            89,
+            50
+          ],
+          "spotlight_url": "https://youtu.be/abzxqFy417g",
+          "notification_adjustment": {
+            "offset": [
+              56,
+              255
+            ],
+            "scale": 1.25
+          },
+          "shop_transform_graphic": 28668
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 1485,
+            "type": "base"
+          },
+          {
+            "adventure_id": 1486,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1487,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1488,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1489,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 1538,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 0,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 14378,
+            "name": "黑暗继承",
+            "description": "",
+            "graphic_id": "22874"
+          },
+          {
+            "upgrade_id": 14379,
+            "name": "渴求",
+            "description": "邪念每次击败敌人都会提升自身伤害，计数在各冒险之间保留。",
+            "graphic_id": "22528"
+          },
+          {
+            "upgrade_id": 14380,
+            "name": "蜕变",
+            "description": "",
+            "graphic_id": "22526"
+          },
+          {
+            "upgrade_id": 14381,
+            "name": "刀锋舔血",
+            "description": "位于阵型边缘或与伤害输出勇士相邻时，邪念可造成更多伤害。",
+            "graphic_id": "22527"
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1806606000,
+        "event_name": "愚人节",
+        "is_available": true,
+        "date_available": "2024-03-06 13:00:00",
+        "last_rework_date": "2024-03-06 13:00:00"
+      }
+    },
+    "attacks": [
+      {
+        "id": "735",
+        "snapshots": {
+          "original": {
+            "id": 735,
+            "name": "Murderous Slash",
+            "description": "The Dark Urge strikes nearby enemies with a slash of his dagger.",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 100,
+            "damage_modifier": 1,
+            "cooldown": 5,
+            "animations": [
+              {
+                "type": "melee_attack",
+                "target_offset_x": -34,
+                "damage_frame": 9,
+                "jump_sound": 30,
+                "sound_frames": {
+                  "2": 154
+                }
+              }
+            ],
+            "tags": [
+              "melee",
+              "aoe"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          },
+          "display": {
+            "id": 735,
+            "name": "杀戮斩击",
+            "description": "邪念会用自己的匕首斩击附近的敌人。",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 100,
+            "damage_modifier": 1,
+            "cooldown": 5,
+            "animations": [
+              {
+                "type": "melee_attack",
+                "target_offset_x": -34,
+                "damage_frame": 9,
+                "jump_sound": 30,
+                "sound_frames": {
+                  "2": 154
+                }
+              }
+            ],
+            "tags": [
+              "melee",
+              "aoe"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          }
+        }
+      },
+      {
+        "id": "737",
+        "snapshots": {
+          "original": {
+            "id": 737,
+            "name": "Form of the Slayer",
+            "description": "The Dark Urge transforms into the Slayer form for 15 seconds, dealing massive damage for the duration.",
+            "long_description": "The Dark Urge transforms into the Slayer form for 15 seconds, dealing massive damage for the duration. Sceleritas Fel, immune to damage, takes his place in the formation for the duration.",
+            "graphic_id": 22537,
+            "target": "none",
+            "num_targets": 0,
+            "aoe_radius": 0,
+            "damage_modifier": 0.03,
+            "cooldown": 320,
+            "animations": [
+              {
+                "type": "ultimate_attack",
+                "ultimate": "dark_urge_slayer",
+                "no_damage_display": false
+              }
+            ],
+            "tags": [
+              "ultimate"
+            ],
+            "damage_types": []
+          },
+          "display": {
+            "id": 737,
+            "name": "屠杀者形态",
+            "description": "邪念转为杀手形态，持续 15 秒，在此期间造成大量伤害。",
+            "long_description": "邪念转为杀手形态，持续 15 秒，在此期间造成大量伤害。在此期间，免疫伤害的斯克莱里塔斯·费尔会在阵型中代替他。",
+            "graphic_id": 22537,
+            "target": "none",
+            "num_targets": 0,
+            "aoe_radius": 0,
+            "damage_modifier": 0.03,
+            "cooldown": 320,
+            "animations": [
+              {
+                "type": "ultimate_attack",
+                "ultimate": "dark_urge_slayer",
+                "no_damage_display": false
+              }
+            ],
+            "tags": [
+              "ultimate"
+            ],
+            "damage_types": []
+          }
+        }
+      }
+    ],
+    "upgrades": [
+      {
+        "id": "14378",
+        "snapshots": {
+          "original": {
+            "id": 14378,
+            "hero_id": 146,
+            "required_level": 0,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1869",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Dark Inheritance"
+          },
+          "display": {
+            "id": 14378,
+            "hero_id": 146,
+            "required_level": 0,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1869",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "黑暗继承"
+          }
+        }
+      },
+      {
+        "id": "14379",
+        "snapshots": {
+          "original": {
+            "id": 14379,
+            "hero_id": 146,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1870",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "The Urge",
+            "tip_text": "The Dark Urge increases his damage each time he defeats an enemy, with a count that persists between adventures."
+          },
+          "display": {
+            "id": 14379,
+            "hero_id": 146,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1870",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "渴求",
+            "tip_text": "邪念每次击败敌人都会提升自身伤害，计数在各冒险之间保留。"
+          }
+        }
+      },
+      {
+        "id": "14380",
+        "snapshots": {
+          "original": {
+            "id": 14380,
+            "hero_id": 146,
+            "required_level": 70,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1871",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Ceremorphosis"
+          },
+          "display": {
+            "id": 14380,
+            "hero_id": 146,
+            "required_level": 70,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1871",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "蜕变"
+          }
+        }
+      },
+      {
+        "id": "14381",
+        "snapshots": {
+          "original": {
+            "id": 14381,
+            "hero_id": 146,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1872",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Living on the Edge",
+            "tip_text": "The Dark Urge deals more damage when on the formation's edge or when next to Champions with the DPS role."
+          },
+          "display": {
+            "id": 14381,
+            "hero_id": 146,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1872",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "刀锋舔血",
+            "tip_text": "位于阵型边缘或与伤害输出勇士相邻时，邪念可造成更多伤害。"
+          }
+        }
+      },
+      {
+        "id": "14382",
+        "snapshots": {
+          "original": {
+            "id": 14382,
+            "hero_id": 146,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1873",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Storm Sorcery",
+            "specialization_name": "Storm Sorcery",
+            "specialization_description": "The Dark Urge's Storm Sorcery origin causes his normal attacks to deal more damage with a larger area of effect.",
+            "specialization_graphic_id": 22536
+          },
+          "display": {
+            "id": 14382,
+            "hero_id": 146,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1873",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "风暴术士",
+            "specialization_name": "风暴术士",
+            "specialization_description": "邪念的“风暴术士”起源导致他的普通攻击可造成更广更大的伤害。",
+            "specialization_graphic_id": 22536
+          }
+        }
+      },
+      {
+        "id": "14383",
+        "snapshots": {
+          "original": {
+            "id": 14383,
+            "hero_id": 146,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1874",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Draconic Bloodline",
+            "specialization_name": "Draconic Bloodline",
+            "specialization_description": "The Dark Urge embraces his draconic heritage and deals more damage when other Dragonborn are in the formation.",
+            "specialization_graphic_id": 22533
+          },
+          "display": {
+            "id": 14383,
+            "hero_id": 146,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1874",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "龙之血统",
+            "specialization_name": "龙之血统",
+            "specialization_description": "邪念接受自己的龙裔遗产，在阵型中存在其他龙裔时造成更多伤害。",
+            "specialization_graphic_id": 22533
+          }
+        }
+      },
+      {
+        "id": "14384",
+        "snapshots": {
+          "original": {
+            "id": 14384,
+            "hero_id": 146,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1875",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Divine Soul",
+            "specialization_name": "Divine Soul",
+            "specialization_description": "The Dark Urge's path of destruction draws the attention of divine powers invested in his murderous ways.",
+            "specialization_graphic_id": 22532
+          },
+          "display": {
+            "id": 14384,
+            "hero_id": 146,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1875",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "神圣灵魂",
+            "specialization_name": "神圣灵魂",
+            "specialization_description": "邪念的破坏之路引起了投入到他杀戮手段的神圣力量的注意。",
+            "specialization_graphic_id": 22532
+          }
+        }
+      },
+      {
+        "id": "14385",
+        "snapshots": {
+          "original": {
+            "id": 14385,
+            "hero_id": 146,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "effect_def,1876",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Embrace the Urge",
+            "specialization_name": "Embrace the Urge",
+            "specialization_description": "The Dark Urge succumbs to his murderous impulses, delighting evil Champions and unlocking an ultimate transformation.",
+            "specialization_graphic_id": 22534
+          },
+          "display": {
+            "id": 14385,
+            "hero_id": 146,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "effect_def,1876",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "拥抱渴望",
+            "specialization_name": "拥抱渴望",
+            "specialization_description": "邪念屈服于自己的杀戮冲动，令邪恶阵营的勇士感到快乐，解锁杀招变形。",
+            "specialization_graphic_id": 22534
+          }
+        }
+      },
+      {
+        "id": "14386",
+        "snapshots": {
+          "original": {
+            "id": 14386,
+            "hero_id": 146,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "effect_def,1877",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Resist the Urge",
+            "specialization_name": "Resist the Urge",
+            "specialization_description": "The Dark Urge suppresses his violent instincts, winning the approval of good Champions and gaining assistance from an unusual ally.",
+            "specialization_graphic_id": 22535
+          },
+          "display": {
+            "id": 14386,
+            "hero_id": 146,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "effect_def,1877",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "抵抗渴望",
+            "specialization_name": "抵抗渴望",
+            "specialization_description": "邪念克制自己的暴力本能，赢得善良阵营勇士的认可，获得一名非凡盟友的协助。",
+            "specialization_graphic_id": 22535
+          }
+        }
+      },
+      {
+        "id": "14387",
+        "snapshots": {
+          "original": {
+            "id": 14387,
+            "hero_id": 146,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14387,
+            "hero_id": 146,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14388",
+        "snapshots": {
+          "original": {
+            "id": 14388,
+            "hero_id": 146,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14380",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14388,
+            "hero_id": 146,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14380",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14389",
+        "snapshots": {
+          "original": {
+            "id": 14389,
+            "hero_id": 146,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14381",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14389,
+            "hero_id": 146,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14381",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14655",
+        "snapshots": {
+          "original": {
+            "id": 14655,
+            "hero_id": 146,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14655,
+            "hero_id": 146,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14656",
+        "snapshots": {
+          "original": {
+            "id": 14656,
+            "hero_id": 146,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14656,
+            "hero_id": 146,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14657",
+        "snapshots": {
+          "original": {
+            "id": 14657,
+            "hero_id": 146,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14657,
+            "hero_id": 146,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14658",
+        "snapshots": {
+          "original": {
+            "id": 14658,
+            "hero_id": 146,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14658,
+            "hero_id": 146,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14659",
+        "snapshots": {
+          "original": {
+            "id": 14659,
+            "hero_id": 146,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14659,
+            "hero_id": 146,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14660",
+        "snapshots": {
+          "original": {
+            "id": 14660,
+            "hero_id": 146,
+            "required_level": 250,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14660,
+            "hero_id": 146,
+            "required_level": 250,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14661",
+        "snapshots": {
+          "original": {
+            "id": 14661,
+            "hero_id": 146,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14661,
+            "hero_id": 146,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14662",
+        "snapshots": {
+          "original": {
+            "id": 14662,
+            "hero_id": 146,
+            "required_level": 310,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14662,
+            "hero_id": 146,
+            "required_level": 310,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14663",
+        "snapshots": {
+          "original": {
+            "id": 14663,
+            "hero_id": 146,
+            "required_level": 370,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14663,
+            "hero_id": 146,
+            "required_level": 370,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14664",
+        "snapshots": {
+          "original": {
+            "id": 14664,
+            "hero_id": 146,
+            "required_level": 440,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14664,
+            "hero_id": 146,
+            "required_level": 440,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14665",
+        "snapshots": {
+          "original": {
+            "id": 14665,
+            "hero_id": 146,
+            "required_level": 470,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14665,
+            "hero_id": 146,
+            "required_level": 470,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14666",
+        "snapshots": {
+          "original": {
+            "id": 14666,
+            "hero_id": 146,
+            "required_level": 510,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14666,
+            "hero_id": 146,
+            "required_level": 510,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14667",
+        "snapshots": {
+          "original": {
+            "id": 14667,
+            "hero_id": 146,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14667,
+            "hero_id": 146,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14668",
+        "snapshots": {
+          "original": {
+            "id": 14668,
+            "hero_id": 146,
+            "required_level": 610,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14668,
+            "hero_id": 146,
+            "required_level": 610,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14669",
+        "snapshots": {
+          "original": {
+            "id": 14669,
+            "hero_id": 146,
+            "required_level": 670,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14669,
+            "hero_id": 146,
+            "required_level": 670,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14670",
+        "snapshots": {
+          "original": {
+            "id": 14670,
+            "hero_id": 146,
+            "required_level": 690,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14670,
+            "hero_id": 146,
+            "required_level": 690,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14671",
+        "snapshots": {
+          "original": {
+            "id": 14671,
+            "hero_id": 146,
+            "required_level": 730,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14671,
+            "hero_id": 146,
+            "required_level": 730,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14672",
+        "snapshots": {
+          "original": {
+            "id": 14672,
+            "hero_id": 146,
+            "required_level": 790,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14672,
+            "hero_id": 146,
+            "required_level": 790,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14673",
+        "snapshots": {
+          "original": {
+            "id": 14673,
+            "hero_id": 146,
+            "required_level": 820,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14673,
+            "hero_id": 146,
+            "required_level": 820,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14674",
+        "snapshots": {
+          "original": {
+            "id": 14674,
+            "hero_id": 146,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14674,
+            "hero_id": 146,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14675",
+        "snapshots": {
+          "original": {
+            "id": 14675,
+            "hero_id": 146,
+            "required_level": 890,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14675,
+            "hero_id": 146,
+            "required_level": 890,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14676",
+        "snapshots": {
+          "original": {
+            "id": 14676,
+            "hero_id": 146,
+            "required_level": 980,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14676,
+            "hero_id": 146,
+            "required_level": 980,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14677",
+        "snapshots": {
+          "original": {
+            "id": 14677,
+            "hero_id": 146,
+            "required_level": 1030,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14677,
+            "hero_id": 146,
+            "required_level": 1030,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14678",
+        "snapshots": {
+          "original": {
+            "id": 14678,
+            "hero_id": 146,
+            "required_level": 1070,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14678,
+            "hero_id": 146,
+            "required_level": 1070,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14679",
+        "snapshots": {
+          "original": {
+            "id": 14679,
+            "hero_id": 146,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14679,
+            "hero_id": 146,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14680",
+        "snapshots": {
+          "original": {
+            "id": 14680,
+            "hero_id": 146,
+            "required_level": 1170,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14680,
+            "hero_id": 146,
+            "required_level": 1170,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14681",
+        "snapshots": {
+          "original": {
+            "id": 14681,
+            "hero_id": 146,
+            "required_level": 1250,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14681,
+            "hero_id": 146,
+            "required_level": 1250,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14682",
+        "snapshots": {
+          "original": {
+            "id": 14682,
+            "hero_id": 146,
+            "required_level": 600,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14682,
+            "hero_id": 146,
+            "required_level": 600,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14683",
+        "snapshots": {
+          "original": {
+            "id": 14683,
+            "hero_id": 146,
+            "required_level": 1380,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14683,
+            "hero_id": 146,
+            "required_level": 1380,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14684",
+        "snapshots": {
+          "original": {
+            "id": 14684,
+            "hero_id": 146,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14684,
+            "hero_id": 146,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14685",
+        "snapshots": {
+          "original": {
+            "id": 14685,
+            "hero_id": 146,
+            "required_level": 1590,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14685,
+            "hero_id": 146,
+            "required_level": 1590,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14686",
+        "snapshots": {
+          "original": {
+            "id": 14686,
+            "hero_id": 146,
+            "required_level": 1700,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14686,
+            "hero_id": 146,
+            "required_level": 1700,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14687",
+        "snapshots": {
+          "original": {
+            "id": 14687,
+            "hero_id": 146,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14687,
+            "hero_id": 146,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14688",
+        "snapshots": {
+          "original": {
+            "id": 14688,
+            "hero_id": 146,
+            "required_level": 1790,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14688,
+            "hero_id": 146,
+            "required_level": 1790,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14689",
+        "snapshots": {
+          "original": {
+            "id": 14689,
+            "hero_id": 146,
+            "required_level": 1800,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14689,
+            "hero_id": 146,
+            "required_level": 1800,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14690",
+        "snapshots": {
+          "original": {
+            "id": 14690,
+            "hero_id": 146,
+            "required_level": 230,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14690,
+            "hero_id": 146,
+            "required_level": 230,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14691",
+        "snapshots": {
+          "original": {
+            "id": 14691,
+            "hero_id": 146,
+            "required_level": 530,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14691,
+            "hero_id": 146,
+            "required_level": 530,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14692",
+        "snapshots": {
+          "original": {
+            "id": 14692,
+            "hero_id": 146,
+            "required_level": 830,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14692,
+            "hero_id": 146,
+            "required_level": 830,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14693",
+        "snapshots": {
+          "original": {
+            "id": 14693,
+            "hero_id": 146,
+            "required_level": 1130,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14693,
+            "hero_id": 146,
+            "required_level": 1130,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14694",
+        "snapshots": {
+          "original": {
+            "id": 14694,
+            "hero_id": 146,
+            "required_level": 1200,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14694,
+            "hero_id": 146,
+            "required_level": 1200,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14695",
+        "snapshots": {
+          "original": {
+            "id": 14695,
+            "hero_id": 146,
+            "required_level": 1360,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14695,
+            "hero_id": 146,
+            "required_level": 1360,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14696",
+        "snapshots": {
+          "original": {
+            "id": 14696,
+            "hero_id": 146,
+            "required_level": 1430,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14696,
+            "hero_id": 146,
+            "required_level": 1430,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14697",
+        "snapshots": {
+          "original": {
+            "id": 14697,
+            "hero_id": 146,
+            "required_level": 1730,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14697,
+            "hero_id": 146,
+            "required_level": 1730,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,14379",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "14698",
+        "snapshots": {
+          "original": {
+            "id": 14698,
+            "hero_id": 146,
+            "required_level": 1750,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 14698,
+            "hero_id": 146,
+            "required_level": 1750,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      }
+    ],
+    "feats": [
+      {
+        "id": "1691",
+        "snapshots": {
+          "original": {
+            "id": 1691,
+            "hero_id": 146,
+            "order": 0,
+            "name": "Tavern Brawler",
+            "description": "Go ahead, my sanguineous master - use your claws!",
+            "rarity": 2,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,30"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 1691,
+            "hero_id": 146,
+            "order": 0,
+            "name": "旅店打手",
+            "description": "去吧，我的血腥大师 - 用上您的爪子吧！",
+            "rarity": 2,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,30"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "1692",
+        "snapshots": {
+          "original": {
+            "id": 1692,
+            "hero_id": 146,
+            "order": 1,
+            "name": "Grappler",
+            "description": "Now that they're unconscious, take off their head!",
+            "rarity": 3,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,60"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 1692,
+            "hero_id": 146,
+            "order": 1,
+            "name": "擒抱者",
+            "description": "既然对方已经昏迷了，那就把他的头给拧下来！",
+            "rarity": 3,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,60"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "1693",
+        "snapshots": {
+          "original": {
+            "id": 1693,
+            "hero_id": 146,
+            "order": 2,
+            "name": "Weapon Master",
+            "description": "You are an exquisite artist with a blade, sire.",
+            "rarity": 4,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,120"
+              }
+            ],
+            "sources": [
+              {
+                "source": "patron",
+                "patron_id": 5
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1712170800
+            },
+            "collections_source": {
+              "type": "patron",
+              "patron_id": 5
+            }
+          },
+          "display": {
+            "id": 1693,
+            "hero_id": 146,
+            "order": 2,
+            "name": "武器大师",
+            "description": "大人啊，您真是用刃器的绝妙艺术家。",
+            "rarity": 4,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,120"
+              }
+            ],
+            "sources": [
+              {
+                "source": "patron",
+                "patron_id": 5
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1712170800
+            },
+            "collections_source": {
+              "type": "patron",
+              "patron_id": 5
+            }
+          }
+        }
+      },
+      {
+        "id": "1694",
+        "snapshots": {
+          "original": {
+            "id": 1694,
+            "hero_id": 146,
+            "order": 3,
+            "name": "Selflessness",
+            "description": "You gave coins to a beggar once. Gave me nightmares for weeks!",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 1694,
+            "hero_id": 146,
+            "order": 3,
+            "name": "无私",
+            "description": "您给乞丐施舍了一次金币，却让我做了几星期的噩梦！",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "1695",
+        "snapshots": {
+          "original": {
+            "id": 1695,
+            "hero_id": 146,
+            "order": 4,
+            "name": "Inspiring Leader",
+            "description": "It is an honor to follow your trail of gore, milord.",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 1695,
+            "hero_id": 146,
+            "order": 4,
+            "name": "鼓舞人心的首领",
+            "description": "跟随您的血肉之径是我的无上荣耀，大人。",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "1696",
+        "snapshots": {
+          "original": {
+            "id": 1696,
+            "hero_id": 146,
+            "order": 5,
+            "name": "I Am The Dark Urge",
+            "description": "Such a unique way of introducing  yourself.",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,14379"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 1696,
+            "hero_id": 146,
+            "order": 5,
+            "name": "我就是邪念",
+            "description": "真是独特的自我介绍方式。",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,14379"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "1697",
+        "snapshots": {
+          "original": {
+            "id": 1697,
+            "hero_id": 146,
+            "order": 6,
+            "name": "Murderous Intent",
+            "description": "We have some free time if you want to get your hands dirty, master.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,14379"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 1697,
+            "hero_id": 146,
+            "order": 6,
+            "name": "杀戮意图",
+            "description": "大人，如果想要弄脏双手，我们还有点空闲时间。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,14379"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "1698",
+        "snapshots": {
+          "original": {
+            "id": 1698,
+            "hero_id": 146,
+            "order": 7,
+            "name": "Growing Infection",
+            "description": "These tadpoles are deliciously vicious.",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,14380"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 1698,
+            "hero_id": 146,
+            "order": 7,
+            "name": "增长感染",
+            "description": "这些蝌蚪真是恶毒得美妙。",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,14380"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "1699",
+        "snapshots": {
+          "original": {
+            "id": 1699,
+            "hero_id": 146,
+            "order": 8,
+            "name": "True Souls",
+            "description": "Making more True Souls for your own purposes, eh, milord?",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,14380"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 1699,
+            "hero_id": 146,
+            "order": 8,
+            "name": "真实灵魂",
+            "description": "大人，呃，为了您自己的目的，多制造一些真实灵魂吧？",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,14380"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "1700",
+        "snapshots": {
+          "original": {
+            "id": 1700,
+            "hero_id": 146,
+            "order": 9,
+            "name": "Murder Gang",
+            "description": "I like the company you keep, sire. Always soaked in blood.",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,14381"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 1700,
+            "hero_id": 146,
+            "order": 9,
+            "name": "杀人团伙",
+            "description": "大人，我喜欢您选的同伴 - 总是满身鲜血的，真好。",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,14381"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "1701",
+        "snapshots": {
+          "original": {
+            "id": 1701,
+            "hero_id": 146,
+            "order": 10,
+            "name": "Vicious Syndicate",
+            "description": "They'll never delight in gore as much as you do.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,14381"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 1701,
+            "hero_id": 146,
+            "order": 10,
+            "name": "恶毒联合",
+            "description": "他们可不会像您这样对血肉如此欣喜。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,14381"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "1702",
+        "snapshots": {
+          "original": {
+            "id": 1702,
+            "hero_id": 146,
+            "order": 11,
+            "name": "Cult of Blood",
+            "description": "Your followers crave the sight of your sanguine deeds, milord!",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,14381"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 406
+              }
+            ],
+            "properties": {
+              "is_premium": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 1702,
+            "hero_id": 146,
+            "order": 11,
+            "name": "鲜血异教",
+            "description": "大人，追随者们渴望看到您的欢愉之举！",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,14381"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 406
+              }
+            ],
+            "properties": {
+              "is_premium": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "1703",
+        "snapshots": {
+          "original": {
+            "id": 1703,
+            "hero_id": 146,
+            "order": 12,
+            "name": "Diverging Paths",
+            "description": "You have a purpose, sire. Don't turn away from it!",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,40,14385,14386",
+                "description": "Increases the effect of The Dark Urge's Embrace the Urge and Resist the Urge specializations by $amount%."
+              }
+            ],
+            "sources": [
+              {
+                "source": "patron",
+                "patron_id": 5
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1712170800
+            },
+            "collections_source": {
+              "type": "patron",
+              "patron_id": 5
+            }
+          },
+          "display": {
+            "id": 1703,
+            "hero_id": 146,
+            "order": 12,
+            "name": "分道扬镳",
+            "description": "大人，您是有自己目的的。不要偏离方向！",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,40,14385,14386",
+                "description": "提升邪念“拥抱渴望”和“抵抗渴望”专精的效果 $amount%。"
+              }
+            ],
+            "sources": [
+              {
+                "source": "patron",
+                "patron_id": 5
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1712170800
+            },
+            "collections_source": {
+              "type": "patron",
+              "patron_id": 5
+            }
+          }
+        }
+      },
+      {
+        "id": "1704",
+        "snapshots": {
+          "original": {
+            "id": 1704,
+            "hero_id": 146,
+            "order": 13,
+            "name": "Resisting the Urge",
+            "description": "Your restraint is curious, but I am sure you know what you're doing, sire.",
+            "rarity": 4,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,400",
+                "description": "Increases the Base DPS of The Dark Urge by $amount% and prevents roaming familiars from automatically activating The Dark Urge's ultimate attack."
+              },
+              {
+                "effect_string": "disallow_roaming_familiar_ult_trigger",
+                "description": ""
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 8
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "event",
+              "event_id": 8,
+              "tier": 3
+            }
+          },
+          "display": {
+            "id": 1704,
+            "hero_id": 146,
+            "order": 13,
+            "name": "抵抗渴望",
+            "description": "您的克制很奇怪，但我肯定够您知道自己是在做些什么，大人。",
+            "rarity": 4,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,400",
+                "description": "提升邪念的基础伤害输出 $amount%，避免游荡魔宠自动激活邪念的杀招攻击。"
+              },
+              {
+                "effect_string": "disallow_roaming_familiar_ult_trigger",
+                "description": ""
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 8
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "event",
+              "event_id": 8,
+              "tier": 3
+            }
+          }
+        }
+      },
+      {
+        "id": "2129",
+        "snapshots": {
+          "original": {
+            "id": 2129,
+            "hero_id": 146,
+            "order": 15,
+            "name": "Blazing Blood",
+            "description": "The hells themselves will quake at your passing, milord!",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,14380"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2025-07-09 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 555
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1744225200
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 2129,
+            "hero_id": 146,
+            "order": 15,
+            "name": "炙热之血",
+            "description": "你光是路过地狱都要抖三抖啊，大人！",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,14380"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2025-07-09 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 555
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1744225200
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "2303",
+        "snapshots": {
+          "original": {
+            "id": 2303,
+            "hero_id": 146,
+            "order": 16,
+            "name": "Blood Moon",
+            "description": "Time for the final act.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,14379"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2026-01-29 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 631
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1761764400
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 2303,
+            "hero_id": 146,
+            "order": 16,
+            "name": "血月",
+            "description": "是时候上演最后一幕了。",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,14379"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2026-01-29 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 631
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1761764400
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "2440",
+        "snapshots": {
+          "original": {
+            "id": 2440,
+            "hero_id": 146,
+            "order": 17,
+            "name": "Vicious Damage",
+            "description": "Ooh, that's sure to leave a nasty scar, milord. Bravo!",
+            "rarity": 4,
+            "graphic_id": 16921,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,400"
+              },
+              {
+                "effect_string": "vicious_damage,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1765468800
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "657",
+              "cost": 0
+            }
+          },
+          "display": {
+            "id": 2440,
+            "hero_id": 146,
+            "order": 17,
+            "name": "恶毒伤害",
+            "description": "噢，那肯定会留下难看的疤痕的，老爷。好极了！",
+            "rarity": 4,
+            "graphic_id": 16921,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,400"
+              },
+              {
+                "effect_string": "vicious_damage,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1765468800
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "657",
+              "cost": 0
+            }
+          }
+        }
+      },
+      {
+        "id": "2449",
+        "snapshots": {
+          "original": {
+            "id": 2449,
+            "hero_id": 146,
+            "order": 18,
+            "name": "Human Glitch",
+            "description": "In another world - another life - would my destiny be any different?",
+            "rarity": 4,
+            "graphic_id": 21658,
+            "effects": [
+              {
+                "effect_string": "add_hero_tags,0,human",
+                "description": "The Dark Urge also counts as a Human and increases the damage of all Champions by 20% for each Ceremorphosis stack the formation has."
+              },
+              {
+                "off_when_benched": true,
+                "effect_string": "global_dps_multiplier_mult,20",
+                "stack_func": "per_ceremorphosis_stacks",
+                "amount_func": "add",
+                "listen_for_computed_changes": true,
+                "amount_updated_listeners": [
+                  "upgrade_unlocked",
+                  "slot_changed",
+                  "feat_changed"
+                ],
+                "description": "",
+                "effect_name": "Human Glitch (Feat)",
+                "use_computed_amount_for_description": true
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2026-04-28 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 668
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1769630400,
+              "available_for_gems_at_time": 1777402800
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "668",
+              "cost": 1680
+            }
+          },
+          "display": {
+            "id": 2449,
+            "hero_id": 146,
+            "order": 18,
+            "name": "人类变异",
+            "description": "在另一个世界——另一段人生——我的命运会有所不同吗？",
+            "rarity": 4,
+            "graphic_id": 21658,
+            "effects": [
+              {
+                "effect_string": "add_hero_tags,0,human",
+                "description": "邪念也算作人类，阵型每拥有一层“蜕变”堆叠层数，所有勇士的伤害提高 20%。"
+              },
+              {
+                "off_when_benched": true,
+                "effect_string": "global_dps_multiplier_mult,20",
+                "stack_func": "per_ceremorphosis_stacks",
+                "amount_func": "add",
+                "listen_for_computed_changes": true,
+                "amount_updated_listeners": [
+                  "upgrade_unlocked",
+                  "slot_changed",
+                  "feat_changed"
+                ],
+                "description": "",
+                "effect_name": "Human Glitch (Feat)",
+                "use_computed_amount_for_description": true
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2026-04-28 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 668
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1769630400,
+              "available_for_gems_at_time": 1777402800
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "668",
+              "cost": 1680
+            }
+          }
+        }
+      }
+    ],
+    "skins": [
+      {
+        "id": "401",
+        "snapshots": {
+          "original": {
+            "id": 401,
+            "hero_id": 146,
+            "name": "Mind Flayer Dark Urge",
+            "cost": {
+              "req_date": "2024-03-06 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 22645,
+              "large_graphic_id": 22647,
+              "portrait_graphic_id": 22644,
+              "xl_graphic_id": 22648,
+              "sceleritas_fel_graphic_id": 22585,
+              "companion_graphic_ids": [
+                22582,
+                22617
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 1365,
+              "odds": 72
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 401,
+            "hero_id": 146,
+            "name": "夺心魔邪念",
+            "cost": {
+              "req_date": "2024-03-06 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 22645,
+              "large_graphic_id": 22647,
+              "portrait_graphic_id": 22644,
+              "xl_graphic_id": 22648,
+              "sceleritas_fel_graphic_id": 22585,
+              "companion_graphic_ids": [
+                22582,
+                22617
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 1365,
+              "odds": 72
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      },
+      {
+        "id": "420",
+        "snapshots": {
+          "original": {
+            "id": 420,
+            "hero_id": 146,
+            "name": "Cunning Dark Urge",
+            "cost": {
+              "req_date": "2024-04-03 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 23170,
+              "large_graphic_id": 23174,
+              "portrait_graphic_id": 23163,
+              "xl_graphic_id": 23177
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "patron",
+              "patron_id": 5
+            },
+            "availabilities": {
+              "patron_id": "5",
+              "patron_shop_item_id": "142"
+            }
+          },
+          "display": {
+            "id": 420,
+            "hero_id": 146,
+            "name": "狡猾的邪念",
+            "cost": {
+              "req_date": "2024-04-03 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 23170,
+              "large_graphic_id": 23174,
+              "portrait_graphic_id": 23163,
+              "xl_graphic_id": 23177
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "patron",
+              "patron_id": 5
+            },
+            "availabilities": {
+              "patron_id": "5",
+              "patron_shop_item_id": "142"
+            }
+          }
+        }
+      },
+      {
+        "id": "542",
+        "snapshots": {
+          "original": {
+            "id": 542,
+            "hero_id": 146,
+            "name": "Helldusk The Dark Urge",
+            "cost": {
+              "req_date": "2025-04-09 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 26182,
+              "large_graphic_id": 26186,
+              "portrait_graphic_id": 26176,
+              "xl_graphic_id": 26190
+            },
+            "rarity": "3",
+            "properties": {
+              "notification_adjustment_override": {
+                "offset": [
+                  56,
+                  241
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "555",
+              "cost": 1680
+            }
+          },
+          "display": {
+            "id": 542,
+            "hero_id": 146,
+            "name": "炼狱黄昏邪念",
+            "cost": {
+              "req_date": "2025-04-09 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 26182,
+              "large_graphic_id": 26186,
+              "portrait_graphic_id": 26176,
+              "xl_graphic_id": 26190
+            },
+            "rarity": "3",
+            "properties": {
+              "notification_adjustment_override": {
+                "offset": [
+                  56,
+                  241
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "555",
+              "cost": 1680
+            }
+          }
+        }
+      },
+      {
+        "id": "638",
+        "snapshots": {
+          "original": {
+            "id": 638,
+            "hero_id": 146,
+            "name": "Cozy Dark Urge",
+            "cost": {
+              "soft_currency": 20000,
+              "req_date": "2025-12-11 08:00:00"
+            },
+            "details": {
+              "base_graphic_id": 28174,
+              "large_graphic_id": 28175,
+              "portrait_graphic_id": 28170,
+              "xl_graphic_id": 28176,
+              "sceleritas_fel_graphic_id": 22585,
+              "companion_graphic_ids": [
+                28177,
+                22617
+              ],
+              "additional_shop_graphics": [
+                {
+                  "graphic_id": 28179,
+                  "sequence": 1,
+                  "is_transform": true
+                }
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "show_only_if_owned": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "657",
+              "cost": 0
+            },
+            "availabilities": {
+              "premium_item_id": "657"
+            }
+          },
+          "display": {
+            "id": 638,
+            "hero_id": 146,
+            "name": "惬意的邪念",
+            "cost": {
+              "soft_currency": 20000,
+              "req_date": "2025-12-11 08:00:00"
+            },
+            "details": {
+              "base_graphic_id": 28174,
+              "large_graphic_id": 28175,
+              "portrait_graphic_id": 28170,
+              "xl_graphic_id": 28176,
+              "sceleritas_fel_graphic_id": 22585,
+              "companion_graphic_ids": [
+                28177,
+                22617
+              ],
+              "additional_shop_graphics": [
+                {
+                  "graphic_id": 28179,
+                  "sequence": 1,
+                  "is_transform": true
+                }
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "show_only_if_owned": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "657",
+              "cost": 0
+            },
+            "availabilities": {
+              "premium_item_id": "657"
+            }
+          }
+        }
+      },
+      {
+        "id": "651",
+        "snapshots": {
+          "original": {
+            "id": 651,
+            "hero_id": 146,
+            "name": "Scarlet Corsair Dark Urge",
+            "cost": {
+              "req_date": "2026-01-28 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 28607,
+              "large_graphic_id": 28609,
+              "portrait_graphic_id": 28605,
+              "xl_graphic_id": 28611,
+              "sceleritas_fel_graphic_id": 22585,
+              "companion_graphic_ids": [
+                22582,
+                22617
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "668",
+              "cost": 1680
+            },
+            "availabilities": {
+              "premium_item_id": "668"
+            }
+          },
+          "display": {
+            "id": 651,
+            "hero_id": 146,
+            "name": "猩红海盗邪念",
+            "cost": {
+              "req_date": "2026-01-28 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 28607,
+              "large_graphic_id": 28609,
+              "portrait_graphic_id": 28605,
+              "xl_graphic_id": 28611,
+              "sceleritas_fel_graphic_id": 22585,
+              "companion_graphic_ids": [
+                22582,
+                22617
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "668",
+              "cost": 1680
+            },
+            "availabilities": {
+              "premium_item_id": "668"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

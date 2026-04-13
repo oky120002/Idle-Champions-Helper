@@ -1,4 +1,5 @@
 import { NavLink, Route, Routes } from 'react-router-dom'
+import { ChampionDetailPage } from '../pages/ChampionDetailPage'
 import { ChampionsPage } from '../pages/ChampionsPage'
 import { FormationPage } from '../pages/FormationPage'
 import { HomePage } from '../pages/HomePage'
@@ -89,6 +90,7 @@ export function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/champions" element={<ChampionsPage />} />
+          <Route path="/champions/:championId" element={<ChampionDetailPage />} />
           <Route path="/variants" element={<VariantsPage />} />
           <Route path="/formation" element={<FormationPage />} />
           <Route path="/presets" element={<PresetsPage />} />

@@ -1,0 +1,6589 @@
+{
+  "updatedAt": "2026-04-13",
+  "summary": {
+    "id": "159",
+    "name": {
+      "original": "Volo",
+      "display": "瓦罗"
+    },
+    "seat": 9,
+    "roles": [
+      "support"
+    ],
+    "affiliations": [],
+    "tags": [
+      "chaotic",
+      "event",
+      "good",
+      "human",
+      "male",
+      "spec_hunter",
+      "spec_hunter_undead",
+      "support",
+      "unaffiliated",
+      "wizard",
+      "y8"
+    ],
+    "portrait": {
+      "path": "v1/champion-portraits/159.png",
+      "sourceGraphic": "Portraits/Portrait_Volo",
+      "sourceVersion": 2
+    }
+  },
+  "englishName": "Volo",
+  "eventName": {
+    "original": "Fleetswake",
+    "display": "远航节"
+  },
+  "dateAvailable": "2025-03-05 13:00:00",
+  "lastReworkDate": "2025-03-05 13:00:00",
+  "popularity": 76,
+  "baseCost": "17500000000000",
+  "baseDamage": "2250000000",
+  "baseHealth": "41",
+  "graphicId": "25685",
+  "portraitGraphicId": "25678",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1804190400
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    150,
+    500,
+    920,
+    1435
+  ],
+  "costCurves": {
+    "1": 1.14
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "content_set_id": 55,
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      190,
+      191,
+      192
+    ],
+    "graphic_large": 25687,
+    "graphic_xl": 25689,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      82,
+      69
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 4,
+      "gethit": 5,
+      "koed": 6,
+      "run": 7
+    },
+    "allow_time_gate": "2025-03-26 12:00:00",
+    "available_in_store": "2025-04-02 12:00:00",
+    "time_gate_adventure_id": 1706,
+    "time_gate_variants_ids": [
+      1663,
+      1664,
+      1665
+    ],
+    "time_gate_tier": 1,
+    "silver_chest_type_id": 650,
+    "gold_chest_type_id": 651,
+    "golden_epic_loot_id": 3773,
+    "golden_epic_promo_id": 585,
+    "event_logo_graphic_id": 3943,
+    "console_portrait": 25676,
+    "trials_effect_id": 836,
+    "portrait_graphic_scale": 0.9,
+    "legendary_effect_id": [
+      54,
+      2,
+      5,
+      43,
+      38,
+      105
+    ],
+    "weekly_buff": "buff_upgrade,200,16550"
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Volothamp \"Volo\" Geddarm",
+      "display": "“瓦罗”瓦罗谭普·哲达"
+    },
+    "class": {
+      "original": "Wizard",
+      "display": "法师"
+    },
+    "race": {
+      "original": "Human",
+      "display": "人类"
+    },
+    "age": 55,
+    "alignment": {
+      "original": "Chaotic Good",
+      "display": "混乱善良"
+    },
+    "abilityScores": {
+      "str": 9,
+      "dex": 12,
+      "con": 10,
+      "int": 15,
+      "wis": 11,
+      "cha": 16
+    },
+    "backstory": {
+      "original": "Volothamp \"Volo\" Geddarm is a flamboyant world traveler, self-proclaimed expert, and author of such works as Volo's Guide to Monsters. Known for his bombastic personality and flair for storytelling, Volo has a knack for turning facts into tall tales. Though he's quick to avoid personal danger, he's fiercely loyal to his friends - just don't expect him to cover the tab.",
+      "display": "“瓦罗”瓦罗谭普·哲达是一位风度翩翩的世界旅行家、自封的专家，以及《瓦罗的怪物指南》等作品的作者。他以夸张的个性和讲故事的天赋而闻名，瓦罗擅长将事实变成离奇的故事。尽管他总是考虑自身面临的风险，但他对朋友非常忠诚——只是别指望他会付账。"
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "836",
+      "name": {
+        "original": "Volo's Guide to Malicious Mockery",
+        "display": "瓦罗的恶意嘲笑指南"
+      },
+      "description": {
+        "original": "Volo writes a scathing note, dealing a deep magical cut to the nearest enemy.",
+        "display": "瓦罗写了一个用词严厉的字条，给最近的敌人造成了深深的魔法创伤。"
+      },
+      "longDescription": null,
+      "cooldown": 7,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "front",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ranged"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "ranged_attack",
+          "shoot_frame": 14,
+          "projectile": "magic_hit",
+          "graphic_id": 9534
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "837",
+      "name": {
+        "original": "Volo's Guide to Writing Wrongs",
+        "display": "瓦罗的错误写作指南"
+      },
+      "description": {
+        "original": "Volo causes his buffed allies to deal additional BUD-based damage for 15 seconds.",
+        "display": "瓦罗使他的增益型盟友造成额外的基础杀招伤害，持续 15 秒。"
+      },
+      "longDescription": {
+        "original": "Volo takes out a book and quill and writes for 15 seconds, causing his buffed allies to deal additional BUD-based damage for the duration.",
+        "display": "瓦罗拿出一本书，用羽毛笔写了 15 秒钟，使他的增益型盟友在持续期间造成额外的基础杀招伤害。"
+      },
+      "cooldown": 300,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "0.03",
+      "target": "front",
+      "damageTypes": [],
+      "tags": [
+        "ultimate"
+      ],
+      "graphicId": "25743",
+      "animations": [
+        {
+          "type": "ultimate_attack",
+          "ultimate": "volo",
+          "no_damage_display": true
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "16550",
+        "name": {
+          "original": "Volo's Guide to Combat",
+          "display": "瓦罗的战斗指南"
+        },
+        "description": null,
+        "graphicId": "25722"
+      },
+      {
+        "upgradeId": "16551",
+        "name": {
+          "original": "Volo's Guide to Questing",
+          "display": "瓦罗的任务指南"
+        },
+        "description": null,
+        "graphicId": "25724"
+      },
+      {
+        "upgradeId": "16552",
+        "name": {
+          "original": "Volo's Guide to Monsters",
+          "display": "瓦罗的怪物指南"
+        },
+        "description": null,
+        "graphicId": "25723"
+      },
+      {
+        "upgradeId": "16553",
+        "name": {
+          "original": "Volo's Guide to Rapid Retreats",
+          "display": "瓦罗的快速撤退指南"
+        },
+        "description": null,
+        "graphicId": "25725"
+      }
+    ]
+  },
+  "upgrades": [
+    {
+      "id": "16549",
+      "requiredLevel": 0,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Volo's Guide to the Sword Coast",
+        "display": "瓦罗的剑湾指南"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2230",
+      "effectDefinition": {
+        "id": "2230",
+        "snapshots": {
+          "original": {
+            "id": 2230,
+            "flavour_text": "",
+            "description": {
+              "desc": "Volo can be used in any Grand Tour of the Sword Coast campaign adventure or variant, even if he would not normally be available to be used due to variant or patron restrictions."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "do_nothing"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 2230,
+            "flavour_text": "",
+            "description": {
+              "desc": "瓦罗可用于任何剑湾之旅战役冒险或支线任务，即使以前由于支线任务或赞助者限制条件无法使用。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "do_nothing"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16550",
+      "requiredLevel": 20,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Volo's Guide to Combat",
+        "display": "瓦罗的战斗指南"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2231",
+      "effectDefinition": {
+        "id": "2231",
+        "snapshots": {
+          "original": {
+            "id": 2231,
+            "flavour_text": "",
+            "description": {
+              "desc": "Volo increases the damage of all Champions in the two columns in front of him by $amount%."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "next_two_col"
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 25729,
+            "large_graphic_id": 25722,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 2231,
+            "flavour_text": "",
+            "description": {
+              "desc": "瓦罗会使他前面两列所有勇士的伤害提高 $amount%。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "next_two_col"
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 25729,
+            "large_graphic_id": 25722,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Volo increases the damage of Champions in the two columns in front of him. Place him behind your damage dealers.",
+        "display": "瓦罗会提高他前面两列勇士的伤害。将他放置在你的伤害输出身后。"
+      }
+    },
+    {
+      "id": "16761",
+      "requiredLevel": 30,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16739",
+      "requiredLevel": 40,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16551",
+      "requiredLevel": 50,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Volo's Guide to Questing",
+        "display": "瓦罗的任务指南"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2232",
+      "effectDefinition": {
+        "id": "2232",
+        "snapshots": {
+          "original": {
+            "id": 2232,
+            "flavour_text": "",
+            "description": {
+              "desc": "Volo increases the effect of Volo's Guide to Combat by $amount% for each Guide and/or Collection Quest completed, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,10",
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "buff_upgrade,0,16550",
+                "amount_expr": "upgrade_amount(16551,0)",
+                "amount_func": "mult",
+                "stack_func": "per_hero_attribute",
+                "post_process_expr": "collection_quests_completed",
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "collection_and_guide_quest_changed"
+                ],
+                "show_bonus": true,
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 25731,
+            "large_graphic_id": 25724,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 1
+            }
+          },
+          "display": {
+            "id": 2232,
+            "flavour_text": "",
+            "description": {
+              "desc": "瓦罗每完成一次指南和/或收集任务，“瓦罗的战斗指南”效果增加 $amount%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,10",
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "buff_upgrade,0,16550",
+                "amount_expr": "upgrade_amount(16551,0)",
+                "amount_func": "mult",
+                "stack_func": "per_hero_attribute",
+                "post_process_expr": "collection_quests_completed",
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "collection_and_guide_quest_changed"
+                ],
+                "show_bonus": true,
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 25731,
+            "large_graphic_id": 25724,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 1
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Volo gets more effective based on the number of guide and/or collection quests you've completed. Complete more quests to power him up!",
+        "display": "瓦罗的效果会随着你完成的指南任务和/或收集任务的数量增加而增加。完成更多的任务来强化他！"
+      }
+    },
+    {
+      "id": "16762",
+      "requiredLevel": 60,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16552",
+      "requiredLevel": 70,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Volo's Guide to Monsters",
+        "display": "瓦罗的怪物指南"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2233",
+      "effectDefinition": {
+        "id": "2233",
+        "snapshots": {
+          "original": {
+            "id": 2233,
+            "flavour_text": "",
+            "description": {
+              "pre": "Volo counts each type of enemy encountered in the current adventure. Volo increases the effect of Volo's Guide to Combat by $amount% for each enemy type encountered, stacking multiplicatively.",
+              "conditions": [
+                {
+                  "condition": "not static_desc",
+                  "desc": "^^Encountered Monster Types: $volo_encountered_monster_tags"
+                }
+              ]
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,100"
+              },
+              {
+                "effect_string": "buff_upgrade,0,16550",
+                "amount_expr": "upgrade_amount(16552,0)",
+                "stacks_on_trigger": "will_stack_manually",
+                "stacks_multiply": true,
+                "show_bonus": true
+              },
+              {
+                "effect_string": "volo_guide_to_monsters",
+                "buff_effect_key_index": 1
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 25730,
+            "large_graphic_id": 25723,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 2233,
+            "flavour_text": "",
+            "description": {
+              "pre": "瓦罗会计算当前冒险中遇到的每一种敌人。每遇到一种敌人，瓦罗就会使“瓦罗的战斗指南”的效果增加 $amount%，以乘算方式堆叠。",
+              "conditions": [
+                {
+                  "condition": "not static_desc",
+                  "desc": "^^遭遇怪物种类：$volo_encountered_monster_tags"
+                }
+              ]
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,100"
+              },
+              {
+                "effect_string": "buff_upgrade,0,16550",
+                "amount_expr": "upgrade_amount(16552,0)",
+                "stacks_on_trigger": "will_stack_manually",
+                "stacks_multiply": true,
+                "show_bonus": true
+              },
+              {
+                "effect_string": "volo_guide_to_monsters",
+                "buff_effect_key_index": 1
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 25730,
+            "large_graphic_id": 25723,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16763",
+      "requiredLevel": 80,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16764",
+      "requiredLevel": 90,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16557",
+      "requiredLevel": 100,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Volo's Guide to Writing Wrongs",
+        "display": "瓦罗的错误写作指南"
+      },
+      "upgradeType": "unlock_ultimate",
+      "effectReference": "effect_def,2238",
+      "effectDefinition": {
+        "id": "2238",
+        "snapshots": {
+          "original": {
+            "id": 2238,
+            "flavour_text": "",
+            "description": {
+              "desc": "Unlocks Volo's Guide to Writing Wrongs Ultimate Attack"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "volo_ult",
+                "duration": 15,
+                "buff_effect_key_index": 2,
+                "scale_monsters": 1.5
+              },
+              {
+                "effect_string": "set_ultimate_attack",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "base_attack_deal_bonus_damage,20",
+                "immediately_after_damage": true,
+                "apply_manually": true,
+                "buff_targets_instead_of_owner": true,
+                "targets": [
+                  "all"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "affected_by_upgrade",
+                    "upgrade_id": 16550
+                  }
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": false,
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": false,
+              "retain_on_slot_changed": true
+            }
+          },
+          "display": {
+            "id": 2238,
+            "flavour_text": "",
+            "description": {
+              "desc": "解锁瓦罗的错误写作指南杀招"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "volo_ult",
+                "duration": 15,
+                "buff_effect_key_index": 2,
+                "scale_monsters": 1.5
+              },
+              {
+                "effect_string": "set_ultimate_attack",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "base_attack_deal_bonus_damage,20",
+                "immediately_after_damage": true,
+                "apply_manually": true,
+                "buff_targets_instead_of_owner": true,
+                "targets": [
+                  "all"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "affected_by_upgrade",
+                    "upgrade_id": 16550
+                  }
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": false,
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": false,
+              "retain_on_slot_changed": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16765",
+      "requiredLevel": 110,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16553",
+      "requiredLevel": 120,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Volo's Guide to Rapid Retreats",
+        "display": "瓦罗的快速撤退指南"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2234",
+      "effectDefinition": {
+        "id": "2234",
+        "snapshots": {
+          "original": {
+            "id": 2234,
+            "flavour_text": "",
+            "description": {
+              "pre": "If a Champion in the column in front of Volo is defeated, the formation immediately retreats to the previous area. Upon returning to the area of their near defeat, the effect of Volo's Guide to Combat is increased by $amount___2% in that area.",
+              "conditions": [
+                {
+                  "condition": "not static_desc",
+                  "desc": "^^Active Area: $volo_buffed_area"
+                }
+              ]
+            },
+            "effect_keys": [
+              {
+                "effect_string": "volo_guide_to_rapid_retreats",
+                "buff_effect_key_index": 1
+              },
+              {
+                "effect_string": "buff_upgrade,1000,16550",
+                "show_bonus": true,
+                "apply_manually": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 25732,
+            "large_graphic_id": 25725,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 2234,
+            "flavour_text": "",
+            "description": {
+              "pre": "如果处于瓦罗前列的勇士被击败，阵型将立即撤退到上一个的区域。当回到他们近乎失败的区域时，“瓦罗的战斗指南”效果在该区域增加 $amount___2%。",
+              "conditions": [
+                {
+                  "condition": "not static_desc",
+                  "desc": "^^激活区域：$volo_buffed_area"
+                }
+              ]
+            },
+            "effect_keys": [
+              {
+                "effect_string": "volo_guide_to_rapid_retreats",
+                "buff_effect_key_index": 1
+              },
+              {
+                "effect_string": "buff_upgrade,1000,16550",
+                "show_bonus": true,
+                "apply_manually": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 25732,
+            "large_graphic_id": 25725,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16766",
+      "requiredLevel": 130,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16767",
+      "requiredLevel": 140,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16554",
+      "requiredLevel": 150,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Volo's Guide to Spirits and Specters",
+        "display": "瓦罗的鬼魂与幽灵指南"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2235",
+      "effectDefinition": {
+        "id": "2235",
+        "snapshots": {
+          "original": {
+            "id": 2235,
+            "flavour_text": "",
+            "description": {
+              "desc": "Volo gains the Hunter role and Undead become his Favored Foe. The effect of Volo's Guide to Combat is increased by $amount% for each Champion in the formation with the Hunter role, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,100",
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "favored_foe,undead",
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "add_hero_tags,0,hunter",
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "buff_upgrade,100,16550",
+                "amount_expr": "upgrade_amount(16554,0)",
+                "amount_func": "mult",
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "HasTag(`hunter`)",
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "hero_tags_changed",
+                  "upgrade_unlocked"
+                ],
+                "show_bonus": true,
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "spec_option_post_apply_info": "Hunter Champions: $num_stacks___4"
+            }
+          },
+          "display": {
+            "id": 2235,
+            "flavour_text": "",
+            "description": {
+              "desc": "瓦罗获得了猎人角色，亡灵成为了他的偏好对手。阵型中每有一位猎人角色勇士，均使“瓦罗的战斗指南”效果提高 $amount%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,100",
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "favored_foe,undead",
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "add_hero_tags,0,hunter",
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "buff_upgrade,100,16550",
+                "amount_expr": "upgrade_amount(16554,0)",
+                "amount_func": "mult",
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "HasTag(`hunter`)",
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "hero_tags_changed",
+                  "upgrade_unlocked"
+                ],
+                "show_bonus": true,
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "spec_option_post_apply_info": "猎人勇士：$num_stacks___4"
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Volo's Guide to Spirits and Specters",
+        "display": "瓦罗的鬼魂与幽灵指南"
+      },
+      "specializationDescription": {
+        "original": "Volo writes his manuscript on fighting undead while consulting with other Champions hunting their favored foes.",
+        "display": "瓦罗在与其他勇士讨论如何对抗他们各自偏好的敌人时，撰写了关于对抗亡灵的手稿。"
+      },
+      "specializationGraphicId": "25741",
+      "tipText": null
+    },
+    {
+      "id": "16555",
+      "requiredLevel": 150,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Volo's Guide to Brain-Eating Tadpoles",
+        "display": "瓦罗的食脑蝌蚪指南"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2236",
+      "effectDefinition": {
+        "id": "2236",
+        "snapshots": {
+          "original": {
+            "id": 2236,
+            "flavour_text": "",
+            "description": {
+              "desc": "The effect of Volo's Guide to Combat is increased by $amount% for each Ceremorphosis stack the formation has, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,100",
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "buff_upgrade,100,16550",
+                "amount_expr": "upgrade_amount(16555,0)",
+                "amount_func": "mult",
+                "stack_func": "per_ceremorphosis_stacks",
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "feat_changed",
+                  "upgrade_unlocked",
+                  "effect_key_changed"
+                ],
+                "changing_effect_keys": [
+                  "ceremorphosis_stacks_mult"
+                ],
+                "show_bonus": true,
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "spec_option_post_apply_info": "Ceremorphosis Stacks: $num_stacks___2"
+            }
+          },
+          "display": {
+            "id": 2236,
+            "flavour_text": "",
+            "description": {
+              "desc": "阵型中每堆叠一层蜕变，均使“瓦罗的战斗指南”效果提高 $amount%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,100",
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "buff_upgrade,100,16550",
+                "amount_expr": "upgrade_amount(16555,0)",
+                "amount_func": "mult",
+                "stack_func": "per_ceremorphosis_stacks",
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "feat_changed",
+                  "upgrade_unlocked",
+                  "effect_key_changed"
+                ],
+                "changing_effect_keys": [
+                  "ceremorphosis_stacks_mult"
+                ],
+                "show_bonus": true,
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "spec_option_post_apply_info": "蜕变堆叠：$num_stacks___2"
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Volo's Guide to Brain-Eating Tadpoles",
+        "display": "瓦罗的食脑蝌蚪指南"
+      },
+      "specializationDescription": {
+        "original": "Volo carefully studies the formation's Ceremorphosis-infected population, enhancing his own abilities.",
+        "display": "瓦罗仔细研究了阵型中受蜕变影响的人群，从而增强自己的技能。"
+      },
+      "specializationGraphicId": "25740",
+      "tipText": null
+    },
+    {
+      "id": "16556",
+      "requiredLevel": 150,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Volo's Guide to All Things Magical",
+        "display": "瓦罗的魔法百科指南"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2237",
+      "effectDefinition": {
+        "id": "2237",
+        "snapshots": {
+          "original": {
+            "id": 2237,
+            "flavour_text": "",
+            "description": {
+              "desc": "The effect of Volo's Guide to Combat is increased by $amount% for each Champion in the formation with a Magic base attack, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,100",
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "buff_upgrade,100,16550",
+                "amount_expr": "upgrade_amount(16556,0)",
+                "amount_func": "mult",
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "HasAttackDamageType(`magic`)",
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "feat_changed",
+                  "upgrade_unlocked",
+                  "attack_changed"
+                ],
+                "show_bonus": true,
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "spec_option_post_apply_info": "Qualified Champions: $num_stacks___2"
+            }
+          },
+          "display": {
+            "id": 2237,
+            "flavour_text": "",
+            "description": {
+              "desc": "阵型中每有一位魔法基本攻击的勇士，均使“瓦罗的战斗指南”效果提高 $amount%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,100",
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "buff_upgrade,100,16550",
+                "amount_expr": "upgrade_amount(16556,0)",
+                "amount_func": "mult",
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "HasAttackDamageType(`magic`)",
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "feat_changed",
+                  "upgrade_unlocked",
+                  "attack_changed"
+                ],
+                "show_bonus": true,
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "spec_option_post_apply_info": "满足资格勇士：$num_stacks___2"
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Volo's Guide to All Things Magical",
+        "display": "瓦罗的魔法百科指南"
+      },
+      "specializationDescription": {
+        "original": "Volo works with his fellow \"wizards\" and other magically inclined Champions.",
+        "display": "瓦罗与他的“法师”同伴以及其他擅长魔法的勇士一起工作。"
+      },
+      "specializationGraphicId": "25739",
+      "tipText": null
+    },
+    {
+      "id": "16768",
+      "requiredLevel": 160,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16741",
+      "requiredLevel": 170,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16769",
+      "requiredLevel": 180,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16770",
+      "requiredLevel": 190,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16771",
+      "requiredLevel": 210,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16772",
+      "requiredLevel": 240,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16773",
+      "requiredLevel": 260,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16774",
+      "requiredLevel": 270,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16775",
+      "requiredLevel": 290,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16744",
+      "requiredLevel": 300,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16776",
+      "requiredLevel": 330,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16777",
+      "requiredLevel": 360,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16778",
+      "requiredLevel": 380,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16779",
+      "requiredLevel": 390,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16746",
+      "requiredLevel": 400,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16780",
+      "requiredLevel": 440,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16781",
+      "requiredLevel": 480,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16782",
+      "requiredLevel": 490,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16783",
+      "requiredLevel": 510,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16748",
+      "requiredLevel": 540,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16784",
+      "requiredLevel": 550,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16785",
+      "requiredLevel": 590,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16786",
+      "requiredLevel": 600,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16787",
+      "requiredLevel": 620,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16788",
+      "requiredLevel": 660,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16750",
+      "requiredLevel": 680,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16789",
+      "requiredLevel": 700,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16790",
+      "requiredLevel": 710,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16791",
+      "requiredLevel": 750,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16792",
+      "requiredLevel": 800,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16752",
+      "requiredLevel": 810,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16793",
+      "requiredLevel": 830,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16794",
+      "requiredLevel": 860,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16795",
+      "requiredLevel": 910,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16796",
+      "requiredLevel": 940,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16755",
+      "requiredLevel": 960,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16797",
+      "requiredLevel": 970,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16798",
+      "requiredLevel": 1050,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16799",
+      "requiredLevel": 1080,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16757",
+      "requiredLevel": 1090,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16800",
+      "requiredLevel": 1160,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16801",
+      "requiredLevel": 1190,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16802",
+      "requiredLevel": 1230,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16759",
+      "requiredLevel": 1240,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16803",
+      "requiredLevel": 1260,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16804",
+      "requiredLevel": 1270,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16558",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16740",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16742",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16743",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16745",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16747",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16749",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16751",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16753",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16754",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16756",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16758",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "16760",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,16550",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    }
+  ],
+  "feats": [
+    {
+      "id": "2094",
+      "order": 1,
+      "name": {
+        "original": "Selflessness",
+        "display": "无私"
+      },
+      "description": {
+        "original": "I am the very model of altruism, my friend! What I do, I do for us all.",
+        "display": "我就是利他主义的典范，我的朋友！我所做的一切，都是为了我们所有人。"
+      },
+      "rarity": "2",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "force_order": true,
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2095",
+      "order": 2,
+      "name": {
+        "original": "Inspiring Leader",
+        "display": "鼓舞人心的首领"
+      },
+      "description": {
+        "original": "My very presence provides a certain sense of sudden capability!",
+        "display": "我的存在本身就能让人瞬间充满力量！"
+      },
+      "rarity": "3",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,25"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "force_order": true,
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "2096",
+      "order": 3,
+      "name": {
+        "original": "Volo's Constructive Consultation",
+        "display": "瓦罗的建设性咨询"
+      },
+      "description": {
+        "original": "The trick is to keep hitting them until they can no longer hit you back.",
+        "display": "诀窍就是不断地攻击他们，直到他们再也无法还手为止。"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,16550"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "force_order": true,
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2097",
+      "order": 4,
+      "name": {
+        "original": "Volo's Discerning Details",
+        "display": "瓦罗的洞察细节"
+      },
+      "description": {
+        "original": "That one's trousers have a loose thread. A keen observation, yes?",
+        "display": "那家伙的裤子上有一根松动的线头。眼光很敏锐，对吧？"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,16550"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "force_order": true,
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "2098",
+      "order": 5,
+      "name": {
+        "original": "Volo's Expanded Expertise",
+        "display": "瓦罗的扩展专长"
+      },
+      "description": {
+        "original": "I've had an epiphany! If I raise my voice, more willing ears might hear me!",
+        "display": "我顿悟了！如果我提高嗓门，或许会有更多愿意倾听的人听到我！"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "change_upgrade_data,16550,0",
+          "data": {
+            "targets": [
+              "next_three_col"
+            ]
+          },
+          "description": "Increases the number of columns buffed by Volo's Guide to Combat by +1."
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000,
+          "start_date": "2025-06-05 12:00:00"
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 544
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "2099",
+      "order": 6,
+      "name": {
+        "original": "Volo's Helpful Hints",
+        "display": "瓦罗的有用提示"
+      },
+      "description": {
+        "original": "Expand your horizons, bolster your ranks, seek gainful employment...",
+        "display": "开拓视野，壮大队伍，谋求高薪……"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,16551,1"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "force_order": true,
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2100",
+      "order": 7,
+      "name": {
+        "original": "Volo's Inspirational Intimations",
+        "display": "瓦罗的激励暗示"
+      },
+      "description": {
+        "original": "Amass a menagerie of helpful creatures, forge the finest arms...",
+        "display": "搜罗一群有用的生物，打造最精良的武器……"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,16551,1"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "force_order": true,
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "2101",
+      "order": 8,
+      "name": {
+        "original": "Volo's Boundless Brilliance",
+        "display": "瓦罗的无尽智慧"
+      },
+      "description": {
+        "original": "And, finally, be sure to boast of your achievements for all the world to see!",
+        "display": "最后，一定要向全世界炫耀你的成就！"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,16551,1"
+        }
+      ],
+      "sources": [
+        {
+          "source": "event",
+          "event_id": 7
+        }
+      ],
+      "properties": {
+        "force_order": true,
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "event",
+        "event_id": 7,
+        "tier": 3
+      }
+    },
+    {
+      "id": "2102",
+      "order": 9,
+      "name": {
+        "original": "Volo's Grasping Guesswork",
+        "display": "瓦罗的盲目猜测"
+      },
+      "description": {
+        "original": "The origins of the fearsome owlbear are a subject of debate among scholars.",
+        "display": "关于可怕的枭熊的起源，学者们一直存在争议。"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,16552,0"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "force_order": true,
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2103",
+      "order": 10,
+      "name": {
+        "original": "Volo's Fantastic Findings",
+        "display": "瓦罗的奇妙发现"
+      },
+      "description": {
+        "original": "In truth, owlbears are neither natural nor the result of magic gone awry.",
+        "display": "事实上，枭熊既不是自然产生的，也不是魔法失控的结果。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,16552,0"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "force_order": true,
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "2104",
+      "order": 11,
+      "name": {
+        "original": "Volo's Justified Jaunt",
+        "display": "瓦罗的合理漫步"
+      },
+      "description": {
+        "original": "I believe a swift, strategic withdrawal is in order. No time to dilly-dally!",
+        "display": "我相信，迅速而有策略地撤退是明智之举。没有时间磨磨蹭蹭了！"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,16553,1"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "force_order": true,
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "2105",
+      "order": 12,
+      "name": {
+        "original": "Volo's Adaptable Approach",
+        "display": "瓦罗的随机应变"
+      },
+      "description": {
+        "original": "No matter the circumstances, the estimable Volo remains ready!",
+        "display": "无论环境如何，可敬的瓦罗始终准备就绪！"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,16554,0",
+          "description": "Increases the base effect of Volo's specializations by $amount%"
+        },
+        {
+          "effect_string": "buff_upgrade,40,16555,0",
+          "description": "",
+          "skip_effect_key_desc": true
+        },
+        {
+          "effect_string": "buff_upgrade,40,16556,0",
+          "description": "",
+          "skip_effect_key_desc": true
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "2106",
+      "order": 13,
+      "name": {
+        "original": "Athlete",
+        "display": "运动员"
+      },
+      "description": {
+        "original": "Behold my physique! Yes, I do maintain a regiment of calisthenics.",
+        "display": "瞧瞧我的体格！是的，我确实在坚持做一套体操训练。"
+      },
+      "rarity": "3",
+      "graphicId": "6073",
+      "effects": [
+        {
+          "effect_string": "increase_ability_score,str,1"
+        }
+      ],
+      "sources": [
+        {
+          "source": "event",
+          "event_id": 7
+        }
+      ],
+      "properties": {
+        "force_order": true,
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "event",
+        "event_id": 7,
+        "tier": 2
+      }
+    },
+    {
+      "id": "2159",
+      "order": 14,
+      "name": {
+        "original": "Illithid Tadpole",
+        "display": "灵吸怪蝌蚪"
+      },
+      "description": {
+        "original": "I've simply the worst headache today. Bah! I'm certain it's nothing serious.",
+        "display": "我今天真是头疼得要命。呸！我确定没什么大碍。"
+      },
+      "rarity": "4",
+      "graphicId": "20923",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,25"
+        },
+        {
+          "effect_string": "add_global_ceremorphosis_stacks,1"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000,
+          "start_date": "2025-06-12 12:00:00"
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 588
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1741806000
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "2249",
+      "order": 15,
+      "name": {
+        "original": "Unknown Power",
+        "display": "未知之力"
+      },
+      "description": {
+        "original": "You ask why Elminster is so concerned with my wellbeing? He's a true fan, of course! Why else?",
+        "display": "你问我为什么艾尔明斯特如此关心我的安危？当然因为他是我的忠实粉丝！不然还能为什么？"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,16554,0",
+          "description": "Increases the base effect of Volo's specializations by $amount%"
+        },
+        {
+          "effect_string": "buff_upgrade,80,16555,0",
+          "description": "",
+          "skip_effect_key_desc": true
+        },
+        {
+          "effect_string": "buff_upgrade,80,16556,0",
+          "description": "",
+          "skip_effect_key_desc": true
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000,
+          "start_date": "2025-11-27 12:00:00"
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 612
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1756321200
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "2478",
+      "order": 16,
+      "name": {
+        "original": "Volo's Keen Knowledge",
+        "display": "瓦罗的渊博知识"
+      },
+      "description": {
+        "original": "Why, I dare to posit that the noble owlbear is, in fact, a creation of the gods themselves!",
+        "display": "我敢说高贵的枭熊实际上是众神亲自创造的！"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,16552,0"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000,
+          "start_date": "2026-06-18 12:00:00"
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 688
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1773860400,
+        "available_for_gems_at_time": 1781809200
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "688",
+        "cost": 1680
+      }
+    }
+  ],
+  "skins": [
+    {
+      "id": "526",
+      "name": {
+        "original": "Privateer Volo",
+        "display": "私掠船船员瓦罗"
+      },
+      "cost": {
+        "req_date": "2025-03-05 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 26032,
+        "large_graphic_id": 26037,
+        "portrait_graphic_id": 26027,
+        "xl_graphic_id": 26042
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "544",
+        "cost": 3830
+      },
+      "availabilities": null
+    },
+    {
+      "id": "590",
+      "name": {
+        "original": "Weave Anchor Volo",
+        "display": "魔网之锚瓦罗"
+      },
+      "cost": {
+        "req_date": "2025-08-27 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 27618,
+        "large_graphic_id": 27621,
+        "portrait_graphic_id": 27616,
+        "xl_graphic_id": 27624
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "612",
+        "cost": 1680
+      },
+      "availabilities": {
+        "premium_item_id": "612"
+      }
+    },
+    {
+      "id": "667",
+      "name": {
+        "original": "Dragon Chronicler Volo",
+        "display": "龙族史官瓦罗"
+      },
+      "cost": {
+        "req_date": "2026-03-18 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 28824,
+        "large_graphic_id": 28826,
+        "portrait_graphic_id": 28821,
+        "xl_graphic_id": 28828
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "688",
+        "cost": 1680
+      },
+      "availabilities": {
+        "premium_item_id": "688"
+      }
+    }
+  ],
+  "raw": {
+    "hero": {
+      "original": {
+        "id": 159,
+        "name": "Volo",
+        "english_name": "Volo",
+        "seat_id": 9,
+        "base_cost": "17500000000000",
+        "base_damage": "2250000000",
+        "base_health": "41",
+        "cost_curves": {
+          "1": 1.14
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 836,
+        "ultimate_attack_id": 837,
+        "graphic_id": 25685,
+        "portrait_graphic_id": 25678,
+        "character_sheet_details": {
+          "full_name": "Volothamp \"Volo\" Geddarm",
+          "class": "Wizard",
+          "race": "Human",
+          "age": 55,
+          "alignment": "Chaotic Good",
+          "ability_scores": {
+            "str": 9,
+            "dex": 12,
+            "con": 10,
+            "int": 15,
+            "wis": 11,
+            "cha": 16
+          },
+          "backstory": "Volothamp \"Volo\" Geddarm is a flamboyant world traveler, self-proclaimed expert, and author of such works as Volo's Guide to Monsters. Known for his bombastic personality and flair for storytelling, Volo has a knack for turning facts into tall tales. Though he's quick to avoid personal danger, he's fiercely loyal to his friends - just don't expect him to cover the tab.",
+          "system_description": "Volothamp \"Volo\" Geddarm is a Support Champion whose encyclopedic knowledge empowers his allies, despite his tendency to overestimate his own expertise. His buffs grow stronger as you complete more collection and guide quests, while his quick thinking ensures the party can regroup when danger strikes."
+        },
+        "default_feat_slot_unlocks": [
+          150,
+          500,
+          920,
+          1435
+        ],
+        "tags": [
+          "male",
+          "human",
+          "wizard",
+          "chaotic",
+          "good",
+          "support",
+          "event",
+          "y8",
+          "spec_hunter",
+          "spec_hunter_undead",
+          "unaffiliated"
+        ],
+        "properties": {
+          "content_set_id": 55,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            190,
+            191,
+            192
+          ],
+          "graphic_large": 25687,
+          "graphic_xl": 25689,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            82,
+            69
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 4,
+            "gethit": 5,
+            "koed": 6,
+            "run": 7
+          },
+          "allow_time_gate": "2025-03-26 12:00:00",
+          "available_in_store": "2025-04-02 12:00:00",
+          "time_gate_adventure_id": 1706,
+          "time_gate_variants_ids": [
+            1663,
+            1664,
+            1665
+          ],
+          "time_gate_tier": 1,
+          "silver_chest_type_id": 650,
+          "gold_chest_type_id": 651,
+          "golden_epic_loot_id": 3773,
+          "golden_epic_promo_id": 585,
+          "event_logo_graphic_id": 3943,
+          "console_portrait": 25676,
+          "trials_effect_id": 836,
+          "portrait_graphic_scale": 0.9,
+          "legendary_effect_id": [
+            54,
+            2,
+            5,
+            43,
+            38,
+            105
+          ],
+          "weekly_buff": "buff_upgrade,200,16550"
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 1662,
+            "type": "base"
+          },
+          {
+            "adventure_id": 1663,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1664,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1665,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1666,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 1706,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 76,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 16550,
+            "name": "Volo's Guide to Combat",
+            "description": "",
+            "graphic_id": "25722"
+          },
+          {
+            "upgrade_id": 16551,
+            "name": "Volo's Guide to Questing",
+            "description": "",
+            "graphic_id": "25724"
+          },
+          {
+            "upgrade_id": 16552,
+            "name": "Volo's Guide to Monsters",
+            "description": "",
+            "graphic_id": "25723"
+          },
+          {
+            "upgrade_id": 16553,
+            "name": "Volo's Guide to Rapid Retreats",
+            "description": "",
+            "graphic_id": "25725"
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1804190400,
+        "event_name": "Fleetswake",
+        "is_available": true,
+        "date_available": "2025-03-05 13:00:00",
+        "last_rework_date": "2025-03-05 13:00:00"
+      },
+      "display": {
+        "id": 159,
+        "name": "瓦罗",
+        "english_name": "Volo",
+        "seat_id": 9,
+        "base_cost": "17500000000000",
+        "base_damage": "2250000000",
+        "base_health": "41",
+        "cost_curves": {
+          "1": 1.14
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 836,
+        "ultimate_attack_id": 837,
+        "graphic_id": 25685,
+        "portrait_graphic_id": 25678,
+        "character_sheet_details": {
+          "full_name": "“瓦罗”瓦罗谭普·哲达",
+          "class": "法师",
+          "race": "人类",
+          "age": 55,
+          "alignment": "混乱善良",
+          "ability_scores": {
+            "str": 9,
+            "dex": 12,
+            "con": 10,
+            "int": 15,
+            "wis": 11,
+            "cha": 16
+          },
+          "backstory": "“瓦罗”瓦罗谭普·哲达是一位风度翩翩的世界旅行家、自封的专家，以及《瓦罗的怪物指南》等作品的作者。他以夸张的个性和讲故事的天赋而闻名，瓦罗擅长将事实变成离奇的故事。尽管他总是考虑自身面临的风险，但他对朋友非常忠诚——只是别指望他会付账。",
+          "system_description": "“瓦罗”瓦罗谭普·哲达是一位支援型勇士，他那百科全书般的知识能够增强盟友的力量，尽管他总是高估自己的专业知识。随着你完成更多收集任务和指南任务，他的增益效果会变得更强大，而他敏捷的思维也确保了当危险来袭时，队伍能够重新集结。"
+        },
+        "default_feat_slot_unlocks": [
+          150,
+          500,
+          920,
+          1435
+        ],
+        "tags": [
+          "male",
+          "human",
+          "wizard",
+          "chaotic",
+          "good",
+          "support",
+          "event",
+          "y8",
+          "spec_hunter",
+          "spec_hunter_undead",
+          "unaffiliated"
+        ],
+        "properties": {
+          "content_set_id": 55,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            190,
+            191,
+            192
+          ],
+          "graphic_large": 25687,
+          "graphic_xl": 25689,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            82,
+            69
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 4,
+            "gethit": 5,
+            "koed": 6,
+            "run": 7
+          },
+          "allow_time_gate": "2025-03-26 12:00:00",
+          "available_in_store": "2025-04-02 12:00:00",
+          "time_gate_adventure_id": 1706,
+          "time_gate_variants_ids": [
+            1663,
+            1664,
+            1665
+          ],
+          "time_gate_tier": 1,
+          "silver_chest_type_id": 650,
+          "gold_chest_type_id": 651,
+          "golden_epic_loot_id": 3773,
+          "golden_epic_promo_id": 585,
+          "event_logo_graphic_id": 3943,
+          "console_portrait": 25676,
+          "trials_effect_id": 836,
+          "portrait_graphic_scale": 0.9,
+          "legendary_effect_id": [
+            54,
+            2,
+            5,
+            43,
+            38,
+            105
+          ],
+          "weekly_buff": "buff_upgrade,200,16550"
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 1662,
+            "type": "base"
+          },
+          {
+            "adventure_id": 1663,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1664,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1665,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1666,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 1706,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 76,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 16550,
+            "name": "瓦罗的战斗指南",
+            "description": "",
+            "graphic_id": "25722"
+          },
+          {
+            "upgrade_id": 16551,
+            "name": "瓦罗的任务指南",
+            "description": "",
+            "graphic_id": "25724"
+          },
+          {
+            "upgrade_id": 16552,
+            "name": "瓦罗的怪物指南",
+            "description": "",
+            "graphic_id": "25723"
+          },
+          {
+            "upgrade_id": 16553,
+            "name": "瓦罗的快速撤退指南",
+            "description": "",
+            "graphic_id": "25725"
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1804190400,
+        "event_name": "远航节",
+        "is_available": true,
+        "date_available": "2025-03-05 13:00:00",
+        "last_rework_date": "2025-03-05 13:00:00"
+      }
+    },
+    "attacks": [
+      {
+        "id": "836",
+        "snapshots": {
+          "original": {
+            "id": 836,
+            "name": "Volo's Guide to Malicious Mockery",
+            "description": "Volo writes a scathing note, dealing a deep magical cut to the nearest enemy.",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 7,
+            "animations": [
+              {
+                "type": "ranged_attack",
+                "shoot_frame": 14,
+                "projectile": "magic_hit",
+                "graphic_id": 9534
+              }
+            ],
+            "tags": [
+              "ranged"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          },
+          "display": {
+            "id": 836,
+            "name": "瓦罗的恶意嘲笑指南",
+            "description": "瓦罗写了一个用词严厉的字条，给最近的敌人造成了深深的魔法创伤。",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 7,
+            "animations": [
+              {
+                "type": "ranged_attack",
+                "shoot_frame": 14,
+                "projectile": "magic_hit",
+                "graphic_id": 9534
+              }
+            ],
+            "tags": [
+              "ranged"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          }
+        }
+      },
+      {
+        "id": "837",
+        "snapshots": {
+          "original": {
+            "id": 837,
+            "name": "Volo's Guide to Writing Wrongs",
+            "description": "Volo causes his buffed allies to deal additional BUD-based damage for 15 seconds.",
+            "long_description": "Volo takes out a book and quill and writes for 15 seconds, causing his buffed allies to deal additional BUD-based damage for the duration.",
+            "graphic_id": 25743,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 0.03,
+            "cooldown": 300,
+            "animations": [
+              {
+                "type": "ultimate_attack",
+                "ultimate": "volo",
+                "no_damage_display": true
+              }
+            ],
+            "tags": [
+              "ultimate"
+            ],
+            "damage_types": []
+          },
+          "display": {
+            "id": 837,
+            "name": "瓦罗的错误写作指南",
+            "description": "瓦罗使他的增益型盟友造成额外的基础杀招伤害，持续 15 秒。",
+            "long_description": "瓦罗拿出一本书，用羽毛笔写了 15 秒钟，使他的增益型盟友在持续期间造成额外的基础杀招伤害。",
+            "graphic_id": 25743,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 0.03,
+            "cooldown": 300,
+            "animations": [
+              {
+                "type": "ultimate_attack",
+                "ultimate": "volo",
+                "no_damage_display": true
+              }
+            ],
+            "tags": [
+              "ultimate"
+            ],
+            "damage_types": []
+          }
+        }
+      }
+    ],
+    "upgrades": [
+      {
+        "id": "16549",
+        "snapshots": {
+          "original": {
+            "id": 16549,
+            "hero_id": 159,
+            "required_level": 0,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2230",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Volo's Guide to the Sword Coast"
+          },
+          "display": {
+            "id": 16549,
+            "hero_id": 159,
+            "required_level": 0,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2230",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "瓦罗的剑湾指南"
+          }
+        }
+      },
+      {
+        "id": "16550",
+        "snapshots": {
+          "original": {
+            "id": 16550,
+            "hero_id": 159,
+            "required_level": 20,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2231",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Volo's Guide to Combat",
+            "tip_text": "Volo increases the damage of Champions in the two columns in front of him. Place him behind your damage dealers."
+          },
+          "display": {
+            "id": 16550,
+            "hero_id": 159,
+            "required_level": 20,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2231",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "瓦罗的战斗指南",
+            "tip_text": "瓦罗会提高他前面两列勇士的伤害。将他放置在你的伤害输出身后。"
+          }
+        }
+      },
+      {
+        "id": "16551",
+        "snapshots": {
+          "original": {
+            "id": 16551,
+            "hero_id": 159,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2232",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Volo's Guide to Questing",
+            "tip_text": "Volo gets more effective based on the number of guide and/or collection quests you've completed. Complete more quests to power him up!"
+          },
+          "display": {
+            "id": 16551,
+            "hero_id": 159,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2232",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "瓦罗的任务指南",
+            "tip_text": "瓦罗的效果会随着你完成的指南任务和/或收集任务的数量增加而增加。完成更多的任务来强化他！"
+          }
+        }
+      },
+      {
+        "id": "16552",
+        "snapshots": {
+          "original": {
+            "id": 16552,
+            "hero_id": 159,
+            "required_level": 70,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2233",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Volo's Guide to Monsters"
+          },
+          "display": {
+            "id": 16552,
+            "hero_id": 159,
+            "required_level": 70,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2233",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "瓦罗的怪物指南"
+          }
+        }
+      },
+      {
+        "id": "16553",
+        "snapshots": {
+          "original": {
+            "id": 16553,
+            "hero_id": 159,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2234",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Volo's Guide to Rapid Retreats"
+          },
+          "display": {
+            "id": 16553,
+            "hero_id": 159,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2234",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "瓦罗的快速撤退指南"
+          }
+        }
+      },
+      {
+        "id": "16554",
+        "snapshots": {
+          "original": {
+            "id": 16554,
+            "hero_id": 159,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2235",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Volo's Guide to Spirits and Specters",
+            "specialization_name": "Volo's Guide to Spirits and Specters",
+            "specialization_description": "Volo writes his manuscript on fighting undead while consulting with other Champions hunting their favored foes.",
+            "specialization_graphic_id": 25741
+          },
+          "display": {
+            "id": 16554,
+            "hero_id": 159,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2235",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "瓦罗的鬼魂与幽灵指南",
+            "specialization_name": "瓦罗的鬼魂与幽灵指南",
+            "specialization_description": "瓦罗在与其他勇士讨论如何对抗他们各自偏好的敌人时，撰写了关于对抗亡灵的手稿。",
+            "specialization_graphic_id": 25741
+          }
+        }
+      },
+      {
+        "id": "16555",
+        "snapshots": {
+          "original": {
+            "id": 16555,
+            "hero_id": 159,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2236",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Volo's Guide to Brain-Eating Tadpoles",
+            "specialization_name": "Volo's Guide to Brain-Eating Tadpoles",
+            "specialization_description": "Volo carefully studies the formation's Ceremorphosis-infected population, enhancing his own abilities.",
+            "specialization_graphic_id": 25740
+          },
+          "display": {
+            "id": 16555,
+            "hero_id": 159,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2236",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "瓦罗的食脑蝌蚪指南",
+            "specialization_name": "瓦罗的食脑蝌蚪指南",
+            "specialization_description": "瓦罗仔细研究了阵型中受蜕变影响的人群，从而增强自己的技能。",
+            "specialization_graphic_id": 25740
+          }
+        }
+      },
+      {
+        "id": "16556",
+        "snapshots": {
+          "original": {
+            "id": 16556,
+            "hero_id": 159,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2237",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Volo's Guide to All Things Magical",
+            "specialization_name": "Volo's Guide to All Things Magical",
+            "specialization_description": "Volo works with his fellow \"wizards\" and other magically inclined Champions.",
+            "specialization_graphic_id": 25739
+          },
+          "display": {
+            "id": 16556,
+            "hero_id": 159,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2237",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "瓦罗的魔法百科指南",
+            "specialization_name": "瓦罗的魔法百科指南",
+            "specialization_description": "瓦罗与他的“法师”同伴以及其他擅长魔法的勇士一起工作。",
+            "specialization_graphic_id": 25739
+          }
+        }
+      },
+      {
+        "id": "16557",
+        "snapshots": {
+          "original": {
+            "id": 16557,
+            "hero_id": 159,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "effect_def,2238",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Volo's Guide to Writing Wrongs"
+          },
+          "display": {
+            "id": 16557,
+            "hero_id": 159,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "effect_def,2238",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "瓦罗的错误写作指南"
+          }
+        }
+      },
+      {
+        "id": "16558",
+        "snapshots": {
+          "original": {
+            "id": 16558,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16558,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16739",
+        "snapshots": {
+          "original": {
+            "id": 16739,
+            "hero_id": 159,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16739,
+            "hero_id": 159,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16740",
+        "snapshots": {
+          "original": {
+            "id": 16740,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16740,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16741",
+        "snapshots": {
+          "original": {
+            "id": 16741,
+            "hero_id": 159,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16741,
+            "hero_id": 159,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16742",
+        "snapshots": {
+          "original": {
+            "id": 16742,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16742,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16743",
+        "snapshots": {
+          "original": {
+            "id": 16743,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16743,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16744",
+        "snapshots": {
+          "original": {
+            "id": 16744,
+            "hero_id": 159,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16744,
+            "hero_id": 159,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16745",
+        "snapshots": {
+          "original": {
+            "id": 16745,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16745,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16746",
+        "snapshots": {
+          "original": {
+            "id": 16746,
+            "hero_id": 159,
+            "required_level": 400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16746,
+            "hero_id": 159,
+            "required_level": 400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16747",
+        "snapshots": {
+          "original": {
+            "id": 16747,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16747,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16748",
+        "snapshots": {
+          "original": {
+            "id": 16748,
+            "hero_id": 159,
+            "required_level": 540,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16748,
+            "hero_id": 159,
+            "required_level": 540,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16749",
+        "snapshots": {
+          "original": {
+            "id": 16749,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16749,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16750",
+        "snapshots": {
+          "original": {
+            "id": 16750,
+            "hero_id": 159,
+            "required_level": 680,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16750,
+            "hero_id": 159,
+            "required_level": 680,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16751",
+        "snapshots": {
+          "original": {
+            "id": 16751,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16751,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16752",
+        "snapshots": {
+          "original": {
+            "id": 16752,
+            "hero_id": 159,
+            "required_level": 810,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16752,
+            "hero_id": 159,
+            "required_level": 810,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16753",
+        "snapshots": {
+          "original": {
+            "id": 16753,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16753,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16754",
+        "snapshots": {
+          "original": {
+            "id": 16754,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16754,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16755",
+        "snapshots": {
+          "original": {
+            "id": 16755,
+            "hero_id": 159,
+            "required_level": 960,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16755,
+            "hero_id": 159,
+            "required_level": 960,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16756",
+        "snapshots": {
+          "original": {
+            "id": 16756,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16756,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16757",
+        "snapshots": {
+          "original": {
+            "id": 16757,
+            "hero_id": 159,
+            "required_level": 1090,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16757,
+            "hero_id": 159,
+            "required_level": 1090,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16758",
+        "snapshots": {
+          "original": {
+            "id": 16758,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16758,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16759",
+        "snapshots": {
+          "original": {
+            "id": 16759,
+            "hero_id": 159,
+            "required_level": 1240,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16759,
+            "hero_id": 159,
+            "required_level": 1240,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16760",
+        "snapshots": {
+          "original": {
+            "id": 16760,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16760,
+            "hero_id": 159,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16761",
+        "snapshots": {
+          "original": {
+            "id": 16761,
+            "hero_id": 159,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16761,
+            "hero_id": 159,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16762",
+        "snapshots": {
+          "original": {
+            "id": 16762,
+            "hero_id": 159,
+            "required_level": 60,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16762,
+            "hero_id": 159,
+            "required_level": 60,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16763",
+        "snapshots": {
+          "original": {
+            "id": 16763,
+            "hero_id": 159,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16763,
+            "hero_id": 159,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16764",
+        "snapshots": {
+          "original": {
+            "id": 16764,
+            "hero_id": 159,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16764,
+            "hero_id": 159,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16765",
+        "snapshots": {
+          "original": {
+            "id": 16765,
+            "hero_id": 159,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16765,
+            "hero_id": 159,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16766",
+        "snapshots": {
+          "original": {
+            "id": 16766,
+            "hero_id": 159,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16766,
+            "hero_id": 159,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16767",
+        "snapshots": {
+          "original": {
+            "id": 16767,
+            "hero_id": 159,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16767,
+            "hero_id": 159,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16768",
+        "snapshots": {
+          "original": {
+            "id": 16768,
+            "hero_id": 159,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16768,
+            "hero_id": 159,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16769",
+        "snapshots": {
+          "original": {
+            "id": 16769,
+            "hero_id": 159,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16769,
+            "hero_id": 159,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16770",
+        "snapshots": {
+          "original": {
+            "id": 16770,
+            "hero_id": 159,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16770,
+            "hero_id": 159,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16771",
+        "snapshots": {
+          "original": {
+            "id": 16771,
+            "hero_id": 159,
+            "required_level": 210,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16771,
+            "hero_id": 159,
+            "required_level": 210,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16772",
+        "snapshots": {
+          "original": {
+            "id": 16772,
+            "hero_id": 159,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16772,
+            "hero_id": 159,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16773",
+        "snapshots": {
+          "original": {
+            "id": 16773,
+            "hero_id": 159,
+            "required_level": 260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16773,
+            "hero_id": 159,
+            "required_level": 260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16774",
+        "snapshots": {
+          "original": {
+            "id": 16774,
+            "hero_id": 159,
+            "required_level": 270,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16774,
+            "hero_id": 159,
+            "required_level": 270,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16775",
+        "snapshots": {
+          "original": {
+            "id": 16775,
+            "hero_id": 159,
+            "required_level": 290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16775,
+            "hero_id": 159,
+            "required_level": 290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16776",
+        "snapshots": {
+          "original": {
+            "id": 16776,
+            "hero_id": 159,
+            "required_level": 330,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16776,
+            "hero_id": 159,
+            "required_level": 330,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16777",
+        "snapshots": {
+          "original": {
+            "id": 16777,
+            "hero_id": 159,
+            "required_level": 360,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16777,
+            "hero_id": 159,
+            "required_level": 360,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16778",
+        "snapshots": {
+          "original": {
+            "id": 16778,
+            "hero_id": 159,
+            "required_level": 380,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16778,
+            "hero_id": 159,
+            "required_level": 380,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16779",
+        "snapshots": {
+          "original": {
+            "id": 16779,
+            "hero_id": 159,
+            "required_level": 390,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16779,
+            "hero_id": 159,
+            "required_level": 390,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16780",
+        "snapshots": {
+          "original": {
+            "id": 16780,
+            "hero_id": 159,
+            "required_level": 440,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16780,
+            "hero_id": 159,
+            "required_level": 440,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16781",
+        "snapshots": {
+          "original": {
+            "id": 16781,
+            "hero_id": 159,
+            "required_level": 480,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16781,
+            "hero_id": 159,
+            "required_level": 480,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16782",
+        "snapshots": {
+          "original": {
+            "id": 16782,
+            "hero_id": 159,
+            "required_level": 490,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16782,
+            "hero_id": 159,
+            "required_level": 490,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16783",
+        "snapshots": {
+          "original": {
+            "id": 16783,
+            "hero_id": 159,
+            "required_level": 510,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16783,
+            "hero_id": 159,
+            "required_level": 510,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16784",
+        "snapshots": {
+          "original": {
+            "id": 16784,
+            "hero_id": 159,
+            "required_level": 550,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16784,
+            "hero_id": 159,
+            "required_level": 550,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16785",
+        "snapshots": {
+          "original": {
+            "id": 16785,
+            "hero_id": 159,
+            "required_level": 590,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16785,
+            "hero_id": 159,
+            "required_level": 590,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16786",
+        "snapshots": {
+          "original": {
+            "id": 16786,
+            "hero_id": 159,
+            "required_level": 600,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16786,
+            "hero_id": 159,
+            "required_level": 600,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16787",
+        "snapshots": {
+          "original": {
+            "id": 16787,
+            "hero_id": 159,
+            "required_level": 620,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16787,
+            "hero_id": 159,
+            "required_level": 620,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16788",
+        "snapshots": {
+          "original": {
+            "id": 16788,
+            "hero_id": 159,
+            "required_level": 660,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16788,
+            "hero_id": 159,
+            "required_level": 660,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16789",
+        "snapshots": {
+          "original": {
+            "id": 16789,
+            "hero_id": 159,
+            "required_level": 700,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16789,
+            "hero_id": 159,
+            "required_level": 700,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16790",
+        "snapshots": {
+          "original": {
+            "id": 16790,
+            "hero_id": 159,
+            "required_level": 710,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16790,
+            "hero_id": 159,
+            "required_level": 710,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16791",
+        "snapshots": {
+          "original": {
+            "id": 16791,
+            "hero_id": 159,
+            "required_level": 750,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16791,
+            "hero_id": 159,
+            "required_level": 750,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16792",
+        "snapshots": {
+          "original": {
+            "id": 16792,
+            "hero_id": 159,
+            "required_level": 800,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16792,
+            "hero_id": 159,
+            "required_level": 800,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16793",
+        "snapshots": {
+          "original": {
+            "id": 16793,
+            "hero_id": 159,
+            "required_level": 830,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16793,
+            "hero_id": 159,
+            "required_level": 830,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16794",
+        "snapshots": {
+          "original": {
+            "id": 16794,
+            "hero_id": 159,
+            "required_level": 860,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16794,
+            "hero_id": 159,
+            "required_level": 860,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16795",
+        "snapshots": {
+          "original": {
+            "id": 16795,
+            "hero_id": 159,
+            "required_level": 910,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16795,
+            "hero_id": 159,
+            "required_level": 910,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16796",
+        "snapshots": {
+          "original": {
+            "id": 16796,
+            "hero_id": 159,
+            "required_level": 940,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16796,
+            "hero_id": 159,
+            "required_level": 940,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16797",
+        "snapshots": {
+          "original": {
+            "id": 16797,
+            "hero_id": 159,
+            "required_level": 970,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16797,
+            "hero_id": 159,
+            "required_level": 970,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16798",
+        "snapshots": {
+          "original": {
+            "id": 16798,
+            "hero_id": 159,
+            "required_level": 1050,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16798,
+            "hero_id": 159,
+            "required_level": 1050,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16799",
+        "snapshots": {
+          "original": {
+            "id": 16799,
+            "hero_id": 159,
+            "required_level": 1080,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16799,
+            "hero_id": 159,
+            "required_level": 1080,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16800",
+        "snapshots": {
+          "original": {
+            "id": 16800,
+            "hero_id": 159,
+            "required_level": 1160,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16800,
+            "hero_id": 159,
+            "required_level": 1160,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16801",
+        "snapshots": {
+          "original": {
+            "id": 16801,
+            "hero_id": 159,
+            "required_level": 1190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16801,
+            "hero_id": 159,
+            "required_level": 1190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16802",
+        "snapshots": {
+          "original": {
+            "id": 16802,
+            "hero_id": 159,
+            "required_level": 1230,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16802,
+            "hero_id": 159,
+            "required_level": 1230,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16803",
+        "snapshots": {
+          "original": {
+            "id": 16803,
+            "hero_id": 159,
+            "required_level": 1260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16803,
+            "hero_id": 159,
+            "required_level": 1260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "16804",
+        "snapshots": {
+          "original": {
+            "id": 16804,
+            "hero_id": 159,
+            "required_level": 1270,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 16804,
+            "hero_id": 159,
+            "required_level": 1270,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,16550",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      }
+    ],
+    "feats": [
+      {
+        "id": "2094",
+        "snapshots": {
+          "original": {
+            "id": 2094,
+            "hero_id": 159,
+            "order": 1,
+            "name": "Selflessness",
+            "description": "I am the very model of altruism, my friend! What I do, I do for us all.",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "force_order": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2094,
+            "hero_id": 159,
+            "order": 1,
+            "name": "无私",
+            "description": "我就是利他主义的典范，我的朋友！我所做的一切，都是为了我们所有人。",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "force_order": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2095",
+        "snapshots": {
+          "original": {
+            "id": 2095,
+            "hero_id": 159,
+            "order": 2,
+            "name": "Inspiring Leader",
+            "description": "My very presence provides a certain sense of sudden capability!",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "force_order": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 2095,
+            "hero_id": 159,
+            "order": 2,
+            "name": "鼓舞人心的首领",
+            "description": "我的存在本身就能让人瞬间充满力量！",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "force_order": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "2096",
+        "snapshots": {
+          "original": {
+            "id": 2096,
+            "hero_id": 159,
+            "order": 3,
+            "name": "Volo's Constructive Consultation",
+            "description": "The trick is to keep hitting them until they can no longer hit you back.",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,16550"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "force_order": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2096,
+            "hero_id": 159,
+            "order": 3,
+            "name": "瓦罗的建设性咨询",
+            "description": "诀窍就是不断地攻击他们，直到他们再也无法还手为止。",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,16550"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "force_order": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2097",
+        "snapshots": {
+          "original": {
+            "id": 2097,
+            "hero_id": 159,
+            "order": 4,
+            "name": "Volo's Discerning Details",
+            "description": "That one's trousers have a loose thread. A keen observation, yes?",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,16550"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "force_order": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 2097,
+            "hero_id": 159,
+            "order": 4,
+            "name": "瓦罗的洞察细节",
+            "description": "那家伙的裤子上有一根松动的线头。眼光很敏锐，对吧？",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,16550"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "force_order": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "2098",
+        "snapshots": {
+          "original": {
+            "id": 2098,
+            "hero_id": 159,
+            "order": 5,
+            "name": "Volo's Expanded Expertise",
+            "description": "I've had an epiphany! If I raise my voice, more willing ears might hear me!",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "change_upgrade_data,16550,0",
+                "data": {
+                  "targets": [
+                    "next_three_col"
+                  ]
+                },
+                "description": "Increases the number of columns buffed by Volo's Guide to Combat by +1."
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2025-06-05 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 544
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 2098,
+            "hero_id": 159,
+            "order": 5,
+            "name": "瓦罗的扩展专长",
+            "description": "我顿悟了！如果我提高嗓门，或许会有更多愿意倾听的人听到我！",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "change_upgrade_data,16550,0",
+                "data": {
+                  "targets": [
+                    "next_three_col"
+                  ]
+                },
+                "description": "瓦罗的战斗指南增益效果的列数 +1。"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2025-06-05 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 544
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "2099",
+        "snapshots": {
+          "original": {
+            "id": 2099,
+            "hero_id": 159,
+            "order": 6,
+            "name": "Volo's Helpful Hints",
+            "description": "Expand your horizons, bolster your ranks, seek gainful employment...",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,16551,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "force_order": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2099,
+            "hero_id": 159,
+            "order": 6,
+            "name": "瓦罗的有用提示",
+            "description": "开拓视野，壮大队伍，谋求高薪……",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,16551,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "force_order": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2100",
+        "snapshots": {
+          "original": {
+            "id": 2100,
+            "hero_id": 159,
+            "order": 7,
+            "name": "Volo's Inspirational Intimations",
+            "description": "Amass a menagerie of helpful creatures, forge the finest arms...",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,16551,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "force_order": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 2100,
+            "hero_id": 159,
+            "order": 7,
+            "name": "瓦罗的激励暗示",
+            "description": "搜罗一群有用的生物，打造最精良的武器……",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,16551,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "force_order": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "2101",
+        "snapshots": {
+          "original": {
+            "id": 2101,
+            "hero_id": 159,
+            "order": 8,
+            "name": "Volo's Boundless Brilliance",
+            "description": "And, finally, be sure to boast of your achievements for all the world to see!",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,16551,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 7
+              }
+            ],
+            "properties": {
+              "force_order": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "event",
+              "event_id": 7,
+              "tier": 3
+            }
+          },
+          "display": {
+            "id": 2101,
+            "hero_id": 159,
+            "order": 8,
+            "name": "瓦罗的无尽智慧",
+            "description": "最后，一定要向全世界炫耀你的成就！",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,16551,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 7
+              }
+            ],
+            "properties": {
+              "force_order": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "event",
+              "event_id": 7,
+              "tier": 3
+            }
+          }
+        }
+      },
+      {
+        "id": "2102",
+        "snapshots": {
+          "original": {
+            "id": 2102,
+            "hero_id": 159,
+            "order": 9,
+            "name": "Volo's Grasping Guesswork",
+            "description": "The origins of the fearsome owlbear are a subject of debate among scholars.",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,16552,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "force_order": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2102,
+            "hero_id": 159,
+            "order": 9,
+            "name": "瓦罗的盲目猜测",
+            "description": "关于可怕的枭熊的起源，学者们一直存在争议。",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,16552,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "force_order": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2103",
+        "snapshots": {
+          "original": {
+            "id": 2103,
+            "hero_id": 159,
+            "order": 10,
+            "name": "Volo's Fantastic Findings",
+            "description": "In truth, owlbears are neither natural nor the result of magic gone awry.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,16552,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "force_order": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 2103,
+            "hero_id": 159,
+            "order": 10,
+            "name": "瓦罗的奇妙发现",
+            "description": "事实上，枭熊既不是自然产生的，也不是魔法失控的结果。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,16552,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "force_order": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "2104",
+        "snapshots": {
+          "original": {
+            "id": 2104,
+            "hero_id": 159,
+            "order": 11,
+            "name": "Volo's Justified Jaunt",
+            "description": "I believe a swift, strategic withdrawal is in order. No time to dilly-dally!",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,16553,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "force_order": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 2104,
+            "hero_id": 159,
+            "order": 11,
+            "name": "瓦罗的合理漫步",
+            "description": "我相信，迅速而有策略地撤退是明智之举。没有时间磨磨蹭蹭了！",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,16553,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "force_order": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "2105",
+        "snapshots": {
+          "original": {
+            "id": 2105,
+            "hero_id": 159,
+            "order": 12,
+            "name": "Volo's Adaptable Approach",
+            "description": "No matter the circumstances, the estimable Volo remains ready!",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,16554,0",
+                "description": "Increases the base effect of Volo's specializations by $amount%"
+              },
+              {
+                "effect_string": "buff_upgrade,40,16555,0",
+                "description": "",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,40,16556,0",
+                "description": "",
+                "skip_effect_key_desc": true
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 2105,
+            "hero_id": 159,
+            "order": 12,
+            "name": "瓦罗的随机应变",
+            "description": "无论环境如何，可敬的瓦罗始终准备就绪！",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,16554,0",
+                "description": "使瓦罗的专精的基本效果提升 $amount%"
+              },
+              {
+                "effect_string": "buff_upgrade,40,16555,0",
+                "description": "",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,40,16556,0",
+                "description": "",
+                "skip_effect_key_desc": true
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "2106",
+        "snapshots": {
+          "original": {
+            "id": 2106,
+            "hero_id": 159,
+            "order": 13,
+            "name": "Athlete",
+            "description": "Behold my physique! Yes, I do maintain a regiment of calisthenics.",
+            "rarity": 3,
+            "graphic_id": 6073,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,str,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 7
+              }
+            ],
+            "properties": {
+              "force_order": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "event",
+              "event_id": 7,
+              "tier": 2
+            }
+          },
+          "display": {
+            "id": 2106,
+            "hero_id": 159,
+            "order": 13,
+            "name": "运动员",
+            "description": "瞧瞧我的体格！是的，我确实在坚持做一套体操训练。",
+            "rarity": 3,
+            "graphic_id": 6073,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,str,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 7
+              }
+            ],
+            "properties": {
+              "force_order": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "event",
+              "event_id": 7,
+              "tier": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "2159",
+        "snapshots": {
+          "original": {
+            "id": 2159,
+            "hero_id": 159,
+            "order": 14,
+            "name": "Illithid Tadpole",
+            "description": "I've simply the worst headache today. Bah! I'm certain it's nothing serious.",
+            "rarity": 4,
+            "graphic_id": 20923,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              },
+              {
+                "effect_string": "add_global_ceremorphosis_stacks,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2025-06-12 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 588
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1741806000
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 2159,
+            "hero_id": 159,
+            "order": 14,
+            "name": "灵吸怪蝌蚪",
+            "description": "我今天真是头疼得要命。呸！我确定没什么大碍。",
+            "rarity": 4,
+            "graphic_id": 20923,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              },
+              {
+                "effect_string": "add_global_ceremorphosis_stacks,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2025-06-12 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 588
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1741806000
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "2249",
+        "snapshots": {
+          "original": {
+            "id": 2249,
+            "hero_id": 159,
+            "order": 15,
+            "name": "Unknown Power",
+            "description": "You ask why Elminster is so concerned with my wellbeing? He's a true fan, of course! Why else?",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,16554,0",
+                "description": "Increases the base effect of Volo's specializations by $amount%"
+              },
+              {
+                "effect_string": "buff_upgrade,80,16555,0",
+                "description": "",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,80,16556,0",
+                "description": "",
+                "skip_effect_key_desc": true
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2025-11-27 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 612
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1756321200
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 2249,
+            "hero_id": 159,
+            "order": 15,
+            "name": "未知之力",
+            "description": "你问我为什么艾尔明斯特如此关心我的安危？当然因为他是我的忠实粉丝！不然还能为什么？",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,16554,0",
+                "description": "使瓦罗的专精的基本效果提升 $amount%"
+              },
+              {
+                "effect_string": "buff_upgrade,80,16555,0",
+                "description": "",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,80,16556,0",
+                "description": "",
+                "skip_effect_key_desc": true
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2025-11-27 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 612
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1756321200
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "2478",
+        "snapshots": {
+          "original": {
+            "id": 2478,
+            "hero_id": 159,
+            "order": 16,
+            "name": "Volo's Keen Knowledge",
+            "description": "Why, I dare to posit that the noble owlbear is, in fact, a creation of the gods themselves!",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,16552,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2026-06-18 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 688
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1773860400,
+              "available_for_gems_at_time": 1781809200
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "688",
+              "cost": 1680
+            }
+          },
+          "display": {
+            "id": 2478,
+            "hero_id": 159,
+            "order": 16,
+            "name": "瓦罗的渊博知识",
+            "description": "我敢说高贵的枭熊实际上是众神亲自创造的！",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,16552,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2026-06-18 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 688
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1773860400,
+              "available_for_gems_at_time": 1781809200
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "688",
+              "cost": 1680
+            }
+          }
+        }
+      }
+    ],
+    "skins": [
+      {
+        "id": "526",
+        "snapshots": {
+          "original": {
+            "id": 526,
+            "hero_id": 159,
+            "name": "Privateer Volo",
+            "cost": {
+              "req_date": "2025-03-05 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 26032,
+              "large_graphic_id": 26037,
+              "portrait_graphic_id": 26027,
+              "xl_graphic_id": 26042
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "544",
+              "cost": 3830
+            }
+          },
+          "display": {
+            "id": 526,
+            "hero_id": 159,
+            "name": "私掠船船员瓦罗",
+            "cost": {
+              "req_date": "2025-03-05 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 26032,
+              "large_graphic_id": 26037,
+              "portrait_graphic_id": 26027,
+              "xl_graphic_id": 26042
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "544",
+              "cost": 3830
+            }
+          }
+        }
+      },
+      {
+        "id": "590",
+        "snapshots": {
+          "original": {
+            "id": 590,
+            "hero_id": 159,
+            "name": "Weave Anchor Volo",
+            "cost": {
+              "req_date": "2025-08-27 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 27618,
+              "large_graphic_id": 27621,
+              "portrait_graphic_id": 27616,
+              "xl_graphic_id": 27624
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "612",
+              "cost": 1680
+            },
+            "availabilities": {
+              "premium_item_id": "612"
+            }
+          },
+          "display": {
+            "id": 590,
+            "hero_id": 159,
+            "name": "魔网之锚瓦罗",
+            "cost": {
+              "req_date": "2025-08-27 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 27618,
+              "large_graphic_id": 27621,
+              "portrait_graphic_id": 27616,
+              "xl_graphic_id": 27624
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "612",
+              "cost": 1680
+            },
+            "availabilities": {
+              "premium_item_id": "612"
+            }
+          }
+        }
+      },
+      {
+        "id": "667",
+        "snapshots": {
+          "original": {
+            "id": 667,
+            "hero_id": 159,
+            "name": "Dragon Chronicler Volo",
+            "cost": {
+              "req_date": "2026-03-18 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 28824,
+              "large_graphic_id": 28826,
+              "portrait_graphic_id": 28821,
+              "xl_graphic_id": 28828
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "688",
+              "cost": 1680
+            },
+            "availabilities": {
+              "premium_item_id": "688"
+            }
+          },
+          "display": {
+            "id": 667,
+            "hero_id": 159,
+            "name": "龙族史官瓦罗",
+            "cost": {
+              "req_date": "2026-03-18 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 28824,
+              "large_graphic_id": 28826,
+              "portrait_graphic_id": 28821,
+              "xl_graphic_id": 28828
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "688",
+              "cost": 1680
+            },
+            "availabilities": {
+              "premium_item_id": "688"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

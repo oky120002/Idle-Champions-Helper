@@ -767,6 +767,453 @@ html[data-ui-locale='en-US'] .site-subtitle {
   word-break: break-all;
 }
 
+.result-card__link,
+.page-backlink,
+.section-jump-bar__button,
+.champion-detail-sidebar__button {
+  border: 1px solid rgba(227, 214, 193, 0.16);
+  border-radius: 999px;
+  background: rgba(9, 14, 20, 0.18);
+  color: #fff3df;
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease;
+}
+
+.result-card__link:hover,
+.page-backlink:hover,
+.section-jump-bar__button:hover,
+.champion-detail-sidebar__button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(200, 167, 127, 0.44);
+}
+
+.result-card__link,
+.page-backlink,
+.champion-detail-sidebar__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.result-card__link {
+  padding: 0.72rem 1rem;
+}
+
+.page-backlink-row {
+  display: flex;
+}
+
+.page-backlink {
+  padding: 0.72rem 1rem;
+}
+
+.champion-detail-page {
+  gap: 1.25rem;
+}
+
+.champion-dossier,
+.champion-detail-sidebar__panel,
+.detail-subcard,
+.detail-json-panel,
+.raw-disclosure,
+.raw-entry {
+  border: 1px solid rgba(227, 214, 193, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.champion-dossier {
+  display: grid;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at top left, rgba(200, 167, 127, 0.14), transparent 28%),
+    radial-gradient(circle at 85% 20%, rgba(62, 113, 147, 0.16), transparent 24%),
+    linear-gradient(180deg, rgba(17, 26, 37, 0.94), rgba(10, 15, 22, 0.98));
+  box-shadow: 0 26px 90px rgba(1, 4, 9, 0.34);
+}
+
+.champion-dossier__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(280px, 0.95fr);
+  gap: 1.2rem;
+  align-items: start;
+}
+
+.champion-dossier__identity {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1.15rem;
+  align-items: start;
+}
+
+.champion-avatar--dossier {
+  width: 7.4rem;
+  height: 7.4rem;
+  border-radius: 28px;
+}
+
+.champion-dossier__copy {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.champion-dossier__eyebrow,
+.champion-detail-sidebar__eyebrow {
+  margin: 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #c8a77f;
+}
+
+.champion-dossier__title {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+}
+
+.champion-dossier__secondary {
+  margin: -0.15rem 0 0;
+  color: rgba(242, 239, 230, 0.62);
+}
+
+.champion-dossier__summary,
+.champion-dossier__line {
+  margin: 0;
+  color: rgba(242, 239, 230, 0.78);
+}
+
+.champion-dossier__stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.dossier-stat {
+  display: grid;
+  gap: 0.45rem;
+  padding: 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(227, 214, 193, 0.08);
+  background: rgba(7, 12, 18, 0.38);
+}
+
+.dossier-stat__label {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(242, 239, 230, 0.58);
+}
+
+.dossier-stat__value {
+  font-size: 1.05rem;
+  color: #fff8ec;
+}
+
+.detail-badge-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.detail-badge-row--wrap {
+  flex-wrap: wrap;
+}
+
+.detail-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.42rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(227, 214, 193, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(242, 239, 230, 0.82);
+  font-size: 0.86rem;
+}
+
+.detail-badge--active {
+  border-color: rgba(200, 167, 127, 0.46);
+  background: rgba(200, 167, 127, 0.12);
+  color: #fff3df;
+}
+
+.section-jump-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.section-jump-bar__button,
+.champion-detail-sidebar__button {
+  padding: 0.62rem 0.92rem;
+}
+
+.champion-detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 296px;
+  gap: 1rem;
+  align-items: start;
+}
+
+.champion-detail-content {
+  display: grid;
+  gap: 1rem;
+}
+
+.champion-detail-sidebar {
+  position: sticky;
+  top: 12.2rem;
+}
+
+.champion-detail-sidebar__panel {
+  display: grid;
+  gap: 0.95rem;
+  padding: 1.2rem;
+  border-radius: 24px;
+}
+
+.champion-detail-sidebar__nav,
+.champion-detail-sidebar__facts {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.champion-detail-sidebar__button {
+  justify-content: flex-start;
+}
+
+.detail-section-anchor {
+  position: relative;
+  top: -7.8rem;
+  height: 0;
+  visibility: hidden;
+}
+
+.detail-field-grid,
+.detail-card-grid,
+.detail-inline-grid,
+.ability-score-grid,
+.raw-grid {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.detail-field-grid {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.detail-field-grid--compact {
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+}
+
+.detail-field {
+  display: grid;
+  gap: 0.4rem;
+  padding: 1rem;
+  border-radius: 18px;
+  border: 1px solid rgba(227, 214, 193, 0.08);
+  background: rgba(7, 12, 18, 0.32);
+}
+
+.detail-field__label {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(242, 239, 230, 0.58);
+}
+
+.detail-field__value {
+  color: #fff8ec;
+  line-height: 1.45;
+}
+
+.detail-field__hint {
+  color: rgba(242, 239, 230, 0.58);
+  font-size: 0.88rem;
+}
+
+.detail-card-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.detail-card-grid--two-up {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.detail-subcard {
+  display: grid;
+  gap: 0.8rem;
+  padding: 1rem;
+  border-radius: 22px;
+}
+
+.detail-subcard--empty {
+  align-content: start;
+}
+
+.detail-subcard--story {
+  margin-top: 0.95rem;
+}
+
+.detail-subcard__header,
+.attack-card__header {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.detail-subcard__eyebrow {
+  margin: 0 0 0.4rem;
+  font-size: 0.76rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #c8a77f;
+}
+
+.detail-subcard__title {
+  margin: 0;
+  color: #fff8ec;
+  font-size: 1.02rem;
+}
+
+.detail-subcard__body {
+  margin: 0;
+  color: rgba(242, 239, 230, 0.82);
+}
+
+.detail-inline-grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.detail-inline-grid--wide {
+  margin-top: 1rem;
+}
+
+.detail-json-panel {
+  padding: 0.85rem;
+  border-radius: 18px;
+}
+
+.detail-json-panel__title {
+  margin: 0 0 0.55rem;
+  color: #fff8ec;
+  font-size: 0.92rem;
+}
+
+.detail-json {
+  margin: 0;
+  max-height: 18rem;
+  overflow: auto;
+  padding: 0.8rem;
+  border-radius: 16px;
+  background: rgba(5, 9, 14, 0.56);
+  color: #dce9f3;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: "SFMono-Regular", "Menlo", monospace;
+}
+
+.ability-score-grid {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  margin-top: 1rem;
+}
+
+.ability-score-card {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.9rem;
+  border-radius: 18px;
+  background: rgba(7, 12, 18, 0.34);
+  border: 1px solid rgba(227, 214, 193, 0.08);
+  text-align: center;
+}
+
+.ability-score-card__label {
+  font-size: 0.76rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(242, 239, 230, 0.54);
+}
+
+.ability-score-card__value {
+  color: #fff8ec;
+  font-size: 1.05rem;
+}
+
+.upgrade-ledger {
+  margin-top: 1rem;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(227, 214, 193, 0.08);
+}
+
+.upgrade-ledger__head,
+.upgrade-ledger__row {
+  display: grid;
+  grid-template-columns: 140px 1fr 1.25fr 1fr;
+  gap: 0.75rem;
+  padding: 0.82rem 1rem;
+}
+
+.upgrade-ledger__head {
+  background: rgba(200, 167, 127, 0.1);
+  color: #fff4e0;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.upgrade-ledger__row {
+  background: rgba(7, 12, 18, 0.28);
+  color: rgba(242, 239, 230, 0.8);
+}
+
+.upgrade-ledger__row + .upgrade-ledger__row {
+  border-top: 1px solid rgba(227, 214, 193, 0.08);
+}
+
+.raw-disclosure-stack,
+.raw-disclosure__stack {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.raw-disclosure,
+.raw-entry {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.raw-disclosure__summary,
+.raw-entry__summary {
+  padding: 0.95rem 1rem;
+  cursor: pointer;
+  list-style: none;
+  color: #fff6e9;
+  background: rgba(7, 12, 18, 0.34);
+}
+
+.raw-disclosure__summary::-webkit-details-marker,
+.raw-entry__summary::-webkit-details-marker {
+  display: none;
+}
+
+.raw-disclosure__body,
+.raw-entry > .raw-grid {
+  padding: 0.9rem;
+}
+
+.raw-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
 @media (max-width: 1040px) {
   .site-header {
     gap: 0.85rem;
@@ -788,6 +1235,19 @@ html[data-ui-locale='en-US'] .site-subtitle {
 
   html[data-ui-locale='en-US'] .site-subtitle {
     max-width: 28rem;
+  }
+
+  .champion-dossier__grid,
+  .champion-detail-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .champion-detail-sidebar {
+    position: static;
+  }
+
+  .ability-score-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -835,6 +1295,48 @@ html[data-ui-locale='en-US'] .site-subtitle {
   .surface-card {
     border-radius: 22px;
   }
+
+  .champion-dossier {
+    padding: 1.2rem;
+    border-radius: 24px;
+  }
+
+  .champion-dossier__identity {
+    grid-template-columns: 1fr;
+  }
+
+  .champion-avatar--dossier {
+    width: 5.6rem;
+    height: 5.6rem;
+  }
+
+  .champion-dossier__stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .section-jump-bar {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 0.25rem;
+  }
+
+  .section-jump-bar__button {
+    flex: 0 0 auto;
+  }
+
+  .detail-subcard__header,
+  .attack-card__header {
+    flex-direction: column;
+  }
+
+  .ability-score-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .upgrade-ledger__head,
+  .upgrade-ledger__row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 520px) {
@@ -843,6 +1345,14 @@ html[data-ui-locale='en-US'] .site-subtitle {
   }
 
   .site-nav {
+    grid-template-columns: 1fr;
+  }
+
+  .champion-dossier__stats,
+  .detail-field-grid,
+  .detail-inline-grid,
+  .detail-card-grid,
+  .raw-grid {
     grid-template-columns: 1fr;
   }
 }
