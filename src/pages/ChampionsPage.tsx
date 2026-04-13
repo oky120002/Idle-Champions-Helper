@@ -357,11 +357,13 @@ export function ChampionsPage() {
                 <div className="results-grid">
                   {visibleChampions.map((champion) => {
                     return (
-                      <article key={champion.id} className="result-card">
+                      <article key={champion.id} className="result-card result-card--champion">
                         <ChampionIdentity
                           champion={champion}
                           locale={locale}
                           eyebrow={locale === 'zh-CN' ? `${champion.seat} 号位` : `Seat ${champion.seat}`}
+                          avatarClassName="champion-avatar--spotlight"
+                          variant="spotlight"
                         />
 
                         <div className="tag-row">
