@@ -1077,6 +1077,43 @@ export function ChampionsPage() {
                       })}
                     </p>
 
+                    {activeFilterChips.length > 0 ? (
+                      <div className="active-filter-bar active-filter-bar--sidebar">
+                        <div className="active-filter-bar__header">
+                          <div className="active-filter-bar__copy">
+                            <strong className="active-filter-bar__title">
+                              {t({ zh: '已选条件', en: 'Selected filters' })}
+                            </strong>
+                            <p className="active-filter-bar__hint">
+                              {t({
+                                zh: '点击任一条件即可单独清空对应维度，也可以一键清空全部。',
+                                en: 'Click any filter chip to clear that dimension only, or clear everything at once.',
+                              })}
+                            </p>
+                          </div>
+                          <button type="button" className="action-button action-button--ghost" onClick={clearAllFilters}>
+                            {t({ zh: '清空全部', en: 'Clear all' })}
+                          </button>
+                        </div>
+                        <div className="active-filter-bar__chips">
+                          {activeFilterChips.map((chip) => (
+                            <button
+                              key={chip.id}
+                              type="button"
+                              className="active-filter-chip"
+                              aria-label={chip.clearLabel}
+                              onClick={() => clearActiveFilterChip(chip.id)}
+                            >
+                              <span>{chip.label}</span>
+                              <span aria-hidden="true" className="active-filter-chip__dismiss">
+                                ×
+                              </span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    ) : null}
+
                     <div className="filter-panel filter-panel--sidebar">
                       <FieldGroup
                         label={t({ zh: '关键词', en: 'Keyword' })}
@@ -1442,41 +1479,6 @@ export function ChampionsPage() {
               </aside>
 
               <section className="champions-results">
-                {activeFilterChips.length > 0 ? (
-                  <div className="active-filter-bar">
-                    <div className="active-filter-bar__header">
-                      <div className="active-filter-bar__copy">
-                        <strong className="active-filter-bar__title">{t({ zh: '已选条件', en: 'Selected filters' })}</strong>
-                        <p className="active-filter-bar__hint">
-                          {t({
-                            zh: '点击任一条件即可单独清空对应维度，也可以一键清空全部。',
-                            en: 'Click any filter chip to clear that dimension only, or clear everything at once.',
-                          })}
-                        </p>
-                      </div>
-                      <button type="button" className="action-button action-button--ghost" onClick={clearAllFilters}>
-                        {t({ zh: '清空全部', en: 'Clear all' })}
-                      </button>
-                    </div>
-                    <div className="active-filter-bar__chips">
-                      {activeFilterChips.map((chip) => (
-                        <button
-                          key={chip.id}
-                          type="button"
-                          className="active-filter-chip"
-                          aria-label={chip.clearLabel}
-                          onClick={() => clearActiveFilterChip(chip.id)}
-                        >
-                          <span>{chip.label}</span>
-                          <span aria-hidden="true" className="active-filter-chip__dismiss">
-                            ×
-                          </span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                ) : null}
-
                 <section
                   ref={resultsShellRef}
                   className="results-panel-shell"
