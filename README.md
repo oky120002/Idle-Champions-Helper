@@ -171,6 +171,7 @@ npm run data:build
 - `docs/product/idle-champions-roadmap.md`：项目价值、范围、阶段路线、核心数据模型
 - `docs/research/data/static-data-storage-research.md`：静态数据存储与版本化策略
 - `docs/research/data/game-data-source-investigation.md`：基础游戏数据、个人数据凭证与第三方站点更新链路调研
+- `docs/research/testing/regression-testing-research.md`：主分支整体回归测试框架设计
 - `docs/investigations/runtime/local-run-verification.md`：本地构建与预览行为验证记录
 - `docs/investigations/repository/github-directory-commit-investigation.md`：`.github` 目录无法提交的本地原因排查
 - `docs/troubleshooting-log.md`：通用问题排查台账，沉淀部署、认证、网络、运行等问题的排查记录
