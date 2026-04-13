@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('../../src/data/client', async () => {
   const actual = await vi.importActual<typeof import('../../src/data/client')>('../../src/data/client')
@@ -17,6 +17,31 @@ import { ChampionDetailPage } from '../../src/pages/ChampionDetailPage'
 import type { ChampionDetail } from '../../src/domain/types'
 
 const mockedLoadChampionDetail = vi.mocked(loadChampionDetail)
+const originalScrollIntoView = Element.prototype.scrollIntoView
+
+const sectionTopMap: Record<string, number> = {
+  overview: 84,
+  'character-sheet': 460,
+  combat: 860,
+  upgrades: 1260,
+  feats: 1660,
+  skins: 2060,
+  raw: 2460,
+}
+
+function createDomRect(top: number): DOMRect {
+  return {
+    x: 0,
+    y: top,
+    width: 0,
+    height: 0,
+    top,
+    right: 0,
+    bottom: top,
+    left: 0,
+    toJSON: () => ({}),
+  } as DOMRect
+}
 
 const detailFixture: ChampionDetail = {
   updatedAt: '2026-04-13',
@@ -304,8 +329,30 @@ function renderChampionDetailPageWithSearch() {
   )
 }
 
+beforeEach(() => {
+  Object.defineProperty(Element.prototype, 'scrollIntoView', {
+    configurable: true,
+    writable: true,
+    value: vi.fn(),
+  })
+
+  vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(function mockBoundingClientRect(this: Element) {
+    if (this instanceof HTMLElement) {
+      return createDomRect(sectionTopMap[this.id] ?? 4000)
+    }
+
+    return createDomRect(4000)
+  })
+})
+
 afterEach(() => {
   mockedLoadChampionDetail.mockReset()
+  vi.restoreAllMocks()
+  Object.defineProperty(Element.prototype, 'scrollIntoView', {
+    configurable: true,
+    writable: true,
+    value: originalScrollIntoView,
+  })
 })
 
 describe('ChampionDetailPage', () => {
@@ -340,5 +387,37 @@ describe('ChampionDetailPage', () => {
       'href',
       '/champions?q=alpha&seat=1&role=support',
     )
+  })
+
+  it('默认高亮概览分区', async () => {
+    mockedLoadChampionDetail.mockResolvedValue(detailFixture)
+
+    renderChampionDetailPage()
+
+    const overviewButtons = await screen.findAllByRole('button', { name: '概览' })
+    const upgradeButtons = await screen.findAllByRole('button', { name: '升级' })
+
+    overviewButtons.forEach((button) => {
+      expect(button).toHaveAttribute('aria-pressed', 'true')
+    })
+    upgradeButtons.forEach((button) => {
+      expect(button).toHaveAttribute('aria-pressed', 'false')
+    })
+  })
+
+  it('点击分区导航后会同步高亮顶部和侧栏按钮', async () => {
+    mockedLoadChampionDetail.mockResolvedValue(detailFixture)
+
+    renderChampionDetailPage()
+
+    const upgradeButtons = await screen.findAllByRole('button', { name: '升级' })
+    fireEvent.click(upgradeButtons[0])
+
+    screen.getAllByRole('button', { name: '升级' }).forEach((button) => {
+      expect(button).toHaveAttribute('aria-pressed', 'true')
+    })
+    screen.getAllByRole('button', { name: '概览' }).forEach((button) => {
+      expect(button).toHaveAttribute('aria-pressed', 'false')
+    })
   })
 })
