@@ -5,8 +5,8 @@ export function PresetsPage() {
     <div className="page-stack">
       <SurfaceCard
         eyebrow="方案存档"
-        title="本地优先，后续接 IndexedDB"
-        description="这一页会承接用户保存的阵容、常用筛选和阶段性目标。"
+        title="最近草稿留在阵型页，命名方案再进入这里"
+        description="这一页会承接用户主动保存的已命名阵容；阵型页的最近草稿继续走本地自动保存 / 恢复。"
       >
         <div className="split-grid">
           <div>
@@ -22,7 +22,7 @@ export function PresetsPage() {
           <div>
             <h3 className="section-heading">当前状态</h3>
             <p className="supporting-text">
-              目前仅保留页面入口与结构约定，等阵型编辑和规则层稳定后再接本地存储。
+              当前先把阵型页的最近草稿闭环跑通；下一步再补命名方案列表、编辑态和本地持久化。
             </p>
           </div>
         </div>
