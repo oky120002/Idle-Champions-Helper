@@ -38,23 +38,29 @@
 
 当英雄筛选进入产品路线图定义的模块 MVP 时，不能继续只靠当前的 `champions / enums` 两份基础集合。
 
-建议补齐三类数据输入：
+建议补齐四类数据输入：
 
 1. 扩展英雄公共字段
    - 在 `Champion` 或配套集合中补 `patronEligibility`
    - 在 `Champion` 或配套集合中补 `modeEligibilityTags`
+   - 该字段只用于“速刷 / 推图 / Trials / Time Gate”这类粗粒度模式标签，不直接承载具体变体规则
 2. 扩展筛选枚举
    - 在 `enums` 中补 `patrons`
    - 在 `enums` 中补 `modes`
-3. 补规则来源
+3. 补场景上下文合同
+   - `variants`、后续 `adventures` 或统一 `scenarios` 集合必须提供稳定 `id`
+   - 若页面要过滤具体冒险 / 变体 / 试炼上下文，筛选状态必须保留 `scenarioId` 或 `ruleContextId`
+   - 不能只保留一个展示用 `mode` 名称，否则无法唯一定位限制来源
+4. 补规则来源
    - 新增结构化规则集合，例如 `public/data/<version>/rules.json`
-   - 用于表达“某模式下的英雄可用性判断来源”，避免回退到字符串匹配
+   - 用于表达“某场景 / 某模式下的英雄可用性判断来源”，避免回退到字符串匹配
 
 当前阶段不接受的做法：
 
 - 直接从 `variants` 原文限制文本做页面侧字符串匹配
 - 把 `Patron / 模式过滤` 规则直接散写到页面组件
 - 在没有公共数据合同的前提下先做临时 UI 开关
+- 只保留通用 `mode` 文本，不保留场景 `id / ruleContextId`
 
 ### 2.3 `Patron / 模式过滤` 的建议规则来源
 
@@ -76,6 +82,21 @@
 ```
 
 这和路线图里“Patron Eligibility + normalized rules 表达方式”的方向保持一致，避免实现时各自猜测来源。
+
+如果页面只做粗粒度目标模式过滤，保留 `modeId` 即可；如果页面开始过滤具体冒险 / 变体 / 试炼上下文，就需要把筛选输入升级为类似下面的结构：
+
+```ts
+type ChampionFilterContext =
+  | { type: 'mode'; modeId: string }
+  | {
+      type: 'scenario'
+      scenarioKind: 'adventure' | 'variant' | 'trial' | 'timeGate'
+      scenarioId: string
+      ruleContextId: string
+    }
+```
+
+这样后续页面、规则层和方案恢复链路才能引用同一份限制上下文，而不是各自猜一个“模式”。
 
 ### 2.4 前端依赖
 
