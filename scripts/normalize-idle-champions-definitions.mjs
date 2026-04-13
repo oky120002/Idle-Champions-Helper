@@ -69,6 +69,23 @@ function toStringList(value) {
   return []
 }
 
+function toTextList(value) {
+  if (Array.isArray(value)) {
+    return value.flatMap((item) => toTextList(item))
+  }
+
+  if (typeof value === 'string') {
+    const trimmed = value.trim()
+    return trimmed ? [trimmed] : []
+  }
+
+  if (typeof value === 'number') {
+    return [String(value)]
+  }
+
+  return []
+}
+
 function getUpdatedAt(rawDefinitions) {
   if (typeof rawDefinitions.current_time === 'number') {
     return new Date(rawDefinitions.current_time * 1000).toISOString().slice(0, 10)
@@ -143,6 +160,11 @@ function normalizeChampion(definition, affiliationMap, override = {}) {
   }
 }
 
+function isPlayableChampion(definition) {
+  const seat = Number(definition.seat_id ?? definition.seat ?? 0)
+  return seat >= 1 && seat <= 12
+}
+
 function looksLikeVariant(definition) {
   return (
     definition.variant_adventure_id !== undefined ||
@@ -158,16 +180,16 @@ function normalizeVariant(definition, campaignMap) {
     name: definition.name ?? `Variant ${definition.id}`,
     campaign: campaignMap.get(String(definition.campaign_id ?? '')) ?? String(definition.campaign_id ?? ''),
     restrictions: uniqueStrings([
-      ...toStringList(definition.requirements_text),
-      ...toStringList(definition.requirements_description),
-      ...toStringList(definition.restrictions_text),
-      ...toStringList(definition.restrictions),
+      ...toTextList(definition.requirements_text),
+      ...toTextList(definition.requirements_description),
+      ...toTextList(definition.restrictions_text),
+      ...toTextList(definition.restrictions),
     ]),
     rewards: uniqueStrings([
-      ...toStringList(definition.reward_description),
-      ...toStringList(definition.reward_descriptions),
-      ...toStringList(definition.rewards_text),
-      ...toStringList(definition.rewards),
+      ...toTextList(definition.reward_description),
+      ...toTextList(definition.reward_descriptions),
+      ...toTextList(definition.rewards_text),
+      ...toTextList(definition.rewards),
     ]),
   }
 }
@@ -182,12 +204,12 @@ function mergeVariants(autoVariants, manualVariants) {
       ...variant,
       id,
       restrictions: uniqueStrings([
-        ...toStringList(merged.get(id)?.restrictions),
-        ...toStringList(variant.restrictions),
+        ...toTextList(merged.get(id)?.restrictions),
+        ...toTextList(variant.restrictions),
       ]),
       rewards: uniqueStrings([
-        ...toStringList(merged.get(id)?.rewards),
-        ...toStringList(variant.rewards),
+        ...toTextList(merged.get(id)?.rewards),
+        ...toTextList(variant.rewards),
       ]),
     })
   }
@@ -268,6 +290,7 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
   const campaignMap = buildCampaignMap(rawDefinitions.campaign_defines)
 
   const champions = (rawDefinitions.hero_defines ?? [])
+    .filter((definition) => isPlayableChampion(definition))
     .map((definition) =>
       normalizeChampion(
         definition,

@@ -17,7 +17,7 @@
 - 已确认技术路线：`Vite + React + TypeScript`
 - 已落地最小可运行工程骨架
 - 已补基础路由、页面壳层、公共数据目录与部署脚本
-- 当前公共数据仍是占位文件，真实游戏数据待补充
+- 已落第一版真实公共数据：`champions`、`variants`、`enums` 已由官方 definitions 生成
 - 个人数据本地存储方案已确定为 `IndexedDB`，但还未正式接入页面
 - 已补官方 definitions 抓取 / 归一化脚本骨架，方便后续接真实公共数据
 - 当前仍处于早期阶段，完整规则体系与测试体系尚未完善
@@ -180,7 +180,7 @@ npm run data:build
 
 ## 下一步建议
 
-1. 补第一版真实 `Champion`、`Variant`、`FormationLayout` 数据结构
+1. 补 `FormationLayout` 与必要的手工 overrides
 2. 先完成英雄筛选页的过滤闭环
 3. 再接阵型编辑页的 seat 冲突校验
 4. 最后补本地方案保存与个人画像能力
