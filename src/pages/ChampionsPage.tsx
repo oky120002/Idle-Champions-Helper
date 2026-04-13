@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useI18n } from '../app/i18n'
+import { FieldGroup } from '../components/FieldGroup'
 import { LocalizedText } from '../components/LocalizedText'
+import { StatusBanner } from '../components/StatusBanner'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollection } from '../data/client'
 import {
@@ -175,16 +177,15 @@ export function ChampionsPage() {
         })}
       >
         {state.status === 'loading' ? (
-          <div className="status-banner status-banner--info">
-            {t({ zh: '正在读取英雄数据…', en: 'Loading champion data…' })}
-          </div>
+          <StatusBanner tone="info">{t({ zh: '正在读取英雄数据…', en: 'Loading champion data…' })}</StatusBanner>
         ) : null}
 
         {state.status === 'error' ? (
-          <div className="status-banner status-banner--error">
-            {t({ zh: '英雄数据读取失败', en: 'Champion data failed to load' })}：
-            {state.message || t({ zh: '未知错误', en: 'Unknown error' })}
-          </div>
+          <StatusBanner
+            tone="error"
+            title={t({ zh: '英雄数据读取失败', en: 'Champion data failed to load' })}
+            detail={state.message || t({ zh: '未知错误', en: 'Unknown error' })}
+          />
         ) : null}
 
         {state.status === 'ready' ? (
@@ -209,8 +210,14 @@ export function ChampionsPage() {
             </div>
 
             <div className="filter-panel">
-              <label className="form-field">
-                <span className="field-label">{t({ zh: '关键词', en: 'Keyword' })}</span>
+              <FieldGroup
+                label={t({ zh: '关键词', en: 'Keyword' })}
+                hint={t({
+                  zh: '支持中英混搜；切换界面语言时，当前关键词和筛选不会被清空。',
+                  en: 'Chinese and English queries both work here, and switching UI language keeps the current filters.',
+                })}
+                as="label"
+              >
                 <input
                   className="text-input"
                   type="text"
@@ -221,16 +228,16 @@ export function ChampionsPage() {
                   value={search}
                   onChange={(event) => setSearch(event.target.value)}
                 />
-                <span className="field-hint">
-                  {t({
-                    zh: '支持中英混搜；切换界面语言时，当前关键词和筛选不会被清空。',
-                    en: 'Chinese and English queries both work here, and switching UI language keeps the current filters.',
-                  })}
-                </span>
-              </label>
+              </FieldGroup>
 
-              <div className="filter-group">
-                <span className="field-label">{t({ zh: '座位', en: 'Seat' })}</span>
+              <FieldGroup
+                label={t({ zh: '座位', en: 'Seat' })}
+                hint={t({
+                  zh: '支持多选；同一维度按“或”命中。',
+                  en: 'Multi-select is supported, and matches within this group use OR.',
+                })}
+                className="filter-group"
+              >
                 <div className="filter-chip-grid">
                   <button
                     type="button"
@@ -252,16 +259,16 @@ export function ChampionsPage() {
                     </button>
                   ))}
                 </div>
-                <span className="field-hint">
-                  {t({
-                    zh: '支持多选；同一维度按“或”命中。',
-                    en: 'Multi-select is supported, and matches within this group use OR.',
-                  })}
-                </span>
-              </div>
+              </FieldGroup>
 
-              <div className="filter-group">
-                <span className="field-label">{t({ zh: '定位', en: 'Role' })}</span>
+              <FieldGroup
+                label={t({ zh: '定位', en: 'Role' })}
+                hint={t({
+                  zh: '支持多选；会匹配任一已选定位。',
+                  en: 'Multi-select is supported, and champions can match any selected role.',
+                })}
+                className="filter-group"
+              >
                 <div className="filter-chip-grid">
                   <button
                     type="button"
@@ -283,16 +290,16 @@ export function ChampionsPage() {
                     </button>
                   ))}
                 </div>
-                <span className="field-hint">
-                  {t({
-                    zh: '支持多选；会匹配任一已选定位。',
-                    en: 'Multi-select is supported, and champions can match any selected role.',
-                  })}
-                </span>
-              </div>
+              </FieldGroup>
 
-              <div className="filter-group">
-                <span className="field-label">{t({ zh: '联动队伍', en: 'Affiliation' })}</span>
+              <FieldGroup
+                label={t({ zh: '联动队伍', en: 'Affiliation' })}
+                hint={t({
+                  zh: '支持多选；适合同时看多个联动队伍候选。',
+                  en: 'Multi-select is supported for comparing multiple affiliations at once.',
+                })}
+                className="filter-group"
+              >
                 <div className="filter-chip-grid">
                   <button
                     type="button"
@@ -320,22 +327,16 @@ export function ChampionsPage() {
                     </button>
                   ))}
                 </div>
-                <span className="field-hint">
-                  {t({
-                    zh: '支持多选；适合同时看多个联动队伍候选。',
-                    en: 'Multi-select is supported for comparing multiple affiliations at once.',
-                  })}
-                </span>
-              </div>
+              </FieldGroup>
             </div>
 
             {filteredChampions.length === 0 ? (
-              <div className="status-banner status-banner--info">
+              <StatusBanner tone="info">
                 {t({
                   zh: '当前筛选条件下没有匹配英雄，可以先清空座位、定位或联动队伍过滤。',
                   en: 'No champions match this filter set yet. Try clearing seat, role, or affiliation filters first.',
                 })}
-              </div>
+              </StatusBanner>
             ) : null}
 
             {filteredChampions.length > 0 ? (

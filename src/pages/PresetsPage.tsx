@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { type AppLocale, useI18n } from '../app/i18n'
+import { FieldGroup } from '../components/FieldGroup'
+import { StatusBanner, type StatusTone } from '../components/StatusBanner'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollectionAtVersion, loadVersion } from '../data/client'
 import {
@@ -20,8 +22,6 @@ import type {
 const PRESET_SCHEMA_VERSION = 1
 
 const PRESET_PRIORITY_OPTIONS: PresetPriority[] = ['high', 'medium', 'low']
-
-type StatusTone = 'info' | 'success' | 'error'
 
 interface StatusMessage {
   tone: StatusTone
@@ -66,18 +66,6 @@ function formatDateTime(value: string, locale: AppLocale): string {
   return date.toLocaleString(locale, {
     hour12: false,
   })
-}
-
-function getStatusBannerClassName(tone: StatusTone): string {
-  if (tone === 'success') {
-    return 'status-banner status-banner--success'
-  }
-
-  if (tone === 'error') {
-    return 'status-banner status-banner--error'
-  }
-
-  return 'status-banner status-banner--info'
 }
 
 function parseScenarioTags(value: string): string[] {
@@ -358,27 +346,20 @@ export function PresetsPage() {
         })}
       >
         {state.status === 'loading' ? (
-          <div className="status-banner status-banner--info">
-            {t({ zh: '正在读取本地方案存档…', en: 'Loading local presets…' })}
-          </div>
+          <StatusBanner tone="info">{t({ zh: '正在读取本地方案存档…', en: 'Loading local presets…' })}</StatusBanner>
         ) : null}
 
         {state.status === 'error' ? (
-          <div className="status-banner status-banner--error">
-            {t({ zh: '方案列表读取失败', en: 'Preset list failed to load' })}：{state.message}
-          </div>
+          <StatusBanner
+            tone="error"
+            title={t({ zh: '方案列表读取失败', en: 'Preset list failed to load' })}
+            detail={state.message}
+          />
         ) : null}
 
         {state.status === 'ready' ? (
           <>
-            {pageStatus ? (
-              <div className={getStatusBannerClassName(pageStatus.tone)}>
-                <div className="status-banner__content">
-                  <strong className="status-banner__title">{pageStatus.title}</strong>
-                  <p className="status-banner__detail">{pageStatus.detail}</p>
-                </div>
-              </div>
-            ) : null}
+            {pageStatus ? <StatusBanner tone={pageStatus.tone} title={pageStatus.title} detail={pageStatus.detail} /> : null}
 
             <div className="metric-grid">
               <article className="metric-card">
@@ -431,12 +412,12 @@ export function PresetsPage() {
         })}
       >
         {state.status === 'ready' && state.items.length === 0 ? (
-          <div className="status-banner status-banner--info">
+          <StatusBanner tone="info">
             {t({
               zh: '这里还没有命名方案。先去阵型页摆出一套阵容，再点击“保存为方案”。',
               en: 'There are no named presets yet. Build a formation first, then click “Save as preset.”',
             })}
-          </div>
+          </StatusBanner>
         ) : null}
 
         {state.status === 'ready' && state.items.length > 0 ? (
@@ -502,23 +483,15 @@ export function PresetsPage() {
                   ) : null}
 
                   {view.prompt.kind === 'invalid' ? (
-                    <div className="status-banner status-banner--error">
-                      <div className="status-banner__content">
-                        <strong className="status-banner__title">{view.prompt.title}</strong>
-                        <p className="status-banner__detail">{view.prompt.detail}</p>
-                      </div>
-                    </div>
+                    <StatusBanner tone="error" title={view.prompt.title} detail={view.prompt.detail} />
                   ) : null}
 
                   {view.prompt.kind === 'restore' && (isCompatibleRestore || hasDroppedReferences) ? (
-                    <div className="status-banner status-banner--info">
-                      <div className="status-banner__content">
-                        <strong className="status-banner__title">
-                          {t({ zh: '恢复时会带兼容处理', en: 'Restore will apply compatibility handling' })}
-                        </strong>
-                        <p className="status-banner__detail">{buildRestoreStatusDetail(view.prompt.preview)}</p>
-                      </div>
-                    </div>
+                    <StatusBanner
+                      tone="info"
+                      title={t({ zh: '恢复时会带兼容处理', en: 'Restore will apply compatibility handling' })}
+                      detail={buildRestoreStatusDetail(view.prompt.preview)}
+                    />
                   ) : null}
 
                   <div className="button-row result-card__section">
@@ -567,10 +540,10 @@ export function PresetsPage() {
 
                   {editingPresetId === view.preset.id ? (
                     <div className="form-stack result-card__section">
-                      <div className="form-field">
-                        <label className="field-label" htmlFor={`preset-name-${view.preset.id}`}>
-                          {t({ zh: '方案名称', en: 'Preset name' })}
-                        </label>
+                      <FieldGroup
+                        label={t({ zh: '方案名称', en: 'Preset name' })}
+                        labelFor={`preset-name-${view.preset.id}`}
+                      >
                         <input
                           id={`preset-name-${view.preset.id}`}
                           className="text-input"
@@ -578,12 +551,12 @@ export function PresetsPage() {
                           value={editor.name}
                           onChange={(event) => updateEditor('name', event.target.value)}
                         />
-                      </div>
+                      </FieldGroup>
 
-                      <div className="form-field">
-                        <label className="field-label" htmlFor={`preset-description-${view.preset.id}`}>
-                          {t({ zh: '方案备注', en: 'Preset notes' })}
-                        </label>
+                      <FieldGroup
+                        label={t({ zh: '方案备注', en: 'Preset notes' })}
+                        labelFor={`preset-description-${view.preset.id}`}
+                      >
                         <textarea
                           id={`preset-description-${view.preset.id}`}
                           className="text-area"
@@ -591,12 +564,12 @@ export function PresetsPage() {
                           value={editor.description}
                           onChange={(event) => updateEditor('description', event.target.value)}
                         />
-                      </div>
+                      </FieldGroup>
 
-                      <div className="form-field">
-                        <label className="field-label" htmlFor={`preset-tags-${view.preset.id}`}>
-                          {t({ zh: '场景标签', en: 'Scenario tags' })}
-                        </label>
+                      <FieldGroup
+                        label={t({ zh: '场景标签', en: 'Scenario tags' })}
+                        labelFor={`preset-tags-${view.preset.id}`}
+                      >
                         <input
                           id={`preset-tags-${view.preset.id}`}
                           className="text-input"
@@ -604,10 +577,9 @@ export function PresetsPage() {
                           value={editor.scenarioTagsInput}
                           onChange={(event) => updateEditor('scenarioTagsInput', event.target.value)}
                         />
-                      </div>
+                      </FieldGroup>
 
-                      <div className="form-field">
-                        <span className="field-label">{t({ zh: '优先级', en: 'Priority' })}</span>
+                      <FieldGroup label={t({ zh: '优先级', en: 'Priority' })}>
                         <div className="segmented-control">
                           {PRESET_PRIORITY_OPTIONS.map((option) => (
                             <button
@@ -624,7 +596,7 @@ export function PresetsPage() {
                             </button>
                           ))}
                         </div>
-                      </div>
+                      </FieldGroup>
 
                       <div className="button-row">
                         <button
