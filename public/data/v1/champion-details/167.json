@@ -1,0 +1,6291 @@
+{
+  "updatedAt": "2026-04-13",
+  "summary": {
+    "id": "167",
+    "name": {
+      "original": "Windfall",
+      "display": "温德福尔"
+    },
+    "seat": 5,
+    "roles": [
+      "dps",
+      "gold",
+      "support"
+    ],
+    "affiliations": [],
+    "tags": [
+      "bard",
+      "chaotic",
+      "dps",
+      "evergreen",
+      "evil",
+      "female",
+      "gold",
+      "spec_breaking",
+      "spec_control",
+      "spec_control_slow",
+      "spec_control_stun",
+      "support",
+      "tiefling",
+      "unaffiliated"
+    ],
+    "portrait": {
+      "path": "v1/champion-portraits/167.png",
+      "sourceGraphic": "Portraits/Portrait_Windfall",
+      "sourceVersion": 2
+    }
+  },
+  "englishName": "Windfall",
+  "eventName": null,
+  "dateAvailable": "2025-05-28 13:00:00",
+  "lastReworkDate": "2025-05-28 13:00:00",
+  "popularity": 0,
+  "baseCost": "5000000",
+  "baseDamage": "275000",
+  "baseHealth": "49",
+  "graphicId": "26287",
+  "portraitGraphicId": "26286",
+  "availability": {
+    "availableInNextEvent": false,
+    "availableInShop": true,
+    "availableInTimeGate": false,
+    "isAvailable": true,
+    "nextEventTimestamp": 0
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    240,
+    605,
+    1055,
+    1605
+  ],
+  "costCurves": {
+    "1": 1.13
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "available_in_store": "2025-10-23 12:00:00",
+    "unlock_adventure_id": 1789,
+    "content_set_id": 68,
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      170,
+      171,
+      172
+    ],
+    "graphic_large": 26288,
+    "graphic_xl": 26289,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      91,
+      90
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 4,
+      "gethit": 5,
+      "koed": 6,
+      "run": 7
+    },
+    "weekly_chest_type_id": 740,
+    "console_portrait": 26369,
+    "trials_effect_id": 836,
+    "portrait_graphic_scale": 0.9,
+    "legendary_effect_id": [
+      1,
+      56,
+      10,
+      43,
+      88,
+      103
+    ],
+    "hero_not_unlocked_skin_warning": "Champion Windfall is not unlocked with this skin. Windfall can only be unlocked by completing Double or Nothing - the second Variant of the Rod of Seven Parts adventure in the Vecna: Eve of Ruin Campaign.",
+    "gold_chest_type_id": 740
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Windfall",
+      "display": "温德福尔"
+    },
+    "class": {
+      "original": "Bard",
+      "display": "吟游诗人"
+    },
+    "race": {
+      "original": "Tiefling",
+      "display": "提夫林"
+    },
+    "age": 35,
+    "alignment": {
+      "original": "Chaotic Evil",
+      "display": "混乱邪恶"
+    },
+    "abilityScores": {
+      "str": 14,
+      "dex": 24,
+      "con": 20,
+      "int": 22,
+      "wis": 18,
+      "cha": 26
+    },
+    "backstory": {
+      "original": "A dedicated champion of Tiamat, Windfall has been granted phenomenal power by her master. She is the proprietor of the Red Belvedere, a monument to Tiamat and a remnant of Avernus's original existence as a bucolic paradise designed to tempt mortals. Its edifice was destroyed in the carnage of the Blood War, but Windfall rebuilt the casino and rededicated it to the Dragon Queen as a celebration of her god's greed and vanity. Windfall is ostentatious and charismatic, making small talk with regular patrons and jovially welcoming new faces to the casino. She once plotted to assemble the Rod of Seven Parts to create a gift for her cruel goddess, but has instead joined the Champions at Tiamat's behest.",
+      "display": "温德福尔是提亚马特虔诚不二的拥护者，她的主人赋予了她非凡的力量。她是“绯红望台”的所有者，这座建筑不仅是提亚马特的纪念碑，更是阿弗纳斯曾经作为诱惑凡人的田园仙境的遗迹。它在血战的大屠杀中被摧毁，但温德福尔重建了这座赌场，并将它重新献给了龙女王，以此颂扬她神明的贪婪与虚荣。温法尔为人张扬炫耀，却又魅力四射，她会和常客闲聊，还会愉快地欢迎新面孔来到赌场。她曾谋划集齐“七节权杖”，为她残忍的女神献上一份厚礼，但如今却遵照提亚马特的命令加入了勇士们的行列。"
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "857",
+      "name": {
+        "original": "Chromatic Rapier",
+        "display": "彩色西洋剑"
+      },
+      "description": {
+        "original": "Windfall attacks a random enemy for 1 hit.",
+        "display": "温德福尔攻击一个随机敌人 1 次。"
+      },
+      "longDescription": null,
+      "cooldown": 2.75,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "random",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "target_offset_x": -34,
+          "damage_frame": 2,
+          "jump_sound": 30,
+          "sound_frames": {
+            "2": 154
+          }
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "855",
+      "name": {
+        "original": "Stunning Scintillation",
+        "display": "致晕光芒"
+      },
+      "description": {
+        "original": "Windfall deals 1 ultimate hit to all enemies, stunning them before slowing them.",
+        "display": "温德福尔对所有敌人造成 1 次杀招攻击，先将敌人眩晕，然后减速。"
+      },
+      "longDescription": {
+        "original": "Windfall's blinding coat erupts in a scintillating flash, dealing 1 ultimate hit to all enemies, stunning and then slowing them.",
+        "display": "温德福尔耀眼的外表闪耀出夺目的光芒，对所有敌人造成 1 次杀招攻击，先将敌人眩晕，然后减速。"
+      },
+      "cooldown": 220,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "all",
+      "damageTypes": [
+        "melee",
+        "magic"
+      ],
+      "tags": [
+        "melee"
+      ],
+      "graphicId": "26385",
+      "animations": [
+        {
+          "type": "ultimate_attack",
+          "ultimate": "windfall",
+          "duration": 8,
+          "stun_duration": 3,
+          "animation_sequence_name": "ultimate",
+          "projectile_details": {
+            "chain_targets": 0,
+            "fixed_time_to_target": 0.15,
+            "follow_source": true,
+            "has_trail": false,
+            "hit_effect_graphic": "Effect_Windfall_Lightning_Hit",
+            "segment_graphics": [
+              "Effect_WindfallChainLightningSegment1",
+              "Effect_WindfallChainLightningSegment2",
+              "Effect_WindfallChainLightningSegment3"
+            ]
+          },
+          "effects_on_monsters": [
+            {
+              "effect_string": "monster_speed_reduce,50",
+              "for_time": 6
+            }
+          ],
+          "force_count_for_bud": false
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "17052",
+        "name": {
+          "original": "Proprietor of the Red Belvedere",
+          "display": "绯红望台的所有者"
+        },
+        "description": null,
+        "graphicId": "813"
+      },
+      {
+        "upgradeId": "17053",
+        "name": {
+          "original": "The Long Game",
+          "display": "漫长赌局"
+        },
+        "description": null,
+        "graphicId": "26376"
+      },
+      {
+        "upgradeId": "17054",
+        "name": {
+          "original": "The Gambler",
+          "display": "赌徒"
+        },
+        "description": null,
+        "graphicId": "26375"
+      },
+      {
+        "upgradeId": "17055",
+        "name": {
+          "original": "Dragon's Pride",
+          "display": "龙之骄傲"
+        },
+        "description": null,
+        "graphicId": "26374"
+      },
+      {
+        "upgradeId": "17078",
+        "name": {
+          "original": "Stunning Scintillation",
+          "display": "致晕光芒"
+        },
+        "description": null,
+        "graphicId": "26385"
+      }
+    ]
+  },
+  "upgrades": [
+    {
+      "id": "17052",
+      "requiredLevel": 0,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Proprietor of the Red Belvedere",
+        "display": "绯红望台的所有者"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2292",
+      "effectDefinition": {
+        "id": "2292",
+        "snapshots": {
+          "original": {
+            "id": 2292,
+            "flavour_text": "",
+            "description": {
+              "desc": "Windfall can be used in any Vecna: Eve of Ruin campaign adventure or variant, even if she would not normally be available to be used due to variant or patron restrictions."
+            },
+            "effect_keys": [],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": false
+            }
+          },
+          "display": {
+            "id": 2292,
+            "flavour_text": "",
+            "description": {
+              "desc": "温德福尔将可用于任何维克那：毁灭前夕战役冒险或支线任务，即使以前由于支线任务或赞助者限制条件无法使用。"
+            },
+            "effect_keys": [],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": false
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17053",
+      "requiredLevel": 30,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "The Long Game",
+        "display": "漫长赌局"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2296",
+      "effectDefinition": {
+        "id": "2296",
+        "snapshots": {
+          "original": {
+            "id": 2296,
+            "flavour_text": "",
+            "description": {
+              "desc": "Windfall increases the damage of all Champions in the column(s) with the most slots by $amount%. If multiple columns are tied for the most slots, then each of them are affected."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "tallest_column"
+                ],
+                "use_computed_amount_for_description": true,
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26379,
+            "large_graphic_id": 26376,
+            "properties": {
+              "is_formation_ability": true
+            }
+          },
+          "display": {
+            "id": 2296,
+            "flavour_text": "",
+            "description": {
+              "desc": "温德福尔会使栏位数量最多的列中所有勇士的伤害提升$amount%。如果有多列栏位数量并列最多，则这些列中的所有英雄都会受到影响。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "tallest_column"
+                ],
+                "use_computed_amount_for_description": true,
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26379,
+            "large_graphic_id": 26376,
+            "properties": {
+              "is_formation_ability": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Windfall increases the damage of all Champions in the longest column(s).",
+        "display": "温德福尔提高阵型中最长一列的（并列也可生效）所有勇士的伤害。"
+      }
+    },
+    {
+      "id": "17280",
+      "requiredLevel": 40,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17249",
+      "requiredLevel": 50,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17054",
+      "requiredLevel": 60,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "The Gambler",
+        "display": "赌徒"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2297",
+      "effectDefinition": {
+        "id": "2297",
+        "snapshots": {
+          "original": {
+            "id": 2297,
+            "flavour_text": "",
+            "description": {
+              "desc": "When Windfall attacks and defeats an enemy, she gains a Raise stack. Otherwise, she gains a Call stack. Gold find is increased by $(not_buffed amount)% for each Raise stack, stacking multiplicatively. Windfall's damage and The Long Game are both increased by $(not_buffed amount___2)% for each Call stack, stacking multiplicatively. Both are capped at 25 stacks and reset upon changing areas."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "gold_multiplier_mult,100",
+                "stacks_on_trigger": "monster_killed_by_owner",
+                "more_triggers": [
+                  {
+                    "trigger": "area_changed",
+                    "action": {
+                      "type": "reset_stacks"
+                    }
+                  }
+                ],
+                "stack_title": "Raise Stacks",
+                "total_title": "Raise Stack Bonus",
+                "max_stacks": 25,
+                "stacks_multiply": true,
+                "show_bonus": true,
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "do_nothing,400",
+                "stacks_on_trigger": "owner_attack_no_kill",
+                "more_triggers": [
+                  {
+                    "trigger": "area_changed",
+                    "action": {
+                      "type": "reset_stacks"
+                    }
+                  }
+                ],
+                "stack_title": "Call Stacks",
+                "total_title": "Call Stack Bonus",
+                "max_stacks": 25,
+                "stacks_multiply": true,
+                "show_bonus": true,
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "hero_dps_multiplier_mult,400",
+                "amount_expr": "upgrade_amount(17054,1)",
+                "targets": [
+                  "self"
+                ],
+                "off_when_benched": true,
+                "show_bonus": false
+              },
+              {
+                "effect_string": "buff_upgrade,400,17053",
+                "amount_expr": "upgrade_amount(17054,1)",
+                "off_when_benched": true,
+                "show_bonus": false
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26378,
+            "large_graphic_id": 26375,
+            "properties": {
+              "is_formation_ability": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 2297,
+            "flavour_text": "",
+            "description": {
+              "desc": "温德福尔攻击并击败敌人时，会获得一层“加注”，否则获得一层“跟注”。每有一层“加注”，金币获取量提升 $(not_buffed amount)%，以乘算方式堆叠。每有一层“跟注”，温德福尔的伤害和“漫长赌局”效果都提升 $(not_buffed amount___2)%，以乘算方式堆叠。“加注”和“跟注”最多叠加至 25 层，并且在更换区域时重置。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "gold_multiplier_mult,100",
+                "stacks_on_trigger": "monster_killed_by_owner",
+                "more_triggers": [
+                  {
+                    "trigger": "area_changed",
+                    "action": {
+                      "type": "reset_stacks"
+                    }
+                  }
+                ],
+                "stack_title": "加注层数",
+                "total_title": "加注层数加成",
+                "max_stacks": 25,
+                "stacks_multiply": true,
+                "show_bonus": true,
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "do_nothing,400",
+                "stacks_on_trigger": "owner_attack_no_kill",
+                "more_triggers": [
+                  {
+                    "trigger": "area_changed",
+                    "action": {
+                      "type": "reset_stacks"
+                    }
+                  }
+                ],
+                "stack_title": "跟注层数",
+                "total_title": "跟注层数加成",
+                "max_stacks": 25,
+                "stacks_multiply": true,
+                "show_bonus": true,
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "hero_dps_multiplier_mult,400",
+                "amount_expr": "upgrade_amount(17054,1)",
+                "targets": [
+                  "self"
+                ],
+                "off_when_benched": true,
+                "show_bonus": false
+              },
+              {
+                "effect_string": "buff_upgrade,400,17053",
+                "amount_expr": "upgrade_amount(17054,1)",
+                "off_when_benched": true,
+                "show_bonus": false
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26378,
+            "large_graphic_id": 26375,
+            "properties": {
+              "is_formation_ability": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "formation_circle_icon": false,
+              "owner_use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17281",
+      "requiredLevel": 70,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17248",
+      "requiredLevel": 80,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,17053",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17282",
+      "requiredLevel": 90,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17056",
+      "requiredLevel": 100,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Red Dragon's Greed",
+        "display": "红龙的贪婪"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2299",
+      "effectDefinition": {
+        "id": "2299",
+        "snapshots": {
+          "original": {
+            "id": 2299,
+            "flavour_text": "",
+            "description": {
+              "desc": "Windfall tries to avoid attacking enemies that don't drop gold or count for quest progress. Her normal attacks light her target on fire, dealing $amount___3 seconds of BUD-based damage to the enemy every second for $time___2 seconds."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "change_base_attack,846"
+              },
+              {
+                "effect_string": "chance_attack_adds_dot,300,5,1,100,846",
+                "pop_damage": true,
+                "use_bud": true,
+                "fixed_damage": true,
+                "graphic": {
+                  "active_graphic_id": 26299,
+                  "scale_y": 0.3
+                }
+              },
+              {
+                "effect_string": "do_nothing,3"
+              },
+              {
+                "effect_string": "expression_on_trigger,owner_attack_with_id",
+                "trigger_params": [
+                  "846"
+                ],
+                "per_trigger_expr": "{AppendToSaveStat(`windfall_spec_0_attack`, false, trigger_count) NotifyStatChanged(`WindfallFiveHeadsOfTiamat`, false)}",
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26383,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "owner_use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 2299,
+            "flavour_text": "",
+            "description": {
+              "desc": "温德福尔会避免攻击不掉落金币也不会计入任务进度的敌人。她的普通攻击会点燃目标，在 $amount___3 秒内，每秒对敌人造成持续 $time___2 秒的基于基础杀招伤害的伤害。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "change_base_attack,846"
+              },
+              {
+                "effect_string": "chance_attack_adds_dot,300,5,1,100,846",
+                "pop_damage": true,
+                "use_bud": true,
+                "fixed_damage": true,
+                "graphic": {
+                  "active_graphic_id": 26299,
+                  "scale_y": 0.3
+                }
+              },
+              {
+                "effect_string": "do_nothing,3"
+              },
+              {
+                "effect_string": "expression_on_trigger,owner_attack_with_id",
+                "trigger_params": [
+                  "846"
+                ],
+                "per_trigger_expr": "{AppendToSaveStat(`windfall_spec_0_attack`, false, trigger_count) NotifyStatChanged(`WindfallFiveHeadsOfTiamat`, false)}",
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26383,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "owner_use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Red Dragon's Greed",
+        "display": "红龙的贪婪"
+      },
+      "specializationDescription": {
+        "original": "Windfall's attacks take on the aspect of a greedy red dragon.",
+        "display": "温德福尔的攻击带有贪婪红龙的特质。"
+      },
+      "specializationGraphicId": "26383",
+      "tipText": null
+    },
+    {
+      "id": "17057",
+      "requiredLevel": 100,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Blue Dragon's Spark",
+        "display": "蓝龙的光芒"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2300",
+      "effectDefinition": {
+        "id": "2300",
+        "snapshots": {
+          "original": {
+            "id": 2300,
+            "flavour_text": "",
+            "description": {
+              "desc": "Windfall gains the Control role and she prefers to attack stunned enemies. Her normal attacks are charged with lightning, striking out at up to two other random enemies, dealing $amount___3 seconds of BUD-based damage to them, and stunning all enemies damaged for 3 seconds."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "add_hero_tags,0,control"
+              },
+              {
+                "effect_string": "change_base_attack,853"
+              },
+              {
+                "effect_string": "do_nothing,5"
+              },
+              {
+                "effect_string": "expression_on_trigger,owner_attack_with_id",
+                "trigger_params": [
+                  "853"
+                ],
+                "per_trigger_expr": "{AppendToSaveStat(`windfall_spec_1_attack`, false, trigger_count) NotifyStatChanged(`WindfallFiveHeadsOfTiamat`, false)}",
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "expression_on_trigger,owner_attack_with_id",
+                "trigger_params": [
+                  "854"
+                ],
+                "per_trigger_expr": "{AppendToSaveStat(`windfall_spec_1_attack`, false, trigger_count) NotifyStatChanged(`WindfallFiveHeadsOfTiamat`, false)}",
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26381,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "owner_use_outgoing_description": true,
+              "default_bonus_index": 2
+            }
+          },
+          "display": {
+            "id": 2300,
+            "flavour_text": "",
+            "description": {
+              "desc": "温德福尔获得“控制”角色定位，并且会优先攻击被眩晕的敌人。她的普通攻击带有闪电能量，最多可以随机攻击另外两名敌人，造成持续 $amount___3 秒的基于基础杀招伤害的伤害，并使所有受到伤害的敌人眩晕 3 秒。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "add_hero_tags,0,control"
+              },
+              {
+                "effect_string": "change_base_attack,853"
+              },
+              {
+                "effect_string": "do_nothing,5"
+              },
+              {
+                "effect_string": "expression_on_trigger,owner_attack_with_id",
+                "trigger_params": [
+                  "853"
+                ],
+                "per_trigger_expr": "{AppendToSaveStat(`windfall_spec_1_attack`, false, trigger_count) NotifyStatChanged(`WindfallFiveHeadsOfTiamat`, false)}",
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "expression_on_trigger,owner_attack_with_id",
+                "trigger_params": [
+                  "854"
+                ],
+                "per_trigger_expr": "{AppendToSaveStat(`windfall_spec_1_attack`, false, trigger_count) NotifyStatChanged(`WindfallFiveHeadsOfTiamat`, false)}",
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26381,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "owner_use_outgoing_description": true,
+              "default_bonus_index": 2
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Blue Dragon's Spark",
+        "display": "蓝龙的光芒"
+      },
+      "specializationDescription": {
+        "original": "Windfall's attacks take on the aspect of a shocking blue dragon.",
+        "display": "温德福尔的攻击带有震撼蓝龙的特质。"
+      },
+      "specializationGraphicId": "26381",
+      "tipText": null
+    },
+    {
+      "id": "17058",
+      "requiredLevel": 100,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Green Dragon's Spite",
+        "display": "绿龙的怨恨"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2301",
+      "effectDefinition": {
+        "id": "2301",
+        "snapshots": {
+          "original": {
+            "id": 2301,
+            "flavour_text": "",
+            "description": {
+              "desc": "Windfall prefers to attack the farthest target. Her normal attacks exude a small cloud of poisonous gas around the target for 10 seconds. Enemies in the gas cloud take $amount___2 seconds of BUD-based damage every second while they are in the area."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "change_base_attack,849"
+              },
+              {
+                "effect_string": "add_monster_hit_effects,2",
+                "optional_attack_ids": [
+                  849
+                ],
+                "monster_effect": {
+                  "effect_string": "ground_effect_area,$amount",
+                  "area_key": "green_dragon_poison_clouds",
+                  "drop_on_hero": true,
+                  "radius": 100,
+                  "duration": 10,
+                  "area_effects": [
+                    {
+                      "effect_string": "bud_dot,$amount",
+                      "tick_rate": 1,
+                      "total_ticks": 9999,
+                      "for_time": "10",
+                      "time_stack_type": "time_reset",
+                      "source_as_owner": true,
+                      "use_collection_source": true,
+                      "stack_across_effects": false
+                    }
+                  ],
+                  "cloud_graphics": [
+                    "Effect_WyrmspeakerGreen_CloudKill1",
+                    "Effect_WyrmspeakerGreen_CloudKill2"
+                  ],
+                  "density": 7,
+                  "use_static_position": true,
+                  "do_not_stack": true
+                }
+              },
+              {
+                "effect_string": "expression_on_trigger,owner_attack_with_id",
+                "trigger_params": [
+                  "849"
+                ],
+                "per_trigger_expr": "{AppendToSaveStat(`windfall_spec_2_attack`, false, trigger_count) NotifyStatChanged(`WindfallFiveHeadsOfTiamat`, false)}",
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26382,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "owner_use_outgoing_description": true,
+              "default_bonus_index": 1
+            }
+          },
+          "display": {
+            "id": 2301,
+            "flavour_text": "",
+            "description": {
+              "desc": "温德福尔会优先攻击最远的目标。她的普通攻击会在目标周围产生一小团有毒气体，持续 10 秒。处于毒气云内的敌人在该区域内时，每秒会受到持续 $amount___2 秒的基于基础杀招伤害的伤害。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "change_base_attack,849"
+              },
+              {
+                "effect_string": "add_monster_hit_effects,2",
+                "optional_attack_ids": [
+                  849
+                ],
+                "monster_effect": {
+                  "effect_string": "ground_effect_area,$amount",
+                  "area_key": "green_dragon_poison_clouds",
+                  "drop_on_hero": true,
+                  "radius": 100,
+                  "duration": 10,
+                  "area_effects": [
+                    {
+                      "effect_string": "bud_dot,$amount",
+                      "tick_rate": 1,
+                      "total_ticks": 9999,
+                      "for_time": "10",
+                      "time_stack_type": "time_reset",
+                      "source_as_owner": true,
+                      "use_collection_source": true,
+                      "stack_across_effects": false
+                    }
+                  ],
+                  "cloud_graphics": [
+                    "Effect_WyrmspeakerGreen_CloudKill1",
+                    "Effect_WyrmspeakerGreen_CloudKill2"
+                  ],
+                  "density": 7,
+                  "use_static_position": true,
+                  "do_not_stack": true
+                }
+              },
+              {
+                "effect_string": "expression_on_trigger,owner_attack_with_id",
+                "trigger_params": [
+                  "849"
+                ],
+                "per_trigger_expr": "{AppendToSaveStat(`windfall_spec_2_attack`, false, trigger_count) NotifyStatChanged(`WindfallFiveHeadsOfTiamat`, false)}",
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26382,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "owner_use_outgoing_description": true,
+              "default_bonus_index": 1
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Green Dragon's Spite",
+        "display": "绿龙的怨恨"
+      },
+      "specializationDescription": {
+        "original": "Windfall's attacks take on the aspect of a noxious green dragon.",
+        "display": "温德福尔的攻击带有恶毒绿龙的特质。"
+      },
+      "specializationGraphicId": "26382",
+      "tipText": null
+    },
+    {
+      "id": "17059",
+      "requiredLevel": 100,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Black Dragon's Corrosion",
+        "display": "黑龙的腐蚀"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2302",
+      "effectDefinition": {
+        "id": "2302",
+        "snapshots": {
+          "original": {
+            "id": 2302,
+            "flavour_text": "",
+            "description": {
+              "desc": "Windfall gains the Breaker role and she prefers to attack armored or hits-based enemies. Her normal attacks coat the target in Acid, dealing $amount___3 seconds of BUD-based damage and all successful attacks against those targets break an additional piece of armored or segmented health."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "add_hero_tags,0,breaking"
+              },
+              {
+                "effect_string": "change_base_attack,848"
+              },
+              {
+                "effect_string": "hero_deal_bud_on_attack,10"
+              },
+              {
+                "effect_string": "windfall_black_dragon_debuff,0",
+                "debuff_max_stacks": 1,
+                "debuffing_attack_ids": [
+                  848
+                ],
+                "debuff_before_damage": false,
+                "off_when_benched": true,
+                "debuff_effects": [
+                  {
+                    "effect_string": "increase_damage_on_armor_and_hits,1",
+                    "active_graphic_id": 26391,
+                    "stacks_on_reapply": false,
+                    "manual_stacking": true,
+                    "default_stacks": 0,
+                    "max_stacks": 1,
+                    "stacks_multiply": false,
+                    "use_collection_source": false
+                  }
+                ]
+              },
+              {
+                "effect_string": "expression_on_trigger,owner_attack_with_id",
+                "trigger_params": [
+                  "848"
+                ],
+                "per_trigger_expr": "{AppendToSaveStat(`windfall_spec_3_attack`, false, trigger_count) NotifyStatChanged(`WindfallFiveHeadsOfTiamat`, false)}",
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26380,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "owner_use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 2302,
+            "flavour_text": "",
+            "description": {
+              "desc": "温德福尔获得“突破者”角色定位，并且会优先攻击有护甲或基于命中的敌人。她的普通攻击会为目标涂上酸液，造成持续 $amount___3 秒的基于基础杀招伤害的伤害，并且所有命中这些目标的攻击都会额外破坏一块护甲或一段生命条。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "add_hero_tags,0,breaking"
+              },
+              {
+                "effect_string": "change_base_attack,848"
+              },
+              {
+                "effect_string": "hero_deal_bud_on_attack,10"
+              },
+              {
+                "effect_string": "windfall_black_dragon_debuff,0",
+                "debuff_max_stacks": 1,
+                "debuffing_attack_ids": [
+                  848
+                ],
+                "debuff_before_damage": false,
+                "off_when_benched": true,
+                "debuff_effects": [
+                  {
+                    "effect_string": "increase_damage_on_armor_and_hits,1",
+                    "active_graphic_id": 26391,
+                    "stacks_on_reapply": false,
+                    "manual_stacking": true,
+                    "default_stacks": 0,
+                    "max_stacks": 1,
+                    "stacks_multiply": false,
+                    "use_collection_source": false
+                  }
+                ]
+              },
+              {
+                "effect_string": "expression_on_trigger,owner_attack_with_id",
+                "trigger_params": [
+                  "848"
+                ],
+                "per_trigger_expr": "{AppendToSaveStat(`windfall_spec_3_attack`, false, trigger_count) NotifyStatChanged(`WindfallFiveHeadsOfTiamat`, false)}",
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26380,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "owner_use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Black Dragon's Corrosion",
+        "display": "黑龙的腐蚀"
+      },
+      "specializationDescription": {
+        "original": "Windfall's attacks take on the aspect of a vile black dragon.",
+        "display": "温德福尔的攻击带有邪恶黑龙的特质。"
+      },
+      "specializationGraphicId": "26380",
+      "tipText": null
+    },
+    {
+      "id": "17060",
+      "requiredLevel": 100,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "White Dragon's Chill",
+        "display": "白龙的寒意"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2303",
+      "effectDefinition": {
+        "id": "2303",
+        "snapshots": {
+          "original": {
+            "id": 2303,
+            "flavour_text": "",
+            "description": {
+              "desc": "Windfall gains the Control role and she prefers to attack slowed enemies. Her normal attacks create a medium cloud of icy air for 5 seconds around the target. Enemies in the cloud take $amount___3 second of BUD-based damage every second while they are in the area and are slowed by 50%."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "add_hero_tags,0,control"
+              },
+              {
+                "effect_string": "change_base_attack,852"
+              },
+              {
+                "effect_string": "add_monster_hit_effects,1",
+                "optional_attack_ids": [
+                  852
+                ],
+                "monster_effect": {
+                  "effect_string": "ground_effect_area,$amount",
+                  "area_key": "white_dragon_ice_clouds",
+                  "drop_on_hero": true,
+                  "radius": 150,
+                  "duration": 5,
+                  "area_effects": [
+                    {
+                      "effect_string": "bud_dot,$amount",
+                      "tick_rate": 1,
+                      "total_ticks": 9999,
+                      "for_time": "5",
+                      "time_stack_type": "time_reset",
+                      "source_as_owner": true,
+                      "use_collection_source": true,
+                      "stack_across_effects": false
+                    },
+                    {
+                      "effect_string": "monster_speed_reduce,50",
+                      "use_collection_source": false
+                    }
+                  ],
+                  "cloud_graphics": [
+                    "Effect_FluffyCloud1",
+                    "Effect_FluffyCloud2"
+                  ],
+                  "density": 10,
+                  "use_static_position": true,
+                  "do_not_stack": true
+                }
+              },
+              {
+                "effect_string": "expression_on_trigger,owner_attack_with_id",
+                "trigger_params": [
+                  "852"
+                ],
+                "per_trigger_expr": "{AppendToSaveStat(`windfall_spec_4_attack`, false, trigger_count) NotifyStatChanged(`WindfallFiveHeadsOfTiamat`, false)}",
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26384,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "owner_use_outgoing_description": true,
+              "default_bonus_index": 2
+            }
+          },
+          "display": {
+            "id": 2303,
+            "flavour_text": "",
+            "description": {
+              "desc": "温德福尔获得“控制”角色定位，并且会优先攻击被减速的敌人。她的普通攻击会在目标周围产生一团中等大小的冰气云，持续 5 秒。处于该云内的敌人在该区域内时，每秒会受到持续 $amount___3 秒的基于基础杀招伤害的伤害，并且会被减速 50%。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "add_hero_tags,0,control"
+              },
+              {
+                "effect_string": "change_base_attack,852"
+              },
+              {
+                "effect_string": "add_monster_hit_effects,1",
+                "optional_attack_ids": [
+                  852
+                ],
+                "monster_effect": {
+                  "effect_string": "ground_effect_area,$amount",
+                  "area_key": "white_dragon_ice_clouds",
+                  "drop_on_hero": true,
+                  "radius": 150,
+                  "duration": 5,
+                  "area_effects": [
+                    {
+                      "effect_string": "bud_dot,$amount",
+                      "tick_rate": 1,
+                      "total_ticks": 9999,
+                      "for_time": "5",
+                      "time_stack_type": "time_reset",
+                      "source_as_owner": true,
+                      "use_collection_source": true,
+                      "stack_across_effects": false
+                    },
+                    {
+                      "effect_string": "monster_speed_reduce,50",
+                      "use_collection_source": false
+                    }
+                  ],
+                  "cloud_graphics": [
+                    "Effect_FluffyCloud1",
+                    "Effect_FluffyCloud2"
+                  ],
+                  "density": 10,
+                  "use_static_position": true,
+                  "do_not_stack": true
+                }
+              },
+              {
+                "effect_string": "expression_on_trigger,owner_attack_with_id",
+                "trigger_params": [
+                  "852"
+                ],
+                "per_trigger_expr": "{AppendToSaveStat(`windfall_spec_4_attack`, false, trigger_count) NotifyStatChanged(`WindfallFiveHeadsOfTiamat`, false)}",
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26384,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "owner_use_outgoing_description": true,
+              "default_bonus_index": 2
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "White Dragon's Chill",
+        "display": "白龙的寒意"
+      },
+      "specializationDescription": {
+        "original": "Windfall's attacks take on the aspect of a chilling white dragon.",
+        "display": "温德福尔的攻击带有凌冽白龙的特质。"
+      },
+      "specializationGraphicId": "26384",
+      "tipText": null
+    },
+    {
+      "id": "17283",
+      "requiredLevel": 110,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17250",
+      "requiredLevel": 130,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,17053",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17284",
+      "requiredLevel": 140,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17078",
+      "requiredLevel": 150,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Stunning Scintillation",
+        "display": "致晕光芒"
+      },
+      "upgradeType": "unlock_ultimate",
+      "effectReference": "effect_def,2316",
+      "effectDefinition": {
+        "id": "2316",
+        "snapshots": {
+          "original": {
+            "id": 2316,
+            "flavour_text": "",
+            "description": {
+              "desc": "Unlocks Windfall's Stunning Scintillation Ultimate Attack"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "windfall_ult",
+                "duration": 4,
+                "fade_duration": 0.6
+              },
+              {
+                "effect_string": "set_ultimate_attack"
+              },
+              {
+                "effect_string": "chance_attack_adds_dot,300,6,1,100,855",
+                "pop_damage": true,
+                "use_bud": true,
+                "extends_time": false,
+                "fixed_damage": true,
+                "graphic": {
+                  "active_graphic_id": 26298,
+                  "scale_y": 0.3,
+                  "random_tint": [
+                    "#FF0000",
+                    "#00FF00",
+                    "#0000FF",
+                    "#000000",
+                    "#FFFFFF"
+                  ]
+                },
+                "after_damage": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 26385,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": false,
+              "show_outgoing_desc_when_benched": false
+            }
+          },
+          "display": {
+            "id": 2316,
+            "flavour_text": "",
+            "description": {
+              "desc": "解锁温德福尔的杀招“致晕光芒”"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "windfall_ult",
+                "duration": 4,
+                "fade_duration": 0.6
+              },
+              {
+                "effect_string": "set_ultimate_attack"
+              },
+              {
+                "effect_string": "chance_attack_adds_dot,300,6,1,100,855",
+                "pop_damage": true,
+                "use_bud": true,
+                "extends_time": false,
+                "fixed_damage": true,
+                "graphic": {
+                  "active_graphic_id": 26298,
+                  "scale_y": 0.3,
+                  "random_tint": [
+                    "#FF0000",
+                    "#00FF00",
+                    "#0000FF",
+                    "#000000",
+                    "#FFFFFF"
+                  ]
+                },
+                "after_damage": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 26385,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": false,
+              "show_outgoing_desc_when_benched": false
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17285",
+      "requiredLevel": 160,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17251",
+      "requiredLevel": 170,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,17053",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17286",
+      "requiredLevel": 180,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17252",
+      "requiredLevel": 190,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17055",
+      "requiredLevel": 200,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Dragon's Pride",
+        "display": "龙之骄傲"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2298",
+      "effectDefinition": {
+        "id": "2298",
+        "snapshots": {
+          "original": {
+            "id": 2298,
+            "flavour_text": "",
+            "description": {
+              "desc": "Windfall increases the effect of The Long Game by $(not_buffed amount)% for each adventure, variant, and Patron variant you have completed in the Vecna: Eve of Ruin campaign, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "off_when_benched": true,
+                "effect_string": "buff_upgrade,20,17053",
+                "stacks_multiply": true,
+                "show_bonus": true,
+                "amount_func": "mult",
+                "stack_func": "get_stat",
+                "stat": "VecnaAdventuresCompleted",
+                "ided_stat_id": 31,
+                "ided_stat_handler": "CompletedAdventuresVariantsAndPatronVariants",
+                "use_computed_amount_for_description": true,
+                "stack_title": "Vecna: Eve of Ruin Adventures Completed",
+                "amount_updated_listeners": [
+                  "stat_changed,VecnaAdventuresCompleted"
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26377,
+            "large_graphic_id": 26374,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": false
+            }
+          },
+          "display": {
+            "id": 2298,
+            "flavour_text": "",
+            "description": {
+              "desc": "对于你在维克那：毁灭前夕战役中所完成的每个冒险、支线任务和赞助者支线任务，温德福尔会使“漫长赌局”的效果提高 $(not_buffed amount)%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "off_when_benched": true,
+                "effect_string": "buff_upgrade,20,17053",
+                "stacks_multiply": true,
+                "show_bonus": true,
+                "amount_func": "mult",
+                "stack_func": "get_stat",
+                "stat": "VecnaAdventuresCompleted",
+                "ided_stat_id": 31,
+                "ided_stat_handler": "CompletedAdventuresVariantsAndPatronVariants",
+                "use_computed_amount_for_description": true,
+                "stack_title": "已完成的“维克那：毁灭前夕”冒险",
+                "amount_updated_listeners": [
+                  "stat_changed,VecnaAdventuresCompleted"
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26377,
+            "large_graphic_id": 26374,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": false
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Windfall increases the effect of The Long Game for each adventure, variant, and Patron variant you have completed in the Vecna: Eve of Ruin campaign.",
+        "display": "对于你在维克那：毁灭前夕战役中所完成的每个冒险、支线任务和赞助者支线任务，温德福尔会使“漫长赌局”的效果提高 %。"
+      }
+    },
+    {
+      "id": "17287",
+      "requiredLevel": 210,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17253",
+      "requiredLevel": 230,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,17053",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17288",
+      "requiredLevel": 240,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17289",
+      "requiredLevel": 260,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17290",
+      "requiredLevel": 280,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17254",
+      "requiredLevel": 300,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,17053",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17291",
+      "requiredLevel": 310,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17255",
+      "requiredLevel": 320,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17292",
+      "requiredLevel": 340,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17293",
+      "requiredLevel": 370,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17256",
+      "requiredLevel": 380,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,17053",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17294",
+      "requiredLevel": 400,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17295",
+      "requiredLevel": 430,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17257",
+      "requiredLevel": 460,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,17053",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17296",
+      "requiredLevel": 470,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17258",
+      "requiredLevel": 490,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17297",
+      "requiredLevel": 510,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17259",
+      "requiredLevel": 540,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,17053",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17298",
+      "requiredLevel": 560,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17260",
+      "requiredLevel": 590,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17261",
+      "requiredLevel": 610,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,17053",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17299",
+      "requiredLevel": 620,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17300",
+      "requiredLevel": 660,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17262",
+      "requiredLevel": 690,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,17053",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17301",
+      "requiredLevel": 700,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17302",
+      "requiredLevel": 730,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17263",
+      "requiredLevel": 740,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17264",
+      "requiredLevel": 760,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,17053",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17303",
+      "requiredLevel": 780,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17304",
+      "requiredLevel": 830,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17265",
+      "requiredLevel": 840,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,17053",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17305",
+      "requiredLevel": 880,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17266",
+      "requiredLevel": 890,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17267",
+      "requiredLevel": 910,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,17053",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17306",
+      "requiredLevel": 940,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17268",
+      "requiredLevel": 980,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17269",
+      "requiredLevel": 990,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,17053",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17307",
+      "requiredLevel": 1010,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17270",
+      "requiredLevel": 1060,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,17053",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17308",
+      "requiredLevel": 1090,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17271",
+      "requiredLevel": 1130,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17272",
+      "requiredLevel": 1140,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,17053",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17309",
+      "requiredLevel": 1200,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17273",
+      "requiredLevel": 1210,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,17053",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17274",
+      "requiredLevel": 1230,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17275",
+      "requiredLevel": 1290,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,17053",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17310",
+      "requiredLevel": 1350,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17276",
+      "requiredLevel": 1360,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,17053",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17277",
+      "requiredLevel": 1380,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17311",
+      "requiredLevel": 1400,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17312",
+      "requiredLevel": 1430,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17278",
+      "requiredLevel": 1440,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,17053",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17279",
+      "requiredLevel": 1470,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17313",
+      "requiredLevel": 1480,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    }
+  ],
+  "feats": [
+    {
+      "id": "2181",
+      "order": 1,
+      "name": {
+        "original": "Tavern Brawler",
+        "display": "旅店打手"
+      },
+      "description": {
+        "original": "Start a fight in my bar, and I'll be the one who finishes it.",
+        "display": "在我的酒吧里挑起事端，最后收拾局面的也会是我。"
+      },
+      "rarity": "2",
+      "graphicId": "6078",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,30"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2182",
+      "order": 2,
+      "name": {
+        "original": "Grappler",
+        "display": "擒抱者"
+      },
+      "description": {
+        "original": "You have no idea what these hands can do. Try me.",
+        "display": "你根本不知道这双手能做些什么，来试试啊。"
+      },
+      "rarity": "3",
+      "graphicId": "6078",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,60"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "2183",
+      "order": 3,
+      "name": {
+        "original": "Selflessness",
+        "display": "无私"
+      },
+      "description": {
+        "original": "Pffft hahaha! Selfless!? ME!? Gods, that's hilarious. You're funny.",
+        "display": "噗哈哈哈！无私？我？天呐，太搞笑了。你可真有趣。"
+      },
+      "rarity": "2",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2184",
+      "order": 4,
+      "name": {
+        "original": "Inspiring Leader",
+        "display": "鼓舞人心的首领"
+      },
+      "description": {
+        "original": "We all serve a greater purpose. I know mine. Now, do as I say.",
+        "display": "我们都为了更伟大的目标而战。我知道我的目标是什么。现在，照我说的做。"
+      },
+      "rarity": "3",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,25"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "2185",
+      "order": 5,
+      "name": {
+        "original": "Hustler",
+        "display": "骗子"
+      },
+      "description": {
+        "original": "Hey! Welcome to the Red Belvedere! We have SO much to show you!",
+        "display": "嘿！欢迎来到绯红望台。我们有好多东西要展示给你看呢！"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,17053"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2186",
+      "order": 6,
+      "name": {
+        "original": "Viper",
+        "display": "毒蛇"
+      },
+      "description": {
+        "original": "Oh sweetie, you thought I was your friend? Aww, that is so sad.",
+        "display": "哦，亲爱的，你以为我是你的朋友？哎呀，真让人难过。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,17053"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "2187",
+      "order": 7,
+      "name": {
+        "original": "Ante Up",
+        "display": "加注"
+      },
+      "description": {
+        "original": "If you're going to play the game, you have to learn to play it right.",
+        "display": "如果你要玩这个游戏，就得学会怎么玩得好。"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,17054,0",
+          "description": "Increases the effect of Windfall's The Gambler ability by $amount%"
+        },
+        {
+          "effect_string": "buff_upgrade,20,17054,1",
+          "description": ""
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2188",
+      "order": 8,
+      "name": {
+        "original": "Poker Face",
+        "display": "扑克脸"
+      },
+      "description": {
+        "original": "Know when to hold, when to fold, when to walk away, and when to run.",
+        "display": "懂得何时坚持，何时放弃，何时转身离开，以及何时拔腿就跑。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,17054,0",
+          "description": "Increases the effect of Windfall's The Gambler ability by $amount%"
+        },
+        {
+          "effect_string": "buff_upgrade,40,17054,1",
+          "description": ""
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "2189",
+      "order": 9,
+      "name": {
+        "original": "Proven Worth",
+        "display": "证明价值"
+      },
+      "description": {
+        "original": "Meeting me is literally the best thing to ever happen to you.",
+        "display": "能遇到我，绝对是你这辈子遇到的最棒的事。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,17055"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "2190",
+      "order": 10,
+      "name": {
+        "original": "Tiamat's Chosen",
+        "display": "提亚马特选中的人"
+      },
+      "description": {
+        "original": "It is done, my queen. I'm going back to hell for a drink and a spa day.",
+        "display": "事情办妥了，我的女王。我要回地狱喝上一杯，再享受一天水疗。"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,17055"
+        }
+      ],
+      "sources": [
+        {
+          "source": "promo",
+          "promotion_id": 50
+        }
+      ],
+      "properties": {
+        "available_time": 999999,
+        "is_available": false,
+        "available_at_time": 1956574800
+      },
+      "collectionsSource": {
+        "type": "not_yet_available"
+      }
+    },
+    {
+      "id": "2191",
+      "order": 11,
+      "name": {
+        "original": "Razzle Dazzle",
+        "display": "花里胡哨"
+      },
+      "description": {
+        "original": "There are so many colorful ways to die. Let's begin.",
+        "display": "死法多种多样，花里胡哨。我们开始吧。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,17056,1",
+          "description": "Increases the effect of all of Windfall's specialization choices by $amount%"
+        },
+        {
+          "effect_string": "buff_upgrade,40,17056,2",
+          "description": ""
+        },
+        {
+          "effect_string": "buff_upgrade,40,17057,2",
+          "description": ""
+        },
+        {
+          "effect_string": "buff_upgrade,40,17058,1",
+          "description": ""
+        },
+        {
+          "effect_string": "buff_upgrade,40,17059,2",
+          "description": ""
+        },
+        {
+          "effect_string": "buff_upgrade,40,17060,2",
+          "description": ""
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "2229",
+      "order": 12,
+      "name": {
+        "original": "Weapon Master",
+        "display": "武器大师"
+      },
+      "description": {
+        "original": "I've lost count of the number of lives I've taken with this blade.",
+        "display": "我早已记不清这把剑下有多少亡魂了。"
+      },
+      "rarity": "4",
+      "graphicId": "6078",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,120"
+        }
+      ],
+      "sources": [
+        {
+          "source": "promo",
+          "promotion_id": 50
+        },
+        {
+          "source": "gems",
+          "cost": 50000
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1753297200
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "2399",
+      "order": 13,
+      "name": {
+        "original": "Drifter",
+        "display": "流浪汉"
+      },
+      "description": {
+        "original": "I'll leave you crying every day once I'm gone. Not sorry.",
+        "display": "等我走了，有你天天哭的时候。我一点也不感到抱歉。"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,17053"
+        }
+      ],
+      "sources": [
+        {
+          "source": "promo",
+          "promotion_id": 50
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1766520000
+      },
+      "collectionsSource": {
+        "type": "emergence",
+        "until": "2026-05-06 12:00:00"
+      }
+    }
+  ],
+  "skins": [],
+  "raw": {
+    "hero": {
+      "original": {
+        "id": 167,
+        "name": "Windfall",
+        "english_name": "Windfall",
+        "seat_id": 5,
+        "base_cost": "5000000",
+        "base_damage": "275000",
+        "base_health": "49",
+        "cost_curves": {
+          "1": 1.13
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 857,
+        "ultimate_attack_id": 855,
+        "graphic_id": 26287,
+        "portrait_graphic_id": 26286,
+        "character_sheet_details": {
+          "full_name": "Windfall",
+          "class": "Bard",
+          "race": "Tiefling",
+          "age": 35,
+          "alignment": "Chaotic Evil",
+          "ability_scores": {
+            "str": 14,
+            "dex": 24,
+            "con": 20,
+            "int": 22,
+            "wis": 18,
+            "cha": 26
+          },
+          "backstory": "A dedicated champion of Tiamat, Windfall has been granted phenomenal power by her master. She is the proprietor of the Red Belvedere, a monument to Tiamat and a remnant of Avernus's original existence as a bucolic paradise designed to tempt mortals. Its edifice was destroyed in the carnage of the Blood War, but Windfall rebuilt the casino and rededicated it to the Dragon Queen as a celebration of her god's greed and vanity. Windfall is ostentatious and charismatic, making small talk with regular patrons and jovially welcoming new faces to the casino. She once plotted to assemble the Rod of Seven Parts to create a gift for her cruel goddess, but has instead joined the Champions at Tiamat's behest.",
+          "system_description": "Windfall is a DPS, Support, and Gold Find Champion found in the second variant of the adventure \"The Rod of Seven Parts\" in the Vecna: Eve of Ruin campaign. She buffs the damage of all Champions in the longest column in the formation, and her attacks take on the draconic essence of the chromatic dragon of your choice. Once unlocked, you can find this Tiefling Bard in Seat 5 (Calliope)."
+        },
+        "default_feat_slot_unlocks": [
+          240,
+          605,
+          1055,
+          1605
+        ],
+        "tags": [
+          "female",
+          "tiefling",
+          "bard",
+          "chaotic",
+          "evil",
+          "dps",
+          "support",
+          "gold",
+          "unaffiliated",
+          "evergreen",
+          "spec_control",
+          "spec_breaking",
+          "spec_control_stun",
+          "spec_control_slow"
+        ],
+        "properties": {
+          "available_in_store": "2025-10-23 12:00:00",
+          "unlock_adventure_id": 1789,
+          "content_set_id": 68,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            170,
+            171,
+            172
+          ],
+          "graphic_large": 26288,
+          "graphic_xl": 26289,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            91,
+            90
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 4,
+            "gethit": 5,
+            "koed": 6,
+            "run": 7
+          },
+          "weekly_chest_type_id": 740,
+          "console_portrait": 26369,
+          "trials_effect_id": 836,
+          "portrait_graphic_scale": 0.9,
+          "legendary_effect_id": [
+            1,
+            56,
+            10,
+            43,
+            88,
+            103
+          ],
+          "hero_not_unlocked_skin_warning": "Champion Windfall is not unlocked with this skin. Windfall can only be unlocked by completing Double or Nothing - the second Variant of the Rod of Seven Parts adventure in the Vecna: Eve of Ruin Campaign.",
+          "gold_chest_type_id": 740
+        },
+        "adventure_ids": [],
+        "popularity": 0,
+        "available_in_time_gate": false,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 17052,
+            "name": "Proprietor of the Red Belvedere",
+            "description": "",
+            "graphic_id": 813
+          },
+          {
+            "upgrade_id": 17053,
+            "name": "The Long Game",
+            "description": "",
+            "graphic_id": "26376"
+          },
+          {
+            "upgrade_id": 17054,
+            "name": "The Gambler",
+            "description": "",
+            "graphic_id": "26375"
+          },
+          {
+            "upgrade_id": 17078,
+            "name": "Stunning Scintillation",
+            "description": "",
+            "graphic_id": "26385"
+          },
+          {
+            "upgrade_id": 17055,
+            "name": "Dragon's Pride",
+            "description": "",
+            "graphic_id": "26374"
+          }
+        ],
+        "available_in_next_event": false,
+        "next_event_timestamp": 0,
+        "event_name": "",
+        "is_available": true,
+        "date_available": "2025-05-28 13:00:00",
+        "last_rework_date": "2025-05-28 13:00:00"
+      },
+      "display": {
+        "id": 167,
+        "name": "温德福尔",
+        "english_name": "Windfall",
+        "seat_id": 5,
+        "base_cost": "5000000",
+        "base_damage": "275000",
+        "base_health": "49",
+        "cost_curves": {
+          "1": 1.13
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 857,
+        "ultimate_attack_id": 855,
+        "graphic_id": 26287,
+        "portrait_graphic_id": 26286,
+        "character_sheet_details": {
+          "full_name": "温德福尔",
+          "class": "吟游诗人",
+          "race": "提夫林",
+          "age": 35,
+          "alignment": "混乱邪恶",
+          "ability_scores": {
+            "str": 14,
+            "dex": 24,
+            "con": 20,
+            "int": 22,
+            "wis": 18,
+            "cha": 26
+          },
+          "backstory": "温德福尔是提亚马特虔诚不二的拥护者，她的主人赋予了她非凡的力量。她是“绯红望台”的所有者，这座建筑不仅是提亚马特的纪念碑，更是阿弗纳斯曾经作为诱惑凡人的田园仙境的遗迹。它在血战的大屠杀中被摧毁，但温德福尔重建了这座赌场，并将它重新献给了龙女王，以此颂扬她神明的贪婪与虚荣。温法尔为人张扬炫耀，却又魅力四射，她会和常客闲聊，还会愉快地欢迎新面孔来到赌场。她曾谋划集齐“七节权杖”，为她残忍的女神献上一份厚礼，但如今却遵照提亚马特的命令加入了勇士们的行列。",
+          "system_description": "温德福尔是一名输出、辅助和金币寻获型勇士，可在“维克那：毁灭前夕”战役冒险“七节权杖”的第二个支线任务中找到她。她能增强阵型中最长一列的英雄的伤害，并且她的攻击会带有你所选择的彩色龙的龙之特性。解锁后，你可以在第 5 栏位找到这位提夫林吟游诗人（卡莉欧碧）。"
+        },
+        "default_feat_slot_unlocks": [
+          240,
+          605,
+          1055,
+          1605
+        ],
+        "tags": [
+          "female",
+          "tiefling",
+          "bard",
+          "chaotic",
+          "evil",
+          "dps",
+          "support",
+          "gold",
+          "unaffiliated",
+          "evergreen",
+          "spec_control",
+          "spec_breaking",
+          "spec_control_stun",
+          "spec_control_slow"
+        ],
+        "properties": {
+          "available_in_store": "2025-10-23 12:00:00",
+          "unlock_adventure_id": 1789,
+          "content_set_id": 68,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            170,
+            171,
+            172
+          ],
+          "graphic_large": 26288,
+          "graphic_xl": 26289,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            91,
+            90
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 4,
+            "gethit": 5,
+            "koed": 6,
+            "run": 7
+          },
+          "weekly_chest_type_id": 740,
+          "console_portrait": 26369,
+          "trials_effect_id": 836,
+          "portrait_graphic_scale": 0.9,
+          "legendary_effect_id": [
+            1,
+            56,
+            10,
+            43,
+            88,
+            103
+          ],
+          "hero_not_unlocked_skin_warning": "勇士温德福尔不随此皮肤解锁。只有完成“要么翻倍，要么输光”——“维克那：毁灭前夕”战役中“七节权杖”冒险的第二个支线任务——才能解锁温德福尔。",
+          "gold_chest_type_id": 740
+        },
+        "adventure_ids": [],
+        "popularity": 0,
+        "available_in_time_gate": false,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 17052,
+            "name": "绯红望台的所有者",
+            "description": "",
+            "graphic_id": 813
+          },
+          {
+            "upgrade_id": 17053,
+            "name": "漫长赌局",
+            "description": "",
+            "graphic_id": "26376"
+          },
+          {
+            "upgrade_id": 17054,
+            "name": "赌徒",
+            "description": "",
+            "graphic_id": "26375"
+          },
+          {
+            "upgrade_id": 17078,
+            "name": "致晕光芒",
+            "description": "",
+            "graphic_id": "26385"
+          },
+          {
+            "upgrade_id": 17055,
+            "name": "龙之骄傲",
+            "description": "",
+            "graphic_id": "26374"
+          }
+        ],
+        "available_in_next_event": false,
+        "next_event_timestamp": 0,
+        "event_name": "",
+        "is_available": true,
+        "date_available": "2025-05-28 13:00:00",
+        "last_rework_date": "2025-05-28 13:00:00"
+      }
+    },
+    "attacks": [
+      {
+        "id": "857",
+        "snapshots": {
+          "original": {
+            "id": 857,
+            "name": "Chromatic Rapier",
+            "description": "Windfall attacks a random enemy for 1 hit.",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "random",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 2.75,
+            "animations": [
+              {
+                "type": "melee_attack",
+                "target_offset_x": -34,
+                "damage_frame": 2,
+                "jump_sound": 30,
+                "sound_frames": {
+                  "2": 154
+                }
+              }
+            ],
+            "tags": [
+              "melee"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          },
+          "display": {
+            "id": 857,
+            "name": "彩色西洋剑",
+            "description": "温德福尔攻击一个随机敌人 1 次。",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "random",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 2.75,
+            "animations": [
+              {
+                "type": "melee_attack",
+                "target_offset_x": -34,
+                "damage_frame": 2,
+                "jump_sound": 30,
+                "sound_frames": {
+                  "2": 154
+                }
+              }
+            ],
+            "tags": [
+              "melee"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          }
+        }
+      },
+      {
+        "id": "855",
+        "snapshots": {
+          "original": {
+            "id": 855,
+            "name": "Stunning Scintillation",
+            "description": "Windfall deals 1 ultimate hit to all enemies, stunning them before slowing them.",
+            "long_description": "Windfall's blinding coat erupts in a scintillating flash, dealing 1 ultimate hit to all enemies, stunning and then slowing them.",
+            "graphic_id": 26385,
+            "target": "all",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 220,
+            "animations": [
+              {
+                "type": "ultimate_attack",
+                "ultimate": "windfall",
+                "duration": 8,
+                "stun_duration": 3,
+                "animation_sequence_name": "ultimate",
+                "projectile_details": {
+                  "chain_targets": 0,
+                  "fixed_time_to_target": 0.15,
+                  "follow_source": true,
+                  "has_trail": false,
+                  "hit_effect_graphic": "Effect_Windfall_Lightning_Hit",
+                  "segment_graphics": [
+                    "Effect_WindfallChainLightningSegment1",
+                    "Effect_WindfallChainLightningSegment2",
+                    "Effect_WindfallChainLightningSegment3"
+                  ]
+                },
+                "effects_on_monsters": [
+                  {
+                    "effect_string": "monster_speed_reduce,50",
+                    "for_time": 6
+                  }
+                ],
+                "force_count_for_bud": false
+              }
+            ],
+            "tags": [
+              "melee"
+            ],
+            "damage_types": [
+              "melee",
+              "magic"
+            ]
+          },
+          "display": {
+            "id": 855,
+            "name": "致晕光芒",
+            "description": "温德福尔对所有敌人造成 1 次杀招攻击，先将敌人眩晕，然后减速。",
+            "long_description": "温德福尔耀眼的外表闪耀出夺目的光芒，对所有敌人造成 1 次杀招攻击，先将敌人眩晕，然后减速。",
+            "graphic_id": 26385,
+            "target": "all",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 220,
+            "animations": [
+              {
+                "type": "ultimate_attack",
+                "ultimate": "windfall",
+                "duration": 8,
+                "stun_duration": 3,
+                "animation_sequence_name": "ultimate",
+                "projectile_details": {
+                  "chain_targets": 0,
+                  "fixed_time_to_target": 0.15,
+                  "follow_source": true,
+                  "has_trail": false,
+                  "hit_effect_graphic": "Effect_Windfall_Lightning_Hit",
+                  "segment_graphics": [
+                    "Effect_WindfallChainLightningSegment1",
+                    "Effect_WindfallChainLightningSegment2",
+                    "Effect_WindfallChainLightningSegment3"
+                  ]
+                },
+                "effects_on_monsters": [
+                  {
+                    "effect_string": "monster_speed_reduce,50",
+                    "for_time": 6
+                  }
+                ],
+                "force_count_for_bud": false
+              }
+            ],
+            "tags": [
+              "melee"
+            ],
+            "damage_types": [
+              "melee",
+              "magic"
+            ]
+          }
+        }
+      }
+    ],
+    "upgrades": [
+      {
+        "id": "17052",
+        "snapshots": {
+          "original": {
+            "id": 17052,
+            "hero_id": 167,
+            "required_level": 0,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2292",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Proprietor of the Red Belvedere"
+          },
+          "display": {
+            "id": 17052,
+            "hero_id": 167,
+            "required_level": 0,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2292",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "绯红望台的所有者"
+          }
+        }
+      },
+      {
+        "id": "17053",
+        "snapshots": {
+          "original": {
+            "id": 17053,
+            "hero_id": 167,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2296",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "The Long Game",
+            "tip_text": "Windfall increases the damage of all Champions in the longest column(s)."
+          },
+          "display": {
+            "id": 17053,
+            "hero_id": 167,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2296",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "漫长赌局",
+            "tip_text": "温德福尔提高阵型中最长一列的（并列也可生效）所有勇士的伤害。"
+          }
+        }
+      },
+      {
+        "id": "17054",
+        "snapshots": {
+          "original": {
+            "id": 17054,
+            "hero_id": 167,
+            "required_level": 60,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2297",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "The Gambler"
+          },
+          "display": {
+            "id": 17054,
+            "hero_id": 167,
+            "required_level": 60,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2297",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "赌徒"
+          }
+        }
+      },
+      {
+        "id": "17055",
+        "snapshots": {
+          "original": {
+            "id": 17055,
+            "hero_id": 167,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2298",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Dragon's Pride",
+            "tip_text": "Windfall increases the effect of The Long Game for each adventure, variant, and Patron variant you have completed in the Vecna: Eve of Ruin campaign."
+          },
+          "display": {
+            "id": 17055,
+            "hero_id": 167,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2298",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "龙之骄傲",
+            "tip_text": "对于你在维克那：毁灭前夕战役中所完成的每个冒险、支线任务和赞助者支线任务，温德福尔会使“漫长赌局”的效果提高 %。"
+          }
+        }
+      },
+      {
+        "id": "17056",
+        "snapshots": {
+          "original": {
+            "id": 17056,
+            "hero_id": 167,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2299",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Red Dragon's Greed",
+            "specialization_name": "Red Dragon's Greed",
+            "specialization_description": "Windfall's attacks take on the aspect of a greedy red dragon.",
+            "specialization_graphic_id": 26383
+          },
+          "display": {
+            "id": 17056,
+            "hero_id": 167,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2299",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "红龙的贪婪",
+            "specialization_name": "红龙的贪婪",
+            "specialization_description": "温德福尔的攻击带有贪婪红龙的特质。",
+            "specialization_graphic_id": 26383
+          }
+        }
+      },
+      {
+        "id": "17057",
+        "snapshots": {
+          "original": {
+            "id": 17057,
+            "hero_id": 167,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Blue Dragon's Spark",
+            "specialization_name": "Blue Dragon's Spark",
+            "specialization_description": "Windfall's attacks take on the aspect of a shocking blue dragon.",
+            "specialization_graphic_id": 26381
+          },
+          "display": {
+            "id": 17057,
+            "hero_id": 167,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "蓝龙的光芒",
+            "specialization_name": "蓝龙的光芒",
+            "specialization_description": "温德福尔的攻击带有震撼蓝龙的特质。",
+            "specialization_graphic_id": 26381
+          }
+        }
+      },
+      {
+        "id": "17058",
+        "snapshots": {
+          "original": {
+            "id": 17058,
+            "hero_id": 167,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2301",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Green Dragon's Spite",
+            "specialization_name": "Green Dragon's Spite",
+            "specialization_description": "Windfall's attacks take on the aspect of a noxious green dragon.",
+            "specialization_graphic_id": 26382
+          },
+          "display": {
+            "id": 17058,
+            "hero_id": 167,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2301",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "绿龙的怨恨",
+            "specialization_name": "绿龙的怨恨",
+            "specialization_description": "温德福尔的攻击带有恶毒绿龙的特质。",
+            "specialization_graphic_id": 26382
+          }
+        }
+      },
+      {
+        "id": "17059",
+        "snapshots": {
+          "original": {
+            "id": 17059,
+            "hero_id": 167,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2302",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Black Dragon's Corrosion",
+            "specialization_name": "Black Dragon's Corrosion",
+            "specialization_description": "Windfall's attacks take on the aspect of a vile black dragon.",
+            "specialization_graphic_id": 26380
+          },
+          "display": {
+            "id": 17059,
+            "hero_id": 167,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2302",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "黑龙的腐蚀",
+            "specialization_name": "黑龙的腐蚀",
+            "specialization_description": "温德福尔的攻击带有邪恶黑龙的特质。",
+            "specialization_graphic_id": 26380
+          }
+        }
+      },
+      {
+        "id": "17060",
+        "snapshots": {
+          "original": {
+            "id": 17060,
+            "hero_id": 167,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2303",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "White Dragon's Chill",
+            "specialization_name": "White Dragon's Chill",
+            "specialization_description": "Windfall's attacks take on the aspect of a chilling white dragon.",
+            "specialization_graphic_id": 26384
+          },
+          "display": {
+            "id": 17060,
+            "hero_id": 167,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2303",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "白龙的寒意",
+            "specialization_name": "白龙的寒意",
+            "specialization_description": "温德福尔的攻击带有凌冽白龙的特质。",
+            "specialization_graphic_id": 26384
+          }
+        }
+      },
+      {
+        "id": "17078",
+        "snapshots": {
+          "original": {
+            "id": 17078,
+            "hero_id": 167,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "effect_def,2316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Stunning Scintillation"
+          },
+          "display": {
+            "id": 17078,
+            "hero_id": 167,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "effect_def,2316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "致晕光芒"
+          }
+        }
+      },
+      {
+        "id": "17248",
+        "snapshots": {
+          "original": {
+            "id": 17248,
+            "hero_id": 167,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17248,
+            "hero_id": 167,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17249",
+        "snapshots": {
+          "original": {
+            "id": 17249,
+            "hero_id": 167,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17249,
+            "hero_id": 167,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17250",
+        "snapshots": {
+          "original": {
+            "id": 17250,
+            "hero_id": 167,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17250,
+            "hero_id": 167,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17251",
+        "snapshots": {
+          "original": {
+            "id": 17251,
+            "hero_id": 167,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17251,
+            "hero_id": 167,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17252",
+        "snapshots": {
+          "original": {
+            "id": 17252,
+            "hero_id": 167,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17252,
+            "hero_id": 167,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17253",
+        "snapshots": {
+          "original": {
+            "id": 17253,
+            "hero_id": 167,
+            "required_level": 230,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17253,
+            "hero_id": 167,
+            "required_level": 230,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17254",
+        "snapshots": {
+          "original": {
+            "id": 17254,
+            "hero_id": 167,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17254,
+            "hero_id": 167,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17255",
+        "snapshots": {
+          "original": {
+            "id": 17255,
+            "hero_id": 167,
+            "required_level": 320,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17255,
+            "hero_id": 167,
+            "required_level": 320,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17256",
+        "snapshots": {
+          "original": {
+            "id": 17256,
+            "hero_id": 167,
+            "required_level": 380,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17256,
+            "hero_id": 167,
+            "required_level": 380,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17257",
+        "snapshots": {
+          "original": {
+            "id": 17257,
+            "hero_id": 167,
+            "required_level": 460,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17257,
+            "hero_id": 167,
+            "required_level": 460,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17258",
+        "snapshots": {
+          "original": {
+            "id": 17258,
+            "hero_id": 167,
+            "required_level": 490,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17258,
+            "hero_id": 167,
+            "required_level": 490,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17259",
+        "snapshots": {
+          "original": {
+            "id": 17259,
+            "hero_id": 167,
+            "required_level": 540,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17259,
+            "hero_id": 167,
+            "required_level": 540,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17260",
+        "snapshots": {
+          "original": {
+            "id": 17260,
+            "hero_id": 167,
+            "required_level": 590,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17260,
+            "hero_id": 167,
+            "required_level": 590,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17261",
+        "snapshots": {
+          "original": {
+            "id": 17261,
+            "hero_id": 167,
+            "required_level": 610,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17261,
+            "hero_id": 167,
+            "required_level": 610,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17262",
+        "snapshots": {
+          "original": {
+            "id": 17262,
+            "hero_id": 167,
+            "required_level": 690,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17262,
+            "hero_id": 167,
+            "required_level": 690,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17263",
+        "snapshots": {
+          "original": {
+            "id": 17263,
+            "hero_id": 167,
+            "required_level": 740,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17263,
+            "hero_id": 167,
+            "required_level": 740,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17264",
+        "snapshots": {
+          "original": {
+            "id": 17264,
+            "hero_id": 167,
+            "required_level": 760,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17264,
+            "hero_id": 167,
+            "required_level": 760,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17265",
+        "snapshots": {
+          "original": {
+            "id": 17265,
+            "hero_id": 167,
+            "required_level": 840,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17265,
+            "hero_id": 167,
+            "required_level": 840,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17266",
+        "snapshots": {
+          "original": {
+            "id": 17266,
+            "hero_id": 167,
+            "required_level": 890,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17266,
+            "hero_id": 167,
+            "required_level": 890,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17267",
+        "snapshots": {
+          "original": {
+            "id": 17267,
+            "hero_id": 167,
+            "required_level": 910,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17267,
+            "hero_id": 167,
+            "required_level": 910,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17268",
+        "snapshots": {
+          "original": {
+            "id": 17268,
+            "hero_id": 167,
+            "required_level": 980,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17268,
+            "hero_id": 167,
+            "required_level": 980,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17269",
+        "snapshots": {
+          "original": {
+            "id": 17269,
+            "hero_id": 167,
+            "required_level": 990,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17269,
+            "hero_id": 167,
+            "required_level": 990,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17270",
+        "snapshots": {
+          "original": {
+            "id": 17270,
+            "hero_id": 167,
+            "required_level": 1060,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17270,
+            "hero_id": 167,
+            "required_level": 1060,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17271",
+        "snapshots": {
+          "original": {
+            "id": 17271,
+            "hero_id": 167,
+            "required_level": 1130,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17271,
+            "hero_id": 167,
+            "required_level": 1130,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17272",
+        "snapshots": {
+          "original": {
+            "id": 17272,
+            "hero_id": 167,
+            "required_level": 1140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17272,
+            "hero_id": 167,
+            "required_level": 1140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17273",
+        "snapshots": {
+          "original": {
+            "id": 17273,
+            "hero_id": 167,
+            "required_level": 1210,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17273,
+            "hero_id": 167,
+            "required_level": 1210,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17274",
+        "snapshots": {
+          "original": {
+            "id": 17274,
+            "hero_id": 167,
+            "required_level": 1230,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17274,
+            "hero_id": 167,
+            "required_level": 1230,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17275",
+        "snapshots": {
+          "original": {
+            "id": 17275,
+            "hero_id": 167,
+            "required_level": 1290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17275,
+            "hero_id": 167,
+            "required_level": 1290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17276",
+        "snapshots": {
+          "original": {
+            "id": 17276,
+            "hero_id": 167,
+            "required_level": 1360,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17276,
+            "hero_id": 167,
+            "required_level": 1360,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17277",
+        "snapshots": {
+          "original": {
+            "id": 17277,
+            "hero_id": 167,
+            "required_level": 1380,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17277,
+            "hero_id": 167,
+            "required_level": 1380,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17278",
+        "snapshots": {
+          "original": {
+            "id": 17278,
+            "hero_id": 167,
+            "required_level": 1440,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17278,
+            "hero_id": 167,
+            "required_level": 1440,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,17053",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17279",
+        "snapshots": {
+          "original": {
+            "id": 17279,
+            "hero_id": 167,
+            "required_level": 1470,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17279,
+            "hero_id": 167,
+            "required_level": 1470,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17280",
+        "snapshots": {
+          "original": {
+            "id": 17280,
+            "hero_id": 167,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17280,
+            "hero_id": 167,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17281",
+        "snapshots": {
+          "original": {
+            "id": 17281,
+            "hero_id": 167,
+            "required_level": 70,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17281,
+            "hero_id": 167,
+            "required_level": 70,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17282",
+        "snapshots": {
+          "original": {
+            "id": 17282,
+            "hero_id": 167,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17282,
+            "hero_id": 167,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17283",
+        "snapshots": {
+          "original": {
+            "id": 17283,
+            "hero_id": 167,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17283,
+            "hero_id": 167,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17284",
+        "snapshots": {
+          "original": {
+            "id": 17284,
+            "hero_id": 167,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17284,
+            "hero_id": 167,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17285",
+        "snapshots": {
+          "original": {
+            "id": 17285,
+            "hero_id": 167,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17285,
+            "hero_id": 167,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17286",
+        "snapshots": {
+          "original": {
+            "id": 17286,
+            "hero_id": 167,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17286,
+            "hero_id": 167,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17287",
+        "snapshots": {
+          "original": {
+            "id": 17287,
+            "hero_id": 167,
+            "required_level": 210,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17287,
+            "hero_id": 167,
+            "required_level": 210,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17288",
+        "snapshots": {
+          "original": {
+            "id": 17288,
+            "hero_id": 167,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17288,
+            "hero_id": 167,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17289",
+        "snapshots": {
+          "original": {
+            "id": 17289,
+            "hero_id": 167,
+            "required_level": 260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17289,
+            "hero_id": 167,
+            "required_level": 260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17290",
+        "snapshots": {
+          "original": {
+            "id": 17290,
+            "hero_id": 167,
+            "required_level": 280,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17290,
+            "hero_id": 167,
+            "required_level": 280,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17291",
+        "snapshots": {
+          "original": {
+            "id": 17291,
+            "hero_id": 167,
+            "required_level": 310,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17291,
+            "hero_id": 167,
+            "required_level": 310,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17292",
+        "snapshots": {
+          "original": {
+            "id": 17292,
+            "hero_id": 167,
+            "required_level": 340,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17292,
+            "hero_id": 167,
+            "required_level": 340,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17293",
+        "snapshots": {
+          "original": {
+            "id": 17293,
+            "hero_id": 167,
+            "required_level": 370,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17293,
+            "hero_id": 167,
+            "required_level": 370,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17294",
+        "snapshots": {
+          "original": {
+            "id": 17294,
+            "hero_id": 167,
+            "required_level": 400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17294,
+            "hero_id": 167,
+            "required_level": 400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17295",
+        "snapshots": {
+          "original": {
+            "id": 17295,
+            "hero_id": 167,
+            "required_level": 430,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17295,
+            "hero_id": 167,
+            "required_level": 430,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17296",
+        "snapshots": {
+          "original": {
+            "id": 17296,
+            "hero_id": 167,
+            "required_level": 470,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17296,
+            "hero_id": 167,
+            "required_level": 470,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17297",
+        "snapshots": {
+          "original": {
+            "id": 17297,
+            "hero_id": 167,
+            "required_level": 510,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17297,
+            "hero_id": 167,
+            "required_level": 510,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17298",
+        "snapshots": {
+          "original": {
+            "id": 17298,
+            "hero_id": 167,
+            "required_level": 560,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17298,
+            "hero_id": 167,
+            "required_level": 560,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17299",
+        "snapshots": {
+          "original": {
+            "id": 17299,
+            "hero_id": 167,
+            "required_level": 620,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17299,
+            "hero_id": 167,
+            "required_level": 620,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17300",
+        "snapshots": {
+          "original": {
+            "id": 17300,
+            "hero_id": 167,
+            "required_level": 660,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17300,
+            "hero_id": 167,
+            "required_level": 660,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17301",
+        "snapshots": {
+          "original": {
+            "id": 17301,
+            "hero_id": 167,
+            "required_level": 700,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17301,
+            "hero_id": 167,
+            "required_level": 700,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17302",
+        "snapshots": {
+          "original": {
+            "id": 17302,
+            "hero_id": 167,
+            "required_level": 730,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17302,
+            "hero_id": 167,
+            "required_level": 730,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17303",
+        "snapshots": {
+          "original": {
+            "id": 17303,
+            "hero_id": 167,
+            "required_level": 780,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17303,
+            "hero_id": 167,
+            "required_level": 780,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17304",
+        "snapshots": {
+          "original": {
+            "id": 17304,
+            "hero_id": 167,
+            "required_level": 830,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17304,
+            "hero_id": 167,
+            "required_level": 830,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17305",
+        "snapshots": {
+          "original": {
+            "id": 17305,
+            "hero_id": 167,
+            "required_level": 880,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17305,
+            "hero_id": 167,
+            "required_level": 880,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17306",
+        "snapshots": {
+          "original": {
+            "id": 17306,
+            "hero_id": 167,
+            "required_level": 940,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17306,
+            "hero_id": 167,
+            "required_level": 940,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17307",
+        "snapshots": {
+          "original": {
+            "id": 17307,
+            "hero_id": 167,
+            "required_level": 1010,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17307,
+            "hero_id": 167,
+            "required_level": 1010,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17308",
+        "snapshots": {
+          "original": {
+            "id": 17308,
+            "hero_id": 167,
+            "required_level": 1090,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17308,
+            "hero_id": 167,
+            "required_level": 1090,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17309",
+        "snapshots": {
+          "original": {
+            "id": 17309,
+            "hero_id": 167,
+            "required_level": 1200,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17309,
+            "hero_id": 167,
+            "required_level": 1200,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17310",
+        "snapshots": {
+          "original": {
+            "id": 17310,
+            "hero_id": 167,
+            "required_level": 1350,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17310,
+            "hero_id": 167,
+            "required_level": 1350,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17311",
+        "snapshots": {
+          "original": {
+            "id": 17311,
+            "hero_id": 167,
+            "required_level": 1400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17311,
+            "hero_id": 167,
+            "required_level": 1400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17312",
+        "snapshots": {
+          "original": {
+            "id": 17312,
+            "hero_id": 167,
+            "required_level": 1430,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17312,
+            "hero_id": 167,
+            "required_level": 1430,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17313",
+        "snapshots": {
+          "original": {
+            "id": 17313,
+            "hero_id": 167,
+            "required_level": 1480,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17313,
+            "hero_id": 167,
+            "required_level": 1480,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      }
+    ],
+    "feats": [
+      {
+        "id": "2181",
+        "snapshots": {
+          "original": {
+            "id": 2181,
+            "hero_id": 167,
+            "order": 1,
+            "name": "Tavern Brawler",
+            "description": "Start a fight in my bar, and I'll be the one who finishes it.",
+            "rarity": 2,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,30"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2181,
+            "hero_id": 167,
+            "order": 1,
+            "name": "旅店打手",
+            "description": "在我的酒吧里挑起事端，最后收拾局面的也会是我。",
+            "rarity": 2,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,30"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2182",
+        "snapshots": {
+          "original": {
+            "id": 2182,
+            "hero_id": 167,
+            "order": 2,
+            "name": "Grappler",
+            "description": "You have no idea what these hands can do. Try me.",
+            "rarity": 3,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,60"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 2182,
+            "hero_id": 167,
+            "order": 2,
+            "name": "擒抱者",
+            "description": "你根本不知道这双手能做些什么，来试试啊。",
+            "rarity": 3,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,60"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "2183",
+        "snapshots": {
+          "original": {
+            "id": 2183,
+            "hero_id": 167,
+            "order": 3,
+            "name": "Selflessness",
+            "description": "Pffft hahaha! Selfless!? ME!? Gods, that's hilarious. You're funny.",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2183,
+            "hero_id": 167,
+            "order": 3,
+            "name": "无私",
+            "description": "噗哈哈哈！无私？我？天呐，太搞笑了。你可真有趣。",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2184",
+        "snapshots": {
+          "original": {
+            "id": 2184,
+            "hero_id": 167,
+            "order": 4,
+            "name": "Inspiring Leader",
+            "description": "We all serve a greater purpose. I know mine. Now, do as I say.",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 2184,
+            "hero_id": 167,
+            "order": 4,
+            "name": "鼓舞人心的首领",
+            "description": "我们都为了更伟大的目标而战。我知道我的目标是什么。现在，照我说的做。",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "2185",
+        "snapshots": {
+          "original": {
+            "id": 2185,
+            "hero_id": 167,
+            "order": 5,
+            "name": "Hustler",
+            "description": "Hey! Welcome to the Red Belvedere! We have SO much to show you!",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,17053"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2185,
+            "hero_id": 167,
+            "order": 5,
+            "name": "骗子",
+            "description": "嘿！欢迎来到绯红望台。我们有好多东西要展示给你看呢！",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,17053"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2186",
+        "snapshots": {
+          "original": {
+            "id": 2186,
+            "hero_id": 167,
+            "order": 6,
+            "name": "Viper",
+            "description": "Oh sweetie, you thought I was your friend? Aww, that is so sad.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17053"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 2186,
+            "hero_id": 167,
+            "order": 6,
+            "name": "毒蛇",
+            "description": "哦，亲爱的，你以为我是你的朋友？哎呀，真让人难过。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17053"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "2187",
+        "snapshots": {
+          "original": {
+            "id": 2187,
+            "hero_id": 167,
+            "order": 7,
+            "name": "Ante Up",
+            "description": "If you're going to play the game, you have to learn to play it right.",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,17054,0",
+                "description": "Increases the effect of Windfall's The Gambler ability by $amount%"
+              },
+              {
+                "effect_string": "buff_upgrade,20,17054,1",
+                "description": ""
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2187,
+            "hero_id": 167,
+            "order": 7,
+            "name": "加注",
+            "description": "如果你要玩这个游戏，就得学会怎么玩得好。",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,17054,0",
+                "description": "温德福尔的“赌徒”技能效果提高 $amount%"
+              },
+              {
+                "effect_string": "buff_upgrade,20,17054,1",
+                "description": ""
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2188",
+        "snapshots": {
+          "original": {
+            "id": 2188,
+            "hero_id": 167,
+            "order": 8,
+            "name": "Poker Face",
+            "description": "Know when to hold, when to fold, when to walk away, and when to run.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17054,0",
+                "description": "Increases the effect of Windfall's The Gambler ability by $amount%"
+              },
+              {
+                "effect_string": "buff_upgrade,40,17054,1",
+                "description": ""
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 2188,
+            "hero_id": 167,
+            "order": 8,
+            "name": "扑克脸",
+            "description": "懂得何时坚持，何时放弃，何时转身离开，以及何时拔腿就跑。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17054,0",
+                "description": "温德福尔的“赌徒”技能效果提高 $amount%"
+              },
+              {
+                "effect_string": "buff_upgrade,40,17054,1",
+                "description": ""
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "2189",
+        "snapshots": {
+          "original": {
+            "id": 2189,
+            "hero_id": 167,
+            "order": 9,
+            "name": "Proven Worth",
+            "description": "Meeting me is literally the best thing to ever happen to you.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17055"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 2189,
+            "hero_id": 167,
+            "order": 9,
+            "name": "证明价值",
+            "description": "能遇到我，绝对是你这辈子遇到的最棒的事。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17055"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "2190",
+        "snapshots": {
+          "original": {
+            "id": 2190,
+            "hero_id": 167,
+            "order": 10,
+            "name": "Tiamat's Chosen",
+            "description": "It is done, my queen. I'm going back to hell for a drink and a spa day.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,17055"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1956574800
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          },
+          "display": {
+            "id": 2190,
+            "hero_id": 167,
+            "order": 10,
+            "name": "提亚马特选中的人",
+            "description": "事情办妥了，我的女王。我要回地狱喝上一杯，再享受一天水疗。",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,17055"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1956574800
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          }
+        }
+      },
+      {
+        "id": "2191",
+        "snapshots": {
+          "original": {
+            "id": 2191,
+            "hero_id": 167,
+            "order": 11,
+            "name": "Razzle Dazzle",
+            "description": "There are so many colorful ways to die. Let's begin.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17056,1",
+                "description": "Increases the effect of all of Windfall's specialization choices by $amount%"
+              },
+              {
+                "effect_string": "buff_upgrade,40,17056,2",
+                "description": ""
+              },
+              {
+                "effect_string": "buff_upgrade,40,17057,2",
+                "description": ""
+              },
+              {
+                "effect_string": "buff_upgrade,40,17058,1",
+                "description": ""
+              },
+              {
+                "effect_string": "buff_upgrade,40,17059,2",
+                "description": ""
+              },
+              {
+                "effect_string": "buff_upgrade,40,17060,2",
+                "description": ""
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 2191,
+            "hero_id": 167,
+            "order": 11,
+            "name": "花里胡哨",
+            "description": "死法多种多样，花里胡哨。我们开始吧。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17056,1",
+                "description": "使温德福尔的所有专精选择效果提高 $amount%。"
+              },
+              {
+                "effect_string": "buff_upgrade,40,17056,2",
+                "description": ""
+              },
+              {
+                "effect_string": "buff_upgrade,40,17057,2",
+                "description": ""
+              },
+              {
+                "effect_string": "buff_upgrade,40,17058,1",
+                "description": ""
+              },
+              {
+                "effect_string": "buff_upgrade,40,17059,2",
+                "description": ""
+              },
+              {
+                "effect_string": "buff_upgrade,40,17060,2",
+                "description": ""
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "2229",
+        "snapshots": {
+          "original": {
+            "id": 2229,
+            "hero_id": 167,
+            "order": 12,
+            "name": "Weapon Master",
+            "description": "I've lost count of the number of lives I've taken with this blade.",
+            "rarity": 4,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,120"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              },
+              {
+                "source": "gems",
+                "cost": 50000
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1753297200
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 2229,
+            "hero_id": 167,
+            "order": 12,
+            "name": "武器大师",
+            "description": "我早已记不清这把剑下有多少亡魂了。",
+            "rarity": 4,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,120"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              },
+              {
+                "source": "gems",
+                "cost": 50000
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1753297200
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "2399",
+        "snapshots": {
+          "original": {
+            "id": 2399,
+            "hero_id": 167,
+            "order": 13,
+            "name": "Drifter",
+            "description": "I'll leave you crying every day once I'm gone. Not sorry.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,17053"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1766520000
+            },
+            "collections_source": {
+              "type": "emergence",
+              "until": "2026-05-06 12:00:00"
+            }
+          },
+          "display": {
+            "id": 2399,
+            "hero_id": 167,
+            "order": 13,
+            "name": "流浪汉",
+            "description": "等我走了，有你天天哭的时候。我一点也不感到抱歉。",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,17053"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1766520000
+            },
+            "collections_source": {
+              "type": "emergence",
+              "until": "2026-05-06 12:00:00"
+            }
+          }
+        }
+      }
+    ],
+    "skins": []
+  }
+}

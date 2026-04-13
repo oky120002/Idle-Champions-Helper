@@ -1,0 +1,5595 @@
+{
+  "updatedAt": "2026-04-13",
+  "summary": {
+    "id": "86",
+    "name": {
+      "original": "Reya",
+      "display": "蕾雅"
+    },
+    "seat": 6,
+    "roles": [
+      "support"
+    ],
+    "affiliations": [],
+    "tags": [
+      "celestial",
+      "evergreen",
+      "female",
+      "good",
+      "human",
+      "hunter",
+      "hunter_fiend",
+      "lawful",
+      "paladin",
+      "positional",
+      "support",
+      "unaffiliated"
+    ],
+    "portrait": {
+      "path": "v1/champion-portraits/86.png",
+      "sourceGraphic": "Portraits/Portrait_Reya",
+      "sourceVersion": 2
+    }
+  },
+  "englishName": "Reya",
+  "eventName": null,
+  "dateAvailable": "2021-03-31 00:00:00",
+  "lastReworkDate": "2021-03-31 00:00:00",
+  "popularity": 0,
+  "baseCost": "250000000",
+  "baseDamage": "2000000",
+  "baseHealth": "86",
+  "graphicId": "10080",
+  "portraitGraphicId": "10079",
+  "availability": {
+    "availableInNextEvent": false,
+    "availableInShop": true,
+    "availableInTimeGate": false,
+    "isAvailable": true,
+    "nextEventTimestamp": 0
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    195,
+    515,
+    905,
+    1390
+  ],
+  "costCurves": {
+    "1": 1.15
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "available_in_store": "2025-10-23 12:00:00",
+    "unlock_adventure_id": 844,
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      170,
+      171,
+      172
+    ],
+    "graphic_large": 10081,
+    "graphic_xl": 13814,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      80,
+      69
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 4,
+      "gethit": 5,
+      "koed": 6,
+      "run": 7
+    },
+    "console_portrait": 10078,
+    "trials_effect_id": 843,
+    "legendary_effect_id": [
+      1,
+      3,
+      58,
+      83,
+      34,
+      102
+    ],
+    "weekly_chest_type_id": 478,
+    "weekly_buff": "buff_upgrade,200,5458",
+    "portrait_graphic_scale": 0.92,
+    "notification_adjustment": {
+      "offset": [
+        56,
+        231
+      ],
+      "scale": 1.25
+    },
+    "hero_not_unlocked_skin_warning": "Champion Reya is not unlocked with this skin. Reya can only be unlocked by completing Reya Reborn - the second Variant of the Idyllglen adventure in the Descent into Avernus Campaign.",
+    "gold_chest_type_id": 478
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Reya Mantlemorn, Avatar of Zariel",
+      "display": "蕾雅·曼特尔芒，扎瑞尔的化身"
+    },
+    "class": {
+      "original": "Paladin",
+      "display": "圣武士"
+    },
+    "race": {
+      "original": "Human / Celestial",
+      "display": "人类/天神"
+    },
+    "age": 19,
+    "alignment": {
+      "original": "Lawful Good",
+      "display": "守序善良"
+    },
+    "abilityScores": {
+      "str": 18,
+      "dex": 12,
+      "con": 14,
+      "int": 13,
+      "wis": 11,
+      "cha": 20
+    },
+    "backstory": {
+      "original": "Born in the land of Turmish, Reya came to the holy city of Elturel to train as a Hellrider when she was twelve. As a faithful follower of Torm, Reya trained to sacrifice herself for the greater good. That preparation led to her taking Zariel's sword and joining the Champions, after rescuing the city of Elturel from Avernus.",
+      "display": "蕾雅出生在突米斯的土地上，她在 12 岁时来到圣城艾尔托瑞尔，受训成为一名地狱骑士。作为托姆的忠实追随者，蕾雅的训练让她能够为大局而牺牲自己。这种精神使她在从阿弗纳斯救下艾尔托瑞尔城之后，接过了扎瑞尔的剑，加入了勇士们。"
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "373",
+      "name": {
+        "original": "Sword of Zariel",
+        "display": "扎瑞尔之剑"
+      },
+      "description": {
+        "original": "Reya leaps out and slashes at a random enemy, cleaving nearby enemies as well.",
+        "display": "蕾雅跳起并劈砍一名随机敌人，同时顺劈附近的敌人。"
+      },
+      "longDescription": {
+        "original": "Reya leaps out and slashes at a random enemy with the Sword of Zariel, cleaving nearby enemies as well.",
+        "display": "蕾雅跳起用扎瑞尔之剑劈砍一名随机敌人，同时顺劈附近的敌人。"
+      },
+      "cooldown": 5.5,
+      "numTargets": 1,
+      "aoeRadius": 100,
+      "damageModifier": "1",
+      "target": "random",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "damage_frame": 4
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "374",
+      "name": {
+        "original": "Avatar of Zariel",
+        "display": "扎瑞尔的化身"
+      },
+      "description": {
+        "original": "Lulu puts all enemies to sleep for 10 seconds, then, Reya swings her sword in a massive circle.",
+        "display": "露露使所有敌人沉睡 10 秒，随后蕾雅用剑挥出一个大圆环。"
+      },
+      "longDescription": {
+        "original": "Reya launches to the sky, she lands by SLAMMING the Sword of Zariel into the ground with a shockwave summoning Zariel and her friend Lulu. While Reya communes with Zariel, Lulu zips around the board, putting all enemies to sleep for 10 seconds. While the enemies are asleep and Reya remains in her pose, the Champions deal massive damage against them. When the 10 seconds is complete, Reya removes the sword and swings it in a massive circle.",
+        "display": "蕾雅跳到空中，下落时用扎瑞尔之剑猛击地面制造震荡波，并召唤出扎瑞尔和她的好友露露。在蕾雅与扎瑞尔交流时，露露会迅速在战场上穿梭，使所有敌人沉睡 10 秒。敌人入睡和蕾雅保持不动时，勇士可对敌人造成高额伤害。10 秒后，蕾雅会收回剑并使出大范围圆环形斩击。"
+      },
+      "cooldown": 240,
+      "numTargets": 0,
+      "aoeRadius": 0,
+      "damageModifier": "0.03",
+      "target": "none",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ranged",
+        "ultimate"
+      ],
+      "graphicId": "10077",
+      "animations": [
+        {
+          "type": "reya_ultimate",
+          "reya_damage_radius": 300,
+          "reya_superhero_landing_shake_amount": 25,
+          "lulu_effect_radius": 200,
+          "lulu_effects": [
+            {
+              "effect_string": "increase_monster_damage,100",
+              "for_time": 10,
+              "active_graphic_id": 7187,
+              "active_graphic_y": -50
+            },
+            {
+              "effect_string": "stun,10"
+            }
+          ]
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "5456",
+        "name": {
+          "original": "Searing Radiance",
+          "display": "灼热光辉"
+        },
+        "description": null,
+        "graphicId": "10071"
+      },
+      {
+        "upgradeId": "5457",
+        "name": {
+          "original": "Echoes of Zariel",
+          "display": "扎瑞尔的回声"
+        },
+        "description": null,
+        "graphicId": "10070"
+      },
+      {
+        "upgradeId": "5458",
+        "name": {
+          "original": "Celestial Champion",
+          "display": "天神勇士"
+        },
+        "description": null,
+        "graphicId": "10069"
+      },
+      {
+        "upgradeId": "5461",
+        "name": {
+          "original": "Avatar of Zariel",
+          "display": "扎瑞尔的化身"
+        },
+        "description": null,
+        "graphicId": "813"
+      },
+      {
+        "upgradeId": "9734",
+        "name": {
+          "original": "Fiend Slayer",
+          "display": "炼狱生物克星"
+        },
+        "description": null,
+        "graphicId": "17296"
+      }
+    ]
+  },
+  "upgrades": [
+    {
+      "id": "5752",
+      "requiredLevel": 20,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5745",
+      "requiredLevel": 30,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5456",
+      "requiredLevel": 40,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Searing Radiance",
+        "display": "灼热光辉"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1331",
+      "effectDefinition": {
+        "id": "1331",
+        "snapshots": {
+          "original": {
+            "id": 1331,
+            "flavour_text": "",
+            "description": {
+              "desc": "Reya imbues adjacent Champions with her Searing Radiance, causing their attacks to deal $(amount)% more damage."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "adj"
+                ],
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 10074,
+            "large_graphic_id": 10071,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 1331,
+            "flavour_text": "",
+            "description": {
+              "desc": "蕾雅用灼热光辉灌注相邻勇士，使他们的攻击伤害提高 $(amount)%。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "adj"
+                ],
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 10074,
+            "large_graphic_id": 10071,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "9734",
+      "requiredLevel": 45,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Fiend Slayer",
+        "display": "炼狱生物克星"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1332",
+      "effectDefinition": {
+        "id": "1332",
+        "snapshots": {
+          "original": {
+            "id": 1332,
+            "flavour_text": "",
+            "description": {
+              "desc": "Fiends become Reya's Favored Foe and take $(amount)% more damage from Reya and adjacent champions."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "increase_damage_against_monster_tag,400,fiend",
+                "targets": [
+                  "self_and_adj"
+                ],
+                "off_when_benched": true
+              },
+              {
+                "off_when_benched": true,
+                "effect_string": "favored_foe,fiend"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 17297,
+            "large_graphic_id": 17296,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 1332,
+            "flavour_text": "",
+            "description": {
+              "desc": "炼狱生物成为蕾雅的偏好对手，蕾雅与相邻勇士对其造成的伤害提高 $(amount)%。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "increase_damage_against_monster_tag,400,fiend",
+                "targets": [
+                  "self_and_adj"
+                ],
+                "off_when_benched": true
+              },
+              {
+                "off_when_benched": true,
+                "effect_string": "favored_foe,fiend"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 17297,
+            "large_graphic_id": 17296,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5753",
+      "requiredLevel": 50,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5462",
+      "requiredLevel": 60,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,5456",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5754",
+      "requiredLevel": 70,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5457",
+      "requiredLevel": 80,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Echoes of Zariel",
+        "display": "扎瑞尔的回声"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,799",
+      "effectDefinition": {
+        "id": "799",
+        "snapshots": {
+          "original": {
+            "id": 799,
+            "flavour_text": "",
+            "description": {
+              "pre": "The gaze of Zariel turns from Reya and sweeps across the formation, looking at a random number of unique champions before returning to Reya. Once it returns to Reya it increases the effect of Searing Radiance by $(amount)% for each Champion it looked at, including Reya, stacking multiplicatively.",
+              "post": {
+                "conditions": [
+                  {
+                    "condition": "not static_desc",
+                    "desc": "^^$(reya_echoes_of_zariel_description)"
+                  }
+                ]
+              }
+            },
+            "effect_keys": [
+              {
+                "effect_string": "reya_echoes_of_zariel,100,5"
+              },
+              {
+                "effect_string": "buff_upgrade,0,5456",
+                "stacks_on_trigger": "will_manually_stack",
+                "stacks_multiply": true,
+                "show_bonus": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 10073,
+            "large_graphic_id": 10070,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 1
+            }
+          },
+          "display": {
+            "id": 799,
+            "flavour_text": "",
+            "description": {
+              "pre": "扎瑞尔的目光脱离蕾雅并扫过整个阵型，在转回蕾雅身上之前注视随机数量的勇士。当它继续开始注视蕾雅时，每注视过一名勇士（包括蕾雅），提升灼热光辉的效果 $(amount)%。以乘算方式堆叠。",
+              "post": {
+                "conditions": [
+                  {
+                    "condition": "not static_desc",
+                    "desc": "^^$(reya_echoes_of_zariel_description)"
+                  }
+                ]
+              }
+            },
+            "effect_keys": [
+              {
+                "effect_string": "reya_echoes_of_zariel,100,5"
+              },
+              {
+                "effect_string": "buff_upgrade,0,5456",
+                "stacks_on_trigger": "will_manually_stack",
+                "stacks_multiply": true,
+                "show_bonus": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 10073,
+            "large_graphic_id": 10070,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 1
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "The gaze of Zariel passes over champions, the more it visits prior to Reya the higher the bonus to her buffs.",
+        "display": "扎瑞尔的目光笼罩勇士。蕾雅前方的目光落点越多，她的增益就越强。"
+      }
+    },
+    {
+      "id": "5755",
+      "requiredLevel": 90,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5757",
+      "requiredLevel": 100,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5744",
+      "requiredLevel": 110,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,5456",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5458",
+      "requiredLevel": 120,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Celestial Champion",
+        "display": "天神勇士"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,800",
+      "effectDefinition": {
+        "id": "800",
+        "snapshots": {
+          "original": {
+            "id": 800,
+            "flavour_text": "",
+            "description": {
+              "desc": "All Lawful aligned Champions' damage is increased by $(amount)%. All Good aligned Champions' damage is increased by $(amount)%."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "lawful"
+                  }
+                ],
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "good"
+                  }
+                ],
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 10072,
+            "large_graphic_id": 10069,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true
+            }
+          },
+          "display": {
+            "id": 800,
+            "flavour_text": "",
+            "description": {
+              "desc": "所有守序阵营勇士的伤害提高 $(amount)%。所有善良阵营勇士的伤害提高 $(amount)%。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "lawful"
+                  }
+                ],
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "good"
+                  }
+                ],
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 10072,
+            "large_graphic_id": 10069,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Reya buffs Good and Lawful Champions more than any other.",
+        "display": "蕾雅对善良和守序勇士的强化比其他勇士更多。"
+      }
+    },
+    {
+      "id": "5756",
+      "requiredLevel": 130,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5464",
+      "requiredLevel": 140,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,5457,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5758",
+      "requiredLevel": 150,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5459",
+      "requiredLevel": 160,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Champions of Good",
+        "display": "善良勇士"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,801",
+      "effectDefinition": {
+        "id": "801",
+        "snapshots": {
+          "original": {
+            "id": 801,
+            "flavour_text": "",
+            "description": {
+              "desc": "Echoes of Zariel is guaranteed to look at all Good aligned Champions in the formation before returning to Reya."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "reya_champions_of,good",
+                "off_when_benched": true,
+                "amount_func": "set",
+                "stack_func": "per_crusader",
+                "tag": "good",
+                "amount_updated_listeners": [
+                  "slot_changed"
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 10075,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "spec_option_post_apply_info": "Champions in Formation Targeted: $sample_amount"
+            }
+          },
+          "display": {
+            "id": 801,
+            "flavour_text": "",
+            "description": {
+              "desc": "回到蕾雅身上之前，扎瑞尔的回声会注视阵型中所有的善良阵营勇士"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "reya_champions_of,good",
+                "off_when_benched": true,
+                "amount_func": "set",
+                "stack_func": "per_crusader",
+                "tag": "good",
+                "amount_updated_listeners": [
+                  "slot_changed"
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 10075,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "spec_option_post_apply_info": "阵型中的目标勇士数量：$sample_amount"
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Champions of Good",
+        "display": "善良勇士"
+      },
+      "specializationDescription": {
+        "original": "The gaze of Zariel focuses on Good aligned Champions.",
+        "display": "扎瑞尔的目光击中在善良勇士身上。"
+      },
+      "specializationGraphicId": "10075",
+      "tipText": null
+    },
+    {
+      "id": "5460",
+      "requiredLevel": 160,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Champions of Law",
+        "display": "守序勇士"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,802",
+      "effectDefinition": {
+        "id": "802",
+        "snapshots": {
+          "original": {
+            "id": 802,
+            "flavour_text": "",
+            "description": {
+              "desc": "Echoes of Zariel is guaranteed to look at all Lawful aligned Champions in the formation before returning to Reya."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "reya_champions_of,lawful",
+                "off_when_benched": true,
+                "amount_func": "set",
+                "stack_func": "per_crusader",
+                "tag": "lawful",
+                "amount_updated_listeners": [
+                  "slot_changed"
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 10076,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "spec_option_post_apply_info": "Champions in Formation Targeted: $sample_amount"
+            }
+          },
+          "display": {
+            "id": 802,
+            "flavour_text": "",
+            "description": {
+              "desc": "回到蕾雅身上之前，扎瑞尔的回声会注视阵型中所有的守序阵营勇士"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "reya_champions_of,lawful",
+                "off_when_benched": true,
+                "amount_func": "set",
+                "stack_func": "per_crusader",
+                "tag": "lawful",
+                "amount_updated_listeners": [
+                  "slot_changed"
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 10076,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "spec_option_post_apply_info": "阵型中的目标勇士数量：$sample_amount"
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Champions of Law",
+        "display": "守序勇士"
+      },
+      "specializationDescription": {
+        "original": "The gaze of Zariel focuses on Lawful aligned Champions.",
+        "display": "扎瑞尔的目光击中在守序勇士身上。"
+      },
+      "specializationGraphicId": "10076",
+      "tipText": null
+    },
+    {
+      "id": "5734",
+      "requiredLevel": 170,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,5456",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5759",
+      "requiredLevel": 180,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5746",
+      "requiredLevel": 190,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5461",
+      "requiredLevel": 200,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Avatar of Zariel",
+        "display": "扎瑞尔的化身"
+      },
+      "upgradeType": "unlock_ultimate",
+      "effectReference": "set_ultimate_attack,374",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5760",
+      "requiredLevel": 210,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,400",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5761",
+      "requiredLevel": 230,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,400",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5762",
+      "requiredLevel": 250,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,400",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5735",
+      "requiredLevel": 260,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,5456",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5763",
+      "requiredLevel": 270,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,400",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5747",
+      "requiredLevel": 300,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5764",
+      "requiredLevel": 310,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,400",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5765",
+      "requiredLevel": 340,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,400",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5736",
+      "requiredLevel": 360,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,5456",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5766",
+      "requiredLevel": 370,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,400",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5571",
+      "requiredLevel": 400,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,5458",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5767",
+      "requiredLevel": 410,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,400",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5768",
+      "requiredLevel": 450,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5737",
+      "requiredLevel": 460,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,5457,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5748",
+      "requiredLevel": 480,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5769",
+      "requiredLevel": 510,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5770",
+      "requiredLevel": 540,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5738",
+      "requiredLevel": 560,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,200,5456",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5771",
+      "requiredLevel": 580,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5731",
+      "requiredLevel": 600,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,5458",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5772",
+      "requiredLevel": 620,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5739",
+      "requiredLevel": 660,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,5456",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5773",
+      "requiredLevel": 670,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,400",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5749",
+      "requiredLevel": 690,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5774",
+      "requiredLevel": 710,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,400",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5775",
+      "requiredLevel": 750,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5740",
+      "requiredLevel": 760,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,5457,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5750",
+      "requiredLevel": 770,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5732",
+      "requiredLevel": 800,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,5458",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5776",
+      "requiredLevel": 810,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5741",
+      "requiredLevel": 860,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,5456",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5777",
+      "requiredLevel": 870,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5751",
+      "requiredLevel": 930,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5778",
+      "requiredLevel": 950,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5742",
+      "requiredLevel": 960,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,200,5456",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5733",
+      "requiredLevel": 1000,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,5458",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5743",
+      "requiredLevel": 1010,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,5457,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5779",
+      "requiredLevel": 1020,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6800",
+      "requiredLevel": 1040,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6801",
+      "requiredLevel": 1050,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,5458",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6802",
+      "requiredLevel": 1060,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,5456",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6803",
+      "requiredLevel": 1070,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6804",
+      "requiredLevel": 1080,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,5456",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6805",
+      "requiredLevel": 1090,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6806",
+      "requiredLevel": 1100,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,5457,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6807",
+      "requiredLevel": 1140,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8534",
+      "requiredLevel": 1160,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8535",
+      "requiredLevel": 1180,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,200,5456",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8536",
+      "requiredLevel": 1200,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,5457,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8537",
+      "requiredLevel": 1220,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,5456",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8538",
+      "requiredLevel": 1260,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5463",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": {
+        "original": "Buff FA2 - Pre Stack (feat only)",
+        "display": "强化阵型技能 2：叠层前（仅专长）"
+      },
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,5457,0",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    }
+  ],
+  "feats": [
+    {
+      "id": "517",
+      "order": 1,
+      "name": {
+        "original": "Selfless",
+        "display": "无私"
+      },
+      "description": {
+        "original": "I'm a Hellrider, it's what I do.",
+        "display": "我是地狱骑士，这是我该做的事。"
+      },
+      "rarity": "2",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "518",
+      "order": 2,
+      "name": {
+        "original": "Inspiring Leader",
+        "display": "鼓舞人心的首领"
+      },
+      "description": {
+        "original": "Avernus changed me, to the core of who I am.",
+        "display": "是阿弗纳斯让我脱胎换骨变了一个人。"
+      },
+      "rarity": "3",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,25"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "519",
+      "order": 3,
+      "name": {
+        "original": "Searing Confidence",
+        "display": "灼热的自信"
+      },
+      "description": {
+        "original": "We have the Angel Zariel watching us.",
+        "display": "天使扎瑞尔在守护着我们。"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,5456"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "520",
+      "order": 4,
+      "name": {
+        "original": "Angelic Radiance",
+        "display": "天使的光辉"
+      },
+      "description": {
+        "original": "Zariel has blessed us with much.",
+        "display": "扎瑞尔赐福了我们。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,5456"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "521",
+      "order": 5,
+      "name": {
+        "original": "Always Watchful",
+        "display": "永远警惕"
+      },
+      "description": {
+        "original": "Zariel has warned me. Our trials are not yet complete.",
+        "display": "扎瑞尔预警过我。我们面临的考验还没结束。"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,5457,1"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "522",
+      "order": 6,
+      "name": {
+        "original": "Zariel's Gaze",
+        "display": "扎瑞尔的凝视"
+      },
+      "description": {
+        "original": "She always has our back.",
+        "display": "她永远会守护着我们。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,5457,1"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "523",
+      "order": 7,
+      "name": {
+        "original": "Elturgard's Paladin",
+        "display": "埃尔图加德的圣武士"
+      },
+      "description": {
+        "original": "It's a ceremonial title, but... I like it.",
+        "display": "虽然只是个虚名头衔，但是......我挺喜欢的。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,5457,0",
+          "description": "Increases the pre-stack bonus of Echoes of Zariel by $amount%."
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "2133",
+      "order": 7,
+      "name": {
+        "original": "Zariel's Chosen",
+        "display": "扎瑞尔选中之人"
+      },
+      "description": {
+        "original": "I am her mercy. I am her wrath. I am all that she was, is, and will be.",
+        "display": "我即她之仁慈，我即她之愤怒。她之过去、现在与未来皆归于我身。"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,5457,0",
+          "description": "Increases the pre-stack bonus of Echoes of Zariel by $amount%."
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000,
+          "start_date": "2025-07-23 12:00:00"
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 560
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1745434800
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "859",
+      "order": 8,
+      "name": {
+        "original": "Aspect of Zariel",
+        "display": "扎瑞尔的面貌"
+      },
+      "description": {
+        "original": "Out of darkness comes the light.",
+        "display": "光明突破黑暗。"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,5456"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 221
+        }
+      ],
+      "properties": {
+        "in_flash_sale": true,
+        "is_premium": true,
+        "is_available": true,
+        "available_at_time": 1661972400
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "1955",
+      "order": 9,
+      "name": {
+        "original": "Guardian of Elturel",
+        "display": "艾尔托瑞尔卫士"
+      },
+      "description": {
+        "original": "Tiamat has come. We're working on a plan to lure her from the city.",
+        "display": "提亚马特来了。我们正在想办法把她引出城。"
+      },
+      "rarity": "4",
+      "graphicId": "24706",
+      "effects": [
+        {
+          "effect_string": "force_allow_hero",
+          "hero_ids": [
+            86
+          ],
+          "ignore_hero_source_check": true,
+          "if": "campaign_id==22",
+          "description": "Reya may be used in any Baldur's Gate: Descent into Avernus adventure or variant when a patron is enabled, even if the patron or variant restrictions would normally restrict her."
+        }
+      ],
+      "sources": [
+        {
+          "source": "promo",
+          "promotion_id": 50
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1730314800
+      },
+      "collectionsSource": {
+        "type": "adventure",
+        "adventure_id": 875
+      }
+    }
+  ],
+  "skins": [
+    {
+      "id": "80",
+      "name": {
+        "original": "Hellrider Reya",
+        "display": "地狱骑士蕾雅"
+      },
+      "cost": [],
+      "details": {
+        "base_graphic_id": 10540,
+        "large_graphic_id": 10544,
+        "xl_graphic_id": 13816,
+        "portrait_graphic_id": 10536
+      },
+      "rarity": "3",
+      "properties": {
+        "show_only_if_owned": true,
+        "notification_adjustment_override": {
+          "offset": [
+            56,
+            228
+          ],
+          "scale": 1.25
+        },
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "patron",
+        "patron_id": 4
+      },
+      "availabilities": {
+        "patron_id": "4",
+        "patron_shop_item_id": "94"
+      }
+    },
+    {
+      "id": "142",
+      "name": {
+        "original": "Blood War Reya",
+        "display": "血战蕾雅"
+      },
+      "cost": {
+        "req_date": "2021-01-05 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 13115,
+        "large_graphic_id": 13116,
+        "xl_graphic_id": 13815,
+        "portrait_graphic_id": 13114
+      },
+      "rarity": "3",
+      "properties": {
+        "show_only_if_owned": true,
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "patron",
+        "patron_id": 4
+      },
+      "availabilities": {
+        "patron_id": "4",
+        "patron_shop_item_id": "108"
+      }
+    },
+    {
+      "id": "212",
+      "name": {
+        "original": "Polymorphed Reya",
+        "display": "变形蕾雅"
+      },
+      "cost": {
+        "req_date": "2022-08-31 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 16106,
+        "large_graphic_id": 16110,
+        "portrait_graphic_id": 16102,
+        "xl_graphic_id": 16114
+      },
+      "rarity": "3",
+      "properties": {
+        "in_flash_sale": true,
+        "is_premium": true,
+        "notification_adjustment_override": {
+          "offset": [
+            56,
+            179
+          ],
+          "scale": 1.07
+        },
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 697,
+        "odds": 51
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    },
+    {
+      "id": "546",
+      "name": {
+        "original": "Champion of Avernus Reya",
+        "display": "阿弗纳斯勇士蕾雅"
+      },
+      "cost": {
+        "req_date": "2025-04-23 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 26357,
+        "large_graphic_id": 26362,
+        "portrait_graphic_id": 26347,
+        "xl_graphic_id": 26367
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "560",
+        "cost": 1680
+      },
+      "availabilities": null
+    }
+  ],
+  "raw": {
+    "hero": {
+      "original": {
+        "id": 86,
+        "name": "Reya",
+        "english_name": "Reya",
+        "seat_id": 6,
+        "base_cost": "250000000",
+        "base_damage": "2000000",
+        "base_health": "86",
+        "cost_curves": {
+          "1": 1.15
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 373,
+        "ultimate_attack_id": 374,
+        "graphic_id": 10080,
+        "portrait_graphic_id": 10079,
+        "character_sheet_details": {
+          "full_name": "Reya Mantlemorn, Avatar of Zariel",
+          "class": "Paladin",
+          "race": "Human / Celestial",
+          "age": 19,
+          "alignment": "Lawful Good",
+          "ability_scores": {
+            "str": 18,
+            "dex": 12,
+            "con": 14,
+            "int": 13,
+            "wis": 11,
+            "cha": 20
+          },
+          "backstory": "Born in the land of Turmish, Reya came to the holy city of Elturel to train as a Hellrider when she was twelve. As a faithful follower of Torm, Reya trained to sacrifice herself for the greater good. That preparation led to her taking Zariel's sword and joining the Champions, after rescuing the city of Elturel from Avernus.",
+          "system_description": "Reya buffs the DPS of adjacent, Lawful and Good Champions."
+        },
+        "default_feat_slot_unlocks": [
+          195,
+          515,
+          905,
+          1390
+        ],
+        "tags": [
+          "female",
+          "human",
+          "celestial",
+          "paladin",
+          "lawful",
+          "good",
+          "support",
+          "evergreen",
+          "unaffiliated",
+          "hunter",
+          "positional",
+          "hunter_fiend"
+        ],
+        "properties": {
+          "available_in_store": "2025-10-23 12:00:00",
+          "unlock_adventure_id": 844,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            170,
+            171,
+            172
+          ],
+          "graphic_large": 10081,
+          "graphic_xl": 13814,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            80,
+            69
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 4,
+            "gethit": 5,
+            "koed": 6,
+            "run": 7
+          },
+          "console_portrait": 10078,
+          "trials_effect_id": 843,
+          "legendary_effect_id": [
+            1,
+            3,
+            58,
+            83,
+            34,
+            102
+          ],
+          "weekly_chest_type_id": 478,
+          "weekly_buff": "buff_upgrade,200,5458",
+          "portrait_graphic_scale": 0.92,
+          "notification_adjustment": {
+            "offset": [
+              56,
+              231
+            ],
+            "scale": 1.25
+          },
+          "hero_not_unlocked_skin_warning": "Champion Reya is not unlocked with this skin. Reya can only be unlocked by completing Reya Reborn - the second Variant of the Idyllglen adventure in the Descent into Avernus Campaign.",
+          "gold_chest_type_id": 478
+        },
+        "adventure_ids": [],
+        "popularity": 0,
+        "available_in_time_gate": false,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 5456,
+            "name": "Searing Radiance",
+            "description": "",
+            "graphic_id": "10071"
+          },
+          {
+            "upgrade_id": 9734,
+            "name": "Fiend Slayer",
+            "description": "",
+            "graphic_id": "17296"
+          },
+          {
+            "upgrade_id": 5457,
+            "name": "Echoes of Zariel",
+            "description": "",
+            "graphic_id": "10070"
+          },
+          {
+            "upgrade_id": 5458,
+            "name": "Celestial Champion",
+            "description": "",
+            "graphic_id": "10069"
+          },
+          {
+            "upgrade_id": 5461,
+            "name": "Avatar of Zariel",
+            "description": "",
+            "graphic_id": 813
+          }
+        ],
+        "available_in_next_event": false,
+        "next_event_timestamp": 0,
+        "event_name": "",
+        "is_available": true,
+        "date_available": "2021-03-31 00:00:00",
+        "last_rework_date": "2021-03-31 00:00:00"
+      },
+      "display": {
+        "id": 86,
+        "name": "蕾雅",
+        "english_name": "Reya",
+        "seat_id": 6,
+        "base_cost": "250000000",
+        "base_damage": "2000000",
+        "base_health": "86",
+        "cost_curves": {
+          "1": 1.15
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 373,
+        "ultimate_attack_id": 374,
+        "graphic_id": 10080,
+        "portrait_graphic_id": 10079,
+        "character_sheet_details": {
+          "full_name": "蕾雅·曼特尔芒，扎瑞尔的化身",
+          "class": "圣武士",
+          "race": "人类/天神",
+          "age": 19,
+          "alignment": "守序善良",
+          "ability_scores": {
+            "str": 18,
+            "dex": 12,
+            "con": 14,
+            "int": 13,
+            "wis": 11,
+            "cha": 20
+          },
+          "backstory": "蕾雅出生在突米斯的土地上，她在 12 岁时来到圣城艾尔托瑞尔，受训成为一名地狱骑士。作为托姆的忠实追随者，蕾雅的训练让她能够为大局而牺牲自己。这种精神使她在从阿弗纳斯救下艾尔托瑞尔城之后，接过了扎瑞尔的剑，加入了勇士们。",
+          "system_description": "蕾雅能够强化相邻的伤害输出者、守序阵营和善良阵营的勇士。"
+        },
+        "default_feat_slot_unlocks": [
+          195,
+          515,
+          905,
+          1390
+        ],
+        "tags": [
+          "female",
+          "human",
+          "celestial",
+          "paladin",
+          "lawful",
+          "good",
+          "support",
+          "evergreen",
+          "unaffiliated",
+          "hunter",
+          "positional",
+          "hunter_fiend"
+        ],
+        "properties": {
+          "available_in_store": "2025-10-23 12:00:00",
+          "unlock_adventure_id": 844,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            170,
+            171,
+            172
+          ],
+          "graphic_large": 10081,
+          "graphic_xl": 13814,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            80,
+            69
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 4,
+            "gethit": 5,
+            "koed": 6,
+            "run": 7
+          },
+          "console_portrait": 10078,
+          "trials_effect_id": 843,
+          "legendary_effect_id": [
+            1,
+            3,
+            58,
+            83,
+            34,
+            102
+          ],
+          "weekly_chest_type_id": 478,
+          "weekly_buff": "buff_upgrade,200,5458",
+          "portrait_graphic_scale": 0.92,
+          "notification_adjustment": {
+            "offset": [
+              56,
+              231
+            ],
+            "scale": 1.25
+          },
+          "hero_not_unlocked_skin_warning": "勇士蕾雅不随此皮肤解锁。只有完成“蕾雅的重生”——“坠入阿弗纳斯”战役中“伊迪尔格伦”冒险的第二个支线任务——才能解锁蕾雅。",
+          "gold_chest_type_id": 478
+        },
+        "adventure_ids": [],
+        "popularity": 0,
+        "available_in_time_gate": false,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 5456,
+            "name": "灼热光辉",
+            "description": "",
+            "graphic_id": "10071"
+          },
+          {
+            "upgrade_id": 9734,
+            "name": "炼狱生物克星",
+            "description": "",
+            "graphic_id": "17296"
+          },
+          {
+            "upgrade_id": 5457,
+            "name": "扎瑞尔的回声",
+            "description": "",
+            "graphic_id": "10070"
+          },
+          {
+            "upgrade_id": 5458,
+            "name": "天神勇士",
+            "description": "",
+            "graphic_id": "10069"
+          },
+          {
+            "upgrade_id": 5461,
+            "name": "扎瑞尔的化身",
+            "description": "",
+            "graphic_id": 813
+          }
+        ],
+        "available_in_next_event": false,
+        "next_event_timestamp": 0,
+        "event_name": "",
+        "is_available": true,
+        "date_available": "2021-03-31 00:00:00",
+        "last_rework_date": "2021-03-31 00:00:00"
+      }
+    },
+    "attacks": [
+      {
+        "id": "373",
+        "snapshots": {
+          "original": {
+            "id": 373,
+            "name": "Sword of Zariel",
+            "description": "Reya leaps out and slashes at a random enemy, cleaving nearby enemies as well.",
+            "long_description": "Reya leaps out and slashes at a random enemy with the Sword of Zariel, cleaving nearby enemies as well.",
+            "graphic_id": 0,
+            "target": "random",
+            "num_targets": 1,
+            "aoe_radius": 100,
+            "damage_modifier": 1,
+            "cooldown": 5.5,
+            "animations": [
+              {
+                "type": "melee_attack",
+                "damage_frame": 4
+              }
+            ],
+            "tags": [
+              "melee"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          },
+          "display": {
+            "id": 373,
+            "name": "扎瑞尔之剑",
+            "description": "蕾雅跳起并劈砍一名随机敌人，同时顺劈附近的敌人。",
+            "long_description": "蕾雅跳起用扎瑞尔之剑劈砍一名随机敌人，同时顺劈附近的敌人。",
+            "graphic_id": 0,
+            "target": "random",
+            "num_targets": 1,
+            "aoe_radius": 100,
+            "damage_modifier": 1,
+            "cooldown": 5.5,
+            "animations": [
+              {
+                "type": "melee_attack",
+                "damage_frame": 4
+              }
+            ],
+            "tags": [
+              "melee"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          }
+        }
+      },
+      {
+        "id": "374",
+        "snapshots": {
+          "original": {
+            "id": 374,
+            "name": "Avatar of Zariel",
+            "description": "Lulu puts all enemies to sleep for 10 seconds, then, Reya swings her sword in a massive circle.",
+            "long_description": "Reya launches to the sky, she lands by SLAMMING the Sword of Zariel into the ground with a shockwave summoning Zariel and her friend Lulu. While Reya communes with Zariel, Lulu zips around the board, putting all enemies to sleep for 10 seconds. While the enemies are asleep and Reya remains in her pose, the Champions deal massive damage against them. When the 10 seconds is complete, Reya removes the sword and swings it in a massive circle.",
+            "graphic_id": 10077,
+            "target": "none",
+            "num_targets": 0,
+            "aoe_radius": 0,
+            "damage_modifier": 0.03,
+            "cooldown": 240,
+            "animations": [
+              {
+                "type": "reya_ultimate",
+                "reya_damage_radius": 300,
+                "reya_superhero_landing_shake_amount": 25,
+                "lulu_effect_radius": 200,
+                "lulu_effects": [
+                  {
+                    "effect_string": "increase_monster_damage,100",
+                    "for_time": 10,
+                    "active_graphic_id": 7187,
+                    "active_graphic_y": -50
+                  },
+                  {
+                    "effect_string": "stun,10"
+                  }
+                ]
+              }
+            ],
+            "tags": [
+              "ranged",
+              "ultimate"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          },
+          "display": {
+            "id": 374,
+            "name": "扎瑞尔的化身",
+            "description": "露露使所有敌人沉睡 10 秒，随后蕾雅用剑挥出一个大圆环。",
+            "long_description": "蕾雅跳到空中，下落时用扎瑞尔之剑猛击地面制造震荡波，并召唤出扎瑞尔和她的好友露露。在蕾雅与扎瑞尔交流时，露露会迅速在战场上穿梭，使所有敌人沉睡 10 秒。敌人入睡和蕾雅保持不动时，勇士可对敌人造成高额伤害。10 秒后，蕾雅会收回剑并使出大范围圆环形斩击。",
+            "graphic_id": 10077,
+            "target": "none",
+            "num_targets": 0,
+            "aoe_radius": 0,
+            "damage_modifier": 0.03,
+            "cooldown": 240,
+            "animations": [
+              {
+                "type": "reya_ultimate",
+                "reya_damage_radius": 300,
+                "reya_superhero_landing_shake_amount": 25,
+                "lulu_effect_radius": 200,
+                "lulu_effects": [
+                  {
+                    "effect_string": "increase_monster_damage,100",
+                    "for_time": 10,
+                    "active_graphic_id": 7187,
+                    "active_graphic_y": -50
+                  },
+                  {
+                    "effect_string": "stun,10"
+                  }
+                ]
+              }
+            ],
+            "tags": [
+              "ranged",
+              "ultimate"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          }
+        }
+      }
+    ],
+    "upgrades": [
+      {
+        "id": "5456",
+        "snapshots": {
+          "original": {
+            "id": 5456,
+            "hero_id": 86,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1331",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Searing Radiance"
+          },
+          "display": {
+            "id": 5456,
+            "hero_id": 86,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1331",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "灼热光辉"
+          }
+        }
+      },
+      {
+        "id": "5457",
+        "snapshots": {
+          "original": {
+            "id": 5457,
+            "hero_id": 86,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,799",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Echoes of Zariel",
+            "tip_text": "The gaze of Zariel passes over champions, the more it visits prior to Reya the higher the bonus to her buffs."
+          },
+          "display": {
+            "id": 5457,
+            "hero_id": 86,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,799",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "扎瑞尔的回声",
+            "tip_text": "扎瑞尔的目光笼罩勇士。蕾雅前方的目光落点越多，她的增益就越强。"
+          }
+        }
+      },
+      {
+        "id": "5458",
+        "snapshots": {
+          "original": {
+            "id": 5458,
+            "hero_id": 86,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,800",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Celestial Champion",
+            "tip_text": "Reya buffs Good and Lawful Champions more than any other."
+          },
+          "display": {
+            "id": 5458,
+            "hero_id": 86,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,800",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "天神勇士",
+            "tip_text": "蕾雅对善良和守序勇士的强化比其他勇士更多。"
+          }
+        }
+      },
+      {
+        "id": "5459",
+        "snapshots": {
+          "original": {
+            "id": 5459,
+            "hero_id": 86,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,801",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Champions of Good",
+            "specialization_name": "Champions of Good",
+            "specialization_description": "The gaze of Zariel focuses on Good aligned Champions.",
+            "specialization_graphic_id": 10075
+          },
+          "display": {
+            "id": 5459,
+            "hero_id": 86,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,801",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "善良勇士",
+            "specialization_name": "善良勇士",
+            "specialization_description": "扎瑞尔的目光击中在善良勇士身上。",
+            "specialization_graphic_id": 10075
+          }
+        }
+      },
+      {
+        "id": "5460",
+        "snapshots": {
+          "original": {
+            "id": 5460,
+            "hero_id": 86,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,802",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Champions of Law",
+            "specialization_name": "Champions of Law",
+            "specialization_description": "The gaze of Zariel focuses on Lawful aligned Champions.",
+            "specialization_graphic_id": 10076
+          },
+          "display": {
+            "id": 5460,
+            "hero_id": 86,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,802",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "守序勇士",
+            "specialization_name": "守序勇士",
+            "specialization_description": "扎瑞尔的目光击中在守序勇士身上。",
+            "specialization_graphic_id": 10076
+          }
+        }
+      },
+      {
+        "id": "5461",
+        "snapshots": {
+          "original": {
+            "id": 5461,
+            "hero_id": 86,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "set_ultimate_attack,374",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Avatar of Zariel"
+          },
+          "display": {
+            "id": 5461,
+            "hero_id": 86,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "set_ultimate_attack,374",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "扎瑞尔的化身"
+          }
+        }
+      },
+      {
+        "id": "5462",
+        "snapshots": {
+          "original": {
+            "id": 5462,
+            "hero_id": 86,
+            "required_level": 60,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5462,
+            "hero_id": 86,
+            "required_level": 60,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5463",
+        "snapshots": {
+          "original": {
+            "id": 5463,
+            "hero_id": 86,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,5457,0",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Buff FA2 - Pre Stack (feat only)"
+          },
+          "display": {
+            "id": 5463,
+            "hero_id": 86,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,5457,0",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "强化阵型技能 2：叠层前（仅专长）"
+          }
+        }
+      },
+      {
+        "id": "5464",
+        "snapshots": {
+          "original": {
+            "id": 5464,
+            "hero_id": 86,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,5457,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5464,
+            "hero_id": 86,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,5457,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5571",
+        "snapshots": {
+          "original": {
+            "id": 5571,
+            "hero_id": 86,
+            "required_level": 400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5458",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5571,
+            "hero_id": 86,
+            "required_level": 400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5458",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5731",
+        "snapshots": {
+          "original": {
+            "id": 5731,
+            "hero_id": 86,
+            "required_level": 600,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5458",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5731,
+            "hero_id": 86,
+            "required_level": 600,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5458",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5732",
+        "snapshots": {
+          "original": {
+            "id": 5732,
+            "hero_id": 86,
+            "required_level": 800,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5458",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5732,
+            "hero_id": 86,
+            "required_level": 800,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5458",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5733",
+        "snapshots": {
+          "original": {
+            "id": 5733,
+            "hero_id": 86,
+            "required_level": 1000,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5458",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5733,
+            "hero_id": 86,
+            "required_level": 1000,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5458",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5734",
+        "snapshots": {
+          "original": {
+            "id": 5734,
+            "hero_id": 86,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5734,
+            "hero_id": 86,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5735",
+        "snapshots": {
+          "original": {
+            "id": 5735,
+            "hero_id": 86,
+            "required_level": 260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5735,
+            "hero_id": 86,
+            "required_level": 260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5736",
+        "snapshots": {
+          "original": {
+            "id": 5736,
+            "hero_id": 86,
+            "required_level": 360,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5736,
+            "hero_id": 86,
+            "required_level": 360,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5737",
+        "snapshots": {
+          "original": {
+            "id": 5737,
+            "hero_id": 86,
+            "required_level": 460,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5457,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5737,
+            "hero_id": 86,
+            "required_level": 460,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5457,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5738",
+        "snapshots": {
+          "original": {
+            "id": 5738,
+            "hero_id": 86,
+            "required_level": 560,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,200,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5738,
+            "hero_id": 86,
+            "required_level": 560,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,200,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5739",
+        "snapshots": {
+          "original": {
+            "id": 5739,
+            "hero_id": 86,
+            "required_level": 660,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5739,
+            "hero_id": 86,
+            "required_level": 660,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5740",
+        "snapshots": {
+          "original": {
+            "id": 5740,
+            "hero_id": 86,
+            "required_level": 760,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5457,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5740,
+            "hero_id": 86,
+            "required_level": 760,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5457,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5741",
+        "snapshots": {
+          "original": {
+            "id": 5741,
+            "hero_id": 86,
+            "required_level": 860,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5741,
+            "hero_id": 86,
+            "required_level": 860,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5742",
+        "snapshots": {
+          "original": {
+            "id": 5742,
+            "hero_id": 86,
+            "required_level": 960,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,200,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5742,
+            "hero_id": 86,
+            "required_level": 960,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,200,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5743",
+        "snapshots": {
+          "original": {
+            "id": 5743,
+            "hero_id": 86,
+            "required_level": 1010,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5457,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5743,
+            "hero_id": 86,
+            "required_level": 1010,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5457,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5744",
+        "snapshots": {
+          "original": {
+            "id": 5744,
+            "hero_id": 86,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5744,
+            "hero_id": 86,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5745",
+        "snapshots": {
+          "original": {
+            "id": 5745,
+            "hero_id": 86,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5745,
+            "hero_id": 86,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5746",
+        "snapshots": {
+          "original": {
+            "id": 5746,
+            "hero_id": 86,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5746,
+            "hero_id": 86,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5747",
+        "snapshots": {
+          "original": {
+            "id": 5747,
+            "hero_id": 86,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5747,
+            "hero_id": 86,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5748",
+        "snapshots": {
+          "original": {
+            "id": 5748,
+            "hero_id": 86,
+            "required_level": 480,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5748,
+            "hero_id": 86,
+            "required_level": 480,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5749",
+        "snapshots": {
+          "original": {
+            "id": 5749,
+            "hero_id": 86,
+            "required_level": 690,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5749,
+            "hero_id": 86,
+            "required_level": 690,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5750",
+        "snapshots": {
+          "original": {
+            "id": 5750,
+            "hero_id": 86,
+            "required_level": 770,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5750,
+            "hero_id": 86,
+            "required_level": 770,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5751",
+        "snapshots": {
+          "original": {
+            "id": 5751,
+            "hero_id": 86,
+            "required_level": 930,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5751,
+            "hero_id": 86,
+            "required_level": 930,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5752",
+        "snapshots": {
+          "original": {
+            "id": 5752,
+            "hero_id": 86,
+            "required_level": 20,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5752,
+            "hero_id": 86,
+            "required_level": 20,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5753",
+        "snapshots": {
+          "original": {
+            "id": 5753,
+            "hero_id": 86,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5753,
+            "hero_id": 86,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5754",
+        "snapshots": {
+          "original": {
+            "id": 5754,
+            "hero_id": 86,
+            "required_level": 70,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5754,
+            "hero_id": 86,
+            "required_level": 70,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5755",
+        "snapshots": {
+          "original": {
+            "id": 5755,
+            "hero_id": 86,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5755,
+            "hero_id": 86,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5756",
+        "snapshots": {
+          "original": {
+            "id": 5756,
+            "hero_id": 86,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5756,
+            "hero_id": 86,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5757",
+        "snapshots": {
+          "original": {
+            "id": 5757,
+            "hero_id": 86,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5757,
+            "hero_id": 86,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5758",
+        "snapshots": {
+          "original": {
+            "id": 5758,
+            "hero_id": 86,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5758,
+            "hero_id": 86,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5759",
+        "snapshots": {
+          "original": {
+            "id": 5759,
+            "hero_id": 86,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5759,
+            "hero_id": 86,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5760",
+        "snapshots": {
+          "original": {
+            "id": 5760,
+            "hero_id": 86,
+            "required_level": 210,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,400",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5760,
+            "hero_id": 86,
+            "required_level": 210,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,400",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5761",
+        "snapshots": {
+          "original": {
+            "id": 5761,
+            "hero_id": 86,
+            "required_level": 230,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,400",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5761,
+            "hero_id": 86,
+            "required_level": 230,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,400",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5762",
+        "snapshots": {
+          "original": {
+            "id": 5762,
+            "hero_id": 86,
+            "required_level": 250,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,400",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5762,
+            "hero_id": 86,
+            "required_level": 250,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,400",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5763",
+        "snapshots": {
+          "original": {
+            "id": 5763,
+            "hero_id": 86,
+            "required_level": 270,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,400",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5763,
+            "hero_id": 86,
+            "required_level": 270,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,400",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5764",
+        "snapshots": {
+          "original": {
+            "id": 5764,
+            "hero_id": 86,
+            "required_level": 310,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,400",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5764,
+            "hero_id": 86,
+            "required_level": 310,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,400",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5765",
+        "snapshots": {
+          "original": {
+            "id": 5765,
+            "hero_id": 86,
+            "required_level": 340,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,400",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5765,
+            "hero_id": 86,
+            "required_level": 340,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,400",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5766",
+        "snapshots": {
+          "original": {
+            "id": 5766,
+            "hero_id": 86,
+            "required_level": 370,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,400",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5766,
+            "hero_id": 86,
+            "required_level": 370,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,400",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5767",
+        "snapshots": {
+          "original": {
+            "id": 5767,
+            "hero_id": 86,
+            "required_level": 410,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,400",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5767,
+            "hero_id": 86,
+            "required_level": 410,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,400",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5768",
+        "snapshots": {
+          "original": {
+            "id": 5768,
+            "hero_id": 86,
+            "required_level": 450,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5768,
+            "hero_id": 86,
+            "required_level": 450,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5769",
+        "snapshots": {
+          "original": {
+            "id": 5769,
+            "hero_id": 86,
+            "required_level": 510,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5769,
+            "hero_id": 86,
+            "required_level": 510,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5770",
+        "snapshots": {
+          "original": {
+            "id": 5770,
+            "hero_id": 86,
+            "required_level": 540,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5770,
+            "hero_id": 86,
+            "required_level": 540,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5771",
+        "snapshots": {
+          "original": {
+            "id": 5771,
+            "hero_id": 86,
+            "required_level": 580,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5771,
+            "hero_id": 86,
+            "required_level": 580,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5772",
+        "snapshots": {
+          "original": {
+            "id": 5772,
+            "hero_id": 86,
+            "required_level": 620,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5772,
+            "hero_id": 86,
+            "required_level": 620,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5773",
+        "snapshots": {
+          "original": {
+            "id": 5773,
+            "hero_id": 86,
+            "required_level": 670,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,400",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5773,
+            "hero_id": 86,
+            "required_level": 670,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,400",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5774",
+        "snapshots": {
+          "original": {
+            "id": 5774,
+            "hero_id": 86,
+            "required_level": 710,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,400",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5774,
+            "hero_id": 86,
+            "required_level": 710,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,400",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5775",
+        "snapshots": {
+          "original": {
+            "id": 5775,
+            "hero_id": 86,
+            "required_level": 750,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5775,
+            "hero_id": 86,
+            "required_level": 750,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5776",
+        "snapshots": {
+          "original": {
+            "id": 5776,
+            "hero_id": 86,
+            "required_level": 810,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5776,
+            "hero_id": 86,
+            "required_level": 810,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5777",
+        "snapshots": {
+          "original": {
+            "id": 5777,
+            "hero_id": 86,
+            "required_level": 870,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5777,
+            "hero_id": 86,
+            "required_level": 870,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5778",
+        "snapshots": {
+          "original": {
+            "id": 5778,
+            "hero_id": 86,
+            "required_level": 950,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5778,
+            "hero_id": 86,
+            "required_level": 950,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5779",
+        "snapshots": {
+          "original": {
+            "id": 5779,
+            "hero_id": 86,
+            "required_level": 1020,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5779,
+            "hero_id": 86,
+            "required_level": 1020,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6800",
+        "snapshots": {
+          "original": {
+            "id": 6800,
+            "hero_id": 86,
+            "required_level": 1040,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6800,
+            "hero_id": 86,
+            "required_level": 1040,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6801",
+        "snapshots": {
+          "original": {
+            "id": 6801,
+            "hero_id": 86,
+            "required_level": 1050,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5458",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6801,
+            "hero_id": 86,
+            "required_level": 1050,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5458",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6802",
+        "snapshots": {
+          "original": {
+            "id": 6802,
+            "hero_id": 86,
+            "required_level": 1060,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6802,
+            "hero_id": 86,
+            "required_level": 1060,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6803",
+        "snapshots": {
+          "original": {
+            "id": 6803,
+            "hero_id": 86,
+            "required_level": 1070,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6803,
+            "hero_id": 86,
+            "required_level": 1070,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6804",
+        "snapshots": {
+          "original": {
+            "id": 6804,
+            "hero_id": 86,
+            "required_level": 1080,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6804,
+            "hero_id": 86,
+            "required_level": 1080,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6805",
+        "snapshots": {
+          "original": {
+            "id": 6805,
+            "hero_id": 86,
+            "required_level": 1090,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6805,
+            "hero_id": 86,
+            "required_level": 1090,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6806",
+        "snapshots": {
+          "original": {
+            "id": 6806,
+            "hero_id": 86,
+            "required_level": 1100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,5457,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6806,
+            "hero_id": 86,
+            "required_level": 1100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,5457,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6807",
+        "snapshots": {
+          "original": {
+            "id": 6807,
+            "hero_id": 86,
+            "required_level": 1140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6807,
+            "hero_id": 86,
+            "required_level": 1140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8534",
+        "snapshots": {
+          "original": {
+            "id": 8534,
+            "hero_id": 86,
+            "required_level": 1160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8534,
+            "hero_id": 86,
+            "required_level": 1160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8535",
+        "snapshots": {
+          "original": {
+            "id": 8535,
+            "hero_id": 86,
+            "required_level": 1180,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,200,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8535,
+            "hero_id": 86,
+            "required_level": 1180,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,200,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8536",
+        "snapshots": {
+          "original": {
+            "id": 8536,
+            "hero_id": 86,
+            "required_level": 1200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,5457,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8536,
+            "hero_id": 86,
+            "required_level": 1200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,5457,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8537",
+        "snapshots": {
+          "original": {
+            "id": 8537,
+            "hero_id": 86,
+            "required_level": 1220,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8537,
+            "hero_id": 86,
+            "required_level": 1220,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,5456",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8538",
+        "snapshots": {
+          "original": {
+            "id": 8538,
+            "hero_id": 86,
+            "required_level": 1260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8538,
+            "hero_id": 86,
+            "required_level": 1260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "9734",
+        "snapshots": {
+          "original": {
+            "id": 9734,
+            "hero_id": 86,
+            "required_level": 45,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1332",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Fiend Slayer"
+          },
+          "display": {
+            "id": 9734,
+            "hero_id": 86,
+            "required_level": 45,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1332",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "炼狱生物克星"
+          }
+        }
+      }
+    ],
+    "feats": [
+      {
+        "id": "517",
+        "snapshots": {
+          "original": {
+            "id": 517,
+            "hero_id": 86,
+            "order": 1,
+            "name": "Selfless",
+            "description": "I'm a Hellrider, it's what I do.",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 517,
+            "hero_id": 86,
+            "order": 1,
+            "name": "无私",
+            "description": "我是地狱骑士，这是我该做的事。",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "518",
+        "snapshots": {
+          "original": {
+            "id": 518,
+            "hero_id": 86,
+            "order": 2,
+            "name": "Inspiring Leader",
+            "description": "Avernus changed me, to the core of who I am.",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 518,
+            "hero_id": 86,
+            "order": 2,
+            "name": "鼓舞人心的首领",
+            "description": "是阿弗纳斯让我脱胎换骨变了一个人。",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "519",
+        "snapshots": {
+          "original": {
+            "id": 519,
+            "hero_id": 86,
+            "order": 3,
+            "name": "Searing Confidence",
+            "description": "We have the Angel Zariel watching us.",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,5456"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 519,
+            "hero_id": 86,
+            "order": 3,
+            "name": "灼热的自信",
+            "description": "天使扎瑞尔在守护着我们。",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,5456"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "520",
+        "snapshots": {
+          "original": {
+            "id": 520,
+            "hero_id": 86,
+            "order": 4,
+            "name": "Angelic Radiance",
+            "description": "Zariel has blessed us with much.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,5456"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 520,
+            "hero_id": 86,
+            "order": 4,
+            "name": "天使的光辉",
+            "description": "扎瑞尔赐福了我们。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,5456"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "521",
+        "snapshots": {
+          "original": {
+            "id": 521,
+            "hero_id": 86,
+            "order": 5,
+            "name": "Always Watchful",
+            "description": "Zariel has warned me. Our trials are not yet complete.",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,5457,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 521,
+            "hero_id": 86,
+            "order": 5,
+            "name": "永远警惕",
+            "description": "扎瑞尔预警过我。我们面临的考验还没结束。",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,5457,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "522",
+        "snapshots": {
+          "original": {
+            "id": 522,
+            "hero_id": 86,
+            "order": 6,
+            "name": "Zariel's Gaze",
+            "description": "She always has our back.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,5457,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 522,
+            "hero_id": 86,
+            "order": 6,
+            "name": "扎瑞尔的凝视",
+            "description": "她永远会守护着我们。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,5457,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "523",
+        "snapshots": {
+          "original": {
+            "id": 523,
+            "hero_id": 86,
+            "order": 7,
+            "name": "Elturgard's Paladin",
+            "description": "It's a ceremonial title, but... I like it.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,5457,0",
+                "description": "Increases the pre-stack bonus of Echoes of Zariel by $amount%."
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 523,
+            "hero_id": 86,
+            "order": 7,
+            "name": "埃尔图加德的圣武士",
+            "description": "虽然只是个虚名头衔，但是......我挺喜欢的。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,5457,0",
+                "description": "使“扎瑞尔的回声”叠加前的加成提高 $amount%。"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "859",
+        "snapshots": {
+          "original": {
+            "id": 859,
+            "hero_id": 86,
+            "order": 8,
+            "name": "Aspect of Zariel",
+            "description": "Out of darkness comes the light.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,5456"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 221
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1661972400
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 859,
+            "hero_id": 86,
+            "order": 8,
+            "name": "扎瑞尔的面貌",
+            "description": "光明突破黑暗。",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,5456"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 221
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1661972400
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "1955",
+        "snapshots": {
+          "original": {
+            "id": 1955,
+            "hero_id": 86,
+            "order": 9,
+            "name": "Guardian of Elturel",
+            "description": "Tiamat has come. We're working on a plan to lure her from the city.",
+            "rarity": 4,
+            "graphic_id": 24706,
+            "effects": [
+              {
+                "effect_string": "force_allow_hero",
+                "hero_ids": [
+                  86
+                ],
+                "ignore_hero_source_check": true,
+                "if": "campaign_id==22",
+                "description": "Reya may be used in any Baldur's Gate: Descent into Avernus adventure or variant when a patron is enabled, even if the patron or variant restrictions would normally restrict her."
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1730314800
+            },
+            "collections_source": {
+              "type": "adventure",
+              "adventure_id": 875
+            }
+          },
+          "display": {
+            "id": 1955,
+            "hero_id": 86,
+            "order": 9,
+            "name": "艾尔托瑞尔卫士",
+            "description": "提亚马特来了。我们正在想办法把她引出城。",
+            "rarity": 4,
+            "graphic_id": 24706,
+            "effects": [
+              {
+                "effect_string": "force_allow_hero",
+                "hero_ids": [
+                  86
+                ],
+                "ignore_hero_source_check": true,
+                "if": "campaign_id==22",
+                "description": "启用赞助者时，蕾雅可用于任何博德之门：坠入阿弗纳斯冒险或支线任务，即便赞助者或支线任务的限制条件在通常情况下会限制她参加，她也可以参加。"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1730314800
+            },
+            "collections_source": {
+              "type": "adventure",
+              "adventure_id": 875
+            }
+          }
+        }
+      },
+      {
+        "id": "2133",
+        "snapshots": {
+          "original": {
+            "id": 2133,
+            "hero_id": 86,
+            "order": 7,
+            "name": "Zariel's Chosen",
+            "description": "I am her mercy. I am her wrath. I am all that she was, is, and will be.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,5457,0",
+                "description": "Increases the pre-stack bonus of Echoes of Zariel by $amount%."
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2025-07-23 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 560
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1745434800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 2133,
+            "hero_id": 86,
+            "order": 7,
+            "name": "扎瑞尔选中之人",
+            "description": "我即她之仁慈，我即她之愤怒。她之过去、现在与未来皆归于我身。",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,5457,0",
+                "description": "使“扎瑞尔的回声”叠加前的加成提高 $amount%。"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2025-07-23 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 560
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1745434800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      }
+    ],
+    "skins": [
+      {
+        "id": "80",
+        "snapshots": {
+          "original": {
+            "id": 80,
+            "hero_id": 86,
+            "name": "Hellrider Reya",
+            "cost": [],
+            "details": {
+              "base_graphic_id": 10540,
+              "large_graphic_id": 10544,
+              "xl_graphic_id": 13816,
+              "portrait_graphic_id": 10536
+            },
+            "rarity": "3",
+            "properties": {
+              "show_only_if_owned": true,
+              "notification_adjustment_override": {
+                "offset": [
+                  56,
+                  228
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "patron",
+              "patron_id": 4
+            },
+            "availabilities": {
+              "patron_id": "4",
+              "patron_shop_item_id": "94"
+            }
+          },
+          "display": {
+            "id": 80,
+            "hero_id": 86,
+            "name": "地狱骑士蕾雅",
+            "cost": [],
+            "details": {
+              "base_graphic_id": 10540,
+              "large_graphic_id": 10544,
+              "xl_graphic_id": 13816,
+              "portrait_graphic_id": 10536
+            },
+            "rarity": "3",
+            "properties": {
+              "show_only_if_owned": true,
+              "notification_adjustment_override": {
+                "offset": [
+                  56,
+                  228
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "patron",
+              "patron_id": 4
+            },
+            "availabilities": {
+              "patron_id": "4",
+              "patron_shop_item_id": "94"
+            }
+          }
+        }
+      },
+      {
+        "id": "142",
+        "snapshots": {
+          "original": {
+            "id": 142,
+            "hero_id": 86,
+            "name": "Blood War Reya",
+            "cost": {
+              "req_date": "2021-01-05 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 13115,
+              "large_graphic_id": 13116,
+              "xl_graphic_id": 13815,
+              "portrait_graphic_id": 13114
+            },
+            "rarity": "3",
+            "properties": {
+              "show_only_if_owned": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "patron",
+              "patron_id": 4
+            },
+            "availabilities": {
+              "patron_id": "4",
+              "patron_shop_item_id": "108"
+            }
+          },
+          "display": {
+            "id": 142,
+            "hero_id": 86,
+            "name": "血战蕾雅",
+            "cost": {
+              "req_date": "2021-01-05 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 13115,
+              "large_graphic_id": 13116,
+              "xl_graphic_id": 13815,
+              "portrait_graphic_id": 13114
+            },
+            "rarity": "3",
+            "properties": {
+              "show_only_if_owned": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "patron",
+              "patron_id": 4
+            },
+            "availabilities": {
+              "patron_id": "4",
+              "patron_shop_item_id": "108"
+            }
+          }
+        }
+      },
+      {
+        "id": "212",
+        "snapshots": {
+          "original": {
+            "id": 212,
+            "hero_id": 86,
+            "name": "Polymorphed Reya",
+            "cost": {
+              "req_date": "2022-08-31 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 16106,
+              "large_graphic_id": 16110,
+              "portrait_graphic_id": 16102,
+              "xl_graphic_id": 16114
+            },
+            "rarity": "3",
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "notification_adjustment_override": {
+                "offset": [
+                  56,
+                  179
+                ],
+                "scale": 1.07
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 697,
+              "odds": 51
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 212,
+            "hero_id": 86,
+            "name": "变形蕾雅",
+            "cost": {
+              "req_date": "2022-08-31 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 16106,
+              "large_graphic_id": 16110,
+              "portrait_graphic_id": 16102,
+              "xl_graphic_id": 16114
+            },
+            "rarity": "3",
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "notification_adjustment_override": {
+                "offset": [
+                  56,
+                  179
+                ],
+                "scale": 1.07
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 697,
+              "odds": 51
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      },
+      {
+        "id": "546",
+        "snapshots": {
+          "original": {
+            "id": 546,
+            "hero_id": 86,
+            "name": "Champion of Avernus Reya",
+            "cost": {
+              "req_date": "2025-04-23 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 26357,
+              "large_graphic_id": 26362,
+              "portrait_graphic_id": 26347,
+              "xl_graphic_id": 26367
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "560",
+              "cost": 1680
+            }
+          },
+          "display": {
+            "id": 546,
+            "hero_id": 86,
+            "name": "阿弗纳斯勇士蕾雅",
+            "cost": {
+              "req_date": "2025-04-23 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 26357,
+              "large_graphic_id": 26362,
+              "portrait_graphic_id": 26347,
+              "xl_graphic_id": 26367
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "560",
+              "cost": 1680
+            }
+          }
+        }
+      }
+    ]
+  }
+}

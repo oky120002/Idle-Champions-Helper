@@ -1,0 +1,4640 @@
+{
+  "updatedAt": "2026-04-13",
+  "summary": {
+    "id": "12",
+    "name": {
+      "original": "Arkhan",
+      "display": "阿克汉"
+    },
+    "seat": 12,
+    "roles": [
+      "dps",
+      "tanking"
+    ],
+    "affiliations": [
+      {
+        "original": "Force Grey",
+        "display": "灰色小队"
+      },
+      {
+        "original": "Dark Order",
+        "display": "黑暗教团"
+      }
+    ],
+    "tags": [
+      "core",
+      "darkorder",
+      "dps",
+      "dragonborn",
+      "evergreen",
+      "evil",
+      "forcegrey",
+      "lcneutral",
+      "male",
+      "neutral",
+      "paladin",
+      "tanking"
+    ],
+    "portrait": {
+      "path": "v1/champion-portraits/12.png",
+      "sourceGraphic": "Portraits/Portrait_Arkhan",
+      "sourceVersion": 6
+    }
+  },
+  "englishName": "Arkhan",
+  "eventName": null,
+  "dateAvailable": "2017-09-07 00:00:00",
+  "lastReworkDate": "2017-09-07 00:00:00",
+  "popularity": 0,
+  "baseCost": "100000000000000000000",
+  "baseDamage": "15000000000000",
+  "baseHealth": "441",
+  "graphicId": "611",
+  "portraitGraphicId": "615",
+  "availability": {
+    "availableInNextEvent": false,
+    "availableInShop": true,
+    "availableInTimeGate": false,
+    "isAvailable": true,
+    "nextEventTimestamp": 0
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    35,
+    225,
+    450,
+    725
+  ],
+  "costCurves": {
+    "1": 1.28
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "available_in_store": "2025-10-23 12:00:00",
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      145,
+      146,
+      147
+    ],
+    "graphic_large": 613,
+    "graphic_xl": 13761,
+    "companion_graphic_id": 848,
+    "companion_visible": false,
+    "eye_height": 138,
+    "portrait_center_offset": [
+      91,
+      66
+    ],
+    "console_portrait": 3258,
+    "permanent_effects": [
+      "base_overwhelm,30"
+    ],
+    "head_graphic_id": 7061,
+    "trials_effect_id": 835,
+    "legendary_effect_id": [
+      54,
+      2,
+      65,
+      44,
+      88,
+      103
+    ],
+    "weekly_chest_type_id": 472,
+    "weekly_buff": "buff_upgrades,200,243,244",
+    "portrait_graphic_scale": 0.89,
+    "notification_adjustment": {
+      "offset": [
+        37,
+        231
+      ],
+      "scale": 1.23
+    },
+    "gold_chest_type_id": 472
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Arkhan",
+      "display": "阿克汉"
+    },
+    "class": {
+      "original": "Paladin",
+      "display": "圣武士"
+    },
+    "race": {
+      "original": "Dragonborn",
+      "display": "龙裔"
+    },
+    "age": 40,
+    "alignment": {
+      "original": "Neutral Evil",
+      "display": "中立邪恶"
+    },
+    "abilityScores": {
+      "str": 20,
+      "dex": 14,
+      "con": 14,
+      "int": 10,
+      "wis": 12,
+      "cha": 18
+    },
+    "backstory": {
+      "original": "Arkhan the Cruel is a dragonborn oathbreaker paladin in the service of the five-headed dragon goddess Tiamat. Due to 'The Wreath of the Prism' that he wears around his neck, he has gained control of the vicious manticore Chango.",
+      "display": "残暴者阿克汉是一位龙裔破誓者圣武士，为五头龙女神提亚马特效忠。由于脖子上戴着的“棱镜花环”，他获得了对邪恶蝎尾狮昌戈的控制。"
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "25",
+      "name": {
+        "original": "Tiamat's Fury",
+        "display": "提亚马特之怒"
+      },
+      "description": {
+        "original": "Arkhan attacks the closest enemy with the fury of Tiamat.",
+        "display": "阿克汉使用提亚马特之怒攻击距离最近的敌人。"
+      },
+      "longDescription": null,
+      "cooldown": 3.9,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "front",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "target_offset_x": -34,
+          "damage_frame": 2,
+          "jump_sound": 30,
+          "sound_frames": {
+            "2": 144
+          }
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "26",
+      "name": {
+        "original": "Flame Breath",
+        "display": "烈焰呼吸"
+      },
+      "description": {
+        "original": "Arkhan breaths deadly dragon fire on a cone of enemies.",
+        "display": "阿克汉对锥形范围的敌人喷吐致命龙息。"
+      },
+      "longDescription": {
+        "original": "Arkhan rushes forward to the nearest enemy and breaths dragon fire on them and all enemies in a large cone.",
+        "display": "阿克汉快速冲向距离最近的敌人，并向其身后锥形大范围内所有敌人喷吐龙息。"
+      },
+      "cooldown": 180,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "0.01111",
+      "target": "front",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ranged",
+        "cone",
+        "ultimate"
+      ],
+      "graphicId": "667",
+      "animations": [
+        {
+          "type": "ranged_attack",
+          "jump_to_target": true,
+          "target_offset_x": -234,
+          "projectile": "fire_breath",
+          "single_projectile": true,
+          "shoot_frame": 15,
+          "sound_frames": {
+            "2": 148
+          },
+          "shoot_offset_x": 36,
+          "shoot_offset_y": -37,
+          "cone_damage_distance": 2000,
+          "cone_damage_angle": 60
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "241",
+        "name": {
+          "original": "Heroic Fury",
+          "display": "英勇狂暴"
+        },
+        "description": null,
+        "graphicId": "4439"
+      },
+      {
+        "upgradeId": "242",
+        "name": {
+          "original": "Rage of the Dragonborn",
+          "display": "龙裔之怒"
+        },
+        "description": null,
+        "graphicId": "4443"
+      },
+      {
+        "upgradeId": "368",
+        "name": {
+          "original": "Rising Anger",
+          "display": "怒火高涨"
+        },
+        "description": null,
+        "graphicId": "4532"
+      },
+      {
+        "upgradeId": "4564",
+        "name": {
+          "original": "Dark Order Synergy",
+          "display": "黑暗教团协同"
+        },
+        "description": null,
+        "graphicId": "8904"
+      }
+    ]
+  },
+  "upgrades": [
+    {
+      "id": "440",
+      "requiredLevel": 10,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "373",
+      "requiredLevel": 25,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "524",
+      "requiredLevel": 30,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "increase_health",
+      "effectReference": "health_add,325",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "314",
+      "requiredLevel": 35,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "set_ultimate_attack,28",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "315",
+      "requiredLevel": 40,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "242",
+      "requiredLevel": 45,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Rage of the Dragonborn",
+        "display": "龙裔之怒"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,222",
+      "effectDefinition": {
+        "id": "222",
+        "snapshots": {
+          "original": {
+            "id": 222,
+            "flavour_text": "",
+            "description": {
+              "desc": "When 6+ Enemies are attacking $source, his base attack gains a small cleave and does 5x damage. When 16+ Enemies are attacking, his base attack is a massive flame breath attack that does 25x damage. Counts each enemy enrage stack as an additional attacker.$only_when_purchased (Current Attackers: $num_attacking_monsters)"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "change_base_attack_per_num_attacking,144,6",
+                "count_power_boost_stacks": true
+              },
+              {
+                "effect_string": "change_base_attack_per_num_attacking,145,16",
+                "count_power_boost_stacks": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 4443,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 222,
+            "flavour_text": "",
+            "description": {
+              "desc": "当 6 名以上敌人正在攻击$source时，他的基本攻击获得小顺势斩效果，并造成 5 倍伤害。如果有 16 名以上敌人向他攻击，则他的基本攻击化为强烈的烈焰呼吸，造成 25 倍伤害。每名敌人造成的怒气堆叠都被视为额外的攻击者。$only_when_purchased（当前攻击者人数：$num_attacking_monsters）"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "change_base_attack_per_num_attacking,144,6",
+                "count_power_boost_stacks": true
+              },
+              {
+                "effect_string": "change_base_attack_per_num_attacking,145,16",
+                "count_power_boost_stacks": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 4443,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": "2",
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Arkhan attacks more ferociously when there are more enemies attacking him. Place him in your front line!",
+        "display": "更多阿克汉的敌人越多，他的攻击就越凶残。将他放置在你的前线！"
+      }
+    },
+    {
+      "id": "523",
+      "requiredLevel": 50,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "241",
+      "requiredLevel": 55,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Heroic Fury",
+        "display": "英勇狂暴"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,217",
+      "effectDefinition": {
+        "id": "217",
+        "snapshots": {
+          "original": {
+            "id": 217,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the Health of all other Champions by $amount% of $source's Max Health"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "increase_health_by_source_percent,25",
+                "targets": [
+                  "other"
+                ],
+                "off_when_benched": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 4439,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_buff_incoming_formation_abilities_target": false
+            }
+          },
+          "display": {
+            "id": 217,
+            "flavour_text": "",
+            "description": {
+              "desc": "提高所有其他勇士的生命值，数值相当于$source最大生命值的 $amount%。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "increase_health_by_source_percent,25",
+                "targets": [
+                  "other"
+                ],
+                "off_when_benched": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 4439,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_buff_incoming_formation_abilities_target": false
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "842",
+      "requiredLevel": 60,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "243",
+      "requiredLevel": 65,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Bulk Up",
+        "display": "严阵以待"
+      },
+      "upgradeType": null,
+      "effectReference": "effect_def,218",
+      "effectDefinition": {
+        "id": "218",
+        "snapshots": {
+          "original": {
+            "id": 218,
+            "flavour_text": "",
+            "description": {
+              "desc": "All positional Formation Abilities $target receives are buffed by $amount% if $target is in the front column of the formation (base 50%)"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_incoming_formation_abilities,50"
+              }
+            ],
+            "requirements": [
+              {
+                "requirement": "in_front_col"
+              }
+            ],
+            "graphic_id": 4435,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_buff_incoming_formation_abilities_target": false
+            }
+          },
+          "display": {
+            "id": 218,
+            "flavour_text": "",
+            "description": {
+              "desc": "如果$target处于阵型前列，则所有作用于$target的阵型技能强化 $amount%（基础值为 50%）"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_incoming_formation_abilities,50"
+              }
+            ],
+            "requirements": [
+              {
+                "requirement": "in_front_col"
+              }
+            ],
+            "graphic_id": 4435,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_buff_incoming_formation_abilities_target": false
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Bulk Up",
+        "display": "严阵以待"
+      },
+      "specializationDescription": {
+        "original": "Arkhan increases the effect of formation abilities affecting him through sheer force of will.",
+        "display": "阿克汉通过纯粹的意志力来强化影响他的阵型技能效果。"
+      },
+      "specializationGraphicId": "4447",
+      "tipText": {
+        "original": "Arkhan increases the affect of formation abilities targeting him. Buff him up to take advantage of this effect!",
+        "display": "阿克汉会强化以他为目标的阵型技能效果。充分利用这个效果为他施加增益！"
+      }
+    },
+    {
+      "id": "244",
+      "requiredLevel": 65,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Usurped Power",
+        "display": "篡夺力量"
+      },
+      "upgradeType": null,
+      "effectReference": "effect_def,219",
+      "effectDefinition": {
+        "id": "219",
+        "snapshots": {
+          "original": {
+            "id": 219,
+            "flavour_text": "",
+            "description": {
+              "desc": "$target receives (at $amount% rate) all positional Formation Abilities received by adjacent Champions that don't already target $target (base 50%)"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "receive_all_formation_abilities_for,50,adj",
+                "effect_scale_title": "Usurped",
+                "effect_scale_description": "Usurped from"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 4445,
+            "large_graphic_id": 0,
+            "properties": []
+          },
+          "display": {
+            "id": 219,
+            "flavour_text": "",
+            "description": {
+              "desc": "$target有 $amount% 几率获得相邻勇士所获得的未以$target为目标的阵型技能效果（基础值为 50%）"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "receive_all_formation_abilities_for,50,adj",
+                "effect_scale_title": "篡夺",
+                "effect_scale_description": "篡夺对象："
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 4445,
+            "large_graphic_id": 0,
+            "properties": []
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Usurped Power",
+        "display": "篡夺力量"
+      },
+      "specializationDescription": {
+        "original": "Arkhan taps into the power of Tiamat to \"borrow\" formation abilities affecting other Champions adjacent to him.",
+        "display": "阿克汉利用提亚马特的力量“借用”影响其身边其他勇士的阵型技能。"
+      },
+      "specializationGraphicId": "4448",
+      "tipText": {
+        "original": "Arkhan is also affected by some formation abilities affecting champions adjacent to him. Build your formation accordingly.",
+        "display": "某些影响阿克汉身边勇士的阵型技能也会影响到他，请据此构建你的阵型。"
+      }
+    },
+    {
+      "id": "1026",
+      "requiredLevel": 70,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "increase_health",
+      "effectReference": "health_add,560",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "368",
+      "requiredLevel": 75,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Rising Anger",
+        "display": "怒火高涨"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,245",
+      "effectDefinition": {
+        "id": "245",
+        "snapshots": {
+          "original": {
+            "id": 245,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the damage of evil champions by $amount% for each enemy attacking $target and/or each enemy enrage stack."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "target_attacking_monsters_hero_dps_mult,100,12",
+                "targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "evil"
+                  }
+                ],
+                "count_power_boost_stacks": true,
+                "use_computed_amount_for_description": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 4532,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true
+            }
+          },
+          "display": {
+            "id": 245,
+            "flavour_text": "",
+            "description": {
+              "desc": "每有一名攻击$target或使其堆叠怒气的敌人，即提升邪恶阵营勇士 $amount% 伤害"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "target_attacking_monsters_hero_dps_mult,100,12",
+                "targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "evil"
+                  }
+                ],
+                "count_power_boost_stacks": true,
+                "use_computed_amount_for_description": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 4532,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": "4",
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1027",
+      "requiredLevel": 80,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "4564",
+      "requiredLevel": 85,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Dark Order Synergy",
+        "display": "黑暗教团协同"
+      },
+      "upgradeType": "upgrade_ability",
+      "effectReference": "effect_def,716",
+      "effectDefinition": {
+        "id": "716",
+        "snapshots": {
+          "original": {
+            "id": 716,
+            "flavour_text": "",
+            "description": {
+              "desc": "$target attacks $amount seconds sooner for each other Dark Order member in the formation"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "reduce_attack_cooldown_per_any_tagged_crusader,0.5,darkorder",
+                "exclude_self": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 8905,
+            "large_graphic_id": 8904,
+            "properties": {
+              "is_formation_ability": true,
+              "show_incoming": false
+            }
+          },
+          "display": {
+            "id": 716,
+            "flavour_text": "",
+            "description": {
+              "desc": "阵型中每有一位黑暗教团其他成员，$target攻击加速 $amount 秒"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "reduce_attack_cooldown_per_any_tagged_crusader,0.5,darkorder",
+                "exclude_self": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 8905,
+            "large_graphic_id": 8904,
+            "properties": {
+              "is_formation_ability": true,
+              "show_incoming": false
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1028",
+      "requiredLevel": 90,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1456",
+      "requiredLevel": 100,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1457",
+      "requiredLevel": 110,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "441",
+      "requiredLevel": 120,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "525",
+      "requiredLevel": 130,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1458",
+      "requiredLevel": 135,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "increase_health",
+      "effectReference": "health_add,970",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "522",
+      "requiredLevel": 145,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "841",
+      "requiredLevel": 160,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "544",
+      "requiredLevel": 175,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "545",
+      "requiredLevel": 190,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1455",
+      "requiredLevel": 200,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "increase_health",
+      "effectReference": "health_add,1685",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "546",
+      "requiredLevel": 205,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1872",
+      "requiredLevel": 220,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1873",
+      "requiredLevel": 235,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1874",
+      "requiredLevel": 250,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1875",
+      "requiredLevel": 265,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1871",
+      "requiredLevel": 270,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "increase_health",
+      "effectReference": "health_add,2910",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2501",
+      "requiredLevel": 280,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2502",
+      "requiredLevel": 295,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2503",
+      "requiredLevel": 315,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2504",
+      "requiredLevel": 330,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2505",
+      "requiredLevel": 335,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "increase_health",
+      "effectReference": "health_add,5000",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3764",
+      "requiredLevel": 355,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3765",
+      "requiredLevel": 375,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3766",
+      "requiredLevel": 395,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3767",
+      "requiredLevel": 405,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "increase_health",
+      "effectReference": "health_add,8500",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5297",
+      "requiredLevel": 430,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5298",
+      "requiredLevel": 450,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5299",
+      "requiredLevel": 470,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5364",
+      "requiredLevel": 480,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "increase_health",
+      "effectReference": "health_add,16350",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6405",
+      "requiredLevel": 510,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6406",
+      "requiredLevel": 530,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6818",
+      "requiredLevel": 540,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "increase_health",
+      "effectReference": "health_add,27500",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8195",
+      "requiredLevel": 570,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8196",
+      "requiredLevel": 600,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8619",
+      "requiredLevel": 610,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "increase_health",
+      "effectReference": "health_add,48000",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    }
+  ],
+  "feats": [
+    {
+      "id": "67",
+      "order": 1,
+      "name": {
+        "original": "Tavern Brawler",
+        "display": "旅店打手"
+      },
+      "description": {
+        "original": "Only four to deal with? I only work in fives.",
+        "display": "只有四个人？至少五个人才够我打。"
+      },
+      "rarity": "2",
+      "graphicId": "6078",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,30"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "68",
+      "order": 2,
+      "name": {
+        "original": "Grappler",
+        "display": "擒抱者"
+      },
+      "description": {
+        "original": "Chango, hold them down so I can chop off their arm!",
+        "display": "昌戈，按住他们，我来砍断他们的胳膊！"
+      },
+      "rarity": "3",
+      "graphicId": "6078",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,60"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "69",
+      "order": 3,
+      "name": {
+        "original": "Tough",
+        "display": "坚韧"
+      },
+      "description": {
+        "original": "Nobody scratches Arkhan the Cruel!",
+        "display": "没人能伤残暴者阿克汉一根汗毛！"
+      },
+      "rarity": "2",
+      "graphicId": "6076",
+      "effects": [
+        {
+          "effect_string": "health_mult,15"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "306",
+      "order": 3,
+      "name": {
+        "original": "Hand of Vecna",
+        "display": "维克那之手"
+      },
+      "description": {
+        "original": "With this hand, I shall rule Avernus with my queen at my side!",
+        "display": "有了这只手，我将和我的皇后共同统治阿弗纳斯！"
+      },
+      "rarity": "4",
+      "graphicId": "6833",
+      "effects": [
+        {
+          "effect_string": "effect_def,508"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 63
+        }
+      ],
+      "properties": {
+        "in_flash_sale": true,
+        "is_premium": true,
+        "is_available": true,
+        "available_at_time": 1576087200
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "70",
+      "order": 4,
+      "name": {
+        "original": "Resilient",
+        "display": "韧性"
+      },
+      "description": {
+        "original": "I may have broken my oath, but I'm stronger for it!",
+        "display": "我也许违背了自己的誓言，但我也因此而更加强大！"
+      },
+      "rarity": "3",
+      "graphicId": "6076",
+      "effects": [
+        {
+          "effect_string": "health_mult,30"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "71",
+      "order": 5,
+      "name": {
+        "original": "Nimble",
+        "display": "敏捷"
+      },
+      "description": {
+        "original": "Quicker than you expected, huh?",
+        "display": "比你预料的更快，对吧？"
+      },
+      "rarity": "3",
+      "graphicId": "6073",
+      "effects": [
+        {
+          "effect_string": "increase_ability_score,dex,1"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "72",
+      "order": 6,
+      "name": {
+        "original": "Defensive Duelist",
+        "display": "防守型决斗者"
+      },
+      "description": {
+        "original": "I'm not scared of anything.",
+        "display": "我什么都不怕。"
+      },
+      "rarity": "2",
+      "graphicId": "6077",
+      "effects": [
+        {
+          "effect_string": "overwhelm_start_increase,5"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "73",
+      "order": 7,
+      "name": {
+        "original": "Calm Under Pressure",
+        "display": "从容应对"
+      },
+      "description": {
+        "original": "Yes, line up to fight me! I'll take you all!",
+        "display": "对，排好队来和我打！我要打你们所有人！"
+      },
+      "rarity": "3",
+      "graphicId": "6077",
+      "effects": [
+        {
+          "effect_string": "overwhelm_start_increase,10"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "480",
+      "order": 8,
+      "name": {
+        "original": "Chosen of Tiamat",
+        "display": "提亚马特的选择"
+      },
+      "description": {
+        "original": "I alone can save Tiamat!",
+        "display": "只有我才能拯救提亚马特！"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,80,243,244"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "promo",
+          "promotion_id": 50
+        }
+      ],
+      "properties": {
+        "in_flash_sale": true,
+        "is_available": true,
+        "available_at_time": 1576519200
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "583",
+      "order": 9,
+      "name": {
+        "original": "Mask of the Dragon Queen",
+        "display": "龙女王的面具"
+      },
+      "description": {
+        "original": "Being Tiamat's Chosen brings its own rewards.",
+        "display": "成为提亚马特选中的人自有其回报。"
+      },
+      "rarity": "4",
+      "graphicId": "6075",
+      "effects": [
+        {
+          "effect_string": "gold_multiplier_mult,50"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 122
+        }
+      ],
+      "properties": {
+        "in_flash_sale": true,
+        "is_premium": true,
+        "is_available": true,
+        "available_at_time": 1631732400
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "1051",
+      "order": 11,
+      "name": {
+        "original": "Weapon Master",
+        "display": "武器大师"
+      },
+      "description": {
+        "original": "Give me a blade.",
+        "display": "给我一把剑。"
+      },
+      "rarity": "4",
+      "graphicId": "6078",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,120"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 263
+        }
+      ],
+      "properties": {
+        "in_flash_sale": true,
+        "is_premium": true,
+        "is_available": true,
+        "available_at_time": 1676664000
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    }
+  ],
+  "skins": [
+    {
+      "id": "27",
+      "name": {
+        "original": "Hand of Vecna Arkhan",
+        "display": "维克那之手阿克汉"
+      },
+      "cost": [],
+      "details": {
+        "base_graphic_id": 6707,
+        "large_graphic_id": 6708,
+        "xl_graphic_id": 13763,
+        "portrait_graphic_id": 6709
+      },
+      "rarity": "3",
+      "properties": {
+        "in_flash_sale": true,
+        "is_premium": true,
+        "notification_adjustment_override": {
+          "offset": [
+            37,
+            234
+          ],
+          "scale": 1.23
+        },
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 221,
+        "odds": 12
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    },
+    {
+      "id": "67",
+      "name": {
+        "original": "Gladiator Arkhan",
+        "display": "角斗士阿克汉"
+      },
+      "cost": {
+        "soft_currency": 40000
+      },
+      "details": {
+        "base_graphic_id": 9810,
+        "large_graphic_id": 9813,
+        "xl_graphic_id": 13762,
+        "portrait_graphic_id": 9814
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gem_shop",
+        "cost": 40000
+      },
+      "availabilities": null
+    },
+    {
+      "id": "98",
+      "name": {
+        "original": "Wyrmspeaker Arkhan",
+        "display": "龙语者阿克汉"
+      },
+      "cost": {
+        "req_date": "2021-09-15 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 11176,
+        "large_graphic_id": 11695,
+        "xl_graphic_id": 13764,
+        "portrait_graphic_id": 11677
+      },
+      "rarity": "3",
+      "properties": {
+        "in_flash_sale": true,
+        "is_premium": true,
+        "notification_adjustment_override": {
+          "offset": [
+            37,
+            234
+          ],
+          "scale": 1.23
+        },
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 473,
+        "odds": 16
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    },
+    {
+      "id": "252",
+      "name": {
+        "original": "Knight of Takhisis Arkhan",
+        "display": "塔克西丝骑士阿克汉"
+      },
+      "cost": {
+        "req_date": "2023-02-17 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 18122,
+        "large_graphic_id": 18125,
+        "portrait_graphic_id": 18113,
+        "xl_graphic_id": 18128
+      },
+      "rarity": "3",
+      "properties": {
+        "in_flash_sale": true,
+        "is_premium": true,
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 893,
+        "odds": 30
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    }
+  ],
+  "raw": {
+    "hero": {
+      "original": {
+        "id": 12,
+        "name": "Arkhan",
+        "english_name": "Arkhan",
+        "seat_id": 12,
+        "base_cost": "100000000000000000000",
+        "base_damage": "15000000000000",
+        "base_health": "441",
+        "cost_curves": {
+          "1": 1.28
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 25,
+        "ultimate_attack_id": 26,
+        "graphic_id": 611,
+        "portrait_graphic_id": 615,
+        "character_sheet_details": {
+          "full_name": "Arkhan",
+          "class": "Paladin",
+          "race": "Dragonborn",
+          "age": 40,
+          "alignment": "Neutral Evil",
+          "ability_scores": {
+            "str": 20,
+            "dex": 14,
+            "con": 14,
+            "int": 10,
+            "wis": 12,
+            "cha": 18
+          },
+          "backstory": "Arkhan the Cruel is a dragonborn oathbreaker paladin in the service of the five-headed dragon goddess Tiamat. Due to 'The Wreath of the Prism' that he wears around his neck, he has gained control of the vicious manticore Chango."
+        },
+        "default_feat_slot_unlocks": [
+          35,
+          225,
+          450,
+          725
+        ],
+        "tags": [
+          "male",
+          "dragonborn",
+          "paladin",
+          "dps",
+          "tanking",
+          "neutral",
+          "evil",
+          "forcegrey",
+          "darkorder",
+          "evergreen",
+          "core",
+          "lcneutral"
+        ],
+        "properties": {
+          "available_in_store": "2025-10-23 12:00:00",
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            145,
+            146,
+            147
+          ],
+          "graphic_large": 613,
+          "graphic_xl": 13761,
+          "companion_graphic_id": 848,
+          "companion_visible": false,
+          "eye_height": 138,
+          "portrait_center_offset": [
+            91,
+            66
+          ],
+          "console_portrait": 3258,
+          "permanent_effects": [
+            "base_overwhelm,30"
+          ],
+          "head_graphic_id": 7061,
+          "trials_effect_id": 835,
+          "legendary_effect_id": [
+            54,
+            2,
+            65,
+            44,
+            88,
+            103
+          ],
+          "weekly_chest_type_id": 472,
+          "weekly_buff": "buff_upgrades,200,243,244",
+          "portrait_graphic_scale": 0.89,
+          "notification_adjustment": {
+            "offset": [
+              37,
+              231
+            ],
+            "scale": 1.23
+          },
+          "gold_chest_type_id": 472
+        },
+        "adventure_ids": [],
+        "popularity": 0,
+        "available_in_time_gate": false,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 242,
+            "name": "Rage of the Dragonborn",
+            "description": "",
+            "graphic_id": "4443"
+          },
+          {
+            "upgrade_id": 241,
+            "name": "Heroic Fury",
+            "description": "",
+            "graphic_id": "4439"
+          },
+          {
+            "upgrade_id": 368,
+            "name": "Rising Anger",
+            "description": "",
+            "graphic_id": "4532"
+          },
+          {
+            "upgrade_id": 4564,
+            "name": "Dark Order Synergy",
+            "description": "",
+            "graphic_id": "8904"
+          }
+        ],
+        "available_in_next_event": false,
+        "next_event_timestamp": 0,
+        "event_name": "",
+        "is_available": true,
+        "date_available": "2017-09-07 00:00:00",
+        "last_rework_date": "2017-09-07 00:00:00"
+      },
+      "display": {
+        "id": 12,
+        "name": "阿克汉",
+        "english_name": "Arkhan",
+        "seat_id": 12,
+        "base_cost": "100000000000000000000",
+        "base_damage": "15000000000000",
+        "base_health": "441",
+        "cost_curves": {
+          "1": 1.28
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 25,
+        "ultimate_attack_id": 26,
+        "graphic_id": 611,
+        "portrait_graphic_id": 615,
+        "character_sheet_details": {
+          "full_name": "阿克汉",
+          "class": "圣武士",
+          "race": "龙裔",
+          "age": 40,
+          "alignment": "中立邪恶",
+          "ability_scores": {
+            "str": 20,
+            "dex": 14,
+            "con": 14,
+            "int": 10,
+            "wis": 12,
+            "cha": 18
+          },
+          "backstory": "残暴者阿克汉是一位龙裔破誓者圣武士，为五头龙女神提亚马特效忠。由于脖子上戴着的“棱镜花环”，他获得了对邪恶蝎尾狮昌戈的控制。"
+        },
+        "default_feat_slot_unlocks": [
+          35,
+          225,
+          450,
+          725
+        ],
+        "tags": [
+          "male",
+          "dragonborn",
+          "paladin",
+          "dps",
+          "tanking",
+          "neutral",
+          "evil",
+          "forcegrey",
+          "darkorder",
+          "evergreen",
+          "core",
+          "lcneutral"
+        ],
+        "properties": {
+          "available_in_store": "2025-10-23 12:00:00",
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            145,
+            146,
+            147
+          ],
+          "graphic_large": 613,
+          "graphic_xl": 13761,
+          "companion_graphic_id": 848,
+          "companion_visible": false,
+          "eye_height": 138,
+          "portrait_center_offset": [
+            91,
+            66
+          ],
+          "console_portrait": 3258,
+          "permanent_effects": [
+            "base_overwhelm,30"
+          ],
+          "head_graphic_id": 7061,
+          "trials_effect_id": 835,
+          "legendary_effect_id": [
+            54,
+            2,
+            65,
+            44,
+            88,
+            103
+          ],
+          "weekly_chest_type_id": 472,
+          "weekly_buff": "buff_upgrades,200,243,244",
+          "portrait_graphic_scale": 0.89,
+          "notification_adjustment": {
+            "offset": [
+              37,
+              231
+            ],
+            "scale": 1.23
+          },
+          "gold_chest_type_id": 472
+        },
+        "adventure_ids": [],
+        "popularity": 0,
+        "available_in_time_gate": false,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 242,
+            "name": "龙裔之怒",
+            "description": "",
+            "graphic_id": "4443"
+          },
+          {
+            "upgrade_id": 241,
+            "name": "英勇狂暴",
+            "description": "",
+            "graphic_id": "4439"
+          },
+          {
+            "upgrade_id": 368,
+            "name": "怒火高涨",
+            "description": "",
+            "graphic_id": "4532"
+          },
+          {
+            "upgrade_id": 4564,
+            "name": "黑暗教团协同",
+            "description": "",
+            "graphic_id": "8904"
+          }
+        ],
+        "available_in_next_event": false,
+        "next_event_timestamp": 0,
+        "event_name": "",
+        "is_available": true,
+        "date_available": "2017-09-07 00:00:00",
+        "last_rework_date": "2017-09-07 00:00:00"
+      }
+    },
+    "attacks": [
+      {
+        "id": "25",
+        "snapshots": {
+          "original": {
+            "id": 25,
+            "name": "Tiamat's Fury",
+            "description": "Arkhan attacks the closest enemy with the fury of Tiamat.",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 3.9,
+            "animations": [
+              {
+                "type": "melee_attack",
+                "target_offset_x": -34,
+                "damage_frame": 2,
+                "jump_sound": 30,
+                "sound_frames": {
+                  "2": 144
+                }
+              }
+            ],
+            "tags": [
+              "melee"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          },
+          "display": {
+            "id": 25,
+            "name": "提亚马特之怒",
+            "description": "阿克汉使用提亚马特之怒攻击距离最近的敌人。",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 3.9,
+            "animations": [
+              {
+                "type": "melee_attack",
+                "target_offset_x": -34,
+                "damage_frame": 2,
+                "jump_sound": 30,
+                "sound_frames": {
+                  "2": 144
+                }
+              }
+            ],
+            "tags": [
+              "melee"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          }
+        }
+      },
+      {
+        "id": "26",
+        "snapshots": {
+          "original": {
+            "id": 26,
+            "name": "Flame Breath",
+            "description": "Arkhan breaths deadly dragon fire on a cone of enemies.",
+            "long_description": "Arkhan rushes forward to the nearest enemy and breaths dragon fire on them and all enemies in a large cone.",
+            "graphic_id": 667,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 0.01111,
+            "cooldown": 180,
+            "animations": [
+              {
+                "type": "ranged_attack",
+                "jump_to_target": true,
+                "target_offset_x": -234,
+                "projectile": "fire_breath",
+                "single_projectile": true,
+                "shoot_frame": 15,
+                "sound_frames": {
+                  "2": 148
+                },
+                "shoot_offset_x": 36,
+                "shoot_offset_y": -37,
+                "cone_damage_distance": 2000,
+                "cone_damage_angle": 60
+              }
+            ],
+            "tags": [
+              "ranged",
+              "cone",
+              "ultimate"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          },
+          "display": {
+            "id": 26,
+            "name": "烈焰呼吸",
+            "description": "阿克汉对锥形范围的敌人喷吐致命龙息。",
+            "long_description": "阿克汉快速冲向距离最近的敌人，并向其身后锥形大范围内所有敌人喷吐龙息。",
+            "graphic_id": 667,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 0.01111,
+            "cooldown": 180,
+            "animations": [
+              {
+                "type": "ranged_attack",
+                "jump_to_target": true,
+                "target_offset_x": -234,
+                "projectile": "fire_breath",
+                "single_projectile": true,
+                "shoot_frame": 15,
+                "sound_frames": {
+                  "2": 148
+                },
+                "shoot_offset_x": 36,
+                "shoot_offset_y": -37,
+                "cone_damage_distance": 2000,
+                "cone_damage_angle": 60
+              }
+            ],
+            "tags": [
+              "ranged",
+              "cone",
+              "ultimate"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          }
+        }
+      }
+    ],
+    "upgrades": [
+      {
+        "id": "241",
+        "snapshots": {
+          "original": {
+            "id": 241,
+            "hero_id": 12,
+            "required_level": 55,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,217",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Heroic Fury"
+          },
+          "display": {
+            "id": 241,
+            "hero_id": 12,
+            "required_level": 55,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,217",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "英勇狂暴"
+          }
+        }
+      },
+      {
+        "id": "242",
+        "snapshots": {
+          "original": {
+            "id": 242,
+            "hero_id": 12,
+            "required_level": 45,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,222",
+            "static_dps_mult": "2",
+            "default_enabled": 1,
+            "name": "Rage of the Dragonborn",
+            "tip_text": "Arkhan attacks more ferociously when there are more enemies attacking him. Place him in your front line!"
+          },
+          "display": {
+            "id": 242,
+            "hero_id": 12,
+            "required_level": 45,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,222",
+            "static_dps_mult": "2",
+            "default_enabled": 1,
+            "name": "龙裔之怒",
+            "tip_text": "更多阿克汉的敌人越多，他的攻击就越凶残。将他放置在你的前线！"
+          }
+        }
+      },
+      {
+        "id": "243",
+        "snapshots": {
+          "original": {
+            "id": 243,
+            "hero_id": 12,
+            "required_level": 65,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "effect_def,218",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Bulk Up",
+            "specialization_name": "Bulk Up",
+            "specialization_description": "Arkhan increases the effect of formation abilities affecting him through sheer force of will.",
+            "specialization_graphic_id": 4447,
+            "tip_text": "Arkhan increases the affect of formation abilities targeting him. Buff him up to take advantage of this effect!"
+          },
+          "display": {
+            "id": 243,
+            "hero_id": 12,
+            "required_level": 65,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "effect_def,218",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "严阵以待",
+            "specialization_name": "严阵以待",
+            "specialization_description": "阿克汉通过纯粹的意志力来强化影响他的阵型技能效果。",
+            "specialization_graphic_id": 4447,
+            "tip_text": "阿克汉会强化以他为目标的阵型技能效果。充分利用这个效果为他施加增益！"
+          }
+        }
+      },
+      {
+        "id": "244",
+        "snapshots": {
+          "original": {
+            "id": 244,
+            "hero_id": 12,
+            "required_level": 65,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "effect_def,219",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Usurped Power",
+            "specialization_name": "Usurped Power",
+            "specialization_description": "Arkhan taps into the power of Tiamat to \"borrow\" formation abilities affecting other Champions adjacent to him.",
+            "specialization_graphic_id": 4448,
+            "tip_text": "Arkhan is also affected by some formation abilities affecting champions adjacent to him. Build your formation accordingly."
+          },
+          "display": {
+            "id": 244,
+            "hero_id": 12,
+            "required_level": 65,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "effect_def,219",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "篡夺力量",
+            "specialization_name": "篡夺力量",
+            "specialization_description": "阿克汉利用提亚马特的力量“借用”影响其身边其他勇士的阵型技能。",
+            "specialization_graphic_id": 4448,
+            "tip_text": "某些影响阿克汉身边勇士的阵型技能也会影响到他，请据此构建你的阵型。"
+          }
+        }
+      },
+      {
+        "id": "314",
+        "snapshots": {
+          "original": {
+            "id": 314,
+            "hero_id": 12,
+            "required_level": 35,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "set_ultimate_attack,28",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 314,
+            "hero_id": 12,
+            "required_level": 35,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "set_ultimate_attack,28",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "315",
+        "snapshots": {
+          "original": {
+            "id": 315,
+            "hero_id": 12,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 315,
+            "hero_id": 12,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "368",
+        "snapshots": {
+          "original": {
+            "id": 368,
+            "hero_id": 12,
+            "required_level": 75,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,245",
+            "static_dps_mult": "4",
+            "default_enabled": 1,
+            "name": "Rising Anger"
+          },
+          "display": {
+            "id": 368,
+            "hero_id": 12,
+            "required_level": 75,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,245",
+            "static_dps_mult": "4",
+            "default_enabled": 1,
+            "name": "怒火高涨"
+          }
+        }
+      },
+      {
+        "id": "373",
+        "snapshots": {
+          "original": {
+            "id": 373,
+            "hero_id": 12,
+            "required_level": 25,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 373,
+            "hero_id": 12,
+            "required_level": 25,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "440",
+        "snapshots": {
+          "original": {
+            "id": 440,
+            "hero_id": 12,
+            "required_level": 10,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 440,
+            "hero_id": 12,
+            "required_level": 10,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "441",
+        "snapshots": {
+          "original": {
+            "id": 441,
+            "hero_id": 12,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 441,
+            "hero_id": 12,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "522",
+        "snapshots": {
+          "original": {
+            "id": 522,
+            "hero_id": 12,
+            "required_level": 145,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 522,
+            "hero_id": 12,
+            "required_level": 145,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "523",
+        "snapshots": {
+          "original": {
+            "id": 523,
+            "hero_id": 12,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 523,
+            "hero_id": 12,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "524",
+        "snapshots": {
+          "original": {
+            "id": 524,
+            "hero_id": 12,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,325",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 524,
+            "hero_id": 12,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,325",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "525",
+        "snapshots": {
+          "original": {
+            "id": 525,
+            "hero_id": 12,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 525,
+            "hero_id": 12,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "544",
+        "snapshots": {
+          "original": {
+            "id": 544,
+            "hero_id": 12,
+            "required_level": 175,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 544,
+            "hero_id": 12,
+            "required_level": 175,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "545",
+        "snapshots": {
+          "original": {
+            "id": 545,
+            "hero_id": 12,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 545,
+            "hero_id": 12,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "546",
+        "snapshots": {
+          "original": {
+            "id": 546,
+            "hero_id": 12,
+            "required_level": 205,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 546,
+            "hero_id": 12,
+            "required_level": 205,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "841",
+        "snapshots": {
+          "original": {
+            "id": 841,
+            "hero_id": 12,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 841,
+            "hero_id": 12,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "842",
+        "snapshots": {
+          "original": {
+            "id": 842,
+            "hero_id": 12,
+            "required_level": 60,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 842,
+            "hero_id": 12,
+            "required_level": 60,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1026",
+        "snapshots": {
+          "original": {
+            "id": 1026,
+            "hero_id": 12,
+            "required_level": 70,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,560",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1026,
+            "hero_id": 12,
+            "required_level": 70,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,560",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1027",
+        "snapshots": {
+          "original": {
+            "id": 1027,
+            "hero_id": 12,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1027,
+            "hero_id": 12,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1028",
+        "snapshots": {
+          "original": {
+            "id": 1028,
+            "hero_id": 12,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1028,
+            "hero_id": 12,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1455",
+        "snapshots": {
+          "original": {
+            "id": 1455,
+            "hero_id": 12,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,1685",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1455,
+            "hero_id": 12,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,1685",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1456",
+        "snapshots": {
+          "original": {
+            "id": 1456,
+            "hero_id": 12,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1456,
+            "hero_id": 12,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1457",
+        "snapshots": {
+          "original": {
+            "id": 1457,
+            "hero_id": 12,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1457,
+            "hero_id": 12,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1458",
+        "snapshots": {
+          "original": {
+            "id": 1458,
+            "hero_id": 12,
+            "required_level": 135,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,970",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1458,
+            "hero_id": 12,
+            "required_level": 135,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,970",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1871",
+        "snapshots": {
+          "original": {
+            "id": 1871,
+            "hero_id": 12,
+            "required_level": 270,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,2910",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1871,
+            "hero_id": 12,
+            "required_level": 270,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,2910",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1872",
+        "snapshots": {
+          "original": {
+            "id": 1872,
+            "hero_id": 12,
+            "required_level": 220,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1872,
+            "hero_id": 12,
+            "required_level": 220,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1873",
+        "snapshots": {
+          "original": {
+            "id": 1873,
+            "hero_id": 12,
+            "required_level": 235,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1873,
+            "hero_id": 12,
+            "required_level": 235,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1874",
+        "snapshots": {
+          "original": {
+            "id": 1874,
+            "hero_id": 12,
+            "required_level": 250,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1874,
+            "hero_id": 12,
+            "required_level": 250,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1875",
+        "snapshots": {
+          "original": {
+            "id": 1875,
+            "hero_id": 12,
+            "required_level": 265,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1875,
+            "hero_id": 12,
+            "required_level": 265,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2501",
+        "snapshots": {
+          "original": {
+            "id": 2501,
+            "hero_id": 12,
+            "required_level": 280,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2501,
+            "hero_id": 12,
+            "required_level": 280,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2502",
+        "snapshots": {
+          "original": {
+            "id": 2502,
+            "hero_id": 12,
+            "required_level": 295,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2502,
+            "hero_id": 12,
+            "required_level": 295,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2503",
+        "snapshots": {
+          "original": {
+            "id": 2503,
+            "hero_id": 12,
+            "required_level": 315,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2503,
+            "hero_id": 12,
+            "required_level": 315,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2504",
+        "snapshots": {
+          "original": {
+            "id": 2504,
+            "hero_id": 12,
+            "required_level": 330,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2504,
+            "hero_id": 12,
+            "required_level": 330,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2505",
+        "snapshots": {
+          "original": {
+            "id": 2505,
+            "hero_id": 12,
+            "required_level": 335,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,5000",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2505,
+            "hero_id": 12,
+            "required_level": 335,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,5000",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3764",
+        "snapshots": {
+          "original": {
+            "id": 3764,
+            "hero_id": 12,
+            "required_level": 355,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3764,
+            "hero_id": 12,
+            "required_level": 355,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3765",
+        "snapshots": {
+          "original": {
+            "id": 3765,
+            "hero_id": 12,
+            "required_level": 375,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3765,
+            "hero_id": 12,
+            "required_level": 375,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3766",
+        "snapshots": {
+          "original": {
+            "id": 3766,
+            "hero_id": 12,
+            "required_level": 395,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3766,
+            "hero_id": 12,
+            "required_level": 395,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3767",
+        "snapshots": {
+          "original": {
+            "id": 3767,
+            "hero_id": 12,
+            "required_level": 405,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,8500",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3767,
+            "hero_id": 12,
+            "required_level": 405,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,8500",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "4564",
+        "snapshots": {
+          "original": {
+            "id": 4564,
+            "hero_id": 12,
+            "required_level": 85,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,716",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Dark Order Synergy"
+          },
+          "display": {
+            "id": 4564,
+            "hero_id": 12,
+            "required_level": 85,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,716",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "黑暗教团协同"
+          }
+        }
+      },
+      {
+        "id": "5297",
+        "snapshots": {
+          "original": {
+            "id": 5297,
+            "hero_id": 12,
+            "required_level": 430,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5297,
+            "hero_id": 12,
+            "required_level": 430,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5298",
+        "snapshots": {
+          "original": {
+            "id": 5298,
+            "hero_id": 12,
+            "required_level": 450,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5298,
+            "hero_id": 12,
+            "required_level": 450,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5299",
+        "snapshots": {
+          "original": {
+            "id": 5299,
+            "hero_id": 12,
+            "required_level": 470,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5299,
+            "hero_id": 12,
+            "required_level": 470,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5364",
+        "snapshots": {
+          "original": {
+            "id": 5364,
+            "hero_id": 12,
+            "required_level": 480,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,16350",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5364,
+            "hero_id": 12,
+            "required_level": 480,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,16350",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6405",
+        "snapshots": {
+          "original": {
+            "id": 6405,
+            "hero_id": 12,
+            "required_level": 510,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6405,
+            "hero_id": 12,
+            "required_level": 510,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6406",
+        "snapshots": {
+          "original": {
+            "id": 6406,
+            "hero_id": 12,
+            "required_level": 530,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6406,
+            "hero_id": 12,
+            "required_level": 530,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6818",
+        "snapshots": {
+          "original": {
+            "id": 6818,
+            "hero_id": 12,
+            "required_level": 540,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,27500",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6818,
+            "hero_id": 12,
+            "required_level": 540,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,27500",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8195",
+        "snapshots": {
+          "original": {
+            "id": 8195,
+            "hero_id": 12,
+            "required_level": 570,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8195,
+            "hero_id": 12,
+            "required_level": 570,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8196",
+        "snapshots": {
+          "original": {
+            "id": 8196,
+            "hero_id": 12,
+            "required_level": 600,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8196,
+            "hero_id": 12,
+            "required_level": 600,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8619",
+        "snapshots": {
+          "original": {
+            "id": 8619,
+            "hero_id": 12,
+            "required_level": 610,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,48000",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8619,
+            "hero_id": 12,
+            "required_level": 610,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,48000",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      }
+    ],
+    "feats": [
+      {
+        "id": "67",
+        "snapshots": {
+          "original": {
+            "id": 67,
+            "hero_id": 12,
+            "order": 1,
+            "name": "Tavern Brawler",
+            "description": "Only four to deal with? I only work in fives.",
+            "rarity": 2,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,30"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 67,
+            "hero_id": 12,
+            "order": 1,
+            "name": "旅店打手",
+            "description": "只有四个人？至少五个人才够我打。",
+            "rarity": 2,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,30"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "68",
+        "snapshots": {
+          "original": {
+            "id": 68,
+            "hero_id": 12,
+            "order": 2,
+            "name": "Grappler",
+            "description": "Chango, hold them down so I can chop off their arm!",
+            "rarity": 3,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,60"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 68,
+            "hero_id": 12,
+            "order": 2,
+            "name": "擒抱者",
+            "description": "昌戈，按住他们，我来砍断他们的胳膊！",
+            "rarity": 3,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,60"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "69",
+        "snapshots": {
+          "original": {
+            "id": 69,
+            "hero_id": 12,
+            "order": 3,
+            "name": "Tough",
+            "description": "Nobody scratches Arkhan the Cruel!",
+            "rarity": 2,
+            "graphic_id": 6076,
+            "effects": [
+              {
+                "effect_string": "health_mult,15"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 69,
+            "hero_id": 12,
+            "order": 3,
+            "name": "坚韧",
+            "description": "没人能伤残暴者阿克汉一根汗毛！",
+            "rarity": 2,
+            "graphic_id": 6076,
+            "effects": [
+              {
+                "effect_string": "health_mult,15"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "70",
+        "snapshots": {
+          "original": {
+            "id": 70,
+            "hero_id": 12,
+            "order": 4,
+            "name": "Resilient",
+            "description": "I may have broken my oath, but I'm stronger for it!",
+            "rarity": 3,
+            "graphic_id": 6076,
+            "effects": [
+              {
+                "effect_string": "health_mult,30"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 70,
+            "hero_id": 12,
+            "order": 4,
+            "name": "韧性",
+            "description": "我也许违背了自己的誓言，但我也因此而更加强大！",
+            "rarity": 3,
+            "graphic_id": 6076,
+            "effects": [
+              {
+                "effect_string": "health_mult,30"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "71",
+        "snapshots": {
+          "original": {
+            "id": 71,
+            "hero_id": 12,
+            "order": 5,
+            "name": "Nimble",
+            "description": "Quicker than you expected, huh?",
+            "rarity": 3,
+            "graphic_id": 6073,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,dex,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 71,
+            "hero_id": 12,
+            "order": 5,
+            "name": "敏捷",
+            "description": "比你预料的更快，对吧？",
+            "rarity": 3,
+            "graphic_id": 6073,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,dex,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "72",
+        "snapshots": {
+          "original": {
+            "id": 72,
+            "hero_id": 12,
+            "order": 6,
+            "name": "Defensive Duelist",
+            "description": "I'm not scared of anything.",
+            "rarity": 2,
+            "graphic_id": 6077,
+            "effects": [
+              {
+                "effect_string": "overwhelm_start_increase,5"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 72,
+            "hero_id": 12,
+            "order": 6,
+            "name": "防守型决斗者",
+            "description": "我什么都不怕。",
+            "rarity": 2,
+            "graphic_id": 6077,
+            "effects": [
+              {
+                "effect_string": "overwhelm_start_increase,5"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "73",
+        "snapshots": {
+          "original": {
+            "id": 73,
+            "hero_id": 12,
+            "order": 7,
+            "name": "Calm Under Pressure",
+            "description": "Yes, line up to fight me! I'll take you all!",
+            "rarity": 3,
+            "graphic_id": 6077,
+            "effects": [
+              {
+                "effect_string": "overwhelm_start_increase,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 73,
+            "hero_id": 12,
+            "order": 7,
+            "name": "从容应对",
+            "description": "对，排好队来和我打！我要打你们所有人！",
+            "rarity": 3,
+            "graphic_id": 6077,
+            "effects": [
+              {
+                "effect_string": "overwhelm_start_increase,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "306",
+        "snapshots": {
+          "original": {
+            "id": 306,
+            "hero_id": 12,
+            "order": 3,
+            "name": "Hand of Vecna",
+            "description": "With this hand, I shall rule Avernus with my queen at my side!",
+            "rarity": 4,
+            "graphic_id": 6833,
+            "effects": [
+              {
+                "effect_string": "effect_def,508"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 63
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1576087200
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 306,
+            "hero_id": 12,
+            "order": 3,
+            "name": "维克那之手",
+            "description": "有了这只手，我将和我的皇后共同统治阿弗纳斯！",
+            "rarity": 4,
+            "graphic_id": 6833,
+            "effects": [
+              {
+                "effect_string": "effect_def,508"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 63
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1576087200
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "480",
+        "snapshots": {
+          "original": {
+            "id": 480,
+            "hero_id": 12,
+            "order": 8,
+            "name": "Chosen of Tiamat",
+            "description": "I alone can save Tiamat!",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,80,243,244"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_available": true,
+              "available_at_time": 1576519200
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 480,
+            "hero_id": 12,
+            "order": 8,
+            "name": "提亚马特的选择",
+            "description": "只有我才能拯救提亚马特！",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,80,243,244"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_available": true,
+              "available_at_time": 1576519200
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "583",
+        "snapshots": {
+          "original": {
+            "id": 583,
+            "hero_id": 12,
+            "order": 9,
+            "name": "Mask of the Dragon Queen",
+            "description": "Being Tiamat's Chosen brings its own rewards.",
+            "rarity": 4,
+            "graphic_id": 6075,
+            "effects": [
+              {
+                "effect_string": "gold_multiplier_mult,50"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 122
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1631732400
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 583,
+            "hero_id": 12,
+            "order": 9,
+            "name": "龙女王的面具",
+            "description": "成为提亚马特选中的人自有其回报。",
+            "rarity": 4,
+            "graphic_id": 6075,
+            "effects": [
+              {
+                "effect_string": "gold_multiplier_mult,50"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 122
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1631732400
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "1051",
+        "snapshots": {
+          "original": {
+            "id": 1051,
+            "hero_id": 12,
+            "order": 11,
+            "name": "Weapon Master",
+            "description": "Give me a blade.",
+            "rarity": 4,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,120"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 263
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1676664000
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 1051,
+            "hero_id": 12,
+            "order": 11,
+            "name": "武器大师",
+            "description": "给我一把剑。",
+            "rarity": 4,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,120"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 263
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1676664000
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      }
+    ],
+    "skins": [
+      {
+        "id": "27",
+        "snapshots": {
+          "original": {
+            "id": 27,
+            "hero_id": 12,
+            "name": "Hand of Vecna Arkhan",
+            "cost": [],
+            "details": {
+              "base_graphic_id": 6707,
+              "large_graphic_id": 6708,
+              "xl_graphic_id": 13763,
+              "portrait_graphic_id": 6709
+            },
+            "rarity": "3",
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "notification_adjustment_override": {
+                "offset": [
+                  37,
+                  234
+                ],
+                "scale": 1.23
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 221,
+              "odds": 12
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 27,
+            "hero_id": 12,
+            "name": "维克那之手阿克汉",
+            "cost": [],
+            "details": {
+              "base_graphic_id": 6707,
+              "large_graphic_id": 6708,
+              "xl_graphic_id": 13763,
+              "portrait_graphic_id": 6709
+            },
+            "rarity": "3",
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "notification_adjustment_override": {
+                "offset": [
+                  37,
+                  234
+                ],
+                "scale": 1.23
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 221,
+              "odds": 12
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      },
+      {
+        "id": "67",
+        "snapshots": {
+          "original": {
+            "id": 67,
+            "hero_id": 12,
+            "name": "Gladiator Arkhan",
+            "cost": {
+              "soft_currency": 40000
+            },
+            "details": {
+              "base_graphic_id": 9810,
+              "large_graphic_id": 9813,
+              "xl_graphic_id": 13762,
+              "portrait_graphic_id": 9814
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gem_shop",
+              "cost": 40000
+            }
+          },
+          "display": {
+            "id": 67,
+            "hero_id": 12,
+            "name": "角斗士阿克汉",
+            "cost": {
+              "soft_currency": 40000
+            },
+            "details": {
+              "base_graphic_id": 9810,
+              "large_graphic_id": 9813,
+              "xl_graphic_id": 13762,
+              "portrait_graphic_id": 9814
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gem_shop",
+              "cost": 40000
+            }
+          }
+        }
+      },
+      {
+        "id": "98",
+        "snapshots": {
+          "original": {
+            "id": 98,
+            "hero_id": 12,
+            "name": "Wyrmspeaker Arkhan",
+            "cost": {
+              "req_date": "2021-09-15 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 11176,
+              "large_graphic_id": 11695,
+              "xl_graphic_id": 13764,
+              "portrait_graphic_id": 11677
+            },
+            "rarity": "3",
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "notification_adjustment_override": {
+                "offset": [
+                  37,
+                  234
+                ],
+                "scale": 1.23
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 473,
+              "odds": 16
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 98,
+            "hero_id": 12,
+            "name": "龙语者阿克汉",
+            "cost": {
+              "req_date": "2021-09-15 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 11176,
+              "large_graphic_id": 11695,
+              "xl_graphic_id": 13764,
+              "portrait_graphic_id": 11677
+            },
+            "rarity": "3",
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "notification_adjustment_override": {
+                "offset": [
+                  37,
+                  234
+                ],
+                "scale": 1.23
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 473,
+              "odds": 16
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      },
+      {
+        "id": "252",
+        "snapshots": {
+          "original": {
+            "id": 252,
+            "hero_id": 12,
+            "name": "Knight of Takhisis Arkhan",
+            "cost": {
+              "req_date": "2023-02-17 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 18122,
+              "large_graphic_id": 18125,
+              "portrait_graphic_id": 18113,
+              "xl_graphic_id": 18128
+            },
+            "rarity": "3",
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 893,
+              "odds": 30
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 252,
+            "hero_id": 12,
+            "name": "塔克西丝骑士阿克汉",
+            "cost": {
+              "req_date": "2023-02-17 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 18122,
+              "large_graphic_id": 18125,
+              "portrait_graphic_id": 18113,
+              "xl_graphic_id": 18128
+            },
+            "rarity": "3",
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 893,
+              "odds": 30
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      }
+    ]
+  }
+}

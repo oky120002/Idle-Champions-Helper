@@ -1,0 +1,6524 @@
+{
+  "updatedAt": "2026-04-13",
+  "summary": {
+    "id": "55",
+    "name": {
+      "original": "Môrgæn",
+      "display": "莫尔甘"
+    },
+    "seat": 9,
+    "roles": [
+      "gold",
+      "support"
+    ],
+    "affiliations": [
+      {
+        "original": "Acquisitions Incorporated",
+        "display": "艾奎兹玄有限责任公司"
+      }
+    ],
+    "tags": [
+      "acqinc",
+      "chaotic",
+      "elf",
+      "event",
+      "female",
+      "geneutral",
+      "gold",
+      "neutral",
+      "ranger",
+      "support",
+      "y3"
+    ],
+    "portrait": {
+      "path": "v1/champion-portraits/55.png",
+      "sourceGraphic": "Portraits/Portrait_Morgaen",
+      "sourceVersion": 2
+    }
+  },
+  "englishName": "Môrgæn",
+  "eventName": {
+    "original": "Wintershield",
+    "display": "冬盾节"
+  },
+  "dateAvailable": "2020-01-08 00:00:00",
+  "lastReworkDate": "2020-01-08 00:00:00",
+  "popularity": 43,
+  "baseCost": "11000000000000",
+  "baseDamage": "1850000000",
+  "baseHealth": "43",
+  "graphicId": "7075",
+  "portraitGraphicId": "7083",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1799352000
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    185,
+    630,
+    1155,
+    1805
+  ],
+  "costCurves": {
+    "1": 1.11
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      170,
+      171,
+      172
+    ],
+    "graphic_large": 7081,
+    "graphic_xl": 13926,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      81,
+      82
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 4,
+      "gethit": 5,
+      "koed": 6,
+      "run": 7
+    },
+    "allow_time_gate": "2020-01-20 12:00:00",
+    "time_gate_blackout": {
+      "start": "2022-01-12 00:00:00",
+      "end": "2022-01-24 12:00:00"
+    },
+    "time_gate_adventure_id": 528,
+    "time_gate_variants_ids": [
+      464,
+      465,
+      466
+    ],
+    "time_gate_tier": 1,
+    "silver_chest_type_id": 168,
+    "gold_chest_type_id": 169,
+    "available_in_store": "2020-01-27 12:00:00",
+    "store_blackout": {
+      "start": "2022-01-12 00:00:00",
+      "end": "2022-01-24 12:00:00"
+    },
+    "golden_epic_loot_id": 1300,
+    "golden_epic_promo_id": 144,
+    "event_logo_graphic_id": 3373,
+    "console_portrait": 6987,
+    "head_graphic_id": 7279,
+    "trials_effect_id": 848,
+    "legendary_effect_id": [
+      1,
+      3,
+      7,
+      38,
+      94,
+      53
+    ],
+    "weekly_buff": "buff_upgrade,200,3326",
+    "portrait_graphic_scale": 0.94,
+    "notification_adjustment": {
+      "offset": [
+        53,
+        224
+      ],
+      "scale": 1.25
+    }
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Môrgæn",
+      "display": "莫尔甘"
+    },
+    "class": {
+      "original": "Ranger",
+      "display": "巡林客"
+    },
+    "race": {
+      "original": "Elf (High)",
+      "display": "精灵（高等）"
+    },
+    "age": 150,
+    "alignment": {
+      "original": "Chaotic Neutral",
+      "display": "混乱中立"
+    },
+    "abilityScores": {
+      "str": 12,
+      "dex": 20,
+      "con": 12,
+      "int": 14,
+      "wis": 15,
+      "cha": 10
+    },
+    "backstory": {
+      "original": "The ranger Môrgæn is a renowned tracker and hunter, able to pinpoint-target foes at any range, then vanish into the woods with no one the wiser. Her legendary ability with the longbow and the custom arrows she crafts instills fear into the hearts of her many enemies -- and more than a few of her coworkers. Famously, she is the only member of Acquisitions Incorporated known to be paid in advance, lest a missed invoice lead to dire repercussions.",
+      "display": "巡林客莫尔甘是著名的追踪者和猎手，能在任何范围准确点杀敌人，然后悄然消失在树林里。她使用长弓和特制箭矢的传奇能力，使许多敌人以及一些同事心生恐惧。最出名的是，她是艾奎兹玄有限责任公司唯一会预先付款的成员，因为公司不想错过付款时间而导致可怕的后果。"
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "262",
+      "name": {
+        "original": "Rapid Shot",
+        "display": "快速射击"
+      },
+      "description": {
+        "original": "Môrgæn shoots an arrow at a random target, then quickly follows up with a second arrow.",
+        "display": "莫尔甘向随机目标射出一箭，然后迅速射出第二箭。"
+      },
+      "longDescription": {
+        "original": "Môrgæn shoots an arrow at a random target, then quickly follows up with a second arrow. This arrow always targets the same enemy, even if that enemy is killed by the first arrow.",
+        "display": "莫尔甘向随机目标射出一箭，然后迅速射出第二箭。两支箭始终会射向同一敌人，即使该敌人已经被第一箭击杀。"
+      },
+      "cooldown": 5.2,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "random",
+      "damageTypes": [
+        "ranged"
+      ],
+      "tags": [
+        "ranged"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "ranged_attack",
+          "projectile": "morgaen_arrow",
+          "projectile_details": {
+            "delay_frames": 11
+          },
+          "shoot_frame": 8,
+          "shoot_offset_x": 65,
+          "shoot_offset_y": -45
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "263",
+      "name": {
+        "original": "Customized Arrow",
+        "display": "定制箭矢"
+      },
+      "description": {
+        "original": "Môrgæn shoots a customized arrow from her quiver, with one of 3 random effects.",
+        "display": "莫尔甘射出一支箭囊中的定制箭矢，箭矢带有 3 种随机效果之一。"
+      },
+      "longDescription": {
+        "original": "Môrgæn pulls a customized arrow from her quiver at random, and fires this more powerful arrow towards a random enemy.",
+        "display": "莫尔甘从箭囊中随机抽出一支定制箭矢，然后将这支更强力的箭矢射向一名随机敌人。"
+      },
+      "cooldown": 210,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "0.03",
+      "target": "random",
+      "damageTypes": [
+        "ranged"
+      ],
+      "tags": [
+        "ranged",
+        "ultimate"
+      ],
+      "graphicId": "7011",
+      "animations": [
+        {
+          "type": "ranged_attack",
+          "projectile": "skull_carved_arrow",
+          "shoot_frame": 13,
+          "line_damage_distance": 100,
+          "shoot_offset_x": 65,
+          "shoot_offset_y": -45
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "3326",
+        "name": {
+          "original": "Paid Up Front",
+          "display": "提前支付"
+        },
+        "description": {
+          "original": "Môrgæn collects a portion of the gold dropped by monsters but then buffs the formation partially based on the gold collected.",
+          "display": "莫尔甘会收集怪物掉落的一部分金币，然后根据收集的金币数量强化一部分队友。"
+        },
+        "graphicId": "6999"
+      },
+      {
+        "upgradeId": "3327",
+        "name": {
+          "original": "Friends In Wealth",
+          "display": "土豪朋友"
+        },
+        "description": {
+          "original": "Môrgæn loves adventuring with Gold Finding Champions (because who doesn't).",
+          "display": "莫尔甘喜欢与金币寻获型勇士一起冒险（谁不是呢）。"
+        },
+        "graphicId": "6998"
+      },
+      {
+        "upgradeId": "3328",
+        "name": {
+          "original": "Double Tap",
+          "display": "双金连射"
+        },
+        "description": null,
+        "graphicId": "6997"
+      },
+      {
+        "upgradeId": "3329",
+        "name": {
+          "original": "Customized Arrow",
+          "display": "定制箭矢"
+        },
+        "description": null,
+        "graphicId": "813"
+      }
+    ]
+  },
+  "upgrades": [
+    {
+      "id": "3328",
+      "requiredLevel": 30,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Double Tap",
+        "display": "双金连射"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,526",
+      "effectDefinition": {
+        "id": "526",
+        "snapshots": {
+          "original": {
+            "id": 526,
+            "flavour_text": "",
+            "description": {
+              "desc": "If Môrgæn's first arrow kills her target, the second arrow causes the enemy to drop a second set of gold."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "morgaen_double_tap"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 7000,
+            "large_graphic_id": 6997,
+            "properties": []
+          },
+          "display": {
+            "id": 526,
+            "flavour_text": "",
+            "description": {
+              "desc": "如果莫尔甘的第一支箭击杀了目标，则第二支箭会使敌人多掉落一组金币"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "morgaen_double_tap"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 7000,
+            "large_graphic_id": 6997,
+            "properties": []
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3396",
+      "requiredLevel": 40,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3352",
+      "requiredLevel": 50,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3326",
+      "requiredLevel": 60,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Paid Up Front",
+        "display": "提前支付"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,523",
+      "effectDefinition": {
+        "id": "523",
+        "snapshots": {
+          "original": {
+            "id": 523,
+            "flavour_text": "",
+            "description": {
+              "conditions": [
+                {
+                  "condition": "upgrade_purchased 3331",
+                  "desc": "Môrgæn collects $amount___2% of all Gold dropped by enemies, but in turn increases the Damage of non-adjacent Champions by $amount%, increased by $increase_per_magnitude% for each order of magnitude Gold that Môrgæn has collected (stacking additively). The collected gold count persists through resets.^^$paid_up_front_bonus"
+                },
+                {
+                  "condition": "upgrade_purchased 3332",
+                  "desc": "Môrgæn collects $amount___2% of all Gold dropped by enemies, but in turn increases the Damage of Champions ahead of Môrgæn by $amount%, increased by $increase_per_magnitude% for each order of magnitude Gold that Môrgæn has collected (stacking additively). The collected gold count persists through resets.^^$paid_up_front_bonus"
+                },
+                {
+                  "condition": "upgrade_purchased 3333",
+                  "desc": "Môrgæn collects $amount___2% of all Gold dropped by enemies, but in turn increases the Damage of Champions behind Môrgæn by $amount%, increased by $increase_per_magnitude% for each order of magnitude Gold that Môrgæn has collected (stacking additively). The collected gold count persists through resets.^^$paid_up_front_bonus"
+                },
+                {
+                  "desc": "Môrgæn collects $amount___2% of all Gold dropped by enemies, but in turn increases the Damage of adjacent Champions by $amount%, increased by $increase_per_magnitude% for each order of magnitude Gold that Môrgæn has collected (stacking additively). The collected gold count persists through resets.^^$paid_up_front_bonus"
+                }
+              ]
+            },
+            "effect_keys": [
+              {
+                "effect_string": "paid_up_front_increase_dps,100,5",
+                "targets": [
+                  "adj"
+                ]
+              },
+              {
+                "effect_string": "paid_up_front_gold_reduce,25",
+                "off_when_benched": true,
+                "show_incoming": false,
+                "outgoing_buffs": false
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 7002,
+            "large_graphic_id": 6999,
+            "properties": {
+              "indexed_effect_properties": true,
+              "owner_use_outgoing_description": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 523,
+            "flavour_text": "",
+            "description": {
+              "conditions": [
+                {
+                  "condition": "upgrade_purchased 3331",
+                  "desc": "莫尔甘会收集 $amount___2% 敌人掉落的金币，但会提升与自身不相邻的勇士 $amount% 伤害。莫尔甘所收集到的金币数量每满足十的 n 次方，此效果即提升 $increase_per_magnitude%（以加算方式堆叠）。收集到的金币在重置冒险后仍然有效。^^$paid_up_front_bonus"
+                },
+                {
+                  "condition": "upgrade_purchased 3332",
+                  "desc": "莫尔甘收集 $amount___2% 敌人掉落的金币，但会提升处于自身前方的勇士 $amount% 伤害。莫尔甘所收集到的金币数量每满足十的 n 次方，此效果即提升 $increase_per_magnitude%（以加算方式堆叠）。收集到的金币在重置冒险后仍然有效。^^$paid_up_front_bonus"
+                },
+                {
+                  "condition": "upgrade_purchased 3333",
+                  "desc": "莫尔甘收集 $amount___2% 敌人掉落的金币，但会提升处于自身后方的勇士 $amount% 伤害。莫尔甘所收集到的金币数量每满足十的 n 次方，此效果即提升 $increase_per_magnitude%（以加算方式堆叠）。收集到的金币在重置冒险后仍然有效。^^$paid_up_front_bonus"
+                },
+                {
+                  "desc": "莫尔甘收集 $amount___2% 敌人掉落的金币，但会提升与自身相邻的勇士 $amount% 伤害。莫尔甘所收集到的金币数量每满足十的 n 次方，此效果即提升 $increase_per_magnitude%（以加算方式堆叠）。收集到的金币在重置冒险后仍然有效。^^$paid_up_front_bonus"
+                }
+              ]
+            },
+            "effect_keys": [
+              {
+                "effect_string": "paid_up_front_increase_dps,100,5",
+                "targets": [
+                  "adj"
+                ]
+              },
+              {
+                "effect_string": "paid_up_front_gold_reduce,25",
+                "off_when_benched": true,
+                "show_incoming": false,
+                "outgoing_buffs": false
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 7002,
+            "large_graphic_id": 6999,
+            "properties": {
+              "indexed_effect_properties": true,
+              "owner_use_outgoing_description": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": "4",
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Môrgæn collects a portion of the gold dropped by monsters but then buffs the formation partially based on the gold collected.",
+        "display": "莫尔甘会收集怪物掉落的一部分金币，然后根据收集的金币数量强化一部分队友。"
+      }
+    },
+    {
+      "id": "3410",
+      "requiredLevel": 85,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3338",
+      "requiredLevel": 100,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,3326",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3411",
+      "requiredLevel": 110,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3327",
+      "requiredLevel": 120,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Friends In Wealth",
+        "display": "土豪朋友"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,525",
+      "effectDefinition": {
+        "id": "525",
+        "snapshots": {
+          "original": {
+            "id": 525,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the Damage of all Champions by $(not_buffed amount)% for each Gold Find Champion in the formation"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "global_dps_mult_by_tag_mult,100,gold",
+                "stacks_multiply": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 7001,
+            "large_graphic_id": 6998,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 525,
+            "flavour_text": "",
+            "description": {
+              "desc": "阵型中每有一位拥有金币寻获相关技能的勇士，就使所有勇士的伤害提高 $(not_buffed amount)%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "global_dps_mult_by_tag_mult,100,gold",
+                "stacks_multiply": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 7001,
+            "large_graphic_id": 6998,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Môrgæn loves adventuring with Gold Finding Champions (because who doesn't).",
+        "display": "莫尔甘喜欢与金币寻获型勇士一起冒险（谁不是呢）。"
+      }
+    },
+    {
+      "id": "3412",
+      "requiredLevel": 130,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3397",
+      "requiredLevel": 140,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3413",
+      "requiredLevel": 160,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3329",
+      "requiredLevel": 180,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Customized Arrow",
+        "display": "定制箭矢"
+      },
+      "upgradeType": "unlock_ultimate",
+      "effectReference": "effect_def,529",
+      "effectDefinition": {
+        "id": "529",
+        "snapshots": {
+          "original": {
+            "id": 529,
+            "flavour_text": "",
+            "description": {
+              "desc": "Unlocks $target's $use_name Ultimate Attack^^Customized Arrow: Shoots one of three random arrows^^Skull-Carved Arrow: Hits all enemies in a line^^Smokepowder Arrow: Explodes when it hits an enemy, dealing AOE damage^^Green-Leaf Arrow: does 300% damage over 20 seconds to the target enemy"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "set_random_ultimate_attack,Customized Arrow,263,264,265"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          },
+          "display": {
+            "id": 529,
+            "flavour_text": "",
+            "description": {
+              "desc": "解锁$target的$use_name杀招^^定制箭矢：随机从三种箭矢中射出其一^^骨雕箭：射击一条直线上的所有敌人^^发烟药箭：击中一名敌人时爆炸，造成范围伤害^^绿叶箭：在 20 秒内对目标敌人造成 300% 伤害"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "set_random_ultimate_attack,Customized Arrow,263,264,265"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3414",
+      "requiredLevel": 190,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3415",
+      "requiredLevel": 220,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3330",
+      "requiredLevel": 240,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Fine As Is",
+        "display": "随遇而安"
+      },
+      "upgradeType": "upgrade_ability",
+      "effectReference": "effect_def,530",
+      "effectDefinition": {
+        "id": "530",
+        "snapshots": {
+          "original": {
+            "id": 530,
+            "flavour_text": "",
+            "description": {
+              "desc": "Paid Up-Front continues to only apply to adjacent Champions"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "do_nothing,0"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          },
+          "display": {
+            "id": 530,
+            "flavour_text": "",
+            "description": {
+              "desc": "提前支付继续只对相邻勇士生效"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "do_nothing,0"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Fine As Is",
+        "display": "随遇而安"
+      },
+      "specializationDescription": {
+        "original": "Môrgæn isn't picky. The way Paid Up-Front works now is fine with her.",
+        "display": "莫尔甘并不挑剔。她对提前支付现在的效果很满意。"
+      },
+      "specializationGraphicId": "7004",
+      "tipText": null
+    },
+    {
+      "id": "3331",
+      "requiredLevel": 240,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Keep Your Distance",
+        "display": "保持距离"
+      },
+      "upgradeType": "upgrade_ability",
+      "effectReference": "effect_def,531",
+      "effectDefinition": {
+        "id": "531",
+        "snapshots": {
+          "original": {
+            "id": 531,
+            "flavour_text": "",
+            "description": {
+              "desc": "Paid Up-Front now only applies to non-adjacent Champions"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "change_upgrade_targets,3326",
+                "new_targets": "non_adj",
+                "effect_index": 0
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          },
+          "display": {
+            "id": 531,
+            "flavour_text": "",
+            "description": {
+              "desc": "提前支付现在只对不相邻勇士生效"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "change_upgrade_targets,3326",
+                "new_targets": "non_adj",
+                "effect_index": 0
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Keep Your Distance",
+        "display": "保持距离"
+      },
+      "specializationDescription": {
+        "original": "Môrgæn would like some of the less interesting Champions in your formation to please keep their distance.",
+        "display": "莫尔甘希望阵型中某些不太有趣的勇士与她保持距离。"
+      },
+      "specializationGraphicId": "7006",
+      "tipText": null
+    },
+    {
+      "id": "3332",
+      "requiredLevel": 240,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Monster Fodder",
+        "display": "怪物饲料"
+      },
+      "upgradeType": "upgrade_ability",
+      "effectReference": "effect_def,532",
+      "effectDefinition": {
+        "id": "532",
+        "snapshots": {
+          "original": {
+            "id": 532,
+            "flavour_text": "",
+            "description": {
+              "desc": "Paid Up-Front now only applies to Champions in front of Môrgæn"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "change_upgrade_targets,3326",
+                "new_targets": "ahead",
+                "effect_index": 0
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          },
+          "display": {
+            "id": 532,
+            "flavour_text": "",
+            "description": {
+              "desc": "提前支付现在只对处于莫尔甘前方的勇士生效"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "change_upgrade_targets,3326",
+                "new_targets": "ahead",
+                "effect_index": 0
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Monster Fodder",
+        "display": "怪物饲料"
+      },
+      "specializationDescription": {
+        "original": "Môrgæn would like to stay behind some of the tastier looking Champions in your formation. Let the monsters eat them, instead of her.",
+        "display": "莫尔甘喜欢留在阵型中某些看起来更美味的勇士身后。让怪物先吃他们，而不是她。"
+      },
+      "specializationGraphicId": "7007",
+      "tipText": null
+    },
+    {
+      "id": "3333",
+      "requiredLevel": 240,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Stay Out Of My Way",
+        "display": "别挡路"
+      },
+      "upgradeType": "upgrade_ability",
+      "effectReference": "effect_def,533",
+      "effectDefinition": {
+        "id": "533",
+        "snapshots": {
+          "original": {
+            "id": 533,
+            "flavour_text": "",
+            "description": {
+              "desc": "Paid Up-Front now only applies to Champions behind Môrgæn"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "change_upgrade_targets,3326",
+                "new_targets": "behind",
+                "effect_index": 0
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          },
+          "display": {
+            "id": 533,
+            "flavour_text": "",
+            "description": {
+              "desc": "提前支付现在只对处于莫尔甘后方的勇士生效"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "change_upgrade_targets,3326",
+                "new_targets": "behind",
+                "effect_index": 0
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Stay Out Of My Way",
+        "display": "别挡路"
+      },
+      "specializationDescription": {
+        "original": "Môrgæn doesn't want to hit some of the less agile Champions in your formation with her arrows, so keep her closer to the front.",
+        "display": "莫尔甘不希望阵型中某些不太敏捷的勇士被她的箭射中，所以将她放置在前线附近。"
+      },
+      "specializationGraphicId": "7008",
+      "tipText": null
+    },
+    {
+      "id": "3405",
+      "requiredLevel": 250,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,3326",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3416",
+      "requiredLevel": 260,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3417",
+      "requiredLevel": 290,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3334",
+      "requiredLevel": 300,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Keep It Simple",
+        "display": "简单最美"
+      },
+      "upgradeType": "upgrade_ability",
+      "effectReference": "effect_def,534",
+      "effectDefinition": {
+        "id": "534",
+        "snapshots": {
+          "original": {
+            "id": 534,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the effect of Paid Up-Front by $amount%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,300,3326"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          },
+          "display": {
+            "id": 534,
+            "flavour_text": "",
+            "description": {
+              "desc": "提前支付的效果提升 $amount%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,300,3326"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Keep It Simple",
+        "display": "简单最美"
+      },
+      "specializationDescription": {
+        "original": "Nothing fancy here, just keep the damage flowing.",
+        "display": "维持伤害输出，不搞花里胡哨。"
+      },
+      "specializationGraphicId": "7005",
+      "tipText": null
+    },
+    {
+      "id": "3335",
+      "requiredLevel": 300,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Tight Formation",
+        "display": "严密阵型"
+      },
+      "upgradeType": "upgrade_ability",
+      "effectReference": "effect_def,535",
+      "effectDefinition": {
+        "id": "535",
+        "snapshots": {
+          "original": {
+            "id": 535,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the effect of Paid Up-Front by $amount% (additively) for each Champion adjacent to Môrgæn"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade_per_target_crusader,75,3326,adj",
+                "show_bonus": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 535,
+            "flavour_text": "",
+            "description": {
+              "desc": "每有一位与莫尔甘相邻的勇士，提前支付的效果即提升 $amount%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade_per_target_crusader,75,3326,adj",
+                "show_bonus": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Tight Formation",
+        "display": "严密阵型"
+      },
+      "specializationDescription": {
+        "original": "Keep our formation tight, and the benefits will be immense.",
+        "display": "保持严密的阵型，获得可观增益。"
+      },
+      "specializationGraphicId": "7010",
+      "tipText": null
+    },
+    {
+      "id": "3336",
+      "requiredLevel": 300,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Calm Under Pressure",
+        "display": "从容应对"
+      },
+      "upgradeType": "upgrade_ability",
+      "effectReference": "effect_def,536",
+      "effectDefinition": {
+        "id": "536",
+        "snapshots": {
+          "original": {
+            "id": 536,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the effect of Paid Up-Front by $amount% for each Enemy attacking a Champion within 2 slots of Môrgæn (additively), up to a max of 20 Enemies"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade_per_unique_attacking_monster,20,3326",
+                "target": {
+                  "type": "distance",
+                  "distance": 2
+                },
+                "limit": 20,
+                "max_stacks": 20
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 536,
+            "flavour_text": "",
+            "description": {
+              "desc": "每名正在攻击距离莫尔甘 2 格范围内勇士的敌人，都会使提前支付的效果提高 $amount%（以加算方式叠加），最多达 20 名敌人"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade_per_unique_attacking_monster,20,3326",
+                "target": {
+                  "type": "distance",
+                  "distance": 2
+                },
+                "limit": 20,
+                "max_stacks": 20
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Calm Under Pressure",
+        "display": "从容应对"
+      },
+      "specializationDescription": {
+        "original": "Yes, some people nearby are being viciously attacked, but at least the buff is getting bigger.",
+        "display": "没错，附近有盟友正在遭受凶残的攻击，但至少增益越来越强。"
+      },
+      "specializationGraphicId": "7003",
+      "tipText": null
+    },
+    {
+      "id": "3337",
+      "requiredLevel": 300,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "The Long Game",
+        "display": "大局观"
+      },
+      "upgradeType": "upgrade_ability",
+      "effectReference": "effect_def,537",
+      "effectDefinition": {
+        "id": "537",
+        "snapshots": {
+          "original": {
+            "id": 537,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the effect of Paid Up-Front by $amount% for every second that an enemy isn't killed, up to a max of 60 seconds; resets when an enemy is killed"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,10,3326",
+                "stacks_on_trigger": "on_timer,1",
+                "max_stacks": 60,
+                "area_change_resets_stacks": true,
+                "more_triggers": [
+                  {
+                    "trigger": "monster_killed",
+                    "action": {
+                      "type": "reset"
+                    }
+                  }
+                ],
+                "off_when_benched": true,
+                "clear_stacks_on_deactivate": false,
+                "stacks_multiply": false,
+                "show_bonus": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 537,
+            "flavour_text": "",
+            "description": {
+              "desc": "每有一名敌人存活 1 秒钟，都会使提前支付的效果提高 $amount%，最多不超过 60 秒。敌人死亡后效果重置"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,10,3326",
+                "stacks_on_trigger": "on_timer,1",
+                "max_stacks": 60,
+                "area_change_resets_stacks": true,
+                "more_triggers": [
+                  {
+                    "trigger": "monster_killed",
+                    "action": {
+                      "type": "reset"
+                    }
+                  }
+                ],
+                "off_when_benched": true,
+                "clear_stacks_on_deactivate": false,
+                "stacks_multiply": false,
+                "show_bonus": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "The Long Game",
+        "display": "大局观"
+      },
+      "specializationDescription": {
+        "original": "If we just keep increasing our damage, we're bound to kill something eventually.",
+        "display": "只要持续提高伤害，最终肯定能杀死些什么。"
+      },
+      "specializationGraphicId": "7009",
+      "tipText": null
+    },
+    {
+      "id": "3418",
+      "requiredLevel": 325,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3398",
+      "requiredLevel": 340,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3419",
+      "requiredLevel": 360,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3339",
+      "requiredLevel": 380,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,3327",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3420",
+      "requiredLevel": 390,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3406",
+      "requiredLevel": 400,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,3326",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3340",
+      "requiredLevel": 420,
+      "requiredUpgradeId": "3334",
+      "name": {
+        "original": "Tight Formation",
+        "display": "严密阵型"
+      },
+      "upgradeType": "upgrade_ability",
+      "effectReference": "effect_def,535",
+      "effectDefinition": {
+        "id": "535",
+        "snapshots": {
+          "original": {
+            "id": 535,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the effect of Paid Up-Front by $amount% (additively) for each Champion adjacent to Môrgæn"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade_per_target_crusader,75,3326,adj",
+                "show_bonus": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 535,
+            "flavour_text": "",
+            "description": {
+              "desc": "每有一位与莫尔甘相邻的勇士，提前支付的效果即提升 $amount%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade_per_target_crusader,75,3326,adj",
+                "show_bonus": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Tight Formation",
+        "display": "严密阵型"
+      },
+      "specializationDescription": {
+        "original": "Keep our formation tight, and the benefits will be immense.",
+        "display": "保持严密的阵型，获得可观增益。"
+      },
+      "specializationGraphicId": "7010",
+      "tipText": null
+    },
+    {
+      "id": "3341",
+      "requiredLevel": 420,
+      "requiredUpgradeId": "3334",
+      "name": {
+        "original": "Calm Under Pressure",
+        "display": "从容应对"
+      },
+      "upgradeType": "upgrade_ability",
+      "effectReference": "effect_def,536",
+      "effectDefinition": {
+        "id": "536",
+        "snapshots": {
+          "original": {
+            "id": 536,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the effect of Paid Up-Front by $amount% for each Enemy attacking a Champion within 2 slots of Môrgæn (additively), up to a max of 20 Enemies"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade_per_unique_attacking_monster,20,3326",
+                "target": {
+                  "type": "distance",
+                  "distance": 2
+                },
+                "limit": 20,
+                "max_stacks": 20
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 536,
+            "flavour_text": "",
+            "description": {
+              "desc": "每名正在攻击距离莫尔甘 2 格范围内勇士的敌人，都会使提前支付的效果提高 $amount%（以加算方式叠加），最多达 20 名敌人"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade_per_unique_attacking_monster,20,3326",
+                "target": {
+                  "type": "distance",
+                  "distance": 2
+                },
+                "limit": 20,
+                "max_stacks": 20
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Calm Under Pressure",
+        "display": "从容应对"
+      },
+      "specializationDescription": {
+        "original": "Yes, some people nearby are being viciously attacked, but at least the buff is getting bigger.",
+        "display": "没错，附近有盟友正在遭受凶残的攻击，但至少增益越来越强。"
+      },
+      "specializationGraphicId": "7003",
+      "tipText": null
+    },
+    {
+      "id": "3342",
+      "requiredLevel": 420,
+      "requiredUpgradeId": "3334",
+      "name": {
+        "original": "The Long Game",
+        "display": "大局观"
+      },
+      "upgradeType": "upgrade_ability",
+      "effectReference": "effect_def,537",
+      "effectDefinition": {
+        "id": "537",
+        "snapshots": {
+          "original": {
+            "id": 537,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the effect of Paid Up-Front by $amount% for every second that an enemy isn't killed, up to a max of 60 seconds; resets when an enemy is killed"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,10,3326",
+                "stacks_on_trigger": "on_timer,1",
+                "max_stacks": 60,
+                "area_change_resets_stacks": true,
+                "more_triggers": [
+                  {
+                    "trigger": "monster_killed",
+                    "action": {
+                      "type": "reset"
+                    }
+                  }
+                ],
+                "off_when_benched": true,
+                "clear_stacks_on_deactivate": false,
+                "stacks_multiply": false,
+                "show_bonus": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 537,
+            "flavour_text": "",
+            "description": {
+              "desc": "每有一名敌人存活 1 秒钟，都会使提前支付的效果提高 $amount%，最多不超过 60 秒。敌人死亡后效果重置"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,10,3326",
+                "stacks_on_trigger": "on_timer,1",
+                "max_stacks": 60,
+                "area_change_resets_stacks": true,
+                "more_triggers": [
+                  {
+                    "trigger": "monster_killed",
+                    "action": {
+                      "type": "reset"
+                    }
+                  }
+                ],
+                "off_when_benched": true,
+                "clear_stacks_on_deactivate": false,
+                "stacks_multiply": false,
+                "show_bonus": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "The Long Game",
+        "display": "大局观"
+      },
+      "specializationDescription": {
+        "original": "If we just keep increasing our damage, we're bound to kill something eventually.",
+        "display": "只要持续提高伤害，最终肯定能杀死些什么。"
+      },
+      "specializationGraphicId": "7009",
+      "tipText": null
+    },
+    {
+      "id": "3343",
+      "requiredLevel": 420,
+      "requiredUpgradeId": "3335",
+      "name": {
+        "original": "Keep It Simple",
+        "display": "简单最美"
+      },
+      "upgradeType": "upgrade_ability",
+      "effectReference": "effect_def,534",
+      "effectDefinition": {
+        "id": "534",
+        "snapshots": {
+          "original": {
+            "id": 534,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the effect of Paid Up-Front by $amount%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,300,3326"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          },
+          "display": {
+            "id": 534,
+            "flavour_text": "",
+            "description": {
+              "desc": "提前支付的效果提升 $amount%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,300,3326"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Keep It Simple",
+        "display": "简单最美"
+      },
+      "specializationDescription": {
+        "original": "Nothing fancy here, just keep the damage flowing.",
+        "display": "维持伤害输出，不搞花里胡哨。"
+      },
+      "specializationGraphicId": "7005",
+      "tipText": null
+    },
+    {
+      "id": "3344",
+      "requiredLevel": 420,
+      "requiredUpgradeId": "3335",
+      "name": {
+        "original": "Calm Under Pressure",
+        "display": "从容应对"
+      },
+      "upgradeType": "upgrade_ability",
+      "effectReference": "effect_def,536",
+      "effectDefinition": {
+        "id": "536",
+        "snapshots": {
+          "original": {
+            "id": 536,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the effect of Paid Up-Front by $amount% for each Enemy attacking a Champion within 2 slots of Môrgæn (additively), up to a max of 20 Enemies"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade_per_unique_attacking_monster,20,3326",
+                "target": {
+                  "type": "distance",
+                  "distance": 2
+                },
+                "limit": 20,
+                "max_stacks": 20
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 536,
+            "flavour_text": "",
+            "description": {
+              "desc": "每名正在攻击距离莫尔甘 2 格范围内勇士的敌人，都会使提前支付的效果提高 $amount%（以加算方式叠加），最多达 20 名敌人"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade_per_unique_attacking_monster,20,3326",
+                "target": {
+                  "type": "distance",
+                  "distance": 2
+                },
+                "limit": 20,
+                "max_stacks": 20
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Calm Under Pressure",
+        "display": "从容应对"
+      },
+      "specializationDescription": {
+        "original": "Yes, some people nearby are being viciously attacked, but at least the buff is getting bigger.",
+        "display": "没错，附近有盟友正在遭受凶残的攻击，但至少增益越来越强。"
+      },
+      "specializationGraphicId": "7003",
+      "tipText": null
+    },
+    {
+      "id": "3345",
+      "requiredLevel": 420,
+      "requiredUpgradeId": "3335",
+      "name": {
+        "original": "The Long Game",
+        "display": "大局观"
+      },
+      "upgradeType": "upgrade_ability",
+      "effectReference": "effect_def,537",
+      "effectDefinition": {
+        "id": "537",
+        "snapshots": {
+          "original": {
+            "id": 537,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the effect of Paid Up-Front by $amount% for every second that an enemy isn't killed, up to a max of 60 seconds; resets when an enemy is killed"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,10,3326",
+                "stacks_on_trigger": "on_timer,1",
+                "max_stacks": 60,
+                "area_change_resets_stacks": true,
+                "more_triggers": [
+                  {
+                    "trigger": "monster_killed",
+                    "action": {
+                      "type": "reset"
+                    }
+                  }
+                ],
+                "off_when_benched": true,
+                "clear_stacks_on_deactivate": false,
+                "stacks_multiply": false,
+                "show_bonus": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 537,
+            "flavour_text": "",
+            "description": {
+              "desc": "每有一名敌人存活 1 秒钟，都会使提前支付的效果提高 $amount%，最多不超过 60 秒。敌人死亡后效果重置"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,10,3326",
+                "stacks_on_trigger": "on_timer,1",
+                "max_stacks": 60,
+                "area_change_resets_stacks": true,
+                "more_triggers": [
+                  {
+                    "trigger": "monster_killed",
+                    "action": {
+                      "type": "reset"
+                    }
+                  }
+                ],
+                "off_when_benched": true,
+                "clear_stacks_on_deactivate": false,
+                "stacks_multiply": false,
+                "show_bonus": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "The Long Game",
+        "display": "大局观"
+      },
+      "specializationDescription": {
+        "original": "If we just keep increasing our damage, we're bound to kill something eventually.",
+        "display": "只要持续提高伤害，最终肯定能杀死些什么。"
+      },
+      "specializationGraphicId": "7009",
+      "tipText": null
+    },
+    {
+      "id": "3346",
+      "requiredLevel": 420,
+      "requiredUpgradeId": "3336",
+      "name": {
+        "original": "Keep It Simple",
+        "display": "简单最美"
+      },
+      "upgradeType": "upgrade_ability",
+      "effectReference": "effect_def,534",
+      "effectDefinition": {
+        "id": "534",
+        "snapshots": {
+          "original": {
+            "id": 534,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the effect of Paid Up-Front by $amount%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,300,3326"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          },
+          "display": {
+            "id": 534,
+            "flavour_text": "",
+            "description": {
+              "desc": "提前支付的效果提升 $amount%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,300,3326"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Keep It Simple",
+        "display": "简单最美"
+      },
+      "specializationDescription": {
+        "original": "Nothing fancy here, just keep the damage flowing.",
+        "display": "维持伤害输出，不搞花里胡哨。"
+      },
+      "specializationGraphicId": "7005",
+      "tipText": null
+    },
+    {
+      "id": "3347",
+      "requiredLevel": 420,
+      "requiredUpgradeId": "3336",
+      "name": {
+        "original": "Tight Formation",
+        "display": "严密阵型"
+      },
+      "upgradeType": "upgrade_ability",
+      "effectReference": "effect_def,535",
+      "effectDefinition": {
+        "id": "535",
+        "snapshots": {
+          "original": {
+            "id": 535,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the effect of Paid Up-Front by $amount% (additively) for each Champion adjacent to Môrgæn"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade_per_target_crusader,75,3326,adj",
+                "show_bonus": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 535,
+            "flavour_text": "",
+            "description": {
+              "desc": "每有一位与莫尔甘相邻的勇士，提前支付的效果即提升 $amount%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade_per_target_crusader,75,3326,adj",
+                "show_bonus": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Tight Formation",
+        "display": "严密阵型"
+      },
+      "specializationDescription": {
+        "original": "Keep our formation tight, and the benefits will be immense.",
+        "display": "保持严密的阵型，获得可观增益。"
+      },
+      "specializationGraphicId": "7010",
+      "tipText": null
+    },
+    {
+      "id": "3348",
+      "requiredLevel": 420,
+      "requiredUpgradeId": "3336",
+      "name": {
+        "original": "The Long Game",
+        "display": "大局观"
+      },
+      "upgradeType": "upgrade_ability",
+      "effectReference": "effect_def,537",
+      "effectDefinition": {
+        "id": "537",
+        "snapshots": {
+          "original": {
+            "id": 537,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the effect of Paid Up-Front by $amount% for every second that an enemy isn't killed, up to a max of 60 seconds; resets when an enemy is killed"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,10,3326",
+                "stacks_on_trigger": "on_timer,1",
+                "max_stacks": 60,
+                "area_change_resets_stacks": true,
+                "more_triggers": [
+                  {
+                    "trigger": "monster_killed",
+                    "action": {
+                      "type": "reset"
+                    }
+                  }
+                ],
+                "off_when_benched": true,
+                "clear_stacks_on_deactivate": false,
+                "stacks_multiply": false,
+                "show_bonus": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 537,
+            "flavour_text": "",
+            "description": {
+              "desc": "每有一名敌人存活 1 秒钟，都会使提前支付的效果提高 $amount%，最多不超过 60 秒。敌人死亡后效果重置"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,10,3326",
+                "stacks_on_trigger": "on_timer,1",
+                "max_stacks": 60,
+                "area_change_resets_stacks": true,
+                "more_triggers": [
+                  {
+                    "trigger": "monster_killed",
+                    "action": {
+                      "type": "reset"
+                    }
+                  }
+                ],
+                "off_when_benched": true,
+                "clear_stacks_on_deactivate": false,
+                "stacks_multiply": false,
+                "show_bonus": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "The Long Game",
+        "display": "大局观"
+      },
+      "specializationDescription": {
+        "original": "If we just keep increasing our damage, we're bound to kill something eventually.",
+        "display": "只要持续提高伤害，最终肯定能杀死些什么。"
+      },
+      "specializationGraphicId": "7009",
+      "tipText": null
+    },
+    {
+      "id": "3349",
+      "requiredLevel": 420,
+      "requiredUpgradeId": "3337",
+      "name": {
+        "original": "Keep It Simple",
+        "display": "简单最美"
+      },
+      "upgradeType": "upgrade_ability",
+      "effectReference": "effect_def,534",
+      "effectDefinition": {
+        "id": "534",
+        "snapshots": {
+          "original": {
+            "id": 534,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the effect of Paid Up-Front by $amount%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,300,3326"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          },
+          "display": {
+            "id": 534,
+            "flavour_text": "",
+            "description": {
+              "desc": "提前支付的效果提升 $amount%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,300,3326"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Keep It Simple",
+        "display": "简单最美"
+      },
+      "specializationDescription": {
+        "original": "Nothing fancy here, just keep the damage flowing.",
+        "display": "维持伤害输出，不搞花里胡哨。"
+      },
+      "specializationGraphicId": "7005",
+      "tipText": null
+    },
+    {
+      "id": "3350",
+      "requiredLevel": 420,
+      "requiredUpgradeId": "3337",
+      "name": {
+        "original": "Tight Formation",
+        "display": "严密阵型"
+      },
+      "upgradeType": "upgrade_ability",
+      "effectReference": "effect_def,535",
+      "effectDefinition": {
+        "id": "535",
+        "snapshots": {
+          "original": {
+            "id": 535,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the effect of Paid Up-Front by $amount% (additively) for each Champion adjacent to Môrgæn"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade_per_target_crusader,75,3326,adj",
+                "show_bonus": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 535,
+            "flavour_text": "",
+            "description": {
+              "desc": "每有一位与莫尔甘相邻的勇士，提前支付的效果即提升 $amount%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade_per_target_crusader,75,3326,adj",
+                "show_bonus": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Tight Formation",
+        "display": "严密阵型"
+      },
+      "specializationDescription": {
+        "original": "Keep our formation tight, and the benefits will be immense.",
+        "display": "保持严密的阵型，获得可观增益。"
+      },
+      "specializationGraphicId": "7010",
+      "tipText": null
+    },
+    {
+      "id": "3351",
+      "requiredLevel": 420,
+      "requiredUpgradeId": "3337",
+      "name": {
+        "original": "Calm Under Pressure",
+        "display": "从容应对"
+      },
+      "upgradeType": "upgrade_ability",
+      "effectReference": "effect_def,536",
+      "effectDefinition": {
+        "id": "536",
+        "snapshots": {
+          "original": {
+            "id": 536,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the effect of Paid Up-Front by $amount% for each Enemy attacking a Champion within 2 slots of Môrgæn (additively), up to a max of 20 Enemies"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade_per_unique_attacking_monster,20,3326",
+                "target": {
+                  "type": "distance",
+                  "distance": 2
+                },
+                "limit": 20,
+                "max_stacks": 20
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 536,
+            "flavour_text": "",
+            "description": {
+              "desc": "每名正在攻击距离莫尔甘 2 格范围内勇士的敌人，都会使提前支付的效果提高 $amount%（以加算方式叠加），最多达 20 名敌人"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade_per_unique_attacking_monster,20,3326",
+                "target": {
+                  "type": "distance",
+                  "distance": 2
+                },
+                "limit": 20,
+                "max_stacks": 20
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Calm Under Pressure",
+        "display": "从容应对"
+      },
+      "specializationDescription": {
+        "original": "Yes, some people nearby are being viciously attacked, but at least the buff is getting bigger.",
+        "display": "没错，附近有盟友正在遭受凶残的攻击，但至少增益越来越强。"
+      },
+      "specializationGraphicId": "7003",
+      "tipText": null
+    },
+    {
+      "id": "3421",
+      "requiredLevel": 465,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3422",
+      "requiredLevel": 530,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3399",
+      "requiredLevel": 540,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3407",
+      "requiredLevel": 550,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,3326",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3423",
+      "requiredLevel": 590,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3424",
+      "requiredLevel": 630,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3403",
+      "requiredLevel": 640,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,3327",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3425",
+      "requiredLevel": 680,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3400",
+      "requiredLevel": 690,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3408",
+      "requiredLevel": 700,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,3326",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3426",
+      "requiredLevel": 730,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3427",
+      "requiredLevel": 780,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3428",
+      "requiredLevel": 830,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3401",
+      "requiredLevel": 840,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3409",
+      "requiredLevel": 850,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,3326",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3429",
+      "requiredLevel": 880,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3404",
+      "requiredLevel": 900,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,3327",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3430",
+      "requiredLevel": 930,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3402",
+      "requiredLevel": 940,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3962",
+      "requiredLevel": 960,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3963",
+      "requiredLevel": 1010,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,200,3326",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3964",
+      "requiredLevel": 1030,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3965",
+      "requiredLevel": 1065,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,200,3327",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3966",
+      "requiredLevel": 1080,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3967",
+      "requiredLevel": 1105,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5200",
+      "requiredLevel": 1140,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5201",
+      "requiredLevel": 1170,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,3327",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5202",
+      "requiredLevel": 1180,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5203",
+      "requiredLevel": 1200,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,3326",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5204",
+      "requiredLevel": 1230,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5205",
+      "requiredLevel": 1250,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6619",
+      "requiredLevel": 1280,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6620",
+      "requiredLevel": 1310,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,3326",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6621",
+      "requiredLevel": 1340,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6622",
+      "requiredLevel": 1370,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,200,3326",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6623",
+      "requiredLevel": 1420,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8388",
+      "requiredLevel": 1450,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8389",
+      "requiredLevel": 1480,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,3326",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8390",
+      "requiredLevel": 1510,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8391",
+      "requiredLevel": 1540,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,3327",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8392",
+      "requiredLevel": 1590,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    }
+  ],
+  "feats": [
+    {
+      "id": "330",
+      "order": 1,
+      "name": {
+        "original": "Selflessness",
+        "display": "无私"
+      },
+      "description": {
+        "original": "Sure, that works.",
+        "display": "当然，起作用了。"
+      },
+      "rarity": "2",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "331",
+      "order": 2,
+      "name": {
+        "original": "Inspiring Leader",
+        "display": "鼓舞人心的首领"
+      },
+      "description": {
+        "original": "Who, me?",
+        "display": "谁，我吗？"
+      },
+      "rarity": "3",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,25"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "332",
+      "order": 3,
+      "name": {
+        "original": "Necessary Paperwork",
+        "display": "必要的文件"
+      },
+      "description": {
+        "original": "Who knows if you're going to be alive when I return?",
+        "display": "谁知道我回来的时候，你是否还活着？"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,3326"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "333",
+      "order": 4,
+      "name": {
+        "original": "Red Tape",
+        "display": "繁文缛节"
+      },
+      "description": {
+        "original": "This isn't my first adventure, you know.",
+        "display": "这不是我的第一次冒险，明白我的意思吧。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,3326"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "334",
+      "order": 5,
+      "name": {
+        "original": "Running with the Cool Kids",
+        "display": "与那些超酷的孩子们一起跑"
+      },
+      "description": {
+        "original": "I'll have what they're having.",
+        "display": "我会与他们共享他们拥有的。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,3327"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "730",
+      "order": 6,
+      "name": {
+        "original": "Coin in Hand",
+        "display": "钱币在手"
+      },
+      "description": {
+        "original": "I'll start as soon as you pay me.",
+        "display": "你把钱付了，我就开始。"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,3326"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "promo",
+          "promotion_id": 50
+        }
+      ],
+      "properties": {
+        "in_flash_sale": true,
+        "is_available": true,
+        "available_at_time": 1644609600
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "1428",
+      "order": 7,
+      "name": {
+        "original": "Time is Money",
+        "display": "时间宝贵"
+      },
+      "description": {
+        "original": "Sure, I'll help -- but you better be collecting gold for me!",
+        "display": "行吧，我会帮忙--但你最好别忘记帮我收集金币！"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,3327"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 360
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1695841200
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    }
+  ],
+  "skins": [],
+  "raw": {
+    "hero": {
+      "original": {
+        "id": 55,
+        "name": "Môrgæn",
+        "english_name": "Môrgæn",
+        "seat_id": 9,
+        "base_cost": "11000000000000",
+        "base_damage": "1850000000",
+        "base_health": "43",
+        "cost_curves": {
+          "1": 1.11
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 262,
+        "ultimate_attack_id": 263,
+        "graphic_id": 7075,
+        "portrait_graphic_id": 7083,
+        "character_sheet_details": {
+          "full_name": "Môrgæn",
+          "class": "Ranger",
+          "race": "Elf (High)",
+          "age": 150,
+          "alignment": "Chaotic Neutral",
+          "ability_scores": {
+            "str": 12,
+            "dex": 20,
+            "con": 12,
+            "int": 14,
+            "wis": 15,
+            "cha": 10
+          },
+          "backstory": "The ranger Môrgæn is a renowned tracker and hunter, able to pinpoint-target foes at any range, then vanish into the woods with no one the wiser. Her legendary ability with the longbow and the custom arrows she crafts instills fear into the hearts of her many enemies -- and more than a few of her coworkers. Famously, she is the only member of Acquisitions Incorporated known to be paid in advance, lest a missed invoice lead to dire repercussions.",
+          "system_description": "Môrgæn always gets paid up front for her services. She skims a percentage off of every monster slain, and buffs the party relative to the total amount she's collected."
+        },
+        "default_feat_slot_unlocks": [
+          185,
+          630,
+          1155,
+          1805
+        ],
+        "tags": [
+          "female",
+          "elf",
+          "ranger",
+          "chaotic",
+          "neutral",
+          "support",
+          "gold",
+          "acqinc",
+          "event",
+          "y3",
+          "geneutral"
+        ],
+        "properties": {
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            170,
+            171,
+            172
+          ],
+          "graphic_large": 7081,
+          "graphic_xl": 13926,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            81,
+            82
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 4,
+            "gethit": 5,
+            "koed": 6,
+            "run": 7
+          },
+          "allow_time_gate": "2020-01-20 12:00:00",
+          "time_gate_blackout": {
+            "start": "2022-01-12 00:00:00",
+            "end": "2022-01-24 12:00:00"
+          },
+          "time_gate_adventure_id": 528,
+          "time_gate_variants_ids": [
+            464,
+            465,
+            466
+          ],
+          "time_gate_tier": 1,
+          "silver_chest_type_id": 168,
+          "gold_chest_type_id": 169,
+          "available_in_store": "2020-01-27 12:00:00",
+          "store_blackout": {
+            "start": "2022-01-12 00:00:00",
+            "end": "2022-01-24 12:00:00"
+          },
+          "golden_epic_loot_id": 1300,
+          "golden_epic_promo_id": 144,
+          "event_logo_graphic_id": 3373,
+          "console_portrait": 6987,
+          "head_graphic_id": 7279,
+          "trials_effect_id": 848,
+          "legendary_effect_id": [
+            1,
+            3,
+            7,
+            38,
+            94,
+            53
+          ],
+          "weekly_buff": "buff_upgrade,200,3326",
+          "portrait_graphic_scale": 0.94,
+          "notification_adjustment": {
+            "offset": [
+              53,
+              224
+            ],
+            "scale": 1.25
+          }
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 463,
+            "type": "base"
+          },
+          {
+            "adventure_id": 464,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 465,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 466,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 467,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 528,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 43,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 3328,
+            "name": "Double Tap",
+            "description": "",
+            "graphic_id": "6997"
+          },
+          {
+            "upgrade_id": 3326,
+            "name": "Paid Up Front",
+            "description": "Môrgæn collects a portion of the gold dropped by monsters but then buffs the formation partially based on the gold collected.",
+            "graphic_id": "6999"
+          },
+          {
+            "upgrade_id": 3327,
+            "name": "Friends In Wealth",
+            "description": "Môrgæn loves adventuring with Gold Finding Champions (because who doesn't).",
+            "graphic_id": "6998"
+          },
+          {
+            "upgrade_id": 3329,
+            "name": "Customized Arrow",
+            "description": "",
+            "graphic_id": 813
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1799352000,
+        "event_name": "Wintershield",
+        "is_available": true,
+        "date_available": "2020-01-08 00:00:00",
+        "last_rework_date": "2020-01-08 00:00:00"
+      },
+      "display": {
+        "id": 55,
+        "name": "莫尔甘",
+        "english_name": "Môrgæn",
+        "seat_id": 9,
+        "base_cost": "11000000000000",
+        "base_damage": "1850000000",
+        "base_health": "43",
+        "cost_curves": {
+          "1": 1.11
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 262,
+        "ultimate_attack_id": 263,
+        "graphic_id": 7075,
+        "portrait_graphic_id": 7083,
+        "character_sheet_details": {
+          "full_name": "莫尔甘",
+          "class": "巡林客",
+          "race": "精灵（高等）",
+          "age": 150,
+          "alignment": "混乱中立",
+          "ability_scores": {
+            "str": 12,
+            "dex": 20,
+            "con": 12,
+            "int": 14,
+            "wis": 15,
+            "cha": 10
+          },
+          "backstory": "巡林客莫尔甘是著名的追踪者和猎手，能在任何范围准确点杀敌人，然后悄然消失在树林里。她使用长弓和特制箭矢的传奇能力，使许多敌人以及一些同事心生恐惧。最出名的是，她是艾奎兹玄有限责任公司唯一会预先付款的成员，因为公司不想错过付款时间而导致可怕的后果。",
+          "system_description": "莫尔甘的服务总是能预先得到报酬。她从每个击杀的怪物身上掠夺一定比例金币，并根据收集到的总额为队伍提供增益。"
+        },
+        "default_feat_slot_unlocks": [
+          185,
+          630,
+          1155,
+          1805
+        ],
+        "tags": [
+          "female",
+          "elf",
+          "ranger",
+          "chaotic",
+          "neutral",
+          "support",
+          "gold",
+          "acqinc",
+          "event",
+          "y3",
+          "geneutral"
+        ],
+        "properties": {
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            170,
+            171,
+            172
+          ],
+          "graphic_large": 7081,
+          "graphic_xl": 13926,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            81,
+            82
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 4,
+            "gethit": 5,
+            "koed": 6,
+            "run": 7
+          },
+          "allow_time_gate": "2020-01-20 12:00:00",
+          "time_gate_blackout": {
+            "start": "2022-01-12 00:00:00",
+            "end": "2022-01-24 12:00:00"
+          },
+          "time_gate_adventure_id": 528,
+          "time_gate_variants_ids": [
+            464,
+            465,
+            466
+          ],
+          "time_gate_tier": 1,
+          "silver_chest_type_id": 168,
+          "gold_chest_type_id": 169,
+          "available_in_store": "2020-01-27 12:00:00",
+          "store_blackout": {
+            "start": "2022-01-12 00:00:00",
+            "end": "2022-01-24 12:00:00"
+          },
+          "golden_epic_loot_id": 1300,
+          "golden_epic_promo_id": 144,
+          "event_logo_graphic_id": 3373,
+          "console_portrait": 6987,
+          "head_graphic_id": 7279,
+          "trials_effect_id": 848,
+          "legendary_effect_id": [
+            1,
+            3,
+            7,
+            38,
+            94,
+            53
+          ],
+          "weekly_buff": "buff_upgrade,200,3326",
+          "portrait_graphic_scale": 0.94,
+          "notification_adjustment": {
+            "offset": [
+              53,
+              224
+            ],
+            "scale": 1.25
+          }
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 463,
+            "type": "base"
+          },
+          {
+            "adventure_id": 464,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 465,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 466,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 467,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 528,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 43,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 3328,
+            "name": "双金连射",
+            "description": "",
+            "graphic_id": "6997"
+          },
+          {
+            "upgrade_id": 3326,
+            "name": "提前支付",
+            "description": "莫尔甘会收集怪物掉落的一部分金币，然后根据收集的金币数量强化一部分队友。",
+            "graphic_id": "6999"
+          },
+          {
+            "upgrade_id": 3327,
+            "name": "土豪朋友",
+            "description": "莫尔甘喜欢与金币寻获型勇士一起冒险（谁不是呢）。",
+            "graphic_id": "6998"
+          },
+          {
+            "upgrade_id": 3329,
+            "name": "定制箭矢",
+            "description": "",
+            "graphic_id": 813
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1799352000,
+        "event_name": "冬盾节",
+        "is_available": true,
+        "date_available": "2020-01-08 00:00:00",
+        "last_rework_date": "2020-01-08 00:00:00"
+      }
+    },
+    "attacks": [
+      {
+        "id": "262",
+        "snapshots": {
+          "original": {
+            "id": 262,
+            "name": "Rapid Shot",
+            "description": "Môrgæn shoots an arrow at a random target, then quickly follows up with a second arrow.",
+            "long_description": "Môrgæn shoots an arrow at a random target, then quickly follows up with a second arrow. This arrow always targets the same enemy, even if that enemy is killed by the first arrow.",
+            "graphic_id": 0,
+            "target": "random",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 5.2,
+            "animations": [
+              {
+                "type": "ranged_attack",
+                "projectile": "morgaen_arrow",
+                "projectile_details": {
+                  "delay_frames": 11
+                },
+                "shoot_frame": 8,
+                "shoot_offset_x": 65,
+                "shoot_offset_y": -45
+              }
+            ],
+            "tags": [
+              "ranged"
+            ],
+            "damage_types": [
+              "ranged"
+            ]
+          },
+          "display": {
+            "id": 262,
+            "name": "快速射击",
+            "description": "莫尔甘向随机目标射出一箭，然后迅速射出第二箭。",
+            "long_description": "莫尔甘向随机目标射出一箭，然后迅速射出第二箭。两支箭始终会射向同一敌人，即使该敌人已经被第一箭击杀。",
+            "graphic_id": 0,
+            "target": "random",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 5.2,
+            "animations": [
+              {
+                "type": "ranged_attack",
+                "projectile": "morgaen_arrow",
+                "projectile_details": {
+                  "delay_frames": 11
+                },
+                "shoot_frame": 8,
+                "shoot_offset_x": 65,
+                "shoot_offset_y": -45
+              }
+            ],
+            "tags": [
+              "ranged"
+            ],
+            "damage_types": [
+              "ranged"
+            ]
+          }
+        }
+      },
+      {
+        "id": "263",
+        "snapshots": {
+          "original": {
+            "id": 263,
+            "name": "Customized Arrow",
+            "description": "Môrgæn shoots a customized arrow from her quiver, with one of 3 random effects.",
+            "long_description": "Môrgæn pulls a customized arrow from her quiver at random, and fires this more powerful arrow towards a random enemy.",
+            "graphic_id": 7011,
+            "target": "random",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 0.03,
+            "cooldown": 210,
+            "animations": [
+              {
+                "type": "ranged_attack",
+                "projectile": "skull_carved_arrow",
+                "shoot_frame": 13,
+                "line_damage_distance": 100,
+                "shoot_offset_x": 65,
+                "shoot_offset_y": -45
+              }
+            ],
+            "tags": [
+              "ranged",
+              "ultimate"
+            ],
+            "damage_types": [
+              "ranged"
+            ]
+          },
+          "display": {
+            "id": 263,
+            "name": "定制箭矢",
+            "description": "莫尔甘射出一支箭囊中的定制箭矢，箭矢带有 3 种随机效果之一。",
+            "long_description": "莫尔甘从箭囊中随机抽出一支定制箭矢，然后将这支更强力的箭矢射向一名随机敌人。",
+            "graphic_id": 7011,
+            "target": "random",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 0.03,
+            "cooldown": 210,
+            "animations": [
+              {
+                "type": "ranged_attack",
+                "projectile": "skull_carved_arrow",
+                "shoot_frame": 13,
+                "line_damage_distance": 100,
+                "shoot_offset_x": 65,
+                "shoot_offset_y": -45
+              }
+            ],
+            "tags": [
+              "ranged",
+              "ultimate"
+            ],
+            "damage_types": [
+              "ranged"
+            ]
+          }
+        }
+      }
+    ],
+    "upgrades": [
+      {
+        "id": "3326",
+        "snapshots": {
+          "original": {
+            "id": 3326,
+            "hero_id": 55,
+            "required_level": 60,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,523",
+            "static_dps_mult": "4",
+            "default_enabled": 1,
+            "name": "Paid Up Front",
+            "tip_text": "Môrgæn collects a portion of the gold dropped by monsters but then buffs the formation partially based on the gold collected."
+          },
+          "display": {
+            "id": 3326,
+            "hero_id": 55,
+            "required_level": 60,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,523",
+            "static_dps_mult": "4",
+            "default_enabled": 1,
+            "name": "提前支付",
+            "tip_text": "莫尔甘会收集怪物掉落的一部分金币，然后根据收集的金币数量强化一部分队友。"
+          }
+        }
+      },
+      {
+        "id": "3327",
+        "snapshots": {
+          "original": {
+            "id": 3327,
+            "hero_id": 55,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,525",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Friends In Wealth",
+            "tip_text": "Môrgæn loves adventuring with Gold Finding Champions (because who doesn't)."
+          },
+          "display": {
+            "id": 3327,
+            "hero_id": 55,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,525",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "土豪朋友",
+            "tip_text": "莫尔甘喜欢与金币寻获型勇士一起冒险（谁不是呢）。"
+          }
+        }
+      },
+      {
+        "id": "3328",
+        "snapshots": {
+          "original": {
+            "id": 3328,
+            "hero_id": 55,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,526",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Double Tap"
+          },
+          "display": {
+            "id": 3328,
+            "hero_id": 55,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,526",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "双金连射"
+          }
+        }
+      },
+      {
+        "id": "3329",
+        "snapshots": {
+          "original": {
+            "id": 3329,
+            "hero_id": 55,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "effect_def,529",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Customized Arrow"
+          },
+          "display": {
+            "id": 3329,
+            "hero_id": 55,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "effect_def,529",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "定制箭矢"
+          }
+        }
+      },
+      {
+        "id": "3330",
+        "snapshots": {
+          "original": {
+            "id": 3330,
+            "hero_id": 55,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,530",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Fine As Is",
+            "specialization_name": "Fine As Is",
+            "specialization_description": "Môrgæn isn't picky. The way Paid Up-Front works now is fine with her.",
+            "specialization_graphic_id": 7004
+          },
+          "display": {
+            "id": 3330,
+            "hero_id": 55,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,530",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "随遇而安",
+            "specialization_name": "随遇而安",
+            "specialization_description": "莫尔甘并不挑剔。她对提前支付现在的效果很满意。",
+            "specialization_graphic_id": 7004
+          }
+        }
+      },
+      {
+        "id": "3331",
+        "snapshots": {
+          "original": {
+            "id": 3331,
+            "hero_id": 55,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,531",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Keep Your Distance",
+            "specialization_name": "Keep Your Distance",
+            "specialization_description": "Môrgæn would like some of the less interesting Champions in your formation to please keep their distance.",
+            "specialization_graphic_id": 7006
+          },
+          "display": {
+            "id": 3331,
+            "hero_id": 55,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,531",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "保持距离",
+            "specialization_name": "保持距离",
+            "specialization_description": "莫尔甘希望阵型中某些不太有趣的勇士与她保持距离。",
+            "specialization_graphic_id": 7006
+          }
+        }
+      },
+      {
+        "id": "3332",
+        "snapshots": {
+          "original": {
+            "id": 3332,
+            "hero_id": 55,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,532",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Monster Fodder",
+            "specialization_name": "Monster Fodder",
+            "specialization_description": "Môrgæn would like to stay behind some of the tastier looking Champions in your formation. Let the monsters eat them, instead of her.",
+            "specialization_graphic_id": 7007
+          },
+          "display": {
+            "id": 3332,
+            "hero_id": 55,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,532",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "怪物饲料",
+            "specialization_name": "怪物饲料",
+            "specialization_description": "莫尔甘喜欢留在阵型中某些看起来更美味的勇士身后。让怪物先吃他们，而不是她。",
+            "specialization_graphic_id": 7007
+          }
+        }
+      },
+      {
+        "id": "3333",
+        "snapshots": {
+          "original": {
+            "id": 3333,
+            "hero_id": 55,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,533",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Stay Out Of My Way",
+            "specialization_name": "Stay Out Of My Way",
+            "specialization_description": "Môrgæn doesn't want to hit some of the less agile Champions in your formation with her arrows, so keep her closer to the front.",
+            "specialization_graphic_id": 7008
+          },
+          "display": {
+            "id": 3333,
+            "hero_id": 55,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,533",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "别挡路",
+            "specialization_name": "别挡路",
+            "specialization_description": "莫尔甘不希望阵型中某些不太敏捷的勇士被她的箭射中，所以将她放置在前线附近。",
+            "specialization_graphic_id": 7008
+          }
+        }
+      },
+      {
+        "id": "3334",
+        "snapshots": {
+          "original": {
+            "id": 3334,
+            "hero_id": 55,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,534",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Keep It Simple",
+            "specialization_name": "Keep It Simple",
+            "specialization_description": "Nothing fancy here, just keep the damage flowing.",
+            "specialization_graphic_id": 7005
+          },
+          "display": {
+            "id": 3334,
+            "hero_id": 55,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,534",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "简单最美",
+            "specialization_name": "简单最美",
+            "specialization_description": "维持伤害输出，不搞花里胡哨。",
+            "specialization_graphic_id": 7005
+          }
+        }
+      },
+      {
+        "id": "3335",
+        "snapshots": {
+          "original": {
+            "id": 3335,
+            "hero_id": 55,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,535",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Tight Formation",
+            "specialization_name": "Tight Formation",
+            "specialization_description": "Keep our formation tight, and the benefits will be immense.",
+            "specialization_graphic_id": 7010
+          },
+          "display": {
+            "id": 3335,
+            "hero_id": 55,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,535",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "严密阵型",
+            "specialization_name": "严密阵型",
+            "specialization_description": "保持严密的阵型，获得可观增益。",
+            "specialization_graphic_id": 7010
+          }
+        }
+      },
+      {
+        "id": "3336",
+        "snapshots": {
+          "original": {
+            "id": 3336,
+            "hero_id": 55,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,536",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Calm Under Pressure",
+            "specialization_name": "Calm Under Pressure",
+            "specialization_description": "Yes, some people nearby are being viciously attacked, but at least the buff is getting bigger.",
+            "specialization_graphic_id": 7003
+          },
+          "display": {
+            "id": 3336,
+            "hero_id": 55,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,536",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "从容应对",
+            "specialization_name": "从容应对",
+            "specialization_description": "没错，附近有盟友正在遭受凶残的攻击，但至少增益越来越强。",
+            "specialization_graphic_id": 7003
+          }
+        }
+      },
+      {
+        "id": "3337",
+        "snapshots": {
+          "original": {
+            "id": 3337,
+            "hero_id": 55,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,537",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "The Long Game",
+            "specialization_name": "The Long Game",
+            "specialization_description": "If we just keep increasing our damage, we're bound to kill something eventually.",
+            "specialization_graphic_id": 7009
+          },
+          "display": {
+            "id": 3337,
+            "hero_id": 55,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,537",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "大局观",
+            "specialization_name": "大局观",
+            "specialization_description": "只要持续提高伤害，最终肯定能杀死些什么。",
+            "specialization_graphic_id": 7009
+          }
+        }
+      },
+      {
+        "id": "3338",
+        "snapshots": {
+          "original": {
+            "id": 3338,
+            "hero_id": 55,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3326",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3338,
+            "hero_id": 55,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3326",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3339",
+        "snapshots": {
+          "original": {
+            "id": 3339,
+            "hero_id": 55,
+            "required_level": 380,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3327",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3339,
+            "hero_id": 55,
+            "required_level": 380,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3327",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3340",
+        "snapshots": {
+          "original": {
+            "id": 3340,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3334,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,535",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Tight Formation",
+            "specialization_name": "Tight Formation",
+            "specialization_description": "Keep our formation tight, and the benefits will be immense.",
+            "specialization_graphic_id": 7010
+          },
+          "display": {
+            "id": 3340,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3334,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,535",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "严密阵型",
+            "specialization_name": "严密阵型",
+            "specialization_description": "保持严密的阵型，获得可观增益。",
+            "specialization_graphic_id": 7010
+          }
+        }
+      },
+      {
+        "id": "3341",
+        "snapshots": {
+          "original": {
+            "id": 3341,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3334,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,536",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Calm Under Pressure",
+            "specialization_name": "Calm Under Pressure",
+            "specialization_description": "Yes, some people nearby are being viciously attacked, but at least the buff is getting bigger.",
+            "specialization_graphic_id": 7003
+          },
+          "display": {
+            "id": 3341,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3334,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,536",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "从容应对",
+            "specialization_name": "从容应对",
+            "specialization_description": "没错，附近有盟友正在遭受凶残的攻击，但至少增益越来越强。",
+            "specialization_graphic_id": 7003
+          }
+        }
+      },
+      {
+        "id": "3342",
+        "snapshots": {
+          "original": {
+            "id": 3342,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3334,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,537",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "The Long Game",
+            "specialization_name": "The Long Game",
+            "specialization_description": "If we just keep increasing our damage, we're bound to kill something eventually.",
+            "specialization_graphic_id": 7009
+          },
+          "display": {
+            "id": 3342,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3334,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,537",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "大局观",
+            "specialization_name": "大局观",
+            "specialization_description": "只要持续提高伤害，最终肯定能杀死些什么。",
+            "specialization_graphic_id": 7009
+          }
+        }
+      },
+      {
+        "id": "3343",
+        "snapshots": {
+          "original": {
+            "id": 3343,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3335,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,534",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Keep It Simple",
+            "specialization_name": "Keep It Simple",
+            "specialization_description": "Nothing fancy here, just keep the damage flowing.",
+            "specialization_graphic_id": 7005
+          },
+          "display": {
+            "id": 3343,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3335,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,534",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "简单最美",
+            "specialization_name": "简单最美",
+            "specialization_description": "维持伤害输出，不搞花里胡哨。",
+            "specialization_graphic_id": 7005
+          }
+        }
+      },
+      {
+        "id": "3344",
+        "snapshots": {
+          "original": {
+            "id": 3344,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3335,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,536",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Calm Under Pressure",
+            "specialization_name": "Calm Under Pressure",
+            "specialization_description": "Yes, some people nearby are being viciously attacked, but at least the buff is getting bigger.",
+            "specialization_graphic_id": 7003
+          },
+          "display": {
+            "id": 3344,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3335,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,536",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "从容应对",
+            "specialization_name": "从容应对",
+            "specialization_description": "没错，附近有盟友正在遭受凶残的攻击，但至少增益越来越强。",
+            "specialization_graphic_id": 7003
+          }
+        }
+      },
+      {
+        "id": "3345",
+        "snapshots": {
+          "original": {
+            "id": 3345,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3335,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,537",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "The Long Game",
+            "specialization_name": "The Long Game",
+            "specialization_description": "If we just keep increasing our damage, we're bound to kill something eventually.",
+            "specialization_graphic_id": 7009
+          },
+          "display": {
+            "id": 3345,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3335,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,537",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "大局观",
+            "specialization_name": "大局观",
+            "specialization_description": "只要持续提高伤害，最终肯定能杀死些什么。",
+            "specialization_graphic_id": 7009
+          }
+        }
+      },
+      {
+        "id": "3346",
+        "snapshots": {
+          "original": {
+            "id": 3346,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3336,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,534",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Keep It Simple",
+            "specialization_name": "Keep It Simple",
+            "specialization_description": "Nothing fancy here, just keep the damage flowing.",
+            "specialization_graphic_id": 7005
+          },
+          "display": {
+            "id": 3346,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3336,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,534",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "简单最美",
+            "specialization_name": "简单最美",
+            "specialization_description": "维持伤害输出，不搞花里胡哨。",
+            "specialization_graphic_id": 7005
+          }
+        }
+      },
+      {
+        "id": "3347",
+        "snapshots": {
+          "original": {
+            "id": 3347,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3336,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,535",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Tight Formation",
+            "specialization_name": "Tight Formation",
+            "specialization_description": "Keep our formation tight, and the benefits will be immense.",
+            "specialization_graphic_id": 7010
+          },
+          "display": {
+            "id": 3347,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3336,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,535",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "严密阵型",
+            "specialization_name": "严密阵型",
+            "specialization_description": "保持严密的阵型，获得可观增益。",
+            "specialization_graphic_id": 7010
+          }
+        }
+      },
+      {
+        "id": "3348",
+        "snapshots": {
+          "original": {
+            "id": 3348,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3336,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,537",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "The Long Game",
+            "specialization_name": "The Long Game",
+            "specialization_description": "If we just keep increasing our damage, we're bound to kill something eventually.",
+            "specialization_graphic_id": 7009
+          },
+          "display": {
+            "id": 3348,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3336,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,537",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "大局观",
+            "specialization_name": "大局观",
+            "specialization_description": "只要持续提高伤害，最终肯定能杀死些什么。",
+            "specialization_graphic_id": 7009
+          }
+        }
+      },
+      {
+        "id": "3349",
+        "snapshots": {
+          "original": {
+            "id": 3349,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3337,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,534",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Keep It Simple",
+            "specialization_name": "Keep It Simple",
+            "specialization_description": "Nothing fancy here, just keep the damage flowing.",
+            "specialization_graphic_id": 7005
+          },
+          "display": {
+            "id": 3349,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3337,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,534",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "简单最美",
+            "specialization_name": "简单最美",
+            "specialization_description": "维持伤害输出，不搞花里胡哨。",
+            "specialization_graphic_id": 7005
+          }
+        }
+      },
+      {
+        "id": "3350",
+        "snapshots": {
+          "original": {
+            "id": 3350,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3337,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,535",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Tight Formation",
+            "specialization_name": "Tight Formation",
+            "specialization_description": "Keep our formation tight, and the benefits will be immense.",
+            "specialization_graphic_id": 7010
+          },
+          "display": {
+            "id": 3350,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3337,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,535",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "严密阵型",
+            "specialization_name": "严密阵型",
+            "specialization_description": "保持严密的阵型，获得可观增益。",
+            "specialization_graphic_id": 7010
+          }
+        }
+      },
+      {
+        "id": "3351",
+        "snapshots": {
+          "original": {
+            "id": 3351,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3337,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,536",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Calm Under Pressure",
+            "specialization_name": "Calm Under Pressure",
+            "specialization_description": "Yes, some people nearby are being viciously attacked, but at least the buff is getting bigger.",
+            "specialization_graphic_id": 7003
+          },
+          "display": {
+            "id": 3351,
+            "hero_id": 55,
+            "required_level": 420,
+            "required_upgrade_id": 3337,
+            "upgrade_type": "upgrade_ability",
+            "effect": "effect_def,536",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "从容应对",
+            "specialization_name": "从容应对",
+            "specialization_description": "没错，附近有盟友正在遭受凶残的攻击，但至少增益越来越强。",
+            "specialization_graphic_id": 7003
+          }
+        }
+      },
+      {
+        "id": "3352",
+        "snapshots": {
+          "original": {
+            "id": 3352,
+            "hero_id": 55,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3352,
+            "hero_id": 55,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3396",
+        "snapshots": {
+          "original": {
+            "id": 3396,
+            "hero_id": 55,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3396,
+            "hero_id": 55,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3397",
+        "snapshots": {
+          "original": {
+            "id": 3397,
+            "hero_id": 55,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3397,
+            "hero_id": 55,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3398",
+        "snapshots": {
+          "original": {
+            "id": 3398,
+            "hero_id": 55,
+            "required_level": 340,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3398,
+            "hero_id": 55,
+            "required_level": 340,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3399",
+        "snapshots": {
+          "original": {
+            "id": 3399,
+            "hero_id": 55,
+            "required_level": 540,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3399,
+            "hero_id": 55,
+            "required_level": 540,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3400",
+        "snapshots": {
+          "original": {
+            "id": 3400,
+            "hero_id": 55,
+            "required_level": 690,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3400,
+            "hero_id": 55,
+            "required_level": 690,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3401",
+        "snapshots": {
+          "original": {
+            "id": 3401,
+            "hero_id": 55,
+            "required_level": 840,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3401,
+            "hero_id": 55,
+            "required_level": 840,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3402",
+        "snapshots": {
+          "original": {
+            "id": 3402,
+            "hero_id": 55,
+            "required_level": 940,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3402,
+            "hero_id": 55,
+            "required_level": 940,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3403",
+        "snapshots": {
+          "original": {
+            "id": 3403,
+            "hero_id": 55,
+            "required_level": 640,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3327",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3403,
+            "hero_id": 55,
+            "required_level": 640,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3327",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3404",
+        "snapshots": {
+          "original": {
+            "id": 3404,
+            "hero_id": 55,
+            "required_level": 900,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3327",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3404,
+            "hero_id": 55,
+            "required_level": 900,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3327",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3405",
+        "snapshots": {
+          "original": {
+            "id": 3405,
+            "hero_id": 55,
+            "required_level": 250,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3326",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3405,
+            "hero_id": 55,
+            "required_level": 250,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3326",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3406",
+        "snapshots": {
+          "original": {
+            "id": 3406,
+            "hero_id": 55,
+            "required_level": 400,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3326",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3406,
+            "hero_id": 55,
+            "required_level": 400,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3326",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3407",
+        "snapshots": {
+          "original": {
+            "id": 3407,
+            "hero_id": 55,
+            "required_level": 550,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3326",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3407,
+            "hero_id": 55,
+            "required_level": 550,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3326",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3408",
+        "snapshots": {
+          "original": {
+            "id": 3408,
+            "hero_id": 55,
+            "required_level": 700,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3326",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3408,
+            "hero_id": 55,
+            "required_level": 700,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3326",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3409",
+        "snapshots": {
+          "original": {
+            "id": 3409,
+            "hero_id": 55,
+            "required_level": 850,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3326",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3409,
+            "hero_id": 55,
+            "required_level": 850,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3326",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3410",
+        "snapshots": {
+          "original": {
+            "id": 3410,
+            "hero_id": 55,
+            "required_level": 85,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3410,
+            "hero_id": 55,
+            "required_level": 85,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3411",
+        "snapshots": {
+          "original": {
+            "id": 3411,
+            "hero_id": 55,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3411,
+            "hero_id": 55,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3412",
+        "snapshots": {
+          "original": {
+            "id": 3412,
+            "hero_id": 55,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3412,
+            "hero_id": 55,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3413",
+        "snapshots": {
+          "original": {
+            "id": 3413,
+            "hero_id": 55,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3413,
+            "hero_id": 55,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3414",
+        "snapshots": {
+          "original": {
+            "id": 3414,
+            "hero_id": 55,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3414,
+            "hero_id": 55,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3415",
+        "snapshots": {
+          "original": {
+            "id": 3415,
+            "hero_id": 55,
+            "required_level": 220,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3415,
+            "hero_id": 55,
+            "required_level": 220,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3416",
+        "snapshots": {
+          "original": {
+            "id": 3416,
+            "hero_id": 55,
+            "required_level": 260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3416,
+            "hero_id": 55,
+            "required_level": 260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3417",
+        "snapshots": {
+          "original": {
+            "id": 3417,
+            "hero_id": 55,
+            "required_level": 290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3417,
+            "hero_id": 55,
+            "required_level": 290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3418",
+        "snapshots": {
+          "original": {
+            "id": 3418,
+            "hero_id": 55,
+            "required_level": 325,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3418,
+            "hero_id": 55,
+            "required_level": 325,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3419",
+        "snapshots": {
+          "original": {
+            "id": 3419,
+            "hero_id": 55,
+            "required_level": 360,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3419,
+            "hero_id": 55,
+            "required_level": 360,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3420",
+        "snapshots": {
+          "original": {
+            "id": 3420,
+            "hero_id": 55,
+            "required_level": 390,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3420,
+            "hero_id": 55,
+            "required_level": 390,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3421",
+        "snapshots": {
+          "original": {
+            "id": 3421,
+            "hero_id": 55,
+            "required_level": 465,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3421,
+            "hero_id": 55,
+            "required_level": 465,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3422",
+        "snapshots": {
+          "original": {
+            "id": 3422,
+            "hero_id": 55,
+            "required_level": 530,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3422,
+            "hero_id": 55,
+            "required_level": 530,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3423",
+        "snapshots": {
+          "original": {
+            "id": 3423,
+            "hero_id": 55,
+            "required_level": 590,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3423,
+            "hero_id": 55,
+            "required_level": 590,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3424",
+        "snapshots": {
+          "original": {
+            "id": 3424,
+            "hero_id": 55,
+            "required_level": 630,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3424,
+            "hero_id": 55,
+            "required_level": 630,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3425",
+        "snapshots": {
+          "original": {
+            "id": 3425,
+            "hero_id": 55,
+            "required_level": 680,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3425,
+            "hero_id": 55,
+            "required_level": 680,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3426",
+        "snapshots": {
+          "original": {
+            "id": 3426,
+            "hero_id": 55,
+            "required_level": 730,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3426,
+            "hero_id": 55,
+            "required_level": 730,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3427",
+        "snapshots": {
+          "original": {
+            "id": 3427,
+            "hero_id": 55,
+            "required_level": 780,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3427,
+            "hero_id": 55,
+            "required_level": 780,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3428",
+        "snapshots": {
+          "original": {
+            "id": 3428,
+            "hero_id": 55,
+            "required_level": 830,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3428,
+            "hero_id": 55,
+            "required_level": 830,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3429",
+        "snapshots": {
+          "original": {
+            "id": 3429,
+            "hero_id": 55,
+            "required_level": 880,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3429,
+            "hero_id": 55,
+            "required_level": 880,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3430",
+        "snapshots": {
+          "original": {
+            "id": 3430,
+            "hero_id": 55,
+            "required_level": 930,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3430,
+            "hero_id": 55,
+            "required_level": 930,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3962",
+        "snapshots": {
+          "original": {
+            "id": 3962,
+            "hero_id": 55,
+            "required_level": 960,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3962,
+            "hero_id": 55,
+            "required_level": 960,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3963",
+        "snapshots": {
+          "original": {
+            "id": 3963,
+            "hero_id": 55,
+            "required_level": 1010,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,200,3326",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3963,
+            "hero_id": 55,
+            "required_level": 1010,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,200,3326",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3964",
+        "snapshots": {
+          "original": {
+            "id": 3964,
+            "hero_id": 55,
+            "required_level": 1030,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3964,
+            "hero_id": 55,
+            "required_level": 1030,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3965",
+        "snapshots": {
+          "original": {
+            "id": 3965,
+            "hero_id": 55,
+            "required_level": 1065,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,200,3327",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3965,
+            "hero_id": 55,
+            "required_level": 1065,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,200,3327",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3966",
+        "snapshots": {
+          "original": {
+            "id": 3966,
+            "hero_id": 55,
+            "required_level": 1080,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3966,
+            "hero_id": 55,
+            "required_level": 1080,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3967",
+        "snapshots": {
+          "original": {
+            "id": 3967,
+            "hero_id": 55,
+            "required_level": 1105,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3967,
+            "hero_id": 55,
+            "required_level": 1105,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5200",
+        "snapshots": {
+          "original": {
+            "id": 5200,
+            "hero_id": 55,
+            "required_level": 1140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5200,
+            "hero_id": 55,
+            "required_level": 1140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5201",
+        "snapshots": {
+          "original": {
+            "id": 5201,
+            "hero_id": 55,
+            "required_level": 1170,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3327",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5201,
+            "hero_id": 55,
+            "required_level": 1170,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3327",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5202",
+        "snapshots": {
+          "original": {
+            "id": 5202,
+            "hero_id": 55,
+            "required_level": 1180,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5202,
+            "hero_id": 55,
+            "required_level": 1180,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5203",
+        "snapshots": {
+          "original": {
+            "id": 5203,
+            "hero_id": 55,
+            "required_level": 1200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3326",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5203,
+            "hero_id": 55,
+            "required_level": 1200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3326",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5204",
+        "snapshots": {
+          "original": {
+            "id": 5204,
+            "hero_id": 55,
+            "required_level": 1230,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5204,
+            "hero_id": 55,
+            "required_level": 1230,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5205",
+        "snapshots": {
+          "original": {
+            "id": 5205,
+            "hero_id": 55,
+            "required_level": 1250,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5205,
+            "hero_id": 55,
+            "required_level": 1250,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6619",
+        "snapshots": {
+          "original": {
+            "id": 6619,
+            "hero_id": 55,
+            "required_level": 1280,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6619,
+            "hero_id": 55,
+            "required_level": 1280,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6620",
+        "snapshots": {
+          "original": {
+            "id": 6620,
+            "hero_id": 55,
+            "required_level": 1310,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3326",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6620,
+            "hero_id": 55,
+            "required_level": 1310,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3326",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6621",
+        "snapshots": {
+          "original": {
+            "id": 6621,
+            "hero_id": 55,
+            "required_level": 1340,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6621,
+            "hero_id": 55,
+            "required_level": 1340,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6622",
+        "snapshots": {
+          "original": {
+            "id": 6622,
+            "hero_id": 55,
+            "required_level": 1370,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,200,3326",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6622,
+            "hero_id": 55,
+            "required_level": 1370,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,200,3326",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6623",
+        "snapshots": {
+          "original": {
+            "id": 6623,
+            "hero_id": 55,
+            "required_level": 1420,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6623,
+            "hero_id": 55,
+            "required_level": 1420,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8388",
+        "snapshots": {
+          "original": {
+            "id": 8388,
+            "hero_id": 55,
+            "required_level": 1450,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8388,
+            "hero_id": 55,
+            "required_level": 1450,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8389",
+        "snapshots": {
+          "original": {
+            "id": 8389,
+            "hero_id": 55,
+            "required_level": 1480,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3326",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8389,
+            "hero_id": 55,
+            "required_level": 1480,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3326",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8390",
+        "snapshots": {
+          "original": {
+            "id": 8390,
+            "hero_id": 55,
+            "required_level": 1510,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8390,
+            "hero_id": 55,
+            "required_level": 1510,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8391",
+        "snapshots": {
+          "original": {
+            "id": 8391,
+            "hero_id": 55,
+            "required_level": 1540,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3327",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8391,
+            "hero_id": 55,
+            "required_level": 1540,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3327",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8392",
+        "snapshots": {
+          "original": {
+            "id": 8392,
+            "hero_id": 55,
+            "required_level": 1590,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8392,
+            "hero_id": 55,
+            "required_level": 1590,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      }
+    ],
+    "feats": [
+      {
+        "id": "330",
+        "snapshots": {
+          "original": {
+            "id": 330,
+            "hero_id": 55,
+            "order": 1,
+            "name": "Selflessness",
+            "description": "Sure, that works.",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 330,
+            "hero_id": 55,
+            "order": 1,
+            "name": "无私",
+            "description": "当然，起作用了。",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "331",
+        "snapshots": {
+          "original": {
+            "id": 331,
+            "hero_id": 55,
+            "order": 2,
+            "name": "Inspiring Leader",
+            "description": "Who, me?",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 331,
+            "hero_id": 55,
+            "order": 2,
+            "name": "鼓舞人心的首领",
+            "description": "谁，我吗？",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "332",
+        "snapshots": {
+          "original": {
+            "id": 332,
+            "hero_id": 55,
+            "order": 3,
+            "name": "Necessary Paperwork",
+            "description": "Who knows if you're going to be alive when I return?",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,3326"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 332,
+            "hero_id": 55,
+            "order": 3,
+            "name": "必要的文件",
+            "description": "谁知道我回来的时候，你是否还活着？",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,3326"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "333",
+        "snapshots": {
+          "original": {
+            "id": 333,
+            "hero_id": 55,
+            "order": 4,
+            "name": "Red Tape",
+            "description": "This isn't my first adventure, you know.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,3326"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 333,
+            "hero_id": 55,
+            "order": 4,
+            "name": "繁文缛节",
+            "description": "这不是我的第一次冒险，明白我的意思吧。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,3326"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "334",
+        "snapshots": {
+          "original": {
+            "id": 334,
+            "hero_id": 55,
+            "order": 5,
+            "name": "Running with the Cool Kids",
+            "description": "I'll have what they're having.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,3327"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 334,
+            "hero_id": 55,
+            "order": 5,
+            "name": "与那些超酷的孩子们一起跑",
+            "description": "我会与他们共享他们拥有的。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,3327"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "730",
+        "snapshots": {
+          "original": {
+            "id": 730,
+            "hero_id": 55,
+            "order": 6,
+            "name": "Coin in Hand",
+            "description": "I'll start as soon as you pay me.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,3326"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_available": true,
+              "available_at_time": 1644609600
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 730,
+            "hero_id": 55,
+            "order": 6,
+            "name": "钱币在手",
+            "description": "你把钱付了，我就开始。",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,3326"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_available": true,
+              "available_at_time": 1644609600
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "1428",
+        "snapshots": {
+          "original": {
+            "id": 1428,
+            "hero_id": 55,
+            "order": 7,
+            "name": "Time is Money",
+            "description": "Sure, I'll help -- but you better be collecting gold for me!",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,3327"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 360
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1695841200
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 1428,
+            "hero_id": 55,
+            "order": 7,
+            "name": "时间宝贵",
+            "description": "行吧，我会帮忙--但你最好别忘记帮我收集金币！",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,3327"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 360
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1695841200
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      }
+    ],
+    "skins": []
+  }
+}

@@ -1,0 +1,6634 @@
+{
+  "updatedAt": "2026-04-13",
+  "summary": {
+    "id": "33",
+    "name": {
+      "original": "Farideh",
+      "display": "法莉德"
+    },
+    "seat": 7,
+    "roles": [
+      "dps"
+    ],
+    "affiliations": [
+      {
+        "original": "Brimstone Angels",
+        "display": "硫磺天使"
+      }
+    ],
+    "tags": [
+      "brimstone",
+      "dps",
+      "event",
+      "female",
+      "good",
+      "lcneutral",
+      "neutral",
+      "spec_debuff",
+      "spec_hunter",
+      "spec_hunter_fiends",
+      "tiefling",
+      "warlock",
+      "y2"
+    ],
+    "portrait": {
+      "path": "v1/champion-portraits/33.png",
+      "sourceGraphic": "Portraits/Portrait_Farideh",
+      "sourceVersion": 5
+    }
+  },
+  "englishName": "Farideh",
+  "eventName": {
+    "original": "Highharvestide",
+    "display": "丰收节"
+  },
+  "dateAvailable": "2018-10-03 00:00:00",
+  "lastReworkDate": "2025-10-08 12:00:00",
+  "popularity": 65,
+  "baseCost": "5250000000",
+  "baseDamage": "20000000",
+  "baseHealth": "45",
+  "graphicId": "4110",
+  "portraitGraphicId": "4117",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1788462000
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    155,
+    605,
+    1130,
+    1780
+  ],
+  "costCurves": {
+    "1": 1.11
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      170,
+      171,
+      172
+    ],
+    "graphic_large": 4118,
+    "graphic_xl": 13880,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      101,
+      73
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 5,
+      "gethit": 6,
+      "koed": 7,
+      "run": 8
+    },
+    "allow_time_gate": true,
+    "time_gate_adventure_id": 261,
+    "time_gate_variants_ids": [
+      257,
+      258,
+      259
+    ],
+    "time_gate_tier": 2,
+    "silver_chest_type_id": 71,
+    "gold_chest_type_id": 72,
+    "available_in_store": true,
+    "golden_epic_loot_id": 780,
+    "golden_epic_promo_id": 53,
+    "event_logo_graphic_id": 3371,
+    "console_portrait": 4116,
+    "head_graphic_id": 7269,
+    "trials_effect_id": 839,
+    "legendary_effect_id": [
+      1,
+      3,
+      63,
+      35,
+      90,
+      49
+    ],
+    "weekly_buff": "hero_dps_multiplier_mult,400",
+    "portrait_graphic_scale": 0.96,
+    "notification_adjustment": {
+      "offset": [
+        60,
+        209
+      ],
+      "scale": 1.25
+    },
+    "shop_transform_graphic": 28656
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Farideh",
+      "display": "法莉德"
+    },
+    "class": {
+      "original": "Warlock",
+      "display": "邪术师"
+    },
+    "race": {
+      "original": "Tiefling",
+      "display": "提夫林"
+    },
+    "age": 19,
+    "alignment": {
+      "original": "Neutral Good",
+      "display": "中立善良"
+    },
+    "abilityScores": {
+      "str": 10,
+      "dex": 14,
+      "con": 14,
+      "int": 14,
+      "wis": 13,
+      "cha": 18
+    },
+    "backstory": {
+      "original": "Abandoned as an infant and adopted by an outcast dragonborn warrior, Farideh grew to adulthood acutely aware of the drawbacks of being a tiefling. While those from the Nine Hells do their utmost to corrupt her, Farideh isn't interested in power so much as defending the world from demons, the undead, and any other villains trying to bring trouble or drag her friends and family into danger.",
+      "display": "法莉德在婴儿时被遗弃，随后被一名流浪的龙裔战士收养。在成年后，她深刻地意识到了作为一名提夫林的缺点。虽然那些来自九层地狱的存在竭力想腐蚀她，但法莉德对力量并不感兴趣。她想要的是保护世界，使其不受恶魔、亡灵，以及任何其他试图带来麻烦或将她朋友和家人拖入危险的恶棍所侵害。"
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "137",
+      "name": {
+        "original": "Scorching Ray",
+        "display": "灼热射线"
+      },
+      "description": {
+        "original": "Farideh creates $attack_num_targets rays of fire and hurls them at random enemies.",
+        "display": "法莉德召唤出 $attack_num_targets 道火焰射线，并将其投向随机敌人。"
+      },
+      "longDescription": null,
+      "cooldown": 5,
+      "numTargets": 3,
+      "aoeRadius": 0,
+      "damageModifier": "0.33",
+      "target": "random",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ranged"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "ranged_attack",
+          "projectile": "scorching_ray",
+          "shoot_frame": 9,
+          "projectile_delay_no_pause": 0.1,
+          "projectile_count": 3,
+          "shoot_offset_x": 27,
+          "shoot_offset_y": -20
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "138",
+      "name": {
+        "original": "Infernal Aspect",
+        "display": "地狱容颜"
+      },
+      "description": {
+        "original": "Farideh taps into her infernal bloodline, pushing away, slowing, and damaging nearby enemies.",
+        "display": "法莉德展露出她的地狱血脉，击退、减速并伤害附近的敌人。"
+      },
+      "longDescription": {
+        "original": "Farideh taps into her infernal bloodline, pushing away and slowing all enemies, then damaging a random enemy every second, for 15 seconds.",
+        "display": "法莉德展露出她的地狱血脉，击退、减速所有敌人，然后每秒对一名随机敌人造成伤害，持续 15 秒。"
+      },
+      "cooldown": 450,
+      "numTargets": 0,
+      "aoeRadius": 0,
+      "damageModifier": "0.014",
+      "target": "none",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ranged",
+        "ultimate"
+      ],
+      "graphicId": "4109",
+      "animations": [
+        {
+          "type": "farideh_ultimate",
+          "tooltip_damage_override": "farideh_ult",
+          "farideh_effect": {
+            "effect_string": "farideh_ultimate,100",
+            "for_time": 15
+          }
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "17835",
+        "name": {
+          "original": "Hellish Rebuke",
+          "display": "炼狱叱喝"
+        },
+        "description": {
+          "original": "Enemies that strike Farideh (can be expanded to allies via upgrades and specializations) take instant damage based on Farideh's DPS.",
+          "display": "攻击法莉德（可通过进阶和专精扩展至包括队友）的敌人，会立即受到基于法莉德的秒伤的伤害。"
+        },
+        "graphicId": "4094"
+      },
+      {
+        "upgradeId": "17836",
+        "name": {
+          "original": "Chosen of Asmodeus",
+          "display": "被阿斯摩蒂斯选中者"
+        },
+        "description": null,
+        "graphicId": "4096"
+      },
+      {
+        "upgradeId": "17837",
+        "name": {
+          "original": "Pact Family",
+          "display": "契约家族"
+        },
+        "description": {
+          "original": "Increase the damage of Farideh for each Tiefling in the formation.",
+          "display": "阵型中每有一名提夫林，都会为法莉德提高伤害。"
+        },
+        "graphicId": "4098"
+      },
+      {
+        "upgradeId": "17838",
+        "name": {
+          "original": "Sister, Sister",
+          "display": "姐妹，姐妹"
+        },
+        "description": null,
+        "graphicId": "27631"
+      }
+    ]
+  },
+  "upgrades": [
+    {
+      "id": "18107",
+      "requiredLevel": 10,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17835",
+      "requiredLevel": 20,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Hellish Rebuke",
+        "display": "炼狱叱喝"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2462",
+      "effectDefinition": {
+        "id": "2462",
+        "snapshots": {
+          "original": {
+            "id": 2462,
+            "flavour_text": "",
+            "description": {
+              "desc": "Enemies that attack any Champion in the formation trigger Farideh's Hellish Rebuke. The enemy is surrounded by green flames for $berserk_time seconds and immediately takes $amount seconds worth of BUD damage."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "deal_bud_damage_when_hit,0.5",
+                "off_when_benched": true,
+                "berserk_time": 5,
+                "targets": [
+                  "all"
+                ],
+                "projectile": "hellish_rebuke",
+                "add_monster_hit_effect___unused": {
+                  "effect_string": "farideh_hellish_rebuked,100",
+                  "active_graphic_id": 27523,
+                  "active_graphic_y": -50,
+                  "overlay_play_mode": "always",
+                  "override_disable_flashing_effects": true,
+                  "for_time": 5
+                },
+                "broadcast_trigger": "farideh_hellish_rebuke_trigger"
+              },
+              {
+                "effect_string": "farideh_hellish_rebuke_overlay",
+                "time": 5,
+                "overlay_data": {
+                  "active_graphic_id": 27523,
+                  "active_graphic_y": -50,
+                  "overlay_play_mode": "always",
+                  "override_disable_flashing_effects": true
+                }
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 4095,
+            "large_graphic_id": 4094,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 2462,
+            "flavour_text": "",
+            "description": {
+              "desc": "攻击阵型中任意勇士的敌人会触发法莉德的“炼狱叱喝”。该敌人会被绿色火焰包围，持续 $berserk_time 秒，并立刻受到相当于 $amount 秒基础杀招伤害的伤害。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "deal_bud_damage_when_hit,0.5",
+                "off_when_benched": true,
+                "berserk_time": 5,
+                "targets": [
+                  "all"
+                ],
+                "projectile": "hellish_rebuke",
+                "add_monster_hit_effect___unused": {
+                  "effect_string": "farideh_hellish_rebuked,100",
+                  "active_graphic_id": 27523,
+                  "active_graphic_y": -50,
+                  "overlay_play_mode": "always",
+                  "override_disable_flashing_effects": true,
+                  "for_time": 5
+                },
+                "broadcast_trigger": "farideh_hellish_rebuke_trigger"
+              },
+              {
+                "effect_string": "farideh_hellish_rebuke_overlay",
+                "time": 5,
+                "overlay_data": {
+                  "active_graphic_id": 27523,
+                  "active_graphic_y": -50,
+                  "overlay_play_mode": "always",
+                  "override_disable_flashing_effects": true
+                }
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 4095,
+            "large_graphic_id": 4094,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Farideh's Hellish Rebuke triggers when enemies hit her or her allies, dealing big damage to the enemy.",
+        "display": "当敌人击中法莉德或者她的盟友时，她的“炼狱叱喝”就会触发，对该敌人造成巨大的伤害。"
+      }
+    },
+    {
+      "id": "18108",
+      "requiredLevel": 40,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17836",
+      "requiredLevel": 50,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Chosen of Asmodeus",
+        "display": "被阿斯摩蒂斯选中者"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2463",
+      "effectDefinition": {
+        "id": "2463",
+        "snapshots": {
+          "original": {
+            "id": 2463,
+            "flavour_text": "",
+            "description": {
+              "desc": "Whenever Farideh's Hellish Rebuke triggers, Farideh's damage is increased by $amount%. This stacks multiplicatively up to $max_stacks___2 times, and the stacks reset when changing areas."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,100",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "amount_expr": "upgrade_amount(17836,0)",
+                "off_when_benched": true,
+                "stacks_on_trigger": "on_broadcast_stacks,farideh_hellish_rebuke_trigger",
+                "more_triggers": [
+                  {
+                    "trigger": "area_changed",
+                    "action": {
+                      "type": "reduce_percent_down",
+                      "percent": 100
+                    }
+                  }
+                ],
+                "max_stacks": 25,
+                "stacks_multiply": true,
+                "show_bonus": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 4097,
+            "large_graphic_id": 4096,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 1
+            }
+          },
+          "display": {
+            "id": 2463,
+            "flavour_text": "",
+            "description": {
+              "desc": "每当法莉德的“炼狱叱喝”触发，法莉德的伤害提高 $amount%。该数值以乘算方式堆叠，最多可堆叠 $max_stacks___2 次，并会在变更区域时重置。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,100",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "amount_expr": "upgrade_amount(17836,0)",
+                "off_when_benched": true,
+                "stacks_on_trigger": "on_broadcast_stacks,farideh_hellish_rebuke_trigger",
+                "more_triggers": [
+                  {
+                    "trigger": "area_changed",
+                    "action": {
+                      "type": "reduce_percent_down",
+                      "percent": 100
+                    }
+                  }
+                ],
+                "max_stacks": 25,
+                "stacks_multiply": true,
+                "show_bonus": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 4097,
+            "large_graphic_id": 4096,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 1
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18109",
+      "requiredLevel": 60,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18110",
+      "requiredLevel": 80,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17837",
+      "requiredLevel": 90,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Pact Family",
+        "display": "契约家族"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2464",
+      "effectDefinition": {
+        "id": "2464",
+        "snapshots": {
+          "original": {
+            "id": 2464,
+            "flavour_text": "",
+            "description": {
+              "desc": "Farideh's damage is increased by $amount% for each Tiefling Champion in the formation, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,100",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "amount_expr": "upgrade_amount(17837,0)",
+                "off_when_benched": true,
+                "amount_func": "mult",
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "HasTag(`tiefling`)",
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "hero_tags_changed"
+                ],
+                "show_bonus": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 4099,
+            "large_graphic_id": 4098,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 2464,
+            "flavour_text": "",
+            "description": {
+              "desc": "阵型中每有一位提夫林勇士，法莉德的伤害提高 $amount%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,100",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "amount_expr": "upgrade_amount(17837,0)",
+                "off_when_benched": true,
+                "amount_func": "mult",
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "HasTag(`tiefling`)",
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "hero_tags_changed"
+                ],
+                "show_bonus": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 4099,
+            "large_graphic_id": 4098,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Farideh's damage is increased by the number of tieflings in the formation. Load up your formation with tieflings to really power her up!",
+        "display": "法莉德的伤害随着阵型中的提夫林数量而提高。在阵型中加入更多提夫林，让她尽情发挥力量！"
+      }
+    },
+    {
+      "id": "18111",
+      "requiredLevel": 100,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17842",
+      "requiredLevel": 110,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Infernal Aspect",
+        "display": "地狱容颜"
+      },
+      "upgradeType": "unlock_ultimate",
+      "effectReference": "effect_def,2471",
+      "effectDefinition": {
+        "id": "2471",
+        "snapshots": {
+          "original": {
+            "id": 2471,
+            "flavour_text": "",
+            "description": {
+              "desc": "Farideh taps into her infernal bloodline, surrounding herself in a nimbus of flames and sprouting a pair of fiery wings from her back for 15 seconds. This causes all enemies to go berserk, resulting in them moving 50% faster, attacking twice as often, but dealing 90% less damage. During this time, her flaming aura shoots slivers of flame at random enemies once per second, dealing massive damage."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "set_ultimate_attack,903"
+              },
+              {
+                "effect_string": "farideh_infernal_aspect_handler,100",
+                "off_when_benched": true,
+                "berserk_effect": {
+                  "effect_string": "effect_def,2472"
+                }
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 2471,
+            "flavour_text": "",
+            "description": {
+              "desc": "法莉德展露出她的地狱血脉，她将自己笼罩在一个火焰光环内，背后生出一对火焰之翼，持续 15 秒。这会使所有敌人发狂，导致他们的移动速度增加 50%，攻击频率加倍，但造成的伤害减少 90%。在此期间，她的火焰光环会向随机敌人发射火焰，频率为每秒一次，造成高额伤害。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "set_ultimate_attack,903"
+              },
+              {
+                "effect_string": "farideh_infernal_aspect_handler,100",
+                "off_when_benched": true,
+                "berserk_effect": {
+                  "effect_string": "effect_def,2472"
+                }
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18112",
+      "requiredLevel": 130,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17839",
+      "requiredLevel": 140,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Daughters of Mehen",
+        "display": "梅亨的女儿们"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2466",
+      "effectDefinition": {
+        "id": "2466",
+        "snapshots": {
+          "original": {
+            "id": 2466,
+            "flavour_text": "",
+            "description": {
+              "desc": "Pact Family now also gains a stack for each Dragonborn Champion in the formation, and its post-stack effect is increased by $(not_buffed amount___2)%. Chosen of Asmodeus stacks are halved when changing areas if Mehen is in the formation, rather than resetting to 0."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "change_upgrade_data,17837,1",
+                "off_when_benched": true,
+                "data": {
+                  "per_hero_expr": "as_int(HasTag(`tiefling`)) + as_int(HasTag(`dragonborn`))"
+                }
+              },
+              {
+                "effect_string": "buff_upgrade,400,17837,1",
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "change_upgrade_data,17836,1",
+                "off_when_benched": true,
+                "targets": [
+                  "all"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "hero_expr",
+                    "hero_expr": "hero_id == 80"
+                  }
+                ],
+                "data": {
+                  "more_triggers": [
+                    {
+                      "trigger": "area_changed",
+                      "action": {
+                        "type": "reduce_percent_down",
+                        "percent": 50
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "effect_string": "do_nothing",
+                "off_when_benched": true,
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "HasTag(`dragonborn`)"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27505,
+            "large_graphic_id": 27505,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "show_incoming": false,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 1,
+              "spec_option_post_apply_info": "Dragonborn Champions: $num_stacks___4"
+            }
+          },
+          "display": {
+            "id": 2466,
+            "flavour_text": "",
+            "description": {
+              "desc": "现在阵型中每有一位龙裔勇士，“契约家族”也会堆叠一层，并且它的堆叠后效果提高 $(not_buffed amount___2)%。如果梅亨位于阵型中，那么在变更区域时，“被阿斯摩蒂斯选中者”的堆叠层数将减半，而不是重置为 0。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "change_upgrade_data,17837,1",
+                "off_when_benched": true,
+                "data": {
+                  "per_hero_expr": "as_int(HasTag(`tiefling`)) + as_int(HasTag(`dragonborn`))"
+                }
+              },
+              {
+                "effect_string": "buff_upgrade,400,17837,1",
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "change_upgrade_data,17836,1",
+                "off_when_benched": true,
+                "targets": [
+                  "all"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "hero_expr",
+                    "hero_expr": "hero_id == 80"
+                  }
+                ],
+                "data": {
+                  "more_triggers": [
+                    {
+                      "trigger": "area_changed",
+                      "action": {
+                        "type": "reduce_percent_down",
+                        "percent": 50
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "effect_string": "do_nothing",
+                "off_when_benched": true,
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "HasTag(`dragonborn`)"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27505,
+            "large_graphic_id": 27505,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "show_incoming": false,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 1,
+              "spec_option_post_apply_info": "龙裔勇士：$num_stacks___4"
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Daughters of Mehen",
+        "display": "梅亨的女儿们"
+      },
+      "specializationDescription": {
+        "original": "Farideh seeks out Mehen and other Dragonborn Champions to assist her in battle.",
+        "display": "法莉德找梅亨和其他龙裔勇士来协助她作战。"
+      },
+      "specializationGraphicId": "27505",
+      "tipText": null
+    },
+    {
+      "id": "17840",
+      "requiredLevel": 140,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Fury of Asmodeus",
+        "display": "阿斯摩蒂斯之怒"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2467",
+      "effectDefinition": {
+        "id": "2467",
+        "snapshots": {
+          "original": {
+            "id": 2467,
+            "flavour_text": "",
+            "description": {
+              "desc": "Farideh gains the Debuff role, and whenever Chosen of Asmodeus is at more than $stack_threshold___2 stacks, Farideh deals $(not_buffed amount___2)% more damage against enemies currently affected by Hellish Rebuke for each stack above $stack_threshold___2 she has, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "add_hero_tags,0,debuff"
+              },
+              {
+                "effect_string": "increase_damage_against_monster,100",
+                "off_when_benched": true,
+                "monster_has_effect_key": "farideh_hellish_rebuked",
+                "amount_func": "mult",
+                "stack_func": "per_hero_attribute",
+                "stack_threshold": 10,
+                "post_process_expr": "max(0, GetUpgradeStacks(17836, 1) - stack_threshold)"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27506,
+            "large_graphic_id": 27506,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 1
+            }
+          },
+          "display": {
+            "id": 2467,
+            "flavour_text": "",
+            "description": {
+              "desc": "法莉德获得减益角色定位，并且每当“被阿斯摩蒂斯选中者”的堆叠层数大于 $stack_threshold___2 时，她拥有的堆叠层数每比 $stack_threshold___2 多 1，她对当前受“炼狱叱喝”影响的敌人就会多造成 $(not_buffed amount___2)% 的伤害，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "add_hero_tags,0,debuff"
+              },
+              {
+                "effect_string": "increase_damage_against_monster,100",
+                "off_when_benched": true,
+                "monster_has_effect_key": "farideh_hellish_rebuked",
+                "amount_func": "mult",
+                "stack_func": "per_hero_attribute",
+                "stack_threshold": 10,
+                "post_process_expr": "max(0, GetUpgradeStacks(17836, 1) - stack_threshold)"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27506,
+            "large_graphic_id": 27506,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 1
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Fury of Asmodeus",
+        "display": "阿斯摩蒂斯之怒"
+      },
+      "specializationDescription": {
+        "original": "Farideh doubles down on her link to Asmodeus, dealing more damage to enemies affected by Hellish Rebuke.",
+        "display": "法莉德进一步强化她与阿斯摩蒂斯的联系，对受“炼狱叱喝”影响的敌人造成更多伤害。"
+      },
+      "specializationGraphicId": "27506",
+      "tipText": null
+    },
+    {
+      "id": "17841",
+      "requiredLevel": 140,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Pact with Lorcan",
+        "display": "与洛肯的契约"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2468",
+      "effectDefinition": {
+        "id": "2468",
+        "snapshots": {
+          "original": {
+            "id": 2468,
+            "flavour_text": "",
+            "description": {
+              "desc": "Farideh gains the Hunter role, Fiends become her favored foe, and the effect of Hellish Rebuke is increased by $(amount___3)% on all Fiends. By sheer dumb luck, each wave of enemies in non-boss areas has a $(amount___4)% chance to spawn $(spawn_min___4)-$(spawn_max___4) Fiends, and all bosses now count as demonic Fiends for the purposes of all abilities that care about such things."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "add_hero_tags,0,hunter"
+              },
+              {
+                "effect_string": "favored_foe,fiend",
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "buff_return_damage_on_tag,200",
+                "targets": [
+                  "all"
+                ],
+                "effect_id": 2462,
+                "tag": "fiend"
+              },
+              {
+                "effect_string": "spawn_additional_monsters,33",
+                "off_when_benched": true,
+                "monster_ids": [
+                  738,
+                  739,
+                  740,
+                  1101,
+                  1102,
+                  1103,
+                  1009,
+                  1010,
+                  1011
+                ],
+                "spawn_count_range": [
+                  1,
+                  2
+                ],
+                "spawn_min": 1,
+                "spawn_max": 2,
+                "non_boss_areas": true,
+                "boss_areas": false
+              },
+              {
+                "effect_string": "monster_add_tags,0,1,fiend"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27507,
+            "large_graphic_id": 27507,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 2
+            }
+          },
+          "display": {
+            "id": 2468,
+            "flavour_text": "",
+            "description": {
+              "desc": "法莉德获得猎人角色定位，炼狱生物变成她的偏好对手，并且“炼狱叱喝”对所有炼狱生物造成的效果提高 $(amount___3)%。纯属走运，非首领区域的每波敌人有 $(amount___4)% 的几率刷新 $(spawn_min___4)-$(spawn_max___4) 只炼狱生物，并且对于所有影响恶魔炼狱生物的技能，所有首领现在会被视为恶魔炼狱生物。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "add_hero_tags,0,hunter"
+              },
+              {
+                "effect_string": "favored_foe,fiend",
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "buff_return_damage_on_tag,200",
+                "targets": [
+                  "all"
+                ],
+                "effect_id": 2462,
+                "tag": "fiend"
+              },
+              {
+                "effect_string": "spawn_additional_monsters,33",
+                "off_when_benched": true,
+                "monster_ids": [
+                  738,
+                  739,
+                  740,
+                  1101,
+                  1102,
+                  1103,
+                  1009,
+                  1010,
+                  1011
+                ],
+                "spawn_count_range": [
+                  1,
+                  2
+                ],
+                "spawn_min": 1,
+                "spawn_max": 2,
+                "non_boss_areas": true,
+                "boss_areas": false
+              },
+              {
+                "effect_string": "monster_add_tags,0,1,fiend"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27507,
+            "large_graphic_id": 27507,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 2
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Pact with Lorcan",
+        "display": "与洛肯的契约"
+      },
+      "specializationDescription": {
+        "original": "Farideh seeks out the Demons that befuddle her sister, Havilar, and attempts to wipe them from existence.",
+        "display": "法莉德追寻那些迷惑她姐妹哈维拉的恶魔，并试图彻底消灭它们。"
+      },
+      "specializationGraphicId": "27507",
+      "tipText": null
+    },
+    {
+      "id": "18113",
+      "requiredLevel": 160,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17838",
+      "requiredLevel": 170,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Sister, Sister",
+        "display": "姐妹，姐妹"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2465",
+      "effectDefinition": {
+        "id": "2465",
+        "snapshots": {
+          "original": {
+            "id": 2465,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the post-stack effect of Pact Family by $(amount)% when Havilar is in the formation. Additionally, whenever Havilar sacrifices her Imps, the stack cap of Chosen of Asmodeus is increased by $(not_buffed amount___2), stacking up to $max_stacks___2 times ($total_additional_stacks_desc additional stacks total).",
+              "post": {
+                "conditions": [
+                  {
+                    "condition": "not static_desc",
+                    "desc": {
+                      "conditions": [
+                        {
+                          "condition": "hero_in_formation 56",
+                          "desc": "^^Post-Stack Buff of Pact Family Active: {Yes}#00FF00"
+                        },
+                        {
+                          "desc": "^^Post-Stack Buff of Pact Family Active: {No}#FF0000"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,500,17837,1",
+                "stack_func": "per_hero_attribute",
+                "amount_func": "mult",
+                "per_hero_expr": "hero_id == 56",
+                "off_when_benched": true,
+                "total_additional_stacks_desc": 10,
+                "amount_updated_listeners": [
+                  "slot_changed"
+                ]
+              },
+              {
+                "effect_string": "buff_upgrade_effect_stacks_max_add,2,17836",
+                "off_when_benched": true,
+                "stacks_on_trigger": "on_broadcast_stacks,havilar_imp_sacrifice_trigger",
+                "more_triggers": [
+                  {
+                    "trigger": "area_changed",
+                    "action": {
+                      "type": "reset"
+                    }
+                  }
+                ],
+                "max_stacks": 5,
+                "stacks_multiply": false,
+                "show_bonus": true,
+                "current_value_bonus_desc": "Total Bonus: $(bonus) Additional Stacks Cap"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27632,
+            "large_graphic_id": 27631,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 2465,
+            "flavour_text": "",
+            "description": {
+              "desc": "当哈维拉在阵型中时，“契约家族”的堆叠后效果提高 $(not_buffed amount)%。此外，每当哈维拉牺牲她的小魔鬼时，“被阿斯摩蒂斯选中者”的堆叠层数上限提高 $(not_buffed amount___2)，最多可堆叠 $max_stacks___2 次（总共可额外堆叠 $total_additional_stacks_desc 层）。",
+              "post": {
+                "conditions": [
+                  {
+                    "condition": "not static_desc",
+                    "desc": {
+                      "conditions": [
+                        {
+                          "condition": "hero_in_formation 56",
+                          "desc": "^^“契约家族”的堆叠后增益激活：{是}#00FF00"
+                        },
+                        {
+                          "desc": "^^“契约家族”的堆叠后增益激活：{否}#FF0000"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,500,17837,1",
+                "stack_func": "per_hero_attribute",
+                "amount_func": "mult",
+                "per_hero_expr": "hero_id == 56",
+                "off_when_benched": true,
+                "total_additional_stacks_desc": 10,
+                "amount_updated_listeners": [
+                  "slot_changed"
+                ]
+              },
+              {
+                "effect_string": "buff_upgrade_effect_stacks_max_add,2,17836",
+                "off_when_benched": true,
+                "stacks_on_trigger": "on_broadcast_stacks,havilar_imp_sacrifice_trigger",
+                "more_triggers": [
+                  {
+                    "trigger": "area_changed",
+                    "action": {
+                      "type": "reset"
+                    }
+                  }
+                ],
+                "max_stacks": 5,
+                "stacks_multiply": false,
+                "show_bonus": true,
+                "current_value_bonus_desc": "总加成：额外 $(bonus) 层堆叠层数上限"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27632,
+            "large_graphic_id": 27631,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18114",
+      "requiredLevel": 180,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18115",
+      "requiredLevel": 210,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18116",
+      "requiredLevel": 230,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18117",
+      "requiredLevel": 260,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18118",
+      "requiredLevel": 290,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17844",
+      "requiredLevel": 300,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17835",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18119",
+      "requiredLevel": 320,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18120",
+      "requiredLevel": 360,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1552",
+      "requiredLevel": 380,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "add_attack_targets,1,137",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18121",
+      "requiredLevel": 400,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18122",
+      "requiredLevel": 440,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18123",
+      "requiredLevel": 480,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18124",
+      "requiredLevel": 530,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18125",
+      "requiredLevel": 580,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18126",
+      "requiredLevel": 600,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17835",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18127",
+      "requiredLevel": 640,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18128",
+      "requiredLevel": 680,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18129",
+      "requiredLevel": 730,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18130",
+      "requiredLevel": 780,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18131",
+      "requiredLevel": 830,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18132",
+      "requiredLevel": 880,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18133",
+      "requiredLevel": 900,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17835",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18134",
+      "requiredLevel": 950,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18135",
+      "requiredLevel": 1020,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18136",
+      "requiredLevel": 1090,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18137",
+      "requiredLevel": 1190,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18138",
+      "requiredLevel": 1200,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17835",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1558",
+      "requiredLevel": 1250,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "add_attack_targets,1,137",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18139",
+      "requiredLevel": 1340,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18140",
+      "requiredLevel": 1500,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17835",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18141",
+      "requiredLevel": 1560,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18142",
+      "requiredLevel": 1620,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18143",
+      "requiredLevel": 1670,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    }
+  ],
+  "feats": [
+    {
+      "id": "183",
+      "order": 1,
+      "name": {
+        "original": "Adept",
+        "display": "熟练"
+      },
+      "description": {
+        "original": "I just want my friends to be safe.",
+        "display": "我只希望我的朋友们安全无恙。"
+      },
+      "rarity": "2",
+      "graphicId": "6078",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,30"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "184",
+      "order": 2,
+      "name": {
+        "original": "Elementalist",
+        "display": "元素使"
+      },
+      "description": {
+        "original": "I am the element of death in battle.",
+        "display": "在战场上我就是死亡元素。"
+      },
+      "rarity": "3",
+      "graphicId": "6078",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,60"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "544",
+      "order": 3,
+      "name": {
+        "original": "Spell Master",
+        "display": "法术大师"
+      },
+      "description": {
+        "original": "What trouble did Havi get into this time?",
+        "display": "哈维这次又闯什么祸了？"
+      },
+      "rarity": "4",
+      "graphicId": "6078",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,120"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "promo",
+          "promotion_id": 50
+        }
+      ],
+      "properties": {
+        "in_flash_sale": true,
+        "is_available": true,
+        "available_at_time": 1622228400
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "812",
+      "order": 4,
+      "name": {
+        "original": "Impulsive Hero",
+        "display": "冲动型英雄"
+      },
+      "description": {
+        "original": "Maybe that eldritch blast was a little quick.",
+        "display": "也许那个魔能爆弹有点快。"
+      },
+      "rarity": "4",
+      "graphicId": "7838",
+      "effects": [
+        {
+          "effect_string": "reduce_attack_cooldown,1"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 187
+        }
+      ],
+      "properties": {
+        "in_flash_sale": true,
+        "is_premium": true,
+        "is_available": true,
+        "available_at_time": 1655319600
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "2020",
+      "order": 5,
+      "name": {
+        "original": "Hex",
+        "display": "巫术"
+      },
+      "description": {
+        "original": "You're about to have a very bad day.",
+        "display": "你要倒大霉了。"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,17835"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2021",
+      "order": 6,
+      "name": {
+        "original": "Witch Bolt",
+        "display": "巫术箭"
+      },
+      "description": {
+        "original": "Havi, get down!",
+        "display": "哈维，趴下！"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,17835"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "699",
+      "order": 7,
+      "name": {
+        "original": "Ice Knife",
+        "display": "冰匕首"
+      },
+      "description": {
+        "original": "Freely... I think something just happened... Where's Havilar?",
+        "display": "弗里......我觉得刚才好像发生了什么事......哈维拉在哪？"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,17835"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "promo",
+          "promotion_id": 50
+        }
+      ],
+      "properties": {
+        "in_flash_sale": true,
+        "is_available": true,
+        "available_at_time": 1642190400
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "2173",
+      "order": 8,
+      "name": {
+        "original": "Hellish Gift",
+        "display": "地狱的礼物"
+      },
+      "description": {
+        "original": "This power is evil. I fear what it may do.",
+        "display": "这股力量很邪恶。我很担心，不知道它可能会造成什么后果。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,17836,0"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "2174",
+      "order": 9,
+      "name": {
+        "original": "Blessing of Asmodeus",
+        "display": "阿斯摩蒂斯的祝福"
+      },
+      "description": {
+        "original": "I didn't ask for this power, but it's mine now. I'll use it for good.",
+        "display": "我并未主动寻求这股力量，但它现在是我的了。我会把它用在正道上的。"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,17836,0"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000,
+          "start_date": "2026-01-08 12:00:00"
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 624
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1759950000
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "2179",
+      "order": 10,
+      "name": {
+        "original": "Touch of Nessus",
+        "display": "涅索斯之触"
+      },
+      "description": {
+        "original": "When I close my eyes, I see it. That terrible place...",
+        "display": "当我闭上眼睛，我就能看到它。那个可怕的地方……"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "change_upgrade_data,17836,1",
+          "data": {
+            "max_stacks": 30
+          },
+          "description": "Increases Farideh's Chosen of Asmodeus max stacks to 30"
+        }
+      ],
+      "sources": [
+        {
+          "source": "promo",
+          "promotion_id": 50
+        }
+      ],
+      "properties": {
+        "available_time": 999999,
+        "is_available": false,
+        "available_at_time": 1956574800
+      },
+      "collectionsSource": {
+        "type": "not_yet_available"
+      }
+    },
+    {
+      "id": "185",
+      "order": 11,
+      "name": {
+        "original": "Tiefling Magic",
+        "display": "提夫林魔法"
+      },
+      "description": {
+        "original": "We know things that maybe we should not.",
+        "display": "我们知道一些或许不应该知道的事情。"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,17837"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "186",
+      "order": 12,
+      "name": {
+        "original": "Dark Allegiance",
+        "display": "黑暗效忠"
+      },
+      "description": {
+        "original": "Not all tieflings are pure evil, you know?",
+        "display": "并非所有提夫林都是纯粹的邪恶，明白我的意思吗？"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,17837"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "726",
+      "order": 13,
+      "name": {
+        "original": "Infernal Heritage",
+        "display": "地狱传承"
+      },
+      "description": {
+        "original": "Use the tools you have.",
+        "display": "利用一切你能利用的。"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,17837"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 157
+        }
+      ],
+      "properties": {
+        "in_flash_sale": true,
+        "is_premium": true,
+        "is_available": true,
+        "available_at_time": 1644955200
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "1872",
+      "order": 14,
+      "name": {
+        "original": "Mehen's Pride",
+        "display": "梅亨的自尊"
+      },
+      "description": {
+        "original": "You may be stronger than me, but you're not stronger than my sister!",
+        "display": "虽然你比我强，但你没有我姐姐强！"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,17838"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 472
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1726686000
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "2332",
+      "order": 15,
+      "name": {
+        "original": "Familial Bonds",
+        "display": "家庭纽带"
+      },
+      "description": {
+        "original": "My family tree is... complicated.",
+        "display": "我的家族谱系……很复杂。"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,20,17839,17840,17841",
+          "description": "Increases the effect of Farideh's specializations by $amount%"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2333",
+      "order": 16,
+      "name": {
+        "original": "Lorcan's Gambit",
+        "display": "洛肯的险招"
+      },
+      "description": {
+        "original": "Whatever he wants from me, it can't be good.",
+        "display": "不管他对我有什么企图，都不会是好事。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,40,17839,17840,17841",
+          "description": "Increases the effect of Farideh's specializations by $amount%"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": -62169955622
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "2334",
+      "order": 17,
+      "name": {
+        "original": "Brimstone Blitz",
+        "display": "硫磺闪电战"
+      },
+      "description": {
+        "original": "We stand together! Go, go, go!",
+        "display": "我们并肩作战！冲冲冲！"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,17841,3",
+          "description": "Increases the chance of $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%"
+        }
+      ],
+      "sources": [
+        {
+          "source": "event",
+          "event_id": 2
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "event",
+        "event_id": 1,
+        "tier": 3
+      }
+    },
+    {
+      "id": "2335",
+      "order": 18,
+      "name": {
+        "original": "Hell Unleashed",
+        "display": "地狱之门开启"
+      },
+      "description": {
+        "original": "Here they come! Get ready!",
+        "display": "它们过来了！大家做好准备！"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "change_upgrade_data,17841,3",
+          "data": {
+            "spawn_count_range": [
+              3,
+              4
+            ],
+            "spawn_min": 3,
+            "spawn_max": 4
+          },
+          "description": "Increases Farideh's Pact with Lorcan's number of fiends spawned to 3-4"
+        }
+      ],
+      "sources": [
+        {
+          "source": "promo",
+          "promotion_id": 50
+        }
+      ],
+      "properties": {
+        "available_time": 999999,
+        "is_available": false,
+        "available_at_time": 1956600000
+      },
+      "collectionsSource": {
+        "type": "not_yet_available"
+      }
+    },
+    {
+      "id": "187",
+      "order": 19,
+      "name": {
+        "original": "Observant",
+        "display": "洞察"
+      },
+      "description": {
+        "original": "What can I say? I like to read.",
+        "display": "我能说什么呢，我喜欢阅读。"
+      },
+      "rarity": "3",
+      "graphicId": "6073",
+      "effects": [
+        {
+          "effect_string": "increase_ability_score,wis,1"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "1427",
+      "order": 20,
+      "name": {
+        "original": "Immolation",
+        "display": "献祭"
+      },
+      "description": {
+        "original": "I'll defeat you with the flames of the Hells if I have to.",
+        "display": "如有必要，我将用地狱之火打败你。"
+      },
+      "rarity": "4",
+      "graphicId": "16918",
+      "effects": [
+        {
+          "effect_string": "immolation,1,5"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 356
+        }
+      ],
+      "properties": {
+        "is_premium": true,
+        "is_available": true,
+        "available_at_time": 1695236400
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "2562",
+      "order": 21,
+      "name": {
+        "original": "Magius Infernus",
+        "display": "玛济斯炼狱"
+      },
+      "description": {
+        "original": "Cast enough fireballs, and most problems tend to go away.",
+        "display": "只要丢出足够多的火球，大部分问题都会解决。"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,80,17839,17840,17841",
+          "description": "Increases the effect of Farideh's specializations by $amount%"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000,
+          "start_date": "2026-07-29 12:00:00"
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 705
+        }
+      ],
+      "properties": {
+        "available_time": 999999,
+        "is_available": false,
+        "available_at_time": 1777489200,
+        "available_for_gems_at_time": 1785351600
+      },
+      "collectionsSource": {
+        "type": "not_yet_available"
+      }
+    }
+  ],
+  "skins": [
+    {
+      "id": "24",
+      "name": {
+        "original": "Devil Farideh",
+        "display": "恶魔法莉德"
+      },
+      "cost": [],
+      "details": {
+        "base_graphic_id": 6609,
+        "large_graphic_id": 6464,
+        "xl_graphic_id": 14022,
+        "portrait_graphic_id": 6614,
+        "flames": 6608,
+        "rebuke_hit_graphic_id": 4141,
+        "rebuke_particle_graphic_id": 4142,
+        "infernal_hit_graphic_id": 4112,
+        "infernal_particle_graphic_id": 4113,
+        "additional_shop_graphics": [
+          {
+            "graphic_id": "27418",
+            "sequence": "1",
+            "is_transform": true
+          }
+        ]
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "patron",
+        "patron_id": 2
+      },
+      "availabilities": {
+        "patron_id": "2",
+        "patron_shop_item_id": "29"
+      }
+    },
+    {
+      "id": "141",
+      "name": {
+        "original": "Ascendant Farideh",
+        "display": "星运法莉德"
+      },
+      "cost": {
+        "req_date": "2022-01-14 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 13250,
+        "large_graphic_id": 13252,
+        "xl_graphic_id": 13881,
+        "portrait_graphic_id": 13253,
+        "flames": 13249,
+        "rebuke_hit_graphic_id": 13243,
+        "rebuke_particle_graphic_id": 13244,
+        "infernal_hit_graphic_id": 13245,
+        "infernal_particle_graphic_id": 13246,
+        "additional_shop_graphics": [
+          {
+            "graphic_id": "27245",
+            "sequence": "1",
+            "is_transform": true
+          }
+        ]
+      },
+      "rarity": "3",
+      "properties": {
+        "show_only_if_owned": true,
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 438,
+        "odds": 38
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    },
+    {
+      "id": "143",
+      "name": {
+        "original": "Shadowfell Farideh",
+        "display": "堕影冥界法莉德"
+      },
+      "cost": {
+        "req_date": "2022-02-15 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 13522,
+        "large_graphic_id": 13523,
+        "xl_graphic_id": 14472,
+        "portrait_graphic_id": 13519,
+        "flames": 13521,
+        "rebuke_hit_graphic_id": 4141,
+        "rebuke_particle_graphic_id": 4142,
+        "infernal_hit_graphic_id": 4112,
+        "infernal_particle_graphic_id": 4113,
+        "additional_shop_graphics": [
+          {
+            "graphic_id": "27246",
+            "sequence": "1",
+            "is_transform": true
+          }
+        ]
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 605,
+        "odds": 35
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    },
+    {
+      "id": "175",
+      "name": {
+        "original": "Polymorphed Farideh",
+        "display": "变形法莉德"
+      },
+      "cost": {
+        "req_date": "2022-06-15 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 15042,
+        "large_graphic_id": 15045,
+        "portrait_graphic_id": 15038,
+        "flames": 15041,
+        "xl_graphic_id": 15714,
+        "rebuke_hit_graphic_id": 4141,
+        "rebuke_particle_graphic_id": 4142,
+        "infernal_hit_graphic_id": 4112,
+        "infernal_particle_graphic_id": 4113,
+        "additional_shop_graphics": [
+          {
+            "graphic_id": "15622",
+            "sequence": "1",
+            "is_transform": true
+          }
+        ]
+      },
+      "rarity": "3",
+      "properties": {
+        "notification_adjustment_override": {
+          "offset": [
+            60,
+            240
+          ],
+          "scale": 1.25
+        },
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 676,
+        "odds": 64
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    },
+    {
+      "id": "342",
+      "name": {
+        "original": "Spelljammer Pilot Farideh",
+        "display": "魔法船手法莉德"
+      },
+      "cost": {
+        "req_date": "2023-09-20 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 20810,
+        "large_graphic_id": 20811,
+        "portrait_graphic_id": 20809,
+        "xl_graphic_id": 20812,
+        "flames": 21123,
+        "rebuke_hit_graphic_id": 4141,
+        "rebuke_particle_graphic_id": 4142,
+        "infernal_hit_graphic_id": 4112,
+        "infernal_particle_graphic_id": 4113,
+        "additional_shop_graphics": [
+          {
+            "graphic_id": "27247",
+            "sequence": "1",
+            "is_transform": true
+          }
+        ]
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 1119,
+        "odds": 15
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    },
+    {
+      "id": "469",
+      "name": {
+        "original": "Harvestguard Farideh",
+        "display": "收获守卫法莉德"
+      },
+      "cost": {
+        "req_date": "2024-09-18 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 24665,
+        "large_graphic_id": 24672,
+        "portrait_graphic_id": 24656,
+        "xl_graphic_id": 24678,
+        "flames": 24666,
+        "rebuke_hit_graphic_id": 4141,
+        "rebuke_particle_graphic_id": 4142,
+        "infernal_hit_graphic_id": 4112,
+        "infernal_particle_graphic_id": 4113,
+        "additional_shop_graphics": [
+          {
+            "graphic_id": "27248",
+            "sequence": "1",
+            "is_transform": true
+          }
+        ]
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 1635,
+        "odds": 288
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    },
+    {
+      "id": "608",
+      "name": {
+        "original": "Darklord Farideh",
+        "display": "黑暗领主法莉德"
+      },
+      "cost": {
+        "req_date": "2025-10-08 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 27907,
+        "large_graphic_id": 27908,
+        "portrait_graphic_id": 27906,
+        "xl_graphic_id": 27909,
+        "flames": 27911,
+        "rebuke_hit_graphic_id": 27985,
+        "rebuke_particle_graphic_id": 27984,
+        "infernal_hit_graphic_id": 27983,
+        "infernal_particle_graphic_id": 27982,
+        "additional_shop_graphics": [
+          {
+            "graphic_id": "27913",
+            "sequence": "1",
+            "is_transform": true
+          }
+        ]
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "624",
+        "cost": 3830
+      },
+      "availabilities": {
+        "premium_item_id": "624"
+      }
+    }
+  ],
+  "raw": {
+    "hero": {
+      "original": {
+        "id": 33,
+        "name": "Farideh",
+        "english_name": "Farideh",
+        "seat_id": 7,
+        "base_cost": "5250000000",
+        "base_damage": "20000000",
+        "base_health": "45",
+        "cost_curves": {
+          "1": 1.11
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 137,
+        "ultimate_attack_id": 138,
+        "graphic_id": 4110,
+        "portrait_graphic_id": 4117,
+        "character_sheet_details": {
+          "full_name": "Farideh",
+          "class": "Warlock",
+          "race": "Tiefling",
+          "age": 19,
+          "alignment": "Neutral Good",
+          "ability_scores": {
+            "str": 10,
+            "dex": 14,
+            "con": 14,
+            "int": 14,
+            "wis": 13,
+            "cha": 18
+          },
+          "backstory": "Abandoned as an infant and adopted by an outcast dragonborn warrior, Farideh grew to adulthood acutely aware of the drawbacks of being a tiefling. While those from the Nine Hells do their utmost to corrupt her, Farideh isn't interested in power so much as defending the world from demons, the undead, and any other villains trying to bring trouble or drag her friends and family into danger.",
+          "system_description": "Farideh's main mechanic is Hellish Rebuke, which does damage to enemies whenever she or her friends are hit."
+        },
+        "default_feat_slot_unlocks": [
+          155,
+          605,
+          1130,
+          1780
+        ],
+        "tags": [
+          "female",
+          "tiefling",
+          "warlock",
+          "neutral",
+          "good",
+          "dps",
+          "event",
+          "brimstone",
+          "y2",
+          "spec_hunter",
+          "spec_hunter_fiends",
+          "spec_debuff",
+          "lcneutral"
+        ],
+        "properties": {
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            170,
+            171,
+            172
+          ],
+          "graphic_large": 4118,
+          "graphic_xl": 13880,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            101,
+            73
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 5,
+            "gethit": 6,
+            "koed": 7,
+            "run": 8
+          },
+          "allow_time_gate": true,
+          "time_gate_adventure_id": 261,
+          "time_gate_variants_ids": [
+            257,
+            258,
+            259
+          ],
+          "time_gate_tier": 2,
+          "silver_chest_type_id": 71,
+          "gold_chest_type_id": 72,
+          "available_in_store": true,
+          "golden_epic_loot_id": 780,
+          "golden_epic_promo_id": 53,
+          "event_logo_graphic_id": 3371,
+          "console_portrait": 4116,
+          "head_graphic_id": 7269,
+          "trials_effect_id": 839,
+          "legendary_effect_id": [
+            1,
+            3,
+            63,
+            35,
+            90,
+            49
+          ],
+          "weekly_buff": "hero_dps_multiplier_mult,400",
+          "portrait_graphic_scale": 0.96,
+          "notification_adjustment": {
+            "offset": [
+              60,
+              209
+            ],
+            "scale": 1.25
+          },
+          "shop_transform_graphic": 28656
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 256,
+            "type": "base"
+          },
+          {
+            "adventure_id": 257,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 258,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 259,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 260,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 261,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 65,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 17835,
+            "name": "Hellish Rebuke",
+            "description": "Enemies that strike Farideh (can be expanded to allies via upgrades and specializations) take instant damage based on Farideh's DPS.",
+            "graphic_id": "4094"
+          },
+          {
+            "upgrade_id": 17836,
+            "name": "Chosen of Asmodeus",
+            "description": "",
+            "graphic_id": "4096"
+          },
+          {
+            "upgrade_id": 17837,
+            "name": "Pact Family",
+            "description": "Increase the damage of Farideh for each Tiefling in the formation.",
+            "graphic_id": "4098"
+          },
+          {
+            "upgrade_id": 17838,
+            "name": "Sister, Sister",
+            "description": "",
+            "graphic_id": "27631"
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1788462000,
+        "event_name": "Highharvestide",
+        "is_available": true,
+        "date_available": "2018-10-03 00:00:00",
+        "last_rework_date": "2025-10-08 12:00:00"
+      },
+      "display": {
+        "id": 33,
+        "name": "法莉德",
+        "english_name": "Farideh",
+        "seat_id": 7,
+        "base_cost": "5250000000",
+        "base_damage": "20000000",
+        "base_health": "45",
+        "cost_curves": {
+          "1": 1.11
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 137,
+        "ultimate_attack_id": 138,
+        "graphic_id": 4110,
+        "portrait_graphic_id": 4117,
+        "character_sheet_details": {
+          "full_name": "法莉德",
+          "class": "邪术师",
+          "race": "提夫林",
+          "age": 19,
+          "alignment": "中立善良",
+          "ability_scores": {
+            "str": 10,
+            "dex": 14,
+            "con": 14,
+            "int": 14,
+            "wis": 13,
+            "cha": 18
+          },
+          "backstory": "法莉德在婴儿时被遗弃，随后被一名流浪的龙裔战士收养。在成年后，她深刻地意识到了作为一名提夫林的缺点。虽然那些来自九层地狱的存在竭力想腐蚀她，但法莉德对力量并不感兴趣。她想要的是保护世界，使其不受恶魔、亡灵，以及任何其他试图带来麻烦或将她朋友和家人拖入危险的恶棍所侵害。",
+          "system_description": "法莉德的主要机制是炼狱叱喝，在她或者她的朋友受到攻击时会对敌人造成伤害。"
+        },
+        "default_feat_slot_unlocks": [
+          155,
+          605,
+          1130,
+          1780
+        ],
+        "tags": [
+          "female",
+          "tiefling",
+          "warlock",
+          "neutral",
+          "good",
+          "dps",
+          "event",
+          "brimstone",
+          "y2",
+          "spec_hunter",
+          "spec_hunter_fiends",
+          "spec_debuff",
+          "lcneutral"
+        ],
+        "properties": {
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            170,
+            171,
+            172
+          ],
+          "graphic_large": 4118,
+          "graphic_xl": 13880,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            101,
+            73
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 5,
+            "gethit": 6,
+            "koed": 7,
+            "run": 8
+          },
+          "allow_time_gate": true,
+          "time_gate_adventure_id": 261,
+          "time_gate_variants_ids": [
+            257,
+            258,
+            259
+          ],
+          "time_gate_tier": 2,
+          "silver_chest_type_id": 71,
+          "gold_chest_type_id": 72,
+          "available_in_store": true,
+          "golden_epic_loot_id": 780,
+          "golden_epic_promo_id": 53,
+          "event_logo_graphic_id": 3371,
+          "console_portrait": 4116,
+          "head_graphic_id": 7269,
+          "trials_effect_id": 839,
+          "legendary_effect_id": [
+            1,
+            3,
+            63,
+            35,
+            90,
+            49
+          ],
+          "weekly_buff": "hero_dps_multiplier_mult,400",
+          "portrait_graphic_scale": 0.96,
+          "notification_adjustment": {
+            "offset": [
+              60,
+              209
+            ],
+            "scale": 1.25
+          },
+          "shop_transform_graphic": 28656
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 256,
+            "type": "base"
+          },
+          {
+            "adventure_id": 257,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 258,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 259,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 260,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 261,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 65,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 17835,
+            "name": "炼狱叱喝",
+            "description": "攻击法莉德（可通过进阶和专精扩展至包括队友）的敌人，会立即受到基于法莉德的秒伤的伤害。",
+            "graphic_id": "4094"
+          },
+          {
+            "upgrade_id": 17836,
+            "name": "被阿斯摩蒂斯选中者",
+            "description": "",
+            "graphic_id": "4096"
+          },
+          {
+            "upgrade_id": 17837,
+            "name": "契约家族",
+            "description": "阵型中每有一名提夫林，都会为法莉德提高伤害。",
+            "graphic_id": "4098"
+          },
+          {
+            "upgrade_id": 17838,
+            "name": "姐妹，姐妹",
+            "description": "",
+            "graphic_id": "27631"
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1788462000,
+        "event_name": "丰收节",
+        "is_available": true,
+        "date_available": "2018-10-03 00:00:00",
+        "last_rework_date": "2025-10-08 12:00:00"
+      }
+    },
+    "attacks": [
+      {
+        "id": "137",
+        "snapshots": {
+          "original": {
+            "id": 137,
+            "name": "Scorching Ray",
+            "description": "Farideh creates $attack_num_targets rays of fire and hurls them at random enemies.",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "random",
+            "num_targets": 3,
+            "aoe_radius": 0,
+            "damage_modifier": 0.33,
+            "cooldown": 5,
+            "animations": [
+              {
+                "type": "ranged_attack",
+                "projectile": "scorching_ray",
+                "shoot_frame": 9,
+                "projectile_delay_no_pause": 0.1,
+                "projectile_count": 3,
+                "shoot_offset_x": 27,
+                "shoot_offset_y": -20
+              }
+            ],
+            "tags": [
+              "ranged"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          },
+          "display": {
+            "id": 137,
+            "name": "灼热射线",
+            "description": "法莉德召唤出 $attack_num_targets 道火焰射线，并将其投向随机敌人。",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "random",
+            "num_targets": 3,
+            "aoe_radius": 0,
+            "damage_modifier": 0.33,
+            "cooldown": 5,
+            "animations": [
+              {
+                "type": "ranged_attack",
+                "projectile": "scorching_ray",
+                "shoot_frame": 9,
+                "projectile_delay_no_pause": 0.1,
+                "projectile_count": 3,
+                "shoot_offset_x": 27,
+                "shoot_offset_y": -20
+              }
+            ],
+            "tags": [
+              "ranged"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          }
+        }
+      },
+      {
+        "id": "138",
+        "snapshots": {
+          "original": {
+            "id": 138,
+            "name": "Infernal Aspect",
+            "description": "Farideh taps into her infernal bloodline, pushing away, slowing, and damaging nearby enemies.",
+            "long_description": "Farideh taps into her infernal bloodline, pushing away and slowing all enemies, then damaging a random enemy every second, for 15 seconds.",
+            "graphic_id": 4109,
+            "target": "none",
+            "num_targets": 0,
+            "aoe_radius": 0,
+            "damage_modifier": 0.014,
+            "cooldown": 450,
+            "animations": [
+              {
+                "type": "farideh_ultimate",
+                "tooltip_damage_override": "farideh_ult",
+                "farideh_effect": {
+                  "effect_string": "farideh_ultimate,100",
+                  "for_time": 15
+                }
+              }
+            ],
+            "tags": [
+              "ranged",
+              "ultimate"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          },
+          "display": {
+            "id": 138,
+            "name": "地狱容颜",
+            "description": "法莉德展露出她的地狱血脉，击退、减速并伤害附近的敌人。",
+            "long_description": "法莉德展露出她的地狱血脉，击退、减速所有敌人，然后每秒对一名随机敌人造成伤害，持续 15 秒。",
+            "graphic_id": 4109,
+            "target": "none",
+            "num_targets": 0,
+            "aoe_radius": 0,
+            "damage_modifier": 0.014,
+            "cooldown": 450,
+            "animations": [
+              {
+                "type": "farideh_ultimate",
+                "tooltip_damage_override": "farideh_ult",
+                "farideh_effect": {
+                  "effect_string": "farideh_ultimate,100",
+                  "for_time": 15
+                }
+              }
+            ],
+            "tags": [
+              "ranged",
+              "ultimate"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          }
+        }
+      }
+    ],
+    "upgrades": [
+      {
+        "id": "1552",
+        "snapshots": {
+          "original": {
+            "id": 1552,
+            "hero_id": 33,
+            "required_level": 380,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "add_attack_targets,1,137",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1552,
+            "hero_id": 33,
+            "required_level": 380,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "add_attack_targets,1,137",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1558",
+        "snapshots": {
+          "original": {
+            "id": 1558,
+            "hero_id": 33,
+            "required_level": 1250,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "add_attack_targets,1,137",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1558,
+            "hero_id": 33,
+            "required_level": 1250,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "add_attack_targets,1,137",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17835",
+        "snapshots": {
+          "original": {
+            "id": 17835,
+            "hero_id": 33,
+            "required_level": 20,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2462",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Hellish Rebuke",
+            "tip_text": "Farideh's Hellish Rebuke triggers when enemies hit her or her allies, dealing big damage to the enemy."
+          },
+          "display": {
+            "id": 17835,
+            "hero_id": 33,
+            "required_level": 20,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2462",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "炼狱叱喝",
+            "tip_text": "当敌人击中法莉德或者她的盟友时，她的“炼狱叱喝”就会触发，对该敌人造成巨大的伤害。"
+          }
+        }
+      },
+      {
+        "id": "17836",
+        "snapshots": {
+          "original": {
+            "id": 17836,
+            "hero_id": 33,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2463",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Chosen of Asmodeus"
+          },
+          "display": {
+            "id": 17836,
+            "hero_id": 33,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2463",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "被阿斯摩蒂斯选中者"
+          }
+        }
+      },
+      {
+        "id": "17837",
+        "snapshots": {
+          "original": {
+            "id": 17837,
+            "hero_id": 33,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2464",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Pact Family",
+            "tip_text": "Farideh's damage is increased by the number of tieflings in the formation. Load up your formation with tieflings to really power her up!"
+          },
+          "display": {
+            "id": 17837,
+            "hero_id": 33,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2464",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "契约家族",
+            "tip_text": "法莉德的伤害随着阵型中的提夫林数量而提高。在阵型中加入更多提夫林，让她尽情发挥力量！"
+          }
+        }
+      },
+      {
+        "id": "17838",
+        "snapshots": {
+          "original": {
+            "id": 17838,
+            "hero_id": 33,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2465",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Sister, Sister"
+          },
+          "display": {
+            "id": 17838,
+            "hero_id": 33,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2465",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "姐妹，姐妹"
+          }
+        }
+      },
+      {
+        "id": "17839",
+        "snapshots": {
+          "original": {
+            "id": 17839,
+            "hero_id": 33,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2466",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Daughters of Mehen",
+            "specialization_name": "Daughters of Mehen",
+            "specialization_description": "Farideh seeks out Mehen and other Dragonborn Champions to assist her in battle.",
+            "specialization_graphic_id": 27505
+          },
+          "display": {
+            "id": 17839,
+            "hero_id": 33,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2466",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "梅亨的女儿们",
+            "specialization_name": "梅亨的女儿们",
+            "specialization_description": "法莉德找梅亨和其他龙裔勇士来协助她作战。",
+            "specialization_graphic_id": 27505
+          }
+        }
+      },
+      {
+        "id": "17840",
+        "snapshots": {
+          "original": {
+            "id": 17840,
+            "hero_id": 33,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2467",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Fury of Asmodeus",
+            "specialization_name": "Fury of Asmodeus",
+            "specialization_description": "Farideh doubles down on her link to Asmodeus, dealing more damage to enemies affected by Hellish Rebuke.",
+            "specialization_graphic_id": 27506
+          },
+          "display": {
+            "id": 17840,
+            "hero_id": 33,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2467",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "阿斯摩蒂斯之怒",
+            "specialization_name": "阿斯摩蒂斯之怒",
+            "specialization_description": "法莉德进一步强化她与阿斯摩蒂斯的联系，对受“炼狱叱喝”影响的敌人造成更多伤害。",
+            "specialization_graphic_id": 27506
+          }
+        }
+      },
+      {
+        "id": "17841",
+        "snapshots": {
+          "original": {
+            "id": 17841,
+            "hero_id": 33,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2468",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Pact with Lorcan",
+            "specialization_name": "Pact with Lorcan",
+            "specialization_description": "Farideh seeks out the Demons that befuddle her sister, Havilar, and attempts to wipe them from existence.",
+            "specialization_graphic_id": 27507
+          },
+          "display": {
+            "id": 17841,
+            "hero_id": 33,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2468",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "与洛肯的契约",
+            "specialization_name": "与洛肯的契约",
+            "specialization_description": "法莉德追寻那些迷惑她姐妹哈维拉的恶魔，并试图彻底消灭它们。",
+            "specialization_graphic_id": 27507
+          }
+        }
+      },
+      {
+        "id": "17842",
+        "snapshots": {
+          "original": {
+            "id": 17842,
+            "hero_id": 33,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "effect_def,2471",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Infernal Aspect"
+          },
+          "display": {
+            "id": 17842,
+            "hero_id": 33,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "effect_def,2471",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "地狱容颜"
+          }
+        }
+      },
+      {
+        "id": "17844",
+        "snapshots": {
+          "original": {
+            "id": 17844,
+            "hero_id": 33,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17835",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17844,
+            "hero_id": 33,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17835",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18107",
+        "snapshots": {
+          "original": {
+            "id": 18107,
+            "hero_id": 33,
+            "required_level": 10,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18107,
+            "hero_id": 33,
+            "required_level": 10,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18108",
+        "snapshots": {
+          "original": {
+            "id": 18108,
+            "hero_id": 33,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18108,
+            "hero_id": 33,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18109",
+        "snapshots": {
+          "original": {
+            "id": 18109,
+            "hero_id": 33,
+            "required_level": 60,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18109,
+            "hero_id": 33,
+            "required_level": 60,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18110",
+        "snapshots": {
+          "original": {
+            "id": 18110,
+            "hero_id": 33,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18110,
+            "hero_id": 33,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18111",
+        "snapshots": {
+          "original": {
+            "id": 18111,
+            "hero_id": 33,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18111,
+            "hero_id": 33,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18112",
+        "snapshots": {
+          "original": {
+            "id": 18112,
+            "hero_id": 33,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18112,
+            "hero_id": 33,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18113",
+        "snapshots": {
+          "original": {
+            "id": 18113,
+            "hero_id": 33,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18113,
+            "hero_id": 33,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18114",
+        "snapshots": {
+          "original": {
+            "id": 18114,
+            "hero_id": 33,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18114,
+            "hero_id": 33,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18115",
+        "snapshots": {
+          "original": {
+            "id": 18115,
+            "hero_id": 33,
+            "required_level": 210,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18115,
+            "hero_id": 33,
+            "required_level": 210,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18116",
+        "snapshots": {
+          "original": {
+            "id": 18116,
+            "hero_id": 33,
+            "required_level": 230,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18116,
+            "hero_id": 33,
+            "required_level": 230,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18117",
+        "snapshots": {
+          "original": {
+            "id": 18117,
+            "hero_id": 33,
+            "required_level": 260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18117,
+            "hero_id": 33,
+            "required_level": 260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18118",
+        "snapshots": {
+          "original": {
+            "id": 18118,
+            "hero_id": 33,
+            "required_level": 290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18118,
+            "hero_id": 33,
+            "required_level": 290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18119",
+        "snapshots": {
+          "original": {
+            "id": 18119,
+            "hero_id": 33,
+            "required_level": 320,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18119,
+            "hero_id": 33,
+            "required_level": 320,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18120",
+        "snapshots": {
+          "original": {
+            "id": 18120,
+            "hero_id": 33,
+            "required_level": 360,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18120,
+            "hero_id": 33,
+            "required_level": 360,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18121",
+        "snapshots": {
+          "original": {
+            "id": 18121,
+            "hero_id": 33,
+            "required_level": 400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18121,
+            "hero_id": 33,
+            "required_level": 400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18122",
+        "snapshots": {
+          "original": {
+            "id": 18122,
+            "hero_id": 33,
+            "required_level": 440,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18122,
+            "hero_id": 33,
+            "required_level": 440,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18123",
+        "snapshots": {
+          "original": {
+            "id": 18123,
+            "hero_id": 33,
+            "required_level": 480,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18123,
+            "hero_id": 33,
+            "required_level": 480,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18124",
+        "snapshots": {
+          "original": {
+            "id": 18124,
+            "hero_id": 33,
+            "required_level": 530,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18124,
+            "hero_id": 33,
+            "required_level": 530,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18125",
+        "snapshots": {
+          "original": {
+            "id": 18125,
+            "hero_id": 33,
+            "required_level": 580,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18125,
+            "hero_id": 33,
+            "required_level": 580,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18126",
+        "snapshots": {
+          "original": {
+            "id": 18126,
+            "hero_id": 33,
+            "required_level": 600,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17835",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18126,
+            "hero_id": 33,
+            "required_level": 600,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17835",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18127",
+        "snapshots": {
+          "original": {
+            "id": 18127,
+            "hero_id": 33,
+            "required_level": 640,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18127,
+            "hero_id": 33,
+            "required_level": 640,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18128",
+        "snapshots": {
+          "original": {
+            "id": 18128,
+            "hero_id": 33,
+            "required_level": 680,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18128,
+            "hero_id": 33,
+            "required_level": 680,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18129",
+        "snapshots": {
+          "original": {
+            "id": 18129,
+            "hero_id": 33,
+            "required_level": 730,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18129,
+            "hero_id": 33,
+            "required_level": 730,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18130",
+        "snapshots": {
+          "original": {
+            "id": 18130,
+            "hero_id": 33,
+            "required_level": 780,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18130,
+            "hero_id": 33,
+            "required_level": 780,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18131",
+        "snapshots": {
+          "original": {
+            "id": 18131,
+            "hero_id": 33,
+            "required_level": 830,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18131,
+            "hero_id": 33,
+            "required_level": 830,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18132",
+        "snapshots": {
+          "original": {
+            "id": 18132,
+            "hero_id": 33,
+            "required_level": 880,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18132,
+            "hero_id": 33,
+            "required_level": 880,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18133",
+        "snapshots": {
+          "original": {
+            "id": 18133,
+            "hero_id": 33,
+            "required_level": 900,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17835",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18133,
+            "hero_id": 33,
+            "required_level": 900,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17835",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18134",
+        "snapshots": {
+          "original": {
+            "id": 18134,
+            "hero_id": 33,
+            "required_level": 950,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18134,
+            "hero_id": 33,
+            "required_level": 950,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18135",
+        "snapshots": {
+          "original": {
+            "id": 18135,
+            "hero_id": 33,
+            "required_level": 1020,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18135,
+            "hero_id": 33,
+            "required_level": 1020,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18136",
+        "snapshots": {
+          "original": {
+            "id": 18136,
+            "hero_id": 33,
+            "required_level": 1090,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18136,
+            "hero_id": 33,
+            "required_level": 1090,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18137",
+        "snapshots": {
+          "original": {
+            "id": 18137,
+            "hero_id": 33,
+            "required_level": 1190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18137,
+            "hero_id": 33,
+            "required_level": 1190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18138",
+        "snapshots": {
+          "original": {
+            "id": 18138,
+            "hero_id": 33,
+            "required_level": 1200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17835",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18138,
+            "hero_id": 33,
+            "required_level": 1200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17835",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18139",
+        "snapshots": {
+          "original": {
+            "id": 18139,
+            "hero_id": 33,
+            "required_level": 1340,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18139,
+            "hero_id": 33,
+            "required_level": 1340,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18140",
+        "snapshots": {
+          "original": {
+            "id": 18140,
+            "hero_id": 33,
+            "required_level": 1500,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17835",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18140,
+            "hero_id": 33,
+            "required_level": 1500,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17835",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18141",
+        "snapshots": {
+          "original": {
+            "id": 18141,
+            "hero_id": 33,
+            "required_level": 1560,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18141,
+            "hero_id": 33,
+            "required_level": 1560,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18142",
+        "snapshots": {
+          "original": {
+            "id": 18142,
+            "hero_id": 33,
+            "required_level": 1620,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18142,
+            "hero_id": 33,
+            "required_level": 1620,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18143",
+        "snapshots": {
+          "original": {
+            "id": 18143,
+            "hero_id": 33,
+            "required_level": 1670,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18143,
+            "hero_id": 33,
+            "required_level": 1670,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      }
+    ],
+    "feats": [
+      {
+        "id": "183",
+        "snapshots": {
+          "original": {
+            "id": 183,
+            "hero_id": 33,
+            "order": 1,
+            "name": "Adept",
+            "description": "I just want my friends to be safe.",
+            "rarity": 2,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,30"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 183,
+            "hero_id": 33,
+            "order": 1,
+            "name": "熟练",
+            "description": "我只希望我的朋友们安全无恙。",
+            "rarity": 2,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,30"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "184",
+        "snapshots": {
+          "original": {
+            "id": 184,
+            "hero_id": 33,
+            "order": 2,
+            "name": "Elementalist",
+            "description": "I am the element of death in battle.",
+            "rarity": 3,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,60"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 184,
+            "hero_id": 33,
+            "order": 2,
+            "name": "元素使",
+            "description": "在战场上我就是死亡元素。",
+            "rarity": 3,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,60"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "185",
+        "snapshots": {
+          "original": {
+            "id": 185,
+            "hero_id": 33,
+            "order": 11,
+            "name": "Tiefling Magic",
+            "description": "We know things that maybe we should not.",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,17837"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 185,
+            "hero_id": 33,
+            "order": 11,
+            "name": "提夫林魔法",
+            "description": "我们知道一些或许不应该知道的事情。",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,17837"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "186",
+        "snapshots": {
+          "original": {
+            "id": 186,
+            "hero_id": 33,
+            "order": 12,
+            "name": "Dark Allegiance",
+            "description": "Not all tieflings are pure evil, you know?",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17837"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 186,
+            "hero_id": 33,
+            "order": 12,
+            "name": "黑暗效忠",
+            "description": "并非所有提夫林都是纯粹的邪恶，明白我的意思吗？",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17837"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "187",
+        "snapshots": {
+          "original": {
+            "id": 187,
+            "hero_id": 33,
+            "order": 19,
+            "name": "Observant",
+            "description": "What can I say? I like to read.",
+            "rarity": 3,
+            "graphic_id": 6073,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,wis,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 187,
+            "hero_id": 33,
+            "order": 19,
+            "name": "洞察",
+            "description": "我能说什么呢，我喜欢阅读。",
+            "rarity": 3,
+            "graphic_id": 6073,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,wis,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "544",
+        "snapshots": {
+          "original": {
+            "id": 544,
+            "hero_id": 33,
+            "order": 3,
+            "name": "Spell Master",
+            "description": "What trouble did Havi get into this time?",
+            "rarity": 4,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,120"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_available": true,
+              "available_at_time": 1622228400
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 544,
+            "hero_id": 33,
+            "order": 3,
+            "name": "法术大师",
+            "description": "哈维这次又闯什么祸了？",
+            "rarity": 4,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,120"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_available": true,
+              "available_at_time": 1622228400
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "699",
+        "snapshots": {
+          "original": {
+            "id": 699,
+            "hero_id": 33,
+            "order": 7,
+            "name": "Ice Knife",
+            "description": "Freely... I think something just happened... Where's Havilar?",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,17835"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_available": true,
+              "available_at_time": 1642190400
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 699,
+            "hero_id": 33,
+            "order": 7,
+            "name": "冰匕首",
+            "description": "弗里......我觉得刚才好像发生了什么事......哈维拉在哪？",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,17835"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_available": true,
+              "available_at_time": 1642190400
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "726",
+        "snapshots": {
+          "original": {
+            "id": 726,
+            "hero_id": 33,
+            "order": 13,
+            "name": "Infernal Heritage",
+            "description": "Use the tools you have.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,17837"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 157
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1644955200
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 726,
+            "hero_id": 33,
+            "order": 13,
+            "name": "地狱传承",
+            "description": "利用一切你能利用的。",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,17837"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 157
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1644955200
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "812",
+        "snapshots": {
+          "original": {
+            "id": 812,
+            "hero_id": 33,
+            "order": 4,
+            "name": "Impulsive Hero",
+            "description": "Maybe that eldritch blast was a little quick.",
+            "rarity": 4,
+            "graphic_id": 7838,
+            "effects": [
+              {
+                "effect_string": "reduce_attack_cooldown,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 187
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1655319600
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 812,
+            "hero_id": 33,
+            "order": 4,
+            "name": "冲动型英雄",
+            "description": "也许那个魔能爆弹有点快。",
+            "rarity": 4,
+            "graphic_id": 7838,
+            "effects": [
+              {
+                "effect_string": "reduce_attack_cooldown,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 187
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1655319600
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "1427",
+        "snapshots": {
+          "original": {
+            "id": 1427,
+            "hero_id": 33,
+            "order": 20,
+            "name": "Immolation",
+            "description": "I'll defeat you with the flames of the Hells if I have to.",
+            "rarity": 4,
+            "graphic_id": 16918,
+            "effects": [
+              {
+                "effect_string": "immolation,1,5"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 356
+              }
+            ],
+            "properties": {
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1695236400
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 1427,
+            "hero_id": 33,
+            "order": 20,
+            "name": "献祭",
+            "description": "如有必要，我将用地狱之火打败你。",
+            "rarity": 4,
+            "graphic_id": 16918,
+            "effects": [
+              {
+                "effect_string": "immolation,1,5"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 356
+              }
+            ],
+            "properties": {
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1695236400
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "1872",
+        "snapshots": {
+          "original": {
+            "id": 1872,
+            "hero_id": 33,
+            "order": 14,
+            "name": "Mehen's Pride",
+            "description": "You may be stronger than me, but you're not stronger than my sister!",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,17838"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 472
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1726686000
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 1872,
+            "hero_id": 33,
+            "order": 14,
+            "name": "梅亨的自尊",
+            "description": "虽然你比我强，但你没有我姐姐强！",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,17838"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 472
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1726686000
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "2020",
+        "snapshots": {
+          "original": {
+            "id": 2020,
+            "hero_id": 33,
+            "order": 5,
+            "name": "Hex",
+            "description": "You're about to have a very bad day.",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,17835"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2020,
+            "hero_id": 33,
+            "order": 5,
+            "name": "巫术",
+            "description": "你要倒大霉了。",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,17835"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2021",
+        "snapshots": {
+          "original": {
+            "id": 2021,
+            "hero_id": 33,
+            "order": 6,
+            "name": "Witch Bolt",
+            "description": "Havi, get down!",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17835"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 2021,
+            "hero_id": 33,
+            "order": 6,
+            "name": "巫术箭",
+            "description": "哈维，趴下！",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17835"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "2173",
+        "snapshots": {
+          "original": {
+            "id": 2173,
+            "hero_id": 33,
+            "order": 8,
+            "name": "Hellish Gift",
+            "description": "This power is evil. I fear what it may do.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17836,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 2173,
+            "hero_id": 33,
+            "order": 8,
+            "name": "地狱的礼物",
+            "description": "这股力量很邪恶。我很担心，不知道它可能会造成什么后果。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17836,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "2174",
+        "snapshots": {
+          "original": {
+            "id": 2174,
+            "hero_id": 33,
+            "order": 9,
+            "name": "Blessing of Asmodeus",
+            "description": "I didn't ask for this power, but it's mine now. I'll use it for good.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,17836,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2026-01-08 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 624
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1759950000
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 2174,
+            "hero_id": 33,
+            "order": 9,
+            "name": "阿斯摩蒂斯的祝福",
+            "description": "我并未主动寻求这股力量，但它现在是我的了。我会把它用在正道上的。",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,17836,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2026-01-08 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 624
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1759950000
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "2179",
+        "snapshots": {
+          "original": {
+            "id": 2179,
+            "hero_id": 33,
+            "order": 10,
+            "name": "Touch of Nessus",
+            "description": "When I close my eyes, I see it. That terrible place...",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "change_upgrade_data,17836,1",
+                "data": {
+                  "max_stacks": 30
+                },
+                "description": "Increases Farideh's Chosen of Asmodeus max stacks to 30"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1956574800
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          },
+          "display": {
+            "id": 2179,
+            "hero_id": 33,
+            "order": 10,
+            "name": "涅索斯之触",
+            "description": "当我闭上眼睛，我就能看到它。那个可怕的地方……",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "change_upgrade_data,17836,1",
+                "data": {
+                  "max_stacks": 30
+                },
+                "description": "使法莉德“被阿斯摩蒂斯选中者”的堆叠层数上限提高到 30"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1956574800
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          }
+        }
+      },
+      {
+        "id": "2332",
+        "snapshots": {
+          "original": {
+            "id": 2332,
+            "hero_id": 33,
+            "order": 15,
+            "name": "Familial Bonds",
+            "description": "My family tree is... complicated.",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,20,17839,17840,17841",
+                "description": "Increases the effect of Farideh's specializations by $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2332,
+            "hero_id": 33,
+            "order": 15,
+            "name": "家庭纽带",
+            "description": "我的家族谱系……很复杂。",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,20,17839,17840,17841",
+                "description": "使法莉德的专精效果提高 $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2333",
+        "snapshots": {
+          "original": {
+            "id": 2333,
+            "hero_id": 33,
+            "order": 16,
+            "name": "Lorcan's Gambit",
+            "description": "Whatever he wants from me, it can't be good.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,40,17839,17840,17841",
+                "description": "Increases the effect of Farideh's specializations by $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": -62169955622
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 2333,
+            "hero_id": 33,
+            "order": 16,
+            "name": "洛肯的险招",
+            "description": "不管他对我有什么企图，都不会是好事。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,40,17839,17840,17841",
+                "description": "使法莉德的专精效果提高 $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": -62169955622
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "2334",
+        "snapshots": {
+          "original": {
+            "id": 2334,
+            "hero_id": 33,
+            "order": 17,
+            "name": "Brimstone Blitz",
+            "description": "We stand together! Go, go, go!",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,17841,3",
+                "description": "Increases the chance of $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 2
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "event",
+              "event_id": 1,
+              "tier": 3
+            }
+          },
+          "display": {
+            "id": 2334,
+            "hero_id": 33,
+            "order": 17,
+            "name": "硫磺闪电战",
+            "description": "我们并肩作战！冲冲冲！",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,17841,3",
+                "description": "使$(upgrade_hero id)的$(upgrade_name id)技能几率增加 $(amount)%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 2
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "event",
+              "event_id": 1,
+              "tier": 3
+            }
+          }
+        }
+      },
+      {
+        "id": "2335",
+        "snapshots": {
+          "original": {
+            "id": 2335,
+            "hero_id": 33,
+            "order": 18,
+            "name": "Hell Unleashed",
+            "description": "Here they come! Get ready!",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "change_upgrade_data,17841,3",
+                "data": {
+                  "spawn_count_range": [
+                    3,
+                    4
+                  ],
+                  "spawn_min": 3,
+                  "spawn_max": 4
+                },
+                "description": "Increases Farideh's Pact with Lorcan's number of fiends spawned to 3-4"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1956600000
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          },
+          "display": {
+            "id": 2335,
+            "hero_id": 33,
+            "order": 18,
+            "name": "地狱之门开启",
+            "description": "它们过来了！大家做好准备！",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "change_upgrade_data,17841,3",
+                "data": {
+                  "spawn_count_range": [
+                    3,
+                    4
+                  ],
+                  "spawn_min": 3,
+                  "spawn_max": 4
+                },
+                "description": "使法莉德“与洛肯的契约”刷新的炼狱生物数量增加 3-4 个"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1956600000
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          }
+        }
+      },
+      {
+        "id": "2562",
+        "snapshots": {
+          "original": {
+            "id": 2562,
+            "hero_id": 33,
+            "order": 21,
+            "name": "Magius Infernus",
+            "description": "Cast enough fireballs, and most problems tend to go away.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,80,17839,17840,17841",
+                "description": "Increases the effect of Farideh's specializations by $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2026-07-29 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 705
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1777489200,
+              "available_for_gems_at_time": 1785351600
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          },
+          "display": {
+            "id": 2562,
+            "hero_id": 33,
+            "order": 21,
+            "name": "玛济斯炼狱",
+            "description": "只要丢出足够多的火球，大部分问题都会解决。",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,80,17839,17840,17841",
+                "description": "使法莉德的专精效果提高 $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2026-07-29 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 705
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1777489200,
+              "available_for_gems_at_time": 1785351600
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          }
+        }
+      }
+    ],
+    "skins": [
+      {
+        "id": "24",
+        "snapshots": {
+          "original": {
+            "id": 24,
+            "hero_id": 33,
+            "name": "Devil Farideh",
+            "cost": [],
+            "details": {
+              "base_graphic_id": 6609,
+              "large_graphic_id": 6464,
+              "xl_graphic_id": 14022,
+              "portrait_graphic_id": 6614,
+              "flames": 6608,
+              "rebuke_hit_graphic_id": 4141,
+              "rebuke_particle_graphic_id": 4142,
+              "infernal_hit_graphic_id": 4112,
+              "infernal_particle_graphic_id": 4113,
+              "additional_shop_graphics": [
+                {
+                  "graphic_id": "27418",
+                  "sequence": "1",
+                  "is_transform": true
+                }
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "patron",
+              "patron_id": 2
+            },
+            "availabilities": {
+              "patron_id": "2",
+              "patron_shop_item_id": "29"
+            }
+          },
+          "display": {
+            "id": 24,
+            "hero_id": 33,
+            "name": "恶魔法莉德",
+            "cost": [],
+            "details": {
+              "base_graphic_id": 6609,
+              "large_graphic_id": 6464,
+              "xl_graphic_id": 14022,
+              "portrait_graphic_id": 6614,
+              "flames": 6608,
+              "rebuke_hit_graphic_id": 4141,
+              "rebuke_particle_graphic_id": 4142,
+              "infernal_hit_graphic_id": 4112,
+              "infernal_particle_graphic_id": 4113,
+              "additional_shop_graphics": [
+                {
+                  "graphic_id": "27418",
+                  "sequence": "1",
+                  "is_transform": true
+                }
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "patron",
+              "patron_id": 2
+            },
+            "availabilities": {
+              "patron_id": "2",
+              "patron_shop_item_id": "29"
+            }
+          }
+        }
+      },
+      {
+        "id": "141",
+        "snapshots": {
+          "original": {
+            "id": 141,
+            "hero_id": 33,
+            "name": "Ascendant Farideh",
+            "cost": {
+              "req_date": "2022-01-14 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 13250,
+              "large_graphic_id": 13252,
+              "xl_graphic_id": 13881,
+              "portrait_graphic_id": 13253,
+              "flames": 13249,
+              "rebuke_hit_graphic_id": 13243,
+              "rebuke_particle_graphic_id": 13244,
+              "infernal_hit_graphic_id": 13245,
+              "infernal_particle_graphic_id": 13246,
+              "additional_shop_graphics": [
+                {
+                  "graphic_id": "27245",
+                  "sequence": "1",
+                  "is_transform": true
+                }
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "show_only_if_owned": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 438,
+              "odds": 38
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 141,
+            "hero_id": 33,
+            "name": "星运法莉德",
+            "cost": {
+              "req_date": "2022-01-14 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 13250,
+              "large_graphic_id": 13252,
+              "xl_graphic_id": 13881,
+              "portrait_graphic_id": 13253,
+              "flames": 13249,
+              "rebuke_hit_graphic_id": 13243,
+              "rebuke_particle_graphic_id": 13244,
+              "infernal_hit_graphic_id": 13245,
+              "infernal_particle_graphic_id": 13246,
+              "additional_shop_graphics": [
+                {
+                  "graphic_id": "27245",
+                  "sequence": "1",
+                  "is_transform": true
+                }
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "show_only_if_owned": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 438,
+              "odds": 38
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      },
+      {
+        "id": "143",
+        "snapshots": {
+          "original": {
+            "id": 143,
+            "hero_id": 33,
+            "name": "Shadowfell Farideh",
+            "cost": {
+              "req_date": "2022-02-15 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 13522,
+              "large_graphic_id": 13523,
+              "xl_graphic_id": 14472,
+              "portrait_graphic_id": 13519,
+              "flames": 13521,
+              "rebuke_hit_graphic_id": 4141,
+              "rebuke_particle_graphic_id": 4142,
+              "infernal_hit_graphic_id": 4112,
+              "infernal_particle_graphic_id": 4113,
+              "additional_shop_graphics": [
+                {
+                  "graphic_id": "27246",
+                  "sequence": "1",
+                  "is_transform": true
+                }
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 605,
+              "odds": 35
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 143,
+            "hero_id": 33,
+            "name": "堕影冥界法莉德",
+            "cost": {
+              "req_date": "2022-02-15 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 13522,
+              "large_graphic_id": 13523,
+              "xl_graphic_id": 14472,
+              "portrait_graphic_id": 13519,
+              "flames": 13521,
+              "rebuke_hit_graphic_id": 4141,
+              "rebuke_particle_graphic_id": 4142,
+              "infernal_hit_graphic_id": 4112,
+              "infernal_particle_graphic_id": 4113,
+              "additional_shop_graphics": [
+                {
+                  "graphic_id": "27246",
+                  "sequence": "1",
+                  "is_transform": true
+                }
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 605,
+              "odds": 35
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      },
+      {
+        "id": "175",
+        "snapshots": {
+          "original": {
+            "id": 175,
+            "hero_id": 33,
+            "name": "Polymorphed Farideh",
+            "cost": {
+              "req_date": "2022-06-15 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 15042,
+              "large_graphic_id": 15045,
+              "portrait_graphic_id": 15038,
+              "flames": 15041,
+              "xl_graphic_id": 15714,
+              "rebuke_hit_graphic_id": 4141,
+              "rebuke_particle_graphic_id": 4142,
+              "infernal_hit_graphic_id": 4112,
+              "infernal_particle_graphic_id": 4113,
+              "additional_shop_graphics": [
+                {
+                  "graphic_id": "15622",
+                  "sequence": "1",
+                  "is_transform": true
+                }
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "notification_adjustment_override": {
+                "offset": [
+                  60,
+                  240
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 676,
+              "odds": 64
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 175,
+            "hero_id": 33,
+            "name": "变形法莉德",
+            "cost": {
+              "req_date": "2022-06-15 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 15042,
+              "large_graphic_id": 15045,
+              "portrait_graphic_id": 15038,
+              "flames": 15041,
+              "xl_graphic_id": 15714,
+              "rebuke_hit_graphic_id": 4141,
+              "rebuke_particle_graphic_id": 4142,
+              "infernal_hit_graphic_id": 4112,
+              "infernal_particle_graphic_id": 4113,
+              "additional_shop_graphics": [
+                {
+                  "graphic_id": "15622",
+                  "sequence": "1",
+                  "is_transform": true
+                }
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "notification_adjustment_override": {
+                "offset": [
+                  60,
+                  240
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 676,
+              "odds": 64
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      },
+      {
+        "id": "342",
+        "snapshots": {
+          "original": {
+            "id": 342,
+            "hero_id": 33,
+            "name": "Spelljammer Pilot Farideh",
+            "cost": {
+              "req_date": "2023-09-20 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 20810,
+              "large_graphic_id": 20811,
+              "portrait_graphic_id": 20809,
+              "xl_graphic_id": 20812,
+              "flames": 21123,
+              "rebuke_hit_graphic_id": 4141,
+              "rebuke_particle_graphic_id": 4142,
+              "infernal_hit_graphic_id": 4112,
+              "infernal_particle_graphic_id": 4113,
+              "additional_shop_graphics": [
+                {
+                  "graphic_id": "27247",
+                  "sequence": "1",
+                  "is_transform": true
+                }
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 1119,
+              "odds": 15
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 342,
+            "hero_id": 33,
+            "name": "魔法船手法莉德",
+            "cost": {
+              "req_date": "2023-09-20 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 20810,
+              "large_graphic_id": 20811,
+              "portrait_graphic_id": 20809,
+              "xl_graphic_id": 20812,
+              "flames": 21123,
+              "rebuke_hit_graphic_id": 4141,
+              "rebuke_particle_graphic_id": 4142,
+              "infernal_hit_graphic_id": 4112,
+              "infernal_particle_graphic_id": 4113,
+              "additional_shop_graphics": [
+                {
+                  "graphic_id": "27247",
+                  "sequence": "1",
+                  "is_transform": true
+                }
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 1119,
+              "odds": 15
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      },
+      {
+        "id": "469",
+        "snapshots": {
+          "original": {
+            "id": 469,
+            "hero_id": 33,
+            "name": "Harvestguard Farideh",
+            "cost": {
+              "req_date": "2024-09-18 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 24665,
+              "large_graphic_id": 24672,
+              "portrait_graphic_id": 24656,
+              "xl_graphic_id": 24678,
+              "flames": 24666,
+              "rebuke_hit_graphic_id": 4141,
+              "rebuke_particle_graphic_id": 4142,
+              "infernal_hit_graphic_id": 4112,
+              "infernal_particle_graphic_id": 4113,
+              "additional_shop_graphics": [
+                {
+                  "graphic_id": "27248",
+                  "sequence": "1",
+                  "is_transform": true
+                }
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 1635,
+              "odds": 288
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 469,
+            "hero_id": 33,
+            "name": "收获守卫法莉德",
+            "cost": {
+              "req_date": "2024-09-18 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 24665,
+              "large_graphic_id": 24672,
+              "portrait_graphic_id": 24656,
+              "xl_graphic_id": 24678,
+              "flames": 24666,
+              "rebuke_hit_graphic_id": 4141,
+              "rebuke_particle_graphic_id": 4142,
+              "infernal_hit_graphic_id": 4112,
+              "infernal_particle_graphic_id": 4113,
+              "additional_shop_graphics": [
+                {
+                  "graphic_id": "27248",
+                  "sequence": "1",
+                  "is_transform": true
+                }
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 1635,
+              "odds": 288
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      },
+      {
+        "id": "608",
+        "snapshots": {
+          "original": {
+            "id": 608,
+            "hero_id": 33,
+            "name": "Darklord Farideh",
+            "cost": {
+              "req_date": "2025-10-08 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 27907,
+              "large_graphic_id": 27908,
+              "portrait_graphic_id": 27906,
+              "xl_graphic_id": 27909,
+              "flames": 27911,
+              "rebuke_hit_graphic_id": 27985,
+              "rebuke_particle_graphic_id": 27984,
+              "infernal_hit_graphic_id": 27983,
+              "infernal_particle_graphic_id": 27982,
+              "additional_shop_graphics": [
+                {
+                  "graphic_id": "27913",
+                  "sequence": "1",
+                  "is_transform": true
+                }
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "624",
+              "cost": 3830
+            },
+            "availabilities": {
+              "premium_item_id": "624"
+            }
+          },
+          "display": {
+            "id": 608,
+            "hero_id": 33,
+            "name": "黑暗领主法莉德",
+            "cost": {
+              "req_date": "2025-10-08 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 27907,
+              "large_graphic_id": 27908,
+              "portrait_graphic_id": 27906,
+              "xl_graphic_id": 27909,
+              "flames": 27911,
+              "rebuke_hit_graphic_id": 27985,
+              "rebuke_particle_graphic_id": 27984,
+              "infernal_hit_graphic_id": 27983,
+              "infernal_particle_graphic_id": 27982,
+              "additional_shop_graphics": [
+                {
+                  "graphic_id": "27913",
+                  "sequence": "1",
+                  "is_transform": true
+                }
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "624",
+              "cost": 3830
+            },
+            "availabilities": {
+              "premium_item_id": "624"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

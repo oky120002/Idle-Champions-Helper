@@ -1,0 +1,6284 @@
+{
+  "updatedAt": "2026-04-13",
+  "summary": {
+    "id": "166",
+    "name": {
+      "original": "Cazrin",
+      "display": "卡兹琳"
+    },
+    "seat": 10,
+    "roles": [
+      "dps",
+      "support"
+    ],
+    "affiliations": [
+      {
+        "original": "The Fallbacks",
+        "display": "后备队"
+      }
+    ],
+    "tags": [
+      "chaotic",
+      "dps",
+      "event",
+      "fallbacks",
+      "female",
+      "good",
+      "human",
+      "support",
+      "wizard",
+      "y9"
+    ],
+    "portrait": {
+      "path": "v1/champion-portraits/166.png",
+      "sourceGraphic": "Portraits/Portrait_Cazrin",
+      "sourceVersion": 2
+    }
+  },
+  "englishName": "Cazrin",
+  "eventName": {
+    "original": "Highharvestide",
+    "display": "丰收节"
+  },
+  "dateAvailable": "2025-09-03 12:00:00",
+  "lastReworkDate": "2025-09-03 12:00:00",
+  "popularity": 122,
+  "baseCost": "1100000000000000",
+  "baseDamage": "50000000000",
+  "baseHealth": "50",
+  "graphicId": "27107",
+  "portraitGraphicId": "27106",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1788462000
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    195,
+    770,
+    1440,
+    2270
+  ],
+  "costCurves": {
+    "1": 1.085
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "content_set_id": 62,
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      170,
+      171,
+      172
+    ],
+    "graphic_large": 27108,
+    "graphic_xl": 27109,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      87,
+      77
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 4,
+      "gethit": 5,
+      "koed": 6,
+      "run": 7
+    },
+    "allow_time_gate": "2025-09-24 12:00:00",
+    "available_in_store": "2025-10-01 12:00:00",
+    "time_gate_adventure_id": 1713,
+    "time_gate_variants_ids": [
+      1698,
+      1699,
+      1700
+    ],
+    "time_gate_tier": 1,
+    "silver_chest_type_id": 664,
+    "gold_chest_type_id": 665,
+    "golden_epic_loot_id": 3941,
+    "golden_epic_promo_id": 592,
+    "event_logo_graphic_id": 3943,
+    "console_portrait": 27144,
+    "trials_effect_id": 836,
+    "weekly_buff": "buff_upgrade,200,17674",
+    "portrait_graphic_scale": 0.9,
+    "legendary_effect_id": [
+      1,
+      3,
+      5,
+      35,
+      94,
+      52
+    ],
+    "notification_adjustment": {
+      "offset": [
+        56,
+        245
+      ],
+      "scale": 1.25
+    }
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Cazrin Varaith",
+      "display": "卡兹琳·瓦雷斯"
+    },
+    "class": {
+      "original": "Wizard",
+      "display": "法师"
+    },
+    "race": {
+      "original": "Human",
+      "display": "人类"
+    },
+    "age": 22,
+    "alignment": {
+      "original": "Chaotic Good",
+      "display": "混乱善良"
+    },
+    "abilityScores": {
+      "str": 8,
+      "dex": 13,
+      "con": 14,
+      "int": 18,
+      "wis": 13,
+      "cha": 13
+    },
+    "backstory": {
+      "original": "Cazrin is the ray of sunshine in the party, the eternal optimist, the friendly ear or the shoulder to cry on. She is passionate about magic, knowledge, and learning, always experimenting or testing new theories. Growing up, Cazrin's family feared and forbade the study of magic because of an ancestress who misused her power, so Cazrin was forced to teach herself and eventually leave her family behind to pursue her dreams. Intelligent but inexperienced, she has embraced a life of adventuring to gather the thrills and experiences that as a child she could only read about in books.",
+      "display": "卡兹琳是探险队里的一缕阳光，她永远都那么乐观，既会耐心地听你倾诉，也能让你依靠在她的肩膀上哭泣。她十分热衷于魔法、知识和学习，总是在做实验或者验证新的理论。在卡兹琳成长的过程中，她的家人畏惧魔法并禁止她研习，这是因为她的一位女性先祖曾利用魔法来作恶，因此卡兹琳不得不自学，并最终离家去追寻自己的梦想。聪慧但缺乏经验的她选择投身冒险来体验那些她儿时只能在书本中读到的惊险和奇遇。"
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "891",
+      "name": {
+        "original": "Magic Missile",
+        "display": "魔法飞弹"
+      },
+      "description": {
+        "original": "Cazrin fires 2 magic missiles at random enemies, preferring different targets if possible",
+        "display": "卡兹琳向随机敌人发射 2 枚魔法飞弹，若可能则优先选择不同目标"
+      },
+      "longDescription": null,
+      "cooldown": 4.5,
+      "numTargets": 2,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "random",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ranged",
+        "multitarget"
+      ],
+      "graphicId": "27105",
+      "animations": [
+        {
+          "type": "ranged_attack",
+          "projectile": "magic_missile",
+          "shoot_frame": 10,
+          "shoot_offset_x": 55,
+          "shoot_offset_y": -155,
+          "projectile_delay": 0.1,
+          "projectile_count": 2,
+          "shoot_sound": 149,
+          "hit_sound": 133,
+          "projectile_details": {
+            "projectile_graphic_id": 27105,
+            "impact_offset_y": -45,
+            "trail_tint": "#c999c3",
+            "impact_tint": "#c999c3"
+          }
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "892",
+      "name": {
+        "original": "Fallback Fireball",
+        "display": "后备火球术"
+      },
+      "description": {
+        "original": "Cazrin attacks all enemies with a fireball.",
+        "display": "卡兹琳用火球攻击所有敌人。"
+      },
+      "longDescription": {
+        "original": "Cazrin attacks all enemies with her version of a fireball.",
+        "display": "卡兹琳用她自创版本的火球攻击所有敌人。"
+      },
+      "cooldown": 360,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "0.03",
+      "target": "all",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ranged",
+        "ultimate"
+      ],
+      "graphicId": "27188",
+      "animations": [
+        {
+          "type": "ultimate_attack",
+          "ultimate": "cazrin",
+          "projectile_data": {
+            "type": "ranged_attack",
+            "shoot_offset_y": -215,
+            "shoot_offset_x": 165,
+            "shoot_frame": 29,
+            "shoot_sound": 149,
+            "hit_sound": 133,
+            "projectile_details": {
+              "hash": "7081d5ba41d98b53cc07844a3a0a219d",
+              "projectile_speed": 1500,
+              "projectile_graphic_id": 27104,
+              "impact_graphic_id": 27466,
+              "smoke_graphic_id": 446,
+              "explosion_graphic_id": 27465
+            }
+          },
+          "damage_frame": 8
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "17673",
+        "name": {
+          "original": "Library of Lore",
+          "display": "秘藏图书馆"
+        },
+        "description": null,
+        "graphicId": "27166"
+      },
+      {
+        "upgradeId": "17674",
+        "name": {
+          "original": "Sunny Disposition",
+          "display": "阳光心态"
+        },
+        "description": null,
+        "graphicId": "27168"
+      },
+      {
+        "upgradeId": "17675",
+        "name": {
+          "original": "Unctuous Uggie",
+          "display": "油腻乌吉"
+        },
+        "description": null,
+        "graphicId": "27169"
+      },
+      {
+        "upgradeId": "17676",
+        "name": {
+          "original": "Mage Armor",
+          "display": "法师护甲"
+        },
+        "description": null,
+        "graphicId": "27167"
+      },
+      {
+        "upgradeId": "17677",
+        "name": {
+          "original": "In Search of Knowledge",
+          "display": "求知探索"
+        },
+        "description": null,
+        "graphicId": "27165"
+      }
+    ]
+  },
+  "upgrades": [
+    {
+      "id": "17672",
+      "requiredLevel": 0,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Uggie!",
+        "display": "乌吉！"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2412",
+      "effectDefinition": {
+        "id": "2412",
+        "snapshots": {
+          "original": {
+            "id": 2412,
+            "flavour_text": "",
+            "description": {
+              "desc": "Uggie joins the party, starting next to Cazrin unless she's already in the formation next to another Fallbacks Champion. Uggie increases the damage of all non-adjacent Champions by $amount%."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "uggie_handler,100",
+                "off_when_benched": true,
+                "uggie_roaming_disable_index": 1,
+                "uggie_priority": 3,
+                "call_uggie_ult_id": 893,
+                "united_strike_ult_id": 894,
+                "use_computed_amount_for_description": true,
+                "uggie_buff_effect_id": 2366,
+                "reload_buff_def_upgrade_ids": [
+                  17681
+                ]
+              },
+              {
+                "effect_string": "disallow_roaming_familiar_ult_trigger",
+                "apply_manually": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27102,
+            "large_graphic_id": 27102,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "retain_on_slot_changed": true
+            }
+          },
+          "display": {
+            "id": 2412,
+            "flavour_text": "",
+            "description": {
+              "desc": "乌吉加入探险队，并将默认与卡兹琳相邻，除非她已在阵型中并与另一位“后备队”勇士相邻。乌吉会使所有非相邻的勇士伤害提高 $amount%。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "uggie_handler,100",
+                "off_when_benched": true,
+                "uggie_roaming_disable_index": 1,
+                "uggie_priority": 3,
+                "call_uggie_ult_id": 893,
+                "united_strike_ult_id": 894,
+                "use_computed_amount_for_description": true,
+                "uggie_buff_effect_id": 2366,
+                "reload_buff_def_upgrade_ids": [
+                  17681
+                ]
+              },
+              {
+                "effect_string": "disallow_roaming_familiar_ult_trigger",
+                "apply_manually": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27102,
+            "large_graphic_id": 27102,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "retain_on_slot_changed": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17673",
+      "requiredLevel": 10,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Library of Lore",
+        "display": "秘藏图书馆"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2413",
+      "effectDefinition": {
+        "id": "2413",
+        "snapshots": {
+          "original": {
+            "id": 2413,
+            "flavour_text": "",
+            "description": {
+              "desc": "Whenever a boss is defeated for the first time in an adventure, it drops a Book that Cazrin collects. Subsequent kills of the same boss have a $chance% chance of dropping an additional Book. The maximum number of Books that can be collected during a single adventure is the highest area reached divided by $max_book_divisor, rounded down. Cazrin keeps track of both the number of Books she has collected in the current adventure, as well as the size of her Library, which is the number of Books she has collected across all adventures. Cazrin's damage is increased by $(amount___2)% for each book in her Library, stacking additively. Each time her Library reaches a new order of magnitude, the base buff is multiplicatively increased by $(amount___5)%.",
+              "post": {
+                "conditions": [
+                  {
+                    "condition": "not static_desc",
+                    "desc": "^^Books Collected This Adventure: $(stat_value cazrin_books_collected_this_adventure 1 none) (max $cazrin_library_of_lore_max_books)"
+                  }
+                ]
+              }
+            },
+            "effect_keys": [
+              {
+                "effect_string": "library_of_lore_handler,1",
+                "max_book_divisor": 5,
+                "chance": 10,
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "pre_stack,10",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "hero_dps_multiplier_add,10",
+                "apply_manually": true,
+                "amount_expr": "upgrade_amount(17673,1)",
+                "stacks_multiply": false,
+                "stacks_on_trigger": "will_manually_stack",
+                "stack_title": "Books Collected",
+                "show_stacks": true,
+                "show_bonus": true
+              },
+              {
+                "effect_string": "buff_upgrade,100,17673,1",
+                "amount_expr": "upgrade_amount(17673,4)",
+                "stacks_multiply": true,
+                "stacks_on_trigger": "will_manually_stack",
+                "apply_manually": true
+              },
+              {
+                "effect_string": "pre_stack,100",
+                "skip_effect_key_desc": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27173,
+            "large_graphic_id": 27166,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 1
+            }
+          },
+          "display": {
+            "id": 2413,
+            "flavour_text": "",
+            "description": {
+              "desc": "每当在冒险中首次击败某个首领时，都会掉落一本由卡兹琳收集的书籍。此后再次击败同一首领时，有 $chance% 的几率额外掉落一本书。在单次冒险中可收集的书籍数量上限为所达到的最高区域除以 $max_book_divisor，向下取整。卡兹琳会记录当前冒险中所收集的书籍数量，以及她的图书馆规模，即她在所有冒险中累计收集的书籍总数。图书馆中每有一本书，卡兹琳的伤害提升$(amount___2)，以加算方式堆叠。每当图书馆的规模达到一个新的数量级时，其基本增益效果提升 $(amount___5)%，以乘算方式堆叠。",
+              "post": {
+                "conditions": [
+                  {
+                    "condition": "not static_desc",
+                    "desc": "^^此次冒险中收集的书籍数：$(stat_value cazrin_books_collected_this_adventure 1 none)（最多 $cazrin_library_of_lore_max_books）"
+                  }
+                ]
+              }
+            },
+            "effect_keys": [
+              {
+                "effect_string": "library_of_lore_handler,1",
+                "max_book_divisor": 5,
+                "chance": 10,
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "pre_stack,10",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "hero_dps_multiplier_add,10",
+                "apply_manually": true,
+                "amount_expr": "upgrade_amount(17673,1)",
+                "stacks_multiply": false,
+                "stacks_on_trigger": "will_manually_stack",
+                "stack_title": "已收集书籍",
+                "show_stacks": true,
+                "show_bonus": true
+              },
+              {
+                "effect_string": "buff_upgrade,100,17673,1",
+                "amount_expr": "upgrade_amount(17673,4)",
+                "stacks_multiply": true,
+                "stacks_on_trigger": "will_manually_stack",
+                "apply_manually": true
+              },
+              {
+                "effect_string": "pre_stack,100",
+                "skip_effect_key_desc": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27173,
+            "large_graphic_id": 27166,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 1
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Cazrin collects books that bosses drop, which increases her damage and her library of books persists between resets.",
+        "display": "卡兹琳会收集首领掉落的书籍，这些书会提升她的伤害，并在重置后保留在她的图书馆中。"
+      }
+    },
+    {
+      "id": "17674",
+      "requiredLevel": 30,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Sunny Disposition",
+        "display": "阳光心态"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2414",
+      "effectDefinition": {
+        "id": "2414",
+        "snapshots": {
+          "original": {
+            "id": 2414,
+            "flavour_text": "",
+            "description": {
+              "desc": "Cazrin increases the damage of all Champions in her column (including herself) and the columns in front of her by $amount%."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "off_when_benched": true,
+                "targets": [
+                  "col_and_ahead"
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27175,
+            "large_graphic_id": 27168,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 2414,
+            "flavour_text": "",
+            "description": {
+              "desc": "卡兹琳可使她所在纵队（包括其自身）和她之前的纵队中的所有勇士的伤害提高 $amount%。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "off_when_benched": true,
+                "targets": [
+                  "col_and_ahead"
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27175,
+            "large_graphic_id": 27168,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Cazrin increases the damage of Champions in her column and the columns in front of her.",
+        "display": "卡兹琳会提高她所在列和她前列勇士的伤害。"
+      }
+    },
+    {
+      "id": "17979",
+      "requiredLevel": 40,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17980",
+      "requiredLevel": 50,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17675",
+      "requiredLevel": 60,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Unctuous Uggie",
+        "display": "油腻乌吉"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2415",
+      "effectDefinition": {
+        "id": "2415",
+        "snapshots": {
+          "original": {
+            "id": 2415,
+            "flavour_text": "",
+            "description": {
+              "desc": "Uggie's buff is increased by $amount% when Cazrin is in the formation."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "unleash_uggie_contribution,400",
+                "off_when_benched": true,
+                "show_bonus": false
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27176,
+            "large_graphic_id": 27169,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 2415,
+            "flavour_text": "",
+            "description": {
+              "desc": "当卡兹琳在阵型中时，乌吉的增益提高 $amount%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "unleash_uggie_contribution,400",
+                "off_when_benched": true,
+                "show_bonus": false
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27176,
+            "large_graphic_id": 27169,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17854",
+      "requiredLevel": 80,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17674",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17981",
+      "requiredLevel": 90,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17683",
+      "requiredLevel": 100,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Fallback Fireball",
+        "display": "后备火球术"
+      },
+      "upgradeType": "unlock_ultimate",
+      "effectReference": "effect_def,2423",
+      "effectDefinition": {
+        "id": "2423",
+        "snapshots": {
+          "original": {
+            "id": 2423,
+            "flavour_text": "",
+            "description": {
+              "desc": "Cazrin attacks all enemies with her version of a massive fireball, dealing ultimate damage to each one."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "set_ultimate_attack,892"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27188,
+            "large_graphic_id": 27188,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 2423,
+            "flavour_text": "",
+            "description": {
+              "desc": "卡兹琳用她自创版本的巨大火球攻击所有敌人，对每个敌人造成杀招伤害。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "set_ultimate_attack,892"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27188,
+            "large_graphic_id": 27188,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17982",
+      "requiredLevel": 120,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17674",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17676",
+      "requiredLevel": 130,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Mage Armor",
+        "display": "法师护甲"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2416",
+      "effectDefinition": {
+        "id": "2416",
+        "snapshots": {
+          "original": {
+            "id": 2416,
+            "flavour_text": "",
+            "description": {
+              "desc": "The first time anyone in the formation takes damage in each area, Cazrin casts Mage Armor on herself. Champions affected by Mage Armor decrease the damage they take by $(amount___2)%."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "apply_effects_at_stacks",
+                "off_when_benched": true,
+                "show_description": false,
+                "apply_effect_stack_amounts": [
+                  1,
+                  1
+                ],
+                "max_stacks": 1,
+                "stacks_on_trigger": "hero_damaged",
+                "more_triggers": [
+                  {
+                    "trigger": "area_changed",
+                    "action": {
+                      "type": "reset"
+                    }
+                  }
+                ]
+              },
+              {
+                "effect_string": "damage_reduction,25",
+                "targets": [
+                  "self_slot"
+                ],
+                "apply_manually": true
+              },
+              {
+                "effect_string": "animation_synced_overlay_on_stat",
+                "stat": "cazrin_books_collected_this_adventure",
+                "instanced": true,
+                "stat_keys": [
+                  0,
+                  120
+                ],
+                "graphics": [
+                  "mage_armor_graphic_id",
+                  "empowered_mage_armor_graphic_id"
+                ],
+                "default_graphic_ids": [
+                  27351,
+                  27352
+                ],
+                "apply_manually": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27174,
+            "large_graphic_id": 27167,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 1
+            }
+          },
+          "display": {
+            "id": 2416,
+            "flavour_text": "",
+            "description": {
+              "desc": "每个区域中，阵型内任何人首次受到伤害时，卡兹琳会对自己施放法师护甲。受到法师护甲影响的勇士所受伤害降低 $(amount___2)%。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "apply_effects_at_stacks",
+                "off_when_benched": true,
+                "show_description": false,
+                "apply_effect_stack_amounts": [
+                  1,
+                  1
+                ],
+                "max_stacks": 1,
+                "stacks_on_trigger": "hero_damaged",
+                "more_triggers": [
+                  {
+                    "trigger": "area_changed",
+                    "action": {
+                      "type": "reset"
+                    }
+                  }
+                ]
+              },
+              {
+                "effect_string": "damage_reduction,25",
+                "targets": [
+                  "self_slot"
+                ],
+                "apply_manually": true
+              },
+              {
+                "effect_string": "animation_synced_overlay_on_stat",
+                "stat": "cazrin_books_collected_this_adventure",
+                "instanced": true,
+                "stat_keys": [
+                  0,
+                  120
+                ],
+                "graphics": [
+                  "mage_armor_graphic_id",
+                  "empowered_mage_armor_graphic_id"
+                ],
+                "default_graphic_ids": [
+                  27351,
+                  27352
+                ],
+                "apply_manually": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27174,
+            "large_graphic_id": 27167,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 1
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17983",
+      "requiredLevel": 140,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17984",
+      "requiredLevel": 150,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17677",
+      "requiredLevel": 160,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "In Search of Knowledge",
+        "display": "求知探索"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2417",
+      "effectDefinition": {
+        "id": "2417",
+        "snapshots": {
+          "original": {
+            "id": 2417,
+            "flavour_text": "",
+            "description": {
+              "desc": "Cazrin's attacks and abilities gain additional effects based on the number of Books that she has collected in the current adventure",
+              "post": {
+                "conditions": [
+                  {
+                    "condition": "not static_desc",
+                    "desc": ":^^ - 10+ Books: Cazrin fires an additional Magic Missile with her base attack.^^ - 40+ Books: Increase the effect of Sunny Disposition by $(amount___10)% for each Book she has collected in the current adventure, stacking multiplicatively.^^ - 80+ Books: Cazrin fires an additional Magic Missile with her base attack. ^^ - 120+ Books: When triggered, Mage Armor is now cast on all Champions in the formation instead of just Cazrin.^^ - 160+ Books: Increase the effect of Unctuous Uggie by $(amount___6)% for each Book Cazrin has collected in the current adventure, stacking additively.^^ - 200+ Books: Support Champions affected by Mage Armor have a $(chance___7)% chance to deal an additional 5 seconds of BUD damage with each normal attack hit.^^ - 240+ Books: Mage Armor's damage prevention is increased to $(amount_desc___8)%.^^ - 300+ Books: For each Tanking Champion affected by Mage Armor, the effect of Sunny Disposition is increased by $(amount___9)%, stacking multiplicatively."
+                  }
+                ]
+              }
+            },
+            "effect_keys": [
+              {
+                "effect_string": "apply_effects_at_stacks",
+                "off_when_benched": true,
+                "show_description": false,
+                "apply_effect_stack_amounts": [
+                  10,
+                  40,
+                  80,
+                  120,
+                  160,
+                  200,
+                  240,
+                  300,
+                  0
+                ],
+                "stacks_on_trigger": "will_stack_manually",
+                "stacks_from_amount_func": "get_stat",
+                "instance_stat": true,
+                "stat": "cazrin_books_collected_this_adventure",
+                "amount_updated_listeners": [
+                  "stat_changed,cazrin_books_collected_this_adventure",
+                  "slot_changed"
+                ],
+                "stack_title": "Books Collected This Adventure",
+                "show_stacks": true
+              },
+              {
+                "effect_string": "change_base_attack,896",
+                "apply_manually": true
+              },
+              {
+                "effect_string": "buff_upgrade,5,17674",
+                "amount_expr": "upgrade_amount(17677,9)",
+                "stacks_from_amount_func": "get_stat",
+                "stacks_multiply": true,
+                "instance_stat": true,
+                "stat": "cazrin_books_collected_this_adventure",
+                "amount_updated_listeners": [
+                  "stat_changed,cazrin_books_collected_this_adventure",
+                  "slot_changed"
+                ],
+                "apply_manually": true
+              },
+              {
+                "effect_string": "change_base_attack,897",
+                "apply_manually": true
+              },
+              {
+                "effect_string": "change_upgrade_data,17676,1",
+                "data": {
+                  "targets": [
+                    "all"
+                  ]
+                },
+                "apply_manually": true
+              },
+              {
+                "effect_string": "buff_upgrade_add_then_mult,1,17675",
+                "amount_func": "add",
+                "stack_func": "get_stat",
+                "stacks_multiply": false,
+                "instance_stat": true,
+                "stat": "cazrin_books_collected_this_adventure",
+                "amount_updated_listeners": [
+                  "stat_changed,cazrin_books_collected_this_adventure",
+                  "slot_changed"
+                ],
+                "apply_manually": true
+              },
+              {
+                "effect_string": "add_monster_hit_effects,5",
+                "chance": 40,
+                "monster_effect": {
+                  "effect_string": "ki_explosion,$amount,1,1"
+                },
+                "after_damage": true,
+                "targets": [
+                  "all"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "support"
+                  },
+                  {
+                    "type": "affected_by_upgrade",
+                    "upgrade_id": 17676
+                  }
+                ],
+                "apply_manually": true
+              },
+              {
+                "effect_string": "change_upgrade_data,17676,1",
+                "data": {
+                  "amount": 50
+                },
+                "amount_desc": 50,
+                "apply_manually": true
+              },
+              {
+                "effect_string": "buff_upgrade,400,17674",
+                "amount_func": "mult",
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "HasTag(`tanking`) && HasEffectByID(2416) && GetUpgradeUnlocked(17676)",
+                "amount_updated_listeners": [
+                  "stacks_changed"
+                ],
+                "changing_stack_upgade_ids": [
+                  17676
+                ],
+                "apply_manually": true
+              },
+              {
+                "effect_string": "pre_stack,5",
+                "skip_effect_key_desc": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27172,
+            "large_graphic_id": 27165,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 2417,
+            "flavour_text": "",
+            "description": {
+              "desc": "卡兹琳的攻击与技能会根据她在当前冒险中收集的书籍数量获得额外效果",
+              "post": {
+                "conditions": [
+                  {
+                    "condition": "not static_desc",
+                    "desc": "：^^ - 10 本以上：卡兹琳的基本攻击额外发射一枚魔法飞弹。^^ - 40 本以上：卡兹琳在本次冒险中每收集到一本书，阳光心态的效果提升 $(amount___10)%，以乘算方式堆叠。^^ - 80 本以上：卡兹琳的基本攻击额外发射一枚魔法飞弹。^^ - 120 本以上：触发时，法师护甲会施加给阵型中的全体勇士，而不仅限于卡兹琳自身。^^ - 160 本以上：卡兹琳在本次冒险中每收集到一本书，油腻乌吉的效果提升 $(amount___6)%，以加算方式堆叠。^^ - 200 本以上：受到法师护甲影响的支援型勇士在每次普通攻击命中时有 $(chance___7)% 的几率额外造成等同于 5 秒基础杀招伤害的伤害。^^ - 240 本以上：法师护甲的伤害减免效果提升至 $(amount_desc___8)%。^^ - 300 本以上：每有一位受到法师护甲影响的坦克型勇士，阳光心态的效果提升 $(amount___9)%，以乘算方式堆叠。"
+                  }
+                ]
+              }
+            },
+            "effect_keys": [
+              {
+                "effect_string": "apply_effects_at_stacks",
+                "off_when_benched": true,
+                "show_description": false,
+                "apply_effect_stack_amounts": [
+                  10,
+                  40,
+                  80,
+                  120,
+                  160,
+                  200,
+                  240,
+                  300,
+                  0
+                ],
+                "stacks_on_trigger": "will_stack_manually",
+                "stacks_from_amount_func": "get_stat",
+                "instance_stat": true,
+                "stat": "cazrin_books_collected_this_adventure",
+                "amount_updated_listeners": [
+                  "stat_changed,cazrin_books_collected_this_adventure",
+                  "slot_changed"
+                ],
+                "stack_title": "此次冒险中收集的书籍数",
+                "show_stacks": true
+              },
+              {
+                "effect_string": "change_base_attack,896",
+                "apply_manually": true
+              },
+              {
+                "effect_string": "buff_upgrade,5,17674",
+                "amount_expr": "upgrade_amount(17677,9)",
+                "stacks_from_amount_func": "get_stat",
+                "stacks_multiply": true,
+                "instance_stat": true,
+                "stat": "cazrin_books_collected_this_adventure",
+                "amount_updated_listeners": [
+                  "stat_changed,cazrin_books_collected_this_adventure",
+                  "slot_changed"
+                ],
+                "apply_manually": true
+              },
+              {
+                "effect_string": "change_base_attack,897",
+                "apply_manually": true
+              },
+              {
+                "effect_string": "change_upgrade_data,17676,1",
+                "data": {
+                  "targets": [
+                    "all"
+                  ]
+                },
+                "apply_manually": true
+              },
+              {
+                "effect_string": "buff_upgrade_add_then_mult,1,17675",
+                "amount_func": "add",
+                "stack_func": "get_stat",
+                "stacks_multiply": false,
+                "instance_stat": true,
+                "stat": "cazrin_books_collected_this_adventure",
+                "amount_updated_listeners": [
+                  "stat_changed,cazrin_books_collected_this_adventure",
+                  "slot_changed"
+                ],
+                "apply_manually": true
+              },
+              {
+                "effect_string": "add_monster_hit_effects,5",
+                "chance": 40,
+                "monster_effect": {
+                  "effect_string": "ki_explosion,$amount,1,1"
+                },
+                "after_damage": true,
+                "targets": [
+                  "all"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "support"
+                  },
+                  {
+                    "type": "affected_by_upgrade",
+                    "upgrade_id": 17676
+                  }
+                ],
+                "apply_manually": true
+              },
+              {
+                "effect_string": "change_upgrade_data,17676,1",
+                "data": {
+                  "amount": 50
+                },
+                "amount_desc": 50,
+                "apply_manually": true
+              },
+              {
+                "effect_string": "buff_upgrade,400,17674",
+                "amount_func": "mult",
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "HasTag(`tanking`) && HasEffectByID(2416) && GetUpgradeUnlocked(17676)",
+                "amount_updated_listeners": [
+                  "stacks_changed"
+                ],
+                "changing_stack_upgade_ids": [
+                  17676
+                ],
+                "apply_manually": true
+              },
+              {
+                "effect_string": "pre_stack,5",
+                "skip_effect_key_desc": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27172,
+            "large_graphic_id": 27165,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17985",
+      "requiredLevel": 170,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17678",
+      "requiredLevel": 180,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Self Taught",
+        "display": "自学成才"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2418",
+      "effectDefinition": {
+        "id": "2418",
+        "snapshots": {
+          "original": {
+            "id": 2418,
+            "flavour_text": "",
+            "description": {
+              "desc": "Cazrin increases the damage bonus of Sunny Disposition by $amount% for each Fallbacks Champion and/or Champions with a Melee and/or Ranged base attack in the formation, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,100",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,100,17674",
+                "amount_expr": "upgrade_amount(17678,0)",
+                "off_when_benched": true,
+                "amount_func": "mult",
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "HasTag(`fallbacks`) || has_base_attack_dmg_type_melee || has_base_attack_dmg_type_ranged",
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "hero_tags_changed"
+                ],
+                "show_bonus": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27184,
+            "large_graphic_id": 27184,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "spec_option_post_apply_info": "Qualified Champions: $num_stacks___2"
+            }
+          },
+          "display": {
+            "id": 2418,
+            "flavour_text": "",
+            "description": {
+              "desc": "阵型中每有一位后备队勇士和/或拥有近战与/或远程基本攻击的勇士，卡兹琳就会将阳光心态的伤害加成提升 $amount%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,100",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,100,17674",
+                "amount_expr": "upgrade_amount(17678,0)",
+                "off_when_benched": true,
+                "amount_func": "mult",
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "HasTag(`fallbacks`) || has_base_attack_dmg_type_melee || has_base_attack_dmg_type_ranged",
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "hero_tags_changed"
+                ],
+                "show_bonus": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27184,
+            "large_graphic_id": 27184,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "spec_option_post_apply_info": "满足条件的勇士数量：$num_stacks___2"
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Self Taught",
+        "display": "自学成才"
+      },
+      "specializationDescription": {
+        "original": "Forbidden by her family to study magic, Cazrin secretly taught herself the arcane arts.",
+        "display": "由于家族禁止她学习魔法，卡兹琳林只能暗中自学奥术之道。"
+      },
+      "specializationGraphicId": "27184",
+      "tipText": null
+    },
+    {
+      "id": "17679",
+      "requiredLevel": 180,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Ancestor's Shadow",
+        "display": "先祖阴影"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2419",
+      "effectDefinition": {
+        "id": "2419",
+        "snapshots": {
+          "original": {
+            "id": 2419,
+            "flavour_text": "",
+            "description": {
+              "desc": "Cazrin increases the damage bonus of Sunny Disposition by $amount% for each Fallbacks Champion and/or Good Champion in the formation, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,100",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,100,17674",
+                "amount_expr": "upgrade_amount(17679,0)",
+                "off_when_benched": true,
+                "amount_func": "mult",
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "HasTag(`fallbacks`) || HasTag(`good`)",
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "hero_tags_changed"
+                ],
+                "show_bonus": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27182,
+            "large_graphic_id": 27182,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "spec_option_post_apply_info": "Qualified Champions: $num_stacks___2"
+            }
+          },
+          "display": {
+            "id": 2419,
+            "flavour_text": "",
+            "description": {
+              "desc": "阵型中每有一位后备队勇士和/或善良勇士，卡兹琳就会将阳光心态的伤害加成提升 $amount%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,100",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,100,17674",
+                "amount_expr": "upgrade_amount(17679,0)",
+                "off_when_benched": true,
+                "amount_func": "mult",
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "HasTag(`fallbacks`) || HasTag(`good`)",
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "hero_tags_changed"
+                ],
+                "show_bonus": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27182,
+            "large_graphic_id": 27182,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "spec_option_post_apply_info": "满足条件的勇士数量：$num_stacks___2"
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Ancestor's Shadow",
+        "display": "先祖阴影"
+      },
+      "specializationDescription": {
+        "original": "Cazrin strives to use her magic for good and not follow her ancestor's twisted path.",
+        "display": "卡兹琳努力用魔法行善，不愿重蹈她祖先那扭曲的道路。"
+      },
+      "specializationGraphicId": "27182",
+      "tipText": null
+    },
+    {
+      "id": "17680",
+      "requiredLevel": 180,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Lost in the Library",
+        "display": "迷失书海"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2420",
+      "effectDefinition": {
+        "id": "2420",
+        "snapshots": {
+          "original": {
+            "id": 2420,
+            "flavour_text": "",
+            "description": {
+              "desc": "Whenever a boss drops a Book, Cazrin collects $amount_desc Books. The maximum number of Books she can collect during this adventure is tripled, but In Search of Knowledge's per Book damage boost to Sunny Disposition is reduced from 5% to $(amount_desc___2)%."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "change_upgrade_data,17673,0",
+                "off_when_benched": true,
+                "data": {
+                  "amount": 3
+                },
+                "amount_desc": 3
+              },
+              {
+                "effect_string": "change_upgrade_data,17677,9",
+                "off_when_benched": true,
+                "data": {
+                  "amount": 1.65
+                },
+                "amount_desc": 1.65
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27183,
+            "large_graphic_id": 27183,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 2420,
+            "flavour_text": "",
+            "description": {
+              "desc": "每当一个首领掉落一本书时，卡兹琳会收集 $amount_desc 本书。她在本次冒险中可收集的书籍上限提升至原来的三倍，但求知探索对阳光心态的每本书伤害加成从 5% 降低至 $(amount_desc___2)%。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "change_upgrade_data,17673,0",
+                "off_when_benched": true,
+                "data": {
+                  "amount": 3
+                },
+                "amount_desc": 3
+              },
+              {
+                "effect_string": "change_upgrade_data,17677,9",
+                "off_when_benched": true,
+                "data": {
+                  "amount": 1.65
+                },
+                "amount_desc": 1.65
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27183,
+            "large_graphic_id": 27183,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Lost in the Library",
+        "display": "迷失书海"
+      },
+      "specializationDescription": {
+        "original": "Her hunger for knowledge outweighs ambition; Cazrin would rather read than rule.",
+        "display": "她对知识的渴望远胜于权力之欲；相比统治，卡兹琳更愿意沉浸在书卷之中。"
+      },
+      "specializationGraphicId": "27183",
+      "tipText": null
+    },
+    {
+      "id": "17986",
+      "requiredLevel": 200,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17674",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17987",
+      "requiredLevel": 210,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17681",
+      "requiredLevel": 240,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Signature Smell",
+        "display": "标志性气味"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2421",
+      "effectDefinition": {
+        "id": "2421",
+        "snapshots": {
+          "original": {
+            "id": 2421,
+            "flavour_text": "",
+            "description": {
+              "desc": "When Uggie is with Cazrin, each damage increase that Uggie! would normally apply to other members of the formation instead applies to Cazrin herself, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "cazrin_uggie_spec_handler",
+                "off_when_benched": true,
+                "spec_effect_index": 1
+              },
+              {
+                "effect_string": "change_upgrade_data,17672,0",
+                "apply_manually": true,
+                "data": {
+                  "uggie_buff_effect_id": 2424
+                }
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27185,
+            "large_graphic_id": 27185,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "retain_on_slot_changed": true
+            }
+          },
+          "display": {
+            "id": 2421,
+            "flavour_text": "",
+            "description": {
+              "desc": "当乌吉与卡兹琳同行时，乌吉！原本会给予阵型中其他成员的每项伤害提升效果将转而作用于卡兹琳本人，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "cazrin_uggie_spec_handler",
+                "off_when_benched": true,
+                "spec_effect_index": 1
+              },
+              {
+                "effect_string": "change_upgrade_data,17672,0",
+                "apply_manually": true,
+                "data": {
+                  "uggie_buff_effect_id": 2424
+                }
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27185,
+            "large_graphic_id": 27185,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "retain_on_slot_changed": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Signature Smell",
+        "display": "标志性气味"
+      },
+      "specializationDescription": {
+        "original": "The worse Uggie smells, the harder Cazrin hits. A disturbing symbiosis.",
+        "display": "乌吉越臭，卡兹琳打得越狠。一种令人不安的共生关系。"
+      },
+      "specializationGraphicId": "27185",
+      "tipText": null
+    },
+    {
+      "id": "17682",
+      "requiredLevel": 240,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Smell Mastery",
+        "display": "气味精通"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2422",
+      "effectDefinition": {
+        "id": "2422",
+        "snapshots": {
+          "original": {
+            "id": 2422,
+            "flavour_text": "",
+            "description": {
+              "desc": "When Uggie is with Cazrin, In Search of Knowledge's per-Book bonus for Sunny Disposition is increased by $amount___2%."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "cazrin_uggie_spec_handler",
+                "off_when_benched": true,
+                "spec_effect_index": 1
+              },
+              {
+                "effect_string": "buff_upgrade,100,17677,9",
+                "apply_manually": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27186,
+            "large_graphic_id": 27186,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 2422,
+            "flavour_text": "",
+            "description": {
+              "desc": "当乌吉与卡兹琳同行时，求知探索对阳光心态的每本书加成提升 $amount___2%。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "cazrin_uggie_spec_handler",
+                "off_when_benched": true,
+                "spec_effect_index": 1
+              },
+              {
+                "effect_string": "buff_upgrade,100,17677,9",
+                "apply_manually": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 27186,
+            "large_graphic_id": 27186,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Smell Mastery",
+        "display": "气味精通"
+      },
+      "specializationDescription": {
+        "original": "It takes true mastery to turn a smell that bad into a support strategy.",
+        "display": "能把那种臭味转化为支援策略，才是真正的高手。"
+      },
+      "specializationGraphicId": "27186",
+      "tipText": null
+    },
+    {
+      "id": "17988",
+      "requiredLevel": 250,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17674",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17989",
+      "requiredLevel": 260,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17990",
+      "requiredLevel": 290,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17991",
+      "requiredLevel": 300,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17674",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17992",
+      "requiredLevel": 330,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17993",
+      "requiredLevel": 370,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17994",
+      "requiredLevel": 380,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17674",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17995",
+      "requiredLevel": 390,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17996",
+      "requiredLevel": 440,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17997",
+      "requiredLevel": 480,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17674",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17998",
+      "requiredLevel": 500,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17999",
+      "requiredLevel": 570,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18000",
+      "requiredLevel": 580,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17674",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18001",
+      "requiredLevel": 590,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18002",
+      "requiredLevel": 630,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18003",
+      "requiredLevel": 680,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17674",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18004",
+      "requiredLevel": 690,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18005",
+      "requiredLevel": 770,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18006",
+      "requiredLevel": 780,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17674",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18007",
+      "requiredLevel": 800,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18008",
+      "requiredLevel": 810,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18009",
+      "requiredLevel": 870,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18010",
+      "requiredLevel": 900,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17674",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18011",
+      "requiredLevel": 940,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18012",
+      "requiredLevel": 1000,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18013",
+      "requiredLevel": 1010,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17674",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18014",
+      "requiredLevel": 1030,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18015",
+      "requiredLevel": 1070,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18016",
+      "requiredLevel": 1120,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17674",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18017",
+      "requiredLevel": 1160,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18018",
+      "requiredLevel": 1240,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17674",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18019",
+      "requiredLevel": 1250,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18020",
+      "requiredLevel": 1270,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18021",
+      "requiredLevel": 1350,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17674",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18022",
+      "requiredLevel": 1400,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18023",
+      "requiredLevel": 1460,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17674",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18024",
+      "requiredLevel": 1480,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18025",
+      "requiredLevel": 1570,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17674",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18026",
+      "requiredLevel": 1640,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18027",
+      "requiredLevel": 1690,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17674",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18028",
+      "requiredLevel": 1700,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18029",
+      "requiredLevel": 1800,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17674",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18030",
+      "requiredLevel": 1840,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18031",
+      "requiredLevel": 1870,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18032",
+      "requiredLevel": 1920,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17674",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18033",
+      "requiredLevel": 1940,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18034",
+      "requiredLevel": 1980,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    }
+  ],
+  "feats": [
+    {
+      "id": "2279",
+      "order": 1,
+      "name": {
+        "original": "Selflessness",
+        "display": "无私"
+      },
+      "description": {
+        "original": "Sometimes you have to make sacrifices for the good of the group.",
+        "display": "有时候，为了团队的利益，你必须做出牺牲。"
+      },
+      "rarity": "2",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2280",
+      "order": 2,
+      "name": {
+        "original": "Inspiring Leader",
+        "display": "鼓舞人心的首领"
+      },
+      "description": {
+        "original": "You did it! That was brilliant! I shouldn't have doubted you!",
+        "display": "你成功了！真是太棒了！我不该怀疑你的！"
+      },
+      "rarity": "3",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,25"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "2281",
+      "order": 3,
+      "name": {
+        "original": "Adept",
+        "display": "熟练"
+      },
+      "description": {
+        "original": "Imagine all the spells waiting to be discovered!",
+        "display": "想象一下，还有多少法术等待我们去发现！"
+      },
+      "rarity": "2",
+      "graphicId": "6078",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,30"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2282",
+      "order": 4,
+      "name": {
+        "original": "Elementalist",
+        "display": "元素使"
+      },
+      "description": {
+        "original": "It's not the first time I've dealt with dangerous magic. This is my job.",
+        "display": "这不是我第一次处理危险魔法了。这是我的职责。"
+      },
+      "rarity": "3",
+      "graphicId": "6078",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,60"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "2283",
+      "order": 5,
+      "name": {
+        "original": "Friend to Books",
+        "display": "书本之友"
+      },
+      "description": {
+        "original": "To be honest, you had me at lost spellbook. I couldn't resist.",
+        "display": "说实话，从你提到“失落的魔法书”那一刻起我就被吸引了。我根本无法抗拒。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,17673"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "2284",
+      "order": 6,
+      "name": {
+        "original": "Rapid Analysis",
+        "display": "快速分析"
+      },
+      "description": {
+        "original": "Having more knowledge is always better, even if you don't always like it.",
+        "display": "知识越多越好，即使你并不总是喜欢它。"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,17673,4",
+          "description": "Increases the effect of Cazrin's Library of Lore order of magnitude buff by $amount%"
+        }
+      ],
+      "sources": [
+        {
+          "source": "event",
+          "event_id": 1
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "event",
+        "event_id": 1,
+        "tier": 3
+      }
+    },
+    {
+      "id": "2285",
+      "order": 7,
+      "name": {
+        "original": "Bright Side",
+        "display": "积极一面"
+      },
+      "description": {
+        "original": "That was my favorite satchel! Oh well. I'll just get a new one.",
+        "display": "那是我最喜欢的挎包！唉，算了。我再去弄一个新的就是了。"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,17674"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2286",
+      "order": 8,
+      "name": {
+        "original": "Optimistic Outlook",
+        "display": "乐观展望"
+      },
+      "description": {
+        "original": "You're not going to die. This potion is going to work. You're going to wake up.",
+        "display": "你不会死的。这瓶药剂会起作用的。你会醒过来的。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,17674"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "2287",
+      "order": 9,
+      "name": {
+        "original": "Cazrin Person",
+        "display": "卡兹琳人类"
+      },
+      "description": {
+        "original": "It's like breathing the inside of a corpse...",
+        "display": "像是在闻尸体里面的气味……"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,17675"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2288",
+      "order": 10,
+      "name": {
+        "original": "Cazrin Friend",
+        "display": "卡兹琳好友"
+      },
+      "description": {
+        "original": "Do you think she actually understands what we're saying?",
+        "display": "你觉得她真的听得懂我们在说什么吗？"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,17675"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "2289",
+      "order": 11,
+      "name": {
+        "original": "Dangerous Magic",
+        "display": "危险魔法"
+      },
+      "description": {
+        "original": "I can get absorbed in my work sometimes, but I'm perfectly capable of sharing.",
+        "display": "我有时候确实会全神贯注于研究，但我完全有能力与人分享成果。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,40,17678,17679"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "2290",
+      "order": 12,
+      "name": {
+        "original": "Forbidden Magic",
+        "display": "禁忌魔法"
+      },
+      "description": {
+        "original": "Knowledge should be shared by everyone, not hoarded by dragons.",
+        "display": "知识应该属于所有人，而不是被龙独占。"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,80,17678,17679"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000,
+          "start_date": "2025-12-03 12:00:00"
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 586
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "2291",
+      "order": 13,
+      "name": {
+        "original": "Heavy Lifter",
+        "display": "中流砥柱"
+      },
+      "description": {
+        "original": "We all struggle. Why not struggle together and make the burden lighter?",
+        "display": "我们都会经历挣扎。那为何不一起挣扎，让负担变轻些？"
+      },
+      "rarity": "4",
+      "graphicId": "10062",
+      "effects": [
+        {
+          "effect_string": "increase_ability_score,str,2"
+        }
+      ],
+      "sources": [
+        {
+          "source": "event",
+          "event_id": 1
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "event",
+        "event_id": 1,
+        "tier": 4
+      }
+    }
+  ],
+  "skins": [
+    {
+      "id": "594",
+      "name": {
+        "original": "Mythic Cazrin",
+        "display": "神话卡兹琳"
+      },
+      "cost": {
+        "req_date": "2025-09-03 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 27587,
+        "large_graphic_id": 27588,
+        "portrait_graphic_id": 27590,
+        "xl_graphic_id": 27589
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "586",
+        "cost": 3830
+      },
+      "availabilities": {
+        "premium_item_id": "586"
+      }
+    }
+  ],
+  "raw": {
+    "hero": {
+      "original": {
+        "id": 166,
+        "name": "Cazrin",
+        "english_name": "Cazrin",
+        "seat_id": 10,
+        "base_cost": "1100000000000000",
+        "base_damage": "50000000000",
+        "base_health": "50",
+        "cost_curves": {
+          "1": 1.085
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 891,
+        "ultimate_attack_id": 892,
+        "graphic_id": 27107,
+        "portrait_graphic_id": 27106,
+        "character_sheet_details": {
+          "full_name": "Cazrin Varaith",
+          "class": "Wizard",
+          "race": "Human",
+          "age": 22,
+          "alignment": "Chaotic Good",
+          "ability_scores": {
+            "str": 8,
+            "dex": 13,
+            "con": 14,
+            "int": 18,
+            "wis": 13,
+            "cha": 13
+          },
+          "backstory": "Cazrin is the ray of sunshine in the party, the eternal optimist, the friendly ear or the shoulder to cry on. She is passionate about magic, knowledge, and learning, always experimenting or testing new theories. Growing up, Cazrin's family feared and forbade the study of magic because of an ancestress who misused her power, so Cazrin was forced to teach herself and eventually leave her family behind to pursue her dreams. Intelligent but inexperienced, she has embraced a life of adventuring to gather the thrills and experiences that as a child she could only read about in books.",
+          "system_description": "Cazrin is a Support and DPS Champion that collects books as she adventures with the Fallbacks' faithful companion, Uggie. Her Sunny Disposition increases the damage of Champions in her column and the columns in front of her, and she's always ready to protect herself with Mage Armor."
+        },
+        "default_feat_slot_unlocks": [
+          195,
+          770,
+          1440,
+          2270
+        ],
+        "tags": [
+          "female",
+          "human",
+          "wizard",
+          "chaotic",
+          "good",
+          "dps",
+          "support",
+          "fallbacks",
+          "event",
+          "y9"
+        ],
+        "properties": {
+          "content_set_id": 62,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            170,
+            171,
+            172
+          ],
+          "graphic_large": 27108,
+          "graphic_xl": 27109,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            87,
+            77
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 4,
+            "gethit": 5,
+            "koed": 6,
+            "run": 7
+          },
+          "allow_time_gate": "2025-09-24 12:00:00",
+          "available_in_store": "2025-10-01 12:00:00",
+          "time_gate_adventure_id": 1713,
+          "time_gate_variants_ids": [
+            1698,
+            1699,
+            1700
+          ],
+          "time_gate_tier": 1,
+          "silver_chest_type_id": 664,
+          "gold_chest_type_id": 665,
+          "golden_epic_loot_id": 3941,
+          "golden_epic_promo_id": 592,
+          "event_logo_graphic_id": 3943,
+          "console_portrait": 27144,
+          "trials_effect_id": 836,
+          "weekly_buff": "buff_upgrade,200,17674",
+          "portrait_graphic_scale": 0.9,
+          "legendary_effect_id": [
+            1,
+            3,
+            5,
+            35,
+            94,
+            52
+          ],
+          "notification_adjustment": {
+            "offset": [
+              56,
+              245
+            ],
+            "scale": 1.25
+          }
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 1697,
+            "type": "base"
+          },
+          {
+            "adventure_id": 1698,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1699,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1700,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1701,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 1713,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 122,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 17673,
+            "name": "Library of Lore",
+            "description": "",
+            "graphic_id": "27166"
+          },
+          {
+            "upgrade_id": 17674,
+            "name": "Sunny Disposition",
+            "description": "",
+            "graphic_id": "27168"
+          },
+          {
+            "upgrade_id": 17675,
+            "name": "Unctuous Uggie",
+            "description": "",
+            "graphic_id": "27169"
+          },
+          {
+            "upgrade_id": 17676,
+            "name": "Mage Armor",
+            "description": "",
+            "graphic_id": "27167"
+          },
+          {
+            "upgrade_id": 17677,
+            "name": "In Search of Knowledge",
+            "description": "",
+            "graphic_id": "27165"
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1788462000,
+        "event_name": "Highharvestide",
+        "is_available": true,
+        "date_available": "2025-09-03 12:00:00",
+        "last_rework_date": "2025-09-03 12:00:00"
+      },
+      "display": {
+        "id": 166,
+        "name": "卡兹琳",
+        "english_name": "Cazrin",
+        "seat_id": 10,
+        "base_cost": "1100000000000000",
+        "base_damage": "50000000000",
+        "base_health": "50",
+        "cost_curves": {
+          "1": 1.085
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 891,
+        "ultimate_attack_id": 892,
+        "graphic_id": 27107,
+        "portrait_graphic_id": 27106,
+        "character_sheet_details": {
+          "full_name": "卡兹琳·瓦雷斯",
+          "class": "法师",
+          "race": "人类",
+          "age": 22,
+          "alignment": "混乱善良",
+          "ability_scores": {
+            "str": 8,
+            "dex": 13,
+            "con": 14,
+            "int": 18,
+            "wis": 13,
+            "cha": 13
+          },
+          "backstory": "卡兹琳是探险队里的一缕阳光，她永远都那么乐观，既会耐心地听你倾诉，也能让你依靠在她的肩膀上哭泣。她十分热衷于魔法、知识和学习，总是在做实验或者验证新的理论。在卡兹琳成长的过程中，她的家人畏惧魔法并禁止她研习，这是因为她的一位女性先祖曾利用魔法来作恶，因此卡兹琳不得不自学，并最终离家去追寻自己的梦想。聪慧但缺乏经验的她选择投身冒险来体验那些她儿时只能在书本中读到的惊险和奇遇。",
+          "system_description": "卡兹琳是一名支援和伤害输出型勇士，她会在与“后备队”忠实伙伴乌吉一起冒险的过程中收集书籍。她的“阳光心态”会提高她所在列以及她身前各列中勇士的伤害，并且她随时都准备好用“法师护甲”来保护自己。"
+        },
+        "default_feat_slot_unlocks": [
+          195,
+          770,
+          1440,
+          2270
+        ],
+        "tags": [
+          "female",
+          "human",
+          "wizard",
+          "chaotic",
+          "good",
+          "dps",
+          "support",
+          "fallbacks",
+          "event",
+          "y9"
+        ],
+        "properties": {
+          "content_set_id": 62,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            170,
+            171,
+            172
+          ],
+          "graphic_large": 27108,
+          "graphic_xl": 27109,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            87,
+            77
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 4,
+            "gethit": 5,
+            "koed": 6,
+            "run": 7
+          },
+          "allow_time_gate": "2025-09-24 12:00:00",
+          "available_in_store": "2025-10-01 12:00:00",
+          "time_gate_adventure_id": 1713,
+          "time_gate_variants_ids": [
+            1698,
+            1699,
+            1700
+          ],
+          "time_gate_tier": 1,
+          "silver_chest_type_id": 664,
+          "gold_chest_type_id": 665,
+          "golden_epic_loot_id": 3941,
+          "golden_epic_promo_id": 592,
+          "event_logo_graphic_id": 3943,
+          "console_portrait": 27144,
+          "trials_effect_id": 836,
+          "weekly_buff": "buff_upgrade,200,17674",
+          "portrait_graphic_scale": 0.9,
+          "legendary_effect_id": [
+            1,
+            3,
+            5,
+            35,
+            94,
+            52
+          ],
+          "notification_adjustment": {
+            "offset": [
+              56,
+              245
+            ],
+            "scale": 1.25
+          }
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 1697,
+            "type": "base"
+          },
+          {
+            "adventure_id": 1698,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1699,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1700,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1701,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 1713,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 122,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 17673,
+            "name": "秘藏图书馆",
+            "description": "",
+            "graphic_id": "27166"
+          },
+          {
+            "upgrade_id": 17674,
+            "name": "阳光心态",
+            "description": "",
+            "graphic_id": "27168"
+          },
+          {
+            "upgrade_id": 17675,
+            "name": "油腻乌吉",
+            "description": "",
+            "graphic_id": "27169"
+          },
+          {
+            "upgrade_id": 17676,
+            "name": "法师护甲",
+            "description": "",
+            "graphic_id": "27167"
+          },
+          {
+            "upgrade_id": 17677,
+            "name": "求知探索",
+            "description": "",
+            "graphic_id": "27165"
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1788462000,
+        "event_name": "丰收节",
+        "is_available": true,
+        "date_available": "2025-09-03 12:00:00",
+        "last_rework_date": "2025-09-03 12:00:00"
+      }
+    },
+    "attacks": [
+      {
+        "id": "891",
+        "snapshots": {
+          "original": {
+            "id": 891,
+            "name": "Magic Missile",
+            "description": "Cazrin fires 2 magic missiles at random enemies, preferring different targets if possible",
+            "long_description": "",
+            "graphic_id": 27105,
+            "target": "random",
+            "num_targets": 2,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 4.5,
+            "animations": [
+              {
+                "type": "ranged_attack",
+                "projectile": "magic_missile",
+                "shoot_frame": 10,
+                "shoot_offset_x": 55,
+                "shoot_offset_y": -155,
+                "projectile_delay": 0.1,
+                "projectile_count": 2,
+                "shoot_sound": 149,
+                "hit_sound": 133,
+                "projectile_details": {
+                  "projectile_graphic_id": 27105,
+                  "impact_offset_y": -45,
+                  "trail_tint": "#c999c3",
+                  "impact_tint": "#c999c3"
+                }
+              }
+            ],
+            "tags": [
+              "ranged",
+              "multitarget"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          },
+          "display": {
+            "id": 891,
+            "name": "魔法飞弹",
+            "description": "卡兹琳向随机敌人发射 2 枚魔法飞弹，若可能则优先选择不同目标",
+            "long_description": "",
+            "graphic_id": 27105,
+            "target": "random",
+            "num_targets": 2,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 4.5,
+            "animations": [
+              {
+                "type": "ranged_attack",
+                "projectile": "magic_missile",
+                "shoot_frame": 10,
+                "shoot_offset_x": 55,
+                "shoot_offset_y": -155,
+                "projectile_delay": 0.1,
+                "projectile_count": 2,
+                "shoot_sound": 149,
+                "hit_sound": 133,
+                "projectile_details": {
+                  "projectile_graphic_id": 27105,
+                  "impact_offset_y": -45,
+                  "trail_tint": "#c999c3",
+                  "impact_tint": "#c999c3"
+                }
+              }
+            ],
+            "tags": [
+              "ranged",
+              "multitarget"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          }
+        }
+      },
+      {
+        "id": "892",
+        "snapshots": {
+          "original": {
+            "id": 892,
+            "name": "Fallback Fireball",
+            "description": "Cazrin attacks all enemies with a fireball.",
+            "long_description": "Cazrin attacks all enemies with her version of a fireball.",
+            "graphic_id": 27188,
+            "target": "all",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 0.03,
+            "cooldown": 360,
+            "animations": [
+              {
+                "type": "ultimate_attack",
+                "ultimate": "cazrin",
+                "projectile_data": {
+                  "type": "ranged_attack",
+                  "shoot_offset_y": -215,
+                  "shoot_offset_x": 165,
+                  "shoot_frame": 29,
+                  "shoot_sound": 149,
+                  "hit_sound": 133,
+                  "projectile_details": {
+                    "hash": "7081d5ba41d98b53cc07844a3a0a219d",
+                    "projectile_speed": 1500,
+                    "projectile_graphic_id": 27104,
+                    "impact_graphic_id": 27466,
+                    "smoke_graphic_id": 446,
+                    "explosion_graphic_id": 27465
+                  }
+                },
+                "damage_frame": 8
+              }
+            ],
+            "tags": [
+              "ranged",
+              "ultimate"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          },
+          "display": {
+            "id": 892,
+            "name": "后备火球术",
+            "description": "卡兹琳用火球攻击所有敌人。",
+            "long_description": "卡兹琳用她自创版本的火球攻击所有敌人。",
+            "graphic_id": 27188,
+            "target": "all",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 0.03,
+            "cooldown": 360,
+            "animations": [
+              {
+                "type": "ultimate_attack",
+                "ultimate": "cazrin",
+                "projectile_data": {
+                  "type": "ranged_attack",
+                  "shoot_offset_y": -215,
+                  "shoot_offset_x": 165,
+                  "shoot_frame": 29,
+                  "shoot_sound": 149,
+                  "hit_sound": 133,
+                  "projectile_details": {
+                    "hash": "7081d5ba41d98b53cc07844a3a0a219d",
+                    "projectile_speed": 1500,
+                    "projectile_graphic_id": 27104,
+                    "impact_graphic_id": 27466,
+                    "smoke_graphic_id": 446,
+                    "explosion_graphic_id": 27465
+                  }
+                },
+                "damage_frame": 8
+              }
+            ],
+            "tags": [
+              "ranged",
+              "ultimate"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          }
+        }
+      }
+    ],
+    "upgrades": [
+      {
+        "id": "17672",
+        "snapshots": {
+          "original": {
+            "id": 17672,
+            "hero_id": 166,
+            "required_level": 0,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2412",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Uggie!"
+          },
+          "display": {
+            "id": 17672,
+            "hero_id": 166,
+            "required_level": 0,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2412",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "乌吉！"
+          }
+        }
+      },
+      {
+        "id": "17673",
+        "snapshots": {
+          "original": {
+            "id": 17673,
+            "hero_id": 166,
+            "required_level": 10,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2413",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Library of Lore",
+            "tip_text": "Cazrin collects books that bosses drop, which increases her damage and her library of books persists between resets."
+          },
+          "display": {
+            "id": 17673,
+            "hero_id": 166,
+            "required_level": 10,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2413",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "秘藏图书馆",
+            "tip_text": "卡兹琳会收集首领掉落的书籍，这些书会提升她的伤害，并在重置后保留在她的图书馆中。"
+          }
+        }
+      },
+      {
+        "id": "17674",
+        "snapshots": {
+          "original": {
+            "id": 17674,
+            "hero_id": 166,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2414",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Sunny Disposition",
+            "tip_text": "Cazrin increases the damage of Champions in her column and the columns in front of her."
+          },
+          "display": {
+            "id": 17674,
+            "hero_id": 166,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2414",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "阳光心态",
+            "tip_text": "卡兹琳会提高她所在列和她前列勇士的伤害。"
+          }
+        }
+      },
+      {
+        "id": "17675",
+        "snapshots": {
+          "original": {
+            "id": 17675,
+            "hero_id": 166,
+            "required_level": 60,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2415",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Unctuous Uggie"
+          },
+          "display": {
+            "id": 17675,
+            "hero_id": 166,
+            "required_level": 60,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2415",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "油腻乌吉"
+          }
+        }
+      },
+      {
+        "id": "17676",
+        "snapshots": {
+          "original": {
+            "id": 17676,
+            "hero_id": 166,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2416",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Mage Armor"
+          },
+          "display": {
+            "id": 17676,
+            "hero_id": 166,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2416",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "法师护甲"
+          }
+        }
+      },
+      {
+        "id": "17677",
+        "snapshots": {
+          "original": {
+            "id": 17677,
+            "hero_id": 166,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2417",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "In Search of Knowledge"
+          },
+          "display": {
+            "id": 17677,
+            "hero_id": 166,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2417",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "求知探索"
+          }
+        }
+      },
+      {
+        "id": "17678",
+        "snapshots": {
+          "original": {
+            "id": 17678,
+            "hero_id": 166,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2418",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Self Taught",
+            "specialization_name": "Self Taught",
+            "specialization_description": "Forbidden by her family to study magic, Cazrin secretly taught herself the arcane arts.",
+            "specialization_graphic_id": 27184
+          },
+          "display": {
+            "id": 17678,
+            "hero_id": 166,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2418",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "自学成才",
+            "specialization_name": "自学成才",
+            "specialization_description": "由于家族禁止她学习魔法，卡兹琳林只能暗中自学奥术之道。",
+            "specialization_graphic_id": 27184
+          }
+        }
+      },
+      {
+        "id": "17679",
+        "snapshots": {
+          "original": {
+            "id": 17679,
+            "hero_id": 166,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2419",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Ancestor's Shadow",
+            "specialization_name": "Ancestor's Shadow",
+            "specialization_description": "Cazrin strives to use her magic for good and not follow her ancestor's twisted path.",
+            "specialization_graphic_id": 27182
+          },
+          "display": {
+            "id": 17679,
+            "hero_id": 166,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2419",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "先祖阴影",
+            "specialization_name": "先祖阴影",
+            "specialization_description": "卡兹琳努力用魔法行善，不愿重蹈她祖先那扭曲的道路。",
+            "specialization_graphic_id": 27182
+          }
+        }
+      },
+      {
+        "id": "17680",
+        "snapshots": {
+          "original": {
+            "id": 17680,
+            "hero_id": 166,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2420",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Lost in the Library",
+            "specialization_name": "Lost in the Library",
+            "specialization_description": "Her hunger for knowledge outweighs ambition; Cazrin would rather read than rule.",
+            "specialization_graphic_id": 27183
+          },
+          "display": {
+            "id": 17680,
+            "hero_id": 166,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2420",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "迷失书海",
+            "specialization_name": "迷失书海",
+            "specialization_description": "她对知识的渴望远胜于权力之欲；相比统治，卡兹琳更愿意沉浸在书卷之中。",
+            "specialization_graphic_id": 27183
+          }
+        }
+      },
+      {
+        "id": "17681",
+        "snapshots": {
+          "original": {
+            "id": 17681,
+            "hero_id": 166,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2421",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Signature Smell",
+            "specialization_name": "Signature Smell",
+            "specialization_description": "The worse Uggie smells, the harder Cazrin hits. A disturbing symbiosis.",
+            "specialization_graphic_id": 27185
+          },
+          "display": {
+            "id": 17681,
+            "hero_id": 166,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2421",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "标志性气味",
+            "specialization_name": "标志性气味",
+            "specialization_description": "乌吉越臭，卡兹琳打得越狠。一种令人不安的共生关系。",
+            "specialization_graphic_id": 27185
+          }
+        }
+      },
+      {
+        "id": "17682",
+        "snapshots": {
+          "original": {
+            "id": 17682,
+            "hero_id": 166,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2422",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Smell Mastery",
+            "specialization_name": "Smell Mastery",
+            "specialization_description": "It takes true mastery to turn a smell that bad into a support strategy.",
+            "specialization_graphic_id": 27186
+          },
+          "display": {
+            "id": 17682,
+            "hero_id": 166,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2422",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "气味精通",
+            "specialization_name": "气味精通",
+            "specialization_description": "能把那种臭味转化为支援策略，才是真正的高手。",
+            "specialization_graphic_id": 27186
+          }
+        }
+      },
+      {
+        "id": "17683",
+        "snapshots": {
+          "original": {
+            "id": 17683,
+            "hero_id": 166,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "effect_def,2423",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Fallback Fireball"
+          },
+          "display": {
+            "id": 17683,
+            "hero_id": 166,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "effect_def,2423",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "后备火球术"
+          }
+        }
+      },
+      {
+        "id": "17854",
+        "snapshots": {
+          "original": {
+            "id": 17854,
+            "hero_id": 166,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17854,
+            "hero_id": 166,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17979",
+        "snapshots": {
+          "original": {
+            "id": 17979,
+            "hero_id": 166,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17979,
+            "hero_id": 166,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17980",
+        "snapshots": {
+          "original": {
+            "id": 17980,
+            "hero_id": 166,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17980,
+            "hero_id": 166,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17981",
+        "snapshots": {
+          "original": {
+            "id": 17981,
+            "hero_id": 166,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17981,
+            "hero_id": 166,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17982",
+        "snapshots": {
+          "original": {
+            "id": 17982,
+            "hero_id": 166,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17982,
+            "hero_id": 166,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17983",
+        "snapshots": {
+          "original": {
+            "id": 17983,
+            "hero_id": 166,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17983,
+            "hero_id": 166,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17984",
+        "snapshots": {
+          "original": {
+            "id": 17984,
+            "hero_id": 166,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17984,
+            "hero_id": 166,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17985",
+        "snapshots": {
+          "original": {
+            "id": 17985,
+            "hero_id": 166,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17985,
+            "hero_id": 166,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17986",
+        "snapshots": {
+          "original": {
+            "id": 17986,
+            "hero_id": 166,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17986,
+            "hero_id": 166,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17987",
+        "snapshots": {
+          "original": {
+            "id": 17987,
+            "hero_id": 166,
+            "required_level": 210,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17987,
+            "hero_id": 166,
+            "required_level": 210,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17988",
+        "snapshots": {
+          "original": {
+            "id": 17988,
+            "hero_id": 166,
+            "required_level": 250,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17988,
+            "hero_id": 166,
+            "required_level": 250,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17989",
+        "snapshots": {
+          "original": {
+            "id": 17989,
+            "hero_id": 166,
+            "required_level": 260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17989,
+            "hero_id": 166,
+            "required_level": 260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17990",
+        "snapshots": {
+          "original": {
+            "id": 17990,
+            "hero_id": 166,
+            "required_level": 290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17990,
+            "hero_id": 166,
+            "required_level": 290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17991",
+        "snapshots": {
+          "original": {
+            "id": 17991,
+            "hero_id": 166,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17991,
+            "hero_id": 166,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17992",
+        "snapshots": {
+          "original": {
+            "id": 17992,
+            "hero_id": 166,
+            "required_level": 330,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17992,
+            "hero_id": 166,
+            "required_level": 330,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17993",
+        "snapshots": {
+          "original": {
+            "id": 17993,
+            "hero_id": 166,
+            "required_level": 370,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17993,
+            "hero_id": 166,
+            "required_level": 370,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17994",
+        "snapshots": {
+          "original": {
+            "id": 17994,
+            "hero_id": 166,
+            "required_level": 380,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17994,
+            "hero_id": 166,
+            "required_level": 380,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17995",
+        "snapshots": {
+          "original": {
+            "id": 17995,
+            "hero_id": 166,
+            "required_level": 390,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17995,
+            "hero_id": 166,
+            "required_level": 390,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17996",
+        "snapshots": {
+          "original": {
+            "id": 17996,
+            "hero_id": 166,
+            "required_level": 440,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17996,
+            "hero_id": 166,
+            "required_level": 440,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17997",
+        "snapshots": {
+          "original": {
+            "id": 17997,
+            "hero_id": 166,
+            "required_level": 480,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17997,
+            "hero_id": 166,
+            "required_level": 480,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17998",
+        "snapshots": {
+          "original": {
+            "id": 17998,
+            "hero_id": 166,
+            "required_level": 500,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17998,
+            "hero_id": 166,
+            "required_level": 500,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17999",
+        "snapshots": {
+          "original": {
+            "id": 17999,
+            "hero_id": 166,
+            "required_level": 570,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17999,
+            "hero_id": 166,
+            "required_level": 570,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18000",
+        "snapshots": {
+          "original": {
+            "id": 18000,
+            "hero_id": 166,
+            "required_level": 580,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18000,
+            "hero_id": 166,
+            "required_level": 580,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18001",
+        "snapshots": {
+          "original": {
+            "id": 18001,
+            "hero_id": 166,
+            "required_level": 590,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18001,
+            "hero_id": 166,
+            "required_level": 590,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18002",
+        "snapshots": {
+          "original": {
+            "id": 18002,
+            "hero_id": 166,
+            "required_level": 630,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18002,
+            "hero_id": 166,
+            "required_level": 630,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18003",
+        "snapshots": {
+          "original": {
+            "id": 18003,
+            "hero_id": 166,
+            "required_level": 680,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18003,
+            "hero_id": 166,
+            "required_level": 680,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18004",
+        "snapshots": {
+          "original": {
+            "id": 18004,
+            "hero_id": 166,
+            "required_level": 690,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18004,
+            "hero_id": 166,
+            "required_level": 690,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18005",
+        "snapshots": {
+          "original": {
+            "id": 18005,
+            "hero_id": 166,
+            "required_level": 770,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18005,
+            "hero_id": 166,
+            "required_level": 770,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18006",
+        "snapshots": {
+          "original": {
+            "id": 18006,
+            "hero_id": 166,
+            "required_level": 780,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18006,
+            "hero_id": 166,
+            "required_level": 780,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18007",
+        "snapshots": {
+          "original": {
+            "id": 18007,
+            "hero_id": 166,
+            "required_level": 800,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18007,
+            "hero_id": 166,
+            "required_level": 800,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18008",
+        "snapshots": {
+          "original": {
+            "id": 18008,
+            "hero_id": 166,
+            "required_level": 810,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18008,
+            "hero_id": 166,
+            "required_level": 810,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18009",
+        "snapshots": {
+          "original": {
+            "id": 18009,
+            "hero_id": 166,
+            "required_level": 870,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18009,
+            "hero_id": 166,
+            "required_level": 870,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18010",
+        "snapshots": {
+          "original": {
+            "id": 18010,
+            "hero_id": 166,
+            "required_level": 900,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18010,
+            "hero_id": 166,
+            "required_level": 900,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18011",
+        "snapshots": {
+          "original": {
+            "id": 18011,
+            "hero_id": 166,
+            "required_level": 940,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18011,
+            "hero_id": 166,
+            "required_level": 940,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18012",
+        "snapshots": {
+          "original": {
+            "id": 18012,
+            "hero_id": 166,
+            "required_level": 1000,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18012,
+            "hero_id": 166,
+            "required_level": 1000,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18013",
+        "snapshots": {
+          "original": {
+            "id": 18013,
+            "hero_id": 166,
+            "required_level": 1010,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18013,
+            "hero_id": 166,
+            "required_level": 1010,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18014",
+        "snapshots": {
+          "original": {
+            "id": 18014,
+            "hero_id": 166,
+            "required_level": 1030,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18014,
+            "hero_id": 166,
+            "required_level": 1030,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18015",
+        "snapshots": {
+          "original": {
+            "id": 18015,
+            "hero_id": 166,
+            "required_level": 1070,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18015,
+            "hero_id": 166,
+            "required_level": 1070,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18016",
+        "snapshots": {
+          "original": {
+            "id": 18016,
+            "hero_id": 166,
+            "required_level": 1120,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18016,
+            "hero_id": 166,
+            "required_level": 1120,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18017",
+        "snapshots": {
+          "original": {
+            "id": 18017,
+            "hero_id": 166,
+            "required_level": 1160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18017,
+            "hero_id": 166,
+            "required_level": 1160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18018",
+        "snapshots": {
+          "original": {
+            "id": 18018,
+            "hero_id": 166,
+            "required_level": 1240,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18018,
+            "hero_id": 166,
+            "required_level": 1240,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18019",
+        "snapshots": {
+          "original": {
+            "id": 18019,
+            "hero_id": 166,
+            "required_level": 1250,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18019,
+            "hero_id": 166,
+            "required_level": 1250,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18020",
+        "snapshots": {
+          "original": {
+            "id": 18020,
+            "hero_id": 166,
+            "required_level": 1270,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18020,
+            "hero_id": 166,
+            "required_level": 1270,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18021",
+        "snapshots": {
+          "original": {
+            "id": 18021,
+            "hero_id": 166,
+            "required_level": 1350,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18021,
+            "hero_id": 166,
+            "required_level": 1350,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18022",
+        "snapshots": {
+          "original": {
+            "id": 18022,
+            "hero_id": 166,
+            "required_level": 1400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18022,
+            "hero_id": 166,
+            "required_level": 1400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18023",
+        "snapshots": {
+          "original": {
+            "id": 18023,
+            "hero_id": 166,
+            "required_level": 1460,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18023,
+            "hero_id": 166,
+            "required_level": 1460,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18024",
+        "snapshots": {
+          "original": {
+            "id": 18024,
+            "hero_id": 166,
+            "required_level": 1480,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18024,
+            "hero_id": 166,
+            "required_level": 1480,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18025",
+        "snapshots": {
+          "original": {
+            "id": 18025,
+            "hero_id": 166,
+            "required_level": 1570,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18025,
+            "hero_id": 166,
+            "required_level": 1570,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18026",
+        "snapshots": {
+          "original": {
+            "id": 18026,
+            "hero_id": 166,
+            "required_level": 1640,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18026,
+            "hero_id": 166,
+            "required_level": 1640,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18027",
+        "snapshots": {
+          "original": {
+            "id": 18027,
+            "hero_id": 166,
+            "required_level": 1690,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18027,
+            "hero_id": 166,
+            "required_level": 1690,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18028",
+        "snapshots": {
+          "original": {
+            "id": 18028,
+            "hero_id": 166,
+            "required_level": 1700,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18028,
+            "hero_id": 166,
+            "required_level": 1700,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18029",
+        "snapshots": {
+          "original": {
+            "id": 18029,
+            "hero_id": 166,
+            "required_level": 1800,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18029,
+            "hero_id": 166,
+            "required_level": 1800,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18030",
+        "snapshots": {
+          "original": {
+            "id": 18030,
+            "hero_id": 166,
+            "required_level": 1840,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18030,
+            "hero_id": 166,
+            "required_level": 1840,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18031",
+        "snapshots": {
+          "original": {
+            "id": 18031,
+            "hero_id": 166,
+            "required_level": 1870,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18031,
+            "hero_id": 166,
+            "required_level": 1870,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18032",
+        "snapshots": {
+          "original": {
+            "id": 18032,
+            "hero_id": 166,
+            "required_level": 1920,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18032,
+            "hero_id": 166,
+            "required_level": 1920,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17674",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18033",
+        "snapshots": {
+          "original": {
+            "id": 18033,
+            "hero_id": 166,
+            "required_level": 1940,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18033,
+            "hero_id": 166,
+            "required_level": 1940,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18034",
+        "snapshots": {
+          "original": {
+            "id": 18034,
+            "hero_id": 166,
+            "required_level": 1980,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18034,
+            "hero_id": 166,
+            "required_level": 1980,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      }
+    ],
+    "feats": [
+      {
+        "id": "2279",
+        "snapshots": {
+          "original": {
+            "id": 2279,
+            "hero_id": 166,
+            "order": 1,
+            "name": "Selflessness",
+            "description": "Sometimes you have to make sacrifices for the good of the group.",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2279,
+            "hero_id": 166,
+            "order": 1,
+            "name": "无私",
+            "description": "有时候，为了团队的利益，你必须做出牺牲。",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2280",
+        "snapshots": {
+          "original": {
+            "id": 2280,
+            "hero_id": 166,
+            "order": 2,
+            "name": "Inspiring Leader",
+            "description": "You did it! That was brilliant! I shouldn't have doubted you!",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 2280,
+            "hero_id": 166,
+            "order": 2,
+            "name": "鼓舞人心的首领",
+            "description": "你成功了！真是太棒了！我不该怀疑你的！",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "2281",
+        "snapshots": {
+          "original": {
+            "id": 2281,
+            "hero_id": 166,
+            "order": 3,
+            "name": "Adept",
+            "description": "Imagine all the spells waiting to be discovered!",
+            "rarity": 2,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,30"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2281,
+            "hero_id": 166,
+            "order": 3,
+            "name": "熟练",
+            "description": "想象一下，还有多少法术等待我们去发现！",
+            "rarity": 2,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,30"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2282",
+        "snapshots": {
+          "original": {
+            "id": 2282,
+            "hero_id": 166,
+            "order": 4,
+            "name": "Elementalist",
+            "description": "It's not the first time I've dealt with dangerous magic. This is my job.",
+            "rarity": 3,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,60"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 2282,
+            "hero_id": 166,
+            "order": 4,
+            "name": "元素使",
+            "description": "这不是我第一次处理危险魔法了。这是我的职责。",
+            "rarity": 3,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,60"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "2283",
+        "snapshots": {
+          "original": {
+            "id": 2283,
+            "hero_id": 166,
+            "order": 5,
+            "name": "Friend to Books",
+            "description": "To be honest, you had me at lost spellbook. I couldn't resist.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17673"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 2283,
+            "hero_id": 166,
+            "order": 5,
+            "name": "书本之友",
+            "description": "说实话，从你提到“失落的魔法书”那一刻起我就被吸引了。我根本无法抗拒。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17673"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "2284",
+        "snapshots": {
+          "original": {
+            "id": 2284,
+            "hero_id": 166,
+            "order": 6,
+            "name": "Rapid Analysis",
+            "description": "Having more knowledge is always better, even if you don't always like it.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,17673,4",
+                "description": "Increases the effect of Cazrin's Library of Lore order of magnitude buff by $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 1
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "event",
+              "event_id": 1,
+              "tier": 3
+            }
+          },
+          "display": {
+            "id": 2284,
+            "hero_id": 166,
+            "order": 6,
+            "name": "快速分析",
+            "description": "知识越多越好，即使你并不总是喜欢它。",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,17673,4",
+                "description": "使卡兹琳“秘藏图书馆”数量级增益的效果提高 $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 1
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "event",
+              "event_id": 1,
+              "tier": 3
+            }
+          }
+        }
+      },
+      {
+        "id": "2285",
+        "snapshots": {
+          "original": {
+            "id": 2285,
+            "hero_id": 166,
+            "order": 7,
+            "name": "Bright Side",
+            "description": "That was my favorite satchel! Oh well. I'll just get a new one.",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,17674"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2285,
+            "hero_id": 166,
+            "order": 7,
+            "name": "积极一面",
+            "description": "那是我最喜欢的挎包！唉，算了。我再去弄一个新的就是了。",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,17674"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2286",
+        "snapshots": {
+          "original": {
+            "id": 2286,
+            "hero_id": 166,
+            "order": 8,
+            "name": "Optimistic Outlook",
+            "description": "You're not going to die. This potion is going to work. You're going to wake up.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17674"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 2286,
+            "hero_id": 166,
+            "order": 8,
+            "name": "乐观展望",
+            "description": "你不会死的。这瓶药剂会起作用的。你会醒过来的。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17674"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "2287",
+        "snapshots": {
+          "original": {
+            "id": 2287,
+            "hero_id": 166,
+            "order": 9,
+            "name": "Cazrin Person",
+            "description": "It's like breathing the inside of a corpse...",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,17675"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2287,
+            "hero_id": 166,
+            "order": 9,
+            "name": "卡兹琳人类",
+            "description": "像是在闻尸体里面的气味……",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,17675"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2288",
+        "snapshots": {
+          "original": {
+            "id": 2288,
+            "hero_id": 166,
+            "order": 10,
+            "name": "Cazrin Friend",
+            "description": "Do you think she actually understands what we're saying?",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17675"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 2288,
+            "hero_id": 166,
+            "order": 10,
+            "name": "卡兹琳好友",
+            "description": "你觉得她真的听得懂我们在说什么吗？",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17675"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "2289",
+        "snapshots": {
+          "original": {
+            "id": 2289,
+            "hero_id": 166,
+            "order": 11,
+            "name": "Dangerous Magic",
+            "description": "I can get absorbed in my work sometimes, but I'm perfectly capable of sharing.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,40,17678,17679"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 2289,
+            "hero_id": 166,
+            "order": 11,
+            "name": "危险魔法",
+            "description": "我有时候确实会全神贯注于研究，但我完全有能力与人分享成果。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,40,17678,17679"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "2290",
+        "snapshots": {
+          "original": {
+            "id": 2290,
+            "hero_id": 166,
+            "order": 12,
+            "name": "Forbidden Magic",
+            "description": "Knowledge should be shared by everyone, not hoarded by dragons.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,80,17678,17679"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2025-12-03 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 586
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 2290,
+            "hero_id": 166,
+            "order": 12,
+            "name": "禁忌魔法",
+            "description": "知识应该属于所有人，而不是被龙独占。",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,80,17678,17679"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2025-12-03 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 586
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "2291",
+        "snapshots": {
+          "original": {
+            "id": 2291,
+            "hero_id": 166,
+            "order": 13,
+            "name": "Heavy Lifter",
+            "description": "We all struggle. Why not struggle together and make the burden lighter?",
+            "rarity": 4,
+            "graphic_id": 10062,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,str,2"
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 1
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "event",
+              "event_id": 1,
+              "tier": 4
+            }
+          },
+          "display": {
+            "id": 2291,
+            "hero_id": 166,
+            "order": 13,
+            "name": "中流砥柱",
+            "description": "我们都会经历挣扎。那为何不一起挣扎，让负担变轻些？",
+            "rarity": 4,
+            "graphic_id": 10062,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,str,2"
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 1
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "event",
+              "event_id": 1,
+              "tier": 4
+            }
+          }
+        }
+      }
+    ],
+    "skins": [
+      {
+        "id": "594",
+        "snapshots": {
+          "original": {
+            "id": 594,
+            "hero_id": 166,
+            "name": "Mythic Cazrin",
+            "cost": {
+              "req_date": "2025-09-03 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 27587,
+              "large_graphic_id": 27588,
+              "portrait_graphic_id": 27590,
+              "xl_graphic_id": 27589
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "586",
+              "cost": 3830
+            },
+            "availabilities": {
+              "premium_item_id": "586"
+            }
+          },
+          "display": {
+            "id": 594,
+            "hero_id": 166,
+            "name": "神话卡兹琳",
+            "cost": {
+              "req_date": "2025-09-03 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 27587,
+              "large_graphic_id": 27588,
+              "portrait_graphic_id": 27590,
+              "xl_graphic_id": 27589
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "586",
+              "cost": 3830
+            },
+            "availabilities": {
+              "premium_item_id": "586"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,5394 @@
+{
+  "updatedAt": "2026-04-13",
+  "summary": {
+    "id": "67",
+    "name": {
+      "original": "Dragonbait",
+      "display": "龙饵"
+    },
+    "seat": 11,
+    "roles": [
+      "support",
+      "tanking"
+    ],
+    "affiliations": [],
+    "tags": [
+      "evergreen",
+      "good",
+      "lawful",
+      "male",
+      "paladin",
+      "saurial",
+      "support",
+      "tanking",
+      "unaffiliated"
+    ],
+    "portrait": {
+      "path": "v1/champion-portraits/67.png",
+      "sourceGraphic": "Portraits/Portrait_DragonbaitHero",
+      "sourceVersion": 2
+    }
+  },
+  "englishName": "Dragonbait",
+  "eventName": null,
+  "dateAvailable": "2020-01-01 13:00:00",
+  "lastReworkDate": "2020-01-01 13:00:00",
+  "popularity": 0,
+  "baseCost": "75000000000000000",
+  "baseDamage": "80000000000",
+  "baseHealth": "384",
+  "graphicId": "7102",
+  "portraitGraphicId": "7104",
+  "availability": {
+    "availableInNextEvent": false,
+    "availableInShop": true,
+    "availableInTimeGate": false,
+    "isAvailable": true,
+    "nextEventTimestamp": 0
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    95,
+    435,
+    825,
+    1310
+  ],
+  "costCurves": {
+    "1": 1.15
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "available_in_store": "2025-10-23 12:00:00",
+    "unlock_adventure_id": 385,
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      145,
+      146,
+      147
+    ],
+    "graphic_large": 7103,
+    "graphic_xl": 13791,
+    "eye_height": 138,
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "attack_b": 4,
+      "ultimate": 5,
+      "gethit": 6,
+      "koed": 7,
+      "run": 8,
+      "attack_c": 11
+    },
+    "portrait_center_offset": [
+      95,
+      80
+    ],
+    "permanent_effects": [
+      "base_overwhelm,25"
+    ],
+    "console_portrait": 6986,
+    "trials_effect_id": 835,
+    "legendary_effect_id": [
+      1,
+      55,
+      23,
+      44,
+      37,
+      51
+    ],
+    "weekly_chest_type_id": 476,
+    "weekly_buff": "buff_upgrade,200,3272",
+    "portrait_graphic_scale": 0.81,
+    "notification_adjustment": {
+      "offset": [
+        35,
+        218
+      ],
+      "scale": 1.25
+    },
+    "hero_not_unlocked_skin_warning": "Champion Dragonbait is not unlocked with this skin. Dragonbait can only be unlocked by completing A Saurial's Resolve - the second Variant of the The Lost Love adventure in the Tomb of Annihilation Campaign.",
+    "gold_chest_type_id": 476
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Dragonbait",
+      "display": "龙饵"
+    },
+    "class": {
+      "original": "Paladin",
+      "display": "圣武士"
+    },
+    "race": {
+      "original": "Saurial",
+      "display": "爬虫人"
+    },
+    "age": 242,
+    "alignment": {
+      "original": "Lawful Good",
+      "display": "守序善良"
+    },
+    "abilityScores": {
+      "str": 15,
+      "dex": 13,
+      "con": 17,
+      "int": 14,
+      "wis": 16,
+      "cha": 18
+    },
+    "backstory": {
+      "original": "Dragonbait is a champion of good and a saurial - a species that originated on a distant world and whose members have long lives. Very few saurials dwell in the Forgotten Realms, and no saurial communities are believed to exist anywhere in the world. The saurial's language is a combination of clicks and whistles beyond the human range of hearing, so Dragonbait relies on 'shouting' scents to communicate emotions. Dragonbait's known scents include: brimstone (confusion), roses (sadness), lemon (pleasure or joy), baked bread (anger), violets (danger or fear), honeysuckle (tenderness or concern), wood smoke (devotion or piety), tar (victory or celebration), and ham (nervousness or worry).",
+      "display": "龙饵是一名善良的勇士，也是一名爬虫人——这是个起源于遥远世界的种族，其成员拥有漫长的生命。很少有爬虫人居住在被遗忘的国度，据说世界上任何地方都没有爬虫人社区的存在。爬虫人的语言是由超出人类听觉范围的咔哒声和口哨声组合而成，所以龙饵依靠“喊叫”的气味来传达情感。龙饵的已知气味包括：硫磺石（混乱）、玫瑰（悲伤）、柠檬（快乐或喜悦）、烤面包（愤怒）、紫罗兰（危险或恐惧）、金银花（温柔或关切）、木烟（奉献或虔诚）、焦油（胜利或庆祝）和火腿（紧张或担忧）。"
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "260",
+      "name": {
+        "original": "Slice Through",
+        "display": "穿刺斩"
+      },
+      "description": {
+        "original": "Dragonbait attacks the closest enemy with his sword, hitting all nearby enemies with a small cleave.",
+        "display": "龙饵用他的剑攻击距离最近的敌人，同时对附近所有敌人触发小顺势斩。"
+      },
+      "longDescription": null,
+      "cooldown": 4.8,
+      "numTargets": 1,
+      "aoeRadius": 100,
+      "damageModifier": "1",
+      "target": "front",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee",
+        "aoe"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "target_offset_x": -60,
+          "damage_frame": 5
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "261",
+      "name": {
+        "original": "Holy Avenger",
+        "display": "神圣复仇者"
+      },
+      "description": {
+        "original": "Dragonbait jumps out and strikes with his Holy Avenger, dealing damage to all enemies on screen and clearing any stun/charm effects on Champions.",
+        "display": "龙饵跳起并使用神圣复仇者发动攻击，对屏幕上的所有敌人造成伤害，并清除所有勇士身上的任何眩晕/魅惑效果。"
+      },
+      "longDescription": {
+        "original": "Dragonbait jumps out and strikes with his Holy Avenger, dealing damage to all enemies on screen and immediately clearing any stun/charm effects on Champions. Any Fiends or Undead left alive are marked with an overlay of the Holy Avenger. Champions who attack marked enemies deal 400% additional damage.",
+        "display": "龙饵跳起并使用神圣复仇者发动攻击，对屏幕上的所有敌人造成伤害，并立即清除所有勇士身上的任何眩晕/魅惑效果。所有在此之后还存活的炼狱生物和亡灵会被神圣复仇者标记，勇士对被标记的敌人造成 400% 额外伤害。"
+      },
+      "cooldown": 270,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "0.03",
+      "target": "all",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee",
+        "ultimate"
+      ],
+      "graphicId": "7180",
+      "animations": [
+        {
+          "type": "dragonbait_ultimate",
+          "start_effect_string": "clear_all_ailments",
+          "start_visual_effect": "formation_heal_glow",
+          "hit_effect_string": "effect_def,521"
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "3272",
+        "name": {
+          "original": "Shen-state",
+          "display": "神态"
+        },
+        "description": null,
+        "graphicId": "7177"
+      },
+      {
+        "upgradeId": "3273",
+        "name": {
+          "original": "Scent: Pie Crust",
+          "display": "气味：馅饼皮"
+        },
+        "description": null,
+        "graphicId": "7175"
+      },
+      {
+        "upgradeId": "3274",
+        "name": {
+          "original": "Scent: Roasted Vegetables",
+          "display": "气味：烤蔬菜"
+        },
+        "description": null,
+        "graphicId": "7176"
+      },
+      {
+        "upgradeId": "3275",
+        "name": {
+          "original": "Scent: Meat Sauce",
+          "display": "气味：肉酱"
+        },
+        "description": null,
+        "graphicId": "7174"
+      },
+      {
+        "upgradeId": "3276",
+        "name": {
+          "original": "Fast Friends",
+          "display": "忠诚朋友"
+        },
+        "description": null,
+        "graphicId": "7173"
+      }
+    ]
+  },
+  "upgrades": [
+    {
+      "id": "3276",
+      "requiredLevel": 10,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Fast Friends",
+        "display": "忠诚朋友"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,518",
+      "effectDefinition": {
+        "id": "518",
+        "snapshots": {
+          "original": {
+            "id": 518,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the health of all other Champions in the formation by $(amount)% of Dragonbait's max health."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "increase_health_by_source_percent,25",
+                "targets": [
+                  "other"
+                ],
+                "off_when_benched": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 7173,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_buff_incoming_formation_abilities_target": false
+            }
+          },
+          "display": {
+            "id": 518,
+            "flavour_text": "",
+            "description": {
+              "desc": "提升阵型中其他所有勇士的生命值，数值相当于龙饵最大生命值的 $(amount)%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "increase_health_by_source_percent,25",
+                "targets": [
+                  "other"
+                ],
+                "off_when_benched": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 7173,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_buff_incoming_formation_abilities_target": false
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3359",
+      "requiredLevel": 15,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3272",
+      "requiredLevel": 20,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Shen-state",
+        "display": "神态"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,517",
+      "effectDefinition": {
+        "id": "517",
+        "snapshots": {
+          "original": {
+            "id": 517,
+            "flavour_text": "",
+            "description": {
+              "desc": "$shen_state_description"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "shen_state,100"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 7177,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 517,
+            "flavour_text": "",
+            "description": {
+              "desc": "$shen_state_description"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "shen_state,100"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 7177,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Dragonbait increases the damage of nearby Champions. The range can be extended with clever formations.",
+        "display": "龙饵提高附近勇士的伤害。巧妙的阵型可以扩大其范围。"
+      }
+    },
+    {
+      "id": "3360",
+      "requiredLevel": 30,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3273",
+      "requiredLevel": 35,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Scent: Pie Crust",
+        "display": "气味：馅饼皮"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,527",
+      "effectDefinition": {
+        "id": "527",
+        "snapshots": {
+          "original": {
+            "id": 527,
+            "flavour_text": "",
+            "description": {
+              "desc": "The range of Shen-state is increased by $amount for each Healer Champion in the formation, stacking additively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "scent_pie_crust,1,all_slots,healing",
+                "show_bonus": true,
+                "show_advanced_info": false,
+                "percent_values": false
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 7175,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 527,
+            "flavour_text": "",
+            "description": {
+              "desc": "阵型中每位治疗者均使神态的范围扩大 $amount，以加算方式堆叠"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "scent_pie_crust,1,all_slots,healing",
+                "show_bonus": true,
+                "show_advanced_info": false,
+                "percent_values": false
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 7175,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3358",
+      "requiredLevel": 45,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,3272",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3361",
+      "requiredLevel": 50,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3274",
+      "requiredLevel": 55,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Scent: Roasted Vegetables",
+        "display": "气味：烤蔬菜"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,519",
+      "effectDefinition": {
+        "id": "519",
+        "snapshots": {
+          "original": {
+            "id": 519,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increase the effect of Shen State by $amount% for each enemy attacking Dragonbait and for each enemy enrage stack (additive). This effect is increased by $amount___2% for each other Tanking Champion in the formation.^^$shen_state_roasted_vegetables_description"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "scent_roasted_vegetables_attacking,100",
+                "count_power_boost_stacks": true
+              },
+              {
+                "effect_string": "scent_roasted_vegetables_tank,100,all_slots,tanking"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 7176,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true
+            }
+          },
+          "display": {
+            "id": 519,
+            "flavour_text": "",
+            "description": {
+              "desc": "每名攻击龙饵或使其堆叠怒气的敌人，均使神态的效果提高 $amount%（以加算方式堆叠）。阵型中每有另外一名坦克勇士，此效果就提升 $amount___2%^^$shen_state_roasted_vegetables_description"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "scent_roasted_vegetables_attacking,100",
+                "count_power_boost_stacks": true
+              },
+              {
+                "effect_string": "scent_roasted_vegetables_tank,100,all_slots,tanking"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 7176,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": "2",
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Dragonbait is a defensive tank, and will increase the damage of all Champions when he comes under attack.",
+        "display": "龙饵是一位防御型坦克，会在自身受到攻击时提高所有勇士的伤害。"
+      }
+    },
+    {
+      "id": "3280",
+      "requiredLevel": 65,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,3272",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3362",
+      "requiredLevel": 70,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3275",
+      "requiredLevel": 80,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Scent: Meat Sauce",
+        "display": "气味：肉酱"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,528",
+      "effectDefinition": {
+        "id": "528",
+        "snapshots": {
+          "original": {
+            "id": 528,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increase the effect of Shen State for each Support Champion in the formation. The increase amount is based on how close the Support Champion is to Dragonbait.^$shen_state_meat_sauce_description"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "scent_meat_sauce,100"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 7174,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 528,
+            "flavour_text": "",
+            "description": {
+              "desc": "阵型中每有一位支援型勇士，就会提升神态的效果。提升数值取决于支援型勇士与龙饵的距离有多近^$shen_state_meat_sauce_description"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "scent_meat_sauce,100"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 7174,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3363",
+      "requiredLevel": 85,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3279",
+      "requiredLevel": 90,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Holy Avenger",
+        "display": "神圣复仇者"
+      },
+      "upgradeType": "unlock_ultimate",
+      "effectReference": "set_ultimate_attack,261",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3283",
+      "requiredLevel": 95,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "increase_health",
+      "effectReference": "health_add,288",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3364",
+      "requiredLevel": 100,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3365",
+      "requiredLevel": 105,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3272",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3282",
+      "requiredLevel": 115,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3275",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3277",
+      "requiredLevel": 120,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Scent: Roasted Chicken",
+        "display": "气味：烤鸡"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "scent_roasted_chicken",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Scent: Roasted Chicken",
+        "display": "气味：烤鸡"
+      },
+      "specializationDescription": {
+        "original": "Dragonbait emits a rich chicken-y scent which changes how his buffs affect his allies based on distance.",
+        "display": "龙饵散发出浓郁的鸡肉味，根据距离改变他的增益对盟友的影响。"
+      },
+      "specializationGraphicId": "7178",
+      "tipText": null
+    },
+    {
+      "id": "3278",
+      "requiredLevel": 120,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Scent: Herbs and Spices",
+        "display": "气味：草药和香料"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1104",
+      "effectDefinition": {
+        "id": "1104",
+        "snapshots": {
+          "original": {
+            "id": 1104,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the effect of $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,50,3274,1"
+              },
+              {
+                "effect_string": "do_nothing,0",
+                "amount_func": "set",
+                "stack_func": "per_crusader",
+                "tag": "tanking"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "spec_option_post_apply_info": "Champions in Formation Targeted: $sample_amount___2"
+            }
+          },
+          "display": {
+            "id": 1104,
+            "flavour_text": "",
+            "description": {
+              "desc": "使$(upgrade_hero id)的$(upgrade_name id)技能效果提升 $(amount)%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,50,3274,1"
+              },
+              {
+                "effect_string": "do_nothing,0",
+                "amount_func": "set",
+                "stack_func": "per_crusader",
+                "tag": "tanking"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "spec_option_post_apply_info": "阵型中的目标勇士数量：$sample_amount___2"
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Scent: Herbs and Spices",
+        "display": "气味：草药和香料"
+      },
+      "specializationDescription": {
+        "original": "Dragonbait enjoys working alongside other defensive Champions, and emits a pleasantly spicy scent while doing so.",
+        "display": "龙饵喜欢与其他防御型勇士并肩作战，并会在这种时候散发出令人愉悦的辛辣气味。"
+      },
+      "specializationGraphicId": "7179",
+      "tipText": null
+    },
+    {
+      "id": "3366",
+      "requiredLevel": 125,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3381",
+      "requiredLevel": 140,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3367",
+      "requiredLevel": 150,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3382",
+      "requiredLevel": 160,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3353",
+      "requiredLevel": 170,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "increase_health",
+      "effectReference": "health_add,504",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3373",
+      "requiredLevel": 185,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3272",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3383",
+      "requiredLevel": 195,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3384",
+      "requiredLevel": 225,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3374",
+      "requiredLevel": 240,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3275",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3385",
+      "requiredLevel": 250,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3368",
+      "requiredLevel": 260,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3354",
+      "requiredLevel": 280,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "increase_health",
+      "effectReference": "health_add,882",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3386",
+      "requiredLevel": 290,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3281",
+      "requiredLevel": 305,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,3274,0",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3387",
+      "requiredLevel": 315,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3375",
+      "requiredLevel": 325,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3272",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3388",
+      "requiredLevel": 355,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3376",
+      "requiredLevel": 375,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3275",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3369",
+      "requiredLevel": 385,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3389",
+      "requiredLevel": 395,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3355",
+      "requiredLevel": 405,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "increase_health",
+      "effectReference": "health_add,1543",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3390",
+      "requiredLevel": 430,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3377",
+      "requiredLevel": 455,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3272",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3391",
+      "requiredLevel": 465,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3392",
+      "requiredLevel": 495,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3370",
+      "requiredLevel": 505,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3378",
+      "requiredLevel": 515,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3275",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3356",
+      "requiredLevel": 525,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "increase_health",
+      "effectReference": "health_add,2700",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3393",
+      "requiredLevel": 540,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3379",
+      "requiredLevel": 585,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3272",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3394",
+      "requiredLevel": 595,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3372",
+      "requiredLevel": 610,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,3274,0",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3395",
+      "requiredLevel": 620,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3371",
+      "requiredLevel": 630,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3380",
+      "requiredLevel": 640,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3275",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3357",
+      "requiredLevel": 645,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "increase_health",
+      "effectReference": "health_add,4724",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3986",
+      "requiredLevel": 655,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3987",
+      "requiredLevel": 680,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,200,3272",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3988",
+      "requiredLevel": 695,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3989",
+      "requiredLevel": 735,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3990",
+      "requiredLevel": 745,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3991",
+      "requiredLevel": 765,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "increase_health",
+      "effectReference": "health_add,8500",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5355",
+      "requiredLevel": 790,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5356",
+      "requiredLevel": 810,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,200,3272",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5357",
+      "requiredLevel": 820,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5358",
+      "requiredLevel": 830,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,3272",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5359",
+      "requiredLevel": 850,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3275",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5360",
+      "requiredLevel": 870,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5375",
+      "requiredLevel": 880,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "increase_health",
+      "effectReference": "health_add,15620",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6684",
+      "requiredLevel": 900,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6685",
+      "requiredLevel": 910,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3275",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6686",
+      "requiredLevel": 920,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,3272",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6687",
+      "requiredLevel": 930,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3275",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6688",
+      "requiredLevel": 940,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6689",
+      "requiredLevel": 950,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,3272",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6690",
+      "requiredLevel": 960,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6691",
+      "requiredLevel": 990,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6829",
+      "requiredLevel": 1000,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "increase_health",
+      "effectReference": "health_add,30000",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8446",
+      "requiredLevel": 1040,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,3272",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8447",
+      "requiredLevel": 1080,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8448",
+      "requiredLevel": 1120,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8628",
+      "requiredLevel": 1130,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "increase_health",
+      "effectReference": "health_add,48850",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    }
+  ],
+  "feats": [
+    {
+      "id": "323",
+      "order": 1,
+      "name": {
+        "original": "Selflessness",
+        "display": "无私"
+      },
+      "description": {
+        "original": "Deekin speaks for Dragonbait. Deekin understands bad smells.",
+        "display": "德金为龙饵开口说话。德金懂得那些可怕气味的意义。"
+      },
+      "rarity": "2",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "324",
+      "order": 2,
+      "name": {
+        "original": "Inspiring Leader",
+        "display": "鼓舞人心的首领"
+      },
+      "description": {
+        "original": "[click] [whistle] [click] [click] [low whistle]",
+        "display": "[咔哒] [吹口哨] [咔哒] [咔哒] [小声吹口哨]"
+      },
+      "rarity": "3",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,25"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "325",
+      "order": 3,
+      "name": {
+        "original": "Tough",
+        "display": "坚韧"
+      },
+      "description": {
+        "original": "Deekin doesn't like when you call Dragonbait short.",
+        "display": "德金不喜欢你叫龙饵矮子。"
+      },
+      "rarity": "2",
+      "graphicId": "6076",
+      "effects": [
+        {
+          "effect_string": "health_mult,15"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "326",
+      "order": 4,
+      "name": {
+        "original": "Resilient",
+        "display": "韧性"
+      },
+      "description": {
+        "original": "Boss keeps getting up whenever he's knocked down.",
+        "display": "首领每次被打倒后，都会不断爬起来。"
+      },
+      "rarity": "3",
+      "graphicId": "6076",
+      "effects": [
+        {
+          "effect_string": "health_mult,30"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "327",
+      "order": 5,
+      "name": {
+        "original": "The Long Stare",
+        "display": "漫长的凝视"
+      },
+      "description": {
+        "original": "Boss looks angry.",
+        "display": "首领看起来很生气。"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,3272",
+          "description": "Dragonbait's Shen State is increased by $(amount)%"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "328",
+      "order": 6,
+      "name": {
+        "original": "Bared Teeth",
+        "display": "龇牙"
+      },
+      "description": {
+        "original": "Deekin thinks we should hit that really big thing.",
+        "display": "德金认为我们应该攻击那个超大的东西。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,3272",
+          "description": "Dragonbait's Shen State is increased by $(amount)%"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "329",
+      "order": 7,
+      "name": {
+        "original": "Calm Under Pressure",
+        "display": "从容应对"
+      },
+      "description": {
+        "original": "He looks most content when he has allies to protect & a quarry to chase.",
+        "display": "当有盟友要保护、有猎物要追赶时，他看起来最为满足。"
+      },
+      "rarity": "3",
+      "graphicId": "6077",
+      "effects": [
+        {
+          "effect_string": "overwhelm_start_increase,10",
+          "description": "Dragonbait takes $(amount) more enemies to get overwhelmed"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "2448",
+      "order": 8,
+      "name": {
+        "original": "Scent of Battle",
+        "display": "战斗气息"
+      },
+      "description": {
+        "original": "Boss smells like a burning bakery.",
+        "display": "首领闻起来就像着火的面包店一样。"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,3272"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000,
+          "start_date": "2026-04-28 12:00:00"
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 667
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1769630400,
+        "available_for_gems_at_time": 1777402800
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "667",
+        "cost": 1680
+      }
+    }
+  ],
+  "skins": [
+    {
+      "id": "129",
+      "name": {
+        "original": "Vampire Dragonbait",
+        "display": "吸血鬼龙饵"
+      },
+      "cost": {
+        "req_date": "2022-01-05 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 13210,
+        "large_graphic_id": 13211,
+        "xl_graphic_id": 13792,
+        "portrait_graphic_id": 13285
+      },
+      "rarity": "3",
+      "properties": {
+        "show_only_if_owned": true,
+        "notification_adjustment_override": {
+          "offset": [
+            35,
+            219
+          ],
+          "scale": 1.25
+        },
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "patron",
+        "patron_id": 3
+      },
+      "availabilities": {
+        "patron_id": "3",
+        "patron_shop_item_id": "107"
+      }
+    },
+    {
+      "id": "650",
+      "name": {
+        "original": "Pirate Dragonbait",
+        "display": "海盗龙饵"
+      },
+      "cost": {
+        "req_date": "2026-01-28 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 28673,
+        "large_graphic_id": 28675,
+        "portrait_graphic_id": 28669,
+        "xl_graphic_id": 28677
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "667",
+        "cost": 1680
+      },
+      "availabilities": {
+        "premium_item_id": "667"
+      }
+    }
+  ],
+  "raw": {
+    "hero": {
+      "original": {
+        "id": 67,
+        "name": "Dragonbait",
+        "english_name": "Dragonbait",
+        "seat_id": 11,
+        "base_cost": "75000000000000000",
+        "base_damage": "80000000000",
+        "base_health": "384",
+        "cost_curves": {
+          "1": 1.15
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 260,
+        "ultimate_attack_id": 261,
+        "graphic_id": 7102,
+        "portrait_graphic_id": 7104,
+        "character_sheet_details": {
+          "full_name": "Dragonbait",
+          "class": "Paladin",
+          "race": "Saurial",
+          "age": 242,
+          "alignment": "Lawful Good",
+          "ability_scores": {
+            "str": 15,
+            "dex": 13,
+            "con": 17,
+            "int": 14,
+            "wis": 16,
+            "cha": 18
+          },
+          "backstory": "Dragonbait is a champion of good and a saurial - a species that originated on a distant world and whose members have long lives. Very few saurials dwell in the Forgotten Realms, and no saurial communities are believed to exist anywhere in the world. The saurial's language is a combination of clicks and whistles beyond the human range of hearing, so Dragonbait relies on 'shouting' scents to communicate emotions. Dragonbait's known scents include: brimstone (confusion), roses (sadness), lemon (pleasure or joy), baked bread (anger), violets (danger or fear), honeysuckle (tenderness or concern), wood smoke (devotion or piety), tar (victory or celebration), and ham (nervousness or worry).",
+          "system_description": "Dragonbait, like all Saurials, communicates through smell. He buffs your party by smelling like meat pie, with your formation choices dictating some of the effects."
+        },
+        "default_feat_slot_unlocks": [
+          95,
+          435,
+          825,
+          1310
+        ],
+        "tags": [
+          "male",
+          "saurial",
+          "paladin",
+          "tanking",
+          "support",
+          "lawful",
+          "good",
+          "evergreen",
+          "unaffiliated"
+        ],
+        "properties": {
+          "available_in_store": "2025-10-23 12:00:00",
+          "unlock_adventure_id": 385,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            145,
+            146,
+            147
+          ],
+          "graphic_large": 7103,
+          "graphic_xl": 13791,
+          "eye_height": 138,
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "attack_b": 4,
+            "ultimate": 5,
+            "gethit": 6,
+            "koed": 7,
+            "run": 8,
+            "attack_c": 11
+          },
+          "portrait_center_offset": [
+            95,
+            80
+          ],
+          "permanent_effects": [
+            "base_overwhelm,25"
+          ],
+          "console_portrait": 6986,
+          "trials_effect_id": 835,
+          "legendary_effect_id": [
+            1,
+            55,
+            23,
+            44,
+            37,
+            51
+          ],
+          "weekly_chest_type_id": 476,
+          "weekly_buff": "buff_upgrade,200,3272",
+          "portrait_graphic_scale": 0.81,
+          "notification_adjustment": {
+            "offset": [
+              35,
+              218
+            ],
+            "scale": 1.25
+          },
+          "hero_not_unlocked_skin_warning": "Champion Dragonbait is not unlocked with this skin. Dragonbait can only be unlocked by completing A Saurial's Resolve - the second Variant of the The Lost Love adventure in the Tomb of Annihilation Campaign.",
+          "gold_chest_type_id": 476
+        },
+        "adventure_ids": [],
+        "popularity": 0,
+        "available_in_time_gate": false,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 3276,
+            "name": "Fast Friends",
+            "description": "",
+            "graphic_id": "7173"
+          },
+          {
+            "upgrade_id": 3272,
+            "name": "Shen-state",
+            "description": "",
+            "graphic_id": "7177"
+          },
+          {
+            "upgrade_id": 3273,
+            "name": "Scent: Pie Crust",
+            "description": "",
+            "graphic_id": "7175"
+          },
+          {
+            "upgrade_id": 3274,
+            "name": "Scent: Roasted Vegetables",
+            "description": "",
+            "graphic_id": "7176"
+          },
+          {
+            "upgrade_id": 3275,
+            "name": "Scent: Meat Sauce",
+            "description": "",
+            "graphic_id": "7174"
+          }
+        ],
+        "available_in_next_event": false,
+        "next_event_timestamp": 0,
+        "event_name": "",
+        "is_available": true,
+        "date_available": "2020-01-01 13:00:00",
+        "last_rework_date": "2020-01-01 13:00:00"
+      },
+      "display": {
+        "id": 67,
+        "name": "龙饵",
+        "english_name": "Dragonbait",
+        "seat_id": 11,
+        "base_cost": "75000000000000000",
+        "base_damage": "80000000000",
+        "base_health": "384",
+        "cost_curves": {
+          "1": 1.15
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 260,
+        "ultimate_attack_id": 261,
+        "graphic_id": 7102,
+        "portrait_graphic_id": 7104,
+        "character_sheet_details": {
+          "full_name": "龙饵",
+          "class": "圣武士",
+          "race": "爬虫人",
+          "age": 242,
+          "alignment": "守序善良",
+          "ability_scores": {
+            "str": 15,
+            "dex": 13,
+            "con": 17,
+            "int": 14,
+            "wis": 16,
+            "cha": 18
+          },
+          "backstory": "龙饵是一名善良的勇士，也是一名爬虫人——这是个起源于遥远世界的种族，其成员拥有漫长的生命。很少有爬虫人居住在被遗忘的国度，据说世界上任何地方都没有爬虫人社区的存在。爬虫人的语言是由超出人类听觉范围的咔哒声和口哨声组合而成，所以龙饵依靠“喊叫”的气味来传达情感。龙饵的已知气味包括：硫磺石（混乱）、玫瑰（悲伤）、柠檬（快乐或喜悦）、烤面包（愤怒）、紫罗兰（危险或恐惧）、金银花（温柔或关切）、木烟（奉献或虔诚）、焦油（胜利或庆祝）和火腿（紧张或担忧）。",
+          "system_description": "龙饵和所有爬虫人一样通过气味沟通。他能通过肉馅饼的味道来为你的队伍提供增益，并根据你的阵型选择不同效果。"
+        },
+        "default_feat_slot_unlocks": [
+          95,
+          435,
+          825,
+          1310
+        ],
+        "tags": [
+          "male",
+          "saurial",
+          "paladin",
+          "tanking",
+          "support",
+          "lawful",
+          "good",
+          "evergreen",
+          "unaffiliated"
+        ],
+        "properties": {
+          "available_in_store": "2025-10-23 12:00:00",
+          "unlock_adventure_id": 385,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            145,
+            146,
+            147
+          ],
+          "graphic_large": 7103,
+          "graphic_xl": 13791,
+          "eye_height": 138,
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "attack_b": 4,
+            "ultimate": 5,
+            "gethit": 6,
+            "koed": 7,
+            "run": 8,
+            "attack_c": 11
+          },
+          "portrait_center_offset": [
+            95,
+            80
+          ],
+          "permanent_effects": [
+            "base_overwhelm,25"
+          ],
+          "console_portrait": 6986,
+          "trials_effect_id": 835,
+          "legendary_effect_id": [
+            1,
+            55,
+            23,
+            44,
+            37,
+            51
+          ],
+          "weekly_chest_type_id": 476,
+          "weekly_buff": "buff_upgrade,200,3272",
+          "portrait_graphic_scale": 0.81,
+          "notification_adjustment": {
+            "offset": [
+              35,
+              218
+            ],
+            "scale": 1.25
+          },
+          "hero_not_unlocked_skin_warning": "勇士龙饵不随此皮肤解锁。只有完成“爬虫人的决心”——“湮灭之墓”战役中“失去的爱”冒险的第二个支线任务——才能解锁龙饵。",
+          "gold_chest_type_id": 476
+        },
+        "adventure_ids": [],
+        "popularity": 0,
+        "available_in_time_gate": false,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 3276,
+            "name": "忠诚朋友",
+            "description": "",
+            "graphic_id": "7173"
+          },
+          {
+            "upgrade_id": 3272,
+            "name": "神态",
+            "description": "",
+            "graphic_id": "7177"
+          },
+          {
+            "upgrade_id": 3273,
+            "name": "气味：馅饼皮",
+            "description": "",
+            "graphic_id": "7175"
+          },
+          {
+            "upgrade_id": 3274,
+            "name": "气味：烤蔬菜",
+            "description": "",
+            "graphic_id": "7176"
+          },
+          {
+            "upgrade_id": 3275,
+            "name": "气味：肉酱",
+            "description": "",
+            "graphic_id": "7174"
+          }
+        ],
+        "available_in_next_event": false,
+        "next_event_timestamp": 0,
+        "event_name": "",
+        "is_available": true,
+        "date_available": "2020-01-01 13:00:00",
+        "last_rework_date": "2020-01-01 13:00:00"
+      }
+    },
+    "attacks": [
+      {
+        "id": "260",
+        "snapshots": {
+          "original": {
+            "id": 260,
+            "name": "Slice Through",
+            "description": "Dragonbait attacks the closest enemy with his sword, hitting all nearby enemies with a small cleave.",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 100,
+            "damage_modifier": 1,
+            "cooldown": 4.8,
+            "animations": [
+              {
+                "type": "melee_attack",
+                "target_offset_x": -60,
+                "damage_frame": 5
+              }
+            ],
+            "tags": [
+              "melee",
+              "aoe"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          },
+          "display": {
+            "id": 260,
+            "name": "穿刺斩",
+            "description": "龙饵用他的剑攻击距离最近的敌人，同时对附近所有敌人触发小顺势斩。",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 100,
+            "damage_modifier": 1,
+            "cooldown": 4.8,
+            "animations": [
+              {
+                "type": "melee_attack",
+                "target_offset_x": -60,
+                "damage_frame": 5
+              }
+            ],
+            "tags": [
+              "melee",
+              "aoe"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          }
+        }
+      },
+      {
+        "id": "261",
+        "snapshots": {
+          "original": {
+            "id": 261,
+            "name": "Holy Avenger",
+            "description": "Dragonbait jumps out and strikes with his Holy Avenger, dealing damage to all enemies on screen and clearing any stun/charm effects on Champions.",
+            "long_description": "Dragonbait jumps out and strikes with his Holy Avenger, dealing damage to all enemies on screen and immediately clearing any stun/charm effects on Champions. Any Fiends or Undead left alive are marked with an overlay of the Holy Avenger. Champions who attack marked enemies deal 400% additional damage.",
+            "graphic_id": 7180,
+            "target": "all",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 0.03,
+            "cooldown": 270,
+            "animations": [
+              {
+                "type": "dragonbait_ultimate",
+                "start_effect_string": "clear_all_ailments",
+                "start_visual_effect": "formation_heal_glow",
+                "hit_effect_string": "effect_def,521"
+              }
+            ],
+            "tags": [
+              "melee",
+              "ultimate"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          },
+          "display": {
+            "id": 261,
+            "name": "神圣复仇者",
+            "description": "龙饵跳起并使用神圣复仇者发动攻击，对屏幕上的所有敌人造成伤害，并清除所有勇士身上的任何眩晕/魅惑效果。",
+            "long_description": "龙饵跳起并使用神圣复仇者发动攻击，对屏幕上的所有敌人造成伤害，并立即清除所有勇士身上的任何眩晕/魅惑效果。所有在此之后还存活的炼狱生物和亡灵会被神圣复仇者标记，勇士对被标记的敌人造成 400% 额外伤害。",
+            "graphic_id": 7180,
+            "target": "all",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 0.03,
+            "cooldown": 270,
+            "animations": [
+              {
+                "type": "dragonbait_ultimate",
+                "start_effect_string": "clear_all_ailments",
+                "start_visual_effect": "formation_heal_glow",
+                "hit_effect_string": "effect_def,521"
+              }
+            ],
+            "tags": [
+              "melee",
+              "ultimate"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          }
+        }
+      }
+    ],
+    "upgrades": [
+      {
+        "id": "3272",
+        "snapshots": {
+          "original": {
+            "id": 3272,
+            "hero_id": 67,
+            "required_level": 20,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,517",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Shen-state",
+            "tip_text": "Dragonbait increases the damage of nearby Champions. The range can be extended with clever formations."
+          },
+          "display": {
+            "id": 3272,
+            "hero_id": 67,
+            "required_level": 20,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,517",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "神态",
+            "tip_text": "龙饵提高附近勇士的伤害。巧妙的阵型可以扩大其范围。"
+          }
+        }
+      },
+      {
+        "id": "3273",
+        "snapshots": {
+          "original": {
+            "id": 3273,
+            "hero_id": 67,
+            "required_level": 35,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,527",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Scent: Pie Crust"
+          },
+          "display": {
+            "id": 3273,
+            "hero_id": 67,
+            "required_level": 35,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,527",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "气味：馅饼皮"
+          }
+        }
+      },
+      {
+        "id": "3274",
+        "snapshots": {
+          "original": {
+            "id": 3274,
+            "hero_id": 67,
+            "required_level": 55,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,519",
+            "static_dps_mult": "2",
+            "default_enabled": 1,
+            "name": "Scent: Roasted Vegetables",
+            "tip_text": "Dragonbait is a defensive tank, and will increase the damage of all Champions when he comes under attack."
+          },
+          "display": {
+            "id": 3274,
+            "hero_id": 67,
+            "required_level": 55,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,519",
+            "static_dps_mult": "2",
+            "default_enabled": 1,
+            "name": "气味：烤蔬菜",
+            "tip_text": "龙饵是一位防御型坦克，会在自身受到攻击时提高所有勇士的伤害。"
+          }
+        }
+      },
+      {
+        "id": "3275",
+        "snapshots": {
+          "original": {
+            "id": 3275,
+            "hero_id": 67,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,528",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Scent: Meat Sauce"
+          },
+          "display": {
+            "id": 3275,
+            "hero_id": 67,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,528",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "气味：肉酱"
+          }
+        }
+      },
+      {
+        "id": "3276",
+        "snapshots": {
+          "original": {
+            "id": 3276,
+            "hero_id": 67,
+            "required_level": 10,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,518",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Fast Friends"
+          },
+          "display": {
+            "id": 3276,
+            "hero_id": 67,
+            "required_level": 10,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,518",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "忠诚朋友"
+          }
+        }
+      },
+      {
+        "id": "3277",
+        "snapshots": {
+          "original": {
+            "id": 3277,
+            "hero_id": 67,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "scent_roasted_chicken",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Scent: Roasted Chicken",
+            "specialization_name": "Scent: Roasted Chicken",
+            "specialization_description": "Dragonbait emits a rich chicken-y scent which changes how his buffs affect his allies based on distance.",
+            "specialization_graphic_id": 7178
+          },
+          "display": {
+            "id": 3277,
+            "hero_id": 67,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "scent_roasted_chicken",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "气味：烤鸡",
+            "specialization_name": "气味：烤鸡",
+            "specialization_description": "龙饵散发出浓郁的鸡肉味，根据距离改变他的增益对盟友的影响。",
+            "specialization_graphic_id": 7178
+          }
+        }
+      },
+      {
+        "id": "3278",
+        "snapshots": {
+          "original": {
+            "id": 3278,
+            "hero_id": 67,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1104",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Scent: Herbs and Spices",
+            "specialization_name": "Scent: Herbs and Spices",
+            "specialization_description": "Dragonbait enjoys working alongside other defensive Champions, and emits a pleasantly spicy scent while doing so.",
+            "specialization_graphic_id": 7179
+          },
+          "display": {
+            "id": 3278,
+            "hero_id": 67,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1104",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "气味：草药和香料",
+            "specialization_name": "气味：草药和香料",
+            "specialization_description": "龙饵喜欢与其他防御型勇士并肩作战，并会在这种时候散发出令人愉悦的辛辣气味。",
+            "specialization_graphic_id": 7179
+          }
+        }
+      },
+      {
+        "id": "3279",
+        "snapshots": {
+          "original": {
+            "id": 3279,
+            "hero_id": 67,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "set_ultimate_attack,261",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Holy Avenger"
+          },
+          "display": {
+            "id": 3279,
+            "hero_id": 67,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "set_ultimate_attack,261",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "神圣复仇者"
+          }
+        }
+      },
+      {
+        "id": "3280",
+        "snapshots": {
+          "original": {
+            "id": 3280,
+            "hero_id": 67,
+            "required_level": 65,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3280,
+            "hero_id": 67,
+            "required_level": 65,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3281",
+        "snapshots": {
+          "original": {
+            "id": 3281,
+            "hero_id": 67,
+            "required_level": 305,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3274,0",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3281,
+            "hero_id": 67,
+            "required_level": 305,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3274,0",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3282",
+        "snapshots": {
+          "original": {
+            "id": 3282,
+            "hero_id": 67,
+            "required_level": 115,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3275",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3282,
+            "hero_id": 67,
+            "required_level": 115,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3275",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3283",
+        "snapshots": {
+          "original": {
+            "id": 3283,
+            "hero_id": 67,
+            "required_level": 95,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,288",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3283,
+            "hero_id": 67,
+            "required_level": 95,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,288",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3353",
+        "snapshots": {
+          "original": {
+            "id": 3353,
+            "hero_id": 67,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,504",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3353,
+            "hero_id": 67,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,504",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3354",
+        "snapshots": {
+          "original": {
+            "id": 3354,
+            "hero_id": 67,
+            "required_level": 280,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,882",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3354,
+            "hero_id": 67,
+            "required_level": 280,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,882",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3355",
+        "snapshots": {
+          "original": {
+            "id": 3355,
+            "hero_id": 67,
+            "required_level": 405,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,1543",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3355,
+            "hero_id": 67,
+            "required_level": 405,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,1543",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3356",
+        "snapshots": {
+          "original": {
+            "id": 3356,
+            "hero_id": 67,
+            "required_level": 525,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,2700",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3356,
+            "hero_id": 67,
+            "required_level": 525,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,2700",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3357",
+        "snapshots": {
+          "original": {
+            "id": 3357,
+            "hero_id": 67,
+            "required_level": 645,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,4724",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3357,
+            "hero_id": 67,
+            "required_level": 645,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,4724",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3358",
+        "snapshots": {
+          "original": {
+            "id": 3358,
+            "hero_id": 67,
+            "required_level": 45,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3358,
+            "hero_id": 67,
+            "required_level": 45,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3359",
+        "snapshots": {
+          "original": {
+            "id": 3359,
+            "hero_id": 67,
+            "required_level": 15,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3359,
+            "hero_id": 67,
+            "required_level": 15,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3360",
+        "snapshots": {
+          "original": {
+            "id": 3360,
+            "hero_id": 67,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3360,
+            "hero_id": 67,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3361",
+        "snapshots": {
+          "original": {
+            "id": 3361,
+            "hero_id": 67,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3361,
+            "hero_id": 67,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3362",
+        "snapshots": {
+          "original": {
+            "id": 3362,
+            "hero_id": 67,
+            "required_level": 70,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3362,
+            "hero_id": 67,
+            "required_level": 70,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3363",
+        "snapshots": {
+          "original": {
+            "id": 3363,
+            "hero_id": 67,
+            "required_level": 85,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3363,
+            "hero_id": 67,
+            "required_level": 85,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3364",
+        "snapshots": {
+          "original": {
+            "id": 3364,
+            "hero_id": 67,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3364,
+            "hero_id": 67,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3365",
+        "snapshots": {
+          "original": {
+            "id": 3365,
+            "hero_id": 67,
+            "required_level": 105,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3365,
+            "hero_id": 67,
+            "required_level": 105,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3366",
+        "snapshots": {
+          "original": {
+            "id": 3366,
+            "hero_id": 67,
+            "required_level": 125,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3366,
+            "hero_id": 67,
+            "required_level": 125,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3367",
+        "snapshots": {
+          "original": {
+            "id": 3367,
+            "hero_id": 67,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3367,
+            "hero_id": 67,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3368",
+        "snapshots": {
+          "original": {
+            "id": 3368,
+            "hero_id": 67,
+            "required_level": 260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3368,
+            "hero_id": 67,
+            "required_level": 260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3369",
+        "snapshots": {
+          "original": {
+            "id": 3369,
+            "hero_id": 67,
+            "required_level": 385,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3369,
+            "hero_id": 67,
+            "required_level": 385,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3370",
+        "snapshots": {
+          "original": {
+            "id": 3370,
+            "hero_id": 67,
+            "required_level": 505,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3370,
+            "hero_id": 67,
+            "required_level": 505,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3371",
+        "snapshots": {
+          "original": {
+            "id": 3371,
+            "hero_id": 67,
+            "required_level": 630,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3371,
+            "hero_id": 67,
+            "required_level": 630,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3372",
+        "snapshots": {
+          "original": {
+            "id": 3372,
+            "hero_id": 67,
+            "required_level": 610,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3274,0",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3372,
+            "hero_id": 67,
+            "required_level": 610,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3274,0",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3373",
+        "snapshots": {
+          "original": {
+            "id": 3373,
+            "hero_id": 67,
+            "required_level": 185,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3373,
+            "hero_id": 67,
+            "required_level": 185,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3374",
+        "snapshots": {
+          "original": {
+            "id": 3374,
+            "hero_id": 67,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3275",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3374,
+            "hero_id": 67,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3275",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3375",
+        "snapshots": {
+          "original": {
+            "id": 3375,
+            "hero_id": 67,
+            "required_level": 325,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3375,
+            "hero_id": 67,
+            "required_level": 325,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3376",
+        "snapshots": {
+          "original": {
+            "id": 3376,
+            "hero_id": 67,
+            "required_level": 375,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3275",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3376,
+            "hero_id": 67,
+            "required_level": 375,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3275",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3377",
+        "snapshots": {
+          "original": {
+            "id": 3377,
+            "hero_id": 67,
+            "required_level": 455,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3377,
+            "hero_id": 67,
+            "required_level": 455,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3378",
+        "snapshots": {
+          "original": {
+            "id": 3378,
+            "hero_id": 67,
+            "required_level": 515,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3275",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3378,
+            "hero_id": 67,
+            "required_level": 515,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3275",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3379",
+        "snapshots": {
+          "original": {
+            "id": 3379,
+            "hero_id": 67,
+            "required_level": 585,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3379,
+            "hero_id": 67,
+            "required_level": 585,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3380",
+        "snapshots": {
+          "original": {
+            "id": 3380,
+            "hero_id": 67,
+            "required_level": 640,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3275",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3380,
+            "hero_id": 67,
+            "required_level": 640,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3275",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3381",
+        "snapshots": {
+          "original": {
+            "id": 3381,
+            "hero_id": 67,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3381,
+            "hero_id": 67,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3382",
+        "snapshots": {
+          "original": {
+            "id": 3382,
+            "hero_id": 67,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3382,
+            "hero_id": 67,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3383",
+        "snapshots": {
+          "original": {
+            "id": 3383,
+            "hero_id": 67,
+            "required_level": 195,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3383,
+            "hero_id": 67,
+            "required_level": 195,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3384",
+        "snapshots": {
+          "original": {
+            "id": 3384,
+            "hero_id": 67,
+            "required_level": 225,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3384,
+            "hero_id": 67,
+            "required_level": 225,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3385",
+        "snapshots": {
+          "original": {
+            "id": 3385,
+            "hero_id": 67,
+            "required_level": 250,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3385,
+            "hero_id": 67,
+            "required_level": 250,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3386",
+        "snapshots": {
+          "original": {
+            "id": 3386,
+            "hero_id": 67,
+            "required_level": 290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3386,
+            "hero_id": 67,
+            "required_level": 290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3387",
+        "snapshots": {
+          "original": {
+            "id": 3387,
+            "hero_id": 67,
+            "required_level": 315,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3387,
+            "hero_id": 67,
+            "required_level": 315,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3388",
+        "snapshots": {
+          "original": {
+            "id": 3388,
+            "hero_id": 67,
+            "required_level": 355,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3388,
+            "hero_id": 67,
+            "required_level": 355,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3389",
+        "snapshots": {
+          "original": {
+            "id": 3389,
+            "hero_id": 67,
+            "required_level": 395,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3389,
+            "hero_id": 67,
+            "required_level": 395,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3390",
+        "snapshots": {
+          "original": {
+            "id": 3390,
+            "hero_id": 67,
+            "required_level": 430,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3390,
+            "hero_id": 67,
+            "required_level": 430,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3391",
+        "snapshots": {
+          "original": {
+            "id": 3391,
+            "hero_id": 67,
+            "required_level": 465,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3391,
+            "hero_id": 67,
+            "required_level": 465,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3392",
+        "snapshots": {
+          "original": {
+            "id": 3392,
+            "hero_id": 67,
+            "required_level": 495,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3392,
+            "hero_id": 67,
+            "required_level": 495,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3393",
+        "snapshots": {
+          "original": {
+            "id": 3393,
+            "hero_id": 67,
+            "required_level": 540,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3393,
+            "hero_id": 67,
+            "required_level": 540,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3394",
+        "snapshots": {
+          "original": {
+            "id": 3394,
+            "hero_id": 67,
+            "required_level": 595,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3394,
+            "hero_id": 67,
+            "required_level": 595,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3395",
+        "snapshots": {
+          "original": {
+            "id": 3395,
+            "hero_id": 67,
+            "required_level": 620,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3395,
+            "hero_id": 67,
+            "required_level": 620,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3986",
+        "snapshots": {
+          "original": {
+            "id": 3986,
+            "hero_id": 67,
+            "required_level": 655,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3986,
+            "hero_id": 67,
+            "required_level": 655,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3987",
+        "snapshots": {
+          "original": {
+            "id": 3987,
+            "hero_id": 67,
+            "required_level": 680,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,200,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3987,
+            "hero_id": 67,
+            "required_level": 680,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,200,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3988",
+        "snapshots": {
+          "original": {
+            "id": 3988,
+            "hero_id": 67,
+            "required_level": 695,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3988,
+            "hero_id": 67,
+            "required_level": 695,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3989",
+        "snapshots": {
+          "original": {
+            "id": 3989,
+            "hero_id": 67,
+            "required_level": 735,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3989,
+            "hero_id": 67,
+            "required_level": 735,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3990",
+        "snapshots": {
+          "original": {
+            "id": 3990,
+            "hero_id": 67,
+            "required_level": 745,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3990,
+            "hero_id": 67,
+            "required_level": 745,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3991",
+        "snapshots": {
+          "original": {
+            "id": 3991,
+            "hero_id": 67,
+            "required_level": 765,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,8500",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3991,
+            "hero_id": 67,
+            "required_level": 765,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,8500",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5355",
+        "snapshots": {
+          "original": {
+            "id": 5355,
+            "hero_id": 67,
+            "required_level": 790,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5355,
+            "hero_id": 67,
+            "required_level": 790,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5356",
+        "snapshots": {
+          "original": {
+            "id": 5356,
+            "hero_id": 67,
+            "required_level": 810,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,200,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5356,
+            "hero_id": 67,
+            "required_level": 810,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,200,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5357",
+        "snapshots": {
+          "original": {
+            "id": 5357,
+            "hero_id": 67,
+            "required_level": 820,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5357,
+            "hero_id": 67,
+            "required_level": 820,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5358",
+        "snapshots": {
+          "original": {
+            "id": 5358,
+            "hero_id": 67,
+            "required_level": 830,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5358,
+            "hero_id": 67,
+            "required_level": 830,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5359",
+        "snapshots": {
+          "original": {
+            "id": 5359,
+            "hero_id": 67,
+            "required_level": 850,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3275",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5359,
+            "hero_id": 67,
+            "required_level": 850,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3275",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5360",
+        "snapshots": {
+          "original": {
+            "id": 5360,
+            "hero_id": 67,
+            "required_level": 870,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5360,
+            "hero_id": 67,
+            "required_level": 870,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5375",
+        "snapshots": {
+          "original": {
+            "id": 5375,
+            "hero_id": 67,
+            "required_level": 880,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,15620",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5375,
+            "hero_id": 67,
+            "required_level": 880,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,15620",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6684",
+        "snapshots": {
+          "original": {
+            "id": 6684,
+            "hero_id": 67,
+            "required_level": 900,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6684,
+            "hero_id": 67,
+            "required_level": 900,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6685",
+        "snapshots": {
+          "original": {
+            "id": 6685,
+            "hero_id": 67,
+            "required_level": 910,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3275",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6685,
+            "hero_id": 67,
+            "required_level": 910,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3275",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6686",
+        "snapshots": {
+          "original": {
+            "id": 6686,
+            "hero_id": 67,
+            "required_level": 920,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6686,
+            "hero_id": 67,
+            "required_level": 920,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6687",
+        "snapshots": {
+          "original": {
+            "id": 6687,
+            "hero_id": 67,
+            "required_level": 930,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3275",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6687,
+            "hero_id": 67,
+            "required_level": 930,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3275",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6688",
+        "snapshots": {
+          "original": {
+            "id": 6688,
+            "hero_id": 67,
+            "required_level": 940,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6688,
+            "hero_id": 67,
+            "required_level": 940,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6689",
+        "snapshots": {
+          "original": {
+            "id": 6689,
+            "hero_id": 67,
+            "required_level": 950,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6689,
+            "hero_id": 67,
+            "required_level": 950,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6690",
+        "snapshots": {
+          "original": {
+            "id": 6690,
+            "hero_id": 67,
+            "required_level": 960,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6690,
+            "hero_id": 67,
+            "required_level": 960,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6691",
+        "snapshots": {
+          "original": {
+            "id": 6691,
+            "hero_id": 67,
+            "required_level": 990,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6691,
+            "hero_id": 67,
+            "required_level": 990,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6829",
+        "snapshots": {
+          "original": {
+            "id": 6829,
+            "hero_id": 67,
+            "required_level": 1000,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,30000",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6829,
+            "hero_id": 67,
+            "required_level": 1000,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,30000",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8446",
+        "snapshots": {
+          "original": {
+            "id": 8446,
+            "hero_id": 67,
+            "required_level": 1040,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8446,
+            "hero_id": 67,
+            "required_level": 1040,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,3272",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8447",
+        "snapshots": {
+          "original": {
+            "id": 8447,
+            "hero_id": 67,
+            "required_level": 1080,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8447,
+            "hero_id": 67,
+            "required_level": 1080,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8448",
+        "snapshots": {
+          "original": {
+            "id": 8448,
+            "hero_id": 67,
+            "required_level": 1120,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8448,
+            "hero_id": 67,
+            "required_level": 1120,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8628",
+        "snapshots": {
+          "original": {
+            "id": 8628,
+            "hero_id": 67,
+            "required_level": 1130,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,48850",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8628,
+            "hero_id": 67,
+            "required_level": 1130,
+            "required_upgrade_id": 0,
+            "upgrade_type": "increase_health",
+            "effect": "health_add,48850",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      }
+    ],
+    "feats": [
+      {
+        "id": "323",
+        "snapshots": {
+          "original": {
+            "id": 323,
+            "hero_id": 67,
+            "order": 1,
+            "name": "Selflessness",
+            "description": "Deekin speaks for Dragonbait. Deekin understands bad smells.",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 323,
+            "hero_id": 67,
+            "order": 1,
+            "name": "无私",
+            "description": "德金为龙饵开口说话。德金懂得那些可怕气味的意义。",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "324",
+        "snapshots": {
+          "original": {
+            "id": 324,
+            "hero_id": 67,
+            "order": 2,
+            "name": "Inspiring Leader",
+            "description": "[click] [whistle] [click] [click] [low whistle]",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 324,
+            "hero_id": 67,
+            "order": 2,
+            "name": "鼓舞人心的首领",
+            "description": "[咔哒] [吹口哨] [咔哒] [咔哒] [小声吹口哨]",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "325",
+        "snapshots": {
+          "original": {
+            "id": 325,
+            "hero_id": 67,
+            "order": 3,
+            "name": "Tough",
+            "description": "Deekin doesn't like when you call Dragonbait short.",
+            "rarity": 2,
+            "graphic_id": 6076,
+            "effects": [
+              {
+                "effect_string": "health_mult,15"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 325,
+            "hero_id": 67,
+            "order": 3,
+            "name": "坚韧",
+            "description": "德金不喜欢你叫龙饵矮子。",
+            "rarity": 2,
+            "graphic_id": 6076,
+            "effects": [
+              {
+                "effect_string": "health_mult,15"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "326",
+        "snapshots": {
+          "original": {
+            "id": 326,
+            "hero_id": 67,
+            "order": 4,
+            "name": "Resilient",
+            "description": "Boss keeps getting up whenever he's knocked down.",
+            "rarity": 3,
+            "graphic_id": 6076,
+            "effects": [
+              {
+                "effect_string": "health_mult,30"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 326,
+            "hero_id": 67,
+            "order": 4,
+            "name": "韧性",
+            "description": "首领每次被打倒后，都会不断爬起来。",
+            "rarity": 3,
+            "graphic_id": 6076,
+            "effects": [
+              {
+                "effect_string": "health_mult,30"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "327",
+        "snapshots": {
+          "original": {
+            "id": 327,
+            "hero_id": 67,
+            "order": 5,
+            "name": "The Long Stare",
+            "description": "Boss looks angry.",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,3272",
+                "description": "Dragonbait's Shen State is increased by $(amount)%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 327,
+            "hero_id": 67,
+            "order": 5,
+            "name": "漫长的凝视",
+            "description": "首领看起来很生气。",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,3272",
+                "description": "龙饵的“神态”效果提高 $(amount)%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "328",
+        "snapshots": {
+          "original": {
+            "id": 328,
+            "hero_id": 67,
+            "order": 6,
+            "name": "Bared Teeth",
+            "description": "Deekin thinks we should hit that really big thing.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,3272",
+                "description": "Dragonbait's Shen State is increased by $(amount)%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 328,
+            "hero_id": 67,
+            "order": 6,
+            "name": "龇牙",
+            "description": "德金认为我们应该攻击那个超大的东西。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,3272",
+                "description": "龙饵的“神态”效果提高 $(amount)%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "329",
+        "snapshots": {
+          "original": {
+            "id": 329,
+            "hero_id": 67,
+            "order": 7,
+            "name": "Calm Under Pressure",
+            "description": "He looks most content when he has allies to protect & a quarry to chase.",
+            "rarity": 3,
+            "graphic_id": 6077,
+            "effects": [
+              {
+                "effect_string": "overwhelm_start_increase,10",
+                "description": "Dragonbait takes $(amount) more enemies to get overwhelmed"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 329,
+            "hero_id": 67,
+            "order": 7,
+            "name": "从容应对",
+            "description": "当有盟友要保护、有猎物要追赶时，他看起来最为满足。",
+            "rarity": 3,
+            "graphic_id": 6077,
+            "effects": [
+              {
+                "effect_string": "overwhelm_start_increase,10",
+                "description": "龙饵被击溃所需的敌人数量增加 $(amount) 名"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "2448",
+        "snapshots": {
+          "original": {
+            "id": 2448,
+            "hero_id": 67,
+            "order": 8,
+            "name": "Scent of Battle",
+            "description": "Boss smells like a burning bakery.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,3272"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2026-04-28 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 667
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1769630400,
+              "available_for_gems_at_time": 1777402800
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "667",
+              "cost": 1680
+            }
+          },
+          "display": {
+            "id": 2448,
+            "hero_id": 67,
+            "order": 8,
+            "name": "战斗气息",
+            "description": "首领闻起来就像着火的面包店一样。",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,3272"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2026-04-28 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 667
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1769630400,
+              "available_for_gems_at_time": 1777402800
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "667",
+              "cost": 1680
+            }
+          }
+        }
+      }
+    ],
+    "skins": [
+      {
+        "id": "129",
+        "snapshots": {
+          "original": {
+            "id": 129,
+            "hero_id": 67,
+            "name": "Vampire Dragonbait",
+            "cost": {
+              "req_date": "2022-01-05 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 13210,
+              "large_graphic_id": 13211,
+              "xl_graphic_id": 13792,
+              "portrait_graphic_id": 13285
+            },
+            "rarity": "3",
+            "properties": {
+              "show_only_if_owned": true,
+              "notification_adjustment_override": {
+                "offset": [
+                  35,
+                  219
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "patron",
+              "patron_id": 3
+            },
+            "availabilities": {
+              "patron_id": "3",
+              "patron_shop_item_id": "107"
+            }
+          },
+          "display": {
+            "id": 129,
+            "hero_id": 67,
+            "name": "吸血鬼龙饵",
+            "cost": {
+              "req_date": "2022-01-05 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 13210,
+              "large_graphic_id": 13211,
+              "xl_graphic_id": 13792,
+              "portrait_graphic_id": 13285
+            },
+            "rarity": "3",
+            "properties": {
+              "show_only_if_owned": true,
+              "notification_adjustment_override": {
+                "offset": [
+                  35,
+                  219
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "patron",
+              "patron_id": 3
+            },
+            "availabilities": {
+              "patron_id": "3",
+              "patron_shop_item_id": "107"
+            }
+          }
+        }
+      },
+      {
+        "id": "650",
+        "snapshots": {
+          "original": {
+            "id": 650,
+            "hero_id": 67,
+            "name": "Pirate Dragonbait",
+            "cost": {
+              "req_date": "2026-01-28 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 28673,
+              "large_graphic_id": 28675,
+              "portrait_graphic_id": 28669,
+              "xl_graphic_id": 28677
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "667",
+              "cost": 1680
+            },
+            "availabilities": {
+              "premium_item_id": "667"
+            }
+          },
+          "display": {
+            "id": 650,
+            "hero_id": 67,
+            "name": "海盗龙饵",
+            "cost": {
+              "req_date": "2026-01-28 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 28673,
+              "large_graphic_id": 28675,
+              "portrait_graphic_id": 28669,
+              "xl_graphic_id": 28677
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "667",
+              "cost": 1680
+            },
+            "availabilities": {
+              "premium_item_id": "667"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

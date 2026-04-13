@@ -1,0 +1,6237 @@
+{
+  "updatedAt": "2026-04-13",
+  "summary": {
+    "id": "172",
+    "name": {
+      "original": "Kyre",
+      "display": "凯尔"
+    },
+    "seat": 5,
+    "roles": [
+      "control",
+      "support"
+    ],
+    "affiliations": [],
+    "tags": [
+      "control",
+      "event",
+      "good",
+      "human",
+      "lawful",
+      "monk",
+      "support",
+      "unaffiliated",
+      "y9"
+    ],
+    "portrait": {
+      "path": "v1/champion-portraits/172.png",
+      "sourceGraphic": "Portraits/Portrait_Kyre",
+      "sourceVersion": 2
+    }
+  },
+  "englishName": "Kyre",
+  "eventName": {
+    "original": "Grand Revel",
+    "display": "闹饮节"
+  },
+  "dateAvailable": "2026-02-04 13:00:00",
+  "lastReworkDate": "2026-02-04 13:00:00",
+  "popularity": 121,
+  "baseCost": "6000000",
+  "baseDamage": "375000",
+  "baseHealth": "47",
+  "graphicId": "28287",
+  "portraitGraphicId": "28286",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1801771200
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    490,
+    1250,
+    2190,
+    3350
+  ],
+  "costCurves": {
+    "1": 1.06
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "content_set_id": 74,
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      170,
+      171,
+      172
+    ],
+    "graphic_large": 28288,
+    "graphic_xl": 28289,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      89,
+      80
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 4,
+      "gethit": 5,
+      "koed": 6,
+      "starttea": 7,
+      "siptea": 8,
+      "idletea": 9,
+      "walktea": 10
+    },
+    "allow_time_gate": "2026-02-25 12:00:00",
+    "available_in_store": "2026-02-25 12:00:00",
+    "time_gate_adventure_id": 1946,
+    "time_gate_variants_ids": [
+      1942,
+      1943,
+      1944
+    ],
+    "time_gate_tier": 1,
+    "silver_chest_type_id": 781,
+    "gold_chest_type_id": 782,
+    "golden_epic_loot_id": 4109,
+    "golden_epic_promo_id": 763,
+    "event_logo_graphic_id": 3369,
+    "console_portrait": 28336,
+    "trials_effect_id": 836,
+    "weekly_chest_type_id": 782,
+    "weekly_buff": "buff_upgrade,200,18667",
+    "portrait_graphic_scale": 1,
+    "legendary_effect_id": [
+      1,
+      58,
+      86,
+      94,
+      102,
+      101
+    ],
+    "notification_adjustment": {
+      "offset": [
+        56,
+        245
+      ],
+      "scale": 1.25
+    }
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Kyre",
+      "display": "凯尔"
+    },
+    "class": {
+      "original": "Monk",
+      "display": "武僧"
+    },
+    "race": {
+      "original": "Human",
+      "display": "人类"
+    },
+    "age": 23,
+    "alignment": {
+      "original": "Lawful Good",
+      "display": "守序善良"
+    },
+    "abilityScores": {
+      "str": 8,
+      "dex": 16,
+      "con": 14,
+      "int": 13,
+      "wis": 14,
+      "cha": 13
+    },
+    "backstory": {
+      "original": "An unnamed child was born to Damaran refugees fleeing the fall of Bloodstone City at the hands of the Warlock Knights of Vaasa, and orphaned when their parents succumbed to a lingering curse. Taken in by wandering elven monks of Sune, the child grew up in the Waterdhavian Monastery of the Sun, surrounded by compassion, discipline, and the pure light of unconditional love. They excelled in body, mind, and spirit, finding peace in exercise, meditation, and crafts, yet always yearned for more - to someday go beyond the monastery walls. Upon coming of age, Kyre chose their own name and at last set out on a pilgrimage across Faerûn to bring light to the dark places where it's needed most.",
+      "display": "血石城在瓦萨邪术师骑士的铁蹄下沦陷，在从中逃难的达马拉难民中诞生了一个没有名字的孩子。由于父母死于一场延续不止的诅咒，这个孩子成为了孤儿。后来，这个孩子被伺奉淑娜的游方精灵武僧收留，在深水城的太阳修道院里，在怜悯、管教以及无条件之爱的纯洁光辉笼罩下慢慢长大。这个孩子在身、心、灵方面皆表现出色，并在锻炼、冥想以及制作手工艺品中寻得了内心的平静，然而其心中始终怀有更深的渴望——有朝一日走出修道院的高墙。成年之时，凯尔为自己取了名字，并终于踏上了穿越费伦的朝圣之旅，将光明带去最需要它的黑暗之地。"
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "935",
+      "name": {
+        "original": "Radiant Sun Bolt",
+        "display": "耀眼太阳之矢"
+      },
+      "description": {
+        "original": "Kyre attacks the toughest enemy for 1 hit.",
+        "display": "凯尔攻击最强硬的敌人，造成 1 次命中。"
+      },
+      "longDescription": {
+        "original": "Kyre attacks the enemy with the most remaining health with a searing bolt of magical radiance, dealing 1 hit.",
+        "display": "凯尔用一道灼热的魔法光辉箭矢攻击剩余生命值最多的敌人，造成 1 次命中。"
+      },
+      "cooldown": 3.5,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "highest_health",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ranged",
+        "magic"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "ranged_attack",
+          "projectile": "pd_generic_projectile",
+          "shoot_offset_y": -63,
+          "shoot_offset_x": 100,
+          "shoot_frame": 14,
+          "shoot_sound": 149,
+          "hit_sound": 133,
+          "projectile_details": {
+            "hash": "3991cd5b5876b1b70359d7edd687cf5f",
+            "target_offset_y": 0,
+            "projectile_speed": 2250,
+            "projectile_graphic_id": 28290
+          }
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "937",
+      "name": {
+        "original": "Searing Arc Strike",
+        "display": "灼热弧击"
+      },
+      "description": {
+        "original": "Kyre creates an energy wave, dealing 1 ultimate hit to affected enemies.",
+        "display": "凯尔制造一道能量波，对被波及的敌人造成 1 次杀招命中。"
+      },
+      "longDescription": {
+        "original": "Kyre creates a wave of radiant light and fire, dealing 1 ultimate hit to enemies it envelops.",
+        "display": "凯尔制造一道由耀眼的光辉与火焰交织而成的能量波，对被波及的敌人造成 1 次杀招命中。"
+      },
+      "cooldown": 150,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "0.03",
+      "target": "front",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee",
+        "ultimate"
+      ],
+      "graphicId": "28335",
+      "animations": [
+        {
+          "type": "kyre_ultimate",
+          "jump_to_target": true,
+          "target_offset_x": -300
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "18667",
+        "name": {
+          "original": "Radiant Soul",
+          "display": "光耀之魂"
+        },
+        "description": null,
+        "graphicId": "28318"
+      },
+      {
+        "upgradeId": "18668",
+        "name": {
+          "original": "Stunning Strike",
+          "display": "震慑击"
+        },
+        "description": null,
+        "graphicId": "28319"
+      },
+      {
+        "upgradeId": "18669",
+        "name": {
+          "original": "Invigorating Radiance",
+          "display": "振奋光辉"
+        },
+        "description": null,
+        "graphicId": "28317"
+      },
+      {
+        "upgradeId": "18670",
+        "name": {
+          "original": "Flawless Strike",
+          "display": "完美打击"
+        },
+        "description": null,
+        "graphicId": "28316"
+      }
+    ]
+  },
+  "upgrades": [
+    {
+      "id": "18667",
+      "requiredLevel": 20,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Radiant Soul",
+        "display": "光耀之魂"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2593",
+      "effectDefinition": {
+        "id": "2593",
+        "snapshots": {
+          "original": {
+            "id": 2593,
+            "flavour_text": "",
+            "description": {
+              "desc": "Kyre increases the damage of all Champions adjacent to them by $amount%."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,400",
+                "targets": [
+                  "adj"
+                ],
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28322,
+            "large_graphic_id": 28318,
+            "properties": {
+              "is_formation_ability": true
+            }
+          },
+          "display": {
+            "id": 2593,
+            "flavour_text": "",
+            "description": {
+              "desc": "凯尔会使所有与其相邻勇士的伤害提高 $amount%。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,400",
+                "targets": [
+                  "adj"
+                ],
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28322,
+            "large_graphic_id": 28318,
+            "properties": {
+              "is_formation_ability": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Kyre increases the damage of adjacent Champions.",
+        "display": "凯尔会提高相邻勇士的伤害。"
+      }
+    },
+    {
+      "id": "18865",
+      "requiredLevel": 50,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18668",
+      "requiredLevel": 60,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Stunning Strike",
+        "display": "震慑击"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2594",
+      "effectDefinition": {
+        "id": "2594",
+        "snapshots": {
+          "original": {
+            "id": 2594,
+            "flavour_text": "",
+            "description": {
+              "desc": "Kyre's normal attacks have a $base_chance% chance to stun their $(if feat_assigned 2237)targets$(else)target$(fi) for $duration seconds. This chance is multiplicatively reduced by 25% each time they stun an enemy with this ability, but resets back to full when changing areas."
+            },
+            "effect_keys": [
+              {
+                "off_when_benched": false,
+                "effect_string": "add_attack_stun,0",
+                "base_chance": 100,
+                "duration": 10,
+                "graphic": 1509,
+                "manual_stacking": true,
+                "more_triggers": [
+                  {
+                    "trigger": "monster_stunned_by_owner",
+                    "action": {
+                      "type": "add_stack"
+                    }
+                  }
+                ],
+                "stack_title": "Stuns This Area",
+                "show_stacks": true,
+                "use_computed_amount_for_description": true,
+                "amount_updated_listeners": [
+                  "area_changed",
+                  "owner_attack_ended"
+                ]
+              },
+              {
+                "off_when_benched": false,
+                "effect_string": "stacks_data_binder_safe,0,kyre_max_stunned_in_single_area",
+                "is_instanced_stat": false,
+                "only_take_max": true,
+                "use_stat_defs": true,
+                "skip_effect_key_desc": true
+              },
+              {
+                "off_when_benched": false,
+                "effect_string": "kyre_stunning_strike",
+                "attack_stun_index": 0,
+                "base_chance": 100
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28323,
+            "large_graphic_id": 28319,
+            "properties": {
+              "is_formation_ability": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "owner_use_outgoing_description": true,
+              "show_incoming": false
+            }
+          },
+          "display": {
+            "id": 2594,
+            "flavour_text": "",
+            "description": {
+              "desc": "凯尔的普通攻击有 $base_chance% 的几率使其$(if feat_assigned 2237)目标$(else)目标$(fi)眩晕 $duration 秒。每当凯尔用此技能眩晕一名敌人，此几率会降低 25%，以乘算方式堆叠，但切换区域后会重置为初始值。"
+            },
+            "effect_keys": [
+              {
+                "off_when_benched": false,
+                "effect_string": "add_attack_stun,0",
+                "base_chance": 100,
+                "duration": 10,
+                "graphic": 1509,
+                "manual_stacking": true,
+                "more_triggers": [
+                  {
+                    "trigger": "monster_stunned_by_owner",
+                    "action": {
+                      "type": "add_stack"
+                    }
+                  }
+                ],
+                "stack_title": "眩晕此区域",
+                "show_stacks": true,
+                "use_computed_amount_for_description": true,
+                "amount_updated_listeners": [
+                  "area_changed",
+                  "owner_attack_ended"
+                ]
+              },
+              {
+                "off_when_benched": false,
+                "effect_string": "stacks_data_binder_safe,0,kyre_max_stunned_in_single_area",
+                "is_instanced_stat": false,
+                "only_take_max": true,
+                "use_stat_defs": true,
+                "skip_effect_key_desc": true
+              },
+              {
+                "off_when_benched": false,
+                "effect_string": "kyre_stunning_strike",
+                "attack_stun_index": 0,
+                "base_chance": 100
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28323,
+            "large_graphic_id": 28319,
+            "properties": {
+              "is_formation_ability": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "owner_use_outgoing_description": true,
+              "show_incoming": false
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18866",
+      "requiredLevel": 70,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18674",
+      "requiredLevel": 80,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Searing Arc Strike",
+        "display": "灼热弧击"
+      },
+      "upgradeType": "unlock_ultimate",
+      "effectReference": "set_ultimate_attack,937",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18854",
+      "requiredLevel": 90,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,18667",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18669",
+      "requiredLevel": 100,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Invigorating Radiance",
+        "display": "振奋光辉"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2595",
+      "effectDefinition": {
+        "id": "2595",
+        "snapshots": {
+          "original": {
+            "id": 2595,
+            "flavour_text": "",
+            "description": {
+              "desc": "Each time any Champion in the formation attacks a stunned enemy, Kyre gains a Radiance stack. Kyre increases the effect of Radiant Soul by $amount% for each Radiance stack, stacking multiplicatively up to $(max_stacks___2) stacks and resetting when changing areas."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,50",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,0,18667",
+                "amount_expr": "upgrade_amount(18669,0)",
+                "max_stacks": 25,
+                "manual_stacking": true,
+                "stacks_multiply": true,
+                "stack_title": "Radiance Stacks",
+                "more_triggers": [
+                  {
+                    "trigger": "area_changed",
+                    "action": {
+                      "type": "reset"
+                    }
+                  },
+                  {
+                    "trigger": "monster_attacked",
+                    "action": {
+                      "type": "add_stack",
+                      "stunned_only": true
+                    }
+                  }
+                ],
+                "show_bonus": true,
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28321,
+            "large_graphic_id": 28317,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "show_incoming": false,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 2595,
+            "flavour_text": "",
+            "description": {
+              "desc": "每当阵型中的任意勇士攻击一名被眩晕的敌人，凯尔获得一层“光辉”堆叠层数。每有一层“光辉”堆叠层数，凯尔会使“光耀之魂”的效果提高 $amount%，以乘算方式堆叠，最多堆叠 $(max_stacks___2) 层，并且在区域切换时重置。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,50",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,0,18667",
+                "amount_expr": "upgrade_amount(18669,0)",
+                "max_stacks": 25,
+                "manual_stacking": true,
+                "stacks_multiply": true,
+                "stack_title": "“光辉”堆叠层数",
+                "more_triggers": [
+                  {
+                    "trigger": "area_changed",
+                    "action": {
+                      "type": "reset"
+                    }
+                  },
+                  {
+                    "trigger": "monster_attacked",
+                    "action": {
+                      "type": "add_stack",
+                      "stunned_only": true
+                    }
+                  }
+                ],
+                "show_bonus": true,
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28321,
+            "large_graphic_id": 28317,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "show_incoming": false,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Kyre has a chance to stun enemies, and their buff increases each time any Champion attacks a stunned enemy.",
+        "display": "凯尔有一定几率眩晕敌人，并且每当任意勇士攻击一名被眩晕的敌人，凯尔的增益会进一步提升。"
+      }
+    },
+    {
+      "id": "18867",
+      "requiredLevel": 130,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18670",
+      "requiredLevel": 140,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Flawless Strike",
+        "display": "完美打击"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2596",
+      "effectDefinition": {
+        "id": "2596",
+        "snapshots": {
+          "original": {
+            "id": 2596,
+            "flavour_text": "",
+            "description": {
+              "desc": "Champions that attack a stunned enemy have a $amount% additively increased chance to critically hit that enemy and deal $amount___2% more critical damage."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "if_stunned_buff_base_crit_chance_add,20",
+                "targets": [
+                  "all"
+                ],
+                "off_when_benched": true,
+                "slot_change_updates_targets": true,
+                "description": ""
+              },
+              {
+                "effect_string": "increase_crit_damage_when_monster_stunned,400",
+                "targets": [
+                  "all"
+                ],
+                "off_when_benched": true,
+                "slot_change_updates_targets": true,
+                "description": ""
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28320,
+            "large_graphic_id": 28316,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": false,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "show_incoming": false,
+              "default_bonus_index": 1
+            }
+          },
+          "display": {
+            "id": 2596,
+            "flavour_text": "",
+            "description": {
+              "desc": "攻击一名被眩晕敌人的勇士有 $amount% 的几率（以加算方式堆叠）对该敌人造成暴击，并额外造成 $amount___2% 的暴击伤害。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "if_stunned_buff_base_crit_chance_add,20",
+                "targets": [
+                  "all"
+                ],
+                "off_when_benched": true,
+                "slot_change_updates_targets": true,
+                "description": ""
+              },
+              {
+                "effect_string": "increase_crit_damage_when_monster_stunned,400",
+                "targets": [
+                  "all"
+                ],
+                "off_when_benched": true,
+                "slot_change_updates_targets": true,
+                "description": ""
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28320,
+            "large_graphic_id": 28316,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": false,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "show_incoming": false,
+              "default_bonus_index": 1
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18868",
+      "requiredLevel": 160,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,18667",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18671",
+      "requiredLevel": 170,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Complete Control",
+        "display": "完全控制"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2597",
+      "effectDefinition": {
+        "id": "2597",
+        "snapshots": {
+          "original": {
+            "id": 2597,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the effect of Radiant Soul by $amount% for each Champion in the formation with the Control role, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,300",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,0,18667",
+                "stack_func": "per_hero_attribute",
+                "amount_func": "mult",
+                "amount_expr": "upgrade_amount(18671,0)",
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "upgrade_unlocked",
+                  "feat_changed"
+                ],
+                "per_hero_expr": "HasTag(`control`)",
+                "off_when_benched": true,
+                "show_bonus": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28330,
+            "large_graphic_id": 28330,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": true,
+              "spec_option_post_apply_info": "Control Champions: $num_stacks___2",
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 2597,
+            "flavour_text": "",
+            "description": {
+              "desc": "阵型中每有一位拥有控制角色定位的勇士，“光耀之魂”的效果提高 $amount%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,300",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,0,18667",
+                "stack_func": "per_hero_attribute",
+                "amount_func": "mult",
+                "amount_expr": "upgrade_amount(18671,0)",
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "upgrade_unlocked",
+                  "feat_changed"
+                ],
+                "per_hero_expr": "HasTag(`control`)",
+                "off_when_benched": true,
+                "show_bonus": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28330,
+            "large_graphic_id": 28330,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": true,
+              "spec_option_post_apply_info": "控制勇士数量：$num_stacks",
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Complete Control",
+        "display": "完全控制"
+      },
+      "specializationDescription": {
+        "original": "Kyre is ever calm in the face of danger, trusting in their techniques and those of their allies.",
+        "display": "凯尔面对危险时总是很冷静，十分信赖自己的武艺和盟友。"
+      },
+      "specializationGraphicId": "28330",
+      "tipText": null
+    },
+    {
+      "id": "18672",
+      "requiredLevel": 170,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Faster Than Light",
+        "display": "超光速"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2598",
+      "effectDefinition": {
+        "id": "2598",
+        "snapshots": {
+          "original": {
+            "id": 2598,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the effect of Radiant Soul by $amount% for each Champion with a Dexterity of 16 or higher in the formation, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,300",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,0,18667",
+                "stack_func": "per_hero_attribute",
+                "amount_func": "mult",
+                "amount_expr": "upgrade_amount(18672,0)",
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "upgrade_unlocked",
+                  "feat_changed"
+                ],
+                "per_hero_expr": "GetStat(`dex`) >= 16",
+                "off_when_benched": true,
+                "show_bonus": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28331,
+            "large_graphic_id": 28331,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": true,
+              "spec_option_post_apply_info": "DEX 16+ Champions: $num_stacks___2",
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 2598,
+            "flavour_text": "",
+            "description": {
+              "desc": "阵型中每有一位敏捷大于等于 16 的勇士，“光耀之魂”的效果提高 $amount%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,300",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,0,18667",
+                "stack_func": "per_hero_attribute",
+                "amount_func": "mult",
+                "amount_expr": "upgrade_amount(18672,0)",
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "upgrade_unlocked",
+                  "feat_changed"
+                ],
+                "per_hero_expr": "GetStat(`dex`) >= 16",
+                "off_when_benched": true,
+                "show_bonus": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28331,
+            "large_graphic_id": 28331,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": true,
+              "spec_option_post_apply_info": "敏捷 16+ 的勇士数量：$num_stacks",
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Faster Than Light",
+        "display": "超光速"
+      },
+      "specializationDescription": {
+        "original": "Kyre fights best with agile allies who can keep pace with their relentless training regiment.",
+        "display": "凯尔与能跟上其极高强度训练节奏的敏捷盟友并肩作战时表现最佳。"
+      },
+      "specializationGraphicId": "28331",
+      "tipText": null
+    },
+    {
+      "id": "18673",
+      "requiredLevel": 170,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Pure of Soul",
+        "display": "心灵纯净"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2599",
+      "effectDefinition": {
+        "id": "2599",
+        "snapshots": {
+          "original": {
+            "id": 2599,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the effect of Radiant Soul by $amount% for each Good Champion in the formation, stacking multiplicatively. In addition, Champions adjacent to Kyre gain the Good tag. This does not affect their other alignment tags, and doesn't affect whether they are eligible for the adventure."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,300",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,0,18667",
+                "stack_func": "per_hero_attribute",
+                "amount_func": "mult",
+                "amount_expr": "upgrade_amount(18673,0)",
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "upgrade_unlocked",
+                  "feat_changed"
+                ],
+                "per_hero_expr": "HasTag(`good`)",
+                "off_when_benched": true,
+                "show_bonus": true
+              },
+              {
+                "off_when_benched": true,
+                "effect_string": "add_hero_tags,0,good",
+                "targets": [
+                  "adj"
+                ],
+                "hide_amount_rate": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28332,
+            "large_graphic_id": 28332,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": true,
+              "spec_option_post_apply_info": "Qualifying Champions: $num_stacks___2",
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "owner_use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 2599,
+            "flavour_text": "",
+            "description": {
+              "desc": "阵型中每有一位善良勇士，“光耀之魂”的效果提高 $amount%，以乘算方式堆叠。另外，与凯尔相邻的勇士获得善良标签。这不会影响他们的其他阵营标签，也不会影响他们是否有资格参加冒险。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,300",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,0,18667",
+                "stack_func": "per_hero_attribute",
+                "amount_func": "mult",
+                "amount_expr": "upgrade_amount(18673,0)",
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "upgrade_unlocked",
+                  "feat_changed"
+                ],
+                "per_hero_expr": "HasTag(`good`)",
+                "off_when_benched": true,
+                "show_bonus": true
+              },
+              {
+                "off_when_benched": true,
+                "effect_string": "add_hero_tags,0,good",
+                "targets": [
+                  "adj"
+                ],
+                "hide_amount_rate": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28332,
+            "large_graphic_id": 28332,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": true,
+              "spec_option_post_apply_info": "满足条件的勇士数量：$num_stacks",
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "owner_use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Pure of Soul",
+        "display": "心灵纯净"
+      },
+      "specializationDescription": {
+        "original": "Kyre's spirit burns with righteous might, inspiring their allies to greater heroics.",
+        "display": "凯尔的精神燃烧着正义的力量，激励着其盟友做出更伟大的英勇之举。"
+      },
+      "specializationGraphicId": "28332",
+      "tipText": null
+    },
+    {
+      "id": "18869",
+      "requiredLevel": 190,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18922",
+      "requiredLevel": 200,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18870",
+      "requiredLevel": 230,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18871",
+      "requiredLevel": 240,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,18667",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18872",
+      "requiredLevel": 290,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18873",
+      "requiredLevel": 340,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18874",
+      "requiredLevel": 350,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18875",
+      "requiredLevel": 390,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18876",
+      "requiredLevel": 430,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,18667",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18877",
+      "requiredLevel": 440,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18878",
+      "requiredLevel": 490,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18879",
+      "requiredLevel": 540,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18880",
+      "requiredLevel": 560,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,18667",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18881",
+      "requiredLevel": 600,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18882",
+      "requiredLevel": 660,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18883",
+      "requiredLevel": 700,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,18667",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18884",
+      "requiredLevel": 720,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18885",
+      "requiredLevel": 780,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18886",
+      "requiredLevel": 800,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18887",
+      "requiredLevel": 850,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18888",
+      "requiredLevel": 860,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,18667",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18889",
+      "requiredLevel": 930,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18890",
+      "requiredLevel": 1010,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18891",
+      "requiredLevel": 1070,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,18667",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18892",
+      "requiredLevel": 1110,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18893",
+      "requiredLevel": 1120,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18894",
+      "requiredLevel": 1230,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18895",
+      "requiredLevel": 1250,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,18667",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18896",
+      "requiredLevel": 1320,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18925",
+      "requiredLevel": 1330,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18897",
+      "requiredLevel": 1400,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18898",
+      "requiredLevel": 1420,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,18667",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18899",
+      "requiredLevel": 1450,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18900",
+      "requiredLevel": 1490,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18901",
+      "requiredLevel": 1570,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18902",
+      "requiredLevel": 1580,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,18667",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18903",
+      "requiredLevel": 1670,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18904",
+      "requiredLevel": 1740,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,18667",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18905",
+      "requiredLevel": 1770,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18906",
+      "requiredLevel": 1780,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18907",
+      "requiredLevel": 1870,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,18667",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18908",
+      "requiredLevel": 1900,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18909",
+      "requiredLevel": 2000,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,18667",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18910",
+      "requiredLevel": 2040,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18911",
+      "requiredLevel": 2080,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18912",
+      "requiredLevel": 2140,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,18667",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18913",
+      "requiredLevel": 2220,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18914",
+      "requiredLevel": 2300,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,18667",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18915",
+      "requiredLevel": 2390,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18916",
+      "requiredLevel": 2450,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,18667",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18917",
+      "requiredLevel": 2480,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18918",
+      "requiredLevel": 2600,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,18667",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18919",
+      "requiredLevel": 2700,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18920",
+      "requiredLevel": 2800,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,18667",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18921",
+      "requiredLevel": 2880,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19159",
+      "requiredLevel": 2890,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18923",
+      "requiredLevel": 2900,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,18667",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18924",
+      "requiredLevel": 3010,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19160",
+      "requiredLevel": 3060,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18926",
+      "requiredLevel": 3080,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,18667",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "18927",
+      "requiredLevel": 3090,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    }
+  ],
+  "feats": [
+    {
+      "id": "2460",
+      "order": 1,
+      "name": {
+        "original": "Selflessness",
+        "display": "无私"
+      },
+      "description": {
+        "original": "I've got a lot of love to give.",
+        "display": "我有很多的爱可以给予他人。"
+      },
+      "rarity": "2",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2459",
+      "order": 2,
+      "name": {
+        "original": "Inspiring Leader",
+        "display": "鼓舞人心的首领"
+      },
+      "description": {
+        "original": "I wish you could see yourself as I see you. There is beauty in you.",
+        "display": "我希望你能像我看待你一样看待你自己。你身上有着一种美。"
+      },
+      "rarity": "3",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,25"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "2461",
+      "order": 3,
+      "name": {
+        "original": "Prodigal Leader",
+        "display": "浪荡首领"
+      },
+      "description": {
+        "original": "The light of life and love shall never fall to darkness. This, I vow.",
+        "display": "生命与爱的光芒绝不会被黑暗吞噬，我就此发誓。"
+      },
+      "rarity": "4",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,50"
+        }
+      ],
+      "sources": [
+        {
+          "source": "promo",
+          "promotion_id": 50
+        }
+      ],
+      "properties": {
+        "available_time": 999999,
+        "is_available": false,
+        "available_at_time": 1956571200
+      },
+      "collectionsSource": {
+        "type": "not_yet_available"
+      }
+    },
+    {
+      "id": "2462",
+      "order": 4,
+      "name": {
+        "original": "Modest Mien",
+        "display": "谦逊的态度"
+      },
+      "description": {
+        "original": "It starts with learning to believe in yourself.",
+        "display": "首先要学会相信自己。"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,18667,0"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2463",
+      "order": 5,
+      "name": {
+        "original": "Roaring Aura",
+        "display": "咆哮的气场"
+      },
+      "description": {
+        "original": "Believe in others as you would have them believe in you.",
+        "display": "就像你希望别人相信你一样，你也要相信别人。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,18667,0"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "2464",
+      "order": 6,
+      "name": {
+        "original": "Burning Glory",
+        "display": "燃烧的荣耀"
+      },
+      "description": {
+        "original": "Be as a beacon in this world, projecting hope for all to see.",
+        "display": "做这个世界的灯塔，投射希望，让所有人看见。"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,18667,0"
+        }
+      ],
+      "sources": [
+        {
+          "source": "promo",
+          "promotion_id": 50
+        }
+      ],
+      "properties": {
+        "available_time": 999999,
+        "is_available": false,
+        "available_at_time": 1956571200
+      },
+      "collectionsSource": {
+        "type": "not_yet_available"
+      }
+    },
+    {
+      "id": "2465",
+      "order": 7,
+      "name": {
+        "original": "Pierce the Heavens",
+        "display": "贯穿苍穹"
+      },
+      "description": {
+        "original": "I've practiced this spiral thrust maneuver ten thousand times.",
+        "display": "这个螺旋突刺的动作我已经练过一万遍了。"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "change_upgrade_data,18668,0",
+          "data": {
+            "base_chance": 200
+          },
+          "description": "Increases the base chance of Stunning Strike up to 200%."
+        },
+        {
+          "effect_string": "change_upgrade_data,18668,2",
+          "data": {
+            "base_chance": 200
+          },
+          "description": ""
+        }
+      ],
+      "sources": [
+        {
+          "source": "promo",
+          "promotion_id": 50
+        }
+      ],
+      "properties": {
+        "available_time": 999999,
+        "is_available": false,
+        "available_at_time": 1777489200
+      },
+      "collectionsSource": {
+        "type": "not_yet_available"
+      }
+    },
+    {
+      "id": "2466",
+      "order": 8,
+      "name": {
+        "original": "Blinding Force",
+        "display": "致盲之力"
+      },
+      "description": {
+        "original": "Know yourself. Know what needs to be done. Know to never hesitate.",
+        "display": "了解你自己。清楚需要做的事。明白永远不要犹豫。"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "change_upgrade_data,18668,0",
+          "data": {
+            "duration": 20
+          },
+          "description": "Increases the stun duration to 20 seconds for Stunning Strike."
+        }
+      ],
+      "sources": [
+        {
+          "source": "promo",
+          "promotion_id": 50
+        }
+      ],
+      "properties": {
+        "available_time": 999999,
+        "is_available": false,
+        "available_at_time": 1956571200
+      },
+      "collectionsSource": {
+        "type": "not_yet_available"
+      }
+    },
+    {
+      "id": "2467",
+      "order": 9,
+      "name": {
+        "original": "Surging Soul",
+        "display": "激荡的灵魂"
+      },
+      "description": {
+        "original": "Be yourself, fiercely and without fear! Embrace the power within you!",
+        "display": "坚定无畏地做你自己！拥抱你内在的力量！"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,18669,0"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "2468",
+      "order": 10,
+      "name": {
+        "original": "Flickering Flame",
+        "display": "闪烁的火焰"
+      },
+      "description": {
+        "original": "May our blows strike true.",
+        "display": "愿我们每击必中。"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,18670,1",
+          "description": "Increases the critical damage bonus of Kyre's Flawless Strike by $amount%"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2469",
+      "order": 11,
+      "name": {
+        "original": "Searing Flash",
+        "display": "灼热的闪光"
+      },
+      "description": {
+        "original": "May this light cleanse the evil before us.",
+        "display": "愿此光芒净化我们前方的邪恶。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,18670,1",
+          "description": "Increases the critical damage bonus of Kyre's Flawless Strike by $amount%"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "2470",
+      "order": 12,
+      "name": {
+        "original": "Heated Precision",
+        "display": "炽热的精准"
+      },
+      "description": {
+        "original": "My order knows the body inside and out. I'll show you where to strike.",
+        "display": "我所属的法师团对人体了如指掌。我来教你们该往哪里下手。"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,18670,0",
+          "description": "Increases the critical hit chance of Kyre's Flawless Strike by $amount%"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2471",
+      "order": 13,
+      "name": {
+        "original": "Impassioned Rigor",
+        "display": "热血的严厉"
+      },
+      "description": {
+        "original": "May this light cleanse the evil before us.",
+        "display": "愿此光芒净化我们前方的邪恶。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,18670,0",
+          "description": "Increases the critical hit chance of Kyre's Flawless Strike by $amount%"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "2472",
+      "order": 14,
+      "name": {
+        "original": "Sunburst",
+        "display": "云开见日"
+      },
+      "description": {
+        "original": "Indomitable light dwells within all. Train with me. Become your greatest self.",
+        "display": "不屈的光芒存在于每个人的心中。和我一起修行，成为最好的自己吧。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,40,18671,18672,18673",
+          "description": "Increases the effect of Kyre's Specializations by $(amount)%"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "2473",
+      "order": 14,
+      "name": {
+        "original": "Dual Sun Technique",
+        "display": "双阳神功"
+      },
+      "description": {
+        "original": "No more holding back!",
+        "display": "不再克制了！"
+      },
+      "rarity": "4",
+      "graphicId": "28565",
+      "effects": [
+        {
+          "effect_string": "change_base_attack,936",
+          "description": "Kyre fires two bolts with their base attack."
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000,
+          "start_date": "2026-05-04 12:00:00"
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 670
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_for_gems_at_time": 1777921200
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "670",
+        "cost": 3830
+      }
+    },
+    {
+      "id": "2474",
+      "order": 16,
+      "name": {
+        "original": "Heavy Lifter",
+        "display": "中流砥柱"
+      },
+      "description": {
+        "original": "It feels good to put on muscle again! Feel the burn!",
+        "display": "再次增肌的感觉真棒！感受这肌肉的灼烧感吧！"
+      },
+      "rarity": "4",
+      "graphicId": "10062",
+      "effects": [
+        {
+          "effect_string": "increase_ability_score,str,2"
+        }
+      ],
+      "sources": [
+        {
+          "source": "event",
+          "event_id": 6
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "event",
+        "event_id": 6,
+        "tier": 3
+      }
+    }
+  ],
+  "skins": [
+    {
+      "id": "661",
+      "name": {
+        "original": "Ancient Kyre",
+        "display": "远古凯尔"
+      },
+      "cost": {
+        "req_date": "2026-02-04 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 28749,
+        "large_graphic_id": 28752,
+        "portrait_graphic_id": 28746,
+        "xl_graphic_id": 28755
+      },
+      "rarity": "3",
+      "properties": {
+        "notification_adjustment_override": {
+          "offset": [
+            56,
+            248
+          ],
+          "scale": 1.25
+        },
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "670",
+        "cost": 3830
+      },
+      "availabilities": {
+        "premium_item_id": "670"
+      }
+    }
+  ],
+  "raw": {
+    "hero": {
+      "original": {
+        "id": 172,
+        "name": "Kyre",
+        "english_name": "Kyre",
+        "seat_id": 5,
+        "base_cost": "6000000",
+        "base_damage": "375000",
+        "base_health": "47",
+        "cost_curves": {
+          "1": 1.06
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 935,
+        "ultimate_attack_id": 937,
+        "graphic_id": 28287,
+        "portrait_graphic_id": 28286,
+        "character_sheet_details": {
+          "full_name": "Kyre",
+          "class": "Monk",
+          "race": "Human",
+          "age": 23,
+          "alignment": "Lawful Good",
+          "ability_scores": {
+            "str": 8,
+            "dex": 16,
+            "con": 14,
+            "int": 13,
+            "wis": 14,
+            "cha": 13
+          },
+          "backstory": "An unnamed child was born to Damaran refugees fleeing the fall of Bloodstone City at the hands of the Warlock Knights of Vaasa, and orphaned when their parents succumbed to a lingering curse. Taken in by wandering elven monks of Sune, the child grew up in the Waterdhavian Monastery of the Sun, surrounded by compassion, discipline, and the pure light of unconditional love. They excelled in body, mind, and spirit, finding peace in exercise, meditation, and crafts, yet always yearned for more - to someday go beyond the monastery walls. Upon coming of age, Kyre chose their own name and at last set out on a pilgrimage across Faerûn to bring light to the dark places where it's needed most.",
+          "system_description": "Kyre is a Support and Control Champion whose Radiant Soul ability increases the damage of adjacent Champions. This Sun Soul Monk can stun enemies, gains power as those enemies are attacked, and helps allies score devastating critical hits."
+        },
+        "default_feat_slot_unlocks": [
+          490,
+          1250,
+          2190,
+          3350
+        ],
+        "tags": [
+          "event",
+          "human",
+          "monk",
+          "lawful",
+          "good",
+          "support",
+          "control",
+          "unaffiliated",
+          "y9"
+        ],
+        "properties": {
+          "content_set_id": 74,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            170,
+            171,
+            172
+          ],
+          "graphic_large": 28288,
+          "graphic_xl": 28289,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            89,
+            80
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 4,
+            "gethit": 5,
+            "koed": 6,
+            "starttea": 7,
+            "siptea": 8,
+            "idletea": 9,
+            "walktea": 10
+          },
+          "allow_time_gate": "2026-02-25 12:00:00",
+          "available_in_store": "2026-02-25 12:00:00",
+          "time_gate_adventure_id": 1946,
+          "time_gate_variants_ids": [
+            1942,
+            1943,
+            1944
+          ],
+          "time_gate_tier": 1,
+          "silver_chest_type_id": 781,
+          "gold_chest_type_id": 782,
+          "golden_epic_loot_id": 4109,
+          "golden_epic_promo_id": 763,
+          "event_logo_graphic_id": 3369,
+          "console_portrait": 28336,
+          "trials_effect_id": 836,
+          "weekly_chest_type_id": 782,
+          "weekly_buff": "buff_upgrade,200,18667",
+          "portrait_graphic_scale": 1,
+          "legendary_effect_id": [
+            1,
+            58,
+            86,
+            94,
+            102,
+            101
+          ],
+          "notification_adjustment": {
+            "offset": [
+              56,
+              245
+            ],
+            "scale": 1.25
+          }
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 1941,
+            "type": "base"
+          },
+          {
+            "adventure_id": 1942,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1943,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1944,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1945,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 1946,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 121,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 18667,
+            "name": "Radiant Soul",
+            "description": "",
+            "graphic_id": "28318"
+          },
+          {
+            "upgrade_id": 18668,
+            "name": "Stunning Strike",
+            "description": "",
+            "graphic_id": "28319"
+          },
+          {
+            "upgrade_id": 18669,
+            "name": "Invigorating Radiance",
+            "description": "",
+            "graphic_id": "28317"
+          },
+          {
+            "upgrade_id": 18670,
+            "name": "Flawless Strike",
+            "description": "",
+            "graphic_id": "28316"
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1801771200,
+        "event_name": "Grand Revel",
+        "is_available": true,
+        "date_available": "2026-02-04 13:00:00",
+        "last_rework_date": "2026-02-04 13:00:00"
+      },
+      "display": {
+        "id": 172,
+        "name": "凯尔",
+        "english_name": "Kyre",
+        "seat_id": 5,
+        "base_cost": "6000000",
+        "base_damage": "375000",
+        "base_health": "47",
+        "cost_curves": {
+          "1": 1.06
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 935,
+        "ultimate_attack_id": 937,
+        "graphic_id": 28287,
+        "portrait_graphic_id": 28286,
+        "character_sheet_details": {
+          "full_name": "凯尔",
+          "class": "武僧",
+          "race": "人类",
+          "age": 23,
+          "alignment": "守序善良",
+          "ability_scores": {
+            "str": 8,
+            "dex": 16,
+            "con": 14,
+            "int": 13,
+            "wis": 14,
+            "cha": 13
+          },
+          "backstory": "血石城在瓦萨邪术师骑士的铁蹄下沦陷，在从中逃难的达马拉难民中诞生了一个没有名字的孩子。由于父母死于一场延续不止的诅咒，这个孩子成为了孤儿。后来，这个孩子被伺奉淑娜的游方精灵武僧收留，在深水城的太阳修道院里，在怜悯、管教以及无条件之爱的纯洁光辉笼罩下慢慢长大。这个孩子在身、心、灵方面皆表现出色，并在锻炼、冥想以及制作手工艺品中寻得了内心的平静，然而其心中始终怀有更深的渴望——有朝一日走出修道院的高墙。成年之时，凯尔为自己取了名字，并终于踏上了穿越费伦的朝圣之旅，将光明带去最需要它的黑暗之地。",
+          "system_description": "凯尔是一位支援与控制勇士，其“光耀之魂”技能会提高相邻勇士的伤害。这位太阳之魂武僧可以眩晕敌人，在这些被眩晕的敌人受攻击时获得力量，并帮助盟友打出极具杀伤力的暴击。"
+        },
+        "default_feat_slot_unlocks": [
+          490,
+          1250,
+          2190,
+          3350
+        ],
+        "tags": [
+          "event",
+          "human",
+          "monk",
+          "lawful",
+          "good",
+          "support",
+          "control",
+          "unaffiliated",
+          "y9"
+        ],
+        "properties": {
+          "content_set_id": 74,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            170,
+            171,
+            172
+          ],
+          "graphic_large": 28288,
+          "graphic_xl": 28289,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            89,
+            80
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 4,
+            "gethit": 5,
+            "koed": 6,
+            "starttea": 7,
+            "siptea": 8,
+            "idletea": 9,
+            "walktea": 10
+          },
+          "allow_time_gate": "2026-02-25 12:00:00",
+          "available_in_store": "2026-02-25 12:00:00",
+          "time_gate_adventure_id": 1946,
+          "time_gate_variants_ids": [
+            1942,
+            1943,
+            1944
+          ],
+          "time_gate_tier": 1,
+          "silver_chest_type_id": 781,
+          "gold_chest_type_id": 782,
+          "golden_epic_loot_id": 4109,
+          "golden_epic_promo_id": 763,
+          "event_logo_graphic_id": 3369,
+          "console_portrait": 28336,
+          "trials_effect_id": 836,
+          "weekly_chest_type_id": 782,
+          "weekly_buff": "buff_upgrade,200,18667",
+          "portrait_graphic_scale": 1,
+          "legendary_effect_id": [
+            1,
+            58,
+            86,
+            94,
+            102,
+            101
+          ],
+          "notification_adjustment": {
+            "offset": [
+              56,
+              245
+            ],
+            "scale": 1.25
+          }
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 1941,
+            "type": "base"
+          },
+          {
+            "adventure_id": 1942,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1943,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1944,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1945,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 1946,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 121,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 18667,
+            "name": "光耀之魂",
+            "description": "",
+            "graphic_id": "28318"
+          },
+          {
+            "upgrade_id": 18668,
+            "name": "震慑击",
+            "description": "",
+            "graphic_id": "28319"
+          },
+          {
+            "upgrade_id": 18669,
+            "name": "振奋光辉",
+            "description": "",
+            "graphic_id": "28317"
+          },
+          {
+            "upgrade_id": 18670,
+            "name": "完美打击",
+            "description": "",
+            "graphic_id": "28316"
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1801771200,
+        "event_name": "闹饮节",
+        "is_available": true,
+        "date_available": "2026-02-04 13:00:00",
+        "last_rework_date": "2026-02-04 13:00:00"
+      }
+    },
+    "attacks": [
+      {
+        "id": "935",
+        "snapshots": {
+          "original": {
+            "id": 935,
+            "name": "Radiant Sun Bolt",
+            "description": "Kyre attacks the toughest enemy for 1 hit.",
+            "long_description": "Kyre attacks the enemy with the most remaining health with a searing bolt of magical radiance, dealing 1 hit.",
+            "graphic_id": 0,
+            "target": "highest_health",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 3.5,
+            "animations": [
+              {
+                "type": "ranged_attack",
+                "projectile": "pd_generic_projectile",
+                "shoot_offset_y": -63,
+                "shoot_offset_x": 100,
+                "shoot_frame": 14,
+                "shoot_sound": 149,
+                "hit_sound": 133,
+                "projectile_details": {
+                  "hash": "3991cd5b5876b1b70359d7edd687cf5f",
+                  "target_offset_y": 0,
+                  "projectile_speed": 2250,
+                  "projectile_graphic_id": 28290
+                }
+              }
+            ],
+            "tags": [
+              "ranged",
+              "magic"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          },
+          "display": {
+            "id": 935,
+            "name": "耀眼太阳之矢",
+            "description": "凯尔攻击最强硬的敌人，造成 1 次命中。",
+            "long_description": "凯尔用一道灼热的魔法光辉箭矢攻击剩余生命值最多的敌人，造成 1 次命中。",
+            "graphic_id": 0,
+            "target": "highest_health",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 3.5,
+            "animations": [
+              {
+                "type": "ranged_attack",
+                "projectile": "pd_generic_projectile",
+                "shoot_offset_y": -63,
+                "shoot_offset_x": 100,
+                "shoot_frame": 14,
+                "shoot_sound": 149,
+                "hit_sound": 133,
+                "projectile_details": {
+                  "hash": "3991cd5b5876b1b70359d7edd687cf5f",
+                  "target_offset_y": 0,
+                  "projectile_speed": 2250,
+                  "projectile_graphic_id": 28290
+                }
+              }
+            ],
+            "tags": [
+              "ranged",
+              "magic"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          }
+        }
+      },
+      {
+        "id": "937",
+        "snapshots": {
+          "original": {
+            "id": 937,
+            "name": "Searing Arc Strike",
+            "description": "Kyre creates an energy wave, dealing 1 ultimate hit to affected enemies.",
+            "long_description": "Kyre creates a wave of radiant light and fire, dealing 1 ultimate hit to enemies it envelops.",
+            "graphic_id": 28335,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 0.03,
+            "cooldown": 150,
+            "animations": [
+              {
+                "type": "kyre_ultimate",
+                "jump_to_target": true,
+                "target_offset_x": -300
+              }
+            ],
+            "tags": [
+              "melee",
+              "ultimate"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          },
+          "display": {
+            "id": 937,
+            "name": "灼热弧击",
+            "description": "凯尔制造一道能量波，对被波及的敌人造成 1 次杀招命中。",
+            "long_description": "凯尔制造一道由耀眼的光辉与火焰交织而成的能量波，对被波及的敌人造成 1 次杀招命中。",
+            "graphic_id": 28335,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 0.03,
+            "cooldown": 150,
+            "animations": [
+              {
+                "type": "kyre_ultimate",
+                "jump_to_target": true,
+                "target_offset_x": -300
+              }
+            ],
+            "tags": [
+              "melee",
+              "ultimate"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          }
+        }
+      }
+    ],
+    "upgrades": [
+      {
+        "id": "18667",
+        "snapshots": {
+          "original": {
+            "id": 18667,
+            "hero_id": 172,
+            "required_level": 20,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2593",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Radiant Soul",
+            "tip_text": "Kyre increases the damage of adjacent Champions."
+          },
+          "display": {
+            "id": 18667,
+            "hero_id": 172,
+            "required_level": 20,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2593",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "光耀之魂",
+            "tip_text": "凯尔会提高相邻勇士的伤害。"
+          }
+        }
+      },
+      {
+        "id": "18668",
+        "snapshots": {
+          "original": {
+            "id": 18668,
+            "hero_id": 172,
+            "required_level": 60,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2594",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Stunning Strike"
+          },
+          "display": {
+            "id": 18668,
+            "hero_id": 172,
+            "required_level": 60,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2594",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "震慑击"
+          }
+        }
+      },
+      {
+        "id": "18669",
+        "snapshots": {
+          "original": {
+            "id": 18669,
+            "hero_id": 172,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2595",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Invigorating Radiance",
+            "tip_text": "Kyre has a chance to stun enemies, and their buff increases each time any Champion attacks a stunned enemy."
+          },
+          "display": {
+            "id": 18669,
+            "hero_id": 172,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2595",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "振奋光辉",
+            "tip_text": "凯尔有一定几率眩晕敌人，并且每当任意勇士攻击一名被眩晕的敌人，凯尔的增益会进一步提升。"
+          }
+        }
+      },
+      {
+        "id": "18670",
+        "snapshots": {
+          "original": {
+            "id": 18670,
+            "hero_id": 172,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2596",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Flawless Strike"
+          },
+          "display": {
+            "id": 18670,
+            "hero_id": 172,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2596",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "完美打击"
+          }
+        }
+      },
+      {
+        "id": "18671",
+        "snapshots": {
+          "original": {
+            "id": 18671,
+            "hero_id": 172,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2597",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Complete Control",
+            "specialization_name": "Complete Control",
+            "specialization_description": "Kyre is ever calm in the face of danger, trusting in their techniques and those of their allies.",
+            "specialization_graphic_id": 28330
+          },
+          "display": {
+            "id": 18671,
+            "hero_id": 172,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2597",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "完全控制",
+            "specialization_name": "完全控制",
+            "specialization_description": "凯尔面对危险时总是很冷静，十分信赖自己的武艺和盟友。",
+            "specialization_graphic_id": 28330
+          }
+        }
+      },
+      {
+        "id": "18672",
+        "snapshots": {
+          "original": {
+            "id": 18672,
+            "hero_id": 172,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2598",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Faster Than Light",
+            "specialization_name": "Faster Than Light",
+            "specialization_description": "Kyre fights best with agile allies who can keep pace with their relentless training regiment.",
+            "specialization_graphic_id": 28331
+          },
+          "display": {
+            "id": 18672,
+            "hero_id": 172,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2598",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "超光速",
+            "specialization_name": "超光速",
+            "specialization_description": "凯尔与能跟上其极高强度训练节奏的敏捷盟友并肩作战时表现最佳。",
+            "specialization_graphic_id": 28331
+          }
+        }
+      },
+      {
+        "id": "18673",
+        "snapshots": {
+          "original": {
+            "id": 18673,
+            "hero_id": 172,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2599",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Pure of Soul",
+            "specialization_name": "Pure of Soul",
+            "specialization_description": "Kyre's spirit burns with righteous might, inspiring their allies to greater heroics.",
+            "specialization_graphic_id": 28332
+          },
+          "display": {
+            "id": 18673,
+            "hero_id": 172,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2599",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "心灵纯净",
+            "specialization_name": "心灵纯净",
+            "specialization_description": "凯尔的精神燃烧着正义的力量，激励着其盟友做出更伟大的英勇之举。",
+            "specialization_graphic_id": 28332
+          }
+        }
+      },
+      {
+        "id": "18674",
+        "snapshots": {
+          "original": {
+            "id": 18674,
+            "hero_id": 172,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "set_ultimate_attack,937",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Searing Arc Strike"
+          },
+          "display": {
+            "id": 18674,
+            "hero_id": 172,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "set_ultimate_attack,937",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "灼热弧击"
+          }
+        }
+      },
+      {
+        "id": "18854",
+        "snapshots": {
+          "original": {
+            "id": 18854,
+            "hero_id": 172,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18854,
+            "hero_id": 172,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18865",
+        "snapshots": {
+          "original": {
+            "id": 18865,
+            "hero_id": 172,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18865,
+            "hero_id": 172,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18866",
+        "snapshots": {
+          "original": {
+            "id": 18866,
+            "hero_id": 172,
+            "required_level": 70,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18866,
+            "hero_id": 172,
+            "required_level": 70,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18867",
+        "snapshots": {
+          "original": {
+            "id": 18867,
+            "hero_id": 172,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18867,
+            "hero_id": 172,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18868",
+        "snapshots": {
+          "original": {
+            "id": 18868,
+            "hero_id": 172,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18868,
+            "hero_id": 172,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18869",
+        "snapshots": {
+          "original": {
+            "id": 18869,
+            "hero_id": 172,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18869,
+            "hero_id": 172,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18870",
+        "snapshots": {
+          "original": {
+            "id": 18870,
+            "hero_id": 172,
+            "required_level": 230,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18870,
+            "hero_id": 172,
+            "required_level": 230,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18871",
+        "snapshots": {
+          "original": {
+            "id": 18871,
+            "hero_id": 172,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18871,
+            "hero_id": 172,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18872",
+        "snapshots": {
+          "original": {
+            "id": 18872,
+            "hero_id": 172,
+            "required_level": 290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18872,
+            "hero_id": 172,
+            "required_level": 290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18873",
+        "snapshots": {
+          "original": {
+            "id": 18873,
+            "hero_id": 172,
+            "required_level": 340,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18873,
+            "hero_id": 172,
+            "required_level": 340,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18874",
+        "snapshots": {
+          "original": {
+            "id": 18874,
+            "hero_id": 172,
+            "required_level": 350,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18874,
+            "hero_id": 172,
+            "required_level": 350,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18875",
+        "snapshots": {
+          "original": {
+            "id": 18875,
+            "hero_id": 172,
+            "required_level": 390,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18875,
+            "hero_id": 172,
+            "required_level": 390,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18876",
+        "snapshots": {
+          "original": {
+            "id": 18876,
+            "hero_id": 172,
+            "required_level": 430,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18876,
+            "hero_id": 172,
+            "required_level": 430,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18877",
+        "snapshots": {
+          "original": {
+            "id": 18877,
+            "hero_id": 172,
+            "required_level": 440,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18877,
+            "hero_id": 172,
+            "required_level": 440,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18878",
+        "snapshots": {
+          "original": {
+            "id": 18878,
+            "hero_id": 172,
+            "required_level": 490,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18878,
+            "hero_id": 172,
+            "required_level": 490,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18879",
+        "snapshots": {
+          "original": {
+            "id": 18879,
+            "hero_id": 172,
+            "required_level": 540,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18879,
+            "hero_id": 172,
+            "required_level": 540,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18880",
+        "snapshots": {
+          "original": {
+            "id": 18880,
+            "hero_id": 172,
+            "required_level": 560,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18880,
+            "hero_id": 172,
+            "required_level": 560,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18881",
+        "snapshots": {
+          "original": {
+            "id": 18881,
+            "hero_id": 172,
+            "required_level": 600,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18881,
+            "hero_id": 172,
+            "required_level": 600,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18882",
+        "snapshots": {
+          "original": {
+            "id": 18882,
+            "hero_id": 172,
+            "required_level": 660,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18882,
+            "hero_id": 172,
+            "required_level": 660,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18883",
+        "snapshots": {
+          "original": {
+            "id": 18883,
+            "hero_id": 172,
+            "required_level": 700,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18883,
+            "hero_id": 172,
+            "required_level": 700,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18884",
+        "snapshots": {
+          "original": {
+            "id": 18884,
+            "hero_id": 172,
+            "required_level": 720,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18884,
+            "hero_id": 172,
+            "required_level": 720,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18885",
+        "snapshots": {
+          "original": {
+            "id": 18885,
+            "hero_id": 172,
+            "required_level": 780,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18885,
+            "hero_id": 172,
+            "required_level": 780,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18886",
+        "snapshots": {
+          "original": {
+            "id": 18886,
+            "hero_id": 172,
+            "required_level": 800,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18886,
+            "hero_id": 172,
+            "required_level": 800,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18887",
+        "snapshots": {
+          "original": {
+            "id": 18887,
+            "hero_id": 172,
+            "required_level": 850,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18887,
+            "hero_id": 172,
+            "required_level": 850,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18888",
+        "snapshots": {
+          "original": {
+            "id": 18888,
+            "hero_id": 172,
+            "required_level": 860,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18888,
+            "hero_id": 172,
+            "required_level": 860,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18889",
+        "snapshots": {
+          "original": {
+            "id": 18889,
+            "hero_id": 172,
+            "required_level": 930,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18889,
+            "hero_id": 172,
+            "required_level": 930,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18890",
+        "snapshots": {
+          "original": {
+            "id": 18890,
+            "hero_id": 172,
+            "required_level": 1010,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18890,
+            "hero_id": 172,
+            "required_level": 1010,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18891",
+        "snapshots": {
+          "original": {
+            "id": 18891,
+            "hero_id": 172,
+            "required_level": 1070,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18891,
+            "hero_id": 172,
+            "required_level": 1070,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18892",
+        "snapshots": {
+          "original": {
+            "id": 18892,
+            "hero_id": 172,
+            "required_level": 1110,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18892,
+            "hero_id": 172,
+            "required_level": 1110,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18893",
+        "snapshots": {
+          "original": {
+            "id": 18893,
+            "hero_id": 172,
+            "required_level": 1120,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18893,
+            "hero_id": 172,
+            "required_level": 1120,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18894",
+        "snapshots": {
+          "original": {
+            "id": 18894,
+            "hero_id": 172,
+            "required_level": 1230,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18894,
+            "hero_id": 172,
+            "required_level": 1230,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18895",
+        "snapshots": {
+          "original": {
+            "id": 18895,
+            "hero_id": 172,
+            "required_level": 1250,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18895,
+            "hero_id": 172,
+            "required_level": 1250,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18896",
+        "snapshots": {
+          "original": {
+            "id": 18896,
+            "hero_id": 172,
+            "required_level": 1320,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18896,
+            "hero_id": 172,
+            "required_level": 1320,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18897",
+        "snapshots": {
+          "original": {
+            "id": 18897,
+            "hero_id": 172,
+            "required_level": 1400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18897,
+            "hero_id": 172,
+            "required_level": 1400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18898",
+        "snapshots": {
+          "original": {
+            "id": 18898,
+            "hero_id": 172,
+            "required_level": 1420,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18898,
+            "hero_id": 172,
+            "required_level": 1420,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18899",
+        "snapshots": {
+          "original": {
+            "id": 18899,
+            "hero_id": 172,
+            "required_level": 1450,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18899,
+            "hero_id": 172,
+            "required_level": 1450,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18900",
+        "snapshots": {
+          "original": {
+            "id": 18900,
+            "hero_id": 172,
+            "required_level": 1490,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18900,
+            "hero_id": 172,
+            "required_level": 1490,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18901",
+        "snapshots": {
+          "original": {
+            "id": 18901,
+            "hero_id": 172,
+            "required_level": 1570,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18901,
+            "hero_id": 172,
+            "required_level": 1570,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18902",
+        "snapshots": {
+          "original": {
+            "id": 18902,
+            "hero_id": 172,
+            "required_level": 1580,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18902,
+            "hero_id": 172,
+            "required_level": 1580,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18903",
+        "snapshots": {
+          "original": {
+            "id": 18903,
+            "hero_id": 172,
+            "required_level": 1670,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18903,
+            "hero_id": 172,
+            "required_level": 1670,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18904",
+        "snapshots": {
+          "original": {
+            "id": 18904,
+            "hero_id": 172,
+            "required_level": 1740,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18904,
+            "hero_id": 172,
+            "required_level": 1740,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18905",
+        "snapshots": {
+          "original": {
+            "id": 18905,
+            "hero_id": 172,
+            "required_level": 1770,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18905,
+            "hero_id": 172,
+            "required_level": 1770,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18906",
+        "snapshots": {
+          "original": {
+            "id": 18906,
+            "hero_id": 172,
+            "required_level": 1780,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18906,
+            "hero_id": 172,
+            "required_level": 1780,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18907",
+        "snapshots": {
+          "original": {
+            "id": 18907,
+            "hero_id": 172,
+            "required_level": 1870,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18907,
+            "hero_id": 172,
+            "required_level": 1870,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18908",
+        "snapshots": {
+          "original": {
+            "id": 18908,
+            "hero_id": 172,
+            "required_level": 1900,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18908,
+            "hero_id": 172,
+            "required_level": 1900,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18909",
+        "snapshots": {
+          "original": {
+            "id": 18909,
+            "hero_id": 172,
+            "required_level": 2000,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18909,
+            "hero_id": 172,
+            "required_level": 2000,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18910",
+        "snapshots": {
+          "original": {
+            "id": 18910,
+            "hero_id": 172,
+            "required_level": 2040,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18910,
+            "hero_id": 172,
+            "required_level": 2040,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18911",
+        "snapshots": {
+          "original": {
+            "id": 18911,
+            "hero_id": 172,
+            "required_level": 2080,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18911,
+            "hero_id": 172,
+            "required_level": 2080,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18912",
+        "snapshots": {
+          "original": {
+            "id": 18912,
+            "hero_id": 172,
+            "required_level": 2140,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18912,
+            "hero_id": 172,
+            "required_level": 2140,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18913",
+        "snapshots": {
+          "original": {
+            "id": 18913,
+            "hero_id": 172,
+            "required_level": 2220,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18913,
+            "hero_id": 172,
+            "required_level": 2220,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18914",
+        "snapshots": {
+          "original": {
+            "id": 18914,
+            "hero_id": 172,
+            "required_level": 2300,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18914,
+            "hero_id": 172,
+            "required_level": 2300,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18915",
+        "snapshots": {
+          "original": {
+            "id": 18915,
+            "hero_id": 172,
+            "required_level": 2390,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18915,
+            "hero_id": 172,
+            "required_level": 2390,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18916",
+        "snapshots": {
+          "original": {
+            "id": 18916,
+            "hero_id": 172,
+            "required_level": 2450,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18916,
+            "hero_id": 172,
+            "required_level": 2450,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18917",
+        "snapshots": {
+          "original": {
+            "id": 18917,
+            "hero_id": 172,
+            "required_level": 2480,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18917,
+            "hero_id": 172,
+            "required_level": 2480,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18918",
+        "snapshots": {
+          "original": {
+            "id": 18918,
+            "hero_id": 172,
+            "required_level": 2600,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18918,
+            "hero_id": 172,
+            "required_level": 2600,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18919",
+        "snapshots": {
+          "original": {
+            "id": 18919,
+            "hero_id": 172,
+            "required_level": 2700,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18919,
+            "hero_id": 172,
+            "required_level": 2700,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18920",
+        "snapshots": {
+          "original": {
+            "id": 18920,
+            "hero_id": 172,
+            "required_level": 2800,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18920,
+            "hero_id": 172,
+            "required_level": 2800,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18921",
+        "snapshots": {
+          "original": {
+            "id": 18921,
+            "hero_id": 172,
+            "required_level": 2880,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18921,
+            "hero_id": 172,
+            "required_level": 2880,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18922",
+        "snapshots": {
+          "original": {
+            "id": 18922,
+            "hero_id": 172,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18922,
+            "hero_id": 172,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18923",
+        "snapshots": {
+          "original": {
+            "id": 18923,
+            "hero_id": 172,
+            "required_level": 2900,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18923,
+            "hero_id": 172,
+            "required_level": 2900,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18924",
+        "snapshots": {
+          "original": {
+            "id": 18924,
+            "hero_id": 172,
+            "required_level": 3010,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18924,
+            "hero_id": 172,
+            "required_level": 3010,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18925",
+        "snapshots": {
+          "original": {
+            "id": 18925,
+            "hero_id": 172,
+            "required_level": 1330,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18925,
+            "hero_id": 172,
+            "required_level": 1330,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18926",
+        "snapshots": {
+          "original": {
+            "id": 18926,
+            "hero_id": 172,
+            "required_level": 3080,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18926,
+            "hero_id": 172,
+            "required_level": 3080,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,18667",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "18927",
+        "snapshots": {
+          "original": {
+            "id": 18927,
+            "hero_id": 172,
+            "required_level": 3090,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 18927,
+            "hero_id": 172,
+            "required_level": 3090,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19160",
+        "snapshots": {
+          "original": {
+            "id": 19160,
+            "hero_id": 172,
+            "required_level": 3060,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19160,
+            "hero_id": 172,
+            "required_level": 3060,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19159",
+        "snapshots": {
+          "original": {
+            "id": 19159,
+            "hero_id": 172,
+            "required_level": 2890,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19159,
+            "hero_id": 172,
+            "required_level": 2890,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      }
+    ],
+    "feats": [
+      {
+        "id": "2459",
+        "snapshots": {
+          "original": {
+            "id": 2459,
+            "hero_id": 172,
+            "order": 2,
+            "name": "Inspiring Leader",
+            "description": "I wish you could see yourself as I see you. There is beauty in you.",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 2459,
+            "hero_id": 172,
+            "order": 2,
+            "name": "鼓舞人心的首领",
+            "description": "我希望你能像我看待你一样看待你自己。你身上有着一种美。",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "2460",
+        "snapshots": {
+          "original": {
+            "id": 2460,
+            "hero_id": 172,
+            "order": 1,
+            "name": "Selflessness",
+            "description": "I've got a lot of love to give.",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2460,
+            "hero_id": 172,
+            "order": 1,
+            "name": "无私",
+            "description": "我有很多的爱可以给予他人。",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2461",
+        "snapshots": {
+          "original": {
+            "id": 2461,
+            "hero_id": 172,
+            "order": 3,
+            "name": "Prodigal Leader",
+            "description": "The light of life and love shall never fall to darkness. This, I vow.",
+            "rarity": 4,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,50"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1956571200
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          },
+          "display": {
+            "id": 2461,
+            "hero_id": 172,
+            "order": 3,
+            "name": "浪荡首领",
+            "description": "生命与爱的光芒绝不会被黑暗吞噬，我就此发誓。",
+            "rarity": 4,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,50"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1956571200
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          }
+        }
+      },
+      {
+        "id": "2462",
+        "snapshots": {
+          "original": {
+            "id": 2462,
+            "hero_id": 172,
+            "order": 4,
+            "name": "Modest Mien",
+            "description": "It starts with learning to believe in yourself.",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,18667,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2462,
+            "hero_id": 172,
+            "order": 4,
+            "name": "谦逊的态度",
+            "description": "首先要学会相信自己。",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,18667,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2463",
+        "snapshots": {
+          "original": {
+            "id": 2463,
+            "hero_id": 172,
+            "order": 5,
+            "name": "Roaring Aura",
+            "description": "Believe in others as you would have them believe in you.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,18667,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 2463,
+            "hero_id": 172,
+            "order": 5,
+            "name": "咆哮的气场",
+            "description": "就像你希望别人相信你一样，你也要相信别人。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,18667,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "2464",
+        "snapshots": {
+          "original": {
+            "id": 2464,
+            "hero_id": 172,
+            "order": 6,
+            "name": "Burning Glory",
+            "description": "Be as a beacon in this world, projecting hope for all to see.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,18667,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1956571200
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          },
+          "display": {
+            "id": 2464,
+            "hero_id": 172,
+            "order": 6,
+            "name": "燃烧的荣耀",
+            "description": "做这个世界的灯塔，投射希望，让所有人看见。",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,18667,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1956571200
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          }
+        }
+      },
+      {
+        "id": "2465",
+        "snapshots": {
+          "original": {
+            "id": 2465,
+            "hero_id": 172,
+            "order": 7,
+            "name": "Pierce the Heavens",
+            "description": "I've practiced this spiral thrust maneuver ten thousand times.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "change_upgrade_data,18668,0",
+                "data": {
+                  "base_chance": 200
+                },
+                "description": "Increases the base chance of Stunning Strike up to 200%."
+              },
+              {
+                "effect_string": "change_upgrade_data,18668,2",
+                "data": {
+                  "base_chance": 200
+                },
+                "description": ""
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1777489200
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          },
+          "display": {
+            "id": 2465,
+            "hero_id": 172,
+            "order": 7,
+            "name": "贯穿苍穹",
+            "description": "这个螺旋突刺的动作我已经练过一万遍了。",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "change_upgrade_data,18668,0",
+                "data": {
+                  "base_chance": 200
+                },
+                "description": "使“震慑击”的基础几率提升至 200%。"
+              },
+              {
+                "effect_string": "change_upgrade_data,18668,2",
+                "data": {
+                  "base_chance": 200
+                },
+                "description": ""
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1777489200
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          }
+        }
+      },
+      {
+        "id": "2466",
+        "snapshots": {
+          "original": {
+            "id": 2466,
+            "hero_id": 172,
+            "order": 8,
+            "name": "Blinding Force",
+            "description": "Know yourself. Know what needs to be done. Know to never hesitate.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "change_upgrade_data,18668,0",
+                "data": {
+                  "duration": 20
+                },
+                "description": "Increases the stun duration to 20 seconds for Stunning Strike."
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1956571200
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          },
+          "display": {
+            "id": 2466,
+            "hero_id": 172,
+            "order": 8,
+            "name": "致盲之力",
+            "description": "了解你自己。清楚需要做的事。明白永远不要犹豫。",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "change_upgrade_data,18668,0",
+                "data": {
+                  "duration": 20
+                },
+                "description": "使“震慑击”的眩晕持续时间延长至 20 秒。"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1956571200
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          }
+        }
+      },
+      {
+        "id": "2467",
+        "snapshots": {
+          "original": {
+            "id": 2467,
+            "hero_id": 172,
+            "order": 9,
+            "name": "Surging Soul",
+            "description": "Be yourself, fiercely and without fear! Embrace the power within you!",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,18669,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 2467,
+            "hero_id": 172,
+            "order": 9,
+            "name": "激荡的灵魂",
+            "description": "坚定无畏地做你自己！拥抱你内在的力量！",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,18669,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "2468",
+        "snapshots": {
+          "original": {
+            "id": 2468,
+            "hero_id": 172,
+            "order": 10,
+            "name": "Flickering Flame",
+            "description": "May our blows strike true.",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,18670,1",
+                "description": "Increases the critical damage bonus of Kyre's Flawless Strike by $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2468,
+            "hero_id": 172,
+            "order": 10,
+            "name": "闪烁的火焰",
+            "description": "愿我们每击必中。",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,18670,1",
+                "description": "使“完美打击”的伤害提高 $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2469",
+        "snapshots": {
+          "original": {
+            "id": 2469,
+            "hero_id": 172,
+            "order": 11,
+            "name": "Searing Flash",
+            "description": "May this light cleanse the evil before us.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,18670,1",
+                "description": "Increases the critical damage bonus of Kyre's Flawless Strike by $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 2469,
+            "hero_id": 172,
+            "order": 11,
+            "name": "灼热的闪光",
+            "description": "愿此光芒净化我们前方的邪恶。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,18670,1",
+                "description": "使“完美打击”的伤害提高 $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "2470",
+        "snapshots": {
+          "original": {
+            "id": 2470,
+            "hero_id": 172,
+            "order": 12,
+            "name": "Heated Precision",
+            "description": "My order knows the body inside and out. I'll show you where to strike.",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,18670,0",
+                "description": "Increases the critical hit chance of Kyre's Flawless Strike by $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2470,
+            "hero_id": 172,
+            "order": 12,
+            "name": "炽热的精准",
+            "description": "我所属的法师团对人体了如指掌。我来教你们该往哪里下手。",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,18670,0",
+                "description": "使“完美打击”的暴击几率提升 $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2471",
+        "snapshots": {
+          "original": {
+            "id": 2471,
+            "hero_id": 172,
+            "order": 13,
+            "name": "Impassioned Rigor",
+            "description": "May this light cleanse the evil before us.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,18670,0",
+                "description": "Increases the critical hit chance of Kyre's Flawless Strike by $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 2471,
+            "hero_id": 172,
+            "order": 13,
+            "name": "热血的严厉",
+            "description": "愿此光芒净化我们前方的邪恶。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,18670,0",
+                "description": "使“完美打击”的暴击几率提升 $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "2472",
+        "snapshots": {
+          "original": {
+            "id": 2472,
+            "hero_id": 172,
+            "order": 14,
+            "name": "Sunburst",
+            "description": "Indomitable light dwells within all. Train with me. Become your greatest self.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,40,18671,18672,18673",
+                "description": "Increases the effect of Kyre's Specializations by $(amount)%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 2472,
+            "hero_id": 172,
+            "order": 14,
+            "name": "云开见日",
+            "description": "不屈的光芒存在于每个人的心中。和我一起修行，成为最好的自己吧。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,40,18671,18672,18673",
+                "description": "使凯尔的专精效果提高 $(amount)%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "2473",
+        "snapshots": {
+          "original": {
+            "id": 2473,
+            "hero_id": 172,
+            "order": 14,
+            "name": "Dual Sun Technique",
+            "description": "No more holding back!",
+            "rarity": 4,
+            "graphic_id": 28565,
+            "effects": [
+              {
+                "effect_string": "change_base_attack,936",
+                "description": "Kyre fires two bolts with their base attack."
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2026-05-04 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 670
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_for_gems_at_time": 1777921200
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "670",
+              "cost": 3830
+            }
+          },
+          "display": {
+            "id": 2473,
+            "hero_id": 172,
+            "order": 14,
+            "name": "双阳神功",
+            "description": "不再克制了！",
+            "rarity": 4,
+            "graphic_id": 28565,
+            "effects": [
+              {
+                "effect_string": "change_base_attack,936",
+                "description": "凯尔的基本攻击会发射两道魔法箭矢。"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2026-05-04 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 670
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_for_gems_at_time": 1777921200
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "670",
+              "cost": 3830
+            }
+          }
+        }
+      },
+      {
+        "id": "2474",
+        "snapshots": {
+          "original": {
+            "id": 2474,
+            "hero_id": 172,
+            "order": 16,
+            "name": "Heavy Lifter",
+            "description": "It feels good to put on muscle again! Feel the burn!",
+            "rarity": 4,
+            "graphic_id": 10062,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,str,2"
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 6
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "event",
+              "event_id": 6,
+              "tier": 3
+            }
+          },
+          "display": {
+            "id": 2474,
+            "hero_id": 172,
+            "order": 16,
+            "name": "中流砥柱",
+            "description": "再次增肌的感觉真棒！感受这肌肉的灼烧感吧！",
+            "rarity": 4,
+            "graphic_id": 10062,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,str,2"
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 6
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "event",
+              "event_id": 6,
+              "tier": 3
+            }
+          }
+        }
+      }
+    ],
+    "skins": [
+      {
+        "id": "661",
+        "snapshots": {
+          "original": {
+            "id": 661,
+            "hero_id": 172,
+            "name": "Ancient Kyre",
+            "cost": {
+              "req_date": "2026-02-04 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 28749,
+              "large_graphic_id": 28752,
+              "portrait_graphic_id": 28746,
+              "xl_graphic_id": 28755
+            },
+            "rarity": "3",
+            "properties": {
+              "notification_adjustment_override": {
+                "offset": [
+                  56,
+                  248
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "670",
+              "cost": 3830
+            },
+            "availabilities": {
+              "premium_item_id": "670"
+            }
+          },
+          "display": {
+            "id": 661,
+            "hero_id": 172,
+            "name": "远古凯尔",
+            "cost": {
+              "req_date": "2026-02-04 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 28749,
+              "large_graphic_id": 28752,
+              "portrait_graphic_id": 28746,
+              "xl_graphic_id": 28755
+            },
+            "rarity": "3",
+            "properties": {
+              "notification_adjustment_override": {
+                "offset": [
+                  56,
+                  248
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "670",
+              "cost": 3830
+            },
+            "availabilities": {
+              "premium_item_id": "670"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

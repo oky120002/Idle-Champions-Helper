@@ -1,0 +1,6105 @@
+{
+  "updatedAt": "2026-04-13",
+  "summary": {
+    "id": "142",
+    "name": {
+      "original": "Wyll",
+      "display": "威尔"
+    },
+    "seat": 12,
+    "roles": [
+      "support"
+    ],
+    "affiliations": [
+      {
+        "original": "Absolute Adversaries",
+        "display": "绝对敌手"
+      }
+    ],
+    "tags": [
+      "absoluteadversaries",
+      "event",
+      "good",
+      "human",
+      "hunter",
+      "hunter_fiend",
+      "lcneutral",
+      "male",
+      "neutral",
+      "support",
+      "warlock",
+      "y7"
+    ],
+    "portrait": {
+      "path": "v1/champion-portraits/142.png",
+      "sourceGraphic": "Portraits/Portrait_Wyll",
+      "sourceVersion": 2
+    }
+  },
+  "englishName": "Wyll",
+  "eventName": {
+    "original": "Wintershield",
+    "display": "冬盾节"
+  },
+  "dateAvailable": "2023-12-20 13:00:00",
+  "lastReworkDate": "2023-12-20 13:00:00",
+  "popularity": 115,
+  "baseCost": "25000000000000000000",
+  "baseDamage": "5000000000000",
+  "baseHealth": "43",
+  "graphicId": "21674",
+  "portraitGraphicId": "21679",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1799352000
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    80,
+    540,
+    1065,
+    1715
+  ],
+  "costCurves": {
+    "1": 1.11
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "content_set_id": 37,
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      185,
+      186,
+      187
+    ],
+    "graphic_large": 21676,
+    "graphic_xl": 21677,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      91,
+      78
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 5,
+      "gethit": 6,
+      "koed": 7,
+      "run": 2
+    },
+    "allow_time_gate": "2024-01-01 12:00:00",
+    "available_in_store": "2024-01-08 12:00:00",
+    "time_gate_adventure_id": 1534,
+    "time_gate_variants_ids": [
+      1466,
+      1467,
+      1468
+    ],
+    "time_gate_tier": 1,
+    "silver_chest_type_id": 554,
+    "gold_chest_type_id": 555,
+    "golden_epic_loot_id": 3365,
+    "golden_epic_promo_id": 465,
+    "event_logo_graphic_id": 3377,
+    "console_portrait": 21700,
+    "trials_effect_id": 842,
+    "portrait_graphic_scale": 0.94,
+    "permanent_effects": [
+      "effect_def,1809"
+    ],
+    "weekly_buff": "buff_upgrade,200,13429",
+    "legendary_effect_id": [
+      54,
+      2,
+      5,
+      34,
+      38,
+      49
+    ],
+    "spotlight_url": "https://youtu.be/aZbVnWLfdzo",
+    "notification_adjustment": {
+      "offset": [
+        52,
+        219
+      ],
+      "scale": 1.25
+    }
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Wyll",
+      "display": "威尔"
+    },
+    "class": {
+      "original": "Warlock",
+      "display": "邪术师"
+    },
+    "race": {
+      "original": "Human",
+      "display": "人类"
+    },
+    "age": 24,
+    "alignment": {
+      "original": "Neutral Good",
+      "display": "中立善良"
+    },
+    "abilityScores": {
+      "str": 9,
+      "dex": 13,
+      "con": 15,
+      "int": 14,
+      "wis": 11,
+      "cha": 16
+    },
+    "backstory": {
+      "original": "From a scion of a famed Baldurian house to a life of adventure on the road, Wyll's life as the monster hunter called the Blade of Frontiers has made him one of the beating hearts of the Sword Coast. While he has done great deeds for the Coast's people, the source of his power remains secret. The cambion Mizora drew Wyll into a warlock's pact in a moment with many lives at stake, and cursed him with the duty of hunting her enemies. Mizora only asks Wyll to sacrifice devilish creatures to her, but a cambion's ambitions are ever fickle, and Wyll wishes to escape the pact before its price grows cruel.",
+      "display": "从声名显赫的博德人家族后裔，到颠沛流离的冒险家——威尔被称为“前线之刃”，怪物猎人的生活使他成为剑湾的重要人物之一。尽管为剑湾做出过伟大贡献，他的力量来源却始终成谜。在众多生命危在旦夕之际，魔裔米佐拉引诱威尔签订了邪术师的契约，使他背负上为她追杀敌人的诅咒。米佐拉只要求威尔献祭魔鬼生物，但魔裔的心思向来变化无常，所以威尔期望着能在代价越来越残酷之前摆脱这份契约。"
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "708",
+      "name": {
+        "original": "Blade & Blast",
+        "display": "剑刃与爆炸"
+      },
+      "description": {
+        "original": "Wyll stabs the closest foe, then casts Eldritch Blast on the lowest health enemy.",
+        "display": "威尔戳刺最近的敌人，随后对生命值最低的敌人施放魔能爆弹。"
+      },
+      "longDescription": null,
+      "cooldown": 5,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "front",
+      "damageTypes": [
+        "melee",
+        "magic"
+      ],
+      "tags": [
+        "melee",
+        "ranged"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "special_melee": "wyll",
+          "target_offset": [
+            -200,
+            0
+          ],
+          "seq_chargeloop": 1,
+          "attack_sounds": {
+            "melee": 179,
+            "eb": 184
+          }
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "709",
+      "name": {
+        "original": "Mizora",
+        "display": "米佐拉"
+      },
+      "description": {
+        "original": "Mizora causes Wyll to attack faster and deal ultimate damage for 15 seconds.",
+        "display": "米佐拉令瓦尔更迅速地进行攻击并造成杀招伤害，持续 15 秒。"
+      },
+      "longDescription": {
+        "original": "Wyll's patron Mizora appears behind him for 15 seconds, increasing his attack rate and making him deal ultimate damage for the duration.",
+        "display": "赞助者米佐拉出现在瓦尔的背后，提高瓦尔的攻击速度并令他造成杀招伤害，持续 15 秒。"
+      },
+      "cooldown": 400,
+      "numTargets": 0,
+      "aoeRadius": 0,
+      "damageModifier": "0.03",
+      "target": "none",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ultimate"
+      ],
+      "graphicId": "21729",
+      "animations": [
+        {
+          "type": "ultimate_attack",
+          "ultimate": "wyll",
+          "no_damage_display": true
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "13429",
+        "name": {
+          "original": "Folk Hero",
+          "display": "民间英雄"
+        },
+        "description": {
+          "original": "Wyll increases the damage of Champions that belong to the most represented race, class, or affiliation(s).",
+          "display": "威尔为阵型中最具代表性种族、职业或从属组织的勇士提升伤害。"
+        },
+        "graphicId": "21720"
+      },
+      {
+        "upgradeId": "13430",
+        "name": {
+          "original": "Ceremorphosis",
+          "display": "蜕变"
+        },
+        "description": null,
+        "graphicId": "21719"
+      },
+      {
+        "upgradeId": "13431",
+        "name": {
+          "original": "A Heartless Contract",
+          "display": "无情的契约"
+        },
+        "description": {
+          "original": "Fiends are Wyll's Favored Foes and he increases the damage of all Champions when attacking them",
+          "display": "炼狱生物是威尔的偏好对手，且威尔会提升所有勇士在攻击炼狱生物时的伤害。"
+        },
+        "graphicId": "21721"
+      },
+      {
+        "upgradeId": "13432",
+        "name": {
+          "original": "Bravado",
+          "display": "虚张声势"
+        },
+        "description": null,
+        "graphicId": "21718"
+      },
+      {
+        "upgradeId": "13436",
+        "name": {
+          "original": "Mizora",
+          "display": "米佐拉"
+        },
+        "description": null,
+        "graphicId": "813"
+      }
+    ]
+  },
+  "upgrades": [
+    {
+      "id": "13429",
+      "requiredLevel": 10,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Folk Hero",
+        "display": "民间英雄"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1975",
+      "effectDefinition": {
+        "id": "1975",
+        "snapshots": {
+          "original": {
+            "id": 1975,
+            "flavour_text": "",
+            "description": {
+              "desc": "Wyll increases the damage of all Champions that belong to the most represented species, class, or affiliation(s) in the formation by $(amount)%. If there is a tie, all tied groups gain the buff, and Champions who are part of several groups can gain multiple stacks of the buff (up to a max of $(max_stacks___2) stacks), stacking multiplicatively. Buffs apply to the pre-stack value.",
+              "post": {
+                "conditions": [
+                  {
+                    "condition": "not static_desc",
+                    "desc": "^^Most Represented^Species: $(most_common_race)^Class: $(most_common_class)^Affiliation: $(most_common_affiliation)"
+                  }
+                ]
+              }
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack_amount,400",
+                "skip_effect_key_desc": true
+              },
+              {
+                "off_when_benched": true,
+                "effect_string": "hero_dps_multiplier_mult,0",
+                "amount_expr": "upgrade_amount(13429,0)",
+                "targets": [
+                  "all"
+                ],
+                "show_stacks": true,
+                "show_stats_on_owner": false,
+                "show_stats_on_receiver": true,
+                "show_bonus_on_receiver_only": true,
+                "amount_func": "mult",
+                "max_stacks": 4,
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "get_num_most_common_affiliations + get_num_most_common_races + get_num_most_common_classes + as_int(GetUpgradeUnlocked(15033))",
+                "post_process_expr": "min(input,max_stacks)",
+                "per_hero_targets": [
+                  "effect_key_slot"
+                ],
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "feat_changed",
+                  "upgrade_unlocked"
+                ],
+                "use_computed_amount_for_description": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 21724,
+            "large_graphic_id": 21720,
+            "properties": {
+              "is_formation_ability": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 1975,
+            "flavour_text": "",
+            "description": {
+              "desc": "威尔为阵型中最具代表性种族、职业或从属组织的所有勇士提升 $(amount)% 伤害。如果存在相同团队，所有相同团体均会获得增益，而这些团体中的勇士可获得复数堆叠的增益（最高 $(max_stacks___2) 层堆叠），以乘算方式堆叠。增益作用于堆叠前的数值。",
+              "post": {
+                "conditions": [
+                  {
+                    "condition": "not static_desc",
+                    "desc": "^^最具代表性^种族：$(most_common_race)^职业：$(most_common_class)^从属组织：$(most_common_affiliation)"
+                  }
+                ]
+              }
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack_amount,400",
+                "skip_effect_key_desc": true
+              },
+              {
+                "off_when_benched": true,
+                "effect_string": "hero_dps_multiplier_mult,0",
+                "amount_expr": "upgrade_amount(13429,0)",
+                "targets": [
+                  "all"
+                ],
+                "show_stacks": true,
+                "show_stats_on_owner": false,
+                "show_stats_on_receiver": true,
+                "show_bonus_on_receiver_only": true,
+                "amount_func": "mult",
+                "max_stacks": 4,
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "get_num_most_common_affiliations + get_num_most_common_races + get_num_most_common_classes + as_int(GetUpgradeUnlocked(15033))",
+                "post_process_expr": "min(input,max_stacks)",
+                "per_hero_targets": [
+                  "effect_key_slot"
+                ],
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "feat_changed",
+                  "upgrade_unlocked"
+                ],
+                "use_computed_amount_for_description": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 21724,
+            "large_graphic_id": 21720,
+            "properties": {
+              "is_formation_ability": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Wyll increases the damage of Champions that belong to the most represented species, class, or affiliation(s).",
+        "display": "威尔为阵型中最具代表性种族、职业或从属组织的勇士提升伤害。"
+      }
+    },
+    {
+      "id": "13884",
+      "requiredLevel": 20,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13885",
+      "requiredLevel": 30,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13430",
+      "requiredLevel": 40,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Ceremorphosis",
+        "display": "蜕变"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1793",
+      "effectDefinition": {
+        "id": "1793",
+        "snapshots": {
+          "original": {
+            "id": 1793,
+            "flavour_text": "",
+            "description": {
+              "desc": "Your formation gains one Ceremorphosis stack due to the mind flayer tadpole in Wyll's brain. Wyll increases the effect of $(upgrade_name id___2) by $(amount)% for each Ceremorphosis stack, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack_amount,100"
+              },
+              {
+                "off_when_benched": true,
+                "effect_string": "buff_upgrade,0,13429",
+                "amount_expr": "upgrade_amount(13430,0)",
+                "stack_func": "per_ceremorphosis_stacks",
+                "amount_func": "mult",
+                "stacks_multiply": true,
+                "show_bonus": true,
+                "stack_title": "Total Ceremorphosis Stacks",
+                "total_title": "Total Bonus",
+                "desc_forced_order": 2,
+                "amount_updated_listeners": [
+                  "upgrade_unlocked",
+                  "slot_changed",
+                  "feat_changed",
+                  "effect_key_changed"
+                ],
+                "changing_effect_keys": [
+                  "ceremorphosis_stacks_mult"
+                ]
+              },
+              {
+                "off_when_benched": true,
+                "outgoing_buffs": false,
+                "effect_string": "wyll_ceremorphosis_stacks,1",
+                "manual_stacking": true,
+                "stacks_multiply": false,
+                "show_stacks": true,
+                "stack_title": "Wyll Ceremorphosis Stacks",
+                "desc_forced_order": 1
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 21723,
+            "large_graphic_id": 21719,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "retain_on_slot_changed": true
+            }
+          },
+          "display": {
+            "id": 1793,
+            "flavour_text": "",
+            "description": {
+              "desc": "威尔大脑中的夺心魔蝌蚪使你的阵型获得一层“蜕变”堆叠。每层“蜕变”均使威尔 $(upgrade_name id___2) 的效果提高 $(amount)%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack_amount,100"
+              },
+              {
+                "off_when_benched": true,
+                "effect_string": "buff_upgrade,0,13429",
+                "amount_expr": "upgrade_amount(13430,0)",
+                "stack_func": "per_ceremorphosis_stacks",
+                "amount_func": "mult",
+                "stacks_multiply": true,
+                "show_bonus": true,
+                "stack_title": "总蜕变堆叠",
+                "total_title": "总加成",
+                "desc_forced_order": 2,
+                "amount_updated_listeners": [
+                  "upgrade_unlocked",
+                  "slot_changed",
+                  "feat_changed",
+                  "effect_key_changed"
+                ],
+                "changing_effect_keys": [
+                  "ceremorphosis_stacks_mult"
+                ]
+              },
+              {
+                "off_when_benched": true,
+                "outgoing_buffs": false,
+                "effect_string": "wyll_ceremorphosis_stacks,1",
+                "manual_stacking": true,
+                "stacks_multiply": false,
+                "show_stacks": true,
+                "stack_title": "威尔蜕变堆叠",
+                "desc_forced_order": 1
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 21723,
+            "large_graphic_id": 21719,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "retain_on_slot_changed": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13886",
+      "requiredLevel": 50,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,13429",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13431",
+      "requiredLevel": 60,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "A Heartless Contract",
+        "display": "无情的契约"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1794",
+      "effectDefinition": {
+        "id": "1794",
+        "snapshots": {
+          "original": {
+            "id": 1794,
+            "flavour_text": "",
+            "description": {
+              "desc": "$(sources_favored_foe_list_and fiend) are Wyll's Favored Foes. All Champions deal $(amount)% more damage against Wyll's Favored Foes."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "increase_damage_against_monster,400",
+                "monster_is_favored_foe_of_effect_owner": true,
+                "targets": [
+                  "all"
+                ],
+                "off_when_benched": true,
+                "override_key_desc": "$target does $amount% more damage against Wyll's Favored Foes"
+              },
+              {
+                "off_when_benched": true,
+                "effect_string": "favored_foe,fiend"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 21725,
+            "large_graphic_id": 21721,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 1794,
+            "flavour_text": "",
+            "description": {
+              "desc": "$(sources_favored_foe_list_and fiend)是威尔的偏好对手。所有勇士对威尔的偏好对手造成 $(amount)% 额外伤害"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "increase_damage_against_monster,400",
+                "monster_is_favored_foe_of_effect_owner": true,
+                "targets": [
+                  "all"
+                ],
+                "off_when_benched": true,
+                "override_key_desc": "$target 对威尔的偏好对手造成 $amount% 额外伤害"
+              },
+              {
+                "off_when_benched": true,
+                "effect_string": "favored_foe,fiend"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 21725,
+            "large_graphic_id": 21721,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Fiends are Wyll's Favored Foes and all Champions deal increased damage to them",
+        "display": "炼狱生物是威尔的偏好对手，所有勇士对这些敌人造成更高伤害"
+      }
+    },
+    {
+      "id": "13436",
+      "requiredLevel": 70,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Mizora",
+        "display": "米佐拉"
+      },
+      "upgradeType": "unlock_ultimate",
+      "effectReference": "set_ultimate_attack",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13887",
+      "requiredLevel": 80,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13432",
+      "requiredLevel": 90,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Bravado",
+        "display": "虚张声势"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1795",
+      "effectDefinition": {
+        "id": "1795",
+        "snapshots": {
+          "original": {
+            "id": 1795,
+            "flavour_text": "",
+            "description": {
+              "desc": "Each time an enemy or distraction is defeated, Wyll increases the effect of $(upgrade_name id) by $(not_buffed amount)%, stacking multiplicatively up to $(max_stacks) times, until the area changes."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,25,13429",
+                "show_bonus": true,
+                "stacks_multiply": true,
+                "max_stacks": 10,
+                "more_triggers": [
+                  {
+                    "trigger": "monster_killed",
+                    "action": {
+                      "type": "add_stack"
+                    }
+                  },
+                  {
+                    "trigger": "distraction_clicked",
+                    "action": {
+                      "type": "add_stack"
+                    }
+                  },
+                  {
+                    "trigger": "area_changed",
+                    "action": {
+                      "type": "reset_stacks"
+                    }
+                  }
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 21722,
+            "large_graphic_id": 21718,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 1795,
+            "flavour_text": "",
+            "description": {
+              "desc": "每次击败敌人或干扰物，威尔提升$(upgrade_name id)的效果 $(not_buffed amount)%，以乘算方式堆叠最多 $(max_stacks) 层，持续到区域更改为止。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,25,13429",
+                "show_bonus": true,
+                "stacks_multiply": true,
+                "max_stacks": 10,
+                "more_triggers": [
+                  {
+                    "trigger": "monster_killed",
+                    "action": {
+                      "type": "add_stack"
+                    }
+                  },
+                  {
+                    "trigger": "distraction_clicked",
+                    "action": {
+                      "type": "add_stack"
+                    }
+                  },
+                  {
+                    "trigger": "area_changed",
+                    "action": {
+                      "type": "reset_stacks"
+                    }
+                  }
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 21722,
+            "large_graphic_id": 21718,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13433",
+      "requiredLevel": 110,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Pact of the Blade",
+        "display": "刃之契"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1796",
+      "effectDefinition": {
+        "id": "1796",
+        "snapshots": {
+          "original": {
+            "id": 1796,
+            "flavour_text": "",
+            "description": {
+              "desc": "Wyll increases the effect of $(upgrade_name upgrade_id) by $(amount)% on Champions with a Melee base attack."
+            },
+            "effect_keys": [
+              {
+                "off_when_benched": true,
+                "effect_string": "buff_incoming_upgrade,200,13429",
+                "optional_effect_index": 1,
+                "targets": [
+                  "all"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "affected_by_upgrade",
+                    "upgrade_id": 13429
+                  },
+                  {
+                    "type": "attack_type",
+                    "attack": "melee"
+                  }
+                ],
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "attack_changed"
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": false,
+              "spec_option_post_apply_info": "Melee Champions: $num_targets"
+            }
+          },
+          "display": {
+            "id": 1796,
+            "flavour_text": "",
+            "description": {
+              "desc": "威尔令使用近战基本攻击的勇士身上的$(upgrade_name upgrade_id)效果提高 $(amount)%。"
+            },
+            "effect_keys": [
+              {
+                "off_when_benched": true,
+                "effect_string": "buff_incoming_upgrade,200,13429",
+                "optional_effect_index": 1,
+                "targets": [
+                  "all"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "affected_by_upgrade",
+                    "upgrade_id": 13429
+                  },
+                  {
+                    "type": "attack_type",
+                    "attack": "melee"
+                  }
+                ],
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "attack_changed"
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "formation_circle_icon": false,
+              "spec_option_post_apply_info": "近战勇士：$num_targets"
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Pact of the Blade",
+        "display": "刃之契"
+      },
+      "specializationDescription": {
+        "original": "Wyll focuses on his blade and empowers his allies with a Melee attack.",
+        "display": "威尔集中精力到自己的利刃，为自己的盟友提供近战攻击强化。"
+      },
+      "specializationGraphicId": "21726",
+      "tipText": null
+    },
+    {
+      "id": "13434",
+      "requiredLevel": 110,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Pact of the Chain",
+        "display": "锁链之契"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1797",
+      "effectDefinition": {
+        "id": "1797",
+        "snapshots": {
+          "original": {
+            "id": 1797,
+            "flavour_text": "",
+            "description": {
+              "desc": "Wyll increases the effect of Folk Hero by $(not_buffed amount)% for each Familiar assigned to his party, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "off_when_benched": true,
+                "effect_string": "buff_upgrade,10,13429",
+                "stack_func": "per_familiar_in_play",
+                "amount_func": "mult",
+                "stacks_multiply": true,
+                "show_bonus": true,
+                "amount_updated_listeners": [
+                  "familiar_changed"
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": false,
+              "spec_option_post_apply_info": "Assigned Familiars: $num_stacks"
+            }
+          },
+          "display": {
+            "id": 1797,
+            "flavour_text": "",
+            "description": {
+              "desc": "每个分配到自己队伍的魔宠均使威尔的“民间英雄”效果提高 $(not_buffed amount)%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "off_when_benched": true,
+                "effect_string": "buff_upgrade,10,13429",
+                "stack_func": "per_familiar_in_play",
+                "amount_func": "mult",
+                "stacks_multiply": true,
+                "show_bonus": true,
+                "amount_updated_listeners": [
+                  "familiar_changed"
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": false,
+              "spec_option_post_apply_info": "已配备魔宠：$num_stacks"
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Pact of the Chain",
+        "display": "锁链之契"
+      },
+      "specializationDescription": {
+        "original": "Wyll's abilities increase with the number of Familiars assigned to the party.",
+        "display": "威尔的技能根据队伍中配备的魔宠获得提升。"
+      },
+      "specializationGraphicId": "21727",
+      "tipText": null
+    },
+    {
+      "id": "13435",
+      "requiredLevel": 110,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Pact of the Tome",
+        "display": "书卷之契"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1798",
+      "effectDefinition": {
+        "id": "1798",
+        "snapshots": {
+          "original": {
+            "id": 1798,
+            "flavour_text": "",
+            "description": {
+              "desc": "Wyll increases the effect of Folk Hero by $(not_buffed amount)% for each Champion in the formation with a Magic base attack, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "off_when_benched": true,
+                "effect_string": "buff_upgrade,25,13429",
+                "amount_func": "mult",
+                "show_bonus": true,
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "has_base_attack_dmg_type_magic",
+                "per_hero_targets": [
+                  "all"
+                ],
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "feat_changed",
+                  "attack_changed"
+                ],
+                "use_computed_amount_for_description": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": false,
+              "spec_option_post_apply_info": "Magic Champions: $num_stacks"
+            }
+          },
+          "display": {
+            "id": 1798,
+            "flavour_text": "",
+            "description": {
+              "desc": "阵型中每有一位魔法基本攻击的勇士，均使威尔的“民间英雄”效果提高 $(not_buffed amount)%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "off_when_benched": true,
+                "effect_string": "buff_upgrade,25,13429",
+                "amount_func": "mult",
+                "show_bonus": true,
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "has_base_attack_dmg_type_magic",
+                "per_hero_targets": [
+                  "all"
+                ],
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "feat_changed",
+                  "attack_changed"
+                ],
+                "use_computed_amount_for_description": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": false,
+              "spec_option_post_apply_info": "魔法勇士：$num_stacks"
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Pact of the Tome",
+        "display": "书卷之契"
+      },
+      "specializationDescription": {
+        "original": "Wyll's magic strengthens with each ally that has a Magical attack.",
+        "display": "威尔的魔法会随使用魔法攻击的盟友人数增加而得到强化。"
+      },
+      "specializationGraphicId": "21728",
+      "tipText": null
+    },
+    {
+      "id": "13889",
+      "requiredLevel": 120,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13890",
+      "requiredLevel": 140,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13888",
+      "requiredLevel": 160,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,13429",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13892",
+      "requiredLevel": 180,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13893",
+      "requiredLevel": 200,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13894",
+      "requiredLevel": 220,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13895",
+      "requiredLevel": 270,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13896",
+      "requiredLevel": 290,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13897",
+      "requiredLevel": 310,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13437",
+      "requiredLevel": 350,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,13429",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13899",
+      "requiredLevel": 360,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13900",
+      "requiredLevel": 430,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13902",
+      "requiredLevel": 460,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13903",
+      "requiredLevel": 470,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13904",
+      "requiredLevel": 510,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13898",
+      "requiredLevel": 530,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,13429",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13906",
+      "requiredLevel": 560,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13907",
+      "requiredLevel": 580,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13908",
+      "requiredLevel": 610,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13901",
+      "requiredLevel": 620,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,13429",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13910",
+      "requiredLevel": 660,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13911",
+      "requiredLevel": 710,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13913",
+      "requiredLevel": 760,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13914",
+      "requiredLevel": 770,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13915",
+      "requiredLevel": 830,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13905",
+      "requiredLevel": 840,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,13429",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13917",
+      "requiredLevel": 870,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13918",
+      "requiredLevel": 900,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13919",
+      "requiredLevel": 970,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13920",
+      "requiredLevel": 980,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13909",
+      "requiredLevel": 1070,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,13429",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13923",
+      "requiredLevel": 1090,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13924",
+      "requiredLevel": 1100,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13926",
+      "requiredLevel": 1270,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13927",
+      "requiredLevel": 1290,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13891",
+      "requiredLevel": 1310,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,13429",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13929",
+      "requiredLevel": 1380,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13930",
+      "requiredLevel": 1430,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13932",
+      "requiredLevel": 1450,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13438",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,13430",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13439",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,13431",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13440",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,13432",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13441",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": {
+        "original": "Buff",
+        "display": "增益"
+      },
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrades,100,13433,13434,13435",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13912",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,13429",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13916",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,13429",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13921",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,13429",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13922",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,13429",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13925",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,13429",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13928",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,13429",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "13931",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,13429",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    }
+  ],
+  "feats": [
+    {
+      "id": "1600",
+      "order": 1,
+      "name": {
+        "original": "Selflessness",
+        "display": "无私"
+      },
+      "description": {
+        "original": "I'd give my life to protect the frontiers. Some say I've already given more.",
+        "display": "我会将自己的人生奉献给便将。有人说，我已经给予出了更难多。"
+      },
+      "rarity": "2",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "1601",
+      "order": 2,
+      "name": {
+        "original": "Inspiring Leader",
+        "display": "鼓舞人心的首领"
+      },
+      "description": {
+        "original": "It's not the blade you wield that matters. It's the people you defend with it.",
+        "display": "重要的不是你佩带的利刃。而是你用利刃保护着的人。"
+      },
+      "rarity": "3",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,25"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "1602",
+      "order": 3,
+      "name": {
+        "original": "Team Player",
+        "display": "团队精神"
+      },
+      "description": {
+        "original": "The only way we'll survive is by working together.",
+        "display": "我们活下去的唯一办法就是通力合作。"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,13429"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "1603",
+      "order": 4,
+      "name": {
+        "original": "Renowned Heroes",
+        "display": "知名英雄"
+      },
+      "description": {
+        "original": "They will tell our story up and down the Sword Coast!",
+        "display": "他们会在整个剑湾传诵我们的故事！"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,13429"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "1604",
+      "order": 5,
+      "name": {
+        "original": "Creeping Presence",
+        "display": "可怖存在"
+      },
+      "description": {
+        "original": "Something's lurking in my mind. I can feel it.",
+        "display": "有东西潜伏在我脑子里。我能感觉得到。"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,13430"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "1605",
+      "order": 6,
+      "name": {
+        "original": "Illithid Connection",
+        "display": "灵吸怪联结"
+      },
+      "description": {
+        "original": "Those visions... did you see them too?",
+        "display": "那些幻像……你们也看到了吗？"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,13430"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "1606",
+      "order": 7,
+      "name": {
+        "original": "Fulfilling the Pact",
+        "display": "履行契约"
+      },
+      "description": {
+        "original": "I must do what my patron demands. That is all I can say.",
+        "display": "我必须做我赞助者要求的事情。我能说的就这些。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,13431"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "1607",
+      "order": 8,
+      "name": {
+        "original": "Become Legend",
+        "display": "成为传奇"
+      },
+      "description": {
+        "original": "One day, all Baldurians will know the Blade of Frontiers!",
+        "display": "总有一天，所有博德人都会知道“前线之刃”的大名！"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,13432"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "1608",
+      "order": 9,
+      "name": {
+        "original": "Near Myth",
+        "display": "近乎神话"
+      },
+      "description": {
+        "original": "Listen - the bards sing of my legend!",
+        "display": "听啊——吟游诗人在歌唱我的传奇！"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,13432"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "1609",
+      "order": 10,
+      "name": {
+        "original": "Mizora's Chosen",
+        "display": "米佐拉精英"
+      },
+      "description": {
+        "original": "With this power, nothing can stand in my way.",
+        "display": "有此等力量，我将无人可挡。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,40,13433,13434,13435"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "1610",
+      "order": 11,
+      "name": {
+        "original": "The Heartless",
+        "display": "无情者"
+      },
+      "description": {
+        "original": "Nothing with a heart - that was the deal.",
+        "display": "禁止有心，立此为约。"
+      },
+      "rarity": "3",
+      "graphicId": "22023",
+      "effects": [
+        {
+          "effect_string": "effect_def,1846"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "1611",
+      "order": 12,
+      "name": {
+        "original": "The Soulless",
+        "display": "无魂者"
+      },
+      "description": {
+        "original": "Wretched things. I'll be your end!",
+        "display": "可怜的东西。我会是你的末日！"
+      },
+      "rarity": "3",
+      "graphicId": "22023",
+      "effects": [
+        {
+          "effect_string": "effect_def,1847"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "1612",
+      "order": 13,
+      "name": {
+        "original": "Distracting Imps",
+        "display": "分心的小魔鬼"
+      },
+      "description": {
+        "original": "We're being followed. I can feel it.",
+        "display": "我们被人跟踪了。我能感觉得到。"
+      },
+      "rarity": "4",
+      "graphicId": "22024",
+      "effects": [
+        {
+          "effect_string": "effect_def,1848"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 360
+        }
+      ],
+      "properties": {
+        "is_premium": true,
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "1613",
+      "order": 14,
+      "name": {
+        "original": "Athlete",
+        "display": "运动员"
+      },
+      "description": {
+        "original": "Not all my skills are gifts from the Hells.",
+        "display": "我的本事，可不都是来自地狱的赠礼。"
+      },
+      "rarity": "3",
+      "graphicId": "6073",
+      "effects": [
+        {
+          "effect_string": "increase_ability_score,str,1"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "1897",
+      "order": 15,
+      "name": {
+        "original": "Mizora's Pawn",
+        "display": "米佐拉的棋子"
+      },
+      "description": {
+        "original": "'Quite the handsome devil, if I do say so.' ~ Mizora",
+        "display": "“要我说的话，那还真是个英俊的魔鬼。”——米佐拉"
+      },
+      "rarity": "4",
+      "graphicId": "21658",
+      "effects": [
+        {
+          "effect_string": "add_hero_tags,0,tiefling",
+          "description": "Wyll also counts as Tiefling"
+        },
+        {
+          "effect_string": "buff_upgrade,80,13429"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 486
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1730314800
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "2141",
+      "order": 16,
+      "name": {
+        "original": "Duke's Pride",
+        "display": "公爵的自尊"
+      },
+      "description": {
+        "original": "He is our shield, as I am his blade. Together, we protect the people of Baldur's Gate.",
+        "display": "他是我们的盾牌，我是他的利刃。我们一起保护博德之门的人民。"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,13429"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000,
+          "start_date": "2025-08-28 12:00:00"
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 574
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1748458800
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "2445",
+      "order": 17,
+      "name": {
+        "original": "Psychic Link",
+        "display": "精神联系"
+      },
+      "description": {
+        "original": "I feel its power awakening within, and I sense Mizora's growing terror.",
+        "display": "我能感觉到它的力量正在体内苏醒，也察觉到米佐拉正越来越恐惧。"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,13430"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000,
+          "start_date": "2026-04-14 12:00:00"
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 663
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1768420800,
+        "available_for_gems_at_time": 1776193200
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "663",
+        "cost": 1680
+      }
+    }
+  ],
+  "skins": [
+    {
+      "id": "388",
+      "name": {
+        "original": "Mind Flayer Wyll",
+        "display": "夺心魔威尔"
+      },
+      "cost": {
+        "req_date": "2023-12-20 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 22145,
+        "large_graphic_id": 22147,
+        "portrait_graphic_id": 22168,
+        "xl_graphic_id": 22148,
+        "mizora_graphic_id": 22146
+      },
+      "rarity": "3",
+      "properties": {
+        "is_premium": true,
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 1353,
+        "odds": 102
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    },
+    {
+      "id": "477",
+      "name": {
+        "original": "Devil Wyll",
+        "display": "魔鬼瓦尔"
+      },
+      "cost": {
+        "req_date": "2024-10-30 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 24950,
+        "large_graphic_id": 24956,
+        "portrait_graphic_id": 24940,
+        "xl_graphic_id": 24962
+      },
+      "rarity": "3",
+      "properties": {
+        "notification_adjustment_override": {
+          "offset": [
+            52,
+            214
+          ],
+          "scale": 1.25
+        },
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 1644,
+        "odds": 160
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    },
+    {
+      "id": "556",
+      "name": {
+        "original": "Prodigal Son Wyll",
+        "display": "回头浪子瓦尔"
+      },
+      "cost": {
+        "req_date": "2025-05-28 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 26842,
+        "large_graphic_id": 26843,
+        "portrait_graphic_id": 26841,
+        "xl_graphic_id": 26844
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "574",
+        "cost": 1680
+      },
+      "availabilities": {
+        "premium_item_id": "574"
+      }
+    },
+    {
+      "id": "647",
+      "name": {
+        "original": "Blade of the North Wyll",
+        "display": "北方之刃瓦尔"
+      },
+      "cost": {
+        "req_date": "2026-01-14 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 28599,
+        "large_graphic_id": 28600,
+        "portrait_graphic_id": 28603,
+        "xl_graphic_id": 28601,
+        "mizora_graphic_id": 28602
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "663",
+        "cost": 1680
+      },
+      "availabilities": {
+        "premium_item_id": "663"
+      }
+    }
+  ],
+  "raw": {
+    "hero": {
+      "original": {
+        "id": 142,
+        "name": "Wyll",
+        "english_name": "Wyll",
+        "seat_id": 12,
+        "base_cost": "25000000000000000000",
+        "base_damage": "5000000000000",
+        "base_health": "43",
+        "cost_curves": {
+          "1": 1.11
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 708,
+        "ultimate_attack_id": 709,
+        "graphic_id": 21674,
+        "portrait_graphic_id": 21679,
+        "character_sheet_details": {
+          "full_name": "Wyll",
+          "class": "Warlock",
+          "race": "Human",
+          "age": 24,
+          "alignment": "Neutral Good",
+          "ability_scores": {
+            "str": 9,
+            "dex": 13,
+            "con": 15,
+            "int": 14,
+            "wis": 11,
+            "cha": 16
+          },
+          "backstory": "From a scion of a famed Baldurian house to a life of adventure on the road, Wyll's life as the monster hunter called the Blade of Frontiers has made him one of the beating hearts of the Sword Coast. While he has done great deeds for the Coast's people, the source of his power remains secret. The cambion Mizora drew Wyll into a warlock's pact in a moment with many lives at stake, and cursed him with the duty of hunting her enemies. Mizora only asks Wyll to sacrifice devilish creatures to her, but a cambion's ambitions are ever fickle, and Wyll wishes to escape the pact before its price grows cruel.",
+          "system_description": "Wyll is a human warlock that supports Champions belonging to the most represented species, class, or affiliation in the formation."
+        },
+        "default_feat_slot_unlocks": [
+          80,
+          540,
+          1065,
+          1715
+        ],
+        "tags": [
+          "male",
+          "human",
+          "warlock",
+          "neutral",
+          "good",
+          "support",
+          "absoluteadversaries",
+          "event",
+          "y7",
+          "hunter",
+          "hunter_fiend",
+          "lcneutral"
+        ],
+        "properties": {
+          "content_set_id": 37,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            185,
+            186,
+            187
+          ],
+          "graphic_large": 21676,
+          "graphic_xl": 21677,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            91,
+            78
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 5,
+            "gethit": 6,
+            "koed": 7,
+            "run": 2
+          },
+          "allow_time_gate": "2024-01-01 12:00:00",
+          "available_in_store": "2024-01-08 12:00:00",
+          "time_gate_adventure_id": 1534,
+          "time_gate_variants_ids": [
+            1466,
+            1467,
+            1468
+          ],
+          "time_gate_tier": 1,
+          "silver_chest_type_id": 554,
+          "gold_chest_type_id": 555,
+          "golden_epic_loot_id": 3365,
+          "golden_epic_promo_id": 465,
+          "event_logo_graphic_id": 3377,
+          "console_portrait": 21700,
+          "trials_effect_id": 842,
+          "portrait_graphic_scale": 0.94,
+          "permanent_effects": [
+            "effect_def,1809"
+          ],
+          "weekly_buff": "buff_upgrade,200,13429",
+          "legendary_effect_id": [
+            54,
+            2,
+            5,
+            34,
+            38,
+            49
+          ],
+          "spotlight_url": "https://youtu.be/aZbVnWLfdzo",
+          "notification_adjustment": {
+            "offset": [
+              52,
+              219
+            ],
+            "scale": 1.25
+          }
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 1465,
+            "type": "base"
+          },
+          {
+            "adventure_id": 1466,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1467,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1468,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1469,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 1534,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 115,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 13429,
+            "name": "Folk Hero",
+            "description": "Wyll increases the damage of Champions that belong to the most represented race, class, or affiliation(s).",
+            "graphic_id": "21720"
+          },
+          {
+            "upgrade_id": 13430,
+            "name": "Ceremorphosis",
+            "description": "",
+            "graphic_id": "21719"
+          },
+          {
+            "upgrade_id": 13431,
+            "name": "A Heartless Contract",
+            "description": "Fiends are Wyll's Favored Foes and he increases the damage of all Champions when attacking them",
+            "graphic_id": "21721"
+          },
+          {
+            "upgrade_id": 13436,
+            "name": "Mizora",
+            "description": "",
+            "graphic_id": 813
+          },
+          {
+            "upgrade_id": 13432,
+            "name": "Bravado",
+            "description": "",
+            "graphic_id": "21718"
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1799352000,
+        "event_name": "Wintershield",
+        "is_available": true,
+        "date_available": "2023-12-20 13:00:00",
+        "last_rework_date": "2023-12-20 13:00:00"
+      },
+      "display": {
+        "id": 142,
+        "name": "威尔",
+        "english_name": "Wyll",
+        "seat_id": 12,
+        "base_cost": "25000000000000000000",
+        "base_damage": "5000000000000",
+        "base_health": "43",
+        "cost_curves": {
+          "1": 1.11
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 708,
+        "ultimate_attack_id": 709,
+        "graphic_id": 21674,
+        "portrait_graphic_id": 21679,
+        "character_sheet_details": {
+          "full_name": "威尔",
+          "class": "邪术师",
+          "race": "人类",
+          "age": 24,
+          "alignment": "中立善良",
+          "ability_scores": {
+            "str": 9,
+            "dex": 13,
+            "con": 15,
+            "int": 14,
+            "wis": 11,
+            "cha": 16
+          },
+          "backstory": "从声名显赫的博德人家族后裔，到颠沛流离的冒险家——威尔被称为“前线之刃”，怪物猎人的生活使他成为剑湾的重要人物之一。尽管为剑湾做出过伟大贡献，他的力量来源却始终成谜。在众多生命危在旦夕之际，魔裔米佐拉引诱威尔签订了邪术师的契约，使他背负上为她追杀敌人的诅咒。米佐拉只要求威尔献祭魔鬼生物，但魔裔的心思向来变化无常，所以威尔期望着能在代价越来越残酷之前摆脱这份契约。",
+          "system_description": "威尔是一个人类邪术师，支援阵型中具有最具代表性的种族、职业或从属组织的勇士。"
+        },
+        "default_feat_slot_unlocks": [
+          80,
+          540,
+          1065,
+          1715
+        ],
+        "tags": [
+          "male",
+          "human",
+          "warlock",
+          "neutral",
+          "good",
+          "support",
+          "absoluteadversaries",
+          "event",
+          "y7",
+          "hunter",
+          "hunter_fiend",
+          "lcneutral"
+        ],
+        "properties": {
+          "content_set_id": 37,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            185,
+            186,
+            187
+          ],
+          "graphic_large": 21676,
+          "graphic_xl": 21677,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            91,
+            78
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 5,
+            "gethit": 6,
+            "koed": 7,
+            "run": 2
+          },
+          "allow_time_gate": "2024-01-01 12:00:00",
+          "available_in_store": "2024-01-08 12:00:00",
+          "time_gate_adventure_id": 1534,
+          "time_gate_variants_ids": [
+            1466,
+            1467,
+            1468
+          ],
+          "time_gate_tier": 1,
+          "silver_chest_type_id": 554,
+          "gold_chest_type_id": 555,
+          "golden_epic_loot_id": 3365,
+          "golden_epic_promo_id": 465,
+          "event_logo_graphic_id": 3377,
+          "console_portrait": 21700,
+          "trials_effect_id": 842,
+          "portrait_graphic_scale": 0.94,
+          "permanent_effects": [
+            "effect_def,1809"
+          ],
+          "weekly_buff": "buff_upgrade,200,13429",
+          "legendary_effect_id": [
+            54,
+            2,
+            5,
+            34,
+            38,
+            49
+          ],
+          "spotlight_url": "https://youtu.be/aZbVnWLfdzo",
+          "notification_adjustment": {
+            "offset": [
+              52,
+              219
+            ],
+            "scale": 1.25
+          }
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 1465,
+            "type": "base"
+          },
+          {
+            "adventure_id": 1466,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1467,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1468,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1469,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 1534,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 115,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 13429,
+            "name": "民间英雄",
+            "description": "威尔为阵型中最具代表性种族、职业或从属组织的勇士提升伤害。",
+            "graphic_id": "21720"
+          },
+          {
+            "upgrade_id": 13430,
+            "name": "蜕变",
+            "description": "",
+            "graphic_id": "21719"
+          },
+          {
+            "upgrade_id": 13431,
+            "name": "无情的契约",
+            "description": "炼狱生物是威尔的偏好对手，且威尔会提升所有勇士在攻击炼狱生物时的伤害。",
+            "graphic_id": "21721"
+          },
+          {
+            "upgrade_id": 13436,
+            "name": "米佐拉",
+            "description": "",
+            "graphic_id": 813
+          },
+          {
+            "upgrade_id": 13432,
+            "name": "虚张声势",
+            "description": "",
+            "graphic_id": "21718"
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1799352000,
+        "event_name": "冬盾节",
+        "is_available": true,
+        "date_available": "2023-12-20 13:00:00",
+        "last_rework_date": "2023-12-20 13:00:00"
+      }
+    },
+    "attacks": [
+      {
+        "id": "708",
+        "snapshots": {
+          "original": {
+            "id": 708,
+            "name": "Blade & Blast",
+            "description": "Wyll stabs the closest foe, then casts Eldritch Blast on the lowest health enemy.",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 5,
+            "animations": [
+              {
+                "type": "melee_attack",
+                "special_melee": "wyll",
+                "target_offset": [
+                  -200,
+                  0
+                ],
+                "seq_chargeloop": 1,
+                "attack_sounds": {
+                  "melee": 179,
+                  "eb": 184
+                }
+              }
+            ],
+            "tags": [
+              "melee",
+              "ranged"
+            ],
+            "damage_types": [
+              "melee",
+              "magic"
+            ]
+          },
+          "display": {
+            "id": 708,
+            "name": "剑刃与爆炸",
+            "description": "威尔戳刺最近的敌人，随后对生命值最低的敌人施放魔能爆弹。",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 5,
+            "animations": [
+              {
+                "type": "melee_attack",
+                "special_melee": "wyll",
+                "target_offset": [
+                  -200,
+                  0
+                ],
+                "seq_chargeloop": 1,
+                "attack_sounds": {
+                  "melee": 179,
+                  "eb": 184
+                }
+              }
+            ],
+            "tags": [
+              "melee",
+              "ranged"
+            ],
+            "damage_types": [
+              "melee",
+              "magic"
+            ]
+          }
+        }
+      },
+      {
+        "id": "709",
+        "snapshots": {
+          "original": {
+            "id": 709,
+            "name": "Mizora",
+            "description": "Mizora causes Wyll to attack faster and deal ultimate damage for 15 seconds.",
+            "long_description": "Wyll's patron Mizora appears behind him for 15 seconds, increasing his attack rate and making him deal ultimate damage for the duration.",
+            "graphic_id": 21729,
+            "target": "none",
+            "num_targets": 0,
+            "aoe_radius": 0,
+            "damage_modifier": 0.03,
+            "cooldown": 400,
+            "animations": [
+              {
+                "type": "ultimate_attack",
+                "ultimate": "wyll",
+                "no_damage_display": true
+              }
+            ],
+            "tags": [
+              "ultimate"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          },
+          "display": {
+            "id": 709,
+            "name": "米佐拉",
+            "description": "米佐拉令瓦尔更迅速地进行攻击并造成杀招伤害，持续 15 秒。",
+            "long_description": "赞助者米佐拉出现在瓦尔的背后，提高瓦尔的攻击速度并令他造成杀招伤害，持续 15 秒。",
+            "graphic_id": 21729,
+            "target": "none",
+            "num_targets": 0,
+            "aoe_radius": 0,
+            "damage_modifier": 0.03,
+            "cooldown": 400,
+            "animations": [
+              {
+                "type": "ultimate_attack",
+                "ultimate": "wyll",
+                "no_damage_display": true
+              }
+            ],
+            "tags": [
+              "ultimate"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          }
+        }
+      }
+    ],
+    "upgrades": [
+      {
+        "id": "13429",
+        "snapshots": {
+          "original": {
+            "id": 13429,
+            "hero_id": 142,
+            "required_level": 10,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1975",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Folk Hero",
+            "tip_text": "Wyll increases the damage of Champions that belong to the most represented species, class, or affiliation(s)."
+          },
+          "display": {
+            "id": 13429,
+            "hero_id": 142,
+            "required_level": 10,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1975",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "民间英雄",
+            "tip_text": "威尔为阵型中最具代表性种族、职业或从属组织的勇士提升伤害。"
+          }
+        }
+      },
+      {
+        "id": "13430",
+        "snapshots": {
+          "original": {
+            "id": 13430,
+            "hero_id": 142,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1793",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Ceremorphosis"
+          },
+          "display": {
+            "id": 13430,
+            "hero_id": 142,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1793",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "蜕变"
+          }
+        }
+      },
+      {
+        "id": "13431",
+        "snapshots": {
+          "original": {
+            "id": 13431,
+            "hero_id": 142,
+            "required_level": 60,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1794",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "A Heartless Contract",
+            "tip_text": "Fiends are Wyll's Favored Foes and all Champions deal increased damage to them"
+          },
+          "display": {
+            "id": 13431,
+            "hero_id": 142,
+            "required_level": 60,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1794",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "无情的契约",
+            "tip_text": "炼狱生物是威尔的偏好对手，所有勇士对这些敌人造成更高伤害"
+          }
+        }
+      },
+      {
+        "id": "13432",
+        "snapshots": {
+          "original": {
+            "id": 13432,
+            "hero_id": 142,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1795",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Bravado"
+          },
+          "display": {
+            "id": 13432,
+            "hero_id": 142,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1795",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "虚张声势"
+          }
+        }
+      },
+      {
+        "id": "13433",
+        "snapshots": {
+          "original": {
+            "id": 13433,
+            "hero_id": 142,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1796",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Pact of the Blade",
+            "specialization_name": "Pact of the Blade",
+            "specialization_description": "Wyll focuses on his blade and empowers his allies with a Melee attack.",
+            "specialization_graphic_id": 21726
+          },
+          "display": {
+            "id": 13433,
+            "hero_id": 142,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1796",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "刃之契",
+            "specialization_name": "刃之契",
+            "specialization_description": "威尔集中精力到自己的利刃，为自己的盟友提供近战攻击强化。",
+            "specialization_graphic_id": 21726
+          }
+        }
+      },
+      {
+        "id": "13434",
+        "snapshots": {
+          "original": {
+            "id": 13434,
+            "hero_id": 142,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1797",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Pact of the Chain",
+            "specialization_name": "Pact of the Chain",
+            "specialization_description": "Wyll's abilities increase with the number of Familiars assigned to the party.",
+            "specialization_graphic_id": 21727
+          },
+          "display": {
+            "id": 13434,
+            "hero_id": 142,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1797",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "锁链之契",
+            "specialization_name": "锁链之契",
+            "specialization_description": "威尔的技能根据队伍中配备的魔宠获得提升。",
+            "specialization_graphic_id": 21727
+          }
+        }
+      },
+      {
+        "id": "13435",
+        "snapshots": {
+          "original": {
+            "id": 13435,
+            "hero_id": 142,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1798",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Pact of the Tome",
+            "specialization_name": "Pact of the Tome",
+            "specialization_description": "Wyll's magic strengthens with each ally that has a Magical attack.",
+            "specialization_graphic_id": 21728
+          },
+          "display": {
+            "id": 13435,
+            "hero_id": 142,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1798",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "书卷之契",
+            "specialization_name": "书卷之契",
+            "specialization_description": "威尔的魔法会随使用魔法攻击的盟友人数增加而得到强化。",
+            "specialization_graphic_id": 21728
+          }
+        }
+      },
+      {
+        "id": "13436",
+        "snapshots": {
+          "original": {
+            "id": 13436,
+            "hero_id": 142,
+            "required_level": 70,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "set_ultimate_attack",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Mizora"
+          },
+          "display": {
+            "id": 13436,
+            "hero_id": 142,
+            "required_level": 70,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "set_ultimate_attack",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "米佐拉"
+          }
+        }
+      },
+      {
+        "id": "13437",
+        "snapshots": {
+          "original": {
+            "id": 13437,
+            "hero_id": 142,
+            "required_level": 350,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13437,
+            "hero_id": 142,
+            "required_level": 350,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13438",
+        "snapshots": {
+          "original": {
+            "id": 13438,
+            "hero_id": 142,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,13430",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13438,
+            "hero_id": 142,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,13430",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13439",
+        "snapshots": {
+          "original": {
+            "id": 13439,
+            "hero_id": 142,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,13431",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13439,
+            "hero_id": 142,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,13431",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13440",
+        "snapshots": {
+          "original": {
+            "id": 13440,
+            "hero_id": 142,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,13432",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13440,
+            "hero_id": 142,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,13432",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13441",
+        "snapshots": {
+          "original": {
+            "id": 13441,
+            "hero_id": 142,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrades,100,13433,13434,13435",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Buff"
+          },
+          "display": {
+            "id": 13441,
+            "hero_id": 142,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrades,100,13433,13434,13435",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "增益"
+          }
+        }
+      },
+      {
+        "id": "13884",
+        "snapshots": {
+          "original": {
+            "id": 13884,
+            "hero_id": 142,
+            "required_level": 20,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13884,
+            "hero_id": 142,
+            "required_level": 20,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13885",
+        "snapshots": {
+          "original": {
+            "id": 13885,
+            "hero_id": 142,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13885,
+            "hero_id": 142,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13886",
+        "snapshots": {
+          "original": {
+            "id": 13886,
+            "hero_id": 142,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13886,
+            "hero_id": 142,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13887",
+        "snapshots": {
+          "original": {
+            "id": 13887,
+            "hero_id": 142,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13887,
+            "hero_id": 142,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13888",
+        "snapshots": {
+          "original": {
+            "id": 13888,
+            "hero_id": 142,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13888,
+            "hero_id": 142,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13889",
+        "snapshots": {
+          "original": {
+            "id": 13889,
+            "hero_id": 142,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13889,
+            "hero_id": 142,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13890",
+        "snapshots": {
+          "original": {
+            "id": 13890,
+            "hero_id": 142,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13890,
+            "hero_id": 142,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13891",
+        "snapshots": {
+          "original": {
+            "id": 13891,
+            "hero_id": 142,
+            "required_level": 1310,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13891,
+            "hero_id": 142,
+            "required_level": 1310,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13892",
+        "snapshots": {
+          "original": {
+            "id": 13892,
+            "hero_id": 142,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13892,
+            "hero_id": 142,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13893",
+        "snapshots": {
+          "original": {
+            "id": 13893,
+            "hero_id": 142,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13893,
+            "hero_id": 142,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13894",
+        "snapshots": {
+          "original": {
+            "id": 13894,
+            "hero_id": 142,
+            "required_level": 220,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13894,
+            "hero_id": 142,
+            "required_level": 220,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13895",
+        "snapshots": {
+          "original": {
+            "id": 13895,
+            "hero_id": 142,
+            "required_level": 270,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13895,
+            "hero_id": 142,
+            "required_level": 270,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13896",
+        "snapshots": {
+          "original": {
+            "id": 13896,
+            "hero_id": 142,
+            "required_level": 290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13896,
+            "hero_id": 142,
+            "required_level": 290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13897",
+        "snapshots": {
+          "original": {
+            "id": 13897,
+            "hero_id": 142,
+            "required_level": 310,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13897,
+            "hero_id": 142,
+            "required_level": 310,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13898",
+        "snapshots": {
+          "original": {
+            "id": 13898,
+            "hero_id": 142,
+            "required_level": 530,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13898,
+            "hero_id": 142,
+            "required_level": 530,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13899",
+        "snapshots": {
+          "original": {
+            "id": 13899,
+            "hero_id": 142,
+            "required_level": 360,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13899,
+            "hero_id": 142,
+            "required_level": 360,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13900",
+        "snapshots": {
+          "original": {
+            "id": 13900,
+            "hero_id": 142,
+            "required_level": 430,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13900,
+            "hero_id": 142,
+            "required_level": 430,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13901",
+        "snapshots": {
+          "original": {
+            "id": 13901,
+            "hero_id": 142,
+            "required_level": 620,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13901,
+            "hero_id": 142,
+            "required_level": 620,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13902",
+        "snapshots": {
+          "original": {
+            "id": 13902,
+            "hero_id": 142,
+            "required_level": 460,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13902,
+            "hero_id": 142,
+            "required_level": 460,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13903",
+        "snapshots": {
+          "original": {
+            "id": 13903,
+            "hero_id": 142,
+            "required_level": 470,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13903,
+            "hero_id": 142,
+            "required_level": 470,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13904",
+        "snapshots": {
+          "original": {
+            "id": 13904,
+            "hero_id": 142,
+            "required_level": 510,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13904,
+            "hero_id": 142,
+            "required_level": 510,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13905",
+        "snapshots": {
+          "original": {
+            "id": 13905,
+            "hero_id": 142,
+            "required_level": 840,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13905,
+            "hero_id": 142,
+            "required_level": 840,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13906",
+        "snapshots": {
+          "original": {
+            "id": 13906,
+            "hero_id": 142,
+            "required_level": 560,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13906,
+            "hero_id": 142,
+            "required_level": 560,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13907",
+        "snapshots": {
+          "original": {
+            "id": 13907,
+            "hero_id": 142,
+            "required_level": 580,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13907,
+            "hero_id": 142,
+            "required_level": 580,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13908",
+        "snapshots": {
+          "original": {
+            "id": 13908,
+            "hero_id": 142,
+            "required_level": 610,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13908,
+            "hero_id": 142,
+            "required_level": 610,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13909",
+        "snapshots": {
+          "original": {
+            "id": 13909,
+            "hero_id": 142,
+            "required_level": 1070,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13909,
+            "hero_id": 142,
+            "required_level": 1070,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13910",
+        "snapshots": {
+          "original": {
+            "id": 13910,
+            "hero_id": 142,
+            "required_level": 660,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13910,
+            "hero_id": 142,
+            "required_level": 660,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13911",
+        "snapshots": {
+          "original": {
+            "id": 13911,
+            "hero_id": 142,
+            "required_level": 710,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13911,
+            "hero_id": 142,
+            "required_level": 710,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13912",
+        "snapshots": {
+          "original": {
+            "id": 13912,
+            "hero_id": 142,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13912,
+            "hero_id": 142,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13913",
+        "snapshots": {
+          "original": {
+            "id": 13913,
+            "hero_id": 142,
+            "required_level": 760,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13913,
+            "hero_id": 142,
+            "required_level": 760,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13914",
+        "snapshots": {
+          "original": {
+            "id": 13914,
+            "hero_id": 142,
+            "required_level": 770,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13914,
+            "hero_id": 142,
+            "required_level": 770,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13915",
+        "snapshots": {
+          "original": {
+            "id": 13915,
+            "hero_id": 142,
+            "required_level": 830,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13915,
+            "hero_id": 142,
+            "required_level": 830,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13916",
+        "snapshots": {
+          "original": {
+            "id": 13916,
+            "hero_id": 142,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13916,
+            "hero_id": 142,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13917",
+        "snapshots": {
+          "original": {
+            "id": 13917,
+            "hero_id": 142,
+            "required_level": 870,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13917,
+            "hero_id": 142,
+            "required_level": 870,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13918",
+        "snapshots": {
+          "original": {
+            "id": 13918,
+            "hero_id": 142,
+            "required_level": 900,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13918,
+            "hero_id": 142,
+            "required_level": 900,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13919",
+        "snapshots": {
+          "original": {
+            "id": 13919,
+            "hero_id": 142,
+            "required_level": 970,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13919,
+            "hero_id": 142,
+            "required_level": 970,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13920",
+        "snapshots": {
+          "original": {
+            "id": 13920,
+            "hero_id": 142,
+            "required_level": 980,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13920,
+            "hero_id": 142,
+            "required_level": 980,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13921",
+        "snapshots": {
+          "original": {
+            "id": 13921,
+            "hero_id": 142,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13921,
+            "hero_id": 142,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13922",
+        "snapshots": {
+          "original": {
+            "id": 13922,
+            "hero_id": 142,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13922,
+            "hero_id": 142,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13923",
+        "snapshots": {
+          "original": {
+            "id": 13923,
+            "hero_id": 142,
+            "required_level": 1090,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13923,
+            "hero_id": 142,
+            "required_level": 1090,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13924",
+        "snapshots": {
+          "original": {
+            "id": 13924,
+            "hero_id": 142,
+            "required_level": 1100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13924,
+            "hero_id": 142,
+            "required_level": 1100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13925",
+        "snapshots": {
+          "original": {
+            "id": 13925,
+            "hero_id": 142,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13925,
+            "hero_id": 142,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13926",
+        "snapshots": {
+          "original": {
+            "id": 13926,
+            "hero_id": 142,
+            "required_level": 1270,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13926,
+            "hero_id": 142,
+            "required_level": 1270,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13927",
+        "snapshots": {
+          "original": {
+            "id": 13927,
+            "hero_id": 142,
+            "required_level": 1290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13927,
+            "hero_id": 142,
+            "required_level": 1290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13928",
+        "snapshots": {
+          "original": {
+            "id": 13928,
+            "hero_id": 142,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13928,
+            "hero_id": 142,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13929",
+        "snapshots": {
+          "original": {
+            "id": 13929,
+            "hero_id": 142,
+            "required_level": 1380,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13929,
+            "hero_id": 142,
+            "required_level": 1380,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13930",
+        "snapshots": {
+          "original": {
+            "id": 13930,
+            "hero_id": 142,
+            "required_level": 1430,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13930,
+            "hero_id": 142,
+            "required_level": 1430,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13931",
+        "snapshots": {
+          "original": {
+            "id": 13931,
+            "hero_id": 142,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13931,
+            "hero_id": 142,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,13429",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "13932",
+        "snapshots": {
+          "original": {
+            "id": 13932,
+            "hero_id": 142,
+            "required_level": 1450,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 13932,
+            "hero_id": 142,
+            "required_level": 1450,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      }
+    ],
+    "feats": [
+      {
+        "id": "1600",
+        "snapshots": {
+          "original": {
+            "id": 1600,
+            "hero_id": 142,
+            "order": 1,
+            "name": "Selflessness",
+            "description": "I'd give my life to protect the frontiers. Some say I've already given more.",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 1600,
+            "hero_id": 142,
+            "order": 1,
+            "name": "无私",
+            "description": "我会将自己的人生奉献给便将。有人说，我已经给予出了更难多。",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "1601",
+        "snapshots": {
+          "original": {
+            "id": 1601,
+            "hero_id": 142,
+            "order": 2,
+            "name": "Inspiring Leader",
+            "description": "It's not the blade you wield that matters. It's the people you defend with it.",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 1601,
+            "hero_id": 142,
+            "order": 2,
+            "name": "鼓舞人心的首领",
+            "description": "重要的不是你佩带的利刃。而是你用利刃保护着的人。",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "1602",
+        "snapshots": {
+          "original": {
+            "id": 1602,
+            "hero_id": 142,
+            "order": 3,
+            "name": "Team Player",
+            "description": "The only way we'll survive is by working together.",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,13429"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 1602,
+            "hero_id": 142,
+            "order": 3,
+            "name": "团队精神",
+            "description": "我们活下去的唯一办法就是通力合作。",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,13429"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "1603",
+        "snapshots": {
+          "original": {
+            "id": 1603,
+            "hero_id": 142,
+            "order": 4,
+            "name": "Renowned Heroes",
+            "description": "They will tell our story up and down the Sword Coast!",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,13429"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 1603,
+            "hero_id": 142,
+            "order": 4,
+            "name": "知名英雄",
+            "description": "他们会在整个剑湾传诵我们的故事！",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,13429"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "1604",
+        "snapshots": {
+          "original": {
+            "id": 1604,
+            "hero_id": 142,
+            "order": 5,
+            "name": "Creeping Presence",
+            "description": "Something's lurking in my mind. I can feel it.",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,13430"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 1604,
+            "hero_id": 142,
+            "order": 5,
+            "name": "可怖存在",
+            "description": "有东西潜伏在我脑子里。我能感觉得到。",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,13430"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "1605",
+        "snapshots": {
+          "original": {
+            "id": 1605,
+            "hero_id": 142,
+            "order": 6,
+            "name": "Illithid Connection",
+            "description": "Those visions... did you see them too?",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,13430"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 1605,
+            "hero_id": 142,
+            "order": 6,
+            "name": "灵吸怪联结",
+            "description": "那些幻像……你们也看到了吗？",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,13430"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "1606",
+        "snapshots": {
+          "original": {
+            "id": 1606,
+            "hero_id": 142,
+            "order": 7,
+            "name": "Fulfilling the Pact",
+            "description": "I must do what my patron demands. That is all I can say.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,13431"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 1606,
+            "hero_id": 142,
+            "order": 7,
+            "name": "履行契约",
+            "description": "我必须做我赞助者要求的事情。我能说的就这些。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,13431"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "1607",
+        "snapshots": {
+          "original": {
+            "id": 1607,
+            "hero_id": 142,
+            "order": 8,
+            "name": "Become Legend",
+            "description": "One day, all Baldurians will know the Blade of Frontiers!",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,13432"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 1607,
+            "hero_id": 142,
+            "order": 8,
+            "name": "成为传奇",
+            "description": "总有一天，所有博德人都会知道“前线之刃”的大名！",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,13432"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "1608",
+        "snapshots": {
+          "original": {
+            "id": 1608,
+            "hero_id": 142,
+            "order": 9,
+            "name": "Near Myth",
+            "description": "Listen - the bards sing of my legend!",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,13432"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 1608,
+            "hero_id": 142,
+            "order": 9,
+            "name": "近乎神话",
+            "description": "听啊——吟游诗人在歌唱我的传奇！",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,13432"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "1609",
+        "snapshots": {
+          "original": {
+            "id": 1609,
+            "hero_id": 142,
+            "order": 10,
+            "name": "Mizora's Chosen",
+            "description": "With this power, nothing can stand in my way.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,40,13433,13434,13435"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 1609,
+            "hero_id": 142,
+            "order": 10,
+            "name": "米佐拉精英",
+            "description": "有此等力量，我将无人可挡。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,40,13433,13434,13435"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "1610",
+        "snapshots": {
+          "original": {
+            "id": 1610,
+            "hero_id": 142,
+            "order": 11,
+            "name": "The Heartless",
+            "description": "Nothing with a heart - that was the deal.",
+            "rarity": 3,
+            "graphic_id": 22023,
+            "effects": [
+              {
+                "effect_string": "effect_def,1846"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 1610,
+            "hero_id": 142,
+            "order": 11,
+            "name": "无情者",
+            "description": "禁止有心，立此为约。",
+            "rarity": 3,
+            "graphic_id": 22023,
+            "effects": [
+              {
+                "effect_string": "effect_def,1846"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "1611",
+        "snapshots": {
+          "original": {
+            "id": 1611,
+            "hero_id": 142,
+            "order": 12,
+            "name": "The Soulless",
+            "description": "Wretched things. I'll be your end!",
+            "rarity": 3,
+            "graphic_id": 22023,
+            "effects": [
+              {
+                "effect_string": "effect_def,1847"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 1611,
+            "hero_id": 142,
+            "order": 12,
+            "name": "无魂者",
+            "description": "可怜的东西。我会是你的末日！",
+            "rarity": 3,
+            "graphic_id": 22023,
+            "effects": [
+              {
+                "effect_string": "effect_def,1847"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "1612",
+        "snapshots": {
+          "original": {
+            "id": 1612,
+            "hero_id": 142,
+            "order": 13,
+            "name": "Distracting Imps",
+            "description": "We're being followed. I can feel it.",
+            "rarity": 4,
+            "graphic_id": 22024,
+            "effects": [
+              {
+                "effect_string": "effect_def,1848"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 360
+              }
+            ],
+            "properties": {
+              "is_premium": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 1612,
+            "hero_id": 142,
+            "order": 13,
+            "name": "分心的小魔鬼",
+            "description": "我们被人跟踪了。我能感觉得到。",
+            "rarity": 4,
+            "graphic_id": 22024,
+            "effects": [
+              {
+                "effect_string": "effect_def,1848"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 360
+              }
+            ],
+            "properties": {
+              "is_premium": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "1613",
+        "snapshots": {
+          "original": {
+            "id": 1613,
+            "hero_id": 142,
+            "order": 14,
+            "name": "Athlete",
+            "description": "Not all my skills are gifts from the Hells.",
+            "rarity": 3,
+            "graphic_id": 6073,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,str,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 1613,
+            "hero_id": 142,
+            "order": 14,
+            "name": "运动员",
+            "description": "我的本事，可不都是来自地狱的赠礼。",
+            "rarity": 3,
+            "graphic_id": 6073,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,str,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "1897",
+        "snapshots": {
+          "original": {
+            "id": 1897,
+            "hero_id": 142,
+            "order": 15,
+            "name": "Mizora's Pawn",
+            "description": "'Quite the handsome devil, if I do say so.' ~ Mizora",
+            "rarity": 4,
+            "graphic_id": 21658,
+            "effects": [
+              {
+                "effect_string": "add_hero_tags,0,tiefling",
+                "description": "Wyll also counts as Tiefling"
+              },
+              {
+                "effect_string": "buff_upgrade,80,13429"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 486
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1730314800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 1897,
+            "hero_id": 142,
+            "order": 15,
+            "name": "米佐拉的棋子",
+            "description": "“要我说的话，那还真是个英俊的魔鬼。”——米佐拉",
+            "rarity": 4,
+            "graphic_id": 21658,
+            "effects": [
+              {
+                "effect_string": "add_hero_tags,0,tiefling",
+                "description": "瓦尔也算作提夫林"
+              },
+              {
+                "effect_string": "buff_upgrade,80,13429"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 486
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1730314800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "2141",
+        "snapshots": {
+          "original": {
+            "id": 2141,
+            "hero_id": 142,
+            "order": 16,
+            "name": "Duke's Pride",
+            "description": "He is our shield, as I am his blade. Together, we protect the people of Baldur's Gate.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,13429"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2025-08-28 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 574
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1748458800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 2141,
+            "hero_id": 142,
+            "order": 16,
+            "name": "公爵的自尊",
+            "description": "他是我们的盾牌，我是他的利刃。我们一起保护博德之门的人民。",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,13429"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2025-08-28 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 574
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1748458800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "2445",
+        "snapshots": {
+          "original": {
+            "id": 2445,
+            "hero_id": 142,
+            "order": 17,
+            "name": "Psychic Link",
+            "description": "I feel its power awakening within, and I sense Mizora's growing terror.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,13430"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2026-04-14 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 663
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1768420800,
+              "available_for_gems_at_time": 1776193200
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "663",
+              "cost": 1680
+            }
+          },
+          "display": {
+            "id": 2445,
+            "hero_id": 142,
+            "order": 17,
+            "name": "精神联系",
+            "description": "我能感觉到它的力量正在体内苏醒，也察觉到米佐拉正越来越恐惧。",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,13430"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2026-04-14 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 663
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1768420800,
+              "available_for_gems_at_time": 1776193200
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "663",
+              "cost": 1680
+            }
+          }
+        }
+      }
+    ],
+    "skins": [
+      {
+        "id": "388",
+        "snapshots": {
+          "original": {
+            "id": 388,
+            "hero_id": 142,
+            "name": "Mind Flayer Wyll",
+            "cost": {
+              "req_date": "2023-12-20 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 22145,
+              "large_graphic_id": 22147,
+              "portrait_graphic_id": 22168,
+              "xl_graphic_id": 22148,
+              "mizora_graphic_id": 22146
+            },
+            "rarity": "3",
+            "properties": {
+              "is_premium": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 1353,
+              "odds": 102
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 388,
+            "hero_id": 142,
+            "name": "夺心魔威尔",
+            "cost": {
+              "req_date": "2023-12-20 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 22145,
+              "large_graphic_id": 22147,
+              "portrait_graphic_id": 22168,
+              "xl_graphic_id": 22148,
+              "mizora_graphic_id": 22146
+            },
+            "rarity": "3",
+            "properties": {
+              "is_premium": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 1353,
+              "odds": 102
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      },
+      {
+        "id": "477",
+        "snapshots": {
+          "original": {
+            "id": 477,
+            "hero_id": 142,
+            "name": "Devil Wyll",
+            "cost": {
+              "req_date": "2024-10-30 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 24950,
+              "large_graphic_id": 24956,
+              "portrait_graphic_id": 24940,
+              "xl_graphic_id": 24962
+            },
+            "rarity": "3",
+            "properties": {
+              "notification_adjustment_override": {
+                "offset": [
+                  52,
+                  214
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 1644,
+              "odds": 160
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 477,
+            "hero_id": 142,
+            "name": "魔鬼瓦尔",
+            "cost": {
+              "req_date": "2024-10-30 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 24950,
+              "large_graphic_id": 24956,
+              "portrait_graphic_id": 24940,
+              "xl_graphic_id": 24962
+            },
+            "rarity": "3",
+            "properties": {
+              "notification_adjustment_override": {
+                "offset": [
+                  52,
+                  214
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 1644,
+              "odds": 160
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      },
+      {
+        "id": "556",
+        "snapshots": {
+          "original": {
+            "id": 556,
+            "hero_id": 142,
+            "name": "Prodigal Son Wyll",
+            "cost": {
+              "req_date": "2025-05-28 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 26842,
+              "large_graphic_id": 26843,
+              "portrait_graphic_id": 26841,
+              "xl_graphic_id": 26844
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "574",
+              "cost": 1680
+            },
+            "availabilities": {
+              "premium_item_id": "574"
+            }
+          },
+          "display": {
+            "id": 556,
+            "hero_id": 142,
+            "name": "回头浪子瓦尔",
+            "cost": {
+              "req_date": "2025-05-28 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 26842,
+              "large_graphic_id": 26843,
+              "portrait_graphic_id": 26841,
+              "xl_graphic_id": 26844
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "574",
+              "cost": 1680
+            },
+            "availabilities": {
+              "premium_item_id": "574"
+            }
+          }
+        }
+      },
+      {
+        "id": "647",
+        "snapshots": {
+          "original": {
+            "id": 647,
+            "hero_id": 142,
+            "name": "Blade of the North Wyll",
+            "cost": {
+              "req_date": "2026-01-14 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 28599,
+              "large_graphic_id": 28600,
+              "portrait_graphic_id": 28603,
+              "xl_graphic_id": 28601,
+              "mizora_graphic_id": 28602
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "663",
+              "cost": 1680
+            },
+            "availabilities": {
+              "premium_item_id": "663"
+            }
+          },
+          "display": {
+            "id": 647,
+            "hero_id": 142,
+            "name": "北方之刃瓦尔",
+            "cost": {
+              "req_date": "2026-01-14 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 28599,
+              "large_graphic_id": 28600,
+              "portrait_graphic_id": 28603,
+              "xl_graphic_id": 28601,
+              "mizora_graphic_id": 28602
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "663",
+              "cost": 1680
+            },
+            "availabilities": {
+              "premium_item_id": "663"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

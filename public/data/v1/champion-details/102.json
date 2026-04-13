@@ -1,0 +1,6224 @@
+{
+  "updatedAt": "2026-04-13",
+  "summary": {
+    "id": "102",
+    "name": {
+      "original": "Nahara",
+      "display": "纳哈拉"
+    },
+    "seat": 3,
+    "roles": [
+      "dps",
+      "speed"
+    ],
+    "affiliations": [
+      {
+        "original": "Black Dice Society",
+        "display": "黑骰子协会"
+      }
+    ],
+    "tags": [
+      "aasimar",
+      "bard",
+      "blackdicesociety",
+      "chaotic",
+      "dps",
+      "event",
+      "female",
+      "geneutral",
+      "neutral",
+      "speed",
+      "warlock",
+      "y5"
+    ],
+    "portrait": {
+      "path": "v1/champion-portraits/102.png",
+      "sourceGraphic": "Portraits/Portrait_Nahara",
+      "sourceVersion": 2
+    }
+  },
+  "englishName": "Nahara",
+  "eventName": {
+    "original": "Founders' Day",
+    "display": "始祖日"
+  },
+  "dateAvailable": "2022-06-29 00:00:00",
+  "lastReworkDate": "2022-06-29 00:00:00",
+  "popularity": 88,
+  "baseCost": "8000",
+  "baseDamage": "5000",
+  "baseHealth": "43",
+  "graphicId": "14554",
+  "portraitGraphicId": "14553",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1783018800
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    485,
+    1130,
+    1940,
+    2940
+  ],
+  "costCurves": {
+    "1": 1.07
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      170,
+      171,
+      172
+    ],
+    "graphic_large": 14555,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      104,
+      63
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "attack": 2,
+      "attack_b": 8,
+      "ultimate": 3,
+      "gethit": 4,
+      "koed": 5
+    },
+    "allow_time_gate": "2022-07-11 12:00:00",
+    "time_gate_adventure_id": 1036,
+    "time_gate_variants_ids": [
+      1004,
+      1005,
+      1006
+    ],
+    "time_gate_tier": 1,
+    "silver_chest_type_id": 360,
+    "gold_chest_type_id": 361,
+    "available_in_store": "2022-07-18 12:00:00",
+    "golden_epic_loot_id": 2380,
+    "golden_epic_promo_id": 271,
+    "event_logo_graphic_id": 3368,
+    "console_portrait": 14551,
+    "trials_effect_id": 838,
+    "permanent_effects": [
+      {
+        "effect_string": "nahara_attack_controller",
+        "form_of_dread_effets": [
+          {
+            "effect_string": "change_base_attack,530"
+          },
+          {
+            "effect_string": "hero_dps_multiplier_mult,1000"
+          }
+        ]
+      }
+    ],
+    "legendary_effect_id": [
+      54,
+      56,
+      21,
+      84,
+      87,
+      105
+    ],
+    "weekly_buff": "buff_upgrade,200,8009,8011",
+    "spotlight_url": "https://youtu.be/j1IlANpaq6M",
+    "portrait_graphic_scale": 1.14,
+    "time_gate_blackout": {
+      "start": "2023-06-25 00:00:00",
+      "end": "2023-07-10 12:00:00"
+    },
+    "store_blackout": {
+      "start": "2023-06-25 00:00:00",
+      "end": "2023-07-10 12:00:00"
+    },
+    "notification_adjustment": {
+      "offset": [
+        56,
+        224
+      ],
+      "scale": 1.25
+    }
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Nahara",
+      "display": "纳哈拉"
+    },
+    "class": {
+      "original": "Warlock / Bard",
+      "display": "邪术师/吟游诗人"
+    },
+    "race": {
+      "original": "Aasimar (Reborn)",
+      "display": "神裔（重生）"
+    },
+    "age": 27,
+    "alignment": {
+      "original": "Chaotic Neutral",
+      "display": "混乱中立"
+    },
+    "abilityScores": {
+      "str": 9,
+      "dex": 16,
+      "con": 12,
+      "int": 10,
+      "wis": 13,
+      "cha": 16
+    },
+    "backstory": {
+      "original": "Nahara is a reborn fallen Aasimar undead warlock/college of the spirits bard. She fell into the mists of Ravenloft unable to remember anything from her life (or past lives as we've come to learn). All she knows is that her current Patron, Azalin Rex, has asked her to aid him against his foe Strahd von Zarovich, who for reasons unknown to her, has been desperately seeking her out.",
+      "display": "纳哈拉是一个重生的堕落神裔亡灵邪术师/鬼灵学院的吟游诗人。她坠入鸦阁魔域的迷雾中，无法记起她生命（或我们已经了解到的前世）中的任何事。她只知道她现在的赞助者亚扎林·雷克斯，要求她协助对付他的敌人斯特拉德·冯·扎罗维奇，而后者由于她不知道的原因，一直在拼命寻找她。"
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "528",
+      "name": {
+        "original": "Witch Bolt",
+        "display": "巫术箭"
+      },
+      "description": {
+        "original": "Nahara attacks a random enemy and every enemy that she already hit with a bolt of energy.",
+        "display": "纳哈拉用能量束攻击一名随机敌人和她之前击中过的所有敌人。"
+      },
+      "longDescription": {
+        "original": "Nahara attacks a random enemy and every enemy that she has already hit with this attack.",
+        "display": "纳哈拉攻击一名随机敌人和她之前使用此攻击方式击中过的所有敌人。"
+      },
+      "cooldown": 5,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "random",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ranged"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "special_melee": "nahara",
+          "sound_frames": {
+            "1": 169
+          },
+          "hit_sound": 133,
+          "start_shoot_frame": 6,
+          "end_shoot_frame": 24,
+          "fps_adjust": 30,
+          "animation_sequence_name": "attack",
+          "shoot_offset_top": {
+            "x": 55,
+            "y": -110
+          },
+          "shoot_offset_btm": {
+            "x": 5,
+            "y": -80
+          },
+          "target_offset_x": -20,
+          "target_offset_y": -40
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "529",
+      "name": {
+        "original": "Form of Dread",
+        "display": "恐惧形态"
+      },
+      "description": {
+        "original": "Nahara takes off and channels Azalin Rex, increasing her damage for 15 seconds.",
+        "display": "纳哈拉飞向空中并引导亚扎林·雷克斯，在 15 秒内增加自身伤害。"
+      },
+      "longDescription": {
+        "original": "Nahara takes off into the air and channels the power of her patron Azalin Rex for 15 seconds. Her damage is increased by 1,000% while in this form and any enemy she hits has a 50% chance of being stunned for 2 seconds.",
+        "display": "纳哈拉飞向空中，引导她的赞助者亚扎林·雷克斯的力量，持续 15 秒。她的伤害增加 1000%，而在此形态下，她击中的任何敌人都有 50% 几率被眩晕 2 秒。"
+      },
+      "cooldown": 240,
+      "numTargets": 0,
+      "aoeRadius": 0,
+      "damageModifier": "0",
+      "target": "none",
+      "damageTypes": [],
+      "tags": [
+        "ultimate"
+      ],
+      "graphicId": "14625",
+      "animations": [
+        {
+          "type": "ultimate_attack",
+          "ultimate": "nahara",
+          "no_damage_display": true
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "8009",
+        "name": {
+          "original": "Who Am I?",
+          "display": "我是谁？"
+        },
+        "description": {
+          "original": "The more Nahara adventures, the more she remembers of her past life; slowly increasing her damage.",
+          "display": "纳哈拉参与的冒险越多，就回忆起更多自己的过去，缓慢提升她的伤害。"
+        },
+        "graphicId": "14615"
+      },
+      {
+        "upgradeId": "8010",
+        "name": {
+          "original": "To Amuse or Avenge",
+          "display": "娱乐或报复"
+        },
+        "description": {
+          "original": "If Nahara is easily defeating enemies she helps her companions speed through later areas. If she is not defeating enemies easily she increases her damage.",
+          "display": "如果纳哈拉能轻松消灭敌人，就可以提升队伍向更深区域推进的速度。如果她无法轻松消灭敌人，则会提升自己的伤害。"
+        },
+        "graphicId": "14614"
+      },
+      {
+        "upgradeId": "8011",
+        "name": {
+          "original": "Strong Society",
+          "display": "强力社团"
+        },
+        "description": null,
+        "graphicId": "14613"
+      },
+      {
+        "upgradeId": "8012",
+        "name": {
+          "original": "Beloved by Strahd",
+          "display": "斯特拉德的宠儿"
+        },
+        "description": null,
+        "graphicId": "14612"
+      },
+      {
+        "upgradeId": "8016",
+        "name": {
+          "original": "Form of Dread",
+          "display": "恐惧形态"
+        },
+        "description": null,
+        "graphicId": "813"
+      }
+    ]
+  },
+  "upgrades": [
+    {
+      "id": "8012",
+      "requiredLevel": 0,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Beloved by Strahd",
+        "display": "斯特拉德的宠儿"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1139",
+      "effectDefinition": {
+        "id": "1139",
+        "snapshots": {
+          "original": {
+            "id": 1139,
+            "flavour_text": "",
+            "description": {
+              "desc": "$(source_hero) is eligible to start in all Strahd patron adventures, even if variant restrictions would say otherwise."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "do_nothing,0"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 14616,
+            "large_graphic_id": 14612,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 1139,
+            "flavour_text": "",
+            "description": {
+              "desc": "即使不满足支线任务限制要求，$(source_hero)仍有资格开始所有斯特拉德赞助者冒险。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "do_nothing,0"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 14616,
+            "large_graphic_id": 14612,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8096",
+      "requiredLevel": 30,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8009",
+      "requiredLevel": 50,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Who Am I?",
+        "display": "我是谁？"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1136",
+      "effectDefinition": {
+        "id": "1136",
+        "snapshots": {
+          "original": {
+            "id": 1136,
+            "flavour_text": "",
+            "description": {
+              "desc": "$(source_hero) recovers a bit of her lost memory as she adventures. If $(source_hero) is in the formation when you complete an area for the first time, she gets a $(amount)% damage bonus, stacking additively. These bonuses persist through resets."
+            },
+            "effect_keys": [
+              {
+                "off_when_benched": true,
+                "effect_string": "hero_dps_multiplier_mult,0.2",
+                "stacks_on_trigger": "area_complete",
+                "base_stack_amount": 1,
+                "stack_title": "Lost Memory Fragments",
+                "total_title": "Total Damage Bonus",
+                "stacks_multiply": false,
+                "show_bonus": true
+              },
+              {
+                "effect_string": "stacks_data_binder,0,NaharasLostMemories",
+                "is_instanced_stat": false
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 14619,
+            "large_graphic_id": 14615,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 1136,
+            "flavour_text": "",
+            "description": {
+              "desc": "$(source_hero)在冒险途中会恢复少许遗失的记忆。如果你首次完成某个区域时$(amount)位于阵型中，她会获得 $(source_hero)% 的伤害加成（加算）。此加成在重置后会保留。"
+            },
+            "effect_keys": [
+              {
+                "off_when_benched": true,
+                "effect_string": "hero_dps_multiplier_mult,0.2",
+                "stacks_on_trigger": "area_complete",
+                "base_stack_amount": 1,
+                "stack_title": "遗失的记忆碎片",
+                "total_title": "总伤害加成",
+                "stacks_multiply": false,
+                "show_bonus": true
+              },
+              {
+                "effect_string": "stacks_data_binder,0,NaharasLostMemories",
+                "is_instanced_stat": false
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 14619,
+            "large_graphic_id": 14615,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Nahara does more damage for every adventure area she completes over all time.",
+        "display": "在任何时间内，纳哈拉每完成一个冒险区域，都会造成更多伤害。"
+      }
+    },
+    {
+      "id": "8097",
+      "requiredLevel": 80,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8010",
+      "requiredLevel": 90,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "To Amuse or Avenge",
+        "display": "娱乐或报复"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1137",
+      "effectDefinition": {
+        "id": "1137",
+        "snapshots": {
+          "original": {
+            "id": 1137,
+            "flavour_text": "",
+            "description": {
+              "desc": "When $(source_hero) attacks and defeats at least one enemy, she gains a Levity stack, with a maximum of $(max_stacks) stacks. When she attacks and doesn't defeat an enemy, she loses a Levity stack. $(source_hero) gets a $(amount___2)% damage bonus for each Levity stack she has below $(max_stacks), and at the start of each area, she reduces the area requirements by $(amount___3)% for each Levity stack above $(start_stacks)."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "nahara_to_amuse_or_avenge,1",
+                "stack_title": "Levity Stacks",
+                "manual_stacking": true,
+                "clear_stacks_on_deactivate": false,
+                "start_stacks": 15,
+                "max_stacks": 30,
+                "stacks_multiply": false,
+                "show_stacks": true,
+                "desc_forced_order": 0
+              },
+              {
+                "off_when_benched": true,
+                "effect_string": "hero_dps_multiplier_mult,10",
+                "manual_stacking": true,
+                "stacks_multiply": false,
+                "total_title": "Total Damage Bonus",
+                "show_bonus": true,
+                "show_advanced_info": false,
+                "prepend_line_break": false,
+                "desc_forced_order": 1
+              },
+              {
+                "off_when_benched": true,
+                "effect_string": "chance_reduce_quest_requirement,2,100",
+                "manual_stacking": true,
+                "stacks_multiply": false,
+                "total_title": "Total Quest Requirement Reduction",
+                "show_bonus": true,
+                "show_advanced_info": false,
+                "prepend_line_break": false,
+                "desc_forced_order": 2
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 14618,
+            "large_graphic_id": 14614,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 1
+            }
+          },
+          "display": {
+            "id": 1137,
+            "flavour_text": "",
+            "description": {
+              "desc": "当$(source_hero)攻击并击杀至少一名敌人时，她会获得 1 层“轻浮”堆叠层数，最高可叠加至 $(max_stacks) 层。当她的攻击未能击杀敌人时，会失去 1 层“轻浮”堆叠。在 $(max_stacks) 层以下时，每有一层“轻浮”堆叠，$(source_hero)获得 $(amount___2)% 伤害加成；且在每个区域开始时，“轻浮”层数高于 $(start_stacks) 的每一层会使区域要求降低 $(amount___3)%。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "nahara_to_amuse_or_avenge,1",
+                "stack_title": "轻浮层数",
+                "manual_stacking": true,
+                "clear_stacks_on_deactivate": false,
+                "start_stacks": 15,
+                "max_stacks": 30,
+                "stacks_multiply": false,
+                "show_stacks": true,
+                "desc_forced_order": 0
+              },
+              {
+                "off_when_benched": true,
+                "effect_string": "hero_dps_multiplier_mult,10",
+                "manual_stacking": true,
+                "stacks_multiply": false,
+                "total_title": "总伤害加成",
+                "show_bonus": true,
+                "show_advanced_info": false,
+                "prepend_line_break": false,
+                "desc_forced_order": 1
+              },
+              {
+                "off_when_benched": true,
+                "effect_string": "chance_reduce_quest_requirement,2,100",
+                "manual_stacking": true,
+                "stacks_multiply": false,
+                "total_title": "总任务要求削减",
+                "show_bonus": true,
+                "show_advanced_info": false,
+                "prepend_line_break": false,
+                "desc_forced_order": 2
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 14618,
+            "large_graphic_id": 14614,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 1
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Nahara allows champions to complete future areas more quickly when she is easily defeating enemies, and when she is not she starts to deal more damage.",
+        "display": "纳哈拉轻松击败敌人时，可以让勇士们更快通过后续区域；而当她没有轻松击败敌人时，她会开始造成更多伤害。"
+      }
+    },
+    {
+      "id": "8098",
+      "requiredLevel": 120,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8018",
+      "requiredLevel": 170,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"Increases the damage of $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8011",
+      "requiredLevel": 190,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Strong Society",
+        "display": "强力社团"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1138",
+      "effectDefinition": {
+        "id": "1138",
+        "snapshots": {
+          "original": {
+            "id": 1138,
+            "flavour_text": "",
+            "description": {
+              "desc": "$(source_hero) gets a $(amount)% damage bonus for each other Black Dice Society affiliation member in the formation, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "strong_society_base,400"
+              },
+              {
+                "effect_string": "hero_dps_mult_per_tagged_crusader_mult,0,blackdicesociety",
+                "amount_expr": "upgrade_amount(8011,0)",
+                "stacks_multiply": true,
+                "exclude_self": true,
+                "stack_title": "Other Black Dice Society Members"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 14617,
+            "large_graphic_id": 14613,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 1138,
+            "flavour_text": "",
+            "description": {
+              "desc": "阵型中每有一个黑骰子协会成员，$(source_hero)获得 $(amount)% 伤害加成（乘算）。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "strong_society_base,400"
+              },
+              {
+                "effect_string": "hero_dps_mult_per_tagged_crusader_mult,0,blackdicesociety",
+                "amount_expr": "upgrade_amount(8011,0)",
+                "stacks_multiply": true,
+                "exclude_self": true,
+                "stack_title": "其他黑骰子协会成员"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 14617,
+            "large_graphic_id": 14613,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8099",
+      "requiredLevel": 200,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8100",
+      "requiredLevel": 220,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"Increases the damage of $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8101",
+      "requiredLevel": 240,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8013",
+      "requiredLevel": 250,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "A Grave Experience",
+        "display": "墓穴体验"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1140",
+      "effectDefinition": {
+        "id": "1140",
+        "snapshots": {
+          "original": {
+            "id": 1140,
+            "flavour_text": "",
+            "description": {
+              "desc": "The $(upgrade_name id) counter increments three times for every area cleared."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "change_upgrade_data,8009,0",
+                "data": {
+                  "base_stack_amount": 3
+                }
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "type": "upgrade",
+              "formation_circle_icon": false
+            }
+          },
+          "display": {
+            "id": 1140,
+            "flavour_text": "",
+            "description": {
+              "desc": "每完成一个区域，$(upgrade_name id)的计数器增加 3 次。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "change_upgrade_data,8009,0",
+                "data": {
+                  "base_stack_amount": 3
+                }
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "type": "upgrade",
+              "formation_circle_icon": false
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "A Grave Experience",
+        "display": "墓穴体验"
+      },
+      "specializationDescription": {
+        "original": "Nahara focuses on her experience to deal more damage",
+        "display": "纳哈拉将她的经验专注于造成更多伤害"
+      },
+      "specializationGraphicId": "14621",
+      "tipText": null
+    },
+    {
+      "id": "8014",
+      "requiredLevel": 250,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "A Barovian Bond",
+        "display": "巴洛维亚纽带"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1141",
+      "effectDefinition": {
+        "id": "1141",
+        "snapshots": {
+          "original": {
+            "id": 1141,
+            "flavour_text": "",
+            "description": {
+              "desc": "$(upgrade_name id) gets a $(amount)% increase and Black Dice Society members can be used if Strahd is currently the Patron, even if they do not qualify for the other variant requirements."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,400,8011,0"
+              },
+              {
+                "off_when_benched": true,
+                "effect_string": "force_allow_hero_by_tag,blackdicesociety",
+                "valid_for_patron_ids": [
+                  3
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "type": "upgrade",
+              "formation_circle_icon": false,
+              "retain_on_slot_changed": true,
+              "spec_option_post_apply_info": "Additional Champions Unlocked: $active_effect_key_handler_exclude_owner___2",
+              "dont_disable": true
+            }
+          },
+          "display": {
+            "id": 1141,
+            "flavour_text": "",
+            "description": {
+              "desc": "$(upgrade_name id) 额外提升 $(amount)%，且如果当前赞助者为斯特拉德，即使不满足其他支线任务要求，也可以使用黑骰子协会的成员。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,400,8011,0"
+              },
+              {
+                "off_when_benched": true,
+                "effect_string": "force_allow_hero_by_tag,blackdicesociety",
+                "valid_for_patron_ids": [
+                  3
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "type": "upgrade",
+              "formation_circle_icon": false,
+              "retain_on_slot_changed": true,
+              "spec_option_post_apply_info": "额外勇士已解锁：$active_effect_key_handler_exclude_owner___2",
+              "dont_disable": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "A Barovian Bond",
+        "display": "巴洛维亚纽带"
+      },
+      "specializationDescription": {
+        "original": "Nahara focuses on her companions to bring the fight to Strahd",
+        "display": "纳哈拉专注于她的同伴，向斯特拉德开战"
+      },
+      "specializationGraphicId": "14620",
+      "tipText": null
+    },
+    {
+      "id": "8015",
+      "requiredLevel": 250,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "A Skilled Lyre",
+        "display": "技艺精湛的七弦琴"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1142",
+      "effectDefinition": {
+        "id": "1142",
+        "snapshots": {
+          "original": {
+            "id": 1142,
+            "flavour_text": "",
+            "description": {
+              "desc": "The area reduction in $(upgrade_name id) is increased by $(amount)%."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,50,8010,2"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "type": "upgrade",
+              "formation_circle_icon": false
+            }
+          },
+          "display": {
+            "id": 1142,
+            "flavour_text": "",
+            "description": {
+              "desc": "$(upgrade_name id) 提供的区域要求削减效果提高 $(amount)%。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,50,8010,2"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "type": "upgrade",
+              "formation_circle_icon": false
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "A Skilled Lyre",
+        "display": "技艺精湛的七弦琴"
+      },
+      "specializationDescription": {
+        "original": "Nahara focuses on her amusement to move more quickly",
+        "display": "纳哈拉专注于她的娱乐才能，使移动速度更快"
+      },
+      "specializationGraphicId": "14622",
+      "tipText": null
+    },
+    {
+      "id": "8102",
+      "requiredLevel": 270,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8103",
+      "requiredLevel": 290,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8016",
+      "requiredLevel": 300,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Form of Dread",
+        "display": "恐惧形态"
+      },
+      "upgradeType": "unlock_ultimate",
+      "effectReference": "set_ultimate_attack,529",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8104",
+      "requiredLevel": 320,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8105",
+      "requiredLevel": 350,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"Increases the damage of $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8106",
+      "requiredLevel": 370,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8107",
+      "requiredLevel": 400,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8108",
+      "requiredLevel": 440,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8109",
+      "requiredLevel": 460,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"Increases the damage of $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8017",
+      "requiredLevel": 500,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,8009",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8110",
+      "requiredLevel": 510,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8115",
+      "requiredLevel": 540,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8116",
+      "requiredLevel": 570,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8117",
+      "requiredLevel": 600,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"Increases the damage of $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8118",
+      "requiredLevel": 630,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8119",
+      "requiredLevel": 670,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8120",
+      "requiredLevel": 710,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8121",
+      "requiredLevel": 770,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8122",
+      "requiredLevel": 780,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"Increases the damage of $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8123",
+      "requiredLevel": 830,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8124",
+      "requiredLevel": 880,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8125",
+      "requiredLevel": 940,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8126",
+      "requiredLevel": 990,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8111",
+      "requiredLevel": 1000,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,8009",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8127",
+      "requiredLevel": 1020,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"Increases the damage of $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8128",
+      "requiredLevel": 1100,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8129",
+      "requiredLevel": 1180,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8130",
+      "requiredLevel": 1250,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8131",
+      "requiredLevel": 1310,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8132",
+      "requiredLevel": 1320,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"Increases the damage of $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8136",
+      "requiredLevel": 1360,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8133",
+      "requiredLevel": 1400,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8134",
+      "requiredLevel": 1450,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8112",
+      "requiredLevel": 1500,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,8009",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8135",
+      "requiredLevel": 1550,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8137",
+      "requiredLevel": 1600,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8140",
+      "requiredLevel": 1630,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8138",
+      "requiredLevel": 1700,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"Increases the damage of $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8139",
+      "requiredLevel": 1760,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8141",
+      "requiredLevel": 1830,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8142",
+      "requiredLevel": 1900,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8144",
+      "requiredLevel": 1960,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8113",
+      "requiredLevel": 2000,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,8009",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8145",
+      "requiredLevel": 2080,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8143",
+      "requiredLevel": 2100,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"Increases the damage of $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8610",
+      "requiredLevel": 2170,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8723",
+      "requiredLevel": 2270,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8724",
+      "requiredLevel": 2400,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8725",
+      "requiredLevel": 2450,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8114",
+      "requiredLevel": 2500,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,8009",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8609",
+      "requiredLevel": 2560,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8726",
+      "requiredLevel": 2620,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8611",
+      "requiredLevel": 2680,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,8009",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8612",
+      "requiredLevel": 2740,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8019",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,8011",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    }
+  ],
+  "feats": [
+    {
+      "id": "799",
+      "order": 1,
+      "name": {
+        "original": "Tavern Brawler",
+        "display": "旅店打手"
+      },
+      "description": {
+        "original": "A lady doesn't start brawls, but she does finish them.",
+        "display": "女士不会挑起争斗，但她会结束争斗。"
+      },
+      "rarity": "2",
+      "graphicId": "6078",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,30"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "800",
+      "order": 2,
+      "name": {
+        "original": "Grappler",
+        "display": "擒抱者"
+      },
+      "description": {
+        "original": "Do not lay a hand on me, or you shall quickly regret it!",
+        "display": "别对我动手动脚，否则你很快就会后悔！"
+      },
+      "rarity": "3",
+      "graphicId": "6078",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,60"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "801",
+      "order": 3,
+      "name": {
+        "original": "Glimpse of the Past",
+        "display": "往事一瞥"
+      },
+      "description": {
+        "original": "I almost feel as if I remember this...",
+        "display": "我几乎觉得我好像想起来了......"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,8009"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "802",
+      "order": 4,
+      "name": {
+        "original": "Memory of a Prior Me",
+        "display": "以前的我的记忆"
+      },
+      "description": {
+        "original": "What I've done before cannot be undone.",
+        "display": "我曾经做过的事，是无法更改的。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,8009"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "803",
+      "order": 5,
+      "name": {
+        "original": "A Brighter Path",
+        "display": "更光明的道路"
+      },
+      "description": {
+        "original": "We shall forge our path through this. It can't get worse!",
+        "display": "我们将从中重铸我们的道路。不会更糟了！"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,8010,1",
+          "description": "Increases the damage of Nahara's Amuse or Avenge ability by $amount%"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "804",
+      "order": 6,
+      "name": {
+        "original": "A Promise Kept",
+        "display": "信守承诺"
+      },
+      "description": {
+        "original": "I shall remain by your side, and we will see the battle through.",
+        "display": "我会留在你身边，我们要战斗到底。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,8010,1",
+          "description": "Increases the damage of Nahara's Amuse or Avenge ability by $amount%"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "805",
+      "order": 7,
+      "name": {
+        "original": "Wing Push-ups",
+        "display": "翼力十足"
+      },
+      "description": {
+        "original": "There are benefits to making certain promises.",
+        "display": "做出某些承诺是有好处的。"
+      },
+      "rarity": "3",
+      "graphicId": "6073",
+      "effects": [
+        {
+          "effect_string": "increase_ability_score,str,1"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "806",
+      "order": 8,
+      "name": {
+        "original": "Tenacious",
+        "display": "顽强之刃"
+      },
+      "description": {
+        "original": "We live but once...unless the Mists declare otherwise...",
+        "display": "我们的生命只有一次......除非迷雾另有所说......"
+      },
+      "rarity": "4",
+      "graphicId": "10062",
+      "effects": [
+        {
+          "effect_string": "increase_ability_score,con,2"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 191
+        }
+      ],
+      "properties": {
+        "in_flash_sale": true,
+        "is_premium": true,
+        "is_available": true,
+        "available_at_time": 1656529200
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "1066",
+      "order": 9,
+      "name": {
+        "original": "A Sense of Self",
+        "display": "自我意识"
+      },
+      "description": {
+        "original": "Perhaps what I can become is as important as who I was.",
+        "display": "我将来的成就也许与我的曾经一样重要。"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,8009"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 270
+        }
+      ],
+      "properties": {
+        "in_flash_sale": true,
+        "is_premium": true,
+        "is_available": true,
+        "available_at_time": 1675281600
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "1488",
+      "order": 10,
+      "name": {
+        "original": "Eventful Night",
+        "display": "繁忙之夜"
+      },
+      "description": {
+        "original": "Shall we share stories or fight to the death?",
+        "display": "我们究竟是讲故事还是战斗至死？"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,8010,1",
+          "description": "Increases the damage of Nahara's Amuse or Avenge ability by $amount%"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 366
+        }
+      ],
+      "properties": {
+        "is_premium": true,
+        "is_available": true,
+        "available_at_time": 1696618800
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "1799",
+      "order": 11,
+      "name": {
+        "original": "Spell Master",
+        "display": "法术大师"
+      },
+      "description": {
+        "original": "These hands hold dangerous power. Do not cross me.",
+        "display": "这双手蕴含着危险的力量。别激怒我。"
+      },
+      "rarity": "4",
+      "graphicId": "6078",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,120"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 446
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1720638000
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "1893",
+      "order": 12,
+      "name": {
+        "original": "Make Undead",
+        "display": "制造亡灵"
+      },
+      "description": {
+        "original": "I feel stronger...",
+        "display": "我感觉变强了……"
+      },
+      "rarity": "4",
+      "graphicId": "21658",
+      "effects": [
+        {
+          "effect_string": "add_hero_tags,0,undead",
+          "description": "Nahara also counts as Undead"
+        },
+        {
+          "effect_string": "hero_dps_multiplier_mult,400",
+          "skip_effect_key_desc": true
+        },
+        {
+          "effect_string": "appear_dead",
+          "show_description": false,
+          "description": "",
+          "skip_effect_key_desc": true
+        }
+      ],
+      "sources": [
+        {
+          "source": "promo",
+          "promotion_id": 50
+        },
+        {
+          "source": "gems",
+          "cost": 50000,
+          "start_date": "2025-04-30 12:00:00"
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1729710000
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "2221",
+      "order": 13,
+      "name": {
+        "original": "Immolation",
+        "display": "献祭"
+      },
+      "description": {
+        "original": "You will burn for this, and it will be by my hand.",
+        "display": "你将为此付出代价，葬身于我的手中，承受烈火的灼烧。"
+      },
+      "rarity": "4",
+      "graphicId": "16918",
+      "effects": [
+        {
+          "effect_string": "immolation,1,5"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000,
+          "start_date": "2025-10-02 12:00:00"
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 593
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1751482800
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    }
+  ],
+  "skins": [
+    {
+      "id": "178",
+      "name": {
+        "original": "Feywild Nahara",
+        "display": "妖精荒野纳哈拉"
+      },
+      "cost": {
+        "req_date": "2022-06-29 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 15232,
+        "large_graphic_id": 15236,
+        "portrait_graphic_id": 15228,
+        "xl_graphic_id": 15623
+      },
+      "rarity": "3",
+      "properties": {
+        "in_flash_sale": true,
+        "is_premium": true,
+        "notification_adjustment_override": {
+          "offset": [
+            56,
+            229
+          ],
+          "scale": 1.25
+        },
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 679,
+        "odds": 25
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    },
+    {
+      "id": "256",
+      "name": {
+        "original": "Blushing Bride Nahara",
+        "display": "羞涩新娘纳哈拉"
+      },
+      "cost": {
+        "req_date": "2023-02-01 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 18206,
+        "large_graphic_id": 18210,
+        "portrait_graphic_id": 18199,
+        "xl_graphic_id": 18213
+      },
+      "rarity": "3",
+      "properties": {
+        "in_flash_sale": true,
+        "is_premium": true,
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 897,
+        "odds": 27
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    },
+    {
+      "id": "330",
+      "name": {
+        "original": "Mind's Eye Nahara",
+        "display": "心灵之眼纳哈拉"
+      },
+      "cost": {
+        "req_date": "2023-10-06 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 21099,
+        "large_graphic_id": 21100,
+        "portrait_graphic_id": 21247,
+        "xl_graphic_id": 21101,
+        "flame_tongue_graphic_id": "{int}"
+      },
+      "rarity": "3",
+      "properties": {
+        "is_premium": true,
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 1228,
+        "odds": 82
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    },
+    {
+      "id": "447",
+      "name": {
+        "original": "Infiltrator Nahara",
+        "display": "潜入者纳哈拉"
+      },
+      "cost": {
+        "req_date": "2024-07-10 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 24185,
+        "large_graphic_id": 24186,
+        "portrait_graphic_id": 24184,
+        "xl_graphic_id": 24187
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 1496,
+        "odds": 40
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    },
+    {
+      "id": "462",
+      "name": {
+        "original": "Vampire Nahara",
+        "display": "吸血鬼纳哈拉"
+      },
+      "cost": {
+        "req_date": "2024-10-23 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 24947,
+        "large_graphic_id": 24953,
+        "portrait_graphic_id": 24943,
+        "xl_graphic_id": 24959
+      },
+      "rarity": "3",
+      "properties": {
+        "notification_adjustment_override": {
+          "offset": [
+            56,
+            210
+          ],
+          "scale": 1.25
+        },
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 1462,
+        "odds": 173
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    },
+    {
+      "id": "574",
+      "name": {
+        "original": "Fortune Hunter Nahara",
+        "display": "财富猎手纳哈拉"
+      },
+      "cost": {
+        "req_date": "2025-07-02 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 27092,
+        "large_graphic_id": 27093,
+        "portrait_graphic_id": 27095,
+        "xl_graphic_id": 27094
+      },
+      "rarity": "3",
+      "properties": {
+        "notification_adjustment_override": {
+          "offset": [
+            56,
+            220
+          ],
+          "scale": 1.25
+        },
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "593",
+        "cost": 1680
+      },
+      "availabilities": {
+        "premium_item_id": "593"
+      }
+    }
+  ],
+  "raw": {
+    "hero": {
+      "original": {
+        "id": 102,
+        "name": "Nahara",
+        "english_name": "Nahara",
+        "seat_id": 3,
+        "base_cost": "8000",
+        "base_damage": "5000",
+        "base_health": "43",
+        "cost_curves": {
+          "1": 1.07
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 528,
+        "ultimate_attack_id": 529,
+        "graphic_id": 14554,
+        "portrait_graphic_id": 14553,
+        "character_sheet_details": {
+          "full_name": "Nahara",
+          "class": "Warlock / Bard",
+          "race": "Aasimar (Reborn)",
+          "age": 27,
+          "alignment": "Chaotic Neutral",
+          "ability_scores": {
+            "str": 9,
+            "dex": 16,
+            "con": 12,
+            "int": 10,
+            "wis": 13,
+            "cha": 16
+          },
+          "backstory": "Nahara is a reborn fallen Aasimar undead warlock/college of the spirits bard. She fell into the mists of Ravenloft unable to remember anything from her life (or past lives as we've come to learn). All she knows is that her current Patron, Azalin Rex, has asked her to aid him against his foe Strahd von Zarovich, who for reasons unknown to her, has been desperately seeking her out.",
+          "system_description": "Nahara is a DPS Speed Champion that does more damage as she completes adventures."
+        },
+        "default_feat_slot_unlocks": [
+          485,
+          1130,
+          1940,
+          2940
+        ],
+        "tags": [
+          "blackdicesociety",
+          "event",
+          "female",
+          "aasimar",
+          "warlock",
+          "bard",
+          "chaotic",
+          "neutral",
+          "dps",
+          "speed",
+          "y5",
+          "geneutral"
+        ],
+        "properties": {
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            170,
+            171,
+            172
+          ],
+          "graphic_large": 14555,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            104,
+            63
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "attack": 2,
+            "attack_b": 8,
+            "ultimate": 3,
+            "gethit": 4,
+            "koed": 5
+          },
+          "allow_time_gate": "2022-07-11 12:00:00",
+          "time_gate_adventure_id": 1036,
+          "time_gate_variants_ids": [
+            1004,
+            1005,
+            1006
+          ],
+          "time_gate_tier": 1,
+          "silver_chest_type_id": 360,
+          "gold_chest_type_id": 361,
+          "available_in_store": "2022-07-18 12:00:00",
+          "golden_epic_loot_id": 2380,
+          "golden_epic_promo_id": 271,
+          "event_logo_graphic_id": 3368,
+          "console_portrait": 14551,
+          "trials_effect_id": 838,
+          "permanent_effects": [
+            {
+              "effect_string": "nahara_attack_controller",
+              "form_of_dread_effets": [
+                {
+                  "effect_string": "change_base_attack,530"
+                },
+                {
+                  "effect_string": "hero_dps_multiplier_mult,1000"
+                }
+              ]
+            }
+          ],
+          "legendary_effect_id": [
+            54,
+            56,
+            21,
+            84,
+            87,
+            105
+          ],
+          "weekly_buff": "buff_upgrade,200,8009,8011",
+          "spotlight_url": "https://youtu.be/j1IlANpaq6M",
+          "portrait_graphic_scale": 1.14,
+          "time_gate_blackout": {
+            "start": "2023-06-25 00:00:00",
+            "end": "2023-07-10 12:00:00"
+          },
+          "store_blackout": {
+            "start": "2023-06-25 00:00:00",
+            "end": "2023-07-10 12:00:00"
+          },
+          "notification_adjustment": {
+            "offset": [
+              56,
+              224
+            ],
+            "scale": 1.25
+          }
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 1003,
+            "type": "base"
+          },
+          {
+            "adventure_id": 1004,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1005,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1006,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1007,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 1036,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 88,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 8012,
+            "name": "Beloved by Strahd",
+            "description": "",
+            "graphic_id": "14612"
+          },
+          {
+            "upgrade_id": 8009,
+            "name": "Who Am I?",
+            "description": "The more Nahara adventures, the more she remembers of her past life; slowly increasing her damage.",
+            "graphic_id": "14615"
+          },
+          {
+            "upgrade_id": 8010,
+            "name": "To Amuse or Avenge",
+            "description": "If Nahara is easily defeating enemies she helps her companions speed through later areas. If she is not defeating enemies easily she increases her damage.",
+            "graphic_id": "14614"
+          },
+          {
+            "upgrade_id": 8011,
+            "name": "Strong Society",
+            "description": "",
+            "graphic_id": "14613"
+          },
+          {
+            "upgrade_id": 8016,
+            "name": "Form of Dread",
+            "description": "",
+            "graphic_id": 813
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1783018800,
+        "event_name": "Founders' Day",
+        "is_available": true,
+        "date_available": "2022-06-29 00:00:00",
+        "last_rework_date": "2022-06-29 00:00:00"
+      },
+      "display": {
+        "id": 102,
+        "name": "纳哈拉",
+        "english_name": "Nahara",
+        "seat_id": 3,
+        "base_cost": "8000",
+        "base_damage": "5000",
+        "base_health": "43",
+        "cost_curves": {
+          "1": 1.07
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 528,
+        "ultimate_attack_id": 529,
+        "graphic_id": 14554,
+        "portrait_graphic_id": 14553,
+        "character_sheet_details": {
+          "full_name": "纳哈拉",
+          "class": "邪术师/吟游诗人",
+          "race": "神裔（重生）",
+          "age": 27,
+          "alignment": "混乱中立",
+          "ability_scores": {
+            "str": 9,
+            "dex": 16,
+            "con": 12,
+            "int": 10,
+            "wis": 13,
+            "cha": 16
+          },
+          "backstory": "纳哈拉是一个重生的堕落神裔亡灵邪术师/鬼灵学院的吟游诗人。她坠入鸦阁魔域的迷雾中，无法记起她生命（或我们已经了解到的前世）中的任何事。她只知道她现在的赞助者亚扎林·雷克斯，要求她协助对付他的敌人斯特拉德·冯·扎罗维奇，而后者由于她不知道的原因，一直在拼命寻找她。",
+          "system_description": "纳哈拉是一位承担伤害输出职责的速度型勇士。她完成的冒险越多，就能造成越多伤害。"
+        },
+        "default_feat_slot_unlocks": [
+          485,
+          1130,
+          1940,
+          2940
+        ],
+        "tags": [
+          "blackdicesociety",
+          "event",
+          "female",
+          "aasimar",
+          "warlock",
+          "bard",
+          "chaotic",
+          "neutral",
+          "dps",
+          "speed",
+          "y5",
+          "geneutral"
+        ],
+        "properties": {
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            170,
+            171,
+            172
+          ],
+          "graphic_large": 14555,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            104,
+            63
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "attack": 2,
+            "attack_b": 8,
+            "ultimate": 3,
+            "gethit": 4,
+            "koed": 5
+          },
+          "allow_time_gate": "2022-07-11 12:00:00",
+          "time_gate_adventure_id": 1036,
+          "time_gate_variants_ids": [
+            1004,
+            1005,
+            1006
+          ],
+          "time_gate_tier": 1,
+          "silver_chest_type_id": 360,
+          "gold_chest_type_id": 361,
+          "available_in_store": "2022-07-18 12:00:00",
+          "golden_epic_loot_id": 2380,
+          "golden_epic_promo_id": 271,
+          "event_logo_graphic_id": 3368,
+          "console_portrait": 14551,
+          "trials_effect_id": 838,
+          "permanent_effects": [
+            {
+              "effect_string": "nahara_attack_controller",
+              "form_of_dread_effets": [
+                {
+                  "effect_string": "change_base_attack,530"
+                },
+                {
+                  "effect_string": "hero_dps_multiplier_mult,1000"
+                }
+              ]
+            }
+          ],
+          "legendary_effect_id": [
+            54,
+            56,
+            21,
+            84,
+            87,
+            105
+          ],
+          "weekly_buff": "buff_upgrade,200,8009,8011",
+          "spotlight_url": "https://youtu.be/j1IlANpaq6M",
+          "portrait_graphic_scale": 1.14,
+          "time_gate_blackout": {
+            "start": "2023-06-25 00:00:00",
+            "end": "2023-07-10 12:00:00"
+          },
+          "store_blackout": {
+            "start": "2023-06-25 00:00:00",
+            "end": "2023-07-10 12:00:00"
+          },
+          "notification_adjustment": {
+            "offset": [
+              56,
+              224
+            ],
+            "scale": 1.25
+          }
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 1003,
+            "type": "base"
+          },
+          {
+            "adventure_id": 1004,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1005,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1006,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1007,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 1036,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 88,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 8012,
+            "name": "斯特拉德的宠儿",
+            "description": "",
+            "graphic_id": "14612"
+          },
+          {
+            "upgrade_id": 8009,
+            "name": "我是谁？",
+            "description": "纳哈拉参与的冒险越多，就回忆起更多自己的过去，缓慢提升她的伤害。",
+            "graphic_id": "14615"
+          },
+          {
+            "upgrade_id": 8010,
+            "name": "娱乐或报复",
+            "description": "如果纳哈拉能轻松消灭敌人，就可以提升队伍向更深区域推进的速度。如果她无法轻松消灭敌人，则会提升自己的伤害。",
+            "graphic_id": "14614"
+          },
+          {
+            "upgrade_id": 8011,
+            "name": "强力社团",
+            "description": "",
+            "graphic_id": "14613"
+          },
+          {
+            "upgrade_id": 8016,
+            "name": "恐惧形态",
+            "description": "",
+            "graphic_id": 813
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1783018800,
+        "event_name": "始祖日",
+        "is_available": true,
+        "date_available": "2022-06-29 00:00:00",
+        "last_rework_date": "2022-06-29 00:00:00"
+      }
+    },
+    "attacks": [
+      {
+        "id": "528",
+        "snapshots": {
+          "original": {
+            "id": 528,
+            "name": "Witch Bolt",
+            "description": "Nahara attacks a random enemy and every enemy that she already hit with a bolt of energy.",
+            "long_description": "Nahara attacks a random enemy and every enemy that she has already hit with this attack.",
+            "graphic_id": 0,
+            "target": "random",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 5,
+            "animations": [
+              {
+                "type": "melee_attack",
+                "special_melee": "nahara",
+                "sound_frames": {
+                  "1": 169
+                },
+                "hit_sound": 133,
+                "start_shoot_frame": 6,
+                "end_shoot_frame": 24,
+                "fps_adjust": 30,
+                "animation_sequence_name": "attack",
+                "shoot_offset_top": {
+                  "x": 55,
+                  "y": -110
+                },
+                "shoot_offset_btm": {
+                  "x": 5,
+                  "y": -80
+                },
+                "target_offset_x": -20,
+                "target_offset_y": -40
+              }
+            ],
+            "tags": [
+              "ranged"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          },
+          "display": {
+            "id": 528,
+            "name": "巫术箭",
+            "description": "纳哈拉用能量束攻击一名随机敌人和她之前击中过的所有敌人。",
+            "long_description": "纳哈拉攻击一名随机敌人和她之前使用此攻击方式击中过的所有敌人。",
+            "graphic_id": 0,
+            "target": "random",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 5,
+            "animations": [
+              {
+                "type": "melee_attack",
+                "special_melee": "nahara",
+                "sound_frames": {
+                  "1": 169
+                },
+                "hit_sound": 133,
+                "start_shoot_frame": 6,
+                "end_shoot_frame": 24,
+                "fps_adjust": 30,
+                "animation_sequence_name": "attack",
+                "shoot_offset_top": {
+                  "x": 55,
+                  "y": -110
+                },
+                "shoot_offset_btm": {
+                  "x": 5,
+                  "y": -80
+                },
+                "target_offset_x": -20,
+                "target_offset_y": -40
+              }
+            ],
+            "tags": [
+              "ranged"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          }
+        }
+      },
+      {
+        "id": "529",
+        "snapshots": {
+          "original": {
+            "id": 529,
+            "name": "Form of Dread",
+            "description": "Nahara takes off and channels Azalin Rex, increasing her damage for 15 seconds.",
+            "long_description": "Nahara takes off into the air and channels the power of her patron Azalin Rex for 15 seconds. Her damage is increased by 1,000% while in this form and any enemy she hits has a 50% chance of being stunned for 2 seconds.",
+            "graphic_id": 14625,
+            "target": "none",
+            "num_targets": 0,
+            "aoe_radius": 0,
+            "damage_modifier": 0,
+            "cooldown": 240,
+            "animations": [
+              {
+                "type": "ultimate_attack",
+                "ultimate": "nahara",
+                "no_damage_display": true
+              }
+            ],
+            "tags": [
+              "ultimate"
+            ],
+            "damage_types": []
+          },
+          "display": {
+            "id": 529,
+            "name": "恐惧形态",
+            "description": "纳哈拉飞向空中并引导亚扎林·雷克斯，在 15 秒内增加自身伤害。",
+            "long_description": "纳哈拉飞向空中，引导她的赞助者亚扎林·雷克斯的力量，持续 15 秒。她的伤害增加 1000%，而在此形态下，她击中的任何敌人都有 50% 几率被眩晕 2 秒。",
+            "graphic_id": 14625,
+            "target": "none",
+            "num_targets": 0,
+            "aoe_radius": 0,
+            "damage_modifier": 0,
+            "cooldown": 240,
+            "animations": [
+              {
+                "type": "ultimate_attack",
+                "ultimate": "nahara",
+                "no_damage_display": true
+              }
+            ],
+            "tags": [
+              "ultimate"
+            ],
+            "damage_types": []
+          }
+        }
+      }
+    ],
+    "upgrades": [
+      {
+        "id": "8009",
+        "snapshots": {
+          "original": {
+            "id": 8009,
+            "hero_id": 102,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1136",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Who Am I?",
+            "tip_text": "Nahara does more damage for every adventure area she completes over all time."
+          },
+          "display": {
+            "id": 8009,
+            "hero_id": 102,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1136",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "我是谁？",
+            "tip_text": "在任何时间内，纳哈拉每完成一个冒险区域，都会造成更多伤害。"
+          }
+        }
+      },
+      {
+        "id": "8010",
+        "snapshots": {
+          "original": {
+            "id": 8010,
+            "hero_id": 102,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1137",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "To Amuse or Avenge",
+            "tip_text": "Nahara allows champions to complete future areas more quickly when she is easily defeating enemies, and when she is not she starts to deal more damage."
+          },
+          "display": {
+            "id": 8010,
+            "hero_id": 102,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1137",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "娱乐或报复",
+            "tip_text": "纳哈拉轻松击败敌人时，可以让勇士们更快通过后续区域；而当她没有轻松击败敌人时，她会开始造成更多伤害。"
+          }
+        }
+      },
+      {
+        "id": "8011",
+        "snapshots": {
+          "original": {
+            "id": 8011,
+            "hero_id": 102,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1138",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Strong Society"
+          },
+          "display": {
+            "id": 8011,
+            "hero_id": 102,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1138",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "强力社团"
+          }
+        }
+      },
+      {
+        "id": "8012",
+        "snapshots": {
+          "original": {
+            "id": 8012,
+            "hero_id": 102,
+            "required_level": 0,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1139",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Beloved by Strahd"
+          },
+          "display": {
+            "id": 8012,
+            "hero_id": 102,
+            "required_level": 0,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1139",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "斯特拉德的宠儿"
+          }
+        }
+      },
+      {
+        "id": "8013",
+        "snapshots": {
+          "original": {
+            "id": 8013,
+            "hero_id": 102,
+            "required_level": 250,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1140",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "A Grave Experience",
+            "specialization_name": "A Grave Experience",
+            "specialization_description": "Nahara focuses on her experience to deal more damage",
+            "specialization_graphic_id": 14621
+          },
+          "display": {
+            "id": 8013,
+            "hero_id": 102,
+            "required_level": 250,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1140",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "墓穴体验",
+            "specialization_name": "墓穴体验",
+            "specialization_description": "纳哈拉将她的经验专注于造成更多伤害",
+            "specialization_graphic_id": 14621
+          }
+        }
+      },
+      {
+        "id": "8014",
+        "snapshots": {
+          "original": {
+            "id": 8014,
+            "hero_id": 102,
+            "required_level": 250,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1141",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "A Barovian Bond",
+            "specialization_name": "A Barovian Bond",
+            "specialization_description": "Nahara focuses on her companions to bring the fight to Strahd",
+            "specialization_graphic_id": 14620
+          },
+          "display": {
+            "id": 8014,
+            "hero_id": 102,
+            "required_level": 250,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1141",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "巴洛维亚纽带",
+            "specialization_name": "巴洛维亚纽带",
+            "specialization_description": "纳哈拉专注于她的同伴，向斯特拉德开战",
+            "specialization_graphic_id": 14620
+          }
+        }
+      },
+      {
+        "id": "8015",
+        "snapshots": {
+          "original": {
+            "id": 8015,
+            "hero_id": 102,
+            "required_level": 250,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1142",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "A Skilled Lyre",
+            "specialization_name": "A Skilled Lyre",
+            "specialization_description": "Nahara focuses on her amusement to move more quickly",
+            "specialization_graphic_id": 14622
+          },
+          "display": {
+            "id": 8015,
+            "hero_id": 102,
+            "required_level": 250,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1142",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "技艺精湛的七弦琴",
+            "specialization_name": "技艺精湛的七弦琴",
+            "specialization_description": "纳哈拉专注于她的娱乐才能，使移动速度更快",
+            "specialization_graphic_id": 14622
+          }
+        }
+      },
+      {
+        "id": "8016",
+        "snapshots": {
+          "original": {
+            "id": 8016,
+            "hero_id": 102,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "set_ultimate_attack,529",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Form of Dread"
+          },
+          "display": {
+            "id": 8016,
+            "hero_id": 102,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "set_ultimate_attack,529",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "恐惧形态"
+          }
+        }
+      },
+      {
+        "id": "8017",
+        "snapshots": {
+          "original": {
+            "id": 8017,
+            "hero_id": 102,
+            "required_level": 500,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,8009",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8017,
+            "hero_id": 102,
+            "required_level": 500,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,8009",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8018",
+        "snapshots": {
+          "original": {
+            "id": 8018,
+            "hero_id": 102,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"Increases the damage of $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8018,
+            "hero_id": 102,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"\\u4f7f$(upgrade_hero id)\\u7684$(upgrade_name id)\\u6280\\u80fd\\u4f24\\u5bb3\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8019",
+        "snapshots": {
+          "original": {
+            "id": 8019,
+            "hero_id": 102,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,8011",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8019,
+            "hero_id": 102,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,8011",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8096",
+        "snapshots": {
+          "original": {
+            "id": 8096,
+            "hero_id": 102,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8096,
+            "hero_id": 102,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8097",
+        "snapshots": {
+          "original": {
+            "id": 8097,
+            "hero_id": 102,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8097,
+            "hero_id": 102,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8098",
+        "snapshots": {
+          "original": {
+            "id": 8098,
+            "hero_id": 102,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8098,
+            "hero_id": 102,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8099",
+        "snapshots": {
+          "original": {
+            "id": 8099,
+            "hero_id": 102,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8099,
+            "hero_id": 102,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8100",
+        "snapshots": {
+          "original": {
+            "id": 8100,
+            "hero_id": 102,
+            "required_level": 220,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"Increases the damage of $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8100,
+            "hero_id": 102,
+            "required_level": 220,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"\\u4f7f$(upgrade_hero id)\\u7684$(upgrade_name id)\\u6280\\u80fd\\u4f24\\u5bb3\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8101",
+        "snapshots": {
+          "original": {
+            "id": 8101,
+            "hero_id": 102,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8101,
+            "hero_id": 102,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8102",
+        "snapshots": {
+          "original": {
+            "id": 8102,
+            "hero_id": 102,
+            "required_level": 270,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8102,
+            "hero_id": 102,
+            "required_level": 270,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8103",
+        "snapshots": {
+          "original": {
+            "id": 8103,
+            "hero_id": 102,
+            "required_level": 290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8103,
+            "hero_id": 102,
+            "required_level": 290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8104",
+        "snapshots": {
+          "original": {
+            "id": 8104,
+            "hero_id": 102,
+            "required_level": 320,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8104,
+            "hero_id": 102,
+            "required_level": 320,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8105",
+        "snapshots": {
+          "original": {
+            "id": 8105,
+            "hero_id": 102,
+            "required_level": 350,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"Increases the damage of $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8105,
+            "hero_id": 102,
+            "required_level": 350,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"\\u4f7f$(upgrade_hero id)\\u7684$(upgrade_name id)\\u6280\\u80fd\\u4f24\\u5bb3\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8106",
+        "snapshots": {
+          "original": {
+            "id": 8106,
+            "hero_id": 102,
+            "required_level": 370,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8106,
+            "hero_id": 102,
+            "required_level": 370,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8107",
+        "snapshots": {
+          "original": {
+            "id": 8107,
+            "hero_id": 102,
+            "required_level": 400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8107,
+            "hero_id": 102,
+            "required_level": 400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8108",
+        "snapshots": {
+          "original": {
+            "id": 8108,
+            "hero_id": 102,
+            "required_level": 440,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8108,
+            "hero_id": 102,
+            "required_level": 440,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8109",
+        "snapshots": {
+          "original": {
+            "id": 8109,
+            "hero_id": 102,
+            "required_level": 460,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"Increases the damage of $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8109,
+            "hero_id": 102,
+            "required_level": 460,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"\\u4f7f$(upgrade_hero id)\\u7684$(upgrade_name id)\\u6280\\u80fd\\u4f24\\u5bb3\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8110",
+        "snapshots": {
+          "original": {
+            "id": 8110,
+            "hero_id": 102,
+            "required_level": 510,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8110,
+            "hero_id": 102,
+            "required_level": 510,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8111",
+        "snapshots": {
+          "original": {
+            "id": 8111,
+            "hero_id": 102,
+            "required_level": 1000,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,8009",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8111,
+            "hero_id": 102,
+            "required_level": 1000,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,8009",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8112",
+        "snapshots": {
+          "original": {
+            "id": 8112,
+            "hero_id": 102,
+            "required_level": 1500,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,8009",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8112,
+            "hero_id": 102,
+            "required_level": 1500,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,8009",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8113",
+        "snapshots": {
+          "original": {
+            "id": 8113,
+            "hero_id": 102,
+            "required_level": 2000,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,8009",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8113,
+            "hero_id": 102,
+            "required_level": 2000,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,8009",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8114",
+        "snapshots": {
+          "original": {
+            "id": 8114,
+            "hero_id": 102,
+            "required_level": 2500,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,8009",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8114,
+            "hero_id": 102,
+            "required_level": 2500,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,8009",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8115",
+        "snapshots": {
+          "original": {
+            "id": 8115,
+            "hero_id": 102,
+            "required_level": 540,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8115,
+            "hero_id": 102,
+            "required_level": 540,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8116",
+        "snapshots": {
+          "original": {
+            "id": 8116,
+            "hero_id": 102,
+            "required_level": 570,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8116,
+            "hero_id": 102,
+            "required_level": 570,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8117",
+        "snapshots": {
+          "original": {
+            "id": 8117,
+            "hero_id": 102,
+            "required_level": 600,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"Increases the damage of $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8117,
+            "hero_id": 102,
+            "required_level": 600,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"\\u4f7f$(upgrade_hero id)\\u7684$(upgrade_name id)\\u6280\\u80fd\\u4f24\\u5bb3\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8118",
+        "snapshots": {
+          "original": {
+            "id": 8118,
+            "hero_id": 102,
+            "required_level": 630,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8118,
+            "hero_id": 102,
+            "required_level": 630,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8119",
+        "snapshots": {
+          "original": {
+            "id": 8119,
+            "hero_id": 102,
+            "required_level": 670,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8119,
+            "hero_id": 102,
+            "required_level": 670,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8120",
+        "snapshots": {
+          "original": {
+            "id": 8120,
+            "hero_id": 102,
+            "required_level": 710,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8120,
+            "hero_id": 102,
+            "required_level": 710,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8121",
+        "snapshots": {
+          "original": {
+            "id": 8121,
+            "hero_id": 102,
+            "required_level": 770,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8121,
+            "hero_id": 102,
+            "required_level": 770,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8122",
+        "snapshots": {
+          "original": {
+            "id": 8122,
+            "hero_id": 102,
+            "required_level": 780,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"Increases the damage of $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8122,
+            "hero_id": 102,
+            "required_level": 780,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"\\u4f7f$(upgrade_hero id)\\u7684$(upgrade_name id)\\u6280\\u80fd\\u4f24\\u5bb3\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8123",
+        "snapshots": {
+          "original": {
+            "id": 8123,
+            "hero_id": 102,
+            "required_level": 830,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8123,
+            "hero_id": 102,
+            "required_level": 830,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8124",
+        "snapshots": {
+          "original": {
+            "id": 8124,
+            "hero_id": 102,
+            "required_level": 880,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8124,
+            "hero_id": 102,
+            "required_level": 880,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8125",
+        "snapshots": {
+          "original": {
+            "id": 8125,
+            "hero_id": 102,
+            "required_level": 940,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8125,
+            "hero_id": 102,
+            "required_level": 940,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8126",
+        "snapshots": {
+          "original": {
+            "id": 8126,
+            "hero_id": 102,
+            "required_level": 990,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8126,
+            "hero_id": 102,
+            "required_level": 990,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8127",
+        "snapshots": {
+          "original": {
+            "id": 8127,
+            "hero_id": 102,
+            "required_level": 1020,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"Increases the damage of $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8127,
+            "hero_id": 102,
+            "required_level": 1020,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"\\u4f7f$(upgrade_hero id)\\u7684$(upgrade_name id)\\u6280\\u80fd\\u4f24\\u5bb3\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8128",
+        "snapshots": {
+          "original": {
+            "id": 8128,
+            "hero_id": 102,
+            "required_level": 1100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8128,
+            "hero_id": 102,
+            "required_level": 1100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8129",
+        "snapshots": {
+          "original": {
+            "id": 8129,
+            "hero_id": 102,
+            "required_level": 1180,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8129,
+            "hero_id": 102,
+            "required_level": 1180,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8130",
+        "snapshots": {
+          "original": {
+            "id": 8130,
+            "hero_id": 102,
+            "required_level": 1250,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8130,
+            "hero_id": 102,
+            "required_level": 1250,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8131",
+        "snapshots": {
+          "original": {
+            "id": 8131,
+            "hero_id": 102,
+            "required_level": 1310,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8131,
+            "hero_id": 102,
+            "required_level": 1310,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8132",
+        "snapshots": {
+          "original": {
+            "id": 8132,
+            "hero_id": 102,
+            "required_level": 1320,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"Increases the damage of $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8132,
+            "hero_id": 102,
+            "required_level": 1320,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"\\u4f7f$(upgrade_hero id)\\u7684$(upgrade_name id)\\u6280\\u80fd\\u4f24\\u5bb3\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8133",
+        "snapshots": {
+          "original": {
+            "id": 8133,
+            "hero_id": 102,
+            "required_level": 1400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8133,
+            "hero_id": 102,
+            "required_level": 1400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8134",
+        "snapshots": {
+          "original": {
+            "id": 8134,
+            "hero_id": 102,
+            "required_level": 1450,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8134,
+            "hero_id": 102,
+            "required_level": 1450,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8135",
+        "snapshots": {
+          "original": {
+            "id": 8135,
+            "hero_id": 102,
+            "required_level": 1550,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8135,
+            "hero_id": 102,
+            "required_level": 1550,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8136",
+        "snapshots": {
+          "original": {
+            "id": 8136,
+            "hero_id": 102,
+            "required_level": 1360,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8136,
+            "hero_id": 102,
+            "required_level": 1360,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8137",
+        "snapshots": {
+          "original": {
+            "id": 8137,
+            "hero_id": 102,
+            "required_level": 1600,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8137,
+            "hero_id": 102,
+            "required_level": 1600,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8138",
+        "snapshots": {
+          "original": {
+            "id": 8138,
+            "hero_id": 102,
+            "required_level": 1700,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"Increases the damage of $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8138,
+            "hero_id": 102,
+            "required_level": 1700,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"\\u4f7f$(upgrade_hero id)\\u7684$(upgrade_name id)\\u6280\\u80fd\\u4f24\\u5bb3\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8139",
+        "snapshots": {
+          "original": {
+            "id": 8139,
+            "hero_id": 102,
+            "required_level": 1760,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8139,
+            "hero_id": 102,
+            "required_level": 1760,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8140",
+        "snapshots": {
+          "original": {
+            "id": 8140,
+            "hero_id": 102,
+            "required_level": 1630,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8140,
+            "hero_id": 102,
+            "required_level": 1630,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8141",
+        "snapshots": {
+          "original": {
+            "id": 8141,
+            "hero_id": 102,
+            "required_level": 1830,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8141,
+            "hero_id": 102,
+            "required_level": 1830,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8142",
+        "snapshots": {
+          "original": {
+            "id": 8142,
+            "hero_id": 102,
+            "required_level": 1900,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8142,
+            "hero_id": 102,
+            "required_level": 1900,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8143",
+        "snapshots": {
+          "original": {
+            "id": 8143,
+            "hero_id": 102,
+            "required_level": 2100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"Increases the damage of $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8143,
+            "hero_id": 102,
+            "required_level": 2100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,8010,1\",\"description\":\"\\u4f7f$(upgrade_hero id)\\u7684$(upgrade_name id)\\u6280\\u80fd\\u4f24\\u5bb3\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8144",
+        "snapshots": {
+          "original": {
+            "id": 8144,
+            "hero_id": 102,
+            "required_level": 1960,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8144,
+            "hero_id": 102,
+            "required_level": 1960,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8145",
+        "snapshots": {
+          "original": {
+            "id": 8145,
+            "hero_id": 102,
+            "required_level": 2080,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8145,
+            "hero_id": 102,
+            "required_level": 2080,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8609",
+        "snapshots": {
+          "original": {
+            "id": 8609,
+            "hero_id": 102,
+            "required_level": 2560,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8609,
+            "hero_id": 102,
+            "required_level": 2560,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8610",
+        "snapshots": {
+          "original": {
+            "id": 8610,
+            "hero_id": 102,
+            "required_level": 2170,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8610,
+            "hero_id": 102,
+            "required_level": 2170,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8611",
+        "snapshots": {
+          "original": {
+            "id": 8611,
+            "hero_id": 102,
+            "required_level": 2680,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,8009",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8611,
+            "hero_id": 102,
+            "required_level": 2680,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,8009",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8612",
+        "snapshots": {
+          "original": {
+            "id": 8612,
+            "hero_id": 102,
+            "required_level": 2740,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8612,
+            "hero_id": 102,
+            "required_level": 2740,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8723",
+        "snapshots": {
+          "original": {
+            "id": 8723,
+            "hero_id": 102,
+            "required_level": 2270,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8723,
+            "hero_id": 102,
+            "required_level": 2270,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8724",
+        "snapshots": {
+          "original": {
+            "id": 8724,
+            "hero_id": 102,
+            "required_level": 2400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8724,
+            "hero_id": 102,
+            "required_level": 2400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8725",
+        "snapshots": {
+          "original": {
+            "id": 8725,
+            "hero_id": 102,
+            "required_level": 2450,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8725,
+            "hero_id": 102,
+            "required_level": 2450,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8726",
+        "snapshots": {
+          "original": {
+            "id": 8726,
+            "hero_id": 102,
+            "required_level": 2620,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8726,
+            "hero_id": 102,
+            "required_level": 2620,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      }
+    ],
+    "feats": [
+      {
+        "id": "799",
+        "snapshots": {
+          "original": {
+            "id": 799,
+            "hero_id": 102,
+            "order": 1,
+            "name": "Tavern Brawler",
+            "description": "A lady doesn't start brawls, but she does finish them.",
+            "rarity": 2,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,30"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 799,
+            "hero_id": 102,
+            "order": 1,
+            "name": "旅店打手",
+            "description": "女士不会挑起争斗，但她会结束争斗。",
+            "rarity": 2,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,30"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "800",
+        "snapshots": {
+          "original": {
+            "id": 800,
+            "hero_id": 102,
+            "order": 2,
+            "name": "Grappler",
+            "description": "Do not lay a hand on me, or you shall quickly regret it!",
+            "rarity": 3,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,60"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 800,
+            "hero_id": 102,
+            "order": 2,
+            "name": "擒抱者",
+            "description": "别对我动手动脚，否则你很快就会后悔！",
+            "rarity": 3,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,60"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "801",
+        "snapshots": {
+          "original": {
+            "id": 801,
+            "hero_id": 102,
+            "order": 3,
+            "name": "Glimpse of the Past",
+            "description": "I almost feel as if I remember this...",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,8009"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 801,
+            "hero_id": 102,
+            "order": 3,
+            "name": "往事一瞥",
+            "description": "我几乎觉得我好像想起来了......",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,8009"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "802",
+        "snapshots": {
+          "original": {
+            "id": 802,
+            "hero_id": 102,
+            "order": 4,
+            "name": "Memory of a Prior Me",
+            "description": "What I've done before cannot be undone.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,8009"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 802,
+            "hero_id": 102,
+            "order": 4,
+            "name": "以前的我的记忆",
+            "description": "我曾经做过的事，是无法更改的。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,8009"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "803",
+        "snapshots": {
+          "original": {
+            "id": 803,
+            "hero_id": 102,
+            "order": 5,
+            "name": "A Brighter Path",
+            "description": "We shall forge our path through this. It can't get worse!",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,8010,1",
+                "description": "Increases the damage of Nahara's Amuse or Avenge ability by $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 803,
+            "hero_id": 102,
+            "order": 5,
+            "name": "更光明的道路",
+            "description": "我们将从中重铸我们的道路。不会更糟了！",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,8010,1",
+                "description": "使纳哈拉的“娱乐或报复”技能的伤害提高 $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "804",
+        "snapshots": {
+          "original": {
+            "id": 804,
+            "hero_id": 102,
+            "order": 6,
+            "name": "A Promise Kept",
+            "description": "I shall remain by your side, and we will see the battle through.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,8010,1",
+                "description": "Increases the damage of Nahara's Amuse or Avenge ability by $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 804,
+            "hero_id": 102,
+            "order": 6,
+            "name": "信守承诺",
+            "description": "我会留在你身边，我们要战斗到底。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,8010,1",
+                "description": "使纳哈拉的“娱乐或报复”技能的伤害提高 $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "805",
+        "snapshots": {
+          "original": {
+            "id": 805,
+            "hero_id": 102,
+            "order": 7,
+            "name": "Wing Push-ups",
+            "description": "There are benefits to making certain promises.",
+            "rarity": 3,
+            "graphic_id": 6073,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,str,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 805,
+            "hero_id": 102,
+            "order": 7,
+            "name": "翼力十足",
+            "description": "做出某些承诺是有好处的。",
+            "rarity": 3,
+            "graphic_id": 6073,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,str,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "806",
+        "snapshots": {
+          "original": {
+            "id": 806,
+            "hero_id": 102,
+            "order": 8,
+            "name": "Tenacious",
+            "description": "We live but once...unless the Mists declare otherwise...",
+            "rarity": 4,
+            "graphic_id": 10062,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,con,2"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 191
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1656529200
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 806,
+            "hero_id": 102,
+            "order": 8,
+            "name": "顽强之刃",
+            "description": "我们的生命只有一次......除非迷雾另有所说......",
+            "rarity": 4,
+            "graphic_id": 10062,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,con,2"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 191
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1656529200
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "1066",
+        "snapshots": {
+          "original": {
+            "id": 1066,
+            "hero_id": 102,
+            "order": 9,
+            "name": "A Sense of Self",
+            "description": "Perhaps what I can become is as important as who I was.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,8009"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 270
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1675281600
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 1066,
+            "hero_id": 102,
+            "order": 9,
+            "name": "自我意识",
+            "description": "我将来的成就也许与我的曾经一样重要。",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,8009"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 270
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1675281600
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "1488",
+        "snapshots": {
+          "original": {
+            "id": 1488,
+            "hero_id": 102,
+            "order": 10,
+            "name": "Eventful Night",
+            "description": "Shall we share stories or fight to the death?",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,8010,1",
+                "description": "Increases the damage of Nahara's Amuse or Avenge ability by $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 366
+              }
+            ],
+            "properties": {
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1696618800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 1488,
+            "hero_id": 102,
+            "order": 10,
+            "name": "繁忙之夜",
+            "description": "我们究竟是讲故事还是战斗至死？",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,8010,1",
+                "description": "使纳哈拉的“娱乐或报复”技能的伤害提高 $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 366
+              }
+            ],
+            "properties": {
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1696618800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "1799",
+        "snapshots": {
+          "original": {
+            "id": 1799,
+            "hero_id": 102,
+            "order": 11,
+            "name": "Spell Master",
+            "description": "These hands hold dangerous power. Do not cross me.",
+            "rarity": 4,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,120"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 446
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1720638000
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 1799,
+            "hero_id": 102,
+            "order": 11,
+            "name": "法术大师",
+            "description": "这双手蕴含着危险的力量。别激怒我。",
+            "rarity": 4,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,120"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 446
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1720638000
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "1893",
+        "snapshots": {
+          "original": {
+            "id": 1893,
+            "hero_id": 102,
+            "order": 12,
+            "name": "Make Undead",
+            "description": "I feel stronger...",
+            "rarity": 4,
+            "graphic_id": 21658,
+            "effects": [
+              {
+                "effect_string": "add_hero_tags,0,undead",
+                "description": "Nahara also counts as Undead"
+              },
+              {
+                "effect_string": "hero_dps_multiplier_mult,400",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "appear_dead",
+                "show_description": false,
+                "description": "",
+                "skip_effect_key_desc": true
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              },
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2025-04-30 12:00:00"
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1729710000
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 1893,
+            "hero_id": 102,
+            "order": 12,
+            "name": "制造亡灵",
+            "description": "我感觉变强了……",
+            "rarity": 4,
+            "graphic_id": 21658,
+            "effects": [
+              {
+                "effect_string": "add_hero_tags,0,undead",
+                "description": "纳哈拉也算作亡灵"
+              },
+              {
+                "effect_string": "hero_dps_multiplier_mult,400",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "appear_dead",
+                "show_description": false,
+                "description": "",
+                "skip_effect_key_desc": true
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              },
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2025-04-30 12:00:00"
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1729710000
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "2221",
+        "snapshots": {
+          "original": {
+            "id": 2221,
+            "hero_id": 102,
+            "order": 13,
+            "name": "Immolation",
+            "description": "You will burn for this, and it will be by my hand.",
+            "rarity": 4,
+            "graphic_id": 16918,
+            "effects": [
+              {
+                "effect_string": "immolation,1,5"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2025-10-02 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 593
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1751482800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 2221,
+            "hero_id": 102,
+            "order": 13,
+            "name": "献祭",
+            "description": "你将为此付出代价，葬身于我的手中，承受烈火的灼烧。",
+            "rarity": 4,
+            "graphic_id": 16918,
+            "effects": [
+              {
+                "effect_string": "immolation,1,5"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2025-10-02 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 593
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1751482800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      }
+    ],
+    "skins": [
+      {
+        "id": "178",
+        "snapshots": {
+          "original": {
+            "id": 178,
+            "hero_id": 102,
+            "name": "Feywild Nahara",
+            "cost": {
+              "req_date": "2022-06-29 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 15232,
+              "large_graphic_id": 15236,
+              "portrait_graphic_id": 15228,
+              "xl_graphic_id": 15623
+            },
+            "rarity": "3",
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "notification_adjustment_override": {
+                "offset": [
+                  56,
+                  229
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 679,
+              "odds": 25
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 178,
+            "hero_id": 102,
+            "name": "妖精荒野纳哈拉",
+            "cost": {
+              "req_date": "2022-06-29 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 15232,
+              "large_graphic_id": 15236,
+              "portrait_graphic_id": 15228,
+              "xl_graphic_id": 15623
+            },
+            "rarity": "3",
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "notification_adjustment_override": {
+                "offset": [
+                  56,
+                  229
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 679,
+              "odds": 25
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      },
+      {
+        "id": "256",
+        "snapshots": {
+          "original": {
+            "id": 256,
+            "hero_id": 102,
+            "name": "Blushing Bride Nahara",
+            "cost": {
+              "req_date": "2023-02-01 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 18206,
+              "large_graphic_id": 18210,
+              "portrait_graphic_id": 18199,
+              "xl_graphic_id": 18213
+            },
+            "rarity": "3",
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 897,
+              "odds": 27
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 256,
+            "hero_id": 102,
+            "name": "羞涩新娘纳哈拉",
+            "cost": {
+              "req_date": "2023-02-01 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 18206,
+              "large_graphic_id": 18210,
+              "portrait_graphic_id": 18199,
+              "xl_graphic_id": 18213
+            },
+            "rarity": "3",
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 897,
+              "odds": 27
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      },
+      {
+        "id": "330",
+        "snapshots": {
+          "original": {
+            "id": 330,
+            "hero_id": 102,
+            "name": "Mind's Eye Nahara",
+            "cost": {
+              "req_date": "2023-10-06 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 21099,
+              "large_graphic_id": 21100,
+              "portrait_graphic_id": 21247,
+              "xl_graphic_id": 21101,
+              "flame_tongue_graphic_id": "{int}"
+            },
+            "rarity": "3",
+            "properties": {
+              "is_premium": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 1228,
+              "odds": 82
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 330,
+            "hero_id": 102,
+            "name": "心灵之眼纳哈拉",
+            "cost": {
+              "req_date": "2023-10-06 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 21099,
+              "large_graphic_id": 21100,
+              "portrait_graphic_id": 21247,
+              "xl_graphic_id": 21101,
+              "flame_tongue_graphic_id": "{int}"
+            },
+            "rarity": "3",
+            "properties": {
+              "is_premium": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 1228,
+              "odds": 82
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      },
+      {
+        "id": "447",
+        "snapshots": {
+          "original": {
+            "id": 447,
+            "hero_id": 102,
+            "name": "Infiltrator Nahara",
+            "cost": {
+              "req_date": "2024-07-10 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 24185,
+              "large_graphic_id": 24186,
+              "portrait_graphic_id": 24184,
+              "xl_graphic_id": 24187
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 1496,
+              "odds": 40
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 447,
+            "hero_id": 102,
+            "name": "潜入者纳哈拉",
+            "cost": {
+              "req_date": "2024-07-10 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 24185,
+              "large_graphic_id": 24186,
+              "portrait_graphic_id": 24184,
+              "xl_graphic_id": 24187
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 1496,
+              "odds": 40
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      },
+      {
+        "id": "462",
+        "snapshots": {
+          "original": {
+            "id": 462,
+            "hero_id": 102,
+            "name": "Vampire Nahara",
+            "cost": {
+              "req_date": "2024-10-23 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 24947,
+              "large_graphic_id": 24953,
+              "portrait_graphic_id": 24943,
+              "xl_graphic_id": 24959
+            },
+            "rarity": "3",
+            "properties": {
+              "notification_adjustment_override": {
+                "offset": [
+                  56,
+                  210
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 1462,
+              "odds": 173
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 462,
+            "hero_id": 102,
+            "name": "吸血鬼纳哈拉",
+            "cost": {
+              "req_date": "2024-10-23 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 24947,
+              "large_graphic_id": 24953,
+              "portrait_graphic_id": 24943,
+              "xl_graphic_id": 24959
+            },
+            "rarity": "3",
+            "properties": {
+              "notification_adjustment_override": {
+                "offset": [
+                  56,
+                  210
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 1462,
+              "odds": 173
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      },
+      {
+        "id": "574",
+        "snapshots": {
+          "original": {
+            "id": 574,
+            "hero_id": 102,
+            "name": "Fortune Hunter Nahara",
+            "cost": {
+              "req_date": "2025-07-02 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 27092,
+              "large_graphic_id": 27093,
+              "portrait_graphic_id": 27095,
+              "xl_graphic_id": 27094
+            },
+            "rarity": "3",
+            "properties": {
+              "notification_adjustment_override": {
+                "offset": [
+                  56,
+                  220
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "593",
+              "cost": 1680
+            },
+            "availabilities": {
+              "premium_item_id": "593"
+            }
+          },
+          "display": {
+            "id": 574,
+            "hero_id": 102,
+            "name": "财富猎手纳哈拉",
+            "cost": {
+              "req_date": "2025-07-02 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 27092,
+              "large_graphic_id": 27093,
+              "portrait_graphic_id": 27095,
+              "xl_graphic_id": 27094
+            },
+            "rarity": "3",
+            "properties": {
+              "notification_adjustment_override": {
+                "offset": [
+                  56,
+                  220
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "593",
+              "cost": 1680
+            },
+            "availabilities": {
+              "premium_item_id": "593"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,4907 @@
+{
+  "updatedAt": "2026-04-13",
+  "summary": {
+    "id": "40",
+    "name": {
+      "original": "Black Viper",
+      "display": "漆黑毒蛇"
+    },
+    "seat": 7,
+    "roles": [
+      "dps"
+    ],
+    "affiliations": [],
+    "tags": [
+      "chaotic",
+      "dps",
+      "event",
+      "female",
+      "geneutral",
+      "human",
+      "neutral",
+      "rogue",
+      "unaffiliated",
+      "y2"
+    ],
+    "portrait": {
+      "path": "v1/champion-portraits/40.png",
+      "sourceGraphic": "Portraits/Portrait_BlackViper",
+      "sourceVersion": 5
+    }
+  },
+  "englishName": "Black Viper",
+  "eventName": {
+    "original": "Fleetswake",
+    "display": "远航节"
+  },
+  "dateAvailable": "2019-02-27 00:00:00",
+  "lastReworkDate": "2019-02-27 00:00:00",
+  "popularity": 78,
+  "baseCost": "12500000000",
+  "baseDamage": "5000000",
+  "baseHealth": "47",
+  "graphicId": "5052",
+  "portraitGraphicId": "5055",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1804190400
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    325,
+    955,
+    1710,
+    2645
+  ],
+  "costCurves": {
+    "1": 1.075
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      170,
+      171,
+      172
+    ],
+    "graphic_large": 5053,
+    "graphic_xl": 13847,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      87,
+      75
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "attack_b": 4,
+      "ultimate": 5,
+      "gethit": 6,
+      "koed": 7,
+      "run": 1
+    },
+    "allow_time_gate": "2019-03-12 12:00:00",
+    "time_gate_blackout": {
+      "start": "2021-02-21 00:00:00",
+      "end": "2021-03-01 12:00:00"
+    },
+    "time_gate_adventure_id": 368,
+    "time_gate_variants_ids": [
+      314,
+      315,
+      316
+    ],
+    "time_gate_tier": 2,
+    "silver_chest_type_id": 89,
+    "gold_chest_type_id": 90,
+    "available_in_store": "2019-03-19 12:00:00",
+    "store_blackout": {
+      "start": "2021-02-21 00:00:00",
+      "end": "2021-03-01 12:00:00"
+    },
+    "golden_epic_loot_id": 940,
+    "golden_epic_promo_id": 81,
+    "event_logo_graphic_id": 3367,
+    "console_portrait": 5054,
+    "head_graphic_id": 7259,
+    "premium_pack_ids": [
+      49
+    ],
+    "trials_effect_id": 839,
+    "legendary_effect_id": [
+      1,
+      56,
+      58,
+      86,
+      81,
+      105
+    ],
+    "weekly_buff": "buff_upgrade,200,2108",
+    "portrait_graphic_scale": 0.94,
+    "notification_adjustment": {
+      "offset": [
+        48,
+        201
+      ],
+      "scale": 1.25
+    }
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "The Black Viper",
+      "display": "漆黑毒蛇"
+    },
+    "class": {
+      "original": "Rogue",
+      "display": "游荡者"
+    },
+    "race": {
+      "original": "Human",
+      "display": "人类"
+    },
+    "age": 32,
+    "alignment": {
+      "original": "Chaotic Neutral",
+      "display": "混乱中立"
+    },
+    "abilityScores": {
+      "str": 11,
+      "dex": 18,
+      "con": 14,
+      "int": 11,
+      "wis": 11,
+      "cha": 16
+    },
+    "backstory": {
+      "original": "The Black Viper was a notorious burglar, pickpocket, mugger, and assassin who died a century ago, after a long and nefarious career. Esvele Rosznar, a brash young noble, has recently adopted the Black Viper's persona to lead a secret life of crime. Like many other nobles, Esvele gossips about the Black Viper's exploits to lend credence to the villain's mystique.",
+      "display": "漆黑毒蛇是一个臭名昭著的窃贼、扒手、抢劫犯和刺客，在经历漫长而邪恶的职业生涯后，于一个世纪前死去。艾斯薇尔·罗斯纳，一个傲慢的年轻贵族，最近利用起漆黑毒蛇的身份，开始了秘密的犯罪生活。像许多其他贵族一样，艾斯韦尔对漆黑毒蛇的事迹添油加醋，增加这个恶棍的神秘感。"
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "181",
+      "name": {
+        "original": "En Garde",
+        "display": "预备"
+      },
+      "description": {
+        "original": "Black Viper attacks a random enemy with her daggers.",
+        "display": "漆黑毒蛇用她的匕首攻击一名随机敌人。"
+      },
+      "longDescription": null,
+      "cooldown": 6,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "random",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "black_viper_base",
+          "sequences": [
+            {
+              "animation_sequence_name": "attack",
+              "scale_x": 1,
+              "target_offset_x": -50,
+              "damage_frame": 8
+            },
+            {
+              "animation_sequence_name": "attack_b",
+              "scale_x": -1,
+              "target_offset_x": 150,
+              "damage_frame": 6,
+              "effects_on_monsters": [
+                {
+                  "effect_string": "effect_def,287"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "182",
+      "name": {
+        "original": "Smokescreen",
+        "display": "烟雾弹"
+      },
+      "description": {
+        "original": "Black Viper throws down a massive smokescreen, hindering enemies and helping herself.",
+        "display": "漆黑毒蛇丢出一枚巨大的烟雾弹，阻碍敌人并协助自己。"
+      },
+      "longDescription": {
+        "original": "Black Viper creates a smokescreen, reducing damage done to the formation and causing all of her attacks to be Sneak Attacks.",
+        "display": "漆黑毒蛇制造一片烟雾，降低阵型受到的伤害，并使自己的所有攻击变为偷袭。"
+      },
+      "cooldown": 300,
+      "numTargets": 0,
+      "aoeRadius": 0,
+      "damageModifier": "0.03",
+      "target": "none",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "ultimate"
+      ],
+      "graphicId": "5081",
+      "animations": [
+        {
+          "type": "black_viper_ultimate",
+          "attack_seq": "ultimate",
+          "no_damage_display": true,
+          "effect_frames": {
+            "projectile": {
+              "effect_string": "reduce_monster_damage,50",
+              "for_time": 20,
+              "activate_on_animation_cancelled": true
+            }
+          },
+          "visual_effect_frames": {
+            "projectile": {
+              "effect": "formation_heal_glow"
+            }
+          }
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "2107",
+        "name": {
+          "original": "Distracted Foes",
+          "display": "分心的敌人"
+        },
+        "description": null,
+        "graphicId": "5076"
+      },
+      {
+        "upgradeId": "2108",
+        "name": {
+          "original": "Aura of Infamy",
+          "display": "恶名灵光"
+        },
+        "description": null,
+        "graphicId": "5075"
+      },
+      {
+        "upgradeId": "2109",
+        "name": {
+          "original": "Sneak Attack",
+          "display": "偷袭"
+        },
+        "description": null,
+        "graphicId": "5078"
+      },
+      {
+        "upgradeId": "2110",
+        "name": {
+          "original": "Jewel Thief",
+          "display": "珠宝大盗"
+        },
+        "description": null,
+        "graphicId": "5077"
+      }
+    ]
+  },
+  "upgrades": [
+    {
+      "id": "2110",
+      "requiredLevel": 35,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Jewel Thief",
+        "display": "珠宝大盗"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,288",
+      "effectDefinition": {
+        "id": "288",
+        "snapshots": {
+          "original": {
+            "id": 288,
+            "flavour_text": "",
+            "description": {
+              "pre": {
+                "conditions": [
+                  {
+                    "condition": "upgrade_purchased 2112",
+                    "desc": "Adds a 33% chance that a Red Gem will drop from a boss loot sack. Each Red Gem collected in the current adventure grants a  12.5% damage bonus stacking multiplicatively. Each Red Gem collected across all adventures permanently unlocks additional bonuses."
+                  },
+                  {
+                    "desc": "Adds a 25% chance that a Red Gem will drop from a boss loot sack. Each Red Gem collected in the current adventure grants a  10% damage bonus stacking multiplicatively. Each Red Gem collected across all adventures permanently unlocks additional bonuses."
+                  }
+                ]
+              },
+              "post": {
+                "conditions": [
+                  {
+                    "condition": "not static_desc",
+                    "desc": "$jewel_thief_description"
+                  },
+                  {
+                    "desc": ""
+                  }
+                ]
+              }
+            },
+            "effect_keys": [
+              {
+                "effect_string": "blackviper_jewel_thief,25,10",
+                "off_when_benched": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 5077,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true,
+              "indexed_effect_properties": true
+            }
+          },
+          "display": {
+            "id": 288,
+            "flavour_text": "",
+            "description": {
+              "pre": {
+                "conditions": [
+                  {
+                    "condition": "upgrade_purchased 2112",
+                    "desc": "首领战利品口袋中出现红宝石的机率增加 33%。每颗在当前冒险途中获得的红宝石赋予 12.5% 伤害加成（以乘算方式堆叠）。在所有冒险中获得的每颗红宝石都可以解锁永久性的额外加成。"
+                  },
+                  {
+                    "desc": "首领战利品口袋中出现的红宝石机率增加 25%。每颗在当前冒险途中获得的红宝石赋予 10% 伤害加成（以乘算方式堆叠）。在所有冒险中获得的每颗红宝石都可以解锁永久性的额外加成。"
+                  }
+                ]
+              },
+              "post": {
+                "conditions": [
+                  {
+                    "condition": "not static_desc",
+                    "desc": "$jewel_thief_description"
+                  },
+                  {
+                    "desc": ""
+                  }
+                ]
+              }
+            },
+            "effect_keys": [
+              {
+                "effect_string": "blackviper_jewel_thief,25,10",
+                "off_when_benched": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 5077,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true,
+              "indexed_effect_properties": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": "2",
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Black Viper powers up over time by collecting Red Gems. Red Gems have both a permanent effect that persists between runs and a damage bonus that applies to the current run.",
+        "display": "漆黑毒蛇通过收集红色宝石来强化自身。红色宝石既有贯穿全程的永久性效果，也有仅作用于当前关卡的伤害加成。"
+      }
+    },
+    {
+      "id": "2128",
+      "requiredLevel": 55,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2109",
+      "requiredLevel": 75,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Sneak Attack",
+        "display": "偷袭"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,286",
+      "effectDefinition": {
+        "id": "286",
+        "snapshots": {
+          "original": {
+            "id": 286,
+            "flavour_text": "",
+            "description": {
+              "conditions": [
+                {
+                  "condition": "upgrade_purchased 2111",
+                  "desc": "Black Viper deals $amount% more damage the first or second time she attacks an enemy. Black Viper attacks 0.5s faster after she Sneak Attacks."
+                },
+                {
+                  "desc": "Black Viper deals $amount% more damage the first time she attacks an enemy."
+                }
+              ]
+            },
+            "effect_keys": [
+              {
+                "effect_string": "sneak_attack_hit,1,100"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 5078,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true,
+              "per_effect_index_bonuses": true
+            }
+          },
+          "display": {
+            "id": 286,
+            "flavour_text": "",
+            "description": {
+              "conditions": [
+                {
+                  "condition": "upgrade_purchased 2111",
+                  "desc": "漆黑毒蛇的第一次或第二次攻击伤害提高 $amount%。在施放偷袭后，漆黑毒蛇的攻击速度加快 0.5 秒。"
+                },
+                {
+                  "desc": "漆黑毒蛇的第一次攻击伤害提高 $amount%。"
+                }
+              ]
+            },
+            "effect_keys": [
+              {
+                "effect_string": "sneak_attack_hit,1,100"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 5078,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true,
+              "per_effect_index_bonuses": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2129",
+      "requiredLevel": 90,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2108",
+      "requiredLevel": 105,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Aura of Infamy",
+        "display": "恶名灵光"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,283",
+      "effectDefinition": {
+        "id": "283",
+        "snapshots": {
+          "original": {
+            "id": 283,
+            "flavour_text": "",
+            "description": {
+              "conditions": [
+                {
+                  "condition": "jewel_thief_upgrade_unlocked 0",
+                  "desc": "All positional Formation Abilities $target receives from Warlocks, Rangers, Rogues, and Bards are buffed by $amount%."
+                },
+                {
+                  "desc": "All positional Formation Abilities $target receives from Rogues and Bards are buffed by $amount%."
+                }
+              ]
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_incoming_formation_abilities,25",
+                "exclude_self": true,
+                "filter_buff_sources": {
+                  "filter_type": "tag",
+                  "allow": true,
+                  "data": [
+                    "bard",
+                    "rogue"
+                  ]
+                }
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 5075,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 283,
+            "flavour_text": "",
+            "description": {
+              "conditions": [
+                {
+                  "condition": "jewel_thief_upgrade_unlocked 0",
+                  "desc": "由邪术师、巡林客、游荡者和吟游诗人施加给$target的所有阵型技能强化 $amount%。"
+                },
+                {
+                  "desc": "由游荡者和吟游诗人施加给$target的所有阵型技能强化 $amount%。"
+                }
+              ]
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_incoming_formation_abilities,25",
+                "exclude_self": true,
+                "filter_buff_sources": {
+                  "filter_type": "tag",
+                  "allow": true,
+                  "data": [
+                    "bard",
+                    "rogue"
+                  ]
+                }
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 5075,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Black Viper is buffed more effectively by Bards, Rogues, and eventually Rangers and Warlocks. Build a formation with those classes to make the best use of her.",
+        "display": "吟游诗人和游荡者，直到巡林客和邪术师会让漆黑毒蛇的增益更强。构建阵型时加入这些职业，从而充分利用她的天赋。"
+      }
+    },
+    {
+      "id": "2114",
+      "requiredLevel": 135,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "add_attack_targets,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2107",
+      "requiredLevel": 160,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Distracted Foes",
+        "display": "分心的敌人"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,284",
+      "effectDefinition": {
+        "id": "284",
+        "snapshots": {
+          "original": {
+            "id": 284,
+            "flavour_text": "",
+            "description": {
+              "conditions": [
+                {
+                  "condition": "jewel_thief_upgrade_unlocked 1",
+                  "desc": "When other Champions are attacked, Black Viper deals +200% more damage on her next attack. Stacks up to 10 times additively."
+                },
+                {
+                  "desc": "When other Champions are attacked, Black Viper deals +100% more damage on her next attack. Stacks up to 5 times additively."
+                }
+              ]
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_dps_multiplier,100",
+                "max_stacks": 5,
+                "stacks_on_trigger": {
+                  "trigger": "hero_attacked",
+                  "target": "other"
+                },
+                "more_triggers": [
+                  {
+                    "trigger": "owner_attack",
+                    "action": {
+                      "type": "reset"
+                    }
+                  }
+                ],
+                "show_bonus": true,
+                "active_graphic_id": 5146,
+                "active_graphic_y": -60,
+                "active_graphic_frame_from_stacks": true,
+                "active_graphic_with_amount_only": true,
+                "active_graphic_frame_offset": true,
+                "_old_effect": [
+                  {
+                    "effect_string": "add_hit_effect_to_source,100",
+                    "hit_effect": {
+                      "effect_string": "effect_def,285"
+                    },
+                    "targets": [
+                      "other"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 5076,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 284,
+            "flavour_text": "",
+            "description": {
+              "conditions": [
+                {
+                  "condition": "jewel_thief_upgrade_unlocked 1",
+                  "desc": "当其他勇士被攻击时，漆黑毒蛇的下次攻击提升 200% 伤害。可以加算方式叠加最多 10 次。"
+                },
+                {
+                  "desc": "当其他勇士被攻击时，漆黑毒蛇的下次攻击提升 100% 伤害。可以加算方式叠加最多 5 次。"
+                }
+              ]
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_dps_multiplier,100",
+                "max_stacks": 5,
+                "stacks_on_trigger": {
+                  "trigger": "hero_attacked",
+                  "target": "other"
+                },
+                "more_triggers": [
+                  {
+                    "trigger": "owner_attack",
+                    "action": {
+                      "type": "reset"
+                    }
+                  }
+                ],
+                "show_bonus": true,
+                "active_graphic_id": 5146,
+                "active_graphic_y": -60,
+                "active_graphic_frame_from_stacks": true,
+                "active_graphic_with_amount_only": true,
+                "active_graphic_frame_offset": true,
+                "_old_effect": [
+                  {
+                    "effect_string": "add_hit_effect_to_source,100",
+                    "hit_effect": {
+                      "effect_string": "effect_def,285"
+                    },
+                    "targets": [
+                      "other"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 5076,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": "1.5",
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2134",
+      "requiredLevel": 190,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2111",
+      "requiredLevel": 215,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "{\"effect_string\":\"add_sneak_attack_hit,1\",\"description\":\"Black Viper can Sneak Attack enemies on her first TWO attacks against them, and she attacks 0.5s faster after she Sneak Attacks.\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Assassinate",
+        "display": "暗杀"
+      },
+      "specializationDescription": {
+        "original": "Black Viper is one with the shadows and can Sneak Attack more often; she attacks faster when she does.",
+        "display": "漆黑毒蛇化身暗影使者，偷袭次数增加，并且攻击速度更快。"
+      },
+      "specializationGraphicId": "5079",
+      "tipText": null
+    },
+    {
+      "id": "2112",
+      "requiredLevel": 215,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "effect_def,290",
+      "effectDefinition": {
+        "id": "290",
+        "snapshots": {
+          "original": {
+            "id": 290,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the drop chance for Red Gems to 33% and increases the current adventure damage bonus by 2.5% per gem."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "increase_jewel_thief_drop_rate,33"
+              },
+              {
+                "effect_string": "increase_jewel_thief_damage_bonus,25"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          },
+          "display": {
+            "id": 290,
+            "flavour_text": "",
+            "description": {
+              "desc": "使红宝石掉落几率提高 33% ，且每颗红宝石使当前冒险的伤害加成提高 2.5%。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "increase_jewel_thief_drop_rate,33"
+              },
+              {
+                "effect_string": "increase_jewel_thief_damage_bonus,25"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          }
+        }
+      },
+      "staticDpsMult": "1.25",
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Collector",
+        "display": "收藏家"
+      },
+      "specializationDescription": {
+        "original": "Black Viper has a keen eye for valuables and will collect more Red Gems and increase their effectiveness.",
+        "display": "漆黑毒蛇拥有高超的贵重物品鉴别能力，可以收集更多红色宝石，并强化其效果。"
+      },
+      "specializationGraphicId": "5080",
+      "tipText": null
+    },
+    {
+      "id": "2115",
+      "requiredLevel": 240,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,75,2108",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2135",
+      "requiredLevel": 260,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2116",
+      "requiredLevel": 280,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrade,100,2109\",\"description\":\"Increases the bonus damage of Sneak Attack by 100%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2136",
+      "requiredLevel": 295,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2113",
+      "requiredLevel": 305,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "set_ultimate_attack,182",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2137",
+      "requiredLevel": 335,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2117",
+      "requiredLevel": 360,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,55,2108",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2138",
+      "requiredLevel": 395,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2131",
+      "requiredLevel": 420,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "add_attack_targets,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2139",
+      "requiredLevel": 455,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2118",
+      "requiredLevel": 480,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,45,2108",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2140",
+      "requiredLevel": 530,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2125",
+      "requiredLevel": 560,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrade,100,2109\",\"description\":\"Increases the bonus damage of Sneak Attack by 100%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2141",
+      "requiredLevel": 580,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2119",
+      "requiredLevel": 630,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,40,2108",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2142",
+      "requiredLevel": 680,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2120",
+      "requiredLevel": 720,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,35,2108",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2143",
+      "requiredLevel": 775,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2126",
+      "requiredLevel": 800,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrade,100,2109\",\"description\":\"Increases the bonus damage of Sneak Attack by 100%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2121",
+      "requiredLevel": 840,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,33,2108",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2144",
+      "requiredLevel": 900,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2122",
+      "requiredLevel": 960,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,30,2108",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2133",
+      "requiredLevel": 990,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "add_attack_targets,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2145",
+      "requiredLevel": 1005,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2127",
+      "requiredLevel": 1020,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrade,100,2109\",\"description\":\"Increases the bonus damage of Sneak Attack by 100%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2146",
+      "requiredLevel": 1050,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2123",
+      "requiredLevel": 1080,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,30,2108",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2147",
+      "requiredLevel": 1140,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2124",
+      "requiredLevel": 1200,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,30,2108",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2148",
+      "requiredLevel": 1215,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2675",
+      "requiredLevel": 1255,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2676",
+      "requiredLevel": 1295,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2677",
+      "requiredLevel": 1330,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,30,2108",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2678",
+      "requiredLevel": 1370,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2679",
+      "requiredLevel": 1410,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2680",
+      "requiredLevel": 1450,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3890",
+      "requiredLevel": 1485,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3891",
+      "requiredLevel": 1535,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3892",
+      "requiredLevel": 1585,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,30,2108",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3893",
+      "requiredLevel": 1635,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3894",
+      "requiredLevel": 1685,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5125",
+      "requiredLevel": 1740,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5126",
+      "requiredLevel": 1790,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5127",
+      "requiredLevel": 1800,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrade,100,2109\",\"description\":\"Increases the bonus damage of Sneak Attack by 100%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5128",
+      "requiredLevel": 1840,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,30,2108",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5129",
+      "requiredLevel": 1890,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6550",
+      "requiredLevel": 1950,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6551",
+      "requiredLevel": 2010,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6552",
+      "requiredLevel": 2020,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrade,100,2109\",\"description\":\"Increases the bonus damage of Sneak Attack by 100%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6553",
+      "requiredLevel": 2070,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6554",
+      "requiredLevel": 2130,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,30,2108",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8325",
+      "requiredLevel": 2190,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8326",
+      "requiredLevel": 2250,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8327",
+      "requiredLevel": 2310,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,30,2108",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8328",
+      "requiredLevel": 2370,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    }
+  ],
+  "feats": [
+    {
+      "id": "219",
+      "order": 1,
+      "name": {
+        "original": "Tavern Brawler",
+        "display": "旅店打手"
+      },
+      "description": {
+        "original": "If I did brawl in a tavern, my enemies would never see me.",
+        "display": "如果我在酒馆里打架，我的敌人根本看不到我。"
+      },
+      "rarity": "2",
+      "graphicId": "6078",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,30"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "220",
+      "order": 2,
+      "name": {
+        "original": "Grappler",
+        "display": "擒抱者"
+      },
+      "description": {
+        "original": "I aim to disarm my foes before they taste my blade.",
+        "display": "我的目标是，在敌人尝到我的利刃前就解除他们的武装。"
+      },
+      "rarity": "3",
+      "graphicId": "6078",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,60"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "221",
+      "order": 3,
+      "name": {
+        "original": "Weapon Master",
+        "display": "武器大师"
+      },
+      "description": {
+        "original": "You would expect such skill from someone like me.",
+        "display": "你要知道，只有我这样的人才能有这种技巧。"
+      },
+      "rarity": "4",
+      "graphicId": "6078",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,120"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "promo",
+          "promotion_id": 50
+        }
+      ],
+      "properties": {
+        "available_time": 999999,
+        "is_available": false,
+        "available_at_time": 1956618000
+      },
+      "collectionsSource": {
+        "type": "not_yet_available"
+      }
+    },
+    {
+      "id": "222",
+      "order": 4,
+      "name": {
+        "original": "Selflessness",
+        "display": "无私"
+      },
+      "description": {
+        "original": "I steal from the rich and give to the poor.",
+        "display": "我劫富济贫。"
+      },
+      "rarity": "2",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "223",
+      "order": 5,
+      "name": {
+        "original": "Inspiring Leader",
+        "display": "鼓舞人心的首领"
+      },
+      "description": {
+        "original": "Without us, Waterdeep would have been reduced to rubble.",
+        "display": "没有我们，深水城早就成了废墟。"
+      },
+      "rarity": "3",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,25"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "224",
+      "order": 6,
+      "name": {
+        "original": "Athlete",
+        "display": "运动员"
+      },
+      "description": {
+        "original": "All of this leather armor has really helped my cardio.",
+        "display": "这些皮甲确实对我的心肺功能有所帮助。"
+      },
+      "rarity": "3",
+      "graphicId": "6073",
+      "effects": [
+        {
+          "effect_string": "increase_ability_score,str,1"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "494",
+      "order": 7,
+      "name": {
+        "original": "Raid Planner",
+        "display": "掠夺计划书"
+      },
+      "description": {
+        "original": "Forget the chest, come check out the bookshelf!",
+        "display": "别理那些箱子了，先过来瞧瞧这个书柜！"
+      },
+      "rarity": "4",
+      "graphicId": "10062",
+      "effects": [
+        {
+          "effect_string": "increase_ability_score,int,2"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "promo",
+          "promotion_id": 50
+        }
+      ],
+      "properties": {
+        "in_flash_sale": true,
+        "is_available": true,
+        "available_at_time": 1614369600
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    }
+  ],
+  "skins": [
+    {
+      "id": "16",
+      "name": {
+        "original": "Esvele Black Viper",
+        "display": "艾斯维尔漆黑毒蛇"
+      },
+      "cost": [],
+      "details": {
+        "base_graphic_id": 6187,
+        "large_graphic_id": 6197,
+        "xl_graphic_id": 13848,
+        "portrait_graphic_id": 6204
+      },
+      "rarity": "3",
+      "properties": {
+        "in_flash_sale": true,
+        "is_premium": true,
+        "notification_adjustment_override": {
+          "offset": [
+            48,
+            204
+          ],
+          "scale": 1.25
+        },
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 150,
+        "odds": 29
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    },
+    {
+      "id": "72",
+      "name": {
+        "original": "Pirate Black Viper",
+        "display": "海盗漆黑毒蛇"
+      },
+      "cost": [],
+      "details": {
+        "base_graphic_id": 10229,
+        "large_graphic_id": 10233,
+        "xl_graphic_id": 13849,
+        "portrait_graphic_id": 10227
+      },
+      "rarity": "3",
+      "properties": {
+        "in_flash_sale": true,
+        "notification_adjustment_override": {
+          "offset": [
+            48,
+            205
+          ],
+          "scale": 1.25
+        },
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 257,
+        "odds": 36
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    }
+  ],
+  "raw": {
+    "hero": {
+      "original": {
+        "id": 40,
+        "name": "Black Viper",
+        "english_name": "Black Viper",
+        "seat_id": 7,
+        "base_cost": "12500000000",
+        "base_damage": "5000000",
+        "base_health": "47",
+        "cost_curves": {
+          "1": 1.075
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 181,
+        "ultimate_attack_id": 182,
+        "graphic_id": 5052,
+        "portrait_graphic_id": 5055,
+        "character_sheet_details": {
+          "full_name": "The Black Viper",
+          "class": "Rogue",
+          "race": "Human",
+          "age": 32,
+          "alignment": "Chaotic Neutral",
+          "ability_scores": {
+            "str": 11,
+            "dex": 18,
+            "con": 14,
+            "int": 11,
+            "wis": 11,
+            "cha": 16
+          },
+          "backstory": "The Black Viper was a notorious burglar, pickpocket, mugger, and assassin who died a century ago, after a long and nefarious career. Esvele Rosznar, a brash young noble, has recently adopted the Black Viper's persona to lead a secret life of crime. Like many other nobles, Esvele gossips about the Black Viper's exploits to lend credence to the villain's mystique.",
+          "system_description": "The Black Viper is a pure dps champion, with massive damage bonuses to those she hasn't previously attacked."
+        },
+        "default_feat_slot_unlocks": [
+          325,
+          955,
+          1710,
+          2645
+        ],
+        "tags": [
+          "female",
+          "human",
+          "rogue",
+          "dps",
+          "chaotic",
+          "neutral",
+          "event",
+          "y2",
+          "unaffiliated",
+          "geneutral"
+        ],
+        "properties": {
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            170,
+            171,
+            172
+          ],
+          "graphic_large": 5053,
+          "graphic_xl": 13847,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            87,
+            75
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "attack_b": 4,
+            "ultimate": 5,
+            "gethit": 6,
+            "koed": 7,
+            "run": 1
+          },
+          "allow_time_gate": "2019-03-12 12:00:00",
+          "time_gate_blackout": {
+            "start": "2021-02-21 00:00:00",
+            "end": "2021-03-01 12:00:00"
+          },
+          "time_gate_adventure_id": 368,
+          "time_gate_variants_ids": [
+            314,
+            315,
+            316
+          ],
+          "time_gate_tier": 2,
+          "silver_chest_type_id": 89,
+          "gold_chest_type_id": 90,
+          "available_in_store": "2019-03-19 12:00:00",
+          "store_blackout": {
+            "start": "2021-02-21 00:00:00",
+            "end": "2021-03-01 12:00:00"
+          },
+          "golden_epic_loot_id": 940,
+          "golden_epic_promo_id": 81,
+          "event_logo_graphic_id": 3367,
+          "console_portrait": 5054,
+          "head_graphic_id": 7259,
+          "premium_pack_ids": [
+            49
+          ],
+          "trials_effect_id": 839,
+          "legendary_effect_id": [
+            1,
+            56,
+            58,
+            86,
+            81,
+            105
+          ],
+          "weekly_buff": "buff_upgrade,200,2108",
+          "portrait_graphic_scale": 0.94,
+          "notification_adjustment": {
+            "offset": [
+              48,
+              201
+            ],
+            "scale": 1.25
+          }
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 313,
+            "type": "base"
+          },
+          {
+            "adventure_id": 314,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 315,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 316,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 317,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 368,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 78,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 2110,
+            "name": "Jewel Thief",
+            "description": "",
+            "graphic_id": "5077"
+          },
+          {
+            "upgrade_id": 2109,
+            "name": "Sneak Attack",
+            "description": "",
+            "graphic_id": "5078"
+          },
+          {
+            "upgrade_id": 2108,
+            "name": "Aura of Infamy",
+            "description": "",
+            "graphic_id": "5075"
+          },
+          {
+            "upgrade_id": 2107,
+            "name": "Distracted Foes",
+            "description": "",
+            "graphic_id": "5076"
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1804190400,
+        "event_name": "Fleetswake",
+        "is_available": true,
+        "date_available": "2019-02-27 00:00:00",
+        "last_rework_date": "2019-02-27 00:00:00"
+      },
+      "display": {
+        "id": 40,
+        "name": "漆黑毒蛇",
+        "english_name": "Black Viper",
+        "seat_id": 7,
+        "base_cost": "12500000000",
+        "base_damage": "5000000",
+        "base_health": "47",
+        "cost_curves": {
+          "1": 1.075
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 181,
+        "ultimate_attack_id": 182,
+        "graphic_id": 5052,
+        "portrait_graphic_id": 5055,
+        "character_sheet_details": {
+          "full_name": "漆黑毒蛇",
+          "class": "游荡者",
+          "race": "人类",
+          "age": 32,
+          "alignment": "混乱中立",
+          "ability_scores": {
+            "str": 11,
+            "dex": 18,
+            "con": 14,
+            "int": 11,
+            "wis": 11,
+            "cha": 16
+          },
+          "backstory": "漆黑毒蛇是一个臭名昭著的窃贼、扒手、抢劫犯和刺客，在经历漫长而邪恶的职业生涯后，于一个世纪前死去。艾斯薇尔·罗斯纳，一个傲慢的年轻贵族，最近利用起漆黑毒蛇的身份，开始了秘密的犯罪生活。像许多其他贵族一样，艾斯韦尔对漆黑毒蛇的事迹添油加醋，增加这个恶棍的神秘感。",
+          "system_description": "漆黑毒蛇是纯输出型勇士，会对她尚未攻击过的敌人造成巨额伤害加成。"
+        },
+        "default_feat_slot_unlocks": [
+          325,
+          955,
+          1710,
+          2645
+        ],
+        "tags": [
+          "female",
+          "human",
+          "rogue",
+          "dps",
+          "chaotic",
+          "neutral",
+          "event",
+          "y2",
+          "unaffiliated",
+          "geneutral"
+        ],
+        "properties": {
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            170,
+            171,
+            172
+          ],
+          "graphic_large": 5053,
+          "graphic_xl": 13847,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            87,
+            75
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "attack_b": 4,
+            "ultimate": 5,
+            "gethit": 6,
+            "koed": 7,
+            "run": 1
+          },
+          "allow_time_gate": "2019-03-12 12:00:00",
+          "time_gate_blackout": {
+            "start": "2021-02-21 00:00:00",
+            "end": "2021-03-01 12:00:00"
+          },
+          "time_gate_adventure_id": 368,
+          "time_gate_variants_ids": [
+            314,
+            315,
+            316
+          ],
+          "time_gate_tier": 2,
+          "silver_chest_type_id": 89,
+          "gold_chest_type_id": 90,
+          "available_in_store": "2019-03-19 12:00:00",
+          "store_blackout": {
+            "start": "2021-02-21 00:00:00",
+            "end": "2021-03-01 12:00:00"
+          },
+          "golden_epic_loot_id": 940,
+          "golden_epic_promo_id": 81,
+          "event_logo_graphic_id": 3367,
+          "console_portrait": 5054,
+          "head_graphic_id": 7259,
+          "premium_pack_ids": [
+            49
+          ],
+          "trials_effect_id": 839,
+          "legendary_effect_id": [
+            1,
+            56,
+            58,
+            86,
+            81,
+            105
+          ],
+          "weekly_buff": "buff_upgrade,200,2108",
+          "portrait_graphic_scale": 0.94,
+          "notification_adjustment": {
+            "offset": [
+              48,
+              201
+            ],
+            "scale": 1.25
+          }
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 313,
+            "type": "base"
+          },
+          {
+            "adventure_id": 314,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 315,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 316,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 317,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 368,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 78,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 2110,
+            "name": "珠宝大盗",
+            "description": "",
+            "graphic_id": "5077"
+          },
+          {
+            "upgrade_id": 2109,
+            "name": "偷袭",
+            "description": "",
+            "graphic_id": "5078"
+          },
+          {
+            "upgrade_id": 2108,
+            "name": "恶名灵光",
+            "description": "",
+            "graphic_id": "5075"
+          },
+          {
+            "upgrade_id": 2107,
+            "name": "分心的敌人",
+            "description": "",
+            "graphic_id": "5076"
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1804190400,
+        "event_name": "远航节",
+        "is_available": true,
+        "date_available": "2019-02-27 00:00:00",
+        "last_rework_date": "2019-02-27 00:00:00"
+      }
+    },
+    "attacks": [
+      {
+        "id": "181",
+        "snapshots": {
+          "original": {
+            "id": 181,
+            "name": "En Garde",
+            "description": "Black Viper attacks a random enemy with her daggers.",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "random",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 6,
+            "animations": [
+              {
+                "type": "black_viper_base",
+                "sequences": [
+                  {
+                    "animation_sequence_name": "attack",
+                    "scale_x": 1,
+                    "target_offset_x": -50,
+                    "damage_frame": 8
+                  },
+                  {
+                    "animation_sequence_name": "attack_b",
+                    "scale_x": -1,
+                    "target_offset_x": 150,
+                    "damage_frame": 6,
+                    "effects_on_monsters": [
+                      {
+                        "effect_string": "effect_def,287"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "tags": [
+              "melee"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          },
+          "display": {
+            "id": 181,
+            "name": "预备",
+            "description": "漆黑毒蛇用她的匕首攻击一名随机敌人。",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "random",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 6,
+            "animations": [
+              {
+                "type": "black_viper_base",
+                "sequences": [
+                  {
+                    "animation_sequence_name": "attack",
+                    "scale_x": 1,
+                    "target_offset_x": -50,
+                    "damage_frame": 8
+                  },
+                  {
+                    "animation_sequence_name": "attack_b",
+                    "scale_x": -1,
+                    "target_offset_x": 150,
+                    "damage_frame": 6,
+                    "effects_on_monsters": [
+                      {
+                        "effect_string": "effect_def,287"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "tags": [
+              "melee"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          }
+        }
+      },
+      {
+        "id": "182",
+        "snapshots": {
+          "original": {
+            "id": 182,
+            "name": "Smokescreen",
+            "description": "Black Viper throws down a massive smokescreen, hindering enemies and helping herself.",
+            "long_description": "Black Viper creates a smokescreen, reducing damage done to the formation and causing all of her attacks to be Sneak Attacks.",
+            "graphic_id": 5081,
+            "target": "none",
+            "num_targets": 0,
+            "aoe_radius": 0,
+            "damage_modifier": 0.03,
+            "cooldown": 300,
+            "animations": [
+              {
+                "type": "black_viper_ultimate",
+                "attack_seq": "ultimate",
+                "no_damage_display": true,
+                "effect_frames": {
+                  "projectile": {
+                    "effect_string": "reduce_monster_damage,50",
+                    "for_time": 20,
+                    "activate_on_animation_cancelled": true
+                  }
+                },
+                "visual_effect_frames": {
+                  "projectile": {
+                    "effect": "formation_heal_glow"
+                  }
+                }
+              }
+            ],
+            "tags": [
+              "ultimate"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          },
+          "display": {
+            "id": 182,
+            "name": "烟雾弹",
+            "description": "漆黑毒蛇丢出一枚巨大的烟雾弹，阻碍敌人并协助自己。",
+            "long_description": "漆黑毒蛇制造一片烟雾，降低阵型受到的伤害，并使自己的所有攻击变为偷袭。",
+            "graphic_id": 5081,
+            "target": "none",
+            "num_targets": 0,
+            "aoe_radius": 0,
+            "damage_modifier": 0.03,
+            "cooldown": 300,
+            "animations": [
+              {
+                "type": "black_viper_ultimate",
+                "attack_seq": "ultimate",
+                "no_damage_display": true,
+                "effect_frames": {
+                  "projectile": {
+                    "effect_string": "reduce_monster_damage,50",
+                    "for_time": 20,
+                    "activate_on_animation_cancelled": true
+                  }
+                },
+                "visual_effect_frames": {
+                  "projectile": {
+                    "effect": "formation_heal_glow"
+                  }
+                }
+              }
+            ],
+            "tags": [
+              "ultimate"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          }
+        }
+      }
+    ],
+    "upgrades": [
+      {
+        "id": "2107",
+        "snapshots": {
+          "original": {
+            "id": 2107,
+            "hero_id": 40,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,284",
+            "static_dps_mult": "1.5",
+            "default_enabled": 1,
+            "name": "Distracted Foes"
+          },
+          "display": {
+            "id": 2107,
+            "hero_id": 40,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,284",
+            "static_dps_mult": "1.5",
+            "default_enabled": 1,
+            "name": "分心的敌人"
+          }
+        }
+      },
+      {
+        "id": "2108",
+        "snapshots": {
+          "original": {
+            "id": 2108,
+            "hero_id": 40,
+            "required_level": 105,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,283",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Aura of Infamy",
+            "tip_text": "Black Viper is buffed more effectively by Bards, Rogues, and eventually Rangers and Warlocks. Build a formation with those classes to make the best use of her."
+          },
+          "display": {
+            "id": 2108,
+            "hero_id": 40,
+            "required_level": 105,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,283",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "恶名灵光",
+            "tip_text": "吟游诗人和游荡者，直到巡林客和邪术师会让漆黑毒蛇的增益更强。构建阵型时加入这些职业，从而充分利用她的天赋。"
+          }
+        }
+      },
+      {
+        "id": "2109",
+        "snapshots": {
+          "original": {
+            "id": 2109,
+            "hero_id": 40,
+            "required_level": 75,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,286",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Sneak Attack"
+          },
+          "display": {
+            "id": 2109,
+            "hero_id": 40,
+            "required_level": 75,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,286",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "偷袭"
+          }
+        }
+      },
+      {
+        "id": "2110",
+        "snapshots": {
+          "original": {
+            "id": 2110,
+            "hero_id": 40,
+            "required_level": 35,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,288",
+            "static_dps_mult": "2",
+            "default_enabled": 1,
+            "name": "Jewel Thief",
+            "tip_text": "Black Viper powers up over time by collecting Red Gems. Red Gems have both a permanent effect that persists between runs and a damage bonus that applies to the current run."
+          },
+          "display": {
+            "id": 2110,
+            "hero_id": 40,
+            "required_level": 35,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,288",
+            "static_dps_mult": "2",
+            "default_enabled": 1,
+            "name": "珠宝大盗",
+            "tip_text": "漆黑毒蛇通过收集红色宝石来强化自身。红色宝石既有贯穿全程的永久性效果，也有仅作用于当前关卡的伤害加成。"
+          }
+        }
+      },
+      {
+        "id": "2111",
+        "snapshots": {
+          "original": {
+            "id": 2111,
+            "hero_id": 40,
+            "required_level": 215,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "{\"effect_string\":\"add_sneak_attack_hit,1\",\"description\":\"Black Viper can Sneak Attack enemies on her first TWO attacks against them, and she attacks 0.5s faster after she Sneak Attacks.\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "",
+            "specialization_name": "Assassinate",
+            "specialization_description": "Black Viper is one with the shadows and can Sneak Attack more often; she attacks faster when she does.",
+            "specialization_graphic_id": 5079
+          },
+          "display": {
+            "id": 2111,
+            "hero_id": 40,
+            "required_level": 215,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "{\"effect_string\":\"add_sneak_attack_hit,1\",\"description\":\"\\u6f06\\u9ed1\\u6bd2\\u86c7\\u53ef\\u4ee5\\u5728\\u5bf9\\u654c\\u4eba\\u7684\\u524d\\u4e24\\u6b21\\u653b\\u51fb\\u4e2d\\u5077\\u88ad\\u4ed6\\u4eec\\uff0c\\u800c\\u4e14\\u5979\\u5728\\u5077\\u88ad\\u540e\\u653b\\u51fb\\u901f\\u5ea6\\u4f1a\\u52a0\\u5feb 0.5 \\u79d2\\u3002\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "",
+            "specialization_name": "暗杀",
+            "specialization_description": "漆黑毒蛇化身暗影使者，偷袭次数增加，并且攻击速度更快。",
+            "specialization_graphic_id": 5079
+          }
+        }
+      },
+      {
+        "id": "2112",
+        "snapshots": {
+          "original": {
+            "id": 2112,
+            "hero_id": 40,
+            "required_level": 215,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "effect_def,290",
+            "static_dps_mult": "1.25",
+            "default_enabled": 1,
+            "name": "",
+            "specialization_name": "Collector",
+            "specialization_description": "Black Viper has a keen eye for valuables and will collect more Red Gems and increase their effectiveness.",
+            "specialization_graphic_id": 5080
+          },
+          "display": {
+            "id": 2112,
+            "hero_id": 40,
+            "required_level": 215,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "effect_def,290",
+            "static_dps_mult": "1.25",
+            "default_enabled": 1,
+            "name": "",
+            "specialization_name": "收藏家",
+            "specialization_description": "漆黑毒蛇拥有高超的贵重物品鉴别能力，可以收集更多红色宝石，并强化其效果。",
+            "specialization_graphic_id": 5080
+          }
+        }
+      },
+      {
+        "id": "2113",
+        "snapshots": {
+          "original": {
+            "id": 2113,
+            "hero_id": 40,
+            "required_level": 305,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "set_ultimate_attack,182",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2113,
+            "hero_id": 40,
+            "required_level": 305,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "set_ultimate_attack,182",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2114",
+        "snapshots": {
+          "original": {
+            "id": 2114,
+            "hero_id": 40,
+            "required_level": 135,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "add_attack_targets,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2114,
+            "hero_id": 40,
+            "required_level": 135,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "add_attack_targets,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2115",
+        "snapshots": {
+          "original": {
+            "id": 2115,
+            "hero_id": 40,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,75,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2115,
+            "hero_id": 40,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,75,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2116",
+        "snapshots": {
+          "original": {
+            "id": 2116,
+            "hero_id": 40,
+            "required_level": 280,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,2109\",\"description\":\"Increases the bonus damage of Sneak Attack by 100%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2116,
+            "hero_id": 40,
+            "required_level": 280,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,2109\",\"description\":\"\\u4f7f\\u5077\\u88ad\\u7684\\u4f24\\u5bb3\\u52a0\\u6210\\u589e\\u52a0 100%\\u3002\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2117",
+        "snapshots": {
+          "original": {
+            "id": 2117,
+            "hero_id": 40,
+            "required_level": 360,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,55,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2117,
+            "hero_id": 40,
+            "required_level": 360,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,55,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2118",
+        "snapshots": {
+          "original": {
+            "id": 2118,
+            "hero_id": 40,
+            "required_level": 480,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,45,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2118,
+            "hero_id": 40,
+            "required_level": 480,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,45,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2119",
+        "snapshots": {
+          "original": {
+            "id": 2119,
+            "hero_id": 40,
+            "required_level": 630,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,40,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2119,
+            "hero_id": 40,
+            "required_level": 630,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,40,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2120",
+        "snapshots": {
+          "original": {
+            "id": 2120,
+            "hero_id": 40,
+            "required_level": 720,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,35,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2120,
+            "hero_id": 40,
+            "required_level": 720,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,35,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2121",
+        "snapshots": {
+          "original": {
+            "id": 2121,
+            "hero_id": 40,
+            "required_level": 840,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,33,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2121,
+            "hero_id": 40,
+            "required_level": 840,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,33,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2122",
+        "snapshots": {
+          "original": {
+            "id": 2122,
+            "hero_id": 40,
+            "required_level": 960,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,30,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2122,
+            "hero_id": 40,
+            "required_level": 960,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,30,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2123",
+        "snapshots": {
+          "original": {
+            "id": 2123,
+            "hero_id": 40,
+            "required_level": 1080,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,30,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2123,
+            "hero_id": 40,
+            "required_level": 1080,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,30,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2124",
+        "snapshots": {
+          "original": {
+            "id": 2124,
+            "hero_id": 40,
+            "required_level": 1200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,30,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2124,
+            "hero_id": 40,
+            "required_level": 1200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,30,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2125",
+        "snapshots": {
+          "original": {
+            "id": 2125,
+            "hero_id": 40,
+            "required_level": 560,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,2109\",\"description\":\"Increases the bonus damage of Sneak Attack by 100%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2125,
+            "hero_id": 40,
+            "required_level": 560,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,2109\",\"description\":\"\\u4f7f\\u5077\\u88ad\\u7684\\u4f24\\u5bb3\\u52a0\\u6210\\u589e\\u52a0 100%\\u3002\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2126",
+        "snapshots": {
+          "original": {
+            "id": 2126,
+            "hero_id": 40,
+            "required_level": 800,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,2109\",\"description\":\"Increases the bonus damage of Sneak Attack by 100%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2126,
+            "hero_id": 40,
+            "required_level": 800,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,2109\",\"description\":\"\\u4f7f\\u5077\\u88ad\\u7684\\u4f24\\u5bb3\\u52a0\\u6210\\u589e\\u52a0 100%\\u3002\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2127",
+        "snapshots": {
+          "original": {
+            "id": 2127,
+            "hero_id": 40,
+            "required_level": 1020,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,2109\",\"description\":\"Increases the bonus damage of Sneak Attack by 100%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2127,
+            "hero_id": 40,
+            "required_level": 1020,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,2109\",\"description\":\"\\u4f7f\\u5077\\u88ad\\u7684\\u4f24\\u5bb3\\u52a0\\u6210\\u589e\\u52a0 100%\\u3002\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2128",
+        "snapshots": {
+          "original": {
+            "id": 2128,
+            "hero_id": 40,
+            "required_level": 55,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2128,
+            "hero_id": 40,
+            "required_level": 55,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2129",
+        "snapshots": {
+          "original": {
+            "id": 2129,
+            "hero_id": 40,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2129,
+            "hero_id": 40,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2131",
+        "snapshots": {
+          "original": {
+            "id": 2131,
+            "hero_id": 40,
+            "required_level": 420,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "add_attack_targets,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2131,
+            "hero_id": 40,
+            "required_level": 420,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "add_attack_targets,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2133",
+        "snapshots": {
+          "original": {
+            "id": 2133,
+            "hero_id": 40,
+            "required_level": 990,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "add_attack_targets,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2133,
+            "hero_id": 40,
+            "required_level": 990,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "add_attack_targets,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2134",
+        "snapshots": {
+          "original": {
+            "id": 2134,
+            "hero_id": 40,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2134,
+            "hero_id": 40,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2135",
+        "snapshots": {
+          "original": {
+            "id": 2135,
+            "hero_id": 40,
+            "required_level": 260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2135,
+            "hero_id": 40,
+            "required_level": 260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2136",
+        "snapshots": {
+          "original": {
+            "id": 2136,
+            "hero_id": 40,
+            "required_level": 295,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2136,
+            "hero_id": 40,
+            "required_level": 295,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2137",
+        "snapshots": {
+          "original": {
+            "id": 2137,
+            "hero_id": 40,
+            "required_level": 335,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2137,
+            "hero_id": 40,
+            "required_level": 335,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2138",
+        "snapshots": {
+          "original": {
+            "id": 2138,
+            "hero_id": 40,
+            "required_level": 395,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2138,
+            "hero_id": 40,
+            "required_level": 395,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2139",
+        "snapshots": {
+          "original": {
+            "id": 2139,
+            "hero_id": 40,
+            "required_level": 455,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2139,
+            "hero_id": 40,
+            "required_level": 455,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2140",
+        "snapshots": {
+          "original": {
+            "id": 2140,
+            "hero_id": 40,
+            "required_level": 530,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2140,
+            "hero_id": 40,
+            "required_level": 530,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2141",
+        "snapshots": {
+          "original": {
+            "id": 2141,
+            "hero_id": 40,
+            "required_level": 580,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2141,
+            "hero_id": 40,
+            "required_level": 580,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2142",
+        "snapshots": {
+          "original": {
+            "id": 2142,
+            "hero_id": 40,
+            "required_level": 680,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2142,
+            "hero_id": 40,
+            "required_level": 680,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2143",
+        "snapshots": {
+          "original": {
+            "id": 2143,
+            "hero_id": 40,
+            "required_level": 775,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2143,
+            "hero_id": 40,
+            "required_level": 775,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2144",
+        "snapshots": {
+          "original": {
+            "id": 2144,
+            "hero_id": 40,
+            "required_level": 900,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2144,
+            "hero_id": 40,
+            "required_level": 900,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2145",
+        "snapshots": {
+          "original": {
+            "id": 2145,
+            "hero_id": 40,
+            "required_level": 1005,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2145,
+            "hero_id": 40,
+            "required_level": 1005,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2146",
+        "snapshots": {
+          "original": {
+            "id": 2146,
+            "hero_id": 40,
+            "required_level": 1050,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2146,
+            "hero_id": 40,
+            "required_level": 1050,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2147",
+        "snapshots": {
+          "original": {
+            "id": 2147,
+            "hero_id": 40,
+            "required_level": 1140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2147,
+            "hero_id": 40,
+            "required_level": 1140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2148",
+        "snapshots": {
+          "original": {
+            "id": 2148,
+            "hero_id": 40,
+            "required_level": 1215,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2148,
+            "hero_id": 40,
+            "required_level": 1215,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2675",
+        "snapshots": {
+          "original": {
+            "id": 2675,
+            "hero_id": 40,
+            "required_level": 1255,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2675,
+            "hero_id": 40,
+            "required_level": 1255,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2676",
+        "snapshots": {
+          "original": {
+            "id": 2676,
+            "hero_id": 40,
+            "required_level": 1295,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2676,
+            "hero_id": 40,
+            "required_level": 1295,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2677",
+        "snapshots": {
+          "original": {
+            "id": 2677,
+            "hero_id": 40,
+            "required_level": 1330,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,30,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2677,
+            "hero_id": 40,
+            "required_level": 1330,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,30,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2678",
+        "snapshots": {
+          "original": {
+            "id": 2678,
+            "hero_id": 40,
+            "required_level": 1370,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2678,
+            "hero_id": 40,
+            "required_level": 1370,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2679",
+        "snapshots": {
+          "original": {
+            "id": 2679,
+            "hero_id": 40,
+            "required_level": 1410,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2679,
+            "hero_id": 40,
+            "required_level": 1410,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2680",
+        "snapshots": {
+          "original": {
+            "id": 2680,
+            "hero_id": 40,
+            "required_level": 1450,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2680,
+            "hero_id": 40,
+            "required_level": 1450,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3890",
+        "snapshots": {
+          "original": {
+            "id": 3890,
+            "hero_id": 40,
+            "required_level": 1485,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3890,
+            "hero_id": 40,
+            "required_level": 1485,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3891",
+        "snapshots": {
+          "original": {
+            "id": 3891,
+            "hero_id": 40,
+            "required_level": 1535,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3891,
+            "hero_id": 40,
+            "required_level": 1535,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3892",
+        "snapshots": {
+          "original": {
+            "id": 3892,
+            "hero_id": 40,
+            "required_level": 1585,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,30,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3892,
+            "hero_id": 40,
+            "required_level": 1585,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,30,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3893",
+        "snapshots": {
+          "original": {
+            "id": 3893,
+            "hero_id": 40,
+            "required_level": 1635,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3893,
+            "hero_id": 40,
+            "required_level": 1635,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3894",
+        "snapshots": {
+          "original": {
+            "id": 3894,
+            "hero_id": 40,
+            "required_level": 1685,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3894,
+            "hero_id": 40,
+            "required_level": 1685,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5125",
+        "snapshots": {
+          "original": {
+            "id": 5125,
+            "hero_id": 40,
+            "required_level": 1740,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5125,
+            "hero_id": 40,
+            "required_level": 1740,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5126",
+        "snapshots": {
+          "original": {
+            "id": 5126,
+            "hero_id": 40,
+            "required_level": 1790,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5126,
+            "hero_id": 40,
+            "required_level": 1790,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5127",
+        "snapshots": {
+          "original": {
+            "id": 5127,
+            "hero_id": 40,
+            "required_level": 1800,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,2109\",\"description\":\"Increases the bonus damage of Sneak Attack by 100%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5127,
+            "hero_id": 40,
+            "required_level": 1800,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,2109\",\"description\":\"\\u4f7f\\u5077\\u88ad\\u7684\\u4f24\\u5bb3\\u52a0\\u6210\\u589e\\u52a0 100%\\u3002\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5128",
+        "snapshots": {
+          "original": {
+            "id": 5128,
+            "hero_id": 40,
+            "required_level": 1840,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,30,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5128,
+            "hero_id": 40,
+            "required_level": 1840,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,30,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5129",
+        "snapshots": {
+          "original": {
+            "id": 5129,
+            "hero_id": 40,
+            "required_level": 1890,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5129,
+            "hero_id": 40,
+            "required_level": 1890,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6550",
+        "snapshots": {
+          "original": {
+            "id": 6550,
+            "hero_id": 40,
+            "required_level": 1950,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6550,
+            "hero_id": 40,
+            "required_level": 1950,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6551",
+        "snapshots": {
+          "original": {
+            "id": 6551,
+            "hero_id": 40,
+            "required_level": 2010,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6551,
+            "hero_id": 40,
+            "required_level": 2010,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6552",
+        "snapshots": {
+          "original": {
+            "id": 6552,
+            "hero_id": 40,
+            "required_level": 2020,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,2109\",\"description\":\"Increases the bonus damage of Sneak Attack by 100%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6552,
+            "hero_id": 40,
+            "required_level": 2020,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrade,100,2109\",\"description\":\"\\u4f7f\\u5077\\u88ad\\u7684\\u4f24\\u5bb3\\u52a0\\u6210\\u589e\\u52a0 100%\\u3002\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6553",
+        "snapshots": {
+          "original": {
+            "id": 6553,
+            "hero_id": 40,
+            "required_level": 2070,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6553,
+            "hero_id": 40,
+            "required_level": 2070,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6554",
+        "snapshots": {
+          "original": {
+            "id": 6554,
+            "hero_id": 40,
+            "required_level": 2130,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,30,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6554,
+            "hero_id": 40,
+            "required_level": 2130,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,30,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8325",
+        "snapshots": {
+          "original": {
+            "id": 8325,
+            "hero_id": 40,
+            "required_level": 2190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8325,
+            "hero_id": 40,
+            "required_level": 2190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8326",
+        "snapshots": {
+          "original": {
+            "id": 8326,
+            "hero_id": 40,
+            "required_level": 2250,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8326,
+            "hero_id": 40,
+            "required_level": 2250,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8327",
+        "snapshots": {
+          "original": {
+            "id": 8327,
+            "hero_id": 40,
+            "required_level": 2310,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,30,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8327,
+            "hero_id": 40,
+            "required_level": 2310,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,30,2108",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8328",
+        "snapshots": {
+          "original": {
+            "id": 8328,
+            "hero_id": 40,
+            "required_level": 2370,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8328,
+            "hero_id": 40,
+            "required_level": 2370,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      }
+    ],
+    "feats": [
+      {
+        "id": "219",
+        "snapshots": {
+          "original": {
+            "id": 219,
+            "hero_id": 40,
+            "order": 1,
+            "name": "Tavern Brawler",
+            "description": "If I did brawl in a tavern, my enemies would never see me.",
+            "rarity": 2,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,30"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 219,
+            "hero_id": 40,
+            "order": 1,
+            "name": "旅店打手",
+            "description": "如果我在酒馆里打架，我的敌人根本看不到我。",
+            "rarity": 2,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,30"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "220",
+        "snapshots": {
+          "original": {
+            "id": 220,
+            "hero_id": 40,
+            "order": 2,
+            "name": "Grappler",
+            "description": "I aim to disarm my foes before they taste my blade.",
+            "rarity": 3,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,60"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 220,
+            "hero_id": 40,
+            "order": 2,
+            "name": "擒抱者",
+            "description": "我的目标是，在敌人尝到我的利刃前就解除他们的武装。",
+            "rarity": 3,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,60"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "221",
+        "snapshots": {
+          "original": {
+            "id": 221,
+            "hero_id": 40,
+            "order": 3,
+            "name": "Weapon Master",
+            "description": "You would expect such skill from someone like me.",
+            "rarity": 4,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,120"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1956618000
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          },
+          "display": {
+            "id": 221,
+            "hero_id": 40,
+            "order": 3,
+            "name": "武器大师",
+            "description": "你要知道，只有我这样的人才能有这种技巧。",
+            "rarity": 4,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,120"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1956618000
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          }
+        }
+      },
+      {
+        "id": "222",
+        "snapshots": {
+          "original": {
+            "id": 222,
+            "hero_id": 40,
+            "order": 4,
+            "name": "Selflessness",
+            "description": "I steal from the rich and give to the poor.",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 222,
+            "hero_id": 40,
+            "order": 4,
+            "name": "无私",
+            "description": "我劫富济贫。",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "223",
+        "snapshots": {
+          "original": {
+            "id": 223,
+            "hero_id": 40,
+            "order": 5,
+            "name": "Inspiring Leader",
+            "description": "Without us, Waterdeep would have been reduced to rubble.",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 223,
+            "hero_id": 40,
+            "order": 5,
+            "name": "鼓舞人心的首领",
+            "description": "没有我们，深水城早就成了废墟。",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "224",
+        "snapshots": {
+          "original": {
+            "id": 224,
+            "hero_id": 40,
+            "order": 6,
+            "name": "Athlete",
+            "description": "All of this leather armor has really helped my cardio.",
+            "rarity": 3,
+            "graphic_id": 6073,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,str,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 224,
+            "hero_id": 40,
+            "order": 6,
+            "name": "运动员",
+            "description": "这些皮甲确实对我的心肺功能有所帮助。",
+            "rarity": 3,
+            "graphic_id": 6073,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,str,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "494",
+        "snapshots": {
+          "original": {
+            "id": 494,
+            "hero_id": 40,
+            "order": 7,
+            "name": "Raid Planner",
+            "description": "Forget the chest, come check out the bookshelf!",
+            "rarity": 4,
+            "graphic_id": 10062,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,int,2"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_available": true,
+              "available_at_time": 1614369600
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 494,
+            "hero_id": 40,
+            "order": 7,
+            "name": "掠夺计划书",
+            "description": "别理那些箱子了，先过来瞧瞧这个书柜！",
+            "rarity": 4,
+            "graphic_id": 10062,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,int,2"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_available": true,
+              "available_at_time": 1614369600
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      }
+    ],
+    "skins": [
+      {
+        "id": "16",
+        "snapshots": {
+          "original": {
+            "id": 16,
+            "hero_id": 40,
+            "name": "Esvele Black Viper",
+            "cost": [],
+            "details": {
+              "base_graphic_id": 6187,
+              "large_graphic_id": 6197,
+              "xl_graphic_id": 13848,
+              "portrait_graphic_id": 6204
+            },
+            "rarity": "3",
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "notification_adjustment_override": {
+                "offset": [
+                  48,
+                  204
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 150,
+              "odds": 29
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 16,
+            "hero_id": 40,
+            "name": "艾斯维尔漆黑毒蛇",
+            "cost": [],
+            "details": {
+              "base_graphic_id": 6187,
+              "large_graphic_id": 6197,
+              "xl_graphic_id": 13848,
+              "portrait_graphic_id": 6204
+            },
+            "rarity": "3",
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "notification_adjustment_override": {
+                "offset": [
+                  48,
+                  204
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 150,
+              "odds": 29
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      },
+      {
+        "id": "72",
+        "snapshots": {
+          "original": {
+            "id": 72,
+            "hero_id": 40,
+            "name": "Pirate Black Viper",
+            "cost": [],
+            "details": {
+              "base_graphic_id": 10229,
+              "large_graphic_id": 10233,
+              "xl_graphic_id": 13849,
+              "portrait_graphic_id": 10227
+            },
+            "rarity": "3",
+            "properties": {
+              "in_flash_sale": true,
+              "notification_adjustment_override": {
+                "offset": [
+                  48,
+                  205
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 257,
+              "odds": 36
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 72,
+            "hero_id": 40,
+            "name": "海盗漆黑毒蛇",
+            "cost": [],
+            "details": {
+              "base_graphic_id": 10229,
+              "large_graphic_id": 10233,
+              "xl_graphic_id": 13849,
+              "portrait_graphic_id": 10227
+            },
+            "rarity": "3",
+            "properties": {
+              "in_flash_sale": true,
+              "notification_adjustment_override": {
+                "offset": [
+                  48,
+                  205
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 257,
+              "odds": 36
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      }
+    ]
+  }
+}

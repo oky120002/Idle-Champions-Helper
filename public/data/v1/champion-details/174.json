@@ -1,0 +1,5964 @@
+{
+  "updatedAt": "2026-04-13",
+  "summary": {
+    "id": "174",
+    "name": {
+      "original": "Tasslehoff",
+      "display": "泰索何夫"
+    },
+    "seat": 11,
+    "roles": [
+      "speed",
+      "support"
+    ],
+    "affiliations": [
+      {
+        "original": "Heroes of the Lance",
+        "display": "长枪英雄"
+      }
+    ],
+    "tags": [
+      "event",
+      "good",
+      "heroeslance",
+      "kender",
+      "lcneutral",
+      "male",
+      "neutral",
+      "rogue",
+      "speed",
+      "support",
+      "y9"
+    ],
+    "portrait": {
+      "path": "v1/champion-portraits/174.png",
+      "sourceGraphic": "Portraits/Portrait_Tasslehoff",
+      "sourceVersion": 2
+    }
+  },
+  "englishName": "Tasslehoff",
+  "eventName": {
+    "original": "Festival of Fools",
+    "display": "愚人节"
+  },
+  "dateAvailable": "2026-04-01 12:00:00",
+  "lastReworkDate": "2026-04-01 12:00:00",
+  "popularity": 0,
+  "baseCost": "650000000000000000",
+  "baseDamage": "900000000000",
+  "baseHealth": "43",
+  "graphicId": "28672",
+  "portraitGraphicId": "28670",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": false,
+    "availableInTimeGate": false,
+    "isAvailable": true,
+    "nextEventTimestamp": 1806606000
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    135,
+    755,
+    1465,
+    2345
+  ],
+  "costCurves": {
+    "1": 1.08
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "content_set_id": 76,
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      170,
+      171,
+      172
+    ],
+    "graphic_large": 28674,
+    "graphic_xl": 28676,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      89,
+      80
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 4,
+      "gethit": 5,
+      "koed": 6,
+      "run": 7
+    },
+    "allow_time_gate": "2026-04-22 12:00:00",
+    "available_in_store": "2026-04-22 12:00:00",
+    "time_gate_adventure_id": 1960,
+    "time_gate_variants_ids": [
+      1956,
+      1957,
+      1958
+    ],
+    "time_gate_tier": 1,
+    "silver_chest_type_id": 795,
+    "gold_chest_type_id": 796,
+    "golden_epic_loot_id": 4157,
+    "golden_epic_promo_id": 783,
+    "event_logo_graphic_id": 3366,
+    "console_portrait": 28645,
+    "trials_effect_id": 836,
+    "weekly_chest_type_id": 796,
+    "weekly_buff": "",
+    "portrait_graphic_scale": 1,
+    "legendary_effect_id": [
+      1,
+      2,
+      5,
+      90,
+      106,
+      48
+    ],
+    "notification_adjustment": {
+      "offset": [
+        45,
+        175
+      ],
+      "scale": 1.14
+    }
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Tasslehoff Burrfoot",
+      "display": "泰索何夫·柏伏特"
+    },
+    "class": {
+      "original": "Rogue",
+      "display": "游荡者"
+    },
+    "race": {
+      "original": "Kender",
+      "display": "坎德人"
+    },
+    "age": 38,
+    "alignment": {
+      "original": "Neutral Good",
+      "display": "中立善良"
+    },
+    "abilityScores": {
+      "str": 13,
+      "dex": 16,
+      "con": 14,
+      "int": 11,
+      "wis": 15,
+      "cha": 11
+    },
+    "backstory": {
+      "original": "Excitable, friendly, and insatiably curious, Tasslehoff Burrfoot is a kender of no small renown. Tas is the beating heart of the Heroes of the Lance, and his knack for 'borrowing' somehow manages to solve more problems than it causes. While Tas may not see himself as a hero, he is fearless in the face of Krynn's greatest dangers, and he always comes to the aid of his friends.",
+      "display": "泰索何夫·柏伏特是一位颇有名气的坎德人，他容易激动，待人友善，而且有着永不满足的好奇心。泰索是“长枪英雄”的灵魂人物，而他那“借用东西”的本事往往能解决比制造出来的还要多的问题。虽然泰索不认为自己是英雄，但他在面对克莱恩最危险的威胁时也毫不畏惧，并且总会向他的朋友伸出援手。"
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "960",
+      "name": {
+        "original": "Hoopak",
+        "display": "弹弓矛"
+      },
+      "description": {
+        "original": "Tasslehoff fires a stone at the closest enemy, dealing one hit.",
+        "display": "泰索何夫向距离最近的敌人发射一枚石头，造成一次命中。"
+      },
+      "longDescription": null,
+      "cooldown": 3.5,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "front",
+      "damageTypes": [
+        "ranged"
+      ],
+      "tags": [
+        "ranged"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "ranged_attack",
+          "projectile": "pd_generic_projectile",
+          "shoot_offset_x": 48,
+          "shoot_offset_y": -65,
+          "shoot_frame": 31,
+          "shoot_sound": 149,
+          "hit_sound": 133,
+          "projectile_details": {
+            "hash": "hoopak",
+            "projectile_speed": 1500,
+            "rotation_speed": 467,
+            "percent_height_offset": 12,
+            "projectile_graphic_id": 28671,
+            "__projectile_hit_graphic_id": 750,
+            "trail": {
+              "lifespan": 0.2,
+              "spawn_rate": 367,
+              "particle_graphic_ids": [
+                12485
+              ],
+              "initial_velocity": {
+                "x": "0",
+                "y": "0"
+              },
+              "velocity_jitter": {
+                "x": "50",
+                "y": "50"
+              },
+              "alpha_lerp": {
+                "0": 0,
+                "1": 0,
+                "0.1": 0.75
+              },
+              "scale_lerp": [
+                {
+                  "x": 0.25,
+                  "y": 0.25
+                },
+                {
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "tint": {
+                "r": 1,
+                "g": 1,
+                "b": 1,
+                "a": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "961",
+      "name": {
+        "original": "I'm Not the Hero",
+        "display": "我不是英雄"
+      },
+      "description": {
+        "original": "Tasslehoff causes the next ultimate used to deal 400% more damage with that ultimate.",
+        "display": "泰索何夫使下一次使用的杀招造成 400% 的额外伤害。"
+      },
+      "longDescription": {
+        "original": "Tasslehoff encourages the next Champion to use their ultimate to deal 400% more damage with that ultimate.",
+        "display": "泰索何夫会鼓励下一个使用杀招的勇士，使该杀招造成 400% 的额外伤害。"
+      },
+      "cooldown": 120,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "none",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ultimate"
+      ],
+      "graphicId": "28640",
+      "animations": [
+        {
+          "type": "tasslehoff_ultimate",
+          "no_damage_display": true,
+          "jump_pos": [
+            50,
+            680
+          ]
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "19243",
+        "name": {
+          "original": "Wanderlust",
+          "display": "流浪癖"
+        },
+        "description": null,
+        "graphicId": "28630"
+      },
+      {
+        "upgradeId": "19244",
+        "name": {
+          "original": "Borrower",
+          "display": "借用人"
+        },
+        "description": null,
+        "graphicId": "28628"
+      },
+      {
+        "upgradeId": "19245",
+        "name": {
+          "original": "Diversion",
+          "display": "声东击西"
+        },
+        "description": null,
+        "graphicId": "28629"
+      }
+    ]
+  },
+  "upgrades": [
+    {
+      "id": "19246",
+      "requiredLevel": 0,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Fearless",
+        "display": "无畏"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2642",
+      "effectDefinition": {
+        "id": "2642",
+        "snapshots": {
+          "original": {
+            "id": 2642,
+            "flavour_text": "",
+            "description": {
+              "desc": "Tasslehoff is immune to being Stunned."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_stun_immunity",
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": false
+            }
+          },
+          "display": {
+            "id": 2642,
+            "flavour_text": "",
+            "description": {
+              "desc": "泰索何夫免疫眩晕。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_stun_immunity",
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": false
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19240",
+      "requiredLevel": 20,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Map Collector: Pre-Cataclysm",
+        "display": "地图收藏家：大灾变之前"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2646",
+      "effectDefinition": {
+        "id": "2646",
+        "snapshots": {
+          "original": {
+            "id": 2646,
+            "flavour_text": "",
+            "description": {
+              "desc": "Tasslehoff increases the damage of Champions in the rear-most column by $amount%."
+            },
+            "effect_keys": [
+              {
+                "off_when_benched": true,
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  {
+                    "type": "col_num",
+                    "start_from_back": true,
+                    "column": 0
+                  }
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28635,
+            "large_graphic_id": 28635,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": true
+            }
+          },
+          "display": {
+            "id": 2646,
+            "flavour_text": "",
+            "description": {
+              "desc": "泰索何夫使身处最后一列中的勇士伤害提高 $amount%。"
+            },
+            "effect_keys": [
+              {
+                "off_when_benched": true,
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  {
+                    "type": "col_num",
+                    "start_from_back": true,
+                    "column": 0
+                  }
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28635,
+            "large_graphic_id": 28635,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Map Collector: Pre-Cataclysm",
+        "display": "地图收藏家：大灾变之前"
+      },
+      "specializationDescription": {
+        "original": "Some of Tasslehoff's maps date as far back as before the Cataclysm, an event so powerful it reshaped the lands of Krynn.",
+        "display": "泰索何夫的一些地图可以追溯到大灾变之前，那是一件影响十分重大的事件，它重塑了克莱恩的土地。"
+      },
+      "specializationGraphicId": "28637",
+      "tipText": null
+    },
+    {
+      "id": "19241",
+      "requiredLevel": 20,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Map Collector: Time of Darkness",
+        "display": "地图收藏家：黑暗时代"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2647",
+      "effectDefinition": {
+        "id": "2647",
+        "snapshots": {
+          "original": {
+            "id": 2647,
+            "flavour_text": "",
+            "description": {
+              "desc": "Tasslehoff increases the damage of Champions in the second to rear-most column by $amount%"
+            },
+            "effect_keys": [
+              {
+                "off_when_benched": true,
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  {
+                    "type": "col_num",
+                    "start_from_back": true,
+                    "column": 1
+                  }
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28636,
+            "large_graphic_id": 28636,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": true
+            }
+          },
+          "display": {
+            "id": 2647,
+            "flavour_text": "",
+            "description": {
+              "desc": "泰索何夫使身处倒数第二列中的勇士伤害提高 $amount%"
+            },
+            "effect_keys": [
+              {
+                "off_when_benched": true,
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  {
+                    "type": "col_num",
+                    "start_from_back": true,
+                    "column": 1
+                  }
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28636,
+            "large_graphic_id": 28636,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Map Collector: Time of Darkness",
+        "display": "地图收藏家：黑暗时代"
+      },
+      "specializationDescription": {
+        "original": "Tasslehoff's maps that date after the Cataclysm come from a time when the people believed the gods had abandoned Krynn.",
+        "display": "泰索何夫那些绘制于大灾变之后的地图，出自一个人们相信众神已抛弃克莱恩的时代。"
+      },
+      "specializationGraphicId": "28636",
+      "tipText": null
+    },
+    {
+      "id": "19242",
+      "requiredLevel": 20,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Map Collector: War of the Lance",
+        "display": "地图收藏家：长矛之战"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2648",
+      "effectDefinition": {
+        "id": "2648",
+        "snapshots": {
+          "original": {
+            "id": 2648,
+            "flavour_text": "",
+            "description": {
+              "desc": "Tasslehoff increases the damage of Champions in the third to rear-most column by $amount%"
+            },
+            "effect_keys": [
+              {
+                "off_when_benched": true,
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  {
+                    "type": "col_num",
+                    "start_from_back": true,
+                    "column": 2
+                  }
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28637,
+            "large_graphic_id": 28637,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": true
+            }
+          },
+          "display": {
+            "id": 2648,
+            "flavour_text": "",
+            "description": {
+              "desc": "泰索何夫使身处倒数第三列中的勇士伤害提高 $amount%"
+            },
+            "effect_keys": [
+              {
+                "off_when_benched": true,
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  {
+                    "type": "col_num",
+                    "start_from_back": true,
+                    "column": 2
+                  }
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28637,
+            "large_graphic_id": 28637,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Map Collector: War of the Lance",
+        "display": "地图收藏家：长矛之战"
+      },
+      "specializationDescription": {
+        "original": "Tas' newest maps were often inspired by his own travels.",
+        "display": "泰索最新的地图往往是受他自己的游历启发的。"
+      },
+      "specializationGraphicId": "28635",
+      "tipText": null
+    },
+    {
+      "id": "19492",
+      "requiredLevel": 40,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19245",
+      "requiredLevel": 60,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Diversion",
+        "display": "声东击西"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2643",
+      "effectDefinition": {
+        "id": "2643",
+        "snapshots": {
+          "original": {
+            "id": 2643,
+            "flavour_text": "",
+            "description": {
+              "desc": "Tasslehoff prevents any Champion-sourced non-healing positional formation abilities from targeting his slot or adjacent slots. For each prevented ability per slot, he gains a Diversion stack. Tasslehoff increases the effect of his Map Collector specialization by $amount% for each Diversion stack, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,10"
+              },
+              {
+                "effect_string": "buff_upgrades,0,19240,19241,19242",
+                "amount_expr": "upgrade_amount(19245,0)",
+                "stacks_on_trigger": "will_stack_manually",
+                "stacks_multiply": true,
+                "show_bonus": true,
+                "off_when_benched": true,
+                "stack_title": "Blocked Abilities"
+              },
+              {
+                "effect_string": "tasslehoff_diversion",
+                "buff_effect_key_index": 1,
+                "overlay": {
+                  "manual_graphic": "tasslehoff_diversion",
+                  "y": -40
+                },
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28632,
+            "large_graphic_id": 28629,
+            "properties": {
+              "is_formation_ability": true,
+              "is_positional_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 2643,
+            "flavour_text": "",
+            "description": {
+              "desc": "泰索何夫会阻止任何来自勇士的非治疗位置阵型技能以他所在的格子或相邻的格子为目标。每阻止了一项此类技能（每个格子计一次），他获得一层“声东击西”堆叠层数。每有一层“声东击西”堆叠层数，泰索何夫会使他“地图收藏家”专精的效果提升 $amount%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,10"
+              },
+              {
+                "effect_string": "buff_upgrades,0,19240,19241,19242",
+                "amount_expr": "upgrade_amount(19245,0)",
+                "stacks_on_trigger": "will_stack_manually",
+                "stacks_multiply": true,
+                "show_bonus": true,
+                "off_when_benched": true,
+                "stack_title": "被禁用的技能"
+              },
+              {
+                "effect_string": "tasslehoff_diversion",
+                "buff_effect_key_index": 1,
+                "overlay": {
+                  "manual_graphic": "tasslehoff_diversion",
+                  "y": -40
+                },
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28632,
+            "large_graphic_id": 28629,
+            "properties": {
+              "is_formation_ability": true,
+              "is_positional_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Tasslehoff prevents non-healing positional formation abilities from buffing his slot and adjacent slots, but his buff grows stronger for each instance this occurs.",
+        "display": "泰索何夫会阻止非治疗的位置阵型技能对他所在的格子和相邻的格子提供增益，但他每阻止一次增益，他自己的增益效果会变得更强。"
+      }
+    },
+    {
+      "id": "19493",
+      "requiredLevel": 70,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19260",
+      "requiredLevel": 80,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19244",
+      "requiredLevel": 90,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Borrower",
+        "display": "借用人"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2644",
+      "effectDefinition": {
+        "id": "2644",
+        "snapshots": {
+          "original": {
+            "id": 2644,
+            "flavour_text": "",
+            "description": {
+              "desc": "Each time the party completes an area, Tasslehoff somehow comes into possession of some future quest items, setting his Found Item stacks to 7. When Tasslehoff attacks an enemy that can drop quest items, there is a $amount% chance he spends a Found Item stack and adds a quest item to the party's quest progress."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "tasslehoff_borrower,10",
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "do_nothing,0",
+                "off_when_benched": true,
+                "manual_stacking": true,
+                "stack_title": "Found Items",
+                "show_stacks": true,
+                "show_bonus": false
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28631,
+            "large_graphic_id": 28628,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 2644,
+            "flavour_text": "",
+            "description": {
+              "desc": "每当探险队完成一个区域，泰索何夫会以某种方式获得一些未来的任务物品，并将他的“找到的物品”堆叠层数设为 7。当泰索何夫攻击一名会掉落任务物品的敌人时，有 $amount% 的几率他会消耗一层“找到的物品”堆叠，并添加一件任务物品到探险队的任务进度。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "tasslehoff_borrower,10",
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "do_nothing,0",
+                "off_when_benched": true,
+                "manual_stacking": true,
+                "stack_title": "找到的物品",
+                "show_stacks": true,
+                "show_bonus": false
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28631,
+            "large_graphic_id": 28628,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "In areas requiring quest items, Tasslehoff will sometimes find a quest item when he attacks.",
+        "display": "在需要任务物品的区域，泰索何夫进行攻击时有时会找到任务物品。"
+      }
+    },
+    {
+      "id": "19494",
+      "requiredLevel": 100,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19335",
+      "requiredLevel": 110,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "I'm Not the Hero",
+        "display": "我不是英雄"
+      },
+      "upgradeType": "unlock_ultimate",
+      "effectReference": "effect_def,2681",
+      "effectDefinition": {
+        "id": "2681",
+        "snapshots": {
+          "original": {
+            "id": 2681,
+            "flavour_text": "",
+            "description": {
+              "desc": "Tasslehoff increases the next ultimate's damage by 400%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "tasslehoff_ultimate_handler,400",
+                "off_when_benched": true,
+                "ultimate_buff_effect_ids": [
+                  2
+                ]
+              },
+              {
+                "effect_string": "set_ultimate_attack,961"
+              },
+              {
+                "effect_string": "buff_ultimate,400",
+                "off_when_benched": true,
+                "apply_manually": true,
+                "targets": [
+                  "all"
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "show_incoming": false,
+              "formation_circle_icon": false
+            }
+          },
+          "display": {
+            "id": 2681,
+            "flavour_text": "",
+            "description": {
+              "desc": "泰索何夫使下一次杀招的伤害提高 400%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "tasslehoff_ultimate_handler,400",
+                "off_when_benched": true,
+                "ultimate_buff_effect_ids": [
+                  2
+                ]
+              },
+              {
+                "effect_string": "set_ultimate_attack,961"
+              },
+              {
+                "effect_string": "buff_ultimate,400",
+                "off_when_benched": true,
+                "apply_manually": true,
+                "targets": [
+                  "all"
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "show_incoming": false,
+              "formation_circle_icon": false
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19243",
+      "requiredLevel": 120,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Wanderlust",
+        "display": "流浪癖"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2645",
+      "effectDefinition": {
+        "id": "2645",
+        "snapshots": {
+          "original": {
+            "id": 2645,
+            "flavour_text": "",
+            "description": {
+              "desc": "Tasslehoff grows impatient if he remains in the same area for a long time. Tasslehoff increases the effect of his Map Collector specialization by $(not_buffed amount)% for every 10 seconds the party is in an area, stacking multiplicatively up to $max_stacks times and resetting when changing areas."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrades,100,19240,19241,19242",
+                "stacks_on_trigger": "on_timer,10",
+                "max_stacks": 12,
+                "area_change_resets_stacks": true,
+                "off_when_benched": true,
+                "clear_stacks_on_deactivate": false,
+                "show_bonus": true,
+                "stacks_multiply": true,
+                "time_per_stack": 10
+              },
+              {
+                "effect_string": "tasslehoff_wanderlust",
+                "buff_index": 0
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28633,
+            "large_graphic_id": 28630,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": true
+            }
+          },
+          "display": {
+            "id": 2645,
+            "flavour_text": "",
+            "description": {
+              "desc": "如果泰索何夫在同一个区域待太久，他会变得不耐烦。探险队每在一个区域中停留 10 秒，泰索何夫会使他“地图收藏家”专精的效果提升 $(not_buffed amount)%，以乘算方式堆叠，最多堆叠 $max_stacks 次，并且在区域切换时重置。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrades,100,19240,19241,19242",
+                "stacks_on_trigger": "on_timer,10",
+                "max_stacks": 12,
+                "area_change_resets_stacks": true,
+                "off_when_benched": true,
+                "clear_stacks_on_deactivate": false,
+                "show_bonus": true,
+                "stacks_multiply": true,
+                "time_per_stack": 10
+              },
+              {
+                "effect_string": "tasslehoff_wanderlust",
+                "buff_index": 0
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28633,
+            "large_graphic_id": 28630,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19495",
+      "requiredLevel": 130,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19496",
+      "requiredLevel": 140,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19237",
+      "requiredLevel": 150,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Small Friends",
+        "display": "矮小的朋友"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2651",
+      "effectDefinition": {
+        "id": "2651",
+        "snapshots": {
+          "original": {
+            "id": 2651,
+            "flavour_text": "",
+            "description": {
+              "desc": "Tasslehoff increases the effect of his Map Collector specialization by $(not_buffed amount)% for each dwarf, fairy, gnome, goblin, halfling, kender, kobold, and/or plasmoid Champion in the formation, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrades,100,19240,19241,19242",
+                "amount_func": "mult",
+                "stacks_multiply": true,
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "HasTag(`dwarf`) || HasTag(`fairy`) || HasTag(`gnome`) || HasTag(`goblin`) || HasTag(`halfling`) || HasTag(`kender`) || HasTag(`kobold`) || HasTag(`plasmoid`)",
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "hero_tags_changed"
+                ],
+                "stack_title": "Small Friends",
+                "show_bonus": true,
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28639,
+            "large_graphic_id": 28639,
+            "properties": {
+              "is_formation_ability": true,
+              "spec_option_post_apply_info": "Qualified Champions: $num_stacks"
+            }
+          },
+          "display": {
+            "id": 2651,
+            "flavour_text": "",
+            "description": {
+              "desc": "阵型中每有一位矮人、仙女、侏儒、地精、半身人、坎德人、狗头人和/或等离子体勇士，泰索何夫会使他“地图收藏家”专精的效果提升 $(not_buffed amount)%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrades,100,19240,19241,19242",
+                "amount_func": "mult",
+                "stacks_multiply": true,
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "HasTag(`dwarf`) || HasTag(`fairy`) || HasTag(`gnome`) || HasTag(`goblin`) || HasTag(`halfling`) || HasTag(`kender`) || HasTag(`kobold`) || HasTag(`plasmoid`)",
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "hero_tags_changed"
+                ],
+                "stack_title": "矮小的朋友",
+                "show_bonus": true,
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28639,
+            "large_graphic_id": 28639,
+            "properties": {
+              "is_formation_ability": true,
+              "spec_option_post_apply_info": "满足条件的勇士数量：$num_stacks"
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Small Friends",
+        "display": "矮小的朋友"
+      },
+      "specializationDescription": {
+        "original": "Tas considers the dwarf Flint as his best friend, and while it may seem one-sided, Flint cares for him just as deeply.",
+        "display": "泰索认为矮人弗林特是他最好的朋友，虽然似乎只有他单方面这样认为，但弗林特同样很关心他。"
+      },
+      "specializationGraphicId": "28639",
+      "tipText": null
+    },
+    {
+      "id": "19238",
+      "requiredLevel": 150,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Fast Friends",
+        "display": "迅速交到的朋友"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2650",
+      "effectDefinition": {
+        "id": "2650",
+        "snapshots": {
+          "original": {
+            "id": 2650,
+            "flavour_text": "",
+            "description": {
+              "desc": "Tasslehoff increases the effect of his Map Collector specialization by $(not_buffed amount)% for each Speed Champion and/or Champion with a Dexterity of 16 or higher in the formation, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrades,100,19240,19241,19242",
+                "amount_func": "mult",
+                "stacks_multiply": true,
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "GetStat(`dex`) >= 16 || HasTag(`speed`)",
+                "amount_updated_listeners": [
+                  "slot_changed"
+                ],
+                "stack_title": "Fast Friends",
+                "show_bonus": true,
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28634,
+            "large_graphic_id": 28634,
+            "properties": {
+              "is_formation_ability": true,
+              "spec_option_post_apply_info": "Qualified Champions: $num_stacks"
+            }
+          },
+          "display": {
+            "id": 2650,
+            "flavour_text": "",
+            "description": {
+              "desc": "阵型中每有一位速度型勇士和/或敏捷大于等于 16 的勇士，泰索何夫会使他“地图收藏家”专精的效果提升 $(not_buffed amount)%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrades,100,19240,19241,19242",
+                "amount_func": "mult",
+                "stacks_multiply": true,
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "GetStat(`dex`) >= 16 || HasTag(`speed`)",
+                "amount_updated_listeners": [
+                  "slot_changed"
+                ],
+                "stack_title": "迅速交到的朋友",
+                "show_bonus": true,
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28634,
+            "large_graphic_id": 28634,
+            "properties": {
+              "is_formation_ability": true,
+              "spec_option_post_apply_info": "满足条件的勇士数量：$num_stacks"
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Fast Friends",
+        "display": "迅速交到的朋友"
+      },
+      "specializationDescription": {
+        "original": "Tas approaches everyone with an open heart and is quick to make new friends.",
+        "display": "泰索对谁都敞开心扉，很快就能交到新的朋友。"
+      },
+      "specializationGraphicId": "28634",
+      "tipText": null
+    },
+    {
+      "id": "19239",
+      "requiredLevel": 150,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Old Friends",
+        "display": "老朋友"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2649",
+      "effectDefinition": {
+        "id": "2649",
+        "snapshots": {
+          "original": {
+            "id": 2649,
+            "flavour_text": "",
+            "description": {
+              "desc": "Tasslehoff increases the effect of his Map Collector specialization by $(not_buffed amount)% for each Hero of the Lance and Champions that are 38 years and older in the formation, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrades,100,19240,19241,19242",
+                "amount_func": "mult",
+                "stacks_multiply": true,
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "age>=38 || HasTag(`heroeslance`)",
+                "amount_updated_listeners": [
+                  "slot_changed"
+                ],
+                "stack_title": "Old Friends",
+                "show_bonus": true,
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28638,
+            "large_graphic_id": 28638,
+            "properties": {
+              "is_formation_ability": true,
+              "spec_option_post_apply_info": "Qualified Champions: $num_stacks"
+            }
+          },
+          "display": {
+            "id": 2649,
+            "flavour_text": "",
+            "description": {
+              "desc": "阵型中每有一位“长枪英雄”或年龄大于等于 38 岁的勇士，泰索何夫会使他“地图收藏家”专精的效果提升 $(not_buffed amount)%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrades,100,19240,19241,19242",
+                "amount_func": "mult",
+                "stacks_multiply": true,
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "age>=38 || HasTag(`heroeslance`)",
+                "amount_updated_listeners": [
+                  "slot_changed"
+                ],
+                "stack_title": "老朋友",
+                "show_bonus": true,
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 28638,
+            "large_graphic_id": 28638,
+            "properties": {
+              "is_formation_ability": true,
+              "spec_option_post_apply_info": "满足条件的勇士数量：$num_stacks"
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Old Friends",
+        "display": "老朋友"
+      },
+      "specializationDescription": {
+        "original": "Tas is fiercely loyal to his friends, especially his old adventuring companions.",
+        "display": "泰索对朋友极其忠诚，尤其是和他一起冒险的老伙计。"
+      },
+      "specializationGraphicId": "28638",
+      "tipText": null
+    },
+    {
+      "id": "19497",
+      "requiredLevel": 160,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19498",
+      "requiredLevel": 170,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19499",
+      "requiredLevel": 180,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19500",
+      "requiredLevel": 220,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19501",
+      "requiredLevel": 230,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19502",
+      "requiredLevel": 270,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19503",
+      "requiredLevel": 280,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19504",
+      "requiredLevel": 320,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19505",
+      "requiredLevel": 330,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19506",
+      "requiredLevel": 340,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19507",
+      "requiredLevel": 390,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19508",
+      "requiredLevel": 400,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19509",
+      "requiredLevel": 460,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19510",
+      "requiredLevel": 470,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19511",
+      "requiredLevel": 500,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19512",
+      "requiredLevel": 540,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19513",
+      "requiredLevel": 600,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19514",
+      "requiredLevel": 630,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19515",
+      "requiredLevel": 640,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19516",
+      "requiredLevel": 690,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19517",
+      "requiredLevel": 700,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19518",
+      "requiredLevel": 760,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19519",
+      "requiredLevel": 770,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19520",
+      "requiredLevel": 800,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19521",
+      "requiredLevel": 830,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19522",
+      "requiredLevel": 890,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19523",
+      "requiredLevel": 900,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19524",
+      "requiredLevel": 920,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19525",
+      "requiredLevel": 980,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19526",
+      "requiredLevel": 1050,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19527",
+      "requiredLevel": 1060,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19528",
+      "requiredLevel": 1070,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19529",
+      "requiredLevel": 1170,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19530",
+      "requiredLevel": 1200,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19531",
+      "requiredLevel": 1250,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19532",
+      "requiredLevel": 1290,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19533",
+      "requiredLevel": 1300,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19534",
+      "requiredLevel": 1380,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19535",
+      "requiredLevel": 1400,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19536",
+      "requiredLevel": 1450,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19537",
+      "requiredLevel": 1500,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19538",
+      "requiredLevel": 1550,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19539",
+      "requiredLevel": 1600,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19540",
+      "requiredLevel": 1680,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19541",
+      "requiredLevel": 1700,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19542",
+      "requiredLevel": 1750,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19543",
+      "requiredLevel": 1840,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19544",
+      "requiredLevel": 1850,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19545",
+      "requiredLevel": 1900,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19546",
+      "requiredLevel": 1930,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19547",
+      "requiredLevel": 1990,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19548",
+      "requiredLevel": 2000,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "19549",
+      "requiredLevel": 2010,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    }
+  ],
+  "feats": [
+    {
+      "id": "2540",
+      "order": 1,
+      "name": {
+        "original": "Selflessness",
+        "display": "无私"
+      },
+      "description": {
+        "original": "We have to keep trying and hoping. ~Tas",
+        "display": "我们必须不断尝试，不能放弃希望。~泰索"
+      },
+      "rarity": "2",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2541",
+      "order": 2,
+      "name": {
+        "original": "Inspiring Leader",
+        "display": "鼓舞人心的首领"
+      },
+      "description": {
+        "original": "We'll take the lead, we mighty warriors. ~Tas",
+        "display": "我们来打头阵，我们是强大的战士。~泰索"
+      },
+      "rarity": "3",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,25"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "2542",
+      "order": 3,
+      "name": {
+        "original": "Mapmaker",
+        "display": "地图制作者"
+      },
+      "description": {
+        "original": "Have you got a map of this area, Tas? ~Tanis",
+        "display": "你有这片区域的地图吗，泰索？~塔尼斯"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,20,19240,19241,19242",
+          "description": "Increases the effect of Tasslehoff's Map Collector Specializations by $amount%"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2543",
+      "order": 4,
+      "name": {
+        "original": "Cartographer",
+        "display": "制图师"
+      },
+      "description": {
+        "original": "The Haven Road through Solace Vale is quickest, that's for sure. ~Tas",
+        "display": "走穿过索拉斯谷的海文路是最快的，那是肯定的。~泰索"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,40,19240,19241,19242",
+          "description": "Increases the effect of Tasslehoff's Map Collector Specializations by $amount%"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "2544",
+      "order": 5,
+      "name": {
+        "original": "Overlooked",
+        "display": "不起眼"
+      },
+      "description": {
+        "original": "Looks are as deceptive as light-fingered kender. ~Raistlin",
+        "display": "长相就跟手脚不干净的坎德人一样，十分具有欺骗性。~雷斯林"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,19245"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "2545",
+      "order": 6,
+      "name": {
+        "original": "Curious",
+        "display": "好奇"
+      },
+      "description": {
+        "original": "Keep your hands out of other people's belongings. ~Tanis",
+        "display": "不要碰别人的东西。~塔尼斯"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,19244"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "2546",
+      "order": 7,
+      "name": {
+        "original": "Acquisitive",
+        "display": "贪婪"
+      },
+      "description": {
+        "original": "I'm not going to take it! I just mentioned it, as an item of interest. ~Tas",
+        "display": "我没有要拿走它！我只是提到了它，觉得它很有意思罢了。~泰索"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,19244"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000,
+          "start_date": "2026-07-01 12:00:00"
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 694
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_for_gems_at_time": 1782932400
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "694",
+        "cost": 3830
+      }
+    },
+    {
+      "id": "2547",
+      "order": 8,
+      "name": {
+        "original": "Wayfarer",
+        "display": "旅人"
+      },
+      "description": {
+        "original": "I'm not supposed to be the one that thinks. I just come along for the fun. ~Tas",
+        "display": "我不应该是动脑思考的那个人。我只是跟着来找乐子的。~泰索"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,19243"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2548",
+      "order": 9,
+      "name": {
+        "original": "Scout",
+        "display": "斥候"
+      },
+      "description": {
+        "original": "No one would ever suspect a kender traveling alone. ~Tas",
+        "display": "没人会怀疑一个独自旅行的坎德人。~泰索"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,19243"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "2549",
+      "order": 10,
+      "name": {
+        "original": "Affable",
+        "display": "友善"
+      },
+      "description": {
+        "original": "I am Tasslehoff Burrfoot. My friends call me Tas. Who are you? ~Tas",
+        "display": "我是泰索何夫·柏伏特。我的朋友都叫我泰索。你是谁？~泰索"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,20,19239,19238,19237",
+          "description": "Increases the effect of Tasslehoff's second set of Specializations by $(amount)%."
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2550",
+      "order": 11,
+      "name": {
+        "original": "Favorable",
+        "display": "讨人喜欢"
+      },
+      "description": {
+        "original": "Let's trust these old gods, since it seems we have found them. ~Tas",
+        "display": "既然我们似乎已经找到这些古老的神了，那我们就信他们吧。~泰索"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,40,19239,19238,19237",
+          "description": "Increases the effect of Tasslehoff's second set of Specializations by $(amount)%."
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "2551",
+      "order": 12,
+      "name": {
+        "original": "Scholar",
+        "display": "学者"
+      },
+      "description": {
+        "original": "I demand the right to represent my people on the advisory council. ~Tas",
+        "display": "我要求拥有在顾问委员会中代表我族人的权利。~泰索"
+      },
+      "rarity": "4",
+      "graphicId": "10062",
+      "effects": [
+        {
+          "effect_string": "increase_ability_score,int,2"
+        }
+      ],
+      "sources": [
+        {
+          "source": "event",
+          "event_id": 8
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "not_yet_available"
+      }
+    },
+    {
+      "id": "2552",
+      "order": 13,
+      "name": {
+        "original": "Entertainer",
+        "display": "艺人"
+      },
+      "description": {
+        "original": "Where is that kender? I suppose he stole the barmaid. ~Flint",
+        "display": "那个坎德人去哪儿了？我看他连酒馆女招待都给偷走了。~弗林特"
+      },
+      "rarity": "4",
+      "graphicId": "10062",
+      "effects": [
+        {
+          "effect_string": "increase_ability_score,cha,2"
+        }
+      ],
+      "sources": [
+        {
+          "source": "event",
+          "event_id": 8
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "not_yet_available"
+      }
+    }
+  ],
+  "skins": [
+    {
+      "id": "674",
+      "name": {
+        "original": "Wanderlust Tasslehoff",
+        "display": "流浪癖泰索何夫"
+      },
+      "cost": {
+        "req_date": "2026-04-01 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 29026,
+        "large_graphic_id": 29027,
+        "portrait_graphic_id": 29029,
+        "xl_graphic_id": 29028
+      },
+      "rarity": "3",
+      "properties": {
+        "notification_adjustment_override": {
+          "offset": [
+            51,
+            165
+          ],
+          "scale": 1.03
+        },
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "694",
+        "cost": 3830
+      },
+      "availabilities": {
+        "premium_item_id": "694"
+      }
+    }
+  ],
+  "raw": {
+    "hero": {
+      "original": {
+        "id": 174,
+        "name": "Tasslehoff",
+        "english_name": "Tasslehoff",
+        "seat_id": 11,
+        "base_cost": "650000000000000000",
+        "base_damage": "900000000000",
+        "base_health": "43",
+        "cost_curves": {
+          "1": 1.08
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 960,
+        "ultimate_attack_id": 961,
+        "graphic_id": 28672,
+        "portrait_graphic_id": 28670,
+        "character_sheet_details": {
+          "full_name": "Tasslehoff Burrfoot",
+          "class": "Rogue",
+          "race": "Kender",
+          "age": 38,
+          "alignment": "Neutral Good",
+          "ability_scores": {
+            "str": 13,
+            "dex": 16,
+            "con": 14,
+            "int": 11,
+            "wis": 15,
+            "cha": 11
+          },
+          "backstory": "Excitable, friendly, and insatiably curious, Tasslehoff Burrfoot is a kender of no small renown. Tas is the beating heart of the Heroes of the Lance, and his knack for 'borrowing' somehow manages to solve more problems than it causes. While Tas may not see himself as a hero, he is fearless in the face of Krynn's greatest dangers, and he always comes to the aid of his friends.",
+          "system_description": "Tasslehoff is a Support and Speed Champion who buffs Champions in one of the back three columns of the player's choice. His diversionary nature strengthens that column at the cost of positional formation abilities next to him, and his wanderlust further increases his support as the party remains in an area. Finally, his habit to borrow items speeds up progression in areas with quest items."
+        },
+        "default_feat_slot_unlocks": [
+          135,
+          755,
+          1465,
+          2345
+        ],
+        "tags": [
+          "male",
+          "kender",
+          "rogue",
+          "neutral",
+          "good",
+          "support",
+          "speed",
+          "heroeslance",
+          "event",
+          "y9",
+          "lcneutral"
+        ],
+        "properties": {
+          "content_set_id": 76,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            170,
+            171,
+            172
+          ],
+          "graphic_large": 28674,
+          "graphic_xl": 28676,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            89,
+            80
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 4,
+            "gethit": 5,
+            "koed": 6,
+            "run": 7
+          },
+          "allow_time_gate": "2026-04-22 12:00:00",
+          "available_in_store": "2026-04-22 12:00:00",
+          "time_gate_adventure_id": 1960,
+          "time_gate_variants_ids": [
+            1956,
+            1957,
+            1958
+          ],
+          "time_gate_tier": 1,
+          "silver_chest_type_id": 795,
+          "gold_chest_type_id": 796,
+          "golden_epic_loot_id": 4157,
+          "golden_epic_promo_id": 783,
+          "event_logo_graphic_id": 3366,
+          "console_portrait": 28645,
+          "trials_effect_id": 836,
+          "weekly_chest_type_id": 796,
+          "weekly_buff": "",
+          "portrait_graphic_scale": 1,
+          "legendary_effect_id": [
+            1,
+            2,
+            5,
+            90,
+            106,
+            48
+          ],
+          "notification_adjustment": {
+            "offset": [
+              45,
+              175
+            ],
+            "scale": 1.14
+          }
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 1955,
+            "type": "base"
+          },
+          {
+            "adventure_id": 1956,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1957,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1958,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1959,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 1960,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 0,
+        "available_in_time_gate": false,
+        "available_in_shop": false,
+        "event_upgrades": [
+          {
+            "upgrade_id": 19245,
+            "name": "Diversion",
+            "description": "",
+            "graphic_id": "28629"
+          },
+          {
+            "upgrade_id": 19244,
+            "name": "Borrower",
+            "description": "",
+            "graphic_id": "28628"
+          },
+          {
+            "upgrade_id": 19243,
+            "name": "Wanderlust",
+            "description": "",
+            "graphic_id": "28630"
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1806606000,
+        "event_name": "Festival of Fools",
+        "is_available": true,
+        "date_available": "2026-04-01 12:00:00",
+        "last_rework_date": "2026-04-01 12:00:00"
+      },
+      "display": {
+        "id": 174,
+        "name": "泰索何夫",
+        "english_name": "Tasslehoff",
+        "seat_id": 11,
+        "base_cost": "650000000000000000",
+        "base_damage": "900000000000",
+        "base_health": "43",
+        "cost_curves": {
+          "1": 1.08
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 960,
+        "ultimate_attack_id": 961,
+        "graphic_id": 28672,
+        "portrait_graphic_id": 28670,
+        "character_sheet_details": {
+          "full_name": "泰索何夫·柏伏特",
+          "class": "游荡者",
+          "race": "坎德人",
+          "age": 38,
+          "alignment": "中立善良",
+          "ability_scores": {
+            "str": 13,
+            "dex": 16,
+            "con": 14,
+            "int": 11,
+            "wis": 15,
+            "cha": 11
+          },
+          "backstory": "泰索何夫·柏伏特是一位颇有名气的坎德人，他容易激动，待人友善，而且有着永不满足的好奇心。泰索是“长枪英雄”的灵魂人物，而他那“借用东西”的本事往往能解决比制造出来的还要多的问题。虽然泰索不认为自己是英雄，但他在面对克莱恩最危险的威胁时也毫不畏惧，并且总会向他的朋友伸出援手。",
+          "system_description": "泰索何夫是一位支援和速度型勇士，会为身处后三列之一（由玩家选择）中的勇士提供增益。他声东击西的性格会强化该列，但代价是削弱作用于他相邻格子的位置阵型技能，而他的流浪癖则会随着探险队在一个区域停留的时间增加而进一步提升他的支援效果。最后，他喜欢借用别人东西的习惯会加快区域任务物品的收集进度。"
+        },
+        "default_feat_slot_unlocks": [
+          135,
+          755,
+          1465,
+          2345
+        ],
+        "tags": [
+          "male",
+          "kender",
+          "rogue",
+          "neutral",
+          "good",
+          "support",
+          "speed",
+          "heroeslance",
+          "event",
+          "y9",
+          "lcneutral"
+        ],
+        "properties": {
+          "content_set_id": 76,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            170,
+            171,
+            172
+          ],
+          "graphic_large": 28674,
+          "graphic_xl": 28676,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            89,
+            80
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 4,
+            "gethit": 5,
+            "koed": 6,
+            "run": 7
+          },
+          "allow_time_gate": "2026-04-22 12:00:00",
+          "available_in_store": "2026-04-22 12:00:00",
+          "time_gate_adventure_id": 1960,
+          "time_gate_variants_ids": [
+            1956,
+            1957,
+            1958
+          ],
+          "time_gate_tier": 1,
+          "silver_chest_type_id": 795,
+          "gold_chest_type_id": 796,
+          "golden_epic_loot_id": 4157,
+          "golden_epic_promo_id": 783,
+          "event_logo_graphic_id": 3366,
+          "console_portrait": 28645,
+          "trials_effect_id": 836,
+          "weekly_chest_type_id": 796,
+          "weekly_buff": "",
+          "portrait_graphic_scale": 1,
+          "legendary_effect_id": [
+            1,
+            2,
+            5,
+            90,
+            106,
+            48
+          ],
+          "notification_adjustment": {
+            "offset": [
+              45,
+              175
+            ],
+            "scale": 1.14
+          }
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 1955,
+            "type": "base"
+          },
+          {
+            "adventure_id": 1956,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1957,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1958,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1959,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 1960,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 0,
+        "available_in_time_gate": false,
+        "available_in_shop": false,
+        "event_upgrades": [
+          {
+            "upgrade_id": 19245,
+            "name": "声东击西",
+            "description": "",
+            "graphic_id": "28629"
+          },
+          {
+            "upgrade_id": 19244,
+            "name": "借用人",
+            "description": "",
+            "graphic_id": "28628"
+          },
+          {
+            "upgrade_id": 19243,
+            "name": "流浪癖",
+            "description": "",
+            "graphic_id": "28630"
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1806606000,
+        "event_name": "愚人节",
+        "is_available": true,
+        "date_available": "2026-04-01 12:00:00",
+        "last_rework_date": "2026-04-01 12:00:00"
+      }
+    },
+    "attacks": [
+      {
+        "id": "960",
+        "snapshots": {
+          "original": {
+            "id": 960,
+            "name": "Hoopak",
+            "description": "Tasslehoff fires a stone at the closest enemy, dealing one hit.",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 3.5,
+            "animations": [
+              {
+                "type": "ranged_attack",
+                "projectile": "pd_generic_projectile",
+                "shoot_offset_x": 48,
+                "shoot_offset_y": -65,
+                "shoot_frame": 31,
+                "shoot_sound": 149,
+                "hit_sound": 133,
+                "projectile_details": {
+                  "hash": "hoopak",
+                  "projectile_speed": 1500,
+                  "rotation_speed": 467,
+                  "percent_height_offset": 12,
+                  "projectile_graphic_id": 28671,
+                  "__projectile_hit_graphic_id": 750,
+                  "trail": {
+                    "lifespan": 0.2,
+                    "spawn_rate": 367,
+                    "particle_graphic_ids": [
+                      12485
+                    ],
+                    "initial_velocity": {
+                      "x": "0",
+                      "y": "0"
+                    },
+                    "velocity_jitter": {
+                      "x": "50",
+                      "y": "50"
+                    },
+                    "alpha_lerp": {
+                      "0": 0,
+                      "1": 0,
+                      "0.1": 0.75
+                    },
+                    "scale_lerp": [
+                      {
+                        "x": 0.25,
+                        "y": 0.25
+                      },
+                      {
+                        "x": 0,
+                        "y": 0
+                      }
+                    ],
+                    "tint": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 1
+                    }
+                  }
+                }
+              }
+            ],
+            "tags": [
+              "ranged"
+            ],
+            "damage_types": [
+              "ranged"
+            ]
+          },
+          "display": {
+            "id": 960,
+            "name": "弹弓矛",
+            "description": "泰索何夫向距离最近的敌人发射一枚石头，造成一次命中。",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 3.5,
+            "animations": [
+              {
+                "type": "ranged_attack",
+                "projectile": "pd_generic_projectile",
+                "shoot_offset_x": 48,
+                "shoot_offset_y": -65,
+                "shoot_frame": 31,
+                "shoot_sound": 149,
+                "hit_sound": 133,
+                "projectile_details": {
+                  "hash": "hoopak",
+                  "projectile_speed": 1500,
+                  "rotation_speed": 467,
+                  "percent_height_offset": 12,
+                  "projectile_graphic_id": 28671,
+                  "__projectile_hit_graphic_id": 750,
+                  "trail": {
+                    "lifespan": 0.2,
+                    "spawn_rate": 367,
+                    "particle_graphic_ids": [
+                      12485
+                    ],
+                    "initial_velocity": {
+                      "x": "0",
+                      "y": "0"
+                    },
+                    "velocity_jitter": {
+                      "x": "50",
+                      "y": "50"
+                    },
+                    "alpha_lerp": {
+                      "0": 0,
+                      "1": 0,
+                      "0.1": 0.75
+                    },
+                    "scale_lerp": [
+                      {
+                        "x": 0.25,
+                        "y": 0.25
+                      },
+                      {
+                        "x": 0,
+                        "y": 0
+                      }
+                    ],
+                    "tint": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 1
+                    }
+                  }
+                }
+              }
+            ],
+            "tags": [
+              "ranged"
+            ],
+            "damage_types": [
+              "ranged"
+            ]
+          }
+        }
+      },
+      {
+        "id": "961",
+        "snapshots": {
+          "original": {
+            "id": 961,
+            "name": "I'm Not the Hero",
+            "description": "Tasslehoff causes the next ultimate used to deal 400% more damage with that ultimate.",
+            "long_description": "Tasslehoff encourages the next Champion to use their ultimate to deal 400% more damage with that ultimate.",
+            "graphic_id": 28640,
+            "target": "none",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 120,
+            "animations": [
+              {
+                "type": "tasslehoff_ultimate",
+                "no_damage_display": true,
+                "jump_pos": [
+                  50,
+                  680
+                ]
+              }
+            ],
+            "tags": [
+              "ultimate"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          },
+          "display": {
+            "id": 961,
+            "name": "我不是英雄",
+            "description": "泰索何夫使下一次使用的杀招造成 400% 的额外伤害。",
+            "long_description": "泰索何夫会鼓励下一个使用杀招的勇士，使该杀招造成 400% 的额外伤害。",
+            "graphic_id": 28640,
+            "target": "none",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 120,
+            "animations": [
+              {
+                "type": "tasslehoff_ultimate",
+                "no_damage_display": true,
+                "jump_pos": [
+                  50,
+                  680
+                ]
+              }
+            ],
+            "tags": [
+              "ultimate"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          }
+        }
+      }
+    ],
+    "upgrades": [
+      {
+        "id": "19246",
+        "snapshots": {
+          "original": {
+            "id": 19246,
+            "hero_id": 174,
+            "required_level": 0,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2642",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Fearless"
+          },
+          "display": {
+            "id": 19246,
+            "hero_id": 174,
+            "required_level": 0,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2642",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "无畏"
+          }
+        }
+      },
+      {
+        "id": "19245",
+        "snapshots": {
+          "original": {
+            "id": 19245,
+            "hero_id": 174,
+            "required_level": 60,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2643",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Diversion",
+            "tip_text": "Tasslehoff prevents non-healing positional formation abilities from buffing his slot and adjacent slots, but his buff grows stronger for each instance this occurs."
+          },
+          "display": {
+            "id": 19245,
+            "hero_id": 174,
+            "required_level": 60,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2643",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "声东击西",
+            "tip_text": "泰索何夫会阻止非治疗的位置阵型技能对他所在的格子和相邻的格子提供增益，但他每阻止一次增益，他自己的增益效果会变得更强。"
+          }
+        }
+      },
+      {
+        "id": "19243",
+        "snapshots": {
+          "original": {
+            "id": 19243,
+            "hero_id": 174,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2645",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Wanderlust"
+          },
+          "display": {
+            "id": 19243,
+            "hero_id": 174,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2645",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "流浪癖"
+          }
+        }
+      },
+      {
+        "id": "19240",
+        "snapshots": {
+          "original": {
+            "id": 19240,
+            "hero_id": 174,
+            "required_level": 20,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2646",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Map Collector: Pre-Cataclysm",
+            "specialization_name": "Map Collector: Pre-Cataclysm",
+            "specialization_description": "Some of Tasslehoff's maps date as far back as before the Cataclysm, an event so powerful it reshaped the lands of Krynn.",
+            "specialization_graphic_id": 28637
+          },
+          "display": {
+            "id": 19240,
+            "hero_id": 174,
+            "required_level": 20,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2646",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "地图收藏家：大灾变之前",
+            "specialization_name": "地图收藏家：大灾变之前",
+            "specialization_description": "泰索何夫的一些地图可以追溯到大灾变之前，那是一件影响十分重大的事件，它重塑了克莱恩的土地。",
+            "specialization_graphic_id": 28637
+          }
+        }
+      },
+      {
+        "id": "19239",
+        "snapshots": {
+          "original": {
+            "id": 19239,
+            "hero_id": 174,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2649",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Old Friends",
+            "specialization_name": "Old Friends",
+            "specialization_description": "Tas is fiercely loyal to his friends, especially his old adventuring companions.",
+            "specialization_graphic_id": 28638
+          },
+          "display": {
+            "id": 19239,
+            "hero_id": 174,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2649",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "老朋友",
+            "specialization_name": "老朋友",
+            "specialization_description": "泰索对朋友极其忠诚，尤其是和他一起冒险的老伙计。",
+            "specialization_graphic_id": 28638
+          }
+        }
+      },
+      {
+        "id": "19244",
+        "snapshots": {
+          "original": {
+            "id": 19244,
+            "hero_id": 174,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2644",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Borrower",
+            "tip_text": "In areas requiring quest items, Tasslehoff will sometimes find a quest item when he attacks."
+          },
+          "display": {
+            "id": 19244,
+            "hero_id": 174,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2644",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "借用人",
+            "tip_text": "在需要任务物品的区域，泰索何夫进行攻击时有时会找到任务物品。"
+          }
+        }
+      },
+      {
+        "id": "19242",
+        "snapshots": {
+          "original": {
+            "id": 19242,
+            "hero_id": 174,
+            "required_level": 20,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2648",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Map Collector: War of the Lance",
+            "specialization_name": "Map Collector: War of the Lance",
+            "specialization_description": "Tas' newest maps were often inspired by his own travels.",
+            "specialization_graphic_id": 28635
+          },
+          "display": {
+            "id": 19242,
+            "hero_id": 174,
+            "required_level": 20,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2648",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "地图收藏家：长矛之战",
+            "specialization_name": "地图收藏家：长矛之战",
+            "specialization_description": "泰索最新的地图往往是受他自己的游历启发的。",
+            "specialization_graphic_id": 28635
+          }
+        }
+      },
+      {
+        "id": "19241",
+        "snapshots": {
+          "original": {
+            "id": 19241,
+            "hero_id": 174,
+            "required_level": 20,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2647",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Map Collector: Time of Darkness",
+            "specialization_name": "Map Collector: Time of Darkness",
+            "specialization_description": "Tasslehoff's maps that date after the Cataclysm come from a time when the people believed the gods had abandoned Krynn.",
+            "specialization_graphic_id": 28636
+          },
+          "display": {
+            "id": 19241,
+            "hero_id": 174,
+            "required_level": 20,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2647",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "地图收藏家：黑暗时代",
+            "specialization_name": "地图收藏家：黑暗时代",
+            "specialization_description": "泰索何夫那些绘制于大灾变之后的地图，出自一个人们相信众神已抛弃克莱恩的时代。",
+            "specialization_graphic_id": 28636
+          }
+        }
+      },
+      {
+        "id": "19238",
+        "snapshots": {
+          "original": {
+            "id": 19238,
+            "hero_id": 174,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2650",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Fast Friends",
+            "specialization_name": "Fast Friends",
+            "specialization_description": "Tas approaches everyone with an open heart and is quick to make new friends.",
+            "specialization_graphic_id": 28634
+          },
+          "display": {
+            "id": 19238,
+            "hero_id": 174,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2650",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "迅速交到的朋友",
+            "specialization_name": "迅速交到的朋友",
+            "specialization_description": "泰索对谁都敞开心扉，很快就能交到新的朋友。",
+            "specialization_graphic_id": 28634
+          }
+        }
+      },
+      {
+        "id": "19237",
+        "snapshots": {
+          "original": {
+            "id": 19237,
+            "hero_id": 174,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2651",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Small Friends",
+            "specialization_name": "Small Friends",
+            "specialization_description": "Tas considers the dwarf Flint as his best friend, and while it may seem one-sided, Flint cares for him just as deeply.",
+            "specialization_graphic_id": 28639
+          },
+          "display": {
+            "id": 19237,
+            "hero_id": 174,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2651",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "矮小的朋友",
+            "specialization_name": "矮小的朋友",
+            "specialization_description": "泰索认为矮人弗林特是他最好的朋友，虽然似乎只有他单方面这样认为，但弗林特同样很关心他。",
+            "specialization_graphic_id": 28639
+          }
+        }
+      },
+      {
+        "id": "19260",
+        "snapshots": {
+          "original": {
+            "id": 19260,
+            "hero_id": 174,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19260,
+            "hero_id": 174,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"\\u4f7f\\u6cf0\\u7d22\\u4f55\\u592b\\u201c\\u5730\\u56fe\\u6536\\u85cf\\u5bb6\\u201d\\u6280\\u80fd\\u7684\\u6548\\u679c\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19335",
+        "snapshots": {
+          "original": {
+            "id": 19335,
+            "hero_id": 174,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "effect_def,2681",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "I'm Not the Hero"
+          },
+          "display": {
+            "id": 19335,
+            "hero_id": 174,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "effect_def,2681",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "我不是英雄"
+          }
+        }
+      },
+      {
+        "id": "19492",
+        "snapshots": {
+          "original": {
+            "id": 19492,
+            "hero_id": 174,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19492,
+            "hero_id": 174,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19493",
+        "snapshots": {
+          "original": {
+            "id": 19493,
+            "hero_id": 174,
+            "required_level": 70,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19493,
+            "hero_id": 174,
+            "required_level": 70,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19494",
+        "snapshots": {
+          "original": {
+            "id": 19494,
+            "hero_id": 174,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19494,
+            "hero_id": 174,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19495",
+        "snapshots": {
+          "original": {
+            "id": 19495,
+            "hero_id": 174,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19495,
+            "hero_id": 174,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19496",
+        "snapshots": {
+          "original": {
+            "id": 19496,
+            "hero_id": 174,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19496,
+            "hero_id": 174,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"\\u4f7f\\u6cf0\\u7d22\\u4f55\\u592b\\u201c\\u5730\\u56fe\\u6536\\u85cf\\u5bb6\\u201d\\u6280\\u80fd\\u7684\\u6548\\u679c\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19497",
+        "snapshots": {
+          "original": {
+            "id": 19497,
+            "hero_id": 174,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19497,
+            "hero_id": 174,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19498",
+        "snapshots": {
+          "original": {
+            "id": 19498,
+            "hero_id": 174,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19498,
+            "hero_id": 174,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19499",
+        "snapshots": {
+          "original": {
+            "id": 19499,
+            "hero_id": 174,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19499,
+            "hero_id": 174,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"\\u4f7f\\u6cf0\\u7d22\\u4f55\\u592b\\u201c\\u5730\\u56fe\\u6536\\u85cf\\u5bb6\\u201d\\u6280\\u80fd\\u7684\\u6548\\u679c\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19500",
+        "snapshots": {
+          "original": {
+            "id": 19500,
+            "hero_id": 174,
+            "required_level": 220,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19500,
+            "hero_id": 174,
+            "required_level": 220,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19501",
+        "snapshots": {
+          "original": {
+            "id": 19501,
+            "hero_id": 174,
+            "required_level": 230,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19501,
+            "hero_id": 174,
+            "required_level": 230,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"\\u4f7f\\u6cf0\\u7d22\\u4f55\\u592b\\u201c\\u5730\\u56fe\\u6536\\u85cf\\u5bb6\\u201d\\u6280\\u80fd\\u7684\\u6548\\u679c\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19502",
+        "snapshots": {
+          "original": {
+            "id": 19502,
+            "hero_id": 174,
+            "required_level": 270,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19502,
+            "hero_id": 174,
+            "required_level": 270,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19503",
+        "snapshots": {
+          "original": {
+            "id": 19503,
+            "hero_id": 174,
+            "required_level": 280,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19503,
+            "hero_id": 174,
+            "required_level": 280,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"\\u4f7f\\u6cf0\\u7d22\\u4f55\\u592b\\u201c\\u5730\\u56fe\\u6536\\u85cf\\u5bb6\\u201d\\u6280\\u80fd\\u7684\\u6548\\u679c\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19504",
+        "snapshots": {
+          "original": {
+            "id": 19504,
+            "hero_id": 174,
+            "required_level": 320,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19504,
+            "hero_id": 174,
+            "required_level": 320,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19505",
+        "snapshots": {
+          "original": {
+            "id": 19505,
+            "hero_id": 174,
+            "required_level": 330,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19505,
+            "hero_id": 174,
+            "required_level": 330,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19506",
+        "snapshots": {
+          "original": {
+            "id": 19506,
+            "hero_id": 174,
+            "required_level": 340,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19506,
+            "hero_id": 174,
+            "required_level": 340,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"\\u4f7f\\u6cf0\\u7d22\\u4f55\\u592b\\u201c\\u5730\\u56fe\\u6536\\u85cf\\u5bb6\\u201d\\u6280\\u80fd\\u7684\\u6548\\u679c\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19507",
+        "snapshots": {
+          "original": {
+            "id": 19507,
+            "hero_id": 174,
+            "required_level": 390,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19507,
+            "hero_id": 174,
+            "required_level": 390,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"\\u4f7f\\u6cf0\\u7d22\\u4f55\\u592b\\u201c\\u5730\\u56fe\\u6536\\u85cf\\u5bb6\\u201d\\u6280\\u80fd\\u7684\\u6548\\u679c\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19508",
+        "snapshots": {
+          "original": {
+            "id": 19508,
+            "hero_id": 174,
+            "required_level": 400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19508,
+            "hero_id": 174,
+            "required_level": 400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19509",
+        "snapshots": {
+          "original": {
+            "id": 19509,
+            "hero_id": 174,
+            "required_level": 460,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19509,
+            "hero_id": 174,
+            "required_level": 460,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19510",
+        "snapshots": {
+          "original": {
+            "id": 19510,
+            "hero_id": 174,
+            "required_level": 470,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19510,
+            "hero_id": 174,
+            "required_level": 470,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19511",
+        "snapshots": {
+          "original": {
+            "id": 19511,
+            "hero_id": 174,
+            "required_level": 500,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19511,
+            "hero_id": 174,
+            "required_level": 500,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"\\u4f7f\\u6cf0\\u7d22\\u4f55\\u592b\\u201c\\u5730\\u56fe\\u6536\\u85cf\\u5bb6\\u201d\\u6280\\u80fd\\u7684\\u6548\\u679c\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19512",
+        "snapshots": {
+          "original": {
+            "id": 19512,
+            "hero_id": 174,
+            "required_level": 540,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19512,
+            "hero_id": 174,
+            "required_level": 540,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19513",
+        "snapshots": {
+          "original": {
+            "id": 19513,
+            "hero_id": 174,
+            "required_level": 600,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19513,
+            "hero_id": 174,
+            "required_level": 600,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"\\u4f7f\\u6cf0\\u7d22\\u4f55\\u592b\\u201c\\u5730\\u56fe\\u6536\\u85cf\\u5bb6\\u201d\\u6280\\u80fd\\u7684\\u6548\\u679c\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19514",
+        "snapshots": {
+          "original": {
+            "id": 19514,
+            "hero_id": 174,
+            "required_level": 630,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19514,
+            "hero_id": 174,
+            "required_level": 630,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19515",
+        "snapshots": {
+          "original": {
+            "id": 19515,
+            "hero_id": 174,
+            "required_level": 640,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19515,
+            "hero_id": 174,
+            "required_level": 640,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19516",
+        "snapshots": {
+          "original": {
+            "id": 19516,
+            "hero_id": 174,
+            "required_level": 690,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19516,
+            "hero_id": 174,
+            "required_level": 690,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19517",
+        "snapshots": {
+          "original": {
+            "id": 19517,
+            "hero_id": 174,
+            "required_level": 700,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19517,
+            "hero_id": 174,
+            "required_level": 700,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"\\u4f7f\\u6cf0\\u7d22\\u4f55\\u592b\\u201c\\u5730\\u56fe\\u6536\\u85cf\\u5bb6\\u201d\\u6280\\u80fd\\u7684\\u6548\\u679c\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19518",
+        "snapshots": {
+          "original": {
+            "id": 19518,
+            "hero_id": 174,
+            "required_level": 760,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19518,
+            "hero_id": 174,
+            "required_level": 760,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19519",
+        "snapshots": {
+          "original": {
+            "id": 19519,
+            "hero_id": 174,
+            "required_level": 770,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19519,
+            "hero_id": 174,
+            "required_level": 770,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19520",
+        "snapshots": {
+          "original": {
+            "id": 19520,
+            "hero_id": 174,
+            "required_level": 800,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19520,
+            "hero_id": 174,
+            "required_level": 800,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"\\u4f7f\\u6cf0\\u7d22\\u4f55\\u592b\\u201c\\u5730\\u56fe\\u6536\\u85cf\\u5bb6\\u201d\\u6280\\u80fd\\u7684\\u6548\\u679c\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19521",
+        "snapshots": {
+          "original": {
+            "id": 19521,
+            "hero_id": 174,
+            "required_level": 830,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19521,
+            "hero_id": 174,
+            "required_level": 830,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19522",
+        "snapshots": {
+          "original": {
+            "id": 19522,
+            "hero_id": 174,
+            "required_level": 890,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19522,
+            "hero_id": 174,
+            "required_level": 890,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19523",
+        "snapshots": {
+          "original": {
+            "id": 19523,
+            "hero_id": 174,
+            "required_level": 900,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19523,
+            "hero_id": 174,
+            "required_level": 900,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"\\u4f7f\\u6cf0\\u7d22\\u4f55\\u592b\\u201c\\u5730\\u56fe\\u6536\\u85cf\\u5bb6\\u201d\\u6280\\u80fd\\u7684\\u6548\\u679c\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19524",
+        "snapshots": {
+          "original": {
+            "id": 19524,
+            "hero_id": 174,
+            "required_level": 920,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19524,
+            "hero_id": 174,
+            "required_level": 920,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19525",
+        "snapshots": {
+          "original": {
+            "id": 19525,
+            "hero_id": 174,
+            "required_level": 980,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19525,
+            "hero_id": 174,
+            "required_level": 980,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19526",
+        "snapshots": {
+          "original": {
+            "id": 19526,
+            "hero_id": 174,
+            "required_level": 1050,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19526,
+            "hero_id": 174,
+            "required_level": 1050,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"\\u4f7f\\u6cf0\\u7d22\\u4f55\\u592b\\u201c\\u5730\\u56fe\\u6536\\u85cf\\u5bb6\\u201d\\u6280\\u80fd\\u7684\\u6548\\u679c\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19527",
+        "snapshots": {
+          "original": {
+            "id": 19527,
+            "hero_id": 174,
+            "required_level": 1060,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19527,
+            "hero_id": 174,
+            "required_level": 1060,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19528",
+        "snapshots": {
+          "original": {
+            "id": 19528,
+            "hero_id": 174,
+            "required_level": 1070,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19528,
+            "hero_id": 174,
+            "required_level": 1070,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19529",
+        "snapshots": {
+          "original": {
+            "id": 19529,
+            "hero_id": 174,
+            "required_level": 1170,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19529,
+            "hero_id": 174,
+            "required_level": 1170,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19530",
+        "snapshots": {
+          "original": {
+            "id": 19530,
+            "hero_id": 174,
+            "required_level": 1200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19530,
+            "hero_id": 174,
+            "required_level": 1200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"\\u4f7f\\u6cf0\\u7d22\\u4f55\\u592b\\u201c\\u5730\\u56fe\\u6536\\u85cf\\u5bb6\\u201d\\u6280\\u80fd\\u7684\\u6548\\u679c\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19531",
+        "snapshots": {
+          "original": {
+            "id": 19531,
+            "hero_id": 174,
+            "required_level": 1250,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19531,
+            "hero_id": 174,
+            "required_level": 1250,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19532",
+        "snapshots": {
+          "original": {
+            "id": 19532,
+            "hero_id": 174,
+            "required_level": 1290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19532,
+            "hero_id": 174,
+            "required_level": 1290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19533",
+        "snapshots": {
+          "original": {
+            "id": 19533,
+            "hero_id": 174,
+            "required_level": 1300,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19533,
+            "hero_id": 174,
+            "required_level": 1300,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"\\u4f7f\\u6cf0\\u7d22\\u4f55\\u592b\\u201c\\u5730\\u56fe\\u6536\\u85cf\\u5bb6\\u201d\\u6280\\u80fd\\u7684\\u6548\\u679c\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19534",
+        "snapshots": {
+          "original": {
+            "id": 19534,
+            "hero_id": 174,
+            "required_level": 1380,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19534,
+            "hero_id": 174,
+            "required_level": 1380,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19535",
+        "snapshots": {
+          "original": {
+            "id": 19535,
+            "hero_id": 174,
+            "required_level": 1400,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19535,
+            "hero_id": 174,
+            "required_level": 1400,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"\\u4f7f\\u6cf0\\u7d22\\u4f55\\u592b\\u201c\\u5730\\u56fe\\u6536\\u85cf\\u5bb6\\u201d\\u6280\\u80fd\\u7684\\u6548\\u679c\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19536",
+        "snapshots": {
+          "original": {
+            "id": 19536,
+            "hero_id": 174,
+            "required_level": 1450,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19536,
+            "hero_id": 174,
+            "required_level": 1450,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19537",
+        "snapshots": {
+          "original": {
+            "id": 19537,
+            "hero_id": 174,
+            "required_level": 1500,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19537,
+            "hero_id": 174,
+            "required_level": 1500,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"\\u4f7f\\u6cf0\\u7d22\\u4f55\\u592b\\u201c\\u5730\\u56fe\\u6536\\u85cf\\u5bb6\\u201d\\u6280\\u80fd\\u7684\\u6548\\u679c\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19538",
+        "snapshots": {
+          "original": {
+            "id": 19538,
+            "hero_id": 174,
+            "required_level": 1550,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19538,
+            "hero_id": 174,
+            "required_level": 1550,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19539",
+        "snapshots": {
+          "original": {
+            "id": 19539,
+            "hero_id": 174,
+            "required_level": 1600,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19539,
+            "hero_id": 174,
+            "required_level": 1600,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"\\u4f7f\\u6cf0\\u7d22\\u4f55\\u592b\\u201c\\u5730\\u56fe\\u6536\\u85cf\\u5bb6\\u201d\\u6280\\u80fd\\u7684\\u6548\\u679c\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19540",
+        "snapshots": {
+          "original": {
+            "id": 19540,
+            "hero_id": 174,
+            "required_level": 1680,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19540,
+            "hero_id": 174,
+            "required_level": 1680,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19541",
+        "snapshots": {
+          "original": {
+            "id": 19541,
+            "hero_id": 174,
+            "required_level": 1700,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19541,
+            "hero_id": 174,
+            "required_level": 1700,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19542",
+        "snapshots": {
+          "original": {
+            "id": 19542,
+            "hero_id": 174,
+            "required_level": 1750,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19542,
+            "hero_id": 174,
+            "required_level": 1750,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"\\u4f7f\\u6cf0\\u7d22\\u4f55\\u592b\\u201c\\u5730\\u56fe\\u6536\\u85cf\\u5bb6\\u201d\\u6280\\u80fd\\u7684\\u6548\\u679c\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19543",
+        "snapshots": {
+          "original": {
+            "id": 19543,
+            "hero_id": 174,
+            "required_level": 1840,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19543,
+            "hero_id": 174,
+            "required_level": 1840,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19544",
+        "snapshots": {
+          "original": {
+            "id": 19544,
+            "hero_id": 174,
+            "required_level": 1850,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19544,
+            "hero_id": 174,
+            "required_level": 1850,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19545",
+        "snapshots": {
+          "original": {
+            "id": 19545,
+            "hero_id": 174,
+            "required_level": 1900,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19545,
+            "hero_id": 174,
+            "required_level": 1900,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"\\u4f7f\\u6cf0\\u7d22\\u4f55\\u592b\\u201c\\u5730\\u56fe\\u6536\\u85cf\\u5bb6\\u201d\\u6280\\u80fd\\u7684\\u6548\\u679c\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19546",
+        "snapshots": {
+          "original": {
+            "id": 19546,
+            "hero_id": 174,
+            "required_level": 1930,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19546,
+            "hero_id": 174,
+            "required_level": 1930,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19547",
+        "snapshots": {
+          "original": {
+            "id": 19547,
+            "hero_id": 174,
+            "required_level": 1990,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19547,
+            "hero_id": 174,
+            "required_level": 1990,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19548",
+        "snapshots": {
+          "original": {
+            "id": 19548,
+            "hero_id": 174,
+            "required_level": 2000,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"Increases the effect of Tasslehoff's Map Collector ability by $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19548,
+            "hero_id": 174,
+            "required_level": 2000,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "{\"effect_string\":\"buff_upgrades,100,19240,19241,19242\",\"description\":\"\\u4f7f\\u6cf0\\u7d22\\u4f55\\u592b\\u201c\\u5730\\u56fe\\u6536\\u85cf\\u5bb6\\u201d\\u6280\\u80fd\\u7684\\u6548\\u679c\\u63d0\\u9ad8 $(amount)%\"}",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "19549",
+        "snapshots": {
+          "original": {
+            "id": 19549,
+            "hero_id": 174,
+            "required_level": 2010,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 19549,
+            "hero_id": 174,
+            "required_level": 2010,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      }
+    ],
+    "feats": [
+      {
+        "id": "2540",
+        "snapshots": {
+          "original": {
+            "id": 2540,
+            "hero_id": 174,
+            "order": 1,
+            "name": "Selflessness",
+            "description": "We have to keep trying and hoping. ~Tas",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2540,
+            "hero_id": 174,
+            "order": 1,
+            "name": "无私",
+            "description": "我们必须不断尝试，不能放弃希望。~泰索",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2541",
+        "snapshots": {
+          "original": {
+            "id": 2541,
+            "hero_id": 174,
+            "order": 2,
+            "name": "Inspiring Leader",
+            "description": "We'll take the lead, we mighty warriors. ~Tas",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 2541,
+            "hero_id": 174,
+            "order": 2,
+            "name": "鼓舞人心的首领",
+            "description": "我们来打头阵，我们是强大的战士。~泰索",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "2542",
+        "snapshots": {
+          "original": {
+            "id": 2542,
+            "hero_id": 174,
+            "order": 3,
+            "name": "Mapmaker",
+            "description": "Have you got a map of this area, Tas? ~Tanis",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,20,19240,19241,19242",
+                "description": "Increases the effect of Tasslehoff's Map Collector Specializations by $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2542,
+            "hero_id": 174,
+            "order": 3,
+            "name": "地图制作者",
+            "description": "你有这片区域的地图吗，泰索？~塔尼斯",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,20,19240,19241,19242",
+                "description": "使泰索何夫“地图收藏家”技能的效果提高 $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2543",
+        "snapshots": {
+          "original": {
+            "id": 2543,
+            "hero_id": 174,
+            "order": 4,
+            "name": "Cartographer",
+            "description": "The Haven Road through Solace Vale is quickest, that's for sure. ~Tas",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,40,19240,19241,19242",
+                "description": "Increases the effect of Tasslehoff's Map Collector Specializations by $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 2543,
+            "hero_id": 174,
+            "order": 4,
+            "name": "制图师",
+            "description": "走穿过索拉斯谷的海文路是最快的，那是肯定的。~泰索",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,40,19240,19241,19242",
+                "description": "使泰索何夫“地图收藏家”技能的效果提高 $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "2544",
+        "snapshots": {
+          "original": {
+            "id": 2544,
+            "hero_id": 174,
+            "order": 5,
+            "name": "Overlooked",
+            "description": "Looks are as deceptive as light-fingered kender. ~Raistlin",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,19245"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 2544,
+            "hero_id": 174,
+            "order": 5,
+            "name": "不起眼",
+            "description": "长相就跟手脚不干净的坎德人一样，十分具有欺骗性。~雷斯林",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,19245"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "2545",
+        "snapshots": {
+          "original": {
+            "id": 2545,
+            "hero_id": 174,
+            "order": 6,
+            "name": "Curious",
+            "description": "Keep your hands out of other people's belongings. ~Tanis",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,19244"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 2545,
+            "hero_id": 174,
+            "order": 6,
+            "name": "好奇",
+            "description": "不要碰别人的东西。~塔尼斯",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,19244"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "2546",
+        "snapshots": {
+          "original": {
+            "id": 2546,
+            "hero_id": 174,
+            "order": 7,
+            "name": "Acquisitive",
+            "description": "I'm not going to take it! I just mentioned it, as an item of interest. ~Tas",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,19244"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2026-07-01 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 694
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_for_gems_at_time": 1782932400
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "694",
+              "cost": 3830
+            }
+          },
+          "display": {
+            "id": 2546,
+            "hero_id": 174,
+            "order": 7,
+            "name": "贪婪",
+            "description": "我没有要拿走它！我只是提到了它，觉得它很有意思罢了。~泰索",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,19244"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2026-07-01 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 694
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_for_gems_at_time": 1782932400
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "694",
+              "cost": 3830
+            }
+          }
+        }
+      },
+      {
+        "id": "2547",
+        "snapshots": {
+          "original": {
+            "id": 2547,
+            "hero_id": 174,
+            "order": 8,
+            "name": "Wayfarer",
+            "description": "I'm not supposed to be the one that thinks. I just come along for the fun. ~Tas",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,19243"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2547,
+            "hero_id": 174,
+            "order": 8,
+            "name": "旅人",
+            "description": "我不应该是动脑思考的那个人。我只是跟着来找乐子的。~泰索",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,19243"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2548",
+        "snapshots": {
+          "original": {
+            "id": 2548,
+            "hero_id": 174,
+            "order": 9,
+            "name": "Scout",
+            "description": "No one would ever suspect a kender traveling alone. ~Tas",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,19243"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 2548,
+            "hero_id": 174,
+            "order": 9,
+            "name": "斥候",
+            "description": "没人会怀疑一个独自旅行的坎德人。~泰索",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,19243"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "2549",
+        "snapshots": {
+          "original": {
+            "id": 2549,
+            "hero_id": 174,
+            "order": 10,
+            "name": "Affable",
+            "description": "I am Tasslehoff Burrfoot. My friends call me Tas. Who are you? ~Tas",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,20,19239,19238,19237",
+                "description": "Increases the effect of Tasslehoff's second set of Specializations by $(amount)%."
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2549,
+            "hero_id": 174,
+            "order": 10,
+            "name": "友善",
+            "description": "我是泰索何夫·柏伏特。我的朋友都叫我泰索。你是谁？~泰索",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,20,19239,19238,19237",
+                "description": "使泰索何夫第二组专精的效果提升 $(amount)%。"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2550",
+        "snapshots": {
+          "original": {
+            "id": 2550,
+            "hero_id": 174,
+            "order": 11,
+            "name": "Favorable",
+            "description": "Let's trust these old gods, since it seems we have found them. ~Tas",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,40,19239,19238,19237",
+                "description": "Increases the effect of Tasslehoff's second set of Specializations by $(amount)%."
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 2550,
+            "hero_id": 174,
+            "order": 11,
+            "name": "讨人喜欢",
+            "description": "既然我们似乎已经找到这些古老的神了，那我们就信他们吧。~泰索",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,40,19239,19238,19237",
+                "description": "使泰索何夫第二组专精的效果提升 $(amount)%。"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "2551",
+        "snapshots": {
+          "original": {
+            "id": 2551,
+            "hero_id": 174,
+            "order": 12,
+            "name": "Scholar",
+            "description": "I demand the right to represent my people on the advisory council. ~Tas",
+            "rarity": 4,
+            "graphic_id": 10062,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,int,2"
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 8
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          },
+          "display": {
+            "id": 2551,
+            "hero_id": 174,
+            "order": 12,
+            "name": "学者",
+            "description": "我要求拥有在顾问委员会中代表我族人的权利。~泰索",
+            "rarity": 4,
+            "graphic_id": 10062,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,int,2"
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 8
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          }
+        }
+      },
+      {
+        "id": "2552",
+        "snapshots": {
+          "original": {
+            "id": 2552,
+            "hero_id": 174,
+            "order": 13,
+            "name": "Entertainer",
+            "description": "Where is that kender? I suppose he stole the barmaid. ~Flint",
+            "rarity": 4,
+            "graphic_id": 10062,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,cha,2"
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 8
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          },
+          "display": {
+            "id": 2552,
+            "hero_id": 174,
+            "order": 13,
+            "name": "艺人",
+            "description": "那个坎德人去哪儿了？我看他连酒馆女招待都给偷走了。~弗林特",
+            "rarity": 4,
+            "graphic_id": 10062,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,cha,2"
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 8
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          }
+        }
+      }
+    ],
+    "skins": [
+      {
+        "id": "674",
+        "snapshots": {
+          "original": {
+            "id": 674,
+            "hero_id": 174,
+            "name": "Wanderlust Tasslehoff",
+            "cost": {
+              "req_date": "2026-04-01 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 29026,
+              "large_graphic_id": 29027,
+              "portrait_graphic_id": 29029,
+              "xl_graphic_id": 29028
+            },
+            "rarity": "3",
+            "properties": {
+              "notification_adjustment_override": {
+                "offset": [
+                  51,
+                  165
+                ],
+                "scale": 1.03
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "694",
+              "cost": 3830
+            },
+            "availabilities": {
+              "premium_item_id": "694"
+            }
+          },
+          "display": {
+            "id": 674,
+            "hero_id": 174,
+            "name": "流浪癖泰索何夫",
+            "cost": {
+              "req_date": "2026-04-01 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 29026,
+              "large_graphic_id": 29027,
+              "portrait_graphic_id": 29029,
+              "xl_graphic_id": 29028
+            },
+            "rarity": "3",
+            "properties": {
+              "notification_adjustment_override": {
+                "offset": [
+                  51,
+                  165
+                ],
+                "scale": 1.03
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "694",
+              "cost": 3830
+            },
+            "availabilities": {
+              "premium_item_id": "694"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

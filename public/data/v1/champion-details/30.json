@@ -1,0 +1,4832 @@
+{
+  "updatedAt": "2026-04-13",
+  "summary": {
+    "id": "30",
+    "name": {
+      "original": "Azaka",
+      "display": "阿扎卡"
+    },
+    "seat": 12,
+    "roles": [
+      "dps",
+      "gold",
+      "support"
+    ],
+    "affiliations": [],
+    "tags": [
+      "dps",
+      "evergreen",
+      "female",
+      "fighter",
+      "geneutral",
+      "gold",
+      "human",
+      "lawful",
+      "lycanthrope",
+      "neutral",
+      "support",
+      "unaffiliated"
+    ],
+    "portrait": {
+      "path": "v1/champion-portraits/30.png",
+      "sourceGraphic": "Portraits/Portrait_Azaka",
+      "sourceVersion": 5
+    }
+  },
+  "englishName": "Azaka",
+  "eventName": null,
+  "dateAvailable": "2018-08-15 13:00:00",
+  "lastReworkDate": "2018-08-15 13:00:00",
+  "popularity": 0,
+  "baseCost": "250000000000000000000",
+  "baseDamage": "10000000000000",
+  "baseHealth": "43",
+  "graphicId": "3618",
+  "portraitGraphicId": "3641",
+  "availability": {
+    "availableInNextEvent": false,
+    "availableInShop": true,
+    "availableInTimeGate": false,
+    "isAvailable": true,
+    "nextEventTimestamp": 0
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    80,
+    790,
+    1600,
+    2600
+  ],
+  "costCurves": {
+    "1": 1.07
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "available_in_store": "2025-10-23 12:00:00",
+    "unlock_adventure_id": 186,
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      145,
+      146,
+      147
+    ],
+    "graphic_large": 3640,
+    "graphic_xl": 13768,
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "attack_b": 4,
+      "ultimate": 5,
+      "gethit": 6,
+      "koed": 7,
+      "run": 8,
+      "attack_c": 11
+    },
+    "eye_height": 138,
+    "portrait_center_offset": [
+      103,
+      80
+    ],
+    "companions": [
+      {
+        "graphic_id": 2506,
+        "visible": false,
+        "offset_x": 45,
+        "offset_y": -40
+      },
+      {
+        "graphic_id": 2506,
+        "visible": false,
+        "offset_x": 45,
+        "offset_y": 40
+      }
+    ],
+    "permanent_effects": [
+      "effect_def,179"
+    ],
+    "console_portrait": 3979,
+    "head_graphic_id": 7257,
+    "trials_effect_id": 838,
+    "legendary_effect_id": [
+      1,
+      3,
+      58,
+      43,
+      88,
+      99
+    ],
+    "weekly_chest_type_id": 475,
+    "weekly_buff": "gold_multiplier_mult,200",
+    "portrait_graphic_scale": 0.85,
+    "notification_adjustment": {
+      "offset": [
+        56,
+        235
+      ],
+      "scale": 1.25
+    },
+    "hero_not_unlocked_skin_warning": "Champion Azaka is not unlocked with this skin. Azaka can only be unlocked by completing Azaka's Procession - Part 2 - the second Variant of the Tomb of the Nine Gods adventure in the Tomb of Annihilation Campaign.",
+    "shop_transform_graphic": 13769,
+    "gold_chest_type_id": 475
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Azaka Stormfang",
+      "display": "阿扎卡·风暴之牙"
+    },
+    "class": {
+      "original": "Fighter",
+      "display": "战士"
+    },
+    "race": {
+      "original": "Human",
+      "display": "人类"
+    },
+    "age": 40,
+    "alignment": {
+      "original": "Lawful Neutral",
+      "display": "守序中立"
+    },
+    "abilityScores": {
+      "str": 19,
+      "dex": 14,
+      "con": 16,
+      "int": 11,
+      "wis": 9,
+      "cha": 14
+    },
+    "backstory": {
+      "original": "Azaka Stormfang was once a guide who operated out of Port Nyanzaru on Chult. She originally concealed her curse of lycanthropy from the champions, as she has lost many friends to that revelation in the past. Her true self was revealed to the Champions after she valiantly helped them collect 3 of the 9 puzzle cubes they needed to defeat the villain Acererak in the Tomb of the Nine Gods. She was killed in the battle, but was able to be resurrected after the champions defeated Acererak's soulmonger. Now, she travels with her new friends, as a champion.",
+      "display": "阿扎卡·风暴之牙曾经在楚尔特的南扎路港担任导游。最初她对勇士们隐瞒了她的兽化诅咒，因为过去的很多朋友得知这件事后都离开了她。在她对勇士们提供了英勇无畏的帮助，收集到了在九神之墓中消灭恶人阿瑟瑞拉克所需 9 个谜题方块中的 3 个后，她的真实身份被勇士们所知晓。她在战斗中英勇牺牲，但在勇士们消灭了阿瑟瑞拉克的灵魂商贩后得以复活。现在她也成为了一名勇士，和她的新朋友们一起踏上旅程。"
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "125",
+      "name": {
+        "original": "Pick Them Off",
+        "display": "干掉他们"
+      },
+      "description": {
+        "original": "Azaka leaps into the air and strikes a random enemy; 33% cleave chance",
+        "display": "阿扎卡跳到空中，攻击一名随机敌人，并有 33% 几率使用顺势斩。"
+      },
+      "longDescription": null,
+      "cooldown": 4.5,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "random",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "power_up_sequence": {
+            "pause_at_start": 0.2,
+            "start_frame": 0,
+            "end_frame": 5
+          },
+          "sequences": [
+            {
+              "start_frame": 5,
+              "damage_frame": 9,
+              "end_frame": 20
+            }
+          ]
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "126",
+      "name": {
+        "original": "Mask of the Beast",
+        "display": "野兽面具"
+      },
+      "description": {
+        "original": "Azaka dons her Mask of the Beast, summoning 2 tigers to her side for 30 seconds, the tigers attack every 5 seconds",
+        "display": "阿扎卡戴上野兽面具，召唤 2 只老虎来陪伴她。持续 30 秒，老虎每 5 秒攻击一次。"
+      },
+      "longDescription": {
+        "original": "Azaka dons her Mask of the Beast, summoning 2 tigers to her side that attack every 5 seconds. The tigers stay for 30 seconds. If Azaka specs with Lycanthrope Forever the tiger attacks count towards her weretiger transformation, and her weretiger cooldown is paused during her Ultimate. If she specs with Resist the Curse, the tigers' attacks cause enemies to drop gold even if they aren't killed.",
+        "display": "阿扎卡戴上野兽面具，召唤 2 只老虎来陪伴她。持续 30 秒，老虎每 5 秒攻击一次。如果阿扎卡选择永久兽化专精，老虎的攻击也会计入她的虎人形态转化所需的攻击次数，同时她虎人形态的冷却在杀招持续时间内会暂停。如果她专精抵抗诅咒，则在老虎的攻击未能击杀敌人时，敌人会掉落金币。"
+      },
+      "cooldown": 380,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "0",
+      "target": "front",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee",
+        "ultimate"
+      ],
+      "graphicId": "3628",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "animation": "spawn_tigers",
+          "visual_effect_frames": {
+            "30": {
+              "effect": "spawn_tiger",
+              "index": 0
+            },
+            "40": {
+              "effect": "spawn_tiger",
+              "index": 1
+            }
+          },
+          "start_frame": 0,
+          "end_frame": 54,
+          "effect_frames": {
+            "-1": {
+              "effect_string": "azaka_ultimate,127",
+              "for_time": 30,
+              "apply_to_hero": true
+            }
+          },
+          "no_damage_display": true
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "1232",
+        "name": {
+          "original": "Curse of Lycanthropy",
+          "display": "兽化诅咒"
+        },
+        "description": null,
+        "graphicId": "3623"
+      },
+      {
+        "upgradeId": "1233",
+        "name": {
+          "original": "Guiding Hand",
+          "display": "引导之手"
+        },
+        "description": null,
+        "graphicId": "3624"
+      },
+      {
+        "upgradeId": "1234",
+        "name": {
+          "original": "Taste for Blood",
+          "display": "嗜血"
+        },
+        "description": null,
+        "graphicId": "3625"
+      },
+      {
+        "upgradeId": "1235",
+        "name": {
+          "original": "Adept Traveler",
+          "display": "旅途行家"
+        },
+        "description": null,
+        "graphicId": "3622"
+      },
+      {
+        "upgradeId": "1236",
+        "name": {
+          "original": "Ultimate (Resist Curse)",
+          "display": "杀招（抵抗诅咒）"
+        },
+        "description": null,
+        "graphicId": "813"
+      }
+    ]
+  },
+  "upgrades": [
+    {
+      "id": "1232",
+      "requiredLevel": 5,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Curse of Lycanthropy",
+        "display": "兽化诅咒"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,175",
+      "effectDefinition": {
+        "id": "175",
+        "snapshots": {
+          "original": {
+            "id": 175,
+            "flavour_text": "",
+            "description": {
+              "desc": "Azaka is a weretiger. After $azaka_attacks attacks in human form, she changes into a weretiger for $azaka_time seconds, increasing her damage by $amount%$weretiger_description"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "azaka_weretiger,400,60,20"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 3623,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "show_incoming": false,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 175,
+            "flavour_text": "",
+            "description": {
+              "desc": "阿扎卡是一名虎人。当$azaka_attacks在人类形态下攻击后，她会转化为虎人形态，持续 $azaka_time 秒，提升自身 $amount% 伤害$weretiger_description"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "azaka_weretiger,400,60,20"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 3623,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "show_incoming": false,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Azaka transforms into a weretiger after several hits. Her damage increases while she's a weretiger.",
+        "display": "阿扎卡在命中数次后变身虎人。成为虎人期间，她的伤害会提高。"
+      }
+    },
+    {
+      "id": "1249",
+      "requiredLevel": 15,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1233",
+      "requiredLevel": 25,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Guiding Hand",
+        "display": "引导之手"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,176",
+      "effectDefinition": {
+        "id": "176",
+        "snapshots": {
+          "original": {
+            "id": 176,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases all Gold found by $(amount)%. This ability is reduced by 50% while Azaka is in weretiger form"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "gold_multiplier_mult,20",
+                "show_bonus": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 3624,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "show_incoming": false,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 176,
+            "flavour_text": "",
+            "description": {
+              "desc": "提升所有金币获得量 $(amount)%。阿扎卡处于虎人形态时，此技能效果降低 50%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "gold_multiplier_mult,20",
+                "show_bonus": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 3624,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "show_incoming": false,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Azaka increases your gold found; this bonus is reduced when she's in weretiger form.",
+        "display": "阿扎卡使获得金币增加。成为虎人期间，此加成降低。"
+      }
+    },
+    {
+      "id": "1250",
+      "requiredLevel": 40,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1235",
+      "requiredLevel": 45,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Adept Traveler",
+        "display": "旅途行家"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,178",
+      "effectDefinition": {
+        "id": "178",
+        "snapshots": {
+          "original": {
+            "id": 178,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the damage of all Champions by $amount% if they are in an exterior location"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "global_dps_multiplier_mult_area_tags,800,outdoors"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 3622,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "show_incoming": false,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 178,
+            "flavour_text": "",
+            "description": {
+              "desc": "在户外场景时，提升所有勇士 $amount% 伤害"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "global_dps_multiplier_mult_area_tags,800,outdoors"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 3622,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "show_incoming": false,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1251",
+      "requiredLevel": 65,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,1233",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1234",
+      "requiredLevel": 75,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Taste for Blood",
+        "display": "嗜血"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,177",
+      "effectDefinition": {
+        "id": "177",
+        "snapshots": {
+          "original": {
+            "id": 177,
+            "flavour_text": "",
+            "description": {
+              "desc": "While in weretiger form, Azaka does an additional $(not_buffed amount)% more damage per attack (stacking multiplicatively). Resets when she changes back to human form."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,25",
+                "stacks_on_trigger": "owner_attack",
+                "clear_stacks_on_deactivate": true,
+                "active_graphic_id": 3630,
+                "active_graphic_play_on_stack": true,
+                "active_graphic_y": -90,
+                "stacks_multiply": true
+              }
+            ],
+            "requirements": [
+              {
+                "requirement": "azaka_weretiger"
+              }
+            ],
+            "graphic_id": 3625,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "show_incoming": false,
+              "use_outgoing_description": true,
+              "icon_when_disabled": true
+            }
+          },
+          "display": {
+            "id": 177,
+            "flavour_text": "",
+            "description": {
+              "desc": "在虎人形态下，阿扎卡每次攻击时造成 $(not_buffed amount)% 额外伤害（以乘算方式堆叠），此效果在她变回人类形态时重置。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,25",
+                "stacks_on_trigger": "owner_attack",
+                "clear_stacks_on_deactivate": true,
+                "active_graphic_id": 3630,
+                "active_graphic_play_on_stack": true,
+                "active_graphic_y": -90,
+                "stacks_multiply": true
+              }
+            ],
+            "requirements": [
+              {
+                "requirement": "azaka_weretiger"
+              }
+            ],
+            "graphic_id": 3625,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "show_incoming": false,
+              "use_outgoing_description": true,
+              "icon_when_disabled": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1252",
+      "requiredLevel": 90,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,1235",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1237",
+      "requiredLevel": 100,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Resist the Curse",
+        "display": "抵抗诅咒"
+      },
+      "upgradeType": null,
+      "effectReference": "effect_def,180",
+      "effectDefinition": {
+        "id": "180",
+        "snapshots": {
+          "original": {
+            "id": 180,
+            "flavour_text": "",
+            "description": {
+              "desc": "Reduces the amount of time Azaka spends in weretiger form by $amount%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_azaka_weretiger_time_reduce,75"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          },
+          "display": {
+            "id": 180,
+            "flavour_text": "",
+            "description": {
+              "desc": "减少 $amount% 阿扎卡处于虎人形态的时间"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_azaka_weretiger_time_reduce,75"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Resist the Curse",
+        "display": "抵抗诅咒"
+      },
+      "specializationDescription": {
+        "original": "Azaka resists her lycanthropic curse, reducing the amount of time spent in weretiger form.",
+        "display": "阿扎卡抵抗她的兽化诅咒，减少虎人形态的持续时间。"
+      },
+      "specializationGraphicId": "3627",
+      "tipText": null
+    },
+    {
+      "id": "1238",
+      "requiredLevel": 100,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Lycanthrope Forever",
+        "display": "永久兽化"
+      },
+      "upgradeType": null,
+      "effectReference": "effect_def,181",
+      "effectDefinition": {
+        "id": "181",
+        "snapshots": {
+          "original": {
+            "id": 181,
+            "flavour_text": "",
+            "description": {
+              "desc": "Reduces the number of attacks needed to trigger Azaka's weretiger transformation by $amount"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "reduce_azaka_weretiger_attacks,8"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          },
+          "display": {
+            "id": 181,
+            "flavour_text": "",
+            "description": {
+              "desc": "减少 $amount 次触发阿扎卡的虎人形态所需的攻击次数"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "reduce_azaka_weretiger_attacks,8"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Lycanthrope Forever",
+        "display": "永久兽化"
+      },
+      "specializationDescription": {
+        "original": "Azaka embraces her lycanthropic curse, decrease the time it takes to enter weretiger form.",
+        "display": "阿扎卡接纳她的兽化诅咒，缩短化身虎人形态所需的时间。"
+      },
+      "specializationGraphicId": "3626",
+      "tipText": null
+    },
+    {
+      "id": "1253",
+      "requiredLevel": 115,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1236",
+      "requiredLevel": 140,
+      "requiredUpgradeId": "1237",
+      "name": {
+        "original": "Ultimate (Resist Curse)",
+        "display": "杀招（抵抗诅咒）"
+      },
+      "upgradeType": null,
+      "effectReference": "set_ultimate_attack,126",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1247",
+      "requiredLevel": 140,
+      "requiredUpgradeId": "1238",
+      "name": {
+        "original": "Ultimate (Lycanthrope Forever)",
+        "display": "杀招（永久兽化）"
+      },
+      "upgradeType": null,
+      "effectReference": "set_ultimate_attack,126",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1276",
+      "requiredLevel": 160,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1254",
+      "requiredLevel": 170,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1269",
+      "requiredLevel": 195,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,1235",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1255",
+      "requiredLevel": 205,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1265",
+      "requiredLevel": 230,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,1233",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1256",
+      "requiredLevel": 255,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1257",
+      "requiredLevel": 290,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,1234",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1273",
+      "requiredLevel": 315,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1258",
+      "requiredLevel": 350,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1270",
+      "requiredLevel": 375,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,1235",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1259",
+      "requiredLevel": 385,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1267",
+      "requiredLevel": 410,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,1233",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1260",
+      "requiredLevel": 430,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1271",
+      "requiredLevel": 490,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,1235",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1261",
+      "requiredLevel": 500,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1274",
+      "requiredLevel": 515,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1262",
+      "requiredLevel": 555,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,1234",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1263",
+      "requiredLevel": 615,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1272",
+      "requiredLevel": 625,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,1235",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1268",
+      "requiredLevel": 645,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,1233",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1264",
+      "requiredLevel": 670,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1275",
+      "requiredLevel": 690,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1248",
+      "requiredLevel": 705,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1888",
+      "requiredLevel": 740,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1889",
+      "requiredLevel": 750,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,1235",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1890",
+      "requiredLevel": 780,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1891",
+      "requiredLevel": 815,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1892",
+      "requiredLevel": 825,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,1233",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1893",
+      "requiredLevel": 865,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "1894",
+      "requiredLevel": 950,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2616",
+      "requiredLevel": 1010,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2617",
+      "requiredLevel": 1070,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2618",
+      "requiredLevel": 1100,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2619",
+      "requiredLevel": 1130,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "2620",
+      "requiredLevel": 1200,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3841",
+      "requiredLevel": 1275,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3842",
+      "requiredLevel": 1350,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3843",
+      "requiredLevel": 1400,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3844",
+      "requiredLevel": 1450,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5064",
+      "requiredLevel": 1500,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5065",
+      "requiredLevel": 1510,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5066",
+      "requiredLevel": 1540,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,1235",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5067",
+      "requiredLevel": 1570,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5068",
+      "requiredLevel": 1580,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,1235",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5069",
+      "requiredLevel": 1620,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5070",
+      "requiredLevel": 1630,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5071",
+      "requiredLevel": 1690,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6494",
+      "requiredLevel": 1750,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6495",
+      "requiredLevel": 1810,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,200,1235",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6496",
+      "requiredLevel": 1870,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6497",
+      "requiredLevel": 1940,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8277",
+      "requiredLevel": 2000,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8278",
+      "requiredLevel": 2020,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,1233",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8279",
+      "requiredLevel": 2060,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8280",
+      "requiredLevel": 2100,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,1235",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8281",
+      "requiredLevel": 2120,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8282",
+      "requiredLevel": 2180,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    }
+  ],
+  "feats": [
+    {
+      "id": "166",
+      "order": 1,
+      "name": {
+        "original": "Tavern Brawler",
+        "display": "旅店打手"
+      },
+      "description": {
+        "original": "Didn't we meet in a tavern? Or was that someone else?",
+        "display": "我们是不是在酒馆见过？还是我记错了？"
+      },
+      "rarity": "2",
+      "graphicId": "6078",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,30"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "167",
+      "order": 2,
+      "name": {
+        "original": "Grappler",
+        "display": "擒抱者"
+      },
+      "description": {
+        "original": "Be careful around grappler vines. They're better at it.",
+        "display": "在擒抱者藤蔓周围要小心，他们更擅长于此。"
+      },
+      "rarity": "3",
+      "graphicId": "6078",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,60"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "168",
+      "order": 3,
+      "name": {
+        "original": "Selflessness",
+        "display": "无私"
+      },
+      "description": {
+        "original": "You need a leader? I'm but a guide.",
+        "display": "你需要一名首领？我只是个向导。"
+      },
+      "rarity": "2",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "169",
+      "order": 4,
+      "name": {
+        "original": "Inspiring Leader",
+        "display": "鼓舞人心的首领"
+      },
+      "description": {
+        "original": "The jungles of Chult are no match for us!",
+        "display": "楚尔特的丛林不是我们的对手！"
+      },
+      "rarity": "3",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,25"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "170",
+      "order": 5,
+      "name": {
+        "original": "Lucky",
+        "display": "幸运"
+      },
+      "description": {
+        "original": "The riches of Omu are ours to discover.",
+        "display": "奥穆的财富等着我们去发掘。"
+      },
+      "rarity": "3",
+      "graphicId": "6075",
+      "effects": [
+        {
+          "effect_string": "gold_multiplier_mult,25"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    }
+  ],
+  "skins": [
+    {
+      "id": "128",
+      "name": {
+        "original": "Farmer Azaka",
+        "display": "农夫阿扎卡"
+      },
+      "cost": {
+        "req_date": "2022-01-05 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 12921,
+        "large_graphic_id": 13109,
+        "xl_graphic_id": 13770,
+        "portrait_graphic_id": 13110,
+        "mask_graphic_id": 12918,
+        "tiger_graphic_id": 12920,
+        "tiger_mask_graphic_id": 12919,
+        "companion_graphic_ids": [
+          13105,
+          13105
+        ],
+        "additional_shop_graphics": [
+          {
+            "graphic_id": "27211",
+            "sequence": "1",
+            "is_transform": true
+          },
+          {
+            "graphic_id": "27213",
+            "sequence": "1"
+          }
+        ]
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "patron",
+        "patron_id": 2
+      },
+      "availabilities": {
+        "patron_id": "2",
+        "patron_shop_item_id": "106"
+      }
+    },
+    {
+      "id": "430",
+      "name": {
+        "original": "Pirate Azaka",
+        "display": "海盗阿扎卡"
+      },
+      "cost": {
+        "req_date": "2024-05-22 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 23870,
+        "large_graphic_id": 23871,
+        "portrait_graphic_id": 23866,
+        "xl_graphic_id": 23872,
+        "mask_graphic_id": 23867,
+        "tiger_graphic_id": 23869,
+        "tiger_mask_graphic_id": 23868,
+        "companion_graphic_ids": [
+          2506,
+          2506
+        ],
+        "additional_shop_graphics": [
+          {
+            "graphic_id": "27212",
+            "sequence": "1",
+            "is_transform": true
+          },
+          {
+            "graphic_id": "27214",
+            "sequence": "1"
+          }
+        ]
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 1210,
+        "odds": 160
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    }
+  ],
+  "raw": {
+    "hero": {
+      "original": {
+        "id": 30,
+        "name": "Azaka",
+        "english_name": "Azaka",
+        "seat_id": 12,
+        "base_cost": "250000000000000000000",
+        "base_damage": "10000000000000",
+        "base_health": "43",
+        "cost_curves": {
+          "1": 1.07
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 125,
+        "ultimate_attack_id": 126,
+        "graphic_id": 3618,
+        "portrait_graphic_id": 3641,
+        "character_sheet_details": {
+          "full_name": "Azaka Stormfang",
+          "class": "Fighter",
+          "race": "Human",
+          "age": 40,
+          "alignment": "Lawful Neutral",
+          "ability_scores": {
+            "str": 19,
+            "dex": 14,
+            "con": 16,
+            "int": 11,
+            "wis": 9,
+            "cha": 14
+          },
+          "backstory": "Azaka Stormfang was once a guide who operated out of Port Nyanzaru on Chult. She originally concealed her curse of lycanthropy from the champions, as she has lost many friends to that revelation in the past. Her true self was revealed to the Champions after she valiantly helped them collect 3 of the 9 puzzle cubes they needed to defeat the villain Acererak in the Tomb of the Nine Gods. She was killed in the battle, but was able to be resurrected after the champions defeated Acererak's soulmonger. Now, she travels with her new friends, as a champion.",
+          "system_description": "Azaka is a lycanthrope and switches between human and weretiger form periodically. Her damage increases the longer she's in weretiger form, and she provides a powerful gold find buff while in human form."
+        },
+        "default_feat_slot_unlocks": [
+          80,
+          790,
+          1600,
+          2600
+        ],
+        "tags": [
+          "female",
+          "human",
+          "lycanthrope",
+          "fighter",
+          "lawful",
+          "neutral",
+          "support",
+          "dps",
+          "gold",
+          "evergreen",
+          "unaffiliated",
+          "geneutral"
+        ],
+        "properties": {
+          "available_in_store": "2025-10-23 12:00:00",
+          "unlock_adventure_id": 186,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            145,
+            146,
+            147
+          ],
+          "graphic_large": 3640,
+          "graphic_xl": 13768,
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "attack_b": 4,
+            "ultimate": 5,
+            "gethit": 6,
+            "koed": 7,
+            "run": 8,
+            "attack_c": 11
+          },
+          "eye_height": 138,
+          "portrait_center_offset": [
+            103,
+            80
+          ],
+          "companions": [
+            {
+              "graphic_id": 2506,
+              "visible": false,
+              "offset_x": 45,
+              "offset_y": -40
+            },
+            {
+              "graphic_id": 2506,
+              "visible": false,
+              "offset_x": 45,
+              "offset_y": 40
+            }
+          ],
+          "permanent_effects": [
+            "effect_def,179"
+          ],
+          "console_portrait": 3979,
+          "head_graphic_id": 7257,
+          "trials_effect_id": 838,
+          "legendary_effect_id": [
+            1,
+            3,
+            58,
+            43,
+            88,
+            99
+          ],
+          "weekly_chest_type_id": 475,
+          "weekly_buff": "gold_multiplier_mult,200",
+          "portrait_graphic_scale": 0.85,
+          "notification_adjustment": {
+            "offset": [
+              56,
+              235
+            ],
+            "scale": 1.25
+          },
+          "hero_not_unlocked_skin_warning": "Champion Azaka is not unlocked with this skin. Azaka can only be unlocked by completing Azaka's Procession - Part 2 - the second Variant of the Tomb of the Nine Gods adventure in the Tomb of Annihilation Campaign.",
+          "shop_transform_graphic": 13769,
+          "gold_chest_type_id": 475
+        },
+        "adventure_ids": [],
+        "popularity": 0,
+        "available_in_time_gate": false,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 1232,
+            "name": "Curse of Lycanthropy",
+            "description": "",
+            "graphic_id": "3623"
+          },
+          {
+            "upgrade_id": 1233,
+            "name": "Guiding Hand",
+            "description": "",
+            "graphic_id": "3624"
+          },
+          {
+            "upgrade_id": 1235,
+            "name": "Adept Traveler",
+            "description": "",
+            "graphic_id": "3622"
+          },
+          {
+            "upgrade_id": 1234,
+            "name": "Taste for Blood",
+            "description": "",
+            "graphic_id": "3625"
+          },
+          {
+            "upgrade_id": 1236,
+            "name": "Ultimate (Resist Curse)",
+            "description": "",
+            "graphic_id": 813
+          }
+        ],
+        "available_in_next_event": false,
+        "next_event_timestamp": 0,
+        "event_name": "",
+        "is_available": true,
+        "date_available": "2018-08-15 13:00:00",
+        "last_rework_date": "2018-08-15 13:00:00"
+      },
+      "display": {
+        "id": 30,
+        "name": "阿扎卡",
+        "english_name": "Azaka",
+        "seat_id": 12,
+        "base_cost": "250000000000000000000",
+        "base_damage": "10000000000000",
+        "base_health": "43",
+        "cost_curves": {
+          "1": 1.07
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 125,
+        "ultimate_attack_id": 126,
+        "graphic_id": 3618,
+        "portrait_graphic_id": 3641,
+        "character_sheet_details": {
+          "full_name": "阿扎卡·风暴之牙",
+          "class": "战士",
+          "race": "人类",
+          "age": 40,
+          "alignment": "守序中立",
+          "ability_scores": {
+            "str": 19,
+            "dex": 14,
+            "con": 16,
+            "int": 11,
+            "wis": 9,
+            "cha": 14
+          },
+          "backstory": "阿扎卡·风暴之牙曾经在楚尔特的南扎路港担任导游。最初她对勇士们隐瞒了她的兽化诅咒，因为过去的很多朋友得知这件事后都离开了她。在她对勇士们提供了英勇无畏的帮助，收集到了在九神之墓中消灭恶人阿瑟瑞拉克所需 9 个谜题方块中的 3 个后，她的真实身份被勇士们所知晓。她在战斗中英勇牺牲，但在勇士们消灭了阿瑟瑞拉克的灵魂商贩后得以复活。现在她也成为了一名勇士，和她的新朋友们一起踏上旅程。",
+          "system_description": "阿扎卡能够兽化，定期在人类和虎人形态之间切换。她在虎人形态的时间越长，伤害就越高。在人类形态下，她能提供强大的金币寻获增益。"
+        },
+        "default_feat_slot_unlocks": [
+          80,
+          790,
+          1600,
+          2600
+        ],
+        "tags": [
+          "female",
+          "human",
+          "lycanthrope",
+          "fighter",
+          "lawful",
+          "neutral",
+          "support",
+          "dps",
+          "gold",
+          "evergreen",
+          "unaffiliated",
+          "geneutral"
+        ],
+        "properties": {
+          "available_in_store": "2025-10-23 12:00:00",
+          "unlock_adventure_id": 186,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            145,
+            146,
+            147
+          ],
+          "graphic_large": 3640,
+          "graphic_xl": 13768,
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "attack_b": 4,
+            "ultimate": 5,
+            "gethit": 6,
+            "koed": 7,
+            "run": 8,
+            "attack_c": 11
+          },
+          "eye_height": 138,
+          "portrait_center_offset": [
+            103,
+            80
+          ],
+          "companions": [
+            {
+              "graphic_id": 2506,
+              "visible": false,
+              "offset_x": 45,
+              "offset_y": -40
+            },
+            {
+              "graphic_id": 2506,
+              "visible": false,
+              "offset_x": 45,
+              "offset_y": 40
+            }
+          ],
+          "permanent_effects": [
+            "effect_def,179"
+          ],
+          "console_portrait": 3979,
+          "head_graphic_id": 7257,
+          "trials_effect_id": 838,
+          "legendary_effect_id": [
+            1,
+            3,
+            58,
+            43,
+            88,
+            99
+          ],
+          "weekly_chest_type_id": 475,
+          "weekly_buff": "gold_multiplier_mult,200",
+          "portrait_graphic_scale": 0.85,
+          "notification_adjustment": {
+            "offset": [
+              56,
+              235
+            ],
+            "scale": 1.25
+          },
+          "hero_not_unlocked_skin_warning": "勇士阿扎卡不随此皮肤解锁。只有完成“阿扎卡的行进 - 第 2 部分”——“湮灭之墓”战役中“九神之墓”冒险的第二个支线任务——才能解锁阿扎卡。",
+          "shop_transform_graphic": 13769,
+          "gold_chest_type_id": 475
+        },
+        "adventure_ids": [],
+        "popularity": 0,
+        "available_in_time_gate": false,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 1232,
+            "name": "兽化诅咒",
+            "description": "",
+            "graphic_id": "3623"
+          },
+          {
+            "upgrade_id": 1233,
+            "name": "引导之手",
+            "description": "",
+            "graphic_id": "3624"
+          },
+          {
+            "upgrade_id": 1235,
+            "name": "旅途行家",
+            "description": "",
+            "graphic_id": "3622"
+          },
+          {
+            "upgrade_id": 1234,
+            "name": "嗜血",
+            "description": "",
+            "graphic_id": "3625"
+          },
+          {
+            "upgrade_id": 1236,
+            "name": "杀招（抵抗诅咒）",
+            "description": "",
+            "graphic_id": 813
+          }
+        ],
+        "available_in_next_event": false,
+        "next_event_timestamp": 0,
+        "event_name": "",
+        "is_available": true,
+        "date_available": "2018-08-15 13:00:00",
+        "last_rework_date": "2018-08-15 13:00:00"
+      }
+    },
+    "attacks": [
+      {
+        "id": "125",
+        "snapshots": {
+          "original": {
+            "id": 125,
+            "name": "Pick Them Off",
+            "description": "Azaka leaps into the air and strikes a random enemy; 33% cleave chance",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "random",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 4.5,
+            "animations": [
+              {
+                "type": "melee_attack",
+                "power_up_sequence": {
+                  "pause_at_start": 0.2,
+                  "start_frame": 0,
+                  "end_frame": 5
+                },
+                "sequences": [
+                  {
+                    "start_frame": 5,
+                    "damage_frame": 9,
+                    "end_frame": 20
+                  }
+                ]
+              }
+            ],
+            "tags": [
+              "melee"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          },
+          "display": {
+            "id": 125,
+            "name": "干掉他们",
+            "description": "阿扎卡跳到空中，攻击一名随机敌人，并有 33% 几率使用顺势斩。",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "random",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 4.5,
+            "animations": [
+              {
+                "type": "melee_attack",
+                "power_up_sequence": {
+                  "pause_at_start": 0.2,
+                  "start_frame": 0,
+                  "end_frame": 5
+                },
+                "sequences": [
+                  {
+                    "start_frame": 5,
+                    "damage_frame": 9,
+                    "end_frame": 20
+                  }
+                ]
+              }
+            ],
+            "tags": [
+              "melee"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          }
+        }
+      },
+      {
+        "id": "126",
+        "snapshots": {
+          "original": {
+            "id": 126,
+            "name": "Mask of the Beast",
+            "description": "Azaka dons her Mask of the Beast, summoning 2 tigers to her side for 30 seconds, the tigers attack every 5 seconds",
+            "long_description": "Azaka dons her Mask of the Beast, summoning 2 tigers to her side that attack every 5 seconds. The tigers stay for 30 seconds. If Azaka specs with Lycanthrope Forever the tiger attacks count towards her weretiger transformation, and her weretiger cooldown is paused during her Ultimate. If she specs with Resist the Curse, the tigers' attacks cause enemies to drop gold even if they aren't killed.",
+            "graphic_id": 3628,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 0,
+            "cooldown": 380,
+            "animations": [
+              {
+                "type": "melee_attack",
+                "animation": "spawn_tigers",
+                "visual_effect_frames": {
+                  "30": {
+                    "effect": "spawn_tiger",
+                    "index": 0
+                  },
+                  "40": {
+                    "effect": "spawn_tiger",
+                    "index": 1
+                  }
+                },
+                "start_frame": 0,
+                "end_frame": 54,
+                "effect_frames": {
+                  "-1": {
+                    "effect_string": "azaka_ultimate,127",
+                    "for_time": 30,
+                    "apply_to_hero": true
+                  }
+                },
+                "no_damage_display": true
+              }
+            ],
+            "tags": [
+              "melee",
+              "ultimate"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          },
+          "display": {
+            "id": 126,
+            "name": "野兽面具",
+            "description": "阿扎卡戴上野兽面具，召唤 2 只老虎来陪伴她。持续 30 秒，老虎每 5 秒攻击一次。",
+            "long_description": "阿扎卡戴上野兽面具，召唤 2 只老虎来陪伴她。持续 30 秒，老虎每 5 秒攻击一次。如果阿扎卡选择永久兽化专精，老虎的攻击也会计入她的虎人形态转化所需的攻击次数，同时她虎人形态的冷却在杀招持续时间内会暂停。如果她专精抵抗诅咒，则在老虎的攻击未能击杀敌人时，敌人会掉落金币。",
+            "graphic_id": 3628,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 0,
+            "cooldown": 380,
+            "animations": [
+              {
+                "type": "melee_attack",
+                "animation": "spawn_tigers",
+                "visual_effect_frames": {
+                  "30": {
+                    "effect": "spawn_tiger",
+                    "index": 0
+                  },
+                  "40": {
+                    "effect": "spawn_tiger",
+                    "index": 1
+                  }
+                },
+                "start_frame": 0,
+                "end_frame": 54,
+                "effect_frames": {
+                  "-1": {
+                    "effect_string": "azaka_ultimate,127",
+                    "for_time": 30,
+                    "apply_to_hero": true
+                  }
+                },
+                "no_damage_display": true
+              }
+            ],
+            "tags": [
+              "melee",
+              "ultimate"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          }
+        }
+      }
+    ],
+    "upgrades": [
+      {
+        "id": "1232",
+        "snapshots": {
+          "original": {
+            "id": 1232,
+            "hero_id": 30,
+            "required_level": 5,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,175",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Curse of Lycanthropy",
+            "tip_text": "Azaka transforms into a weretiger after several hits. Her damage increases while she's a weretiger."
+          },
+          "display": {
+            "id": 1232,
+            "hero_id": 30,
+            "required_level": 5,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,175",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "兽化诅咒",
+            "tip_text": "阿扎卡在命中数次后变身虎人。成为虎人期间，她的伤害会提高。"
+          }
+        }
+      },
+      {
+        "id": "1233",
+        "snapshots": {
+          "original": {
+            "id": 1233,
+            "hero_id": 30,
+            "required_level": 25,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,176",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Guiding Hand",
+            "tip_text": "Azaka increases your gold found; this bonus is reduced when she's in weretiger form."
+          },
+          "display": {
+            "id": 1233,
+            "hero_id": 30,
+            "required_level": 25,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,176",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "引导之手",
+            "tip_text": "阿扎卡使获得金币增加。成为虎人期间，此加成降低。"
+          }
+        }
+      },
+      {
+        "id": "1234",
+        "snapshots": {
+          "original": {
+            "id": 1234,
+            "hero_id": 30,
+            "required_level": 75,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,177",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Taste for Blood"
+          },
+          "display": {
+            "id": 1234,
+            "hero_id": 30,
+            "required_level": 75,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,177",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "嗜血"
+          }
+        }
+      },
+      {
+        "id": "1235",
+        "snapshots": {
+          "original": {
+            "id": 1235,
+            "hero_id": 30,
+            "required_level": 45,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,178",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Adept Traveler"
+          },
+          "display": {
+            "id": 1235,
+            "hero_id": 30,
+            "required_level": 45,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,178",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "旅途行家"
+          }
+        }
+      },
+      {
+        "id": "1236",
+        "snapshots": {
+          "original": {
+            "id": 1236,
+            "hero_id": 30,
+            "required_level": 140,
+            "required_upgrade_id": 1237,
+            "upgrade_type": null,
+            "effect": "set_ultimate_attack,126",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Ultimate (Resist Curse)"
+          },
+          "display": {
+            "id": 1236,
+            "hero_id": 30,
+            "required_level": 140,
+            "required_upgrade_id": 1237,
+            "upgrade_type": null,
+            "effect": "set_ultimate_attack,126",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "杀招（抵抗诅咒）"
+          }
+        }
+      },
+      {
+        "id": "1237",
+        "snapshots": {
+          "original": {
+            "id": 1237,
+            "hero_id": 30,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "effect_def,180",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Resist the Curse",
+            "specialization_name": "Resist the Curse",
+            "specialization_description": "Azaka resists her lycanthropic curse, reducing the amount of time spent in weretiger form.",
+            "specialization_graphic_id": 3627
+          },
+          "display": {
+            "id": 1237,
+            "hero_id": 30,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "effect_def,180",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "抵抗诅咒",
+            "specialization_name": "抵抗诅咒",
+            "specialization_description": "阿扎卡抵抗她的兽化诅咒，减少虎人形态的持续时间。",
+            "specialization_graphic_id": 3627
+          }
+        }
+      },
+      {
+        "id": "1238",
+        "snapshots": {
+          "original": {
+            "id": 1238,
+            "hero_id": 30,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "effect_def,181",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Lycanthrope Forever",
+            "specialization_name": "Lycanthrope Forever",
+            "specialization_description": "Azaka embraces her lycanthropic curse, decrease the time it takes to enter weretiger form.",
+            "specialization_graphic_id": 3626
+          },
+          "display": {
+            "id": 1238,
+            "hero_id": 30,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "effect_def,181",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "永久兽化",
+            "specialization_name": "永久兽化",
+            "specialization_description": "阿扎卡接纳她的兽化诅咒，缩短化身虎人形态所需的时间。",
+            "specialization_graphic_id": 3626
+          }
+        }
+      },
+      {
+        "id": "1247",
+        "snapshots": {
+          "original": {
+            "id": 1247,
+            "hero_id": 30,
+            "required_level": 140,
+            "required_upgrade_id": 1238,
+            "upgrade_type": null,
+            "effect": "set_ultimate_attack,126",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Ultimate (Lycanthrope Forever)"
+          },
+          "display": {
+            "id": 1247,
+            "hero_id": 30,
+            "required_level": 140,
+            "required_upgrade_id": 1238,
+            "upgrade_type": null,
+            "effect": "set_ultimate_attack,126",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "杀招（永久兽化）"
+          }
+        }
+      },
+      {
+        "id": "1248",
+        "snapshots": {
+          "original": {
+            "id": 1248,
+            "hero_id": 30,
+            "required_level": 705,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1248,
+            "hero_id": 30,
+            "required_level": 705,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1249",
+        "snapshots": {
+          "original": {
+            "id": 1249,
+            "hero_id": 30,
+            "required_level": 15,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1249,
+            "hero_id": 30,
+            "required_level": 15,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1250",
+        "snapshots": {
+          "original": {
+            "id": 1250,
+            "hero_id": 30,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1250,
+            "hero_id": 30,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1251",
+        "snapshots": {
+          "original": {
+            "id": 1251,
+            "hero_id": 30,
+            "required_level": 65,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1233",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1251,
+            "hero_id": 30,
+            "required_level": 65,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1233",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1252",
+        "snapshots": {
+          "original": {
+            "id": 1252,
+            "hero_id": 30,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1235",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1252,
+            "hero_id": 30,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1235",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1253",
+        "snapshots": {
+          "original": {
+            "id": 1253,
+            "hero_id": 30,
+            "required_level": 115,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1253,
+            "hero_id": 30,
+            "required_level": 115,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1254",
+        "snapshots": {
+          "original": {
+            "id": 1254,
+            "hero_id": 30,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1254,
+            "hero_id": 30,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1255",
+        "snapshots": {
+          "original": {
+            "id": 1255,
+            "hero_id": 30,
+            "required_level": 205,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1255,
+            "hero_id": 30,
+            "required_level": 205,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1256",
+        "snapshots": {
+          "original": {
+            "id": 1256,
+            "hero_id": 30,
+            "required_level": 255,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1256,
+            "hero_id": 30,
+            "required_level": 255,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1257",
+        "snapshots": {
+          "original": {
+            "id": 1257,
+            "hero_id": 30,
+            "required_level": 290,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1234",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1257,
+            "hero_id": 30,
+            "required_level": 290,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1234",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1258",
+        "snapshots": {
+          "original": {
+            "id": 1258,
+            "hero_id": 30,
+            "required_level": 350,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1258,
+            "hero_id": 30,
+            "required_level": 350,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1259",
+        "snapshots": {
+          "original": {
+            "id": 1259,
+            "hero_id": 30,
+            "required_level": 385,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1259,
+            "hero_id": 30,
+            "required_level": 385,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1260",
+        "snapshots": {
+          "original": {
+            "id": 1260,
+            "hero_id": 30,
+            "required_level": 430,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1260,
+            "hero_id": 30,
+            "required_level": 430,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1261",
+        "snapshots": {
+          "original": {
+            "id": 1261,
+            "hero_id": 30,
+            "required_level": 500,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1261,
+            "hero_id": 30,
+            "required_level": 500,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1262",
+        "snapshots": {
+          "original": {
+            "id": 1262,
+            "hero_id": 30,
+            "required_level": 555,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1234",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1262,
+            "hero_id": 30,
+            "required_level": 555,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1234",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1263",
+        "snapshots": {
+          "original": {
+            "id": 1263,
+            "hero_id": 30,
+            "required_level": 615,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1263,
+            "hero_id": 30,
+            "required_level": 615,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1264",
+        "snapshots": {
+          "original": {
+            "id": 1264,
+            "hero_id": 30,
+            "required_level": 670,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1264,
+            "hero_id": 30,
+            "required_level": 670,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1265",
+        "snapshots": {
+          "original": {
+            "id": 1265,
+            "hero_id": 30,
+            "required_level": 230,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1233",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1265,
+            "hero_id": 30,
+            "required_level": 230,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1233",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1267",
+        "snapshots": {
+          "original": {
+            "id": 1267,
+            "hero_id": 30,
+            "required_level": 410,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1233",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1267,
+            "hero_id": 30,
+            "required_level": 410,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1233",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1268",
+        "snapshots": {
+          "original": {
+            "id": 1268,
+            "hero_id": 30,
+            "required_level": 645,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1233",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1268,
+            "hero_id": 30,
+            "required_level": 645,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1233",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1269",
+        "snapshots": {
+          "original": {
+            "id": 1269,
+            "hero_id": 30,
+            "required_level": 195,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,1235",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1269,
+            "hero_id": 30,
+            "required_level": 195,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,1235",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1270",
+        "snapshots": {
+          "original": {
+            "id": 1270,
+            "hero_id": 30,
+            "required_level": 375,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1235",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1270,
+            "hero_id": 30,
+            "required_level": 375,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1235",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1271",
+        "snapshots": {
+          "original": {
+            "id": 1271,
+            "hero_id": 30,
+            "required_level": 490,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,1235",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1271,
+            "hero_id": 30,
+            "required_level": 490,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,1235",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1272",
+        "snapshots": {
+          "original": {
+            "id": 1272,
+            "hero_id": 30,
+            "required_level": 625,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1235",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1272,
+            "hero_id": 30,
+            "required_level": 625,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1235",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1273",
+        "snapshots": {
+          "original": {
+            "id": 1273,
+            "hero_id": 30,
+            "required_level": 315,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1273,
+            "hero_id": 30,
+            "required_level": 315,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1274",
+        "snapshots": {
+          "original": {
+            "id": 1274,
+            "hero_id": 30,
+            "required_level": 515,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1274,
+            "hero_id": 30,
+            "required_level": 515,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1275",
+        "snapshots": {
+          "original": {
+            "id": 1275,
+            "hero_id": 30,
+            "required_level": 690,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1275,
+            "hero_id": 30,
+            "required_level": 690,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1276",
+        "snapshots": {
+          "original": {
+            "id": 1276,
+            "hero_id": 30,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1276,
+            "hero_id": 30,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1888",
+        "snapshots": {
+          "original": {
+            "id": 1888,
+            "hero_id": 30,
+            "required_level": 740,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1888,
+            "hero_id": 30,
+            "required_level": 740,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1889",
+        "snapshots": {
+          "original": {
+            "id": 1889,
+            "hero_id": 30,
+            "required_level": 750,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1235",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1889,
+            "hero_id": 30,
+            "required_level": 750,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1235",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1890",
+        "snapshots": {
+          "original": {
+            "id": 1890,
+            "hero_id": 30,
+            "required_level": 780,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1890,
+            "hero_id": 30,
+            "required_level": 780,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1891",
+        "snapshots": {
+          "original": {
+            "id": 1891,
+            "hero_id": 30,
+            "required_level": 815,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1891,
+            "hero_id": 30,
+            "required_level": 815,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1892",
+        "snapshots": {
+          "original": {
+            "id": 1892,
+            "hero_id": 30,
+            "required_level": 825,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1233",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1892,
+            "hero_id": 30,
+            "required_level": 825,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1233",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1893",
+        "snapshots": {
+          "original": {
+            "id": 1893,
+            "hero_id": 30,
+            "required_level": 865,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1893,
+            "hero_id": 30,
+            "required_level": 865,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "1894",
+        "snapshots": {
+          "original": {
+            "id": 1894,
+            "hero_id": 30,
+            "required_level": 950,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 1894,
+            "hero_id": 30,
+            "required_level": 950,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2616",
+        "snapshots": {
+          "original": {
+            "id": 2616,
+            "hero_id": 30,
+            "required_level": 1010,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2616,
+            "hero_id": 30,
+            "required_level": 1010,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2617",
+        "snapshots": {
+          "original": {
+            "id": 2617,
+            "hero_id": 30,
+            "required_level": 1070,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2617,
+            "hero_id": 30,
+            "required_level": 1070,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2618",
+        "snapshots": {
+          "original": {
+            "id": 2618,
+            "hero_id": 30,
+            "required_level": 1100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2618,
+            "hero_id": 30,
+            "required_level": 1100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2619",
+        "snapshots": {
+          "original": {
+            "id": 2619,
+            "hero_id": 30,
+            "required_level": 1130,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2619,
+            "hero_id": 30,
+            "required_level": 1130,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "2620",
+        "snapshots": {
+          "original": {
+            "id": 2620,
+            "hero_id": 30,
+            "required_level": 1200,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 2620,
+            "hero_id": 30,
+            "required_level": 1200,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3841",
+        "snapshots": {
+          "original": {
+            "id": 3841,
+            "hero_id": 30,
+            "required_level": 1275,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3841,
+            "hero_id": 30,
+            "required_level": 1275,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3842",
+        "snapshots": {
+          "original": {
+            "id": 3842,
+            "hero_id": 30,
+            "required_level": 1350,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3842,
+            "hero_id": 30,
+            "required_level": 1350,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3843",
+        "snapshots": {
+          "original": {
+            "id": 3843,
+            "hero_id": 30,
+            "required_level": 1400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3843,
+            "hero_id": 30,
+            "required_level": 1400,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3844",
+        "snapshots": {
+          "original": {
+            "id": 3844,
+            "hero_id": 30,
+            "required_level": 1450,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3844,
+            "hero_id": 30,
+            "required_level": 1450,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5064",
+        "snapshots": {
+          "original": {
+            "id": 5064,
+            "hero_id": 30,
+            "required_level": 1500,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5064,
+            "hero_id": 30,
+            "required_level": 1500,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5065",
+        "snapshots": {
+          "original": {
+            "id": 5065,
+            "hero_id": 30,
+            "required_level": 1510,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5065,
+            "hero_id": 30,
+            "required_level": 1510,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5066",
+        "snapshots": {
+          "original": {
+            "id": 5066,
+            "hero_id": 30,
+            "required_level": 1540,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,1235",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5066,
+            "hero_id": 30,
+            "required_level": 1540,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,1235",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5067",
+        "snapshots": {
+          "original": {
+            "id": 5067,
+            "hero_id": 30,
+            "required_level": 1570,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5067,
+            "hero_id": 30,
+            "required_level": 1570,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5068",
+        "snapshots": {
+          "original": {
+            "id": 5068,
+            "hero_id": 30,
+            "required_level": 1580,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,1235",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5068,
+            "hero_id": 30,
+            "required_level": 1580,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,1235",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5069",
+        "snapshots": {
+          "original": {
+            "id": 5069,
+            "hero_id": 30,
+            "required_level": 1620,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5069,
+            "hero_id": 30,
+            "required_level": 1620,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5070",
+        "snapshots": {
+          "original": {
+            "id": 5070,
+            "hero_id": 30,
+            "required_level": 1630,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5070,
+            "hero_id": 30,
+            "required_level": 1630,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5071",
+        "snapshots": {
+          "original": {
+            "id": 5071,
+            "hero_id": 30,
+            "required_level": 1690,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5071,
+            "hero_id": 30,
+            "required_level": 1690,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6494",
+        "snapshots": {
+          "original": {
+            "id": 6494,
+            "hero_id": 30,
+            "required_level": 1750,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6494,
+            "hero_id": 30,
+            "required_level": 1750,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6495",
+        "snapshots": {
+          "original": {
+            "id": 6495,
+            "hero_id": 30,
+            "required_level": 1810,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,1235",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6495,
+            "hero_id": 30,
+            "required_level": 1810,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,200,1235",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6496",
+        "snapshots": {
+          "original": {
+            "id": 6496,
+            "hero_id": 30,
+            "required_level": 1870,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6496,
+            "hero_id": 30,
+            "required_level": 1870,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6497",
+        "snapshots": {
+          "original": {
+            "id": 6497,
+            "hero_id": 30,
+            "required_level": 1940,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6497,
+            "hero_id": 30,
+            "required_level": 1940,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8277",
+        "snapshots": {
+          "original": {
+            "id": 8277,
+            "hero_id": 30,
+            "required_level": 2000,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8277,
+            "hero_id": 30,
+            "required_level": 2000,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8278",
+        "snapshots": {
+          "original": {
+            "id": 8278,
+            "hero_id": 30,
+            "required_level": 2020,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1233",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8278,
+            "hero_id": 30,
+            "required_level": 2020,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1233",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8279",
+        "snapshots": {
+          "original": {
+            "id": 8279,
+            "hero_id": 30,
+            "required_level": 2060,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8279,
+            "hero_id": 30,
+            "required_level": 2060,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8280",
+        "snapshots": {
+          "original": {
+            "id": 8280,
+            "hero_id": 30,
+            "required_level": 2100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1235",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8280,
+            "hero_id": 30,
+            "required_level": 2100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,1235",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8281",
+        "snapshots": {
+          "original": {
+            "id": 8281,
+            "hero_id": 30,
+            "required_level": 2120,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8281,
+            "hero_id": 30,
+            "required_level": 2120,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8282",
+        "snapshots": {
+          "original": {
+            "id": 8282,
+            "hero_id": 30,
+            "required_level": 2180,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8282,
+            "hero_id": 30,
+            "required_level": 2180,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      }
+    ],
+    "feats": [
+      {
+        "id": "166",
+        "snapshots": {
+          "original": {
+            "id": 166,
+            "hero_id": 30,
+            "order": 1,
+            "name": "Tavern Brawler",
+            "description": "Didn't we meet in a tavern? Or was that someone else?",
+            "rarity": 2,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,30"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 166,
+            "hero_id": 30,
+            "order": 1,
+            "name": "旅店打手",
+            "description": "我们是不是在酒馆见过？还是我记错了？",
+            "rarity": 2,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,30"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "167",
+        "snapshots": {
+          "original": {
+            "id": 167,
+            "hero_id": 30,
+            "order": 2,
+            "name": "Grappler",
+            "description": "Be careful around grappler vines. They're better at it.",
+            "rarity": 3,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,60"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 167,
+            "hero_id": 30,
+            "order": 2,
+            "name": "擒抱者",
+            "description": "在擒抱者藤蔓周围要小心，他们更擅长于此。",
+            "rarity": 3,
+            "graphic_id": 6078,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,60"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "168",
+        "snapshots": {
+          "original": {
+            "id": 168,
+            "hero_id": 30,
+            "order": 3,
+            "name": "Selflessness",
+            "description": "You need a leader? I'm but a guide.",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 168,
+            "hero_id": 30,
+            "order": 3,
+            "name": "无私",
+            "description": "你需要一名首领？我只是个向导。",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "169",
+        "snapshots": {
+          "original": {
+            "id": 169,
+            "hero_id": 30,
+            "order": 4,
+            "name": "Inspiring Leader",
+            "description": "The jungles of Chult are no match for us!",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 169,
+            "hero_id": 30,
+            "order": 4,
+            "name": "鼓舞人心的首领",
+            "description": "楚尔特的丛林不是我们的对手！",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "170",
+        "snapshots": {
+          "original": {
+            "id": 170,
+            "hero_id": 30,
+            "order": 5,
+            "name": "Lucky",
+            "description": "The riches of Omu are ours to discover.",
+            "rarity": 3,
+            "graphic_id": 6075,
+            "effects": [
+              {
+                "effect_string": "gold_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 170,
+            "hero_id": 30,
+            "order": 5,
+            "name": "幸运",
+            "description": "奥穆的财富等着我们去发掘。",
+            "rarity": 3,
+            "graphic_id": 6075,
+            "effects": [
+              {
+                "effect_string": "gold_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      }
+    ],
+    "skins": [
+      {
+        "id": "128",
+        "snapshots": {
+          "original": {
+            "id": 128,
+            "hero_id": 30,
+            "name": "Farmer Azaka",
+            "cost": {
+              "req_date": "2022-01-05 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 12921,
+              "large_graphic_id": 13109,
+              "xl_graphic_id": 13770,
+              "portrait_graphic_id": 13110,
+              "mask_graphic_id": 12918,
+              "tiger_graphic_id": 12920,
+              "tiger_mask_graphic_id": 12919,
+              "companion_graphic_ids": [
+                13105,
+                13105
+              ],
+              "additional_shop_graphics": [
+                {
+                  "graphic_id": "27211",
+                  "sequence": "1",
+                  "is_transform": true
+                },
+                {
+                  "graphic_id": "27213",
+                  "sequence": "1"
+                }
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "patron",
+              "patron_id": 2
+            },
+            "availabilities": {
+              "patron_id": "2",
+              "patron_shop_item_id": "106"
+            }
+          },
+          "display": {
+            "id": 128,
+            "hero_id": 30,
+            "name": "农夫阿扎卡",
+            "cost": {
+              "req_date": "2022-01-05 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 12921,
+              "large_graphic_id": 13109,
+              "xl_graphic_id": 13770,
+              "portrait_graphic_id": 13110,
+              "mask_graphic_id": 12918,
+              "tiger_graphic_id": 12920,
+              "tiger_mask_graphic_id": 12919,
+              "companion_graphic_ids": [
+                13105,
+                13105
+              ],
+              "additional_shop_graphics": [
+                {
+                  "graphic_id": "27211",
+                  "sequence": "1",
+                  "is_transform": true
+                },
+                {
+                  "graphic_id": "27213",
+                  "sequence": "1"
+                }
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "patron",
+              "patron_id": 2
+            },
+            "availabilities": {
+              "patron_id": "2",
+              "patron_shop_item_id": "106"
+            }
+          }
+        }
+      },
+      {
+        "id": "430",
+        "snapshots": {
+          "original": {
+            "id": 430,
+            "hero_id": 30,
+            "name": "Pirate Azaka",
+            "cost": {
+              "req_date": "2024-05-22 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 23870,
+              "large_graphic_id": 23871,
+              "portrait_graphic_id": 23866,
+              "xl_graphic_id": 23872,
+              "mask_graphic_id": 23867,
+              "tiger_graphic_id": 23869,
+              "tiger_mask_graphic_id": 23868,
+              "companion_graphic_ids": [
+                2506,
+                2506
+              ],
+              "additional_shop_graphics": [
+                {
+                  "graphic_id": "27212",
+                  "sequence": "1",
+                  "is_transform": true
+                },
+                {
+                  "graphic_id": "27214",
+                  "sequence": "1"
+                }
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 1210,
+              "odds": 160
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 430,
+            "hero_id": 30,
+            "name": "海盗阿扎卡",
+            "cost": {
+              "req_date": "2024-05-22 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 23870,
+              "large_graphic_id": 23871,
+              "portrait_graphic_id": 23866,
+              "xl_graphic_id": 23872,
+              "mask_graphic_id": 23867,
+              "tiger_graphic_id": 23869,
+              "tiger_mask_graphic_id": 23868,
+              "companion_graphic_ids": [
+                2506,
+                2506
+              ],
+              "additional_shop_graphics": [
+                {
+                  "graphic_id": "27212",
+                  "sequence": "1",
+                  "is_transform": true
+                },
+                {
+                  "graphic_id": "27214",
+                  "sequence": "1"
+                }
+              ]
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 1210,
+              "odds": 160
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      }
+    ]
+  }
+}
