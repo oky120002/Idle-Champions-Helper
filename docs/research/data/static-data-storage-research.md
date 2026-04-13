@@ -207,7 +207,7 @@ GitHub Actions 构建并发布到 GitHub Pages
 - `scripts/fetch-idle-champions-definitions.mjs`
 - `scripts/normalize-idle-champions-definitions.mjs`
 - `scripts/data/manual-overrides.json`
-- `docs/game-data-source-investigation.md`
+- 相关数据来源调研文档统一放在 `docs/research/data/`
 
 这里有一个需要统一的点：
 

@@ -4,6 +4,7 @@ import { ChampionsPage } from '../pages/ChampionsPage'
 import { VariantsPage } from '../pages/VariantsPage'
 import { FormationPage } from '../pages/FormationPage'
 import { PresetsPage } from '../pages/PresetsPage'
+import { UserDataPage } from '../pages/UserDataPage'
 
 const navigation = [
   { to: '/', label: '总览' },
@@ -11,6 +12,7 @@ const navigation = [
   { to: '/variants', label: '变体限制' },
   { to: '/formation', label: '阵型编辑' },
   { to: '/presets', label: '方案存档' },
+  { to: '/user-data', label: '个人数据' },
 ]
 
 function getNavClassName(isActive: boolean): string {
@@ -51,6 +53,7 @@ export function App() {
           <Route path="/variants" element={<VariantsPage />} />
           <Route path="/formation" element={<FormationPage />} />
           <Route path="/presets" element={<PresetsPage />} />
+          <Route path="/user-data" element={<UserDataPage />} />
           <Route path="*" element={<HomePage />} />
         </Routes>
       </main>

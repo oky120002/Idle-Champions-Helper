@@ -6,6 +6,12 @@
 
 仓库级强制规范见 `AGENTS.md`；本文件仅承载现状、结构、使用方式与文档导航。
 
+## 在线访问
+
+- 正式地址：[https://oky120002.github.io/Idle-Champions-Helper/](https://oky120002.github.io/Idle-Champions-Helper/)
+- 当前部署方式：`GitHub Pages + GitHub Actions`
+- 问题排查台账：[`docs/troubleshooting-log.md`](docs/troubleshooting-log.md)
+
 ## 当前状态
 
 - 已确认技术路线：`Vite + React + TypeScript`
@@ -79,7 +85,7 @@ npm run data:build
 
 - 原始 definitions 快照默认输出到 `tmp/idle-champions-api/`
 - 手工补充层默认读取 `scripts/data/manual-overrides.json`
-- 详细调研结论见 `docs/game-data-source-investigation.md`
+- 详细调研结论见 `docs/research/data/game-data-source-investigation.md`
 
 ## 当前目录结构
 
@@ -89,6 +95,11 @@ npm run data:build
 │   └── workflows/
 │       └── deploy.yml
 ├── docs/
+│   ├── investigations/
+│   ├── modules/
+│   ├── product/
+│   ├── research/
+│   └── README.md
 ├── scripts/
 │   ├── data/
 │   ├── fixtures/
@@ -121,6 +132,10 @@ npm run data:build
 └── vite.config.ts
 ```
 
+说明：
+
+- `docs/README.md` 是文档总索引；新增文档应按用途放入 `product/`、`research/`、`modules/`、`investigations/`
+
 ## 当前已经落地的内容
 
 ### 页面骨架
@@ -152,11 +167,16 @@ npm run data:build
 
 ## 文档导航
 
-- `docs/idle-champions-research-roadmap.md`：项目价值、范围、阶段路线、核心数据模型
-- `docs/static-data-storage-research.md`：静态数据存储与版本化策略
-- `docs/game-data-source-investigation.md`：基础游戏数据来源、接口链路与推荐方案
-- `docs/static-hosting-research.md`：GitHub Pages 部署方案与路由策略
-- `docs/china-static-hosting-research.md`：国内访问体验研究存档，仅作背景参考，不作为正式发布路线依据
+- `docs/README.md`：`docs/` 目录结构说明、归档规则与当前索引
+- `docs/product/idle-champions-roadmap.md`：项目价值、范围、阶段路线、核心数据模型
+- `docs/research/data/static-data-storage-research.md`：静态数据存储与版本化策略
+- `docs/research/data/game-data-source-investigation.md`：基础游戏数据、个人数据凭证与第三方站点更新链路调研
+- `docs/investigations/runtime/local-run-verification.md`：本地构建与预览行为验证记录
+- `docs/investigations/repository/github-directory-commit-investigation.md`：`.github` 目录无法提交的本地原因排查
+- `docs/troubleshooting-log.md`：通用问题排查台账，沉淀部署、认证、网络、运行等问题的排查记录
+- `docs/modules/user-data/user-data-import-design.md`：本地优先的个人数据导入方案与安全边界
+- `docs/research/deployment/static-hosting-research.md`：GitHub Pages 部署方案与路由策略
+- `docs/research/deployment/china-static-hosting-research.md`：国内访问体验研究存档，仅作背景参考，不作为正式发布路线依据
 
 ## 下一步建议
 
