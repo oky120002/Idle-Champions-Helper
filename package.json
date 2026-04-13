@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "data:fetch": "node scripts/fetch-idle-champions-definitions.mjs",
+    "data:normalize": "node scripts/normalize-idle-champions-definitions.mjs",
+    "data:build": "node scripts/build-idle-champions-data.mjs"
   },
   "dependencies": {
     "react": "^19.2.4",
