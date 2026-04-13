@@ -159,10 +159,16 @@ function buildFormationContext(kind, originalDefinition = {}, localizedDefinitio
 
 function buildFormationName(primaryContext, slotCount, layoutId) {
   if (!primaryContext?.name) {
-    return `官方布局 ${slotCount} 槽 · ${layoutId}`
+    return {
+      original: `Official layout ${slotCount} slots · ${layoutId}`,
+      display: `官方布局 ${slotCount} 槽 · ${layoutId}`,
+    }
   }
 
-  return `${primaryContext.name.display} · ${slotCount} 槽`
+  return {
+    original: `${primaryContext.name.original} · ${slotCount} slots`,
+    display: `${primaryContext.name.display} · ${slotCount} 槽`,
+  }
 }
 
 function buildFormationNotes(contexts, slotCount) {
@@ -180,7 +186,18 @@ function buildFormationNotes(contexts, slotCount) {
     counts.variant > 0 ? `${counts.variant} 个变体` : null,
   ].filter(Boolean)
 
-  return `官方 definitions 自动提取的 ${slotCount} 槽布局，当前关联 ${summaryParts.join(' / ')}。`
+  const englishSummaryParts = [
+    counts.campaign > 0 ? `${counts.campaign} campaign${counts.campaign > 1 ? 's' : ''}` : null,
+    counts.adventure > 0
+      ? `${counts.adventure} adventure${counts.adventure > 1 ? 's' : ''}`
+      : null,
+    counts.variant > 0 ? `${counts.variant} variant${counts.variant > 1 ? 's' : ''}` : null,
+  ].filter(Boolean)
+
+  return {
+    original: `Auto-extracted ${slotCount}-slot layout from official definitions, currently linked to ${englishSummaryParts.join(' / ')}.`,
+    display: `官方 definitions 自动提取的 ${slotCount} 槽布局，当前关联 ${summaryParts.join(' / ')}。`,
+  }
 }
 
 function compareFormationLayouts(left, right) {
@@ -191,8 +208,8 @@ function compareFormationLayouts(left, right) {
     left.slots.length - right.slots.length ||
     getContextOrder(leftPrimaryContext?.kind) - getContextOrder(rightPrimaryContext?.kind) ||
     compareLocalizedText(
-      leftPrimaryContext?.name ?? { original: left.name, display: left.name },
-      rightPrimaryContext?.name ?? { original: right.name, display: right.name },
+      leftPrimaryContext?.name ?? left.name,
+      rightPrimaryContext?.name ?? right.name,
     ) ||
     left.id.localeCompare(right.id)
   )

@@ -96,8 +96,8 @@ interface ScenarioRef {
 
 interface FormationLayout {
   id: string
-  name: string
-  notes?: string
+  name: LocalizedText
+  notes?: LocalizedText
   slots: FormationSlot[]
   applicableContexts?: ScenarioRef[]
   sourceContexts?: FormationContext[]

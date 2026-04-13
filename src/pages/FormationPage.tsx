@@ -659,7 +659,7 @@ export function FormationPage() {
                         locale === 'zh-CN'
                           ? `${Object.keys(draftPrompt.preview.placements).length} 名英雄`
                           : `${Object.keys(draftPrompt.preview.placements).length} champions`
-                      } · ${draftPrompt.preview.layoutName}`
+                      } · ${getLocalizedTextPair(draftPrompt.preview.layoutName, locale)}`
                     : draftPrompt.detail
                 }
                 actions={
@@ -769,7 +769,7 @@ export function FormationPage() {
                 {selectedLayoutContextSummary ? (
                   <StatusBanner tone="info">{selectedLayoutContextSummary}</StatusBanner>
                 ) : selectedLayout.notes ? (
-                  <StatusBanner tone="info">{selectedLayout.notes}</StatusBanner>
+                  <StatusBanner tone="info">{getLocalizedTextPair(selectedLayout.notes, locale)}</StatusBanner>
                 ) : null}
 
                 {conflictingSeats.length > 0 ? (
@@ -961,7 +961,7 @@ export function FormationPage() {
             <article className="preview-card">
               <span className="preview-card__label">{t({ zh: '当前布局', en: 'Current layout' })}</span>
               <strong className="preview-card__value">
-                {selectedLayout?.name ?? t({ zh: '未选择', en: 'Not selected' })}
+                {selectedLayout ? getFormationLayoutLabel(selectedLayout, locale) : t({ zh: '未选择', en: 'Not selected' })}
               </strong>
             </article>
             <article className="preview-card">

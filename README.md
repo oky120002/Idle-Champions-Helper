@@ -18,7 +18,7 @@
 - 已落地最小可运行工程骨架
 - 已补基础路由、页面壳层、公共数据目录与部署脚本
 - 已落第一版真实公共数据：`champions`、`variants`、`enums`、`formations` 已由官方 definitions 自动生成，其中阵型布局已覆盖 157 个唯一官方布局
-- 已补第一版官方中文映射层：`champions / affiliations / campaigns / variants` 保留“官方原文 + 中文展示名”双字段
+- 已补第一版官方中文映射层：`champions / affiliations / campaigns / variants / formations` 均保留“官方原文 + 中文展示名”双字段
 - 已把 161 名可上阵英雄的官方头像按版本写入 `public/data/v1/champion-portraits/`，并在英雄相关卡片里接入展示
 - 已补第一版界面语言切换，页面可在中文 / 英文界面之间切换
 - 已落最小测试基础设施：`Vitest`、`React Testing Library`、`Playwright`

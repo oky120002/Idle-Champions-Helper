@@ -13,6 +13,7 @@ import {
 } from '../data/formationPersistence'
 import { deleteFormationPreset, listFormationPresets, saveFormationPreset } from '../data/formationPresetStore'
 import { buildOrderedChampionsFromPlacements } from '../domain/championPlacement'
+import { getLocalizedTextPair } from '../domain/localizedText'
 import type {
   Champion,
   FormationLayout,
@@ -437,7 +438,9 @@ export function PresetsPage() {
 
                   <div className="tag-row">
                     <span className="tag-pill tag-pill--muted">
-                      {view.prompt.kind === 'restore' ? view.prompt.preview.layoutName : view.preset.layoutId}
+                      {view.prompt.kind === 'restore'
+                        ? getLocalizedTextPair(view.prompt.preview.layoutName, locale)
+                        : view.preset.layoutId}
                     </span>
                     <span className="tag-pill tag-pill--muted">
                       {t({ zh: '保存版本', en: 'Saved version' })}：{view.preset.dataVersion}
