@@ -49,7 +49,8 @@ textarea {
 .app-shell {
   position: relative;
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .background-orb {
@@ -366,6 +367,11 @@ html[data-ui-locale='en-US'] .site-subtitle {
   margin-top: 1rem;
 }
 
+.filter-panel--sidebar {
+  margin-top: 0;
+  gap: 1.1rem;
+}
+
 .filter-panel--compact {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
@@ -419,10 +425,61 @@ html[data-ui-locale='en-US'] .site-subtitle {
   align-content: start;
 }
 
-.results-panel-shell {
+.champions-workspace {
+  display: grid;
+  gap: 1.25rem;
   margin-top: 1rem;
+}
+
+.champions-sidebar {
+  min-width: 0;
+}
+
+.champions-sidebar__surface {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 24px;
+  border: 1px solid rgba(227, 214, 193, 0.1);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02)),
+    rgba(9, 14, 20, 0.42);
+}
+
+.champions-sidebar__header {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.champions-sidebar__title {
+  margin-bottom: 0;
+}
+
+.champions-sidebar__hint {
+  margin: 0.35rem 0 0;
+  color: rgba(242, 239, 230, 0.58);
+  font-size: 0.92rem;
+}
+
+.champions-sidebar__badge {
+  justify-self: start;
+  padding: 0.38rem 0.78rem;
+  border-radius: 999px;
+  border: 1px solid rgba(200, 167, 127, 0.18);
+  background: rgba(200, 167, 127, 0.08);
+  color: rgba(255, 243, 223, 0.88);
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.champions-results {
+  min-width: 0;
+}
+
+.results-panel-shell {
   overflow: clip;
-  transition: height 260ms ease;
+  transition: height 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .results-panel {
@@ -755,6 +812,31 @@ html[data-ui-locale='en-US'] .site-subtitle {
   }
 }
 
+@media (min-width: 1080px) {
+  .champions-workspace {
+    grid-template-columns: minmax(19rem, 22rem) minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .champions-sidebar__sticky {
+    position: sticky;
+    top: var(--champions-sticky-top, 10rem);
+  }
+
+  .champions-sidebar__surface {
+    max-height: calc(100vh - var(--champions-sticky-top, 10rem) - 1rem);
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+
+  .champions-sidebar__header {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 0.8rem;
+  }
+}
+
 @media (max-width: 720px) {
   .site-header {
     padding-top: 1.2rem;
@@ -798,6 +880,11 @@ html[data-ui-locale='en-US'] .site-subtitle {
   .hero-panel,
   .surface-card {
     border-radius: 22px;
+  }
+
+  .champions-sidebar__surface {
+    padding: 0.9rem;
+    border-radius: 20px;
   }
 }
 
