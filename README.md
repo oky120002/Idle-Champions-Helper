@@ -20,6 +20,7 @@
 - 已落第一版真实公共数据：`champions`、`variants`、`enums` 已由官方 definitions 生成，并补了手工维护的 `formations` MVP 布局数据
 - 已补第一版官方中文映射层：`champions / affiliations / campaigns / variants` 保留“官方原文 + 中文展示名”双字段
 - 已把 161 名可上阵英雄的官方头像按版本写入 `public/data/v1/champion-portraits/`，并在英雄相关卡片里接入展示
+- 已补第一版英雄视觉资源基座：`public/data/v1/champion-visuals.json` 会保留英雄本体立绘、皮肤立绘与皮肤头像的远端可解析元数据
 - 已补第一版界面语言切换，页面可在中文 / 英文界面之间切换
 - 已落最小测试基础设施：`Vitest`、`React Testing Library`、`Playwright`
 - 阵型页已接入“最近草稿”本地自动保存 / 恢复，持久化介质为 `IndexedDB`
@@ -148,6 +149,7 @@ npm run data:build
 - 详细调研结论见 `docs/research/data/game-data-source-investigation.md`
 - `language_id=7` 官方中文覆盖结论见 `docs/research/data/language-id-7-chinese-definitions-research.md`
 - 官方头像字段与资源尺寸核实见 `docs/research/data/champion-portrait-asset-research.md`
+- 英雄立绘与皮肤资源的远端解析策略见 `docs/research/data/champion-visual-asset-research.md`
 
 ## 当前目录结构
 
@@ -173,6 +175,7 @@ npm run data:build
 │   └── data/
 │       ├── version.json
 │       └── v1/
+│           ├── champion-visuals.json
 │           ├── champion-portraits/
 │           ├── champions.json
 │           ├── enums.json
@@ -219,6 +222,7 @@ npm run data:build
 - `src/domain/types.ts`：放数据类型定义
 - `public/data/version.json`：声明当前数据版本
 - `public/data/v1/*.json`：当前版本的数据文件
+- `public/data/v1/champion-visuals.json`：英雄本体立绘、皮肤立绘与皮肤头像的远端元数据目录
 - `public/data/v1/champion-portraits/`：当前版本的官方英雄头像 PNG 资源
 - `scripts/fetch-idle-champions-definitions.mjs`：拉取官方 definitions 原始快照
 - `scripts/normalize-idle-champions-definitions.mjs`：把原始快照转换为前端数据
