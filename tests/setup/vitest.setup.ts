@@ -4,4 +4,9 @@ import { afterEach } from 'vitest'
 
 afterEach(() => {
   cleanup()
+  if (window.localStorage && typeof window.localStorage.clear === 'function') {
+    window.localStorage.clear()
+  }
+  document.documentElement.removeAttribute('lang')
+  delete document.documentElement.dataset.uiLocale
 })
