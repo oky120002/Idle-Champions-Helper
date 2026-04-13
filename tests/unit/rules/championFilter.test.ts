@@ -11,6 +11,7 @@ function createChampion(
   seat: number,
   roles: string[],
   affiliations: LocalizedText[],
+  tags: string[] = [],
 ): Champion {
   return {
     id,
@@ -18,7 +19,7 @@ function createChampion(
     seat,
     roles,
     affiliations,
-    tags: [],
+    tags,
   }
 }
 
@@ -27,10 +28,10 @@ const adversaries = localized('Absolute Adversaries', '绝对宿敌')
 const oxventurers = localized('Oxventurers Guild', '牛冒险者公会')
 
 const champions: Champion[] = [
-  createChampion('alpha', 1, ['support'], [hall]),
-  createChampion('beta', 2, ['healing'], [hall]),
-  createChampion('gamma', 2, ['dps'], [adversaries]),
-  createChampion('delta', 3, ['tank'], [oxventurers]),
+  createChampion('alpha', 1, ['support'], [hall], ['human', 'male', 'warlock']),
+  createChampion('beta', 2, ['healing'], [hall], ['elf', 'female', 'cleric']),
+  createChampion('gamma', 2, ['dps'], [adversaries], ['drow', 'male', 'rogue']),
+  createChampion('delta', 3, ['tank'], [oxventurers], ['human', 'female', 'fighter']),
 ]
 
 describe('filterChampions', () => {
@@ -41,6 +42,9 @@ describe('filterChampions', () => {
         seats: [1, 2],
         roles: [],
         affiliations: [],
+        races: [],
+        genders: [],
+        professions: [],
       }).map((champion) => champion.id),
     ).toEqual(['alpha', 'beta', 'gamma'])
   })
@@ -52,6 +56,23 @@ describe('filterChampions', () => {
         seats: [],
         roles: ['support', 'dps'],
         affiliations: ['Companions of the Hall', 'Absolute Adversaries'],
+        races: [],
+        genders: [],
+        professions: [],
+      }).map((champion) => champion.id),
+    ).toEqual(['alpha', 'gamma'])
+  })
+
+  it('支持按种族、性别和职业多选过滤', () => {
+    expect(
+      filterChampions(champions, {
+        search: '',
+        seats: [],
+        roles: [],
+        affiliations: [],
+        races: ['human', 'drow'],
+        genders: ['male'],
+        professions: ['warlock', 'rogue'],
       }).map((champion) => champion.id),
     ).toEqual(['alpha', 'gamma'])
   })

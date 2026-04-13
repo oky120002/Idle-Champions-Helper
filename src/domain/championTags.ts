@@ -311,6 +311,18 @@ export interface ChampionAttributeGroup {
   tags: string[]
 }
 
+const ATTRIBUTE_GROUP_MATCHERS: Record<
+  Exclude<ChampionAttributeGroupId, 'other'>,
+  (tag: string) => boolean
+> = {
+  race: (tag) => RACE_TAGS.has(tag),
+  gender: (tag) => GENDER_TAGS.has(tag),
+  alignment: (tag) => ALIGNMENT_TAGS.has(tag),
+  profession: (tag) => PROFESSION_TAGS.has(tag),
+  acquisition: isAcquisitionTag,
+  mechanics: isMechanicTag,
+}
+
 function toTitleCase(value: string): string {
   return value
     .split(/[\s_-]+/)
@@ -331,29 +343,38 @@ function isMechanicTag(tag: string): boolean {
   return tag === 'positional' || tag.startsWith('control_') || tag.startsWith('spec_')
 }
 
-export function getChampionAttributeGroups(tags: string[]): ChampionAttributeGroup[] {
+export function getChampionTagsForGroup(
+  tags: string[],
+  groupId: ChampionAttributeGroupId,
+): string[] {
   const attributeTags = getChampionAttributeTags(tags)
-  const definitions: Array<{
-    id: ChampionAttributeGroupId
-    matches: (tag: string) => boolean
-  }> = [
-    { id: 'race', matches: (tag) => RACE_TAGS.has(tag) },
-    { id: 'gender', matches: (tag) => GENDER_TAGS.has(tag) },
-    { id: 'alignment', matches: (tag) => ALIGNMENT_TAGS.has(tag) },
-    { id: 'profession', matches: (tag) => PROFESSION_TAGS.has(tag) },
-    { id: 'acquisition', matches: isAcquisitionTag },
-    { id: 'mechanics', matches: isMechanicTag },
-  ]
 
-  const groups = definitions
-    .map((definition) => ({
-      id: definition.id,
-      tags: attributeTags.filter((tag) => definition.matches(tag)),
+  if (groupId === 'other') {
+    const usedTags = new Set(
+      Object.entries(ATTRIBUTE_GROUP_MATCHERS).flatMap(([id]) =>
+        attributeTags.filter((tag) =>
+          ATTRIBUTE_GROUP_MATCHERS[id as Exclude<ChampionAttributeGroupId, 'other'>](tag),
+        ),
+      ),
+    )
+
+    return attributeTags.filter((tag) => !usedTags.has(tag))
+  }
+
+  return attributeTags.filter((tag) => ATTRIBUTE_GROUP_MATCHERS[groupId](tag))
+}
+
+export function getChampionAttributeGroups(tags: string[]): ChampionAttributeGroup[] {
+  const groups: ChampionAttributeGroup[] = (
+    Object.keys(ATTRIBUTE_GROUP_MATCHERS) as Array<Exclude<ChampionAttributeGroupId, 'other'>>
+  )
+    .map((groupId) => ({
+      id: groupId,
+      tags: getChampionTagsForGroup(tags, groupId),
     }))
     .filter((group) => group.tags.length > 0)
 
-  const usedTags = new Set(groups.flatMap((group) => group.tags))
-  const otherTags = attributeTags.filter((tag) => !usedTags.has(tag))
+  const otherTags = getChampionTagsForGroup(tags, 'other')
 
   if (otherTags.length > 0) {
     groups.push({
