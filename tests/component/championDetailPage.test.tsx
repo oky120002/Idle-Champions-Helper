@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('../../src/data/client', async () => {
@@ -309,26 +309,12 @@ function renderChampionDetailPage() {
   return renderChampionDetailPageAt('/champions/7')
 }
 
-function LocationProbe() {
-  const location = useLocation()
-
-  return <output data-testid="router-location">{`${location.pathname}${location.search}${location.hash}`}</output>
-}
-
 function renderChampionDetailPageAt(initialEntry: string) {
   return render(
     <I18nProvider>
       <MemoryRouter initialEntries={[initialEntry]}>
         <Routes>
-          <Route
-            path="/champions/:championId"
-            element={
-              <>
-                <ChampionDetailPage />
-                <LocationProbe />
-              </>
-            }
-          />
+          <Route path="/champions/:championId" element={<ChampionDetailPage />} />
         </Routes>
       </MemoryRouter>
     </I18nProvider>,
@@ -340,6 +326,8 @@ function renderChampionDetailPageWithSearch() {
 }
 
 beforeEach(() => {
+  window.history.replaceState(window.history.state, '', '/')
+
   Object.defineProperty(Element.prototype, 'scrollIntoView', {
     configurable: true,
     writable: true,
@@ -413,8 +401,13 @@ describe('ChampionDetailPage', () => {
     upgradeButtons.forEach((button) => {
       expect(button).toHaveAttribute('aria-pressed', 'false')
     })
+    expect(screen.getByTestId('sidebar-section-overview')).toHaveAttribute('data-progress-state', 'active')
+    expect(screen.getByTestId('sidebar-section-overview')).toHaveAttribute('aria-current', 'step')
+    expect(screen.getByTestId('sidebar-section-combat')).toHaveAttribute('data-progress-state', 'upcoming')
+    expect(screen.getByText('当前浏览 · 概览')).toBeInTheDocument()
+    expect(screen.getByText('1 / 7')).toBeInTheDocument()
     await waitFor(() => {
-      expect(screen.getByTestId('router-location')).toHaveTextContent('/champions/7#overview')
+      expect(window.location.hash).toBe('#/champions/7#overview')
     })
   })
 
@@ -432,14 +425,20 @@ describe('ChampionDetailPage', () => {
     screen.getAllByRole('button', { name: '概览' }).forEach((button) => {
       expect(button).toHaveAttribute('aria-pressed', 'false')
     })
+    expect(screen.getByTestId('sidebar-section-overview')).toHaveAttribute('data-progress-state', 'completed')
+    expect(screen.getByTestId('sidebar-section-upgrades')).toHaveAttribute('data-progress-state', 'active')
+    expect(screen.getByTestId('sidebar-section-raw')).toHaveAttribute('data-progress-state', 'upcoming')
+    expect(screen.getByText('当前浏览 · 升级')).toBeInTheDocument()
+    expect(screen.getByText('4 / 7')).toBeInTheDocument()
     await waitFor(() => {
-      expect(screen.getByTestId('router-location')).toHaveTextContent('/champions/7#upgrades')
+      expect(window.location.hash).toBe('#/champions/7#upgrades')
     })
   })
 
   it('带分区 hash 进入时会直达对应分区并保留该 hash', async () => {
     mockedLoadChampionDetail.mockResolvedValue(detailFixture)
 
+    window.history.replaceState(window.history.state, '', '/#/champions/7#upgrades')
     renderChampionDetailPageAt('/champions/7#upgrades')
 
     await waitFor(() => {
@@ -447,9 +446,10 @@ describe('ChampionDetailPage', () => {
         expect(button).toHaveAttribute('aria-pressed', 'true')
       })
     })
+    expect(screen.getByTestId('sidebar-section-upgrades')).toHaveAttribute('data-progress-state', 'active')
     expect(Element.prototype.scrollIntoView).toHaveBeenCalled()
     await waitFor(() => {
-      expect(screen.getByTestId('router-location')).toHaveTextContent('/champions/7#upgrades')
+      expect(window.location.hash).toBe('#/champions/7#upgrades')
     })
   })
 })
