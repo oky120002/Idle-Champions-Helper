@@ -1,13 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useI18n, type LocaleText } from '../app/i18n'
+import { useI18n } from '../app/i18n'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollectionAtVersion, loadVersion } from '../data/client'
 import {
   buildFormationSnapshotPrompt,
   buildRestoreStatusDetail,
-  type FormationSnapshotPreview,
   type FormationSnapshotPrompt,
+  type FormationSnapshotPreview,
 } from '../data/formationPersistence'
 import {
   deleteRecentFormationDraft,
@@ -35,11 +35,7 @@ const DRAFT_SCHEMA_VERSION = 1
 const PRESET_SCHEMA_VERSION = 1
 const DRAFT_SAVE_DELAY_MS = 600
 
-const PRESET_PRIORITY_OPTIONS: Array<{ value: PresetPriority; label: LocaleText }> = [
-  { value: 'medium', label: { zh: '常用', en: 'Standard' } },
-  { value: 'high', label: { zh: '高优先', en: 'High' } },
-  { value: 'low', label: { zh: '备用', en: 'Backup' } },
-]
+const PRESET_PRIORITY_OPTIONS: PresetPriority[] = ['medium', 'high', 'low']
 
 type FormationState =
   | { status: 'loading' }
@@ -79,14 +75,14 @@ function getErrorMessage(error: unknown): string {
   return error instanceof Error ? error.message : '未知错误'
 }
 
-function formatDateTime(value: string, locale: 'zh-CN' | 'en-US'): string {
+function formatDateTime(value: string): string {
   const date = new Date(value)
 
   if (Number.isNaN(date.getTime())) {
     return value
   }
 
-  return date.toLocaleString(locale, {
+  return date.toLocaleString('zh-CN', {
     hour12: false,
   })
 }
@@ -152,7 +148,7 @@ export function FormationPage() {
   const pendingPresetRestoreRef = useRef<FormationPreset | null>(routeState?.pendingPresetRestore ?? null)
 
   const [state, setState] = useState<FormationState>({ status: 'loading' })
-  const [selectedLayoutId, setSelectedLayoutId] = useState('')
+  const [selectedLayoutId, setSelectedLayoutId] = useState<string>('')
   const [placements, setPlacements] = useState<Record<string, string>>({})
   const [scenarioRef, setScenarioRef] = useState<ScenarioRef | null>(null)
   const [draftPrompt, setDraftPrompt] = useState<DraftPrompt | null>(null)
@@ -192,6 +188,11 @@ export function FormationPage() {
 
         setState(baseState)
         setSelectedLayoutId(formationCollection.items[0]?.id ?? '')
+        setDraftStatus({
+          tone: 'info',
+          title: '最近草稿会自动保存在当前浏览器',
+          detail: '介质为 IndexedDB；只保存在本地，不上传到外部服务。',
+        })
 
         if (pendingPresetRestoreRef.current) {
           navigate('/formation', { replace: true, state: null })
@@ -221,9 +222,10 @@ export function FormationPage() {
                 return
               }
 
+              setIsDraftPersistenceArmed(true)
               setDraftStatus({
                 tone: 'error',
-                title: t({ zh: '方案已恢复，但最近草稿回写失败', en: 'Preset restored but draft sync failed' }),
+                title: '方案已恢复，但最近草稿回写失败',
                 detail: getErrorMessage(error),
               })
             }
@@ -241,27 +243,19 @@ export function FormationPage() {
             setSelectedLayoutId(restoredDraft.layoutId)
             setPlacements(restoredDraft.placements)
             setScenarioRef(restoredDraft.scenarioRef)
-            setDraftPrompt(null)
             setIsDraftPersistenceArmed(true)
             setDraftStatus({
               tone: 'success',
-              title: t({
-                zh: `已从方案“${pendingPresetRestore.name}”恢复到阵型页`,
-                en: `Restored preset “${pendingPresetRestore.name}” back to the formation page`,
-              }),
+              title: `已从方案“${pendingPresetRestore.name}”恢复到阵型页`,
               detail: buildRestoreStatusDetail(pendingPrompt.preview),
             })
             return
           }
 
-          setDraftPrompt(null)
           setIsDraftPersistenceArmed(true)
           setDraftStatus({
             tone: 'error',
-            title: t({
-              zh: `方案“${pendingPresetRestore.name}”当前不能恢复`,
-              en: `Preset “${pendingPresetRestore.name}” cannot be restored right now`,
-            }),
+            title: `方案“${pendingPresetRestore.name}”当前不能恢复`,
             detail: pendingPrompt.detail,
           })
           return
@@ -275,14 +269,6 @@ export function FormationPage() {
           }
 
           if (!storedDraft) {
-            setDraftStatus({
-              tone: 'info',
-              title: t({ zh: '最近草稿会自动保存在当前浏览器', en: 'Recent drafts stay in this browser automatically' }),
-              detail: t({
-                zh: '介质为 IndexedDB；只保存在本地，不上传到外部服务。',
-                en: 'They are stored in IndexedDB locally and never uploaded to an external service.',
-              }),
-            })
             setIsDraftPersistenceArmed(true)
             return
           }
@@ -306,15 +292,12 @@ export function FormationPage() {
             return
           }
 
+          setIsDraftPersistenceArmed(true)
           setDraftStatus({
             tone: 'error',
-            title: t({ zh: '最近草稿读取失败', en: 'Failed to read the recent draft' }),
-            detail: t({
-              zh: `${getErrorMessage(error)} 当前仍可继续编辑，但不会自动恢复旧草稿。`,
-              en: `${getErrorMessage(error)} You can keep editing, but the old draft will not be restored automatically.`,
-            }),
+            title: '最近草稿读取失败',
+            detail: `${getErrorMessage(error)} 当前仍可继续编辑，但不会自动恢复旧草稿。`,
           })
-          setIsDraftPersistenceArmed(true)
         }
       } catch (error: unknown) {
         if (disposed) {
@@ -333,7 +316,7 @@ export function FormationPage() {
     return () => {
       disposed = true
     }
-  }, [navigate, t])
+  }, [navigate])
 
   useEffect(() => {
     if (state.status !== 'ready' || !isDraftPersistenceArmed || editRevision === 0 || !selectedLayoutId) {
@@ -347,11 +330,8 @@ export function FormationPage() {
             await deleteRecentFormationDraft()
             setDraftStatus({
               tone: 'info',
-              title: t({ zh: '最近草稿已清理', en: 'Recent draft cleared' }),
-              detail: t({
-                zh: '当前阵型为空，浏览器本地不会继续保留最近草稿。',
-                en: 'The formation is empty, so no recent draft is kept locally anymore.',
-              }),
+              title: '最近草稿已清理',
+              detail: '当前阵型为空，浏览器本地不会继续保留最近草稿。',
             })
             return
           }
@@ -368,16 +348,13 @@ export function FormationPage() {
           await saveRecentFormationDraft(nextDraft)
           setDraftStatus({
             tone: 'success',
-            title: t({ zh: '最近草稿已自动保存', en: 'Recent draft saved automatically' }),
-            detail: t({
-              zh: `${formatDateTime(nextDraft.updatedAt, locale)} · 保存在当前浏览器的 IndexedDB。`,
-              en: `${formatDateTime(nextDraft.updatedAt, locale)} · Saved in IndexedDB in this browser.`,
-            }),
+            title: '最近草稿已自动保存',
+            detail: `${formatDateTime(nextDraft.updatedAt)} · 保存在当前浏览器的 IndexedDB。`,
           })
         } catch (error: unknown) {
           setDraftStatus({
             tone: 'error',
-            title: t({ zh: '最近草稿保存失败', en: 'Failed to save the recent draft' }),
+            title: '最近草稿保存失败',
             detail: getErrorMessage(error),
           })
         }
@@ -389,7 +366,7 @@ export function FormationPage() {
     return () => {
       window.clearTimeout(timeoutId)
     }
-  }, [editRevision, isDraftPersistenceArmed, locale, placements, scenarioRef, selectedLayoutId, state, t])
+  }, [editRevision, isDraftPersistenceArmed, placements, scenarioRef, selectedLayoutId, state])
 
   const selectedLayout =
     state.status === 'ready'
@@ -453,19 +430,28 @@ export function FormationPage() {
     return `${seatLabel} · ${getLocalizedTextPair(champion.name, locale)}`
   }
 
+  function getPresetPriorityLabel(priority: PresetPriority): string {
+    if (priority === 'high') {
+      return t({ zh: '高优先', en: 'High' })
+    }
+
+    if (priority === 'low') {
+      return t({ zh: '备用', en: 'Fallback' })
+    }
+
+    return t({ zh: '常用', en: 'Regular' })
+  }
+
   function handleSelectLayout(layoutId: string) {
     setSelectedLayoutId(layoutId)
     setPlacements({})
     setScenarioRef(null)
-    setPresetStatus(null)
     setDraftStatus({
       tone: 'info',
-      title: t({ zh: '已切换布局', en: 'Layout switched' }),
-      detail: t({
-        zh: '当前布局变化后会重新生成最近草稿；旧的场景上下文不会被沿用。',
-        en: 'Changing the layout creates a new recent draft, and the previous scenario context is not reused.',
-      }),
+      title: '已切换布局',
+      detail: '当前布局变化后会重新生成最近草稿；旧的场景上下文不会被沿用。',
     })
+    setPresetStatus(null)
     bumpEditRevision()
   }
 
@@ -488,15 +474,12 @@ export function FormationPage() {
 
   function handleClear() {
     setPlacements({})
-    setPresetStatus(null)
     setDraftStatus({
       tone: 'info',
-      title: t({ zh: '当前阵型已清空', en: 'Formation cleared' }),
-      detail: t({
-        zh: '如果保持为空，最近草稿会从浏览器本地一起清理。',
-        en: 'If it stays empty, the recent draft will be cleared from this browser as well.',
-      }),
+      title: '当前阵型已清空',
+      detail: '如果保持为空，最近草稿会从浏览器本地一起清理。',
     })
+    setPresetStatus(null)
     bumpEditRevision()
   }
 
@@ -520,29 +503,24 @@ export function FormationPage() {
     setIsDraftPersistenceArmed(true)
     setDraftStatus({
       tone: 'success',
-      title: t({ zh: '最近草稿已恢复', en: 'Recent draft restored' }),
+      title: '最近草稿已恢复',
       detail: buildRestoreStatusDetail(draftPrompt.preview),
     })
     void saveRecentFormationDraft(restoredDraft)
+    bumpEditRevision()
   }
 
   function handleKeepDraftWithoutRestore() {
     const detail =
       draftPrompt?.kind === 'restore'
-        ? t({
-            zh: '本次不恢复旧草稿；你后续开始编辑后，新内容会覆盖这条最近草稿。',
-            en: 'The old draft stays untouched for now; once you edit, the new content will overwrite it.',
-          })
-        : t({
-            zh: '本次先保留旧草稿；等你开始编辑当前阵型后，新内容才会覆盖它。',
-            en: 'The old draft stays for now; it will be replaced only after you edit the current formation.',
-          })
+        ? '本次不恢复旧草稿；你后续开始编辑后，新内容会覆盖这条最近草稿。'
+        : '本次先保留旧草稿；等你开始编辑当前阵型后，新内容才会覆盖它。'
 
     setDraftPrompt(null)
     setIsDraftPersistenceArmed(true)
     setDraftStatus({
       tone: 'info',
-      title: t({ zh: '已保留最近草稿，但本次不恢复', en: 'Recent draft kept without restoring' }),
+      title: '已保留最近草稿，但本次不恢复',
       detail,
     })
   }
@@ -555,16 +533,13 @@ export function FormationPage() {
         setIsDraftPersistenceArmed(true)
         setDraftStatus({
           tone: 'info',
-          title: t({ zh: '最近草稿已丢弃', en: 'Recent draft discarded' }),
-          detail: t({
-            zh: '当前页面不会再提示恢复这条旧草稿。',
-            en: 'This page will no longer prompt you to restore the old draft.',
-          }),
+          title: '最近草稿已丢弃',
+          detail: '当前页面不会再提示恢复这条旧草稿。',
         })
       } catch (error: unknown) {
         setDraftStatus({
           tone: 'error',
-          title: t({ zh: '最近草稿删除失败', en: 'Failed to discard the recent draft' }),
+          title: '最近草稿删除失败',
           detail: getErrorMessage(error),
         })
       }
@@ -580,6 +555,10 @@ export function FormationPage() {
     }))
   }
 
+  function handlePriorityChange(priority: PresetPriority) {
+    updatePresetForm('priority', priority)
+  }
+
   function handleOpenPresetsPage() {
     navigate('/presets')
   }
@@ -589,7 +568,7 @@ export function FormationPage() {
       return
     }
 
-    const savePresetTask = async () => {
+    const savePreset = async () => {
       setIsSavingPreset(true)
 
       try {
@@ -618,16 +597,13 @@ export function FormationPage() {
         })
         setPresetStatus({
           tone: 'success',
-          title: t({ zh: `方案“${preset.name}”已保存`, en: `Preset “${preset.name}” saved` }),
-          detail: t({
-            zh: '现在可以去“方案存档”页继续恢复和管理。',
-            en: 'You can now manage and restore it from the presets page.',
-          }),
+          title: `方案“${preset.name}”已保存`,
+          detail: '现在可以去“方案存档”页继续编辑、删除，或重新恢复回阵型页。',
         })
       } catch (error: unknown) {
         setPresetStatus({
           tone: 'error',
-          title: t({ zh: '保存方案失败', en: 'Failed to save the preset' }),
+          title: '保存方案失败',
           detail: getErrorMessage(error),
         })
       } finally {
@@ -635,7 +611,7 @@ export function FormationPage() {
       }
     }
 
-    void savePresetTask()
+    void savePreset()
   }
 
   return (
@@ -644,11 +620,11 @@ export function FormationPage() {
         eyebrow={t({ zh: '阵型编辑', en: 'Formation editor' })}
         title={t({
           zh: '把最近草稿保存 / 恢复接回阵型页闭环',
-          en: 'Close the loop for saving and restoring recent formation drafts',
+          en: 'Close the loop on recent-draft save and restore',
         })}
         description={t({
           zh: '当前继续使用手工维护的 MVP 布局；最近草稿会自动写入当前浏览器的 IndexedDB，不上传到外部。',
-          en: 'This page still uses manually maintained MVP layouts, and recent drafts are written to IndexedDB in this browser only.',
+          en: 'This page still uses manually maintained MVP layouts, and recent drafts are auto-saved to IndexedDB in the current browser only.',
         })}
       >
         {state.status === 'loading' ? (
@@ -659,8 +635,7 @@ export function FormationPage() {
 
         {state.status === 'error' ? (
           <div className="status-banner status-banner--error">
-            {t({ zh: '阵型数据读取失败', en: 'Formation data failed to load' })}：
-            {state.message || t({ zh: '未知错误', en: 'Unknown error' })}
+            {t({ zh: '阵型数据读取失败', en: 'Formation data failed to load' })}：{state.message}
           </div>
         ) : null}
 
@@ -672,40 +647,72 @@ export function FormationPage() {
                   draftPrompt.kind === 'restore' ? 'status-banner status-banner--info' : 'status-banner status-banner--error'
                 }
               >
-                <strong>
-                  {draftPrompt.kind === 'restore'
-                    ? t({ zh: '检测到最近草稿，是否恢复？', en: 'A recent draft was found. Restore it?' })
-                    : draftPrompt.title}
-                </strong>
-                <p className="supporting-text">
-                  {draftPrompt.kind === 'restore'
-                    ? t({
-                        zh: `${formatDateTime(draftPrompt.preview.snapshot.updatedAt, locale)} · ${Object.keys(draftPrompt.preview.placements).length} 名英雄 · ${draftPrompt.preview.layoutName}`,
-                        en: `${formatDateTime(draftPrompt.preview.snapshot.updatedAt, locale)} · ${Object.keys(draftPrompt.preview.placements).length} champions · ${draftPrompt.preview.layoutName}`,
-                      })
-                    : draftPrompt.detail}
-                </p>
-                {draftPrompt.kind === 'restore' ? (
-                  <p className="supporting-text">{buildRestoreStatusDetail(draftPrompt.preview)}</p>
-                ) : null}
-                <div className="button-row">
+                <div className="status-banner__content">
+                  <strong className="status-banner__title">
+                    {draftPrompt.kind === 'restore'
+                      ? t({ zh: '检测到最近草稿，是否恢复？', en: 'Recent draft detected. Restore it?' })
+                      : draftPrompt.title}
+                  </strong>
+                  <p className="status-banner__detail">
+                    {draftPrompt.kind === 'restore'
+                      ? `${formatDateTime(draftPrompt.preview.snapshot.updatedAt)} · ${
+                          locale === 'zh-CN'
+                            ? `${Object.keys(draftPrompt.preview.placements).length} 名英雄`
+                            : `${Object.keys(draftPrompt.preview.placements).length} champions`
+                        } · ${draftPrompt.preview.layoutName}`
+                      : draftPrompt.detail}
+                  </p>
                   {draftPrompt.kind === 'restore' ? (
-                    <button type="button" className="action-button action-button--secondary" onClick={handleRestoreRecentDraft}>
-                      {t({ zh: '恢复最近草稿', en: 'Restore recent draft' })}
+                    <>
+                      <p className="status-banner__detail">{buildRestoreStatusDetail(draftPrompt.preview)}</p>
+                      <div className="tag-row status-banner__meta">
+                        <span className="tag-pill tag-pill--muted">
+                          {t({ zh: '保存版本', en: 'Saved version' })}：{draftPrompt.preview.snapshot.dataVersion}
+                        </span>
+                        <span className="tag-pill tag-pill--muted">
+                          {t({ zh: '恢复版本', en: 'Restore version' })}：{draftPrompt.preview.dataVersion}
+                        </span>
+                        <span className="tag-pill tag-pill--muted">
+                          {draftPrompt.preview.restoreMode === 'compatible'
+                            ? t({ zh: '兼容恢复', en: 'Compatible restore' })
+                            : t({ zh: '原样恢复', en: 'Exact restore' })}
+                        </span>
+                      </div>
+                    </>
+                  ) : null}
+                </div>
+                <div className="status-banner__actions">
+                  {draftPrompt.kind === 'restore' ? (
+                    <button
+                      type="button"
+                      className="action-button action-button--secondary"
+                      onClick={handleRestoreRecentDraft}
+                    >
+                      {t({ zh: '恢复最近草稿', en: 'Restore draft' })}
                     </button>
                   ) : null}
-                  <button type="button" className="action-button action-button--ghost" onClick={handleKeepDraftWithoutRestore}>
-                    {t({ zh: '先保留不恢复', en: 'Keep it for now' })}
+                  <button
+                    type="button"
+                    className="action-button action-button--ghost"
+                    onClick={handleKeepDraftWithoutRestore}
+                  >
+                    {t({ zh: '先保留不恢复', en: 'Keep for now' })}
                   </button>
-                  <button type="button" className="action-button action-button--ghost" onClick={handleDiscardRecentDraft}>
-                    {t({ zh: '丢弃旧草稿', en: 'Discard old draft' })}
+                  <button
+                    type="button"
+                    className="action-button action-button--ghost"
+                    onClick={handleDiscardRecentDraft}
+                  >
+                    {t({ zh: '丢弃旧草稿', en: 'Discard draft' })}
                   </button>
                 </div>
               </div>
             ) : draftStatus ? (
               <div className={getStatusBannerClassName(draftStatus.tone)}>
-                <strong>{draftStatus.title}</strong>
-                <p className="supporting-text">{draftStatus.detail}</p>
+                <div className="status-banner__content">
+                  <strong className="status-banner__title">{draftStatus.title}</strong>
+                  <p className="status-banner__detail">{draftStatus.detail}</p>
+                </div>
               </div>
             ) : null}
 
@@ -752,13 +759,15 @@ export function FormationPage() {
                   </article>
                 </div>
 
-                {selectedLayout.notes ? <div className="status-banner status-banner--info">{selectedLayout.notes}</div> : null}
+                {selectedLayout.notes ? (
+                  <div className="status-banner status-banner--info">{selectedLayout.notes}</div>
+                ) : null}
 
                 {conflictingSeats.length > 0 ? (
                   <div className="status-banner status-banner--error">
                     {t({
                       zh: `当前阵型里出现 seat 冲突：${conflictingSeats.join(', ')}。同一 seat 只能放一名英雄。`,
-                      en: `Seat conflicts found: ${conflictingSeats.join(', ')}. Only one champion may occupy each seat.`,
+                      en: `Seat conflicts found in this formation: ${conflictingSeats.join(', ')}. Only one champion may occupy each seat.`,
                     })}
                   </div>
                 ) : null}
@@ -779,7 +788,11 @@ export function FormationPage() {
                           <span className="formation-slot__label">
                             {locale === 'zh-CN' ? `槽位 ${index + 1}` : `Slot ${index + 1}`}
                           </span>
-                          <select className="slot-select" value={championId} onChange={(event) => handleAssignChampion(slot.id, event.target.value)}>
+                          <select
+                            className="slot-select"
+                            value={championId}
+                            onChange={(event) => handleAssignChampion(slot.id, event.target.value)}
+                          >
                             <option value="">{t({ zh: '未放置', en: 'Empty' })}</option>
                             {championOptions.map((item) => (
                               <option key={item.id} value={item.id}>
@@ -824,10 +837,13 @@ export function FormationPage() {
 
       <SurfaceCard
         eyebrow={t({ zh: '阵型摘要', en: 'Formation summary' })}
-        title={t({ zh: '把工作草稿保存成命名方案，再交给方案存档页管理', en: 'Save the working draft as a named preset' })}
+        title={t({
+          zh: '把工作草稿保存成命名方案，再交给方案存档页管理',
+          en: 'Turn the working draft into a named preset',
+        })}
         description={t({
-          zh: '最近草稿继续留在阵型页自动保存；命名方案会进入方案存档页，后续可恢复回阵型页。',
-          en: 'Recent drafts stay here automatically, while named presets move to the presets page for later restore.',
+          zh: '最近草稿继续留在阵型页自动保存；命名方案会进入方案存档页，后续可编辑、删除并恢复回阵型页。',
+          en: 'Recent drafts stay on this page for auto-save, while named presets move into the preset library for later edit, delete, and restore.',
         })}
       >
         <div className="split-grid">
@@ -842,13 +858,16 @@ export function FormationPage() {
                 type="text"
                 value={presetForm.name}
                 onChange={(event) => updatePresetForm('name', event.target.value)}
-                placeholder={t({ zh: '例如：速刷常用 10 槽波形', en: 'For example: Speed farming layout' })}
+                placeholder={t({
+                  zh: '例如：速刷常用 10 槽波形',
+                  en: 'Example: Speed farm core wave 10',
+                })}
               />
             </div>
 
             <div className="form-field">
               <label className="field-label" htmlFor="preset-description">
-                {t({ zh: '方案备注', en: 'Preset note' })}
+                {t({ zh: '方案备注', en: 'Preset notes' })}
               </label>
               <textarea
                 id="preset-description"
@@ -856,7 +875,10 @@ export function FormationPage() {
                 rows={4}
                 value={presetForm.description}
                 onChange={(event) => updatePresetForm('description', event.target.value)}
-                placeholder={t({ zh: '记录这套阵容适合什么目标、还有哪些待补位。', en: 'Capture what this preset is for and what still needs work.' })}
+                placeholder={t({
+                  zh: '记录这套阵容适合什么目标、还有哪些待补位。',
+                  en: 'Describe what this formation is for and what still needs tuning.',
+                })}
               />
             </div>
 
@@ -870,12 +892,15 @@ export function FormationPage() {
                 type="text"
                 value={presetForm.scenarioTagsInput}
                 onChange={(event) => updatePresetForm('scenarioTagsInput', event.target.value)}
-                placeholder={t({ zh: '例如：推图，速刷，Time Gate', en: 'For example: pushing, speed, Time Gate' })}
+                placeholder={t({
+                  zh: '例如：推图，速刷，Time Gate',
+                  en: 'Example: Push, speed, Time Gate',
+                })}
               />
               <span className="field-hint">
                 {t({
                   zh: '仅作用户可读标签，不作为恢复主键；可用中英文逗号分隔。',
-                  en: 'These are reader-friendly tags only, not restore keys; both Chinese and English commas work.',
+                  en: 'These are reader-friendly tags only, not restore keys. Use commas to separate them.',
                 })}
               </span>
             </div>
@@ -885,34 +910,43 @@ export function FormationPage() {
               <div className="segmented-control">
                 {PRESET_PRIORITY_OPTIONS.map((option) => (
                   <button
-                    key={option.value}
+                    key={option}
                     type="button"
                     className={
-                      presetForm.priority === option.value
+                      presetForm.priority === option
                         ? 'segmented-control__button segmented-control__button--active'
                         : 'segmented-control__button'
                     }
-                    onClick={() => updatePresetForm('priority', option.value)}
+                    onClick={() => handlePriorityChange(option)}
                   >
-                    {t(option.label)}
+                    {getPresetPriorityLabel(option)}
                   </button>
                 ))}
               </div>
             </div>
 
             <div className="button-row">
-              <button type="button" className="action-button action-button--secondary" onClick={handleSavePreset} disabled={!canSavePreset}>
-                {isSavingPreset ? t({ zh: '保存中…', en: 'Saving…' }) : t({ zh: '保存为方案', en: 'Save as preset' })}
+              <button
+                type="button"
+                className="action-button action-button--secondary"
+                onClick={handleSavePreset}
+                disabled={!canSavePreset}
+              >
+                {isSavingPreset
+                  ? t({ zh: '保存中…', en: 'Saving…' })
+                  : t({ zh: '保存为方案', en: 'Save as preset' })}
               </button>
               <button type="button" className="action-button action-button--ghost" onClick={handleOpenPresetsPage}>
-                {t({ zh: '查看方案存档', en: 'Open presets page' })}
+                {t({ zh: '查看方案存档', en: 'Open preset library' })}
               </button>
             </div>
 
             {presetStatus ? (
               <div className={getStatusBannerClassName(presetStatus.tone)}>
-                <strong>{presetStatus.title}</strong>
-                <p className="supporting-text">{presetStatus.detail}</p>
+                <div className="status-banner__content">
+                  <strong className="status-banner__title">{presetStatus.title}</strong>
+                  <p className="status-banner__detail">{presetStatus.detail}</p>
+                </div>
               </div>
             ) : null}
           </div>
@@ -920,7 +954,9 @@ export function FormationPage() {
           <div className="preview-grid">
             <article className="preview-card">
               <span className="preview-card__label">{t({ zh: '当前布局', en: 'Current layout' })}</span>
-              <strong className="preview-card__value">{selectedLayout?.name ?? t({ zh: '未选择', en: 'Not selected' })}</strong>
+              <strong className="preview-card__value">
+                {selectedLayout?.name ?? t({ zh: '未选择', en: 'Not selected' })}
+              </strong>
             </article>
             <article className="preview-card">
               <span className="preview-card__label">{t({ zh: '可保存英雄数', en: 'Savable champions' })}</span>
@@ -933,8 +969,12 @@ export function FormationPage() {
               </strong>
             </article>
             <article className="preview-card">
-              <span className="preview-card__label">{t({ zh: '数据版本', en: 'Data version' })}</span>
-              <strong className="preview-card__value">{state.status === 'ready' ? state.dataVersion : '-'}</strong>
+              <span className="preview-card__label">{t({ zh: '场景上下文', en: 'Scenario context' })}</span>
+              <strong className="preview-card__value">
+                {scenarioRef
+                  ? `${scenarioRef.kind}:${scenarioRef.id}`
+                  : t({ zh: '当前未绑定', en: 'Not linked yet' })}
+              </strong>
             </article>
           </div>
         </div>
@@ -943,7 +983,7 @@ export function FormationPage() {
           <p className="supporting-text">
             {t({
               zh: '当前还没有放置英雄。先选一个布局，再逐格选择英雄，页面会自动保存最近草稿；至少放置 1 名英雄后才可保存为命名方案。',
-              en: 'No champion is placed yet. Pick a layout and fill slots first; the page will autosave the draft, and you need at least one champion before saving a named preset.',
+              en: 'No champions are placed yet. Pick a layout, fill the slots, and the page will auto-save a recent draft. Place at least one champion before saving a named preset.',
             })}
           </p>
         ) : (
@@ -962,6 +1002,12 @@ export function FormationPage() {
                   <p className="supporting-text">
                     {locale === 'zh-CN' ? `${champion.seat} 号位` : `Seat ${champion.seat}`}
                   </p>
+                  {champion.affiliations.length > 0 ? (
+                    <p className="supporting-text">
+                      {t({ zh: '联动队伍', en: 'Affiliation' })}：
+                      {champion.affiliations.map((affiliation) => getLocalizedTextPair(affiliation, locale)).join(' / ')}
+                    </p>
+                  ) : null}
                   <div className="tag-row">
                     {champion.roles.map((role) => (
                       <span key={role} className="tag-pill">

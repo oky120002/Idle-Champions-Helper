@@ -21,9 +21,11 @@
 - 已补第一版官方中文映射层：`champions / affiliations / campaigns / variants` 保留“官方原文 + 中文展示名”双字段
 - 已补第一版界面语言切换，页面可在中文 / 英文界面之间切换
 - 已落最小测试基础设施：`Vitest`、`React Testing Library`、`Playwright`
-- 最近草稿与命名方案已接入 `IndexedDB`，支持本地自动保存、恢复与回写
+- 阵型页已接入“最近草稿”本地自动保存 / 恢复，持久化介质为 `IndexedDB`
+- 方案存档页已落第一版命名方案库：支持保存、编辑、删除、恢复回阵型页
+- 当前浏览器内的命名方案与最近草稿都已由 `IndexedDB` 承载
 - 已补官方 definitions 原文 + `language_id=7` 中文双快照抓取 / 归一化脚本
-- 当前仍处于早期阶段，测试覆盖与完整规则体系都还在逐步补齐
+- 当前仍处于早期阶段，完整规则体系与测试覆盖都还在继续补齐
 
 ## 当前技术路线
 
@@ -142,11 +144,6 @@ npm run data:build
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml
-├── tests/
-│   ├── component/
-│   ├── e2e/
-│   ├── setup/
-│   └── unit/
 ├── docs/
 │   ├── investigations/
 │   ├── modules/
@@ -179,13 +176,10 @@ npm run data:build
 ├── README.md
 ├── index.html
 ├── package.json
-├── playwright.config.ts
 ├── tsconfig.app.json
 ├── tsconfig.json
 ├── tsconfig.node.json
-├── tsconfig.test.json
-├── vite.config.ts
-└── vitest.config.ts
+└── vite.config.ts
 ```
 
 说明：
@@ -202,7 +196,7 @@ npm run data:build
 - `阵型编辑`
 - `方案存档`
 
-这些页面已经具备第一版真实数据查询、本地导入校验和阵型草稿 / 方案保存能力；但规则深度、推荐层与完整个人进度映射仍未完成。
+这些页面目前先承担结构验证与信息架构验证，不声称已经完成真实业务能力。
 
 ### 数据层约定
 
@@ -217,7 +211,7 @@ npm run data:build
 ### 部署约定
 
 - GitHub Pages 项目站
-- GitHub Actions 官方 Pages 工作流，部署严格依赖完整回归
+- GitHub Actions 官方 Pages 工作流
 - 生产环境 `base` 路径按仓库名处理
 - 第一阶段默认使用 `HashRouter`，避免 SPA 刷新 404 复杂度
 
@@ -227,23 +221,28 @@ npm run data:build
 - `docs/product/idle-champions-roadmap.md`：项目价值、范围、阶段路线、核心数据模型
 - `docs/research/data/static-data-storage-research.md`：静态数据存储与版本化策略
 - `docs/research/data/game-data-source-investigation.md`：基础游戏数据、个人数据凭证与第三方站点更新链路调研
+- `docs/research/data/language-id-7-chinese-definitions-research.md`：`language_id=7` 官方中文 definitions 覆盖范围与字段缺口核实
 - `docs/research/testing/regression-testing-research.md`：主分支整体回归测试框架设计
 - `docs/investigations/runtime/local-run-verification.md`：本地构建与预览行为验证记录
+- `docs/investigations/runtime/playwright-browser-launch-verification.md`：Playwright 浏览器启动与页面验收记录，包含受限会话失败与完全访问权限会话成功两种结果
 - `docs/investigations/repository/github-directory-commit-investigation.md`：`.github` 目录无法提交的本地原因排查
 - `docs/troubleshooting-log.md`：通用问题排查台账，沉淀部署、认证、网络、运行等问题的排查记录
+- `docs/modules/champions/champions-filter-design.md`：英雄筛选模块设计稿
+- `docs/modules/formation/formation-editor-design.md`：阵型编辑模块设计稿
+- `docs/modules/presets/presets-design.md`：方案存档模块设计稿
 - `docs/modules/user-data/user-data-import-design.md`：本地优先的个人数据导入方案与安全边界
 - `docs/research/deployment/static-hosting-research.md`：GitHub Pages 部署方案与路由策略
 - `docs/research/deployment/china-static-hosting-research.md`：国内访问体验研究存档，仅作背景参考，不作为正式发布路线依据
 
 ## 下一步建议
 
-1. 补 `FormationLayout` 的适用场景、上下文与必要的手工 overrides
-2. 完善阵型编辑页的 seat 冲突校验、候选英雄约束与布局提示
-3. 把个人数据导入结果安全写入 `IndexedDB`，接到页面状态与筛选闭环
-4. 扩展方案管理能力，例如删除、覆盖保存和更细的标签 / 目标描述
+1. 把 `scenarioRef` 与 `FormationLayout` 的适用场景接成真实上下文
+2. 补 `Patron / 模式过滤`、seat 冲突和候选英雄约束闭环
+3. 基于已通过的 Playwright 验收继续扩充页面回归，并把个人数据导入结果安全写入 `IndexedDB`
+4. 扩展个人画像与非阵型类本地数据能力
 
 ## 说明
 
 - 当前仓库里所有中文文案、页面标题、README 和调研文档默认使用中文。
 - 游戏术语或技术名词在没有稳定中文叫法时可保留原文；只要存在稳定中文叫法，就优先中文。
-- 当前已接入第一版真实公共数据与本地持久化闭环，但规则完整度、个人进度映射和推荐层仍处早期阶段，页面不应视为完成品。
+- 当前已接入第一版真实公共数据与本地持久化闭环，但规则完整度、个人进度映射和推荐层仍处于早期阶段，页面不应视为完成品。
