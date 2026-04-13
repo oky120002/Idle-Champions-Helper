@@ -60,6 +60,7 @@
 - `docs/product/documentation-governance.md`：文档治理方案，定义扫描触发条件、修复策略与单一事实源。
 - `docs/product/idle-champions-roadmap.md`：项目价值、范围、阶段路线与核心模型。
 - `docs/research/data/game-data-source-investigation.md`：基础游戏数据与个人数据来源调研。
+- `docs/research/data/champion-portrait-asset-research.md`：官方英雄头像字段、mobile assets 链路与尺寸核实。
 - `docs/research/data/language-id-7-chinese-definitions-research.md`：`language_id=7` 官方中文 definitions 链路与字段覆盖核实。
 - `docs/research/data/static-data-storage-research.md`：静态数据存储与版本化策略。
 - `docs/research/testing/regression-testing-research.md`：主分支整体回归测试框架设计。

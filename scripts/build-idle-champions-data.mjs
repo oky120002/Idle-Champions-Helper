@@ -2,6 +2,7 @@ import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import { fetchDefinitionsSnapshot } from './fetch-idle-champions-definitions.mjs'
 import { normalizeDefinitionsSnapshot } from './normalize-idle-champions-definitions.mjs'
+import { syncChampionPortraits } from './sync-idle-champions-portraits.mjs'
 
 async function main() {
   const { values } = parseArgs({
@@ -49,11 +50,17 @@ async function main() {
     currentVersion: values.currentVersion,
     manualOverrides: values.manualOverrides,
   })
+  const portraits = await syncChampionPortraits({
+    input: fetched.rawFile,
+    outputDir: values.outputDir,
+    masterApiUrl: values.masterApiUrl,
+  })
 
   console.log(`数据流水线完成：`)
   console.log(`- source raw: ${fetched.rawFile}`)
   console.log(`- display raw: ${localizedFetched.rawFile}`)
   console.log(`- normalized dir: ${normalized.outputDir}`)
+  console.log(`- portraits dir: ${portraits.outputDir}`)
   console.log(`- version file: ${normalized.versionFile}`)
 }
 

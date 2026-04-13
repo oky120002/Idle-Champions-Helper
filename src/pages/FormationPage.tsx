@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useI18n } from '../app/i18n'
+import { ChampionAvatar } from '../components/ChampionAvatar'
+import { ChampionIdentity } from '../components/ChampionIdentity'
+import { ChampionPill } from '../components/ChampionPill'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollectionAtVersion, loadVersion } from '../data/client'
 import {
@@ -19,8 +22,8 @@ import {
   getLocalizedTextPair,
   getPrimaryLocalizedText,
   getRoleLabel,
-  getSecondaryLocalizedText,
 } from '../domain/localizedText'
+import { buildOrderedChampionsFromPlacements } from '../domain/championPlacement'
 import type {
   Champion,
   FormationDraft,
@@ -417,6 +420,13 @@ export function FormationPage() {
     () => findSeatConflicts(selectedChampions.map((item) => item.champion.seat)),
     [selectedChampions],
   )
+  const draftPromptChampions = useMemo(() => {
+    if (!draftPrompt || draftPrompt.kind !== 'restore') {
+      return []
+    }
+
+    return buildOrderedChampionsFromPlacements(draftPrompt.preview.placements, draftPrompt.preview.champions)
+  }, [draftPrompt])
 
   const canSavePreset = selectedChampions.length > 0 && presetForm.name.trim().length > 0 && !isSavingPreset
 
@@ -678,6 +688,13 @@ export function FormationPage() {
                             : t({ zh: '原样恢复', en: 'Exact restore' })}
                         </span>
                       </div>
+                      {draftPromptChampions.length > 0 ? (
+                        <div className="tag-row status-banner__meta">
+                          {draftPromptChampions.map((champion, index) => (
+                            <ChampionPill key={`${champion.id}-${index}`} champion={champion} locale={locale} />
+                          ))}
+                        </div>
+                      ) : null}
                     </>
                   ) : null}
                 </div>
@@ -800,17 +817,28 @@ export function FormationPage() {
                               </option>
                             ))}
                           </select>
-                          <span className="formation-slot__hint">
-                            {champion
-                              ? t({
+                          {champion ? (
+                            <div className="formation-slot__current">
+                              <ChampionAvatar
+                                champion={champion}
+                                locale={locale}
+                                className="champion-avatar--slot"
+                              />
+                              <span className="formation-slot__hint">
+                                {t({
                                   zh: `当前：${getLocalizedTextPair(champion.name, locale)}`,
                                   en: `Current: ${getLocalizedTextPair(champion.name, locale)}`,
-                                })
-                              : t({
-                                  zh: `坐标 ${slot.row}-${slot.column}`,
-                                  en: `Position ${slot.row}-${slot.column}`,
                                 })}
-                          </span>
+                              </span>
+                            </div>
+                          ) : (
+                            <span className="formation-slot__hint">
+                              {t({
+                                zh: `坐标 ${slot.row}-${slot.column}`,
+                                en: `Position ${slot.row}-${slot.column}`,
+                              })}
+                            </span>
+                          )}
                         </div>
                       )
                     })}
@@ -989,16 +1017,9 @@ export function FormationPage() {
         ) : (
           <div className="results-grid">
             {selectedChampions.map(({ slotId, champion }) => {
-              const primaryName = getPrimaryLocalizedText(champion.name, locale)
-              const secondaryName = getSecondaryLocalizedText(champion.name, locale)
-
               return (
                 <article key={`${slotId}-${champion.id}`} className="result-card">
-                  <div className="result-card__header">
-                    <span className="result-card__eyebrow">{slotId}</span>
-                    <h3 className="result-card__title">{primaryName}</h3>
-                  </div>
-                  {secondaryName ? <p className="result-card__secondary">{secondaryName}</p> : null}
+                  <ChampionIdentity champion={champion} locale={locale} eyebrow={slotId} />
                   <p className="supporting-text">
                     {locale === 'zh-CN' ? `${champion.seat} 号位` : `Seat ${champion.seat}`}
                   </p>
