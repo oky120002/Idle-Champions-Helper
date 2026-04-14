@@ -22,6 +22,10 @@
   - 头像继续本地同步到版本化目录
   - 英雄本体立绘、皮肤立绘与皮肤头像不落本地二进制
   - 只在数据基座里保留 `graphicId / sourceGraphic / remoteUrl / delivery` 等远端可解析元数据，后续页面需要时再实时请求和解包
+- 但要注意一个部署边界：
+  - 2026-04-14 对 `master.idlechampions.com/~idledragons/mobile_assets/...` 做响应头核查时，未见 `Access-Control-Allow-Origin`
+  - 这意味着在 `GitHub Pages` 这类纯静态站点里，浏览器侧未必能直接跨域 `fetch` 这些官方二进制资源
+  - 所以前端页面应按“能预览则预览，失败则回退到元数据与原始地址”的方式设计，不能把浏览器直连解包当成稳定前提
 
 ---
 
@@ -99,6 +103,28 @@
 - 英雄立绘与皮肤立绘是“可解析”的
 - 但它们不是适合直接静态托管进仓库的轻量资源
 
+### 3.3 浏览器直连约束：当前未见 CORS 允许头
+
+2026-04-14 进一步对以下地址做响应头核查：
+
+- `https://master.idlechampions.com/~idledragons/mobile_assets/Characters/Hero_Bruenor`
+- `https://master.idlechampions.com/~idledragons/mobile_assets/Portraits/Portrait_Bruenor`
+
+结果：
+
+- 响应可正常返回 `200`
+- 但当前未见 `Access-Control-Allow-Origin`
+
+这带来的实际影响是：
+
+- Node 脚本、命令行抓取或后续代理链路仍然可以请求并解包
+- 但如果前端部署在 `GitHub Pages` 这类纯静态站点，浏览器端想直接 `fetch(remoteUrl)` 再做二进制解包，存在被跨域策略阻断的高概率风险
+
+因此当前仓库的页面接入策略应当是：
+
+- 保留运行时解包能力，方便后续代理、浏览器策略变化或本地特殊环境直接复用
+- 页面本身必须提供失败兜底：即使远端预览拉不起来，也要继续展示 `graphicId / remotePath / remoteUrl / delivery`
+
 ---
 
 ## 4. 本仓库落地策略
@@ -154,7 +180,8 @@
 
 - 当前已确认“引用链路 + 响应格式 + 样例可解包”成立。
 - 当前**还没有**为所有立绘资源逐个落地尺寸审计，也没有把这些大图同步进仓库。
-- 如果后续要做英雄详情页、皮肤图鉴或大图预览，建议在运行时按需请求 `remoteUrl` 并根据 `delivery` 解析，而不是预先把所有图片写入 Git 仓库。
+- 当前也**不能假设**纯静态站点里的浏览器一定能直接跨域解包这些远端资源，因为官方响应头暂未显式开放 CORS。
+- 如果后续要做英雄详情页、皮肤图鉴或大图预览，建议继续保留 `remoteUrl + delivery` 元数据，并以“浏览器按需尝试 + 失败回退元数据 / 后续代理 / 离线脚本”的方式推进，而不是预先把所有图片写入 Git 仓库。
 
 ---
 
