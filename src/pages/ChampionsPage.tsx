@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useI18n } from '../app/i18n'
 import { ChampionIdentity } from '../components/ChampionIdentity'
+import { ChampionVisualWorkbench } from '../components/ChampionVisualWorkbench'
 import { FieldGroup } from '../components/FieldGroup'
 import { LocalizedText } from '../components/LocalizedText'
 import { StatusBanner } from '../components/StatusBanner'
@@ -9,6 +10,7 @@ import { loadCollection } from '../data/client'
 import {
   formatSeatLabel,
   getLocalizedTextPair,
+  getPrimaryLocalizedText,
   getRoleLabel,
 } from '../domain/localizedText'
 import {
@@ -17,7 +19,7 @@ import {
   getChampionTagsForGroup,
   getChampionTagLabel,
 } from '../domain/championTags'
-import type { Champion, LocalizedText as LocalizedTextValue } from '../domain/types'
+import type { Champion, ChampionVisual, LocalizedText as LocalizedTextValue } from '../domain/types'
 import { filterChampions, toggleFilterValue } from '../rules/championFilter'
 
 interface StringEnumGroup {
@@ -47,6 +49,7 @@ type ChampionState =
   | {
       status: 'ready'
       champions: Champion[]
+      visuals: ChampionVisual[]
       roles: string[]
       affiliations: LocalizedTextValue[]
     }
@@ -111,12 +114,20 @@ export function ChampionsPage() {
   const [selectedProfessions, setSelectedProfessions] = useState<string[]>([])
   const [selectedAcquisitions, setSelectedAcquisitions] = useState<string[]>([])
   const [selectedMechanics, setSelectedMechanics] = useState<string[]>([])
+  const [selectedChampionId, setSelectedChampionId] = useState<string | null>(null)
 
   useEffect(() => {
     let disposed = false
 
-    Promise.all([loadCollection<Champion>('champions'), loadCollection<unknown>('enums')])
-      .then(([championCollection, enumCollection]) => {
+    Promise.all([
+      loadCollection<Champion>('champions'),
+      loadCollection<unknown>('enums'),
+      loadCollection<ChampionVisual>('champion-visuals').catch(() => ({
+        updatedAt: '',
+        items: [],
+      })),
+    ])
+      .then(([championCollection, enumCollection, visualCollection]) => {
         if (disposed) {
           return
         }
@@ -129,6 +140,7 @@ export function ChampionsPage() {
         setState({
           status: 'ready',
           champions: championCollection.items,
+          visuals: visualCollection.items,
           roles,
           affiliations,
         })
@@ -181,6 +193,12 @@ export function ChampionsPage() {
   ])
 
   const visibleChampions = filteredChampions.slice(0, MAX_VISIBLE_RESULTS)
+  const selectedChampion =
+    selectedChampionId !== null ? visibleChampions.find((champion) => champion.id === selectedChampionId) ?? null : null
+  const selectedChampionVisual =
+    state.status === 'ready' && selectedChampion
+      ? state.visuals.find((visual) => visual.championId === selectedChampion.id) ?? null
+      : null
   const matchedSeats = new Set(filteredChampions.map((champion) => champion.seat)).size
   const orderedSelectedSeats = seatOptions.filter((seat) => selectedSeats.includes(seat))
   const orderedSelectedRoles =
@@ -818,12 +836,26 @@ export function ChampionsPage() {
                   })}
                 </p>
 
+                {selectedChampion ? (
+                  <ChampionVisualWorkbench
+                    key={selectedChampion.id}
+                    champion={selectedChampion}
+                    visual={selectedChampionVisual}
+                    locale={locale}
+                    onClose={() => setSelectedChampionId(null)}
+                  />
+                ) : null}
+
                 <div className="results-grid">
                   {visibleChampions.map((champion) => {
                     const attributeGroups = getChampionAttributeGroups(champion.tags)
+                    const isSelected = champion.id === selectedChampionId
 
                     return (
-                      <article key={champion.id} className="result-card result-card--champion">
+                      <article
+                        key={champion.id}
+                        className={isSelected ? 'result-card result-card--champion result-card--selected' : 'result-card result-card--champion'}
+                      >
                         <ChampionIdentity
                           champion={champion}
                           locale={locale}
@@ -876,6 +908,21 @@ export function ChampionsPage() {
                               })}
                             </p>
                           )}
+                        </div>
+
+                        <div className="result-card__actions">
+                          <button
+                            type="button"
+                            className={isSelected ? 'action-button action-button--secondary action-button--toggled' : 'action-button action-button--ghost'}
+                            aria-label={t({
+                              zh: `查看 ${getPrimaryLocalizedText(champion.name, locale)} 视觉档案`,
+                              en: `View ${getPrimaryLocalizedText(champion.name, locale)} visual dossier`,
+                            })}
+                            aria-pressed={isSelected}
+                            onClick={() => setSelectedChampionId(champion.id)}
+                          >
+                            {isSelected ? t({ zh: '当前档案', en: 'Current dossier' }) : t({ zh: '视觉档案', en: 'Visual dossier' })}
+                          </button>
                         </div>
                       </article>
                     )
