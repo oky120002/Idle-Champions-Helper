@@ -3,9 +3,12 @@ import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import {
+  DEFAULT_MASTER_API_URL,
   buildChampionPortraitPath,
+  buildGraphicMap,
   collectChampionPortraitSources,
   isPlayableChampion,
+  resolveGraphicAssetById,
 } from './data/champion-portrait-helpers.mjs'
 import { extractOfficialFormations, looksLikeVariant } from './data/formation-layout-helpers.mjs'
 
@@ -618,6 +621,54 @@ function normalizeChampionSkin(originalDefinition, localizedDefinition) {
   }
 }
 
+function normalizeChampionVisualSkin(originalDefinition, localizedDefinition, graphicMap, baseUrl) {
+  const originalName = originalDefinition.name ?? originalDefinition.skin_name ?? `Skin ${originalDefinition.id}`
+  const displayName = localizedDefinition?.name ?? localizedDefinition?.skin_name ?? originalName
+
+  return {
+    id: String(originalDefinition.id),
+    name: normalizeLocalizedText(originalName, displayName, `Skin ${originalDefinition.id}`),
+    portrait: resolveGraphicAssetById(graphicMap, originalDefinition.details?.portrait_graphic_id, baseUrl),
+    base: resolveGraphicAssetById(graphicMap, originalDefinition.details?.base_graphic_id, baseUrl),
+    large: resolveGraphicAssetById(graphicMap, originalDefinition.details?.large_graphic_id, baseUrl),
+    xl: resolveGraphicAssetById(graphicMap, originalDefinition.details?.xl_graphic_id, baseUrl),
+  }
+}
+
+function normalizeChampionVisual(
+  originalDefinition,
+  localizedDefinition,
+  portraitSource,
+  skins,
+  graphicMap,
+  currentVersion,
+  baseUrl,
+) {
+  const originalName =
+    originalDefinition.name ??
+    originalDefinition.english_name ??
+    originalDefinition.character_sheet_details?.full_name ??
+    `Champion ${originalDefinition.id}`
+  const displayName =
+    localizedDefinition?.name ??
+    localizedDefinition?.character_sheet_details?.full_name ??
+    originalName
+
+  return {
+    championId: String(originalDefinition.id),
+    seat: Number(originalDefinition.seat_id ?? originalDefinition.seat ?? 0),
+    name: normalizeLocalizedText(originalName, displayName, `Champion ${originalDefinition.id}`),
+    portrait: portraitSource?.remote
+      ? {
+          localPath: buildChampionPortraitPath(currentVersion, String(originalDefinition.id)),
+          remote: portraitSource.remote,
+        }
+      : null,
+    base: resolveGraphicAssetById(graphicMap, originalDefinition.graphic_id, baseUrl),
+    skins,
+  }
+}
+
 function normalizeChampionDetail(
   champion,
   originalDefinition,
@@ -959,6 +1010,7 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
   const localizedDefinitions = options.localizedInput
     ? await readJson(path.resolve(options.localizedInput))
     : rawDefinitions
+  const masterApiUrl = options.masterApiUrl ?? DEFAULT_MASTER_API_URL
   const manualOverrides = await readManualOverrides(manualOverridesFile)
   const updatedAt = getUpdatedAt(rawDefinitions)
   const affiliationMap = buildAffiliationMap(
@@ -985,8 +1037,9 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
   const localizedFeatsById = buildIdMap(localizedDefinitions.hero_feat_defines)
   const skinsByHeroId = groupDefinitionsByHeroId(rawDefinitions.hero_skin_defines)
   const localizedSkinsById = buildIdMap(localizedDefinitions.hero_skin_defines)
+  const graphicMap = buildGraphicMap(rawDefinitions.graphic_defines)
   const portraitSourcesByChampionId = new Map(
-    collectChampionPortraitSources(rawDefinitions).map((source) => [source.championId, source]),
+    collectChampionPortraitSources(rawDefinitions, masterApiUrl).map((source) => [source.championId, source]),
   )
   const playableChampionDefinitions = (rawDefinitions.hero_defines ?? []).filter((definition) =>
     isPlayableChampion(definition),
@@ -1044,9 +1097,48 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
     normalizeManualFormations(manualOverrides.formations ?? []),
   )
   const enums = normalizeEnums(champions, affiliationMap, campaignMap)
+  const championVisuals = playableChampionDefinitions
+    .map((definition) => {
+      const championId = String(definition.id)
+      const skins = (skinsByHeroId.get(championId) ?? [])
+        .map((skinDefinition) =>
+          normalizeChampionVisualSkin(
+            skinDefinition,
+            localizedSkinsById.get(String(skinDefinition.id)),
+            graphicMap,
+            masterApiUrl,
+          ),
+        )
+        .sort(
+          (left, right) =>
+            left.name.display.localeCompare(right.name.display) ||
+            left.name.original.localeCompare(right.name.original) ||
+            Number(left.id) - Number(right.id),
+        )
+
+      return normalizeChampionVisual(
+        definition,
+        localizedChampionsById.get(championId),
+        portraitSourcesByChampionId.get(championId) ?? null,
+        skins,
+        graphicMap,
+        currentVersion,
+        masterApiUrl,
+      )
+    })
+    .sort(
+      (left, right) =>
+        left.seat - right.seat ||
+        left.name.display.localeCompare(right.name.display) ||
+        Number(left.championId) - Number(right.championId),
+    )
 
   await writeJson(path.join(outputDir, 'champions.json'), {
     items: champions,
+    updatedAt,
+  })
+  await writeJson(path.join(outputDir, 'champion-visuals.json'), {
+    items: championVisuals,
     updatedAt,
   })
   const championDetailsDir = path.join(outputDir, 'champion-details')
@@ -1074,6 +1166,7 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
       '名称展示层同时保留官方原文与 language_id=7 返回的中文展示名。',
       '英雄头像资源来自官方 mobile_assets，并按数据版本写入 public/data/<version>/champion-portraits/。',
       '英雄详情页数据按 public/data/<version>/champion-details/<hero-id>.json 输出，包含结构化字段与原始快照片段。',
+      '英雄本体立绘与皮肤资源保留为远端可解析元数据，见 public/data/<version>/champion-visuals.json。',
       '阵型布局已从官方 definitions 的 campaign / adventure game_changes 自动提取；手工补充层只用于必要覆写。',
     ],
   })
@@ -1084,6 +1177,7 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
     updatedAt,
     counts: {
       champions: champions.length,
+      championVisuals: championVisuals.length,
       championDetails: championDetails.length,
       variants: variants.length,
       formations: formations.length,
@@ -1103,6 +1197,7 @@ function printUsage() {
   --versionFile <file>       version.json 输出位置，默认 ${DEFAULT_VERSION_FILE}
   --currentVersion <name>    version.json 中的 current 字段，默认 ${DEFAULT_CURRENT_VERSION}
   --manualOverrides <file>   手工补充层 JSON，默认 ${DEFAULT_MANUAL_OVERRIDES}
+  --masterApiUrl <url>       远端 mobile_assets 基础地址，默认 ${DEFAULT_MASTER_API_URL}
   --help                     显示帮助
 `)
 }
@@ -1116,6 +1211,7 @@ async function main() {
       versionFile: { type: 'string' },
       currentVersion: { type: 'string' },
       manualOverrides: { type: 'string' },
+      masterApiUrl: { type: 'string' },
       help: { type: 'boolean' },
     },
   })
@@ -1132,7 +1228,7 @@ async function main() {
   console.log(`- version.json: ${result.versionFile}`)
   console.log(`- updatedAt: ${result.updatedAt}`)
   console.log(
-    `- counts: champions=${result.counts.champions}, championDetails=${result.counts.championDetails}, variants=${result.counts.variants}, formations=${result.counts.formations}, enums=${result.counts.enums}`,
+    `- counts: champions=${result.counts.champions}, championVisuals=${result.counts.championVisuals}, championDetails=${result.counts.championDetails}, variants=${result.counts.variants}, formations=${result.counts.formations}, enums=${result.counts.enums}`,
   )
 }
 
