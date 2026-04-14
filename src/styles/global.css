@@ -1624,7 +1624,8 @@ html[data-ui-locale='en-US'] .site-subtitle {
 }
 
 .text-input,
-.text-area {
+.text-area,
+.select-input {
   width: 100%;
   padding: 0.9rem 1rem;
   border: 1px solid rgba(227, 214, 193, 0.16);
@@ -1634,7 +1635,8 @@ html[data-ui-locale='en-US'] .site-subtitle {
 }
 
 .text-input:focus,
-.text-area:focus {
+.text-area:focus,
+.select-input:focus {
   outline: 1px solid rgba(200, 167, 127, 0.52);
   border-color: rgba(200, 167, 127, 0.52);
 }
@@ -3511,7 +3513,140 @@ html[data-ui-locale='en-US'] .site-subtitle {
   gap: 0.75rem;
 }
 
+.illustrations-page .surface-card__body {
+  gap: 1.5rem;
+}
+
+.illustrations-page__summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  color: rgba(244, 239, 226, 0.8);
+  font-size: 0.95rem;
+}
+
+.illustrations-page__filters {
+  display: grid;
+  grid-template-columns: minmax(16rem, 2fr) minmax(10rem, 0.75fr) minmax(16rem, 1.5fr);
+  gap: 1rem;
+  align-items: end;
+}
+
+.illustrations-page__search,
+.illustrations-page__view-filter {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.illustrations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 1.25rem;
+}
+
+.illustration-card {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 24px;
+  border: 1px solid rgba(227, 214, 193, 0.12);
+  background:
+    radial-gradient(circle at top, rgba(210, 173, 120, 0.14), transparent 58%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.02));
+  box-shadow: 0 18px 44px rgba(11, 8, 4, 0.24);
+}
+
+.illustration-card__image-shell {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 21rem;
+  padding: 1rem;
+  overflow: hidden;
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at top, rgba(207, 168, 112, 0.18), transparent 48%),
+    linear-gradient(180deg, rgba(17, 24, 38, 0.92), rgba(8, 12, 20, 0.92));
+}
+
+.illustration-card__image-shell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 1.35rem 1.35rem;
+  opacity: 0.28;
+}
+
+.illustration-card__image {
+  position: relative;
+  z-index: 1;
+  max-width: 100%;
+  max-height: 20rem;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 16px 22px rgba(0, 0, 0, 0.42));
+}
+
+.illustration-card__body {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.illustration-card__meta-row,
+.illustration-card__facts,
+.illustration-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.illustration-card__kind,
+.illustration-card__seat {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.38rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 246, 232, 0.86);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.illustration-card__title {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #fff7eb;
+}
+
+.illustration-card__secondary,
+.illustration-card__champion,
+.illustration-card__champion--muted {
+  margin: 0;
+  color: rgba(244, 239, 226, 0.74);
+}
+
+.illustration-card__champion {
+  font-weight: 700;
+}
+
+.illustration-card__champion--muted {
+  font-size: 0.92rem;
+}
+
+.illustration-card__facts {
+  color: rgba(223, 212, 193, 0.68);
+  font-size: 0.86rem;
+}
+
 @media (max-width: 1040px) {
+  .illustrations-page__filters {
+    grid-template-columns: 1fr;
+  }
+
   .visual-workbench__header,
   .visual-workbench__layout {
     grid-template-columns: 1fr;
@@ -3527,6 +3662,10 @@ html[data-ui-locale='en-US'] .site-subtitle {
   .visual-workbench {
     padding: 1rem;
     border-radius: 24px;
+  }
+
+  .illustration-card__image-shell {
+    min-height: 17rem;
   }
 
   .visual-workbench__stage {
@@ -3558,6 +3697,10 @@ html[data-ui-locale='en-US'] .site-subtitle {
 @media (max-width: 520px) {
   .visual-workbench__title-row {
     align-items: flex-start;
+  }
+
+  .illustrations-grid {
+    grid-template-columns: 1fr;
   }
 
   .visual-workbench__summary-pill {
