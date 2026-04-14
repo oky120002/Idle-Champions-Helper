@@ -23,6 +23,16 @@ async function getResultsTargetBottom(page: Page): Promise<number> {
   })
 }
 
+async function scrollIntoResultsQuickNavZone(page: Page): Promise<void> {
+  const targetTop = await getResultsTargetTop(page)
+  const activationTop = Math.max(targetTop - 120, 260)
+
+  await page.evaluate((top) => {
+    window.scrollTo({ top, behavior: 'instant' })
+  }, activationTop)
+  await page.waitForTimeout(120)
+}
+
 test('英雄筛选页点击筛选按钮时不应发生意外滚动跳转', async ({ page }) => {
   await page.addInitScript(() => {
     window.localStorage.removeItem('idle-champions-helper.locale')
@@ -84,9 +94,7 @@ test('英雄筛选页结果快捷按钮应支持一键到底和返回顶部', as
 
   await page.goto('./#/champions')
   await expect(page.getByRole('heading', { level: 2, name: '先用真实公共数据把查询入口跑起来' })).toBeVisible()
-
-  await page.evaluate(() => window.scrollTo({ top: 360, behavior: 'instant' }))
-  await page.waitForTimeout(120)
+  await scrollIntoResultsQuickNavZone(page)
 
   await expect(page.getByRole('button', { name: '跳到结果底部' })).toBeVisible()
 
