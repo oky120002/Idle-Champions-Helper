@@ -4,6 +4,7 @@ import { ChampionDetailPage } from '../pages/ChampionDetailPage'
 import { ChampionsPage } from '../pages/ChampionsPage'
 import { FormationPage } from '../pages/FormationPage'
 import { HomePage } from '../pages/HomePage'
+import { IllustrationsPage } from '../pages/IllustrationsPage'
 import { PresetsPage } from '../pages/PresetsPage'
 import { UserDataPage } from '../pages/UserDataPage'
 import { VariantsPage } from '../pages/VariantsPage'
@@ -12,6 +13,7 @@ import { type AppLocale, type LocaleText, useI18n } from './i18n'
 const navigation: Array<{ to: string; label: LocaleText }> = [
   { to: '/', label: { zh: '总览', en: 'Overview' } },
   { to: '/champions', label: { zh: '英雄筛选', en: 'Champions' } },
+  { to: '/illustrations', label: { zh: '立绘页', en: 'Illustrations' } },
   { to: '/variants', label: { zh: '变体限制', en: 'Variants' } },
   { to: '/formation', label: { zh: '阵型编辑', en: 'Formation' } },
   { to: '/presets', label: { zh: '方案存档', en: 'Presets' } },
@@ -178,6 +180,7 @@ export function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/champions" element={<ChampionsPage />} />
           <Route path="/champions/:championId" element={<ChampionDetailPage />} />
+          <Route path="/illustrations" element={<IllustrationsPage />} />
           <Route path="/variants" element={<VariantsPage />} />
           <Route path="/formation" element={<FormationPage />} />
           <Route path="/presets" element={<PresetsPage />} />
