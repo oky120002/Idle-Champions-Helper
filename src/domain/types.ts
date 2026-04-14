@@ -67,6 +67,34 @@ export interface ChampionVisual {
   skins: ChampionSkinVisual[]
 }
 
+export type ChampionIllustrationKind = 'hero-base' | 'skin'
+
+export type ChampionIllustrationSourceSlot = 'base' | 'large' | 'xl'
+
+export interface ChampionIllustrationImage {
+  path: string
+  width: number
+  height: number
+  bytes: number
+  format: 'png'
+}
+
+export interface ChampionIllustration {
+  id: string
+  championId: string
+  skinId: string | null
+  kind: ChampionIllustrationKind
+  seat: number
+  championName: LocalizedText
+  illustrationName: LocalizedText
+  portraitPath: string | null
+  sourceSlot: ChampionIllustrationSourceSlot
+  sourceGraphicId: string
+  sourceGraphic: string
+  sourceVersion: number | null
+  image: ChampionIllustrationImage
+}
+
 export interface Champion {
   id: string
   name: LocalizedText
