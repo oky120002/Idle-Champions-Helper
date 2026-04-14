@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Link, useLocation, useParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { type AppLocale, useI18n } from '../app/i18n'
 import { ChampionAvatar } from '../components/ChampionAvatar'
 import { SurfaceCard } from '../components/SurfaceCard'
-import { loadChampionDetail } from '../data/client'
+import { loadChampionDetail, resolveDataUrl } from '../data/client'
 import {
   getLocalizedTextPair,
   getPrimaryLocalizedText,
@@ -22,6 +22,7 @@ import type {
 } from '../domain/types'
 
 const DETAIL_SECTION_IDS = ['overview', 'character-sheet', 'combat', 'upgrades', 'feats', 'skins', 'raw'] as const
+const DETAIL_HASH_PREFIX = 'section-'
 
 type DetailSectionId = (typeof DETAIL_SECTION_IDS)[number]
 type DetailSectionProgressState = 'completed' | 'active' | 'upcoming'
@@ -67,6 +68,7 @@ interface FeatCardProps {
 interface SkinCardProps {
   skin: ChampionSkinDetail
   locale: AppLocale
+  onPreview: (skinId: string) => void
 }
 
 interface RawPairDisclosureProps {
@@ -77,6 +79,13 @@ interface RawPairDisclosureProps {
 interface RawEntriesDisclosureProps {
   title: string
   entries: ChampionRawEntry[]
+}
+
+interface SkinArtworkIds {
+  baseGraphicId: string | null
+  largeGraphicId: string | null
+  xlGraphicId: string | null
+  portraitGraphicId: string | null
 }
 
 function isJsonObject(value: JsonValue): value is Record<string, JsonValue> {
@@ -177,6 +186,61 @@ function buildRarityLabel(value: string | null, locale: AppLocale): string {
   }
 
   return locale === 'zh-CN' ? `稀有度 ${value}` : `Rarity ${value}`
+}
+
+function readGraphicId(value: JsonValue, key: string): string | null {
+  if (!isJsonObject(value)) {
+    return null
+  }
+
+  const candidate = value[key]
+
+  if (candidate === null || candidate === undefined) {
+    return null
+  }
+
+  const normalized = String(candidate).trim()
+  return normalized.length > 0 ? normalized : null
+}
+
+function getSkinArtworkIds(skin: ChampionSkinDetail): SkinArtworkIds {
+  return {
+    baseGraphicId: readGraphicId(skin.details, 'base_graphic_id'),
+    largeGraphicId: readGraphicId(skin.details, 'large_graphic_id'),
+    xlGraphicId: readGraphicId(skin.details, 'xl_graphic_id'),
+    portraitGraphicId: readGraphicId(skin.details, 'portrait_graphic_id'),
+  }
+}
+
+function buildSkinPreviewAlt(skin: ChampionSkinDetail, locale: AppLocale): string {
+  const primaryName = getPrimaryLocalizedText(skin.name, locale)
+  return locale === 'zh-CN' ? `${primaryName}皮肤预览` : `${primaryName} skin preview`
+}
+
+function buildSkinPortraitPreviewUrl(portraitGraphicId: string | null): string | null {
+  if (!portraitGraphicId) {
+    return null
+  }
+
+  // The reference viewer exposes decoded portrait PNGs, which keeps this preview usable
+  // until skin illustration assets are versioned locally like champion portraits.
+  return `https://idle.kleho.ru/assets/g/${encodeURIComponent(portraitGraphicId)}.png`
+}
+
+function resolveSkinPreviewUrl(
+  skin: ChampionSkinDetail,
+  champion: ChampionDetail['summary'],
+  useFallbackPortrait = false,
+): string | null {
+  if (!useFallbackPortrait) {
+    const portraitPreviewUrl = buildSkinPortraitPreviewUrl(getSkinArtworkIds(skin).portraitGraphicId)
+
+    if (portraitPreviewUrl) {
+      return portraitPreviewUrl
+    }
+  }
+
+  return champion.portrait?.path ? resolveDataUrl(champion.portrait.path) : null
 }
 
 function DetailField({ label, value, hint }: DetailFieldProps) {
@@ -321,7 +385,9 @@ function FeatCard({ feat, locale }: FeatCardProps) {
   )
 }
 
-function SkinCard({ skin, locale }: SkinCardProps) {
+function SkinCard({ skin, locale, onPreview }: SkinCardProps) {
+  const artworkIds = getSkinArtworkIds(skin)
+
   return (
     <article className="detail-subcard skin-card">
       <div className="detail-subcard__header">
@@ -329,6 +395,25 @@ function SkinCard({ skin, locale }: SkinCardProps) {
           <p className="detail-subcard__eyebrow">{buildRarityLabel(skin.rarity, locale)}</p>
           <h3 className="detail-subcard__title">{getLocalizedTextPair(skin.name, locale)}</h3>
         </div>
+        <button
+          type="button"
+          className="action-button action-button--ghost action-button--compact"
+          aria-label={
+            locale === 'zh-CN'
+              ? `查看立绘：${getPrimaryLocalizedText(skin.name, locale)}`
+              : `Preview artwork: ${getPrimaryLocalizedText(skin.name, locale)}`
+          }
+          onClick={() => onPreview(skin.id)}
+        >
+          {locale === 'zh-CN' ? '查看立绘' : 'Preview'}
+        </button>
+      </div>
+
+      <div className="detail-field-grid detail-field-grid--compact">
+        <DetailField label={locale === 'zh-CN' ? 'Base Graphic ID' : 'Base graphic ID'} value={formatNullableText(artworkIds.baseGraphicId, locale)} />
+        <DetailField label={locale === 'zh-CN' ? 'Large Graphic ID' : 'Large graphic ID'} value={formatNullableText(artworkIds.largeGraphicId, locale)} />
+        <DetailField label={locale === 'zh-CN' ? 'XL Graphic ID' : 'XL graphic ID'} value={formatNullableText(artworkIds.xlGraphicId, locale)} />
+        <DetailField label={locale === 'zh-CN' ? 'Portrait Graphic ID' : 'Portrait graphic ID'} value={formatNullableText(artworkIds.portraitGraphicId, locale)} />
       </div>
 
       <div className="detail-inline-grid">
@@ -391,8 +476,11 @@ function isDetailSectionId(value: string): value is DetailSectionId {
 
 function resolveSectionIdFromHashValue(hashValue: string): DetailSectionId | null {
   const normalizedHash = hashValue.startsWith('#') ? hashValue.slice(1) : hashValue
+  const normalizedSectionId = normalizedHash.startsWith(DETAIL_HASH_PREFIX)
+    ? normalizedHash.slice(DETAIL_HASH_PREFIX.length)
+    : normalizedHash
 
-  return isDetailSectionId(normalizedHash) ? normalizedHash : null
+  return isDetailSectionId(normalizedSectionId) ? normalizedSectionId : null
 }
 
 function resolveSectionIdFromBrowserHash(hash: string): DetailSectionId | null {
@@ -407,7 +495,7 @@ function resolveSectionIdFromBrowserHash(hash: string): DetailSectionId | null {
 }
 
 function buildSectionHash(pathname: string, search: string, sectionId: DetailSectionId): string {
-  return `#${pathname}${search}#${sectionId}`
+  return `#${pathname}${search}#${DETAIL_HASH_PREFIX}${sectionId}`
 }
 
 function resolveActiveSectionId(): DetailSectionId {
@@ -434,10 +522,16 @@ function resolveActiveSectionId(): DetailSectionId {
 export function ChampionDetailPage() {
   const { championId } = useParams<{ championId: string }>()
   const location = useLocation()
+  const navigate = useNavigate()
   const { locale, t } = useI18n()
   const [state, setState] = useState<ChampionDetailState>({ status: 'idle' })
   const [activeSectionId, setActiveSectionId] = useState<DetailSectionId>(DETAIL_SECTION_IDS[0])
   const pendingHashSectionIdRef = useRef<DetailSectionId | null>(null)
+  const handledSectionHashRef = useRef<string | null>(null)
+  const isLeavingPageRef = useRef(false)
+  const [artworkDialogChampionId, setArtworkDialogChampionId] = useState<string | null>(null)
+  const [selectedSkinId, setSelectedSkinId] = useState<string | null>(null)
+  const [failedSkinPreviewIds, setFailedSkinPreviewIds] = useState<Record<string, boolean>>({})
   const isMissingChampionId = !championId
 
   useEffect(() => {
@@ -446,6 +540,9 @@ export function ChampionDetailPage() {
     if (!championId) {
       return undefined
     }
+
+    pendingHashSectionIdRef.current = null
+    handledSectionHashRef.current = null
 
     loadChampionDetail(championId)
       .then((detail) => {
@@ -477,8 +574,20 @@ export function ChampionDetailPage() {
     }
   }, [championId])
 
+  useEffect(() => {
+    isLeavingPageRef.current = false
+  }, [championId])
+
   const detail =
     state.status === 'ready' && state.detail.summary.id === championId ? state.detail : null
+  const isArtworkDialogOpen = detail ? artworkDialogChampionId === detail.summary.id : false
+  const selectedSkin = useMemo(() => {
+    if (!detail || detail.skins.length === 0) {
+      return null
+    }
+
+    return detail.skins.find((skin) => skin.id === selectedSkinId) ?? detail.skins[0]
+  }, [detail, selectedSkinId])
   const isLoading =
     !isMissingChampionId &&
     (state.status === 'idle' ||
@@ -556,6 +665,54 @@ export function ChampionDetailPage() {
     typeof window === 'undefined'
       ? resolveSectionIdFromHashValue(location.hash)
       : resolveSectionIdFromBrowserHash(window.location.hash) ?? resolveSectionIdFromHashValue(location.hash)
+  const selectedSkinArtworkIds = selectedSkin ? getSkinArtworkIds(selectedSkin) : null
+  const selectedSkinPreviewKey = detail && selectedSkin ? `${detail.summary.id}:${selectedSkin.id}` : null
+  const selectedSkinPreviewUrl =
+    detail && selectedSkin
+      ? resolveSkinPreviewUrl(
+          selectedSkin,
+          detail.summary,
+          Boolean(selectedSkinPreviewKey && failedSkinPreviewIds[selectedSkinPreviewKey]),
+        )
+      : null
+
+  const openArtworkDialog = (skinId?: string) => {
+    if (!detail || detail.skins.length === 0) {
+      return
+    }
+
+    const nextSkinId = skinId && detail.skins.some((skin) => skin.id === skinId) ? skinId : detail.skins[0]?.id ?? null
+
+    setSelectedSkinId(nextSkinId)
+    setArtworkDialogChampionId(detail.summary.id)
+  }
+
+  const closeArtworkDialog = () => {
+    setArtworkDialogChampionId(null)
+    setSelectedSkinId(null)
+  }
+
+  useEffect(() => {
+    if (!isArtworkDialogOpen || typeof window === 'undefined') {
+      return undefined
+    }
+
+    const previousOverflow = document.body.style.overflow
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closeArtworkDialog()
+      }
+    }
+
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isArtworkDialogOpen])
 
   useEffect(() => {
     if (!detail || typeof window === 'undefined') {
@@ -588,11 +745,19 @@ export function ChampionDetailPage() {
   }, [detail])
 
   useEffect(() => {
-    if (!detail || !hashSectionId || hashSectionId === activeSectionId || typeof window === 'undefined') {
+    if (!detail || !hashSectionId || typeof window === 'undefined') {
       return
     }
 
+    const browserHash = window.location.hash
+
+    if (handledSectionHashRef.current === browserHash) {
+      return
+    }
+
+    handledSectionHashRef.current = browserHash
     pendingHashSectionIdRef.current = hashSectionId
+
     const frameId = window.requestAnimationFrame(() => {
       setActiveSectionId(hashSectionId)
       document.getElementById(hashSectionId)?.scrollIntoView({ behavior: 'auto', block: 'start' })
@@ -601,10 +766,14 @@ export function ChampionDetailPage() {
     return () => {
       window.cancelAnimationFrame(frameId)
     }
-  }, [activeSectionId, detail, hashSectionId])
+  }, [detail, hashSectionId])
 
   useEffect(() => {
     if (!detail || typeof window === 'undefined') {
+      return
+    }
+
+    if (isLeavingPageRef.current) {
       return
     }
 
@@ -613,6 +782,7 @@ export function ChampionDetailPage() {
     }
 
     const nextHash = buildSectionHash(location.pathname, location.search, activeSectionId)
+    handledSectionHashRef.current = nextHash
 
     if (window.location.hash === nextHash) {
       return
@@ -632,6 +802,7 @@ export function ChampionDetailPage() {
 
       if (typeof window !== 'undefined') {
         const nextHash = buildSectionHash(location.pathname, location.search, id)
+        handledSectionHashRef.current = nextHash
 
         if (window.location.hash !== nextHash) {
           window.history.replaceState(
@@ -646,14 +817,23 @@ export function ChampionDetailPage() {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
+  const backToChampions = {
+    pathname: '/champions',
+    search: location.search,
+  } as const
+
   return (
     <div className="page-stack champion-detail-page">
       <div className="page-backlink-row">
         <Link
           className="page-backlink"
-          to={{
-            pathname: '/champions',
-            search: location.search,
+          to={backToChampions}
+          onClick={(event) => {
+            // HashRouter pages here also manage an in-page section hash. Navigate explicitly so
+            // leaving the page does not race with the section-hash sync effect and bounce back.
+            event.preventDefault()
+            isLeavingPageRef.current = true
+            navigate(backToChampions)
           }}
         >
           {t({ zh: '← 返回英雄筛选', en: '← Back to champions' })}
@@ -708,7 +888,22 @@ export function ChampionDetailPage() {
           <section className="champion-dossier">
             <div className="champion-dossier__grid">
               <div className="champion-dossier__identity">
-                <ChampionAvatar champion={detail.summary} locale={locale} className="champion-avatar--dossier" loading="eager" />
+                <div className="champion-dossier__avatar-stage">
+                  <ChampionAvatar champion={detail.summary} locale={locale} className="champion-avatar--dossier" loading="eager" />
+                  {detail.skins.length > 0 ? (
+                    <button
+                      type="button"
+                      className="champion-dossier__artwork-button"
+                      aria-label={t({ zh: '打开皮肤立绘预览', en: 'Open skin artwork preview' })}
+                      onClick={() => openArtworkDialog()}
+                    >
+                      <span aria-hidden="true" className="champion-dossier__artwork-icon">
+                        ◎
+                      </span>
+                      <span>{t({ zh: '看皮肤立绘', en: 'View skins' })}</span>
+                    </button>
+                  ) : null}
+                </div>
                 <div className="champion-dossier__copy">
                   <p className="champion-dossier__eyebrow">
                     {locale === 'zh-CN' ? `${detail.summary.seat} 号位 · 英雄 #${detail.summary.id}` : `Seat ${detail.summary.seat} · Champion #${detail.summary.id}`}
@@ -981,7 +1176,12 @@ export function ChampionDetailPage() {
                 <div id="skins" className="detail-section-anchor" />
                 <div className="detail-card-grid">
                   {detail.skins.map((skin) => (
-                    <SkinCard key={skin.id} skin={skin} locale={locale} />
+                    <SkinCard
+                      key={skin.id}
+                      skin={skin}
+                      locale={locale}
+                      onPreview={openArtworkDialog}
+                    />
                   ))}
                 </div>
               </SurfaceCard>
@@ -1073,6 +1273,115 @@ export function ChampionDetailPage() {
               </div>
             </aside>
           </div>
+
+          {isArtworkDialogOpen && selectedSkin ? (
+            <div
+              className="skin-artwork-dialog"
+              role="dialog"
+              aria-modal="true"
+              aria-label={t({ zh: '皮肤立绘预览', en: 'Skin artwork preview' })}
+              onClick={closeArtworkDialog}
+            >
+              <div className="skin-artwork-dialog__backdrop" aria-hidden="true" />
+              <div className="skin-artwork-dialog__panel" onClick={(event) => event.stopPropagation()}>
+                <div className="skin-artwork-dialog__header">
+                  <div className="skin-artwork-dialog__copy">
+                    <p className="champion-detail-sidebar__eyebrow">{t({ zh: '皮肤立绘预览', en: 'Skin artwork preview' })}</p>
+                    <h3 className="skin-artwork-dialog__title">{getLocalizedTextPair(selectedSkin.name, locale)}</h3>
+                    <p className="skin-artwork-dialog__hint">
+                      {t({
+                        zh: '当前先用各皮肤的 portrait 预览图集中切换，下方继续保留 large / xl graphic id，方便后续对照原始资源。',
+                        en: 'This overlay currently uses the portrait-style preview for each skin while keeping the large / xl graphic ids visible for deeper asset verification.',
+                      })}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    className="skin-artwork-dialog__close"
+                    aria-label={t({ zh: '关闭皮肤立绘预览', en: 'Close skin artwork preview' })}
+                    onClick={closeArtworkDialog}
+                  >
+                    ×
+                  </button>
+                </div>
+
+                <div className="skin-artwork-dialog__body">
+                  <div className="skin-artwork-dialog__stage">
+                    <div className="skin-artwork-dialog__canvas">
+                      {selectedSkinPreviewUrl ? (
+                        <img
+                          key={`${selectedSkinPreviewKey ?? selectedSkin.id}:${Boolean(
+                            selectedSkinPreviewKey && failedSkinPreviewIds[selectedSkinPreviewKey],
+                          )}`}
+                          className="skin-artwork-dialog__image"
+                          src={selectedSkinPreviewUrl}
+                          alt={buildSkinPreviewAlt(selectedSkin, locale)}
+                          loading="eager"
+                          onError={() => {
+                            if (!selectedSkinPreviewKey) {
+                              return
+                            }
+
+                            setFailedSkinPreviewIds((current) =>
+                              current[selectedSkinPreviewKey]
+                                ? current
+                                : { ...current, [selectedSkinPreviewKey]: true },
+                            )
+                          }}
+                        />
+                      ) : (
+                        <div className="skin-artwork-dialog__fallback">
+                          {t({ zh: '当前没有可用的皮肤预览资源。', en: 'No skin preview asset is available right now.' })}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="detail-field-grid detail-field-grid--compact">
+                      <DetailField label={t({ zh: 'Base Graphic ID', en: 'Base graphic ID' })} value={formatNullableText(selectedSkinArtworkIds?.baseGraphicId ?? null, locale)} />
+                      <DetailField label={t({ zh: 'Large Graphic ID', en: 'Large graphic ID' })} value={formatNullableText(selectedSkinArtworkIds?.largeGraphicId ?? null, locale)} />
+                      <DetailField label={t({ zh: 'XL Graphic ID', en: 'XL graphic ID' })} value={formatNullableText(selectedSkinArtworkIds?.xlGraphicId ?? null, locale)} />
+                      <DetailField label={t({ zh: 'Portrait Graphic ID', en: 'Portrait graphic ID' })} value={formatNullableText(selectedSkinArtworkIds?.portraitGraphicId ?? null, locale)} />
+                    </div>
+                  </div>
+
+                  <div className="skin-artwork-dialog__selector">
+                    <p className="skin-artwork-dialog__selector-title">{t({ zh: '切换皮肤', en: 'Switch skins' })}</p>
+                    <div className="skin-artwork-dialog__tabs">
+                      {detail.skins.map((skin) => {
+                        const artworkIds = getSkinArtworkIds(skin)
+
+                        return (
+                          <button
+                            key={skin.id}
+                            type="button"
+                            className={
+                              selectedSkin.id === skin.id
+                                ? 'skin-artwork-dialog__tab skin-artwork-dialog__tab--active'
+                                : 'skin-artwork-dialog__tab'
+                            }
+                            aria-label={
+                              locale === 'zh-CN'
+                                ? `切换皮肤：${getPrimaryLocalizedText(skin.name, locale)}`
+                                : `Switch skin: ${getPrimaryLocalizedText(skin.name, locale)}`
+                            }
+                            aria-pressed={selectedSkin.id === skin.id}
+                            onClick={() => setSelectedSkinId(skin.id)}
+                          >
+                            <span className="skin-artwork-dialog__tab-title">{getPrimaryLocalizedText(skin.name, locale)}</span>
+                            <span className="skin-artwork-dialog__tab-meta">
+                              {artworkIds.largeGraphicId || artworkIds.xlGraphicId || artworkIds.portraitGraphicId
+                                ? `ID ${artworkIds.largeGraphicId ?? artworkIds.xlGraphicId ?? artworkIds.portraitGraphicId}`
+                                : t({ zh: '暂无图像字段', en: 'No graphic id' })}
+                            </span>
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : null}
         </>
       ) : null}
     </div>
