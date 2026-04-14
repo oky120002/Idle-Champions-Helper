@@ -1,23 +1,41 @@
 import { expect, test } from '@playwright/test'
 
-test('英雄详情页支持分区进度提示与 hash 定位保留', async ({ page }) => {
-  await page.goto('./#/champions/7')
+test('英雄筛选卡片进入详情后，详情 hash 与返回链路保持闭环', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.localStorage.removeItem('idle-champions-helper.locale')
+  })
 
-  await expect(page).toHaveURL(/#\/champions\/7#overview$/)
+  await page.goto('./#/champions')
+  await expect(page.getByRole('heading', { level: 2, name: '先用真实公共数据把查询入口跑起来' })).toBeVisible()
+
+  await page.getByRole('button', { name: '7 号位', exact: true }).click()
+  await expect(page).toHaveURL(/#\/champions\?seat=7$/)
+
+  const minscCard = page.getByRole('link', { name: /查看详情：明斯克/ })
+  await expect(minscCard).toBeVisible()
+  await minscCard.click()
+
+  await expect(page).toHaveURL(/#\/champions\/7\?seat=7#section-overview$/)
   await expect(page.getByRole('heading', { level: 2, name: '明斯克' })).toBeVisible()
+  await expect(page.getByRole('link', { name: '← 返回英雄筛选' })).toHaveAttribute('href', /#\/champions\?seat=7$/)
   await expect(page.locator('.champion-detail-sidebar__progress-copy')).toHaveText('当前浏览 · 概览')
-  await expect(page.getByTestId('sidebar-section-overview')).toHaveAttribute('data-progress-state', 'active')
 
   await page.getByTestId('sidebar-section-upgrades').click()
 
-  await expect(page).toHaveURL(/#\/champions\/7#upgrades$/)
+  await expect(page).toHaveURL(/#\/champions\/7\?seat=7#section-upgrades$/)
   await expect(page.locator('.champion-detail-sidebar__progress-copy')).toHaveText('当前浏览 · 升级')
   await expect(page.getByTestId('sidebar-section-overview')).toHaveAttribute('data-progress-state', 'completed')
   await expect(page.getByTestId('sidebar-section-upgrades')).toHaveAttribute('data-progress-state', 'active')
 
   await page.reload()
 
-  await expect(page).toHaveURL(/#\/champions\/7#upgrades$/)
+  await expect(page).toHaveURL(/#\/champions\/7\?seat=7#section-upgrades$/)
   await expect(page.locator('.champion-detail-sidebar__progress-copy')).toHaveText('当前浏览 · 升级')
   await expect(page.getByTestId('sidebar-section-upgrades')).toHaveAttribute('data-progress-state', 'active')
+
+  await page.getByRole('link', { name: '← 返回英雄筛选' }).click()
+
+  await expect(page).toHaveURL(/#\/champions\?seat=7$/)
+  await expect(page.getByRole('button', { name: '7 号位', exact: true })).toHaveAttribute('aria-pressed', 'true')
+  await expect(page.getByRole('link', { name: /查看详情：明斯克/ })).toBeVisible()
 })
