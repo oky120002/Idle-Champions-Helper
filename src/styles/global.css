@@ -2204,15 +2204,76 @@ html[data-ui-locale='en-US'] .site-subtitle {
   margin-top: 1rem;
 }
 
+.detail-data-panel,
 .detail-json-panel {
   padding: 0.85rem;
   border-radius: 18px;
 }
 
+.detail-data-panel__title,
 .detail-json-panel__title {
   margin: 0 0 0.55rem;
   color: #fff8ec;
   font-size: 0.92rem;
+}
+
+.detail-structured-fields,
+.detail-structured-stack,
+.detail-effect-list {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.detail-structured-field,
+.detail-structured-card,
+.detail-effect-item {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.8rem;
+  border: 1px solid rgba(227, 214, 193, 0.08);
+  border-radius: 16px;
+  background: rgba(7, 12, 18, 0.3);
+}
+
+.detail-structured-field__label {
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(242, 239, 230, 0.54);
+}
+
+.detail-structured-field__value,
+.detail-structured-card__body,
+.detail-effect-item__meta {
+  min-width: 0;
+}
+
+.detail-structured-text,
+.detail-effect-item__summary {
+  color: #fff8ec;
+  line-height: 1.55;
+}
+
+.detail-effect-item__summary {
+  margin: 0;
+}
+
+.detail-structured-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.detail-structured-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.9rem;
+  padding: 0.26rem 0.68rem;
+  border-radius: 999px;
+  border: 1px solid rgba(62, 113, 147, 0.25);
+  background: rgba(62, 113, 147, 0.12);
+  color: rgba(231, 243, 255, 0.9);
+  font-size: 0.84rem;
 }
 
 .detail-json {
@@ -2267,7 +2328,7 @@ html[data-ui-locale='en-US'] .site-subtitle {
 .upgrade-ledger__head,
 .upgrade-ledger__row {
   display: grid;
-  grid-template-columns: 140px 1fr 1.25fr 1fr;
+  grid-template-columns: 120px minmax(140px, 0.9fr) minmax(180px, 1fr) minmax(280px, 1.6fr) minmax(160px, 1fr);
   gap: 0.75rem;
   padding: 0.82rem 1rem;
 }
