@@ -260,6 +260,22 @@ const detailFixture: ChampionDetail = {
       collectionsSource: { type: 'flash_sale' },
       availabilities: { in_flash_sales: true },
     },
+    {
+      id: '5',
+      name: {
+        original: 'Space Boo Expedition',
+        display: '太空布布远征装',
+      },
+      cost: [],
+      details: {
+        large_graphic_id: 4475,
+        portrait_graphic_id: 4474,
+      },
+      rarity: '4',
+      properties: { is_available: true },
+      collectionsSource: { type: 'wild_offer' },
+      availabilities: { in_wild_offers: true },
+    },
   ],
   raw: {
     hero: {
@@ -301,6 +317,13 @@ const detailFixture: ChampionDetail = {
           display: { id: 4 },
         },
       },
+      {
+        id: '5',
+        snapshots: {
+          original: { id: 5 },
+          display: { id: 5 },
+        },
+      },
     ],
   },
 }
@@ -327,6 +350,15 @@ function renderChampionDetailPageWithSearch() {
 
 beforeEach(() => {
   window.history.replaceState(window.history.state, '', '/')
+  Object.assign(sectionTopMap, {
+    overview: 84,
+    'character-sheet': 460,
+    combat: 860,
+    upgrades: 1260,
+    feats: 1660,
+    skins: 2060,
+    raw: 2460,
+  })
 
   Object.defineProperty(Element.prototype, 'scrollIntoView', {
     configurable: true,
@@ -407,7 +439,7 @@ describe('ChampionDetailPage', () => {
     expect(screen.getByText('当前浏览 · 概览')).toBeInTheDocument()
     expect(screen.getByText('1 / 7')).toBeInTheDocument()
     await waitFor(() => {
-      expect(window.location.hash).toBe('#/champions/7#overview')
+      expect(window.location.hash).toBe('#/champions/7#section-overview')
     })
   })
 
@@ -431,15 +463,15 @@ describe('ChampionDetailPage', () => {
     expect(screen.getByText('当前浏览 · 升级')).toBeInTheDocument()
     expect(screen.getByText('4 / 7')).toBeInTheDocument()
     await waitFor(() => {
-      expect(window.location.hash).toBe('#/champions/7#upgrades')
+      expect(window.location.hash).toBe('#/champions/7#section-upgrades')
     })
   })
 
   it('带分区 hash 进入时会直达对应分区并保留该 hash', async () => {
     mockedLoadChampionDetail.mockResolvedValue(detailFixture)
 
-    window.history.replaceState(window.history.state, '', '/#/champions/7#upgrades')
-    renderChampionDetailPageAt('/champions/7#upgrades')
+    window.history.replaceState(window.history.state, '', '/#/champions/7#section-upgrades')
+    renderChampionDetailPageAt('/champions/7#section-upgrades')
 
     await waitFor(() => {
       screen.getAllByRole('button', { name: '升级' }).forEach((button) => {
@@ -449,7 +481,59 @@ describe('ChampionDetailPage', () => {
     expect(screen.getByTestId('sidebar-section-upgrades')).toHaveAttribute('data-progress-state', 'active')
     expect(Element.prototype.scrollIntoView).toHaveBeenCalled()
     await waitFor(() => {
-      expect(window.location.hash).toBe('#/champions/7#upgrades')
+      expect(window.location.hash).toBe('#/champions/7#section-upgrades')
     })
+  })
+
+  it('滚动激活新的分区时不会再被 hash 定位拉回原处', async () => {
+    mockedLoadChampionDetail.mockResolvedValue(detailFixture)
+
+    renderChampionDetailPage()
+
+    await screen.findByRole('heading', { level: 2, name: '明斯克' })
+
+    Object.assign(sectionTopMap, {
+      overview: -360,
+      'character-sheet': -280,
+      combat: -220,
+      upgrades: 120,
+      feats: 720,
+      skins: 1120,
+      raw: 1520,
+    })
+
+    fireEvent.scroll(window)
+
+    await waitFor(() => {
+      expect(screen.getByText('当前浏览 · 升级')).toBeInTheDocument()
+    })
+
+    expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled()
+    await waitFor(() => {
+      expect(window.location.hash).toBe('#/champions/7#section-upgrades')
+    })
+  })
+
+  it('支持在悬浮预览里切换不同皮肤', async () => {
+    mockedLoadChampionDetail.mockResolvedValue(detailFixture)
+
+    renderChampionDetailPage()
+
+    await screen.findByRole('heading', { level: 2, name: '明斯克' })
+
+    fireEvent.click(screen.getByRole('button', { name: '查看立绘：巨型布布服装' }))
+
+    expect(screen.getByRole('dialog', { name: '皮肤立绘预览' })).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: '巨型布布服装皮肤预览' })).toHaveAttribute(
+      'src',
+      'https://idle.kleho.ru/assets/g/4473.png',
+    )
+
+    fireEvent.click(screen.getByRole('button', { name: '切换皮肤：太空布布远征装' }))
+
+    expect(screen.getByRole('img', { name: '太空布布远征装皮肤预览' })).toHaveAttribute(
+      'src',
+      'https://idle.kleho.ru/assets/g/4474.png',
+    )
   })
 })
