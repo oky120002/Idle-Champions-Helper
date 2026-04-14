@@ -424,8 +424,8 @@ const ATTRIBUTE_GROUP_LABELS: Record<ChampionAttributeGroupId, { 'zh-CN': string
     'en-US': 'Gender',
   },
   mechanics: {
-    'zh-CN': '机制',
-    'en-US': 'Mechanics',
+    'zh-CN': '特殊机制',
+    'en-US': 'Special mechanics',
   },
   other: {
     'zh-CN': '其他',
@@ -453,6 +453,23 @@ export type ChampionAttributeGroupId =
 export interface ChampionAttributeGroup {
   id: ChampionAttributeGroupId
   tags: string[]
+}
+
+export type ChampionMechanicCategoryId = 'positional' | 'control' | 'specialization'
+
+const MECHANIC_CATEGORY_LABELS: Record<ChampionMechanicCategoryId, Record<AppLocale, string>> = {
+  positional: {
+    'zh-CN': '站位相关',
+    'en-US': 'Positioning',
+  },
+  control: {
+    'zh-CN': '控制效果',
+    'en-US': 'Control effects',
+  },
+  specialization: {
+    'zh-CN': '专精方向',
+    'en-US': 'Specializations',
+  },
 }
 
 const ATTRIBUTE_GROUP_MATCHERS: Record<
@@ -485,6 +502,22 @@ function isAcquisitionTag(tag: string): boolean {
 
 function isMechanicTag(tag: string): boolean {
   return tag === 'positional' || tag.startsWith('control_') || tag.startsWith('spec_')
+}
+
+export function getChampionMechanicCategoryId(tag: string): ChampionMechanicCategoryId | null {
+  if (tag === 'positional') {
+    return 'positional'
+  }
+
+  if (tag.startsWith('control_')) {
+    return 'control'
+  }
+
+  if (tag.startsWith('spec_')) {
+    return 'specialization'
+  }
+
+  return null
 }
 
 export function getChampionTagsForGroup(
@@ -532,6 +565,13 @@ export function getChampionAttributeGroups(tags: string[]): ChampionAttributeGro
 
 export function getChampionAttributeGroupLabel(groupId: ChampionAttributeGroupId, locale: AppLocale): string {
   return ATTRIBUTE_GROUP_LABELS[groupId][locale]
+}
+
+export function getChampionMechanicCategoryLabel(
+  categoryId: ChampionMechanicCategoryId,
+  locale: AppLocale,
+): string {
+  return MECHANIC_CATEGORY_LABELS[categoryId][locale]
 }
 
 export function getChampionTagLabel(tag: string, locale: AppLocale): string {
