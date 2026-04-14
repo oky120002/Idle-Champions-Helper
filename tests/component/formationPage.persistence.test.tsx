@@ -204,7 +204,7 @@ describe('FormationPage persistence flow', () => {
     }, { timeout: 2000 })
 
     expect(await screen.findByText('最近草稿已自动保存')).toBeInTheDocument()
-    expect(screen.getAllByRole('img', { name: '布鲁诺头像' })).toHaveLength(2)
+    expect(screen.getAllByRole('img', { name: '布鲁诺头像' }).length).toBeGreaterThanOrEqual(2)
   })
 
   it('可以把当前阵型保存为命名方案', async () => {

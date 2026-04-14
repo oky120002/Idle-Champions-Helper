@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { NavLink, Route, Routes } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import { ChampionDetailPage } from '../pages/ChampionDetailPage'
 import { ChampionsPage } from '../pages/ChampionsPage'
 import { FormationPage } from '../pages/FormationPage'
@@ -48,16 +48,53 @@ function MobileMenuIcon({ isOpen }: { isOpen: boolean }) {
 
 export function App() {
   const { locale, setLocale, t } = useI18n()
-  const [isMobileNavOpen, setMobileNavOpen] = useState(false)
+  const location = useLocation()
+  const [mobileNavState, setMobileNavState] = useState(() => ({
+    isOpen: false,
+    pathname: location.pathname,
+  }))
+  const [scrollY, setScrollY] = useState(() => (typeof window === 'undefined' ? 0 : window.scrollY))
+  const isHomeRoute = location.pathname === '/'
+  const isMobileNavOpen = mobileNavState.isOpen && mobileNavState.pathname === location.pathname
+  const isHeaderCondensed = !isHomeRoute && Math.max(scrollY, typeof window === 'undefined' ? 0 : window.scrollY) > 56
+
+  useEffect(() => {
+    const syncScrollY = () => {
+      setScrollY(window.scrollY)
+    }
+
+    window.addEventListener('scroll', syncScrollY, { passive: true })
+
+    return () => {
+      window.removeEventListener('scroll', syncScrollY)
+    }
+  }, [])
+
+  const headerClassName = [
+    'site-header',
+    !isHomeRoute ? 'site-header--subpage' : '',
+    isHeaderCondensed ? 'site-header--condensed' : '',
+    isMobileNavOpen ? 'site-header--mobile-nav-open' : '',
+  ]
+    .filter(Boolean)
+    .join(' ')
 
   return (
     <div className="app-shell">
       <div className="background-orb background-orb--one" />
       <div className="background-orb background-orb--two" />
 
-      <header className={isMobileNavOpen ? 'site-header site-header--mobile-nav-open' : 'site-header'}>
+      <header className={headerClassName}>
         <div className="site-header__topbar">
-          <p className="site-kicker">{t({ zh: 'Idle Champions 辅助站', en: 'Idle Champions Helper' })}</p>
+          <div className="site-header__brand-group">
+            <p className="site-kicker">{t({ zh: 'Idle Champions 辅助站', en: 'Idle Champions Helper' })}</p>
+            <div className="site-header__compact-brand" aria-hidden="true">
+              <span className="site-header__compact-mark" />
+              <span className="site-header__compact-title">
+                {t({ zh: '个人成长决策台', en: 'Growth-Oriented Formation Desk' })}
+              </span>
+            </div>
+          </div>
           <div className="site-header__topbar-actions">
             <div
               className="locale-switcher"
@@ -82,29 +119,36 @@ export function App() {
                 ))}
               </div>
             </div>
-
-            <button
-              type="button"
-              className={isMobileNavOpen ? 'site-header__menu-toggle site-header__menu-toggle--active' : 'site-header__menu-toggle'}
-              aria-controls="site-primary-nav"
-              aria-expanded={isMobileNavOpen}
-              aria-label={isMobileNavOpen ? t({ zh: '收起主导航', en: 'Close primary navigation' }) : t({ zh: '展开主导航', en: 'Open primary navigation' })}
-              onClick={() => setMobileNavOpen((current) => !current)}
-            >
-              <MobileMenuIcon isOpen={isMobileNavOpen} />
-              <span>{isMobileNavOpen ? t({ zh: '收起', en: 'Close' }) : t({ zh: '菜单', en: 'Menu' })}</span>
-            </button>
           </div>
+
+          <button
+            type="button"
+            className={isMobileNavOpen ? 'site-header__menu-toggle site-header__menu-toggle--active' : 'site-header__menu-toggle'}
+            aria-controls="site-primary-nav"
+            aria-expanded={isMobileNavOpen}
+            aria-label={isMobileNavOpen ? t({ zh: '收起主导航', en: 'Close primary navigation' }) : t({ zh: '展开主导航', en: 'Open primary navigation' })}
+            onClick={() =>
+              setMobileNavState((current) => ({
+                isOpen: current.pathname === location.pathname ? !current.isOpen : true,
+                pathname: location.pathname,
+              }))
+            }
+          >
+            <MobileMenuIcon isOpen={isMobileNavOpen} />
+            <span>{isMobileNavOpen ? t({ zh: '收起导航', en: 'Close nav' }) : t({ zh: '展开导航', en: 'Open nav' })}</span>
+          </button>
         </div>
 
-        <div className="site-header__content">
-          <h1 className="site-title">{t({ zh: '个人成长决策台', en: 'Growth-Oriented Formation Desk' })}</h1>
-          <p className="site-subtitle">
-            {t({
-              zh: '先把查询、筛选、阵型和保存做扎实，再逐步扩到推荐层。',
-              en: 'Nail search, filtering, formations, and saves first, then grow into explainable recommendations.',
-            })}
-          </p>
+        <div className="site-header__content-shell">
+          <div className="site-header__content">
+            <h1 className="site-title">{t({ zh: '个人成长决策台', en: 'Growth-Oriented Formation Desk' })}</h1>
+            <p className="site-subtitle">
+              {t({
+                zh: '先把查询、筛选、阵型和保存做扎实，再逐步扩到推荐层。',
+                en: 'Nail search, filtering, formations, and saves first, then grow into explainable recommendations.',
+              })}
+            </p>
+          </div>
         </div>
 
         <nav
@@ -118,7 +162,12 @@ export function App() {
               to={item.to}
               end={item.to === '/'}
               className={({ isActive }) => getNavClassName(isActive)}
-              onClick={() => setMobileNavOpen(false)}
+              onClick={() =>
+                setMobileNavState({
+                  isOpen: false,
+                  pathname: location.pathname,
+                })
+              }
             >
               {t(item.label)}
             </NavLink>
