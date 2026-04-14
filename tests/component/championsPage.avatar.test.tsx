@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('../../src/data/client', async () => {
@@ -60,15 +61,19 @@ describe('ChampionsPage avatars', () => {
       throw new Error(`unexpected collection: ${name}`)
     })
 
-    render(
+    const { container } = render(
       <I18nProvider>
-        <ChampionsPage />
+        <MemoryRouter>
+          <ChampionsPage />
+        </MemoryRouter>
       </I18nProvider>,
     )
 
     const avatar = await screen.findByRole('img', { name: '布鲁诺头像' })
+    const seatChip = container.querySelector('.result-card__portrait-chip')
 
     expect(avatar).toHaveAttribute('src', '/data/v1/champion-portraits/1.png')
+    expect(seatChip).toHaveTextContent('1 号位')
     expect(screen.getByText('布鲁诺')).toBeInTheDocument()
   })
 })

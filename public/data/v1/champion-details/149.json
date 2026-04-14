@@ -1,0 +1,6354 @@
+{
+  "updatedAt": "2026-04-13",
+  "summary": {
+    "id": "149",
+    "name": {
+      "original": "Duke Ravengard",
+      "display": "瑞文嘉德公爵"
+    },
+    "seat": 8,
+    "roles": [
+      "support"
+    ],
+    "affiliations": [],
+    "tags": [
+      "event",
+      "fighter",
+      "geneutral",
+      "human",
+      "lawful",
+      "male",
+      "neutral",
+      "spec_control",
+      "spec_control_knockback",
+      "support",
+      "tales",
+      "unaffiliated",
+      "y7"
+    ],
+    "portrait": {
+      "path": "v1/champion-portraits/149.png",
+      "sourceGraphic": "Portraits/Portrait_DukeRavengard",
+      "sourceVersion": 2
+    }
+  },
+  "englishName": "Duke Ravengard",
+  "eventName": {
+    "original": "Dragondown",
+    "display": "龙陨节"
+  },
+  "dateAvailable": "2024-06-05 13:00:00",
+  "lastReworkDate": "2024-06-05 13:00:00",
+  "popularity": 46,
+  "baseCost": "300000000000",
+  "baseDamage": "175000000",
+  "baseHealth": "49",
+  "graphicId": "23493",
+  "portraitGraphicId": "23492",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1780599600
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    295,
+    930,
+    1690,
+    2625
+  ],
+  "costCurves": {
+    "1": 1.075
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "content_set_id": 44,
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      185,
+      186,
+      187
+    ],
+    "graphic_large": 23495,
+    "graphic_xl": 23496,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      85,
+      70
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 5,
+      "gethit": 6,
+      "koed": 7,
+      "run": 1
+    },
+    "permanent_effects": [
+      "effect_def,1989"
+    ],
+    "allow_time_gate": "2024-06-26 12:00:00",
+    "available_in_store": "2024-07-03 12:00:00",
+    "time_gate_adventure_id": 1542,
+    "time_gate_variants_ids": [
+      1506,
+      1507,
+      1508
+    ],
+    "time_gate_tier": 1,
+    "silver_chest_type_id": 568,
+    "gold_chest_type_id": 569,
+    "golden_epic_loot_id": 3533,
+    "golden_epic_promo_id": 472,
+    "event_logo_graphic_id": 3374,
+    "console_portrait": 23586,
+    "trials_effect_id": 842,
+    "portrait_graphic_scale": 1,
+    "legendary_effect_id": [
+      1,
+      3,
+      58,
+      96,
+      43,
+      46
+    ],
+    "weekly_buff": "buff_upgrade,25,15028",
+    "notification_adjustment": {
+      "offset": [
+        54,
+        219
+      ],
+      "scale": 1.25
+    },
+    "spotlight_url": "https://youtu.be/Nh_s1QwF7MA"
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Duke Ravengard",
+      "display": "瑞文嘉德公爵"
+    },
+    "class": {
+      "original": "Fighter",
+      "display": "战士"
+    },
+    "race": {
+      "original": "Human",
+      "display": "人类"
+    },
+    "age": 53,
+    "alignment": {
+      "original": "Lawful Neutral",
+      "display": "守序中立"
+    },
+    "abilityScores": {
+      "str": 17,
+      "dex": 14,
+      "con": 16,
+      "int": 11,
+      "wis": 10,
+      "cha": 17
+    },
+    "backstory": {
+      "original": "Ulder Ravengard is the leader of the Flaming Fist and the Grand Duke of Baldur's Gate. His primary concerns are the stability and prosperity of Baldur's Gate, and he's been a voice of reason and common sense among the ruling council. In recent years, he has been a target of fiendish plots in unsuccessful attempts to take over the city.",
+      "display": "乌尔德·瑞文嘉德是烈焰之拳的领袖，也是博德之门的公爵。他的首要关注点是博德之门的稳定和繁荣，并一直在执政委员会中充当理性与常识的代言人。近年来，炼狱生物曾多次企图占领城市但无功而返，而他是首当其冲的目标。"
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "756",
+      "name": {
+        "original": "Duke's Longsword",
+        "display": "公爵的长剑"
+      },
+      "description": {
+        "original": "Duke Ravengard attacks the closest enemy for one hit with his longsword.",
+        "display": "瑞文嘉德公爵用他的剑攻击距离最近的敌人并命中一次。"
+      },
+      "longDescription": null,
+      "cooldown": 4,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "front",
+      "damageTypes": [
+        "melee"
+      ],
+      "tags": [
+        "melee"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "melee_attack",
+          "target_offset_x": -40,
+          "start_frame": 5,
+          "damage_frame": 12,
+          "jump_sound": 30,
+          "sound_frames": {
+            "2": 194
+          }
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "758",
+      "name": {
+        "original": "Duke's Fire Shield",
+        "display": "公爵的火焰护盾"
+      },
+      "description": {
+        "original": "Duke Ravengard ignites in flames for 20 seconds, damaging attacking melee enemies and increasing his damage.",
+        "display": "瑞文嘉德公爵燃烧 20 秒，对攻击他的近战敌人造成伤害，并提高他自身的伤害。"
+      },
+      "longDescription": {
+        "original": "Duke Ravengard's magical armor ignites in flames for 20 seconds, causing any attacking melee enemies to take damage as well as increasing his own damage.",
+        "display": "瑞文嘉德公爵的魔法护甲燃烧 20 秒，使所有攻击他的近战敌人受到伤害，并提高他自身的伤害。"
+      },
+      "cooldown": 200,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "0.03",
+      "target": "none",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ultimate"
+      ],
+      "graphicId": "23613",
+      "animations": [
+        {
+          "type": "ultimate_attack",
+          "ultimate": "duke_ravengard",
+          "no_damage_display": true
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "15028",
+        "name": {
+          "original": "Marshal of the Flaming Fist",
+          "display": "烈焰之拳元帅"
+        },
+        "description": null,
+        "graphicId": "23605"
+      },
+      {
+        "upgradeId": "15029",
+        "name": {
+          "original": "Position of Power",
+          "display": "位高权重"
+        },
+        "description": null,
+        "graphicId": "23606"
+      },
+      {
+        "upgradeId": "15030",
+        "name": {
+          "original": "Critical Teamwork",
+          "display": "致命合作"
+        },
+        "description": null,
+        "graphicId": "23604"
+      }
+    ]
+  },
+  "upgrades": [
+    {
+      "id": "15027",
+      "requiredLevel": 0,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Critical Hit",
+        "display": "暴击"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1968",
+      "effectDefinition": {
+        "id": "1968",
+        "snapshots": {
+          "original": {
+            "id": 1968,
+            "flavour_text": "",
+            "description": {
+              "desc": "Duke Ravengard's base chance to Critical Hit is $(amount)%."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "set_base_crit_chance,20"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": false
+            }
+          },
+          "display": {
+            "id": 1968,
+            "flavour_text": "",
+            "description": {
+              "desc": "瑞文嘉德公爵造成暴击的基础概率为 $(amount)%。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "set_base_crit_chance,20"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": false
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15028",
+      "requiredLevel": 30,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Marshal of the Flaming Fist",
+        "display": "烈焰之拳元帅"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1969",
+      "effectDefinition": {
+        "id": "1969",
+        "snapshots": {
+          "original": {
+            "id": 1969,
+            "flavour_text": "",
+            "description": {
+              "desc": "Duke Ravengard gains a Command stack for each Champion with a melee base attack in the formation (including himself). Each stack increases the damage of these Champions by $(amount)%, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack_amount,400"
+              },
+              {
+                "effect_string": "hero_dps_multiplier_mult,0",
+                "amount_expr": "upgrade_amount(15028,0)",
+                "targets": [
+                  "all"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "hero_expr",
+                    "hero_expr": "HasAttackDamageType(`melee`)"
+                  }
+                ],
+                "amount_func": "mult",
+                "show_bonus": true,
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "HasAttackDamageType(`melee`)",
+                "per_hero_targets": [
+                  "all"
+                ],
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "feat_changed",
+                  "attack_changed"
+                ],
+                "use_computed_amount_for_description": true,
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 23608,
+            "large_graphic_id": 23605,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true
+            }
+          },
+          "display": {
+            "id": 1969,
+            "flavour_text": "",
+            "description": {
+              "desc": "阵型中每有一位以近战为基本攻击方式的勇士（包括他自己），瑞文嘉德公爵就获得一层命令堆叠。每层堆叠会提升这些勇士们 $(amount)% 伤害，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack_amount,400"
+              },
+              {
+                "effect_string": "hero_dps_multiplier_mult,0",
+                "amount_expr": "upgrade_amount(15028,0)",
+                "targets": [
+                  "all"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "hero_expr",
+                    "hero_expr": "HasAttackDamageType(`melee`)"
+                  }
+                ],
+                "amount_func": "mult",
+                "show_bonus": true,
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "HasAttackDamageType(`melee`)",
+                "per_hero_targets": [
+                  "all"
+                ],
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "feat_changed",
+                  "attack_changed"
+                ],
+                "use_computed_amount_for_description": true,
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 23608,
+            "large_graphic_id": 23605,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Duke Ravengard's support abilities grow stronger as you include more heroes that use melee attacks.",
+        "display": "阵型重使用近战攻击的勇士越多，瑞文嘉德公爵的辅助技能也就越强。"
+      }
+    },
+    {
+      "id": "15164",
+      "requiredLevel": 40,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15134",
+      "requiredLevel": 50,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15035",
+      "requiredLevel": 70,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,15028,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15165",
+      "requiredLevel": 80,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15030",
+      "requiredLevel": 90,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Critical Teamwork",
+        "display": "致命合作"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1971",
+      "effectDefinition": {
+        "id": "1971",
+        "snapshots": {
+          "original": {
+            "id": 1971,
+            "flavour_text": "",
+            "description": {
+              "desc": "Whenever a Champion with a melee base attack gets a critical hit, increase the effect of Marshal of the Flaming Fist by $(not_buffed amount)% and additively increase the odds of all Champions in the formation getting critical hits by $(not_buffed amount___2)%. Both effects stack up to 50 times and reset when changing areas."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,50,15028,1",
+                "off_when_benched": true,
+                "max_stacks": 50,
+                "total_title": "Total Marshal of the Flaming Fist Bonus",
+                "stacks_multiply": true,
+                "show_bonus": true,
+                "stacks_on_trigger": "on_broadcast_stacks,melee_hero_crit",
+                "more_triggers": [
+                  {
+                    "trigger": "area_changed",
+                    "action": {
+                      "type": "reduce_percent",
+                      "percent": 100
+                    }
+                  }
+                ]
+              },
+              {
+                "effect_string": "global_buff_base_crit_chance_add,1",
+                "off_when_benched": true,
+                "max_stacks": 50,
+                "total_title": "Total Increased Crit Chance",
+                "stacks_multiply": false,
+                "show_bonus": true,
+                "stacks_on_trigger": "on_broadcast_stacks,melee_hero_crit",
+                "more_triggers": [
+                  {
+                    "trigger": "area_changed",
+                    "action": {
+                      "type": "reduce_percent",
+                      "percent": 100
+                    }
+                  }
+                ],
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "broadcast_on_trigger,melee_hero_crit,pre_target_attack_crit",
+                "off_when_benched": true,
+                "targets": [
+                  "all"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "hero_expr",
+                    "hero_expr": "HasAttackDamageType(`melee`)"
+                  }
+                ],
+                "override_key_desc": "Each time $target deals a Critical Hit, they contribute a Critical Teamwork stack to $(source_hero)"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 23607,
+            "large_graphic_id": 23604,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true
+            }
+          },
+          "display": {
+            "id": 1971,
+            "flavour_text": "",
+            "description": {
+              "desc": "每当一名以近战为基本攻击的勇士打出暴击时，烈焰之拳元帅的效果提高 $(not_buffed amount)%，并使阵型中所有勇士的暴击几率叠加提高 $(not_buffed amount___2)%。这两种效果最多堆叠 50 次，并在改变区域时重置。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,50,15028,1",
+                "off_when_benched": true,
+                "max_stacks": 50,
+                "total_title": "烈焰之拳元帅总加成",
+                "stacks_multiply": true,
+                "show_bonus": true,
+                "stacks_on_trigger": "on_broadcast_stacks,melee_hero_crit",
+                "more_triggers": [
+                  {
+                    "trigger": "area_changed",
+                    "action": {
+                      "type": "reduce_percent",
+                      "percent": 100
+                    }
+                  }
+                ]
+              },
+              {
+                "effect_string": "global_buff_base_crit_chance_add,1",
+                "off_when_benched": true,
+                "max_stacks": 50,
+                "total_title": "总计提升暴击率",
+                "stacks_multiply": false,
+                "show_bonus": true,
+                "stacks_on_trigger": "on_broadcast_stacks,melee_hero_crit",
+                "more_triggers": [
+                  {
+                    "trigger": "area_changed",
+                    "action": {
+                      "type": "reduce_percent",
+                      "percent": 100
+                    }
+                  }
+                ],
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "broadcast_on_trigger,melee_hero_crit,pre_target_attack_crit",
+                "off_when_benched": true,
+                "targets": [
+                  "all"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "hero_expr",
+                    "hero_expr": "HasAttackDamageType(`melee`)"
+                  }
+                ],
+                "override_key_desc": "每次 $target 打出暴击时，都会为 $(source_hero) 施加一层致命合作"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 23607,
+            "large_graphic_id": 23604,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Duke Ravengard's support abilities grow stronger in an area each time a Champion scores a critical hit!",
+        "display": "每当一名勇士打出暴击时，在一个区域内瑞文嘉德公爵的辅助技能就会变得更强！"
+      }
+    },
+    {
+      "id": "15034",
+      "requiredLevel": 120,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Fire Shield",
+        "display": "火焰护盾"
+      },
+      "upgradeType": "unlock_ultimate",
+      "effectReference": "effect_def,1983",
+      "effectDefinition": {
+        "id": "1983",
+        "snapshots": {
+          "original": {
+            "id": 1983,
+            "flavour_text": "",
+            "description": {
+              "desc": "Unlock $(source_hero)'s Fire Shield Ultimate Attack"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "duke_ravengard_fire_shield",
+                "duration": 20,
+                "base_graphic": 23493
+              },
+              {
+                "apply_manually": true,
+                "effect_string": "base_attack_deal_bonus_damage,25",
+                "immediately_after_damage": true
+              },
+              {
+                "apply_manually": true,
+                "effect_string": "deal_bud_damage_when_hit,25",
+                "targets": [
+                  "all"
+                ],
+                "target_filters": [
+                  {
+                    "type": "hero_expr",
+                    "per_hero_expr": "is_in_front_most_column"
+                  }
+                ],
+                "filter_damage_types": [
+                  "melee"
+                ],
+                "is_ultimate": true
+              },
+              {
+                "effect_string": "set_ultimate_attack"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "show_incoming": false,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "formation_circle_icon": false
+            }
+          },
+          "display": {
+            "id": 1983,
+            "flavour_text": "",
+            "description": {
+              "desc": "解锁$(source_hero)的“火焰护盾”杀招攻击"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "duke_ravengard_fire_shield",
+                "duration": 20,
+                "base_graphic": 23493
+              },
+              {
+                "apply_manually": true,
+                "effect_string": "base_attack_deal_bonus_damage,25",
+                "immediately_after_damage": true
+              },
+              {
+                "apply_manually": true,
+                "effect_string": "deal_bud_damage_when_hit,25",
+                "targets": [
+                  "all"
+                ],
+                "target_filters": [
+                  {
+                    "type": "hero_expr",
+                    "per_hero_expr": "is_in_front_most_column"
+                  }
+                ],
+                "filter_damage_types": [
+                  "melee"
+                ],
+                "is_ultimate": true
+              },
+              {
+                "effect_string": "set_ultimate_attack"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "show_incoming": false,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "formation_circle_icon": false
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15166",
+      "requiredLevel": 140,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15029",
+      "requiredLevel": 150,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Position of Power",
+        "display": "位高权重"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1970",
+      "effectDefinition": {
+        "id": "1970",
+        "snapshots": {
+          "original": {
+            "id": 1970,
+            "flavour_text": "",
+            "description": {
+              "desc": "Duke Ravengard increases the effect of the outgoing positional formation abilities of all Champions with a melee base attack by $(not_buffed amount)% for each Command stack he has, stacking additively."
+            },
+            "effect_keys": [
+              {
+                "off_when_benched": true,
+                "effect_string": "buff_positional_formation_abilities,25",
+                "targets": [
+                  "crusader"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "hero_expr",
+                    "hero_expr": "HasAttackDamageType(`melee`)"
+                  }
+                ],
+                "include_escorts": true,
+                "stacks_multiply": false,
+                "amount_func": "add",
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "HasAttackDamageType(`melee`)",
+                "per_hero_targets": [
+                  "all"
+                ],
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "feat_changed",
+                  "attack_changed"
+                ],
+                "show_bonus": true,
+                "use_computed_amount_for_description": true,
+                "override_key_desc": "Increases the effect of $target's outgoing Positional Formation Abilities by $amount%",
+                "stack_title": "Command Stacks"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 23609,
+            "large_graphic_id": 23606,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 1970,
+            "flavour_text": "",
+            "description": {
+              "desc": "瑞文嘉德公爵使所有具备近战基本攻击的勇士提供的位置阵型技能的效果提高，每层命令堆叠提高 $(not_buffed amount)%，以加算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "off_when_benched": true,
+                "effect_string": "buff_positional_formation_abilities,25",
+                "targets": [
+                  "crusader"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "hero_expr",
+                    "hero_expr": "HasAttackDamageType(`melee`)"
+                  }
+                ],
+                "include_escorts": true,
+                "stacks_multiply": false,
+                "amount_func": "add",
+                "stack_func": "per_hero_attribute",
+                "per_hero_expr": "HasAttackDamageType(`melee`)",
+                "per_hero_targets": [
+                  "all"
+                ],
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "feat_changed",
+                  "attack_changed"
+                ],
+                "show_bonus": true,
+                "use_computed_amount_for_description": true,
+                "override_key_desc": "使 $target 提供的位置阵型技能的效果提高 $amount%",
+                "stack_title": "命令层数"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 23609,
+            "large_graphic_id": 23606,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15135",
+      "requiredLevel": 170,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,15028,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15167",
+      "requiredLevel": 190,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15031",
+      "requiredLevel": 200,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Lead The Charge",
+        "display": "带头冲锋"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1972",
+      "effectDefinition": {
+        "id": "1972",
+        "snapshots": {
+          "original": {
+            "id": 1972,
+            "flavour_text": "",
+            "description": {
+              "desc": "Duke Ravengard gains the Control role and when he gets a critical hit, he follows up by bashing the enemy with his shield, knocking it back a short distance. When this occurs, all melee Champions adjacent to Duke Ravengard have their base attack cooldowns immediately reset."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "change_base_attack,757"
+              },
+              {
+                "effect_string": "add_hero_tags,0,control"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": false
+            }
+          },
+          "display": {
+            "id": 1972,
+            "flavour_text": "",
+            "description": {
+              "desc": "瑞文嘉德公爵获得控制者角色，当他受到暴击时，他会用盾牌猛击敌人，将其击退一段距离。出现这种情况时，与瑞文嘉德公爵相邻的所有近勇士军的基本攻击冷却时间会立即重置。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "change_base_attack,757"
+              },
+              {
+                "effect_string": "add_hero_tags,0,control"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": false
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Lead The Charge",
+        "display": "带头冲锋"
+      },
+      "specializationDescription": {
+        "original": "Duke Ravengard leads the attack, causing his followers to attack more often.",
+        "display": "瑞文嘉德公爵带头冲锋，激励他的追随者们增加攻击频率。"
+      },
+      "specializationGraphicId": "23610",
+      "tipText": null
+    },
+    {
+      "id": "15032",
+      "requiredLevel": 200,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Strength of Baldur's Gate",
+        "display": "博德之门的力量"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1973",
+      "effectDefinition": {
+        "id": "1973",
+        "snapshots": {
+          "original": {
+            "id": 1973,
+            "flavour_text": "",
+            "description": {
+              "desc": "Champions with a melee base attack have their crit chance additively increased by 20% and crit damage increased by 1000%."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_base_crit_chance_add,20",
+                "targets": [
+                  "all"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "hero_expr",
+                    "hero_expr": "HasAttackDamageType(`melee`)"
+                  }
+                ],
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "buff_base_crit_damage_mult,1000",
+                "targets": [
+                  "all"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "hero_expr",
+                    "hero_expr": "HasAttackDamageType(`melee`)"
+                  }
+                ],
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": false
+            }
+          },
+          "display": {
+            "id": 1973,
+            "flavour_text": "",
+            "description": {
+              "desc": "拥有近战基本攻击的勇士，其暴击率以加算方式提高 20%，暴击伤害提高 1000%。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_base_crit_chance_add,20",
+                "targets": [
+                  "all"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "hero_expr",
+                    "hero_expr": "HasAttackDamageType(`melee`)"
+                  }
+                ],
+                "off_when_benched": true
+              },
+              {
+                "effect_string": "buff_base_crit_damage_mult,1000",
+                "targets": [
+                  "all"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "hero_expr",
+                    "hero_expr": "HasAttackDamageType(`melee`)"
+                  }
+                ],
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": false
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Strength of Baldur's Gate",
+        "display": "博德之门的力量"
+      },
+      "specializationDescription": {
+        "original": "Ulder shows the other Champions how to strike vulnerable points to deal more damage.",
+        "display": "乌尔德向其他勇士们展示如何打击敌人弱点，造成更高伤害。"
+      },
+      "specializationGraphicId": "23612",
+      "tipText": null
+    },
+    {
+      "id": "15033",
+      "requiredLevel": 200,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Legacy of Ravengard",
+        "display": "瑞文嘉德的传承"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,1974",
+      "effectDefinition": {
+        "id": "1974",
+        "snapshots": {
+          "original": {
+            "id": 1974,
+            "flavour_text": "",
+            "description": {
+              "desc": "If Wyll is in the formation, anyone affected by Wyll's Folk Hero benefit gains an additional stack, but the maximum remains at 4 stacks."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "do_nothing",
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": false
+            }
+          },
+          "display": {
+            "id": 1974,
+            "flavour_text": "",
+            "description": {
+              "desc": "如果瓦尔在阵型中，任何受其“民间英雄”效果影响的人都会获得额外层数，但最大层数仍为 4。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "do_nothing",
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": false
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Legacy of Ravengard",
+        "display": "瑞文嘉德的传承"
+      },
+      "specializationDescription": {
+        "original": "Ulder supports Wyll, making them a powerful force together.",
+        "display": "乌尔德支援瓦尔，两人势不可挡。"
+      },
+      "specializationGraphicId": "23611",
+      "tipText": null
+    },
+    {
+      "id": "15136",
+      "requiredLevel": 220,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15168",
+      "requiredLevel": 230,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15137",
+      "requiredLevel": 240,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,15028,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15169",
+      "requiredLevel": 280,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15170",
+      "requiredLevel": 320,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15036",
+      "requiredLevel": 350,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,15030,0",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15171",
+      "requiredLevel": 370,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15138",
+      "requiredLevel": 380,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15172",
+      "requiredLevel": 420,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15173",
+      "requiredLevel": 470,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15139",
+      "requiredLevel": 480,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,15028,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15175",
+      "requiredLevel": 520,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15146",
+      "requiredLevel": 530,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15176",
+      "requiredLevel": 590,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15140",
+      "requiredLevel": 610,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,15028,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15177",
+      "requiredLevel": 640,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15141",
+      "requiredLevel": 650,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15178",
+      "requiredLevel": 720,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15142",
+      "requiredLevel": 740,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,15028,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15179",
+      "requiredLevel": 810,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15143",
+      "requiredLevel": 870,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,15030,0",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15180",
+      "requiredLevel": 900,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15144",
+      "requiredLevel": 920,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15181",
+      "requiredLevel": 960,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15145",
+      "requiredLevel": 1000,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,15028,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15182",
+      "requiredLevel": 1030,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15151",
+      "requiredLevel": 1080,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15183",
+      "requiredLevel": 1100,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15147",
+      "requiredLevel": 1120,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,15028,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15184",
+      "requiredLevel": 1180,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15148",
+      "requiredLevel": 1250,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,15028,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15185",
+      "requiredLevel": 1270,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15149",
+      "requiredLevel": 1340,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15186",
+      "requiredLevel": 1360,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15150",
+      "requiredLevel": 1380,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,15030,0",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15187",
+      "requiredLevel": 1470,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15157",
+      "requiredLevel": 1490,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15152",
+      "requiredLevel": 1500,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,15028,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15188",
+      "requiredLevel": 1600,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15153",
+      "requiredLevel": 1630,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,15028,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15189",
+      "requiredLevel": 1690,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15154",
+      "requiredLevel": 1750,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15155",
+      "requiredLevel": 1760,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,15028,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15190",
+      "requiredLevel": 1800,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15156",
+      "requiredLevel": 1890,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,15030,0",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15162",
+      "requiredLevel": 1920,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15191",
+      "requiredLevel": 1970,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15158",
+      "requiredLevel": 2020,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,15028,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15159",
+      "requiredLevel": 2140,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,15028,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15160",
+      "requiredLevel": 2170,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15192",
+      "requiredLevel": 2190,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15193",
+      "requiredLevel": 2260,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15161",
+      "requiredLevel": 2270,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,15028,1",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15174",
+      "requiredLevel": 2320,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15194",
+      "requiredLevel": 2330,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "15163",
+      "requiredLevel": 2340,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,15030,0",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    }
+  ],
+  "feats": [
+    {
+      "id": "1804",
+      "order": 1,
+      "name": {
+        "original": "Selflessness",
+        "display": "无私"
+      },
+      "description": {
+        "original": "Elturel may not be my city, but I will lay down my life to protect its people.",
+        "display": "艾尔托瑞尔也许不是我的城市，但我愿意舍命保护它的人民。"
+      },
+      "rarity": "2",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1577908800
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "1805",
+      "order": 2,
+      "name": {
+        "original": "Inspiring Leader",
+        "display": "鼓舞人心的首领"
+      },
+      "description": {
+        "original": "Show the fiends of Avernus what it means to be a Hellrider!",
+        "display": "让阿弗纳斯的炼狱生物们见识见识地狱骑士的风采！"
+      },
+      "rarity": "3",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,25"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1577908800
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "1806",
+      "order": 3,
+      "name": {
+        "original": "Form Up",
+        "display": "摆好阵型"
+      },
+      "description": {
+        "original": "We shall be the front line of defense against the forces of the Hells!",
+        "display": "我们将成为抵御地狱侵袭的最前线！"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,15028,0"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1577908800
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "1807",
+      "order": 4,
+      "name": {
+        "original": "Last Stand",
+        "display": "最后一战"
+      },
+      "description": {
+        "original": "We are the last hope of Elturel.",
+        "display": "我们是艾尔托瑞尔最后的希望。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,15028,0"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1577908800
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "1808",
+      "order": 5,
+      "name": {
+        "original": "Strength in Numbers",
+        "display": "群体优势"
+      },
+      "description": {
+        "original": "We are stronger together!",
+        "display": "人多力量大！"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,15029"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1577908800
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "1809",
+      "order": 6,
+      "name": {
+        "original": "Battle Formations",
+        "display": "战斗阵型"
+      },
+      "description": {
+        "original": "Knowing our strengths is how we will win.",
+        "display": "知己才能制敌。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,15029"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1577908800
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "1810",
+      "order": 7,
+      "name": {
+        "original": "Crucial Weakness",
+        "display": "致命弱点"
+      },
+      "description": {
+        "original": "There! Their formation is weakening - attack!",
+        "display": "那边！他们的阵型正在崩溃，快进攻！"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,15030,0"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1577908800
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "1811",
+      "order": 8,
+      "name": {
+        "original": "Turning the Tide",
+        "display": "形势逆转"
+      },
+      "description": {
+        "original": "This is it - victory is nearly at hand!",
+        "display": "好！胜利近在眼前了！"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,15030,0"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1577908800
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "1812",
+      "order": 9,
+      "name": {
+        "original": "Work Together",
+        "display": "携手合作"
+      },
+      "description": {
+        "original": "Let's show these cultists what it means to be a Baldurian!",
+        "display": "让这些信徒瞧瞧什么叫做真正的“博德人”！"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade_effect_stacks_max_add,10,15030"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1577908800
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "1823",
+      "order": 10,
+      "name": {
+        "original": "Morale Boost",
+        "display": "提升士气"
+      },
+      "description": {
+        "original": "This is what our soldiers needed - hope.",
+        "display": "我们的士兵正需要希望。"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade_effect_stacks_max_add,20,15030"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000,
+          "start_date": "2025-09-04 12:00:00"
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 576
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1749063600
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "1813",
+      "order": 11,
+      "name": {
+        "original": "Spirit of Confidence",
+        "display": "自信精神"
+      },
+      "description": {
+        "original": "One person can change the entire battle.",
+        "display": "只要一个人，就能改变整场战局。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "persist_effect_stacks,20,15030"
+        }
+      ],
+      "sources": [
+        {
+          "source": "promo",
+          "promotion_id": 50
+        }
+      ],
+      "properties": {
+        "available_time": 999999,
+        "is_available": false,
+        "available_at_time": 1956600000
+      },
+      "collectionsSource": {
+        "type": "not_yet_available"
+      }
+    },
+    {
+      "id": "1814",
+      "order": 12,
+      "name": {
+        "original": "Heart of Battle",
+        "display": "战斗之心"
+      },
+      "description": {
+        "original": "Let hope strengthen your blades and deliver us victory!",
+        "display": "让希望磨砺你的剑刃，带领我们走向胜利！"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "persist_effect_stacks,40,15030"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1721847600
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "1815",
+      "order": 12,
+      "name": {
+        "original": "Illithid Tadpole",
+        "display": "灵吸怪蝌蚪"
+      },
+      "description": {
+        "original": "I... I had the strangest dream... Why does my head hurt?",
+        "display": "我……我做了一个非常奇怪的梦……我怎么头这么疼？"
+      },
+      "rarity": "4",
+      "graphicId": "20923",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,25"
+        },
+        {
+          "effect_string": "add_global_ceremorphosis_stacks,1"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 435
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1577908800
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "1816",
+      "order": 14,
+      "name": {
+        "original": "Scholar",
+        "display": "学者"
+      },
+      "description": {
+        "original": "I always cherish my time in Candlekeep.",
+        "display": "我会永远怀念在烛堡度过的时光。"
+      },
+      "rarity": "4",
+      "graphicId": "10062",
+      "effects": [
+        {
+          "effect_string": "increase_ability_score,int,2"
+        }
+      ],
+      "sources": [
+        {
+          "source": "event",
+          "event_id": 10
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1577908800
+      },
+      "collectionsSource": {
+        "type": "event",
+        "event_id": 10,
+        "tier": 3
+      }
+    },
+    {
+      "id": "2441",
+      "order": 15,
+      "name": {
+        "original": "No Compromises",
+        "display": "绝不妥协"
+      },
+      "description": {
+        "original": "As Grand Duke, my morals are tested time and again. I must not lose myself.",
+        "display": "身为大公爵，我的道德一次又一次经受考验。我绝对不能迷失自我。"
+      },
+      "rarity": "4",
+      "graphicId": "22842",
+      "effects": [
+        {
+          "effect_string": "change_hero_alignment_tag,lawful,good"
+        }
+      ],
+      "sources": [
+        {
+          "source": "campaign",
+          "campaign_id": 32
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1769630400
+      },
+      "collectionsSource": {
+        "type": "adventure",
+        "adventure_id": 1869
+      }
+    },
+    {
+      "id": "2609",
+      "order": 16,
+      "name": {
+        "original": "TBD Duke Ravengard Feat (Do not translate)",
+        "display": "TBD Duke Ravengard Feat (Do not translate)"
+      },
+      "description": null,
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [],
+      "sources": [
+        {
+          "source": "campaign",
+          "campaign_id": 32
+        }
+      ],
+      "properties": {
+        "available_time": 999999,
+        "is_available": false,
+        "available_at_time": 1782327600
+      },
+      "collectionsSource": ""
+    }
+  ],
+  "skins": [
+    {
+      "id": "434",
+      "name": {
+        "original": "Wyrm Slayer Ravengard",
+        "display": "飞龙杀手瑞文嘉德"
+      },
+      "cost": {
+        "req_date": "2024-06-05 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 23637,
+        "large_graphic_id": 23641,
+        "portrait_graphic_id": 23651,
+        "xl_graphic_id": 23645,
+        "enflamed_graphic_id": 23636
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 1487,
+        "odds": 120
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    },
+    {
+      "id": "442",
+      "name": {
+        "original": "Baldur's Gate Duke Ravengard",
+        "display": "博德之门瑞文嘉德公爵"
+      },
+      "cost": {
+        "soft_currency": 20000,
+        "req_date": "2024-09-25 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 23923,
+        "large_graphic_id": 23925,
+        "portrait_graphic_id": 23918,
+        "xl_graphic_id": 23926,
+        "enflamed_graphic_id": 23924
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gem_shop",
+        "cost": 20000
+      },
+      "availabilities": null
+    },
+    {
+      "id": "559",
+      "name": {
+        "original": "Dracolich Duke Ravengard",
+        "display": "龙巫妖瑞文嘉德公爵"
+      },
+      "cost": {
+        "req_date": "2025-06-04 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 26909,
+        "large_graphic_id": 26910,
+        "portrait_graphic_id": 26913,
+        "xl_graphic_id": 26911,
+        "enflamed_graphic_id": 26912
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "576",
+        "cost": 1680
+      },
+      "availabilities": {
+        "premium_item_id": "576"
+      }
+    },
+    {
+      "id": "641",
+      "name": {
+        "original": "Blood War Duke Ravengard",
+        "display": "血战瑞文嘉德公爵"
+      },
+      "cost": {
+        "req_date": "2026-01-28 00:00:01"
+      },
+      "details": {
+        "base_graphic_id": 28475,
+        "large_graphic_id": 28478,
+        "portrait_graphic_id": 28474,
+        "xl_graphic_id": 28480,
+        "enflamed_graphic_id": 28476
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "adventure",
+        "adventure_id": 1870
+      },
+      "availabilities": {
+        "adventure_ids": [],
+        "adventures": [
+          {
+            "id": "1870",
+            "name": "End of a Legacy"
+          }
+        ]
+      }
+    }
+  ],
+  "raw": {
+    "hero": {
+      "original": {
+        "id": 149,
+        "name": "Duke Ravengard",
+        "english_name": "Duke Ravengard",
+        "seat_id": 8,
+        "base_cost": "300000000000",
+        "base_damage": "175000000",
+        "base_health": "49",
+        "cost_curves": {
+          "1": 1.075
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 756,
+        "ultimate_attack_id": 758,
+        "graphic_id": 23493,
+        "portrait_graphic_id": 23492,
+        "character_sheet_details": {
+          "full_name": "Duke Ravengard",
+          "class": "Fighter",
+          "race": "Human",
+          "age": 53,
+          "alignment": "Lawful Neutral",
+          "ability_scores": {
+            "str": 17,
+            "dex": 14,
+            "con": 16,
+            "int": 11,
+            "wis": 10,
+            "cha": 17
+          },
+          "backstory": "Ulder Ravengard is the leader of the Flaming Fist and the Grand Duke of Baldur's Gate. His primary concerns are the stability and prosperity of Baldur's Gate, and he's been a voice of reason and common sense among the ruling council. In recent years, he has been a target of fiendish plots in unsuccessful attempts to take over the city.",
+          "system_description": "Duke Ravengard greatly supports Champions with Melee base attacks. His buffs are further increased in an area when any Melee Champion scores a critical hit."
+        },
+        "default_feat_slot_unlocks": [
+          295,
+          930,
+          1690,
+          2625
+        ],
+        "tags": [
+          "male",
+          "human",
+          "fighter",
+          "lawful",
+          "neutral",
+          "support",
+          "event",
+          "y7",
+          "unaffiliated",
+          "spec_control",
+          "spec_control_knockback",
+          "tales",
+          "geneutral"
+        ],
+        "properties": {
+          "content_set_id": 44,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            185,
+            186,
+            187
+          ],
+          "graphic_large": 23495,
+          "graphic_xl": 23496,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            85,
+            70
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 5,
+            "gethit": 6,
+            "koed": 7,
+            "run": 1
+          },
+          "permanent_effects": [
+            "effect_def,1989"
+          ],
+          "allow_time_gate": "2024-06-26 12:00:00",
+          "available_in_store": "2024-07-03 12:00:00",
+          "time_gate_adventure_id": 1542,
+          "time_gate_variants_ids": [
+            1506,
+            1507,
+            1508
+          ],
+          "time_gate_tier": 1,
+          "silver_chest_type_id": 568,
+          "gold_chest_type_id": 569,
+          "golden_epic_loot_id": 3533,
+          "golden_epic_promo_id": 472,
+          "event_logo_graphic_id": 3374,
+          "console_portrait": 23586,
+          "trials_effect_id": 842,
+          "portrait_graphic_scale": 1,
+          "legendary_effect_id": [
+            1,
+            3,
+            58,
+            96,
+            43,
+            46
+          ],
+          "weekly_buff": "buff_upgrade,25,15028",
+          "notification_adjustment": {
+            "offset": [
+              54,
+              219
+            ],
+            "scale": 1.25
+          },
+          "spotlight_url": "https://youtu.be/Nh_s1QwF7MA"
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 1505,
+            "type": "base"
+          },
+          {
+            "adventure_id": 1506,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1507,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1508,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1509,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 1542,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 46,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 15028,
+            "name": "Marshal of the Flaming Fist",
+            "description": "",
+            "graphic_id": "23605"
+          },
+          {
+            "upgrade_id": 15029,
+            "name": "Position of Power",
+            "description": "",
+            "graphic_id": "23606"
+          },
+          {
+            "upgrade_id": 15030,
+            "name": "Critical Teamwork",
+            "description": "",
+            "graphic_id": "23604"
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1780599600,
+        "event_name": "Dragondown",
+        "is_available": true,
+        "date_available": "2024-06-05 13:00:00",
+        "last_rework_date": "2024-06-05 13:00:00"
+      },
+      "display": {
+        "id": 149,
+        "name": "瑞文嘉德公爵",
+        "english_name": "Duke Ravengard",
+        "seat_id": 8,
+        "base_cost": "300000000000",
+        "base_damage": "175000000",
+        "base_health": "49",
+        "cost_curves": {
+          "1": 1.075
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 756,
+        "ultimate_attack_id": 758,
+        "graphic_id": 23493,
+        "portrait_graphic_id": 23492,
+        "character_sheet_details": {
+          "full_name": "瑞文嘉德公爵",
+          "class": "战士",
+          "race": "人类",
+          "age": 53,
+          "alignment": "守序中立",
+          "ability_scores": {
+            "str": 17,
+            "dex": 14,
+            "con": 16,
+            "int": 11,
+            "wis": 10,
+            "cha": 17
+          },
+          "backstory": "乌尔德·瑞文嘉德是烈焰之拳的领袖，也是博德之门的公爵。他的首要关注点是博德之门的稳定和繁荣，并一直在执政委员会中充当理性与常识的代言人。近年来，炼狱生物曾多次企图占领城市但无功而返，而他是首当其冲的目标。",
+          "system_description": "瑞文嘉德公爵能给拥有近战基本攻击的勇士提供很大助益。当任何近战勇士打出暴击时，他的增益会在一个区域内进一步得到增强。"
+        },
+        "default_feat_slot_unlocks": [
+          295,
+          930,
+          1690,
+          2625
+        ],
+        "tags": [
+          "male",
+          "human",
+          "fighter",
+          "lawful",
+          "neutral",
+          "support",
+          "event",
+          "y7",
+          "unaffiliated",
+          "spec_control",
+          "spec_control_knockback",
+          "tales",
+          "geneutral"
+        ],
+        "properties": {
+          "content_set_id": 44,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            185,
+            186,
+            187
+          ],
+          "graphic_large": 23495,
+          "graphic_xl": 23496,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            85,
+            70
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 5,
+            "gethit": 6,
+            "koed": 7,
+            "run": 1
+          },
+          "permanent_effects": [
+            "effect_def,1989"
+          ],
+          "allow_time_gate": "2024-06-26 12:00:00",
+          "available_in_store": "2024-07-03 12:00:00",
+          "time_gate_adventure_id": 1542,
+          "time_gate_variants_ids": [
+            1506,
+            1507,
+            1508
+          ],
+          "time_gate_tier": 1,
+          "silver_chest_type_id": 568,
+          "gold_chest_type_id": 569,
+          "golden_epic_loot_id": 3533,
+          "golden_epic_promo_id": 472,
+          "event_logo_graphic_id": 3374,
+          "console_portrait": 23586,
+          "trials_effect_id": 842,
+          "portrait_graphic_scale": 1,
+          "legendary_effect_id": [
+            1,
+            3,
+            58,
+            96,
+            43,
+            46
+          ],
+          "weekly_buff": "buff_upgrade,25,15028",
+          "notification_adjustment": {
+            "offset": [
+              54,
+              219
+            ],
+            "scale": 1.25
+          },
+          "spotlight_url": "https://youtu.be/Nh_s1QwF7MA"
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 1505,
+            "type": "base"
+          },
+          {
+            "adventure_id": 1506,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1507,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1508,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1509,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 1542,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 46,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 15028,
+            "name": "烈焰之拳元帅",
+            "description": "",
+            "graphic_id": "23605"
+          },
+          {
+            "upgrade_id": 15029,
+            "name": "位高权重",
+            "description": "",
+            "graphic_id": "23606"
+          },
+          {
+            "upgrade_id": 15030,
+            "name": "致命合作",
+            "description": "",
+            "graphic_id": "23604"
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1780599600,
+        "event_name": "龙陨节",
+        "is_available": true,
+        "date_available": "2024-06-05 13:00:00",
+        "last_rework_date": "2024-06-05 13:00:00"
+      }
+    },
+    "attacks": [
+      {
+        "id": "756",
+        "snapshots": {
+          "original": {
+            "id": 756,
+            "name": "Duke's Longsword",
+            "description": "Duke Ravengard attacks the closest enemy for one hit with his longsword.",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 4,
+            "animations": [
+              {
+                "type": "melee_attack",
+                "target_offset_x": -40,
+                "start_frame": 5,
+                "damage_frame": 12,
+                "jump_sound": 30,
+                "sound_frames": {
+                  "2": 194
+                }
+              }
+            ],
+            "tags": [
+              "melee"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          },
+          "display": {
+            "id": 756,
+            "name": "公爵的长剑",
+            "description": "瑞文嘉德公爵用他的剑攻击距离最近的敌人并命中一次。",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 4,
+            "animations": [
+              {
+                "type": "melee_attack",
+                "target_offset_x": -40,
+                "start_frame": 5,
+                "damage_frame": 12,
+                "jump_sound": 30,
+                "sound_frames": {
+                  "2": 194
+                }
+              }
+            ],
+            "tags": [
+              "melee"
+            ],
+            "damage_types": [
+              "melee"
+            ]
+          }
+        }
+      },
+      {
+        "id": "758",
+        "snapshots": {
+          "original": {
+            "id": 758,
+            "name": "Duke's Fire Shield",
+            "description": "Duke Ravengard ignites in flames for 20 seconds, damaging attacking melee enemies and increasing his damage.",
+            "long_description": "Duke Ravengard's magical armor ignites in flames for 20 seconds, causing any attacking melee enemies to take damage as well as increasing his own damage.",
+            "graphic_id": 23613,
+            "target": "none",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 0.03,
+            "cooldown": 200,
+            "animations": [
+              {
+                "type": "ultimate_attack",
+                "ultimate": "duke_ravengard",
+                "no_damage_display": true
+              }
+            ],
+            "tags": [
+              "ultimate"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          },
+          "display": {
+            "id": 758,
+            "name": "公爵的火焰护盾",
+            "description": "瑞文嘉德公爵燃烧 20 秒，对攻击他的近战敌人造成伤害，并提高他自身的伤害。",
+            "long_description": "瑞文嘉德公爵的魔法护甲燃烧 20 秒，使所有攻击他的近战敌人受到伤害，并提高他自身的伤害。",
+            "graphic_id": 23613,
+            "target": "none",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 0.03,
+            "cooldown": 200,
+            "animations": [
+              {
+                "type": "ultimate_attack",
+                "ultimate": "duke_ravengard",
+                "no_damage_display": true
+              }
+            ],
+            "tags": [
+              "ultimate"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          }
+        }
+      }
+    ],
+    "upgrades": [
+      {
+        "id": "15027",
+        "snapshots": {
+          "original": {
+            "id": 15027,
+            "hero_id": 149,
+            "required_level": 0,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1968",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Critical Hit"
+          },
+          "display": {
+            "id": 15027,
+            "hero_id": 149,
+            "required_level": 0,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1968",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "暴击"
+          }
+        }
+      },
+      {
+        "id": "15028",
+        "snapshots": {
+          "original": {
+            "id": 15028,
+            "hero_id": 149,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1969",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Marshal of the Flaming Fist",
+            "tip_text": "Duke Ravengard's support abilities grow stronger as you include more heroes that use melee attacks."
+          },
+          "display": {
+            "id": 15028,
+            "hero_id": 149,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1969",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "烈焰之拳元帅",
+            "tip_text": "阵型重使用近战攻击的勇士越多，瑞文嘉德公爵的辅助技能也就越强。"
+          }
+        }
+      },
+      {
+        "id": "15029",
+        "snapshots": {
+          "original": {
+            "id": 15029,
+            "hero_id": 149,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1970",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Position of Power"
+          },
+          "display": {
+            "id": 15029,
+            "hero_id": 149,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1970",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "位高权重"
+          }
+        }
+      },
+      {
+        "id": "15030",
+        "snapshots": {
+          "original": {
+            "id": 15030,
+            "hero_id": 149,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1971",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Critical Teamwork",
+            "tip_text": "Duke Ravengard's support abilities grow stronger in an area each time a Champion scores a critical hit!"
+          },
+          "display": {
+            "id": 15030,
+            "hero_id": 149,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1971",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "致命合作",
+            "tip_text": "每当一名勇士打出暴击时，在一个区域内瑞文嘉德公爵的辅助技能就会变得更强！"
+          }
+        }
+      },
+      {
+        "id": "15031",
+        "snapshots": {
+          "original": {
+            "id": 15031,
+            "hero_id": 149,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1972",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Lead The Charge",
+            "specialization_name": "Lead The Charge",
+            "specialization_description": "Duke Ravengard leads the attack, causing his followers to attack more often.",
+            "specialization_graphic_id": 23610
+          },
+          "display": {
+            "id": 15031,
+            "hero_id": 149,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1972",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "带头冲锋",
+            "specialization_name": "带头冲锋",
+            "specialization_description": "瑞文嘉德公爵带头冲锋，激励他的追随者们增加攻击频率。",
+            "specialization_graphic_id": 23610
+          }
+        }
+      },
+      {
+        "id": "15032",
+        "snapshots": {
+          "original": {
+            "id": 15032,
+            "hero_id": 149,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1973",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Strength of Baldur's Gate",
+            "specialization_name": "Strength of Baldur's Gate",
+            "specialization_description": "Ulder shows the other Champions how to strike vulnerable points to deal more damage.",
+            "specialization_graphic_id": 23612
+          },
+          "display": {
+            "id": 15032,
+            "hero_id": 149,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1973",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "博德之门的力量",
+            "specialization_name": "博德之门的力量",
+            "specialization_description": "乌尔德向其他勇士们展示如何打击敌人弱点，造成更高伤害。",
+            "specialization_graphic_id": 23612
+          }
+        }
+      },
+      {
+        "id": "15033",
+        "snapshots": {
+          "original": {
+            "id": 15033,
+            "hero_id": 149,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1974",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Legacy of Ravengard",
+            "specialization_name": "Legacy of Ravengard",
+            "specialization_description": "Ulder supports Wyll, making them a powerful force together.",
+            "specialization_graphic_id": 23611
+          },
+          "display": {
+            "id": 15033,
+            "hero_id": 149,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,1974",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "瑞文嘉德的传承",
+            "specialization_name": "瑞文嘉德的传承",
+            "specialization_description": "乌尔德支援瓦尔，两人势不可挡。",
+            "specialization_graphic_id": 23611
+          }
+        }
+      },
+      {
+        "id": "15034",
+        "snapshots": {
+          "original": {
+            "id": 15034,
+            "hero_id": 149,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "effect_def,1983",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Fire Shield"
+          },
+          "display": {
+            "id": 15034,
+            "hero_id": 149,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "effect_def,1983",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "火焰护盾"
+          }
+        }
+      },
+      {
+        "id": "15035",
+        "snapshots": {
+          "original": {
+            "id": 15035,
+            "hero_id": 149,
+            "required_level": 70,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15035,
+            "hero_id": 149,
+            "required_level": 70,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15036",
+        "snapshots": {
+          "original": {
+            "id": 15036,
+            "hero_id": 149,
+            "required_level": 350,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15030,0",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15036,
+            "hero_id": 149,
+            "required_level": 350,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15030,0",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15134",
+        "snapshots": {
+          "original": {
+            "id": 15134,
+            "hero_id": 149,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15134,
+            "hero_id": 149,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15135",
+        "snapshots": {
+          "original": {
+            "id": 15135,
+            "hero_id": 149,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15135,
+            "hero_id": 149,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15136",
+        "snapshots": {
+          "original": {
+            "id": 15136,
+            "hero_id": 149,
+            "required_level": 220,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15136,
+            "hero_id": 149,
+            "required_level": 220,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15137",
+        "snapshots": {
+          "original": {
+            "id": 15137,
+            "hero_id": 149,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15137,
+            "hero_id": 149,
+            "required_level": 240,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15138",
+        "snapshots": {
+          "original": {
+            "id": 15138,
+            "hero_id": 149,
+            "required_level": 380,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15138,
+            "hero_id": 149,
+            "required_level": 380,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15139",
+        "snapshots": {
+          "original": {
+            "id": 15139,
+            "hero_id": 149,
+            "required_level": 480,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15139,
+            "hero_id": 149,
+            "required_level": 480,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15140",
+        "snapshots": {
+          "original": {
+            "id": 15140,
+            "hero_id": 149,
+            "required_level": 610,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15140,
+            "hero_id": 149,
+            "required_level": 610,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15141",
+        "snapshots": {
+          "original": {
+            "id": 15141,
+            "hero_id": 149,
+            "required_level": 650,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15141,
+            "hero_id": 149,
+            "required_level": 650,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15142",
+        "snapshots": {
+          "original": {
+            "id": 15142,
+            "hero_id": 149,
+            "required_level": 740,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15142,
+            "hero_id": 149,
+            "required_level": 740,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15143",
+        "snapshots": {
+          "original": {
+            "id": 15143,
+            "hero_id": 149,
+            "required_level": 870,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15030,0",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15143,
+            "hero_id": 149,
+            "required_level": 870,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15030,0",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15144",
+        "snapshots": {
+          "original": {
+            "id": 15144,
+            "hero_id": 149,
+            "required_level": 920,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15144,
+            "hero_id": 149,
+            "required_level": 920,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15145",
+        "snapshots": {
+          "original": {
+            "id": 15145,
+            "hero_id": 149,
+            "required_level": 1000,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15145,
+            "hero_id": 149,
+            "required_level": 1000,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15146",
+        "snapshots": {
+          "original": {
+            "id": 15146,
+            "hero_id": 149,
+            "required_level": 530,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15146,
+            "hero_id": 149,
+            "required_level": 530,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15147",
+        "snapshots": {
+          "original": {
+            "id": 15147,
+            "hero_id": 149,
+            "required_level": 1120,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15147,
+            "hero_id": 149,
+            "required_level": 1120,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15148",
+        "snapshots": {
+          "original": {
+            "id": 15148,
+            "hero_id": 149,
+            "required_level": 1250,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15148,
+            "hero_id": 149,
+            "required_level": 1250,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15149",
+        "snapshots": {
+          "original": {
+            "id": 15149,
+            "hero_id": 149,
+            "required_level": 1340,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15149,
+            "hero_id": 149,
+            "required_level": 1340,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15150",
+        "snapshots": {
+          "original": {
+            "id": 15150,
+            "hero_id": 149,
+            "required_level": 1380,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15030,0",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15150,
+            "hero_id": 149,
+            "required_level": 1380,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15030,0",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15151",
+        "snapshots": {
+          "original": {
+            "id": 15151,
+            "hero_id": 149,
+            "required_level": 1080,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15151,
+            "hero_id": 149,
+            "required_level": 1080,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15152",
+        "snapshots": {
+          "original": {
+            "id": 15152,
+            "hero_id": 149,
+            "required_level": 1500,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15152,
+            "hero_id": 149,
+            "required_level": 1500,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15153",
+        "snapshots": {
+          "original": {
+            "id": 15153,
+            "hero_id": 149,
+            "required_level": 1630,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15153,
+            "hero_id": 149,
+            "required_level": 1630,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15154",
+        "snapshots": {
+          "original": {
+            "id": 15154,
+            "hero_id": 149,
+            "required_level": 1750,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15154,
+            "hero_id": 149,
+            "required_level": 1750,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15155",
+        "snapshots": {
+          "original": {
+            "id": 15155,
+            "hero_id": 149,
+            "required_level": 1760,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15155,
+            "hero_id": 149,
+            "required_level": 1760,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15156",
+        "snapshots": {
+          "original": {
+            "id": 15156,
+            "hero_id": 149,
+            "required_level": 1890,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15030,0",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15156,
+            "hero_id": 149,
+            "required_level": 1890,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15030,0",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15157",
+        "snapshots": {
+          "original": {
+            "id": 15157,
+            "hero_id": 149,
+            "required_level": 1490,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15157,
+            "hero_id": 149,
+            "required_level": 1490,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15158",
+        "snapshots": {
+          "original": {
+            "id": 15158,
+            "hero_id": 149,
+            "required_level": 2020,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15158,
+            "hero_id": 149,
+            "required_level": 2020,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15159",
+        "snapshots": {
+          "original": {
+            "id": 15159,
+            "hero_id": 149,
+            "required_level": 2140,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15159,
+            "hero_id": 149,
+            "required_level": 2140,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15160",
+        "snapshots": {
+          "original": {
+            "id": 15160,
+            "hero_id": 149,
+            "required_level": 2170,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15160,
+            "hero_id": 149,
+            "required_level": 2170,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15161",
+        "snapshots": {
+          "original": {
+            "id": 15161,
+            "hero_id": 149,
+            "required_level": 2270,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15161,
+            "hero_id": 149,
+            "required_level": 2270,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15028,1",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15162",
+        "snapshots": {
+          "original": {
+            "id": 15162,
+            "hero_id": 149,
+            "required_level": 1920,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15162,
+            "hero_id": 149,
+            "required_level": 1920,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15163",
+        "snapshots": {
+          "original": {
+            "id": 15163,
+            "hero_id": 149,
+            "required_level": 2340,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15030,0",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15163,
+            "hero_id": 149,
+            "required_level": 2340,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,15030,0",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15164",
+        "snapshots": {
+          "original": {
+            "id": 15164,
+            "hero_id": 149,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15164,
+            "hero_id": 149,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15165",
+        "snapshots": {
+          "original": {
+            "id": 15165,
+            "hero_id": 149,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15165,
+            "hero_id": 149,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15166",
+        "snapshots": {
+          "original": {
+            "id": 15166,
+            "hero_id": 149,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15166,
+            "hero_id": 149,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15167",
+        "snapshots": {
+          "original": {
+            "id": 15167,
+            "hero_id": 149,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15167,
+            "hero_id": 149,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15168",
+        "snapshots": {
+          "original": {
+            "id": 15168,
+            "hero_id": 149,
+            "required_level": 230,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15168,
+            "hero_id": 149,
+            "required_level": 230,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15169",
+        "snapshots": {
+          "original": {
+            "id": 15169,
+            "hero_id": 149,
+            "required_level": 280,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15169,
+            "hero_id": 149,
+            "required_level": 280,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15170",
+        "snapshots": {
+          "original": {
+            "id": 15170,
+            "hero_id": 149,
+            "required_level": 320,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15170,
+            "hero_id": 149,
+            "required_level": 320,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15171",
+        "snapshots": {
+          "original": {
+            "id": 15171,
+            "hero_id": 149,
+            "required_level": 370,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15171,
+            "hero_id": 149,
+            "required_level": 370,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15172",
+        "snapshots": {
+          "original": {
+            "id": 15172,
+            "hero_id": 149,
+            "required_level": 420,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15172,
+            "hero_id": 149,
+            "required_level": 420,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15173",
+        "snapshots": {
+          "original": {
+            "id": 15173,
+            "hero_id": 149,
+            "required_level": 470,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15173,
+            "hero_id": 149,
+            "required_level": 470,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15174",
+        "snapshots": {
+          "original": {
+            "id": 15174,
+            "hero_id": 149,
+            "required_level": 2320,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15174,
+            "hero_id": 149,
+            "required_level": 2320,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15175",
+        "snapshots": {
+          "original": {
+            "id": 15175,
+            "hero_id": 149,
+            "required_level": 520,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15175,
+            "hero_id": 149,
+            "required_level": 520,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15176",
+        "snapshots": {
+          "original": {
+            "id": 15176,
+            "hero_id": 149,
+            "required_level": 590,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15176,
+            "hero_id": 149,
+            "required_level": 590,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15177",
+        "snapshots": {
+          "original": {
+            "id": 15177,
+            "hero_id": 149,
+            "required_level": 640,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15177,
+            "hero_id": 149,
+            "required_level": 640,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15178",
+        "snapshots": {
+          "original": {
+            "id": 15178,
+            "hero_id": 149,
+            "required_level": 720,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15178,
+            "hero_id": 149,
+            "required_level": 720,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15179",
+        "snapshots": {
+          "original": {
+            "id": 15179,
+            "hero_id": 149,
+            "required_level": 810,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15179,
+            "hero_id": 149,
+            "required_level": 810,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15180",
+        "snapshots": {
+          "original": {
+            "id": 15180,
+            "hero_id": 149,
+            "required_level": 900,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15180,
+            "hero_id": 149,
+            "required_level": 900,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15181",
+        "snapshots": {
+          "original": {
+            "id": 15181,
+            "hero_id": 149,
+            "required_level": 960,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15181,
+            "hero_id": 149,
+            "required_level": 960,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15182",
+        "snapshots": {
+          "original": {
+            "id": 15182,
+            "hero_id": 149,
+            "required_level": 1030,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15182,
+            "hero_id": 149,
+            "required_level": 1030,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15183",
+        "snapshots": {
+          "original": {
+            "id": 15183,
+            "hero_id": 149,
+            "required_level": 1100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15183,
+            "hero_id": 149,
+            "required_level": 1100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15184",
+        "snapshots": {
+          "original": {
+            "id": 15184,
+            "hero_id": 149,
+            "required_level": 1180,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15184,
+            "hero_id": 149,
+            "required_level": 1180,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15185",
+        "snapshots": {
+          "original": {
+            "id": 15185,
+            "hero_id": 149,
+            "required_level": 1270,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15185,
+            "hero_id": 149,
+            "required_level": 1270,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15186",
+        "snapshots": {
+          "original": {
+            "id": 15186,
+            "hero_id": 149,
+            "required_level": 1360,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15186,
+            "hero_id": 149,
+            "required_level": 1360,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15187",
+        "snapshots": {
+          "original": {
+            "id": 15187,
+            "hero_id": 149,
+            "required_level": 1470,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15187,
+            "hero_id": 149,
+            "required_level": 1470,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15188",
+        "snapshots": {
+          "original": {
+            "id": 15188,
+            "hero_id": 149,
+            "required_level": 1600,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15188,
+            "hero_id": 149,
+            "required_level": 1600,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15189",
+        "snapshots": {
+          "original": {
+            "id": 15189,
+            "hero_id": 149,
+            "required_level": 1690,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15189,
+            "hero_id": 149,
+            "required_level": 1690,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15190",
+        "snapshots": {
+          "original": {
+            "id": 15190,
+            "hero_id": 149,
+            "required_level": 1800,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15190,
+            "hero_id": 149,
+            "required_level": 1800,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15191",
+        "snapshots": {
+          "original": {
+            "id": 15191,
+            "hero_id": 149,
+            "required_level": 1970,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15191,
+            "hero_id": 149,
+            "required_level": 1970,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15192",
+        "snapshots": {
+          "original": {
+            "id": 15192,
+            "hero_id": 149,
+            "required_level": 2190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15192,
+            "hero_id": 149,
+            "required_level": 2190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15193",
+        "snapshots": {
+          "original": {
+            "id": 15193,
+            "hero_id": 149,
+            "required_level": 2260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15193,
+            "hero_id": 149,
+            "required_level": 2260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "15194",
+        "snapshots": {
+          "original": {
+            "id": 15194,
+            "hero_id": 149,
+            "required_level": 2330,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 15194,
+            "hero_id": 149,
+            "required_level": 2330,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      }
+    ],
+    "feats": [
+      {
+        "id": "1804",
+        "snapshots": {
+          "original": {
+            "id": 1804,
+            "hero_id": 149,
+            "order": 1,
+            "name": "Selflessness",
+            "description": "Elturel may not be my city, but I will lay down my life to protect its people.",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1577908800
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 1804,
+            "hero_id": 149,
+            "order": 1,
+            "name": "无私",
+            "description": "艾尔托瑞尔也许不是我的城市，但我愿意舍命保护它的人民。",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1577908800
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "1805",
+        "snapshots": {
+          "original": {
+            "id": 1805,
+            "hero_id": 149,
+            "order": 2,
+            "name": "Inspiring Leader",
+            "description": "Show the fiends of Avernus what it means to be a Hellrider!",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1577908800
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 1805,
+            "hero_id": 149,
+            "order": 2,
+            "name": "鼓舞人心的首领",
+            "description": "让阿弗纳斯的炼狱生物们见识见识地狱骑士的风采！",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1577908800
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "1806",
+        "snapshots": {
+          "original": {
+            "id": 1806,
+            "hero_id": 149,
+            "order": 3,
+            "name": "Form Up",
+            "description": "We shall be the front line of defense against the forces of the Hells!",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,15028,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1577908800
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 1806,
+            "hero_id": 149,
+            "order": 3,
+            "name": "摆好阵型",
+            "description": "我们将成为抵御地狱侵袭的最前线！",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,15028,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1577908800
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "1807",
+        "snapshots": {
+          "original": {
+            "id": 1807,
+            "hero_id": 149,
+            "order": 4,
+            "name": "Last Stand",
+            "description": "We are the last hope of Elturel.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,15028,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1577908800
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 1807,
+            "hero_id": 149,
+            "order": 4,
+            "name": "最后一战",
+            "description": "我们是艾尔托瑞尔最后的希望。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,15028,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1577908800
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "1808",
+        "snapshots": {
+          "original": {
+            "id": 1808,
+            "hero_id": 149,
+            "order": 5,
+            "name": "Strength in Numbers",
+            "description": "We are stronger together!",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,15029"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1577908800
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 1808,
+            "hero_id": 149,
+            "order": 5,
+            "name": "群体优势",
+            "description": "人多力量大！",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,15029"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1577908800
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "1809",
+        "snapshots": {
+          "original": {
+            "id": 1809,
+            "hero_id": 149,
+            "order": 6,
+            "name": "Battle Formations",
+            "description": "Knowing our strengths is how we will win.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,15029"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1577908800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 1809,
+            "hero_id": 149,
+            "order": 6,
+            "name": "战斗阵型",
+            "description": "知己才能制敌。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,15029"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1577908800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "1810",
+        "snapshots": {
+          "original": {
+            "id": 1810,
+            "hero_id": 149,
+            "order": 7,
+            "name": "Crucial Weakness",
+            "description": "There! Their formation is weakening - attack!",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,15030,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1577908800
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 1810,
+            "hero_id": 149,
+            "order": 7,
+            "name": "致命弱点",
+            "description": "那边！他们的阵型正在崩溃，快进攻！",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,15030,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1577908800
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "1811",
+        "snapshots": {
+          "original": {
+            "id": 1811,
+            "hero_id": 149,
+            "order": 8,
+            "name": "Turning the Tide",
+            "description": "This is it - victory is nearly at hand!",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,15030,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1577908800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 1811,
+            "hero_id": 149,
+            "order": 8,
+            "name": "形势逆转",
+            "description": "好！胜利近在眼前了！",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,15030,0"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1577908800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "1812",
+        "snapshots": {
+          "original": {
+            "id": 1812,
+            "hero_id": 149,
+            "order": 9,
+            "name": "Work Together",
+            "description": "Let's show these cultists what it means to be a Baldurian!",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade_effect_stacks_max_add,10,15030"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1577908800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 1812,
+            "hero_id": 149,
+            "order": 9,
+            "name": "携手合作",
+            "description": "让这些信徒瞧瞧什么叫做真正的“博德人”！",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade_effect_stacks_max_add,10,15030"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1577908800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "1813",
+        "snapshots": {
+          "original": {
+            "id": 1813,
+            "hero_id": 149,
+            "order": 11,
+            "name": "Spirit of Confidence",
+            "description": "One person can change the entire battle.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "persist_effect_stacks,20,15030"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1956600000
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          },
+          "display": {
+            "id": 1813,
+            "hero_id": 149,
+            "order": 11,
+            "name": "自信精神",
+            "description": "只要一个人，就能改变整场战局。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "persist_effect_stacks,20,15030"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1956600000
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          }
+        }
+      },
+      {
+        "id": "1814",
+        "snapshots": {
+          "original": {
+            "id": 1814,
+            "hero_id": 149,
+            "order": 12,
+            "name": "Heart of Battle",
+            "description": "Let hope strengthen your blades and deliver us victory!",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "persist_effect_stacks,40,15030"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1721847600
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 1814,
+            "hero_id": 149,
+            "order": 12,
+            "name": "战斗之心",
+            "description": "让希望磨砺你的剑刃，带领我们走向胜利！",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "persist_effect_stacks,40,15030"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1721847600
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "1815",
+        "snapshots": {
+          "original": {
+            "id": 1815,
+            "hero_id": 149,
+            "order": 12,
+            "name": "Illithid Tadpole",
+            "description": "I... I had the strangest dream... Why does my head hurt?",
+            "rarity": 4,
+            "graphic_id": 20923,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              },
+              {
+                "effect_string": "add_global_ceremorphosis_stacks,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 435
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1577908800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 1815,
+            "hero_id": 149,
+            "order": 12,
+            "name": "灵吸怪蝌蚪",
+            "description": "我……我做了一个非常奇怪的梦……我怎么头这么疼？",
+            "rarity": 4,
+            "graphic_id": 20923,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              },
+              {
+                "effect_string": "add_global_ceremorphosis_stacks,1"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 435
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1577908800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "1816",
+        "snapshots": {
+          "original": {
+            "id": 1816,
+            "hero_id": 149,
+            "order": 14,
+            "name": "Scholar",
+            "description": "I always cherish my time in Candlekeep.",
+            "rarity": 4,
+            "graphic_id": 10062,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,int,2"
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 10
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1577908800
+            },
+            "collections_source": {
+              "type": "event",
+              "event_id": 10,
+              "tier": 3
+            }
+          },
+          "display": {
+            "id": 1816,
+            "hero_id": 149,
+            "order": 14,
+            "name": "学者",
+            "description": "我会永远怀念在烛堡度过的时光。",
+            "rarity": 4,
+            "graphic_id": 10062,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,int,2"
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 10
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1577908800
+            },
+            "collections_source": {
+              "type": "event",
+              "event_id": 10,
+              "tier": 3
+            }
+          }
+        }
+      },
+      {
+        "id": "1823",
+        "snapshots": {
+          "original": {
+            "id": 1823,
+            "hero_id": 149,
+            "order": 10,
+            "name": "Morale Boost",
+            "description": "This is what our soldiers needed - hope.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade_effect_stacks_max_add,20,15030"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2025-09-04 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 576
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1749063600
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 1823,
+            "hero_id": 149,
+            "order": 10,
+            "name": "提升士气",
+            "description": "我们的士兵正需要希望。",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade_effect_stacks_max_add,20,15030"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2025-09-04 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 576
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1749063600
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "2441",
+        "snapshots": {
+          "original": {
+            "id": 2441,
+            "hero_id": 149,
+            "order": 15,
+            "name": "No Compromises",
+            "description": "As Grand Duke, my morals are tested time and again. I must not lose myself.",
+            "rarity": 4,
+            "graphic_id": 22842,
+            "effects": [
+              {
+                "effect_string": "change_hero_alignment_tag,lawful,good"
+              }
+            ],
+            "sources": [
+              {
+                "source": "campaign",
+                "campaign_id": 32
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1769630400
+            },
+            "collections_source": {
+              "type": "adventure",
+              "adventure_id": 1869
+            }
+          },
+          "display": {
+            "id": 2441,
+            "hero_id": 149,
+            "order": 15,
+            "name": "绝不妥协",
+            "description": "身为大公爵，我的道德一次又一次经受考验。我绝对不能迷失自我。",
+            "rarity": 4,
+            "graphic_id": 22842,
+            "effects": [
+              {
+                "effect_string": "change_hero_alignment_tag,lawful,good"
+              }
+            ],
+            "sources": [
+              {
+                "source": "campaign",
+                "campaign_id": 32
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1769630400
+            },
+            "collections_source": {
+              "type": "adventure",
+              "adventure_id": 1869
+            }
+          }
+        }
+      },
+      {
+        "id": "2609",
+        "snapshots": {
+          "original": {
+            "id": 2609,
+            "hero_id": 149,
+            "order": 16,
+            "name": "TBD Duke Ravengard Feat (Do not translate)",
+            "description": "",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [],
+            "sources": [
+              {
+                "source": "campaign",
+                "campaign_id": 32
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1782327600
+            },
+            "collections_source": ""
+          },
+          "display": {
+            "id": 2609,
+            "hero_id": 149,
+            "order": 16,
+            "name": "TBD Duke Ravengard Feat (Do not translate)",
+            "description": "",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [],
+            "sources": [
+              {
+                "source": "campaign",
+                "campaign_id": 32
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1782327600
+            },
+            "collections_source": ""
+          }
+        }
+      }
+    ],
+    "skins": [
+      {
+        "id": "434",
+        "snapshots": {
+          "original": {
+            "id": 434,
+            "hero_id": 149,
+            "name": "Wyrm Slayer Ravengard",
+            "cost": {
+              "req_date": "2024-06-05 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 23637,
+              "large_graphic_id": 23641,
+              "portrait_graphic_id": 23651,
+              "xl_graphic_id": 23645,
+              "enflamed_graphic_id": 23636
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 1487,
+              "odds": 120
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 434,
+            "hero_id": 149,
+            "name": "飞龙杀手瑞文嘉德",
+            "cost": {
+              "req_date": "2024-06-05 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 23637,
+              "large_graphic_id": 23641,
+              "portrait_graphic_id": 23651,
+              "xl_graphic_id": 23645,
+              "enflamed_graphic_id": 23636
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 1487,
+              "odds": 120
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      },
+      {
+        "id": "442",
+        "snapshots": {
+          "original": {
+            "id": 442,
+            "hero_id": 149,
+            "name": "Baldur's Gate Duke Ravengard",
+            "cost": {
+              "soft_currency": 20000,
+              "req_date": "2024-09-25 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 23923,
+              "large_graphic_id": 23925,
+              "portrait_graphic_id": 23918,
+              "xl_graphic_id": 23926,
+              "enflamed_graphic_id": 23924
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gem_shop",
+              "cost": 20000
+            }
+          },
+          "display": {
+            "id": 442,
+            "hero_id": 149,
+            "name": "博德之门瑞文嘉德公爵",
+            "cost": {
+              "soft_currency": 20000,
+              "req_date": "2024-09-25 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 23923,
+              "large_graphic_id": 23925,
+              "portrait_graphic_id": 23918,
+              "xl_graphic_id": 23926,
+              "enflamed_graphic_id": 23924
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gem_shop",
+              "cost": 20000
+            }
+          }
+        }
+      },
+      {
+        "id": "559",
+        "snapshots": {
+          "original": {
+            "id": 559,
+            "hero_id": 149,
+            "name": "Dracolich Duke Ravengard",
+            "cost": {
+              "req_date": "2025-06-04 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 26909,
+              "large_graphic_id": 26910,
+              "portrait_graphic_id": 26913,
+              "xl_graphic_id": 26911,
+              "enflamed_graphic_id": 26912
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "576",
+              "cost": 1680
+            },
+            "availabilities": {
+              "premium_item_id": "576"
+            }
+          },
+          "display": {
+            "id": 559,
+            "hero_id": 149,
+            "name": "龙巫妖瑞文嘉德公爵",
+            "cost": {
+              "req_date": "2025-06-04 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 26909,
+              "large_graphic_id": 26910,
+              "portrait_graphic_id": 26913,
+              "xl_graphic_id": 26911,
+              "enflamed_graphic_id": 26912
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "576",
+              "cost": 1680
+            },
+            "availabilities": {
+              "premium_item_id": "576"
+            }
+          }
+        }
+      },
+      {
+        "id": "641",
+        "snapshots": {
+          "original": {
+            "id": 641,
+            "hero_id": 149,
+            "name": "Blood War Duke Ravengard",
+            "cost": {
+              "req_date": "2026-01-28 00:00:01"
+            },
+            "details": {
+              "base_graphic_id": 28475,
+              "large_graphic_id": 28478,
+              "portrait_graphic_id": 28474,
+              "xl_graphic_id": 28480,
+              "enflamed_graphic_id": 28476
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "adventure",
+              "adventure_id": 1870
+            },
+            "availabilities": {
+              "adventure_ids": [],
+              "adventures": [
+                {
+                  "id": "1870",
+                  "name": "End of a Legacy"
+                }
+              ]
+            }
+          },
+          "display": {
+            "id": 641,
+            "hero_id": 149,
+            "name": "血战瑞文嘉德公爵",
+            "cost": {
+              "req_date": "2026-01-28 00:00:01"
+            },
+            "details": {
+              "base_graphic_id": 28475,
+              "large_graphic_id": 28478,
+              "portrait_graphic_id": 28474,
+              "xl_graphic_id": 28480,
+              "enflamed_graphic_id": 28476
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "adventure",
+              "adventure_id": 1870
+            },
+            "availabilities": {
+              "adventure_ids": [],
+              "adventures": [
+                {
+                  "id": "1870",
+                  "name": "传承的终结"
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}

@@ -25,7 +25,9 @@ import {
   getLocalizedTextPair,
   getPrimaryLocalizedText,
   getRoleLabel,
+  matchesLocalizedText,
 } from '../domain/localizedText'
+import { getFormationLayoutContextSummary, getFormationLayoutLabel } from '../domain/formationLayout'
 import { buildOrderedChampionsFromPlacements } from '../domain/championPlacement'
 import type {
   Champion,
@@ -42,6 +44,9 @@ const PRESET_SCHEMA_VERSION = 1
 const DRAFT_SAVE_DELAY_MS = 600
 
 const PRESET_PRIORITY_OPTIONS: PresetPriority[] = ['medium', 'high', 'low']
+const LAYOUT_FILTER_OPTIONS = ['all', 'campaign', 'adventure', 'variant'] as const
+
+type LayoutFilterKind = (typeof LAYOUT_FILTER_OPTIONS)[number]
 
 type FormationState =
   | { status: 'loading' }
@@ -132,6 +137,34 @@ function buildRestoredDraftFromPreview(preview: FormationSnapshotPreview<Formati
   }
 }
 
+function matchesLayoutSearch(layout: FormationLayout, query: string): boolean {
+  if (!query.trim()) {
+    return true
+  }
+
+  return (
+    matchesLocalizedText(layout.name, query) ||
+    (layout.notes ? matchesLocalizedText(layout.notes, query) : false) ||
+    (layout.sourceContexts ?? []).some((context) => matchesLocalizedText(context.name, query))
+  )
+}
+
+function matchesLayoutContextKind(layout: FormationLayout, selectedKind: LayoutFilterKind): boolean {
+  if (selectedKind === 'all') {
+    return true
+  }
+
+  return (layout.sourceContexts ?? []).some((context) => context.kind === selectedKind)
+}
+
+function pickPreferredSlotId(layout: FormationLayout | null, placements: Record<string, string> = {}): string {
+  if (!layout) {
+    return ''
+  }
+
+  return layout.slots.find((slot) => Boolean(placements[slot.id]))?.id ?? layout.slots[0]?.id ?? ''
+}
+
 export function FormationPage() {
   const { locale, t } = useI18n()
   const navigate = useNavigate()
@@ -149,6 +182,9 @@ export function FormationPage() {
   const [isDraftPersistenceArmed, setIsDraftPersistenceArmed] = useState(false)
   const [editRevision, setEditRevision] = useState(0)
   const [isSavingPreset, setIsSavingPreset] = useState(false)
+  const [layoutSearch, setLayoutSearch] = useState('')
+  const [selectedContextKind, setSelectedContextKind] = useState<LayoutFilterKind>('all')
+  const [activeMobileSlotId, setActiveMobileSlotId] = useState('')
   const [presetForm, setPresetForm] = useState<PresetFormState>({
     name: '',
     description: '',
@@ -180,6 +216,7 @@ export function FormationPage() {
 
         setState(baseState)
         setSelectedLayoutId(formationCollection.items[0]?.id ?? '')
+        setActiveMobileSlotId(pickPreferredSlotId(formationCollection.items[0] ?? null))
         setDraftStatus({
           tone: 'info',
           title: '最近草稿会自动保存在当前浏览器',
@@ -234,6 +271,12 @@ export function FormationPage() {
             })
             setSelectedLayoutId(restoredDraft.layoutId)
             setPlacements(restoredDraft.placements)
+            setActiveMobileSlotId(
+              pickPreferredSlotId(
+                pendingPrompt.preview.formations.find((layout) => layout.id === restoredDraft.layoutId) ?? null,
+                restoredDraft.placements,
+              ),
+            )
             setScenarioRef(restoredDraft.scenarioRef)
             setIsDraftPersistenceArmed(true)
             setDraftStatus({
@@ -364,6 +407,22 @@ export function FormationPage() {
     state.status === 'ready'
       ? state.formations.find((layout) => layout.id === selectedLayoutId) ?? state.formations[0] ?? null
       : null
+  const selectedLayoutLabel = selectedLayout ? getFormationLayoutLabel(selectedLayout, locale) : null
+  const selectedLayoutContextSummary = selectedLayout
+    ? getFormationLayoutContextSummary(selectedLayout, locale)
+    : null
+  const filteredLayouts = useMemo(() => {
+    if (state.status !== 'ready') {
+      return []
+    }
+
+    return state.formations.filter(
+      (layout) => matchesLayoutContextKind(layout, selectedContextKind) && matchesLayoutSearch(layout, layoutSearch),
+    )
+  }, [layoutSearch, selectedContextKind, state])
+  const isSelectedLayoutVisible = selectedLayout
+    ? filteredLayouts.some((layout) => layout.id === selectedLayout.id)
+    : false
 
   const championOptions = useMemo(() => {
     if (state.status !== 'ready') {
@@ -378,6 +437,14 @@ export function FormationPage() {
     )
   }, [locale, state])
 
+  const championById = useMemo(() => {
+    if (state.status !== 'ready') {
+      return new Map<string, Champion>()
+    }
+
+    return new Map(state.champions.map((champion) => [champion.id, champion]))
+  }, [state])
+
   const selectedChampions = useMemo(() => {
     if (state.status !== 'ready' || !selectedLayout) {
       return []
@@ -391,7 +458,7 @@ export function FormationPage() {
           return null
         }
 
-        const champion = state.champions.find((item) => item.id === championId) ?? null
+        const champion = championById.get(championId) ?? null
 
         if (!champion) {
           return null
@@ -403,7 +470,12 @@ export function FormationPage() {
         }
       })
       .filter((item): item is { slotId: string; champion: Champion } => item !== null)
-  }, [placements, selectedLayout, state])
+  }, [championById, placements, selectedLayout, state])
+
+  const activeMobileSlot =
+    selectedLayout?.slots.find((slot) => slot.id === activeMobileSlotId) ?? selectedLayout?.slots[0] ?? null
+  const activeMobileChampionId = activeMobileSlot ? placements[activeMobileSlot.id] ?? '' : ''
+  const activeMobileChampion = activeMobileChampionId ? championById.get(activeMobileChampionId) ?? null : null
 
   const conflictingSeats = useMemo(
     () => findSeatConflicts(selectedChampions.map((item) => item.champion.seat)),
@@ -439,8 +511,27 @@ export function FormationPage() {
     return t({ zh: '常用', en: 'Regular' })
   }
 
+  function getLayoutFilterLabel(kind: LayoutFilterKind): string {
+    if (kind === 'campaign') {
+      return t({ zh: '战役', en: 'Campaign' })
+    }
+
+    if (kind === 'adventure') {
+      return t({ zh: '冒险', en: 'Adventure' })
+    }
+
+    if (kind === 'variant') {
+      return t({ zh: '变体', en: 'Variant' })
+    }
+
+    return t({ zh: '全部', en: 'All' })
+  }
+
   function handleSelectLayout(layoutId: string) {
+    const nextLayout = state.status === 'ready' ? state.formations.find((layout) => layout.id === layoutId) ?? null : null
+
     setSelectedLayoutId(layoutId)
+    setActiveMobileSlotId(pickPreferredSlotId(nextLayout))
     setPlacements({})
     setScenarioRef(null)
     setDraftStatus({
@@ -495,6 +586,12 @@ export function FormationPage() {
     })
     setSelectedLayoutId(restoredDraft.layoutId)
     setPlacements(restoredDraft.placements)
+    setActiveMobileSlotId(
+      pickPreferredSlotId(
+        draftPrompt.preview.formations.find((layout) => layout.id === restoredDraft.layoutId) ?? null,
+        restoredDraft.placements,
+      ),
+    )
     setScenarioRef(restoredDraft.scenarioRef)
     setDraftPrompt(null)
     setIsDraftPersistenceArmed(true)
@@ -620,8 +717,8 @@ export function FormationPage() {
           en: 'Close the loop on recent-draft save and restore',
         })}
         description={t({
-          zh: '当前继续使用手工维护的 MVP 布局；最近草稿会自动写入当前浏览器的 IndexedDB，不上传到外部。',
-          en: 'This page still uses manually maintained MVP layouts, and recent drafts are auto-saved to IndexedDB in the current browser only.',
+          zh: '当前布局库已改为官方 definitions 自动提取；最近草稿会自动写入当前浏览器的 IndexedDB，不上传到外部。',
+          en: 'The layout library now comes from official definitions, and recent drafts are still auto-saved to IndexedDB in the current browser only.',
         })}
       >
         {state.status === 'loading' ? (
@@ -654,7 +751,7 @@ export function FormationPage() {
                         locale === 'zh-CN'
                           ? `${Object.keys(draftPrompt.preview.placements).length} 名英雄`
                           : `${Object.keys(draftPrompt.preview.placements).length} champions`
-                      } · ${draftPrompt.preview.layoutName}`
+                      } · ${getLocalizedTextPair(draftPrompt.preview.layoutName, locale)}`
                     : draftPrompt.detail
                 }
                 actions={
@@ -715,19 +812,71 @@ export function FormationPage() {
               <StatusBanner tone={draftStatus.tone} title={draftStatus.title} detail={draftStatus.detail} />
             ) : null}
 
-            <FieldGroup label={t({ zh: '布局选择', en: 'Layout' })} className="filter-group">
-              <div className="filter-chip-grid">
-                {state.formations.map((layout) => (
-                  <button
-                    key={layout.id}
-                    type="button"
-                    className={selectedLayout?.id === layout.id ? 'filter-chip filter-chip--active' : 'filter-chip'}
-                    onClick={() => handleSelectLayout(layout.id)}
-                  >
-                    {layout.name}
-                  </button>
-                ))}
+            <FieldGroup label={t({ zh: '布局筛选', en: 'Layout filters' })} className="filter-group">
+              <div className="filter-panel filter-panel--compact">
+                <FieldGroup
+                  label={t({ zh: '关键词', en: 'Keyword' })}
+                  hint={t({
+                    zh: '支持搜索布局名、布局备注和来源场景名称，保留中英混搜。',
+                    en: 'Search layout names, notes, and source context names with mixed Chinese and English.',
+                  })}
+                  labelFor="formation-layout-search"
+                  className="filter-group"
+                >
+                  <input
+                    id="formation-layout-search"
+                    className="text-input"
+                    type="text"
+                    value={layoutSearch}
+                    onChange={(event) => setLayoutSearch(event.target.value)}
+                    placeholder={t({
+                      zh: '搜布局名、来源战役、冒险或变体',
+                      en: 'Search layouts, campaigns, adventures, or variants',
+                    })}
+                  />
+                </FieldGroup>
+
+                <FieldGroup
+                  label={t({ zh: '场景类型', en: 'Scenario type' })}
+                  hint={t({
+                    zh: '筛选只影响上方布局选择区，不会自动清空正在编辑的布局。',
+                    en: 'Filters only affect the layout picker and never clear the layout you are editing.',
+                  })}
+                  className="filter-group"
+                >
+                  <div className="filter-chip-grid">
+                    {LAYOUT_FILTER_OPTIONS.map((kind) => (
+                      <button
+                        key={kind}
+                        type="button"
+                        className={
+                          selectedContextKind === kind ? 'filter-chip filter-chip--active' : 'filter-chip'
+                        }
+                        onClick={() => setSelectedContextKind(kind)}
+                      >
+                        {getLayoutFilterLabel(kind)}
+                      </button>
+                    ))}
+                  </div>
+                </FieldGroup>
               </div>
+            </FieldGroup>
+
+            <FieldGroup label={t({ zh: '布局选择', en: 'Layout' })} className="filter-group">
+              {filteredLayouts.length > 0 ? (
+                <div className="filter-chip-grid">
+                  {filteredLayouts.map((layout) => (
+                    <button
+                      key={layout.id}
+                      type="button"
+                      className={selectedLayout?.id === layout.id ? 'filter-chip filter-chip--active' : 'filter-chip'}
+                      onClick={() => handleSelectLayout(layout.id)}
+                    >
+                      {getFormationLayoutLabel(layout, locale)}
+                    </button>
+                  ))}
+                </div>
+              ) : null}
             </FieldGroup>
 
             {selectedLayout ? (
@@ -735,7 +884,7 @@ export function FormationPage() {
                 <div className="metric-grid">
                   <article className="metric-card">
                     <span className="metric-card__label">{t({ zh: '当前布局', en: 'Current layout' })}</span>
-                    <strong className="metric-card__value">{selectedLayout.name}</strong>
+                    <strong className="metric-card__value">{selectedLayoutLabel}</strong>
                   </article>
                   <article className="metric-card">
                     <span className="metric-card__label">{t({ zh: '槽位数', en: 'Slots' })}</span>
@@ -744,6 +893,14 @@ export function FormationPage() {
                   <article className="metric-card">
                     <span className="metric-card__label">{t({ zh: '数据版本', en: 'Data version' })}</span>
                     <strong className="metric-card__value">{state.dataVersion}</strong>
+                  </article>
+                  <article className="metric-card">
+                    <span className="metric-card__label">{t({ zh: '布局库', en: 'Layout library' })}</span>
+                    <strong className="metric-card__value">{state.formations.length}</strong>
+                  </article>
+                  <article className="metric-card">
+                    <span className="metric-card__label">{t({ zh: '当前匹配布局', en: 'Matching layouts' })}</span>
+                    <strong className="metric-card__value">{filteredLayouts.length}</strong>
                   </article>
                   <article className="metric-card">
                     <span className="metric-card__label">{t({ zh: '已放置英雄', en: 'Placed champions' })}</span>
@@ -757,7 +914,34 @@ export function FormationPage() {
                   </article>
                 </div>
 
-                {selectedLayout.notes ? <StatusBanner tone="info">{selectedLayout.notes}</StatusBanner> : null}
+                {!isSelectedLayoutVisible ? (
+                  <StatusBanner
+                    tone="info"
+                    title={t({
+                      zh: '当前正在编辑的布局不在筛选结果中',
+                      en: 'The layout you are editing is outside the current filter results',
+                    })}
+                    detail={t({
+                      zh: '筛选只影响上方布局选择区；当前布局和已放置英雄会继续保留，放宽条件后可再次看到它。',
+                      en: 'Filters only affect the layout picker. Your current layout and placed champions stay intact and will appear again once you broaden the filters.',
+                    })}
+                  />
+                ) : null}
+
+                {filteredLayouts.length === 0 ? (
+                  <StatusBanner tone="info">
+                    {t({
+                      zh: '当前筛选条件下没有匹配布局，可以先放宽关键词或场景类型。',
+                      en: 'No layouts match these filters yet. Try broadening the keyword or scenario type.',
+                    })}
+                  </StatusBanner>
+                ) : null}
+
+                {selectedLayoutContextSummary ? (
+                  <StatusBanner tone="info">{selectedLayoutContextSummary}</StatusBanner>
+                ) : selectedLayout.notes ? (
+                  <StatusBanner tone="info">{getLocalizedTextPair(selectedLayout.notes, locale)}</StatusBanner>
+                ) : null}
 
                 {conflictingSeats.length > 0 ? (
                   <StatusBanner tone="error">
@@ -772,57 +956,173 @@ export function FormationPage() {
                   <div className="formation-board">
                     {selectedLayout.slots.map((slot, index) => {
                       const championId = placements[slot.id] ?? ''
-                      const champion = championOptions.find((item) => item.id === championId) ?? null
+                      const champion = championById.get(championId) ?? null
                       const hasConflict = champion ? conflictingSeats.includes(champion.seat) : false
+                      const isMobileSlotActive = activeMobileSlot?.id === slot.id
+                      const slotAriaLabel = champion
+                        ? t({
+                            zh: `编辑槽位 ${index + 1}，当前为 ${getPrimaryLocalizedText(champion.name, locale)}`,
+                            en: `Edit slot ${index + 1}, current champion ${getPrimaryLocalizedText(champion.name, locale)}`,
+                          })
+                        : t({
+                            zh: `编辑槽位 ${index + 1}，当前未放置`,
+                            en: `Edit slot ${index + 1}, currently empty`,
+                          })
 
                       return (
                         <div
                           key={slot.id}
-                          className={hasConflict ? 'formation-slot formation-slot--conflict' : 'formation-slot'}
+                          className={[
+                            'formation-slot',
+                            hasConflict ? 'formation-slot--conflict' : '',
+                            isMobileSlotActive ? 'formation-slot--active' : '',
+                          ]
+                            .filter(Boolean)
+                            .join(' ')}
                           style={{ gridColumn: slot.column, gridRow: slot.row }}
                         >
+                          <button
+                            type="button"
+                            className="formation-slot__tap-target"
+                            data-testid={`formation-mobile-slot-${slot.id}`}
+                            aria-label={slotAriaLabel}
+                            aria-pressed={isMobileSlotActive}
+                            onClick={() => setActiveMobileSlotId(slot.id)}
+                          />
                           <span className="formation-slot__label">
                             {locale === 'zh-CN' ? `槽位 ${index + 1}` : `Slot ${index + 1}`}
                           </span>
-                          <select
-                            className="slot-select"
-                            value={championId}
-                            onChange={(event) => handleAssignChampion(slot.id, event.target.value)}
-                          >
-                            <option value="">{t({ zh: '未放置', en: 'Empty' })}</option>
-                            {championOptions.map((item) => (
-                              <option key={item.id} value={item.id}>
-                                {getChampionOptionLabel(item)}
-                              </option>
-                            ))}
-                          </select>
-                          {champion ? (
-                            <div className="formation-slot__current">
-                              <ChampionAvatar
-                                champion={champion}
-                                locale={locale}
-                                className="champion-avatar--slot"
-                              />
+                          <div className="formation-slot__summary" aria-hidden="true">
+                            {champion ? (
+                              <div className="formation-slot__summary-badge">
+                                <ChampionAvatar champion={champion} locale={locale} className="champion-avatar--slot-mini" />
+                                <span className="formation-slot__summary-seat">{champion.seat}</span>
+                              </div>
+                            ) : (
+                              <span className="formation-slot__summary-empty">+</span>
+                            )}
+                          </div>
+                          <div className="formation-slot__controls">
+                            <select
+                              className="slot-select"
+                              value={championId}
+                              onChange={(event) => handleAssignChampion(slot.id, event.target.value)}
+                            >
+                              <option value="">{t({ zh: '未放置', en: 'Empty' })}</option>
+                              {championOptions.map((item) => (
+                                <option key={item.id} value={item.id}>
+                                  {getChampionOptionLabel(item)}
+                                </option>
+                              ))}
+                            </select>
+                            {champion ? (
+                              <div className="formation-slot__current">
+                                <ChampionAvatar
+                                  champion={champion}
+                                  locale={locale}
+                                  className="champion-avatar--slot"
+                                />
+                                <span className="formation-slot__hint">
+                                  {t({
+                                    zh: `当前：${getLocalizedTextPair(champion.name, locale)}`,
+                                    en: `Current: ${getLocalizedTextPair(champion.name, locale)}`,
+                                  })}
+                                </span>
+                              </div>
+                            ) : (
                               <span className="formation-slot__hint">
                                 {t({
-                                  zh: `当前：${getLocalizedTextPair(champion.name, locale)}`,
-                                  en: `Current: ${getLocalizedTextPair(champion.name, locale)}`,
+                                  zh: `坐标 ${slot.row}-${slot.column}`,
+                                  en: `Position ${slot.row}-${slot.column}`,
                                 })}
                               </span>
-                            </div>
-                          ) : (
-                            <span className="formation-slot__hint">
-                              {t({
-                                zh: `坐标 ${slot.row}-${slot.column}`,
-                                en: `Position ${slot.row}-${slot.column}`,
-                              })}
-                            </span>
-                          )}
+                            )}
+                          </div>
                         </div>
                       )
                     })}
                   </div>
                 </div>
+
+                {activeMobileSlot ? (
+                  <div className="formation-mobile-editor" data-testid="formation-mobile-editor">
+                    <div className="formation-mobile-editor__header">
+                      <div>
+                        <p className="formation-mobile-editor__eyebrow">
+                          {t({ zh: '当前编辑槽位', en: 'Editing slot' })}
+                        </p>
+                        <h3 className="formation-mobile-editor__title" data-testid="formation-mobile-editor-slot">
+                          {locale === 'zh-CN'
+                            ? `槽位 ${selectedLayout.slots.findIndex((slot) => slot.id === activeMobileSlot.id) + 1}`
+                            : `Slot ${selectedLayout.slots.findIndex((slot) => slot.id === activeMobileSlot.id) + 1}`}
+                        </h3>
+                        <p className="formation-mobile-editor__description">
+                          {activeMobileChampion
+                            ? t({
+                                zh: `当前为 ${getLocalizedTextPair(activeMobileChampion.name, locale)}，点击下方可更换英雄。`,
+                                en: `Currently ${getLocalizedTextPair(activeMobileChampion.name, locale)}. Use the picker below to swap champions.`,
+                              })
+                            : t({
+                                zh: '当前未放置英雄，先从下方列表里选择一名候选。',
+                                en: 'This slot is empty. Pick a champion below to place one here.',
+                              })}
+                        </p>
+                      </div>
+                      {activeMobileChampion ? (
+                        <button
+                          type="button"
+                          className="action-button action-button--ghost formation-mobile-editor__clear"
+                          onClick={() => handleAssignChampion(activeMobileSlot.id, '')}
+                        >
+                          {t({ zh: '清空槽位', en: 'Clear slot' })}
+                        </button>
+                      ) : null}
+                    </div>
+
+                    <select
+                      data-testid="formation-mobile-slot-select"
+                      className="slot-select"
+                      value={activeMobileChampionId}
+                      onChange={(event) => handleAssignChampion(activeMobileSlot.id, event.target.value)}
+                    >
+                      <option value="">{t({ zh: '未放置', en: 'Empty' })}</option>
+                      {championOptions.map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {getChampionOptionLabel(item)}
+                        </option>
+                      ))}
+                    </select>
+
+                    {activeMobileChampion ? (
+                      <div className="formation-mobile-editor__current">
+                        <ChampionAvatar
+                          champion={activeMobileChampion}
+                          locale={locale}
+                          className="champion-avatar--slot"
+                        />
+                        <div className="formation-mobile-editor__current-copy">
+                          <strong
+                            className="formation-mobile-editor__current-name"
+                            data-testid="formation-mobile-current-name"
+                          >
+                            {getLocalizedTextPair(activeMobileChampion.name, locale)}
+                          </strong>
+                          <span className="formation-mobile-editor__current-meta">
+                            {formatSeatLabel(activeMobileChampion.seat, locale)} ·{' '}
+                            {activeMobileChampion.roles.map((role) => getRoleLabel(role, locale)).join(' / ')}
+                          </span>
+                        </div>
+                      </div>
+                    ) : (
+                      <p
+                        className="formation-mobile-editor__empty"
+                        data-testid="formation-mobile-current-name"
+                      >
+                        {t({ zh: '当前未放置英雄', en: 'No champion placed yet' })}
+                      </p>
+                    )}
+                  </div>
+                ) : null}
 
                 <div className="button-row">
                   <button type="button" className="action-button action-button--ghost" onClick={handleClear}>
@@ -833,8 +1133,8 @@ export function FormationPage() {
             ) : (
               <StatusBanner tone="info">
                 {t({
-                  zh: '当前还没有可用布局，请先补 `scripts/data/manual-overrides.json`。',
-                  en: 'No layouts are available yet. Add one to `scripts/data/manual-overrides.json` first.',
+                  zh: '当前还没有可用布局，请先运行官方数据构建脚本。',
+                  en: 'No layouts are available yet. Run the official data build pipeline first.',
                 })}
               </StatusBanner>
             )}
@@ -948,7 +1248,7 @@ export function FormationPage() {
             <article className="preview-card">
               <span className="preview-card__label">{t({ zh: '当前布局', en: 'Current layout' })}</span>
               <strong className="preview-card__value">
-                {selectedLayout?.name ?? t({ zh: '未选择', en: 'Not selected' })}
+                {selectedLayout ? getFormationLayoutLabel(selectedLayout, locale) : t({ zh: '未选择', en: 'Not selected' })}
               </strong>
             </article>
             <article className="preview-card">

@@ -2,6 +2,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
+import { PNG } from 'pngjs'
 import {
   CHAMPION_PORTRAIT_DIR_NAME,
   DEFAULT_MASTER_API_URL,
@@ -43,6 +44,107 @@ function getPngDimensions(buffer, offset) {
   }
 }
 
+function trimPngToIend(buffer) {
+  let cursor = 8
+
+  while (cursor + 12 <= buffer.length) {
+    const chunkLength = buffer.readUInt32BE(cursor)
+    const chunkType = buffer.subarray(cursor + 4, cursor + 8).toString('ascii')
+    const nextCursor = cursor + 12 + chunkLength
+
+    if (nextCursor > buffer.length) {
+      return buffer
+    }
+
+    cursor = nextCursor
+
+    if (chunkType === 'IEND') {
+      return buffer.subarray(0, cursor)
+    }
+  }
+
+  return buffer
+}
+
+function findOpaqueBounds(png) {
+  let left = png.width
+  let top = png.height
+  let right = -1
+  let bottom = -1
+
+  for (let y = 0; y < png.height; y += 1) {
+    for (let x = 0; x < png.width; x += 1) {
+      const alpha = png.data[(png.width * y + x) * 4 + 3]
+
+      if (alpha === 0) {
+        continue
+      }
+
+      left = Math.min(left, x)
+      top = Math.min(top, y)
+      right = Math.max(right, x)
+      bottom = Math.max(bottom, y)
+    }
+  }
+
+  if (right < left || bottom < top) {
+    return null
+  }
+
+  return {
+    left,
+    top,
+    right,
+    bottom,
+    width: right - left + 1,
+    height: bottom - top + 1,
+  }
+}
+
+function trimTransparentAreaAndCenter(pngBuffer) {
+  const normalizedPngBuffer = trimPngToIend(pngBuffer)
+  const source = PNG.sync.read(normalizedPngBuffer)
+  const bounds = findOpaqueBounds(source)
+
+  if (!bounds) {
+    return {
+      pngBuffer: normalizedPngBuffer,
+      width: source.width,
+      height: source.height,
+      contentWidth: source.width,
+      contentHeight: source.height,
+      trimmed: false,
+    }
+  }
+
+  const outputSize = Math.max(bounds.width, bounds.height)
+  const output = new PNG({ width: outputSize, height: outputSize })
+  const offsetX = Math.floor((outputSize - bounds.width) / 2)
+  const offsetY = Math.floor((outputSize - bounds.height) / 2)
+
+  for (let y = 0; y < bounds.height; y += 1) {
+    for (let x = 0; x < bounds.width; x += 1) {
+      const sourceIndex =
+        ((bounds.top + y) * source.width + (bounds.left + x)) * 4
+      const outputIndex = ((offsetY + y) * output.width + (offsetX + x)) * 4
+
+      output.data[outputIndex] = source.data[sourceIndex]
+      output.data[outputIndex + 1] = source.data[sourceIndex + 1]
+      output.data[outputIndex + 2] = source.data[sourceIndex + 2]
+      output.data[outputIndex + 3] = source.data[sourceIndex + 3]
+    }
+  }
+
+  return {
+    pngBuffer: PNG.sync.write(output),
+    width: output.width,
+    height: output.height,
+    contentWidth: bounds.width,
+    contentHeight: bounds.height,
+    trimmed: bounds.width !== source.width || bounds.height !== source.height || bounds.left > 0 || bounds.top > 0,
+  }
+}
+
 async function readJson(filePath) {
   return JSON.parse(await readFile(filePath, 'utf8'))
 }
@@ -63,21 +165,27 @@ async function downloadChampionPortrait(task, options) {
     throw new Error(`资源 ${task.graphic} 未找到 PNG 数据头，无法写出头像文件`)
   }
 
-  const pngBuffer = rawBuffer.subarray(pngOffset)
+  const extractedPngBuffer = rawBuffer.subarray(pngOffset)
+  const processedPng = trimTransparentAreaAndCenter(extractedPngBuffer)
   const outputFile = path.join(options.outputDir, CHAMPION_PORTRAIT_DIR_NAME, `${task.championId}.png`)
-  const dimensions = getPngDimensions(rawBuffer, pngOffset)
+  const sourceDimensions = getPngDimensions(rawBuffer, pngOffset)
 
-  await writeFile(outputFile, pngBuffer)
+  await writeFile(outputFile, processedPng.pngBuffer)
 
   return {
     championId: task.championId,
     graphic: task.graphic,
     version: task.version,
     outputFile,
-    width: dimensions?.width ?? null,
-    height: dimensions?.height ?? null,
+    width: processedPng.width,
+    height: processedPng.height,
+    contentWidth: processedPng.contentWidth,
+    contentHeight: processedPng.contentHeight,
+    sourceWidth: sourceDimensions?.width ?? null,
+    sourceHeight: sourceDimensions?.height ?? null,
+    trimmed: processedPng.trimmed,
     wrappedBytes: pngOffset,
-    bytes: pngBuffer.length,
+    bytes: processedPng.pngBuffer.length,
     sourceUrl: url,
   }
 }
@@ -122,22 +230,51 @@ export async function syncChampionPortraits(options = {}) {
   )
 
   const dimensionSummary = new Map()
+  const sourceDimensionSummary = new Map()
+  const contentDimensionSummary = new Map()
   const wrappedBytesSummary = new Map()
+  let trimmedCount = 0
 
   portraits.forEach((portrait) => {
     const dimensionKey =
       portrait.width && portrait.height ? `${portrait.width}x${portrait.height}` : 'unknown'
     dimensionSummary.set(dimensionKey, (dimensionSummary.get(dimensionKey) ?? 0) + 1)
+    const sourceDimensionKey =
+      portrait.sourceWidth && portrait.sourceHeight
+        ? `${portrait.sourceWidth}x${portrait.sourceHeight}`
+        : 'unknown'
+    sourceDimensionSummary.set(
+      sourceDimensionKey,
+      (sourceDimensionSummary.get(sourceDimensionKey) ?? 0) + 1,
+    )
+    const contentDimensionKey =
+      portrait.contentWidth && portrait.contentHeight
+        ? `${portrait.contentWidth}x${portrait.contentHeight}`
+        : 'unknown'
+    contentDimensionSummary.set(
+      contentDimensionKey,
+      (contentDimensionSummary.get(contentDimensionKey) ?? 0) + 1,
+    )
     wrappedBytesSummary.set(
       String(portrait.wrappedBytes),
       (wrappedBytesSummary.get(String(portrait.wrappedBytes)) ?? 0) + 1,
     )
+    if (portrait.trimmed) {
+      trimmedCount += 1
+    }
   })
 
   return {
     outputDir: path.join(outputDir, CHAMPION_PORTRAIT_DIR_NAME),
     count: portraits.length,
     portraits,
+    trimmedCount,
+    sourceDimensions: Array.from(sourceDimensionSummary.entries())
+      .sort((left, right) => left[0].localeCompare(right[0]))
+      .map(([size, count]) => ({ size, count })),
+    contentDimensions: Array.from(contentDimensionSummary.entries())
+      .sort((left, right) => left[0].localeCompare(right[0]))
+      .map(([size, count]) => ({ size, count })),
     dimensions: Array.from(dimensionSummary.entries())
       .sort((left, right) => left[0].localeCompare(right[0]))
       .map(([size, count]) => ({ size, count })),
@@ -181,6 +318,13 @@ async function main() {
   console.log('英雄头像同步完成：')
   console.log(`- 输出目录: ${result.outputDir}`)
   console.log(`- 数量: ${result.count}`)
+  console.log(`- 已裁切透明边数量: ${result.trimmedCount}`)
+  console.log(
+    `- 原始尺寸分布: ${result.sourceDimensions.map((item) => `${item.size} (${item.count})`).join(', ') || '无'}`,
+  )
+  console.log(
+    `- 有效内容尺寸: ${result.contentDimensions.map((item) => `${item.size} (${item.count})`).join(', ') || '无'}`,
+  )
   console.log(
     `- 尺寸分布: ${result.dimensions.map((item) => `${item.size} (${item.count})`).join(', ') || '无'}`,
   )

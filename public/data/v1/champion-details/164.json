@@ -1,0 +1,6746 @@
+{
+  "updatedAt": "2026-04-13",
+  "summary": {
+    "id": "164",
+    "name": {
+      "original": "Tess",
+      "display": "苔丝"
+    },
+    "seat": 8,
+    "roles": [
+      "support"
+    ],
+    "affiliations": [
+      {
+        "original": "The Fallbacks",
+        "display": "后备队"
+      }
+    ],
+    "tags": [
+      "chaotic",
+      "elf",
+      "event",
+      "fallbacks",
+      "female",
+      "good",
+      "rogue",
+      "support",
+      "y8"
+    ],
+    "portrait": {
+      "path": "v1/champion-portraits/164.png",
+      "sourceGraphic": "Portraits/Portrait_Tess",
+      "sourceVersion": 3
+    }
+  },
+  "englishName": "Tess",
+  "eventName": {
+    "original": "Founders' Day",
+    "display": "始祖日"
+  },
+  "dateAvailable": "2025-07-02 12:00:00",
+  "lastReworkDate": "2025-07-02 12:00:00",
+  "popularity": 84,
+  "baseCost": "250000000000",
+  "baseDamage": "150000000",
+  "baseHealth": "47",
+  "graphicId": "26778",
+  "portraitGraphicId": "26772",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1783018800
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    255,
+    785,
+    1425,
+    2205
+  ],
+  "costCurves": {
+    "1": 1.09
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "content_set_id": 60,
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      170,
+      171,
+      172
+    ],
+    "graphic_large": 26779,
+    "graphic_xl": 26780,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      89,
+      80
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 4,
+      "gethit": 5,
+      "koed": 6,
+      "run": 7
+    },
+    "allow_time_gate": "2025-07-23 12:00:00",
+    "available_in_store": "2025-07-30 12:00:00",
+    "time_gate_adventure_id": 1711,
+    "time_gate_variants_ids": [
+      1688,
+      1689,
+      1690
+    ],
+    "time_gate_tier": 1,
+    "silver_chest_type_id": 660,
+    "gold_chest_type_id": 661,
+    "golden_epic_loot_id": 3893,
+    "golden_epic_promo_id": 590,
+    "event_logo_graphic_id": 3943,
+    "console_portrait": 26771,
+    "trials_effect_id": 836,
+    "weekly_buff": "buff_upgrade,200,17316",
+    "portrait_graphic_scale": 0.9,
+    "legendary_effect_id": [
+      1,
+      3,
+      58,
+      84,
+      87,
+      49
+    ],
+    "notification_adjustment": {
+      "offset": [
+        56,
+        240
+      ],
+      "scale": 1.25
+    }
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Tessalynde 'Tess' Halendria",
+      "display": "苔丝琳德 “苔丝” 哈伦德里亚"
+    },
+    "class": {
+      "original": "Rogue",
+      "display": "游荡者"
+    },
+    "race": {
+      "original": "Elf (Wood)",
+      "display": "精灵（木精灵）"
+    },
+    "age": 120,
+    "alignment": {
+      "original": "Chaotic Good",
+      "display": "混乱善良"
+    },
+    "abilityScores": {
+      "str": 12,
+      "dex": 17,
+      "con": 12,
+      "int": 15,
+      "wis": 13,
+      "cha": 13
+    },
+    "backstory": {
+      "original": "Tess grew up in a small village where she wreaked havoc as an amateur thief (she stole to see if she could, not because she wanted to keep the items - mostly), before her parents sent her to be trained by an aging halfling rogue named Mel. Under Mel's mentorship, Tess became a professional infiltrator, using her skills for good. Now she's formed her own adventuring party and is actively molding them into the heroes she knows they can be.",
+      "display": "苔丝在一个小村庄长大。她是一名业余小偷，惹出了不少麻烦（她偷窃只是想测试自己的本领，而不是真的想占有那些物品——大多时候是这样）。后来，她的父母把她送走，让一位名叫梅尔的年迈半身人游荡者训练她。在梅尔的指导下，苔丝成为了一名专业的潜行者，利用自己的技能行善。现在她组建了自己的冒险队伍，并积极地将他们塑造成她所坚信的勇士。"
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "870",
+      "name": {
+        "original": "Hand Crossbow",
+        "display": "手弩"
+      },
+      "description": {
+        "original": "Tess attacks the closest enemy for 1 hit.",
+        "display": "苔丝攻击最近的敌人，造成 1 次打击。"
+      },
+      "longDescription": null,
+      "cooldown": 4,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "front",
+      "damageTypes": [
+        "ranged"
+      ],
+      "tags": [
+        "ranged"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "ranged_attack",
+          "projectile": "pd_generic_projectile",
+          "shoot_offset_y": -60,
+          "shoot_frame": 8,
+          "shoot_sound": 149,
+          "hit_sound": 133,
+          "projectile_details": {
+            "hash": "67f52f8a67393eadfdc8ef2193442a04",
+            "target_offset_y": 0,
+            "projectile_speed": 2250,
+            "projectile_graphic_id": 26775
+          }
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "875",
+      "name": {
+        "original": "Deadly Dance",
+        "display": "致命舞蹈"
+      },
+      "description": {
+        "original": "Tess attacks the enemy with the most health, then teleports and attacks all nearby foes.",
+        "display": "苔丝攻击生命值最高的敌人，然后瞬移攻击所有附近的敌人。"
+      },
+      "longDescription": {
+        "original": "Tess throws her dagger at the enemy with the most health for 1 ultimate hit, then teleports and deals another ultimate hit to all nearby foes.",
+        "display": "苔丝将她的匕首投向生命值最高的敌人，造成 1 次杀招打击，然后瞬移并对所有附近的敌人造成又一次杀招打击。"
+      },
+      "cooldown": 360,
+      "numTargets": 1,
+      "aoeRadius": 150,
+      "damageModifier": "0.03",
+      "target": "highest_health",
+      "damageTypes": [],
+      "tags": [
+        "ranged",
+        "melee",
+        "ultimate"
+      ],
+      "graphicId": "26838",
+      "animations": [
+        {
+          "type": "ultimate_attack",
+          "ultimate": "tess",
+          "aoe_radius": 150,
+          "shoot_offset_y": -35,
+          "projectile_details": {
+            "hash": "cfefe0019c9bad171d8e039c8b7e80aa",
+            "target_offset_y": -10,
+            "projectile_speed": 1500,
+            "projectile_graphic_id": 26776,
+            "rotation_speed": 720,
+            "percent_height_offset": 2
+          },
+          "damage_frame": 8
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "17316",
+        "name": {
+          "original": "Lead The Way",
+          "display": "引领前行"
+        },
+        "description": null,
+        "graphicId": "26815"
+      },
+      {
+        "upgradeId": "17317",
+        "name": {
+          "original": "Unleash Uggie",
+          "display": "放开乌吉"
+        },
+        "description": null,
+        "graphicId": "26820"
+      },
+      {
+        "upgradeId": "17318",
+        "name": {
+          "original": "Snack Attack",
+          "display": "零食攻击"
+        },
+        "description": null,
+        "graphicId": "26816"
+      },
+      {
+        "upgradeId": "17319",
+        "name": {
+          "original": "A Plan For Everything",
+          "display": "应对一切的计划"
+        },
+        "description": null,
+        "graphicId": "26814"
+      },
+      {
+        "upgradeId": "17320",
+        "name": {
+          "original": "Trap Expert",
+          "display": "陷阱专家"
+        },
+        "description": null,
+        "graphicId": "26817"
+      }
+    ]
+  },
+  "upgrades": [
+    {
+      "id": "17315",
+      "requiredLevel": 0,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Uggie!",
+        "display": "乌吉！"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2346",
+      "effectDefinition": {
+        "id": "2346",
+        "snapshots": {
+          "original": {
+            "id": 2346,
+            "flavour_text": "",
+            "description": {
+              "desc": "Uggie joins the party, starting next to Tess unless she's already in the formation next to another Fallbacks Champion. Uggie increases the damage of all non-adjacent Champions by $(amount)%."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "uggie_handler,100",
+                "off_when_benched": true,
+                "uggie_roaming_disable_index": 1,
+                "uggie_priority": 5,
+                "uggie_buff_effect_id": 2366,
+                "use_computed_amount_for_description": true
+              },
+              {
+                "effect_string": "disallow_roaming_familiar_ult_trigger",
+                "apply_manually": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26837,
+            "large_graphic_id": 26837,
+            "properties": {
+              "is_formation_ability": true,
+              "show_incoming": false,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "retain_on_slot_changed": true
+            }
+          },
+          "display": {
+            "id": 2346,
+            "flavour_text": "",
+            "description": {
+              "desc": "乌吉加入探险队，并将默认与苔丝相邻，除非她已在阵型中并与另一位“后备队”勇士相邻。乌吉会使所有非相邻的勇士伤害提高 $(amount)%。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "uggie_handler,100",
+                "off_when_benched": true,
+                "uggie_roaming_disable_index": 1,
+                "uggie_priority": 5,
+                "uggie_buff_effect_id": 2366,
+                "use_computed_amount_for_description": true
+              },
+              {
+                "effect_string": "disallow_roaming_familiar_ult_trigger",
+                "apply_manually": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26837,
+            "large_graphic_id": 26837,
+            "properties": {
+              "is_formation_ability": true,
+              "show_incoming": false,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0,
+              "retain_on_slot_changed": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17541",
+      "requiredLevel": 10,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17316",
+      "requiredLevel": 30,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Lead The Way",
+        "display": "引领前行"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2347",
+      "effectDefinition": {
+        "id": "2347",
+        "snapshots": {
+          "original": {
+            "id": 2347,
+            "flavour_text": "",
+            "description": {
+              "conditions": [
+                {
+                  "condition": "feat_assigned 2237",
+                  "desc": "Tess increases the damage of all Champions in the columns in front of her by $amount%."
+                },
+                {
+                  "desc": "Tess increases the damage of all Champions in the columns behind her by $amount%."
+                }
+              ]
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,400",
+                "off_when_benched": true,
+                "targets": [
+                  "behind"
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26824,
+            "large_graphic_id": 26815,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 2347,
+            "flavour_text": "",
+            "description": {
+              "conditions": [
+                {
+                  "condition": "feat_assigned 2237",
+                  "desc": "苔丝会使她前列所有勇士的伤害提高 $amount%。"
+                },
+                {
+                  "desc": "苔丝会使所有处于她身后各列的勇士伤害提高 $amount%。"
+                }
+              ]
+            },
+            "effect_keys": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,400",
+                "off_when_benched": true,
+                "targets": [
+                  "behind"
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26824,
+            "large_graphic_id": 26815,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Tess increases the damage of Champions behind Tess, and Uggie increases the damage of Champions not next to Uggie.",
+        "display": "苔丝使在她身后的勇士伤害提高，同时乌吉使不与乌吉相邻的勇士伤害提高。"
+      }
+    },
+    {
+      "id": "17552",
+      "requiredLevel": 40,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17542",
+      "requiredLevel": 50,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17317",
+      "requiredLevel": 60,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Unleash Uggie",
+        "display": "放开乌吉"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2348",
+      "effectDefinition": {
+        "id": "2348",
+        "snapshots": {
+          "original": {
+            "id": 2348,
+            "flavour_text": "",
+            "description": {
+              "desc": "Uggie's buff is increased by $amount% when Tess is in the formation"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "unleash_uggie_contribution,400",
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26827,
+            "large_graphic_id": 26820,
+            "properties": {
+              "is_formation_ability": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 2348,
+            "flavour_text": "",
+            "description": {
+              "desc": "当苔丝在阵型中时，乌吉的增益提高 $amount%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "unleash_uggie_contribution,400",
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26827,
+            "large_graphic_id": 26820,
+            "properties": {
+              "is_formation_ability": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17553",
+      "requiredLevel": 70,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17473",
+      "requiredLevel": 80,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17316",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17318",
+      "requiredLevel": 100,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Snack Attack",
+        "display": "零食攻击"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2349",
+      "effectDefinition": {
+        "id": "2349",
+        "snapshots": {
+          "original": {
+            "id": 2349,
+            "flavour_text": "",
+            "description": {
+              "desc": "When Uggie is with Tess, Uggie attacks a random target whenever Tess attacks or disarms a trap. Uggie's attack deals $amount seconds of BUD-based damage."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "tess_snack_attack_handler,5",
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26825,
+            "large_graphic_id": 26816,
+            "properties": {
+              "is_formation_ability": true,
+              "show_incoming": false,
+              "use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 2349,
+            "flavour_text": "",
+            "description": {
+              "desc": "当乌吉在苔丝身边时，每当苔丝进行攻击或拆除陷阱，乌吉会攻击一个随机目标。乌吉的攻击会造成等同于 $amount 秒基础杀招伤害的伤害。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "tess_snack_attack_handler,5",
+                "off_when_benched": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26825,
+            "large_graphic_id": 26816,
+            "properties": {
+              "is_formation_ability": true,
+              "show_incoming": false,
+              "use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17554",
+      "requiredLevel": 110,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17522",
+      "requiredLevel": 120,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17316",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17332",
+      "requiredLevel": 130,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Deadly Dance",
+        "display": "致命舞蹈"
+      },
+      "upgradeType": "unlock_ultimate",
+      "effectReference": "effect_def,2362",
+      "effectDefinition": {
+        "id": "2362",
+        "snapshots": {
+          "original": {
+            "id": 2362,
+            "flavour_text": "",
+            "description": {
+              "desc": "Tess throws one of her teleportation daggers at the enemy with the most health, dealing 1 ultimate hit. She then teleports behind that enemy, and stabs a bunch of times, dealing 1 ultimate hit to all targets within melee range, including the original target. She then returns to her place in the formation."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "set_ultimate_attack,875"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26838,
+            "large_graphic_id": 26838,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": false,
+              "show_outgoing_desc_when_benched": false
+            }
+          },
+          "display": {
+            "id": 2362,
+            "flavour_text": "",
+            "description": {
+              "desc": "苔丝将她的一把瞬移匕首投向生命值最高的敌人，造成 1 次杀招打击。然后她会瞬移到该敌人身后，连续刺击数次，对位于近战攻击范围内的所有目标造成 1 次杀招打击，包括原目标。然后她会回到她在阵型中的位置。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "set_ultimate_attack,875"
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26838,
+            "large_graphic_id": 26838,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "formation_circle_icon": false,
+              "show_outgoing_desc_when_benched": false
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17555",
+      "requiredLevel": 140,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17321",
+      "requiredLevel": 150,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "The Fallback Plan",
+        "display": "后备队计划"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2352",
+      "effectDefinition": {
+        "id": "2352",
+        "snapshots": {
+          "original": {
+            "id": 2352,
+            "flavour_text": "",
+            "description": {
+              "desc": "Tess increases the effect of Lead The Way by $amount% for each unaffiliated Champion or Fallbacks Champion in the formation, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,150",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,0,17316",
+                "off_when_benched": true,
+                "amount_expr": "upgrade_amount(17321,0)",
+                "amount_func": "mult",
+                "stack_func": "per_crusader",
+                "stack_func_data": {
+                  "target_filters": [
+                    {
+                      "type": "tags",
+                      "tags": "fallbacks|unaffiliated"
+                    }
+                  ]
+                },
+                "amount_updated_listeners": [
+                  "slot_changed"
+                ],
+                "stacks_multiply": true,
+                "show_bonus": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26832,
+            "large_graphic_id": 26832,
+            "properties": {
+              "is_formation_ability": true,
+              "spec_option_post_apply_info": "Qualified Champions: $num_stacks___2",
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 2352,
+            "flavour_text": "",
+            "description": {
+              "desc": "阵型中每有一名无从属组织勇士或“后备队”勇士，苔丝会使“引领前行”的效果提升 $amount%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,150",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,0,17316",
+                "off_when_benched": true,
+                "amount_expr": "upgrade_amount(17321,0)",
+                "amount_func": "mult",
+                "stack_func": "per_crusader",
+                "stack_func_data": {
+                  "target_filters": [
+                    {
+                      "type": "tags",
+                      "tags": "fallbacks|unaffiliated"
+                    }
+                  ]
+                },
+                "amount_updated_listeners": [
+                  "slot_changed"
+                ],
+                "stacks_multiply": true,
+                "show_bonus": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26832,
+            "large_graphic_id": 26832,
+            "properties": {
+              "is_formation_ability": true,
+              "spec_option_post_apply_info": "满足条件的勇士数量：$num_stacks___2",
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "The Fallback Plan",
+        "display": "后备队计划"
+      },
+      "specializationDescription": {
+        "original": "When the titans are absent, ordinary souls must bear the weight of responsibility and courage.",
+        "display": "当泰坦不在时，普通人必须挑起责任和勇气的重担。"
+      },
+      "specializationGraphicId": "26832",
+      "tipText": null
+    },
+    {
+      "id": "17322",
+      "requiredLevel": 150,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Eyes on the Horizon",
+        "display": "放眼未来"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2353",
+      "effectDefinition": {
+        "id": "2353",
+        "snapshots": {
+          "original": {
+            "id": 2353,
+            "flavour_text": "",
+            "description": {
+              "desc": "Tess increases the effect of Lead The Way by $amount% for each Champion in the formation with a ranged attack, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,200",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,0,17316",
+                "off_when_benched": true,
+                "amount_expr": "upgrade_amount(17322,0)",
+                "amount_func": "mult",
+                "stack_func": "per_crusader",
+                "stack_func_data": {
+                  "target_filters": [
+                    {
+                      "type": "attack_type",
+                      "attack": "ranged"
+                    }
+                  ]
+                },
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "attack_changed"
+                ],
+                "stacks_multiply": true,
+                "show_bonus": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26830,
+            "large_graphic_id": 26830,
+            "properties": {
+              "is_formation_ability": true,
+              "spec_option_post_apply_info": "Qualified Champions: $num_stacks___2",
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 2353,
+            "flavour_text": "",
+            "description": {
+              "desc": "阵型中每有一名可远程攻击的勇士，苔丝会使“引领前行”的效果提升 $amount%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,200",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,0,17316",
+                "off_when_benched": true,
+                "amount_expr": "upgrade_amount(17322,0)",
+                "amount_func": "mult",
+                "stack_func": "per_crusader",
+                "stack_func_data": {
+                  "target_filters": [
+                    {
+                      "type": "attack_type",
+                      "attack": "ranged"
+                    }
+                  ]
+                },
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "attack_changed"
+                ],
+                "stacks_multiply": true,
+                "show_bonus": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26830,
+            "large_graphic_id": 26830,
+            "properties": {
+              "is_formation_ability": true,
+              "spec_option_post_apply_info": "满足条件的勇士数量：$num_stacks___2",
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Eyes on the Horizon",
+        "display": "放眼未来"
+      },
+      "specializationDescription": {
+        "original": "Tess is still learning, but she always looks ahead.",
+        "display": "苔丝依然在学习，但她的目光总是往前看。"
+      },
+      "specializationGraphicId": "26830",
+      "tipText": null
+    },
+    {
+      "id": "17323",
+      "requiredLevel": 150,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Rogues' Gallery",
+        "display": "不法者名册"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2354",
+      "effectDefinition": {
+        "id": "2354",
+        "snapshots": {
+          "original": {
+            "id": 2354,
+            "flavour_text": "",
+            "description": {
+              "desc": "Tess increases the effect of Lead The Way by $amount% for each Rogue Champion in the formation, stacking multiplicatively."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,250",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,0,17316",
+                "off_when_benched": true,
+                "amount_expr": "upgrade_amount(17323,0)",
+                "amount_func": "mult",
+                "stack_func": "per_crusader",
+                "stack_func_data": {
+                  "target_filters": [
+                    {
+                      "type": "tags",
+                      "tags": "rogue"
+                    }
+                  ]
+                },
+                "amount_updated_listeners": [
+                  "slot_changed"
+                ],
+                "stacks_multiply": true,
+                "show_bonus": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26831,
+            "large_graphic_id": 26831,
+            "properties": {
+              "is_formation_ability": true,
+              "spec_option_post_apply_info": "Qualified Champions: $num_stacks___2",
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 2354,
+            "flavour_text": "",
+            "description": {
+              "desc": "阵型中每有一名身为游荡者的勇士，苔丝会使“引领前行”的效果提升 $amount%，以乘算方式堆叠。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "pre_stack,250",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,0,17316",
+                "off_when_benched": true,
+                "amount_expr": "upgrade_amount(17323,0)",
+                "amount_func": "mult",
+                "stack_func": "per_crusader",
+                "stack_func_data": {
+                  "target_filters": [
+                    {
+                      "type": "tags",
+                      "tags": "rogue"
+                    }
+                  ]
+                },
+                "amount_updated_listeners": [
+                  "slot_changed"
+                ],
+                "stacks_multiply": true,
+                "show_bonus": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26831,
+            "large_graphic_id": 26831,
+            "properties": {
+              "is_formation_ability": true,
+              "spec_option_post_apply_info": "满足条件的勇士数量：$num_stacks___2",
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Rogues' Gallery",
+        "display": "不法者名册"
+      },
+      "specializationDescription": {
+        "original": "One day, Tess hopes to make it through her mentor's challenge to finally grab that green scarf.",
+        "display": "苔丝希望有朝一日能通过她导师的考验，最终拿到那条绿色围巾。"
+      },
+      "specializationGraphicId": "26831",
+      "tipText": null
+    },
+    {
+      "id": "17556",
+      "requiredLevel": 160,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17523",
+      "requiredLevel": 170,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17316",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17319",
+      "requiredLevel": 180,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "A Plan For Everything",
+        "display": "应对一切的计划"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2350",
+      "effectDefinition": {
+        "id": "2350",
+        "snapshots": {
+          "original": {
+            "id": 2350,
+            "flavour_text": "",
+            "description": {
+              "desc": "Tess increases the effect of Lead The Way by $(not_buffed amount)% for each different role in the formation, stacking multiplicatively.",
+              "post": {
+                "conditions": [
+                  {
+                    "condition": "not static_desc",
+                    "desc": "^^Roles In Formation: $(roles)"
+                  }
+                ]
+              }
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,400,17316",
+                "off_when_benched": true,
+                "amount_func": "mult",
+                "stack_func": "per_unique_role",
+                "stack_title": "Unique Roles",
+                "show_bonus": true,
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "hero_tags_changed"
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26823,
+            "large_graphic_id": 26814,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          },
+          "display": {
+            "id": 2350,
+            "flavour_text": "",
+            "description": {
+              "desc": "阵型中每有一个不同的角色定位，苔丝就会使“引领前行”的效果提升 $(not_buffed amount)%，以乘算方式堆叠。",
+              "post": {
+                "conditions": [
+                  {
+                    "condition": "not static_desc",
+                    "desc": "^^阵型中的角色定位数量：$(roles)"
+                  }
+                ]
+              }
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,400,17316",
+                "off_when_benched": true,
+                "amount_func": "mult",
+                "stack_func": "per_unique_role",
+                "stack_title": "不同角色定位",
+                "show_bonus": true,
+                "amount_updated_listeners": [
+                  "slot_changed",
+                  "hero_tags_changed"
+                ]
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26823,
+            "large_graphic_id": 26814,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 0
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17557",
+      "requiredLevel": 190,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17320",
+      "requiredLevel": 200,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Trap Expert",
+        "display": "陷阱专家"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,2351",
+      "effectDefinition": {
+        "id": "2351",
+        "snapshots": {
+          "original": {
+            "id": 2351,
+            "flavour_text": "",
+            "description": {
+              "desc": "There's a $chance% chance when an enemy dies that they drop a Trap that Tess immediately spots. During Tess's next attack, rather than attacking, she leaps out and disarms the Trap before it can harm any of her friends. For each Trap disarmed in this way, Lead The Way is increased by $(not_buffed amount___2)%, stacking additively. Stacks persist through resets."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "tess_trap_expert_handler",
+                "off_when_benched": true,
+                "chance": 5
+              },
+              {
+                "effect_string": "buff_upgrade,25,17316",
+                "off_when_benched": true,
+                "stacks_multiply": false,
+                "stacks_on_trigger": "will_manually_stack",
+                "stack_title": "Traps Disarmed",
+                "show_bonus": true
+              },
+              {
+                "effect_string": "change_base_attack,873",
+                "apply_manually": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26826,
+            "large_graphic_id": 26817,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 1,
+              "retain_on_slot_changed": true
+            }
+          },
+          "display": {
+            "id": 2351,
+            "flavour_text": "",
+            "description": {
+              "desc": "敌人死亡时有 $chance% 的几率掉落一个陷阱，苔丝会立即发现。苔丝下次进攻时不会进行攻击，而是会跃出并抢在陷阱伤害到她的任何朋友之前将其拆除。每有一个陷阱以这种方式被拆除，“引领前行”的效果提升 $(not_buffed amount___2)%，以加算方式堆叠。堆叠的层数在重置冒险后会保留。"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "tess_trap_expert_handler",
+                "off_when_benched": true,
+                "chance": 5
+              },
+              {
+                "effect_string": "buff_upgrade,25,17316",
+                "off_when_benched": true,
+                "stacks_multiply": false,
+                "stacks_on_trigger": "will_manually_stack",
+                "stack_title": "已拆除的陷阱",
+                "show_bonus": true
+              },
+              {
+                "effect_string": "change_base_attack,873",
+                "apply_manually": true
+              }
+            ],
+            "requirements": "",
+            "graphic_id": 26826,
+            "large_graphic_id": 26817,
+            "properties": {
+              "is_formation_ability": true,
+              "owner_use_outgoing_description": true,
+              "indexed_effect_properties": true,
+              "per_effect_index_bonuses": true,
+              "default_bonus_index": 1,
+              "retain_on_slot_changed": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Tess's slain enemies occasionally drop traps, which she disarms for a permanent persistent bonus to her main support ability.",
+        "display": "被苔丝击杀的敌人偶尔会掉落陷阱，她会拆除这些陷阱，从而获得对她主要支援技能的永久持续加成。"
+      }
+    },
+    {
+      "id": "17524",
+      "requiredLevel": 210,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17316",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17558",
+      "requiredLevel": 220,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17543",
+      "requiredLevel": 230,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17525",
+      "requiredLevel": 250,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17316",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17559",
+      "requiredLevel": 260,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17560",
+      "requiredLevel": 300,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17526",
+      "requiredLevel": 320,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17316",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17561",
+      "requiredLevel": 350,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17562",
+      "requiredLevel": 390,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17527",
+      "requiredLevel": 410,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17316",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17563",
+      "requiredLevel": 430,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17544",
+      "requiredLevel": 470,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17564",
+      "requiredLevel": 490,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17528",
+      "requiredLevel": 520,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17316",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17565",
+      "requiredLevel": 540,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17566",
+      "requiredLevel": 610,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17529",
+      "requiredLevel": 630,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17316",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17567",
+      "requiredLevel": 670,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17545",
+      "requiredLevel": 700,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17568",
+      "requiredLevel": 730,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17530",
+      "requiredLevel": 740,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17316",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17569",
+      "requiredLevel": 800,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17570",
+      "requiredLevel": 840,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17531",
+      "requiredLevel": 850,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17316",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17571",
+      "requiredLevel": 900,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17546",
+      "requiredLevel": 920,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17532",
+      "requiredLevel": 950,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17316",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17572",
+      "requiredLevel": 960,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17573",
+      "requiredLevel": 1030,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17533",
+      "requiredLevel": 1060,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17316",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17574",
+      "requiredLevel": 1100,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17547",
+      "requiredLevel": 1130,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17575",
+      "requiredLevel": 1160,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17534",
+      "requiredLevel": 1170,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17316",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17576",
+      "requiredLevel": 1260,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17535",
+      "requiredLevel": 1270,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17316",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17548",
+      "requiredLevel": 1340,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17577",
+      "requiredLevel": 1370,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17536",
+      "requiredLevel": 1380,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17316",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17537",
+      "requiredLevel": 1490,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17316",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17578",
+      "requiredLevel": 1500,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17549",
+      "requiredLevel": 1550,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17538",
+      "requiredLevel": 1590,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17316",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17579",
+      "requiredLevel": 1650,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17539",
+      "requiredLevel": 1700,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17316",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17550",
+      "requiredLevel": 1760,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17540",
+      "requiredLevel": 1810,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17316",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17580",
+      "requiredLevel": 1860,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17753",
+      "requiredLevel": 1910,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17316",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17581",
+      "requiredLevel": 1920,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17582",
+      "requiredLevel": 1960,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,300",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17551",
+      "requiredLevel": 1970,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17754",
+      "requiredLevel": 1980,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17316",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "17474",
+      "requiredLevel": 9999,
+      "requiredUpgradeId": "9999",
+      "name": null,
+      "upgradeType": "upgrade_ability",
+      "effectReference": "buff_upgrade,100,17317",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    }
+  ],
+  "feats": [
+    {
+      "id": "2233",
+      "order": 1,
+      "name": {
+        "original": "Selflessness",
+        "display": "无私"
+      },
+      "description": {
+        "original": "I have to care for this group. I have to be the leader they deserve.",
+        "display": "我必须照顾这群人。我必须成为有资格领导他们的首领。"
+      },
+      "rarity": "2",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2234",
+      "order": 2,
+      "name": {
+        "original": "Inspiring Leader",
+        "display": "鼓舞人心的首领"
+      },
+      "description": {
+        "original": "There's no need to worry, because I have a plan.",
+        "display": "不用担心，因为我有一个计划。"
+      },
+      "rarity": "3",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,25"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "2231",
+      "order": 3,
+      "name": {
+        "original": "Prodigal Leader",
+        "display": "浪荡首领"
+      },
+      "description": {
+        "original": "I'm not always the best leader, but I truly believe that we're stronger together.",
+        "display": "我并不总是最出色的首领，但我坚信团结使我们更强大。"
+      },
+      "rarity": "4",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,50"
+        }
+      ],
+      "sources": [
+        {
+          "source": "promo",
+          "promotion_id": 50
+        },
+        {
+          "source": "gems",
+          "cost": 50000
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1753297200
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "2235",
+      "order": 4,
+      "name": {
+        "original": "Looking Ahead",
+        "display": "往前看"
+      },
+      "description": {
+        "original": "This is just the beginning. Wait and see.",
+        "display": "这才刚刚开始，拭目以待吧。"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,17316"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2236",
+      "order": 5,
+      "name": {
+        "original": "Eyes on the Horizon",
+        "display": "放眼未来"
+      },
+      "description": {
+        "original": "You know where you went wrong, so you know how to adjust for next time.",
+        "display": "你知道你哪里做错了，也就是说你知道下次该怎么改正了。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,17316"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "2237",
+      "order": 6,
+      "name": {
+        "original": "Great Things Ahead",
+        "display": "未来可期"
+      },
+      "description": {
+        "original": "We've got something special. We shouldn't waste it. We can do great things.",
+        "display": "我们拥有某样特别的东西，我们不该浪费了。我们能成就一番大事的。"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "change_upgrade_targets,17316",
+          "new_targets": "ahead",
+          "description": "Changes Lead The Way to affect Champions in columns in front of her instead of behind."
+        }
+      ],
+      "sources": [
+        {
+          "source": "event",
+          "event_id": 11
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "event",
+        "event_id": 11,
+        "tier": 3
+      }
+    },
+    {
+      "id": "2238",
+      "order": 7,
+      "name": {
+        "original": "Tess Person",
+        "display": "苔丝人类"
+      },
+      "description": {
+        "original": "Ready to help out, girl?",
+        "display": "姑娘，准备好帮忙了吗？"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,17317"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2239",
+      "order": 8,
+      "name": {
+        "original": "Tess Friend",
+        "display": "苔丝好友"
+      },
+      "description": {
+        "original": "That was fun, wasn't it, girl?",
+        "display": "刚才很有趣，对吧，姑娘？"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,17317"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "2240",
+      "order": 9,
+      "name": {
+        "original": "Gourmand",
+        "display": "美食家"
+      },
+      "description": {
+        "original": "Uggie has... unusual dietary needs.",
+        "display": "乌吉有着……非同寻常的饮食需求。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,17318"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "2241",
+      "order": 10,
+      "name": {
+        "original": "Gather Up",
+        "display": "集合"
+      },
+      "description": {
+        "original": "Alright, Fallbacks. It's time to take this party inside.",
+        "display": "好了，“后备队”的各位成员，是时候到屋子里去了。"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,17319"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "2242",
+      "order": 11,
+      "name": {
+        "original": "Ready for Anything",
+        "display": "做好一切准备"
+      },
+      "description": {
+        "original": "You know I'm always prepared. It's my job to anticipate what the group needs.",
+        "display": "你知道我随时都会做好准备的。预判团队的需要是我的职责。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,17319"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "2243",
+      "order": 12,
+      "name": {
+        "original": "Deft Hands",
+        "display": "巧手"
+      },
+      "description": {
+        "original": "Call me Tess. My friend's name is Anson. We're professional infiltrators.",
+        "display": "叫我苔丝就行。我的朋友叫安森。我们是专业的潜行者。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,17320"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "2244",
+      "order": 13,
+      "name": {
+        "original": "Strategic Adjustment",
+        "display": "战略调整"
+      },
+      "description": {
+        "original": "Would everyone shut up a minute and let me get a plan together?",
+        "display": "大家能不能先闭嘴，让我制定一个计划？"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,40,17321,17322,17323",
+          "description": "Increases the effect of all of Tess's Specializations by $amount%"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "2245",
+      "order": 14,
+      "name": {
+        "original": "Tenacious",
+        "display": "坚持不懈"
+      },
+      "description": {
+        "original": "I'm not always going to fail. Someday, I'll earn that scarf.",
+        "display": "我不会一直失败的。总有一天，我会得到那条围巾的。"
+      },
+      "rarity": "4",
+      "graphicId": "10062",
+      "effects": [
+        {
+          "effect_string": "increase_ability_score,con,2"
+        }
+      ],
+      "sources": [
+        {
+          "source": "event",
+          "event_id": 11
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "event",
+        "event_id": 11,
+        "tier": 4
+      }
+    },
+    {
+      "id": "2246",
+      "order": 15,
+      "name": {
+        "original": "Sleeping Toxin",
+        "display": "睡眠毒素"
+      },
+      "description": {
+        "original": "Careful. One poke from that and it's lights out.",
+        "display": "当心，只要被那东西戳一下你就会晕过去。"
+      },
+      "rarity": "4",
+      "graphicId": "27077",
+      "effects": [
+        {
+          "effect_string": "add_hero_tags,0,control",
+          "description": "Tess gains the Control role and 25% of her attacks stun her targets for 5 seconds"
+        },
+        {
+          "effect_string": "global_dps_multiplier_mult,100"
+        },
+        {
+          "effect_string": "change_base_attack,874",
+          "description": ""
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000,
+          "start_date": "2025-10-02 12:00:00"
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 591
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "2247",
+      "order": 16,
+      "name": {
+        "original": "Deadly Toxin",
+        "display": "致命毒素"
+      },
+      "description": {
+        "original": "If there's a problem, this should solve it.",
+        "display": "它应该能解决任何问题。"
+      },
+      "rarity": "4",
+      "graphicId": "0",
+      "effects": [
+        {
+          "effect_string": "do_nothing"
+        }
+      ],
+      "sources": [
+        {
+          "source": "promo",
+          "promotion_id": 50
+        }
+      ],
+      "properties": {
+        "available_time": 999999,
+        "is_available": false,
+        "available_at_time": 1972407600
+      },
+      "collectionsSource": {
+        "type": "not_yet_available"
+      }
+    },
+    {
+      "id": "2327",
+      "order": 17,
+      "name": {
+        "original": "Tess Family",
+        "display": "苔丝家族"
+      },
+      "description": {
+        "original": "We'll always be together, won't we, girl?",
+        "display": "我们会永远在一起的，对吧，姑娘？"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,17317"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1761159600
+      },
+      "collectionsSource": {
+        "type": "emergence",
+        "unavailable": true
+      }
+    },
+    {
+      "id": "2439",
+      "order": 18,
+      "name": {
+        "original": "Iron Deficiency",
+        "display": "缺铁"
+      },
+      "description": {
+        "original": "Uggie needs bacon grease, apple cores, rusty nails, cat vomit, and vinegar.",
+        "display": "乌吉需要培根油、苹果核、生锈的钉子、猫的呕吐物和醋。"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,17318"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1764784800
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "2601",
+      "order": 19,
+      "name": {
+        "original": "Cat Burglar",
+        "display": "Cat Burglar"
+      },
+      "description": {
+        "original": "My mask finds the traps. My hands do the rest.",
+        "display": "My mask finds the traps. My hands do the rest."
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,17320"
+        }
+      ],
+      "sources": [
+        {
+          "source": "campaign",
+          "campaign_id": 32
+        }
+      ],
+      "properties": {
+        "available_time": 999999,
+        "is_available": false,
+        "available_at_time": 1779908400
+      },
+      "collectionsSource": {
+        "type": "not_yet_available"
+      }
+    }
+  ],
+  "skins": [
+    {
+      "id": "572",
+      "name": {
+        "original": "Fortune Hunter Tess",
+        "display": "财富猎手苔丝"
+      },
+      "cost": {
+        "req_date": "2025-07-02 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 27127,
+        "large_graphic_id": 27128,
+        "portrait_graphic_id": 27126,
+        "xl_graphic_id": 27129
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "591",
+        "cost": 3830
+      },
+      "availabilities": {
+        "premium_item_id": "591"
+      }
+    },
+    {
+      "id": "634",
+      "name": {
+        "original": "Cozy Tess",
+        "display": "惬意的苔丝"
+      },
+      "cost": {
+        "soft_currency": 20000,
+        "req_date": "2025-12-03 10:00:00"
+      },
+      "details": {
+        "base_graphic_id": 28273,
+        "large_graphic_id": 28275,
+        "portrait_graphic_id": 28270,
+        "xl_graphic_id": 28277
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gem_shop",
+        "cost": 20000
+      },
+      "availabilities": null
+    }
+  ],
+  "raw": {
+    "hero": {
+      "original": {
+        "id": 164,
+        "name": "Tess",
+        "english_name": "Tess",
+        "seat_id": 8,
+        "base_cost": "250000000000",
+        "base_damage": "150000000",
+        "base_health": "47",
+        "cost_curves": {
+          "1": 1.09
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 870,
+        "ultimate_attack_id": 875,
+        "graphic_id": 26778,
+        "portrait_graphic_id": 26772,
+        "character_sheet_details": {
+          "full_name": "Tessalynde 'Tess' Halendria",
+          "class": "Rogue",
+          "race": "Elf (Wood)",
+          "age": 120,
+          "alignment": "Chaotic Good",
+          "ability_scores": {
+            "str": 12,
+            "dex": 17,
+            "con": 12,
+            "int": 15,
+            "wis": 13,
+            "cha": 13
+          },
+          "backstory": "Tess grew up in a small village where she wreaked havoc as an amateur thief (she stole to see if she could, not because she wanted to keep the items - mostly), before her parents sent her to be trained by an aging halfling rogue named Mel. Under Mel's mentorship, Tess became a professional infiltrator, using her skills for good. Now she's formed her own adventuring party and is actively molding them into the heroes she knows they can be.",
+          "system_description": "Tess is a Support Champion who leads by example, buffing the damage of all Champions behind her. This trap expert has a plan for everything, increasing your formation's damage if she is given companions with a diverse set of roles. Tess can always be found with the Fallbacks' Otyugh companion Uggie nearby."
+        },
+        "default_feat_slot_unlocks": [
+          255,
+          785,
+          1425,
+          2205
+        ],
+        "tags": [
+          "female",
+          "elf",
+          "rogue",
+          "chaotic",
+          "good",
+          "support",
+          "fallbacks",
+          "event",
+          "y8"
+        ],
+        "properties": {
+          "content_set_id": 60,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            170,
+            171,
+            172
+          ],
+          "graphic_large": 26779,
+          "graphic_xl": 26780,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            89,
+            80
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 4,
+            "gethit": 5,
+            "koed": 6,
+            "run": 7
+          },
+          "allow_time_gate": "2025-07-23 12:00:00",
+          "available_in_store": "2025-07-30 12:00:00",
+          "time_gate_adventure_id": 1711,
+          "time_gate_variants_ids": [
+            1688,
+            1689,
+            1690
+          ],
+          "time_gate_tier": 1,
+          "silver_chest_type_id": 660,
+          "gold_chest_type_id": 661,
+          "golden_epic_loot_id": 3893,
+          "golden_epic_promo_id": 590,
+          "event_logo_graphic_id": 3943,
+          "console_portrait": 26771,
+          "trials_effect_id": 836,
+          "weekly_buff": "buff_upgrade,200,17316",
+          "portrait_graphic_scale": 0.9,
+          "legendary_effect_id": [
+            1,
+            3,
+            58,
+            84,
+            87,
+            49
+          ],
+          "notification_adjustment": {
+            "offset": [
+              56,
+              240
+            ],
+            "scale": 1.25
+          }
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 1687,
+            "type": "base"
+          },
+          {
+            "adventure_id": 1688,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1689,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1690,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1691,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 1711,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 84,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 17316,
+            "name": "Lead The Way",
+            "description": "",
+            "graphic_id": "26815"
+          },
+          {
+            "upgrade_id": 17317,
+            "name": "Unleash Uggie",
+            "description": "",
+            "graphic_id": "26820"
+          },
+          {
+            "upgrade_id": 17318,
+            "name": "Snack Attack",
+            "description": "",
+            "graphic_id": "26816"
+          },
+          {
+            "upgrade_id": 17319,
+            "name": "A Plan For Everything",
+            "description": "",
+            "graphic_id": "26814"
+          },
+          {
+            "upgrade_id": 17320,
+            "name": "Trap Expert",
+            "description": "",
+            "graphic_id": "26817"
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1783018800,
+        "event_name": "Founders' Day",
+        "is_available": true,
+        "date_available": "2025-07-02 12:00:00",
+        "last_rework_date": "2025-07-02 12:00:00"
+      },
+      "display": {
+        "id": 164,
+        "name": "苔丝",
+        "english_name": "Tess",
+        "seat_id": 8,
+        "base_cost": "250000000000",
+        "base_damage": "150000000",
+        "base_health": "47",
+        "cost_curves": {
+          "1": 1.09
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 870,
+        "ultimate_attack_id": 875,
+        "graphic_id": 26778,
+        "portrait_graphic_id": 26772,
+        "character_sheet_details": {
+          "full_name": "苔丝琳德 “苔丝” 哈伦德里亚",
+          "class": "游荡者",
+          "race": "精灵（木精灵）",
+          "age": 120,
+          "alignment": "混乱善良",
+          "ability_scores": {
+            "str": 12,
+            "dex": 17,
+            "con": 12,
+            "int": 15,
+            "wis": 13,
+            "cha": 13
+          },
+          "backstory": "苔丝在一个小村庄长大。她是一名业余小偷，惹出了不少麻烦（她偷窃只是想测试自己的本领，而不是真的想占有那些物品——大多时候是这样）。后来，她的父母把她送走，让一位名叫梅尔的年迈半身人游荡者训练她。在梅尔的指导下，苔丝成为了一名专业的潜行者，利用自己的技能行善。现在她组建了自己的冒险队伍，并积极地将他们塑造成她所坚信的勇士。",
+          "system_description": "苔丝是一名支援型勇士，她以身作则，为自己身后的所有勇士提升伤害。这位陷阱专家对任何情况都有应对之策，如果给她搭配拥有多样角色定位的同伴，就能提升阵型的伤害。在苔丝身边，总能看到“后备队”的“食腐兽”同伴乌吉。"
+        },
+        "default_feat_slot_unlocks": [
+          255,
+          785,
+          1425,
+          2205
+        ],
+        "tags": [
+          "female",
+          "elf",
+          "rogue",
+          "chaotic",
+          "good",
+          "support",
+          "fallbacks",
+          "event",
+          "y8"
+        ],
+        "properties": {
+          "content_set_id": 60,
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            170,
+            171,
+            172
+          ],
+          "graphic_large": 26779,
+          "graphic_xl": 26780,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            89,
+            80
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 4,
+            "gethit": 5,
+            "koed": 6,
+            "run": 7
+          },
+          "allow_time_gate": "2025-07-23 12:00:00",
+          "available_in_store": "2025-07-30 12:00:00",
+          "time_gate_adventure_id": 1711,
+          "time_gate_variants_ids": [
+            1688,
+            1689,
+            1690
+          ],
+          "time_gate_tier": 1,
+          "silver_chest_type_id": 660,
+          "gold_chest_type_id": 661,
+          "golden_epic_loot_id": 3893,
+          "golden_epic_promo_id": 590,
+          "event_logo_graphic_id": 3943,
+          "console_portrait": 26771,
+          "trials_effect_id": 836,
+          "weekly_buff": "buff_upgrade,200,17316",
+          "portrait_graphic_scale": 0.9,
+          "legendary_effect_id": [
+            1,
+            3,
+            58,
+            84,
+            87,
+            49
+          ],
+          "notification_adjustment": {
+            "offset": [
+              56,
+              240
+            ],
+            "scale": 1.25
+          }
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 1687,
+            "type": "base"
+          },
+          {
+            "adventure_id": 1688,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1689,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1690,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 1691,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 1711,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 84,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 17316,
+            "name": "引领前行",
+            "description": "",
+            "graphic_id": "26815"
+          },
+          {
+            "upgrade_id": 17317,
+            "name": "放开乌吉",
+            "description": "",
+            "graphic_id": "26820"
+          },
+          {
+            "upgrade_id": 17318,
+            "name": "零食攻击",
+            "description": "",
+            "graphic_id": "26816"
+          },
+          {
+            "upgrade_id": 17319,
+            "name": "应对一切的计划",
+            "description": "",
+            "graphic_id": "26814"
+          },
+          {
+            "upgrade_id": 17320,
+            "name": "陷阱专家",
+            "description": "",
+            "graphic_id": "26817"
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1783018800,
+        "event_name": "始祖日",
+        "is_available": true,
+        "date_available": "2025-07-02 12:00:00",
+        "last_rework_date": "2025-07-02 12:00:00"
+      }
+    },
+    "attacks": [
+      {
+        "id": "870",
+        "snapshots": {
+          "original": {
+            "id": 870,
+            "name": "Hand Crossbow",
+            "description": "Tess attacks the closest enemy for 1 hit.",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 4,
+            "animations": [
+              {
+                "type": "ranged_attack",
+                "projectile": "pd_generic_projectile",
+                "shoot_offset_y": -60,
+                "shoot_frame": 8,
+                "shoot_sound": 149,
+                "hit_sound": 133,
+                "projectile_details": {
+                  "hash": "67f52f8a67393eadfdc8ef2193442a04",
+                  "target_offset_y": 0,
+                  "projectile_speed": 2250,
+                  "projectile_graphic_id": 26775
+                }
+              }
+            ],
+            "tags": [
+              "ranged"
+            ],
+            "damage_types": [
+              "ranged"
+            ]
+          },
+          "display": {
+            "id": 870,
+            "name": "手弩",
+            "description": "苔丝攻击最近的敌人，造成 1 次打击。",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "front",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 4,
+            "animations": [
+              {
+                "type": "ranged_attack",
+                "projectile": "pd_generic_projectile",
+                "shoot_offset_y": -60,
+                "shoot_frame": 8,
+                "shoot_sound": 149,
+                "hit_sound": 133,
+                "projectile_details": {
+                  "hash": "67f52f8a67393eadfdc8ef2193442a04",
+                  "target_offset_y": 0,
+                  "projectile_speed": 2250,
+                  "projectile_graphic_id": 26775
+                }
+              }
+            ],
+            "tags": [
+              "ranged"
+            ],
+            "damage_types": [
+              "ranged"
+            ]
+          }
+        }
+      },
+      {
+        "id": "875",
+        "snapshots": {
+          "original": {
+            "id": 875,
+            "name": "Deadly Dance",
+            "description": "Tess attacks the enemy with the most health, then teleports and attacks all nearby foes.",
+            "long_description": "Tess throws her dagger at the enemy with the most health for 1 ultimate hit, then teleports and deals another ultimate hit to all nearby foes.",
+            "graphic_id": 26838,
+            "target": "highest_health",
+            "num_targets": 1,
+            "aoe_radius": 150,
+            "damage_modifier": 0.03,
+            "cooldown": 360,
+            "animations": [
+              {
+                "type": "ultimate_attack",
+                "ultimate": "tess",
+                "aoe_radius": 150,
+                "shoot_offset_y": -35,
+                "projectile_details": {
+                  "hash": "cfefe0019c9bad171d8e039c8b7e80aa",
+                  "target_offset_y": -10,
+                  "projectile_speed": 1500,
+                  "projectile_graphic_id": 26776,
+                  "rotation_speed": 720,
+                  "percent_height_offset": 2
+                },
+                "damage_frame": 8
+              }
+            ],
+            "tags": [
+              "ranged",
+              "melee",
+              "ultimate"
+            ],
+            "damage_types": []
+          },
+          "display": {
+            "id": 875,
+            "name": "致命舞蹈",
+            "description": "苔丝攻击生命值最高的敌人，然后瞬移攻击所有附近的敌人。",
+            "long_description": "苔丝将她的匕首投向生命值最高的敌人，造成 1 次杀招打击，然后瞬移并对所有附近的敌人造成又一次杀招打击。",
+            "graphic_id": 26838,
+            "target": "highest_health",
+            "num_targets": 1,
+            "aoe_radius": 150,
+            "damage_modifier": 0.03,
+            "cooldown": 360,
+            "animations": [
+              {
+                "type": "ultimate_attack",
+                "ultimate": "tess",
+                "aoe_radius": 150,
+                "shoot_offset_y": -35,
+                "projectile_details": {
+                  "hash": "cfefe0019c9bad171d8e039c8b7e80aa",
+                  "target_offset_y": -10,
+                  "projectile_speed": 1500,
+                  "projectile_graphic_id": 26776,
+                  "rotation_speed": 720,
+                  "percent_height_offset": 2
+                },
+                "damage_frame": 8
+              }
+            ],
+            "tags": [
+              "ranged",
+              "melee",
+              "ultimate"
+            ],
+            "damage_types": []
+          }
+        }
+      }
+    ],
+    "upgrades": [
+      {
+        "id": "17315",
+        "snapshots": {
+          "original": {
+            "id": 17315,
+            "hero_id": 164,
+            "required_level": 0,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2346",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Uggie!"
+          },
+          "display": {
+            "id": 17315,
+            "hero_id": 164,
+            "required_level": 0,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2346",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "乌吉！"
+          }
+        }
+      },
+      {
+        "id": "17316",
+        "snapshots": {
+          "original": {
+            "id": 17316,
+            "hero_id": 164,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2347",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Lead The Way",
+            "tip_text": "Tess increases the damage of Champions behind Tess, and Uggie increases the damage of Champions not next to Uggie."
+          },
+          "display": {
+            "id": 17316,
+            "hero_id": 164,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2347",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "引领前行",
+            "tip_text": "苔丝使在她身后的勇士伤害提高，同时乌吉使不与乌吉相邻的勇士伤害提高。"
+          }
+        }
+      },
+      {
+        "id": "17317",
+        "snapshots": {
+          "original": {
+            "id": 17317,
+            "hero_id": 164,
+            "required_level": 60,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2348",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Unleash Uggie"
+          },
+          "display": {
+            "id": 17317,
+            "hero_id": 164,
+            "required_level": 60,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2348",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "放开乌吉"
+          }
+        }
+      },
+      {
+        "id": "17318",
+        "snapshots": {
+          "original": {
+            "id": 17318,
+            "hero_id": 164,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2349",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Snack Attack"
+          },
+          "display": {
+            "id": 17318,
+            "hero_id": 164,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2349",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "零食攻击"
+          }
+        }
+      },
+      {
+        "id": "17319",
+        "snapshots": {
+          "original": {
+            "id": 17319,
+            "hero_id": 164,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2350",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "A Plan For Everything"
+          },
+          "display": {
+            "id": 17319,
+            "hero_id": 164,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2350",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "应对一切的计划"
+          }
+        }
+      },
+      {
+        "id": "17320",
+        "snapshots": {
+          "original": {
+            "id": 17320,
+            "hero_id": 164,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2351",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Trap Expert",
+            "tip_text": "Tess's slain enemies occasionally drop traps, which she disarms for a permanent persistent bonus to her main support ability."
+          },
+          "display": {
+            "id": 17320,
+            "hero_id": 164,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2351",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "陷阱专家",
+            "tip_text": "被苔丝击杀的敌人偶尔会掉落陷阱，她会拆除这些陷阱，从而获得对她主要支援技能的永久持续加成。"
+          }
+        }
+      },
+      {
+        "id": "17321",
+        "snapshots": {
+          "original": {
+            "id": 17321,
+            "hero_id": 164,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2352",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "The Fallback Plan",
+            "specialization_name": "The Fallback Plan",
+            "specialization_description": "When the titans are absent, ordinary souls must bear the weight of responsibility and courage.",
+            "specialization_graphic_id": 26832
+          },
+          "display": {
+            "id": 17321,
+            "hero_id": 164,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2352",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "后备队计划",
+            "specialization_name": "后备队计划",
+            "specialization_description": "当泰坦不在时，普通人必须挑起责任和勇气的重担。",
+            "specialization_graphic_id": 26832
+          }
+        }
+      },
+      {
+        "id": "17322",
+        "snapshots": {
+          "original": {
+            "id": 17322,
+            "hero_id": 164,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2353",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Eyes on the Horizon",
+            "specialization_name": "Eyes on the Horizon",
+            "specialization_description": "Tess is still learning, but she always looks ahead.",
+            "specialization_graphic_id": 26830
+          },
+          "display": {
+            "id": 17322,
+            "hero_id": 164,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2353",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "放眼未来",
+            "specialization_name": "放眼未来",
+            "specialization_description": "苔丝依然在学习，但她的目光总是往前看。",
+            "specialization_graphic_id": 26830
+          }
+        }
+      },
+      {
+        "id": "17323",
+        "snapshots": {
+          "original": {
+            "id": 17323,
+            "hero_id": 164,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2354",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Rogues' Gallery",
+            "specialization_name": "Rogues' Gallery",
+            "specialization_description": "One day, Tess hopes to make it through her mentor's challenge to finally grab that green scarf.",
+            "specialization_graphic_id": 26831
+          },
+          "display": {
+            "id": 17323,
+            "hero_id": 164,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,2354",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "不法者名册",
+            "specialization_name": "不法者名册",
+            "specialization_description": "苔丝希望有朝一日能通过她导师的考验，最终拿到那条绿色围巾。",
+            "specialization_graphic_id": 26831
+          }
+        }
+      },
+      {
+        "id": "17332",
+        "snapshots": {
+          "original": {
+            "id": 17332,
+            "hero_id": 164,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "effect_def,2362",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "Deadly Dance"
+          },
+          "display": {
+            "id": 17332,
+            "hero_id": 164,
+            "required_level": 130,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "effect_def,2362",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "致命舞蹈"
+          }
+        }
+      },
+      {
+        "id": "17473",
+        "snapshots": {
+          "original": {
+            "id": 17473,
+            "hero_id": 164,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17473,
+            "hero_id": 164,
+            "required_level": 80,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17474",
+        "snapshots": {
+          "original": {
+            "id": 17474,
+            "hero_id": 164,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17317",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17474,
+            "hero_id": 164,
+            "required_level": 9999,
+            "required_upgrade_id": 9999,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17317",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17522",
+        "snapshots": {
+          "original": {
+            "id": 17522,
+            "hero_id": 164,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17522,
+            "hero_id": 164,
+            "required_level": 120,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17523",
+        "snapshots": {
+          "original": {
+            "id": 17523,
+            "hero_id": 164,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17523,
+            "hero_id": 164,
+            "required_level": 170,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17524",
+        "snapshots": {
+          "original": {
+            "id": 17524,
+            "hero_id": 164,
+            "required_level": 210,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17524,
+            "hero_id": 164,
+            "required_level": 210,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17525",
+        "snapshots": {
+          "original": {
+            "id": 17525,
+            "hero_id": 164,
+            "required_level": 250,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17525,
+            "hero_id": 164,
+            "required_level": 250,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17526",
+        "snapshots": {
+          "original": {
+            "id": 17526,
+            "hero_id": 164,
+            "required_level": 320,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17526,
+            "hero_id": 164,
+            "required_level": 320,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17527",
+        "snapshots": {
+          "original": {
+            "id": 17527,
+            "hero_id": 164,
+            "required_level": 410,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17527,
+            "hero_id": 164,
+            "required_level": 410,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17528",
+        "snapshots": {
+          "original": {
+            "id": 17528,
+            "hero_id": 164,
+            "required_level": 520,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17528,
+            "hero_id": 164,
+            "required_level": 520,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17529",
+        "snapshots": {
+          "original": {
+            "id": 17529,
+            "hero_id": 164,
+            "required_level": 630,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17529,
+            "hero_id": 164,
+            "required_level": 630,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17530",
+        "snapshots": {
+          "original": {
+            "id": 17530,
+            "hero_id": 164,
+            "required_level": 740,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17530,
+            "hero_id": 164,
+            "required_level": 740,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17531",
+        "snapshots": {
+          "original": {
+            "id": 17531,
+            "hero_id": 164,
+            "required_level": 850,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17531,
+            "hero_id": 164,
+            "required_level": 850,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17532",
+        "snapshots": {
+          "original": {
+            "id": 17532,
+            "hero_id": 164,
+            "required_level": 950,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17532,
+            "hero_id": 164,
+            "required_level": 950,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17533",
+        "snapshots": {
+          "original": {
+            "id": 17533,
+            "hero_id": 164,
+            "required_level": 1060,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17533,
+            "hero_id": 164,
+            "required_level": 1060,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17534",
+        "snapshots": {
+          "original": {
+            "id": 17534,
+            "hero_id": 164,
+            "required_level": 1170,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17534,
+            "hero_id": 164,
+            "required_level": 1170,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17535",
+        "snapshots": {
+          "original": {
+            "id": 17535,
+            "hero_id": 164,
+            "required_level": 1270,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17535,
+            "hero_id": 164,
+            "required_level": 1270,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17536",
+        "snapshots": {
+          "original": {
+            "id": 17536,
+            "hero_id": 164,
+            "required_level": 1380,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17536,
+            "hero_id": 164,
+            "required_level": 1380,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17537",
+        "snapshots": {
+          "original": {
+            "id": 17537,
+            "hero_id": 164,
+            "required_level": 1490,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17537,
+            "hero_id": 164,
+            "required_level": 1490,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17538",
+        "snapshots": {
+          "original": {
+            "id": 17538,
+            "hero_id": 164,
+            "required_level": 1590,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17538,
+            "hero_id": 164,
+            "required_level": 1590,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17539",
+        "snapshots": {
+          "original": {
+            "id": 17539,
+            "hero_id": 164,
+            "required_level": 1700,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17539,
+            "hero_id": 164,
+            "required_level": 1700,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17540",
+        "snapshots": {
+          "original": {
+            "id": 17540,
+            "hero_id": 164,
+            "required_level": 1810,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17540,
+            "hero_id": 164,
+            "required_level": 1810,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17541",
+        "snapshots": {
+          "original": {
+            "id": 17541,
+            "hero_id": 164,
+            "required_level": 10,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17541,
+            "hero_id": 164,
+            "required_level": 10,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17542",
+        "snapshots": {
+          "original": {
+            "id": 17542,
+            "hero_id": 164,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17542,
+            "hero_id": 164,
+            "required_level": 50,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17543",
+        "snapshots": {
+          "original": {
+            "id": 17543,
+            "hero_id": 164,
+            "required_level": 230,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17543,
+            "hero_id": 164,
+            "required_level": 230,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17544",
+        "snapshots": {
+          "original": {
+            "id": 17544,
+            "hero_id": 164,
+            "required_level": 470,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17544,
+            "hero_id": 164,
+            "required_level": 470,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17545",
+        "snapshots": {
+          "original": {
+            "id": 17545,
+            "hero_id": 164,
+            "required_level": 700,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17545,
+            "hero_id": 164,
+            "required_level": 700,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17546",
+        "snapshots": {
+          "original": {
+            "id": 17546,
+            "hero_id": 164,
+            "required_level": 920,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17546,
+            "hero_id": 164,
+            "required_level": 920,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17547",
+        "snapshots": {
+          "original": {
+            "id": 17547,
+            "hero_id": 164,
+            "required_level": 1130,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17547,
+            "hero_id": 164,
+            "required_level": 1130,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17548",
+        "snapshots": {
+          "original": {
+            "id": 17548,
+            "hero_id": 164,
+            "required_level": 1340,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17548,
+            "hero_id": 164,
+            "required_level": 1340,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17549",
+        "snapshots": {
+          "original": {
+            "id": 17549,
+            "hero_id": 164,
+            "required_level": 1550,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17549,
+            "hero_id": 164,
+            "required_level": 1550,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17550",
+        "snapshots": {
+          "original": {
+            "id": 17550,
+            "hero_id": 164,
+            "required_level": 1760,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17550,
+            "hero_id": 164,
+            "required_level": 1760,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17551",
+        "snapshots": {
+          "original": {
+            "id": 17551,
+            "hero_id": 164,
+            "required_level": 1970,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17551,
+            "hero_id": 164,
+            "required_level": 1970,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17552",
+        "snapshots": {
+          "original": {
+            "id": 17552,
+            "hero_id": 164,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17552,
+            "hero_id": 164,
+            "required_level": 40,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17553",
+        "snapshots": {
+          "original": {
+            "id": 17553,
+            "hero_id": 164,
+            "required_level": 70,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17553,
+            "hero_id": 164,
+            "required_level": 70,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17554",
+        "snapshots": {
+          "original": {
+            "id": 17554,
+            "hero_id": 164,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17554,
+            "hero_id": 164,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17555",
+        "snapshots": {
+          "original": {
+            "id": 17555,
+            "hero_id": 164,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17555,
+            "hero_id": 164,
+            "required_level": 140,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17556",
+        "snapshots": {
+          "original": {
+            "id": 17556,
+            "hero_id": 164,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17556,
+            "hero_id": 164,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17557",
+        "snapshots": {
+          "original": {
+            "id": 17557,
+            "hero_id": 164,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17557,
+            "hero_id": 164,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17558",
+        "snapshots": {
+          "original": {
+            "id": 17558,
+            "hero_id": 164,
+            "required_level": 220,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17558,
+            "hero_id": 164,
+            "required_level": 220,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17559",
+        "snapshots": {
+          "original": {
+            "id": 17559,
+            "hero_id": 164,
+            "required_level": 260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17559,
+            "hero_id": 164,
+            "required_level": 260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17560",
+        "snapshots": {
+          "original": {
+            "id": 17560,
+            "hero_id": 164,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17560,
+            "hero_id": 164,
+            "required_level": 300,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17561",
+        "snapshots": {
+          "original": {
+            "id": 17561,
+            "hero_id": 164,
+            "required_level": 350,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17561,
+            "hero_id": 164,
+            "required_level": 350,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17562",
+        "snapshots": {
+          "original": {
+            "id": 17562,
+            "hero_id": 164,
+            "required_level": 390,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17562,
+            "hero_id": 164,
+            "required_level": 390,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17563",
+        "snapshots": {
+          "original": {
+            "id": 17563,
+            "hero_id": 164,
+            "required_level": 430,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17563,
+            "hero_id": 164,
+            "required_level": 430,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17564",
+        "snapshots": {
+          "original": {
+            "id": 17564,
+            "hero_id": 164,
+            "required_level": 490,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17564,
+            "hero_id": 164,
+            "required_level": 490,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17565",
+        "snapshots": {
+          "original": {
+            "id": 17565,
+            "hero_id": 164,
+            "required_level": 540,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17565,
+            "hero_id": 164,
+            "required_level": 540,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17566",
+        "snapshots": {
+          "original": {
+            "id": 17566,
+            "hero_id": 164,
+            "required_level": 610,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17566,
+            "hero_id": 164,
+            "required_level": 610,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17567",
+        "snapshots": {
+          "original": {
+            "id": 17567,
+            "hero_id": 164,
+            "required_level": 670,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17567,
+            "hero_id": 164,
+            "required_level": 670,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17568",
+        "snapshots": {
+          "original": {
+            "id": 17568,
+            "hero_id": 164,
+            "required_level": 730,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17568,
+            "hero_id": 164,
+            "required_level": 730,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17569",
+        "snapshots": {
+          "original": {
+            "id": 17569,
+            "hero_id": 164,
+            "required_level": 800,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17569,
+            "hero_id": 164,
+            "required_level": 800,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17570",
+        "snapshots": {
+          "original": {
+            "id": 17570,
+            "hero_id": 164,
+            "required_level": 840,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17570,
+            "hero_id": 164,
+            "required_level": 840,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17571",
+        "snapshots": {
+          "original": {
+            "id": 17571,
+            "hero_id": 164,
+            "required_level": 900,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17571,
+            "hero_id": 164,
+            "required_level": 900,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17572",
+        "snapshots": {
+          "original": {
+            "id": 17572,
+            "hero_id": 164,
+            "required_level": 960,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17572,
+            "hero_id": 164,
+            "required_level": 960,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17573",
+        "snapshots": {
+          "original": {
+            "id": 17573,
+            "hero_id": 164,
+            "required_level": 1030,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17573,
+            "hero_id": 164,
+            "required_level": 1030,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17574",
+        "snapshots": {
+          "original": {
+            "id": 17574,
+            "hero_id": 164,
+            "required_level": 1100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17574,
+            "hero_id": 164,
+            "required_level": 1100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17575",
+        "snapshots": {
+          "original": {
+            "id": 17575,
+            "hero_id": 164,
+            "required_level": 1160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17575,
+            "hero_id": 164,
+            "required_level": 1160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17576",
+        "snapshots": {
+          "original": {
+            "id": 17576,
+            "hero_id": 164,
+            "required_level": 1260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17576,
+            "hero_id": 164,
+            "required_level": 1260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17577",
+        "snapshots": {
+          "original": {
+            "id": 17577,
+            "hero_id": 164,
+            "required_level": 1370,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17577,
+            "hero_id": 164,
+            "required_level": 1370,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17578",
+        "snapshots": {
+          "original": {
+            "id": 17578,
+            "hero_id": 164,
+            "required_level": 1500,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17578,
+            "hero_id": 164,
+            "required_level": 1500,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17579",
+        "snapshots": {
+          "original": {
+            "id": 17579,
+            "hero_id": 164,
+            "required_level": 1650,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17579,
+            "hero_id": 164,
+            "required_level": 1650,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17580",
+        "snapshots": {
+          "original": {
+            "id": 17580,
+            "hero_id": 164,
+            "required_level": 1860,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17580,
+            "hero_id": 164,
+            "required_level": 1860,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17581",
+        "snapshots": {
+          "original": {
+            "id": 17581,
+            "hero_id": 164,
+            "required_level": 1920,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17581,
+            "hero_id": 164,
+            "required_level": 1920,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17582",
+        "snapshots": {
+          "original": {
+            "id": 17582,
+            "hero_id": 164,
+            "required_level": 1960,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17582,
+            "hero_id": 164,
+            "required_level": 1960,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,300",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17753",
+        "snapshots": {
+          "original": {
+            "id": 17753,
+            "hero_id": 164,
+            "required_level": 1910,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17753,
+            "hero_id": 164,
+            "required_level": 1910,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "17754",
+        "snapshots": {
+          "original": {
+            "id": 17754,
+            "hero_id": 164,
+            "required_level": 1980,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 17754,
+            "hero_id": 164,
+            "required_level": 1980,
+            "required_upgrade_id": 0,
+            "upgrade_type": "upgrade_ability",
+            "effect": "buff_upgrade,100,17316",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      }
+    ],
+    "feats": [
+      {
+        "id": "2231",
+        "snapshots": {
+          "original": {
+            "id": 2231,
+            "hero_id": 164,
+            "order": 3,
+            "name": "Prodigal Leader",
+            "description": "I'm not always the best leader, but I truly believe that we're stronger together.",
+            "rarity": 4,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,50"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              },
+              {
+                "source": "gems",
+                "cost": 50000
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1753297200
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 2231,
+            "hero_id": 164,
+            "order": 3,
+            "name": "浪荡首领",
+            "description": "我并不总是最出色的首领，但我坚信团结使我们更强大。",
+            "rarity": 4,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,50"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              },
+              {
+                "source": "gems",
+                "cost": 50000
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1753297200
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "2233",
+        "snapshots": {
+          "original": {
+            "id": 2233,
+            "hero_id": 164,
+            "order": 1,
+            "name": "Selflessness",
+            "description": "I have to care for this group. I have to be the leader they deserve.",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2233,
+            "hero_id": 164,
+            "order": 1,
+            "name": "无私",
+            "description": "我必须照顾这群人。我必须成为有资格领导他们的首领。",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2234",
+        "snapshots": {
+          "original": {
+            "id": 2234,
+            "hero_id": 164,
+            "order": 2,
+            "name": "Inspiring Leader",
+            "description": "There's no need to worry, because I have a plan.",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 2234,
+            "hero_id": 164,
+            "order": 2,
+            "name": "鼓舞人心的首领",
+            "description": "不用担心，因为我有一个计划。",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "2235",
+        "snapshots": {
+          "original": {
+            "id": 2235,
+            "hero_id": 164,
+            "order": 4,
+            "name": "Looking Ahead",
+            "description": "This is just the beginning. Wait and see.",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,17316"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2235,
+            "hero_id": 164,
+            "order": 4,
+            "name": "往前看",
+            "description": "这才刚刚开始，拭目以待吧。",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,17316"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2236",
+        "snapshots": {
+          "original": {
+            "id": 2236,
+            "hero_id": 164,
+            "order": 5,
+            "name": "Eyes on the Horizon",
+            "description": "You know where you went wrong, so you know how to adjust for next time.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17316"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 2236,
+            "hero_id": 164,
+            "order": 5,
+            "name": "放眼未来",
+            "description": "你知道你哪里做错了，也就是说你知道下次该怎么改正了。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17316"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "2237",
+        "snapshots": {
+          "original": {
+            "id": 2237,
+            "hero_id": 164,
+            "order": 6,
+            "name": "Great Things Ahead",
+            "description": "We've got something special. We shouldn't waste it. We can do great things.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "change_upgrade_targets,17316",
+                "new_targets": "ahead",
+                "description": "Changes Lead The Way to affect Champions in columns in front of her instead of behind."
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 11
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "event",
+              "event_id": 11,
+              "tier": 3
+            }
+          },
+          "display": {
+            "id": 2237,
+            "hero_id": 164,
+            "order": 6,
+            "name": "未来可期",
+            "description": "我们拥有某样特别的东西，我们不该浪费了。我们能成就一番大事的。",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "change_upgrade_targets,17316",
+                "new_targets": "ahead",
+                "description": "将“引领前行”的对象改为她身前各列中的勇士而非她身后各列中的勇士。"
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 11
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "event",
+              "event_id": 11,
+              "tier": 3
+            }
+          }
+        }
+      },
+      {
+        "id": "2238",
+        "snapshots": {
+          "original": {
+            "id": 2238,
+            "hero_id": 164,
+            "order": 7,
+            "name": "Tess Person",
+            "description": "Ready to help out, girl?",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,17317"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2238,
+            "hero_id": 164,
+            "order": 7,
+            "name": "苔丝人类",
+            "description": "姑娘，准备好帮忙了吗？",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,17317"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2239",
+        "snapshots": {
+          "original": {
+            "id": 2239,
+            "hero_id": 164,
+            "order": 8,
+            "name": "Tess Friend",
+            "description": "That was fun, wasn't it, girl?",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17317"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 2239,
+            "hero_id": 164,
+            "order": 8,
+            "name": "苔丝好友",
+            "description": "刚才很有趣，对吧，姑娘？",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17317"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "2240",
+        "snapshots": {
+          "original": {
+            "id": 2240,
+            "hero_id": 164,
+            "order": 9,
+            "name": "Gourmand",
+            "description": "Uggie has... unusual dietary needs.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17318"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 2240,
+            "hero_id": 164,
+            "order": 9,
+            "name": "美食家",
+            "description": "乌吉有着……非同寻常的饮食需求。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17318"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "2241",
+        "snapshots": {
+          "original": {
+            "id": 2241,
+            "hero_id": 164,
+            "order": 10,
+            "name": "Gather Up",
+            "description": "Alright, Fallbacks. It's time to take this party inside.",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,17319"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 2241,
+            "hero_id": 164,
+            "order": 10,
+            "name": "集合",
+            "description": "好了，“后备队”的各位成员，是时候到屋子里去了。",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,17319"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "2242",
+        "snapshots": {
+          "original": {
+            "id": 2242,
+            "hero_id": 164,
+            "order": 11,
+            "name": "Ready for Anything",
+            "description": "You know I'm always prepared. It's my job to anticipate what the group needs.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17319"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 2242,
+            "hero_id": 164,
+            "order": 11,
+            "name": "做好一切准备",
+            "description": "你知道我随时都会做好准备的。预判团队的需要是我的职责。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17319"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "2243",
+        "snapshots": {
+          "original": {
+            "id": 2243,
+            "hero_id": 164,
+            "order": 12,
+            "name": "Deft Hands",
+            "description": "Call me Tess. My friend's name is Anson. We're professional infiltrators.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17320"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 2243,
+            "hero_id": 164,
+            "order": 12,
+            "name": "巧手",
+            "description": "叫我苔丝就行。我的朋友叫安森。我们是专业的潜行者。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,17320"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "2244",
+        "snapshots": {
+          "original": {
+            "id": 2244,
+            "hero_id": 164,
+            "order": 13,
+            "name": "Strategic Adjustment",
+            "description": "Would everyone shut up a minute and let me get a plan together?",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,40,17321,17322,17323",
+                "description": "Increases the effect of all of Tess's Specializations by $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 2244,
+            "hero_id": 164,
+            "order": 13,
+            "name": "战略调整",
+            "description": "大家能不能先闭嘴，让我制定一个计划？",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,40,17321,17322,17323",
+                "description": "使苔丝的所有专精效果提高 $amount%"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "2245",
+        "snapshots": {
+          "original": {
+            "id": 2245,
+            "hero_id": 164,
+            "order": 14,
+            "name": "Tenacious",
+            "description": "I'm not always going to fail. Someday, I'll earn that scarf.",
+            "rarity": 4,
+            "graphic_id": 10062,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,con,2"
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 11
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "event",
+              "event_id": 11,
+              "tier": 4
+            }
+          },
+          "display": {
+            "id": 2245,
+            "hero_id": 164,
+            "order": 14,
+            "name": "坚持不懈",
+            "description": "我不会一直失败的。总有一天，我会得到那条围巾的。",
+            "rarity": 4,
+            "graphic_id": 10062,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,con,2"
+              }
+            ],
+            "sources": [
+              {
+                "source": "event",
+                "event_id": 11
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "event",
+              "event_id": 11,
+              "tier": 4
+            }
+          }
+        }
+      },
+      {
+        "id": "2246",
+        "snapshots": {
+          "original": {
+            "id": 2246,
+            "hero_id": 164,
+            "order": 15,
+            "name": "Sleeping Toxin",
+            "description": "Careful. One poke from that and it's lights out.",
+            "rarity": 4,
+            "graphic_id": 27077,
+            "effects": [
+              {
+                "effect_string": "add_hero_tags,0,control",
+                "description": "Tess gains the Control role and 25% of her attacks stun her targets for 5 seconds"
+              },
+              {
+                "effect_string": "global_dps_multiplier_mult,100"
+              },
+              {
+                "effect_string": "change_base_attack,874",
+                "description": ""
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2025-10-02 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 591
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 2246,
+            "hero_id": 164,
+            "order": 15,
+            "name": "睡眠毒素",
+            "description": "当心，只要被那东西戳一下你就会晕过去。",
+            "rarity": 4,
+            "graphic_id": 27077,
+            "effects": [
+              {
+                "effect_string": "add_hero_tags,0,control",
+                "description": "苔丝获得控制角色定位，并且她 25% 的攻击会使她的目标眩晕 5 秒"
+              },
+              {
+                "effect_string": "global_dps_multiplier_mult,100"
+              },
+              {
+                "effect_string": "change_base_attack,874",
+                "description": ""
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2025-10-02 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 591
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "2247",
+        "snapshots": {
+          "original": {
+            "id": 2247,
+            "hero_id": 164,
+            "order": 16,
+            "name": "Deadly Toxin",
+            "description": "If there's a problem, this should solve it.",
+            "rarity": 4,
+            "graphic_id": 0,
+            "effects": [
+              {
+                "effect_string": "do_nothing"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1972407600
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          },
+          "display": {
+            "id": 2247,
+            "hero_id": 164,
+            "order": 16,
+            "name": "致命毒素",
+            "description": "它应该能解决任何问题。",
+            "rarity": 4,
+            "graphic_id": 0,
+            "effects": [
+              {
+                "effect_string": "do_nothing"
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1972407600
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          }
+        }
+      },
+      {
+        "id": "2327",
+        "snapshots": {
+          "original": {
+            "id": 2327,
+            "hero_id": 164,
+            "order": 17,
+            "name": "Tess Family",
+            "description": "We'll always be together, won't we, girl?",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,17317"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1761159600
+            },
+            "collections_source": {
+              "type": "emergence",
+              "unavailable": true
+            }
+          },
+          "display": {
+            "id": 2327,
+            "hero_id": 164,
+            "order": 17,
+            "name": "苔丝家族",
+            "description": "我们会永远在一起的，对吧，姑娘？",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,17317"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1761159600
+            },
+            "collections_source": {
+              "type": "emergence",
+              "unavailable": true
+            }
+          }
+        }
+      },
+      {
+        "id": "2439",
+        "snapshots": {
+          "original": {
+            "id": 2439,
+            "hero_id": 164,
+            "order": 18,
+            "name": "Iron Deficiency",
+            "description": "Uggie needs bacon grease, apple cores, rusty nails, cat vomit, and vinegar.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,17318"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1764784800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 2439,
+            "hero_id": 164,
+            "order": 18,
+            "name": "缺铁",
+            "description": "乌吉需要培根油、苹果核、生锈的钉子、猫的呕吐物和醋。",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,17318"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1764784800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "2601",
+        "snapshots": {
+          "original": {
+            "id": 2601,
+            "hero_id": 164,
+            "order": 19,
+            "name": "Cat Burglar",
+            "description": "My mask finds the traps. My hands do the rest.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,17320"
+              }
+            ],
+            "sources": [
+              {
+                "source": "campaign",
+                "campaign_id": 32
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1779908400
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          },
+          "display": {
+            "id": 2601,
+            "hero_id": 164,
+            "order": 19,
+            "name": "Cat Burglar",
+            "description": "My mask finds the traps. My hands do the rest.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,17320"
+              }
+            ],
+            "sources": [
+              {
+                "source": "campaign",
+                "campaign_id": 32
+              }
+            ],
+            "properties": {
+              "available_time": 999999,
+              "is_available": false,
+              "available_at_time": 1779908400
+            },
+            "collections_source": {
+              "type": "not_yet_available"
+            }
+          }
+        }
+      }
+    ],
+    "skins": [
+      {
+        "id": "572",
+        "snapshots": {
+          "original": {
+            "id": 572,
+            "hero_id": 164,
+            "name": "Fortune Hunter Tess",
+            "cost": {
+              "req_date": "2025-07-02 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 27127,
+              "large_graphic_id": 27128,
+              "portrait_graphic_id": 27126,
+              "xl_graphic_id": 27129
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "591",
+              "cost": 3830
+            },
+            "availabilities": {
+              "premium_item_id": "591"
+            }
+          },
+          "display": {
+            "id": 572,
+            "hero_id": 164,
+            "name": "财富猎手苔丝",
+            "cost": {
+              "req_date": "2025-07-02 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 27127,
+              "large_graphic_id": 27128,
+              "portrait_graphic_id": 27126,
+              "xl_graphic_id": 27129
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "591",
+              "cost": 3830
+            },
+            "availabilities": {
+              "premium_item_id": "591"
+            }
+          }
+        }
+      },
+      {
+        "id": "634",
+        "snapshots": {
+          "original": {
+            "id": 634,
+            "hero_id": 164,
+            "name": "Cozy Tess",
+            "cost": {
+              "soft_currency": 20000,
+              "req_date": "2025-12-03 10:00:00"
+            },
+            "details": {
+              "base_graphic_id": 28273,
+              "large_graphic_id": 28275,
+              "portrait_graphic_id": 28270,
+              "xl_graphic_id": 28277
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gem_shop",
+              "cost": 20000
+            }
+          },
+          "display": {
+            "id": 634,
+            "hero_id": 164,
+            "name": "惬意的苔丝",
+            "cost": {
+              "soft_currency": 20000,
+              "req_date": "2025-12-03 10:00:00"
+            },
+            "details": {
+              "base_graphic_id": 28273,
+              "large_graphic_id": 28275,
+              "portrait_graphic_id": 28270,
+              "xl_graphic_id": 28277
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gem_shop",
+              "cost": 20000
+            }
+          }
+        }
+      }
+    ]
+  }
+}

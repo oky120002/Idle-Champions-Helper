@@ -1,0 +1,5830 @@
+{
+  "updatedAt": "2026-04-13",
+  "summary": {
+    "id": "51",
+    "name": {
+      "original": "Avren",
+      "display": "阿夫伦"
+    },
+    "seat": 11,
+    "roles": [
+      "control",
+      "support"
+    ],
+    "affiliations": [
+      {
+        "original": "Heroes of the Planes",
+        "display": "位面英雄"
+      }
+    ],
+    "tags": [
+      "chaotic",
+      "control",
+      "control_stun",
+      "event",
+      "geneutral",
+      "half-elf",
+      "male",
+      "neutral",
+      "planes",
+      "sorcerer",
+      "support",
+      "warlock",
+      "y3"
+    ],
+    "portrait": {
+      "path": "v1/champion-portraits/51.png",
+      "sourceGraphic": "Portraits/Portrait_Avren",
+      "sourceVersion": 6
+    }
+  },
+  "englishName": "Avren",
+  "eventName": {
+    "original": "Liar's Night",
+    "display": "说谎者之夜"
+  },
+  "dateAvailable": "2019-10-16 00:00:00",
+  "lastReworkDate": "2019-10-16 00:00:00",
+  "popularity": 58,
+  "baseCost": "750000000000000000",
+  "baseDamage": "900000000000",
+  "baseHealth": "45",
+  "graphicId": "6475",
+  "portraitGraphicId": "6550",
+  "availability": {
+    "availableInNextEvent": true,
+    "availableInShop": true,
+    "availableInTimeGate": true,
+    "isAvailable": true,
+    "nextEventTimestamp": 1790881200
+  },
+  "adventureIds": [],
+  "defaultFeatSlotUnlocks": [
+    90,
+    495,
+    960,
+    1535
+  ],
+  "costCurves": {
+    "1": 1.125
+  },
+  "healthCurves": {
+    "1": 1
+  },
+  "properties": {
+    "attack_sound": 1,
+    "death_sound": 1,
+    "pain_sounds": [
+      185,
+      186,
+      187
+    ],
+    "graphic_large": 6477,
+    "graphic_xl": 14019,
+    "eye_height": 124,
+    "portrait_center_offset": [
+      96,
+      71
+    ],
+    "ultimate_color": [
+      255,
+      0,
+      0
+    ],
+    "animation_frames": {
+      "idle": 0,
+      "walk": 1,
+      "charge": 2,
+      "attack": 3,
+      "ultimate": 6,
+      "gethit": 7,
+      "koed": 8,
+      "run": 9
+    },
+    "allow_time_gate": "2019-10-28 12:00:00",
+    "time_gate_blackout": {
+      "start": "2021-10-17 00:00:00",
+      "end": "2021-11-01 12:00:00"
+    },
+    "store_blackout": {
+      "start": "2021-10-17 00:00:00",
+      "end": "2021-11-01 12:00:00"
+    },
+    "time_gate_adventure_id": 524,
+    "time_gate_variants_ids": [
+      444,
+      445,
+      446
+    ],
+    "time_gate_tier": 1,
+    "silver_chest_type_id": 160,
+    "gold_chest_type_id": 161,
+    "available_in_store": "2019-11-04 12:00:00",
+    "golden_epic_loot_id": 1208,
+    "golden_epic_promo_id": 127,
+    "event_logo_graphic_id": 3372,
+    "console_portrait": 6549,
+    "head_graphic_id": 7256,
+    "trials_effect_id": 843,
+    "legendary_effect_id": [
+      1,
+      2,
+      8,
+      97,
+      88,
+      53
+    ],
+    "weekly_buff": "buff_upgrades,200,3044",
+    "portrait_graphic_scale": 0.85,
+    "notification_adjustment": {
+      "offset": [
+        52,
+        248
+      ],
+      "scale": 1.25
+    }
+  },
+  "characterSheet": {
+    "fullName": {
+      "original": "Avren",
+      "display": "阿夫伦"
+    },
+    "class": {
+      "original": "Warlock / Sorcerer",
+      "display": "邪术师/术士"
+    },
+    "race": {
+      "original": "Half-Elf",
+      "display": "半精灵"
+    },
+    "age": 40,
+    "alignment": {
+      "original": "Chaotic Neutral",
+      "display": "混乱中立"
+    },
+    "abilityScores": {
+      "str": 8,
+      "dex": 16,
+      "con": 15,
+      "int": 13,
+      "wis": 10,
+      "cha": 18
+    },
+    "backstory": {
+      "original": "Avren is an embodiment of mischief; a trickster god in humanoid form. Long ago, he tricked an ancient being into giving him magic and immortality. This power also came with a curse: whenever Avren dies, he will return to life with a new body and varying abilities. While Avren's body may change, however, his soul and his undying love for his wife, Sofieus, always remains. The two have remained married for centuries, seeking each other out to reunite in each lifetime.",
+      "display": "阿夫伦是恶作剧的化身，一位人形的诡计之神。很久以前，他欺骗了一个古老的存在，使他获得了魔法和不朽的力量。这种力量也伴随着诅咒：每当阿夫伦死亡，他就会以新的身体和不同的技能复活。虽然阿夫伦的身体会变，但是他的灵魂和对妻子索菲厄斯不朽的爱却始终不变。几个世纪以来，两人一直保持着婚姻关系，在每一世中都会寻找对方以重聚。"
+    }
+  },
+  "attacks": {
+    "base": {
+      "id": "231",
+      "name": {
+        "original": "Spectral Shards",
+        "display": "幽灵碎片"
+      },
+      "description": {
+        "original": "Avren tosses three spectral shards at random enemies. One does damage, one stuns, and one is fake and only briefly staggers the enemy.",
+        "display": "阿夫伦向随机敌人投掷三枚幽灵碎片。一枚造成伤害，一枚造成眩晕，还有一枚是假的，只会在短时间内使敌人动摇。"
+      },
+      "longDescription": null,
+      "cooldown": 6.5,
+      "numTargets": 3,
+      "aoeRadius": 0,
+      "damageModifier": "1",
+      "target": "random",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ranged",
+        "multitarget"
+      ],
+      "graphicId": "0",
+      "animations": [
+        {
+          "type": "avren_base",
+          "projectile": "avren_dagger",
+          "shoot_frame": 18,
+          "projectile_delay_no_pause": 0.2,
+          "shoot_sound": 149,
+          "hit_sound": 133,
+          "animation_sequence": 3,
+          "shard_effects": [
+            {
+              "damage": 0
+            },
+            {
+              "damage": 0,
+              "stun_time": 2
+            },
+            {
+              "damage": 1
+            }
+          ]
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "233",
+      "name": {
+        "original": "Insignificance",
+        "display": "微不足道"
+      },
+      "description": {
+        "original": "Avren casts Reduce on all his enemies and Enlarge on himself, then begins kicking the teenie-tiny enemies around.",
+        "display": "阿夫伦对所有敌人施放缩小术并对自己释放变巨术，然后开始乱踢被缩小的敌人。"
+      },
+      "longDescription": {
+        "original": "Avren casts Reduce on all enemies on the screen, dealing some damage and reducing their size by half and their damage done by 50% for 15 seconds. He also casts Enlarge on himself for the duration, and during that time his base attack changes from Spectral Shards to Kick.",
+        "display": "阿夫伦对屏幕上的所有敌人施放缩小术，造成少量伤害并使他们的体型减半，造成的伤害降低 50%，持续 15 秒。他还会在持续期间内对自己施放变巨术，同时他的基本攻击会从幽灵碎片变为脚踢。"
+      },
+      "cooldown": 260,
+      "numTargets": 1,
+      "aoeRadius": 0,
+      "damageModifier": "0.025",
+      "target": "all",
+      "damageTypes": [
+        "magic"
+      ],
+      "tags": [
+        "ranged",
+        "ultimate"
+      ],
+      "graphicId": "6537",
+      "animations": [
+        {
+          "type": "avren_ultimate",
+          "shoot_frame": 38,
+          "attack_id": 232,
+          "duration": 15,
+          "monster_damage_reduce": 50,
+          "monster_speed_reduction": 50,
+          "animation_sequence": 6
+        }
+      ]
+    },
+    "eventUpgrades": [
+      {
+        "upgradeId": "3044",
+        "name": {
+          "original": "Mirror Image",
+          "display": "镜像"
+        },
+        "description": {
+          "original": "Avren summons a mirror image of himself next to others which provides various buffs based on the affected Champion's roles.",
+          "display": "阿夫伦在其他人身边召唤一个自己的镜像，根据受影响勇士的角色提供不同增益。"
+        },
+        "graphicId": "6538"
+      },
+      {
+        "upgradeId": "3100",
+        "name": {
+          "original": "Seeing Double",
+          "display": "眼花缭乱"
+        },
+        "description": {
+          "original": "Avren increases global damage based on the number of Mirror Image buffs that are being provided.",
+          "display": "根据提供的镜像增益的数量，阿夫伦的整体伤害获得提升。"
+        },
+        "graphicId": "6540"
+      }
+    ]
+  },
+  "upgrades": [
+    {
+      "id": "3044",
+      "requiredLevel": 30,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Mirror Image",
+        "display": "镜像"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,474",
+      "effectDefinition": {
+        "id": "474",
+        "snapshots": {
+          "original": {
+            "id": 474,
+            "flavour_text": "",
+            "description": {
+              "conditions": [
+                {
+                  "condition": "short_form",
+                  "desc": "$source casts Mirror Image every $cooldown seconds. The image lasts for $duration seconds and buffs its target depending on their tags."
+                },
+                {
+                  "desc": "$source casts Mirror Image every $cooldown seconds. The image lasts for $duration seconds and buffs its target depending on their tags.^^$(mirror_image_desc)"
+                }
+              ]
+            },
+            "effect_keys": [
+              {
+                "effect_string": "mirror_image,100,30,15",
+                "tagged_effects": {
+                  "dps": "hero_dps_multiplier_mult,600",
+                  "support": "global_dps_multiplier_mult,200",
+                  "tanking": "healing_add,2"
+                },
+                "mirror_graphic": 6480,
+                "anim_sequence": 4
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 6539,
+            "large_graphic_id": 6538,
+            "properties": {
+              "is_formation_ability": true,
+              "show_incoming": false,
+              "use_outgoing_description": true
+            }
+          },
+          "display": {
+            "id": 474,
+            "flavour_text": "",
+            "description": {
+              "conditions": [
+                {
+                  "condition": "short_form",
+                  "desc": "$source每 $cooldown 秒施放镜像。镜像持续 $duration 秒，并根据其目标的标记对目标进行相应强化。"
+                },
+                {
+                  "desc": "$source每 $cooldown 秒施放镜像。镜像持续 $duration 秒，并根据其目标的标记对目标进行相应强化。^^$(mirror_image_desc)"
+                }
+              ]
+            },
+            "effect_keys": [
+              {
+                "effect_string": "mirror_image,100,30,15",
+                "tagged_effects": {
+                  "dps": "hero_dps_multiplier_mult,600",
+                  "support": "global_dps_multiplier_mult,200",
+                  "tanking": "healing_add,2"
+                },
+                "mirror_graphic": 6480,
+                "anim_sequence": 4
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 6539,
+            "large_graphic_id": 6538,
+            "properties": {
+              "is_formation_ability": true,
+              "show_incoming": false,
+              "use_outgoing_description": true
+            }
+          }
+        }
+      },
+      "staticDpsMult": "5",
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Avren summons Mirror Images on random Champions, buffing them based on their roles.",
+        "display": "阿夫伦召唤随机勇士的镜像，并根据他们的职责进行强化。"
+      }
+    },
+    {
+      "id": "3111",
+      "requiredLevel": 45,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3119",
+      "requiredLevel": 55,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3120",
+      "requiredLevel": 75,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3094",
+      "requiredLevel": 90,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3044",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3095",
+      "requiredLevel": 100,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "effect_def,475",
+      "effectDefinition": {
+        "id": "475",
+        "snapshots": {
+          "original": {
+            "id": 475,
+            "flavour_text": "",
+            "description": {
+              "desc": "$source prefers casting Mirror Image on Good targets whenever possible."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "mirror_image_preference",
+                "tag": "good",
+                "amount_func": "set",
+                "stack_func": "per_crusader",
+                "amount_updated_listeners": [
+                  "slot_changed"
+                ]
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "spec_option_post_apply_info": "Champions in Formation Targeted: $sample_amount"
+            }
+          },
+          "display": {
+            "id": 475,
+            "flavour_text": "",
+            "description": {
+              "desc": "$source会尽可能地对善良阵营的勇士施放镜像"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "mirror_image_preference",
+                "tag": "good",
+                "amount_func": "set",
+                "stack_func": "per_crusader",
+                "amount_updated_listeners": [
+                  "slot_changed"
+                ]
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "spec_option_post_apply_info": "阵型中的目标勇士数量：$sample_amount"
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Mirror Focus (Good)",
+        "display": "镜像聚焦（善良）"
+      },
+      "specializationDescription": {
+        "original": "Avren focuses his Mirror Images on \"good\" champions, because evil never wins!",
+        "display": "阿夫伦将他的镜像聚焦在“善良”勇士身上，因为邪恶必败！"
+      },
+      "specializationGraphicId": "6534",
+      "tipText": null
+    },
+    {
+      "id": "3096",
+      "requiredLevel": 100,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "effect_def,476",
+      "effectDefinition": {
+        "id": "476",
+        "snapshots": {
+          "original": {
+            "id": 476,
+            "flavour_text": "",
+            "description": {
+              "desc": "$source prefers casting Mirror Image on Neutral targets whenever possible (on the good/evil axis only)."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "mirror_image_preference",
+                "tag": "geneutral",
+                "amount_func": "set",
+                "stack_func": "per_crusader",
+                "amount_updated_listeners": [
+                  "slot_changed"
+                ]
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "spec_option_post_apply_info": "Champions in Formation Targeted: $sample_amount"
+            }
+          },
+          "display": {
+            "id": 476,
+            "flavour_text": "",
+            "description": {
+              "desc": "$source会尽可能地对中立阵营的勇士施放镜像（以善良/中立/邪恶划分阵营时）"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "mirror_image_preference",
+                "tag": "geneutral",
+                "amount_func": "set",
+                "stack_func": "per_crusader",
+                "amount_updated_listeners": [
+                  "slot_changed"
+                ]
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "spec_option_post_apply_info": "阵型中的目标勇士数量：$sample_amount"
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Mirror Focus (Neutral)",
+        "display": "镜像聚焦（中立）"
+      },
+      "specializationDescription": {
+        "original": "Avren focuses his Mirror Images on \"neutral\" champions (note: only looks at neutral on the good/evil axis, NOT the lawful/chaotic axis).",
+        "display": "阿夫伦将他的镜像聚焦在“善良”勇士身上（注：仅与善良/邪恶的中立相关，而非守序/混乱的中立）。"
+      },
+      "specializationGraphicId": "6535",
+      "tipText": null
+    },
+    {
+      "id": "3097",
+      "requiredLevel": 100,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "effect_def,477",
+      "effectDefinition": {
+        "id": "477",
+        "snapshots": {
+          "original": {
+            "id": 477,
+            "flavour_text": "",
+            "description": {
+              "desc": "$source prefers casting Mirror Image on Evil targets whenever possible."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "mirror_image_preference",
+                "tag": "evil",
+                "amount_func": "set",
+                "stack_func": "per_crusader",
+                "amount_updated_listeners": [
+                  "slot_changed"
+                ]
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "spec_option_post_apply_info": "Champions in Formation Targeted: $sample_amount"
+            }
+          },
+          "display": {
+            "id": 477,
+            "flavour_text": "",
+            "description": {
+              "desc": "$source会尽可能地对邪恶阵营的勇士施放镜像"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "mirror_image_preference",
+                "tag": "evil",
+                "amount_func": "set",
+                "stack_func": "per_crusader",
+                "amount_updated_listeners": [
+                  "slot_changed"
+                ]
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": {
+              "spec_option_post_apply_info": "阵型中的目标勇士数量：$sample_amount"
+            }
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Mirror Focus (Evil)",
+        "display": "镜像聚焦（邪恶）"
+      },
+      "specializationDescription": {
+        "original": "Avren focuses his Mirror Images on \"evil\" champions, because good is dumb!",
+        "display": "阿夫伦将他的镜像聚焦在“邪恶”勇士身上，因为善良太蠢！"
+      },
+      "specializationGraphicId": "6533",
+      "tipText": null
+    },
+    {
+      "id": "3121",
+      "requiredLevel": 110,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3122",
+      "requiredLevel": 125,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3112",
+      "requiredLevel": 135,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3102",
+      "requiredLevel": 150,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": "unlock_ultimate",
+      "effectReference": "set_ultimate_attack,233",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3123",
+      "requiredLevel": 160,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3103",
+      "requiredLevel": 180,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3044",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3124",
+      "requiredLevel": 190,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3098",
+      "requiredLevel": 200,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "effect_def,478",
+      "effectDefinition": {
+        "id": "478",
+        "snapshots": {
+          "original": {
+            "id": 478,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the duration of Mirror Image by $amount% to 60 seconds."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "mirror_image_duration,100"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          },
+          "display": {
+            "id": 478,
+            "flavour_text": "",
+            "description": {
+              "desc": "镜像效果的持续时间提高 $amount% 至 60 秒"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "mirror_image_duration,100"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Sturdy Mirrors",
+        "display": "坚毅镜像"
+      },
+      "specializationDescription": {
+        "original": "Avren focuses on making his Mirror Images last longer, increasing the number of potentially affected Champions.",
+        "display": "阿夫伦专注于延长镜像的持续时间，并增加潜在的受影响勇士数量。"
+      },
+      "specializationGraphicId": "6536",
+      "tipText": null
+    },
+    {
+      "id": "3099",
+      "requiredLevel": 200,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "effect_def,479",
+      "effectDefinition": {
+        "id": "479",
+        "snapshots": {
+          "original": {
+            "id": 479,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the effects of Mirror Image by $amount%."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,300,3044"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          },
+          "display": {
+            "id": 479,
+            "flavour_text": "",
+            "description": {
+              "desc": "镜像的效果提升 $amount%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "buff_upgrade,300,3044"
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 0,
+            "large_graphic_id": 0,
+            "properties": []
+          }
+        }
+      },
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": {
+        "original": "Empowered Mirrors",
+        "display": "强化镜像"
+      },
+      "specializationDescription": {
+        "original": "Avren focuses on making his Mirror Images more powerful, increasing their individual effects.",
+        "display": "阿夫伦专注于强化他的镜像，提高其各自的效果。"
+      },
+      "specializationGraphicId": "6532",
+      "tipText": null
+    },
+    {
+      "id": "3125",
+      "requiredLevel": 220,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3113",
+      "requiredLevel": 235,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3100",
+      "requiredLevel": 250,
+      "requiredUpgradeId": null,
+      "name": {
+        "original": "Seeing Double",
+        "display": "眼花缭乱"
+      },
+      "upgradeType": "unlock_ability",
+      "effectReference": "effect_def,480",
+      "effectDefinition": {
+        "id": "480",
+        "snapshots": {
+          "original": {
+            "id": 480,
+            "flavour_text": "",
+            "description": {
+              "desc": "Increases the Damage of all Champions by $(not_buffed amount)% (multiplicative) for each Champion adjacent to $source_hero. The base amount is increased by $bonus% for each active Mirror Image effect on the adjacent Champion."
+            },
+            "effect_keys": [
+              {
+                "effect_string": "mirror_image_damage_increase,50,50",
+                "off_when_benched": true,
+                "show_bonus": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 6541,
+            "large_graphic_id": 6540,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true,
+              "show_incoming": false
+            }
+          },
+          "display": {
+            "id": 480,
+            "flavour_text": "",
+            "description": {
+              "desc": "每有一位与$source_hero相邻的勇士，即提升所有勇士伤害 $(not_buffed amount)%（乘算）。每有一位相邻的勇士拥有镜像，此加成即提升 $bonus%"
+            },
+            "effect_keys": [
+              {
+                "effect_string": "mirror_image_damage_increase,50,50",
+                "off_when_benched": true,
+                "show_bonus": true
+              }
+            ],
+            "requirements": [],
+            "graphic_id": 6541,
+            "large_graphic_id": 6540,
+            "properties": {
+              "is_formation_ability": true,
+              "use_outgoing_description": true,
+              "show_incoming": false
+            }
+          }
+        }
+      },
+      "staticDpsMult": "3",
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": {
+        "original": "Avren buffs the party based on how many buffs his Mirror Images are providing.",
+        "display": "阿夫伦根据镜像提供的增益数量来强化队伍。"
+      }
+    },
+    {
+      "id": "3126",
+      "requiredLevel": 260,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3127",
+      "requiredLevel": 290,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3104",
+      "requiredLevel": 315,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3044",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3128",
+      "requiredLevel": 325,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3114",
+      "requiredLevel": 335,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3129",
+      "requiredLevel": 355,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3101",
+      "requiredLevel": 365,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3130",
+      "requiredLevel": 415,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3115",
+      "requiredLevel": 425,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3131",
+      "requiredLevel": 445,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3105",
+      "requiredLevel": 455,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3044",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3108",
+      "requiredLevel": 480,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3132",
+      "requiredLevel": 490,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3133",
+      "requiredLevel": 515,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3116",
+      "requiredLevel": 525,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3134",
+      "requiredLevel": 555,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3135",
+      "requiredLevel": 580,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3109",
+      "requiredLevel": 590,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3106",
+      "requiredLevel": 600,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3044",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3136",
+      "requiredLevel": 625,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3117",
+      "requiredLevel": 635,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3137",
+      "requiredLevel": 675,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3110",
+      "requiredLevel": 700,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3138",
+      "requiredLevel": 715,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3118",
+      "requiredLevel": 725,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3107",
+      "requiredLevel": 740,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3044",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3942",
+      "requiredLevel": 750,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3944",
+      "requiredLevel": 775,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3943",
+      "requiredLevel": 800,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3945",
+      "requiredLevel": 840,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3946",
+      "requiredLevel": 875,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,200",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "3947",
+      "requiredLevel": 885,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3044",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5186",
+      "requiredLevel": 930,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5187",
+      "requiredLevel": 950,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5188",
+      "requiredLevel": 970,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "5189",
+      "requiredLevel": 1010,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6604",
+      "requiredLevel": 1060,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6605",
+      "requiredLevel": 1100,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6606",
+      "requiredLevel": 1160,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "6607",
+      "requiredLevel": 1170,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3044",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8378",
+      "requiredLevel": 1220,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "global_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8379",
+      "requiredLevel": 1260,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "buff_upgrade,100,3100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    },
+    {
+      "id": "8380",
+      "requiredLevel": 1310,
+      "requiredUpgradeId": null,
+      "name": null,
+      "upgradeType": null,
+      "effectReference": "hero_dps_multiplier_mult,100",
+      "effectDefinition": null,
+      "staticDpsMult": null,
+      "defaultEnabled": true,
+      "specializationName": null,
+      "specializationDescription": null,
+      "specializationGraphicId": null,
+      "tipText": null
+    }
+  ],
+  "feats": [
+    {
+      "id": "292",
+      "order": 1,
+      "name": {
+        "original": "Selflessness",
+        "display": "无私"
+      },
+      "description": {
+        "original": "There'll always be another Avren, but there'll never be another *you!*",
+        "display": "始终会有另外的阿夫伦，但绝不会再有另一个“你”！"
+      },
+      "rarity": "2",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "293",
+      "order": 2,
+      "name": {
+        "original": "Inspiring Leader",
+        "display": "鼓舞人心的首领"
+      },
+      "description": {
+        "original": "Ages of exploring the multiverse has given me a gift for leadership",
+        "display": "多年来对多位面的探索，给予了我领导天赋。"
+      },
+      "rarity": "3",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,25"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 12500
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 12500
+      }
+    },
+    {
+      "id": "1421",
+      "order": 3,
+      "name": {
+        "original": "Prodigal Leader",
+        "display": "浪荡首领"
+      },
+      "description": {
+        "original": "Oh, now you all want to follow me?",
+        "display": "哦，现在你们都想跟随我了？"
+      },
+      "rarity": "4",
+      "graphicId": "6074",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,50"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 344
+        }
+      ],
+      "properties": {
+        "is_premium": true,
+        "is_available": true,
+        "available_at_time": 1691607600
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "294",
+      "order": 4,
+      "name": {
+        "original": "Dim Reflection",
+        "display": "昏暗反射"
+      },
+      "description": {
+        "original": "A mirrored image is only as good as its source, they say...",
+        "display": "他们说，镜像最多只能跟本体一样强......"
+      },
+      "rarity": "2",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,20,3044"
+        }
+      ],
+      "sources": [
+        {
+          "source": "default"
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "free"
+      }
+    },
+    {
+      "id": "295",
+      "order": 5,
+      "name": {
+        "original": "Blinding Reflection",
+        "display": "致盲反射"
+      },
+      "description": {
+        "original": "Blinding to others perhaps, but not one as grand as myself.",
+        "display": "对其他人来说也许令人盲目，但对我这样的大人物来说并非如此。"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,3044"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "459",
+      "order": 6,
+      "name": {
+        "original": "Two-Headed Coin",
+        "display": "两面都是头像的硬币"
+      },
+      "description": {
+        "original": "You have worth.",
+        "display": "你拥有价值。"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,3044"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 98
+        }
+      ],
+      "properties": {
+        "in_flash_sale": true,
+        "is_premium": true,
+        "is_available": true,
+        "available_at_time": 1605124800
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "296",
+      "order": 7,
+      "name": {
+        "original": "Eyes Wide Open",
+        "display": "大开眼界"
+      },
+      "description": {
+        "original": "There's always another secret...",
+        "display": "总是会有其他的秘密......"
+      },
+      "rarity": "3",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,40,3100"
+        }
+      ],
+      "sources": [
+        {
+          "source": "chest",
+          "chest_type_id": 2,
+          "odds": 10
+        }
+      ],
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "chest",
+        "chest_type_id": 2
+      }
+    },
+    {
+      "id": "620",
+      "order": 8,
+      "name": {
+        "original": "Paired Vision",
+        "display": "复视"
+      },
+      "description": {
+        "original": "We're facing a god with 5 pairs of eyes. Watch each other's backs.",
+        "display": "我们面对的是一个有五双眼睛的神。它们相互照看着身后。"
+      },
+      "rarity": "4",
+      "graphicId": "6080",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,80,3100"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "promo",
+          "promotion_id": 50
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1634569200
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "842",
+      "order": 9,
+      "name": {
+        "original": "Heavy Lifter",
+        "display": "惯偷"
+      },
+      "description": {
+        "original": "To get stronger, may I suggest channeling obscene amounts of power?",
+        "display": "为了变得更强，我可以建议你灌注巨量的能量吗？"
+      },
+      "rarity": "4",
+      "graphicId": "10062",
+      "effects": [
+        {
+          "effect_string": "increase_ability_score,str,2"
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 206
+        }
+      ],
+      "properties": {
+        "in_flash_sale": true,
+        "is_premium": true,
+        "is_available": true,
+        "available_at_time": 1660158000
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    },
+    {
+      "id": "1634",
+      "order": 10,
+      "name": {
+        "original": "Gnome Glitch",
+        "display": "侏儒变异"
+      },
+      "description": {
+        "original": "Well, it's not the worst form I've had, so I'll take it.",
+        "display": "嗯，不算我碰到过的最糟糕形态，所以我欣然接受。"
+      },
+      "rarity": "4",
+      "graphicId": "21658",
+      "effects": [
+        {
+          "effect_string": "add_hero_tags,0,gnome",
+          "description": "Avren also counts as a Gnome"
+        },
+        {
+          "effect_string": "buff_upgrade_per_any_tagged_crusader,20,3044,gnome",
+          "amount_updated_listeners": [
+            "feat_changed",
+            "slot_changed"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "source": "promo",
+          "promotion_id": 50
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1707940800
+      },
+      "collectionsSource": {
+        "type": "adventure",
+        "adventure_id": 1572
+      }
+    },
+    {
+      "id": "2300",
+      "order": 11,
+      "name": {
+        "original": "Multiversal Allies",
+        "display": "多元宇宙盟友"
+      },
+      "description": {
+        "original": "I've got friends in weird places.",
+        "display": "我在一些奇怪的地方也有朋友。"
+      },
+      "rarity": "4",
+      "graphicId": "25576",
+      "effects": [
+        {
+          "effect_string": "effect_def,2193",
+          "description": "Increases the damage of all Champions by 20% for each unique species in the formation, stacking additively."
+        }
+      ],
+      "sources": [
+        {
+          "source": "gems",
+          "cost": 50000,
+          "start_date": "2026-01-15 12:00:00"
+        },
+        {
+          "source": "premium",
+          "premium_item_id": 627
+        }
+      ],
+      "properties": {
+        "is_available": true,
+        "available_at_time": 1760554800
+      },
+      "collectionsSource": {
+        "type": "gems",
+        "cost": 50000
+      }
+    }
+  ],
+  "skins": [
+    {
+      "id": "22",
+      "name": {
+        "original": "Zombie Avren",
+        "display": "僵尸阿夫伦"
+      },
+      "cost": [],
+      "details": {
+        "base_graphic_id": 6476,
+        "large_graphic_id": 6478,
+        "xl_graphic_id": 14021,
+        "portrait_graphic_id": 6556
+      },
+      "rarity": "3",
+      "properties": {
+        "show_only_if_owned": true,
+        "in_flash_sale": false,
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "adventure",
+        "adventure_id": 446
+      },
+      "availabilities": {
+        "in_flash_sales": true,
+        "adventure_ids": [],
+        "adventures": [
+          {
+            "id": "446",
+            "name": "The Clone War",
+            "timegate_hero_id": 51
+          }
+        ]
+      }
+    },
+    {
+      "id": "61",
+      "name": {
+        "original": "Artificer Avren",
+        "display": "机关术士阿夫伦"
+      },
+      "cost": [],
+      "details": {
+        "base_graphic_id": 9292,
+        "large_graphic_id": 9293,
+        "xl_graphic_id": 13833,
+        "portrait_graphic_id": 9294
+      },
+      "rarity": "3",
+      "properties": {
+        "in_flash_sale": true,
+        "is_premium": true,
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 412,
+        "odds": 30
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    },
+    {
+      "id": "105",
+      "name": {
+        "original": "Wyrmspeaker Avren",
+        "display": "龙语者阿夫伦"
+      },
+      "cost": {
+        "req_date": "2021-09-15 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 11029,
+        "large_graphic_id": 11690,
+        "xl_graphic_id": 13835,
+        "portrait_graphic_id": 11073
+      },
+      "rarity": "3",
+      "properties": {
+        "show_only_if_owned": true,
+        "notification_adjustment_override": {
+          "offset": [
+            52,
+            257
+          ],
+          "scale": 1.25
+        },
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "trials"
+      },
+      "availabilities": null
+    },
+    {
+      "id": "114",
+      "name": {
+        "original": "Ascendant Avren",
+        "display": "星运阿夫伦"
+      },
+      "cost": {
+        "soft_currency": 20000,
+        "req_date": "2022-03-23 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 11872,
+        "large_graphic_id": 11873,
+        "xl_graphic_id": 13834,
+        "portrait_graphic_id": 11874
+      },
+      "rarity": "3",
+      "properties": {
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "gem_shop",
+        "cost": 20000
+      },
+      "availabilities": null
+    },
+    {
+      "id": "200",
+      "name": {
+        "original": "Cranium Rat Avren",
+        "display": "颅鼠阿夫伦"
+      },
+      "cost": {
+        "req_date": "2022-08-10 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 15970,
+        "large_graphic_id": 15975,
+        "portrait_graphic_id": 15968,
+        "xl_graphic_id": 15972
+      },
+      "rarity": "3",
+      "properties": {
+        "in_flash_sale": true,
+        "is_premium": true,
+        "notification_adjustment_override": {
+          "offset": [
+            52,
+            246
+          ],
+          "scale": 1.25
+        },
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 689,
+        "odds": 30
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    },
+    {
+      "id": "324",
+      "name": {
+        "original": "Spelljammer Avren",
+        "display": "魔法船阿夫伦"
+      },
+      "cost": {
+        "req_date": "2023-08-09 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 20347,
+        "large_graphic_id": 20348,
+        "portrait_graphic_id": 20350,
+        "xl_graphic_id": 20349
+      },
+      "rarity": "3",
+      "properties": {
+        "is_premium": true,
+        "notification_adjustment_override": {
+          "offset": [
+            54,
+            210
+          ],
+          "scale": 1.18
+        },
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "flash_sale",
+        "item_id": 1111,
+        "odds": 35
+      },
+      "availabilities": {
+        "in_flash_sales": true
+      }
+    },
+    {
+      "id": "370",
+      "name": {
+        "original": "Gnome Glitch Avren",
+        "display": "侏儒变异阿夫伦"
+      },
+      "cost": {
+        "req_date": "2024-02-14 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 22179,
+        "large_graphic_id": 22180,
+        "portrait_graphic_id": 22176,
+        "xl_graphic_id": 22181,
+        "mirror_graphic": 22178,
+        "simple_projectile_graphic_id": 22177
+      },
+      "rarity": "3",
+      "properties": {
+        "notification_adjustment_override": {
+          "offset": [
+            41,
+            164
+          ],
+          "scale": 1.23
+        },
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "adventure",
+        "adventure_id": 1567
+      },
+      "availabilities": {
+        "adventure_ids": [],
+        "adventures": [
+          {
+            "id": "1567",
+            "name": "The Fortune's Wheel"
+          }
+        ]
+      }
+    },
+    {
+      "id": "611",
+      "name": {
+        "original": "Avren in a Jar",
+        "display": "罐中阿夫伦"
+      },
+      "cost": {
+        "req_date": "2025-10-15 12:00:00"
+      },
+      "details": {
+        "base_graphic_id": 27928,
+        "large_graphic_id": 27935,
+        "portrait_graphic_id": 27937,
+        "xl_graphic_id": 27936
+      },
+      "rarity": "3",
+      "properties": {
+        "notification_adjustment_override": {
+          "offset": [
+            52,
+            226
+          ],
+          "scale": 1.25
+        },
+        "is_available": true
+      },
+      "collectionsSource": {
+        "type": "dlc",
+        "item_id": "627",
+        "cost": 1680
+      },
+      "availabilities": {
+        "premium_item_id": "627"
+      }
+    }
+  ],
+  "raw": {
+    "hero": {
+      "original": {
+        "id": 51,
+        "name": "Avren",
+        "english_name": "Avren",
+        "seat_id": 11,
+        "base_cost": "750000000000000000",
+        "base_damage": "900000000000",
+        "base_health": "45",
+        "cost_curves": {
+          "1": 1.125
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 231,
+        "ultimate_attack_id": 233,
+        "graphic_id": 6475,
+        "portrait_graphic_id": 6550,
+        "character_sheet_details": {
+          "full_name": "Avren",
+          "class": "Warlock / Sorcerer",
+          "race": "Half-Elf",
+          "age": 40,
+          "alignment": "Chaotic Neutral",
+          "ability_scores": {
+            "str": 8,
+            "dex": 16,
+            "con": 15,
+            "int": 13,
+            "wis": 10,
+            "cha": 18
+          },
+          "backstory": "Avren is an embodiment of mischief; a trickster god in humanoid form. Long ago, he tricked an ancient being into giving him magic and immortality. This power also came with a curse: whenever Avren dies, he will return to life with a new body and varying abilities. While Avren's body may change, however, his soul and his undying love for his wife, Sofieus, always remains. The two have remained married for centuries, seeking each other out to reunite in each lifetime.",
+          "system_description": "Avren summons mirror images of himself, which buff affected Champions base on their role(s), and then he provides a massive global buff increased in-part by the number of buffs his mirror images are providing."
+        },
+        "default_feat_slot_unlocks": [
+          90,
+          495,
+          960,
+          1535
+        ],
+        "tags": [
+          "male",
+          "half-elf",
+          "warlock",
+          "sorcerer",
+          "support",
+          "chaotic",
+          "neutral",
+          "event",
+          "planes",
+          "y3",
+          "control",
+          "control_stun",
+          "geneutral"
+        ],
+        "properties": {
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            185,
+            186,
+            187
+          ],
+          "graphic_large": 6477,
+          "graphic_xl": 14019,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            96,
+            71
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 6,
+            "gethit": 7,
+            "koed": 8,
+            "run": 9
+          },
+          "allow_time_gate": "2019-10-28 12:00:00",
+          "time_gate_blackout": {
+            "start": "2021-10-17 00:00:00",
+            "end": "2021-11-01 12:00:00"
+          },
+          "store_blackout": {
+            "start": "2021-10-17 00:00:00",
+            "end": "2021-11-01 12:00:00"
+          },
+          "time_gate_adventure_id": 524,
+          "time_gate_variants_ids": [
+            444,
+            445,
+            446
+          ],
+          "time_gate_tier": 1,
+          "silver_chest_type_id": 160,
+          "gold_chest_type_id": 161,
+          "available_in_store": "2019-11-04 12:00:00",
+          "golden_epic_loot_id": 1208,
+          "golden_epic_promo_id": 127,
+          "event_logo_graphic_id": 3372,
+          "console_portrait": 6549,
+          "head_graphic_id": 7256,
+          "trials_effect_id": 843,
+          "legendary_effect_id": [
+            1,
+            2,
+            8,
+            97,
+            88,
+            53
+          ],
+          "weekly_buff": "buff_upgrades,200,3044",
+          "portrait_graphic_scale": 0.85,
+          "notification_adjustment": {
+            "offset": [
+              52,
+              248
+            ],
+            "scale": 1.25
+          }
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 443,
+            "type": "base"
+          },
+          {
+            "adventure_id": 444,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 445,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 446,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 447,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 524,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 58,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 3044,
+            "name": "Mirror Image",
+            "description": "Avren summons a mirror image of himself next to others which provides various buffs based on the affected Champion's roles.",
+            "graphic_id": "6538"
+          },
+          {
+            "upgrade_id": 3100,
+            "name": "Seeing Double",
+            "description": "Avren increases global damage based on the number of Mirror Image buffs that are being provided.",
+            "graphic_id": "6540"
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1790881200,
+        "event_name": "Liar's Night",
+        "is_available": true,
+        "date_available": "2019-10-16 00:00:00",
+        "last_rework_date": "2019-10-16 00:00:00"
+      },
+      "display": {
+        "id": 51,
+        "name": "阿夫伦",
+        "english_name": "Avren",
+        "seat_id": 11,
+        "base_cost": "750000000000000000",
+        "base_damage": "900000000000",
+        "base_health": "45",
+        "cost_curves": {
+          "1": 1.125
+        },
+        "health_curves": {
+          "1": 1
+        },
+        "base_attack_id": 231,
+        "ultimate_attack_id": 233,
+        "graphic_id": 6475,
+        "portrait_graphic_id": 6550,
+        "character_sheet_details": {
+          "full_name": "阿夫伦",
+          "class": "邪术师/术士",
+          "race": "半精灵",
+          "age": 40,
+          "alignment": "混乱中立",
+          "ability_scores": {
+            "str": 8,
+            "dex": 16,
+            "con": 15,
+            "int": 13,
+            "wis": 10,
+            "cha": 18
+          },
+          "backstory": "阿夫伦是恶作剧的化身，一位人形的诡计之神。很久以前，他欺骗了一个古老的存在，使他获得了魔法和不朽的力量。这种力量也伴随着诅咒：每当阿夫伦死亡，他就会以新的身体和不同的技能复活。虽然阿夫伦的身体会变，但是他的灵魂和对妻子索菲厄斯不朽的爱却始终不变。几个世纪以来，两人一直保持着婚姻关系，在每一世中都会寻找对方以重聚。",
+          "system_description": "阿夫伦召唤自己的镜像，根据受影响勇士的角色为其提供增益，随后他会提供一个大型全局增益，数值根据他的镜像提供增益的数量而提升。"
+        },
+        "default_feat_slot_unlocks": [
+          90,
+          495,
+          960,
+          1535
+        ],
+        "tags": [
+          "male",
+          "half-elf",
+          "warlock",
+          "sorcerer",
+          "support",
+          "chaotic",
+          "neutral",
+          "event",
+          "planes",
+          "y3",
+          "control",
+          "control_stun",
+          "geneutral"
+        ],
+        "properties": {
+          "attack_sound": 1,
+          "death_sound": 1,
+          "pain_sounds": [
+            185,
+            186,
+            187
+          ],
+          "graphic_large": 6477,
+          "graphic_xl": 14019,
+          "eye_height": 124,
+          "portrait_center_offset": [
+            96,
+            71
+          ],
+          "ultimate_color": [
+            255,
+            0,
+            0
+          ],
+          "animation_frames": {
+            "idle": 0,
+            "walk": 1,
+            "charge": 2,
+            "attack": 3,
+            "ultimate": 6,
+            "gethit": 7,
+            "koed": 8,
+            "run": 9
+          },
+          "allow_time_gate": "2019-10-28 12:00:00",
+          "time_gate_blackout": {
+            "start": "2021-10-17 00:00:00",
+            "end": "2021-11-01 12:00:00"
+          },
+          "store_blackout": {
+            "start": "2021-10-17 00:00:00",
+            "end": "2021-11-01 12:00:00"
+          },
+          "time_gate_adventure_id": 524,
+          "time_gate_variants_ids": [
+            444,
+            445,
+            446
+          ],
+          "time_gate_tier": 1,
+          "silver_chest_type_id": 160,
+          "gold_chest_type_id": 161,
+          "available_in_store": "2019-11-04 12:00:00",
+          "golden_epic_loot_id": 1208,
+          "golden_epic_promo_id": 127,
+          "event_logo_graphic_id": 3372,
+          "console_portrait": 6549,
+          "head_graphic_id": 7256,
+          "trials_effect_id": 843,
+          "legendary_effect_id": [
+            1,
+            2,
+            8,
+            97,
+            88,
+            53
+          ],
+          "weekly_buff": "buff_upgrades,200,3044",
+          "portrait_graphic_scale": 0.85,
+          "notification_adjustment": {
+            "offset": [
+              52,
+              248
+            ],
+            "scale": 1.25
+          }
+        },
+        "adventure_ids": [
+          {
+            "adventure_id": 443,
+            "type": "base"
+          },
+          {
+            "adventure_id": 444,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 445,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 446,
+            "type": "variant"
+          },
+          {
+            "adventure_id": 447,
+            "type": "free_play"
+          },
+          {
+            "adventure_id": 524,
+            "type": "time_gate"
+          }
+        ],
+        "popularity": 58,
+        "available_in_time_gate": true,
+        "available_in_shop": true,
+        "event_upgrades": [
+          {
+            "upgrade_id": 3044,
+            "name": "镜像",
+            "description": "阿夫伦在其他人身边召唤一个自己的镜像，根据受影响勇士的角色提供不同增益。",
+            "graphic_id": "6538"
+          },
+          {
+            "upgrade_id": 3100,
+            "name": "眼花缭乱",
+            "description": "根据提供的镜像增益的数量，阿夫伦的整体伤害获得提升。",
+            "graphic_id": "6540"
+          }
+        ],
+        "available_in_next_event": true,
+        "next_event_timestamp": 1790881200,
+        "event_name": "说谎者之夜",
+        "is_available": true,
+        "date_available": "2019-10-16 00:00:00",
+        "last_rework_date": "2019-10-16 00:00:00"
+      }
+    },
+    "attacks": [
+      {
+        "id": "231",
+        "snapshots": {
+          "original": {
+            "id": 231,
+            "name": "Spectral Shards",
+            "description": "Avren tosses three spectral shards at random enemies. One does damage, one stuns, and one is fake and only briefly staggers the enemy.",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "random",
+            "num_targets": 3,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 6.5,
+            "animations": [
+              {
+                "type": "avren_base",
+                "projectile": "avren_dagger",
+                "shoot_frame": 18,
+                "projectile_delay_no_pause": 0.2,
+                "shoot_sound": 149,
+                "hit_sound": 133,
+                "animation_sequence": 3,
+                "shard_effects": [
+                  {
+                    "damage": 0
+                  },
+                  {
+                    "damage": 0,
+                    "stun_time": 2
+                  },
+                  {
+                    "damage": 1
+                  }
+                ]
+              }
+            ],
+            "tags": [
+              "ranged",
+              "multitarget"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          },
+          "display": {
+            "id": 231,
+            "name": "幽灵碎片",
+            "description": "阿夫伦向随机敌人投掷三枚幽灵碎片。一枚造成伤害，一枚造成眩晕，还有一枚是假的，只会在短时间内使敌人动摇。",
+            "long_description": "",
+            "graphic_id": 0,
+            "target": "random",
+            "num_targets": 3,
+            "aoe_radius": 0,
+            "damage_modifier": 1,
+            "cooldown": 6.5,
+            "animations": [
+              {
+                "type": "avren_base",
+                "projectile": "avren_dagger",
+                "shoot_frame": 18,
+                "projectile_delay_no_pause": 0.2,
+                "shoot_sound": 149,
+                "hit_sound": 133,
+                "animation_sequence": 3,
+                "shard_effects": [
+                  {
+                    "damage": 0
+                  },
+                  {
+                    "damage": 0,
+                    "stun_time": 2
+                  },
+                  {
+                    "damage": 1
+                  }
+                ]
+              }
+            ],
+            "tags": [
+              "ranged",
+              "multitarget"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          }
+        }
+      },
+      {
+        "id": "233",
+        "snapshots": {
+          "original": {
+            "id": 233,
+            "name": "Insignificance",
+            "description": "Avren casts Reduce on all his enemies and Enlarge on himself, then begins kicking the teenie-tiny enemies around.",
+            "long_description": "Avren casts Reduce on all enemies on the screen, dealing some damage and reducing their size by half and their damage done by 50% for 15 seconds. He also casts Enlarge on himself for the duration, and during that time his base attack changes from Spectral Shards to Kick.",
+            "graphic_id": 6537,
+            "target": "all",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 0.025,
+            "cooldown": 260,
+            "animations": [
+              {
+                "type": "avren_ultimate",
+                "shoot_frame": 38,
+                "attack_id": 232,
+                "duration": 15,
+                "monster_damage_reduce": 50,
+                "monster_speed_reduction": 50,
+                "animation_sequence": 6
+              }
+            ],
+            "tags": [
+              "ranged",
+              "ultimate"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          },
+          "display": {
+            "id": 233,
+            "name": "微不足道",
+            "description": "阿夫伦对所有敌人施放缩小术并对自己释放变巨术，然后开始乱踢被缩小的敌人。",
+            "long_description": "阿夫伦对屏幕上的所有敌人施放缩小术，造成少量伤害并使他们的体型减半，造成的伤害降低 50%，持续 15 秒。他还会在持续期间内对自己施放变巨术，同时他的基本攻击会从幽灵碎片变为脚踢。",
+            "graphic_id": 6537,
+            "target": "all",
+            "num_targets": 1,
+            "aoe_radius": 0,
+            "damage_modifier": 0.025,
+            "cooldown": 260,
+            "animations": [
+              {
+                "type": "avren_ultimate",
+                "shoot_frame": 38,
+                "attack_id": 232,
+                "duration": 15,
+                "monster_damage_reduce": 50,
+                "monster_speed_reduction": 50,
+                "animation_sequence": 6
+              }
+            ],
+            "tags": [
+              "ranged",
+              "ultimate"
+            ],
+            "damage_types": [
+              "magic"
+            ]
+          }
+        }
+      }
+    ],
+    "upgrades": [
+      {
+        "id": "3044",
+        "snapshots": {
+          "original": {
+            "id": 3044,
+            "hero_id": 51,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,474",
+            "static_dps_mult": "5",
+            "default_enabled": 1,
+            "name": "Mirror Image",
+            "tip_text": "Avren summons Mirror Images on random Champions, buffing them based on their roles."
+          },
+          "display": {
+            "id": 3044,
+            "hero_id": 51,
+            "required_level": 30,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,474",
+            "static_dps_mult": "5",
+            "default_enabled": 1,
+            "name": "镜像",
+            "tip_text": "阿夫伦召唤随机勇士的镜像，并根据他们的职责进行强化。"
+          }
+        }
+      },
+      {
+        "id": "3094",
+        "snapshots": {
+          "original": {
+            "id": 3094,
+            "hero_id": 51,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3044",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3094,
+            "hero_id": 51,
+            "required_level": 90,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3044",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3095",
+        "snapshots": {
+          "original": {
+            "id": 3095,
+            "hero_id": 51,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "effect_def,475",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "",
+            "specialization_name": "Mirror Focus (Good)",
+            "specialization_description": "Avren focuses his Mirror Images on \"good\" champions, because evil never wins!",
+            "specialization_graphic_id": 6534
+          },
+          "display": {
+            "id": 3095,
+            "hero_id": 51,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "effect_def,475",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "",
+            "specialization_name": "镜像聚焦（善良）",
+            "specialization_description": "阿夫伦将他的镜像聚焦在“善良”勇士身上，因为邪恶必败！",
+            "specialization_graphic_id": 6534
+          }
+        }
+      },
+      {
+        "id": "3096",
+        "snapshots": {
+          "original": {
+            "id": 3096,
+            "hero_id": 51,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "effect_def,476",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "",
+            "specialization_name": "Mirror Focus (Neutral)",
+            "specialization_description": "Avren focuses his Mirror Images on \"neutral\" champions (note: only looks at neutral on the good/evil axis, NOT the lawful/chaotic axis).",
+            "specialization_graphic_id": 6535
+          },
+          "display": {
+            "id": 3096,
+            "hero_id": 51,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "effect_def,476",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "",
+            "specialization_name": "镜像聚焦（中立）",
+            "specialization_description": "阿夫伦将他的镜像聚焦在“善良”勇士身上（注：仅与善良/邪恶的中立相关，而非守序/混乱的中立）。",
+            "specialization_graphic_id": 6535
+          }
+        }
+      },
+      {
+        "id": "3097",
+        "snapshots": {
+          "original": {
+            "id": 3097,
+            "hero_id": 51,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "effect_def,477",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "",
+            "specialization_name": "Mirror Focus (Evil)",
+            "specialization_description": "Avren focuses his Mirror Images on \"evil\" champions, because good is dumb!",
+            "specialization_graphic_id": 6533
+          },
+          "display": {
+            "id": 3097,
+            "hero_id": 51,
+            "required_level": 100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "effect_def,477",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "",
+            "specialization_name": "镜像聚焦（邪恶）",
+            "specialization_description": "阿夫伦将他的镜像聚焦在“邪恶”勇士身上，因为善良太蠢！",
+            "specialization_graphic_id": 6533
+          }
+        }
+      },
+      {
+        "id": "3098",
+        "snapshots": {
+          "original": {
+            "id": 3098,
+            "hero_id": 51,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "effect_def,478",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "",
+            "specialization_name": "Sturdy Mirrors",
+            "specialization_description": "Avren focuses on making his Mirror Images last longer, increasing the number of potentially affected Champions.",
+            "specialization_graphic_id": 6536
+          },
+          "display": {
+            "id": 3098,
+            "hero_id": 51,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "effect_def,478",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "",
+            "specialization_name": "坚毅镜像",
+            "specialization_description": "阿夫伦专注于延长镜像的持续时间，并增加潜在的受影响勇士数量。",
+            "specialization_graphic_id": 6536
+          }
+        }
+      },
+      {
+        "id": "3099",
+        "snapshots": {
+          "original": {
+            "id": 3099,
+            "hero_id": 51,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "effect_def,479",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "",
+            "specialization_name": "Empowered Mirrors",
+            "specialization_description": "Avren focuses on making his Mirror Images more powerful, increasing their individual effects.",
+            "specialization_graphic_id": 6532
+          },
+          "display": {
+            "id": 3099,
+            "hero_id": 51,
+            "required_level": 200,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "effect_def,479",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": "",
+            "specialization_name": "强化镜像",
+            "specialization_description": "阿夫伦专注于强化他的镜像，提高其各自的效果。",
+            "specialization_graphic_id": 6532
+          }
+        }
+      },
+      {
+        "id": "3100",
+        "snapshots": {
+          "original": {
+            "id": 3100,
+            "hero_id": 51,
+            "required_level": 250,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,480",
+            "static_dps_mult": "3",
+            "default_enabled": 1,
+            "name": "Seeing Double",
+            "tip_text": "Avren buffs the party based on how many buffs his Mirror Images are providing."
+          },
+          "display": {
+            "id": 3100,
+            "hero_id": 51,
+            "required_level": 250,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ability",
+            "effect": "effect_def,480",
+            "static_dps_mult": "3",
+            "default_enabled": 1,
+            "name": "眼花缭乱",
+            "tip_text": "阿夫伦根据镜像提供的增益数量来强化队伍。"
+          }
+        }
+      },
+      {
+        "id": "3101",
+        "snapshots": {
+          "original": {
+            "id": 3101,
+            "hero_id": 51,
+            "required_level": 365,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3101,
+            "hero_id": 51,
+            "required_level": 365,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3102",
+        "snapshots": {
+          "original": {
+            "id": 3102,
+            "hero_id": 51,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "set_ultimate_attack,233",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3102,
+            "hero_id": 51,
+            "required_level": 150,
+            "required_upgrade_id": 0,
+            "upgrade_type": "unlock_ultimate",
+            "effect": "set_ultimate_attack,233",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3103",
+        "snapshots": {
+          "original": {
+            "id": 3103,
+            "hero_id": 51,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3044",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3103,
+            "hero_id": 51,
+            "required_level": 180,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3044",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3104",
+        "snapshots": {
+          "original": {
+            "id": 3104,
+            "hero_id": 51,
+            "required_level": 315,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3044",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3104,
+            "hero_id": 51,
+            "required_level": 315,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3044",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3105",
+        "snapshots": {
+          "original": {
+            "id": 3105,
+            "hero_id": 51,
+            "required_level": 455,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3044",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3105,
+            "hero_id": 51,
+            "required_level": 455,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3044",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3106",
+        "snapshots": {
+          "original": {
+            "id": 3106,
+            "hero_id": 51,
+            "required_level": 600,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3044",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3106,
+            "hero_id": 51,
+            "required_level": 600,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3044",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3107",
+        "snapshots": {
+          "original": {
+            "id": 3107,
+            "hero_id": 51,
+            "required_level": 740,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3044",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3107,
+            "hero_id": 51,
+            "required_level": 740,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3044",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3108",
+        "snapshots": {
+          "original": {
+            "id": 3108,
+            "hero_id": 51,
+            "required_level": 480,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3108,
+            "hero_id": 51,
+            "required_level": 480,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3109",
+        "snapshots": {
+          "original": {
+            "id": 3109,
+            "hero_id": 51,
+            "required_level": 590,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3109,
+            "hero_id": 51,
+            "required_level": 590,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3110",
+        "snapshots": {
+          "original": {
+            "id": 3110,
+            "hero_id": 51,
+            "required_level": 700,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3110,
+            "hero_id": 51,
+            "required_level": 700,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3111",
+        "snapshots": {
+          "original": {
+            "id": 3111,
+            "hero_id": 51,
+            "required_level": 45,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3111,
+            "hero_id": 51,
+            "required_level": 45,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3112",
+        "snapshots": {
+          "original": {
+            "id": 3112,
+            "hero_id": 51,
+            "required_level": 135,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3112,
+            "hero_id": 51,
+            "required_level": 135,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3113",
+        "snapshots": {
+          "original": {
+            "id": 3113,
+            "hero_id": 51,
+            "required_level": 235,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3113,
+            "hero_id": 51,
+            "required_level": 235,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3114",
+        "snapshots": {
+          "original": {
+            "id": 3114,
+            "hero_id": 51,
+            "required_level": 335,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3114,
+            "hero_id": 51,
+            "required_level": 335,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3115",
+        "snapshots": {
+          "original": {
+            "id": 3115,
+            "hero_id": 51,
+            "required_level": 425,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3115,
+            "hero_id": 51,
+            "required_level": 425,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3116",
+        "snapshots": {
+          "original": {
+            "id": 3116,
+            "hero_id": 51,
+            "required_level": 525,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3116,
+            "hero_id": 51,
+            "required_level": 525,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3117",
+        "snapshots": {
+          "original": {
+            "id": 3117,
+            "hero_id": 51,
+            "required_level": 635,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3117,
+            "hero_id": 51,
+            "required_level": 635,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3118",
+        "snapshots": {
+          "original": {
+            "id": 3118,
+            "hero_id": 51,
+            "required_level": 725,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3118,
+            "hero_id": 51,
+            "required_level": 725,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3119",
+        "snapshots": {
+          "original": {
+            "id": 3119,
+            "hero_id": 51,
+            "required_level": 55,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3119,
+            "hero_id": 51,
+            "required_level": 55,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3120",
+        "snapshots": {
+          "original": {
+            "id": 3120,
+            "hero_id": 51,
+            "required_level": 75,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3120,
+            "hero_id": 51,
+            "required_level": 75,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3121",
+        "snapshots": {
+          "original": {
+            "id": 3121,
+            "hero_id": 51,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3121,
+            "hero_id": 51,
+            "required_level": 110,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3122",
+        "snapshots": {
+          "original": {
+            "id": 3122,
+            "hero_id": 51,
+            "required_level": 125,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3122,
+            "hero_id": 51,
+            "required_level": 125,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3123",
+        "snapshots": {
+          "original": {
+            "id": 3123,
+            "hero_id": 51,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3123,
+            "hero_id": 51,
+            "required_level": 160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3124",
+        "snapshots": {
+          "original": {
+            "id": 3124,
+            "hero_id": 51,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3124,
+            "hero_id": 51,
+            "required_level": 190,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3125",
+        "snapshots": {
+          "original": {
+            "id": 3125,
+            "hero_id": 51,
+            "required_level": 220,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3125,
+            "hero_id": 51,
+            "required_level": 220,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3126",
+        "snapshots": {
+          "original": {
+            "id": 3126,
+            "hero_id": 51,
+            "required_level": 260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3126,
+            "hero_id": 51,
+            "required_level": 260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3127",
+        "snapshots": {
+          "original": {
+            "id": 3127,
+            "hero_id": 51,
+            "required_level": 290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3127,
+            "hero_id": 51,
+            "required_level": 290,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3128",
+        "snapshots": {
+          "original": {
+            "id": 3128,
+            "hero_id": 51,
+            "required_level": 325,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3128,
+            "hero_id": 51,
+            "required_level": 325,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3129",
+        "snapshots": {
+          "original": {
+            "id": 3129,
+            "hero_id": 51,
+            "required_level": 355,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3129,
+            "hero_id": 51,
+            "required_level": 355,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3130",
+        "snapshots": {
+          "original": {
+            "id": 3130,
+            "hero_id": 51,
+            "required_level": 415,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3130,
+            "hero_id": 51,
+            "required_level": 415,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3131",
+        "snapshots": {
+          "original": {
+            "id": 3131,
+            "hero_id": 51,
+            "required_level": 445,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3131,
+            "hero_id": 51,
+            "required_level": 445,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3132",
+        "snapshots": {
+          "original": {
+            "id": 3132,
+            "hero_id": 51,
+            "required_level": 490,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3132,
+            "hero_id": 51,
+            "required_level": 490,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3133",
+        "snapshots": {
+          "original": {
+            "id": 3133,
+            "hero_id": 51,
+            "required_level": 515,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3133,
+            "hero_id": 51,
+            "required_level": 515,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3134",
+        "snapshots": {
+          "original": {
+            "id": 3134,
+            "hero_id": 51,
+            "required_level": 555,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3134,
+            "hero_id": 51,
+            "required_level": 555,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3135",
+        "snapshots": {
+          "original": {
+            "id": 3135,
+            "hero_id": 51,
+            "required_level": 580,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3135,
+            "hero_id": 51,
+            "required_level": 580,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3136",
+        "snapshots": {
+          "original": {
+            "id": 3136,
+            "hero_id": 51,
+            "required_level": 625,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3136,
+            "hero_id": 51,
+            "required_level": 625,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3137",
+        "snapshots": {
+          "original": {
+            "id": 3137,
+            "hero_id": 51,
+            "required_level": 675,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3137,
+            "hero_id": 51,
+            "required_level": 675,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3138",
+        "snapshots": {
+          "original": {
+            "id": 3138,
+            "hero_id": 51,
+            "required_level": 715,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3138,
+            "hero_id": 51,
+            "required_level": 715,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3942",
+        "snapshots": {
+          "original": {
+            "id": 3942,
+            "hero_id": 51,
+            "required_level": 750,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3942,
+            "hero_id": 51,
+            "required_level": 750,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3943",
+        "snapshots": {
+          "original": {
+            "id": 3943,
+            "hero_id": 51,
+            "required_level": 800,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3943,
+            "hero_id": 51,
+            "required_level": 800,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3944",
+        "snapshots": {
+          "original": {
+            "id": 3944,
+            "hero_id": 51,
+            "required_level": 775,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3944,
+            "hero_id": 51,
+            "required_level": 775,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3945",
+        "snapshots": {
+          "original": {
+            "id": 3945,
+            "hero_id": 51,
+            "required_level": 840,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3945,
+            "hero_id": 51,
+            "required_level": 840,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3946",
+        "snapshots": {
+          "original": {
+            "id": 3946,
+            "hero_id": 51,
+            "required_level": 875,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3946,
+            "hero_id": 51,
+            "required_level": 875,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,200",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "3947",
+        "snapshots": {
+          "original": {
+            "id": 3947,
+            "hero_id": 51,
+            "required_level": 885,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3044",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 3947,
+            "hero_id": 51,
+            "required_level": 885,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3044",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5186",
+        "snapshots": {
+          "original": {
+            "id": 5186,
+            "hero_id": 51,
+            "required_level": 930,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5186,
+            "hero_id": 51,
+            "required_level": 930,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5187",
+        "snapshots": {
+          "original": {
+            "id": 5187,
+            "hero_id": 51,
+            "required_level": 950,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5187,
+            "hero_id": 51,
+            "required_level": 950,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5188",
+        "snapshots": {
+          "original": {
+            "id": 5188,
+            "hero_id": 51,
+            "required_level": 970,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5188,
+            "hero_id": 51,
+            "required_level": 970,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "5189",
+        "snapshots": {
+          "original": {
+            "id": 5189,
+            "hero_id": 51,
+            "required_level": 1010,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 5189,
+            "hero_id": 51,
+            "required_level": 1010,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6604",
+        "snapshots": {
+          "original": {
+            "id": 6604,
+            "hero_id": 51,
+            "required_level": 1060,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6604,
+            "hero_id": 51,
+            "required_level": 1060,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6605",
+        "snapshots": {
+          "original": {
+            "id": 6605,
+            "hero_id": 51,
+            "required_level": 1100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6605,
+            "hero_id": 51,
+            "required_level": 1100,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6606",
+        "snapshots": {
+          "original": {
+            "id": 6606,
+            "hero_id": 51,
+            "required_level": 1160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6606,
+            "hero_id": 51,
+            "required_level": 1160,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "6607",
+        "snapshots": {
+          "original": {
+            "id": 6607,
+            "hero_id": 51,
+            "required_level": 1170,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3044",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 6607,
+            "hero_id": 51,
+            "required_level": 1170,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3044",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8378",
+        "snapshots": {
+          "original": {
+            "id": 8378,
+            "hero_id": 51,
+            "required_level": 1220,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8378,
+            "hero_id": 51,
+            "required_level": 1220,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "global_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8379",
+        "snapshots": {
+          "original": {
+            "id": 8379,
+            "hero_id": 51,
+            "required_level": 1260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8379,
+            "hero_id": 51,
+            "required_level": 1260,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "buff_upgrade,100,3100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      },
+      {
+        "id": "8380",
+        "snapshots": {
+          "original": {
+            "id": 8380,
+            "hero_id": 51,
+            "required_level": 1310,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          },
+          "display": {
+            "id": 8380,
+            "hero_id": 51,
+            "required_level": 1310,
+            "required_upgrade_id": 0,
+            "upgrade_type": null,
+            "effect": "hero_dps_multiplier_mult,100",
+            "static_dps_mult": null,
+            "default_enabled": 1,
+            "name": ""
+          }
+        }
+      }
+    ],
+    "feats": [
+      {
+        "id": "292",
+        "snapshots": {
+          "original": {
+            "id": 292,
+            "hero_id": 51,
+            "order": 1,
+            "name": "Selflessness",
+            "description": "There'll always be another Avren, but there'll never be another *you!*",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 292,
+            "hero_id": 51,
+            "order": 1,
+            "name": "无私",
+            "description": "始终会有另外的阿夫伦，但绝不会再有另一个“你”！",
+            "rarity": 2,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "293",
+        "snapshots": {
+          "original": {
+            "id": 293,
+            "hero_id": 51,
+            "order": 2,
+            "name": "Inspiring Leader",
+            "description": "Ages of exploring the multiverse has given me a gift for leadership",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          },
+          "display": {
+            "id": 293,
+            "hero_id": 51,
+            "order": 2,
+            "name": "鼓舞人心的首领",
+            "description": "多年来对多位面的探索，给予了我领导天赋。",
+            "rarity": 3,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,25"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 12500
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 12500
+            }
+          }
+        }
+      },
+      {
+        "id": "294",
+        "snapshots": {
+          "original": {
+            "id": 294,
+            "hero_id": 51,
+            "order": 4,
+            "name": "Dim Reflection",
+            "description": "A mirrored image is only as good as its source, they say...",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,3044"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          },
+          "display": {
+            "id": 294,
+            "hero_id": 51,
+            "order": 4,
+            "name": "昏暗反射",
+            "description": "他们说，镜像最多只能跟本体一样强......",
+            "rarity": 2,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,20,3044"
+              }
+            ],
+            "sources": [
+              {
+                "source": "default"
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "free"
+            }
+          }
+        }
+      },
+      {
+        "id": "295",
+        "snapshots": {
+          "original": {
+            "id": 295,
+            "hero_id": 51,
+            "order": 5,
+            "name": "Blinding Reflection",
+            "description": "Blinding to others perhaps, but not one as grand as myself.",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,3044"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 295,
+            "hero_id": 51,
+            "order": 5,
+            "name": "致盲反射",
+            "description": "对其他人来说也许令人盲目，但对我这样的大人物来说并非如此。",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,3044"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "296",
+        "snapshots": {
+          "original": {
+            "id": 296,
+            "hero_id": 51,
+            "order": 7,
+            "name": "Eyes Wide Open",
+            "description": "There's always another secret...",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,3100"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          },
+          "display": {
+            "id": 296,
+            "hero_id": 51,
+            "order": 7,
+            "name": "大开眼界",
+            "description": "总是会有其他的秘密......",
+            "rarity": 3,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,40,3100"
+              }
+            ],
+            "sources": [
+              {
+                "source": "chest",
+                "chest_type_id": 2,
+                "odds": 10
+              }
+            ],
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "chest",
+              "chest_type_id": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "459",
+        "snapshots": {
+          "original": {
+            "id": 459,
+            "hero_id": 51,
+            "order": 6,
+            "name": "Two-Headed Coin",
+            "description": "You have worth.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,3044"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 98
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1605124800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 459,
+            "hero_id": 51,
+            "order": 6,
+            "name": "两面都是头像的硬币",
+            "description": "你拥有价值。",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,3044"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 98
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1605124800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "620",
+        "snapshots": {
+          "original": {
+            "id": 620,
+            "hero_id": 51,
+            "order": 8,
+            "name": "Paired Vision",
+            "description": "We're facing a god with 5 pairs of eyes. Watch each other's backs.",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,3100"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1634569200
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 620,
+            "hero_id": 51,
+            "order": 8,
+            "name": "复视",
+            "description": "我们面对的是一个有五双眼睛的神。它们相互照看着身后。",
+            "rarity": 4,
+            "graphic_id": 6080,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,80,3100"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1634569200
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "842",
+        "snapshots": {
+          "original": {
+            "id": 842,
+            "hero_id": 51,
+            "order": 9,
+            "name": "Heavy Lifter",
+            "description": "To get stronger, may I suggest channeling obscene amounts of power?",
+            "rarity": 4,
+            "graphic_id": 10062,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,str,2"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 206
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1660158000
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 842,
+            "hero_id": 51,
+            "order": 9,
+            "name": "惯偷",
+            "description": "为了变得更强，我可以建议你灌注巨量的能量吗？",
+            "rarity": 4,
+            "graphic_id": 10062,
+            "effects": [
+              {
+                "effect_string": "increase_ability_score,str,2"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 206
+              }
+            ],
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1660158000
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "1421",
+        "snapshots": {
+          "original": {
+            "id": 1421,
+            "hero_id": 51,
+            "order": 3,
+            "name": "Prodigal Leader",
+            "description": "Oh, now you all want to follow me?",
+            "rarity": 4,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,50"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 344
+              }
+            ],
+            "properties": {
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1691607600
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 1421,
+            "hero_id": 51,
+            "order": 3,
+            "name": "浪荡首领",
+            "description": "哦，现在你们都想跟随我了？",
+            "rarity": 4,
+            "graphic_id": 6074,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,50"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 344
+              }
+            ],
+            "properties": {
+              "is_premium": true,
+              "is_available": true,
+              "available_at_time": 1691607600
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      },
+      {
+        "id": "1634",
+        "snapshots": {
+          "original": {
+            "id": 1634,
+            "hero_id": 51,
+            "order": 10,
+            "name": "Gnome Glitch",
+            "description": "Well, it's not the worst form I've had, so I'll take it.",
+            "rarity": 4,
+            "graphic_id": 21658,
+            "effects": [
+              {
+                "effect_string": "add_hero_tags,0,gnome",
+                "description": "Avren also counts as a Gnome"
+              },
+              {
+                "effect_string": "buff_upgrade_per_any_tagged_crusader,20,3044,gnome",
+                "amount_updated_listeners": [
+                  "feat_changed",
+                  "slot_changed"
+                ]
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1707940800
+            },
+            "collections_source": {
+              "type": "adventure",
+              "adventure_id": 1572
+            }
+          },
+          "display": {
+            "id": 1634,
+            "hero_id": 51,
+            "order": 10,
+            "name": "侏儒变异",
+            "description": "嗯，不算我碰到过的最糟糕形态，所以我欣然接受。",
+            "rarity": 4,
+            "graphic_id": 21658,
+            "effects": [
+              {
+                "effect_string": "add_hero_tags,0,gnome",
+                "description": "阿夫伦也算作侏儒"
+              },
+              {
+                "effect_string": "buff_upgrade_per_any_tagged_crusader,20,3044,gnome",
+                "amount_updated_listeners": [
+                  "feat_changed",
+                  "slot_changed"
+                ]
+              }
+            ],
+            "sources": [
+              {
+                "source": "promo",
+                "promotion_id": 50
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1707940800
+            },
+            "collections_source": {
+              "type": "adventure",
+              "adventure_id": 1572
+            }
+          }
+        }
+      },
+      {
+        "id": "2300",
+        "snapshots": {
+          "original": {
+            "id": 2300,
+            "hero_id": 51,
+            "order": 11,
+            "name": "Multiversal Allies",
+            "description": "I've got friends in weird places.",
+            "rarity": 4,
+            "graphic_id": 25576,
+            "effects": [
+              {
+                "effect_string": "effect_def,2193",
+                "description": "Increases the damage of all Champions by 20% for each unique species in the formation, stacking additively."
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2026-01-15 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 627
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1760554800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          },
+          "display": {
+            "id": 2300,
+            "hero_id": 51,
+            "order": 11,
+            "name": "多元宇宙盟友",
+            "description": "我在一些奇怪的地方也有朋友。",
+            "rarity": 4,
+            "graphic_id": 25576,
+            "effects": [
+              {
+                "effect_string": "effect_def,2193",
+                "description": "阵型中每有一个独特的种族，所有勇士的伤害提高 20%，以加算方式堆叠。"
+              }
+            ],
+            "sources": [
+              {
+                "source": "gems",
+                "cost": 50000,
+                "start_date": "2026-01-15 12:00:00"
+              },
+              {
+                "source": "premium",
+                "premium_item_id": 627
+              }
+            ],
+            "properties": {
+              "is_available": true,
+              "available_at_time": 1760554800
+            },
+            "collections_source": {
+              "type": "gems",
+              "cost": 50000
+            }
+          }
+        }
+      }
+    ],
+    "skins": [
+      {
+        "id": "22",
+        "snapshots": {
+          "original": {
+            "id": 22,
+            "hero_id": 51,
+            "name": "Zombie Avren",
+            "cost": [],
+            "details": {
+              "base_graphic_id": 6476,
+              "large_graphic_id": 6478,
+              "xl_graphic_id": 14021,
+              "portrait_graphic_id": 6556
+            },
+            "rarity": "3",
+            "properties": {
+              "show_only_if_owned": true,
+              "in_flash_sale": false,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "adventure",
+              "adventure_id": 446
+            },
+            "availabilities": {
+              "in_flash_sales": true,
+              "adventure_ids": [],
+              "adventures": [
+                {
+                  "id": "446",
+                  "name": "The Clone War",
+                  "timegate_hero_id": 51
+                }
+              ]
+            }
+          },
+          "display": {
+            "id": 22,
+            "hero_id": 51,
+            "name": "僵尸阿夫伦",
+            "cost": [],
+            "details": {
+              "base_graphic_id": 6476,
+              "large_graphic_id": 6478,
+              "xl_graphic_id": 14021,
+              "portrait_graphic_id": 6556
+            },
+            "rarity": "3",
+            "properties": {
+              "show_only_if_owned": true,
+              "in_flash_sale": false,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "adventure",
+              "adventure_id": 446
+            },
+            "availabilities": {
+              "in_flash_sales": true,
+              "adventure_ids": [],
+              "adventures": [
+                {
+                  "id": "446",
+                  "name": "克隆人战争",
+                  "timegate_hero_id": 51
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": "61",
+        "snapshots": {
+          "original": {
+            "id": 61,
+            "hero_id": 51,
+            "name": "Artificer Avren",
+            "cost": [],
+            "details": {
+              "base_graphic_id": 9292,
+              "large_graphic_id": 9293,
+              "xl_graphic_id": 13833,
+              "portrait_graphic_id": 9294
+            },
+            "rarity": "3",
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 412,
+              "odds": 30
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 61,
+            "hero_id": 51,
+            "name": "机关术士阿夫伦",
+            "cost": [],
+            "details": {
+              "base_graphic_id": 9292,
+              "large_graphic_id": 9293,
+              "xl_graphic_id": 13833,
+              "portrait_graphic_id": 9294
+            },
+            "rarity": "3",
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 412,
+              "odds": 30
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      },
+      {
+        "id": "105",
+        "snapshots": {
+          "original": {
+            "id": 105,
+            "hero_id": 51,
+            "name": "Wyrmspeaker Avren",
+            "cost": {
+              "req_date": "2021-09-15 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 11029,
+              "large_graphic_id": 11690,
+              "xl_graphic_id": 13835,
+              "portrait_graphic_id": 11073
+            },
+            "rarity": "3",
+            "properties": {
+              "show_only_if_owned": true,
+              "notification_adjustment_override": {
+                "offset": [
+                  52,
+                  257
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "trials"
+            }
+          },
+          "display": {
+            "id": 105,
+            "hero_id": 51,
+            "name": "龙语者阿夫伦",
+            "cost": {
+              "req_date": "2021-09-15 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 11029,
+              "large_graphic_id": 11690,
+              "xl_graphic_id": 13835,
+              "portrait_graphic_id": 11073
+            },
+            "rarity": "3",
+            "properties": {
+              "show_only_if_owned": true,
+              "notification_adjustment_override": {
+                "offset": [
+                  52,
+                  257
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "trials"
+            }
+          }
+        }
+      },
+      {
+        "id": "114",
+        "snapshots": {
+          "original": {
+            "id": 114,
+            "hero_id": 51,
+            "name": "Ascendant Avren",
+            "cost": {
+              "soft_currency": 20000,
+              "req_date": "2022-03-23 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 11872,
+              "large_graphic_id": 11873,
+              "xl_graphic_id": 13834,
+              "portrait_graphic_id": 11874
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gem_shop",
+              "cost": 20000
+            }
+          },
+          "display": {
+            "id": 114,
+            "hero_id": 51,
+            "name": "星运阿夫伦",
+            "cost": {
+              "soft_currency": 20000,
+              "req_date": "2022-03-23 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 11872,
+              "large_graphic_id": 11873,
+              "xl_graphic_id": 13834,
+              "portrait_graphic_id": 11874
+            },
+            "rarity": "3",
+            "properties": {
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "gem_shop",
+              "cost": 20000
+            }
+          }
+        }
+      },
+      {
+        "id": "200",
+        "snapshots": {
+          "original": {
+            "id": 200,
+            "hero_id": 51,
+            "name": "Cranium Rat Avren",
+            "cost": {
+              "req_date": "2022-08-10 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 15970,
+              "large_graphic_id": 15975,
+              "portrait_graphic_id": 15968,
+              "xl_graphic_id": 15972
+            },
+            "rarity": "3",
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "notification_adjustment_override": {
+                "offset": [
+                  52,
+                  246
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 689,
+              "odds": 30
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 200,
+            "hero_id": 51,
+            "name": "颅鼠阿夫伦",
+            "cost": {
+              "req_date": "2022-08-10 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 15970,
+              "large_graphic_id": 15975,
+              "portrait_graphic_id": 15968,
+              "xl_graphic_id": 15972
+            },
+            "rarity": "3",
+            "properties": {
+              "in_flash_sale": true,
+              "is_premium": true,
+              "notification_adjustment_override": {
+                "offset": [
+                  52,
+                  246
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 689,
+              "odds": 30
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      },
+      {
+        "id": "324",
+        "snapshots": {
+          "original": {
+            "id": 324,
+            "hero_id": 51,
+            "name": "Spelljammer Avren",
+            "cost": {
+              "req_date": "2023-08-09 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 20347,
+              "large_graphic_id": 20348,
+              "portrait_graphic_id": 20350,
+              "xl_graphic_id": 20349
+            },
+            "rarity": "3",
+            "properties": {
+              "is_premium": true,
+              "notification_adjustment_override": {
+                "offset": [
+                  54,
+                  210
+                ],
+                "scale": 1.18
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 1111,
+              "odds": 35
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          },
+          "display": {
+            "id": 324,
+            "hero_id": 51,
+            "name": "魔法船阿夫伦",
+            "cost": {
+              "req_date": "2023-08-09 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 20347,
+              "large_graphic_id": 20348,
+              "portrait_graphic_id": 20350,
+              "xl_graphic_id": 20349
+            },
+            "rarity": "3",
+            "properties": {
+              "is_premium": true,
+              "notification_adjustment_override": {
+                "offset": [
+                  54,
+                  210
+                ],
+                "scale": 1.18
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "flash_sale",
+              "item_id": 1111,
+              "odds": 35
+            },
+            "availabilities": {
+              "in_flash_sales": true
+            }
+          }
+        }
+      },
+      {
+        "id": "370",
+        "snapshots": {
+          "original": {
+            "id": 370,
+            "hero_id": 51,
+            "name": "Gnome Glitch Avren",
+            "cost": {
+              "req_date": "2024-02-14 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 22179,
+              "large_graphic_id": 22180,
+              "portrait_graphic_id": 22176,
+              "xl_graphic_id": 22181,
+              "mirror_graphic": 22178,
+              "simple_projectile_graphic_id": 22177
+            },
+            "rarity": "3",
+            "properties": {
+              "notification_adjustment_override": {
+                "offset": [
+                  41,
+                  164
+                ],
+                "scale": 1.23
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "adventure",
+              "adventure_id": 1567
+            },
+            "availabilities": {
+              "adventure_ids": [],
+              "adventures": [
+                {
+                  "id": "1567",
+                  "name": "The Fortune's Wheel"
+                }
+              ]
+            }
+          },
+          "display": {
+            "id": 370,
+            "hero_id": 51,
+            "name": "侏儒变异阿夫伦",
+            "cost": {
+              "req_date": "2024-02-14 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 22179,
+              "large_graphic_id": 22180,
+              "portrait_graphic_id": 22176,
+              "xl_graphic_id": 22181,
+              "mirror_graphic": 22178,
+              "simple_projectile_graphic_id": 22177
+            },
+            "rarity": "3",
+            "properties": {
+              "notification_adjustment_override": {
+                "offset": [
+                  41,
+                  164
+                ],
+                "scale": 1.23
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "adventure",
+              "adventure_id": 1567
+            },
+            "availabilities": {
+              "adventure_ids": [],
+              "adventures": [
+                {
+                  "id": "1567",
+                  "name": "命运之轮"
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": "611",
+        "snapshots": {
+          "original": {
+            "id": 611,
+            "hero_id": 51,
+            "name": "Avren in a Jar",
+            "cost": {
+              "req_date": "2025-10-15 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 27928,
+              "large_graphic_id": 27935,
+              "portrait_graphic_id": 27937,
+              "xl_graphic_id": 27936
+            },
+            "rarity": "3",
+            "properties": {
+              "notification_adjustment_override": {
+                "offset": [
+                  52,
+                  226
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "627",
+              "cost": 1680
+            },
+            "availabilities": {
+              "premium_item_id": "627"
+            }
+          },
+          "display": {
+            "id": 611,
+            "hero_id": 51,
+            "name": "罐中阿夫伦",
+            "cost": {
+              "req_date": "2025-10-15 12:00:00"
+            },
+            "details": {
+              "base_graphic_id": 27928,
+              "large_graphic_id": 27935,
+              "portrait_graphic_id": 27937,
+              "xl_graphic_id": 27936
+            },
+            "rarity": "3",
+            "properties": {
+              "notification_adjustment_override": {
+                "offset": [
+                  52,
+                  226
+                ],
+                "scale": 1.25
+              },
+              "is_available": true
+            },
+            "collections_source": {
+              "type": "dlc",
+              "item_id": "627",
+              "cost": 1680
+            },
+            "availabilities": {
+              "premium_item_id": "627"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
