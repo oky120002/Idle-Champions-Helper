@@ -455,6 +455,39 @@ html[data-ui-locale='en-US'] .site-subtitle {
   gap: 0.65rem;
 }
 
+.filter-subgroup-stack {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.filter-subgroup {
+  display: grid;
+  gap: 0.65rem;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid rgba(227, 214, 193, 0.08);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015)),
+    rgba(7, 12, 18, 0.34);
+}
+
+.filter-subgroup__header {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.filter-subgroup__title {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #fff3df;
+}
+
+.filter-subgroup__hint {
+  margin: 0;
+  font-size: 0.84rem;
+  color: rgba(242, 239, 230, 0.58);
+}
+
 .filter-chip-grid,
 .tag-row {
   display: flex;
