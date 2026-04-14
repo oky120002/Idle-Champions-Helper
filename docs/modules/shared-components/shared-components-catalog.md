@@ -31,7 +31,100 @@
 </SurfaceCard>
 ```
 
-### 2. `LocalizedText`
+### 2. `ChampionAvatar`
+
+- 路径：`src/components/ChampionAvatar.tsx`
+- 适用场景：英雄头像、小卡片头像、阵型槽位缩略头像、胶囊标签头像
+- 设计目的：统一版本化头像路径、双语 `alt` 文案和无头像时的首字母回退，避免页面里重复拼 `img + resolveDataUrl + fallback`
+- 核心 props：
+  - `champion: Champion` 必填
+  - `locale: AppLocale` 必填
+  - `className?: string`
+  - `loading?: 'eager' | 'lazy'`
+- 已使用位置：
+  - `src/pages/FormationPage.tsx`
+  - `src/components/ChampionIdentity.tsx`
+  - `src/components/ChampionPill.tsx`
+- 使用示例：
+
+```tsx
+<ChampionAvatar champion={champion} locale={locale} className="champion-avatar--slot" />
+
+<ChampionAvatar
+  champion={champion}
+  locale={locale}
+  className="champion-avatar--card"
+  loading="eager"
+/>
+```
+
+- 使用建议：
+  - 只要页面需要展示英雄头像，优先复用它，不要重新手写 `img` 与回退节点
+  - 头像尺寸和圆角交给调用方 class 约束，组件本身只负责资源与可访问性语义
+
+### 3. `ChampionIdentity`
+
+- 路径：`src/components/ChampionIdentity.tsx`
+- 适用场景：结果卡标题区、英雄详情头部、需要“头像 + eyebrow + 主副名称”成组展示的位置
+- 设计目的：统一结果卡头部的身份信息结构，减少页面层重复拼接头像、席位标签和双语名称
+- 核心 props：
+  - `champion: Champion` 必填
+  - `locale: AppLocale` 必填
+  - `eyebrow: string` 必填
+  - `avatarClassName?: string`
+- 已使用位置：
+  - `src/pages/ChampionsPage.tsx`
+  - `src/pages/FormationPage.tsx`
+- 使用示例：
+
+```tsx
+<ChampionIdentity
+  champion={champion}
+  locale={locale}
+  eyebrow={formatSeatLabel(champion.seat, locale)}
+/>
+
+<ChampionIdentity
+  champion={champion}
+  locale={locale}
+  eyebrow={slotId}
+  avatarClassName="champion-avatar--slot"
+/>
+```
+
+- 使用建议：
+  - 适合“卡片标题区”这种相对完整的身份展示；如果只是紧凑列表，优先用 `ChampionPill`
+  - `eyebrow` 由调用方决定，常见值是 `seat`、槽位号或上下文标签
+
+### 4. `ChampionPill`
+
+- 路径：`src/components/ChampionPill.tsx`
+- 适用场景：已上阵英雄列表、恢复预览列表、紧凑型英雄选择结果
+- 设计目的：统一“小头像 + 单行标签”模式，并内置默认的 `seat + 双语名称` 标签，避免页面层重复组织紧凑展示文案
+- 核心 props：
+  - `champion: Champion` 必填
+  - `locale: AppLocale` 必填
+  - `label?: string`
+- 已使用位置：
+  - `src/pages/FormationPage.tsx`
+  - `src/pages/PresetsPage.tsx`
+- 使用示例：
+
+```tsx
+<ChampionPill champion={champion} locale={locale} />
+
+<ChampionPill
+  champion={champion}
+  locale={locale}
+  label={t({ zh: '核心输出', en: 'Primary DPS' })}
+/>
+```
+
+- 使用建议：
+  - 默认标签已经覆盖大多数“seat + 名称”场景，只有在业务语义更强时再传入自定义 `label`
+  - 如果需要多行标题、副文本或 eyebrow，不要强行扩展它，改用 `ChampionIdentity`
+
+### 5. `LocalizedText`
 
 - 路径：`src/components/LocalizedText.tsx`
 - 适用场景：展示游戏数据里的双语字段，即 `{ original, display }`
@@ -73,7 +166,7 @@
   - 只用于游戏数据双语字段，不用于 `t({ zh, en })` 这类 UI 文案
   - 如果只是字符串格式化，不需要 DOM 结构，优先看下方 helper，不要硬包成组件
 
-### 3. `StatusBanner`
+### 6. `StatusBanner`
 
 - 路径：`src/components/StatusBanner.tsx`
 - 适用场景：加载、成功、错误、兼容恢复提醒、草稿恢复确认等状态提示
@@ -103,7 +196,7 @@
 />
 ```
 
-### 4. `FieldGroup`
+### 7. `FieldGroup`
 
 - 路径：`src/components/FieldGroup.tsx`
 - 适用场景：带 `label` / `hint` 的输入字段块，以及筛选区这类“标题 + 内容 + 提示”结构

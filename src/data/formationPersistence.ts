@@ -1,4 +1,4 @@
-import type { Champion, FormationLayout, ScenarioRef } from '../domain/types'
+import type { Champion, FormationLayout, LocalizedText, ScenarioRef } from '../domain/types'
 import { loadCollectionAtVersion } from './client'
 
 export interface FormationSnapshotLike {
@@ -21,7 +21,7 @@ export interface ValidatedFormationPlacements {
 
 export interface FormationSnapshotPreview<T extends FormationSnapshotLike> {
   snapshot: T
-  layoutName: string
+  layoutName: LocalizedText
   dataVersion: string
   restoreMode: FormationRestoreMode
   formations: FormationLayout[]
