@@ -283,7 +283,7 @@ describe('ChampionsPage filters', () => {
     expect(screen.getByRole('button', { name: '清空阵营：善良' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '清空获取方式：活动英雄' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '清空机制：减速控制' })).toBeInTheDocument()
-    expect(screen.getAllByRole('button', { name: '清空全部' })).toHaveLength(2)
+    expect(screen.getAllByRole('button', { name: '清空全部' })).toHaveLength(1)
 
     await user.click(screen.getByRole('button', { name: '清空机制：减速控制' }))
 
@@ -299,7 +299,7 @@ describe('ChampionsPage filters', () => {
     expect(screen.queryByText('德尔塔')).not.toBeInTheDocument()
   })
 
-  it('无匹配时提供放开筛选和清空全部的快捷操作', async () => {
+  it('无匹配时仍可通过唯一的清空入口快速回到全量结果', async () => {
     const user = userEvent.setup()
 
     renderChampionsPage()
@@ -311,20 +311,12 @@ describe('ChampionsPage filters', () => {
 
     expect(
       screen.getByText(
-        '当前筛选条件下没有匹配英雄，可以先放开座位、定位、联动队伍、种族、性别、阵营、职业、获取方式或机制，或一键清空全部条件。',
+        '当前筛选条件下没有匹配英雄。可以直接点左侧已选条件逐项回退，或用筛选头部的清空全部重新开始。',
       ),
     ).toBeInTheDocument()
+    expect(screen.getAllByRole('button', { name: '清空全部' })).toHaveLength(1)
 
-    await user.click(screen.getByRole('button', { name: '一键放开全部筛选' }))
-
-    await waitFor(() => {
-      expect(screen.getByText('德尔塔')).toBeInTheDocument()
-    })
-
-    expect(screen.getByDisplayValue('德')).toBeInTheDocument()
-    expect(screen.queryByText('阿尔法')).not.toBeInTheDocument()
-
-    await user.click(within(screen.getByRole('group', { name: '筛选快捷操作' })).getByRole('button', { name: '清空全部' }))
+    await user.click(within(screen.getByRole('group', { name: '筛选状态操作' })).getByRole('button', { name: '清空全部' }))
 
     await waitFor(() => {
       expect(screen.getByText('阿尔法')).toBeInTheDocument()

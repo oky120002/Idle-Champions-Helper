@@ -493,7 +493,8 @@ export function ChampionsPage() {
   const visibleChampions = showAllResults ? filteredChampions : filteredChampions.slice(0, MAX_VISIBLE_RESULTS)
   const matchedSeats = new Set(filteredChampions.map((champion) => champion.seat)).size
   const trimmedSearch = search.trim()
-  const hasStructuredFilters =
+  const hasActiveFilters =
+    trimmedSearch.length > 0 ||
     selectedSeats.length > 0 ||
     selectedRoles.length > 0 ||
     selectedAffiliations.length > 0 ||
@@ -503,7 +504,6 @@ export function ChampionsPage() {
     selectedProfessions.length > 0 ||
     selectedAcquisitions.length > 0 ||
     selectedMechanics.length > 0
-  const hasActiveFilters = trimmedSearch.length > 0 || hasStructuredFilters
   const canToggleResultVisibility = filteredChampions.length > MAX_VISIBLE_RESULTS
   const orderedSelectedSeats = seatOptions.filter((seat) => selectedSeats.includes(seat))
   const orderedSelectedRoles =
@@ -653,20 +653,6 @@ export function ChampionsPage() {
     prepareResultsViewportTransition('filters')
     setShowAllResults(false)
     mutation()
-  }
-
-  function clearStructuredFilters() {
-    runFilterMutation(() => {
-      setSelectedSeats([])
-      setSelectedRoles([])
-      setSelectedAffiliations([])
-      setSelectedRaces([])
-      setSelectedGenders([])
-      setSelectedAlignments([])
-      setSelectedProfessions([])
-      setSelectedAcquisitions([])
-      setSelectedMechanics([])
-    })
   }
 
   function clearAllFilters() {
@@ -1101,42 +1087,34 @@ export function ChampionsPage() {
                         </h3>
                         <p className="champions-sidebar__hint">
                           {t({
-                            zh: '往下浏览卡片时，筛选区会稳稳留在视线附近；条件很多时，也能就地快速放开或清空。',
-                            en: 'The filters stay close while you browse deeper results, with quick ways to widen or clear the set.',
+                            zh: '往下浏览卡片时，筛选区会稳稳留在视线附近；所有回退动作都收束到一个入口，减少反复找按钮。',
+                            en: 'The filters stay close while you browse deeper results, with one clear reset entry instead of scattered actions.',
                           })}
                         </p>
                       </div>
-                      <span className="champions-sidebar__badge">
-                        {activeFilterChips.length > 0
-                          ? t({
-                              zh: `${activeFilterChips.length} 项已启用`,
-                              en: `${activeFilterChips.length} active`,
-                            })
-                          : t({ zh: '未启用', en: 'Idle' })}
-                      </span>
-                    </div>
-
-                    <div
-                      className="champions-sidebar__actions"
-                      role="group"
-                      aria-label={t({ zh: '筛选快捷操作', en: 'Filter quick actions' })}
-                    >
-                      <button
-                        type="button"
-                        className="action-button action-button--ghost action-button--compact"
-                        onClick={clearStructuredFilters}
-                        disabled={!hasStructuredFilters}
+                      <div
+                        className="champions-sidebar__status"
+                        role="group"
+                        aria-label={t({ zh: '筛选状态操作', en: 'Filter status actions' })}
                       >
-                        {t({ zh: '全部放开', en: 'Open all chips' })}
-                      </button>
-                      <button
-                        type="button"
-                        className="action-button action-button--secondary action-button--compact"
-                        onClick={clearAllFilters}
-                        disabled={!hasActiveFilters}
-                      >
-                        {t({ zh: '清空全部', en: 'Clear all' })}
-                      </button>
+                        <span className="champions-sidebar__badge">
+                          {activeFilterChips.length > 0
+                            ? t({
+                                zh: `${activeFilterChips.length} 项已启用`,
+                                en: `${activeFilterChips.length} active`,
+                              })
+                            : t({ zh: '未启用', en: 'Idle' })}
+                        </span>
+                        {hasActiveFilters ? (
+                          <button
+                            type="button"
+                            className="action-button action-button--secondary action-button--compact"
+                            onClick={clearAllFilters}
+                          >
+                            {t({ zh: '清空全部', en: 'Clear all' })}
+                          </button>
+                        ) : null}
+                      </div>
                     </div>
 
                     <p className="champions-sidebar__microcopy">
@@ -1155,14 +1133,11 @@ export function ChampionsPage() {
                             </strong>
                             <p className="active-filter-bar__hint">
                               {t({
-                                zh: '点击任一条件即可单独清空对应维度，也可以一键清空全部。',
-                                en: 'Click any filter chip to clear that dimension only, or clear everything at once.',
+                                zh: '点击任一条件即可单独清空对应维度；全量回退统一用上方的清空全部。',
+                                en: 'Click any filter chip to clear that dimension only, then use the reset button above when you want a full reset.',
                               })}
                             </p>
                           </div>
-                          <button type="button" className="action-button action-button--ghost" onClick={clearAllFilters}>
-                            {t({ zh: '清空全部', en: 'Clear all' })}
-                          </button>
                         </div>
                         <div className="active-filter-bar__chips">
                           {activeFilterChips.map((chip) => (
@@ -1630,8 +1605,8 @@ export function ChampionsPage() {
                               en: `Showing ${visibleChampions.length} / ${filteredChampions.length} champions. Narrow things down with a keyword, seat, role, affiliation, race, gender, alignment, profession, availability, or mechanic if the list feels too broad.`,
                             })
                           : t({
-                              zh: '当前筛选条件下没有匹配英雄，可以先放开座位、定位、联动队伍、种族、性别、阵营、职业、获取方式或机制，或一键清空全部条件。',
-                              en: 'No champions match this filter set yet. Try opening seat, role, affiliation, race, gender, alignment, profession, availability, and mechanic filters back up, or clear everything in one step.',
+                              zh: '当前筛选条件下没有匹配英雄。可以直接点左侧已选条件逐项回退，或用筛选头部的清空全部重新开始。',
+                              en: 'No champions match this filter set yet. Peel the left-side chips back one by one, or use the reset button in the filter header to start over.',
                             })}
                       </p>
 
@@ -1675,26 +1650,7 @@ export function ChampionsPage() {
                             </button>
                           ) : null}
                         </div>
-                      ) : (
-                        <div className="results-empty-actions">
-                          <button
-                            type="button"
-                            className="action-button action-button--ghost"
-                            onClick={clearStructuredFilters}
-                            disabled={!hasStructuredFilters}
-                          >
-                            {t({ zh: '一键放开全部筛选', en: 'Open every chip filter' })}
-                          </button>
-                          <button
-                            type="button"
-                            className="action-button action-button--secondary"
-                            onClick={clearAllFilters}
-                            disabled={!hasActiveFilters}
-                          >
-                            {t({ zh: '一键清空全部条件', en: 'Clear every filter' })}
-                          </button>
-                        </div>
-                      )}
+                      ) : null}
                     </div>
 
                     {filteredChampions.length > 0 ? (
