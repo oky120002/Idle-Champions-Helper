@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { type CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useI18n } from '../app/i18n'
 import { FieldGroup } from '../components/FieldGroup'
@@ -27,7 +27,11 @@ import {
   getRoleLabel,
   matchesLocalizedText,
 } from '../domain/localizedText'
-import { getFormationLayoutContextSummary, getFormationLayoutLabel } from '../domain/formationLayout'
+import {
+  getFormationBoardMetrics,
+  getFormationLayoutContextSummary,
+  getFormationLayoutLabel,
+} from '../domain/formationLayout'
 import { buildOrderedChampionsFromPlacements } from '../domain/championPlacement'
 import type {
   Champion,
@@ -395,6 +399,19 @@ export function FormationPage() {
   const selectedLayoutContextSummary = selectedLayout
     ? getFormationLayoutContextSummary(selectedLayout, locale)
     : null
+  const formationBoardStyle = useMemo<CSSProperties | undefined>(() => {
+    if (!selectedLayout) {
+      return undefined
+    }
+
+    const metrics = getFormationBoardMetrics(selectedLayout)
+
+    return {
+      gridTemplateColumns: `repeat(${metrics.columnCount}, minmax(0, 1fr))`,
+      width: `${metrics.widthPx}px`,
+      minWidth: `${metrics.minWidthPx}px`,
+    }
+  }, [selectedLayout])
   const filteredLayouts = useMemo(() => {
     if (state.status !== 'ready') {
       return []
@@ -915,7 +932,7 @@ export function FormationPage() {
                 ) : null}
 
                 <div className="formation-board-wrap">
-                  <div className="formation-board">
+                  <div className="formation-board" data-testid="formation-board" style={formationBoardStyle}>
                     {selectedLayout.slots.map((slot, index) => {
                       const championId = placements[slot.id] ?? ''
                       const champion = championOptions.find((item) => item.id === championId) ?? null
