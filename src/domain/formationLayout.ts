@@ -2,12 +2,35 @@ import type { AppLocale } from '../app/i18n'
 import { getLocalizedTextPair, getPrimaryLocalizedText } from './localizedText'
 import type { FormationLayout } from './types'
 
+const FORMATION_BOARD_BASE_COLUMNS = 5
+const FORMATION_BOARD_BASE_WIDTH_PX = 640
+const FORMATION_BOARD_BASE_MIN_WIDTH_PX = 520
+
+export interface FormationBoardMetrics {
+  columnCount: number
+  minWidthPx: number
+  widthPx: number
+}
+
 function buildCountLabel(count: number, singular: string, plural: string): string {
   return count === 1 ? singular : plural
 }
 
 export function getFormationLayoutLabel(layout: FormationLayout, locale: AppLocale): string {
   return getPrimaryLocalizedText(layout.name, locale)
+}
+
+export function getFormationBoardMetrics(layout: FormationLayout): FormationBoardMetrics {
+  const columnCount = Math.max(
+    FORMATION_BOARD_BASE_COLUMNS,
+    layout.slots.reduce((max, slot) => Math.max(max, slot.column), 0),
+  )
+
+  return {
+    columnCount,
+    widthPx: Math.round((FORMATION_BOARD_BASE_WIDTH_PX / FORMATION_BOARD_BASE_COLUMNS) * columnCount),
+    minWidthPx: Math.round((FORMATION_BOARD_BASE_MIN_WIDTH_PX / FORMATION_BOARD_BASE_COLUMNS) * columnCount),
+  }
 }
 
 export function getFormationLayoutContextSummary(
