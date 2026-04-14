@@ -1,6 +1,8 @@
 :root {
   --layout-max-width: 1400px;
   --layout-inline-gap: clamp(1rem, 2vw, 1.75rem);
+  --champions-sidebar-width: 22rem;
+  --champions-results-card-min: 260px;
   color-scheme: dark;
   font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   line-height: 1.5;
@@ -14,6 +16,34 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --layout-max-width: 1560px;
+  }
+}
+
+@media (min-width: 1680px) {
+  :root {
+    --layout-max-width: 1760px;
+    --champions-sidebar-width: 22.5rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --layout-max-width: 1960px;
+    --champions-sidebar-width: 23rem;
+  }
+}
+
+@media (min-width: 2240px) {
+  :root {
+    --layout-max-width: 2200px;
+    --layout-inline-gap: clamp(1.25rem, 1.8vw, 2.25rem);
+    --champions-sidebar-width: 23.5rem;
+  }
 }
 
 * {
@@ -759,7 +789,7 @@ html[data-ui-locale='en-US'] .site-subtitle {
   display: grid;
   gap: 1rem;
   margin-top: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--champions-results-card-min)), 1fr));
 }
 
 .results-grid--stable {
@@ -1972,7 +2002,7 @@ html[data-ui-locale='en-US'] .site-subtitle {
 
 @media (min-width: 1080px) {
   .champions-workspace {
-    grid-template-columns: minmax(19rem, 22rem) minmax(0, 1fr);
+    grid-template-columns: minmax(19rem, var(--champions-sidebar-width)) minmax(0, 1fr);
     align-items: stretch;
   }
 
