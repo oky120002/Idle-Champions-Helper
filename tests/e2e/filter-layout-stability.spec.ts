@@ -14,6 +14,28 @@ async function getViewportTop(locator: Locator): Promise<number> {
   return Math.round(box.y)
 }
 
+async function getFirstRowCardCount(locator: Locator): Promise<number> {
+  return locator.evaluateAll((elements) => {
+    const tops = elements
+      .map((element) => {
+        if (!(element instanceof HTMLElement)) {
+          return null
+        }
+
+        return Math.round(element.getBoundingClientRect().top)
+      })
+      .filter((top): top is number => top !== null)
+
+    if (tops.length === 0) {
+      throw new Error('结果卡片不存在。')
+    }
+
+    const firstRowTop = Math.min(...tops)
+
+    return tops.filter((top) => Math.abs(top - firstRowTop) <= 4).length
+  })
+}
+
 test('英雄筛选页首次显示当前筛选摘要时不应推挤结果说明位置', async ({ page }) => {
   await page.addInitScript(() => {
     window.localStorage.removeItem('idle-champions-helper.locale')
@@ -87,6 +109,7 @@ test('英雄筛选页桌面宽度下主内容区应更舒展，不再过窄', as
     window.localStorage.removeItem('idle-champions-helper.locale')
   })
 
+  await page.setViewportSize({ width: 1600, height: 1200 })
   await page.goto('./#/champions')
   await expect(page.getByRole('heading', { level: 2, name: '先用真实公共数据把查询入口跑起来' })).toBeVisible()
 
@@ -98,5 +121,44 @@ test('英雄筛选页桌面宽度下主内容区应更舒展，不再过窄', as
     return Math.round(element.getBoundingClientRect().width)
   })
 
-  expect(mainWidth).toBeGreaterThanOrEqual(1200)
+  expect(mainWidth).toBeGreaterThanOrEqual(1520)
+})
+
+test('英雄筛选页超宽屏下应放宽到接近六列结果卡', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.localStorage.removeItem('idle-champions-helper.locale')
+  })
+
+  await page.setViewportSize({ width: 2545, height: 1500 })
+  await page.goto('./#/champions')
+  await expect(page.getByRole('heading', { level: 2, name: '先用真实公共数据把查询入口跑起来' })).toBeVisible()
+  await expect(page.getByText(/^当前展示 \d+ \/ \d+ 名英雄/)).toBeVisible()
+
+  const mainWidth = await page.locator('.site-main').evaluate((element) => {
+    if (!(element instanceof HTMLElement)) {
+      throw new Error('主内容区节点不存在。')
+    }
+
+    return Math.round(element.getBoundingClientRect().width)
+  })
+
+  const firstRowCardCount = await getFirstRowCardCount(page.locator('.results-grid .result-card--link'))
+
+  expect(mainWidth).toBeGreaterThanOrEqual(2180)
+  expect(firstRowCardCount).toBeGreaterThanOrEqual(6)
+})
+
+test('英雄筛选页移动端宽度下结果区应自然收敛为单列', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.localStorage.removeItem('idle-champions-helper.locale')
+  })
+
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('./#/champions')
+  await expect(page.getByRole('heading', { level: 2, name: '先用真实公共数据把查询入口跑起来' })).toBeVisible()
+  await expect(page.getByText(/^当前展示 \d+ \/ \d+ 名英雄/)).toBeVisible()
+
+  const firstRowCardCount = await getFirstRowCardCount(page.locator('.results-grid .result-card--link'))
+
+  expect(firstRowCardCount).toBe(1)
 })
