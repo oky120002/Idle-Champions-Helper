@@ -27,11 +27,41 @@ test('移动端顶部导航应保持紧凑且不依赖横向滑动', async ({ pa
   })
 
   const menuToggle = page.getByRole('button', { name: '展开主导航' })
+  const utilityMetrics = await page.locator('.site-header').evaluate((element) => {
+    if (!(element instanceof HTMLElement)) {
+      throw new Error('顶部导航不存在。')
+    }
+
+    const locale = element.querySelector('.locale-switcher')
+    const menu = element.querySelector('.site-header__menu-toggle')
+
+    if (!(locale instanceof HTMLElement) || !(menu instanceof HTMLElement)) {
+      throw new Error('顶部导航控件不存在。')
+    }
+
+    const localeRect = locale.getBoundingClientRect()
+    const menuRect = menu.getBoundingClientRect()
+    const menuStyle = window.getComputedStyle(menu)
+
+    return {
+      localeTop: Math.round(localeRect.top),
+      localeBottom: Math.round(localeRect.bottom),
+      menuTop: Math.round(menuRect.top),
+      menuHeight: Math.round(menuRect.height),
+      menuWidth: Math.round(menuRect.width),
+      menuRadius: Math.round(Number.parseFloat(menuStyle.borderTopLeftRadius)),
+    }
+  })
 
   await expect(menuToggle).toBeVisible()
 
   expect(headerMetrics.top).toBe(0)
   expect(headerMetrics.height).toBeLessThanOrEqual(88)
+  expect(utilityMetrics.menuTop).toBeGreaterThanOrEqual(utilityMetrics.localeTop + 10)
+  expect(utilityMetrics.menuTop).toBeLessThan(utilityMetrics.localeBottom + 8)
+  expect(utilityMetrics.menuHeight).toBeLessThanOrEqual(36)
+  expect(utilityMetrics.menuWidth).toBeGreaterThan(utilityMetrics.menuHeight + 10)
+  expect(utilityMetrics.menuRadius).toBeLessThanOrEqual(16)
   expect(await getDocumentHorizontalOverflow(page)).toBeLessThanOrEqual(1)
 
   await menuToggle.click()
