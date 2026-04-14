@@ -132,6 +132,7 @@ test('英雄筛选页超宽屏下应放宽到接近六列结果卡', async ({ pa
   await page.setViewportSize({ width: 2545, height: 1500 })
   await page.goto('./#/champions')
   await expect(page.getByRole('heading', { level: 2, name: '先用真实公共数据把查询入口跑起来' })).toBeVisible()
+  await expect(page.getByText(/^当前展示 \d+ \/ \d+ 名英雄/)).toBeVisible()
 
   const mainWidth = await page.locator('.site-main').evaluate((element) => {
     if (!(element instanceof HTMLElement)) {
@@ -155,6 +156,7 @@ test('英雄筛选页移动端宽度下结果区应自然收敛为单列', async
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('./#/champions')
   await expect(page.getByRole('heading', { level: 2, name: '先用真实公共数据把查询入口跑起来' })).toBeVisible()
+  await expect(page.getByText(/^当前展示 \d+ \/ \d+ 名英雄/)).toBeVisible()
 
   const firstRowCardCount = await getFirstRowCardCount(page.locator('.results-grid .result-card--link'))
 
