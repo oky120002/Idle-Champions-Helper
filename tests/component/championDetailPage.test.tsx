@@ -348,6 +348,19 @@ function renderChampionDetailPageWithSearch() {
   return renderChampionDetailPageAt('/champions/7?q=alpha&seat=1&role=support')
 }
 
+function renderChampionDetailPageWithBackRoute(initialEntry: string) {
+  return render(
+    <I18nProvider>
+      <MemoryRouter initialEntries={[initialEntry]}>
+        <Routes>
+          <Route path="/champions" element={<div>筛选页占位</div>} />
+          <Route path="/champions/:championId" element={<ChampionDetailPage />} />
+        </Routes>
+      </MemoryRouter>
+    </I18nProvider>,
+  )
+}
+
 beforeEach(() => {
   window.history.replaceState(window.history.state, '', '/')
   Object.assign(sectionTopMap, {
@@ -417,6 +430,20 @@ describe('ChampionDetailPage', () => {
       'href',
       '/champions?q=alpha&seat=1&role=support',
     )
+  })
+
+  it('点击返回链接后不会被分区 hash 同步拉回详情页', async () => {
+    mockedLoadChampionDetail.mockResolvedValue(detailFixture)
+
+    renderChampionDetailPageWithBackRoute('/champions/7?seat=7')
+
+    expect(await screen.findByRole('link', { name: '← 返回英雄筛选' })).toHaveAttribute('href', '/champions?seat=7')
+    fireEvent.click(await screen.findByTestId('sidebar-section-upgrades'))
+    expect(await screen.findByText('当前浏览 · 升级')).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('link', { name: '← 返回英雄筛选' }))
+
+    expect(await screen.findByText('筛选页占位')).toBeInTheDocument()
   })
 
   it('默认高亮概览分区', async () => {
