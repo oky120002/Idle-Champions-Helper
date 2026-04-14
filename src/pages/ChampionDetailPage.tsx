@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Link, useLocation, useParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { type AppLocale, useI18n } from '../app/i18n'
 import { ChampionAvatar } from '../components/ChampionAvatar'
 import { SurfaceCard } from '../components/SurfaceCard'
@@ -522,11 +522,13 @@ function resolveActiveSectionId(): DetailSectionId {
 export function ChampionDetailPage() {
   const { championId } = useParams<{ championId: string }>()
   const location = useLocation()
+  const navigate = useNavigate()
   const { locale, t } = useI18n()
   const [state, setState] = useState<ChampionDetailState>({ status: 'idle' })
   const [activeSectionId, setActiveSectionId] = useState<DetailSectionId>(DETAIL_SECTION_IDS[0])
   const pendingHashSectionIdRef = useRef<DetailSectionId | null>(null)
   const handledSectionHashRef = useRef<string | null>(null)
+  const isLeavingPageRef = useRef(false)
   const [artworkDialogChampionId, setArtworkDialogChampionId] = useState<string | null>(null)
   const [selectedSkinId, setSelectedSkinId] = useState<string | null>(null)
   const [failedSkinPreviewIds, setFailedSkinPreviewIds] = useState<Record<string, boolean>>({})
@@ -570,6 +572,10 @@ export function ChampionDetailPage() {
     return () => {
       disposed = true
     }
+  }, [championId])
+
+  useEffect(() => {
+    isLeavingPageRef.current = false
   }, [championId])
 
   const detail =
@@ -767,6 +773,10 @@ export function ChampionDetailPage() {
       return
     }
 
+    if (isLeavingPageRef.current) {
+      return
+    }
+
     if (pendingHashSectionIdRef.current && pendingHashSectionIdRef.current !== activeSectionId) {
       return
     }
@@ -807,14 +817,23 @@ export function ChampionDetailPage() {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
+  const backToChampions = {
+    pathname: '/champions',
+    search: location.search,
+  } as const
+
   return (
     <div className="page-stack champion-detail-page">
       <div className="page-backlink-row">
         <Link
           className="page-backlink"
-          to={{
-            pathname: '/champions',
-            search: location.search,
+          to={backToChampions}
+          onClick={(event) => {
+            // HashRouter pages here also manage an in-page section hash. Navigate explicitly so
+            // leaving the page does not race with the section-hash sync effect and bounce back.
+            event.preventDefault()
+            isLeavingPageRef.current = true
+            navigate(backToChampions)
           }}
         >
           {t({ zh: '← 返回英雄筛选', en: '← Back to champions' })}

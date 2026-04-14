@@ -32,6 +32,41 @@ export interface ChampionPortrait {
   sourceVersion: number | null
 }
 
+export type RemoteGraphicDelivery = 'wrapped-png' | 'zlib-png' | 'unknown'
+
+export interface RemoteGraphicAsset {
+  graphicId: string
+  sourceGraphic: string
+  sourceVersion: number | null
+  remotePath: string
+  remoteUrl: string
+  delivery: RemoteGraphicDelivery
+  uses: string[]
+}
+
+export interface ChampionVisualPortrait {
+  localPath: string
+  remote: RemoteGraphicAsset
+}
+
+export interface ChampionSkinVisual {
+  id: string
+  name: LocalizedText
+  portrait: RemoteGraphicAsset | null
+  base: RemoteGraphicAsset | null
+  large: RemoteGraphicAsset | null
+  xl: RemoteGraphicAsset | null
+}
+
+export interface ChampionVisual {
+  championId: string
+  seat: number
+  name: LocalizedText
+  portrait: ChampionVisualPortrait | null
+  base: RemoteGraphicAsset | null
+  skins: ChampionSkinVisual[]
+}
+
 export interface Champion {
   id: string
   name: LocalizedText

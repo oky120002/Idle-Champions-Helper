@@ -84,6 +84,7 @@ test('英雄筛选页结果快捷按钮应支持一键到底和返回顶部', as
 
   await page.goto('./#/champions')
   await expect(page.getByRole('heading', { level: 2, name: '先用真实公共数据把查询入口跑起来' })).toBeVisible()
+  await expect(page.getByText(/^当前展示 \d+ \/ \d+ 名英雄/)).toBeVisible()
 
   await page.evaluate(() => window.scrollTo({ top: 360, behavior: 'instant' }))
   await page.waitForTimeout(120)
