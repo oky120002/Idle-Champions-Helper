@@ -187,18 +187,28 @@ export interface ScenarioRef {
   id: string
 }
 
+export interface FormationContext extends ScenarioRef {
+  name: LocalizedText
+  campaignId?: string
+  variantAdventureId?: string
+}
+
 export interface FormationSlot {
   id: string
   row: number
   column: number
+  x?: number
+  y?: number
+  adjacentSlotIds?: string[]
 }
 
 export interface FormationLayout {
   id: string
-  name: string
-  notes?: string
+  name: LocalizedText
+  notes?: LocalizedText
   slots: FormationSlot[]
   applicableContexts?: ScenarioRef[]
+  sourceContexts?: FormationContext[]
   laneHints?: {
     front?: string[]
     middle?: string[]

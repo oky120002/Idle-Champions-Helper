@@ -63,6 +63,7 @@
 - `docs/research/data/champion-portrait-asset-research.md`：官方英雄头像字段、mobile assets 链路与尺寸核实。
 - `docs/research/data/champion-detail-fields-research.md`：英雄详情页所需字段、definitions 可用范围与详情数据合同建议。
 - `docs/research/data/language-id-7-chinese-definitions-research.md`：`language_id=7` 官方中文 definitions 链路与字段覆盖核实。
+- `docs/research/data/official-formation-layout-extraction-research.md`：官方阵型布局字段落点、上下文分布与唯一布局提取结论。
 - `docs/research/data/static-data-storage-research.md`：静态数据存储与版本化策略。
 - `docs/research/testing/regression-testing-research.md`：主分支整体回归测试框架设计。
 - `docs/research/deployment/china-static-hosting-research.md`：国内访问体验与托管备选方案。
@@ -76,6 +77,7 @@
 - `docs/modules/user-data/user-data-import-design.md`：本地优先的个人数据导入设计稿。
 - `docs/investigations/repository/github-directory-commit-investigation.md`：`.github` 空目录不被 Git 跟踪的历史排查归档。
 - `docs/investigations/runtime/local-run-verification.md`：本地构建、开发预览、Vite `preview` 与 GitHub Pages 预览差异验证。
+- `docs/investigations/runtime/champions-filter-scroll-stability-investigation.md`：英雄筛选页长列表筛选时的滚动跳动与页面回顶问题排查。
 - `docs/investigations/runtime/playwright-browser-launch-verification.md`：当前 Codex CLI 环境下 Playwright 浏览器启动受限的确认记录。
 
 ## 后续新增文档的放置建议
