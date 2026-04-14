@@ -7,6 +7,7 @@
 ## 文档治理入口
 
 - `docs/product/documentation-governance.md`：文档扫描、修复、合并、删除与归档的常规流程。
+- `docs/product/mobile-compatibility-guidelines.md`：移动端布局与交互兼容性规范，明确禁止把横向滑动作为主导航或主操作入口。
 - `docs/troubleshooting-log.md`：流程、环境、部署、认证等非代码问题的摘要台账。
 
 ## 高频入口
@@ -59,13 +60,18 @@
 - `docs/troubleshooting-log.md`：通用问题排查台账，沉淀问题描述、排查摘要、根因、解法与引用信息。
 - `docs/product/documentation-governance.md`：文档治理方案，定义扫描触发条件、修复策略与单一事实源。
 - `docs/product/idle-champions-roadmap.md`：项目价值、范围、阶段路线与核心模型。
+- `docs/product/mobile-compatibility-guidelines.md`：移动端兼容性开发规范，禁止把横向滑动作为移动端主导航、主操作或主信息入口。
 - `docs/research/data/game-data-source-investigation.md`：基础游戏数据与个人数据来源调研。
 - `docs/research/data/champion-portrait-asset-research.md`：官方英雄头像字段、mobile assets 链路与尺寸核实。
+- `docs/research/data/champion-detail-fields-research.md`：英雄详情页所需字段、definitions 可用范围与详情数据合同建议。
+- `docs/research/data/champion-visual-asset-research.md`：英雄本体立绘、皮肤立绘与皮肤头像的官方字段链路与远端解析策略。
 - `docs/research/data/language-id-7-chinese-definitions-research.md`：`language_id=7` 官方中文 definitions 链路与字段覆盖核实。
+- `docs/research/data/official-formation-layout-extraction-research.md`：官方阵型布局字段落点、上下文分布与唯一布局提取结论。
 - `docs/research/data/static-data-storage-research.md`：静态数据存储与版本化策略。
 - `docs/research/testing/regression-testing-research.md`：主分支整体回归测试框架设计。
 - `docs/research/deployment/china-static-hosting-research.md`：国内访问体验与托管备选方案。
 - `docs/research/deployment/static-hosting-research.md`：GitHub Pages 部署方案与路由策略。
+- `docs/modules/champions/champion-detail-design.md`：英雄详情页的信息架构、路由入口与交互设计稿。
 - `docs/modules/champions/champions-filter-design.md`：英雄筛选模块设计稿。
 - `docs/modules/formation/formation-editor-design.md`：阵型编辑模块设计稿。
 - `docs/modules/presets/presets-design.md`：方案存档模块设计稿。
@@ -74,6 +80,7 @@
 - `docs/modules/user-data/user-data-import-design.md`：本地优先的个人数据导入设计稿。
 - `docs/investigations/repository/github-directory-commit-investigation.md`：`.github` 空目录不被 Git 跟踪的历史排查归档。
 - `docs/investigations/runtime/local-run-verification.md`：本地构建、开发预览、Vite `preview` 与 GitHub Pages 预览差异验证。
+- `docs/investigations/runtime/champions-filter-scroll-stability-investigation.md`：英雄筛选页长列表筛选时的滚动跳动与页面回顶问题排查。
 - `docs/investigations/runtime/playwright-browser-launch-verification.md`：当前 Codex CLI 环境下 Playwright 浏览器启动受限的确认记录。
 
 ## 后续新增文档的放置建议

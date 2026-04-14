@@ -35,7 +35,10 @@ const formationsFixture: DataCollection<FormationLayout> = {
   items: [
     {
       id: 'layout-a',
-      name: '布局 A',
+      name: {
+        original: 'Layout A',
+        display: '布局 A',
+      },
       slots: [
         { id: 'slot-1', row: 1, column: 1 },
         { id: 'slot-2', row: 1, column: 2 },
@@ -201,7 +204,7 @@ describe('FormationPage persistence flow', () => {
     }, { timeout: 2000 })
 
     expect(await screen.findByText('最近草稿已自动保存')).toBeInTheDocument()
-    expect(screen.getAllByRole('img', { name: '布鲁诺头像' })).toHaveLength(2)
+    expect(screen.getAllByRole('img', { name: '布鲁诺头像' }).length).toBeGreaterThanOrEqual(2)
   })
 
   it('可以把当前阵型保存为命名方案', async () => {

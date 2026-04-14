@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { NavLink, Route, Routes } from 'react-router-dom'
+import { ChampionDetailPage } from '../pages/ChampionDetailPage'
 import { ChampionsPage } from '../pages/ChampionsPage'
 import { FormationPage } from '../pages/FormationPage'
 import { HomePage } from '../pages/HomePage'
@@ -25,39 +27,73 @@ function getNavClassName(isActive: boolean): string {
   return isActive ? 'nav-link nav-link--active' : 'nav-link'
 }
 
+function MobileMenuIcon({ isOpen }: { isOpen: boolean }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+      {isOpen ? (
+        <>
+          <path d="M6.5 6.5 17.5 17.5" strokeLinecap="round" />
+          <path d="M17.5 6.5 6.5 17.5" strokeLinecap="round" />
+        </>
+      ) : (
+        <>
+          <path d="M4.5 7h15" strokeLinecap="round" />
+          <path d="M4.5 12h15" strokeLinecap="round" />
+          <path d="M4.5 17h15" strokeLinecap="round" />
+        </>
+      )}
+    </svg>
+  )
+}
+
 export function App() {
   const { locale, setLocale, t } = useI18n()
+  const [isMobileNavOpen, setMobileNavOpen] = useState(false)
 
   return (
     <div className="app-shell">
       <div className="background-orb background-orb--one" />
       <div className="background-orb background-orb--two" />
 
-      <header className="site-header">
+      <header className={isMobileNavOpen ? 'site-header site-header--mobile-nav-open' : 'site-header'}>
         <div className="site-header__topbar">
           <p className="site-kicker">{t({ zh: 'Idle Champions 辅助站', en: 'Idle Champions Helper' })}</p>
-          <div
-            className="locale-switcher"
-            role="group"
-            aria-label={t({ zh: '界面语言切换', en: 'Interface language switcher' })}
-          >
-            <span className="locale-switcher__label">{t({ zh: '界面语言', en: 'UI language' })}</span>
-            <div className="locale-switcher__controls">
-              {localeOptions.map((option) => (
-                <button
-                  key={option.id}
-                  type="button"
-                  className={
-                    locale === option.id
-                      ? 'locale-switcher__button locale-switcher__button--active'
-                      : 'locale-switcher__button'
-                  }
-                  onClick={() => setLocale(option.id)}
-                >
-                  {option.label}
-                </button>
-              ))}
+          <div className="site-header__topbar-actions">
+            <div
+              className="locale-switcher"
+              role="group"
+              aria-label={t({ zh: '界面语言切换', en: 'Interface language switcher' })}
+            >
+              <span className="locale-switcher__label">{t({ zh: '界面语言', en: 'UI language' })}</span>
+              <div className="locale-switcher__controls">
+                {localeOptions.map((option) => (
+                  <button
+                    key={option.id}
+                    type="button"
+                    className={
+                      locale === option.id
+                        ? 'locale-switcher__button locale-switcher__button--active'
+                        : 'locale-switcher__button'
+                    }
+                    onClick={() => setLocale(option.id)}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
             </div>
+
+            <button
+              type="button"
+              className={isMobileNavOpen ? 'site-header__menu-toggle site-header__menu-toggle--active' : 'site-header__menu-toggle'}
+              aria-controls="site-primary-nav"
+              aria-expanded={isMobileNavOpen}
+              aria-label={isMobileNavOpen ? t({ zh: '收起主导航', en: 'Close primary navigation' }) : t({ zh: '展开主导航', en: 'Open primary navigation' })}
+              onClick={() => setMobileNavOpen((current) => !current)}
+            >
+              <MobileMenuIcon isOpen={isMobileNavOpen} />
+              <span>{isMobileNavOpen ? t({ zh: '收起', en: 'Close' }) : t({ zh: '菜单', en: 'Menu' })}</span>
+            </button>
           </div>
         </div>
 
@@ -71,13 +107,18 @@ export function App() {
           </p>
         </div>
 
-        <nav className="site-nav" aria-label={t({ zh: '主导航', en: 'Primary navigation' })}>
+        <nav
+          id="site-primary-nav"
+          className={isMobileNavOpen ? 'site-nav site-nav--mobile-open' : 'site-nav'}
+          aria-label={t({ zh: '主导航', en: 'Primary navigation' })}
+        >
           {navigation.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
               end={item.to === '/'}
               className={({ isActive }) => getNavClassName(isActive)}
+              onClick={() => setMobileNavOpen(false)}
             >
               {t(item.label)}
             </NavLink>
@@ -89,6 +130,7 @@ export function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/champions" element={<ChampionsPage />} />
+          <Route path="/champions/:championId" element={<ChampionDetailPage />} />
           <Route path="/variants" element={<VariantsPage />} />
           <Route path="/formation" element={<FormationPage />} />
           <Route path="/presets" element={<PresetsPage />} />

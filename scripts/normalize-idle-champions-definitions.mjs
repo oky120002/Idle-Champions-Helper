@@ -3,10 +3,14 @@ import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import {
+  DEFAULT_MASTER_API_URL,
   buildChampionPortraitPath,
+  buildGraphicMap,
   collectChampionPortraitSources,
   isPlayableChampion,
+  resolveGraphicAssetById,
 } from './data/champion-portrait-helpers.mjs'
+import { extractOfficialFormations, looksLikeVariant } from './data/formation-layout-helpers.mjs'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_VERSION_FILE = 'public/data/version.json'
@@ -289,6 +293,112 @@ function getAffiliationTags(definition, affiliationMap) {
   ])
 }
 
+function normalizeJsonValue(value) {
+  if (
+    value === null ||
+    typeof value === 'string' ||
+    typeof value === 'number' ||
+    typeof value === 'boolean'
+  ) {
+    return value
+  }
+
+  if (value === undefined) {
+    return null
+  }
+
+  if (Array.isArray(value)) {
+    return value.map((item) => normalizeJsonValue(item))
+  }
+
+  if (typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, item]) => [key, normalizeJsonValue(item)]),
+    )
+  }
+
+  return toText(value)
+}
+
+function normalizeOptionalLocalizedText(originalValue, displayValue, fallbackValue = '') {
+  return normalizeLocalizedText(originalValue, displayValue, fallbackValue)
+}
+
+function normalizeNumber(value) {
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return value
+  }
+
+  const text = toText(value)
+
+  if (!text) {
+    return null
+  }
+
+  const parsed = Number(text)
+  return Number.isFinite(parsed) ? parsed : null
+}
+
+function buildIdMap(definitions = []) {
+  const result = new Map()
+
+  for (const definition of definitions) {
+    const id = definition?.id
+
+    if (id === undefined) {
+      continue
+    }
+
+    result.set(String(id), definition)
+  }
+
+  return result
+}
+
+function groupDefinitionsByHeroId(definitions = []) {
+  const result = new Map()
+
+  for (const definition of definitions) {
+    const heroId = definition?.hero_id
+
+    if (heroId === undefined) {
+      continue
+    }
+
+    const key = String(heroId)
+    const existing = result.get(key) ?? []
+    existing.push(definition)
+    result.set(key, existing)
+  }
+
+  return result
+}
+
+function buildRawSnapshotPair(originalValue, displayValue) {
+  return {
+    original: normalizeJsonValue(originalValue),
+    display: normalizeJsonValue(displayValue ?? originalValue ?? null),
+  }
+}
+
+function buildRawEntry(id, originalValue, displayValue) {
+  return {
+    id: String(id),
+    snapshots: buildRawSnapshotPair(originalValue, displayValue),
+  }
+}
+
+function parseEffectDefinitionId(value) {
+  const text = toText(value)
+
+  if (!text) {
+    return null
+  }
+
+  const match = /^effect_def,([0-9]+)$/.exec(text.trim())
+  return match ? match[1] : null
+}
+
 function normalizeChampion(
   originalDefinition,
   localizedDefinition,
@@ -342,15 +452,352 @@ function normalizeChampion(
   }
 }
 
-function looksLikeVariant(definition) {
-  return (
-    definition.variant_adventure_id !== undefined ||
-    definition.base_adventure_id !== undefined ||
-    definition.variant_id !== undefined ||
-    definition.adventure_variant_id !== undefined
+function normalizeChampionCharacterSheet(originalDefinition, localizedDefinition) {
+  const originalSheet = originalDefinition.character_sheet_details ?? {}
+  const localizedSheet = localizedDefinition?.character_sheet_details ?? {}
+  const abilityScores = Object.fromEntries(
+    ['str', 'dex', 'con', 'int', 'wis', 'cha']
+      .map((key) => [key, normalizeNumber(originalSheet.ability_scores?.[key])])
+      .filter(([, value]) => value !== null),
   )
+
+  const result = {
+    fullName: normalizeOptionalLocalizedText(
+      originalSheet.full_name,
+      localizedSheet.full_name,
+      originalDefinition.name ?? `Champion ${originalDefinition.id}`,
+    ),
+    class: normalizeOptionalLocalizedText(originalSheet.class, localizedSheet.class),
+    race: normalizeOptionalLocalizedText(originalSheet.race, localizedSheet.race),
+    age: normalizeNumber(originalSheet.age),
+    alignment: normalizeOptionalLocalizedText(originalSheet.alignment, localizedSheet.alignment),
+    abilityScores,
+    backstory: normalizeOptionalLocalizedText(originalSheet.backstory, localizedSheet.backstory),
+  }
+
+  return result.fullName ||
+    result.class ||
+    result.race ||
+    result.age !== null ||
+    result.alignment ||
+    result.backstory ||
+    Object.keys(result.abilityScores).length > 0
+    ? result
+    : null
 }
 
+function normalizeAttack(originalDefinition, localizedDefinition) {
+  if (!originalDefinition) {
+    return null
+  }
+
+  return {
+    id: String(originalDefinition.id),
+    name: normalizeLocalizedText(
+      originalDefinition.name,
+      localizedDefinition?.name,
+      `Attack ${originalDefinition.id}`,
+    ),
+    description: normalizeOptionalLocalizedText(
+      originalDefinition.description,
+      localizedDefinition?.description,
+    ),
+    longDescription: normalizeOptionalLocalizedText(
+      originalDefinition.long_description,
+      localizedDefinition?.long_description,
+    ),
+    cooldown: normalizeNumber(originalDefinition.cooldown),
+    numTargets: normalizeNumber(originalDefinition.num_targets),
+    aoeRadius: normalizeNumber(originalDefinition.aoe_radius),
+    damageModifier: toText(originalDefinition.damage_modifier),
+    target: toText(originalDefinition.target),
+    damageTypes: uniqueStrings(toStringList(originalDefinition.damage_types)),
+    tags: uniqueStrings(toStringList(originalDefinition.tags)),
+    graphicId: toText(originalDefinition.graphic_id),
+    animations: normalizeJsonValue(originalDefinition.animations ?? []),
+  }
+}
+
+function normalizeEventUpgrades(originalItems = [], localizedItems = []) {
+  const localizedByUpgradeId = new Map(
+    localizedItems.map((item) => [String(item.upgrade_id ?? item.id ?? ''), item]),
+  )
+
+  return originalItems
+    .map((item) => {
+      const localizedItem = localizedByUpgradeId.get(String(item.upgrade_id ?? item.id ?? '')) ?? {}
+
+      return {
+        upgradeId: String(item.upgrade_id ?? item.id ?? ''),
+        name: normalizeLocalizedText(
+          item.name,
+          localizedItem.name,
+          `Event Upgrade ${item.upgrade_id ?? item.id ?? ''}`,
+        ),
+        description: normalizeOptionalLocalizedText(item.description, localizedItem.description),
+        graphicId: toText(item.graphic_id),
+      }
+    })
+    .sort((left, right) => Number(left.upgradeId) - Number(right.upgradeId))
+}
+
+function normalizeChampionUpgrade(
+  originalDefinition,
+  localizedDefinition,
+  effectDefinitionsById,
+  localizedEffectDefinitionsById,
+) {
+  const effectReference = toText(originalDefinition.effect)
+  const effectDefinitionId = parseEffectDefinitionId(effectReference)
+
+  return {
+    id: String(originalDefinition.id),
+    requiredLevel: normalizeNumber(originalDefinition.required_level),
+    requiredUpgradeId: (() => {
+      const value = toText(originalDefinition.required_upgrade_id)
+      return value && value !== '0' ? value : null
+    })(),
+    name: normalizeOptionalLocalizedText(originalDefinition.name, localizedDefinition?.name),
+    upgradeType: toText(originalDefinition.upgrade_type),
+    effectReference,
+    effectDefinition: effectDefinitionId
+      ? buildRawEntry(
+          effectDefinitionId,
+          effectDefinitionsById.get(effectDefinitionId) ?? null,
+          localizedEffectDefinitionsById.get(effectDefinitionId) ?? null,
+        )
+      : null,
+    staticDpsMult: toText(originalDefinition.static_dps_mult),
+    defaultEnabled: Boolean(originalDefinition.default_enabled),
+    specializationName: normalizeOptionalLocalizedText(
+      originalDefinition.specialization_name,
+      localizedDefinition?.specialization_name,
+    ),
+    specializationDescription: normalizeOptionalLocalizedText(
+      originalDefinition.specialization_description,
+      localizedDefinition?.specialization_description,
+    ),
+    specializationGraphicId: toText(originalDefinition.specialization_graphic_id),
+    tipText: normalizeOptionalLocalizedText(originalDefinition.tip_text, localizedDefinition?.tip_text),
+  }
+}
+
+function normalizeChampionFeat(originalDefinition, localizedDefinition) {
+  return {
+    id: String(originalDefinition.id),
+    order: normalizeNumber(originalDefinition.order),
+    name: normalizeLocalizedText(
+      originalDefinition.name,
+      localizedDefinition?.name,
+      `Feat ${originalDefinition.id}`,
+    ),
+    description: normalizeOptionalLocalizedText(
+      originalDefinition.description,
+      localizedDefinition?.description,
+    ),
+    rarity: toText(originalDefinition.rarity),
+    graphicId: toText(originalDefinition.graphic_id),
+    effects: normalizeJsonValue(originalDefinition.effects ?? []),
+    sources: normalizeJsonValue(originalDefinition.sources ?? []),
+    properties: normalizeJsonValue(originalDefinition.properties ?? {}),
+    collectionsSource: normalizeJsonValue(originalDefinition.collections_source ?? {}),
+  }
+}
+
+function normalizeChampionSkin(originalDefinition, localizedDefinition) {
+  return {
+    id: String(originalDefinition.id),
+    name: normalizeLocalizedText(
+      originalDefinition.name,
+      localizedDefinition?.name,
+      `Skin ${originalDefinition.id}`,
+    ),
+    cost: normalizeJsonValue(originalDefinition.cost ?? []),
+    details: normalizeJsonValue(originalDefinition.details ?? {}),
+    rarity: toText(originalDefinition.rarity),
+    properties: normalizeJsonValue(originalDefinition.properties ?? {}),
+    collectionsSource: normalizeJsonValue(originalDefinition.collections_source ?? {}),
+    availabilities: normalizeJsonValue(originalDefinition.availabilities ?? null),
+  }
+}
+
+function normalizeChampionVisualSkin(originalDefinition, localizedDefinition, graphicMap, baseUrl) {
+  const originalName = originalDefinition.name ?? originalDefinition.skin_name ?? `Skin ${originalDefinition.id}`
+  const displayName = localizedDefinition?.name ?? localizedDefinition?.skin_name ?? originalName
+
+  return {
+    id: String(originalDefinition.id),
+    name: normalizeLocalizedText(originalName, displayName, `Skin ${originalDefinition.id}`),
+    portrait: resolveGraphicAssetById(graphicMap, originalDefinition.details?.portrait_graphic_id, baseUrl),
+    base: resolveGraphicAssetById(graphicMap, originalDefinition.details?.base_graphic_id, baseUrl),
+    large: resolveGraphicAssetById(graphicMap, originalDefinition.details?.large_graphic_id, baseUrl),
+    xl: resolveGraphicAssetById(graphicMap, originalDefinition.details?.xl_graphic_id, baseUrl),
+  }
+}
+
+function normalizeChampionVisual(
+  originalDefinition,
+  localizedDefinition,
+  portraitSource,
+  skins,
+  graphicMap,
+  currentVersion,
+  baseUrl,
+) {
+  const originalName =
+    originalDefinition.name ??
+    originalDefinition.english_name ??
+    originalDefinition.character_sheet_details?.full_name ??
+    `Champion ${originalDefinition.id}`
+  const displayName =
+    localizedDefinition?.name ??
+    localizedDefinition?.character_sheet_details?.full_name ??
+    originalName
+
+  return {
+    championId: String(originalDefinition.id),
+    seat: Number(originalDefinition.seat_id ?? originalDefinition.seat ?? 0),
+    name: normalizeLocalizedText(originalName, displayName, `Champion ${originalDefinition.id}`),
+    portrait: portraitSource?.remote
+      ? {
+          localPath: buildChampionPortraitPath(currentVersion, String(originalDefinition.id)),
+          remote: portraitSource.remote,
+        }
+      : null,
+    base: resolveGraphicAssetById(graphicMap, originalDefinition.graphic_id, baseUrl),
+    skins,
+  }
+}
+
+function normalizeChampionDetail(
+  champion,
+  originalDefinition,
+  localizedDefinition,
+  updatedAt,
+  attackDefinitionsById,
+  localizedAttackDefinitionsById,
+  upgradesByHeroId,
+  localizedUpgradesById,
+  effectDefinitionsById,
+  localizedEffectDefinitionsById,
+  featsByHeroId,
+  localizedFeatsById,
+  skinsByHeroId,
+  localizedSkinsById,
+) {
+  const baseAttackId = toText(originalDefinition.base_attack_id)
+  const ultimateAttackId = toText(originalDefinition.ultimate_attack_id)
+  const upgrades = (upgradesByHeroId.get(champion.id) ?? [])
+    .map((definition) =>
+      normalizeChampionUpgrade(
+        definition,
+        localizedUpgradesById.get(String(definition.id)),
+        effectDefinitionsById,
+        localizedEffectDefinitionsById,
+      ),
+    )
+    .sort(
+      (left, right) =>
+        (left.requiredLevel ?? Number.MAX_SAFE_INTEGER) -
+          (right.requiredLevel ?? Number.MAX_SAFE_INTEGER) || Number(left.id) - Number(right.id),
+    )
+  const feats = (featsByHeroId.get(champion.id) ?? [])
+    .map((definition) =>
+      normalizeChampionFeat(definition, localizedFeatsById.get(String(definition.id))),
+    )
+    .sort(
+      (left, right) =>
+        (left.order ?? Number.MAX_SAFE_INTEGER) - (right.order ?? Number.MAX_SAFE_INTEGER) ||
+        Number(left.id) - Number(right.id),
+    )
+  const skins = (skinsByHeroId.get(champion.id) ?? [])
+    .map((definition) =>
+      normalizeChampionSkin(definition, localizedSkinsById.get(String(definition.id))),
+    )
+    .sort((left, right) => Number(left.id) - Number(right.id))
+  const baseAttack = baseAttackId
+    ? normalizeAttack(
+        attackDefinitionsById.get(baseAttackId),
+        localizedAttackDefinitionsById.get(baseAttackId),
+      )
+    : null
+  const ultimateAttack = ultimateAttackId
+    ? normalizeAttack(
+        attackDefinitionsById.get(ultimateAttackId),
+        localizedAttackDefinitionsById.get(ultimateAttackId),
+      )
+    : null
+
+  return {
+    updatedAt,
+    summary: champion,
+    englishName: toText(originalDefinition.english_name) ?? champion.name.original,
+    eventName: normalizeOptionalLocalizedText(
+      originalDefinition.event_name,
+      localizedDefinition?.event_name,
+    ),
+    dateAvailable: toText(originalDefinition.date_available),
+    lastReworkDate: toText(originalDefinition.last_rework_date),
+    popularity: normalizeNumber(originalDefinition.popularity),
+    baseCost: toText(originalDefinition.base_cost),
+    baseDamage: toText(originalDefinition.base_damage),
+    baseHealth: toText(originalDefinition.base_health),
+    graphicId: toText(originalDefinition.graphic_id),
+    portraitGraphicId: toText(originalDefinition.portrait_graphic_id),
+    availability: {
+      availableInNextEvent: Boolean(originalDefinition.available_in_next_event),
+      availableInShop: Boolean(originalDefinition.available_in_shop),
+      availableInTimeGate: Boolean(originalDefinition.available_in_time_gate),
+      isAvailable: Boolean(originalDefinition.is_available),
+      nextEventTimestamp: normalizeNumber(originalDefinition.next_event_timestamp),
+    },
+    adventureIds: uniqueStrings(toStringList(originalDefinition.adventure_ids)),
+    defaultFeatSlotUnlocks: uniqueStrings(toStringList(originalDefinition.default_feat_slot_unlocks))
+      .map((value) => Number(value))
+      .filter((value) => Number.isFinite(value))
+      .sort((left, right) => left - right),
+    costCurves: normalizeJsonValue(originalDefinition.cost_curves ?? {}),
+    healthCurves: normalizeJsonValue(originalDefinition.health_curves ?? {}),
+    properties: normalizeJsonValue(originalDefinition.properties ?? {}),
+    characterSheet: normalizeChampionCharacterSheet(originalDefinition, localizedDefinition),
+    attacks: {
+      base: baseAttack,
+      ultimate: ultimateAttack,
+      eventUpgrades: normalizeEventUpgrades(
+        originalDefinition.event_upgrades,
+        localizedDefinition?.event_upgrades,
+      ),
+    },
+    upgrades,
+    feats,
+    skins,
+    raw: {
+      hero: buildRawSnapshotPair(originalDefinition, localizedDefinition ?? null),
+      attacks: [baseAttackId, ultimateAttackId]
+        .filter(Boolean)
+        .map((attackId) =>
+          buildRawEntry(
+            attackId,
+            attackDefinitionsById.get(attackId) ?? null,
+            localizedAttackDefinitionsById.get(attackId) ?? null,
+          ),
+        ),
+      upgrades: (upgradesByHeroId.get(champion.id) ?? []).map((definition) =>
+        buildRawEntry(
+          definition.id,
+          definition,
+          localizedUpgradesById.get(String(definition.id)) ?? null,
+        ),
+      ),
+      feats: (featsByHeroId.get(champion.id) ?? []).map((definition) =>
+        buildRawEntry(definition.id, definition, localizedFeatsById.get(String(definition.id)) ?? null),
+      ),
+      skins: (skinsByHeroId.get(champion.id) ?? []).map((definition) =>
+        buildRawEntry(definition.id, definition, localizedSkinsById.get(String(definition.id)) ?? null),
+      ),
+    },
+  }
+}
 function normalizeVariant(originalDefinition, localizedDefinition, campaignMap) {
   const originalRestrictions = uniqueStrings([
     ...toTextList(originalDefinition.requirements_text),
@@ -419,21 +866,96 @@ function mergeVariants(autoVariants, manualVariants) {
   return Array.from(merged.values()).sort((left, right) => Number(left.id) - Number(right.id))
 }
 
-function normalizeFormations(formations = []) {
+function normalizeManualFormations(formations = []) {
   return formations
-    .map((formation) => ({
-      id: String(formation.id),
-      name: String(formation.name ?? formation.id),
-      notes: typeof formation.notes === 'string' ? formation.notes : undefined,
-      slots: Array.isArray(formation.slots)
-        ? formation.slots.map((slot) => ({
-            id: String(slot.id),
-            row: Number(slot.row),
-            column: Number(slot.column),
-          }))
-        : [],
-    }))
-    .sort((left, right) => left.name.localeCompare(right.name))
+    .map((formation) => {
+      const name =
+        typeof formation.name === 'object' && formation.name !== null
+          ? normalizeLocalizedText(
+              formation.name.original,
+              formation.name.display,
+              formation.id,
+            )
+          : normalizeLocalizedText(formation.name, formation.name, formation.id)
+
+      return {
+        id: String(formation.id),
+        name,
+        notes:
+          typeof formation.notes === 'object' && formation.notes !== null
+            ? normalizeLocalizedText(formation.notes.original, formation.notes.display)
+            : normalizeLocalizedText(formation.notes, formation.notes),
+        slots: Array.isArray(formation.slots)
+          ? formation.slots.map((slot) => ({
+              id: String(slot.id),
+              row: Number(slot.row),
+              column: Number(slot.column),
+              x: Number.isFinite(Number(slot.x)) ? Number(slot.x) : undefined,
+              y: Number.isFinite(Number(slot.y)) ? Number(slot.y) : undefined,
+              adjacentSlotIds: Array.isArray(slot.adjacentSlotIds)
+                ? slot.adjacentSlotIds.map((value) => String(value))
+                : undefined,
+            }))
+          : [],
+        applicableContexts: Array.isArray(formation.applicableContexts)
+          ? formation.applicableContexts
+              .filter((context) => context?.kind && context?.id !== undefined)
+              .map((context) => ({
+                kind: String(context.kind),
+                id: String(context.id),
+              }))
+          : undefined,
+        sourceContexts: Array.isArray(formation.sourceContexts)
+          ? formation.sourceContexts
+              .filter((context) => context?.kind && context?.id !== undefined && context?.name)
+              .map((context) => {
+                const contextName = normalizeLocalizedText(
+                  context.name.original,
+                  context.name.display,
+                  `${context.kind}-${context.id}`,
+                )
+
+                if (!contextName) {
+                  return null
+                }
+
+                return {
+                  kind: String(context.kind),
+                  id: String(context.id),
+                  name: contextName,
+                  campaignId:
+                    context.campaignId !== undefined ? String(context.campaignId) : undefined,
+                  variantAdventureId:
+                    context.variantAdventureId !== undefined
+                      ? String(context.variantAdventureId)
+                      : undefined,
+                }
+              })
+              .filter(Boolean)
+          : undefined,
+      }
+    })
+    .filter((formation) => formation.name)
+    .sort((left, right) => compareLocalizedText(left.name, right.name))
+}
+
+function mergeFormations(autoFormations, manualFormations) {
+  const merged = new Map(autoFormations.map((formation) => [formation.id, formation]))
+
+  for (const formation of manualFormations) {
+    const existing = merged.get(formation.id)
+
+    merged.set(formation.id, {
+      ...existing,
+      ...formation,
+      id: formation.id,
+      slots: formation.slots.length > 0 ? formation.slots : (existing?.slots ?? []),
+      applicableContexts: formation.applicableContexts ?? existing?.applicableContexts,
+      sourceContexts: formation.sourceContexts ?? existing?.sourceContexts,
+    })
+  }
+
+  return Array.from(merged.values())
 }
 
 function normalizeEnums(champions, affiliationMap, campaignMap) {
@@ -488,6 +1010,7 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
   const localizedDefinitions = options.localizedInput
     ? await readJson(path.resolve(options.localizedInput))
     : rawDefinitions
+  const masterApiUrl = options.masterApiUrl ?? DEFAULT_MASTER_API_URL
   const manualOverrides = await readManualOverrides(manualOverridesFile)
   const updatedAt = getUpdatedAt(rawDefinitions)
   const affiliationMap = buildAffiliationMap(
@@ -504,12 +1027,25 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
   const localizedVariantsById = new Map(
     (localizedDefinitions.adventure_defines ?? []).map((definition) => [String(definition.id), definition]),
   )
+  const attackDefinitionsById = buildIdMap(rawDefinitions.attack_defines)
+  const localizedAttackDefinitionsById = buildIdMap(localizedDefinitions.attack_defines)
+  const upgradesByHeroId = groupDefinitionsByHeroId(rawDefinitions.upgrade_defines)
+  const localizedUpgradesById = buildIdMap(localizedDefinitions.upgrade_defines)
+  const effectDefinitionsById = buildIdMap(rawDefinitions.effect_defines)
+  const localizedEffectDefinitionsById = buildIdMap(localizedDefinitions.effect_defines)
+  const featsByHeroId = groupDefinitionsByHeroId(rawDefinitions.hero_feat_defines)
+  const localizedFeatsById = buildIdMap(localizedDefinitions.hero_feat_defines)
+  const skinsByHeroId = groupDefinitionsByHeroId(rawDefinitions.hero_skin_defines)
+  const localizedSkinsById = buildIdMap(localizedDefinitions.hero_skin_defines)
+  const graphicMap = buildGraphicMap(rawDefinitions.graphic_defines)
   const portraitSourcesByChampionId = new Map(
-    collectChampionPortraitSources(rawDefinitions).map((source) => [source.championId, source]),
+    collectChampionPortraitSources(rawDefinitions, masterApiUrl).map((source) => [source.championId, source]),
+  )
+  const playableChampionDefinitions = (rawDefinitions.hero_defines ?? []).filter((definition) =>
+    isPlayableChampion(definition),
   )
 
-  const champions = (rawDefinitions.hero_defines ?? [])
-    .filter((definition) => isPlayableChampion(definition))
+  const champions = playableChampionDefinitions
     .map((definition) =>
       normalizeChampion(
         definition,
@@ -526,6 +1062,27 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
         left.name.display.localeCompare(right.name.display) ||
         Number(left.id) - Number(right.id),
     )
+  const championDefinitionsById = new Map(
+    playableChampionDefinitions.map((definition) => [String(definition.id), definition]),
+  )
+  const championDetails = champions.map((champion) =>
+    normalizeChampionDetail(
+      champion,
+      championDefinitionsById.get(champion.id),
+      localizedChampionsById.get(champion.id),
+      updatedAt,
+      attackDefinitionsById,
+      localizedAttackDefinitionsById,
+      upgradesByHeroId,
+      localizedUpgradesById,
+      effectDefinitionsById,
+      localizedEffectDefinitionsById,
+      featsByHeroId,
+      localizedFeatsById,
+      skinsByHeroId,
+      localizedSkinsById,
+    ),
+  )
 
   const autoVariants = (rawDefinitions.adventure_defines ?? [])
     .filter((definition) => looksLikeVariant(definition))
@@ -534,13 +1091,61 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
     )
 
   const variants = mergeVariants(autoVariants, manualOverrides.variants ?? [])
-  const formations = normalizeFormations(manualOverrides.formations ?? [])
+  const officialFormations = extractOfficialFormations(rawDefinitions, localizedDefinitions)
+  const formations = mergeFormations(
+    officialFormations,
+    normalizeManualFormations(manualOverrides.formations ?? []),
+  )
   const enums = normalizeEnums(champions, affiliationMap, campaignMap)
+  const championVisuals = playableChampionDefinitions
+    .map((definition) => {
+      const championId = String(definition.id)
+      const skins = (skinsByHeroId.get(championId) ?? [])
+        .map((skinDefinition) =>
+          normalizeChampionVisualSkin(
+            skinDefinition,
+            localizedSkinsById.get(String(skinDefinition.id)),
+            graphicMap,
+            masterApiUrl,
+          ),
+        )
+        .sort(
+          (left, right) =>
+            left.name.display.localeCompare(right.name.display) ||
+            left.name.original.localeCompare(right.name.original) ||
+            Number(left.id) - Number(right.id),
+        )
+
+      return normalizeChampionVisual(
+        definition,
+        localizedChampionsById.get(championId),
+        portraitSourcesByChampionId.get(championId) ?? null,
+        skins,
+        graphicMap,
+        currentVersion,
+        masterApiUrl,
+      )
+    })
+    .sort(
+      (left, right) =>
+        left.seat - right.seat ||
+        left.name.display.localeCompare(right.name.display) ||
+        Number(left.championId) - Number(right.championId),
+    )
 
   await writeJson(path.join(outputDir, 'champions.json'), {
     items: champions,
     updatedAt,
   })
+  await writeJson(path.join(outputDir, 'champion-visuals.json'), {
+    items: championVisuals,
+    updatedAt,
+  })
+  const championDetailsDir = path.join(outputDir, 'champion-details')
+  await mkdir(championDetailsDir, { recursive: true })
+  for (const detail of championDetails) {
+    await writeJson(path.join(championDetailsDir, `${detail.summary.id}.json`), detail)
+  }
   await writeJson(path.join(outputDir, 'variants.json'), {
     items: variants,
     updatedAt,
@@ -560,7 +1165,9 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
       '公共数据来源：Idle Champions 官方客户端 definitions 接口。',
       '名称展示层同时保留官方原文与 language_id=7 返回的中文展示名。',
       '英雄头像资源来自官方 mobile_assets，并按数据版本写入 public/data/<version>/champion-portraits/。',
-      '阵型布局、变体说明与中文补充建议通过 scripts/data/manual-overrides.json 维护。',
+      '英雄详情页数据按 public/data/<version>/champion-details/<hero-id>.json 输出，包含结构化字段与原始快照片段。',
+      '英雄本体立绘与皮肤资源保留为远端可解析元数据，见 public/data/<version>/champion-visuals.json。',
+      '阵型布局已从官方 definitions 的 campaign / adventure game_changes 自动提取；手工补充层只用于必要覆写。',
     ],
   })
 
@@ -570,6 +1177,8 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
     updatedAt,
     counts: {
       champions: champions.length,
+      championVisuals: championVisuals.length,
+      championDetails: championDetails.length,
       variants: variants.length,
       formations: formations.length,
       enums: enums.length,
@@ -588,6 +1197,7 @@ function printUsage() {
   --versionFile <file>       version.json 输出位置，默认 ${DEFAULT_VERSION_FILE}
   --currentVersion <name>    version.json 中的 current 字段，默认 ${DEFAULT_CURRENT_VERSION}
   --manualOverrides <file>   手工补充层 JSON，默认 ${DEFAULT_MANUAL_OVERRIDES}
+  --masterApiUrl <url>       远端 mobile_assets 基础地址，默认 ${DEFAULT_MASTER_API_URL}
   --help                     显示帮助
 `)
 }
@@ -601,6 +1211,7 @@ async function main() {
       versionFile: { type: 'string' },
       currentVersion: { type: 'string' },
       manualOverrides: { type: 'string' },
+      masterApiUrl: { type: 'string' },
       help: { type: 'boolean' },
     },
   })
@@ -617,7 +1228,7 @@ async function main() {
   console.log(`- version.json: ${result.versionFile}`)
   console.log(`- updatedAt: ${result.updatedAt}`)
   console.log(
-    `- counts: champions=${result.counts.champions}, variants=${result.counts.variants}, formations=${result.counts.formations}, enums=${result.counts.enums}`,
+    `- counts: champions=${result.counts.champions}, championVisuals=${result.counts.championVisuals}, championDetails=${result.counts.championDetails}, variants=${result.counts.variants}, formations=${result.counts.formations}, enums=${result.counts.enums}`,
   )
 }
 

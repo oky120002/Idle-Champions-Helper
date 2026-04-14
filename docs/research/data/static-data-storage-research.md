@@ -189,7 +189,7 @@ src/
 ```text
 抓取官方 definitions 原始快照
   ↓
-归一化并补充手工 overrides
+归一化并应用必要 overrides
   ↓
 更新 public/data/v1/*.json
   ↓
@@ -206,8 +206,17 @@ GitHub Actions 构建并发布到 GitHub Pages
 
 - `scripts/fetch-idle-champions-definitions.mjs`
 - `scripts/normalize-idle-champions-definitions.mjs`
-- `scripts/data/manual-overrides.json`
+- `scripts/build-idle-champions-data.mjs`：统一串起“官方原文 definitions + 中文 definitions + 归一化集合 + 官方头像”
+- `scripts/data/manual-overrides.json`（当前主要用于必要覆写，不再承担阵型布局主数据）
 - 相关数据来源调研文档统一放在 `docs/research/data/`
+
+建议对外只记一个入口命令：
+
+```bash
+npm run data:official
+```
+
+它就是当前整条官方基座数据流水线的唯一 npm 入口。
 
 这里有一个需要统一的点：
 
