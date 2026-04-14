@@ -8,15 +8,17 @@ vi.mock('../../src/data/client', async () => {
   return {
     ...actual,
     loadChampionDetail: vi.fn(),
+    loadCollection: vi.fn(),
   }
 })
 
 import { I18nProvider } from '../../src/app/i18n'
-import { loadChampionDetail } from '../../src/data/client'
+import { loadChampionDetail, loadCollection } from '../../src/data/client'
 import { ChampionDetailPage } from '../../src/pages/ChampionDetailPage'
-import type { ChampionDetail } from '../../src/domain/types'
+import type { ChampionDetail, ChampionIllustration, DataCollection } from '../../src/domain/types'
 
 const mockedLoadChampionDetail = vi.mocked(loadChampionDetail)
+const mockedLoadCollection = vi.mocked(loadCollection)
 const originalScrollIntoView = Element.prototype.scrollIntoView
 
 const sectionTopMap: Record<string, number> = {
@@ -372,6 +374,66 @@ const detailFixture: ChampionDetail = {
   },
 }
 
+const illustrationFixture: DataCollection<ChampionIllustration> = {
+  updatedAt: '2026-04-15',
+  items: [
+    {
+      id: 'skin:4',
+      championId: '7',
+      skinId: '4',
+      kind: 'skin',
+      seat: 7,
+      championName: {
+        original: 'Minsc',
+        display: '明斯克',
+      },
+      illustrationName: {
+        original: 'Giant Boo Costume',
+        display: '巨型布布服装',
+      },
+      portraitPath: 'v1/champion-portraits/7.png',
+      sourceSlot: 'large',
+      sourceGraphicId: '4471',
+      sourceGraphic: 'Characters/Hero_Minsc_GiantBoo_2xup',
+      sourceVersion: 1,
+      image: {
+        path: 'v1/champion-illustrations/skins/4.png',
+        width: 1024,
+        height: 1024,
+        bytes: 64000,
+        format: 'png',
+      },
+    },
+    {
+      id: 'skin:5',
+      championId: '7',
+      skinId: '5',
+      kind: 'skin',
+      seat: 7,
+      championName: {
+        original: 'Minsc',
+        display: '明斯克',
+      },
+      illustrationName: {
+        original: 'Space Boo Expedition',
+        display: '太空布布远征装',
+      },
+      portraitPath: 'v1/champion-portraits/7.png',
+      sourceSlot: 'base',
+      sourceGraphicId: '4472',
+      sourceGraphic: 'Characters/Hero_Minsc_SpaceBoo',
+      sourceVersion: 1,
+      image: {
+        path: 'v1/champion-illustrations/skins/5.png',
+        width: 1024,
+        height: 1024,
+        bytes: 65000,
+        format: 'png',
+      },
+    },
+  ],
+}
+
 function renderChampionDetailPage() {
   return renderChampionDetailPageAt('/champions/7')
 }
@@ -430,10 +492,19 @@ beforeEach(() => {
 
     return createDomRect(4000)
   })
+
+  mockedLoadCollection.mockImplementation(async (name) => {
+    if (name === 'champion-illustrations') {
+      return illustrationFixture
+    }
+
+    throw new Error(`unexpected collection: ${name}`)
+  })
 })
 
 afterEach(() => {
   mockedLoadChampionDetail.mockReset()
+  mockedLoadCollection.mockReset()
   vi.restoreAllMocks()
   Object.defineProperty(Element.prototype, 'scrollIntoView', {
     configurable: true,
@@ -604,16 +675,24 @@ describe('ChampionDetailPage', () => {
     fireEvent.click(screen.getByRole('button', { name: '查看立绘：巨型布布服装' }))
 
     expect(screen.getByRole('dialog', { name: '皮肤立绘预览' })).toBeInTheDocument()
-    expect(screen.getByRole('img', { name: '巨型布布服装皮肤预览' })).toHaveAttribute(
-      'src',
-      'https://idle.kleho.ru/assets/g/4473.png',
-    )
+    await waitFor(() => {
+      expect(screen.getByRole('img', { name: '巨型布布服装皮肤预览' })).toHaveAttribute(
+        'src',
+        '/data/v1/champion-illustrations/skins/4.png',
+      )
+    })
+    await waitFor(() => {
+      expect(screen.getByText('已命中')).toBeInTheDocument()
+      expect(screen.getByText('large')).toBeInTheDocument()
+    })
 
     fireEvent.click(screen.getByRole('button', { name: '切换皮肤：太空布布远征装' }))
 
-    expect(screen.getByRole('img', { name: '太空布布远征装皮肤预览' })).toHaveAttribute(
-      'src',
-      'https://idle.kleho.ru/assets/g/4474.png',
-    )
+    await waitFor(() => {
+      expect(screen.getByRole('img', { name: '太空布布远征装皮肤预览' })).toHaveAttribute(
+        'src',
+        '/data/v1/champion-illustrations/skins/5.png',
+      )
+    })
   })
 })

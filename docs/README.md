@@ -72,6 +72,7 @@
 - `docs/research/testing/regression-testing-research.md`：主分支整体回归测试框架设计。
 - `docs/research/deployment/china-static-hosting-research.md`：国内访问体验与托管备选方案。
 - `docs/research/deployment/static-hosting-research.md`：GitHub Pages 部署方案与路由策略。
+- `docs/modules/champions/champion-illustration-page-design.md`：英雄立绘页在 GitHub Pages 零成本前提下的稳定展示方案设计稿。
 - `docs/modules/champions/champion-detail-design.md`：英雄详情页的信息架构、路由入口与交互设计稿。
 - `docs/modules/champions/champions-filter-design.md`：英雄筛选模块设计稿。
 - `docs/modules/formation/formation-editor-design.md`：阵型编辑模块设计稿。

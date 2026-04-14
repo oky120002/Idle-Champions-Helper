@@ -21,6 +21,7 @@
 - 已补第一版官方中文映射层：`champions / affiliations / campaigns / variants / formations` 均保留“官方原文 + 中文展示名”双字段
 - 已把 161 名可上阵英雄的官方头像按版本写入 `public/data/v1/champion-portraits/`，并在英雄相关卡片里接入展示
 - 已补第一版英雄视觉资源基座：`public/data/v1/champion-visuals.json` 会保留英雄本体立绘、皮肤立绘与皮肤头像的远端可解析元数据
+- 已补第一版本地立绘静态资源：`public/data/v1/champion-illustrations.json` 与配套 PNG 目录可在 GitHub Pages 上稳定展示全部英雄本体立绘与皮肤立绘
 - 已补第一版界面语言切换，页面可在中文 / 英文界面之间切换
 - 已落最小测试基础设施：`Vitest`、`React Testing Library`、`Playwright`
 - 阵型页已接入“最近草稿”本地自动保存 / 恢复，持久化介质为 `IndexedDB`
@@ -146,6 +147,7 @@ npm run data:official
 - `language_id=7` 中文 definitions 快照
 - `champions / variants / formations / enums` 归一化公共数据
 - 官方英雄头像资源
+- 立绘页直接消费的本地静态立绘资源
 
 说明：
 
@@ -181,13 +183,16 @@ npm run data:official
 │   ├── build-idle-champions-data.mjs
 │   ├── fetch-idle-champions-definitions.mjs
 │   ├── normalize-idle-champions-definitions.mjs
+│   ├── sync-idle-champions-illustrations.mjs
 │   └── sync-idle-champions-portraits.mjs
 ├── public/
 │   └── data/
 │       ├── version.json
 │       └── v1/
+│           ├── champion-illustrations.json
 │           ├── champion-visuals.json
 │           ├── champion-details/
+│           ├── champion-illustrations/
 │           ├── champion-portraits/
 │           ├── champions.json
 │           ├── enums.json
@@ -233,12 +238,15 @@ npm run data:official
 - `src/data/client.ts`：统一处理版本读取、路径拼接和基础缓存
 - `src/domain/types.ts`：放数据类型定义
 - `public/data/version.json`：声明当前数据版本
+- `public/data/v1/champion-illustrations.json`：立绘页直接消费的本地静态立绘清单
 - `public/data/v1/champion-visuals.json`：英雄本体立绘、皮肤立绘与皮肤头像的远端元数据目录
 - `public/data/v1/champion-details/<hero-id>.json`：单个英雄的结构化详情与原始 definitions 快照片段
 - `public/data/v1/*.json`：当前版本的数据文件
+- `public/data/v1/champion-illustrations/`：当前版本的英雄本体立绘与皮肤立绘 PNG 资源
 - `public/data/v1/champion-portraits/`：当前版本的官方英雄头像 PNG 资源
 - `scripts/fetch-idle-champions-definitions.mjs`：拉取官方 definitions 原始快照
 - `scripts/normalize-idle-champions-definitions.mjs`：把原始快照转换为前端数据，并自动提取官方阵型布局
+- `scripts/sync-idle-champions-illustrations.mjs`：把英雄本体立绘与皮肤立绘拉到版本化公共目录
 - `scripts/sync-idle-champions-portraits.mjs`：把官方 mobile assets 里的英雄头像拉到版本化公共目录
 - `scripts/data/manual-overrides.json`：维护自动抓取之外的必要覆写与补充数据
 
