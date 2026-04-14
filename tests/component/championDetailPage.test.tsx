@@ -85,9 +85,17 @@ const detailFixture: ChampionDetail = {
   },
   adventureIds: [],
   defaultFeatSlotUnlocks: [10, 30, 70, 120],
-  costCurves: { 1: '0.96' },
+  costCurves: { 1: '0.96', 2: '1.12' },
   healthCurves: { 1: '1.01' },
-  properties: { weekly_buff: false },
+  properties: {
+    available_in_store: '2025-10-23 12:00:00',
+    pain_sounds: [190, 191, 192],
+    weekly_buff: 'buff_upgrades,200,108,109',
+    notification_adjustment: {
+      offset: [56, 204],
+      scale: 1.25,
+    },
+  },
   characterSheet: {
     fullName: {
       original: 'Minsc',
@@ -203,7 +211,41 @@ const detailFixture: ChampionDetail = {
           },
         },
       },
-      staticDpsMult: '25',
+      staticDpsMult: '1.25',
+      defaultEnabled: true,
+      specializationName: null,
+      specializationDescription: null,
+      specializationGraphicId: null,
+      tipText: null,
+    },
+    {
+      id: '109',
+      requiredLevel: 50,
+      requiredUpgradeId: null,
+      name: {
+        original: 'Favored Enemy: Beasts',
+        display: '偏好敌人：兽类',
+      },
+      upgradeType: 'unlock_ability',
+      effectReference: 'effect_def,1327',
+      effectDefinition: null,
+      staticDpsMult: '1.25',
+      defaultEnabled: true,
+      specializationName: null,
+      specializationDescription: null,
+      specializationGraphicId: null,
+      tipText: null,
+    },
+    {
+      id: '117',
+      requiredLevel: 125,
+      requiredUpgradeId: null,
+      name: null,
+      upgradeType: 'upgrade_ability',
+      effectReference:
+        `{"effect_string":"buff_upgrades,200,108,109","description":"Increases the effect of Minsc's Favored Enemy ability by $(amount)%."}`,
+      effectDefinition: null,
+      staticDpsMult: null,
       defaultEnabled: true,
       specializationName: null,
       specializationDescription: null,
@@ -266,7 +308,9 @@ const detailFixture: ChampionDetail = {
         original: 'Space Boo Expedition',
         display: '太空布布远征装',
       },
-      cost: [],
+      cost: {
+        soft_currency: 40000,
+      },
       details: {
         large_graphic_id: 4475,
         portrait_graphic_id: 4474,
@@ -409,6 +453,15 @@ describe('ChampionDetailPage', () => {
     expect(screen.getByText(/明斯克是一位有些迟钝但非常勇敢的巡林客/)).toBeInTheDocument()
     expect(screen.getByText('偏好敌人：类人生物 · Favored Enemy: Humanoids')).toBeInTheDocument()
     expect(screen.getByText('类人生物敌人成为明斯克的偏好对手。')).toBeInTheDocument()
+    expect(screen.getByText('商店上架时间')).toBeInTheDocument()
+    expect(screen.getByText('周增益')).toBeInTheDocument()
+    expect(screen.getAllByText('使偏好敌人（2 个分支）效果提高 200%').length).toBeGreaterThan(0)
+    expect(screen.getByText('自身伤害提高 30%')).toBeInTheDocument()
+    expect(screen.getByText('获取来源')).toBeInTheDocument()
+    expect(screen.getByText('软货币')).toBeInTheDocument()
+    expect(screen.getAllByText('Large Graphic ID').length).toBeGreaterThan(0)
+    expect(screen.queryByText('large_graphic_id')).not.toBeInTheDocument()
+    expect(screen.queryByText('未命名 upgrade_ability')).not.toBeInTheDocument()
     expect(screen.getByText('Hero / Attacks / Upgrades / Feats / Skins')).toBeInTheDocument()
     expect(screen.getByText('Hero 快照')).toBeInTheDocument()
   })
