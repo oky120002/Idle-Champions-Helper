@@ -106,13 +106,6 @@ interface FeatCardProps {
   effectContext: EffectContext
 }
 
-interface SkinArtworkIds {
-  baseGraphicId: string | null
-  largeGraphicId: string | null
-  xlGraphicId: string | null
-  portraitGraphicId: string | null
-}
-
 interface EffectContext {
   locale: AppLocale
   championName: string
@@ -1353,15 +1346,6 @@ function readGraphicId(value: JsonValue, key: string): string | null {
 
   const normalized = String(candidate).trim()
   return normalized.length > 0 ? normalized : null
-}
-
-function getSkinArtworkIds(skin: ChampionSkinDetail): SkinArtworkIds {
-  return {
-    baseGraphicId: readGraphicId(skin.details, 'base_graphic_id'),
-    largeGraphicId: readGraphicId(skin.details, 'large_graphic_id'),
-    xlGraphicId: readGraphicId(skin.details, 'xl_graphic_id'),
-    portraitGraphicId: readGraphicId(skin.details, 'portrait_graphic_id'),
-  }
 }
 
 function buildSkinPreviewAlt(skin: ChampionSkinDetail, locale: AppLocale): string {
