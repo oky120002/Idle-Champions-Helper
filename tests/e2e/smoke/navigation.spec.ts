@@ -1,6 +1,5 @@
 import { readFileSync } from 'node:fs'
 import { expect, test } from '@playwright/test'
-import { SUPPORT_URL_SAMPLE } from '../../../src/data/userImport'
 
 const versionMeta = JSON.parse(
   readFileSync(new URL('../../../public/data/version.json', import.meta.url), 'utf8'),
@@ -19,7 +18,7 @@ test('GitHub Pages 基线路径下可以完成主页与个人数据 smoke 回归
   await page.getByRole('link', { name: '个人数据' }).click()
   await expect(page.getByRole('heading', { level: 2, name: '先把本地导入链路和安全边界立住' })).toBeVisible()
 
-  await page.getByRole('textbox').fill(SUPPORT_URL_SAMPLE)
+  await page.getByRole('button', { name: '填入脱敏示例' }).click()
   await page.getByRole('button', { name: '读取并校验' }).click()
 
   await expect(page.getByText('已在本地解析出一组合法凭证，当前页面仅展示脱敏结果，不会自动保存。')).toBeVisible()
