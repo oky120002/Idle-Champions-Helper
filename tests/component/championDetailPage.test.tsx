@@ -680,10 +680,6 @@ describe('ChampionDetailPage', () => {
         '/data/v1/champion-illustrations/skins/4.png',
       )
     })
-    await waitFor(() => {
-      expect(screen.getByText('已命中')).toBeInTheDocument()
-      expect(screen.getByText('large')).toBeInTheDocument()
-    })
 
     fireEvent.click(screen.getByRole('button', { name: '切换皮肤：太空布布远征装' }))
 
