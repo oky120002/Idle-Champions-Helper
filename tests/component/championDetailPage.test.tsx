@@ -25,8 +25,6 @@ const sectionTopMap: Record<string, number> = {
   combat: 860,
   upgrades: 1260,
   feats: 1660,
-  skins: 2060,
-  raw: 2460,
 }
 
 function createDomRect(top: number): DOMRect {
@@ -407,15 +405,13 @@ function renderChampionDetailPageWithBackRoute(initialEntry: string) {
 
 beforeEach(() => {
   window.history.replaceState(window.history.state, '', '/')
-  Object.assign(sectionTopMap, {
-    overview: 84,
-    'character-sheet': 460,
-    combat: 860,
-    upgrades: 1260,
-    feats: 1660,
-    skins: 2060,
-    raw: 2460,
-  })
+    Object.assign(sectionTopMap, {
+      overview: 84,
+      'character-sheet': 460,
+      combat: 860,
+      upgrades: 1260,
+      feats: 1660,
+    })
 
   Object.defineProperty(Element.prototype, 'scrollIntoView', {
     configurable: true,
@@ -443,7 +439,7 @@ afterEach(() => {
 })
 
 describe('ChampionDetailPage', () => {
-  it('按分区渲染英雄详情，并保留原始字段入口', async () => {
+  it('按分区渲染英雄详情，并压缩非关键字段', async () => {
     mockedLoadChampionDetail.mockResolvedValue(detailFixture)
 
     renderChampionDetailPage()
@@ -451,19 +447,24 @@ describe('ChampionDetailPage', () => {
     expect(await screen.findByRole('heading', { level: 2, name: '明斯克' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { level: 2, name: '叙事资料与能力分布' })).toBeInTheDocument()
     expect(screen.getByText(/明斯克是一位有些迟钝但非常勇敢的巡林客/)).toBeInTheDocument()
-    expect(screen.getByText('偏好敌人：类人生物 · Favored Enemy: Humanoids')).toBeInTheDocument()
+    expect(screen.getByText('偏好敌人：类人生物')).toBeInTheDocument()
+    expect(screen.queryByText('偏好敌人：类人生物 · Favored Enemy: Humanoids')).not.toBeInTheDocument()
     expect(screen.getByText('类人生物敌人成为明斯克的偏好对手。')).toBeInTheDocument()
     expect(screen.getByText('商店上架时间')).toBeInTheDocument()
     expect(screen.getByText('周增益')).toBeInTheDocument()
     expect(screen.getAllByText('使偏好敌人（2 个分支）效果提高 200%').length).toBeGreaterThan(0)
     expect(screen.getByText('自身伤害提高 30%')).toBeInTheDocument()
     expect(screen.getByText('获取来源')).toBeInTheDocument()
-    expect(screen.getByText('软货币')).toBeInTheDocument()
-    expect(screen.getAllByText('Large Graphic ID').length).toBeGreaterThan(0)
+    expect(screen.getByText('力量')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 3, name: '顺势斩' })).toBeInTheDocument()
+    expect(screen.queryByText('顺势斩 · Cleave')).not.toBeInTheDocument()
+    expect(screen.queryByText('Minsc is a dim-witted but courageous ranger.')).not.toBeInTheDocument()
+    expect(screen.queryByText('受击音效')).not.toBeInTheDocument()
+    expect(screen.queryByText('通知偏移')).not.toBeInTheDocument()
+    expect(screen.queryByText('Large Graphic ID')).not.toBeInTheDocument()
     expect(screen.queryByText('large_graphic_id')).not.toBeInTheDocument()
     expect(screen.queryByText('未命名 upgrade_ability')).not.toBeInTheDocument()
-    expect(screen.getByText('Hero / Attacks / Upgrades / Feats / Skins')).toBeInTheDocument()
-    expect(screen.getByText('Hero 快照')).toBeInTheDocument()
+    expect(screen.queryByText('Hero 快照')).not.toBeInTheDocument()
   })
 
   it('在 404 时展示未找到状态', async () => {
@@ -517,7 +518,7 @@ describe('ChampionDetailPage', () => {
     expect(screen.getByTestId('sidebar-section-overview')).toHaveAttribute('aria-current', 'step')
     expect(screen.getByTestId('sidebar-section-combat')).toHaveAttribute('data-progress-state', 'upcoming')
     expect(screen.getByText('当前浏览 · 概览')).toBeInTheDocument()
-    expect(screen.getByText('1 / 7')).toBeInTheDocument()
+    expect(screen.getByText('1 / 5')).toBeInTheDocument()
     await waitFor(() => {
       expect(window.location.hash).toBe('#/champions/7#section-overview')
     })
@@ -539,9 +540,9 @@ describe('ChampionDetailPage', () => {
     })
     expect(screen.getByTestId('sidebar-section-overview')).toHaveAttribute('data-progress-state', 'completed')
     expect(screen.getByTestId('sidebar-section-upgrades')).toHaveAttribute('data-progress-state', 'active')
-    expect(screen.getByTestId('sidebar-section-raw')).toHaveAttribute('data-progress-state', 'upcoming')
+    expect(screen.getByTestId('sidebar-section-feats')).toHaveAttribute('data-progress-state', 'upcoming')
     expect(screen.getByText('当前浏览 · 升级')).toBeInTheDocument()
-    expect(screen.getByText('4 / 7')).toBeInTheDocument()
+    expect(screen.getByText('4 / 5')).toBeInTheDocument()
     await waitFor(() => {
       expect(window.location.hash).toBe('#/champions/7#section-upgrades')
     })
@@ -578,8 +579,6 @@ describe('ChampionDetailPage', () => {
       combat: -220,
       upgrades: 120,
       feats: 720,
-      skins: 1120,
-      raw: 1520,
     })
 
     fireEvent.scroll(window)
@@ -601,7 +600,7 @@ describe('ChampionDetailPage', () => {
 
     await screen.findByRole('heading', { level: 2, name: '明斯克' })
 
-    fireEvent.click(screen.getByRole('button', { name: '查看立绘：巨型布布服装' }))
+    fireEvent.click(screen.getByRole('button', { name: '打开皮肤立绘预览' }))
 
     expect(screen.getByRole('dialog', { name: '皮肤立绘预览' })).toBeInTheDocument()
     expect(screen.getByRole('img', { name: '巨型布布服装皮肤预览' })).toHaveAttribute(
