@@ -97,6 +97,31 @@ const formationsFixture: DataCollection<FormationLayout> = {
         },
       ],
     },
+    {
+      id: 'layout-six-columns',
+      name: {
+        original: 'Time Gate - The Trickster\'s Delight (Kent) · 10 slots',
+        display: '时空门 - 骗子的欢欣（肯特） · 10 槽',
+      },
+      notes: {
+        original: 'Six-column regression layout',
+        display: '六列回归布局',
+      },
+      slots: [
+        { id: 'slot-six-1', row: 3, column: 1 },
+        { id: 'slot-six-2', row: 2, column: 6 },
+      ],
+      sourceContexts: [
+        {
+          kind: 'adventure',
+          id: 'adventure-kent',
+          name: {
+            original: 'Time Gate - The Trickster\'s Delight (Kent)',
+            display: '时空门 - 骗子的欢欣（肯特）',
+          },
+        },
+      ],
+    },
   ],
 }
 
@@ -255,5 +280,22 @@ describe('FormationPage layout filters', () => {
     await user.type(searchInput, '完全不存在的布局')
 
     expect(screen.getByText('当前筛选条件下没有匹配布局，可以先放宽关键词或场景类型。')).toBeInTheDocument()
+  })
+
+  it('六列布局会扩展阵型画板宽度，避免槽位被压缩', async () => {
+    const user = userEvent.setup()
+
+    renderFormationPage()
+
+    const searchInput = await findLayoutSearchInput()
+
+    await user.type(searchInput, '肯特')
+    await user.click(screen.getByRole('button', { name: '时空门 - 骗子的欢欣（肯特） · 10 槽' }))
+
+    const board = screen.getByTestId('formation-board') as HTMLDivElement
+
+    expect(board.style.gridTemplateColumns).toBe('repeat(6, minmax(0, 1fr))')
+    expect(board.style.width).toBe('768px')
+    expect(board.style.minWidth).toBe('624px')
   })
 })
