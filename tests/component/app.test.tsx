@@ -4,6 +4,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
 import { App } from '../../src/app/App'
 import { I18nProvider } from '../../src/app/i18n'
+import { SUPPORT_URL_SAMPLE } from '../../src/data/userImport'
 
 describe('App', () => {
   it('在个人数据页完成本地导入 smoke 测试', async () => {
@@ -20,6 +21,7 @@ describe('App', () => {
     expect(screen.getByRole('heading', { level: 2, name: '先把本地导入链路和安全边界立住' })).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: '填入脱敏示例' }))
+    expect(screen.getByRole('textbox')).toHaveValue(SUPPORT_URL_SAMPLE)
     await user.click(screen.getByRole('button', { name: '读取并校验' }))
 
     expect(screen.getByText('已在本地解析出一组合法凭证，当前页面仅展示脱敏结果，不会自动保存。')).toBeInTheDocument()
