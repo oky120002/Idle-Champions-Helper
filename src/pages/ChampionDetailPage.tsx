@@ -1333,21 +1333,6 @@ function buildRarityLabel(value: string | null, locale: AppLocale): string {
   return locale === 'zh-CN' ? `稀有度 ${value}` : `Rarity ${value}`
 }
 
-function readGraphicId(value: JsonValue, key: string): string | null {
-  if (!isJsonObject(value)) {
-    return null
-  }
-
-  const candidate = value[key]
-
-  if (candidate === null || candidate === undefined) {
-    return null
-  }
-
-  const normalized = String(candidate).trim()
-  return normalized.length > 0 ? normalized : null
-}
-
 function buildSkinPreviewAlt(skin: ChampionSkinDetail, locale: AppLocale): string {
   const primaryName = getPrimaryLocalizedText(skin.name, locale)
   return locale === 'zh-CN' ? `${primaryName}皮肤预览` : `${primaryName} skin preview`
