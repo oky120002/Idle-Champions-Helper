@@ -63,6 +63,7 @@
 - `docs/product/mobile-compatibility-guidelines.md`：移动端兼容性开发规范，禁止把横向滑动作为移动端主导航、主操作或主信息入口。
 - `docs/research/data/game-data-source-investigation.md`：基础游戏数据与个人数据来源调研。
 - `docs/research/data/champion-portrait-asset-research.md`：官方英雄头像字段、mobile assets 链路与尺寸核实。
+- `docs/research/data/champion-image-asset-sizing-research.md`：官方头像、立绘、皮肤资源的尺寸样本、体积量级与后续资源线程交接边界。
 - `docs/research/data/champion-detail-fields-research.md`：英雄详情页所需字段、definitions 可用范围与详情数据合同建议。
 - `docs/research/data/champion-visual-asset-research.md`：英雄本体立绘、皮肤立绘与皮肤头像的官方字段链路与远端解析策略。
 - `docs/research/data/language-id-7-chinese-definitions-research.md`：`language_id=7` 官方中文 definitions 链路与字段覆盖核实。
@@ -71,6 +72,7 @@
 - `docs/research/testing/regression-testing-research.md`：主分支整体回归测试框架设计。
 - `docs/research/deployment/china-static-hosting-research.md`：国内访问体验与托管备选方案。
 - `docs/research/deployment/static-hosting-research.md`：GitHub Pages 部署方案与路由策略。
+- `docs/modules/champions/champion-illustration-page-design.md`：英雄立绘页在 GitHub Pages 零成本前提下的稳定展示方案设计稿。
 - `docs/modules/champions/champion-detail-design.md`：英雄详情页的信息架构、路由入口与交互设计稿。
 - `docs/modules/champions/champions-filter-design.md`：英雄筛选模块设计稿。
 - `docs/modules/formation/formation-editor-design.md`：阵型编辑模块设计稿。
