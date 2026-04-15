@@ -14,51 +14,16 @@ import type {
   ChampionAttackDetail,
   ChampionDetail,
   ChampionFeatDetail,
-  LocalizedText,
   ChampionIllustration,
   ChampionRawEntry,
+  ChampionRawSnapshotPair,
   ChampionSkinDetail,
   ChampionUpgradeDetail,
   JsonValue,
 } from '../domain/types'
 
-const DETAIL_SECTION_IDS = ['overview', 'character-sheet', 'combat', 'upgrades', 'feats'] as const
+const DETAIL_SECTION_IDS = ['overview', 'character-sheet', 'combat', 'upgrades', 'feats', 'skins', 'raw'] as const
 const DETAIL_HASH_PREFIX = 'section-'
-const OVERVIEW_PROPERTY_HIDDEN_KEYS = new Set([
-  'animation_frames',
-  'attack_sound',
-  'base_graphic_id',
-  'chest_type_id',
-  'companion_graphic_id',
-  'console_portrait',
-  'death_sound',
-  'event_logo_graphic_id',
-  'eye_height',
-  'gold_chest_type_id',
-  'graphic_id',
-  'graphic_large',
-  'graphic_xl',
-  'head_graphic_id',
-  'impale_graphic_id',
-  'item_id',
-  'large_graphic_id',
-  'legendary_effect_id',
-  'notification_adjustment',
-  'notification_adjustment_override',
-  'pain_sounds',
-  'patron_shop_item_id',
-  'portrait_center_offset',
-  'portrait_graphic_id',
-  'premium_item_id',
-  'promotion_id',
-  'projectile_graphic_id',
-  'silver_chest_type_id',
-  'specialization_graphic_id',
-  'trials_effect_id',
-  'ultimate_color',
-  'weekly_chest_type_id',
-  'xl_graphic_id',
-])
 
 type DetailSectionId = (typeof DETAIL_SECTION_IDS)[number]
 type DetailSectionProgressState = 'completed' | 'active' | 'upcoming'
@@ -71,7 +36,7 @@ type ChampionDetailState =
 
 interface DetailFieldProps {
   label: string
-  value: ReactNode
+  value: string
   hint?: string | null
 }
 
@@ -104,6 +69,30 @@ interface FeatCardProps {
   feat: ChampionFeatDetail
   locale: AppLocale
   effectContext: EffectContext
+}
+
+interface SkinCardProps {
+  skin: ChampionSkinDetail
+  locale: AppLocale
+  effectContext: EffectContext
+  onPreview: (skinId: string) => void
+}
+
+interface RawPairDisclosureProps {
+  title: string
+  pair: ChampionRawSnapshotPair
+}
+
+interface RawEntriesDisclosureProps {
+  title: string
+  entries: ChampionRawEntry[]
+}
+
+interface SkinArtworkIds {
+  baseGraphicId: string | null
+  largeGraphicId: string | null
+  xlGraphicId: string | null
+  portraitGraphicId: string | null
 }
 
 interface EffectContext {
@@ -237,6 +226,26 @@ function formatMultiplierValue(value: string | null, locale: AppLocale): string 
   return `${new Intl.NumberFormat(locale, {
     maximumFractionDigits: 4,
   }).format(numeric)}%`
+}
+
+function stringifyJson(value: JsonValue): string {
+  return JSON.stringify(value, null, 2)
+}
+
+function summarizeJson(value: JsonValue, locale: AppLocale): string {
+  if (Array.isArray(value)) {
+    return `${value.length} ${locale === 'zh-CN' ? '项' : 'items'}`
+  }
+
+  if (isJsonObject(value)) {
+    return `${Object.keys(value).length} ${locale === 'zh-CN' ? '个字段' : 'fields'}`
+  }
+
+  if (value === null) {
+    return locale === 'zh-CN' ? '空值' : 'Empty'
+  }
+
+  return String(value)
 }
 
 function containsCjkCharacters(value: string): boolean {
@@ -462,78 +471,6 @@ function buildNotAvailableLabel(locale: AppLocale): string {
   return locale === 'zh-CN' ? '暂无' : 'Not available'
 }
 
-function shouldHideOverviewProperty(key: string): boolean {
-  const normalized = key.trim().toLowerCase()
-
-  if (OVERVIEW_PROPERTY_HIDDEN_KEYS.has(normalized)) {
-    return true
-  }
-
-  return (
-    normalized.includes('graphic') ||
-    normalized.includes('sound') ||
-    normalized.includes('animation') ||
-    normalized.includes('chest_type') ||
-    normalized.includes('portrait_center_offset') ||
-    normalized.includes('eye_height') ||
-    normalized.includes('notification_adjustment') ||
-    normalized.includes('ultimate_color')
-  )
-}
-
-function isStructuredValueEmpty(value: JsonValue): boolean {
-  if (Array.isArray(value)) {
-    return value.length === 0
-  }
-
-  if (isJsonObject(value)) {
-    return Object.keys(value).length === 0
-  }
-
-  return false
-}
-
-function pruneStructuredValue(
-  value: JsonValue,
-  shouldOmitKey: (key: string) => boolean,
-): JsonValue | null {
-  if (Array.isArray(value)) {
-    const nextItems = value
-      .map((item) => pruneStructuredValue(item, shouldOmitKey))
-      .filter((item): item is JsonValue => item !== null && !isStructuredValueEmpty(item))
-
-    return nextItems.length > 0 ? nextItems : null
-  }
-
-  if (isJsonObject(value)) {
-    const nextEntries = Object.entries(value).flatMap(([key, itemValue]) => {
-      if (shouldOmitKey(key)) {
-        return []
-      }
-
-      const nextValue = pruneStructuredValue(itemValue, shouldOmitKey)
-
-      if (nextValue === null || isStructuredValueEmpty(nextValue)) {
-        return []
-      }
-
-      return [[key, nextValue] as const]
-    })
-
-    return nextEntries.length > 0 ? Object.fromEntries(nextEntries) : null
-  }
-
-  if (value === null) {
-    return null
-  }
-
-  if (typeof value === 'string' && !value.trim()) {
-    return null
-  }
-
-  return value
-}
-
 function parseInlineJsonValue(value: string): JsonValue | null {
   const trimmed = value.trim()
 
@@ -686,7 +623,6 @@ function resolveEffectDescription(
 
   const resolveToken = (token: string): string => {
     const normalized = token.trim()
-    const amountIndexMatch = normalized.match(/amount[_ ]?(\d+)/i)
 
     if (normalized === 'amount') {
       return formatNumberishToken(numericArgs[0] ?? null, effectContext.locale)
@@ -703,15 +639,6 @@ function resolveEffectDescription(
         : `${formatNumberishToken(numericArgs[0] ?? null, effectContext.locale)} seconds`
     }
 
-    if (amountIndexMatch) {
-      const index = Number(amountIndexMatch[1]) - 1
-      return formatNumberishToken(numericArgs[index] ?? numericArgs[0] ?? null, effectContext.locale)
-    }
-
-    if (normalized.toLowerCase().includes('amount')) {
-      return formatNumberishToken(numericArgs[0] ?? null, effectContext.locale)
-    }
-
     if (normalized.startsWith('upgrade_name')) {
       return targetSummary.summary ?? (effectContext.locale === 'zh-CN' ? '对应能力' : 'the linked ability')
     }
@@ -726,9 +653,6 @@ function resolveEffectDescription(
   return description
     .replace(/\$\(([^)]+)\)/g, (_match, token) => resolveToken(token))
     .replace(/\$amount\b/g, formatNumberishToken(numericArgs[0] ?? null, effectContext.locale))
-    .replace(/\$([a-z_][a-z0-9_]*)/gi, (_match, token) => resolveToken(token))
-    .replace(/\s{2,}/g, ' ')
-    .trim()
 }
 
 function describeEffectPayload(payload: ParsedEffectPayload, effectContext: EffectContext): EffectDescriptor {
@@ -1013,11 +937,11 @@ function buildUpgradePresentation(
       : validEffectDescriptor?.categoryLabel ?? localizeUpgradeType(null, effectContext.locale)
   const title = (() => {
     if (upgrade.name) {
-      return getPrimaryLocalizedText(upgrade.name, effectContext.locale)
+      return getLocalizedTextPair(upgrade.name, effectContext.locale)
     }
 
     if (upgrade.specializationName) {
-      return getPrimaryLocalizedText(upgrade.specializationName, effectContext.locale)
+      return getLocalizedTextPair(upgrade.specializationName, effectContext.locale)
     }
 
     if (upgrade.upgradeType === 'unlock_ultimate') {
@@ -1043,8 +967,8 @@ function buildUpgradePresentation(
   const summary =
     effectDefinition.summary ??
     validEffectDescriptor?.summary ??
-    (upgrade.specializationDescription ? getPrimaryLocalizedText(upgrade.specializationDescription, effectContext.locale) : null) ??
-    (upgrade.tipText ? getPrimaryLocalizedText(upgrade.tipText, effectContext.locale) : null)
+    (upgrade.specializationDescription ? getLocalizedTextPair(upgrade.specializationDescription, effectContext.locale) : null) ??
+    (upgrade.tipText ? getLocalizedTextPair(upgrade.tipText, effectContext.locale) : null)
   const prerequisiteLabel = upgrade.requiredUpgradeId
     ? effectContext.upgradeLabelById.get(upgrade.requiredUpgradeId) ??
       (effectContext.locale === 'zh-CN'
@@ -1055,9 +979,9 @@ function buildUpgradePresentation(
       : 'No prerequisite'
   const detailLines = [
     upgrade.specializationDescription
-      ? getPrimaryLocalizedText(upgrade.specializationDescription, effectContext.locale)
+      ? getLocalizedTextPair(upgrade.specializationDescription, effectContext.locale)
       : null,
-    upgrade.tipText ? getPrimaryLocalizedText(upgrade.tipText, effectContext.locale) : null,
+    upgrade.tipText ? getLocalizedTextPair(upgrade.tipText, effectContext.locale) : null,
     effectDefinition.detail,
     ...effectDefinition.bullets,
     validEffectDescriptor?.detail ?? null,
@@ -1333,6 +1257,30 @@ function buildRarityLabel(value: string | null, locale: AppLocale): string {
   return locale === 'zh-CN' ? `稀有度 ${value}` : `Rarity ${value}`
 }
 
+function readGraphicId(value: JsonValue, key: string): string | null {
+  if (!isJsonObject(value)) {
+    return null
+  }
+
+  const candidate = value[key]
+
+  if (candidate === null || candidate === undefined) {
+    return null
+  }
+
+  const normalized = String(candidate).trim()
+  return normalized.length > 0 ? normalized : null
+}
+
+function getSkinArtworkIds(skin: ChampionSkinDetail): SkinArtworkIds {
+  return {
+    baseGraphicId: readGraphicId(skin.details, 'base_graphic_id'),
+    largeGraphicId: readGraphicId(skin.details, 'large_graphic_id'),
+    xlGraphicId: readGraphicId(skin.details, 'xl_graphic_id'),
+    portraitGraphicId: readGraphicId(skin.details, 'portrait_graphic_id'),
+  }
+}
+
 function buildSkinPreviewAlt(skin: ChampionSkinDetail, locale: AppLocale): string {
   const primaryName = getPrimaryLocalizedText(skin.name, locale)
   return locale === 'zh-CN' ? `${primaryName}皮肤预览` : `${primaryName} skin preview`
@@ -1347,18 +1295,6 @@ function resolveSkinPreviewUrl(
   }
 
   return champion.portrait?.path ? resolveDataUrl(champion.portrait.path) : null
-}
-
-function renderLocalizedFieldValue(value: LocalizedText, locale: AppLocale): ReactNode {
-  const primary = getPrimaryLocalizedText(value, locale)
-  const secondary = getSecondaryLocalizedText(value, locale)
-
-  return (
-    <span className="detail-field__value-stack">
-      <span>{primary}</span>
-      {secondary ? <span className="detail-field__secondary">{secondary}</span> : null}
-    </span>
-  )
 }
 
 function DetailField({ label, value, hint }: DetailFieldProps) {
@@ -1381,16 +1317,12 @@ function AttackPanel({ title, attack, locale }: AttackPanelProps) {
     )
   }
 
-  const attackTags = [...attack.damageTypes, ...attack.tags].filter(
-    (item, index, list) => item.trim() && list.indexOf(item) === index,
-  )
-
   return (
     <article className="detail-subcard attack-card">
       <div className="attack-card__header">
         <div>
           <p className="detail-subcard__eyebrow">{title}</p>
-          <h3 className="detail-subcard__title">{getPrimaryLocalizedText(attack.name, locale)}</h3>
+          <h3 className="detail-subcard__title">{getLocalizedTextPair(attack.name, locale)}</h3>
         </div>
         <div className="detail-badge-row">
           <span className="detail-badge">{locale === 'zh-CN' ? `冷却 ${formatNumber(attack.cooldown, locale)} 秒` : `${formatNumber(attack.cooldown, locale)}s cooldown`}</span>
@@ -1398,19 +1330,30 @@ function AttackPanel({ title, attack, locale }: AttackPanelProps) {
         </div>
       </div>
 
-      {attack.description ? <p className="detail-subcard__body">{getPrimaryLocalizedText(attack.description, locale)}</p> : null}
-      {attack.longDescription ? <p className="supporting-text">{getPrimaryLocalizedText(attack.longDescription, locale)}</p> : null}
+      {attack.description ? <p className="detail-subcard__body">{getLocalizedTextPair(attack.description, locale)}</p> : null}
+      {attack.longDescription ? <p className="supporting-text">{getLocalizedTextPair(attack.longDescription, locale)}</p> : null}
 
       <div className="detail-field-grid detail-field-grid--compact">
         <DetailField label={locale === 'zh-CN' ? 'AOE 半径' : 'AOE radius'} value={formatNumber(attack.aoeRadius, locale)} />
         <DetailField label={locale === 'zh-CN' ? '伤害倍率' : 'Damage modifier'} value={formatNullableText(attack.damageModifier, locale)} />
         <DetailField label={locale === 'zh-CN' ? '目标规则' : 'Target rule'} value={formatNullableText(attack.target, locale)} />
+        <DetailField label={locale === 'zh-CN' ? 'Graphic ID' : 'Graphic ID'} value={formatNullableText(attack.graphicId, locale)} />
       </div>
 
-      {attackTags.length > 0 ? (
-        <div className="attack-card__tag-list" aria-label={locale === 'zh-CN' ? '攻击标签' : 'Attack tags'}>
-          {attackTags.map((item) => (
-            <span key={item} className="attack-card__tag">
+      {attack.damageTypes.length > 0 ? (
+        <div className="tag-row">
+          {attack.damageTypes.map((item) => (
+            <span key={item} className="tag-pill">
+              {item}
+            </span>
+          ))}
+        </div>
+      ) : null}
+
+      {attack.tags.length > 0 ? (
+        <div className="tag-row">
+          {attack.tags.map((item) => (
+            <span key={item} className="tag-pill tag-pill--muted">
               {item}
             </span>
           ))}
@@ -1421,30 +1364,6 @@ function AttackPanel({ title, attack, locale }: AttackPanelProps) {
 }
 
 function UpgradeCard({ upgrade, presentation, locale }: UpgradeCardProps) {
-  const factItems = [
-    presentation.targetLabel
-      ? {
-          label: locale === 'zh-CN' ? '作用对象' : 'Target',
-          value: presentation.targetLabel,
-          hint: presentation.targetHint ?? null,
-        }
-      : null,
-    presentation.staticMultiplierLabel
-      ? {
-          label: locale === 'zh-CN' ? '静态倍率' : 'Static multiplier',
-          value: presentation.staticMultiplierLabel,
-          hint: null,
-        }
-      : null,
-    !upgrade.defaultEnabled
-      ? {
-          label: locale === 'zh-CN' ? '默认状态' : 'Default state',
-          value: locale === 'zh-CN' ? '默认关闭' : 'Disabled by default',
-          hint: null,
-        }
-      : null,
-  ].filter((item): item is { label: string; value: string; hint: string | null } => Boolean(item))
-
   return (
     <article className="detail-subcard upgrade-card">
       <div className="detail-subcard__header">
@@ -1454,9 +1373,10 @@ function UpgradeCard({ upgrade, presentation, locale }: UpgradeCardProps) {
           </p>
           <h3 className="detail-subcard__title">{presentation.title}</h3>
         </div>
-        <div className="upgrade-card__meta">
-          <span className="upgrade-card__badge">{presentation.typeLabel}</span>
-          {upgrade.requiredUpgradeId ? <span className="upgrade-card__badge upgrade-card__badge--muted">{presentation.prerequisiteLabel}</span> : null}
+        <div className="detail-badge-row">
+          <span className="detail-badge">{presentation.typeLabel}</span>
+          {upgrade.requiredUpgradeId ? <span className="detail-badge">{presentation.prerequisiteLabel}</span> : null}
+          {upgrade.specializationGraphicId ? <span className="detail-badge">{locale === 'zh-CN' ? `专精图 ${upgrade.specializationGraphicId}` : `Spec art ${upgrade.specializationGraphicId}`}</span> : null}
         </div>
       </div>
 
@@ -1467,16 +1387,19 @@ function UpgradeCard({ upgrade, presentation, locale }: UpgradeCardProps) {
         </p>
       ))}
 
-      {factItems.length > 0 ? (
-        <div className="upgrade-card__facts">
-          {factItems.map((item) => (
-            <span key={`${item.label}:${item.value}`} className="upgrade-card__fact" title={item.hint ?? undefined}>
-              <span className="upgrade-card__fact-label">{item.label}</span>
-              <strong className="upgrade-card__fact-value">{item.value}</strong>
-            </span>
-          ))}
-        </div>
-      ) : null}
+      <div className="detail-field-grid detail-field-grid--compact">
+        <DetailField label={locale === 'zh-CN' ? '升级类型' : 'Upgrade type'} value={presentation.typeLabel} />
+        <DetailField
+          label={locale === 'zh-CN' ? '作用对象' : 'Target'}
+          value={presentation.targetLabel ?? (locale === 'zh-CN' ? '当前英雄' : 'Current champion')}
+          hint={presentation.targetHint}
+        />
+        <DetailField label={locale === 'zh-CN' ? '前置条件' : 'Prerequisite'} value={presentation.prerequisiteLabel} />
+        <DetailField label={locale === 'zh-CN' ? '默认启用' : 'Default enabled'} value={formatBoolean(upgrade.defaultEnabled, locale)} />
+        {presentation.staticMultiplierLabel ? (
+          <DetailField label={locale === 'zh-CN' ? '静态倍率' : 'Static multiplier'} value={presentation.staticMultiplierLabel} />
+        ) : null}
+      </div>
     </article>
   )
 }
@@ -1515,6 +1438,91 @@ function FeatCard({ feat, locale, effectContext }: FeatCardProps) {
         <StructuredPanel title={locale === 'zh-CN' ? '收藏来源' : 'Collection source'} value={feat.collectionsSource} locale={locale} effectContext={effectContext} />
       </div>
     </article>
+  )
+}
+
+function SkinCard({ skin, locale, effectContext, onPreview }: SkinCardProps) {
+  const artworkIds = getSkinArtworkIds(skin)
+
+  return (
+    <article className="detail-subcard skin-card">
+      <div className="detail-subcard__header">
+        <div>
+          <p className="detail-subcard__eyebrow">{buildRarityLabel(skin.rarity, locale)}</p>
+          <h3 className="detail-subcard__title">{getLocalizedTextPair(skin.name, locale)}</h3>
+        </div>
+        <button
+          type="button"
+          className="action-button action-button--ghost action-button--compact"
+          aria-label={
+            locale === 'zh-CN'
+              ? `查看立绘：${getPrimaryLocalizedText(skin.name, locale)}`
+              : `Preview artwork: ${getPrimaryLocalizedText(skin.name, locale)}`
+          }
+          onClick={() => onPreview(skin.id)}
+        >
+          {locale === 'zh-CN' ? '查看立绘' : 'Preview'}
+        </button>
+      </div>
+
+      <div className="detail-field-grid detail-field-grid--compact">
+        <DetailField label={locale === 'zh-CN' ? 'Base Graphic ID' : 'Base graphic ID'} value={formatNullableText(artworkIds.baseGraphicId, locale)} />
+        <DetailField label={locale === 'zh-CN' ? 'Large Graphic ID' : 'Large graphic ID'} value={formatNullableText(artworkIds.largeGraphicId, locale)} />
+        <DetailField label={locale === 'zh-CN' ? 'XL Graphic ID' : 'XL graphic ID'} value={formatNullableText(artworkIds.xlGraphicId, locale)} />
+        <DetailField label={locale === 'zh-CN' ? 'Portrait Graphic ID' : 'Portrait graphic ID'} value={formatNullableText(artworkIds.portraitGraphicId, locale)} />
+      </div>
+
+      <div className="detail-inline-grid">
+        <StructuredPanel title={locale === 'zh-CN' ? '成本' : 'Cost'} value={skin.cost} locale={locale} effectContext={effectContext} />
+        <StructuredPanel title={locale === 'zh-CN' ? '资源字段' : 'Details'} value={skin.details} locale={locale} effectContext={effectContext} />
+        <StructuredPanel title={locale === 'zh-CN' ? '来源' : 'Source'} value={skin.collectionsSource} locale={locale} effectContext={effectContext} />
+        <StructuredPanel title={locale === 'zh-CN' ? '属性' : 'Properties'} value={skin.properties} locale={locale} effectContext={effectContext} />
+        {skin.availabilities ? <StructuredPanel title={locale === 'zh-CN' ? '可获取渠道' : 'Availabilities'} value={skin.availabilities} locale={locale} effectContext={effectContext} /> : null}
+      </div>
+    </article>
+  )
+}
+
+function RawPairDisclosure({ title, pair }: RawPairDisclosureProps) {
+  return (
+    <details className="raw-disclosure">
+      <summary className="raw-disclosure__summary">{title}</summary>
+      <div className="raw-disclosure__body raw-grid">
+        <article className="detail-json-panel">
+          <h3 className="detail-json-panel__title">Source</h3>
+          <pre className="detail-json">{stringifyJson(pair.original)}</pre>
+        </article>
+        <article className="detail-json-panel">
+          <h3 className="detail-json-panel__title">Localized</h3>
+          <pre className="detail-json">{stringifyJson(pair.display)}</pre>
+        </article>
+      </div>
+    </details>
+  )
+}
+
+function RawEntriesDisclosure({ title, entries }: RawEntriesDisclosureProps) {
+  return (
+    <details className="raw-disclosure">
+      <summary className="raw-disclosure__summary">{title}</summary>
+      <div className="raw-disclosure__stack">
+        {entries.map((entry) => (
+          <details key={entry.id} className="raw-entry">
+            <summary className="raw-entry__summary">#{entry.id}</summary>
+            <div className="raw-grid">
+              <article className="detail-json-panel">
+                <h3 className="detail-json-panel__title">Source</h3>
+                <pre className="detail-json">{stringifyJson(entry.snapshots.original)}</pre>
+              </article>
+              <article className="detail-json-panel">
+                <h3 className="detail-json-panel__title">Localized</h3>
+                <pre className="detail-json">{stringifyJson(entry.snapshots.display)}</pre>
+              </article>
+            </div>
+          </details>
+        ))}
+      </div>
+    </details>
   )
 }
 
@@ -1751,19 +1759,14 @@ export function ChampionDetailPage() {
         upgrade.upgradeType !== 'unlock_ultimate',
     )
   }, [detail])
-  const overviewProperties = useMemo(() => {
-    if (!detail) {
-      return null
-    }
-
-    return pruneStructuredValue(detail.properties, shouldHideOverviewProperty)
-  }, [detail])
   const sectionLinks: Array<{ id: DetailSectionId; label: string }> = [
     { id: 'overview', label: t({ zh: '概览', en: 'Overview' }) },
     { id: 'character-sheet', label: t({ zh: '角色卡', en: 'Character sheet' }) },
     { id: 'combat', label: t({ zh: '战斗', en: 'Combat' }) },
     { id: 'upgrades', label: t({ zh: '升级', en: 'Upgrades' }) },
     { id: 'feats', label: t({ zh: '天赋', en: 'Feats' }) },
+    { id: 'skins', label: t({ zh: '皮肤', en: 'Skins' }) },
+    { id: 'raw', label: t({ zh: '原始字段', en: 'Raw fields' }) },
   ]
   const activeSectionIndex = Math.max(
     sectionLinks.findIndex((section) => section.id === activeSectionId),
@@ -1797,6 +1800,7 @@ export function ChampionDetailPage() {
     typeof window === 'undefined'
       ? resolveSectionIdFromHashValue(location.hash)
       : resolveSectionIdFromBrowserHash(window.location.hash) ?? resolveSectionIdFromHashValue(location.hash)
+  const selectedSkinArtworkIds = selectedSkin ? getSkinArtworkIds(selectedSkin) : null
   const selectedSkinIllustration = selectedSkin ? skinIllustrationsById.get(selectedSkin.id) ?? null : null
   const selectedSkinPreviewUrl =
     detail && selectedSkin
@@ -1972,8 +1976,8 @@ export function ChampionDetailPage() {
           eyebrow={t({ zh: '英雄详情', en: 'Champion detail' })}
           title={t({ zh: '正在整理英雄卷宗…', en: 'Building the champion dossier…' })}
           description={t({
-            zh: '当前会加载结构化详情、战斗定义和成长轨道。',
-            en: 'This loads the structured profile, combat definitions, and progression track.',
+            zh: '当前会加载结构化详情与原始 definitions 片段。',
+            en: 'This loads both the structured profile and the raw definitions slices.',
           })}
         >
           <div className="status-banner status-banner--info">{t({ zh: '正在读取详情数据…', en: 'Loading detail data…' })}</div>
@@ -2041,8 +2045,8 @@ export function ChampionDetailPage() {
                   ) : null}
                   <p className="champion-dossier__summary">
                     {t({
-                      zh: '这个页面把结构化资料、成长轨道和战斗细节压进同一条浏览链路里，方便边查边做阵型判断。',
-                      en: 'This page keeps the structured profile, progression track, and combat detail in one flow so you can inspect and decide quickly.',
+                      zh: '这个页面把结构化资料、成长轨道和原始 definitions 片段放在同一条浏览链路里，适合边查边做阵型判断。',
+                      en: 'This page keeps the structured profile, progression track, and raw definitions slices in one browsing flow so you can inspect and decide quickly.',
                     })}
                   </p>
 
@@ -2144,16 +2148,18 @@ export function ChampionDetailPage() {
                   <DetailField label={t({ zh: '首次可用', en: 'Date available' })} value={formatNullableText(detail.dateAvailable, locale)} />
                   <DetailField label={t({ zh: '最后重做', en: 'Last rework' })} value={formatNullableText(detail.lastReworkDate, locale)} />
                   <DetailField label={t({ zh: 'Popularity', en: 'Popularity' })} value={formatNumber(detail.popularity, locale)} />
+                  <DetailField label={t({ zh: 'Graphic ID', en: 'Graphic ID' })} value={formatNullableText(detail.graphicId, locale)} />
+                  <DetailField label={t({ zh: 'Portrait Graphic ID', en: 'Portrait Graphic ID' })} value={formatNullableText(detail.portraitGraphicId, locale)} />
                   <DetailField label={t({ zh: '下次活动时间', en: 'Next event time' })} value={formatTimestamp(detail.availability.nextEventTimestamp, locale)} />
                   <DetailField label={t({ zh: '默认天赋槽解锁', en: 'Default feat slots' })} value={detail.defaultFeatSlotUnlocks.length > 0 ? detail.defaultFeatSlotUnlocks.join(' / ') : t({ zh: '暂无', en: 'None yet' })} />
+                  <DetailField label={t({ zh: 'Adventure IDs', en: 'Adventure IDs' })} value={detail.adventureIds.length > 0 ? detail.adventureIds.join(', ') : t({ zh: '暂无', en: 'None yet' })} hint={t({ zh: `${detail.adventureIds.length} 条`, en: `${detail.adventureIds.length} entries` })} />
+                  <DetailField label={t({ zh: '原始块摘要', en: 'Raw blocks' })} value={t({ zh: 'Hero / Attacks / Upgrades / Feats / Skins', en: 'Hero / Attacks / Upgrades / Feats / Skins' })} />
                 </div>
 
-                <div className="champion-overview-panels">
+                <div className="detail-inline-grid detail-inline-grid--wide">
                   <StructuredPanel title={t({ zh: 'Cost Curves', en: 'Cost Curves' })} value={detail.costCurves} locale={locale} effectContext={effectContext} />
                   <StructuredPanel title={t({ zh: 'Health Curves', en: 'Health Curves' })} value={detail.healthCurves} locale={locale} effectContext={effectContext} />
-                  {overviewProperties ? (
-                    <StructuredPanel title={t({ zh: 'Properties', en: 'Properties' })} value={overviewProperties} locale={locale} effectContext={effectContext} />
-                  ) : null}
+                  <StructuredPanel title={t({ zh: 'Properties', en: 'Properties' })} value={detail.properties} locale={locale} effectContext={effectContext} />
                 </div>
               </SurfaceCard>
 
@@ -2169,18 +2175,17 @@ export function ChampionDetailPage() {
                 {detail.characterSheet ? (
                   <>
                     <div className="detail-field-grid">
-                      <DetailField label={t({ zh: '全名', en: 'Full name' })} value={detail.characterSheet.fullName ? renderLocalizedFieldValue(detail.characterSheet.fullName, locale) : t({ zh: '暂无', en: 'Not available' })} />
-                      <DetailField label={t({ zh: '职业', en: 'Class' })} value={detail.characterSheet.class ? renderLocalizedFieldValue(detail.characterSheet.class, locale) : t({ zh: '暂无', en: 'Not available' })} />
-                      <DetailField label={t({ zh: '种族', en: 'Race' })} value={detail.characterSheet.race ? renderLocalizedFieldValue(detail.characterSheet.race, locale) : t({ zh: '暂无', en: 'Not available' })} />
-                      <DetailField label={t({ zh: '阵营', en: 'Alignment' })} value={detail.characterSheet.alignment ? renderLocalizedFieldValue(detail.characterSheet.alignment, locale) : t({ zh: '暂无', en: 'Not available' })} />
+                      <DetailField label={t({ zh: '全名', en: 'Full name' })} value={detail.characterSheet.fullName ? getLocalizedTextPair(detail.characterSheet.fullName, locale) : t({ zh: '暂无', en: 'Not available' })} />
+                      <DetailField label={t({ zh: '职业', en: 'Class' })} value={detail.characterSheet.class ? getLocalizedTextPair(detail.characterSheet.class, locale) : t({ zh: '暂无', en: 'Not available' })} />
+                      <DetailField label={t({ zh: '种族', en: 'Race' })} value={detail.characterSheet.race ? getLocalizedTextPair(detail.characterSheet.race, locale) : t({ zh: '暂无', en: 'Not available' })} />
+                      <DetailField label={t({ zh: '阵营', en: 'Alignment' })} value={detail.characterSheet.alignment ? getLocalizedTextPair(detail.characterSheet.alignment, locale) : t({ zh: '暂无', en: 'Not available' })} />
                       <DetailField label={t({ zh: '年龄', en: 'Age' })} value={formatNumber(detail.characterSheet.age, locale)} />
                     </div>
 
                     <div className="ability-score-grid">
                       {(['str', 'dex', 'con', 'int', 'wis', 'cha'] as const).map((key) => (
                         <article key={key} className="ability-score-card">
-                          <span className="ability-score-card__abbr">{key.toUpperCase()}</span>
-                          <span className="ability-score-card__label">{localizeAbilityScore(key, locale)}</span>
+                          <span className="ability-score-card__label">{key.toUpperCase()}</span>
                           <strong className="ability-score-card__value">{formatNumber(detail.characterSheet?.abilityScores[key] ?? null, locale)}</strong>
                         </article>
                       ))}
@@ -2189,7 +2194,7 @@ export function ChampionDetailPage() {
                     {detail.characterSheet.backstory ? (
                       <article className="detail-subcard detail-subcard--story">
                         <h3 className="detail-subcard__title">{t({ zh: '背景故事', en: 'Backstory' })}</h3>
-                        <p className="detail-subcard__body">{getPrimaryLocalizedText(detail.characterSheet.backstory, locale)}</p>
+                        <p className="detail-subcard__body">{getLocalizedTextPair(detail.characterSheet.backstory, locale)}</p>
                       </article>
                     ) : null}
                   </>
@@ -2214,30 +2219,25 @@ export function ChampionDetailPage() {
                   <DetailField label={t({ zh: '事件升级', en: 'Event upgrades' })} value={formatNumber(detail.attacks.eventUpgrades.length, locale)} />
                 </div>
 
-                <div className="detail-card-grid detail-card-grid--two-up combat-panels">
+                <div className="detail-card-grid detail-card-grid--two-up">
                   <AttackPanel title={t({ zh: '普攻', en: 'Base attack' })} attack={detail.attacks.base} locale={locale} />
                   <AttackPanel title={t({ zh: '大招', en: 'Ultimate' })} attack={detail.attacks.ultimate} locale={locale} />
                 </div>
 
                 {detail.attacks.eventUpgrades.length > 0 ? (
-                  <div className="event-upgrade-list">
-                    <div className="event-upgrade-list__header">
-                      <div>
-                        <p className="detail-subcard__eyebrow">{t({ zh: '活动升级', en: 'Event upgrades' })}</p>
-                        <h3 className="detail-subcard__title">{t({ zh: '活动能力改动', en: 'Event upgrade notes' })}</h3>
-                      </div>
-                      <span className="upgrade-card__badge upgrade-card__badge--muted">
-                        {t({ zh: `${detail.attacks.eventUpgrades.length} 条`, en: `${detail.attacks.eventUpgrades.length} entries` })}
-                      </span>
-                    </div>
-                    <div className="event-upgrade-list__items">
-                      {detail.attacks.eventUpgrades.map((upgrade) => (
-                        <article key={upgrade.upgradeId} className="event-upgrade-list__item">
-                          <strong className="event-upgrade-list__name">{getPrimaryLocalizedText(upgrade.name, locale)}</strong>
-                          {upgrade.description ? <p className="event-upgrade-list__description">{getPrimaryLocalizedText(upgrade.description, locale)}</p> : null}
-                        </article>
-                      ))}
-                    </div>
+                  <div className="detail-card-grid">
+                    {detail.attacks.eventUpgrades.map((upgrade) => (
+                      <article key={upgrade.upgradeId} className="detail-subcard">
+                        <div className="detail-subcard__header">
+                          <div>
+                            <p className="detail-subcard__eyebrow">{t({ zh: '活动升级', en: 'Event upgrade' })}</p>
+                            <h3 className="detail-subcard__title">{getLocalizedTextPair(upgrade.name, locale)}</h3>
+                          </div>
+                          {upgrade.graphicId ? <span className="detail-badge">Graphic {upgrade.graphicId}</span> : null}
+                        </div>
+                        {upgrade.description ? <p className="detail-subcard__body">{getLocalizedTextPair(upgrade.description, locale)}</p> : null}
+                      </article>
+                    ))}
                   </div>
                 ) : null}
               </SurfaceCard>
@@ -2245,25 +2245,20 @@ export function ChampionDetailPage() {
               <SurfaceCard
                 eyebrow={t({ zh: '升级', en: 'Upgrades' })}
                 title={t({ zh: '成长轨道分成可读升级和数值里程碑', en: 'Split the progression track into readable upgrades and numeric milestones' })}
+                description={t({
+                  zh: '命名升级优先展示在上半段，空名数值升级用紧凑 ledger 排布，既不丢信息，也不把页面炸成瀑布流。',
+                  en: 'Named upgrades stay in the upper layer, while unnamed numeric milestones move into a compact ledger so nothing is lost and the page stays scannable.',
+                })}
               >
                 <div id="upgrades" className="detail-section-anchor" />
-                <div className="upgrade-summary-grid">
-                  <article className="upgrade-summary-card">
-                    <span className="upgrade-summary-card__label">{t({ zh: '全部升级', en: 'All upgrades' })}</span>
-                    <strong className="upgrade-summary-card__value">{formatNumber(detail.upgrades.length, locale)}</strong>
-                  </article>
-                  <article className="upgrade-summary-card">
-                    <span className="upgrade-summary-card__label">{t({ zh: '重点升级', en: 'Spotlight upgrades' })}</span>
-                    <strong className="upgrade-summary-card__value">{formatNumber(spotlightUpgrades.length, locale)}</strong>
-                  </article>
-                  <article className="upgrade-summary-card">
-                    <span className="upgrade-summary-card__label">{t({ zh: '数值里程碑', en: 'Numeric milestones' })}</span>
-                    <strong className="upgrade-summary-card__value">{formatNumber(ledgerUpgrades.length, locale)}</strong>
-                  </article>
+                <div className="detail-field-grid detail-field-grid--compact">
+                  <DetailField label={t({ zh: '全部升级', en: 'All upgrades' })} value={formatNumber(detail.upgrades.length, locale)} />
+                  <DetailField label={t({ zh: '重点升级', en: 'Spotlight upgrades' })} value={formatNumber(spotlightUpgrades.length, locale)} />
+                  <DetailField label={t({ zh: '数值里程碑', en: 'Numeric milestones' })} value={formatNumber(ledgerUpgrades.length, locale)} />
                 </div>
 
                 {spotlightUpgrades.length > 0 ? (
-                  <div className="detail-card-grid upgrade-card-grid">
+                  <div className="detail-card-grid">
                     {spotlightUpgrades.map((upgrade) => (
                       <UpgradeCard
                         key={upgrade.id}
@@ -2309,6 +2304,54 @@ export function ChampionDetailPage() {
                   {detail.feats.map((feat) => (
                     <FeatCard key={feat.id} feat={feat} locale={locale} effectContext={effectContext!} />
                   ))}
+                </div>
+              </SurfaceCard>
+
+              <SurfaceCard
+                eyebrow={t({ zh: '皮肤', en: 'Skins' })}
+                title={t({ zh: '成本、资产字段和来源一页看全', en: 'View costs, asset fields, and sources in one place' })}
+                description={t({
+                  zh: '皮肤仍然按结构化字段展示，不把 cost / details / availability 混进原始 JSON 大段里。',
+                  en: 'Skins still use structured slices so cost, details, and availability do not disappear inside giant JSON blobs.',
+                })}
+              >
+                <div id="skins" className="detail-section-anchor" />
+                <div className="detail-card-grid">
+                  {detail.skins.map((skin) => (
+                    <SkinCard
+                      key={skin.id}
+                      skin={skin}
+                      locale={locale}
+                      effectContext={effectContext!}
+                      onPreview={openArtworkDialog}
+                    />
+                  ))}
+                </div>
+              </SurfaceCard>
+
+              <SurfaceCard
+                eyebrow={t({ zh: '原始字段', en: 'Raw fields' })}
+                title={t({ zh: '最后一层：source / localized 快照片段', en: 'Final layer: source and localized snapshot slices' })}
+                description={t({
+                  zh: '为了满足“所有信息”，这里保留原始 definitions 片段；默认折叠，避免影响前半段的浏览效率。',
+                  en: 'To satisfy the all-information requirement, the raw definitions slices stay here behind collapsible sections so they do not slow down the upper half of the page.',
+                })}
+              >
+                <div id="raw" className="detail-section-anchor" />
+                <div className="detail-field-grid detail-field-grid--compact">
+                  <DetailField label={t({ zh: 'Hero raw', en: 'Hero raw' })} value={summarizeJson(detail.raw.hero.original, locale)} />
+                  <DetailField label={t({ zh: 'Attacks raw', en: 'Attacks raw' })} value={`${detail.raw.attacks.length}`} />
+                  <DetailField label={t({ zh: 'Upgrades raw', en: 'Upgrades raw' })} value={`${detail.raw.upgrades.length}`} />
+                  <DetailField label={t({ zh: 'Feats raw', en: 'Feats raw' })} value={`${detail.raw.feats.length}`} />
+                  <DetailField label={t({ zh: 'Skins raw', en: 'Skins raw' })} value={`${detail.raw.skins.length}`} />
+                </div>
+
+                <div className="raw-disclosure-stack">
+                  <RawPairDisclosure title={t({ zh: 'Hero 快照', en: 'Hero snapshot' })} pair={detail.raw.hero} />
+                  <RawEntriesDisclosure title={t({ zh: 'Attack 快照', en: 'Attack snapshots' })} entries={detail.raw.attacks} />
+                  <RawEntriesDisclosure title={t({ zh: 'Upgrade 快照', en: 'Upgrade snapshots' })} entries={detail.raw.upgrades} />
+                  <RawEntriesDisclosure title={t({ zh: 'Feat 快照', en: 'Feat snapshots' })} entries={detail.raw.feats} />
+                  <RawEntriesDisclosure title={t({ zh: 'Skin 快照', en: 'Skin snapshots' })} entries={detail.raw.skins} />
                 </div>
               </SurfaceCard>
             </div>
@@ -2387,15 +2430,15 @@ export function ChampionDetailPage() {
                 <div className="skin-artwork-dialog__header">
                   <div className="skin-artwork-dialog__copy">
                     <p className="champion-detail-sidebar__eyebrow">{t({ zh: '皮肤立绘预览', en: 'Skin artwork preview' })}</p>
-                    <h3 className="skin-artwork-dialog__title">{getPrimaryLocalizedText(selectedSkin.name, locale)}</h3>
+                    <h3 className="skin-artwork-dialog__title">{getLocalizedTextPair(selectedSkin.name, locale)}</h3>
                     <p className="skin-artwork-dialog__hint">
                       {t({
                         zh: selectedSkinIllustration
-                          ? '这里直接切换不同皮肤的立绘预览；当前命中站内版本化立绘资源。'
-                          : '这里直接切换不同皮肤的立绘预览；当前未命中本地立绘时会回退到英雄头像。',
+                          ? '当前预览来自站内版本化立绘静态资源；下方继续保留原始 graphic id 与来源槽位，方便核对基座。'
+                          : '当前没有命中本地皮肤立绘时，会回退到英雄头像；下方继续保留原始 graphic id，方便排查缺口。',
                         en: selectedSkinIllustration
-                          ? 'Switch between skin previews here. The current image is served from the local versioned illustration asset.'
-                          : 'Switch between skin previews here. When a local illustration is unavailable, this preview falls back to the champion portrait.',
+                          ? 'This preview is now served from the versioned local illustration asset while the original graphic ids stay visible below for verification.'
+                          : 'When a local skin illustration is unavailable, this preview falls back to the champion portrait while keeping the original graphic ids visible below.',
                       })}
                     </p>
                   </div>
@@ -2425,12 +2468,23 @@ export function ChampionDetailPage() {
                         </div>
                       )}
                     </div>
+
+                    <div className="detail-field-grid detail-field-grid--compact">
+                      <DetailField label={t({ zh: '本地立绘', en: 'Local illustration' })} value={selectedSkinIllustration ? t({ zh: '已命中', en: 'Available' }) : t({ zh: '未命中', en: 'Missing' })} />
+                      <DetailField label={t({ zh: '来源槽位', en: 'Source slot' })} value={selectedSkinIllustration?.sourceSlot ?? t({ zh: '未知', en: 'Unknown' })} />
+                      <DetailField label={t({ zh: 'Base Graphic ID', en: 'Base graphic ID' })} value={formatNullableText(selectedSkinArtworkIds?.baseGraphicId ?? null, locale)} />
+                      <DetailField label={t({ zh: 'Large Graphic ID', en: 'Large graphic ID' })} value={formatNullableText(selectedSkinArtworkIds?.largeGraphicId ?? null, locale)} />
+                      <DetailField label={t({ zh: 'XL Graphic ID', en: 'XL graphic ID' })} value={formatNullableText(selectedSkinArtworkIds?.xlGraphicId ?? null, locale)} />
+                      <DetailField label={t({ zh: 'Portrait Graphic ID', en: 'Portrait graphic ID' })} value={formatNullableText(selectedSkinArtworkIds?.portraitGraphicId ?? null, locale)} />
+                    </div>
                   </div>
 
                   <div className="skin-artwork-dialog__selector">
                     <p className="skin-artwork-dialog__selector-title">{t({ zh: '切换皮肤', en: 'Switch skins' })}</p>
                     <div className="skin-artwork-dialog__tabs">
                       {detail.skins.map((skin) => {
+                        const artworkIds = getSkinArtworkIds(skin)
+
                         return (
                           <button
                             key={skin.id}
@@ -2449,7 +2503,11 @@ export function ChampionDetailPage() {
                             onClick={() => setSelectedSkinId(skin.id)}
                           >
                             <span className="skin-artwork-dialog__tab-title">{getPrimaryLocalizedText(skin.name, locale)}</span>
-                            <span className="skin-artwork-dialog__tab-meta">{buildRarityLabel(skin.rarity, locale)}</span>
+                            <span className="skin-artwork-dialog__tab-meta">
+                              {artworkIds.largeGraphicId || artworkIds.xlGraphicId || artworkIds.portraitGraphicId
+                                ? `ID ${artworkIds.largeGraphicId ?? artworkIds.xlGraphicId ?? artworkIds.portraitGraphicId}`
+                                : t({ zh: '暂无图像字段', en: 'No graphic id' })}
+                            </span>
                           </button>
                         )
                       })}
