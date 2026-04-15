@@ -4,6 +4,9 @@ interface HeaderMetrics {
   contentHeight: number
   compactBrandOpacity: number
   height: number
+  kickerDisplay: string
+  navTop: number
+  topbarActionsTop: number
 }
 
 async function getHeaderMetrics(page: Page): Promise<HeaderMetrics> {
@@ -23,6 +26,9 @@ async function getHeaderMetrics(page: Page): Promise<HeaderMetrics> {
       contentHeight: Math.round(contentShell.getBoundingClientRect().height),
       compactBrandOpacity: Number(window.getComputedStyle(compactBrand).opacity),
       height: Math.round(element.getBoundingClientRect().height),
+      kickerDisplay: window.getComputedStyle(element.querySelector('.site-kicker') as Element).display,
+      navTop: Math.round((element.querySelector('.site-nav') as HTMLElement).getBoundingClientRect().top),
+      topbarActionsTop: Math.round((element.querySelector('.site-header__topbar-actions') as HTMLElement).getBoundingClientRect().top),
     }
   })
 }
@@ -47,9 +53,12 @@ test('非首页滚动后顶部大标题应自动收紧，回顶后再展开', as
   const condensedMetrics = await getHeaderMetrics(page)
 
   await expect(page.locator('.site-header')).toHaveClass(/site-header--condensed/)
-  expect(condensedMetrics.height).toBeLessThan(initialMetrics.height - 60)
+  expect(condensedMetrics.height).toBeLessThan(initialMetrics.height - 80)
+  expect(condensedMetrics.height).toBeLessThanOrEqual(80)
   expect(condensedMetrics.contentHeight).toBeLessThanOrEqual(4)
   expect(condensedMetrics.compactBrandOpacity).toBeGreaterThan(0.9)
+  expect(condensedMetrics.kickerDisplay).toBe('none')
+  expect(Math.abs(condensedMetrics.navTop - condensedMetrics.topbarActionsTop)).toBeLessThanOrEqual(6)
 
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }))
   await page.waitForTimeout(320)

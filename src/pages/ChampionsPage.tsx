@@ -17,9 +17,12 @@ import {
 import {
   getChampionAttributeGroupLabel,
   getChampionAttributeGroups,
+  getChampionMechanicCategoryId,
+  getChampionMechanicCategoryLabel,
   getChampionTagLabel,
   getChampionTagsForGroup,
 } from '../domain/championTags'
+import type { ChampionMechanicCategoryId } from '../domain/championTags'
 import type { Champion, ChampionVisual, LocalizedText as LocalizedTextValue } from '../domain/types'
 import { filterChampions, toggleFilterValue } from '../rules/championFilter'
 
@@ -86,6 +89,11 @@ interface ResultsQuickNavigationState {
   canScrollBottom: boolean
 }
 
+interface MechanicOptionGroup {
+  id: ChampionMechanicCategoryId
+  options: string[]
+}
+
 type ChampionState =
   | { status: 'loading' }
   | {
@@ -141,6 +149,17 @@ function collectAttributeFilterOptions(
   return Array.from(new Set(champions.flatMap((champion) => getChampionTagsForGroup(champion.tags, groupId)))).sort(
     (left, right) => getChampionTagLabel(left, locale).localeCompare(getChampionTagLabel(right, locale)),
   )
+}
+
+function groupMechanicOptions(options: string[]): MechanicOptionGroup[] {
+  const orderedCategories: ChampionMechanicCategoryId[] = ['positional', 'control', 'specialization']
+
+  return orderedCategories
+    .map((id) => ({
+      id,
+      options: options.filter((tag) => getChampionMechanicCategoryId(tag) === id),
+    }))
+    .filter((group) => group.options.length > 0)
 }
 
 function readSearchValue(searchParams: URLSearchParams): string {
@@ -872,14 +891,14 @@ export function ChampionsPage() {
       ? {
           id: 'mechanics',
           label: t({
-            zh: `机制：${orderedSelectedMechanics.map((mechanic) => getChampionTagLabel(mechanic, locale)).join('、')}`,
-            en: `Mechanics: ${orderedSelectedMechanics
+            zh: `特殊机制：${orderedSelectedMechanics.map((mechanic) => getChampionTagLabel(mechanic, locale)).join('、')}`,
+            en: `Special mechanics: ${orderedSelectedMechanics
               .map((mechanic) => getChampionTagLabel(mechanic, locale))
               .join(', ')}`,
           }),
           clearLabel: t({
-            zh: `清空机制：${orderedSelectedMechanics.map((mechanic) => getChampionTagLabel(mechanic, locale)).join('、')}`,
-            en: `Clear mechanics: ${orderedSelectedMechanics
+            zh: `清空特殊机制：${orderedSelectedMechanics.map((mechanic) => getChampionTagLabel(mechanic, locale)).join('、')}`,
+            en: `Clear special mechanics: ${orderedSelectedMechanics
               .map((mechanic) => getChampionTagLabel(mechanic, locale))
               .join(', ')}`,
           }),
@@ -890,6 +909,7 @@ export function ChampionsPage() {
   const activeFilters = activeFilterChips.map((chip) => chip.label)
   const showResultsQuickNavTop = resultsQuickNavigation.isVisible && resultsQuickNavigation.canScrollTop
   const showResultsQuickNavBottom = resultsQuickNavigation.isVisible && resultsQuickNavigation.canScrollBottom
+  const mechanicOptionGroups = groupMechanicOptions(mechanicOptions)
 
   useEffect(() => {
     if (state.status !== 'ready' || hasAttemptedScrollRestoreRef.current || typeof window === 'undefined') {
@@ -1449,10 +1469,10 @@ export function ChampionsPage() {
                       </FilterDisclosureSection>
 
                       <FilterDisclosureSection
-                        title={t({ zh: '来源与机制', en: 'Source & mechanics' })}
+                        title={t({ zh: '来源与特殊机制', en: 'Source & special mechanics' })}
                         summary={t({
-                          zh: '职业 / 获取方式 / 机制',
-                          en: 'Profession / availability / mechanics',
+                          zh: '职业 / 获取方式 / 特殊机制',
+                          en: 'Profession / availability / special mechanics',
                         })}
                         status={
                           metaFiltersSelectedCount > 0
@@ -1551,8 +1571,8 @@ export function ChampionsPage() {
                           <FieldGroup
                             label={getChampionAttributeGroupLabel('mechanics', locale)}
                             hint={t({
-                              zh: '支持多选；适合按控制、站位联动或专精机制组合筛候选。',
-                              en: 'Multi-select is supported for control, positional, or specialization-based mechanics.',
+                              zh: '支持多选；这里只收会直接影响阵型取舍的特殊玩法标签，不等于完整技能说明。',
+                              en: 'Multi-select is supported for the combat tags that most directly affect formation building, not the full ability text.',
                             })}
                             className="filter-group"
                           >
@@ -1565,24 +1585,55 @@ export function ChampionsPage() {
                               >
                                 {t({ zh: '全部', en: 'All' })}
                               </button>
-                              {mechanicOptions.map((mechanic) => (
-                                <button
-                                  key={mechanic}
-                                  type="button"
-                                  className={
-                                    selectedMechanics.includes(mechanic)
-                                      ? 'filter-chip filter-chip--active'
-                                      : 'filter-chip'
-                                  }
-                                  aria-pressed={selectedMechanics.includes(mechanic)}
-                                  onClick={() =>
-                                    runFilterMutation(() => {
-                                      setSelectedMechanics((current) => toggleFilterValue(current, mechanic))
-                                    })
-                                  }
-                                >
-                                  {getChampionTagLabel(mechanic, locale)}
-                                </button>
+                            </div>
+
+                            <div className="filter-subgroup-stack">
+                              {mechanicOptionGroups.map((group) => (
+                                <section key={group.id} className="filter-subgroup">
+                                  <div className="filter-subgroup__header">
+                                    <strong className="filter-subgroup__title">
+                                      {getChampionMechanicCategoryLabel(group.id, locale)}
+                                    </strong>
+                                    <p className="filter-subgroup__hint">
+                                      {group.id === 'positional'
+                                        ? t({
+                                            zh: '前后排、相邻位或固定站位会直接影响这类英雄的发挥。',
+                                            en: 'These champions care about adjacency, rows, or specific formation slots.',
+                                          })
+                                        : group.id === 'control'
+                                          ? t({
+                                              zh: '会直接施加眩晕、减速、击退、定身或位移等控制效果。',
+                                              en: 'These champions directly apply effects like stun, slow, knockback, root, or repositioning.',
+                                            })
+                                          : t({
+                                              zh: '专精分支会偏向金币、速度、减益或特定敌人猎杀。',
+                                              en: 'Their specialization paths lean toward gold, speed, debuffs, or hunting certain enemy types.',
+                                            })}
+                                    </p>
+                                  </div>
+
+                                  <div className="filter-chip-grid">
+                                    {group.options.map((mechanic) => (
+                                      <button
+                                        key={mechanic}
+                                        type="button"
+                                        className={
+                                          selectedMechanics.includes(mechanic)
+                                            ? 'filter-chip filter-chip--active'
+                                            : 'filter-chip'
+                                        }
+                                        aria-pressed={selectedMechanics.includes(mechanic)}
+                                        onClick={() =>
+                                          runFilterMutation(() => {
+                                            setSelectedMechanics((current) => toggleFilterValue(current, mechanic))
+                                          })
+                                        }
+                                      >
+                                        {getChampionTagLabel(mechanic, locale)}
+                                      </button>
+                                    ))}
+                                  </div>
+                                </section>
                               ))}
                             </div>
                           </FieldGroup>
@@ -1618,8 +1669,8 @@ export function ChampionsPage() {
                       <p className="supporting-text">
                         {filteredChampions.length > 0
                           ? t({
-                              zh: `当前展示 ${visibleChampions.length} / ${filteredChampions.length} 名英雄。如果结果过多，优先加关键词、座位、定位、联动队伍、种族、性别、阵营、职业、获取方式或机制缩小范围。`,
-                              en: `Showing ${visibleChampions.length} / ${filteredChampions.length} champions. Narrow things down with a keyword, seat, role, affiliation, race, gender, alignment, profession, availability, or mechanic if the list feels too broad.`,
+                              zh: `当前展示 ${visibleChampions.length} / ${filteredChampions.length} 名英雄。如果结果过多，优先加关键词、座位、定位、联动队伍、种族、性别、阵营、职业、获取方式或特殊机制缩小范围。`,
+                              en: `Showing ${visibleChampions.length} / ${filteredChampions.length} champions. Narrow things down with a keyword, seat, role, affiliation, race, gender, alignment, profession, availability, or special mechanic if the list feels too broad.`,
                             })
                           : t({
                               zh: '当前筛选条件下没有匹配英雄。可以直接点左侧已选条件逐项回退，或用筛选头部的清空全部重新开始。',

@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { type AppLocale, useI18n } from '../app/i18n'
 import { ChampionAvatar } from '../components/ChampionAvatar'
 import { SurfaceCard } from '../components/SurfaceCard'
-import { loadChampionDetail, resolveDataUrl } from '../data/client'
+import { loadChampionDetail, loadCollection, resolveDataUrl } from '../data/client'
 import {
   getLocalizedTextPair,
   getPrimaryLocalizedText,
@@ -15,6 +15,7 @@ import type {
   ChampionDetail,
   ChampionFeatDetail,
   LocalizedText,
+  ChampionIllustration,
   ChampionRawEntry,
   ChampionSkinDetail,
   ChampionUpgradeDetail,
@@ -1368,27 +1369,12 @@ function buildSkinPreviewAlt(skin: ChampionSkinDetail, locale: AppLocale): strin
   return locale === 'zh-CN' ? `${primaryName}皮肤预览` : `${primaryName} skin preview`
 }
 
-function buildSkinPortraitPreviewUrl(portraitGraphicId: string | null): string | null {
-  if (!portraitGraphicId) {
-    return null
-  }
-
-  // The reference viewer exposes decoded portrait PNGs, which keeps this preview usable
-  // until skin illustration assets are versioned locally like champion portraits.
-  return `https://idle.kleho.ru/assets/g/${encodeURIComponent(portraitGraphicId)}.png`
-}
-
 function resolveSkinPreviewUrl(
-  skin: ChampionSkinDetail,
+  skinIllustration: ChampionIllustration | null,
   champion: ChampionDetail['summary'],
-  useFallbackPortrait = false,
 ): string | null {
-  if (!useFallbackPortrait) {
-    const portraitPreviewUrl = buildSkinPortraitPreviewUrl(getSkinArtworkIds(skin).portraitGraphicId)
-
-    if (portraitPreviewUrl) {
-      return portraitPreviewUrl
-    }
+  if (skinIllustration) {
+    return resolveDataUrl(skinIllustration.image.path)
   }
 
   return champion.portrait?.path ? resolveDataUrl(champion.portrait.path) : null
@@ -1622,9 +1608,9 @@ export function ChampionDetailPage() {
   const pendingHashSectionIdRef = useRef<DetailSectionId | null>(null)
   const handledSectionHashRef = useRef<string | null>(null)
   const isLeavingPageRef = useRef(false)
+  const [skinIllustrationsById, setSkinIllustrationsById] = useState<Map<string, ChampionIllustration>>(new Map())
   const [artworkDialogChampionId, setArtworkDialogChampionId] = useState<string | null>(null)
   const [selectedSkinId, setSelectedSkinId] = useState<string | null>(null)
-  const [failedSkinPreviewIds, setFailedSkinPreviewIds] = useState<Record<string, boolean>>({})
   const isMissingChampionId = !championId
 
   useEffect(() => {
@@ -1666,6 +1652,36 @@ export function ChampionDetailPage() {
       disposed = true
     }
   }, [championId])
+
+  useEffect(() => {
+    let disposed = false
+
+    loadCollection<ChampionIllustration>('champion-illustrations')
+      .then((collection) => {
+        if (disposed) {
+          return
+        }
+
+        setSkinIllustrationsById(
+          new Map(
+            collection.items
+              .filter((illustration) => illustration.kind === 'skin' && illustration.skinId)
+              .map((illustration) => [illustration.skinId as string, illustration]),
+          ),
+        )
+      })
+      .catch(() => {
+        if (disposed) {
+          return
+        }
+
+        setSkinIllustrationsById(new Map())
+      })
+
+    return () => {
+      disposed = true
+    }
+  }, [])
 
   useEffect(() => {
     isLeavingPageRef.current = false
@@ -1812,14 +1828,10 @@ export function ChampionDetailPage() {
     typeof window === 'undefined'
       ? resolveSectionIdFromHashValue(location.hash)
       : resolveSectionIdFromBrowserHash(window.location.hash) ?? resolveSectionIdFromHashValue(location.hash)
-  const selectedSkinPreviewKey = detail && selectedSkin ? `${detail.summary.id}:${selectedSkin.id}` : null
+  const selectedSkinIllustration = selectedSkin ? skinIllustrationsById.get(selectedSkin.id) ?? null : null
   const selectedSkinPreviewUrl =
     detail && selectedSkin
-      ? resolveSkinPreviewUrl(
-          selectedSkin,
-          detail.summary,
-          Boolean(selectedSkinPreviewKey && failedSkinPreviewIds[selectedSkinPreviewKey]),
-        )
+      ? resolveSkinPreviewUrl(selectedSkinIllustration, detail.summary)
       : null
 
   const openArtworkDialog = (skinId?: string) => {
@@ -2409,8 +2421,12 @@ export function ChampionDetailPage() {
                     <h3 className="skin-artwork-dialog__title">{getPrimaryLocalizedText(selectedSkin.name, locale)}</h3>
                     <p className="skin-artwork-dialog__hint">
                       {t({
-                        zh: '这里直接切换不同皮肤的立绘预览，方便快速对比版本差异。',
-                        en: 'Switch between skin previews here to compare each artwork quickly.',
+                        zh: selectedSkinIllustration
+                          ? '这里直接切换不同皮肤的立绘预览；当前命中站内版本化立绘资源。'
+                          : '这里直接切换不同皮肤的立绘预览；当前未命中本地立绘时会回退到英雄头像。',
+                        en: selectedSkinIllustration
+                          ? 'Switch between skin previews here. The current image is served from the local versioned illustration asset.'
+                          : 'Switch between skin previews here. When a local illustration is unavailable, this preview falls back to the champion portrait.',
                       })}
                     </p>
                   </div>
@@ -2429,24 +2445,10 @@ export function ChampionDetailPage() {
                     <div className="skin-artwork-dialog__canvas">
                       {selectedSkinPreviewUrl ? (
                         <img
-                          key={`${selectedSkinPreviewKey ?? selectedSkin.id}:${Boolean(
-                            selectedSkinPreviewKey && failedSkinPreviewIds[selectedSkinPreviewKey],
-                          )}`}
                           className="skin-artwork-dialog__image"
                           src={selectedSkinPreviewUrl}
                           alt={buildSkinPreviewAlt(selectedSkin, locale)}
                           loading="eager"
-                          onError={() => {
-                            if (!selectedSkinPreviewKey) {
-                              return
-                            }
-
-                            setFailedSkinPreviewIds((current) =>
-                              current[selectedSkinPreviewKey]
-                                ? current
-                                : { ...current, [selectedSkinPreviewKey]: true },
-                            )
-                          }}
                         />
                       ) : (
                         <div className="skin-artwork-dialog__fallback">
