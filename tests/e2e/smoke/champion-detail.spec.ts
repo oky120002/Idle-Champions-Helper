@@ -19,6 +19,8 @@ test('英雄筛选卡片进入详情后，详情 hash 与返回链路保持闭�
   await expect(page.getByRole('heading', { level: 2, name: '明斯克' })).toBeVisible()
   await expect(page.getByRole('link', { name: '← 返回英雄筛选' })).toHaveAttribute('href', /#\/champions\?seat=7$/)
   await expect(page.locator('.champion-detail-sidebar__progress-copy')).toHaveText('当前浏览 · 概览')
+  await expect(page.getByTestId('sidebar-section-skins')).toHaveCount(0)
+  await expect(page.getByTestId('sidebar-section-raw')).toHaveCount(0)
 
   await page.getByTestId('sidebar-section-upgrades').click()
 
