@@ -134,6 +134,51 @@
 - definitions 解决的是“资源怎么定位”
 - 不是“完整人物怎么组装”
 
+### 3.4 `preview_graphic_id` 与 `additional_shop_graphics` 复核结论
+
+2026-04-16 进一步复核后，针对“官方有没有现成预览图可以直接拿来替代 pose 判断”，当前结论更明确：
+
+- `preview_graphic_id` **不在**英雄或皮肤资源链路里。
+- 当前快照里全部 `preview_graphic_id` 都出现在：
+  - `adventure_defines[].rewards[].preview_graphic_id`
+- 已核到的这批 `preview_graphic_id` 对应的 `graphic_defines.type` 都是 `1`，资源路径是：
+  - `Icons/...`
+- 典型样例：
+  - `18787 -> Icons/CorruptedGems/Icon_CorruptedGem`
+  - `22944 -> Icons/Adventures/Vecna/Adventure_Vecna_Reward_RodPart_1`
+  - `24818 ~ 24822 -> Vecna 冒险奖励碎片图标`
+
+这说明：
+
+- `preview_graphic_id` 是**奖励预览图标**，不是英雄/皮肤主立绘预览；
+- 它不能替代当前皮肤立绘的 `SkelAnim` 静态 pose 选择。
+
+另一个看起来更接近“商店预览”的字段是：
+
+- `hero_skin_defines.details.additional_shop_graphics`
+
+但继续核对后发现：
+
+- 它只出现在 `149 / 673` 个皮肤上，不是全量字段；
+- 这批资源本身仍然全部是 `graphic_defines.type = 3 (SkelAnim)`；
+- 内容多为变身形态、伙伴、宠物、额外特效或商店展示补充图，而不是“该皮肤唯一正式主立绘”。
+
+抽样样例：
+
+- `Bee Strix`
+  - 主皮肤：`Characters/Event/Hero_Strix_Bee_4xup`
+  - 额外商店图：`Characters/Event/Hero_StrixBroom_Bee_4xup`
+- `Champion Asharra`
+  - 额外商店图：`Characters/Hero_AsharraFlying_Champion_4xup`
+
+这些资源虽然能作为“额外候选素材”或“特殊变身展示资源”参考，但依然需要：
+
+1. 解 `SkelAnim`；
+2. 选 sequence / frame；
+3. 逐帧合成。
+
+所以当前不能把 `additional_shop_graphics` 理解成“官方已经给好的最终静态立绘”。
+
 ---
 
 ## 4. 组装规则实际上藏在客户端运行时资源里
@@ -321,6 +366,8 @@
 - **有组装所需数据。**
 - 但这些数据**不在**当前页面消费的 definitions 普通字段里，而在 `graphic_defines.type = 3 (SkelAnim)` 对应的客户端二进制资源与运行时代码里。
 - 官方更像是提供了“动画资源格式 + 客户端加载器”，而不是提供一份现成可直接读取的“完整立绘 JSON 坐标表”。
+- `preview_graphic_id` 这类“预览”字段目前确认是奖励图标预览，不是英雄/皮肤主立绘预览。
+- `additional_shop_graphics` 虽然更接近商店展示资源，但它只是部分皮肤的额外 `SkelAnim` 素材，不是通用、可直接替代主立绘判断的官方答案。
 
 也就是说，后续实现方向应该是：
 
