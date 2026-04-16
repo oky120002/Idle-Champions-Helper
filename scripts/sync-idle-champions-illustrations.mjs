@@ -3,6 +3,8 @@ import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import { decodeRemoteGraphicBuffer, readPngDimensions } from './data/mobile-asset-codec.mjs'
+import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.mjs'
+import { renderSkelAnimPoseToPngBuffer } from './data/skelanim-renderer.mjs'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'
@@ -11,9 +13,9 @@ const DEFAULT_CONCURRENCY = 6
 const CHAMPION_ILLUSTRATION_DIR_NAME = 'champion-illustrations'
 
 const SLOT_PRIORITY = {
-  large: 3,
-  base: 2,
-  xl: 1,
+  xl: 3,
+  large: 2,
+  base: 1,
 }
 
 function buildIllustrationImagePath(currentVersion, group, id) {
@@ -24,7 +26,34 @@ async function readJson(filePath) {
   return JSON.parse(await readFile(filePath, 'utf8'))
 }
 
+function parseIdFilter(rawValue) {
+  if (!rawValue) {
+    return null
+  }
+
+  const ids = rawValue
+    .split(',')
+    .map((value) => value.trim())
+    .filter(Boolean)
+
+  return ids.length > 0 ? new Set(ids) : null
+}
+
 function compareCandidateMetrics(left, right) {
+  const leftSlotPriority = SLOT_PRIORITY[left.slot] ?? 0
+  const rightSlotPriority = SLOT_PRIORITY[right.slot] ?? 0
+
+  if (leftSlotPriority !== rightSlotPriority) {
+    return rightSlotPriority - leftSlotPriority
+  }
+
+  const leftStatic = Boolean(left.render?.isStaticPose)
+  const rightStatic = Boolean(right.render?.isStaticPose)
+
+  if (leftStatic !== rightStatic) {
+    return rightStatic ? 1 : -1
+  }
+
   const leftPixels = left.width * left.height
   const rightPixels = right.width * right.height
 
@@ -36,7 +65,7 @@ function compareCandidateMetrics(left, right) {
     return right.height - left.height
   }
 
-  return (SLOT_PRIORITY[right.slot] ?? 0) - (SLOT_PRIORITY[left.slot] ?? 0)
+  return 0
 }
 
 function sortIllustrations(left, right) {
@@ -70,14 +99,56 @@ async function runWithConcurrency(items, concurrency, worker) {
   return results
 }
 
-async function fetchDecodedCandidate(asset) {
+function isSkelAnimAsset(asset) {
+  return asset.remotePath.includes('/Characters/')
+}
+
+function resolvePreferredSequenceIndexes(asset, graphicDefById) {
+  const graphicDef = graphicDefById.get(String(asset.graphicId))
+  const sequenceOverride = graphicDef?.export_params?.sequence_override
+
+  if (!Array.isArray(sequenceOverride) || sequenceOverride.length === 0) {
+    return []
+  }
+
+  return sequenceOverride
+    .map((value) => Number(value) - 1)
+    .filter((value) => Number.isInteger(value) && value >= 0)
+}
+
+async function fetchDecodedCandidate(asset, graphicDefById) {
   const response = await fetch(asset.remoteUrl, { cache: 'no-store' })
 
   if (!response.ok) {
     throw new Error(`下载资源失败：HTTP ${response.status}`)
   }
 
-  const decodedBuffer = decodeRemoteGraphicBuffer(asset, Buffer.from(await response.arrayBuffer()))
+  const rawBuffer = Buffer.from(await response.arrayBuffer())
+
+  if (isSkelAnimAsset(asset)) {
+    const skelAnim = decodeSkelAnimGraphicBuffer(asset, rawBuffer)
+    const rendered = await renderSkelAnimPoseToPngBuffer(skelAnim, {
+      preferredSequenceIndexes: resolvePreferredSequenceIndexes(asset, graphicDefById),
+    })
+
+    return {
+      asset,
+      bytes: rendered.bytes,
+      width: rendered.width,
+      height: rendered.height,
+      render: {
+        pipeline: 'skelanim',
+        sequenceIndex: rendered.render.sequenceIndex,
+        sequenceLength: rendered.render.sequenceLength,
+        isStaticPose: rendered.render.isStaticPose,
+        frameIndex: rendered.render.frameIndex,
+        visiblePieceCount: rendered.render.visiblePieceCount,
+        bounds: rendered.render.bounds,
+      },
+    }
+  }
+
+  const decodedBuffer = decodeRemoteGraphicBuffer(asset, rawBuffer)
   const dimensions = readPngDimensions(decodedBuffer)
 
   return {
@@ -85,16 +156,25 @@ async function fetchDecodedCandidate(asset) {
     bytes: decodedBuffer,
     width: dimensions.width,
     height: dimensions.height,
+      render: {
+        pipeline: 'decoded-png',
+        sequenceIndex: null,
+        sequenceLength: null,
+        isStaticPose: null,
+        frameIndex: null,
+        visiblePieceCount: null,
+        bounds: null,
+    },
   }
 }
 
-async function selectBestIllustrationCandidate(entry) {
+async function selectBestIllustrationCandidate(entry, graphicDefById) {
   const candidates = []
   const errors = []
 
   for (const candidate of entry.candidates) {
     try {
-      const decoded = await fetchDecodedCandidate(candidate.asset)
+      const decoded = await fetchDecodedCandidate(candidate.asset, graphicDefById)
       candidates.push({
         slot: candidate.slot,
         ...decoded,
@@ -117,9 +197,14 @@ async function selectBestIllustrationCandidate(entry) {
 }
 
 function buildHeroIllustrationTasks(visuals) {
+  const championIdFilter = parseIdFilter(visuals.filters?.championIds ?? null)
   const tasks = []
 
   for (const visual of visuals.items ?? []) {
+    if (championIdFilter && !championIdFilter.has(visual.championId)) {
+      continue
+    }
+
     if (!visual.base) {
       continue
     }
@@ -143,10 +228,20 @@ function buildHeroIllustrationTasks(visuals) {
 }
 
 function buildSkinIllustrationTasks(visuals) {
+  const championIdFilter = parseIdFilter(visuals.filters?.championIds ?? null)
+  const skinIdFilter = parseIdFilter(visuals.filters?.skinIds ?? null)
   const tasks = []
 
   for (const visual of visuals.items ?? []) {
+    if (championIdFilter && !championIdFilter.has(visual.championId)) {
+      continue
+    }
+
     for (const skin of visual.skins ?? []) {
+      if (skinIdFilter && !skinIdFilter.has(skin.id)) {
+        continue
+      }
+
       const candidates = [
         skin.large ? { slot: 'large', asset: skin.large } : null,
         skin.base ? { slot: 'base', asset: skin.base } : null,
@@ -180,13 +275,23 @@ export async function syncChampionIllustrations(options = {}) {
   const outputDir = path.resolve(options.outputDir ?? DEFAULT_OUTPUT_DIR)
   const currentVersion = options.currentVersion ?? DEFAULT_CURRENT_VERSION
   const visualsFile = path.resolve(options.visualsFile ?? path.join(outputDir, DEFAULT_VISUALS_FILE))
+  const definitionsInput = options.input ? path.resolve(options.input) : null
   const concurrency = Math.max(1, Number(options.concurrency ?? DEFAULT_CONCURRENCY))
   const visuals = await readJson(visualsFile)
+  const definitions = definitionsInput ? await readJson(definitionsInput) : null
+  const graphicDefById = new Map((definitions?.graphic_defines ?? []).map((item) => [String(item.id), item]))
+  const filteredVisuals = {
+    ...visuals,
+    filters: {
+      championIds: options.championIds ?? null,
+      skinIds: options.skinIds ?? null,
+    },
+  }
 
   const illustrationRoot = path.join(outputDir, CHAMPION_ILLUSTRATION_DIR_NAME)
   const tasks = [
-    ...buildHeroIllustrationTasks(visuals),
-    ...buildSkinIllustrationTasks(visuals),
+    ...buildHeroIllustrationTasks(filteredVisuals),
+    ...buildSkinIllustrationTasks(filteredVisuals),
   ]
 
   await rm(illustrationRoot, { recursive: true, force: true })
@@ -194,7 +299,7 @@ export async function syncChampionIllustrations(options = {}) {
   await mkdir(path.join(illustrationRoot, 'skins'), { recursive: true })
 
   const writtenIllustrations = await runWithConcurrency(tasks, concurrency, async (task) => {
-    const selected = await selectBestIllustrationCandidate(task)
+    const selected = await selectBestIllustrationCandidate(task, graphicDefById)
     const outputFile = path.join(illustrationRoot, task.outputGroup, task.outputFileName)
 
     await writeFile(outputFile, selected.bytes)
@@ -212,6 +317,7 @@ export async function syncChampionIllustrations(options = {}) {
       sourceGraphicId: selected.asset.graphicId,
       sourceGraphic: selected.asset.sourceGraphic,
       sourceVersion: selected.asset.sourceVersion,
+      render: selected.render,
       image: {
         path: buildIllustrationImagePath(currentVersion, task.outputGroup, task.outputFileName.replace(/\.png$/u, '')),
         width: selected.width,
@@ -247,20 +353,23 @@ export async function syncChampionIllustrations(options = {}) {
 
 function printUsage() {
   console.log(`用法：
-  node scripts/sync-idle-champions-illustrations.mjs [--visualsFile <file>] [--outputDir <dir>]
+  node scripts/sync-idle-champions-illustrations.mjs [--input <definitions.json>] [--visualsFile <file>] [--outputDir <dir>]
 
 说明：
-  基于 champion-visuals.json 拉取并写出页面可直接消费的本地立绘资源。
+  基于 champion-visuals.json 拉取、解析 SkelAnim 并写出页面可直接消费的本地立绘资源。
 `)
 }
 
 async function main() {
   const { values } = parseArgs({
     options: {
+      input: { type: 'string' },
       visualsFile: { type: 'string' },
       outputDir: { type: 'string' },
       currentVersion: { type: 'string' },
       concurrency: { type: 'string' },
+      championIds: { type: 'string' },
+      skinIds: { type: 'string' },
       help: { type: 'boolean' },
     },
   })
