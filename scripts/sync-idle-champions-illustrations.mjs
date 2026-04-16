@@ -3,12 +3,17 @@ import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import { decodeRemoteGraphicBuffer, readPngDimensions } from './data/mobile-asset-codec.mjs'
+import {
+  loadChampionIllustrationOverrides,
+  resolveChampionIllustrationOverride,
+} from './data/champion-illustration-overrides.mjs'
 import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.mjs'
 import { renderSkelAnimPoseToPngBuffer } from './data/skelanim-renderer.mjs'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'
 const DEFAULT_VISUALS_FILE = 'champion-visuals.json'
+const DEFAULT_ILLUSTRATION_OVERRIDES = 'scripts/data/champion-illustration-overrides.json'
 const DEFAULT_CONCURRENCY = 6
 const CHAMPION_ILLUSTRATION_DIR_NAME = 'champion-illustrations'
 
@@ -68,6 +73,17 @@ function compareCandidateMetrics(left, right) {
   return 0
 }
 
+function compareCandidatePriority(left, right) {
+  const leftPriority = left.manualOverride?.priorityScore ?? 0
+  const rightPriority = right.manualOverride?.priorityScore ?? 0
+
+  if (leftPriority !== rightPriority) {
+    return rightPriority - leftPriority
+  }
+
+  return compareCandidateMetrics(left, right)
+}
+
 function sortIllustrations(left, right) {
   return (
     left.seat - right.seat ||
@@ -103,6 +119,24 @@ function isSkelAnimAsset(asset) {
   return asset.remotePath.includes('/Characters/')
 }
 
+function mergePreferredIndexes(...groups) {
+  const ordered = []
+  const seen = new Set()
+
+  for (const group of groups) {
+    for (const value of group ?? []) {
+      if (!Number.isInteger(value) || value < 0 || seen.has(value)) {
+        continue
+      }
+
+      seen.add(value)
+      ordered.push(value)
+    }
+  }
+
+  return ordered
+}
+
 function resolvePreferredSequenceIndexes(asset, graphicDefById) {
   const graphicDef = graphicDefById.get(String(asset.graphicId))
   const sequenceOverride = graphicDef?.export_params?.sequence_override
@@ -116,7 +150,8 @@ function resolvePreferredSequenceIndexes(asset, graphicDefById) {
     .filter((value) => Number.isInteger(value) && value >= 0)
 }
 
-async function fetchDecodedCandidate(asset, graphicDefById) {
+async function fetchDecodedCandidate(candidate, graphicDefById, manualOverride = null) {
+  const { asset } = candidate
   const response = await fetch(asset.remoteUrl, { cache: 'no-store' })
 
   if (!response.ok) {
@@ -128,7 +163,11 @@ async function fetchDecodedCandidate(asset, graphicDefById) {
   if (isSkelAnimAsset(asset)) {
     const skelAnim = decodeSkelAnimGraphicBuffer(asset, rawBuffer)
     const rendered = await renderSkelAnimPoseToPngBuffer(skelAnim, {
-      preferredSequenceIndexes: resolvePreferredSequenceIndexes(asset, graphicDefById),
+      preferredSequenceIndexes: mergePreferredIndexes(
+        manualOverride?.preferredSequenceIndexes ?? [],
+        resolvePreferredSequenceIndexes(asset, graphicDefById),
+      ),
+      preferredFrameIndexes: manualOverride?.preferredFrameIndexes ?? [],
     })
 
     return {
@@ -173,10 +212,13 @@ async function selectBestIllustrationCandidate(entry, graphicDefById) {
   const errors = []
 
   for (const candidate of entry.candidates) {
+    const manualOverride = resolveChampionIllustrationOverride(entry, candidate, entry.illustrationOverrides)
+
     try {
-      const decoded = await fetchDecodedCandidate(candidate.asset, graphicDefById)
+      const decoded = await fetchDecodedCandidate(candidate, graphicDefById, manualOverride)
       candidates.push({
         slot: candidate.slot,
+        manualOverride,
         ...decoded,
       })
     } catch (error) {
@@ -192,7 +234,7 @@ async function selectBestIllustrationCandidate(entry, graphicDefById) {
     throw new Error(`${entry.id} 无法生成立绘：${message}`)
   }
 
-  candidates.sort(compareCandidateMetrics)
+  candidates.sort(compareCandidatePriority)
   return candidates[0]
 }
 
@@ -275,10 +317,12 @@ export async function syncChampionIllustrations(options = {}) {
   const outputDir = path.resolve(options.outputDir ?? DEFAULT_OUTPUT_DIR)
   const currentVersion = options.currentVersion ?? DEFAULT_CURRENT_VERSION
   const visualsFile = path.resolve(options.visualsFile ?? path.join(outputDir, DEFAULT_VISUALS_FILE))
+  const illustrationOverridesFile = path.resolve(options.illustrationOverrides ?? DEFAULT_ILLUSTRATION_OVERRIDES)
   const definitionsInput = options.input ? path.resolve(options.input) : null
   const concurrency = Math.max(1, Number(options.concurrency ?? DEFAULT_CONCURRENCY))
   const visuals = await readJson(visualsFile)
   const definitions = definitionsInput ? await readJson(definitionsInput) : null
+  const illustrationOverrides = await loadChampionIllustrationOverrides(illustrationOverridesFile)
   const graphicDefById = new Map((definitions?.graphic_defines ?? []).map((item) => [String(item.id), item]))
   const filteredVisuals = {
     ...visuals,
@@ -292,7 +336,10 @@ export async function syncChampionIllustrations(options = {}) {
   const tasks = [
     ...buildHeroIllustrationTasks(filteredVisuals),
     ...buildSkinIllustrationTasks(filteredVisuals),
-  ]
+  ].map((task) => ({
+    ...task,
+    illustrationOverrides,
+  }))
 
   await rm(illustrationRoot, { recursive: true, force: true })
   await mkdir(path.join(illustrationRoot, 'heroes'), { recursive: true })
@@ -317,6 +364,7 @@ export async function syncChampionIllustrations(options = {}) {
       sourceGraphicId: selected.asset.graphicId,
       sourceGraphic: selected.asset.sourceGraphic,
       sourceVersion: selected.asset.sourceVersion,
+      manualOverride: selected.manualOverride?.audit ?? null,
       render: selected.render,
       image: {
         path: buildIllustrationImagePath(currentVersion, task.outputGroup, task.outputFileName.replace(/\.png$/u, '')),
@@ -353,7 +401,7 @@ export async function syncChampionIllustrations(options = {}) {
 
 function printUsage() {
   console.log(`用法：
-  node scripts/sync-idle-champions-illustrations.mjs [--input <definitions.json>] [--visualsFile <file>] [--outputDir <dir>]
+  node scripts/sync-idle-champions-illustrations.mjs [--input <definitions.json>] [--visualsFile <file>] [--outputDir <dir>] [--illustrationOverrides <file>]
 
 说明：
   基于 champion-visuals.json 拉取、解析 SkelAnim 并写出页面可直接消费的本地立绘资源。
@@ -367,6 +415,7 @@ async function main() {
       visualsFile: { type: 'string' },
       outputDir: { type: 'string' },
       currentVersion: { type: 'string' },
+      illustrationOverrides: { type: 'string' },
       concurrency: { type: 'string' },
       championIds: { type: 'string' },
       skinIds: { type: 'string' },

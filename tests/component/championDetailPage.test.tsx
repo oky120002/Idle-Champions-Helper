@@ -396,6 +396,20 @@ const illustrationFixture: DataCollection<ChampionIllustration> = {
       sourceGraphicId: '4471',
       sourceGraphic: 'Characters/Hero_Minsc_GiantBoo_2xup',
       sourceVersion: 1,
+      render: {
+        pipeline: 'skelanim',
+        sequenceIndex: 0,
+        sequenceLength: 1,
+        isStaticPose: true,
+        frameIndex: 0,
+        visiblePieceCount: 24,
+        bounds: {
+          minX: 0,
+          minY: 0,
+          maxX: 1024,
+          maxY: 1024,
+        },
+      },
       image: {
         path: 'v1/champion-illustrations/skins/4.png',
         width: 1024,
@@ -423,6 +437,20 @@ const illustrationFixture: DataCollection<ChampionIllustration> = {
       sourceGraphicId: '4472',
       sourceGraphic: 'Characters/Hero_Minsc_SpaceBoo',
       sourceVersion: 1,
+      render: {
+        pipeline: 'skelanim',
+        sequenceIndex: 0,
+        sequenceLength: 1,
+        isStaticPose: true,
+        frameIndex: 0,
+        visiblePieceCount: 24,
+        bounds: {
+          minX: 0,
+          minY: 0,
+          maxX: 1024,
+          maxY: 1024,
+        },
+      },
       image: {
         path: 'v1/champion-illustrations/skins/5.png',
         width: 1024,

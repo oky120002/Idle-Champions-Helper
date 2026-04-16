@@ -13,6 +13,7 @@ async function main() {
       versionFile: { type: 'string' },
       currentVersion: { type: 'string' },
       manualOverrides: { type: 'string' },
+      illustrationOverrides: { type: 'string' },
       masterApiUrl: { type: 'string' },
       playserverClientVersion: { type: 'string' },
       definitionsClientVersion: { type: 'string' },
@@ -68,6 +69,7 @@ async function main() {
     input: fetched.rawFile,
     outputDir: values.outputDir,
     currentVersion: values.currentVersion,
+    illustrationOverrides: values.illustrationOverrides,
   })
 
   console.log(`官方基座数据流水线完成：`)

@@ -162,6 +162,7 @@
 - `sourceGraphicId`
 - `sourceGraphic`
 - `sourceVersion`
+- `manualOverride`
 - `render.pipeline`
 - `render.sequenceIndex`
 - `render.sequenceLength`
@@ -174,6 +175,7 @@
 
 - 排查某张图到底来自哪个 graphic；
 - 排查默认选择的是哪个 sequence / frame；
+- 排查某张图是否命中了 `skinId / graphicId / championId` 人工覆盖；
 - 判断异常图是否因为 sequence、frame 还是 slot 选择错误；
 - 为后续人工覆盖提供最小必要上下文。
 
@@ -198,20 +200,22 @@
 
 ---
 
-## 7. 后续人工覆盖应该落在哪里
+## 7. 当前人工覆盖层与后续扩展
 
 ### 7.1 当前最合适的覆盖层位置
 
-如果后续遇到个别皮肤“默认首帧不对”或“应该选别的 slot / sequence / frame”，最合适的覆盖层应当放在：
+截至 2026-04-16，仓库已经落地了第一版人工覆盖层，位置就是：
 
-- `scripts/sync-idle-champions-illustrations.mjs` 的候选选择阶段；
-- 或在它读取完 `champion-visuals.json` 后，增加一层“按 skinId / graphicId 注入覆盖规则”的配置。
+- `scripts/data/champion-illustration-overrides.json`
+- `scripts/data/champion-illustration-overrides.mjs`
+- `scripts/sync-idle-champions-illustrations.mjs` 的候选选择阶段
 
 原因：
 
 - `skelanim-renderer.mjs` 当前已经支持 `preferredSequenceIndexes` 和 `preferredFrameIndexes`；
-- 覆盖层只需要在调用渲染器前，把特定皮肤的首选 sequence / frame / slot 注入进去；
+- 覆盖层只需要在调用渲染器前，把特定皮肤或资源的首选 sequence / frame / slot 注入进去；
 - 没必要把“业务级例外规则”写死到底层矩阵或解码逻辑里。
+- 当前覆盖文件已经支持按 `skinId / graphicId / championId` 匹配，并在 `champion-illustrations.json` 里输出 `manualOverride` 审计字段。
 
 ### 7.2 推荐的覆盖键
 
@@ -224,9 +228,19 @@
 3. `championId`
    - 只适合做兜底，不适合覆盖具体皮肤细节。
 
-### 7.3 推荐的覆盖字段
+### 7.3 当前首版已支持的覆盖字段
 
-未来如果加人工覆盖，建议最少支持：
+当前 `scripts/data/champion-illustration-overrides.json` 已支持：
+
+- `skinId`
+- `graphicId`
+- `championId`
+- `slot`
+- `preferredSequenceIndexes`
+- `preferredFrameIndexes`
+- `notes`
+
+示例：
 
 ```json
 {
@@ -236,6 +250,13 @@
   "preferredFrameIndexes": [0]
 }
 ```
+
+当前实现约束：
+
+- `sequence / frame` 索引使用 `0` 基；
+- `slot` 是“优先尝试该候选槽位”，不是绝对只允许这一槽；
+- `skinId > graphicId > championId`，低优先级覆盖只做兜底，高优先级同字段可覆盖低优先级；
+- 如果某个覆盖目标候选实际不可解码，脚本仍会回退到其他可用候选，避免整张图构建失败。
 
 如果后续出现更复杂的例外，再考虑扩展：
 
@@ -264,13 +285,13 @@
 ### 8.1 单元测试
 
 ```bash
-node --test scripts/data/skelanim.test.mjs
+node --test scripts/data/skelanim.test.mjs scripts/sync-idle-champions-illustrations.test.mjs
 ```
 
 ### 8.2 组件测试
 
 ```bash
-npm run test:component -- tests/component/illustrationsPage.test.tsx
+npm run test:component -- tests/component/illustrationsPage.test.tsx tests/component/championDetailPage.test.tsx
 ```
 
 ### 8.3 小范围样例渲染

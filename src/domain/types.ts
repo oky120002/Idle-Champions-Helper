@@ -96,6 +96,15 @@ export interface ChampionIllustrationRender {
   bounds: ChampionIllustrationRenderBounds | null
 }
 
+export interface ChampionIllustrationManualOverride {
+  matchedBy: Array<'championId' | 'graphicId' | 'skinId'>
+  requestedSlot: ChampionIllustrationSourceSlot | null
+  candidateMatchedSlot: boolean | null
+  preferredSequenceIndexes: number[]
+  preferredFrameIndexes: number[]
+  notes: string[]
+}
+
 export interface ChampionIllustration {
   id: string
   championId: string
@@ -109,6 +118,7 @@ export interface ChampionIllustration {
   sourceGraphicId: string
   sourceGraphic: string
   sourceVersion: number | null
+  manualOverride?: ChampionIllustrationManualOverride | null
   render: ChampionIllustrationRender
   image: ChampionIllustrationImage
 }
