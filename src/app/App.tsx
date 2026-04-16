@@ -29,6 +29,14 @@ function getNavClassName(isActive: boolean): string {
   return isActive ? 'nav-link nav-link--active' : 'nav-link'
 }
 
+function isNavigationItemActive(pathname: string, to: string): boolean {
+  if (to === '/') {
+    return pathname === '/'
+  }
+
+  return pathname === to || pathname.startsWith(`${to}/`)
+}
+
 function MobileMenuIcon({ isOpen }: { isOpen: boolean }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
@@ -59,6 +67,7 @@ export function App() {
   const isHomeRoute = location.pathname === '/'
   const isMobileNavOpen = mobileNavState.isOpen && mobileNavState.pathname === location.pathname
   const isHeaderCondensed = !isHomeRoute && Math.max(scrollY, typeof window === 'undefined' ? 0 : window.scrollY) > 56
+  const activeNavigationItem = navigation.find((item) => isNavigationItemActive(location.pathname, item.to)) ?? navigation[0]
 
   useEffect(() => {
     const syncScrollY = () => {
@@ -98,6 +107,33 @@ export function App() {
             </div>
           </div>
           <div className="site-header__topbar-actions">
+            <button
+              type="button"
+              className={isMobileNavOpen ? 'site-header__menu-toggle site-header__menu-toggle--active' : 'site-header__menu-toggle'}
+              aria-controls="site-primary-nav"
+              aria-expanded={isMobileNavOpen}
+              aria-label={isMobileNavOpen ? t({ zh: '收起主导航', en: 'Close primary navigation' }) : t({ zh: '展开主导航', en: 'Open primary navigation' })}
+              onClick={() =>
+                setMobileNavState((current) => ({
+                  isOpen: current.pathname === location.pathname ? !current.isOpen : true,
+                  pathname: location.pathname,
+                }))
+              }
+            >
+              <span className="site-header__menu-toggle-copy">
+                <span className="site-header__menu-toggle-label">{t({ zh: '快速导航', en: 'Quick nav' })}</span>
+                <strong className="site-header__menu-toggle-value">{t(activeNavigationItem.label)}</strong>
+              </span>
+              <span className="site-header__menu-toggle-indicator">
+                <span className="site-header__menu-toggle-indicator-icon">
+                  <MobileMenuIcon isOpen={isMobileNavOpen} />
+                </span>
+                <span className="site-header__menu-toggle-indicator-text">
+                  {isMobileNavOpen ? t({ zh: '收起', en: 'Close' }) : t({ zh: '展开', en: 'Open' })}
+                </span>
+              </span>
+            </button>
+
             <div
               className="locale-switcher"
               role="group"
@@ -122,23 +158,6 @@ export function App() {
               </div>
             </div>
           </div>
-
-          <button
-            type="button"
-            className={isMobileNavOpen ? 'site-header__menu-toggle site-header__menu-toggle--active' : 'site-header__menu-toggle'}
-            aria-controls="site-primary-nav"
-            aria-expanded={isMobileNavOpen}
-            aria-label={isMobileNavOpen ? t({ zh: '收起主导航', en: 'Close primary navigation' }) : t({ zh: '展开主导航', en: 'Open primary navigation' })}
-            onClick={() =>
-              setMobileNavState((current) => ({
-                isOpen: current.pathname === location.pathname ? !current.isOpen : true,
-                pathname: location.pathname,
-              }))
-            }
-          >
-            <MobileMenuIcon isOpen={isMobileNavOpen} />
-            <span>{isMobileNavOpen ? t({ zh: '收起导航', en: 'Close nav' }) : t({ zh: '展开导航', en: 'Open nav' })}</span>
-          </button>
         </div>
 
         <div className="site-header__content-shell">
@@ -158,7 +177,19 @@ export function App() {
           className={isMobileNavOpen ? 'site-nav site-nav--mobile-open' : 'site-nav'}
           aria-label={t({ zh: '主导航', en: 'Primary navigation' })}
         >
-          {navigation.map((item) => (
+          <div className="site-nav__mobile-head" aria-hidden="true">
+            <span className="site-nav__eyebrow">{t({ zh: '切换工作台', en: 'Switch workspaces' })}</span>
+            <div className="site-nav__summary">
+              <strong>{t(activeNavigationItem.label)}</strong>
+              <span>
+                {t({
+                  zh: '在资料、阵型、限制与个人数据之间快速跳转，不依赖横向滑动。',
+                  en: 'Jump between lookup, formations, restrictions, and personal data without horizontal scrolling.',
+                })}
+              </span>
+            </div>
+          </div>
+          {navigation.map((item, index) => (
             <NavLink
               key={item.to}
               to={item.to}
@@ -171,7 +202,10 @@ export function App() {
                 })
               }
             >
-              {t(item.label)}
+              <span className="nav-link__index" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <span className="nav-link__label">{t(item.label)}</span>
             </NavLink>
           ))}
         </nav>

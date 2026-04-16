@@ -42,26 +42,38 @@ test('移动端顶部导航应保持紧凑且不依赖横向滑动', async ({ pa
     const localeRect = locale.getBoundingClientRect()
     const menuRect = menu.getBoundingClientRect()
     const menuStyle = window.getComputedStyle(menu)
+    const isOverlapping = !(
+      menuRect.right <= localeRect.left ||
+      menuRect.left >= localeRect.right ||
+      menuRect.bottom <= localeRect.top ||
+      menuRect.top >= localeRect.bottom
+    )
 
     return {
-      localeTop: Math.round(localeRect.top),
+      isOverlapping,
       localeBottom: Math.round(localeRect.bottom),
-      menuTop: Math.round(menuRect.top),
+      localeLeft: Math.round(localeRect.left),
+      localeTop: Math.round(localeRect.top),
+      menuBottom: Math.round(menuRect.bottom),
+      menuLeft: Math.round(menuRect.left),
       menuHeight: Math.round(menuRect.height),
-      menuWidth: Math.round(menuRect.width),
+      menuRight: Math.round(menuRect.right),
       menuRadius: Math.round(Number.parseFloat(menuStyle.borderTopLeftRadius)),
+      menuTop: Math.round(menuRect.top),
     }
   })
 
   await expect(menuToggle).toBeVisible()
 
   expect(headerMetrics.top).toBe(0)
-  expect(headerMetrics.height).toBeLessThanOrEqual(88)
-  expect(utilityMetrics.menuTop).toBeGreaterThanOrEqual(utilityMetrics.localeTop + 10)
-  expect(utilityMetrics.menuTop).toBeLessThan(utilityMetrics.localeBottom + 8)
-  expect(utilityMetrics.menuHeight).toBeLessThanOrEqual(36)
-  expect(utilityMetrics.menuWidth).toBeGreaterThan(utilityMetrics.menuHeight + 10)
-  expect(utilityMetrics.menuRadius).toBeLessThanOrEqual(16)
+  expect(headerMetrics.height).toBeLessThanOrEqual(132)
+  expect(utilityMetrics.isOverlapping).toBe(false)
+  expect(utilityMetrics.menuLeft).toBeLessThan(utilityMetrics.localeLeft)
+  expect(utilityMetrics.menuTop).toBeGreaterThanOrEqual(utilityMetrics.localeTop - 2)
+  expect(utilityMetrics.menuBottom).toBeLessThanOrEqual(utilityMetrics.localeBottom + 2)
+  expect(utilityMetrics.menuHeight).toBeGreaterThanOrEqual(48)
+  expect(utilityMetrics.menuRadius).toBeGreaterThanOrEqual(18)
+  expect(utilityMetrics.menuRight).toBeGreaterThan(utilityMetrics.menuLeft + 120)
   expect(await getDocumentHorizontalOverflow(page)).toBeLessThanOrEqual(1)
 
   await menuToggle.click()
@@ -76,6 +88,7 @@ test('移动端顶部导航应保持紧凑且不依赖横向滑动', async ({ pa
     return {
       display: style.display,
       clientWidth: Math.round(element.clientWidth),
+      panelRadius: Math.round(Number.parseFloat(style.borderTopLeftRadius)),
       scrollWidth: Math.round(element.scrollWidth),
     }
   })
@@ -89,8 +102,10 @@ test('移动端顶部导航应保持紧凑且不依赖横向滑动', async ({ pa
       return Math.round(element.getBoundingClientRect().top)
     }),
   )
+  await expect(page.locator('.site-nav__summary')).toContainText('英雄筛选')
 
   expect(navMetrics.display).toBe('grid')
+  expect(navMetrics.panelRadius).toBeGreaterThanOrEqual(20)
   expect(navMetrics.scrollWidth - navMetrics.clientWidth).toBeLessThanOrEqual(1)
   expect(Math.max(...navLinkTops) - Math.min(...navLinkTops)).toBeGreaterThan(20)
   expect(await getDocumentHorizontalOverflow(page)).toBeLessThanOrEqual(1)
