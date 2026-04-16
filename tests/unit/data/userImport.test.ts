@@ -9,7 +9,7 @@ import {
 describe('userImport helpers', () => {
   it('从 Support URL 提取合法凭证与 network', () => {
     const url =
-      'https://help.idlechampions.com/?page=help&network=mobile&user_id=123456789&device_hash=ABCDEF1234567890'
+      'https://support.example.invalid/?page=help&network=mobile&user_id=123456789&device_hash=ABCDEF1234567890'
 
     expect(parseSupportUrl(url)).toEqual({
       ok: true,

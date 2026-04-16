@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
 
 vi.mock('../../src/data/client', async () => {
@@ -12,13 +12,8 @@ vi.mock('../../src/data/client', async () => {
   }
 })
 
-vi.mock('../../src/data/remoteGraphicAsset', () => ({
-  loadRemoteGraphicAssetUrl: vi.fn(),
-}))
-
 import { I18nProvider } from '../../src/app/i18n'
 import { loadCollection } from '../../src/data/client'
-import { loadRemoteGraphicAssetUrl } from '../../src/data/remoteGraphicAsset'
 import { ChampionsPage } from '../../src/pages/ChampionsPage'
 import type { Champion, ChampionVisual, DataCollection, LocalizedText } from '../../src/domain/types'
 
@@ -144,8 +139,6 @@ const visualsFixture: DataCollection<ChampionVisual> = {
 }
 
 const mockedLoadCollection = vi.mocked(loadCollection)
-const mockedLoadRemoteGraphicAssetUrl = vi.mocked(loadRemoteGraphicAssetUrl)
-
 function renderChampionsPage() {
   return render(
     <I18nProvider>
@@ -172,19 +165,10 @@ beforeEach(() => {
 
     throw new Error(`unexpected collection: ${name}`)
   })
-
-  mockedLoadRemoteGraphicAssetUrl.mockImplementation(async (asset) => {
-    return `blob:${asset.graphicId}`
-  })
-})
-
-afterEach(() => {
-  mockedLoadCollection.mockReset()
-  mockedLoadRemoteGraphicAssetUrl.mockReset()
 })
 
 describe('ChampionsPage visuals', () => {
-  it('支持打开英雄视觉档案并切换到皮肤 xl 资源槽位', async () => {
+  it('支持打开英雄视觉档案并切换到皮肤 xl 资源槽位，同时不暴露官方请求入口', async () => {
     const user = userEvent.setup()
 
     renderChampionsPage()
@@ -196,23 +180,14 @@ describe('ChampionsPage visuals', () => {
     const panel = await screen.findByLabelText('当前英雄视觉档案')
 
     expect(within(panel).getByRole('button', { name: '本体立绘' })).toBeInTheDocument()
-    expect(await within(panel).findByRole('img', { name: '阿尔法本体立绘预览' })).toHaveAttribute('src', 'blob:1000')
-    expect(mockedLoadRemoteGraphicAssetUrl).toHaveBeenCalledWith(
-      expect.objectContaining({
-        graphicId: '1000',
-        remoteUrl: 'https://example.com/mobile_assets/Characters/Hero_Alpha',
-      }),
-    )
+    expect(within(panel).getByText(/静态站不会请求官方资源/)).toBeInTheDocument()
+    expect(within(panel).queryByText('https://example.com/mobile_assets/Characters/Hero_Alpha')).not.toBeInTheDocument()
+    expect(within(panel).queryByRole('link', { name: '打开原始地址' })).not.toBeInTheDocument()
+    expect(within(panel).getByText('构建期同步 / 站内不请求')).toBeInTheDocument()
 
     await user.click(within(panel).getByRole('button', { name: '皮肤 xl' }))
 
-    expect(await within(panel).findByRole('img', { name: '阿尔法皮肤 xl预览' })).toHaveAttribute('src', 'blob:1005')
-    expect(mockedLoadRemoteGraphicAssetUrl).toHaveBeenCalledWith(
-      expect.objectContaining({
-        graphicId: '1005',
-        remoteUrl: 'https://example.com/mobile_assets/Characters/Hero_AlphaPrime_4xup',
-      }),
-    )
     expect(within(panel).getByText('Characters/Hero_AlphaPrime_4xup')).toBeInTheDocument()
+    expect(within(panel).getByText('graphic #1005')).toBeInTheDocument()
   })
 })

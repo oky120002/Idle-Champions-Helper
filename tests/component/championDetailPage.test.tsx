@@ -15,7 +15,12 @@ vi.mock('../../src/data/client', async () => {
 import { I18nProvider } from '../../src/app/i18n'
 import { loadChampionDetail, loadCollection } from '../../src/data/client'
 import { ChampionDetailPage } from '../../src/pages/ChampionDetailPage'
-import type { ChampionDetail, ChampionIllustration, DataCollection } from '../../src/domain/types'
+import type {
+  ChampionDetail,
+  ChampionIllustration,
+  ChampionSpecializationGraphic,
+  DataCollection,
+} from '../../src/domain/types'
 
 const mockedLoadChampionDetail = vi.mocked(loadChampionDetail)
 const mockedLoadCollection = vi.mocked(loadCollection)
@@ -490,6 +495,11 @@ const illustrationFixture: DataCollection<ChampionIllustration> = {
   ],
 }
 
+const specializationGraphicFixture: DataCollection<ChampionSpecializationGraphic> = {
+  updatedAt: '2026-04-16',
+  items: [],
+}
+
 function renderChampionDetailPage() {
   return renderChampionDetailPageAt('/champions/7')
 }
@@ -552,6 +562,10 @@ beforeEach(() => {
       return illustrationFixture
     }
 
+    if (name === 'champion-specialization-graphics') {
+      return specializationGraphicFixture
+    }
+
     throw new Error(`unexpected collection: ${name}`)
   })
 })
@@ -577,7 +591,7 @@ describe('ChampionDetailPage', () => {
     expect(screen.getByRole('heading', { level: 2, name: '叙事资料与能力分布' })).toBeInTheDocument()
     expect(screen.getByText(/明斯克是一位有些迟钝但非常勇敢的巡林客/)).toBeInTheDocument()
     expect(screen.getByText('偏好敌人：类人生物')).toBeInTheDocument()
-    expect(screen.getByText('Favored Enemy: Humanoids')).toBeInTheDocument()
+    expect(screen.queryByText('Favored Enemy: Humanoids')).not.toBeInTheDocument()
     expect(screen.getByText('类人生物敌人成为明斯克的偏好对手。')).toBeInTheDocument()
     expect(screen.getByText('商店上架时间')).toBeInTheDocument()
     expect(screen.getByText('周增益')).toBeInTheDocument()
@@ -587,7 +601,9 @@ describe('ChampionDetailPage', () => {
     expect(screen.queryByText('下个活动可得')).not.toBeInTheDocument()
     expect(screen.getAllByText('使偏好敌人（2 个分支）效果提高 200%').length).toBeGreaterThan(0)
     expect(screen.getByText('自身伤害提高 30%')).toBeInTheDocument()
-    expect(screen.getByText('获取来源')).toBeInTheDocument()
+    expect(screen.getByText('来源')).toBeInTheDocument()
+    expect(screen.getByText('收藏')).toBeInTheDocument()
+    expect(screen.queryByText(/更多说明/)).not.toBeInTheDocument()
     expect(screen.queryByText('软货币')).not.toBeInTheDocument()
     expect(screen.queryByText('Large Graphic ID')).not.toBeInTheDocument()
     expect(screen.queryByText('原始字段')).not.toBeInTheDocument()

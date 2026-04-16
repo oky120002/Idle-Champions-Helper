@@ -1,6 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { pickLocaleText, type AppLocale } from '../app/i18n'
-import { loadRemoteGraphicAssetUrl } from '../data/remoteGraphicAsset'
 import {
   formatSeatLabel,
   getPrimaryLocalizedText,
@@ -17,16 +16,6 @@ import { ChampionAvatar } from './ChampionAvatar'
 import { StatusBanner } from './StatusBanner'
 
 type AssetSelection = 'hero-base' | 'hero-portrait' | 'skin-base' | 'skin-large' | 'skin-xl' | 'skin-portrait'
-
-type PreviewState =
-  | { status: 'idle' }
-  | { status: 'loading' }
-  | { status: 'ready'; src: string }
-  | { status: 'error'; message: string }
-
-type PreviewResolution =
-  | { key: string; status: 'ready'; src: string }
-  | { key: string; status: 'error'; message: string }
 
 interface AssetOption {
   id: AssetSelection
@@ -73,14 +62,14 @@ function buildAssetOptions(
     {
       id: 'hero-base',
       label: pickLocaleText(locale, { zh: '本体立绘', en: 'Base art' }),
-      hint: pickLocaleText(locale, { zh: '英雄本体远端立绘', en: 'Champion base remote art' }),
+      hint: pickLocaleText(locale, { zh: '英雄本体立绘槽位', en: 'Champion base art slot' }),
       asset: visual?.base ?? null,
       stageVariant: 'art',
     },
     {
       id: 'hero-portrait',
-      label: pickLocaleText(locale, { zh: '官方头像', en: 'Official portrait' }),
-      hint: pickLocaleText(locale, { zh: '官方 portrait 资源', en: 'Official portrait asset' }),
+      label: pickLocaleText(locale, { zh: '头像槽位', en: 'Portrait slot' }),
+      hint: pickLocaleText(locale, { zh: '英雄头像资源槽位', en: 'Champion portrait asset slot' }),
       asset: visual?.portrait?.remote ?? null,
       stageVariant: 'portrait',
     },
@@ -136,13 +125,6 @@ function countVisualSlots(visual: ChampionVisual | null): number {
   return heroSlots + skinSlots
 }
 
-function buildPreviewAlt(primaryName: string, assetLabel: string, locale: AppLocale): string {
-  return pickLocaleText(locale, {
-    zh: `${primaryName}${assetLabel}预览`,
-    en: `${primaryName} ${assetLabel} preview`,
-  })
-}
-
 function getPreviewStageClassName(option: AssetOption | null): string {
   if (!option) {
     return 'visual-workbench__stage'
@@ -156,7 +138,6 @@ export function ChampionVisualWorkbench({ champion, visual, locale, onClose }: C
   const secondaryName = getSecondaryLocalizedText(champion.name, locale)
   const [selectedSkinId, setSelectedSkinId] = useState<string | null>(visual?.skins[0]?.id ?? null)
   const [selectedAssetId, setSelectedAssetId] = useState<AssetSelection>('hero-base')
-  const [previewResolution, setPreviewResolution] = useState<PreviewResolution | null>(null)
 
   const selectedSkin = useMemo(() => {
     if (!visual?.skins.length || !selectedSkinId) {
@@ -171,63 +152,6 @@ export function ChampionVisualWorkbench({ champion, visual, locale, onClose }: C
   const selectedAssetOption =
     availableAssetOptions.find((option) => option.id === selectedAssetId) ?? availableAssetOptions[0] ?? null
   const selectedAsset = selectedAssetOption?.asset ?? null
-  const selectedAssetKey = selectedAsset
-    ? [selectedAsset.remoteUrl, selectedAsset.sourceVersion ?? 'null', selectedAsset.delivery].join('|')
-    : null
-
-  const previewState = useMemo<PreviewState>(() => {
-    if (!selectedAssetKey) {
-      return { status: 'idle' }
-    }
-
-    if (!previewResolution || previewResolution.key !== selectedAssetKey) {
-      return { status: 'loading' }
-    }
-
-    if (previewResolution.status === 'ready') {
-      return { status: 'ready', src: previewResolution.src }
-    }
-
-    return { status: 'error', message: previewResolution.message }
-  }, [previewResolution, selectedAssetKey])
-
-  useEffect(() => {
-    if (!selectedAsset || !selectedAssetKey) {
-      return
-    }
-
-    let disposed = false
-
-    loadRemoteGraphicAssetUrl(selectedAsset)
-      .then((src) => {
-        if (disposed) {
-          return
-        }
-
-        setPreviewResolution({ key: selectedAssetKey, status: 'ready', src })
-      })
-      .catch((error: unknown) => {
-        if (disposed) {
-          return
-        }
-
-        setPreviewResolution({
-          key: selectedAssetKey,
-          status: 'error',
-          message:
-            error instanceof Error && error.message
-              ? error.message
-              : pickLocaleText(locale, {
-                  zh: '当前环境暂时无法实时解包这个官方资源。',
-                  en: 'This environment cannot decode the official remote asset right now.',
-                }),
-        })
-      })
-
-    return () => {
-      disposed = true
-    }
-  }, [locale, selectedAsset, selectedAssetKey])
 
   const skinCount = visual?.skins.length ?? 0
   const visualSlotCount = countVisualSlots(visual)
@@ -250,8 +174,8 @@ export function ChampionVisualWorkbench({ champion, visual, locale, onClose }: C
           {secondaryName ? <p className="visual-workbench__secondary">{secondaryName}</p> : null}
           <p className="visual-workbench__description">
             {pickLocaleText(locale, {
-              zh: `已登记 ${visualSlotCount} 个远端视觉槽位，涵盖本体立绘、官方头像与 ${skinCount} 套皮肤资源。面板会按需尝试实时解包；如果当前浏览器环境拦截跨域读取，下方仍保留完整的 graphic id、remote path 与原始地址。`,
-              en: `The catalog currently tracks ${visualSlotCount} remote visual slots across base art, portraits, and ${skinCount} skin sets. The panel will attempt a live decode on demand, and if the current browser environment blocks cross-origin reads, the full graphic id, remote path, and raw URL remain available below.`,
+              zh: `已登记 ${visualSlotCount} 个视觉槽位，涵盖本体立绘、头像资源与 ${skinCount} 套皮肤。静态站只展示本地同步头像和基座元数据，不会在浏览器里请求官方资源。`,
+              en: `The catalog currently tracks ${visualSlotCount} visual slots across base art, portraits, and ${skinCount} skin sets. The static site only shows the local synced avatar plus catalog metadata and never requests official assets in the browser.`,
             })}
           </p>
         </div>
@@ -262,7 +186,7 @@ export function ChampionVisualWorkbench({ champion, visual, locale, onClose }: C
             <strong className="visual-workbench__summary-value">{skinCount}</strong>
           </div>
           <div className="visual-workbench__summary-pill">
-            <span className="visual-workbench__summary-label">{pickLocaleText(locale, { zh: '远端槽位', en: 'Remote slots' })}</span>
+            <span className="visual-workbench__summary-label">{pickLocaleText(locale, { zh: '登记槽位', en: 'Catalog slots' })}</span>
             <strong className="visual-workbench__summary-value">{visualSlotCount}</strong>
           </div>
           <button type="button" className="action-button action-button--ghost visual-workbench__close" onClick={onClose}>
@@ -290,39 +214,38 @@ export function ChampionVisualWorkbench({ champion, visual, locale, onClose }: C
               <div className="visual-workbench__stage-grid" aria-hidden="true" />
               <div className="visual-workbench__stage-orb visual-workbench__stage-orb--warm" aria-hidden="true" />
               <div className="visual-workbench__stage-orb visual-workbench__stage-orb--cool" aria-hidden="true" />
-
-              {previewState.status === 'ready' && selectedAssetOption ? (
-                <img
-                  className={`visual-workbench__preview visual-workbench__preview--${selectedAssetOption.stageVariant}`}
-                  src={previewState.src}
-                  alt={buildPreviewAlt(primaryName, selectedAssetOption.label, locale)}
-                />
-              ) : (
-                <div className="visual-workbench__stage-empty">
-                  <strong className="visual-workbench__stage-empty-title">
-                    {selectedAssetOption
-                      ? pickLocaleText(locale, {
-                          zh: '等待远端资源接入当前环境',
-                          en: 'Waiting for the remote asset to become available here',
-                        })
-                      : pickLocaleText(locale, {
-                          zh: '当前英雄没有更多远端视觉资源',
-                          en: 'No additional remote visual slots are available for this champion',
-                        })}
-                  </strong>
+              <div className="visual-workbench__stage-empty">
+                <strong className="visual-workbench__stage-empty-title">
+                  {selectedAssetOption
+                    ? pickLocaleText(locale, {
+                        zh: '当前槽位仅展示站内基座记录',
+                        en: 'This slot stays metadata-only inside the static site',
+                      })
+                    : pickLocaleText(locale, {
+                        zh: '当前英雄没有更多视觉槽位',
+                        en: 'No additional visual slots are available for this champion',
+                      })}
+                </strong>
+                <p className="visual-workbench__stage-empty-copy">
+                  {selectedAssetOption
+                    ? pickLocaleText(locale, {
+                        zh: '静态站不会请求官方资源。这里保留当前槽位的基座记录；如需实际图片，必须先走构建期同步并接入站内本地资源。',
+                        en: 'The static site never requests official assets. This stage keeps the current slot as catalog metadata only; actual imagery must be synced during the build and then served locally.',
+                      })
+                    : pickLocaleText(locale, {
+                        zh: '当前英雄只有本地头像参考，没有更多可切换的视觉槽位。',
+                        en: 'Only the local avatar reference is available here for now, with no additional visual slots to inspect.',
+                      })}
+                </p>
+                {selectedAsset ? (
                   <p className="visual-workbench__stage-empty-copy">
-                    {previewState.status === 'loading'
-                      ? pickLocaleText(locale, {
-                          zh: '正在尝试实时解包官方远端资源…',
-                          en: 'Attempting to decode the official remote asset in real time…',
-                        })
-                      : pickLocaleText(locale, {
-                          zh: '这里优先尝试拉取远端立绘；如果浏览器环境不允许跨域读取，右侧会保留完整元数据，后续仍可用于离线脚本、代理链路或手工抓取。',
-                          en: 'This stage tries to pull the remote art first. If the browser environment refuses cross-origin reads, the full metadata remains available on the right for offline scripts, proxy work, or manual retrieval later.',
-                        })}
+                    {pickLocaleText(locale, {
+                      zh: `当前登记：graphic #${selectedAsset.graphicId} · ${getDeliveryLabel(selectedAsset.delivery, locale)} · ${selectedAsset.uses.length || 0} 项用途`,
+                      en: `Registered as graphic #${selectedAsset.graphicId} · ${getDeliveryLabel(selectedAsset.delivery, locale)} · ${selectedAsset.uses.length || 0} uses`,
+                    })}
                   </p>
-                </div>
-              )}
+                ) : null}
+              </div>
 
               <div className="visual-workbench__reference-chip">
                 <ChampionAvatar champion={champion} locale={locale} className="visual-workbench__reference-avatar" loading="eager" />
@@ -334,7 +257,7 @@ export function ChampionVisualWorkbench({ champion, visual, locale, onClose }: C
             </div>
 
             <div className="visual-workbench__stage-footer">
-              <span className="visual-workbench__stage-pill">{selectedAssetOption?.label ?? pickLocaleText(locale, { zh: '暂无远端槽位', en: 'No remote slot yet' })}</span>
+              <span className="visual-workbench__stage-pill">{selectedAssetOption?.label ?? pickLocaleText(locale, { zh: '暂无槽位', en: 'No slot yet' })}</span>
               {selectedAsset ? <span className="visual-workbench__stage-pill visual-workbench__stage-pill--muted">graphic #{selectedAsset.graphicId}</span> : null}
               {selectedAsset ? <span className="visual-workbench__stage-pill visual-workbench__stage-pill--muted">{getDeliveryLabel(selectedAsset.delivery, locale)}</span> : null}
             </div>
@@ -346,8 +269,8 @@ export function ChampionVisualWorkbench({ champion, visual, locale, onClose }: C
                 <strong className="visual-workbench__panel-title">{pickLocaleText(locale, { zh: '资源槽位', en: 'Asset slots' })}</strong>
                 <span className="visual-workbench__panel-hint">
                   {pickLocaleText(locale, {
-                    zh: '只会按需尝试当前选中的资源，不会批量请求整列结果卡。',
-                    en: 'Only the currently selected asset is requested on demand, not the entire result list.',
+                    zh: '这里只切换槽位和查看基座记录；静态站不会对这些槽位发起任何官方请求。',
+                    en: 'This panel only switches between catalog slots and metadata. The static site never issues official requests for them.',
                   })}
                 </span>
               </div>
@@ -417,21 +340,6 @@ export function ChampionVisualWorkbench({ champion, visual, locale, onClose }: C
               </div>
             ) : null}
 
-            {previewState.status === 'error' ? (
-              <StatusBanner
-                tone="info"
-                title={pickLocaleText(locale, {
-                  zh: '当前环境没有直接拉起这个官方远端资源',
-                  en: 'The current environment could not load this official remote asset directly',
-                })}
-                detail={previewState.message}
-                meta={pickLocaleText(locale, {
-                  zh: '这通常意味着浏览器环境无法直接读取跨域二进制资源；不过完整元数据已经保留下来，后续仍能接代理、离线脚本或调试链路。',
-                  en: 'This usually means the browser environment cannot read the cross-origin binary directly. The full metadata stays available below for a future proxy, offline script, or debugging flow.',
-                })}
-              />
-            ) : null}
-
             {selectedAsset ? (
               <div className="visual-workbench__meta-grid">
                 <div className="visual-workbench__meta-item">
@@ -450,29 +358,19 @@ export function ChampionVisualWorkbench({ champion, visual, locale, onClose }: C
                   <span className="visual-workbench__meta-key">source version</span>
                   <strong className="visual-workbench__meta-value">{selectedAsset.sourceVersion ?? 'null'}</strong>
                 </div>
-                <div className="visual-workbench__meta-item visual-workbench__meta-item--wide">
-                  <span className="visual-workbench__meta-key">remote path</span>
-                  <strong className="visual-workbench__meta-value visual-workbench__meta-value--mono">{selectedAsset.remotePath}</strong>
-                </div>
-                <div className="visual-workbench__meta-item visual-workbench__meta-item--wide">
-                  <span className="visual-workbench__meta-key">remote url</span>
-                  <strong className="visual-workbench__meta-value visual-workbench__meta-value--mono">{selectedAsset.remoteUrl}</strong>
+                <div className="visual-workbench__meta-item">
+                  <span className="visual-workbench__meta-key">{pickLocaleText(locale, { zh: '接入方式', en: 'Delivery mode' })}</span>
+                  <strong className="visual-workbench__meta-value">
+                    {pickLocaleText(locale, {
+                      zh: '构建期同步 / 站内不请求',
+                      en: 'Build-time sync / no in-site request',
+                    })}
+                  </strong>
                 </div>
                 <div className="visual-workbench__meta-item visual-workbench__meta-item--wide">
                   <span className="visual-workbench__meta-key">uses</span>
                   <strong className="visual-workbench__meta-value">{selectedAsset.uses.join(', ') || '—'}</strong>
                 </div>
-              </div>
-            ) : null}
-
-            {selectedAsset ? (
-              <div className="visual-workbench__link-row">
-                <a className="action-button action-button--secondary" href={selectedAsset.remoteUrl} target="_blank" rel="noreferrer">
-                  {pickLocaleText(locale, { zh: '打开原始地址', en: 'Open raw URL' })}
-                </a>
-                <a className="action-button action-button--ghost" href={selectedAsset.remoteUrl} download>
-                  {pickLocaleText(locale, { zh: '尝试直接下载', en: 'Try direct download' })}
-                </a>
               </div>
             ) : null}
           </div>
