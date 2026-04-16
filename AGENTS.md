@@ -21,8 +21,8 @@
 
 ## 3. 文档约束
 
-- `AGENTS.md` 只写长期稳定的硬规则；`README.md` 只写项目概览、常用命令和高频入口；不要在两者之间重复维护同一事实。
-- 用户可见文案、README、`docs/` 和提交说明默认使用中文；引用仓库文件一律使用项目相对路径。
+- `AGENTS.md` 只写项目差异化、长期稳定的硬规则；`README.md` 只写项目概览、常用命令和高频入口；不要在两者之间重复维护同一事实。
+- 文档里引用仓库文件一律使用项目相对路径。
 - 技术路线、部署方式、目录结构、命令、数据结构或核心范围变化时，必须同步相关文档。
 - 调研、检索、确认结论沉淀到 `docs/`；流程、环境、认证、分支或发布类问题的摘要补到 `docs/troubleshooting-log.md`。
 - 新模块或大范围交互改动先补对应设计稿，文档落位遵循 `docs/README.md`。
@@ -33,5 +33,5 @@
 - 项目定位、阶段目标、范围裁剪：`docs/product/idle-champions-roadmap.md`
 - 文档职责、精简原则、扫描触发条件：`docs/product/documentation-governance.md`
 - `docs/` 目录结构与落位规则：`docs/README.md`
+- 主题局部索引：`docs/product/README.md`、`docs/research/README.md`、`docs/modules/README.md`、`docs/investigations/README.md`
 - 移动端布局与横向滚动禁令：`docs/product/mobile-compatibility-guidelines.md`
-- 模块设计与专题资料：`docs/modules/`、`docs/research/`、`docs/investigations/`
