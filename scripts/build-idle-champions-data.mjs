@@ -4,6 +4,7 @@ import { fetchDefinitionsSnapshot } from './fetch-idle-champions-definitions.mjs
 import { normalizeDefinitionsSnapshot } from './normalize-idle-champions-definitions.mjs'
 import { syncChampionIllustrations } from './sync-idle-champions-illustrations.mjs'
 import { syncChampionPortraits } from './sync-idle-champions-portraits.mjs'
+import { syncChampionSpecializationGraphics } from './sync-idle-champions-specialization-graphics.mjs'
 
 async function main() {
   const { values } = parseArgs({
@@ -33,7 +34,8 @@ async function main() {
   2. language_id=7 中文 definitions
   3. champions / variants / formations / enums 归一化数据
   4. 官方英雄头像资源
-  5. 立绘页所需的本地静态立绘资源
+  5. 详情页升级区本地专精图资源
+  6. 立绘页所需的本地静态立绘资源
 
 推荐入口：
   npm run data:official`)
@@ -65,6 +67,12 @@ async function main() {
     outputDir: values.outputDir,
     masterApiUrl: values.masterApiUrl,
   })
+  const specializationGraphics = await syncChampionSpecializationGraphics({
+    input: fetched.rawFile,
+    outputDir: values.outputDir,
+    currentVersion: values.currentVersion,
+    masterApiUrl: values.masterApiUrl,
+  })
   const illustrations = await syncChampionIllustrations({
     input: fetched.rawFile,
     outputDir: values.outputDir,
@@ -78,6 +86,7 @@ async function main() {
   console.log(`- display raw: ${localizedFetched.rawFile}`)
   console.log(`- normalized dir: ${normalized.outputDir}`)
   console.log(`- portraits dir: ${portraits.outputDir}`)
+  console.log(`- specialization graphics dir: ${specializationGraphics.outputDir}`)
   console.log(`- illustrations dir: ${illustrations.outputDir}`)
   console.log(`- version file: ${normalized.versionFile}`)
 }
