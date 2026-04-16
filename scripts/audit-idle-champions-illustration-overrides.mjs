@@ -6,6 +6,30 @@ import { pathToFileURL } from 'node:url'
 const DEFAULT_INPUT = 'public/data/v1/champion-illustrations.json'
 const DEFAULT_OUTPUT_DIR = 'tmp/illustration-override-audit'
 const DEFAULT_TOP = 12
+const DEFAULT_REVIEWED_SKIN_IDS = [
+  '332',
+  '416',
+  '344',
+  '417',
+  '297',
+  '367',
+  '452',
+  '550',
+  '362',
+  '290',
+  '515',
+  '473',
+  '111',
+  '390',
+  '123',
+  '333',
+  '133',
+  '327',
+  '396',
+  '409',
+  '470',
+  '471',
+]
 const SMALL_THEME_KEYWORDS = [
   '毛绒',
   '宝宝',
@@ -363,7 +387,7 @@ async function main() {
   const input = path.resolve(values.input ?? DEFAULT_INPUT)
   const outputDir = path.resolve(values.outputDir ?? DEFAULT_OUTPUT_DIR)
   const top = Math.max(1, Number(values.top ?? DEFAULT_TOP))
-  const reviewedSkinIds = parseIdList(values.reviewedSkinIds ?? '332,416,344,417,297')
+  const reviewedSkinIds = parseIdList(values.reviewedSkinIds ?? DEFAULT_REVIEWED_SKIN_IDS.join(','))
   const illustrations = await readJson(input)
   const report = buildReport(illustrations, reviewedSkinIds, top)
 
