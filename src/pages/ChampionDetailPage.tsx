@@ -37,6 +37,7 @@ interface DetailFieldProps {
   label: string
   value: ReactNode
   hint?: ReactNode | null
+  variant?: 'default' | 'compact'
 }
 
 interface StructuredPanelProps {
@@ -1347,9 +1348,9 @@ function resolveSkinPreviewUrl(
   return champion.portrait?.path ? resolveDataUrl(champion.portrait.path) : null
 }
 
-function DetailField({ label, value, hint }: DetailFieldProps) {
+function DetailField({ label, value, hint, variant = 'default' }: DetailFieldProps) {
   return (
-    <article className="detail-field">
+    <article className={variant === 'compact' ? 'detail-field detail-field--compact' : 'detail-field'}>
       <span className="detail-field__label">{label}</span>
       <div className="detail-field__value">{value}</div>
       {hint ? <span className="detail-field__hint">{hint}</span> : null}
@@ -1384,9 +1385,9 @@ function AttackPanel({ title, attack, locale }: AttackPanelProps) {
       {attack.longDescription ? <p className="supporting-text">{getPrimaryLocalizedText(attack.longDescription, locale)}</p> : null}
 
       <div className="detail-field-grid detail-field-grid--compact">
-        <DetailField label={locale === 'zh-CN' ? 'AOE 半径' : 'AOE radius'} value={formatNumber(attack.aoeRadius, locale)} />
-        <DetailField label={locale === 'zh-CN' ? '伤害倍率' : 'Damage modifier'} value={formatNullableText(attack.damageModifier, locale)} />
-        <DetailField label={locale === 'zh-CN' ? '目标规则' : 'Target rule'} value={formatNullableText(attack.target, locale)} />
+        <DetailField label={locale === 'zh-CN' ? 'AOE 半径' : 'AOE radius'} value={formatNumber(attack.aoeRadius, locale)} variant="compact" />
+        <DetailField label={locale === 'zh-CN' ? '伤害倍率' : 'Damage modifier'} value={formatNullableText(attack.damageModifier, locale)} variant="compact" />
+        <DetailField label={locale === 'zh-CN' ? '目标规则' : 'Target rule'} value={formatNullableText(attack.target, locale)} variant="compact" />
       </div>
 
       {attack.damageTypes.length > 0 ? (
@@ -1415,38 +1416,46 @@ function AttackPanel({ title, attack, locale }: AttackPanelProps) {
 function UpgradeCard({ upgrade, presentation, locale }: UpgradeCardProps) {
   return (
     <article className="detail-subcard upgrade-card">
-      <div className="detail-subcard__header">
-        <div>
-          <p className="detail-subcard__eyebrow">
-            {locale === 'zh-CN' ? `等级 ${formatNumber(upgrade.requiredLevel, locale)}` : `Level ${formatNumber(upgrade.requiredLevel, locale)}`}
-          </p>
-          <h3 className="detail-subcard__title">{presentation.title}</h3>
-        </div>
-        <div className="detail-badge-row">
-          <span className="detail-badge">{presentation.typeLabel}</span>
-          {upgrade.requiredUpgradeId ? <span className="detail-badge">{presentation.prerequisiteLabel}</span> : null}
-          {upgrade.specializationGraphicId ? <span className="detail-badge">{locale === 'zh-CN' ? `专精图 ${upgrade.specializationGraphicId}` : `Spec art ${upgrade.specializationGraphicId}`}</span> : null}
+      <div className="upgrade-card__masthead">
+        <span aria-hidden="true" className="upgrade-card__seal">
+          {formatNumber(upgrade.requiredLevel, locale)}
+        </span>
+        <div className="detail-subcard__header upgrade-card__header">
+          <div className="upgrade-card__heading">
+            <p className="detail-subcard__eyebrow">
+              {locale === 'zh-CN' ? `等级 ${formatNumber(upgrade.requiredLevel, locale)}` : `Level ${formatNumber(upgrade.requiredLevel, locale)}`}
+            </p>
+            <h3 className="detail-subcard__title">{presentation.title}</h3>
+          </div>
+          <div className="detail-badge-row upgrade-card__badges">
+            <span className="detail-badge">{presentation.typeLabel}</span>
+            {upgrade.requiredUpgradeId ? <span className="detail-badge">{presentation.prerequisiteLabel}</span> : null}
+            {upgrade.specializationGraphicId ? <span className="detail-badge">{locale === 'zh-CN' ? `专精图 ${upgrade.specializationGraphicId}` : `Spec art ${upgrade.specializationGraphicId}`}</span> : null}
+          </div>
         </div>
       </div>
 
-      {presentation.summary ? <p className="detail-subcard__body">{presentation.summary}</p> : null}
-      {presentation.detailLines.map((line) => (
-        <p key={line} className="supporting-text">
-          {line}
-        </p>
-      ))}
+      {presentation.summary ? <p className="detail-subcard__body upgrade-card__summary">{presentation.summary}</p> : null}
+      <div className="upgrade-card__detail-list">
+        {presentation.detailLines.map((line) => (
+          <p key={line} className="supporting-text">
+            {line}
+          </p>
+        ))}
+      </div>
 
-      <div className="detail-field-grid detail-field-grid--compact">
-        <DetailField label={locale === 'zh-CN' ? '升级类型' : 'Upgrade type'} value={presentation.typeLabel} />
+      <div className="detail-field-grid detail-field-grid--compact upgrade-card__field-grid">
+        <DetailField label={locale === 'zh-CN' ? '升级类型' : 'Upgrade type'} value={presentation.typeLabel} variant="compact" />
         <DetailField
           label={locale === 'zh-CN' ? '作用对象' : 'Target'}
           value={presentation.targetLabel ?? (locale === 'zh-CN' ? '当前英雄' : 'Current champion')}
           hint={presentation.targetHint}
+          variant="compact"
         />
-        <DetailField label={locale === 'zh-CN' ? '前置条件' : 'Prerequisite'} value={presentation.prerequisiteLabel} />
-        <DetailField label={locale === 'zh-CN' ? '默认启用' : 'Default enabled'} value={formatBoolean(upgrade.defaultEnabled, locale)} />
+        <DetailField label={locale === 'zh-CN' ? '前置条件' : 'Prerequisite'} value={presentation.prerequisiteLabel} variant="compact" />
+        <DetailField label={locale === 'zh-CN' ? '默认启用' : 'Default enabled'} value={formatBoolean(upgrade.defaultEnabled, locale)} variant="compact" />
         {presentation.staticMultiplierLabel ? (
-          <DetailField label={locale === 'zh-CN' ? '静态倍率' : 'Static multiplier'} value={presentation.staticMultiplierLabel} />
+          <DetailField label={locale === 'zh-CN' ? '静态倍率' : 'Static multiplier'} value={presentation.staticMultiplierLabel} variant="compact" />
         ) : null}
       </div>
     </article>
@@ -1470,21 +1479,25 @@ function NumericUpgradeRow({ upgrade, presentation, locale }: NumericUpgradeRowP
 function FeatCard({ feat, locale, effectContext }: FeatCardProps) {
   return (
     <article className="detail-subcard feat-card">
-      <div className="detail-subcard__header">
-        <div>
-          <p className="detail-subcard__eyebrow">{locale === 'zh-CN' ? `顺序 ${formatNumber(feat.order, locale)}` : `Order ${formatNumber(feat.order, locale)}`}</p>
-          <h3 className="detail-subcard__title"><LocalizedTextStack value={feat.name} /></h3>
+      <div className="feat-card__masthead">
+        <div className="detail-subcard__header feat-card__header">
+          <div className="feat-card__heading">
+            <p className="detail-subcard__eyebrow">{locale === 'zh-CN' ? `顺序 ${formatNumber(feat.order, locale)}` : `Order ${formatNumber(feat.order, locale)}`}</p>
+            <h3 className="detail-subcard__title"><LocalizedTextStack value={feat.name} /></h3>
+          </div>
+          <span className="detail-badge feat-card__rarity">{buildRarityLabel(feat.rarity, locale)}</span>
         </div>
-        <span className="detail-badge">{buildRarityLabel(feat.rarity, locale)}</span>
       </div>
 
-      {feat.description ? <p className="detail-subcard__body">{getPrimaryLocalizedText(feat.description, locale)}</p> : null}
+      {feat.description ? <p className="detail-subcard__body feat-card__summary">{getPrimaryLocalizedText(feat.description, locale)}</p> : null}
 
-      <div className="detail-inline-grid">
-        <EffectListPanel title={locale === 'zh-CN' ? '效果明细' : 'Effects'} value={feat.effects} locale={locale} effectContext={effectContext} />
-        <StructuredPanel title={locale === 'zh-CN' ? '获取来源' : 'Sources'} value={feat.sources} locale={locale} effectContext={effectContext} />
-        <StructuredPanel title={locale === 'zh-CN' ? '可用性与属性' : 'Properties'} value={feat.properties} locale={locale} effectContext={effectContext} />
-        <StructuredPanel title={locale === 'zh-CN' ? '收藏来源' : 'Collection source'} value={feat.collectionsSource} locale={locale} effectContext={effectContext} />
+      <div className="feat-card__panels">
+        <div className="detail-inline-grid">
+          <EffectListPanel title={locale === 'zh-CN' ? '效果明细' : 'Effects'} value={feat.effects} locale={locale} effectContext={effectContext} />
+          <StructuredPanel title={locale === 'zh-CN' ? '获取来源' : 'Sources'} value={feat.sources} locale={locale} effectContext={effectContext} />
+          <StructuredPanel title={locale === 'zh-CN' ? '可用性与属性' : 'Properties'} value={feat.properties} locale={locale} effectContext={effectContext} />
+          <StructuredPanel title={locale === 'zh-CN' ? '收藏来源' : 'Collection source'} value={feat.collectionsSource} locale={locale} effectContext={effectContext} />
+        </div>
       </div>
     </article>
   )
@@ -2094,15 +2107,17 @@ export function ChampionDetailPage() {
                   ) : null}
                 </div>
                 <div className="champion-dossier__copy">
-                  <p className="champion-dossier__eyebrow">
-                    {locale === 'zh-CN' ? `${detail.summary.seat} 号位` : `Seat ${detail.summary.seat}`}
-                  </p>
-                  <h2 className="champion-dossier__title">{getPrimaryLocalizedText(detail.summary.name, locale)}</h2>
-                  {getSecondaryLocalizedText(detail.summary.name, locale) ? (
-                    <p className="champion-dossier__secondary">{getSecondaryLocalizedText(detail.summary.name, locale)}</p>
-                  ) : null}
+                  <div className="champion-dossier__title-block">
+                    <p className="champion-dossier__eyebrow">
+                      {locale === 'zh-CN' ? `${detail.summary.seat} 号位` : `Seat ${detail.summary.seat}`}
+                    </p>
+                    <h2 className="champion-dossier__title">{getPrimaryLocalizedText(detail.summary.name, locale)}</h2>
+                    {getSecondaryLocalizedText(detail.summary.name, locale) ? (
+                      <p className="champion-dossier__secondary">{getSecondaryLocalizedText(detail.summary.name, locale)}</p>
+                    ) : null}
+                  </div>
 
-                  <div className="tag-row">
+                  <div className="tag-row champion-dossier__role-strip">
                     {detail.summary.roles.map((role) => (
                       <span key={role} className="tag-pill">
                         {getRoleLabel(role, locale)}
@@ -2110,76 +2125,105 @@ export function ChampionDetailPage() {
                     ))}
                   </div>
 
-                  <div className="champion-dossier__meta-stack">
-                    <span className="champion-dossier__meta-label">{t({ zh: '联动', en: 'Affiliations' })}</span>
-                    {detail.summary.affiliations.length > 0 ? (
-                      <div className="champion-dossier__meta-list">
-                        {detail.summary.affiliations.map((item) => (
-                          <LocalizedTextStack key={`${item.display}-${item.original}`} value={item} />
-                        ))}
-                      </div>
-                    ) : (
-                      <p className="supporting-text champion-dossier__line">{t({ zh: '暂无', en: 'None yet' })}</p>
-                    )}
+                  <div className="champion-dossier__meta-strip">
+                    <div className="champion-dossier__meta-stack">
+                      <span className="champion-dossier__meta-label">{t({ zh: '联动', en: 'Affiliations' })}</span>
+                      {detail.summary.affiliations.length > 0 ? (
+                        <div className="champion-dossier__meta-list">
+                          {detail.summary.affiliations.map((item) => (
+                            <LocalizedTextStack key={`${item.display}-${item.original}`} value={item} />
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="supporting-text champion-dossier__line">{t({ zh: '暂无', en: 'None yet' })}</p>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className="champion-dossier__stats">
-                <article className="dossier-stat">
-                  <span className="dossier-stat__label">{t({ zh: '升级', en: 'Upgrades' })}</span>
-                  <strong className="dossier-stat__value">{detail.upgrades.length}</strong>
-                </article>
-                <article className="dossier-stat">
-                  <span className="dossier-stat__label">{t({ zh: '天赋', en: 'Feats' })}</span>
-                  <strong className="dossier-stat__value">{detail.feats.length}</strong>
-                </article>
-                <article className="dossier-stat">
-                  <span className="dossier-stat__label">{t({ zh: '皮肤', en: 'Skins' })}</span>
-                  <strong className="dossier-stat__value">{detail.skins.length}</strong>
-                </article>
+              <div className="champion-dossier__stats-panel">
+                <div className="champion-dossier__stats-head">
+                  <span className="champion-dossier__meta-label">{t({ zh: '卷宗计数', en: 'Dossier tally' })}</span>
+                  <p className="champion-dossier__line">
+                    {t({
+                      zh: '先看资料体量，再决定深入哪一段。',
+                      en: 'Check the dossier weight first, then decide where to dig in.',
+                    })}
+                  </p>
+                </div>
+                <div className="champion-dossier__stats">
+                  <article className="dossier-stat">
+                    <span className="dossier-stat__label">{t({ zh: '升级', en: 'Upgrades' })}</span>
+                    <strong className="dossier-stat__value">{detail.upgrades.length}</strong>
+                    <span className="dossier-stat__meta">{t({ zh: '成长轨道', en: 'Progression track' })}</span>
+                  </article>
+                  <article className="dossier-stat">
+                    <span className="dossier-stat__label">{t({ zh: '天赋', en: 'Feats' })}</span>
+                    <strong className="dossier-stat__value">{detail.feats.length}</strong>
+                    <span className="dossier-stat__meta">{t({ zh: '可装备条目', en: 'Equipable entries' })}</span>
+                  </article>
+                  <article className="dossier-stat">
+                    <span className="dossier-stat__label">{t({ zh: '皮肤', en: 'Skins' })}</span>
+                    <strong className="dossier-stat__value">{detail.skins.length}</strong>
+                    <span className="dossier-stat__meta">{t({ zh: '立绘与外观', en: 'Art + cosmetics' })}</span>
+                  </article>
+                </div>
               </div>
             </div>
 
-            <div className="detail-badge-row detail-badge-row--wrap">
-              {summaryAvailabilityBadges.map((badge) => (
-                <span
-                  key={badge.key}
-                  className={badge.active ? 'detail-badge detail-badge--active' : 'detail-badge'}
-                >
-                  {badge.label}
-                </span>
-              ))}
-              {detail.eventName ? (
-                <span className="detail-badge detail-badge--stacked">
-                  <span className="detail-badge__prefix">{t({ zh: '活动', en: 'Event' })}</span>
-                  <LocalizedTextStack value={detail.eventName} />
-                </span>
-              ) : null}
-            </div>
+            <div className="champion-dossier__footer">
+              <div className="champion-dossier__footer-panel champion-dossier__footer-panel--badges">
+                <span className="champion-dossier__meta-label">{t({ zh: '可用性', en: 'Availability' })}</span>
+                <div className="detail-badge-row detail-badge-row--wrap champion-dossier__badge-grid">
+                  {summaryAvailabilityBadges.map((badge) => (
+                    <span
+                      key={badge.key}
+                      className={badge.active ? 'detail-badge detail-badge--active' : 'detail-badge'}
+                    >
+                      {badge.label}
+                    </span>
+                  ))}
+                  {detail.eventName ? (
+                    <span className="detail-badge detail-badge--stacked">
+                      <span className="detail-badge__prefix">{t({ zh: '活动', en: 'Event' })}</span>
+                      <LocalizedTextStack value={detail.eventName} />
+                    </span>
+                  ) : null}
+                </div>
+              </div>
 
-            <div className="section-jump-bar">
-              {sectionLinks.map((section) => (
-                <button
-                  key={section.id}
-                  type="button"
-                  className={
-                    activeSectionId === section.id
-                      ? 'section-jump-bar__button section-jump-bar__button--active'
-                      : 'section-jump-bar__button'
-                  }
-                  aria-pressed={activeSectionId === section.id}
-                  onClick={() => scrollToSection(section.id)}
-                >
-                  {section.label}
-                </button>
-              ))}
+              <div className="champion-dossier__footer-panel champion-dossier__footer-panel--jump">
+                <span className="champion-dossier__meta-label">{t({ zh: '章节跳转', en: 'Section jump' })}</span>
+                <div className="section-jump-bar">
+                  {sectionLinks.map((section, index) => (
+                    <button
+                      key={section.id}
+                      type="button"
+                      aria-label={section.label}
+                      className={
+                        activeSectionId === section.id
+                          ? 'section-jump-bar__button section-jump-bar__button--active'
+                          : 'section-jump-bar__button'
+                      }
+                      aria-pressed={activeSectionId === section.id}
+                      onClick={() => scrollToSection(section.id)}
+                    >
+                      <span aria-hidden="true" className="section-jump-bar__button-index">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                      <span className="section-jump-bar__button-text">{section.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </section>
 
           <div className="champion-detail-layout">
             <div className="champion-detail-content">
               <SurfaceCard
+                className="detail-section detail-section--overview"
                 eyebrow={t({ zh: '概览', en: 'Overview' })}
                 title={t({ zh: '身份、系统字段与可用性', en: 'Identity, system fields, and availability' })}
                 description={t({
@@ -2196,6 +2240,7 @@ export function ChampionDetailPage() {
               </SurfaceCard>
 
               <SurfaceCard
+                className="detail-section detail-section--character"
                 eyebrow={t({ zh: '角色卡', en: 'Character sheet' })}
                 title={t({ zh: '叙事资料与能力分布', en: 'Narrative profile and ability spread' })}
                 description={t({
@@ -2236,6 +2281,7 @@ export function ChampionDetailPage() {
               </SurfaceCard>
 
               <SurfaceCard
+                className="detail-section detail-section--combat"
                 eyebrow={t({ zh: '战斗', en: 'Combat' })}
                 title={t({ zh: '基础数值、普攻、大招与活动升级', en: 'Base stats, attacks, ultimate, and event upgrades' })}
                 description={t({
@@ -2274,6 +2320,7 @@ export function ChampionDetailPage() {
               </SurfaceCard>
 
               <SurfaceCard
+                className="detail-section detail-section--upgrades"
                 eyebrow={t({ zh: '升级', en: 'Upgrades' })}
                 title={t({ zh: '成长轨道分成可读升级和数值里程碑', en: 'Split the progression track into readable upgrades and numeric milestones' })}
                 description={t({
@@ -2282,10 +2329,10 @@ export function ChampionDetailPage() {
                 })}
               >
                 <div id="upgrades" className="detail-section-anchor" />
-                <div className="detail-field-grid detail-field-grid--compact">
-                  <DetailField label={t({ zh: '全部升级', en: 'All upgrades' })} value={formatNumber(detail.upgrades.length, locale)} />
-                  <DetailField label={t({ zh: '重点升级', en: 'Spotlight upgrades' })} value={formatNumber(spotlightUpgrades.length, locale)} />
-                  <DetailField label={t({ zh: '数值里程碑', en: 'Numeric milestones' })} value={formatNumber(ledgerUpgrades.length, locale)} />
+                <div className="detail-field-grid detail-field-grid--compact detail-summary-strip">
+                  <DetailField label={t({ zh: '全部升级', en: 'All upgrades' })} value={formatNumber(detail.upgrades.length, locale)} variant="compact" />
+                  <DetailField label={t({ zh: '重点升级', en: 'Spotlight upgrades' })} value={formatNumber(spotlightUpgrades.length, locale)} variant="compact" />
+                  <DetailField label={t({ zh: '数值里程碑', en: 'Numeric milestones' })} value={formatNumber(ledgerUpgrades.length, locale)} variant="compact" />
                 </div>
 
                 {spotlightUpgrades.length > 0 ? (
@@ -2323,6 +2370,7 @@ export function ChampionDetailPage() {
               </SurfaceCard>
 
               <SurfaceCard
+                className="detail-section detail-section--feats"
                 eyebrow={t({ zh: '天赋', en: 'Feats' })}
                 title={t({ zh: '全部天赋原样保留，并补来源字段', en: 'Keep every feat intact and expose its source fields' })}
                 description={t({
@@ -2446,12 +2494,12 @@ export function ChampionDetailPage() {
                     </div>
 
                     <div className="detail-field-grid detail-field-grid--compact">
-                      <DetailField label={t({ zh: '本地立绘', en: 'Local illustration' })} value={selectedSkinIllustration ? t({ zh: '已命中', en: 'Available' }) : t({ zh: '未命中', en: 'Missing' })} />
-                      <DetailField label={t({ zh: '来源槽位', en: 'Source slot' })} value={selectedSkinIllustration?.sourceSlot ?? t({ zh: '未知', en: 'Unknown' })} />
-                      <DetailField label={t({ zh: 'Base Graphic ID', en: 'Base graphic ID' })} value={formatNullableText(selectedSkinArtworkIds?.baseGraphicId ?? null, locale)} />
-                      <DetailField label={t({ zh: 'Large Graphic ID', en: 'Large graphic ID' })} value={formatNullableText(selectedSkinArtworkIds?.largeGraphicId ?? null, locale)} />
-                      <DetailField label={t({ zh: 'XL Graphic ID', en: 'XL graphic ID' })} value={formatNullableText(selectedSkinArtworkIds?.xlGraphicId ?? null, locale)} />
-                      <DetailField label={t({ zh: 'Portrait Graphic ID', en: 'Portrait graphic ID' })} value={formatNullableText(selectedSkinArtworkIds?.portraitGraphicId ?? null, locale)} />
+                      <DetailField label={t({ zh: '本地立绘', en: 'Local illustration' })} value={selectedSkinIllustration ? t({ zh: '已命中', en: 'Available' }) : t({ zh: '未命中', en: 'Missing' })} variant="compact" />
+                      <DetailField label={t({ zh: '来源槽位', en: 'Source slot' })} value={selectedSkinIllustration?.sourceSlot ?? t({ zh: '未知', en: 'Unknown' })} variant="compact" />
+                      <DetailField label={t({ zh: 'Base Graphic ID', en: 'Base graphic ID' })} value={formatNullableText(selectedSkinArtworkIds?.baseGraphicId ?? null, locale)} variant="compact" />
+                      <DetailField label={t({ zh: 'Large Graphic ID', en: 'Large graphic ID' })} value={formatNullableText(selectedSkinArtworkIds?.largeGraphicId ?? null, locale)} variant="compact" />
+                      <DetailField label={t({ zh: 'XL Graphic ID', en: 'XL graphic ID' })} value={formatNullableText(selectedSkinArtworkIds?.xlGraphicId ?? null, locale)} variant="compact" />
+                      <DetailField label={t({ zh: 'Portrait Graphic ID', en: 'Portrait graphic ID' })} value={formatNullableText(selectedSkinArtworkIds?.portraitGraphicId ?? null, locale)} variant="compact" />
                     </div>
                   </div>
 

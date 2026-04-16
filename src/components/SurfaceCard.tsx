@@ -5,6 +5,7 @@ interface SurfaceCardProps extends PropsWithChildren {
   title: string
   description?: string
   footer?: ReactNode
+  className?: string
 }
 
 export function SurfaceCard({
@@ -12,10 +13,11 @@ export function SurfaceCard({
   title,
   description,
   footer,
+  className,
   children,
 }: SurfaceCardProps) {
   return (
-    <section className="surface-card">
+    <section className={className ? `surface-card ${className}` : 'surface-card'}>
       {eyebrow ? <p className="surface-card__eyebrow">{eyebrow}</p> : null}
       <h2 className="surface-card__title">{title}</h2>
       {description ? <p className="surface-card__description">{description}</p> : null}
