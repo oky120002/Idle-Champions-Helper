@@ -51,7 +51,7 @@
 - Node 脚本可以抓。
 - `GitHub Pages` 上的纯静态前端，不能把“浏览器跨域下载官方资源再现场解包”当成生产稳定前提。
 
-所以当前 `src/data/remoteGraphicAsset.ts` 这类运行时解包能力，只适合：
+所以此前那类“浏览器端直连官方资源并现场解包”的运行时能力，只适合：
 
 - 调试
 - 研究
@@ -319,9 +319,8 @@ npm run data:official
 
 ### 6.3 现有运行时远端解包能力的定位
 
-当前这些能力：
+当前这些能力里，仍适合保留的只有：
 
-- `src/data/remoteGraphicAsset.ts`
 - `src/components/ChampionVisualWorkbench.tsx`
 
 后续建议改成：
@@ -442,7 +441,6 @@ npm run data:official
 - `docs/research/data/champion-visual-asset-research.md`
 - `docs/research/data/champion-image-asset-sizing-research.md`
 - `public/data/v1/champion-visuals.json`
-- `src/data/remoteGraphicAsset.ts`
 - `src/components/ChampionVisualWorkbench.tsx`
 - [GitHub Pages: What is GitHub Pages?](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)
 - [GitHub Pages limits](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits)
