@@ -7,10 +7,12 @@ import { inflateRawSync, inflateSync, unzipSync } from 'node:zlib'
 import { PNG } from 'pngjs'
 import {
   DEFAULT_MASTER_API_URL,
+  buildRemoteGraphicAsset,
   buildGraphicMap,
-  buildMobileAssetUrl,
 } from './data/champion-asset-helpers.mjs'
 import { extractWrappedPngBuffer } from './data/mobile-asset-codec.mjs'
+import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.mjs'
+import { renderSkelAnimPoseToPngBuffer } from './data/skelanim-renderer.mjs'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'
@@ -332,6 +334,39 @@ function decodeGraphicBuffer(rawBuffer) {
   throw new Error(errors.join(' | '))
 }
 
+function isSkelAnimGraphicDefinition(graphicDefinition) {
+  return Number(graphicDefinition?.type ?? 0) === 3
+}
+
+function buildPetGraphicAsset(graphicDefinition, baseUrl = DEFAULT_MASTER_API_URL) {
+  const asset = buildRemoteGraphicAsset(graphicDefinition, baseUrl)
+
+  if (!asset) {
+    return null
+  }
+
+  if (!isSkelAnimGraphicDefinition(graphicDefinition)) {
+    return asset
+  }
+
+  return {
+    ...asset,
+    delivery: 'zlib-png',
+  }
+}
+
+function resolvePreferredSequenceIndexes(graphicDefinition) {
+  const sequenceOverride = graphicDefinition?.export_params?.sequence_override
+
+  if (!Array.isArray(sequenceOverride) || sequenceOverride.length === 0) {
+    return []
+  }
+
+  return sequenceOverride
+    .map((value) => Number(value) - 1)
+    .filter((value) => Number.isInteger(value) && value >= 0)
+}
+
 function findOpaqueBounds(png) {
   let left = png.width
   let top = png.height
@@ -493,7 +528,17 @@ async function downloadRawAsset(task) {
 async function downloadPetAsset(task) {
   try {
     const rawBuffer = await downloadRawAsset(task)
-    const decodedPng = decodeGraphicBuffer(rawBuffer)
+    const decodedPng =
+      task.renderMode === 'skelanim'
+        ? (
+            await renderSkelAnimPoseToPngBuffer(
+              decodeSkelAnimGraphicBuffer(task.asset, rawBuffer),
+              {
+                preferredSequenceIndexes: task.preferredSequenceIndexes,
+              },
+            )
+          ).bytes
+        : decodeGraphicBuffer(rawBuffer)
     const processed =
       task.variant === 'icon' ? processIconPng(decodedPng) : processIllustrationPng(decodedPng)
 
@@ -532,6 +577,7 @@ export async function syncPetsCatalog(options = {}) {
     : rawDefinitions
   const updatedAt = getUpdatedAt(rawDefinitions)
   const graphicMap = buildGraphicMap(rawDefinitions.graphic_defines)
+  const assetBaseUrl = options.masterApiUrl ?? DEFAULT_MASTER_API_URL
   const localizedFamiliarsById = buildIdMap(localizedDefinitions.familiar_defines)
   const patronsById = buildIdMap(rawDefinitions.patron_defines)
   const localizedPatronsById = buildIdMap(localizedDefinitions.patron_defines)
@@ -563,6 +609,8 @@ export async function syncPetsCatalog(options = {}) {
     const illustrationGraphicId = toNonZeroText(definition.properties?.xl_graphic_id)
     const iconGraphic = iconGraphicId ? graphicMap.get(iconGraphicId) ?? null : null
     const illustrationGraphic = illustrationGraphicId ? graphicMap.get(illustrationGraphicId) ?? null : null
+    const iconAsset = iconGraphic ? buildPetGraphicAsset(iconGraphic, assetBaseUrl) : null
+    const illustrationAsset = illustrationGraphic ? buildPetGraphicAsset(illustrationGraphic, assetBaseUrl) : null
 
     const pet = {
       id: petId,
@@ -598,24 +646,27 @@ export async function syncPetsCatalog(options = {}) {
     pet.icon = await readExistingImage(iconOutputFile, iconOutputPath)
     pet.illustration = await readExistingImage(illustrationOutputFile, illustrationOutputPath)
 
-    if (!pet.icon && iconGraphic?.graphic) {
+    if (!pet.icon && iconAsset?.sourceGraphic) {
       tasks.push({
         petId,
         variant: 'icon',
-        remoteUrl: buildMobileAssetUrl(iconGraphic.graphic, options.masterApiUrl ?? DEFAULT_MASTER_API_URL),
+        asset: iconAsset,
+        renderMode: isSkelAnimGraphicDefinition(iconGraphic) ? 'skelanim' : 'decoded-png',
+        preferredSequenceIndexes: resolvePreferredSequenceIndexes(iconGraphic),
+        remoteUrl: iconAsset.remoteUrl,
         outputFile: iconOutputFile,
         outputPath: iconOutputPath,
       })
     }
 
-    if (!pet.illustration && illustrationGraphic?.graphic) {
+    if (!pet.illustration && illustrationAsset?.sourceGraphic) {
       tasks.push({
         petId,
         variant: 'illustration',
-        remoteUrl: buildMobileAssetUrl(
-          illustrationGraphic.graphic,
-          options.masterApiUrl ?? DEFAULT_MASTER_API_URL,
-        ),
+        asset: illustrationAsset,
+        renderMode: isSkelAnimGraphicDefinition(illustrationGraphic) ? 'skelanim' : 'decoded-png',
+        preferredSequenceIndexes: resolvePreferredSequenceIndexes(illustrationGraphic),
+        remoteUrl: illustrationAsset.remoteUrl,
         outputFile: illustrationOutputFile,
         outputPath: illustrationOutputPath,
       })
