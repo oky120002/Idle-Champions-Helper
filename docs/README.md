@@ -2,11 +2,11 @@
 
 本目录按“文档用途优先、主题次级归类”的原则组织，不再把所有 Markdown 文档平铺在 `docs/` 根目录。
 
-`docs/README.md` 是 `docs/` 的唯一总索引；`README.md` 只保留高频入口，不再重复维护完整清单。
+`docs/README.md` 是 `docs/` 的唯一总索引；`README.md` 只保留高频入口，不再重复维护完整清单。除高频入口外，专题内容按需加载，不预加载整棵 `docs/`。
 
 ## 文档治理入口
 
-- `docs/product/documentation-governance.md`：文档扫描、修复、合并、删除与归档的常规流程。
+- `docs/product/documentation-governance.md`：文档扫描、精简、合并、删除与按需加载的常规流程。
 - `docs/product/mobile-compatibility-guidelines.md`：移动端布局与交互兼容性规范，明确禁止把横向滑动作为主导航或主操作入口。
 - `docs/troubleshooting-log.md`：流程、环境、部署、认证等非代码问题的摘要台账。
 
@@ -14,7 +14,7 @@
 
 如果你当前最关心的是“怎么启动”和“怎么部署”，先看这几份：
 
-- `README.md`：仓库首页，最先看；只保留现状摘要、常用命令与高频入口。
+- `README.md`：仓库首页，最先看；只保留项目概览、常用命令与高频入口。
 - `docs/troubleshooting-log.md`：统一的问题排查台账，优先收录已发生问题的摘要、根因、解法和引用信息。
 - `docs/investigations/runtime/local-run-verification.md`：本地开发、`preview` 与 `preview:pages` 的适用边界与验证结果。
 - `docs/research/deployment/static-hosting-research.md`：正式部署路线、GitHub Pages 与 GitHub Actions 工作流设计。
@@ -58,7 +58,7 @@
 ## 当前索引
 
 - `docs/troubleshooting-log.md`：通用问题排查台账，沉淀问题描述、排查摘要、根因、解法与引用信息。
-- `docs/product/documentation-governance.md`：文档治理方案，定义扫描触发条件、修复策略与单一事实源。
+- `docs/product/documentation-governance.md`：文档治理方案，定义精简职责、按需加载与扫描触发条件。
 - `docs/product/idle-champions-roadmap.md`：项目价值、范围、阶段路线与核心模型。
 - `docs/product/mobile-compatibility-guidelines.md`：移动端兼容性开发规范，禁止把横向滑动作为移动端主导航、主操作或主信息入口。
 - `docs/research/data/game-data-source-investigation.md`：基础游戏数据与个人数据来源调研。
