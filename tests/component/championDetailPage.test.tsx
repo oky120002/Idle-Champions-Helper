@@ -267,6 +267,36 @@ const detailFixture: ChampionDetail = {
       specializationGraphicId: null,
       tipText: null,
     },
+    {
+      id: '118',
+      requiredLevel: 160,
+      requiredUpgradeId: null,
+      name: null,
+      upgradeType: null,
+      effectReference: 'gold_multiplier_mult,100',
+      effectDefinition: null,
+      staticDpsMult: null,
+      defaultEnabled: true,
+      specializationName: null,
+      specializationDescription: null,
+      specializationGraphicId: null,
+      tipText: null,
+    },
+    {
+      id: '119',
+      requiredLevel: 200,
+      requiredUpgradeId: null,
+      name: null,
+      upgradeType: null,
+      effectReference: 'global_dps_multiplier_mult,200',
+      effectDefinition: null,
+      staticDpsMult: null,
+      defaultEnabled: true,
+      specializationName: null,
+      specializationDescription: null,
+      specializationGraphicId: null,
+      tipText: null,
+    },
   ],
   feats: [
     {
@@ -619,6 +649,26 @@ describe('ChampionDetailPage', () => {
     await waitFor(() => {
       expect(window.location.hash).toBe('#/champions/7#section-upgrades')
     })
+  })
+
+  it('默认收起自身增伤和全队增伤，并允许按类型重新展开等级列表', async () => {
+    mockedLoadChampionDetail.mockResolvedValue(detailFixture)
+
+    renderChampionDetailPage()
+
+    await screen.findByRole('heading', { level: 2, name: '明斯克' })
+
+    expect(screen.getByRole('button', { name: /自身增伤/ })).toHaveAttribute('aria-pressed', 'false')
+    expect(screen.getByRole('button', { name: /全队增伤/ })).toHaveAttribute('aria-pressed', 'false')
+    expect(screen.getByRole('button', { name: /金币加成/ })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.queryByText('自身伤害提高 100%')).not.toBeInTheDocument()
+    expect(screen.queryByText('全队伤害提高 200%')).not.toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: /自身增伤/ }))
+    fireEvent.click(screen.getByRole('button', { name: /全队增伤/ }))
+
+    expect(screen.getByText('自身伤害提高 100%')).toBeInTheDocument()
+    expect(screen.getByText('全队伤害提高 200%')).toBeInTheDocument()
   })
 
   it('带分区 hash 进入时会直达对应分区并保留该 hash', async () => {

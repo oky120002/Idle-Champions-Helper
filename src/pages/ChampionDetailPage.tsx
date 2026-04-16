@@ -118,6 +118,18 @@ interface UpgradePresentation {
   staticMultiplierLabel: string | null
 }
 
+interface UpgradeCategoryMeta {
+  key: string
+  label: string
+  defaultEnabled: boolean
+}
+
+interface LedgerUpgradeRow {
+  upgrade: ChampionUpgradeDetail
+  presentation: UpgradePresentation
+  category: UpgradeCategoryMeta
+}
+
 function isJsonObject(value: JsonValue): value is Record<string, JsonValue> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
 }
@@ -961,6 +973,19 @@ function buildUpgradePresentation(
   }
 }
 
+function buildUpgradeCategoryMeta(typeLabel: string, locale: AppLocale): UpgradeCategoryMeta {
+  const defaultCollapsedLabels =
+    locale === 'zh-CN'
+      ? new Set(['自身增伤', '全队增伤'])
+      : new Set(['Self damage', 'Party damage'])
+
+  return {
+    key: typeLabel,
+    label: typeLabel,
+    defaultEnabled: !defaultCollapsedLabels.has(typeLabel),
+  }
+}
+
 function formatStructuredPrimitive(
   value: string | number | boolean | null,
   locale: AppLocale,
@@ -1413,42 +1438,102 @@ function AttackPanel({ title, attack, locale }: AttackPanelProps) {
 }
 
 function UpgradeCard({ upgrade, presentation, locale }: UpgradeCardProps) {
+  const isCompact = upgrade.upgradeType === 'unlock_ability' || upgrade.upgradeType === 'unlock_ultimate'
+  const metaItems = [
+    upgrade.requiredUpgradeId
+      ? {
+          key: 'prerequisite',
+          label: locale === 'zh-CN' ? '前置' : 'Prerequisite',
+          value: presentation.prerequisiteLabel,
+        }
+      : null,
+    presentation.staticMultiplierLabel
+      ? {
+          key: 'multiplier',
+          label: locale === 'zh-CN' ? '倍率' : 'Multiplier',
+          value: presentation.staticMultiplierLabel,
+        }
+      : null,
+    !upgrade.defaultEnabled
+      ? {
+          key: 'default-enabled',
+          label: locale === 'zh-CN' ? '默认' : 'Default',
+          value: formatBoolean(upgrade.defaultEnabled, locale),
+        }
+      : null,
+    upgrade.specializationGraphicId
+      ? {
+          key: 'spec-art',
+          label: locale === 'zh-CN' ? '专精图' : 'Spec art',
+          value:
+            locale === 'zh-CN'
+              ? `图 ${upgrade.specializationGraphicId}`
+              : `#${upgrade.specializationGraphicId}`,
+        }
+      : null,
+  ].filter(
+    (
+      value,
+    ): value is {
+      key: string
+      label: string
+      value: string
+    } => Boolean(value),
+  )
+
   return (
-    <article className="detail-subcard upgrade-card">
-      <div className="detail-subcard__header">
-        <div>
-          <p className="detail-subcard__eyebrow">
+    <article className={isCompact ? 'detail-subcard upgrade-card upgrade-card--compact' : 'detail-subcard upgrade-card'}>
+      <div className="upgrade-card__header">
+        <div className="upgrade-card__title-stack">
+          <p className="upgrade-card__eyebrow">
             {locale === 'zh-CN' ? `等级 ${formatNumber(upgrade.requiredLevel, locale)}` : `Level ${formatNumber(upgrade.requiredLevel, locale)}`}
           </p>
           <h3 className="detail-subcard__title">{presentation.title}</h3>
         </div>
-        <div className="detail-badge-row">
-          <span className="detail-badge">{presentation.typeLabel}</span>
-          {upgrade.requiredUpgradeId ? <span className="detail-badge">{presentation.prerequisiteLabel}</span> : null}
-          {upgrade.specializationGraphicId ? <span className="detail-badge">{locale === 'zh-CN' ? `专精图 ${upgrade.specializationGraphicId}` : `Spec art ${upgrade.specializationGraphicId}`}</span> : null}
+        <span className="upgrade-card__type-badge">{presentation.typeLabel}</span>
+      </div>
+
+      {presentation.summary ? <p className="upgrade-card__summary">{presentation.summary}</p> : null}
+
+      {presentation.targetHint ? <p className="upgrade-card__hint">{presentation.targetHint}</p> : null}
+
+      {metaItems.length > 0 ? (
+        <div className="upgrade-card__meta-row">
+          {metaItems.map((item) => (
+            <span key={item.key} className="upgrade-card__meta-pill">
+              <span className="upgrade-card__meta-label">{item.label}</span>
+              <strong className="upgrade-card__meta-value">{item.value}</strong>
+            </span>
+          ))}
         </div>
-      </div>
+      ) : null}
 
-      {presentation.summary ? <p className="detail-subcard__body">{presentation.summary}</p> : null}
-      {presentation.detailLines.map((line) => (
-        <p key={line} className="supporting-text">
-          {line}
-        </p>
-      ))}
-
-      <div className="detail-field-grid detail-field-grid--compact">
-        <DetailField label={locale === 'zh-CN' ? '升级类型' : 'Upgrade type'} value={presentation.typeLabel} />
-        <DetailField
-          label={locale === 'zh-CN' ? '作用对象' : 'Target'}
-          value={presentation.targetLabel ?? (locale === 'zh-CN' ? '当前英雄' : 'Current champion')}
-          hint={presentation.targetHint}
-        />
-        <DetailField label={locale === 'zh-CN' ? '前置条件' : 'Prerequisite'} value={presentation.prerequisiteLabel} />
-        <DetailField label={locale === 'zh-CN' ? '默认启用' : 'Default enabled'} value={formatBoolean(upgrade.defaultEnabled, locale)} />
-        {presentation.staticMultiplierLabel ? (
-          <DetailField label={locale === 'zh-CN' ? '静态倍率' : 'Static multiplier'} value={presentation.staticMultiplierLabel} />
-        ) : null}
-      </div>
+      {presentation.detailLines.length > 0 ? (
+        isCompact ? (
+          <details className="upgrade-card__details">
+            <summary className="upgrade-card__details-summary">
+              {locale === 'zh-CN'
+                ? `更多说明 ${formatNumber(presentation.detailLines.length, locale)} 条`
+                : `${formatNumber(presentation.detailLines.length, locale)} more notes`}
+            </summary>
+            <div className="upgrade-card__details-body">
+              {presentation.detailLines.map((line) => (
+                <p key={line} className="supporting-text">
+                  {line}
+                </p>
+              ))}
+            </div>
+          </details>
+        ) : (
+          <div className="upgrade-card__details-body">
+            {presentation.detailLines.map((line) => (
+              <p key={line} className="supporting-text">
+                {line}
+              </p>
+            ))}
+          </div>
+        )
+      ) : null}
     </article>
   )
 }
@@ -1723,6 +1808,137 @@ export function ChampionDetailPage() {
         upgrade.upgradeType !== 'unlock_ultimate',
     )
   }, [detail])
+  const ledgerRows = useMemo<LedgerUpgradeRow[]>(() => {
+    if (!detail || !effectContext) {
+      return []
+    }
+
+    return ledgerUpgrades.map((upgrade) => {
+      const presentation =
+        upgradePresentations.get(upgrade.id) ?? buildUpgradePresentation(upgrade, effectContext)
+
+      return {
+        upgrade,
+        presentation,
+        category: buildUpgradeCategoryMeta(presentation.typeLabel, locale),
+      }
+    })
+  }, [detail, effectContext, ledgerUpgrades, locale, upgradePresentations])
+  const ledgerFilterOptions = useMemo(() => {
+    const optionMap = new Map<string, UpgradeCategoryMeta & { count: number }>()
+
+    ledgerRows.forEach((row) => {
+      const current = optionMap.get(row.category.key)
+
+      if (current) {
+        current.count += 1
+        return
+      }
+
+      optionMap.set(row.category.key, {
+        ...row.category,
+        count: 1,
+      })
+    })
+
+    return Array.from(optionMap.values()).sort((left, right) => {
+      if (left.defaultEnabled !== right.defaultEnabled) {
+        return left.defaultEnabled ? 1 : -1
+      }
+
+      if (left.count !== right.count) {
+        return right.count - left.count
+      }
+
+      return left.label.localeCompare(right.label, locale)
+    })
+  }, [ledgerRows, locale])
+  const defaultLedgerFilterKeys = useMemo(
+    () => ledgerFilterOptions.filter((option) => option.defaultEnabled).map((option) => option.key),
+    [ledgerFilterOptions],
+  )
+  const ledgerFilterSignature = useMemo(
+    () =>
+      ledgerFilterOptions
+        .map((option) => `${option.key}:${option.defaultEnabled}:${option.count}`)
+        .join('|'),
+    [ledgerFilterOptions],
+  )
+  const [ledgerFilterSelection, setLedgerFilterSelection] = useState<{
+    signature: string
+    keys: string[]
+  } | null>(null)
+  const activeLedgerFilterKeys = useMemo(
+    () =>
+      ledgerFilterSelection?.signature === ledgerFilterSignature
+        ? ledgerFilterSelection.keys
+        : defaultLedgerFilterKeys,
+    [defaultLedgerFilterKeys, ledgerFilterSelection, ledgerFilterSignature],
+  )
+  const activeLedgerFilterKeySet = useMemo(
+    () => new Set(activeLedgerFilterKeys),
+    [activeLedgerFilterKeys],
+  )
+  const visibleLedgerRows = useMemo(
+    () => ledgerRows.filter((row) => activeLedgerFilterKeySet.has(row.category.key)),
+    [activeLedgerFilterKeySet, ledgerRows],
+  )
+  const hiddenLedgerLabels = useMemo(
+    () =>
+      ledgerFilterOptions
+        .filter((option) => !activeLedgerFilterKeySet.has(option.key))
+        .map((option) => option.label),
+    [activeLedgerFilterKeySet, ledgerFilterOptions],
+  )
+  const hiddenLedgerSummary = useMemo(() => {
+    if (ledgerRows.length === 0) {
+      return t({ zh: '当前没有可读的数值里程碑。', en: 'No numeric milestones are available here.' })
+    }
+
+    if (hiddenLedgerLabels.length === 0) {
+      return t({ zh: '当前显示全部类型', en: 'Showing every type' })
+    }
+
+    if (hiddenLedgerLabels.length <= 2) {
+      return locale === 'zh-CN'
+        ? `已收起 ${hiddenLedgerLabels.join(' / ')}`
+        : `Hidden: ${hiddenLedgerLabels.join(' / ')}`
+    }
+
+    return locale === 'zh-CN'
+      ? `已收起 ${formatNumber(hiddenLedgerLabels.length, locale)} 类`
+      : `${formatNumber(hiddenLedgerLabels.length, locale)} types hidden`
+  }, [hiddenLedgerLabels, ledgerRows.length, locale, t])
+  const hasCustomLedgerFilterState = useMemo(() => {
+    if (activeLedgerFilterKeys.length !== defaultLedgerFilterKeys.length) {
+      return true
+    }
+
+    return defaultLedgerFilterKeys.some((key) => !activeLedgerFilterKeySet.has(key))
+  }, [activeLedgerFilterKeySet, activeLedgerFilterKeys.length, defaultLedgerFilterKeys])
+  const isShowingAllLedgerTypes = activeLedgerFilterKeys.length === ledgerFilterOptions.length
+  const toggleLedgerFilter = (key: string) => {
+    const currentKeys =
+      ledgerFilterSelection?.signature === ledgerFilterSignature
+        ? ledgerFilterSelection.keys
+        : defaultLedgerFilterKeys
+
+    setLedgerFilterSelection({
+      signature: ledgerFilterSignature,
+      keys: currentKeys.includes(key)
+        ? currentKeys.filter((item) => item !== key)
+        : [...currentKeys, key],
+    })
+  }
+  const resetLedgerFilters = () => {
+    setLedgerFilterSelection(null)
+  }
+  const enableAllLedgerFilters = () => {
+    setLedgerFilterSelection({
+      signature: ledgerFilterSignature,
+      keys: ledgerFilterOptions.map((option) => option.key),
+    })
+  }
   const overviewFields = useMemo<DetailFieldProps[]>(() => {
     if (!detail) {
       return []
@@ -2282,14 +2498,40 @@ export function ChampionDetailPage() {
                 })}
               >
                 <div id="upgrades" className="detail-section-anchor" />
-                <div className="detail-field-grid detail-field-grid--compact">
-                  <DetailField label={t({ zh: '全部升级', en: 'All upgrades' })} value={formatNumber(detail.upgrades.length, locale)} />
-                  <DetailField label={t({ zh: '重点升级', en: 'Spotlight upgrades' })} value={formatNumber(spotlightUpgrades.length, locale)} />
-                  <DetailField label={t({ zh: '数值里程碑', en: 'Numeric milestones' })} value={formatNumber(ledgerUpgrades.length, locale)} />
+                <div className="upgrade-stat-strip">
+                  <article className="upgrade-stat-card">
+                    <span className="upgrade-stat-card__label">{t({ zh: '全部升级', en: 'All upgrades' })}</span>
+                    <strong className="upgrade-stat-card__value">{formatNumber(detail.upgrades.length, locale)}</strong>
+                    <span className="upgrade-stat-card__hint">
+                      {t({
+                        zh: '包含解锁、命名升级和数值里程碑',
+                        en: 'Includes unlocks, named upgrades, and numeric milestones',
+                      })}
+                    </span>
+                  </article>
+                  <article className="upgrade-stat-card">
+                    <span className="upgrade-stat-card__label">{t({ zh: '重点升级', en: 'Spotlight upgrades' })}</span>
+                    <strong className="upgrade-stat-card__value">{formatNumber(spotlightUpgrades.length, locale)}</strong>
+                    <span className="upgrade-stat-card__hint">
+                      {t({
+                        zh: '优先展示技能解锁和带说明的节点',
+                        en: 'Highlights unlocks and upgrades with readable notes',
+                      })}
+                    </span>
+                  </article>
+                  <article className="upgrade-stat-card">
+                    <span className="upgrade-stat-card__label">{t({ zh: '数值里程碑', en: 'Numeric milestones' })}</span>
+                    <strong className="upgrade-stat-card__value">
+                      {ledgerRows.length > 0
+                        ? `${formatNumber(visibleLedgerRows.length, locale)} / ${formatNumber(ledgerRows.length, locale)}`
+                        : formatNumber(ledgerRows.length, locale)}
+                    </strong>
+                    <span className="upgrade-stat-card__hint">{hiddenLedgerSummary}</span>
+                  </article>
                 </div>
 
                 {spotlightUpgrades.length > 0 ? (
-                  <div className="detail-card-grid">
+                  <div className="upgrade-spotlight-grid">
                     {spotlightUpgrades.map((upgrade) => (
                       <UpgradeCard
                         key={upgrade.id}
@@ -2301,24 +2543,83 @@ export function ChampionDetailPage() {
                   </div>
                 ) : null}
 
-                {ledgerUpgrades.length > 0 ? (
-                  <div className="upgrade-ledger">
-                    <div className="upgrade-ledger__head">
-                      <span>{t({ zh: '等级', en: 'Level' })}</span>
-                      <span>{t({ zh: '类型', en: 'Type' })}</span>
-                      <span>{t({ zh: '作用对象', en: 'Target' })}</span>
-                      <span>{t({ zh: '效果说明', en: 'Effect summary' })}</span>
-                      <span>{t({ zh: '前置', en: 'Prerequisite' })}</span>
+                {ledgerRows.length > 0 ? (
+                  <>
+                    <div className="upgrade-filter-bar">
+                      <div className="upgrade-filter-bar__copy">
+                        <p className="upgrade-filter-bar__eyebrow">{t({ zh: '等级列表过滤', en: 'Ledger filters' })}</p>
+                        <p className="upgrade-filter-bar__description">
+                          {t({
+                            zh: '默认先收起“自身增伤”和“全队增伤”，让里程碑表先保留更有判断价值的条目。',
+                            en: 'Self and party damage boosts stay collapsed by default so the ledger surfaces the more decision-making entries first.',
+                          })}
+                        </p>
+                      </div>
+                      <div className="upgrade-filter-bar__actions">
+                        <button
+                          type="button"
+                          className="action-button action-button--ghost action-button--compact"
+                          onClick={resetLedgerFilters}
+                          disabled={!hasCustomLedgerFilterState}
+                        >
+                          {t({ zh: '恢复默认', en: 'Reset default' })}
+                        </button>
+                        <button
+                          type="button"
+                          className="action-button action-button--secondary action-button--compact"
+                          onClick={enableAllLedgerFilters}
+                          disabled={isShowingAllLedgerTypes}
+                        >
+                          {t({ zh: '显示全部', en: 'Show all' })}
+                        </button>
+                      </div>
+                      <div className="upgrade-filter-chip-row">
+                        {ledgerFilterOptions.map((option) => {
+                          const isActive = activeLedgerFilterKeySet.has(option.key)
+
+                          return (
+                            <button
+                              key={option.key}
+                              type="button"
+                              className={isActive ? 'upgrade-filter-chip upgrade-filter-chip--active' : 'upgrade-filter-chip'}
+                              aria-pressed={isActive}
+                              onClick={() => toggleLedgerFilter(option.key)}
+                            >
+                              <span className="upgrade-filter-chip__label">{option.label}</span>
+                              <span className="upgrade-filter-chip__count">{formatNumber(option.count, locale)}</span>
+                            </button>
+                          )
+                        })}
+                      </div>
                     </div>
-                    {ledgerUpgrades.map((upgrade) => (
-                      <NumericUpgradeRow
-                        key={upgrade.id}
-                        upgrade={upgrade}
-                        presentation={upgradePresentations.get(upgrade.id) ?? buildUpgradePresentation(upgrade, effectContext!)}
-                        locale={locale}
-                      />
-                    ))}
-                  </div>
+
+                    {visibleLedgerRows.length > 0 ? (
+                      <div className="upgrade-ledger">
+                        <div className="upgrade-ledger__head">
+                          <span>{t({ zh: '等级', en: 'Level' })}</span>
+                          <span>{t({ zh: '类型', en: 'Type' })}</span>
+                          <span>{t({ zh: '作用对象', en: 'Target' })}</span>
+                          <span>{t({ zh: '效果说明', en: 'Effect summary' })}</span>
+                          <span>{t({ zh: '前置', en: 'Prerequisite' })}</span>
+                        </div>
+                        {visibleLedgerRows.map((row) => (
+                          <NumericUpgradeRow
+                            key={row.upgrade.id}
+                            upgrade={row.upgrade}
+                            presentation={row.presentation}
+                            locale={locale}
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="upgrade-ledger__empty">
+                        {t({
+                          zh: '当前筛选把所有里程碑都收起了，重新打开上面的类型即可恢复列表。',
+                          en: 'The current filter hides every milestone. Re-enable any type above to bring the ledger back.',
+                        })}
+                      </div>
+                    )}
+                  </>
                 ) : null}
               </SurfaceCard>
 
