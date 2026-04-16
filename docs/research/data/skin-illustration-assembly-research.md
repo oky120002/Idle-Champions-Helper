@@ -12,6 +12,8 @@
   - 本机反编译得到的 `Assembly-CSharp.dll` IL 文本（仓库外临时文件）
 
 > 如果你当前更关心“后端预合成”和“前端实时合成”两条渲染路线该怎么选，请继续看 `docs/research/data/skin-illustration-render-strategy-research.md`；本文只回答“为什么会碎”和“官方有没有组装数据”。
+>
+> 2026-04-16 落地补充：仓库当前已经落地的离线渲染实现、坐标系修正、默认 pose / slot 选择规则与后续人工覆盖建议，统一见 `docs/research/data/skin-illustration-render-pipeline-research.md`。
 
 ---
 
