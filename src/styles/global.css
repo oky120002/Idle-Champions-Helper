@@ -1916,9 +1916,22 @@ html[data-ui-locale='en-US'] .site-subtitle {
   color: rgba(242, 239, 230, 0.78);
 }
 
+.champion-dossier__meta-stack,
+.champion-dossier__meta-list {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.champion-dossier__meta-label {
+  font-size: 0.76rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(242, 239, 230, 0.54);
+}
+
 .champion-dossier__stats {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
   gap: 0.85rem;
 }
 
@@ -1964,6 +1977,16 @@ html[data-ui-locale='en-US'] .site-subtitle {
   font-size: 0.86rem;
 }
 
+.detail-badge--stacked {
+  display: grid;
+  gap: 0.18rem;
+  align-items: start;
+}
+
+.detail-badge__prefix {
+  display: inline-flex;
+}
+
 .detail-badge--active {
   border-color: rgba(200, 167, 127, 0.46);
   background: rgba(200, 167, 127, 0.12);
@@ -2007,7 +2030,8 @@ html[data-ui-locale='en-US'] .site-subtitle {
 
 .champion-detail-sidebar {
   position: sticky;
-  top: 12.2rem;
+  top: 1rem;
+  align-self: start;
 }
 
 .champion-detail-sidebar__panel {
@@ -2074,8 +2098,7 @@ html[data-ui-locale='en-US'] .site-subtitle {
   background: linear-gradient(90deg, rgba(200, 167, 127, 0.7), rgba(231, 209, 171, 0.96));
 }
 
-.champion-detail-sidebar__nav,
-.champion-detail-sidebar__facts {
+.champion-detail-sidebar__nav {
   display: grid;
   gap: 0.65rem;
 }
@@ -2345,6 +2368,8 @@ html[data-ui-locale='en-US'] .site-subtitle {
 .detail-field {
   display: grid;
   gap: 0.4rem;
+  align-content: start;
+  min-width: 0;
   padding: 1rem;
   border-radius: 18px;
   border: 1px solid rgba(227, 214, 193, 0.08);
@@ -2359,6 +2384,10 @@ html[data-ui-locale='en-US'] .site-subtitle {
 }
 
 .detail-field__value {
+  display: grid;
+  gap: 0.22rem;
+  min-width: 0;
+  justify-items: start;
   color: #fff8ec;
   line-height: 1.45;
 }
@@ -2422,14 +2451,27 @@ html[data-ui-locale='en-US'] .site-subtitle {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
-.detail-inline-grid--wide {
-  margin-top: 1rem;
-}
-
 .detail-data-panel,
 .detail-json-panel {
   padding: 0.85rem;
   border-radius: 18px;
+}
+
+.localized-text-stack {
+  display: grid;
+  gap: 0.14rem;
+  min-width: 0;
+}
+
+.localized-text-stack__primary,
+.localized-text-stack__secondary {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.localized-text-stack__secondary {
+  color: rgba(242, 239, 230, 0.62);
+  font-size: 0.9em;
 }
 
 .detail-data-panel__title,
