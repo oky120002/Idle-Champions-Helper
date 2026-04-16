@@ -4,13 +4,13 @@
 - 当前状态：本文基于仓库当前 `public/data/v1/champion-illustrations.json`、本地已生成 PNG 产物，以及 2026-04-16 新增的 alpha 审计脚本整理，现阶段有效。
 - 目标：在“尺寸偏差 + 主题分类”之外，再补一层可复跑的系统审计，用来抓“浮空武器 / 浮空伴生物 / detached prop / 画布内部空域过多”这类单看宽高不容易冒出来的问题。
 
-> 如果你想看上一轮基于尺寸偏差的抽样，请看 `docs/research/data/skin-illustration-override-audit-research.md`；如果你想看当前渲染链路与 override 落点，请看 `docs/research/data/skin-illustration-render-pipeline-research.md`。
+> 如果你想看上一轮基于尺寸偏差的抽样，请看 `docs/research/data/skin-illustration-override-audit-research.md`；如果你想看当前渲染链路与 override 落点，请看 `docs/research/data/skin-illustration-render-pipeline-research.md`；如果你想看这一轮人工复核后沉淀下来的经验库，请看 `docs/research/data/skin-illustration-manual-review-heuristics.md`。
 
 ---
 
 ## 1. 结论先行
 
-截至 2026-04-16，这一轮 alpha 连通域审计先得到 4 个关键结论：
+截至 2026-04-16，这一轮 alpha 连通域审计先得到 5 个关键结论：
 
 - **这条新启发式确实能抓出上一轮“尺寸偏差”没那么敏感的 detached prop / fragment 样本。**
 - 但它的噪音也很明显：很多高分样本并不是 pose 选错，而是主题本来就带有漂浮书、漂浮眼、玻璃罩、悬浮饮料、玩具配件之类的分离道具。
@@ -24,7 +24,11 @@
   - `59`：闭门不出沃纳特
   - `496`：塞伦涅守望者
   - `306`：骄傲父亲梅亨
-- 我继续对其中 `351`、`112`、`210`、`306` 做了 `current vs 多候选 pose` 补看，当前观察是：**这些高分更多是在提示“这个 skin 本来就有 detached 道具/伴生物”，而不是已经证明当前默认 pose 错了。**
+- 我继续对这 9 个候选全部做了人工补看：
+  - 第一批：`351`、`112`、`210`、`306`
+  - 第二批：`282`、`298`、`103`、`59`、`496`
+- 当前观察是：**这些高分更多是在提示“这个 skin 本来就有 detached 道具/伴生物”，而不是已经证明当前默认 pose 错了。**
+- 把这 9 个样本并入默认 `reviewedSkinIds` 后再复跑，当前 alpha 审计已经没有剩余未复核的高优先级候选。
 
 这意味着：
 
@@ -121,7 +125,7 @@ node scripts/audit-idle-champions-illustration-alpha-fragmentation.mjs
 
 ## 4. 这轮脚本跑出的结果
 
-按当前默认 `reviewedSkinIds` 复跑，结果是：
+按这轮开始时的默认 `reviewedSkinIds` 复跑，结果是：
 
 - `detached-fragment`：`8`
 - `sparse-fill`：`0`
@@ -151,11 +155,16 @@ node scripts/audit-idle-champions-illustration-alpha-fragmentation.mjs
 
 ## 5. 对 top 样本的补充目检
 
-为了确认这套启发式不是纯噪音，我又补看了这 4 个高分样本的候选 pose：
+为了确认这套启发式不是纯噪音，我把这 9 个高分样本都补做了 `current vs 候选 pose` 目检：
 
 - `351`：冒险休闲多纳尔
+- `282`：女巫之光 BBEG
 - `112`：女巫之光守望者
 - `210`：顶点多纳尔
+- `298`：假期地下城主
+- `103`：龙语者贾拉索
+- `59`：闭门不出沃纳特
+- `496`：塞伦涅守望者
 - `306`：骄傲父亲梅亨
 
 补看方式仍是：
@@ -168,12 +177,27 @@ node scripts/audit-idle-champions-illustration-alpha-fragmentation.mjs
 - `351`
   - detached 大剑在候选 pose 里几乎一直存在；
   - 更像这套资源本来就是“人物 + 外侧大剑”的展示结构，而不是默认 frame 选错。
+- `282`
+  - 漂浮眼与漂浮书在多候选 pose 里都持续存在；
+  - 更像女巫之光主题的固定展示元素，不建议因为 detached 就直接写 override。
 - `112`
   - 候选 pose 只是轻微调整站姿；
   - 当前 detached 感更多来自主题造型本身，并没有看到压倒性的更优 frame。
 - `210`
   - 玻璃罩、坐骑 / 特效、外侧锯齿状武器在多个候选 pose 里都存在；
   - 更像复杂主题包装，而不是当前 pose 的单点错误。
+- `298`
+  - 漂浮饮料在不同候选里都保留；
+  - 更像假期主题 props，不是 pose 选错。
+- `103`
+  - 细剑在当前与候选 pose 里都保持近似关系；
+  - 当前没有看到哪个候选能明确改善“拿武器”的阅读感。
+- `59`
+  - 右侧配件在多候选里都持续存在；
+  - 没有看到足够明确的更优 pose。
+- `496`
+  - 月牙 / 星星 / companion 感在多候选里同样存在；
+  - 更像主题特效与 companion 的固定构图。
 - `306`
   - 酒壶和蝙蝠一样在多候选 pose 里持续存在；
   - 当前高分主要是在提示“主题里有 detached 配件”，不是 pose 特有问题。
@@ -182,6 +206,7 @@ node scripts/audit-idle-champions-illustration-alpha-fragmentation.mjs
 
 - **alpha 审计能发现“哪些图有分离主体块”**
 - 但它还不能单独回答“这些分离块是不是错误”
+- 而且在把这 9 个样本都纳入已复核列表后，当前这套 alpha 审计候选池也已经基本跑空。
 
 ---
 
@@ -241,3 +266,4 @@ node scripts/audit-idle-champions-illustration-alpha-fragmentation.mjs
 - `tmp/illustration-alpha-audit/report.json`
 - `tmp/illustration-alpha-audit/index.html`
 - `docs/research/data/skin-illustration-override-audit-research.md`
+- `docs/research/data/skin-illustration-manual-review-heuristics.md`

@@ -13,6 +13,7 @@
 - `docs/research/data/game-data-source-investigation.md`：基础数据与个人数据来源边界
 - `docs/research/data/static-data-storage-research.md`：版本化静态数据目录与存储策略
 - `docs/research/data/champion-detail-fields-research.md`：英雄详情字段合同
+- `docs/research/data/skin-illustration-manual-review-heuristics.md`：皮肤立绘人工复核经验库
 - `docs/research/deployment/static-hosting-research.md`：正式部署方案与路由策略
 - `docs/research/testing/regression-testing-research.md`：主分支整体回归门禁设计
 
