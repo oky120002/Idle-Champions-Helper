@@ -2,34 +2,11 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
+import { DEFAULT_REVIEWED_SKIN_IDS } from './data/champion-illustration-audit-config.mjs'
 
 const DEFAULT_INPUT = 'public/data/v1/champion-illustrations.json'
 const DEFAULT_OUTPUT_DIR = 'tmp/illustration-override-audit'
 const DEFAULT_TOP = 12
-const DEFAULT_REVIEWED_SKIN_IDS = [
-  '332',
-  '416',
-  '344',
-  '417',
-  '297',
-  '367',
-  '452',
-  '550',
-  '362',
-  '290',
-  '515',
-  '473',
-  '111',
-  '390',
-  '123',
-  '333',
-  '133',
-  '327',
-  '396',
-  '409',
-  '470',
-  '471',
-]
 const SMALL_THEME_KEYWORDS = [
   '毛绒',
   '宝宝',

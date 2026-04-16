@@ -4,7 +4,7 @@
 - 当前状态：本文基于仓库当前 `public/data/v1/champion-illustrations.json`、已生成立绘产物，以及 2026-04-16 新增的抽样审计脚本整理，现阶段有效。
 - 目标：先做一轮系统抽样，把“下一批最值得人工目检、最可能需要补 override 的皮肤”收敛成一份可执行清单，避免直接盲写规则。
 
-> 如果你想看当前立绘渲染主链路、pose / slot 默认规则和覆盖层落点，请看 `docs/research/data/skin-illustration-render-pipeline-research.md`；本文只负责回答“下一批 override 应该先看哪些 skin”。
+> 如果你想看当前立绘渲染主链路、pose / slot 默认规则和覆盖层落点，请看 `docs/research/data/skin-illustration-render-pipeline-research.md`；如果你想看 2026-04-16 新补的一轮“alpha 连通域 / detached prop”审计，请看 `docs/research/data/skin-illustration-alpha-fragmentation-research.md`；本文只负责回答“下一批 override 应该先看哪些 skin”。
 
 ---
 
