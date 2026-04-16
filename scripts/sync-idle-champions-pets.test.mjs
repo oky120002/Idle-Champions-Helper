@@ -24,6 +24,88 @@ function createPng(width, height, colorByPixel) {
   return PNG.sync.write(png)
 }
 
+function encodeUInt32LE(value) {
+  const buffer = Buffer.alloc(4)
+  buffer.writeUInt32LE(value, 0)
+  return buffer
+}
+
+function encodeInt32LE(value) {
+  const buffer = Buffer.alloc(4)
+  buffer.writeInt32LE(value, 0)
+  return buffer
+}
+
+function encodeInt16LE(value) {
+  const buffer = Buffer.alloc(2)
+  buffer.writeInt16LE(value, 0)
+  return buffer
+}
+
+function encodeDoubleLE(value) {
+  const buffer = Buffer.alloc(8)
+  buffer.writeDoubleLE(value, 0)
+  return buffer
+}
+
+function encodeBoolean(value) {
+  return Buffer.from([value ? 1 : 0])
+}
+
+function encodeString(value) {
+  const bytes = Buffer.from(value, 'utf8')
+  return Buffer.concat([encodeInt16LE(bytes.length), bytes])
+}
+
+function buildSkelAnimAssetBuffer({ sheetWidth, sheetHeight, textures, characters }) {
+  const chunks = [encodeUInt32LE(sheetWidth), encodeUInt32LE(sheetHeight), encodeUInt32LE(textures.length)]
+
+  for (const texture of textures) {
+    chunks.push(encodeUInt32LE(texture.length), texture)
+  }
+
+  chunks.push(encodeUInt32LE(characters.length))
+
+  for (const character of characters) {
+    chunks.push(encodeString(character.name), encodeUInt32LE(character.sequences.length))
+
+    for (const sequence of character.sequences) {
+      chunks.push(encodeUInt32LE(sequence.length), encodeUInt32LE(sequence.pieces.length))
+
+      for (const piece of sequence.pieces) {
+        chunks.push(
+          encodeUInt32LE(piece.textureId),
+          encodeUInt32LE(piece.sourceX),
+          encodeUInt32LE(piece.sourceY),
+          encodeUInt32LE(piece.sourceWidth),
+          encodeUInt32LE(piece.sourceHeight),
+          encodeInt32LE(piece.centerX),
+          encodeInt32LE(piece.centerY),
+        )
+
+        for (const frame of piece.frames) {
+          chunks.push(encodeBoolean(Boolean(frame)))
+
+          if (!frame) {
+            continue
+          }
+
+          chunks.push(
+            encodeUInt32LE(frame.depth),
+            encodeDoubleLE(frame.rotation),
+            encodeDoubleLE(frame.scaleX),
+            encodeDoubleLE(frame.scaleY),
+            encodeDoubleLE(frame.x),
+            encodeDoubleLE(frame.y),
+          )
+        }
+      }
+    }
+  }
+
+  return zlib.deflateSync(Buffer.concat(chunks))
+}
+
 async function writeJson(filePath, value) {
   await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
 }
@@ -261,4 +343,148 @@ test('syncPetsCatalog 输出宠物目录、获取方式与本地图像', async (
   assert.equal(unreleasedPet.acquisition.kind, 'not-yet-available')
   assert.equal(unreleasedPet.icon, null)
   assert.equal(unreleasedPet.illustration, null)
+})
+
+test('syncPetsCatalog 会把 type=3 的宠物分件资源离线合成为单张 PNG', async (t) => {
+  const tempDir = await createTempDir(t)
+  const inputFile = path.join(tempDir, 'definitions.json')
+  const outputDir = path.join(tempDir, 'data')
+  const rawByUrl = new Map()
+
+  const texture = createPng(6, 2, (x, y) => {
+    if (x <= 1) {
+      return [255, 0, 0, 255]
+    }
+
+    if (x >= 4) {
+      return [0, 120, 255, 255]
+    }
+
+    return [0, 0, 0, 0]
+  })
+
+  const skelAnimBuffer = buildSkelAnimAssetBuffer({
+    sheetWidth: 6,
+    sheetHeight: 2,
+    textures: [texture],
+    characters: [
+      {
+        name: 'AssembledPet',
+        sequences: [
+          {
+            length: 1,
+            pieces: [
+              {
+                textureId: 0,
+                sourceX: 0,
+                sourceY: 0,
+                sourceWidth: 2,
+                sourceHeight: 2,
+                centerX: 0,
+                centerY: 0,
+                frames: [
+                  {
+                    depth: 0,
+                    rotation: 0,
+                    scaleX: 1,
+                    scaleY: 1,
+                    x: 0,
+                    y: 0,
+                  },
+                ],
+              },
+              {
+                textureId: 0,
+                sourceX: 4,
+                sourceY: 0,
+                sourceWidth: 2,
+                sourceHeight: 2,
+                centerX: 0,
+                centerY: 0,
+                frames: [
+                  {
+                    depth: 1,
+                    rotation: 0,
+                    scaleX: 1,
+                    scaleY: 1,
+                    x: 2,
+                    y: 0,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  })
+
+  for (const graphicPath of ['Familiars/SkelIcon', 'Familiars/SkelIllustration_4xup']) {
+    rawByUrl.set(`https://example.test/mobile_assets/${graphicPath}`, skelAnimBuffer)
+  }
+
+  const originalFetch = globalThis.fetch
+  globalThis.fetch = async (input) => {
+    const url = String(input)
+    const body = rawByUrl.get(url)
+
+    if (!body) {
+      return new Response('not found', { status: 404 })
+    }
+
+    return new Response(body, { status: 200 })
+  }
+  t.after(() => {
+    globalThis.fetch = originalFetch
+  })
+
+  await writeJson(inputFile, {
+    current_time: 1770000000,
+    familiar_defines: [
+      {
+        id: 7,
+        name: 'Skel Pet',
+        description: 'Rendered from separated pieces.',
+        graphic_id: 701,
+        properties: { xl_graphic_id: 702, is_available: true },
+        is_available: true,
+        collections_source: { type: 'gems', cost: 50 },
+      },
+    ],
+    premium_item_defines: [],
+    patron_defines: [],
+    patron_shop_item_defines: [],
+    graphic_defines: [
+      { id: 701, type: 3, graphic: 'Familiars/SkelIcon', export_params: { sequence_override: [1] } },
+      { id: 702, type: 3, graphic: 'Familiars/SkelIllustration_4xup', export_params: { sequence_override: [1] } },
+    ],
+  })
+
+  const result = await syncPetsCatalog({
+    input: inputFile,
+    outputDir,
+    currentVersion: 'v1',
+    masterApiUrl: 'https://example.test/',
+    concurrency: 1,
+  })
+
+  assert.equal(result.count, 1)
+  assert.equal(result.counts.icons, 1)
+  assert.equal(result.counts.illustrations, 1)
+
+  const pets = await readJson(path.join(outputDir, 'pets.json'))
+  const pet = pets.items[0]
+
+  assert.equal(pet.icon.width, 4)
+  assert.equal(pet.icon.height, 4)
+  assert.equal(pet.illustration.width, 4)
+  assert.equal(pet.illustration.height, 2)
+
+  const iconPng = PNG.sync.read(await readFile(path.join(outputDir, 'pets', 'icons', '7.png')))
+  const illustrationPng = PNG.sync.read(await readFile(path.join(outputDir, 'pets', 'illustrations', '7.png')))
+
+  assert.equal(iconPng.width, 4)
+  assert.equal(iconPng.height, 4)
+  assert.equal(illustrationPng.width, 4)
+  assert.equal(illustrationPng.height, 2)
 })

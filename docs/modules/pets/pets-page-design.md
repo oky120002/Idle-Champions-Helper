@@ -54,6 +54,11 @@
 - `patron_defines`：赞助商名称与货币名
 - `graphic_defines`：图像路径定位
 
+补充说明：
+
+- 宠物 `graphic_id` 与 `properties.xl_graphic_id` 当前主链路同样是 `SkelAnim` 分件资源，不是直接可展示的整张 PNG。
+- 因此 `scripts/sync-idle-champions-pets.mjs` 必须在构建期完成 `SkelAnim` pose 合成，再把图标与立绘写成站内静态 PNG。
+
 ---
 
 ## 4. 获取方式归类
@@ -91,4 +96,3 @@
 - 样式：`src/styles/global.css`
 - 数据脚本：`scripts/sync-idle-champions-pets.mjs`
 - 构建入口：`scripts/build-idle-champions-data.mjs`
-
