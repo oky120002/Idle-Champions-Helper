@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import os from 'node:os'
 import path from 'node:path'
 import zlib from 'node:zlib'
-import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { PNG } from 'pngjs'
 import { syncChampionIllustrations } from './sync-idle-champions-illustrations.mjs'
 
@@ -394,4 +394,157 @@ test('syncChampionIllustrations 合并 championId 与 graphicId 覆盖到 pose �
     notes: ['冠军兜底优先第 1 帧', '指定 graphic 优先第 1 个 sequence'],
   })
   assert.deepEqual(Array.from(png.data), [255, 255, 0, 255])
+})
+
+test('syncChampionIllustrations 在 skinIds 局部重渲染时保留既有清单与图片', async (t) => {
+  const tempDir = await createTempDir(t)
+  const visualsFile = path.join(tempDir, 'champion-visuals.json')
+  const illustrationRoot = path.join(tempDir, 'champion-illustrations')
+
+  await writeJson(visualsFile, {
+    updatedAt: '2026-04-16',
+    items: [
+      {
+        championId: '101',
+        seat: 1,
+        name: { original: 'Hero One', display: '英雄一' },
+        portrait: null,
+        base: createDecodedPngAsset({
+          graphicId: 'hero-101',
+          sourceGraphic: 'Hero_101',
+          color: [10, 20, 30],
+          remotePath: '/Portraits/Hero_101',
+        }),
+        skins: [
+          {
+            id: '501',
+            name: { original: 'Skin One', display: '皮肤一' },
+            portrait: null,
+            base: createDecodedPngAsset({
+              graphicId: 'skin-501',
+              sourceGraphic: 'Skin_501',
+              color: [12, 34, 56],
+              remotePath: '/Portraits/Skin_501',
+            }),
+            large: null,
+            xl: null,
+          },
+        ],
+      },
+      {
+        championId: '102',
+        seat: 2,
+        name: { original: 'Hero Two', display: '英雄二' },
+        portrait: null,
+        base: createDecodedPngAsset({
+          graphicId: 'hero-102',
+          sourceGraphic: 'Hero_102',
+          color: [20, 30, 40],
+          remotePath: '/Portraits/Hero_102',
+        }),
+        skins: [
+          {
+            id: '601',
+            name: { original: 'Skin Two', display: '皮肤二' },
+            portrait: null,
+            base: createDecodedPngAsset({
+              graphicId: 'skin-601',
+              sourceGraphic: 'Skin_601',
+              color: [65, 43, 21],
+              remotePath: '/Portraits/Skin_601',
+            }),
+            large: null,
+            xl: null,
+          },
+        ],
+      },
+    ],
+  })
+
+  await mkdir(path.join(illustrationRoot, 'heroes'), { recursive: true })
+  await mkdir(path.join(illustrationRoot, 'skins'), { recursive: true })
+  await writeFile(path.join(illustrationRoot, 'heroes', '999.png'), Buffer.from('keep-hero'))
+  await writeFile(path.join(illustrationRoot, 'skins', '601.png'), Buffer.from('keep-skin'))
+  await writeJson(path.join(tempDir, 'champion-illustrations.json'), {
+    updatedAt: '2026-04-15',
+    items: [
+      {
+        id: 'hero:999',
+        championId: '999',
+        skinId: null,
+        kind: 'hero-base',
+        seat: 9,
+        championName: { original: 'Hero Keep', display: '保留英雄' },
+        illustrationName: { original: 'Hero Keep', display: '保留英雄' },
+        portraitPath: null,
+        sourceSlot: 'base',
+        sourceGraphicId: 'hero-keep',
+        sourceGraphic: 'Hero_Keep',
+        sourceVersion: 1,
+        render: {
+          pipeline: 'decoded-png',
+          sequenceIndex: null,
+          sequenceLength: null,
+          isStaticPose: null,
+          frameIndex: null,
+          visiblePieceCount: null,
+          bounds: null,
+        },
+        image: {
+          path: 'v1/champion-illustrations/heroes/999.png',
+          width: 1,
+          height: 1,
+          bytes: 9,
+          format: 'png',
+        },
+      },
+      {
+        id: 'skin:601',
+        championId: '102',
+        skinId: '601',
+        kind: 'skin',
+        seat: 2,
+        championName: { original: 'Hero Two', display: '英雄二' },
+        illustrationName: { original: 'Skin Two', display: '皮肤二' },
+        portraitPath: null,
+        sourceSlot: 'base',
+        sourceGraphicId: 'skin-601',
+        sourceGraphic: 'Skin_601',
+        sourceVersion: 1,
+        render: {
+          pipeline: 'decoded-png',
+          sequenceIndex: null,
+          sequenceLength: null,
+          isStaticPose: null,
+          frameIndex: null,
+          visiblePieceCount: null,
+          bounds: null,
+        },
+        image: {
+          path: 'v1/champion-illustrations/skins/601.png',
+          width: 1,
+          height: 1,
+          bytes: 9,
+          format: 'png',
+        },
+      },
+    ],
+  })
+
+  await syncChampionIllustrations({
+    visualsFile,
+    outputDir: tempDir,
+    currentVersion: 'v1',
+    skinIds: '501',
+  })
+
+  const output = JSON.parse(await readFile(path.join(tempDir, 'champion-illustrations.json'), 'utf8'))
+  const ids = output.items.map((item) => item.id)
+  const updatedSkin = output.items.find((item) => item.id === 'skin:501')
+
+  assert.deepEqual(ids, ['skin:501', 'skin:601', 'hero:999'])
+  assert.ok(updatedSkin)
+  assert.equal(updatedSkin.sourceGraphicId, 'skin-501')
+  assert.deepEqual(await readFile(path.join(illustrationRoot, 'heroes', '999.png')), Buffer.from('keep-hero'))
+  assert.deepEqual(await readFile(path.join(illustrationRoot, 'skins', '601.png')), Buffer.from('keep-skin'))
 })
