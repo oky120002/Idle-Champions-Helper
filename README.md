@@ -10,7 +10,7 @@
 
 ## 当前范围
 
-- 已有页面：总览、英雄筛选、英雄详情、立绘页、变体限制、阵型编辑、方案存档、个人数据
+- 已有页面：总览、英雄筛选、英雄详情、立绘页、宠物图鉴、变体限制、阵型编辑、方案存档、个人数据
 - 公共数据：`public/data/version.json` 与 `public/data/v1/*.json`
 - 本地数据：最近草稿与命名方案使用 `IndexedDB`
 - 当前回归基线：`Vitest`、`React Testing Library`、`Playwright`
@@ -45,6 +45,7 @@ npm run data:fetch
 npm run data:normalize -- --input tmp/idle-champions-api/<english>.json --localizedInput tmp/idle-champions-api/<zh>.json
 npm run data:portraits -- --input tmp/idle-champions-api/<english>.json
 npm run data:illustrations
+npm run data:pets -- --input tmp/idle-champions-api/<english>.json --localizedInput tmp/idle-champions-api/<zh>.json
 ```
 
 - `data:official` 是当前公共数据构建入口。

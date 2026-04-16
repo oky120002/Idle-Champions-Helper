@@ -123,6 +123,40 @@ export interface ChampionIllustration {
   image: ChampionIllustrationImage
 }
 
+export interface PetImage {
+  path: string
+  width: number
+  height: number
+  bytes: number
+  format: 'png'
+}
+
+export type PetAcquisitionKind = 'gems' | 'premium' | 'patron' | 'not-yet-available' | 'unknown'
+
+export interface PetAcquisition {
+  kind: PetAcquisitionKind
+  sourceType: string | null
+  gemCost: number | null
+  premiumPackName: LocalizedText | null
+  premiumPackDescription: LocalizedText | null
+  patronName: LocalizedText | null
+  patronCurrency: LocalizedText | null
+  patronCost: number | null
+  patronInfluence: number | null
+}
+
+export interface Pet {
+  id: string
+  name: LocalizedText
+  description: LocalizedText | null
+  isAvailable: boolean
+  iconGraphicId: string | null
+  illustrationGraphicId: string | null
+  acquisition: PetAcquisition
+  icon: PetImage | null
+  illustration: PetImage | null
+}
+
 export interface Champion {
   id: string
   name: LocalizedText

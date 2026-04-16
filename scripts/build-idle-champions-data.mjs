@@ -3,6 +3,7 @@ import { pathToFileURL } from 'node:url'
 import { fetchDefinitionsSnapshot } from './fetch-idle-champions-definitions.mjs'
 import { normalizeDefinitionsSnapshot } from './normalize-idle-champions-definitions.mjs'
 import { syncChampionIllustrations } from './sync-idle-champions-illustrations.mjs'
+import { syncPetsCatalog } from './sync-idle-champions-pets.mjs'
 import { syncChampionPortraits } from './sync-idle-champions-portraits.mjs'
 
 async function main() {
@@ -71,14 +72,22 @@ async function main() {
     currentVersion: values.currentVersion,
     illustrationOverrides: values.illustrationOverrides,
   })
+  const pets = await syncPetsCatalog({
+    input: fetched.rawFile,
+    localizedInput: localizedFetched.rawFile,
+    outputDir: values.outputDir,
+    currentVersion: values.currentVersion,
+    masterApiUrl: values.masterApiUrl,
+  })
 
   console.log(`官方基座数据流水线完成：`)
-  console.log(`- included: definitions(source + zh) + normalized collections + champion portraits + champion illustrations`)
+  console.log(`- included: definitions(source + zh) + normalized collections + champion portraits + champion illustrations + pet catalog`)
   console.log(`- source raw: ${fetched.rawFile}`)
   console.log(`- display raw: ${localizedFetched.rawFile}`)
   console.log(`- normalized dir: ${normalized.outputDir}`)
   console.log(`- portraits dir: ${portraits.outputDir}`)
   console.log(`- illustrations dir: ${illustrations.outputDir}`)
+  console.log(`- pets: ${pets.count} (assets ${pets.assetCount})`)
   console.log(`- version file: ${normalized.versionFile}`)
 }
 

@@ -66,6 +66,7 @@
 - `docs/research/data/champion-image-asset-sizing-research.md`：官方头像、立绘、皮肤资源的尺寸样本、体积量级与后续资源线程交接边界。
 - `docs/research/data/champion-detail-fields-research.md`：英雄详情页所需字段、definitions 可用范围与详情数据合同建议。
 - `docs/research/data/champion-visual-asset-research.md`：英雄本体立绘、皮肤立绘与皮肤头像的官方字段链路与远端解析策略。
+- `docs/research/data/pet-catalog-data-research.md`：宠物主表、获取方式映射与本地图像同步链路研究。
 - `docs/research/data/skin-illustration-assembly-research.md`：皮肤立绘为什么会显示碎片图、`SkelAnim` 组装数据落点，以及离线合成完整立绘的可行方案。
 - `docs/research/data/skin-illustration-render-strategy-research.md`：后端预合成与前端实时合成两条皮肤立绘渲染路线的可行性、兼容性与终端风险对比。
 - `docs/research/data/skin-illustration-render-pipeline-research.md`：当前已落地的皮肤立绘离线渲染管线、pose / slot 选择规则、坐标系修正结果与后续人工覆盖落点。
@@ -80,6 +81,7 @@
 - `docs/modules/champions/champion-detail-design.md`：英雄详情页的信息架构、路由入口与交互设计稿。
 - `docs/modules/champions/champions-filter-design.md`：英雄筛选模块设计稿。
 - `docs/modules/formation/formation-editor-design.md`：阵型编辑模块设计稿。
+- `docs/modules/pets/pets-page-design.md`：宠物图鉴页的范围、数据口径与页面结构设计稿。
 - `docs/modules/presets/presets-design.md`：方案存档模块设计稿。
 - `docs/modules/shared-components/shared-components-design.md`：共享组件治理规则、抽取准入条件与测试规范。
 - `docs/modules/shared-components/shared-components-catalog.md`：当前可复用组件与相关 helper 索引。
