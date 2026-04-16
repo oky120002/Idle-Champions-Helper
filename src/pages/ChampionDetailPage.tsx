@@ -1771,6 +1771,54 @@ export function ChampionDetailPage() {
       ...buildOverviewPropertyFields(detail, locale, effectContext),
     ]
   }, [detail, effectContext, locale, t])
+  const summaryAvailabilityBadges = useMemo(() => {
+    if (!detail) {
+      return []
+    }
+
+    const badges: Array<{ key: string; label: ReactNode; active?: boolean }> = []
+
+    if (detail.availability.isAvailable) {
+      badges.push({
+        key: 'available',
+        label: t({ zh: '当前可用', en: 'Currently available' }),
+        active: true,
+      })
+    }
+
+    if (detail.availability.availableInShop) {
+      badges.push({
+        key: 'shop',
+        label: t({ zh: '商店可得', en: 'Available in shop' }),
+        active: true,
+      })
+    }
+
+    if (detail.availability.availableInTimeGate) {
+      badges.push({
+        key: 'time-gate',
+        label: t({ zh: '时间门可得', en: 'Available in Time Gate' }),
+        active: true,
+      })
+    }
+
+    if (detail.availability.availableInNextEvent) {
+      badges.push({
+        key: 'next-event',
+        label: t({ zh: '下个活动可得', en: 'Available in next event' }),
+        active: true,
+      })
+    }
+
+    if (badges.length === 0) {
+      badges.push({
+        key: 'unavailable',
+        label: t({ zh: '当前未开放', en: 'Currently unavailable' }),
+      })
+    }
+
+    return badges
+  }, [detail, t])
   const sectionLinks: Array<{ id: DetailSectionId; label: string }> = [
     { id: 'overview', label: t({ zh: '概览', en: 'Overview' }) },
     { id: 'character-sheet', label: t({ zh: '角色卡', en: 'Character sheet' }) },
@@ -2100,18 +2148,14 @@ export function ChampionDetailPage() {
             </div>
 
             <div className="detail-badge-row detail-badge-row--wrap">
-              <span className={detail.availability.isAvailable ? 'detail-badge detail-badge--active' : 'detail-badge'}>
-                {t({ zh: '当前可用', en: 'Currently available' })}: {formatBoolean(detail.availability.isAvailable, locale)}
-              </span>
-              <span className={detail.availability.availableInShop ? 'detail-badge detail-badge--active' : 'detail-badge'}>
-                {t({ zh: '商店', en: 'Shop' })}: {formatBoolean(detail.availability.availableInShop, locale)}
-              </span>
-              <span className={detail.availability.availableInTimeGate ? 'detail-badge detail-badge--active' : 'detail-badge'}>
-                {t({ zh: '时间门', en: 'Time Gate' })}: {formatBoolean(detail.availability.availableInTimeGate, locale)}
-              </span>
-              <span className={detail.availability.availableInNextEvent ? 'detail-badge detail-badge--active' : 'detail-badge'}>
-                {t({ zh: '下个活动', en: 'Next event' })}: {formatBoolean(detail.availability.availableInNextEvent, locale)}
-              </span>
+              {summaryAvailabilityBadges.map((badge) => (
+                <span
+                  key={badge.key}
+                  className={badge.active ? 'detail-badge detail-badge--active' : 'detail-badge'}
+                >
+                  {badge.label}
+                </span>
+              ))}
               {detail.eventName ? (
                 <span className="detail-badge detail-badge--stacked">
                   <span className="detail-badge__prefix">{t({ zh: '活动', en: 'Event' })}</span>
