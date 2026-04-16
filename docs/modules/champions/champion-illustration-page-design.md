@@ -5,7 +5,9 @@
 - 目标：在“只用 GitHub Pages、零额外服务、零额外成本”的前提下，让立绘页面能够稳定显示全部英雄本体立绘与全部皮肤立绘。
 - 当前结论：立绘页的主方案不能继续依赖浏览器运行时直连官方 `mobile_assets`。最优方案是“构建期全量抓取并解包官方立绘，发布为站内静态衍生图，运行时只读本地资源”。
 
-> 2026-04-16 补充说明：这里的“解包官方立绘”需要进一步细化。最新调研已确认，很多英雄/皮肤主立绘资源本质上是 `graphic_defines.type = 3 (SkelAnim)` 的分件动画资源，所以构建期主链路应理解为“解压二进制 + 解析 sequence/frame + 合成完整静态 pose”，而不是只把 `Characters/...` 裁成 PNG atlas。详见 `docs/research/data/skin-illustration-assembly-research.md`。
+> 2026-04-16 补充说明：这里的“解包官方立绘”需要进一步细化。最新调研已确认，很多英雄/皮肤主立绘资源本质上是 `graphic_defines.type = 3 (SkelAnim)` 的分件动画资源，所以构建期主链路应理解为“解压二进制 + 解析 sequence/frame + 合成完整静态 pose”，而不是只把 `Characters/...` 裁成 PNG atlas。关于“为什么会碎”和底层资源证据，详见 `docs/research/data/skin-illustration-assembly-research.md`；关于仓库当前已经落地的实际渲染管线、坐标系修正、默认 pose / slot 规则与后续人工覆盖建议，详见 `docs/research/data/skin-illustration-render-pipeline-research.md`。
+>
+> 现状对齐说明：仓库当前首版落地产物已简化为 `public/data/v1/champion-illustrations/heroes/*.png` 与 `public/data/v1/champion-illustrations/skins/*.png`；本文后续关于 `thumbs / display` 与 `webp` 的目录、格式和分档策略，保留为后续可演进的页面资源设计，不代表 2026-04-16 的现状实现。
 
 ---
 
