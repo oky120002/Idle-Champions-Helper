@@ -4,6 +4,8 @@
 - 调研目标：确认官方 definitions 中除英雄头像外，是否还能稳定定位英雄立绘、皮肤立绘与皮肤头像，并确定本仓库的落地策略。
 - 调研方式：基于仓库内 2026-04-13 的官方 definitions 快照，对 `hero_defines`、`hero_skin_defines`、`graphic_defines` 与 `mobile_assets` 返回内容做交叉核实。
 
+> 2026-04-16 补充说明：本文确认的是“资源引用链路”和“原始响应能否解包出纹理数据”。后续进一步核实发现，很多 `Characters/...` 主立绘资源本质上是 `graphic_defines.type = 3 (SkelAnim)` 的分件动画资源，解包后拿到的常常只是 atlas 纹理而不是最终可展示的完整人物。关于“为什么弹窗里会看到碎片图，以及如何离线组装成完整立绘”，请改看 `docs/research/data/skin-illustration-assembly-research.md`。
+
 ---
 
 ## 1. 结论先行

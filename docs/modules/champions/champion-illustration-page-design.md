@@ -5,6 +5,10 @@
 - 目标：在“只用 GitHub Pages、零额外服务、零额外成本”的前提下，让立绘页面能够稳定显示全部英雄本体立绘与全部皮肤立绘。
 - 当前结论：立绘页的主方案不能继续依赖浏览器运行时直连官方 `mobile_assets`。最优方案是“构建期全量抓取并解包官方立绘，发布为站内静态衍生图，运行时只读本地资源”。
 
+> 2026-04-16 补充说明：这里的“解包官方立绘”需要进一步细化。最新调研已确认，很多英雄/皮肤主立绘资源本质上是 `graphic_defines.type = 3 (SkelAnim)` 的分件动画资源，所以构建期主链路应理解为“解压二进制 + 解析 sequence/frame + 合成完整静态 pose”，而不是只把 `Characters/...` 裁成 PNG atlas。关于“为什么会碎”和底层资源证据，详见 `docs/research/data/skin-illustration-assembly-research.md`；关于仓库当前已经落地的实际渲染管线、坐标系修正、默认 pose / slot 规则与后续人工覆盖建议，详见 `docs/research/data/skin-illustration-render-pipeline-research.md`。
+>
+> 现状对齐说明：仓库当前首版落地产物已简化为 `public/data/v1/champion-illustrations/heroes/*.png` 与 `public/data/v1/champion-illustrations/skins/*.png`；本文后续关于 `thumbs / display` 与 `webp` 的目录、格式和分档策略，保留为后续可演进的页面资源设计，不代表 2026-04-16 的现状实现。
+
 ---
 
 ## 1. 结论先行
@@ -12,7 +16,7 @@
 如果产品目标是“立绘页面正常显示所有立绘”，那么在当前约束下，唯一应该作为主路径的方案是：
 
 1. 在数据构建阶段离线抓取官方立绘资源。
-2. 在 Node 脚本里完成 `wrapped-png / zlib-png` 解包、透明边裁切、尺寸审计与页面用衍生图生成。
+2. 在 Node 脚本里完成 `wrapped-png / zlib-png` 解包、`SkelAnim` 解析、静态 pose 合成、透明边裁切、尺寸审计与页面用衍生图生成。
 3. 把页面真正消费的图片发布到站内静态目录。
 4. 页面运行时只读取 `GitHub Pages` 上的本地静态图片与清单文件，不再依赖浏览器跨域抓官方资源。
 
@@ -39,7 +43,7 @@
 
 仓库现有调研已经确认：
 
-- `Characters/...` 立绘资源需要 `zlib inflate + PNG` 解包。
+- `Characters/...` 立绘资源需要先做 `zlib inflate`，但对很多英雄/皮肤主立绘来说，拿到的只是分件动画图集，还需要额外的 `SkelAnim` 组装步骤。
 - 官方 `mobile_assets` 当前未见稳定的 `Access-Control-Allow-Origin`。
 
 这意味着：
@@ -210,8 +214,8 @@ type ChampionIllustrationEntry = {
 1. 读取英文 definitions 快照与 `champion-visuals.json`
 2. 枚举全部英雄本体与皮肤立绘单元
 3. 下载候选官方图片资源
-4. 按 `delivery` 解包成 PNG
-5. 计算真实尺寸、透明边范围和内容边界
+4. 按 `delivery` 解包成 PNG / atlas，并在 `SkelAnim` 场景下继续解析 piece 与帧数据
+5. 渲染候选静态 pose，计算真实尺寸、透明边范围和内容边界
 6. 选出页面主立绘来源
 7. 生成 `thumb / display` 两档页面衍生图
 8. 写出 `champion-illustrations.json`
@@ -251,15 +255,16 @@ npm run data:official
 但现有调研已经确认：
 
 - `xl` 不一定比 `large` 更适合页面展示
-- 真实宽高必须以解包结果为准
+- 真实宽高必须以最终渲染结果为准，而不只是 atlas 尺寸
 
 因此建议的选择规则是：
 
 1. 对候选槽位全部解包
-2. 计算真实宽高
-3. 计算非透明内容区域的高度和面积
-4. 优先选择“内容高度更高”的候选图
-5. 若接近，再比较内容面积与总像素
+2. 对 `SkelAnim` 候选先渲染出静态 pose
+3. 计算真实宽高
+4. 计算非透明内容区域的高度和面积
+5. 优先选择“内容高度更高”的候选图
+6. 若接近，再比较内容面积与总像素
 
 这样比“固定优先 large”更稳。
 
