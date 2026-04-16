@@ -14,10 +14,9 @@
 
 - **当前清单元数据本身仍不能直接自动告诉我们“哪张图一定错了”。**
 - `672 / 672` 个皮肤立绘当前都还是 `sourceSlot = xl`。
-- 在已经落地 5 条人工 override 后，当前只有这 5 个 skin 不是默认 `sequence 0 / frame 0`：
+- 在已经落地 4 条人工 override 后，当前只有这 4 个 skin 不是默认 `sequence 0 / frame 0`：
   - `368`：半精灵变异哨兵 -> `sequence 1 / frame 11`
   - `133`：星运伊芙琳 -> `sequence 0 / frame 7`
-  - `123`：星运弗里 -> `sequence 1 / frame 28`
   - `473`：飞升阿斯代伦 -> `sequence 1 / frame 30`
   - `520`：舞厅蔚 -> `sequence 1 / frame 7`
 - 这意味着：**即使现在已经有少量人工修正，元数据仍不足以自动判定“剩下哪张一定错”。**
@@ -30,9 +29,10 @@
   - `473` 已确认值得落地 override；
   - `362`、`290`、`515`、`111` 当前都**不建议**写 override。
 - 第二批剩余 5 个样本也已经补完复核，其中：
-  - `123`、`133` 已确认值得落地 override；
+  - `133` 已确认值得落地 override；
+  - `123` 初看更紧凑，但实际成图存在手部连接断开，已**撤回 override**；
   - `390`、`333`、`327` 当前都**不建议**写 override。
-- 审计脚本复跑后，`theme-expanded` 数量已从 `11` 降到 `9`；`123` 与 `133` 已不再出现在高优先级候选里。
+- 审计脚本复跑后，`theme-expanded` 数量已从 `11` 降到 `10`；`133` 已不再出现在高优先级候选里。
 - 明显偏小的 `毛绒 / 宝宝 / 玩偶` 类样本，本轮仍不建议优先写 override；它们更像主题造型本意，而不是 pose 选错。
 
 这里必须保持克制：
@@ -49,12 +49,11 @@
 - 皮肤总数：`672`
 - `sourceSlot = xl`：`672`
 - `render.pipeline = skelanim`：`672`
-- `render.sequenceIndex = 0`：`668`
-- `render.frameIndex = 0`：`667`
+- `render.sequenceIndex = 0`：`669`
+- `render.frameIndex = 0`：`668`
 - 非默认 `sequence / frame` 的只有：
   - `368`
   - `133`
-  - `123`
   - `473`
   - `520`
 
@@ -129,12 +128,12 @@ node scripts/audit-idle-champions-illustration-overrides.mjs
 
 ## 4. 当前抽样结果总览
 
-在落地 `368`、`133`、`123`、`473` 与 `520` 之后，本轮脚本最新产出的高优先级样本还有 `16` 个，分为四类：
+在落地 `368`、`133`、`473` 与 `520` 之后，本轮脚本最新产出的高优先级样本还有 `17` 个，分为四类：
 
 - `non-obvious`：`3`
   - 结构偏差明显，但名字上又不是明显的“毛绒 / 巨人 / 飞升”主题
   - **优先级最高**
-- `theme-expanded`：`9`
+- `theme-expanded`：`10`
   - 尺寸偏差明显，但也可能是主题本来就更大 / 更宽 / 更高
   - **第二优先级**
 - `theme-small`：`3`
@@ -187,21 +186,7 @@ node scripts/audit-idle-champions-illustration-overrides.mjs
   - 它落地后仍会被结构偏差脚本列进 `theme-expanded`，这也再次说明审计脚本只能做“候选排序”，不能替代人工目检；
   - 已写入 `scripts/data/champion-illustration-overrides.json`。
 
-### 5.4 `123`：星运弗里
-
-- 落地规则：
-  - `preferredSequenceIndexes = [1]`
-  - `preferredFrameIndexes = [28]`
-- 落地后结果：
-  - `render.sequenceIndex: 0 -> 1`
-  - `render.frameIndex: 0 -> 28`
-  - 尺寸从 `176 x 154` 调整为 `158 x 152`
-- 当前判断：
-  - 这条调整把默认 pose 里右侧法杖的横向外伸收回来一些，整体更接近弗里皮肤组的常见占幅；
-  - 落地后它已经不再出现在 `theme-expanded` 候选里；
-  - 已写入 `scripts/data/champion-illustration-overrides.json`。
-
-### 5.5 `133`：星运伊芙琳
+### 5.4 `133`：星运伊芙琳
 
 - 落地规则：
   - `preferredSequenceIndexes = [0]`
@@ -233,7 +218,7 @@ node scripts/audit-idle-champions-illustration-overrides.mjs
 - 当前判断：
   - 候选图确实更收敛一些；
   - 但对照希契其他皮肤一起看，`半人马` 主题本身就天然更宽，当前候选并没有形成“明显更对”的压倒性优势；
-  - 候选 pose 里武器可读性还略弱一些；
+  - 候选 pose 里靠右侧的手部连接也不自然；
   - **暂不落 override，继续保留人工待定。**
 
 ### 6.2 `452`：斑猫人变异珊蒂
@@ -280,14 +265,15 @@ node scripts/audit-idle-champions-illustration-overrides.mjs
 | skinId | 名称 | 当前结论 |
 | --- | --- | --- |
 | `390` | 夺心魔维康妮亚 | 候选 `sequence 1 / frame 0` 只比当前轻微收窄，但夺心魔主题本来就天然外扩，**不建议写 override** |
-| `123` | 星运弗里 | 候选 `sequence 1 / frame 28` 把右侧法杖收回，整体更紧凑，**已落地 override** |
-| `333` | 魔冢伊万德拉 | 候选 `sequence 1 / frame 19` 与当前只有轻微差异，仍然保留大面积纵向长枪遮挡，**不建议写 override** |
+| `123` | 星运弗里 | 候选 `sequence 1 / frame 28` 虽然更紧凑，但手部与法杖连接断开，**已撤回 override** |
+| `333` | 魔冢伊万德拉 | 候选 `sequence 1 / frame 19` 与当前只有轻微差异，而且武器看起来仍然像悬空，**不建议写 override** |
 | `133` | 星运伊芙琳 | 候选 `sequence 0 / frame 7` 明显改善主体过小的问题，**已落地 override** |
 | `327` | 宇宙梦魇沃罗妮卡 | 候选 `sequence 1 / frame 0` 与当前几乎等价，只是轻微收窄，**不建议写 override** |
 
 说明：
 
-- 这一轮补看之后，第二批里新增落地的是 `123` 与 `133`；
+- 这一轮补看之后，第二批里最终保留落地的只有 `133`；
+- `123` 虽然一度尝试落地，但因手部断开已回退到默认 pose；
 - `390`、`333`、`327` 虽然结构偏差仍高，但目前都没有看到足够明确的视觉收益；
 - 这也再次说明“候选分数变好”不等于“肉眼一定更对”。
 
@@ -326,7 +312,7 @@ node scripts/audit-idle-champions-illustration-overrides.mjs
 如果下一轮继续录 override，建议按这个顺序推进：
 
 1. 继续谨慎观察 `367`，但在没有更强视觉证据前不要仓促落规则
-2. 若还要继续扩样，再从当前审计结果里向后看新的 `theme-expanded` / `non-obvious` 候选，而不是重复处理 `123`、`133`
+2. 若还要继续扩样，再从当前审计结果里向后看新的 `theme-expanded` / `non-obvious` 候选；其中 `123` 已确认“更紧凑但有断裂”，不应直接重复录入
 3. 把确实需要调整的样本写入 `scripts/data/champion-illustration-overrides.json`
 4. 每录一批，都只做小范围重渲染，不要立刻全量重建
 
