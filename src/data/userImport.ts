@@ -31,10 +31,10 @@ const DEFAULT_MESSAGES: UserImportMessages = {
 }
 
 export const SUPPORT_URL_SAMPLE =
-  'https://help.idlechampions.com/?page=help&network=mobile&user_id=123456789&device_hash=abcdef1234567890abcdef1234567890&mcv=385'
+  'https://support.example.invalid/?page=help&network=mobile&user_id=123456789&device_hash=abcdef1234567890abcdef1234567890&mcv=385'
 
-export const WEB_REQUEST_LOG_SAMPLE = `POST /~idledragons/post.php?call=getuserdetails&language_id=1&user_id=123456789&hash=abcdef1234567890abcdef1234567890&instance_key=1&timestamp=1710000000 HTTP/1.1
-Host: ps28.idlechampions.com
+export const WEB_REQUEST_LOG_SAMPLE = `POST /sample/request?user_id=123456789&hash=abcdef1234567890abcdef1234567890&timestamp=1710000000 HTTP/1.1
+Host: sample.invalid
 `
 
 function normalizeHash(value: string): string {

@@ -16,6 +16,7 @@ import type {
   ChampionIllustration,
   ChampionRawEntry,
   ChampionSkinDetail,
+  ChampionSpecializationGraphic,
   ChampionUpgradeDetail,
   LocalizedText,
   JsonValue,
@@ -40,13 +41,6 @@ interface DetailFieldProps {
   variant?: 'default' | 'compact'
 }
 
-interface StructuredPanelProps {
-  title: string
-  value: JsonValue
-  locale: AppLocale
-  effectContext?: EffectContext | null
-}
-
 interface AttackPanelProps {
   title: ReactNode
   attack: ChampionAttackDetail | null
@@ -57,6 +51,7 @@ interface UpgradeCardProps {
   upgrade: ChampionUpgradeDetail
   presentation: UpgradePresentation
   locale: AppLocale
+  specializationGraphic: ChampionSpecializationGraphic | null
 }
 
 interface NumericUpgradeRowProps {
@@ -69,6 +64,31 @@ interface FeatCardProps {
   feat: ChampionFeatDetail
   locale: AppLocale
   effectContext: EffectContext
+}
+
+interface DetailSectionBadge {
+  label: string
+  value: string
+}
+
+interface DetailSectionHeaderProps {
+  title: string
+  badges: DetailSectionBadge[]
+}
+
+interface SummaryTagGroupProps {
+  label: string
+  items: string[]
+}
+
+interface FeatEffectEntry {
+  summary: string
+  detail: string | null
+}
+
+interface UpgradeSpecializationArtProps {
+  src: string
+  alt: string
 }
 
 interface SkinArtworkIds {
@@ -109,7 +129,7 @@ interface EffectDefinitionPresentation {
 }
 
 interface UpgradePresentation {
-  title: ReactNode
+  title: string
   typeLabel: string
   targetLabel: string | null
   targetHint: string | null
@@ -912,11 +932,11 @@ function buildUpgradePresentation(
       : validEffectDescriptor?.categoryLabel ?? localizeUpgradeType(null, effectContext.locale)
   const title = (() => {
     if (upgrade.name) {
-      return <LocalizedTextStack value={upgrade.name} />
+      return getPrimaryLocalizedText(upgrade.name, effectContext.locale)
     }
 
     if (upgrade.specializationName) {
-      return <LocalizedTextStack value={upgrade.specializationName} />
+      return getPrimaryLocalizedText(upgrade.specializationName, effectContext.locale)
     }
 
     if (upgrade.upgradeType === 'unlock_ultimate') {
@@ -1002,6 +1022,10 @@ function formatStructuredPrimitive(
   }
 
   if (typeof value === 'number') {
+    if (parentKey === 'available_at_time') {
+      return formatTimestamp(value, locale)
+    }
+
     if (parentKey === 'odds') {
       return `${formatNumber(value, locale)}%`
     }
@@ -1115,6 +1139,105 @@ function buildOverviewPropertyFields(
   return fields
 }
 
+function buildSummaryTagText(label: string, value: string, locale: AppLocale): string {
+  return locale === 'zh-CN' ? `${label} · ${value}` : `${label}: ${value}`
+}
+
+function collectStructuredSummaryTags(
+  value: JsonValue,
+  locale: AppLocale,
+  effectContext: EffectContext,
+  parentKey: string | null = null,
+): string[] {
+  if (Array.isArray(value)) {
+    return Array.from(
+      new Set(
+        value.flatMap((item) =>
+          collectStructuredSummaryTags(item, locale, effectContext, parentKey),
+        ),
+      ),
+    )
+  }
+
+  if (isJsonObject(value)) {
+    return Array.from(
+      new Set(
+        Object.entries(value).flatMap(([key, itemValue]) =>
+          collectStructuredSummaryTags(itemValue, locale, effectContext, key),
+        ),
+      ),
+    )
+  }
+
+  if (typeof value === 'boolean') {
+    if (!value || !parentKey) {
+      return []
+    }
+
+    return [localizeStructuredKey(parentKey, locale)]
+  }
+
+  const formatted = formatStructuredPrimitive(value, locale, parentKey, effectContext)
+
+  if (!formatted || formatted === buildNotAvailableLabel(locale)) {
+    return []
+  }
+
+  if (!parentKey || parentKey === 'source' || parentKey === 'type') {
+    return [formatted]
+  }
+
+  return [buildSummaryTagText(localizeStructuredKey(parentKey, locale), formatted, locale)]
+}
+
+function buildFeatEffectEntries(value: JsonValue, effectContext: EffectContext): FeatEffectEntry[] {
+  if (!Array.isArray(value)) {
+    return []
+  }
+
+  const seen = new Set<string>()
+
+  return value.flatMap((item) => {
+    const descriptor = describeEffectItem(item, effectContext)
+    const signature = `${descriptor.summary}__${descriptor.detail ?? ''}`
+
+    if (seen.has(signature)) {
+      return []
+    }
+
+    seen.add(signature)
+    return [
+      {
+        summary: descriptor.summary,
+        detail: descriptor.detail,
+      },
+    ]
+  })
+}
+
+function buildFeatTagGroups(
+  feat: ChampionFeatDetail,
+  locale: AppLocale,
+  effectContext: EffectContext,
+): SummaryTagGroupProps[] {
+  const groups: SummaryTagGroupProps[] = [
+    {
+      label: locale === 'zh-CN' ? '来源' : 'Sources',
+      items: collectStructuredSummaryTags(feat.sources, locale, effectContext),
+    },
+    {
+      label: locale === 'zh-CN' ? '属性' : 'Properties',
+      items: collectStructuredSummaryTags(feat.properties, locale, effectContext),
+    },
+    {
+      label: locale === 'zh-CN' ? '收藏' : 'Collection',
+      items: collectStructuredSummaryTags(feat.collectionsSource, locale, effectContext),
+    },
+  ]
+
+  return groups.filter((group) => group.items.length > 0)
+}
+
 function LocalizedTextStack({ value }: { value: LocalizedText }) {
   const hasSecondary = value.display.trim() !== value.original.trim()
 
@@ -1124,109 +1247,6 @@ function LocalizedTextStack({ value }: { value: LocalizedText }) {
       {hasSecondary ? <span className="localized-text-stack__secondary">{value.original}</span> : null}
     </span>
   )
-}
-
-function StructuredValueRenderer({
-  value,
-  locale,
-  effectContext,
-  parentKey = null,
-}: {
-  value: JsonValue
-  locale: AppLocale
-  effectContext?: EffectContext | null
-  parentKey?: string | null
-}): ReactNode {
-  if (Array.isArray(value)) {
-    if (value.length === 0) {
-      return <span className="supporting-text">{buildNotAvailableLabel(locale)}</span>
-    }
-
-    if (value.every(isJsonPrimitive)) {
-      return (
-        <div className="detail-structured-chip-row">
-          {value.map((item, index) => {
-            const formatted = formatStructuredPrimitive(item, locale, parentKey, effectContext)
-
-            return (
-              <span key={`${parentKey ?? 'value'}-${index}`} className="detail-structured-chip">
-                {formatted ?? buildNotAvailableLabel(locale)}
-              </span>
-            )
-          })}
-        </div>
-      )
-    }
-
-    return (
-      <div className="detail-structured-stack">
-        {value.map((item, index) => (
-          <article key={`${parentKey ?? 'item'}-${index}`} className="detail-structured-card">
-            <span className="detail-structured-field__label">
-              {locale === 'zh-CN' ? `条目 ${index + 1}` : `Item ${index + 1}`}
-            </span>
-            <div className="detail-structured-card__body">
-              <StructuredValueRenderer
-                value={item}
-                locale={locale}
-                effectContext={effectContext}
-                parentKey={parentKey}
-              />
-            </div>
-          </article>
-        ))}
-      </div>
-    )
-  }
-
-  if (isJsonObject(value)) {
-    const entries = Object.entries(value)
-
-    if (entries.length === 0) {
-      return <span className="supporting-text">{buildNotAvailableLabel(locale)}</span>
-    }
-
-    return (
-      <div className="detail-structured-fields">
-        {entries.map(([key, itemValue]) => (
-          <article key={key} className="detail-structured-field">
-            <span className="detail-structured-field__label">{localizeStructuredKey(key, locale)}</span>
-            <div className="detail-structured-field__value">
-              <StructuredValueRenderer
-                value={itemValue}
-                locale={locale}
-                effectContext={effectContext}
-                parentKey={key}
-              />
-            </div>
-          </article>
-        ))}
-      </div>
-    )
-  }
-
-  const formatted = formatStructuredPrimitive(value, locale, parentKey, effectContext)
-
-  if (formatted !== null) {
-    return <span className="detail-structured-text">{formatted}</span>
-  }
-
-  if (typeof value === 'string') {
-    const inlineJson = parseInlineJsonValue(value)
-
-    if (inlineJson) {
-      return (
-        <StructuredValueRenderer
-          value={inlineJson}
-          locale={locale}
-          effectContext={effectContext}
-          parentKey={parentKey}
-        />
-      )
-    }
-  }
-
-  return <span className="detail-structured-text">{buildNotAvailableLabel(locale)}</span>
 }
 
 function describeEffectItem(
@@ -1271,57 +1291,51 @@ function describeEffectItem(
   }
 }
 
-function StructuredPanel({ title, value, locale, effectContext }: StructuredPanelProps) {
+function DetailSectionHeader({ title, badges }: DetailSectionHeaderProps) {
   return (
-    <article className="detail-data-panel">
-      <h3 className="detail-data-panel__title">{title}</h3>
-      <StructuredValueRenderer value={value} locale={locale} effectContext={effectContext} />
-    </article>
+    <header className="detail-section-header">
+      <h2 className="detail-section-header__title">{title}</h2>
+      {badges.length > 0 ? (
+        <div className="detail-section-header__badge-row">
+          {badges.map((badge) => (
+            <span
+              key={`${badge.label}-${badge.value}`}
+              className="detail-section-header__badge"
+            >
+              <span className="detail-section-header__badge-label">{badge.label}</span>
+              <strong className="detail-section-header__badge-value">{badge.value}</strong>
+            </span>
+          ))}
+        </div>
+      ) : null}
+    </header>
   )
 }
 
-function EffectListPanel({
-  title,
-  value,
-  locale,
-  effectContext,
-}: StructuredPanelProps) {
-  const effectItems = Array.isArray(value) ? value : []
+function SummaryTagGroup({ label, items }: SummaryTagGroupProps) {
+  if (items.length === 0) {
+    return null
+  }
 
   return (
-    <article className="detail-data-panel">
-      <h3 className="detail-data-panel__title">{title}</h3>
-      {effectItems.length > 0 ? (
-        <div className="detail-effect-list">
-          {effectItems.map((item, index) => {
-            const descriptor = describeEffectItem(item, effectContext ?? {
-              locale,
-              championName: '',
-              attackLabelById: new Map(),
-              upgradeLabelById: new Map(),
-            })
+    <section className="summary-tag-group">
+      <p className="summary-tag-group__label">{label}</p>
+      <div className="summary-tag-group__items">
+        {items.map((item) => (
+          <span key={item} className="summary-tag-group__chip">
+            {item}
+          </span>
+        ))}
+      </div>
+    </section>
+  )
+}
 
-            return (
-              <article key={`effect-${index}`} className="detail-effect-item">
-                <p className="detail-effect-item__summary">{descriptor.summary}</p>
-                {descriptor.detail ? <p className="supporting-text">{descriptor.detail}</p> : null}
-                {descriptor.meta ? (
-                  <div className="detail-effect-item__meta">
-                    <StructuredValueRenderer
-                      value={descriptor.meta}
-                      locale={locale}
-                      effectContext={effectContext}
-                    />
-                  </div>
-                ) : null}
-              </article>
-            )
-          })}
-        </div>
-      ) : (
-        <p className="supporting-text">{buildNotAvailableLabel(locale)}</p>
-      )}
-    </article>
+function UpgradeSpecializationArt({ src, alt }: UpgradeSpecializationArtProps) {
+  return (
+    <div className="upgrade-card__spec-art" aria-hidden="true">
+      <img src={src} alt={alt} loading="lazy" />
+    </div>
   )
 }
 
@@ -1438,102 +1452,79 @@ function AttackPanel({ title, attack, locale }: AttackPanelProps) {
   )
 }
 
-function UpgradeCard({ upgrade, presentation, locale }: UpgradeCardProps) {
+function UpgradeCard({ upgrade, presentation, locale, specializationGraphic }: UpgradeCardProps) {
   const isCompact = upgrade.upgradeType === 'unlock_ability' || upgrade.upgradeType === 'unlock_ultimate'
   const metaItems = [
     upgrade.requiredUpgradeId
-      ? {
-          key: 'prerequisite',
-          label: locale === 'zh-CN' ? '前置' : 'Prerequisite',
-          value: presentation.prerequisiteLabel,
-        }
+      ? buildSummaryTagText(
+          locale === 'zh-CN' ? '前置' : 'Prerequisite',
+          presentation.prerequisiteLabel,
+          locale,
+        )
       : null,
     presentation.staticMultiplierLabel
-      ? {
-          key: 'multiplier',
-          label: locale === 'zh-CN' ? '倍率' : 'Multiplier',
-          value: presentation.staticMultiplierLabel,
-        }
+      ? buildSummaryTagText(
+          locale === 'zh-CN' ? '倍率' : 'Multiplier',
+          presentation.staticMultiplierLabel,
+          locale,
+        )
       : null,
     !upgrade.defaultEnabled
-      ? {
-          key: 'default-enabled',
-          label: locale === 'zh-CN' ? '默认' : 'Default',
-          value: formatBoolean(upgrade.defaultEnabled, locale),
-        }
+      ? locale === 'zh-CN'
+        ? '默认关闭'
+        : 'Disabled by default'
       : null,
-    upgrade.specializationGraphicId
-      ? {
-          key: 'spec-art',
-          label: locale === 'zh-CN' ? '专精图' : 'Spec art',
-          value:
-            locale === 'zh-CN'
-              ? `图 ${upgrade.specializationGraphicId}`
-              : `#${upgrade.specializationGraphicId}`,
-        }
-      : null,
+  ].filter((value): value is string => Boolean(value))
+  const noteItems = [
+    presentation.targetHint,
+    ...presentation.detailLines,
   ].filter(
-    (
-      value,
-    ): value is {
-      key: string
-      label: string
-      value: string
-    } => Boolean(value),
+    (value, index, list): value is string =>
+      Boolean(value) && value !== presentation.summary && list.indexOf(value) === index,
   )
 
   return (
     <article className={isCompact ? 'detail-subcard upgrade-card upgrade-card--compact' : 'detail-subcard upgrade-card'}>
-      <div className="upgrade-card__header">
-        <div className="upgrade-card__title-stack">
-          <p className="upgrade-card__eyebrow">
+      <div className="upgrade-card__topline">
+        <div className="upgrade-card__eyebrow-row">
+          <span className="upgrade-card__level-pill">
             {locale === 'zh-CN' ? `等级 ${formatNumber(upgrade.requiredLevel, locale)}` : `Level ${formatNumber(upgrade.requiredLevel, locale)}`}
-          </p>
-          <h3 className="detail-subcard__title">{presentation.title}</h3>
+          </span>
+          <span className="upgrade-card__type-badge">{presentation.typeLabel}</span>
         </div>
-        <span className="upgrade-card__type-badge">{presentation.typeLabel}</span>
+        {specializationGraphic ? (
+          <UpgradeSpecializationArt
+            src={resolveDataUrl(specializationGraphic.image.path)}
+            alt={locale === 'zh-CN' ? `${presentation.title}专精图` : `${presentation.title} specialization art`}
+          />
+        ) : null}
       </div>
 
+      <div className="upgrade-card__header">
+        <div className="upgrade-card__title-stack">
+          <h3 className="detail-subcard__title">{presentation.title}</h3>
+        </div>
+      </div>
       {presentation.summary ? <p className="upgrade-card__summary">{presentation.summary}</p> : null}
 
-      {presentation.targetHint ? <p className="upgrade-card__hint">{presentation.targetHint}</p> : null}
-
       {metaItems.length > 0 ? (
-        <div className="upgrade-card__meta-row">
+        <div className="upgrade-card__tag-row">
           {metaItems.map((item) => (
-            <span key={item.key} className="upgrade-card__meta-pill">
-              <span className="upgrade-card__meta-label">{item.label}</span>
-              <strong className="upgrade-card__meta-value">{item.value}</strong>
+            <span key={item} className="upgrade-card__meta-pill">
+              <strong className="upgrade-card__meta-value">{item}</strong>
             </span>
           ))}
         </div>
       ) : null}
 
-      {presentation.detailLines.length > 0 ? (
-        isCompact ? (
-          <details className="upgrade-card__details">
-            <summary className="upgrade-card__details-summary">
-              {locale === 'zh-CN'
-                ? `更多说明 ${formatNumber(presentation.detailLines.length, locale)} 条`
-                : `${formatNumber(presentation.detailLines.length, locale)} more notes`}
-            </summary>
-            <div className="upgrade-card__details-body">
-              {presentation.detailLines.map((line) => (
-                <p key={line} className="supporting-text">
-                  {line}
-                </p>
-              ))}
-            </div>
-          </details>
-        ) : (
-          <div className="upgrade-card__details-body">
-            {presentation.detailLines.map((line) => (
-              <p key={line} className="supporting-text">
-                {line}
-              </p>
-            ))}
-          </div>
-        )
+      {noteItems.length > 0 ? (
+        <div className={isCompact ? 'upgrade-card__details-body upgrade-card__details-body--compact' : 'upgrade-card__details-body'}>
+          {noteItems.map((line) => (
+            <p key={line} className="upgrade-card__note">
+              {line}
+            </p>
+          ))}
+        </div>
       ) : null}
     </article>
   )
@@ -1554,28 +1545,44 @@ function NumericUpgradeRow({ upgrade, presentation, locale }: NumericUpgradeRowP
 }
 
 function FeatCard({ feat, locale, effectContext }: FeatCardProps) {
+  const effectEntries = buildFeatEffectEntries(feat.effects, effectContext)
+  const tagGroups = buildFeatTagGroups(feat, locale, effectContext)
+
   return (
     <article className="detail-subcard feat-card">
-      <div className="feat-card__masthead">
-        <div className="detail-subcard__header feat-card__header">
-          <div className="feat-card__heading">
-            <p className="detail-subcard__eyebrow">{locale === 'zh-CN' ? `顺序 ${formatNumber(feat.order, locale)}` : `Order ${formatNumber(feat.order, locale)}`}</p>
-            <h3 className="detail-subcard__title"><LocalizedTextStack value={feat.name} /></h3>
-          </div>
-          <span className="detail-badge feat-card__rarity">{buildRarityLabel(feat.rarity, locale)}</span>
+      <div className="feat-card__topline">
+        <span className="upgrade-card__level-pill">
+          {locale === 'zh-CN' ? `顺序 ${formatNumber(feat.order, locale)}` : `Order ${formatNumber(feat.order, locale)}`}
+        </span>
+        <span className="detail-badge feat-card__rarity">{buildRarityLabel(feat.rarity, locale)}</span>
+      </div>
+
+      <div className="feat-card__header">
+        <div className="feat-card__heading">
+          <h3 className="detail-subcard__title">{getPrimaryLocalizedText(feat.name, locale)}</h3>
         </div>
       </div>
 
       {feat.description ? <p className="detail-subcard__body feat-card__summary">{getPrimaryLocalizedText(feat.description, locale)}</p> : null}
 
-      <div className="feat-card__panels">
-        <div className="detail-inline-grid">
-          <EffectListPanel title={locale === 'zh-CN' ? '效果明细' : 'Effects'} value={feat.effects} locale={locale} effectContext={effectContext} />
-          <StructuredPanel title={locale === 'zh-CN' ? '获取来源' : 'Sources'} value={feat.sources} locale={locale} effectContext={effectContext} />
-          <StructuredPanel title={locale === 'zh-CN' ? '可用性与属性' : 'Properties'} value={feat.properties} locale={locale} effectContext={effectContext} />
-          <StructuredPanel title={locale === 'zh-CN' ? '收藏来源' : 'Collection source'} value={feat.collectionsSource} locale={locale} effectContext={effectContext} />
+      {effectEntries.length > 0 ? (
+        <div className="feat-card__effect-list">
+          {effectEntries.map((entry) => (
+            <article key={`${entry.summary}-${entry.detail ?? ''}`} className="feat-card__effect-item">
+              <p className="feat-card__effect-summary">{entry.summary}</p>
+              {entry.detail ? <p className="feat-card__effect-detail">{entry.detail}</p> : null}
+            </article>
+          ))}
         </div>
-      </div>
+      ) : null}
+
+      {tagGroups.length > 0 ? (
+        <div className="feat-card__meta-groups">
+          {tagGroups.map((group) => (
+            <SummaryTagGroup key={group.label} label={group.label} items={group.items} />
+          ))}
+        </div>
+      ) : null}
     </article>
   )
 }
@@ -1640,6 +1647,9 @@ export function ChampionDetailPage() {
   const handledSectionHashRef = useRef<string | null>(null)
   const isLeavingPageRef = useRef(false)
   const [skinIllustrationsById, setSkinIllustrationsById] = useState<Map<string, ChampionIllustration>>(new Map())
+  const [specializationGraphicsById, setSpecializationGraphicsById] = useState<
+    Map<string, ChampionSpecializationGraphic>
+  >(new Map())
   const [artworkDialogChampionId, setArtworkDialogChampionId] = useState<string | null>(null)
   const [selectedSkinId, setSelectedSkinId] = useState<string | null>(null)
   const isMissingChampionId = !championId
@@ -1707,6 +1717,32 @@ export function ChampionDetailPage() {
         }
 
         setSkinIllustrationsById(new Map())
+      })
+
+    return () => {
+      disposed = true
+    }
+  }, [])
+
+  useEffect(() => {
+    let disposed = false
+
+    loadCollection<ChampionSpecializationGraphic>('champion-specialization-graphics')
+      .then((collection) => {
+        if (disposed) {
+          return
+        }
+
+        setSpecializationGraphicsById(
+          new Map(collection.items.map((item) => [item.graphicId, item])),
+        )
+      })
+      .catch(() => {
+        if (disposed) {
+          return
+        }
+
+        setSpecializationGraphicsById(new Map())
       })
 
     return () => {
@@ -1944,6 +1980,52 @@ export function ChampionDetailPage() {
       keys: ledgerFilterOptions.map((option) => option.key),
     })
   }
+  const upgradeSectionBadges = useMemo<DetailSectionBadge[]>(
+    () => [
+      {
+        label: t({ zh: '全部升级', en: 'All' }),
+        value: formatNumber(detail?.upgrades.length ?? 0, locale),
+      },
+      {
+        label: t({ zh: '重点升级', en: 'Spotlight' }),
+        value: formatNumber(spotlightUpgrades.length, locale),
+      },
+      {
+        label: t({ zh: '数值里程碑', en: 'Ledger' }),
+        value:
+          ledgerRows.length > 0
+            ? `${formatNumber(visibleLedgerRows.length, locale)} / ${formatNumber(ledgerRows.length, locale)}`
+            : formatNumber(ledgerRows.length, locale),
+      },
+    ],
+    [detail?.upgrades.length, ledgerRows.length, locale, spotlightUpgrades.length, t, visibleLedgerRows.length],
+  )
+  const availableFeatCount = useMemo(() => {
+    if (!detail) {
+      return 0
+    }
+
+    return detail.feats.filter(
+      (feat) => isJsonObject(feat.properties) && feat.properties.is_available === true,
+    ).length
+  }, [detail])
+  const featSectionBadges = useMemo<DetailSectionBadge[]>(
+    () => [
+      {
+        label: t({ zh: '全部天赋', en: 'Total' }),
+        value: formatNumber(detail?.feats.length ?? 0, locale),
+      },
+      {
+        label: t({ zh: '默认槽', en: 'Default slots' }),
+        value: formatNumber(detail?.defaultFeatSlotUnlocks.length ?? 0, locale),
+      },
+      {
+        label: t({ zh: '当前可用', en: 'Available now' }),
+        value: formatNumber(availableFeatCount, locale),
+      },
+    ],
+    [availableFeatCount, detail?.defaultFeatSlotUnlocks.length, detail?.feats.length, locale, t],
+  )
   const overviewFields = useMemo<DetailFieldProps[]>(() => {
     if (!detail) {
       return []
@@ -2528,55 +2610,24 @@ export function ChampionDetailPage() {
               </SurfaceCard>
 
               <SurfaceCard
-                className="detail-section detail-section--upgrades"
-                eyebrow={t({ zh: '升级', en: 'Upgrades' })}
-                title={t({ zh: '成长轨道分成可读升级和数值里程碑', en: 'Split the progression track into readable upgrades and numeric milestones' })}
-                description={t({
-                  zh: '命名升级优先展示在上半段，空名数值升级用紧凑 ledger 排布，既不丢信息，也不把页面炸成瀑布流。',
-                  en: 'Named upgrades stay in the upper layer, while unnamed numeric milestones move into a compact ledger so nothing is lost and the page stays scannable.',
-                })}
+                className="detail-section detail-section--upgrades detail-section--headerless"
               >
                 <div id="upgrades" className="detail-section-anchor" />
-                <div className="upgrade-stat-strip">
-                  <article className="upgrade-stat-card">
-                    <span className="upgrade-stat-card__label">{t({ zh: '全部升级', en: 'All upgrades' })}</span>
-                    <strong className="upgrade-stat-card__value">{formatNumber(detail.upgrades.length, locale)}</strong>
-                    <span className="upgrade-stat-card__hint">
-                      {t({
-                        zh: '包含解锁、命名升级和数值里程碑',
-                        en: 'Includes unlocks, named upgrades, and numeric milestones',
-                      })}
-                    </span>
-                  </article>
-                  <article className="upgrade-stat-card">
-                    <span className="upgrade-stat-card__label">{t({ zh: '重点升级', en: 'Spotlight upgrades' })}</span>
-                    <strong className="upgrade-stat-card__value">{formatNumber(spotlightUpgrades.length, locale)}</strong>
-                    <span className="upgrade-stat-card__hint">
-                      {t({
-                        zh: '优先展示技能解锁和带说明的节点',
-                        en: 'Highlights unlocks and upgrades with readable notes',
-                      })}
-                    </span>
-                  </article>
-                  <article className="upgrade-stat-card">
-                    <span className="upgrade-stat-card__label">{t({ zh: '数值里程碑', en: 'Numeric milestones' })}</span>
-                    <strong className="upgrade-stat-card__value">
-                      {ledgerRows.length > 0
-                        ? `${formatNumber(visibleLedgerRows.length, locale)} / ${formatNumber(ledgerRows.length, locale)}`
-                        : formatNumber(ledgerRows.length, locale)}
-                    </strong>
-                    <span className="upgrade-stat-card__hint">{hiddenLedgerSummary}</span>
-                  </article>
-                </div>
+                <DetailSectionHeader title={t({ zh: '升级', en: 'Upgrades' })} badges={upgradeSectionBadges} />
 
                 {spotlightUpgrades.length > 0 ? (
-                  <div className="upgrade-spotlight-grid">
+                  <div className="upgrade-showcase-grid">
                     {spotlightUpgrades.map((upgrade) => (
                       <UpgradeCard
                         key={upgrade.id}
                         upgrade={upgrade}
                         presentation={upgradePresentations.get(upgrade.id) ?? buildUpgradePresentation(upgrade, effectContext!)}
                         locale={locale}
+                        specializationGraphic={
+                          upgrade.specializationGraphicId
+                            ? specializationGraphicsById.get(upgrade.specializationGraphicId) ?? null
+                            : null
+                        }
                       />
                     ))}
                   </div>
@@ -2588,47 +2639,46 @@ export function ChampionDetailPage() {
                       <div className="upgrade-filter-bar__copy">
                         <p className="upgrade-filter-bar__eyebrow">{t({ zh: '等级列表过滤', en: 'Ledger filters' })}</p>
                         <p className="upgrade-filter-bar__description">
-                          {t({
-                            zh: '默认先收起“自身增伤”和“全队增伤”，让里程碑表先保留更有判断价值的条目。',
-                            en: 'Self and party damage boosts stay collapsed by default so the ledger surfaces the more decision-making entries first.',
-                          })}
+                          {hiddenLedgerSummary}
                         </p>
                       </div>
-                      <div className="upgrade-filter-bar__actions">
-                        <button
-                          type="button"
-                          className="action-button action-button--ghost action-button--compact"
-                          onClick={resetLedgerFilters}
-                          disabled={!hasCustomLedgerFilterState}
-                        >
-                          {t({ zh: '恢复默认', en: 'Reset default' })}
-                        </button>
-                        <button
-                          type="button"
-                          className="action-button action-button--secondary action-button--compact"
-                          onClick={enableAllLedgerFilters}
-                          disabled={isShowingAllLedgerTypes}
-                        >
-                          {t({ zh: '显示全部', en: 'Show all' })}
-                        </button>
-                      </div>
-                      <div className="upgrade-filter-chip-row">
-                        {ledgerFilterOptions.map((option) => {
-                          const isActive = activeLedgerFilterKeySet.has(option.key)
+                      <div className="upgrade-filter-bar__controls">
+                        <div className="upgrade-filter-chip-row">
+                          {ledgerFilterOptions.map((option) => {
+                            const isActive = activeLedgerFilterKeySet.has(option.key)
 
-                          return (
-                            <button
-                              key={option.key}
-                              type="button"
-                              className={isActive ? 'upgrade-filter-chip upgrade-filter-chip--active' : 'upgrade-filter-chip'}
-                              aria-pressed={isActive}
-                              onClick={() => toggleLedgerFilter(option.key)}
-                            >
-                              <span className="upgrade-filter-chip__label">{option.label}</span>
-                              <span className="upgrade-filter-chip__count">{formatNumber(option.count, locale)}</span>
-                            </button>
-                          )
-                        })}
+                            return (
+                              <button
+                                key={option.key}
+                                type="button"
+                                className={isActive ? 'upgrade-filter-chip upgrade-filter-chip--active' : 'upgrade-filter-chip'}
+                                aria-pressed={isActive}
+                                onClick={() => toggleLedgerFilter(option.key)}
+                              >
+                                <span className="upgrade-filter-chip__label">{option.label}</span>
+                                <span className="upgrade-filter-chip__count">{formatNumber(option.count, locale)}</span>
+                              </button>
+                            )
+                          })}
+                        </div>
+                        <div className="upgrade-filter-bar__actions">
+                          <button
+                            type="button"
+                            className="action-button action-button--ghost action-button--compact"
+                            onClick={resetLedgerFilters}
+                            disabled={!hasCustomLedgerFilterState}
+                          >
+                            {t({ zh: '恢复默认', en: 'Reset default' })}
+                          </button>
+                          <button
+                            type="button"
+                            className="action-button action-button--secondary action-button--compact"
+                            onClick={enableAllLedgerFilters}
+                            disabled={isShowingAllLedgerTypes}
+                          >
+                            {t({ zh: '显示全部', en: 'Show all' })}
+                          </button>
+                        </div>
                       </div>
                     </div>
 
@@ -2663,16 +2713,11 @@ export function ChampionDetailPage() {
               </SurfaceCard>
 
               <SurfaceCard
-                className="detail-section detail-section--feats"
-                eyebrow={t({ zh: '天赋', en: 'Feats' })}
-                title={t({ zh: '全部天赋原样保留，并补来源字段', en: 'Keep every feat intact and expose its source fields' })}
-                description={t({
-                  zh: '这里不只展示名字和描述，还把 effect、source、property 一并展开。',
-                  en: 'This section keeps more than the name and description by exposing effect, source, and property data together.',
-                })}
+                className="detail-section detail-section--feats detail-section--headerless"
               >
                 <div id="feats" className="detail-section-anchor" />
-                <div className="detail-card-grid">
+                <DetailSectionHeader title={t({ zh: '天赋', en: 'Feats' })} badges={featSectionBadges} />
+                <div className="feat-grid">
                   {detail.feats.map((feat) => (
                     <FeatCard key={feat.id} feat={feat} locale={locale} effectContext={effectContext!} />
                   ))}

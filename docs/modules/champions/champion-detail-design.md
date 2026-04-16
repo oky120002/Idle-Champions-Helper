@@ -135,6 +135,8 @@
 
 1. 命名升级 / specialization / ability unlock
    - 视觉层级更高
+   - 若存在 `specializationGraphicId`，应通过构建期基座数据同步为站内本地静态图后再展示；详情页运行时不直接请求官方 `mobile_assets`
+   - 同步出的专精图应先按可见内容裁切，去掉右侧 / 下侧空白后再入库，避免详情页把原始留白一并放大
 2. 无名数值升级
    - 用紧凑 ledger 形式展示 required level、倍率、effect
 
