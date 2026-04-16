@@ -11,6 +11,8 @@
   - 本机 Steam 客户端缓存（仓库外路径）
   - 本机反编译得到的 `Assembly-CSharp.dll` IL 文本（仓库外临时文件）
 
+> 如果你当前更关心“后端预合成”和“前端实时合成”两条渲染路线该怎么选，请继续看 `docs/research/data/skin-illustration-render-strategy-research.md`；本文只回答“为什么会碎”和“官方有没有组装数据”。
+
 ---
 
 ## 1. 结论先行
