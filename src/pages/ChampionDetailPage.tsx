@@ -2047,7 +2047,7 @@ export function ChampionDetailPage() {
                 </div>
                 <div className="champion-dossier__copy">
                   <p className="champion-dossier__eyebrow">
-                    {locale === 'zh-CN' ? `${detail.summary.seat} 号位 · 英雄 #${detail.summary.id}` : `Seat ${detail.summary.seat} · Champion #${detail.summary.id}`}
+                    {locale === 'zh-CN' ? `${detail.summary.seat} 号位` : `Seat ${detail.summary.seat}`}
                   </p>
                   <h2 className="champion-dossier__title">{getPrimaryLocalizedText(detail.summary.name, locale)}</h2>
                   {getSecondaryLocalizedText(detail.summary.name, locale) ? (
@@ -2080,14 +2080,6 @@ export function ChampionDetailPage() {
                       <p className="supporting-text champion-dossier__line">{t({ zh: '暂无', en: 'None yet' })}</p>
                     )}
                   </div>
-
-                  <div className="tag-row">
-                    {detail.summary.tags.map((tag) => (
-                      <span key={tag} className="tag-pill tag-pill--muted">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
                 </div>
               </div>
 
@@ -2101,12 +2093,8 @@ export function ChampionDetailPage() {
                   <strong className="dossier-stat__value">{detail.feats.length}</strong>
                 </article>
                 <article className="dossier-stat">
-                  <span className="dossier-stat__label">{t({ zh: '皮肤条目', en: 'Skins' })}</span>
+                  <span className="dossier-stat__label">{t({ zh: '可预览皮肤', en: 'Preview skins' })}</span>
                   <strong className="dossier-stat__value">{detail.skins.length}</strong>
-                </article>
-                <article className="dossier-stat">
-                  <span className="dossier-stat__label">{t({ zh: '详情更新', en: 'Updated' })}</span>
-                  <strong className="dossier-stat__value">{detail.updatedAt}</strong>
                 </article>
               </div>
             </div>
