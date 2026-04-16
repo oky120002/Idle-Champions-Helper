@@ -2101,12 +2101,6 @@ export function ChampionDetailPage() {
                   {getSecondaryLocalizedText(detail.summary.name, locale) ? (
                     <p className="champion-dossier__secondary">{getSecondaryLocalizedText(detail.summary.name, locale)}</p>
                   ) : null}
-                  <p className="champion-dossier__summary">
-                    {t({
-                      zh: '这个页面把结构化资料、成长轨道和技能说明放在同一条浏览链路里，适合边查边做阵型判断。',
-                      en: 'This page keeps the structured profile, progression track, and combat details in one browsing flow so you can inspect and decide quickly.',
-                    })}
-                  </p>
 
                   <div className="tag-row">
                     {detail.summary.roles.map((role) => (
@@ -2117,7 +2111,7 @@ export function ChampionDetailPage() {
                   </div>
 
                   <div className="champion-dossier__meta-stack">
-                    <span className="champion-dossier__meta-label">{t({ zh: '联动队伍', en: 'Affiliations' })}</span>
+                    <span className="champion-dossier__meta-label">{t({ zh: '联动', en: 'Affiliations' })}</span>
                     {detail.summary.affiliations.length > 0 ? (
                       <div className="champion-dossier__meta-list">
                         {detail.summary.affiliations.map((item) => (
@@ -2133,15 +2127,15 @@ export function ChampionDetailPage() {
 
               <div className="champion-dossier__stats">
                 <article className="dossier-stat">
-                  <span className="dossier-stat__label">{t({ zh: '升级条目', en: 'Upgrades' })}</span>
+                  <span className="dossier-stat__label">{t({ zh: '升级', en: 'Upgrades' })}</span>
                   <strong className="dossier-stat__value">{detail.upgrades.length}</strong>
                 </article>
                 <article className="dossier-stat">
-                  <span className="dossier-stat__label">{t({ zh: '天赋条目', en: 'Feats' })}</span>
+                  <span className="dossier-stat__label">{t({ zh: '天赋', en: 'Feats' })}</span>
                   <strong className="dossier-stat__value">{detail.feats.length}</strong>
                 </article>
                 <article className="dossier-stat">
-                  <span className="dossier-stat__label">{t({ zh: '可预览皮肤', en: 'Preview skins' })}</span>
+                  <span className="dossier-stat__label">{t({ zh: '皮肤', en: 'Skins' })}</span>
                   <strong className="dossier-stat__value">{detail.skins.length}</strong>
                 </article>
               </div>
