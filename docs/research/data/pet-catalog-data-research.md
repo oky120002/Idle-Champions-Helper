@@ -36,13 +36,14 @@
 - 有效 `xl_graphic_id`：`319` 条
 - 缺图像槽位：`4` 条（当前 definitions 返回 `0`）
 
-资源路径位于 `graphic_defines[*].graphic`，实际路径前缀为 `Familiars/...`。
+资源路径位于 `graphic_defines[*].graphic`，实际路径前缀主要是 `Familiars/...`，少量会落在 `Escorts/...`。
 
 样本抓取确认：
 
-- `Familiars/*` 资源可从官方 `mobile_assets` 获取
-- 当前样本以 deflate 压缩 PNG 形式返回
-- 因此适合在构建期离线解包为站内静态 PNG，而不是运行时跨域解码
+- `Familiars/*` / `Escorts/*` 资源都可从官方 `mobile_assets` 获取
+- 2026-04-16 这批有图宠物的 `graphic_id` 与 `xl_graphic_id` 在快照里 **全部都是 `graphic_defines.type = 3`**
+- 这类资源并不是“直接可用的一张 PNG”，而是 **zlib 容器里的 `SkelAnim` 分件动画数据**
+- 因此宠物图标与宠物立绘都不能只做 deflate 解包；构建期必须继续做 `SkelAnim` pose 合成，输出站内最终 PNG
 
 ---
 
@@ -88,7 +89,7 @@
 ## 5. 对本仓库的直接落地建议
 
 1. 新增独立脚本把宠物目录和图像一起写入 `public/data/<version>/pets.json` 与 `public/data/<version>/pets/`。
-2. 页面运行时只读本地 PNG，继续满足 GitHub Pages 静态站约束。
-3. 首版只上宠物本体，不把 `familiar_skin_defines` 混入主目录。
-4. 页面卡片显示“获取方式摘要 + 细节”，不直接暴露原始 JSON 结构给用户。
-
+2. 脚本内直接复用 `SkelAnim` 渲染链路，把宠物图标与 4x 立绘都离线合成为单张 PNG。
+3. 页面运行时只读本地 PNG，继续满足 GitHub Pages 静态站约束。
+4. 首版只上宠物本体，不把 `familiar_skin_defines` 混入主目录。
+5. 页面卡片显示“获取方式摘要 + 细节”，不直接暴露原始 JSON 结构给用户。
