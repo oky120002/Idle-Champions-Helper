@@ -2,6 +2,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
+import { DEFAULT_REVIEWED_SKIN_IDS } from './data/champion-illustration-audit-config.mjs'
 
 const DEFAULT_INPUT = 'public/data/v1/champion-illustrations.json'
 const DEFAULT_OUTPUT_DIR = 'tmp/illustration-override-audit'
@@ -363,7 +364,7 @@ async function main() {
   const input = path.resolve(values.input ?? DEFAULT_INPUT)
   const outputDir = path.resolve(values.outputDir ?? DEFAULT_OUTPUT_DIR)
   const top = Math.max(1, Number(values.top ?? DEFAULT_TOP))
-  const reviewedSkinIds = parseIdList(values.reviewedSkinIds ?? '332,416,344,417,297')
+  const reviewedSkinIds = parseIdList(values.reviewedSkinIds ?? DEFAULT_REVIEWED_SKIN_IDS.join(','))
   const illustrations = await readJson(input)
   const report = buildReport(illustrations, reviewedSkinIds, top)
 
