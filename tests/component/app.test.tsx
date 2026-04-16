@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
@@ -42,5 +42,30 @@ describe('App', () => {
     await user.click(screen.getByRole('link', { name: '方案存档' }))
 
     expect(screen.getByRole('heading', { level: 2, name: '命名方案已落到浏览器本地 IndexedDB' })).toBeInTheDocument()
+  })
+
+  it('通过低频语言设置入口切换到英文界面', async () => {
+    const user = userEvent.setup()
+
+    render(
+      <I18nProvider>
+        <MemoryRouter initialEntries={['/user-data']}>
+          <App />
+        </MemoryRouter>
+      </I18nProvider>,
+    )
+
+    const localeTrigger = screen.getByRole('button', { name: '界面语言，当前中文' })
+    const toolbarSwitcher = localeTrigger.closest('.locale-switcher')
+
+    if (!(toolbarSwitcher instanceof HTMLElement)) {
+      throw new Error('桌面语言入口不存在。')
+    }
+
+    await user.click(localeTrigger)
+    await user.click(within(toolbarSwitcher).getByRole('button', { name: 'English' }))
+
+    expect(screen.getByRole('button', { name: 'Interface language, current English' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1, name: 'Growth-Oriented Formation Desk' })).toBeInTheDocument()
   })
 })
