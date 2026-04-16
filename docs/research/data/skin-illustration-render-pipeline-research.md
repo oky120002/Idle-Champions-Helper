@@ -296,6 +296,12 @@ npm run test:component -- tests/component/illustrationsPage.test.tsx tests/compo
 
 ### 8.3 小范围样例渲染
 
+当前脚本已经支持在传入 `--skinIds` 或 `--championIds` 时做**增量合并输出**：
+
+- 不会再清空整个 `champion-illustrations/` 目录；
+- 会保留未选中的既有清单与图片；
+- `只传 --skinIds` 时，不会额外重建全部英雄本体立绘。
+
 ```bash
 node scripts/sync-idle-champions-illustrations.mjs \
   --input tmp/idle-champions-api/definitions-2026-04-16T03-48-29.427Z-latest-en.json \

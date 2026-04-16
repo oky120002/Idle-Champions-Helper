@@ -31,6 +31,18 @@ async function readJson(filePath) {
   return JSON.parse(await readFile(filePath, 'utf8'))
 }
 
+async function readJsonIfExists(filePath) {
+  try {
+    return await readJson(filePath)
+  } catch (error) {
+    if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
+      return null
+    }
+
+    throw error
+  }
+}
+
 function parseIdFilter(rawValue) {
   if (!rawValue) {
     return null
@@ -240,7 +252,12 @@ async function selectBestIllustrationCandidate(entry, graphicDefById) {
 
 function buildHeroIllustrationTasks(visuals) {
   const championIdFilter = parseIdFilter(visuals.filters?.championIds ?? null)
+  const skinIdFilter = parseIdFilter(visuals.filters?.skinIds ?? null)
   const tasks = []
+
+  if (skinIdFilter && !championIdFilter) {
+    return tasks
+  }
 
   for (const visual of visuals.items ?? []) {
     if (championIdFilter && !championIdFilter.has(visual.championId)) {
@@ -320,6 +337,9 @@ export async function syncChampionIllustrations(options = {}) {
   const illustrationOverridesFile = path.resolve(options.illustrationOverrides ?? DEFAULT_ILLUSTRATION_OVERRIDES)
   const definitionsInput = options.input ? path.resolve(options.input) : null
   const concurrency = Math.max(1, Number(options.concurrency ?? DEFAULT_CONCURRENCY))
+  const championIdFilter = parseIdFilter(options.championIds ?? null)
+  const skinIdFilter = parseIdFilter(options.skinIds ?? null)
+  const hasSelectionFilters = Boolean(championIdFilter || skinIdFilter)
   const visuals = await readJson(visualsFile)
   const definitions = definitionsInput ? await readJson(definitionsInput) : null
   const illustrationOverrides = await loadChampionIllustrationOverrides(illustrationOverridesFile)
@@ -340,8 +360,12 @@ export async function syncChampionIllustrations(options = {}) {
     ...task,
     illustrationOverrides,
   }))
+  const collectionFile = path.join(outputDir, 'champion-illustrations.json')
 
-  await rm(illustrationRoot, { recursive: true, force: true })
+  if (!hasSelectionFilters) {
+    await rm(illustrationRoot, { recursive: true, force: true })
+  }
+
   await mkdir(path.join(illustrationRoot, 'heroes'), { recursive: true })
   await mkdir(path.join(illustrationRoot, 'skins'), { recursive: true })
 
@@ -364,7 +388,7 @@ export async function syncChampionIllustrations(options = {}) {
       sourceGraphicId: selected.asset.graphicId,
       sourceGraphic: selected.asset.sourceGraphic,
       sourceVersion: selected.asset.sourceVersion,
-      manualOverride: selected.manualOverride?.audit ?? null,
+      ...(selected.manualOverride?.audit ? { manualOverride: selected.manualOverride.audit } : {}),
       render: selected.render,
       image: {
         path: buildIllustrationImagePath(currentVersion, task.outputGroup, task.outputFileName.replace(/\.png$/u, '')),
@@ -376,9 +400,16 @@ export async function syncChampionIllustrations(options = {}) {
     }
   })
 
-  const sortedIllustrations = writtenIllustrations.sort(sortIllustrations)
+  const baseCollection = hasSelectionFilters ? await readJsonIfExists(collectionFile) : null
+  const illustrationMap = new Map((baseCollection?.items ?? []).map((item) => [item.id, item]))
+
+  for (const illustration of writtenIllustrations) {
+    illustrationMap.set(illustration.id, illustration)
+  }
+
+  const sortedIllustrations = Array.from(illustrationMap.values()).sort(sortIllustrations)
   await writeFile(
-    path.join(outputDir, 'champion-illustrations.json'),
+    collectionFile,
     `${JSON.stringify({ items: sortedIllustrations, updatedAt: visuals.updatedAt }, null, 2)}\n`,
   )
 

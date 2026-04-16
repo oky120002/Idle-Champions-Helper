@@ -15,16 +15,17 @@
 - **当前清单元数据本身不能直接自动告诉我们“哪张图一定错了”。**
 - `672 / 672` 个皮肤立绘当前都还是：
   - `sourceSlot = xl`
-  - `render.sequenceIndex = 0`
-  - `render.frameIndex = 0`
-- 这意味着：仅看 `champion-illustrations.json`，无法像“查非 0 frame”那样直接筛出错误项。
+  - 首轮抽样前全部是 `render.sequenceIndex = 0`
+  - 首轮抽样前全部是 `render.frameIndex = 0`
+- 这意味着：仅看最初的 `champion-illustrations.json`，无法像“查非 0 frame”那样直接筛出错误项。
 - 所以这轮抽样改用“**同英雄内部尺寸偏差 + 主题分类 + 已复核样例回避**”的方法，先筛出**最值得优先肉眼复核**的候选。
-- 当前建议的第一批复核顺序，优先看这 5 个**非显式主题异常**样本：
+- 第一轮已实际落地两条高置信 override：
+  - `368`：半精灵变异哨兵 -> `sequence 1 / frame 11`
+  - `520`：舞厅蔚 -> `sequence 1 / frame 7`
+- 这两条落地后，当前剩余最优先复核的**非显式主题异常**样本变成：
   1. `367`：半人马变异希契
   2. `452`：斑猫人变异珊蒂
-  3. `520`：舞厅蔚
-  4. `550`：泰尔那多贾希拉
-  5. `368`：半精灵变异哨兵
+  3. `550`：泰尔那多贾希拉
 - 第二批再看这 10 个**结构偏差明显、但主题上也可能天然偏大的样本**：
   - `362`、`290`、`515`、`473`、`111`、`390`、`123`、`333`、`133`、`327`
 - 明显偏小的 `毛绒 / 宝宝 / 玩偶` 类样本，本轮不建议优先写 override；它们更像主题造型本意，而不是 pose 选错。
@@ -118,9 +119,9 @@ node scripts/audit-idle-champions-illustration-overrides.mjs
 
 ## 4. 当前抽样结果总览
 
-本轮脚本产出的高优先级样本共 `20` 个，分为四类：
+在落地 `368` 与 `520` 之后，本轮脚本最新产出的高优先级样本共 `18` 个，分为四类：
 
-- `non-obvious`：`5`
+- `non-obvious`：`3`
   - 结构偏差明显，但名字上又不是明显的“毛绒 / 巨人 / 飞升”主题
   - **优先级最高**
 - `theme-expanded`：`11`
@@ -134,15 +135,45 @@ node scripts/audit-idle-champions-illustration-overrides.mjs
 
 ---
 
-## 5. 第一批建议先复核的 5 个 skin
+## 5. 当前已落地的第一批 override
 
-这 5 个是当前最值得先看的一批，因为它们：
+### 5.1 `368`：半精灵变异哨兵
+
+- 落地规则：
+  - `preferredSequenceIndexes = [1]`
+  - `preferredFrameIndexes = [11]`
+- 落地后结果：
+  - `render.sequenceIndex: 0 -> 1`
+  - `render.frameIndex: 0 -> 11`
+  - 尺寸从 `115 x 162` 调整为 `134 x 165`
+- 当前判断：
+  - 这条调整把成图从“同英雄皮肤组里明显偏窄”拉回到更接近哨兵组中位尺寸；
+  - 已写入 `scripts/data/champion-illustration-overrides.json`。
+
+### 5.2 `520`：舞厅蔚
+
+- 落地规则：
+  - `preferredSequenceIndexes = [1]`
+  - `preferredFrameIndexes = [7]`
+- 落地后结果：
+  - `render.sequenceIndex: 0 -> 1`
+  - `render.frameIndex: 0 -> 7`
+  - 尺寸从 `139 x 134` 调整为 `111 x 131`
+- 当前判断：
+  - 这条调整把成图从“横向展开偏大”拉回到更接近蔚皮肤组中位尺寸；
+  - 已写入 `scripts/data/champion-illustration-overrides.json`。
+
+---
+
+## 6. 当前最优先复核的 3 个 non-obvious skin
+
+这 3 个是当前最值得继续先看的一批，因为它们：
 
 - 在同英雄组内偏差明显；
 - 但名称上又不属于“天然应该缩小 / 放大”的明确主题；
 - 如果真要开始补第一批 override，应该先从这里确认。
 
-### 5.1 `367`：半人马变异希契
+### 6.1 `367`：半人马变异希契
 
 - 英雄：希契
 - 原因：
@@ -154,7 +185,7 @@ node scripts/audit-idle-champions-illustration-overrides.mjs
   - 主题名本身没有像 `毛绒 / 飞升 / 巨人` 那样明确解释这个偏差；
   - **建议排第一批。**
 
-### 5.2 `452`：斑猫人变异珊蒂
+### 6.2 `452`：斑猫人变异珊蒂
 
 - 英雄：珊蒂
 - 原因：
@@ -164,17 +195,7 @@ node scripts/audit-idle-champions-illustration-overrides.mjs
   - 宽度扩张明显，但又不是显式大型主题；
   - **建议第一批复核。**
 
-### 5.3 `520`：舞厅蔚
-
-- 英雄：蔚
-- 原因：
-  - 宽度是同英雄中位数的 `1.48x`
-  - 面积是同英雄中位数的 `1.57x`
-- 当前判断：
-  - 是这批里最“非主题驱动”的宽度异常之一；
-  - **建议第一批复核。**
-
-### 5.4 `550`：泰尔那多贾希拉
+### 6.3 `550`：泰尔那多贾希拉
 
 - 英雄：贾希拉
 - 原因：
@@ -184,19 +205,9 @@ node scripts/audit-idle-champions-illustration-overrides.mjs
   - 横向展开明显，但没有显式巨型主题解释；
   - **建议第一批复核。**
 
-### 5.5 `368`：半精灵变异哨兵
-
-- 英雄：哨兵
-- 原因：
-  - 宽度仅为同英雄中位数的 `0.71x`
-  - 面积仅为同英雄中位数的 `0.64x`
-- 当前判断：
-  - 与前四张相反，它是明显“偏窄 / 偏小”的非显式主题异常；
-  - **建议第一批复核。**
-
 ---
 
-## 6. 第二批建议复核的 10 个 skin
+## 7. 第二批建议复核的 10 个 skin
 
 这批结构偏差也很高，但它们的主题名本身就更像会带来自然尺寸变化，所以排在第二批：
 
@@ -220,7 +231,7 @@ node scripts/audit-idle-champions-illustration-overrides.mjs
 
 ---
 
-## 7. 当前不建议优先写 override 的样本
+## 8. 当前不建议优先写 override 的样本
 
 ### 7.1 明显缩小主题
 
@@ -248,11 +259,11 @@ node scripts/audit-idle-champions-illustration-overrides.mjs
 
 ---
 
-## 8. 推荐的下一步执行顺序
+## 9. 推荐的下一步执行顺序
 
 如果下一轮开始真的要录 override，建议按这个顺序推进：
 
-1. 先目检第一批 5 个：`367, 452, 520, 550, 368`
+1. 先继续目检剩余 3 个 non-obvious：`367, 452, 550`
 2. 只要其中有 1~2 个确认“确实应换 pose / frame”，就继续看第二批前 5 个：`362, 290, 515, 473, 111`
 3. 把确实需要调整的样本写入 `scripts/data/champion-illustration-overrides.json`
 4. 每录一批，都只做小范围重渲染，不要立刻全量重建
@@ -266,13 +277,13 @@ node scripts/sync-idle-champions-illustrations.mjs \
   --illustrationOverrides scripts/data/champion-illustration-overrides.json \
   --outputDir tmp/render-validation \
   --currentVersion v1 \
-  --skinIds 367,452,520,550,368 \
+  --skinIds 367,452,550 \
   --concurrency 2
 ```
 
 ---
 
-## 9. 当前记录关联文件
+## 10. 当前记录关联文件
 
 - `scripts/audit-idle-champions-illustration-overrides.mjs`
 - `scripts/data/champion-illustration-overrides.json`
