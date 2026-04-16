@@ -70,6 +70,8 @@
 - `docs/research/data/skin-illustration-render-strategy-research.md`：后端预合成与前端实时合成两条皮肤立绘渲染路线的可行性、兼容性与终端风险对比。
 - `docs/research/data/skin-illustration-render-pipeline-research.md`：当前已落地的皮肤立绘离线渲染管线、pose / slot 选择规则、坐标系修正结果与后续人工覆盖落点。
 - `docs/research/data/skin-illustration-override-audit-research.md`：基于当前立绘产物做第一轮 override 候选抽样，整理下一批最值得人工复核的皮肤清单与优先顺序。
+- `docs/research/data/skin-illustration-alpha-fragmentation-research.md`：基于最终 PNG 的 alpha 连通域审计，补抓 detached prop / 浮空组件类候选并评估其噪音边界。
+- `docs/research/data/skin-illustration-manual-review-heuristics.md`：皮肤立绘人工复核经验库，沉淀“什么时候值得写 override、什么时候只是主题本意”的可复用规则。
 - `docs/research/data/language-id-7-chinese-definitions-research.md`：`language_id=7` 官方中文 definitions 链路与字段覆盖核实。
 - `docs/research/data/official-formation-layout-extraction-research.md`：官方阵型布局字段落点、上下文分布与唯一布局提取结论。
 - `docs/research/data/static-data-storage-research.md`：静态数据存储与版本化策略。
