@@ -41,6 +41,20 @@ const illustrationFixture: DataCollection<ChampionIllustration> = {
       sourceGraphicId: '8',
       sourceGraphic: 'Characters/Hero_Bruenor',
       sourceVersion: 7,
+      render: {
+        pipeline: 'skelanim',
+        sequenceIndex: 0,
+        sequenceLength: 1,
+        isStaticPose: true,
+        frameIndex: 0,
+        visiblePieceCount: 18,
+        bounds: {
+          minX: -32,
+          minY: -12,
+          maxX: 420,
+          maxY: 960,
+        },
+      },
       image: {
         path: 'v1/champion-illustrations/heroes/1.png',
         width: 1024,
@@ -68,6 +82,20 @@ const illustrationFixture: DataCollection<ChampionIllustration> = {
       sourceGraphicId: '3004',
       sourceGraphic: 'Characters/Hero_BruenorPirate_2xup',
       sourceVersion: 3,
+      render: {
+        pipeline: 'skelanim',
+        sequenceIndex: 1,
+        sequenceLength: 32,
+        isStaticPose: false,
+        frameIndex: 10,
+        visiblePieceCount: 22,
+        bounds: {
+          minX: -40,
+          minY: -18,
+          maxX: 512,
+          maxY: 1012,
+        },
+      },
       image: {
         path: 'v1/champion-illustrations/skins/3001.png',
         width: 1024,

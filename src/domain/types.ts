@@ -79,6 +79,23 @@ export interface ChampionIllustrationImage {
   format: 'png'
 }
 
+export interface ChampionIllustrationRenderBounds {
+  minX: number
+  minY: number
+  maxX: number
+  maxY: number
+}
+
+export interface ChampionIllustrationRender {
+  pipeline: 'skelanim' | 'decoded-png'
+  sequenceIndex: number | null
+  sequenceLength: number | null
+  isStaticPose: boolean | null
+  frameIndex: number | null
+  visiblePieceCount: number | null
+  bounds: ChampionIllustrationRenderBounds | null
+}
+
 export interface ChampionIllustration {
   id: string
   championId: string
@@ -92,6 +109,7 @@ export interface ChampionIllustration {
   sourceGraphicId: string
   sourceGraphic: string
   sourceVersion: number | null
+  render: ChampionIllustrationRender
   image: ChampionIllustrationImage
 }
 

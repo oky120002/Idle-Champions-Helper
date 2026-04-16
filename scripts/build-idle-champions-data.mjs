@@ -65,6 +65,7 @@ async function main() {
     masterApiUrl: values.masterApiUrl,
   })
   const illustrations = await syncChampionIllustrations({
+    input: fetched.rawFile,
     outputDir: values.outputDir,
     currentVersion: values.currentVersion,
   })
