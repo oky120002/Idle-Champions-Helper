@@ -4,7 +4,7 @@
 - 当前状态：本文基于仓库当前 `public/data/v1/champion-illustrations.json`、本地已生成 PNG 产物，以及 2026-04-16 新增的 alpha 审计脚本整理，现阶段有效。
 - 目标：在“尺寸偏差 + 主题分类”之外，再补一层可复跑的系统审计，用来抓“浮空武器 / 浮空伴生物 / detached prop / 画布内部空域过多”这类单看宽高不容易冒出来的问题。
 
-> 如果你想看上一轮基于尺寸偏差的抽样，请看 `docs/research/data/skin-illustration-override-audit-research.md`；如果你想看当前渲染链路与 override 落点，请看 `docs/research/data/skin-illustration-render-pipeline-research.md`；如果你想看这一轮人工复核后沉淀下来的经验库，请看 `docs/research/data/skin-illustration-manual-review-heuristics.md`。
+> 如果你想看上一轮基于尺寸偏差的抽样，请看 `docs/research/data/skin-illustration-override-audit-research.md`；如果你想看 current-vs-candidate 的进一步收敛结果，请看 `docs/research/data/skin-illustration-pose-delta-audit-research.md`；如果你想看当前渲染链路与 override 落点，请看 `docs/research/data/skin-illustration-render-pipeline-research.md`；如果你想看这一轮人工复核后沉淀下来的经验库，请看 `docs/research/data/skin-illustration-manual-review-heuristics.md`。
 
 ---
 
