@@ -82,14 +82,17 @@ const enumsFixture: DataCollection<StringEnumGroup | LocalizedEnumGroup> = {
   ],
 }
 
+const generatedRoleGroups = [['support'], ['healing'], ['dps'], ['tank']] as const
+const generatedAffiliationGroups = [[hall], [adversaries], [oxventurers]] as const
+
 const manyChampionsFixture: DataCollection<Champion> = {
   updatedAt: '2026-04-13',
   items: Array.from({ length: 60 }, (_, index) => ({
     id: `generated-${index + 1}`,
     name: localized(`Generated Hero ${index + 1}`, `测试英雄 ${index + 1}`),
     seat: (index % 12) + 1,
-    roles: [['support'], ['healing'], ['dps'], ['tank']][index % 4],
-    affiliations: [[hall], [adversaries], [oxventurers]][index % 3],
+    roles: [...generatedRoleGroups[index % generatedRoleGroups.length]!],
+    affiliations: [...generatedAffiliationGroups[index % generatedAffiliationGroups.length]!],
     tags: [`tag-${index + 1}`],
   })),
 }
@@ -383,7 +386,7 @@ describe('ChampionsPage filters', () => {
 
     expect(screen.getByText(/^当前展示 60 \/ 60 名英雄/)).toBeInTheDocument()
 
-    await user.click(screen.getAllByRole('button', { name: '收起到默认 48 名' })[0])
+    await user.click(screen.getAllByRole('button', { name: '收起到默认 48 名' })[0]!)
 
     await waitFor(() => {
       expect(screen.queryByText('测试英雄 60')).not.toBeInTheDocument()

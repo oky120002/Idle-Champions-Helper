@@ -12,6 +12,13 @@ interface SiteHeaderProps {
 }
 
 export function SiteHeader({ locale, setLocale, pathname, t }: SiteHeaderProps) {
+  const fallbackNavigationItem = navigation[0]
+  const fallbackLocaleOption = localeOptions[0]
+
+  if (!fallbackNavigationItem || !fallbackLocaleOption) {
+    throw new Error('Site navigation requires at least one navigation item and locale option.')
+  }
+
   const {
     closeMobileNav,
     headerClassName,
@@ -21,8 +28,9 @@ export function SiteHeader({ locale, setLocale, pathname, t }: SiteHeaderProps) 
     setLocaleMenuOpen,
     toggleMobileNav,
   } = useSiteHeaderState(pathname)
-  const activeNavigationItem = navigation.find((item) => isNavigationItemActive(pathname, item.to)) ?? navigation[0]
-  const activeLocaleOption = localeOptions.find((option) => option.id === locale) ?? localeOptions[0]
+  const activeNavigationItem =
+    navigation.find((item) => isNavigationItemActive(pathname, item.to)) ?? fallbackNavigationItem
+  const activeLocaleOption = localeOptions.find((option) => option.id === locale) ?? fallbackLocaleOption
 
   const handleLocaleSelect = (nextLocale: AppLocale) => {
     setLocale(nextLocale)

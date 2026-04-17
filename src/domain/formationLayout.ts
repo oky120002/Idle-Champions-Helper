@@ -1,6 +1,6 @@
 import type { AppLocale } from '../app/i18n'
 import { getLocalizedTextPair, getPrimaryLocalizedText } from './localizedText'
-import type { FormationLayout } from './types'
+import type { FormationContext, FormationLayout } from './types'
 
 const FORMATION_BOARD_BASE_COLUMNS = 5
 const FORMATION_BOARD_BASE_WIDTH_PX = 640
@@ -44,12 +44,16 @@ export function getFormationLayoutContextSummary(
   }
 
   const primaryContext = sourceContexts[0]
+  if (!primaryContext) {
+    return layout.notes ? getPrimaryLocalizedText(layout.notes, locale) : null
+  }
+
   const counts = sourceContexts.reduce(
-    (result, context) => {
-      result[context.kind] = (result[context.kind] ?? 0) + 1
+    (result: Record<FormationContext['kind'], number>, context) => {
+      result[context.kind] += 1
       return result
     },
-    { campaign: 0, adventure: 0, variant: 0, trial: 0, timeGate: 0 } as Record<string, number>,
+    { campaign: 0, adventure: 0, variant: 0, trial: 0, timeGate: 0 },
   )
 
   const countParts =

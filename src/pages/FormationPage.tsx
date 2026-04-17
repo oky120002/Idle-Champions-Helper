@@ -228,7 +228,7 @@ export function FormationPage() {
         })
 
         if (pendingPresetRestoreRef.current) {
-          navigate('/formation', { replace: true, state: null })
+          void navigate('/formation', { replace: true, state: null })
 
           const pendingPresetRestore = pendingPresetRestoreRef.current
           const pendingDraft = convertPresetToDraft(pendingPresetRestore)
@@ -671,7 +671,7 @@ export function FormationPage() {
   }
 
   function handleOpenPresetsPage() {
-    navigate('/presets')
+    void navigate('/presets')
   }
 
   function handleSavePreset() {

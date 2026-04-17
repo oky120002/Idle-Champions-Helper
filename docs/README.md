@@ -7,6 +7,7 @@
 ## 文档治理入口
 
 - `docs/product/documentation-governance.md`：文档扫描、修复、合并、删除与归档的常规流程。
+- `docs/product/ai-first-ts-tsx-guidelines.md`：面向 AI 开发的 TypeScript / React 渐进式加载与结构规范。
 - `docs/product/mobile-compatibility-guidelines.md`：移动端布局与交互兼容性规范，明确禁止把横向滑动作为主导航或主操作入口。
 - `docs/troubleshooting-log.md`：流程、环境、部署、认证等非代码问题的摘要台账。
 
@@ -59,6 +60,7 @@
 
 - `docs/troubleshooting-log.md`：通用问题排查台账，沉淀问题描述、排查摘要、根因、解法与引用信息。
 - `docs/product/documentation-governance.md`：文档治理方案，定义扫描触发条件、修复策略与单一事实源。
+- `docs/product/ai-first-ts-tsx-guidelines.md`：AI-first 的 TypeScript / React 结构、类型边界与渐进式加载规范。
 - `docs/product/idle-champions-roadmap.md`：项目价值、范围、阶段路线与核心模型。
 - `docs/product/mobile-compatibility-guidelines.md`：移动端兼容性开发规范，禁止把横向滑动作为移动端主导航、主操作或主信息入口。
 - `docs/research/data/game-data-source-investigation.md`：基础游戏数据与个人数据来源调研。

@@ -162,7 +162,16 @@ export function parseWebRequestLog(
     }
   }
 
-  const [first, second] = directMatch.slice(1, 3)
+  const first = directMatch[1]
+  const second = directMatch[2]
+
+  if (!first || !second) {
+    return {
+      ok: false,
+      error: messages.logIncompleteCredentials,
+    }
+  }
+
   const userId = USER_ID_PATTERN.test(first) ? first : second
   const hash = USER_ID_PATTERN.test(first) ? second : first
 

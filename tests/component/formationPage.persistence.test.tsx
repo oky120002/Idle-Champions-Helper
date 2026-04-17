@@ -191,7 +191,7 @@ describe('FormationPage persistence flow', () => {
 
     const [select] = await screen.findAllByRole('combobox')
 
-    await user.selectOptions(select, 'bruenor')
+    await user.selectOptions(select!, 'bruenor')
 
     await waitFor(async () => {
       await expect(readRecentFormationDraft()).resolves.toMatchObject({
@@ -213,7 +213,7 @@ describe('FormationPage persistence flow', () => {
     renderFormationPage()
 
     const [select] = await screen.findAllByRole('combobox')
-    await user.selectOptions(select, 'bruenor')
+    await user.selectOptions(select!, 'bruenor')
     await user.type(screen.getByLabelText('方案名称'), '推图常用队')
     await user.type(screen.getByLabelText('方案备注'), '先拿来做组件测试')
     await user.click(screen.getByRole('button', { name: '保存为方案' }))

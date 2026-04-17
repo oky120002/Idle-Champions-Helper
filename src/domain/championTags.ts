@@ -1,2 +1,2 @@
 export * from './champion-tags/selectors'
-export * from './champion-tags/types'
+export type * from './champion-tags/types'

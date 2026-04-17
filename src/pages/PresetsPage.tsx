@@ -262,7 +262,7 @@ export function PresetsPage() {
       return
     }
 
-    navigate('/formation', {
+    void navigate('/formation', {
       state: {
         pendingPresetRestore: view.preset,
       },

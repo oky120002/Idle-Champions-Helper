@@ -260,7 +260,7 @@ describe('FormationPage layout filters', () => {
     renderFormationPage()
 
     await user.click(await screen.findByRole('button', { name: '变体网格' }))
-    await user.selectOptions(screen.getAllByRole('combobox')[0], 'bruenor')
+    await user.selectOptions(screen.getAllByRole('combobox')[0]!, 'bruenor')
     await user.click(screen.getByRole('button', { name: '战役' }))
 
     expect(screen.getByText('当前正在编辑的布局不在筛选结果中')).toBeInTheDocument()
@@ -292,7 +292,7 @@ describe('FormationPage layout filters', () => {
     await user.type(searchInput, '肯特')
     await user.click(screen.getByRole('button', { name: '时空门 - 骗子的欢欣（肯特） · 10 槽' }))
 
-    const board = screen.getByTestId('formation-board') as HTMLDivElement
+    const board = screen.getByTestId('formation-board')
 
     expect(board.style.gridTemplateColumns).toBe('repeat(6, minmax(0, 1fr))')
     expect(board.style.width).toBe('768px')
