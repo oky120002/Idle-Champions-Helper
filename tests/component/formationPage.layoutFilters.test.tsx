@@ -1,9 +1,8 @@
 import 'fake-indexeddb/auto'
 
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { MemoryRouter } from 'react-router-dom'
 
 vi.mock('../../src/data/client', async () => {
   const actual = await vi.importActual<typeof import('../../src/data/client')>('../../src/data/client')
@@ -16,11 +15,15 @@ vi.mock('../../src/data/client', async () => {
   }
 })
 
-import { I18nProvider } from '../../src/app/i18n'
-import { loadCollection, loadCollectionAtVersion, loadVersion } from '../../src/data/client'
-import { APP_DATABASE_NAME } from '../../src/data/localDatabase'
-import { FormationPage } from '../../src/pages/FormationPage'
 import type { Champion, DataCollection, DataVersion, FormationLayout } from '../../src/domain/types'
+import {
+  mockFormationPageCollections,
+  mockedLoadCollection,
+  mockedLoadCollectionAtVersion,
+  mockedLoadVersion,
+  renderFormationPage,
+  resetFormationPageDatabase,
+} from './formation-page/formationPageTestHarness'
 
 const versionFixture: DataVersion = {
   current: 'v1',
@@ -142,78 +145,24 @@ const championsFixture: DataCollection<Champion> = {
   ],
 }
 
-const mockedLoadCollection = vi.mocked(loadCollection)
-const mockedLoadCollectionAtVersion = vi.mocked(loadCollectionAtVersion)
-const mockedLoadVersion = vi.mocked(loadVersion)
-
-async function resetDatabase(): Promise<void> {
-  await new Promise<void>((resolve, reject) => {
-    const request = indexedDB.deleteDatabase(APP_DATABASE_NAME)
-
-    request.onerror = () => {
-      reject(request.error ?? new Error('删除测试数据库失败。'))
-    }
-
-    request.onblocked = () => {
-      reject(new Error('删除测试数据库被阻塞。'))
-    }
-
-    request.onsuccess = () => {
-      resolve()
-    }
-  })
-}
-
-function mockDataLayer() {
-  mockedLoadVersion.mockResolvedValue(versionFixture)
-  mockedLoadCollection.mockImplementation(async (name) => {
-    if (name === 'formations') {
-      return formationsFixture
-    }
-
-    if (name === 'champions') {
-      return championsFixture
-    }
-
-    throw new Error(`unexpected collection: ${name}`)
-  })
-  mockedLoadCollectionAtVersion.mockImplementation(async (version, name) => {
-    if (version === 'v1' && name === 'formations') {
-      return formationsFixture
-    }
-
-    if (version === 'v1' && name === 'champions') {
-      return championsFixture
-    }
-
-    throw new Error(`unexpected collection at version: ${version}/${name}`)
-  })
-}
-
-function renderFormationPage() {
-  return render(
-    <I18nProvider>
-      <MemoryRouter>
-        <FormationPage />
-      </MemoryRouter>
-    </I18nProvider>,
-  )
-}
-
 async function findLayoutSearchInput() {
   return screen.findByPlaceholderText('搜布局名、来源战役、冒险或变体')
 }
 
 beforeEach(async () => {
-  await resetDatabase()
-  mockDataLayer()
+  await resetFormationPageDatabase()
+  mockFormationPageCollections({
+    version: versionFixture,
+    formations: formationsFixture,
+    champions: championsFixture,
+  })
 })
 
 afterEach(async () => {
   mockedLoadCollection.mockReset()
   mockedLoadCollectionAtVersion.mockReset()
   mockedLoadVersion.mockReset()
-  await resetDatabase()
+  await resetFormationPageDatabase()
 })
 
 describe('FormationPage layout filters', () => {
