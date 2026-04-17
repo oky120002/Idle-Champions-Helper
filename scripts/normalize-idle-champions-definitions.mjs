@@ -28,6 +28,35 @@ const ROLE_TAGS = new Set([
   'tank',
   'tanking',
 ])
+const GENERIC_MONSTER_TAGS = new Set([
+  'melee',
+  'ranged',
+  'boss',
+  'hits_based',
+  'armor_based',
+  'static',
+  'flying',
+])
+const SPECIAL_MONSTER_TAGS = new Set(['boss', 'hits_based', 'armor_based', 'static'])
+const MAGIC_ATTACK_HINTS = [
+  'missile',
+  'bolt',
+  'fireball',
+  'magic',
+  'ray',
+  'breath',
+  'lightning',
+  'poison',
+  'necrotic',
+  'witch',
+  'spell',
+  'arcane',
+]
+const STRUCTURAL_VARIANT_GAME_CHANGES = new Set([
+  'formation',
+  'formation_saves_campaign_id',
+  'initial_formation',
+])
 
 function toText(value) {
   if (typeof value === 'string') {
@@ -123,6 +152,16 @@ async function writeJson(filePath, value) {
 
 function uniqueStrings(values) {
   return Array.from(new Set(values.filter((value) => typeof value === 'string' && value.trim())))
+}
+
+function uniqueNumbers(values) {
+  return Array.from(
+    new Set(
+      values.filter(
+        (value) => typeof value === 'number' && Number.isFinite(value) && value >= 0,
+      ),
+    ),
+  ).sort((left, right) => left - right)
 }
 
 function toStringList(value) {
@@ -353,6 +392,526 @@ function buildIdMap(definitions = []) {
   }
 
   return result
+}
+
+function stripAdventureFlavor(value) {
+  const text = toText(value)
+
+  if (!text) {
+    return null
+  }
+
+  return text
+    .replace(/^Time Gate\s*-\s*/i, '')
+    .replace(/^时空门\s*-\s*/u, '')
+    .replace(/\s*[（(][^()（）]+[)）]\s*$/u, '')
+    .trim()
+}
+
+function extractObjectiveArea(definition = {}) {
+  const directObjective = (definition.objectives ?? []).find((item) =>
+    ['area', 'complete_area'].includes(item?.condition),
+  )
+  const directArea = normalizeNumber(directObjective?.area)
+
+  if (directArea !== null) {
+    return directArea
+  }
+
+  const objectiveText = toText(definition.objectives_text)
+
+  if (!objectiveText) {
+    return null
+  }
+
+  const match = objectiveText.match(/(\d+)/)
+  return match ? normalizeNumber(match[1]) : null
+}
+
+function buildAdventureMap(originalDefinitions = [], localizedDefinitions = [], campaignMap) {
+  const originalById = buildIdMap(originalDefinitions)
+  const localizedById = buildIdMap(localizedDefinitions)
+  const ids = Array.from(new Set([...originalById.keys(), ...localizedById.keys()]))
+
+  return new Map(
+    ids
+      .map((id) => {
+        const originalDefinition = originalById.get(id) ?? {}
+        const localizedDefinition = localizedById.get(id) ?? {}
+        const campaignId = String(originalDefinition.campaign_id ?? localizedDefinition.campaign_id ?? '')
+        const campaign =
+          campaignMap.get(campaignId) ?? {
+            id: campaignId,
+            original: campaignId,
+            display: campaignId,
+          }
+        const name = normalizeLocalizedText(
+          getDefinitionName(originalDefinition),
+          getDefinitionName(localizedDefinition),
+          `Adventure ${id}`,
+        )
+
+        if (!name) {
+          return null
+        }
+
+        const themeName = normalizeLocalizedText(
+          stripAdventureFlavor(name.original),
+          stripAdventureFlavor(name.display),
+          name.original,
+        )
+
+        return [
+          id,
+          {
+            id,
+            name,
+            themeName: themeName ?? name,
+            campaign,
+            locationId:
+              originalDefinition.location_id !== undefined
+                ? String(originalDefinition.location_id)
+                : null,
+            areaSetId:
+              originalDefinition.area_set_id !== undefined
+                ? String(originalDefinition.area_set_id)
+                : null,
+            objectiveArea: extractObjectiveArea(originalDefinition),
+            variantAdventureId:
+              originalDefinition.variant_adventure_id !== undefined
+                ? String(originalDefinition.variant_adventure_id)
+                : null,
+            isVariant: looksLikeVariant(originalDefinition),
+          },
+        ]
+      })
+      .filter(Boolean),
+  )
+}
+
+function buildSceneMap(adventureMap) {
+  const groupedScenes = new Map()
+
+  for (const adventure of adventureMap.values()) {
+    if (adventure.isVariant || !adventure.locationId) {
+      continue
+    }
+
+    const key = `${adventure.campaign.id}:${adventure.locationId}`
+    const current = groupedScenes.get(key)
+
+    if (!current || Number(adventure.id) < Number(current.sourceAdventureId)) {
+      groupedScenes.set(key, {
+        id: key,
+        original: adventure.themeName.original,
+        display: adventure.themeName.display,
+        sourceAdventureId: adventure.id,
+      })
+    }
+  }
+
+  return new Map(
+    Array.from(groupedScenes.entries()).map(([key, value]) => [
+      key,
+      {
+        id: key,
+        original: value.original,
+        display: value.display,
+      },
+    ]),
+  )
+}
+
+function classifyMonsterAttack(monster, attackDefinitionsById) {
+  const tags = new Set(toStringList(monster.tags))
+
+  if (tags.has('melee')) {
+    return 'melee'
+  }
+
+  if (tags.has('ranged')) {
+    return 'ranged'
+  }
+
+  const attackId = monster.attack_id !== undefined ? String(monster.attack_id) : null
+  const attackName = attackId ? toText(attackDefinitionsById.get(attackId)?.name)?.toLowerCase() ?? '' : ''
+
+  if (attackName.includes('melee')) {
+    return 'melee'
+  }
+
+  if (attackName.includes('ranged')) {
+    return 'ranged'
+  }
+
+  if (MAGIC_ATTACK_HINTS.some((hint) => attackName.includes(hint))) {
+    return 'magic'
+  }
+
+  return 'other'
+}
+
+function normalizeMonsterIdentity(monster, attackDefinitionsById) {
+  const tags = uniqueStrings(toStringList(monster.tags)).sort((left, right) => left.localeCompare(right))
+  const attackType = classifyMonsterAttack(monster, attackDefinitionsById)
+
+  return {
+    id: String(monster.id),
+    name: toText(monster.name) ?? `Monster ${monster.id}`,
+    tags,
+    attackType,
+    isSpecial: tags.some((tag) => SPECIAL_MONSTER_TAGS.has(tag)),
+  }
+}
+
+function buildMonsterCatalog(rawDefinitions, attackDefinitionsById) {
+  const monstersById = new Map()
+  const monstersByAdventureId = new Map()
+
+  for (const definition of rawDefinitions.monster_defines ?? []) {
+    const monster = normalizeMonsterIdentity(definition, attackDefinitionsById)
+    monstersById.set(monster.id, monster)
+
+    for (const adventureId of uniqueStrings(toStringList(definition.adventures))) {
+      const existing = monstersByAdventureId.get(adventureId) ?? []
+      existing.push(monster)
+      monstersByAdventureId.set(adventureId, existing)
+    }
+  }
+
+  return {
+    monstersById,
+    monstersByAdventureId,
+  }
+}
+
+function getMonsterIdentityKey(monster) {
+  return `${monster.name}\u0000${monster.attackType}\u0000${monster.tags.join('|')}`
+}
+
+function collectMonsterIdsFromGameChange(value, result = new Set()) {
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      collectMonsterIdsFromGameChange(item, result)
+    }
+
+    return result
+  }
+
+  if (!value || typeof value !== 'object') {
+    return result
+  }
+
+  for (const [key, item] of Object.entries(value)) {
+    if (key === 'monster_id') {
+      const monsterId = normalizeNumber(item)
+
+      if (monsterId !== null) {
+        result.add(String(monsterId))
+      }
+
+      continue
+    }
+
+    if (key === 'monster_ids' || key === 'boss_ids') {
+      for (const monsterId of toStringList(item)) {
+        result.add(monsterId)
+      }
+
+      continue
+    }
+
+    if (key === 'monster_replacements_by_id' && item && typeof item === 'object') {
+      for (const replacementId of Object.values(item)) {
+        const normalized = normalizeNumber(replacementId)
+
+        if (normalized !== null) {
+          result.add(String(normalized))
+        }
+      }
+
+      continue
+    }
+
+    collectMonsterIdsFromGameChange(item, result)
+  }
+
+  return result
+}
+
+function collectEscortNames(gameChanges = []) {
+  const names = []
+
+  function visit(value, currentType = null) {
+    if (Array.isArray(value)) {
+      for (const item of value) {
+        visit(item, currentType)
+      }
+
+      return
+    }
+
+    if (!value || typeof value !== 'object') {
+      return
+    }
+
+    const nextType = typeof value.type === 'string' ? value.type : currentType
+
+    if (
+      nextType &&
+      nextType.startsWith('slot_escort') &&
+      Array.isArray(value.names)
+    ) {
+      names.push(...toTextList(value.names))
+    }
+
+    for (const item of Object.values(value)) {
+      visit(item, nextType)
+    }
+  }
+
+  visit(gameChanges)
+  return uniqueStrings(names)
+}
+
+function buildAreaHighlightId(entry) {
+  return [
+    entry.kind,
+    entry.start ?? 'open',
+    entry.end ?? 'open',
+    entry.loopAt ?? 'loop',
+    entry.repeatAt ?? 'repeat',
+  ].join(':')
+}
+
+function pushAreaHighlight(result, entry) {
+  const start =
+    normalizeNumber(entry.start) ??
+    normalizeNumber(entry.end)
+
+  if (start === null) {
+    return
+  }
+
+  const normalizedEntry = {
+    id: buildAreaHighlightId({
+      ...entry,
+      start,
+      end: normalizeNumber(entry.end),
+    }),
+    kind: entry.kind,
+    start,
+    end: normalizeNumber(entry.end),
+    loopAt: normalizeNumber(entry.loopAt),
+    repeatAt: normalizeNumber(entry.repeatAt),
+  }
+
+  if (!result.has(normalizedEntry.id)) {
+    result.set(normalizedEntry.id, normalizedEntry)
+  }
+}
+
+function parseAreaRange(rangeText) {
+  const normalized = toText(rangeText)
+
+  if (!normalized) {
+    return null
+  }
+
+  const parts = normalized
+    .split(/[,-]/)
+    .map((item) => item.trim())
+    .filter(Boolean)
+
+  if (parts.length !== 2) {
+    return null
+  }
+
+  const start = normalizeNumber(parts[0])
+  const end = normalizeNumber(parts[1])
+
+  if (start === null && end === null) {
+    return null
+  }
+
+  return { start, end }
+}
+
+function collectAreaHighlights(gameChanges = []) {
+  const highlights = new Map()
+
+  function visit(value, context) {
+    if (Array.isArray(value)) {
+      for (const item of value) {
+        visit(item, context)
+      }
+
+      return
+    }
+
+    if (!value || typeof value !== 'object') {
+      return
+    }
+
+    const loopAt = normalizeNumber(value.loop_at) ?? context.loopAt
+    const repeatAt = normalizeNumber(value.repeat_at) ?? context.repeatAt
+    const minArea = normalizeNumber(value.min_area)
+    const maxArea = normalizeNumber(value.max_area)
+    const startArea = normalizeNumber(value.start_area)
+    const endArea = normalizeNumber(value.end_area)
+    const areaRange = parseAreaRange(value.area_range)
+
+    if (minArea !== null || maxArea !== null) {
+      pushAreaHighlight(highlights, {
+        kind: context.kind,
+        start: minArea,
+        end: maxArea,
+        loopAt,
+        repeatAt,
+      })
+    }
+
+    if (startArea !== null || endArea !== null) {
+      pushAreaHighlight(highlights, {
+        kind: context.kind,
+        start: startArea,
+        end: endArea,
+        loopAt,
+        repeatAt,
+      })
+    }
+
+    if (areaRange) {
+      pushAreaHighlight(highlights, {
+        kind: context.kind,
+        start: areaRange.start,
+        end: areaRange.end,
+        loopAt,
+        repeatAt,
+      })
+    }
+
+    for (const item of Object.values(value)) {
+      visit(item, {
+        kind: context.kind,
+        loopAt,
+        repeatAt,
+      })
+    }
+  }
+
+  for (const gameChange of gameChanges) {
+    visit(gameChange, {
+      kind: toText(gameChange.type) ?? 'effect',
+      loopAt: normalizeNumber(gameChange.loop_at),
+      repeatAt: normalizeNumber(gameChange.repeat_at),
+    })
+  }
+
+  return Array.from(highlights.values()).sort(
+    (left, right) =>
+      left.start - right.start ||
+      (left.end ?? Number.MAX_SAFE_INTEGER) - (right.end ?? Number.MAX_SAFE_INTEGER) ||
+      left.kind.localeCompare(right.kind),
+  )
+}
+
+function buildVariantEnemySummary(originalDefinition, baseAdventureId, monsterCatalog) {
+  const pool = new Map()
+
+  for (const monster of monsterCatalog.monstersByAdventureId.get(baseAdventureId) ?? []) {
+    pool.set(getMonsterIdentityKey(monster), monster)
+  }
+
+  for (const monsterId of collectMonsterIdsFromGameChange(originalDefinition.game_changes ?? [])) {
+    const monster = monsterCatalog.monstersById.get(monsterId)
+
+    if (monster) {
+      pool.set(getMonsterIdentityKey(monster), monster)
+    }
+  }
+
+  const attackMix = { melee: 0, ranged: 0, magic: 0, other: 0 }
+  const enemyTypeCounts = new Map()
+  let specialEnemyCount = 0
+
+  for (const monster of pool.values()) {
+    attackMix[monster.attackType] += 1
+
+    if (monster.isSpecial) {
+      specialEnemyCount += 1
+    }
+
+    for (const tag of monster.tags) {
+      if (GENERIC_MONSTER_TAGS.has(tag)) {
+        continue
+      }
+
+      enemyTypeCounts.set(tag, (enemyTypeCounts.get(tag) ?? 0) + 1)
+    }
+  }
+
+  const escortCount = collectEscortNames(originalDefinition.game_changes ?? []).length
+
+  return {
+    enemyCount: pool.size,
+    enemyTypes: Array.from(enemyTypeCounts.entries())
+      .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))
+      .map(([tag]) => tag),
+    attackMix,
+    specialEnemyCount: specialEnemyCount + escortCount,
+    escortCount,
+  }
+}
+
+function buildVariantMetadataMap(originalDefinitions, localizedDefinitions, campaignMap, monsterCatalog) {
+  const adventureMap = buildAdventureMap(originalDefinitions, localizedDefinitions, campaignMap)
+  const sceneMap = buildSceneMap(adventureMap)
+  const metadataById = new Map()
+
+  for (const definition of originalDefinitions) {
+    if (!looksLikeVariant(definition)) {
+      continue
+    }
+
+    const variantId = String(definition.id)
+    const baseAdventureId =
+      definition.variant_adventure_id !== undefined
+        ? String(definition.variant_adventure_id)
+        : null
+    const adventure = baseAdventureId ? adventureMap.get(baseAdventureId) ?? null : null
+    const sceneKey =
+      adventure?.locationId ? `${adventure.campaign.id}:${adventure.locationId}` : null
+    const scene = sceneKey ? sceneMap.get(sceneKey) ?? null : null
+    const objectiveArea = extractObjectiveArea(definition)
+    const areaHighlights = collectAreaHighlights(definition.game_changes ?? [])
+    const enemySummary = buildVariantEnemySummary(definition, baseAdventureId ?? '', monsterCatalog)
+    const mechanics = uniqueStrings(
+      (definition.game_changes ?? [])
+        .map((gameChange) => toText(gameChange.type))
+        .filter(Boolean),
+    )
+      .filter((gameChangeType) => !STRUCTURAL_VARIANT_GAME_CHANGES.has(gameChangeType))
+      .sort((left, right) => left.localeCompare(right))
+
+    metadataById.set(variantId, {
+      adventureId: baseAdventureId,
+      adventure: adventure?.name ?? null,
+      objectiveArea,
+      locationId: adventure?.locationId ?? null,
+      areaSetId: adventure?.areaSetId ?? null,
+      scene,
+      areaHighlights,
+      areaMilestones: uniqueNumbers([
+        objectiveArea ?? -1,
+        ...areaHighlights.map((highlight) => highlight.start),
+      ]),
+      mechanics,
+      ...enemySummary,
+    })
+  }
+
+  return metadataById
 }
 
 function groupDefinitionsByHeroId(definitions = []) {
@@ -798,7 +1357,7 @@ function normalizeChampionDetail(
     },
   }
 }
-function normalizeVariant(originalDefinition, localizedDefinition, campaignMap) {
+function normalizeVariant(originalDefinition, localizedDefinition, campaignMap, variantMetadataById) {
   const originalRestrictions = uniqueStrings([
     ...toTextList(originalDefinition.requirements_text),
     ...toTextList(originalDefinition.requirements_description),
@@ -829,6 +1388,7 @@ function normalizeVariant(originalDefinition, localizedDefinition, campaignMap) 
       original: String(originalDefinition.campaign_id ?? ''),
       display: String(originalDefinition.campaign_id ?? ''),
     }
+  const metadata = variantMetadataById.get(String(originalDefinition.id)) ?? {}
 
   return {
     id: String(originalDefinition.id),
@@ -838,8 +1398,27 @@ function normalizeVariant(originalDefinition, localizedDefinition, campaignMap) 
       `Variant ${originalDefinition.id}`,
     ),
     campaign,
+    adventureId: metadata.adventureId ?? null,
+    adventure: metadata.adventure ?? null,
+    objectiveArea: metadata.objectiveArea ?? null,
+    locationId: metadata.locationId ?? null,
+    areaSetId: metadata.areaSetId ?? null,
+    scene: metadata.scene ?? null,
     restrictions: normalizeLocalizedTextList(originalRestrictions, displayRestrictions),
     rewards: normalizeLocalizedTextList(originalRewards, displayRewards),
+    enemyCount: metadata.enemyCount ?? 0,
+    enemyTypes: metadata.enemyTypes ?? [],
+    attackMix: metadata.attackMix ?? {
+      melee: 0,
+      ranged: 0,
+      magic: 0,
+      other: 0,
+    },
+    specialEnemyCount: metadata.specialEnemyCount ?? 0,
+    escortCount: metadata.escortCount ?? 0,
+    areaHighlights: metadata.areaHighlights ?? [],
+    areaMilestones: metadata.areaMilestones ?? [],
+    mechanics: metadata.mechanics ?? [],
   }
 }
 
@@ -1037,6 +1616,13 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
   const localizedFeatsById = buildIdMap(localizedDefinitions.hero_feat_defines)
   const skinsByHeroId = groupDefinitionsByHeroId(rawDefinitions.hero_skin_defines)
   const localizedSkinsById = buildIdMap(localizedDefinitions.hero_skin_defines)
+  const monsterCatalog = buildMonsterCatalog(rawDefinitions, attackDefinitionsById)
+  const variantMetadataById = buildVariantMetadataMap(
+    rawDefinitions.adventure_defines ?? [],
+    localizedDefinitions.adventure_defines ?? [],
+    campaignMap,
+    monsterCatalog,
+  )
   const graphicMap = buildGraphicMap(rawDefinitions.graphic_defines)
   const portraitSourcesByChampionId = new Map(
     collectChampionPortraitSources(rawDefinitions, masterApiUrl).map((source) => [source.championId, source]),
@@ -1087,7 +1673,12 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
   const autoVariants = (rawDefinitions.adventure_defines ?? [])
     .filter((definition) => looksLikeVariant(definition))
     .map((definition) =>
-      normalizeVariant(definition, localizedVariantsById.get(String(definition.id)), campaignMap),
+      normalizeVariant(
+        definition,
+        localizedVariantsById.get(String(definition.id)),
+        campaignMap,
+        variantMetadataById,
+      ),
     )
 
   const variants = mergeVariants(autoVariants, manualOverrides.variants ?? [])

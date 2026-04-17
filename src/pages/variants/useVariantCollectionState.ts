@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { loadCollection } from '../../data/client'
-import type { LocalizedOption, Variant } from '../../domain/types'
+import type { FormationLayout, LocalizedOption, Variant } from '../../domain/types'
 import { isCampaignEnumGroup, isLocalizedOption } from './variant-model'
 import type { VariantState } from './types'
 
@@ -10,8 +10,12 @@ export function useVariantCollectionState(): VariantState {
   useEffect(() => {
     let disposed = false
 
-    Promise.all([loadCollection<Variant>('variants'), loadCollection<unknown>('enums')])
-      .then(([variantCollection, enumCollection]) => {
+    Promise.all([
+      loadCollection<Variant>('variants'),
+      loadCollection<unknown>('enums'),
+      loadCollection<FormationLayout>('formations'),
+    ])
+      .then(([variantCollection, enumCollection, formationCollection]) => {
         if (disposed) {
           return
         }
@@ -25,6 +29,7 @@ export function useVariantCollectionState(): VariantState {
           status: 'ready',
           variants: variantCollection.items,
           campaigns,
+          formations: formationCollection.items,
         })
       })
       .catch((error: unknown) => {
