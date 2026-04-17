@@ -3,7 +3,8 @@ import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import type { ChampionDetail, ChampionUpgradeDetail } from '../../domain/types'
 import { buildUpgradeCategoryMeta, buildUpgradePresentation } from './effect-model'
 import { buildOverviewPropertyFields } from './summary-model'
-import { formatNumber, isJsonObject } from './shared'
+import { isJsonObject } from './detail-json'
+import { formatNumber } from './detail-value-formatters'
 import type { DetailFieldProps, EffectContext, LedgerUpgradeRow, UpgradeCategoryMeta } from './types'
 
 export function buildSpotlightUpgrades(detail: ChampionDetail | null): ChampionUpgradeDetail[] {

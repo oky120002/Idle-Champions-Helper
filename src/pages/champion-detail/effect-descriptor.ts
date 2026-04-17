@@ -1,11 +1,6 @@
 import type { ParsedEffectPayload, EffectContext, EffectDescriptor } from './types'
-import {
-  buildNotAvailableLabel,
-  containsCjkCharacters,
-  formatNumberishToken,
-  localizeAbilityScore,
-  localizeEffectKind,
-} from './shared'
+import { containsCjkCharacters, localizeAbilityScore, localizeEffectKind } from './detail-localization'
+import { buildNotAvailableLabel, formatNumberishToken } from './detail-value-formatters'
 import { resolveEffectDescription, resolveEffectTargets } from './effect-payload'
 
 export function describeEffectPayload(payload: ParsedEffectPayload, effectContext: EffectContext): EffectDescriptor {

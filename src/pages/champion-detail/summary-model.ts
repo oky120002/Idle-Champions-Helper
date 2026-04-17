@@ -2,7 +2,9 @@ import type { AppLocale } from '../../app/i18n'
 import type { ChampionDetail, ChampionFeatDetail, JsonValue } from '../../domain/types'
 import type { DetailFieldProps, EffectContext, FeatEffectEntry, SummaryTagGroupProps } from './types'
 import { describeEffectPayload, parseEffectPayload } from './effect-model'
-import { buildNotAvailableLabel, formatBoolean, formatNumber, formatTimestamp, isJsonObject, isJsonPrimitive, localizeSourceType, localizeStructuredKey, parseInlineJsonValue } from './shared'
+import { isJsonObject, isJsonPrimitive, parseInlineJsonValue } from './detail-json'
+import { localizeSourceType, localizeStructuredKey } from './detail-localization'
+import { buildNotAvailableLabel, formatBoolean, formatNumber, formatTimestamp } from './detail-value-formatters'
 
 export function formatStructuredPrimitive(
   value: string | number | boolean | null,

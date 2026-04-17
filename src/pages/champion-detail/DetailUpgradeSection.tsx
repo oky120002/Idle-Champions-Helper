@@ -3,7 +3,7 @@ import type { ChampionDetail, ChampionSpecializationGraphic } from '../../domain
 import { buildUpgradePresentation } from './effect-model'
 import { NumericUpgradeRow, UpgradeCard } from './detail-cards'
 import { DetailSectionHeader } from './detail-primitives'
-import { formatNumber } from './shared'
+import { formatNumber } from './detail-value-formatters'
 import type { DetailSectionBadge, EffectContext, LedgerUpgradeRow, UpgradeCategoryMeta, UpgradePresentation } from './types'
 
 type DetailUpgradeSectionProps = {

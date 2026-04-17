@@ -7,7 +7,7 @@ import type {
   ChampionSkinDetail,
   JsonValue,
 } from '../../domain/types'
-import { isJsonObject } from './shared'
+import { isJsonObject } from './detail-json'
 import type { SkinArtworkIds } from './types'
 
 export function buildRarityLabel(value: string | null, locale: AppLocale): string {

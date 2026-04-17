@@ -2,7 +2,7 @@ import { SurfaceCard } from '../../components/SurfaceCard'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import type { ChampionDetail } from '../../domain/types'
 import { AttackPanel, DetailField, LocalizedTextStack } from './detail-cards'
-import { formatDigitString, formatNumber } from './shared'
+import { formatDigitString, formatNumber } from './detail-value-formatters'
 
 type DetailCombatSectionProps = {
   detail: ChampionDetail
