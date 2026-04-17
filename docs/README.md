@@ -1,103 +1,35 @@
-# docs 文档目录说明
+# docs 文档入口
 
-本目录按“文档用途优先、主题次级归类”的原则组织，不再把所有 Markdown 文档平铺在 `docs/` 根目录。
-
-`docs/README.md` 是 `docs/` 的唯一总索引；`README.md` 只保留高频入口，不再重复维护完整清单。
-
-## 文档治理入口
-
-- `docs/product/documentation-governance.md`：文档扫描、修复、合并、删除与归档的常规流程。
-- `docs/product/mobile-compatibility-guidelines.md`：移动端布局与交互兼容性规范，明确禁止把横向滑动作为主导航或主操作入口。
-- `docs/troubleshooting-log.md`：流程、环境、部署、认证等非代码问题的摘要台账。
+- 作用：`docs/` 总索引，只回答“去哪读”；专题细节留在各目录 `README.md` 或单篇文档。
+- 默认加载顺序：`README.md` -> `docs/README.md` -> 目标目录 `README.md` -> 单篇专题文档。
+- 压缩原则：入口文档只保留导航、放置规则和触发条件；长清单、代码块、实现细节优先留在专题文档或仓库文件本身。
 
 ## 高频入口
 
-如果你当前最关心的是“怎么启动”和“怎么部署”，先看这几份：
+- `docs/product/README.md`：项目边界、路线图、移动端和文档治理。
+- `docs/research/README.md`：数据来源、部署、测试、资源链路等外部事实。
+- `docs/modules/README.md`：模块设计稿与共享组件治理。
+- `docs/investigations/README.md`：运行、仓库、环境排查入口。
+- `docs/troubleshooting-log.md`：可复用问题摘要台账。
 
-- `README.md`：仓库首页，最先看；只保留现状摘要、常用命令与高频入口。
-- `docs/troubleshooting-log.md`：统一的问题排查台账，优先收录已发生问题的摘要、根因、解法和引用信息。
-- `docs/investigations/runtime/local-run-verification.md`：本地开发、`preview` 与 `preview:pages` 的适用边界与验证结果。
-- `docs/research/deployment/static-hosting-research.md`：正式部署路线、GitHub Pages 与 GitHub Actions 工作流设计。
-- `docs/research/deployment/china-static-hosting-research.md`：国内访问体验和后续托管备选背景。
+## 放置规则
 
-## 目录分层
+- `docs/product/`：项目定位、阶段目标、全局规则、PRD。
+- `docs/research/`：数据来源、技术选型、部署、测试、外部核实。
+- `docs/modules/`：模块设计稿、模块补充研究、模块级验证。
+- `docs/investigations/`：排查、复现、环境确认、历史验证。
+- `docs/` 根目录：仅跨主题入口与台账，不放普通专题文档。
 
-- `docs/product/`：产品级文档，收纳路线图、范围边界、PRD、全局方案等面向整个项目的说明。
-- `docs/research/`：调研、检索、确认类文档，先按主题分二级目录，例如 `data/`、`deployment/`；后续如有玩法机制、第三方工具、测试方案等调研，可继续按主题扩展。
-- `docs/modules/`：模块级文档。每个模块使用独立目录，模块开发前必须先落一份设计稿；同目录下可继续补模块调研、验证和实现说明。
-- `docs/investigations/`：排查、故障、环境确认类文档，按排查对象或领域拆分二级目录，避免与正式调研或设计稿混放。
-- `docs/` 根目录：只保留跨主题入口文档，例如 `docs/README.md` 和 `docs/troubleshooting-log.md`。
+## 命名与维护
 
-## 放置判定规则
+- 目录和文件统一 `kebab-case`。
+- 调研统一 `*-research.md`；排查统一 `*-investigation.md` 或 `*-verification.md`；模块设计优先 `*-design.md`。
+- 仓库内引用统一项目相对路径；历史结论要标明当前是否仍有效。
+- 同一事实只在一处展开，其他入口只保留一句摘要和链接。
+- 某目录文档增长到不适合平铺时，先补该目录 `README.md`，再继续加专题文档。
 
-- 回答“项目要做什么、阶段怎么推进、范围怎么裁剪”的文档，放 `docs/product/`。
-- 回答“外部信息是什么、数据或技术应当怎么选”的文档，放 `docs/research/`。
-- 回答“某个模块准备怎么做、开发前设计是什么”的文档，放 `docs/modules/<module>/`。
-- 回答“某个问题为什么发生、如何复现、如何确认”的文档，放 `docs/investigations/`。
+## 需要更新本目录的情况
 
-## 预留主题
-
-- `docs/research/data/`：数据来源、字段映射、存储策略、接口链路。
-- `docs/research/deployment/`：静态托管、访问策略、发布流程、部署约束。
-- `docs/research/testing/`：测试框架选型、自动化策略、测试环境调研。
-- `docs/research/tooling/`：构建工具、脚本链路、开发辅助工具调研。
-- `docs/investigations/runtime/`：本地运行、构建、预览、浏览器行为排查。
-- `docs/investigations/repository/`：Git、目录结构、提交、仓库配置排查。
-- `docs/modules/<module>/`：模块设计稿、模块调研、模块验证记录。
-
-## 命名规则
-
-- 目录名与文件名统一使用 kebab-case。
-- 调研类文件统一使用 `主题-research.md`。
-- 排查或确认类文件统一使用 `主题-investigation.md` 或 `主题-verification.md`。
-- 模块设计稿统一放在 `docs/modules/<module>/` 下，文件名优先使用 `<module>-design.md`。
-- 文档里引用仓库内文件时统一使用项目相对路径，不写绑定某个工作树或本机用户名的绝对路径。
-- 历史性排查文档要在标题、开头说明或索引描述里标明“当前是否仍有效”，避免把旧结论误读为现状。
-- 普通新文档不直接放在 `docs/` 根目录；根目录只保留跨主题入口文档，例如 `docs/README.md` 与 `docs/troubleshooting-log.md`。
-
-## 当前索引
-
-- `docs/troubleshooting-log.md`：通用问题排查台账，沉淀问题描述、排查摘要、根因、解法与引用信息。
-- `docs/product/documentation-governance.md`：文档治理方案，定义扫描触发条件、修复策略与单一事实源。
-- `docs/product/idle-champions-roadmap.md`：项目价值、范围、阶段路线与核心模型。
-- `docs/product/mobile-compatibility-guidelines.md`：移动端兼容性开发规范，禁止把横向滑动作为移动端主导航、主操作或主信息入口。
-- `docs/research/data/game-data-source-investigation.md`：基础游戏数据与个人数据来源调研。
-- `docs/research/data/champion-portrait-asset-research.md`：官方英雄头像字段、mobile assets 链路与尺寸核实。
-- `docs/research/data/champion-image-asset-sizing-research.md`：官方头像、立绘、皮肤资源的尺寸样本、体积量级与后续资源线程交接边界。
-- `docs/research/data/champion-detail-fields-research.md`：英雄详情页所需字段、definitions 可用范围与详情数据合同建议。
-- `docs/research/data/champion-visual-asset-research.md`：英雄本体立绘、皮肤立绘与皮肤头像的官方字段链路与远端解析策略。
-- `docs/research/data/pet-catalog-data-research.md`：宠物主表、获取方式映射与本地图像同步链路研究。
-- `docs/research/data/skin-illustration-assembly-research.md`：皮肤立绘为什么会显示碎片图、`SkelAnim` 组装数据落点，以及离线合成完整立绘的可行方案。
-- `docs/research/data/skin-illustration-render-strategy-research.md`：后端预合成与前端实时合成两条皮肤立绘渲染路线的可行性、兼容性与终端风险对比。
-- `docs/research/data/skin-illustration-render-pipeline-research.md`：当前已落地的皮肤立绘离线渲染管线、pose / slot 选择规则、坐标系修正结果与后续人工覆盖落点。
-- `docs/research/data/skin-illustration-override-audit-research.md`：基于当前立绘产物做第一轮 override 候选抽样，整理下一批最值得人工复核的皮肤清单与优先顺序。
-- `docs/research/data/skin-illustration-alpha-fragmentation-research.md`：基于最终 PNG 的 alpha 连通域审计，补抓 detached prop / 浮空组件类候选并评估其噪音边界。
-- `docs/research/data/skin-illustration-pose-delta-audit-research.md`：基于 current-vs-candidate 的 pose delta 审计，继续缩小真正值得人工深看的皮肤队列。
-- `docs/research/data/skin-illustration-manual-review-heuristics.md`：皮肤立绘人工复核经验库，沉淀“什么时候值得写 override、什么时候只是主题本意”的可复用规则。
-- `docs/research/data/language-id-7-chinese-definitions-research.md`：`language_id=7` 官方中文 definitions 链路与字段覆盖核实。
-- `docs/research/data/official-formation-layout-extraction-research.md`：官方阵型布局字段落点、上下文分布与唯一布局提取结论。
-- `docs/research/data/static-data-storage-research.md`：静态数据存储与版本化策略。
-- `docs/research/testing/regression-testing-research.md`：主分支整体回归测试框架设计。
-- `docs/research/deployment/china-static-hosting-research.md`：国内访问体验与托管备选方案。
-- `docs/research/deployment/static-hosting-research.md`：GitHub Pages 部署方案与路由策略。
-- `docs/modules/champions/champion-illustration-page-design.md`：英雄立绘页在 GitHub Pages 零成本前提下的稳定展示方案设计稿。
-- `docs/modules/champions/champion-detail-design.md`：英雄详情页的信息架构、路由入口与交互设计稿。
-- `docs/modules/champions/champions-filter-design.md`：英雄筛选模块设计稿。
-- `docs/modules/formation/formation-editor-design.md`：阵型编辑模块设计稿。
-- `docs/modules/pets/pets-page-design.md`：宠物图鉴页的范围、数据口径与页面结构设计稿。
-- `docs/modules/presets/presets-design.md`：方案存档模块设计稿。
-- `docs/modules/shared-components/shared-components-design.md`：共享组件治理规则、抽取准入条件与测试规范。
-- `docs/modules/shared-components/shared-components-catalog.md`：当前可复用组件与相关 helper 索引。
-- `docs/modules/user-data/user-data-import-design.md`：本地优先的个人数据导入设计稿。
-- `docs/investigations/repository/github-directory-commit-investigation.md`：`.github` 空目录不被 Git 跟踪的历史排查归档。
-- `docs/investigations/runtime/local-run-verification.md`：本地构建、开发预览、Vite `preview` 与 GitHub Pages 预览差异验证。
-- `docs/investigations/runtime/champions-filter-scroll-stability-investigation.md`：英雄筛选页长列表筛选时的滚动跳动与页面回顶问题排查。
-- `docs/investigations/runtime/playwright-browser-launch-verification.md`：当前 Codex CLI 环境下 Playwright 浏览器启动受限的确认记录。
-
-## 后续新增文档的放置建议
-
-- 新的产品阶段规划、范围调整、PRD：放 `docs/product/`
-- 新的外部资料调研、技术选型、来源核实：放 `docs/research/<topic>/`
-- 新模块开发前设计稿及其配套验证：放 `docs/modules/<module>/`
-- 需要长期累计复用的问题排查记录：优先补到 `docs/troubleshooting-log.md`
-- 临时问题排查、环境确认、异常复盘：放 `docs/investigations/<topic>/`
+- 新增或删除目录级文档、局部 `README.md`。
+- 项目范围、路由、部署链路、数据目录、文档治理规则发生变化。
+- 发现根索引重新膨胀、重复列举专题细节、写入绝对路径或过期命令。

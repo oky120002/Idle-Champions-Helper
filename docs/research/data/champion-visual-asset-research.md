@@ -6,8 +6,6 @@
 
 > 2026-04-16 补充说明：本文确认的是“资源引用链路”和“原始响应能否解包出纹理数据”。后续进一步核实发现，很多 `Characters/...` 主立绘资源本质上是 `graphic_defines.type = 3 (SkelAnim)` 的分件动画资源，解包后拿到的常常只是 atlas 纹理而不是最终可展示的完整人物。关于“为什么弹窗里会看到碎片图，以及如何离线组装成完整立绘”，请改看 `docs/research/data/skin-illustration-assembly-research.md`。
 
----
-
 ## 1. 结论先行
 
 - 官方 definitions 里不只有头像字段，也有英雄本体立绘与皮肤立绘的资源引用。
@@ -29,11 +27,9 @@
   - 这意味着在 `GitHub Pages` 这类纯静态站点里，浏览器侧未必能直接跨域 `fetch` 这些官方二进制资源
   - 所以前端页面应按“能预览则预览，失败则回退到元数据与原始地址”的方式设计，不能把浏览器直连解包当成稳定前提
 
----
-
 ## 2. 已核实的字段链路
 
-### 2.1 英雄本体
+### 英雄本体
 
 在 `hero_defines[]` 里可以稳定看到：
 
@@ -52,7 +48,7 @@
 - `portrait_graphic_id` 对应我们已经在页面里使用的小头像
 - `graphic_id` 对应英雄本体立绘资源引用
 
-### 2.2 皮肤资源
+### 皮肤资源
 
 在 `hero_skin_defines[].details` 里可以稳定看到：
 
@@ -70,11 +66,9 @@
 
 这说明官方已经给出了皮肤的小头像、本体图、大图与更大图的完整引用链路。
 
----
-
 ## 3. mobile_assets 返回格式核实
 
-### 3.1 头像类：`Portraits/...`
+### 头像类：`Portraits/...`
 
 头像类资源沿用之前已确认的格式：
 
@@ -84,7 +78,7 @@
 
 这也是当前英雄头像同步脚本能稳定工作的原因。
 
-### 3.2 角色立绘类：`Characters/...`
+### 角色立绘类：`Characters/...`
 
 对 `Characters/Hero_Bruenor`、`Characters/Hero_BruenorPirate_Large`、`Characters/Hero_BruenorPirate_4xup` 做实际请求后确认：
 
@@ -105,7 +99,7 @@
 - 英雄立绘与皮肤立绘是“可解析”的
 - 但它们不是适合直接静态托管进仓库的轻量资源
 
-### 3.3 浏览器直连约束：当前未见 CORS 允许头
+### 浏览器直连约束：当前未见 CORS 允许头
 
 2026-04-14 进一步对以下地址做响应头核查：
 
@@ -127,11 +121,9 @@
 - 保留运行时解包能力，方便后续代理、浏览器策略变化或本地特殊环境直接复用
 - 页面本身必须提供失败兜底：即使远端预览拉不起来，也要继续展示 `graphicId / remotePath / remoteUrl / delivery`
 
----
-
 ## 4. 本仓库落地策略
 
-### 4.1 已落地
+### 已落地
 
 - 保留现有 `public/data/<version>/champion-portraits/` 本地头像目录
 - 新增 `public/data/<version>/champion-visuals.json`
@@ -140,7 +132,7 @@
   - 英雄本体立绘：远端元数据
   - 该英雄全部皮肤：皮肤名 + portrait/base/large/xl 远端元数据
 
-### 4.2 不落本地的部分
+### 不落本地的部分
 
 以下资源目前只保留远端元数据，不把二进制拉进仓库：
 
@@ -157,7 +149,7 @@
 - 当前页面尚未直接消费
 - 用远端元数据更适合后续按需请求与实时解析
 
-### 4.3 数据字段建议
+### 数据字段建议
 
 远端资源元数据统一保留：
 
@@ -176,8 +168,6 @@
 
 后续如果页面要实时展示这些资源，只需按 `delivery` 选择对应的解包方式。
 
----
-
 ## 5. 当前结论的边界
 
 - 当前已确认“引用链路 + 响应格式 + 样例可解包”成立。
@@ -185,18 +175,16 @@
 - 当前也**不能假设**纯静态站点里的浏览器一定能直接跨域解包这些远端资源，因为官方响应头暂未显式开放 CORS。
 - 如果后续要做英雄详情页、皮肤图鉴或大图预览，建议继续保留 `remoteUrl + delivery` 元数据，并以“浏览器按需尝试 + 失败回退元数据 / 后续代理 / 离线脚本”的方式推进，而不是预先把所有图片写入 Git 仓库。
 
----
-
 ## 6. 本次确认用到的官方来源
 
-1. Play server 发现接口  
+1. Play server 发现接口
    `https://master.idlechampions.com/~idledragons/post.php?call=getPlayServerForDefinitions&mobile_client_version=999&network_id=11`
-2. 2026-04-13 英文 definitions  
+2. 2026-04-13 英文 definitions
    `https://ps30.idlechampions.com/~idledragons/post.php?call=getDefinitions&new_achievements=1&mobile_client_version=99999&language_id=1`
-3. 2026-04-13 中文 definitions  
+3. 2026-04-13 中文 definitions
    `https://ps30.idlechampions.com/~idledragons/post.php?call=getDefinitions&new_achievements=1&mobile_client_version=99999&language_id=7`
-4. 样例英雄本体立绘  
+4. 样例英雄本体立绘
    `https://master.idlechampions.com/~idledragons/mobile_assets/Characters/Hero_Bruenor`
-5. 样例皮肤 large / xl 资源  
-   `https://master.idlechampions.com/~idledragons/mobile_assets/Characters/Hero_BruenorPirate_Large`  
+5. 样例皮肤 large / xl 资源
+   `https://master.idlechampions.com/~idledragons/mobile_assets/Characters/Hero_BruenorPirate_Large`
    `https://master.idlechampions.com/~idledragons/mobile_assets/Characters/Hero_BruenorPirate_4xup`
