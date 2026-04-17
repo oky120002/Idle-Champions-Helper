@@ -4,8 +4,6 @@
 - 调研目的：确认当前仓库是否已经具备“英雄详情页”所需数据，以及新增页面时应如何组织“所有信息”。
 - 当前有效性：有效；基于 2026-04-13 当天抓取的官方 definitions 快照。
 
----
-
 ## 1. 结论
 
 1. 当前 `public/data/v1/champions.json` 只覆盖英雄摘要字段，无法直接支撑“英雄详情页”。
@@ -17,8 +15,6 @@
    - 已结构化的重点信息区块，便于正常浏览
    - 原始 source / localized 快照片段，保证“所有信息”可达
 5. 用户提供的两个参考页可作为“高信息密度详情页”的方向参考，但当前环境无法稳定以浏览器方式渲染这两个站点；本次结论主要基于官方 definitions 字段核对和用户任务要求形成。
-
----
 
 ## 2. 当前前端公共数据的缺口
 
@@ -43,8 +39,6 @@
 - availability / event / 时间门 / 商店状态
 - 各类原始 properties 与曲线字段
 
----
-
 ## 3. 官方 definitions 已核到的可用字段
 
 本次使用仓库脚本抓取了两份快照：
@@ -52,7 +46,7 @@
 - 原文快照：`tmp/idle-champions-api/definitions-2026-04-13T11-26-56.162Z-detail-source.json`
 - 中文快照：`tmp/idle-champions-api/definitions-2026-04-13T11-27-56.784Z-detail-zh.json`
 
-### 3.1 `hero_defines`
+### `hero_defines`
 
 可稳定拿到的核心字段包括：
 
@@ -73,7 +67,7 @@
 - 系统字段：`adventure_ids`、`cost_curves`、`health_curves`、`properties`
 - 资产字段：`graphic_id`、`portrait_graphic_id`
 
-### 3.2 `attack_defines`
+### `attack_defines`
 
 通过 `base_attack_id` 和 `ultimate_attack_id` 可以补出：
 
@@ -90,7 +84,7 @@
 - `animations`
 - `graphic_id`
 
-### 3.3 `upgrade_defines`
+### `upgrade_defines`
 
 按 `hero_id` 可拿到完整升级轨道，当前可见字段包括：
 
@@ -113,7 +107,7 @@
 - 很多升级没有展示名，它们本质上是数值里程碑；详情页应保留，但不能和命名能力升级混成同一视觉层级。
 - `effect` 常见形态是 `effect_def,<id>`，可以进一步关联 `effect_defines`，拿到描述模板与 requirements。
 
-### 3.4 `hero_feat_defines`
+### `hero_feat_defines`
 
 按 `hero_id` 可拿到每个英雄的全部天赋：
 
@@ -128,7 +122,7 @@
 - `properties`
 - `collections_source`
 
-### 3.5 `hero_skin_defines`
+### `hero_skin_defines`
 
 按 `hero_id` 可拿到皮肤数据：
 
@@ -141,13 +135,11 @@
 - `collections_source`
 - `availabilities`（部分皮肤存在）
 
----
-
 ## 4. 详情页推荐数据合同
 
 推荐在 `public/data/<version>/champion-details/<hero-id>.json` 中输出以下两层内容：
 
-### 4.1 结构化层
+### 结构化层
 
 用于正常页面展示：
 
@@ -161,7 +153,7 @@
 - 皮肤
 - 关键系统字段
 
-### 4.2 原始快照层
+### 原始快照层
 
 用于保证“所有信息”：
 
@@ -176,8 +168,6 @@
 
 1. 只做漂亮摘要，但细节缺失，达不到“所有信息”
 2. 直接把大块 JSON 平铺到页面，严重破坏可读性
-
----
 
 ## 5. 页面信息架构建议
 
@@ -196,8 +186,6 @@
 
 其中“原始快照”应放在页面后半段，并通过折叠区块降低默认噪音。
 
----
-
 ## 6. 外部参考页确认结果
 
 用户提供的参考页：
@@ -212,8 +200,6 @@
 - 因此无法在当前环境里可靠复核其完整可视布局
 
 这意味着本次实现不能声称“完全复刻”上述页面，只能吸收用户给出的方向：高密度、全量信息、按分区浏览。
-
----
 
 ## 7. 关键依据
 
