@@ -12,15 +12,16 @@ export function VariantsPage() {
   return (
     <div className="page-stack">
       <SurfaceCard
-        eyebrow={t({ zh: '变体限制', en: 'Variant restrictions' })}
-        title={t({ zh: '先把官方中文展示和原文回退一起接上', en: 'Show official Chinese labels while keeping source-text fallback' })}
+        className="variants-page"
+        eyebrow={t({ zh: '变体筛选', en: 'Variant filters' })}
+        title={t({ zh: '按官方战役结构筛变体，再看阵型与区域节奏', en: 'Filter variants by official campaign structure, then scan formations and area pacing' })}
         description={t({
-          zh: '当前先接官方 definitions 归一化后的变体数据，名称、战役和限制文本都优先显示 `language_id=7` 中文，并保留官方原文用于检索和回退。',
-          en: 'This page uses normalized official definitions, prefers `language_id=7` Chinese for names, campaigns, and restriction text, and still keeps the original strings for search and fallback.',
+          zh: '这一页只消费游戏官方基座归一化后的战役、冒险、怪物与阵型数据。参考站只借了信息排布思路，实际筛选与展示都来自官方 definitions。',
+          en: 'This page consumes only normalized official campaign, adventure, monster, and formation data. Reference sites inform the layout direction, but the actual filtering and rendering come from official definitions.',
         })}
       >
         {state.status === 'loading' ? (
-          <StatusBanner tone="info">{t({ zh: '正在读取变体数据…', en: 'Loading variant data…' })}</StatusBanner>
+          <StatusBanner tone="info">{t({ zh: '正在读取官方变体数据…', en: 'Loading official variant data…' })}</StatusBanner>
         ) : null}
 
         {state.status === 'error' ? (
@@ -34,8 +35,10 @@ export function VariantsPage() {
         {state.status === 'ready' ? (
           <>
             <VariantsMetrics model={model} />
-            <VariantsFilterBar model={model} />
-            <VariantsResultsSection model={model} />
+            <div className="variants-workspace">
+              <VariantsFilterBar model={model} />
+              <VariantsResultsSection model={model} />
+            </div>
           </>
         ) : null}
       </SurfaceCard>

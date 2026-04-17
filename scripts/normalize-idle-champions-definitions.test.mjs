@@ -50,12 +50,55 @@ test('normalizeDefinitionsSnapshot 输出官方原文和中文展示双字段', 
     original: 'A Grand Tour of the Sword Coast',
     display: '剑湾之旅',
   })
+  assert.deepEqual(variants.items[0].adventure, {
+    original: 'The Test Adventure',
+    display: '测试冒险',
+  })
+  assert.equal(variants.items[0].adventureId, '100')
+  assert.equal(variants.items[0].objectiveArea, 75)
+  assert.equal(variants.items[0].locationId, '8')
+  assert.equal(variants.items[0].areaSetId, '55')
+  assert.deepEqual(variants.items[0].scene, {
+    id: '1:8',
+    original: 'The Test Adventure',
+    display: '测试冒险',
+  })
   assert.deepEqual(variants.items[0].restrictions, [
     {
       original: 'Only champions with 14+ CON',
       display: '只能使用体质 14+ 的勇士',
     },
   ])
+  assert.equal(variants.items[0].enemyCount, 3)
+  assert.deepEqual(variants.items[0].enemyTypes, ['humanoid', 'bandit', 'undead'])
+  assert.deepEqual(variants.items[0].attackMix, {
+    melee: 2,
+    ranged: 1,
+    magic: 0,
+    other: 0,
+  })
+  assert.equal(variants.items[0].specialEnemyCount, 3)
+  assert.equal(variants.items[0].escortCount, 2)
+  assert.deepEqual(variants.items[0].areaMilestones, [1, 51, 75])
+  assert.deepEqual(variants.items[0].areaHighlights, [
+    {
+      id: 'slot_escort_by_area:1:open:loop:repeat',
+      kind: 'slot_escort_by_area',
+      start: 1,
+      end: null,
+      loopAt: null,
+      repeatAt: null,
+    },
+    {
+      id: 'slot_escort_by_area:51:open:loop:repeat',
+      kind: 'slot_escort_by_area',
+      start: 51,
+      end: null,
+      loopAt: null,
+      repeatAt: null,
+    },
+  ])
+  assert.deepEqual(variants.items[0].mechanics, ['random_monster', 'slot_escort_by_area'])
 
   assert.deepEqual(enums.items[1], {
     id: 'affiliations',
