@@ -1,11 +1,41 @@
 import type { LocalizedOption, LocalizedText } from './common'
 
+export interface VariantAreaHighlight {
+  id: string
+  kind: string
+  start: number
+  end: number | null
+  loopAt: number | null
+  repeatAt: number | null
+}
+
+export interface VariantAttackMix {
+  melee: number
+  ranged: number
+  magic: number
+  other: number
+}
+
 export interface Variant {
   id: string
   name: LocalizedText
   campaign: LocalizedOption
+  adventureId: string | null
+  adventure: LocalizedText | null
+  objectiveArea: number | null
+  locationId: string | null
+  areaSetId: string | null
+  scene: LocalizedOption | null
   restrictions: LocalizedText[]
   rewards: LocalizedText[]
+  enemyCount: number
+  enemyTypes: string[]
+  attackMix: VariantAttackMix
+  specialEnemyCount: number
+  escortCount: number
+  areaHighlights: VariantAreaHighlight[]
+  areaMilestones: number[]
+  mechanics: string[]
 }
 
 export interface ScenarioRef {

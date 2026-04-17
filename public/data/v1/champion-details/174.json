@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-14",
+  "updatedAt": "2026-04-17",
   "summary": {
     "id": "174",
     "name": {
@@ -26,6 +26,7 @@
       "male",
       "neutral",
       "rogue",
+      "small",
       "speed",
       "support",
       "y9"
@@ -1111,7 +1112,7 @@
             "id": 2651,
             "flavour_text": "",
             "description": {
-              "desc": "Tasslehoff increases the effect of his Map Collector specialization by $(not_buffed amount)% for each dwarf, fairy, gnome, goblin, halfling, kender, kobold, and/or plasmoid Champion in the formation, stacking multiplicatively."
+              "desc": "Tasslehoff increases the effect of his Map Collector specialization by $(not_buffed amount)% for each dwarf or Small Champion in the formation, stacking multiplicatively. (Small Champions are fairy, gnome, goblin, halfling, kender, kobold, and plasmoid Champions.)"
             },
             "effect_keys": [
               {
@@ -2663,6 +2664,7 @@
           "heroeslance",
           "event",
           "y9",
+          "small",
           "lcneutral"
         ],
         "properties": {
@@ -2839,6 +2841,7 @@
           "heroeslance",
           "event",
           "y9",
+          "small",
           "lcneutral"
         ],
         "properties": {
@@ -5265,7 +5268,7 @@
             "effects": [
               {
                 "effect_string": "buff_upgrades,20,19240,19241,19242",
-                "description": "使泰索何夫“地图收藏家”技能的效果提高 $amount%"
+                "description": "使泰索何夫“地图收藏家”专精的效果提高 $amount%"
               }
             ],
             "sources": [
@@ -5325,7 +5328,7 @@
             "effects": [
               {
                 "effect_string": "buff_upgrades,40,19240,19241,19242",
-                "description": "使泰索何夫“地图收藏家”技能的效果提高 $amount%"
+                "description": "使泰索何夫“地图收藏家”专精的效果提高 $amount%"
               }
             ],
             "sources": [

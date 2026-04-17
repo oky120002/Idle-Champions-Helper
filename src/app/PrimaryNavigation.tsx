@@ -37,8 +37,8 @@ export function PrimaryNavigation({
           <strong>{t(activeNavigationItem.label)}</strong>
           <span>
             {t({
-              zh: '在资料、阵型、限制与个人数据之间快速跳转，不依赖横向滑动。',
-              en: 'Jump between lookup, formations, restrictions, and personal data without horizontal scrolling.',
+              zh: '在资料、筛选、阵型与个人数据之间快速跳转，不依赖横向滑动。',
+              en: 'Jump between lookup, filters, formations, and personal data without horizontal scrolling.',
             })}
           </span>
         </div>

@@ -5,29 +5,15 @@
       "id": 1,
       "name": "Bruenor",
       "seat_id": 1,
-      "tags": [
-        "support",
-        "tank",
-        "dwarf",
-        "male"
-      ],
-      "affiliation_tags": [
-        "companions_of_the_hall"
-      ]
+      "tags": ["support", "tank", "dwarf", "male"],
+      "affiliation_tags": ["companions_of_the_hall"]
     },
     {
       "id": 58,
       "name": "Hew Maan",
       "seat_id": 8,
-      "tags": [
-        "speed",
-        "support",
-        "kobold",
-        "nonbinary"
-      ],
-      "affiliation_tags": [
-        "rivals_of_waterdeep"
-      ],
+      "tags": ["speed", "support", "kobold", "nonbinary"],
+      "affiliation_tags": ["rivals_of_waterdeep"],
       "character_sheet_details": {
         "full_name": "Hew Maan"
       }
@@ -55,16 +41,95 @@
       "name": "Tomb of Annihilation"
     }
   ],
+  "attack_defines": [
+    {
+      "id": 21,
+      "name": "Monster Melee Normal"
+    },
+    {
+      "id": 22,
+      "name": "Monster Ranged Normal"
+    }
+  ],
+  "monster_defines": [
+    {
+      "id": 301,
+      "name": "Test Bandit",
+      "attack_id": 21,
+      "tags": ["melee", "humanoid", "bandit"],
+      "adventures": [100]
+    },
+    {
+      "id": 302,
+      "name": "Test Archer",
+      "attack_id": 22,
+      "tags": ["ranged", "humanoid"],
+      "adventures": [100]
+    },
+    {
+      "id": 303,
+      "name": "Test Boss",
+      "attack_id": 21,
+      "tags": ["melee", "boss", "undead"],
+      "adventures": [100]
+    }
+  ],
   "adventure_defines": [
+    {
+      "id": 100,
+      "name": "The Test Adventure",
+      "campaign_id": 1,
+      "location_id": 8,
+      "area_set_id": 55,
+      "requirements_text": ["Complete tutorial"],
+      "objectives": [
+        {
+          "condition": "complete_area",
+          "area": 50
+        }
+      ]
+    },
     {
       "id": 101,
       "name": "A Test Variant",
       "campaign_id": 1,
       "variant_adventure_id": 100,
-      "requirements_text": [
-        "Only champions with 14+ CON"
+      "location_id": 8,
+      "area_set_id": 55,
+      "requirements_text": ["Only champions with 14+ CON"],
+      "reward_description": "1 Gold Chest",
+      "objectives": [
+        {
+          "condition": "complete_area",
+          "area": 75
+        }
       ],
-      "reward_description": "1 Gold Chest"
+      "game_changes": [
+        {
+          "type": "slot_escort_by_area",
+          "escorts": [
+            {
+              "min_area": 1,
+              "slot_ids": [4],
+              "graphics": [1],
+              "hps": [1],
+              "names": ["Chicken"]
+            },
+            {
+              "min_area": 51,
+              "slot_ids": [4, 6],
+              "graphics": [1, 2],
+              "hps": [1, 1],
+              "names": ["Chicken", "Wolf Pup"]
+            }
+          ]
+        },
+        {
+          "type": "random_monster",
+          "monster_id": 303,
+          "chance": 0.1
+        }
+      ]
     }
   ]
 }
