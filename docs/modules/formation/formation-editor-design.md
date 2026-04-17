@@ -20,12 +20,12 @@
 
 ## 第一阶段闭环
 
-- 按战役 / 冒险 / 变体筛选布局
-- 按上下文名称中英混搜布局
-- 切换布局、为每个槽位选英雄、清空单槽 / 整体阵型
-- 实时提示 `seat` 冲突并生成阵型摘要
-- 保存最近草稿、恢复最近草稿、从当前工作草稿发起“保存为方案”
-- 移动端采用“缩略阵型棋盘 + 当前槽位编辑卡”，不依赖横向滑动
+- 按战役 / 冒险 / 变体筛选布局。
+- 按上下文名称中英混搜布局。
+- 切换布局、为每个槽位选英雄、清空单槽 / 整体阵型。
+- 实时提示 `seat` 冲突并生成阵型摘要。
+- 保存最近草稿、恢复最近草稿、从当前工作草稿发起“保存为方案”。
+- 移动端采用“缩略阵型棋盘 + 当前槽位编辑卡”，不依赖横向滑动。
 
 ### 布局筛选要求
 
@@ -36,37 +36,24 @@
 
 ## 草稿数据模型
 
-```ts
-interface FormationDraft {
-  schemaVersion: 1
-  dataVersion: string
-  layoutId: string
-  scenarioRef: {
-    kind: 'campaign' | 'adventure' | 'variant' | 'trial' | 'timeGate'
-    id: string
-  } | null
-  placements: Record<string, string>
-  updatedAt: string
-}
-```
-
-- `schemaVersion`：草稿结构版本，便于以后迁移
-- `dataVersion`：保存时对应的公共数据版本
-- `layoutId`：当前布局
-- `scenarioRef`：正式场景身份；没有场景筛选时可为空
-- `placements[slotId] = championId`
-- `updatedAt`：最近编辑时间
+| 字段 | 说明 |
+| --- | --- |
+| `schemaVersion` | 草稿结构版本，便于以后迁移 |
+| `dataVersion` | 保存时对应的公共数据版本 |
+| `layoutId` | 当前布局 |
+| `scenarioRef.kind` | `campaign` / `adventure` / `variant` / `trial` / `timeGate` |
+| `scenarioRef.id` | 正式场景身份；没有场景筛选时可为空 |
+| `placements` | `slotId -> championId` |
+| `updatedAt` | 最近编辑时间 |
 
 ## 恢复校验与回退
 
 恢复前必须校验：`dataVersion`、`layoutId`、`scenarioRef`、`slotId`、`championId` 是否仍可识别。
 
-恢复语义分层：
-
-1. 保存版本仍可读：优先按保存时 `dataVersion` 原样恢复
-2. 保存版本可读但部分失效：保留有效放置，列出失效布局 / 槽位 / 英雄，并提示用户重新保存或丢弃失效引用
-3. 保存版本不可读：才进入兼容恢复，用当前版本校验并明确提示“基于新版本兼容恢复，结果可能有偏差”
-4. 整体失效：不静默恢复，明确提示用户丢弃旧草稿
+1. 保存版本仍可读：优先按保存时 `dataVersion` 原样恢复。
+2. 保存版本可读但部分失效：保留有效放置，列出失效布局 / 槽位 / 英雄，并提示用户重新保存或丢弃失效引用。
+3. 保存版本不可读：才进入兼容恢复，用当前版本校验并明确提示“基于新版本兼容恢复，结果可能有偏差”。
+4. 整体失效：不静默恢复，明确提示用户丢弃旧草稿。
 
 ## 最近草稿持久化
 
