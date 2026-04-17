@@ -4,11 +4,9 @@ import type { ChampionRawEntry, ChampionUpgradeDetail } from '../../domain/types
 import type { EffectContext, EffectDefinitionPresentation, EffectDescriptor, UpgradePresentation } from './types'
 import { describeEffectPayload, buildUnavailableUpgradeLabel } from './effect-descriptor'
 import { parseEffectPayload, resolveEffectDescription } from './effect-payload'
-import {
-  formatMultiplierValue,
-  isJsonObject,
-  localizeUpgradeType,
-} from './shared'
+import { isJsonObject } from './detail-json'
+import { localizeUpgradeType } from './detail-localization'
+import { formatMultiplierValue } from './detail-value-formatters'
 
 export function buildEffectDefinitionPresentation(
   entry: ChampionRawEntry | null,

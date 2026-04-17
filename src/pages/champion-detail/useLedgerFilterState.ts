@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { formatNumber } from './shared'
+import { formatNumber } from './detail-value-formatters'
 import type { LedgerUpgradeRow, UpgradeCategoryMeta } from './types'
 
 type UseLedgerFilterStateOptions = {

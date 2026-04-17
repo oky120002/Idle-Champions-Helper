@@ -2,7 +2,7 @@ import type { ChampionDetail, ChampionIllustration, ChampionSkinDetail } from '.
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import { buildSkinPreviewAlt, getSkinArtworkIds } from './detail-card-model'
 import { DetailField, LocalizedTextStack } from './detail-cards'
-import { formatNullableText } from './shared'
+import { formatNullableText } from './detail-value-formatters'
 import type { SkinArtworkIds } from './types'
 
 interface SkinArtworkDialogProps {

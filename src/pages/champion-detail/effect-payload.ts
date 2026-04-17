@@ -1,6 +1,7 @@
 import type { AppLocale } from '../../app/i18n'
 import type { ParsedEffectPayload, EffectContext } from './types'
-import { formatNumberishToken, isJsonObject, isNumberishToken, parseInlineJsonValue } from './shared'
+import { isJsonObject, parseInlineJsonValue } from './detail-json'
+import { formatNumberishToken, isNumberishToken } from './detail-value-formatters'
 
 export function parseEffectPayload(value: string): ParsedEffectPayload | null {
   const trimmed = value.trim()

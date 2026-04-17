@@ -8,11 +8,7 @@ import {
   SummaryTagGroup,
   UpgradeSpecializationArt,
 } from './detail-primitives'
-import {
-  buildNotAvailableLabel,
-  formatNullableText,
-  formatNumber,
-} from './shared'
+import { buildNotAvailableLabel, formatNullableText, formatNumber } from './detail-value-formatters'
 import type {
   AttackPanelProps,
   FeatCardProps,
