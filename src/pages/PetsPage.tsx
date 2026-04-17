@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useI18n } from '../app/i18n'
+import { FilterSidebarLayout } from '../components/filter-sidebar/FilterSidebarLayout'
 import { StatusBanner } from '../components/StatusBanner'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollection } from '../data/client'
 import type { Pet } from '../domain/types'
 import { PetFilters } from './pets/PetFilters'
-import { PetResultsGrid } from './pets/PetResultsGrid'
+import { PetsResultsSection } from './pets/PetsResultsSection'
 import { PetSummaryFooter } from './pets/PetSummaryFooter'
 import { matchesPetQuery } from './pets/search'
 import type { AssetFilter, SourceFilter } from './pets/types'
@@ -84,6 +85,12 @@ export function PetsPage() {
     [pets],
   )
 
+  function clearAllFilters() {
+    setQuery('')
+    setSourceFilter('all')
+    setAssetFilter('all')
+  }
+
   return (
     <div className="page-shell pets-page">
       <SurfaceCard
@@ -95,45 +102,50 @@ export function PetsPage() {
         })}
         footer={<PetSummaryFooter summary={summary} />}
       >
-        <PetFilters
-          query={query}
-          sourceFilter={sourceFilter}
-          assetFilter={assetFilter}
-          onQueryChange={setQuery}
-          onSourceFilterChange={setSourceFilter}
-          onAssetFilterChange={setAssetFilter}
-        />
+        <FilterSidebarLayout
+          sidebar={
+            <PetFilters
+              query={query}
+              sourceFilter={sourceFilter}
+              assetFilter={assetFilter}
+              onQueryChange={setQuery}
+              onSourceFilterChange={setSourceFilter}
+              onAssetFilterChange={setAssetFilter}
+              onClearAllFilters={clearAllFilters}
+            />
+          }
+        >
+          {state.status === 'loading' ? (
+            <StatusBanner
+              tone="info"
+              title={t({ zh: '正在加载宠物目录', en: 'Loading pet catalog' })}
+              detail={t({
+                zh: '正在读取本地版本化的宠物清单与静态图像。',
+                en: 'Reading the local versioned pet manifest and static images.',
+              })}
+            />
+          ) : null}
 
-        {state.status === 'loading' ? (
-          <StatusBanner
-            tone="info"
-            title={t({ zh: '正在加载宠物目录', en: 'Loading pet catalog' })}
-            detail={t({
-              zh: '正在读取本地版本化的宠物清单与静态图像。',
-              en: 'Reading the local versioned pet manifest and static images.',
-            })}
-          />
-        ) : null}
+          {state.status === 'error' ? (
+            <StatusBanner
+              tone="error"
+              title={t({ zh: '宠物目录加载失败', en: 'Failed to load pet catalog' })}
+              detail={
+                state.message
+                  ? t({
+                      zh: `无法读取 pets 数据：${state.message}`,
+                      en: `Unable to read pets data: ${state.message}`,
+                    })
+                  : t({
+                      zh: '无法读取 pets 数据。',
+                      en: 'Unable to read pets data.',
+                    })
+              }
+            />
+          ) : null}
 
-        {state.status === 'error' ? (
-          <StatusBanner
-            tone="error"
-            title={t({ zh: '宠物目录加载失败', en: 'Failed to load pet catalog' })}
-            detail={
-              state.message
-                ? t({
-                    zh: `无法读取 pets 数据：${state.message}`,
-                    en: `Unable to read pets data: ${state.message}`,
-                  })
-                : t({
-                    zh: '无法读取 pets 数据。',
-                    en: 'Unable to read pets data.',
-                  })
-            }
-          />
-        ) : null}
-
-        {state.status === 'ready' ? <PetResultsGrid pets={filteredPets} /> : null}
+          {state.status === 'ready' ? <PetsResultsSection pets={filteredPets} totalPets={pets.length} /> : null}
+        </FilterSidebarLayout>
       </SurfaceCard>
     </div>
   )
