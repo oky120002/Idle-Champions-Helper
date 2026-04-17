@@ -8,4 +8,4 @@
 
 - 当前主链路、关键文件与页面审计字段：`docs/research/data/skin-illustration/pipeline-overview.md`
 - 资源识别、矩阵、画布、pose 与 slot 选择：`docs/research/data/skin-illustration/pipeline-render-rules.md`
-- override 落点、验证命令、已复核样例与剩余风险：`docs/research/data/skin-illustration/pipeline-operations.md`
+- 样例复核、override 落点、验证命令与剩余风险：`docs/research/data/skin-illustration/pipeline-operations/README.md`

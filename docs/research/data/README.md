@@ -4,18 +4,17 @@
 
 ## 先读哪组
 
-- 数据来源与个人数据边界：`docs/research/data/game-data-source-investigation.md`
+- 数据来源与个人数据边界：`docs/research/data/game-data-source/README.md`
 - 静态数据目录与缓存合同：`docs/research/data/static-data-storage-research.md`
-- 官方中文链路：`docs/research/data/language-id-7-chinese-definitions-research.md`
-- 阵型布局字段与唯一布局提取：`docs/research/data/official-formation-layout-extraction-research.md`
-- 英雄详情字段合同：`docs/research/data/champion-detail-fields-research.md`
-- 宠物目录与获取方式：`docs/research/data/pet-catalog-data-research.md`
+- 官方中文链路：`docs/research/data/language-id-7/README.md`
+- 阵型布局字段与唯一布局提取：`docs/research/data/formation-layout/README.md`
+- 英雄详情字段合同：`docs/research/data/champion-detail-fields/README.md`
+- 宠物目录与获取方式：`docs/research/data/pet-catalog/README.md`
 
 ## 资源链路
 
-- 英雄头像：`docs/research/data/champion-portrait-asset-research.md`
-- 英雄 / 皮肤资源引用与 transport：`docs/research/data/champion-visual-asset-research.md`
-- 图片尺寸与落地边界：`docs/research/data/champion-image-asset-sizing-research.md`
+- 英雄头像：`docs/research/data/portrait-asset/README.md`
+- 英雄 / 皮肤资源引用与尺寸边界：`docs/research/data/visual-asset/README.md`
 
 ## 皮肤立绘主线
 

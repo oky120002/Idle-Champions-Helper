@@ -6,5 +6,5 @@
 
 ## 先读哪篇
 
-- 方法、脚本、样本范围与分组结果：`docs/research/data/skin-illustration/delta-method-and-results.md`
+- 方法、脚本、运行范围与输出：`docs/research/data/skin-illustration/delta-audit/README.md`
 - 对 `promising` 样本的复核、经验补充与下一步：`docs/research/data/skin-illustration/delta-review-conclusions.md`
