@@ -1,651 +1,87 @@
 # 主分支整体回归测试框架设计
 
-- 设计日期：2026-04-13
-- 设计目标：为本项目建立一套面向 `main` 分支的整体回归测试框架，确保每次推送到 `main` 后都会执行完整回归，并且只有在回归通过后才允许发布到生产环境。
-- 当前结论：**推荐采用“PR 快速门禁 + `main` 全量回归 + 通过后再部署 GitHub Pages”的三段式框架；其中生产发布必须严格依赖完整回归结果，不能与回归并行或绕过。**
+- 日期：2026-04-13
+- 目标：让 `main` 只有在完整回归通过后才部署 GitHub Pages；后续再把门禁前移到 PR。
+- 当前结论：采用“本地快反馈 + PR 快速门禁 + `main` 全量回归 + 通过后部署”的分层框架；部署永远依赖完整回归，不能并行绕过。
+- 当前已落地：`Vitest`、`React Testing Library`、`Playwright` 已接入，`.github/workflows/deploy.yml` 已改成“回归 -> 构建 -> Pages 部署”。
+- 当前缺口：业务规则 / 数据覆盖仍需补齐，`pull_request -> main` 的独立快速门禁 workflow 还未拆出。
 
-## 0. 实施更新
+## 目标与边界
 
-- 更新日期：2026-04-13
-- 已落地内容：
-  - 仓库已接入 `Vitest`
-  - 组件测试已接入 `React Testing Library`
-  - 浏览器回归已接入 `Playwright`
-  - `.github/workflows/deploy.yml` 已改为“完整回归与构建 -> 上传 Pages 产物 -> 部署”
-- 当前仍未完成的部分：
-  - 业务规则、数据校验和页面流程的覆盖面还需要持续补齐
-  - `pull_request -> main` 的快速门禁还未单独拆成独立工作流
+- `push main` 后的工作流能保证“不坏发布”，但不能阻止坏提交已经进入 `main` 历史。
+- 如果目标升级为“尽量不坏进入 `main`”，还要补分支保护、PR 审核和必过检查。
+- 本文同时记录两件事：当前已落地的部署门禁；后续仍需补的测试分层与治理增强。
 
----
+## 推荐分层
 
-## 1. 先说结论
+| 层级 | 工具 | 职责 | 建议目录 / 脚本 |
+| --- | --- | --- | --- |
+| 静态质量门禁 | `eslint`、`tsc`、`vite build` | 语法、类型、构建错误 | `lint`、`typecheck`、`build` |
+| 单元 / 规则 / 数据回归 | `Vitest` | `src/rules/`、`src/data/`、`scripts/` 纯函数、`public/data/` 合同与一致性 | `tests/unit/`、`tests/data/`、`test:unit`、`test:data` |
+| 组件 / 页面集成 | `Vitest + React Testing Library` | 路由、页面标题、空态、筛选表单、交互后的 DOM 变化 | `tests/component/`、`tests/page/`、`test:component` |
+| 浏览器级回归 | `Playwright` | 真实浏览器里的加载、路由、关键流程、部署路径 | `tests/e2e/smoke/`、`tests/e2e/regression/`、`test:e2e:*` |
 
-### 1.1 生产门禁必须放在部署前，而不是部署后
+- 不把所有问题都压给 Playwright：规则问题先让单元测试拦，组件问题先让集成测试拦，真实流程问题再交给浏览器层。
+- `Vitest` 适合本项目：与 `Vite` 同栈、支持多 project、能覆盖逻辑与组件。
+- `Playwright` 适合作为生产门禁最终层：真实浏览器、报告与 trace 完整、GitHub Actions 集成成熟。
 
-当前仓库已经把生产门禁放到了部署前：`.github/workflows/deploy.yml` 会先执行完整回归与构建，只有成功后才会部署 GitHub Pages。
+## 当前仓库基线
 
-这一节保留，是为了明确这条链路为什么必须继续保持，并说明后续还要把门禁从 `push main` 继续前移到 `pull_request -> main`。
+- 技术栈：`Vite + React + TypeScript`。
+- 现有脚本：`lint`、`typecheck`、`test:run`、`test:unit`、`test:component`、`test:e2e`、`test:regression`、`build`。
+- 关键源码：`src/app/App.tsx`、`src/data/client.ts`、`src/data/userImport.ts`、`src/rules/seat.ts`。
+- 当前部署链路：`.github/workflows/deploy.yml` 已是“完整回归与构建 -> 上传 Pages artifact -> 部署”。
+- 环境约束：本地预览与 GitHub Pages `base` 路径不同，页面回归和产物验收优先走 `npm run preview:pages` 与 `scripts/serve-github-pages-preview.mjs`。
 
-如果目标是“**不能把有问题的东西提交到生产**”，最关键的调整不是先写很多测试，而是先把工作流改成下面这条强依赖链：
+## `main` 完整回归定义
 
-```text
-push main
-  ↓
-质量检查
-  ↓
-单元 / 规则 / 数据回归
-  ↓
-页面与流程回归
-  ↓
-生产构建
-  ↓
-Pages 部署
-```
+- 当前已落地口径：`lint -> typecheck -> test:run -> test:e2e -> build -> deploy`；部署不是回归的一部分，而是回归通过后的后续动作。
+- 建议长期口径：`lint -> typecheck -> test:unit -> test:data -> test:component -> test:e2e:regression -> build -> deploy`。
+- PR 快速门禁可轻量一些：`lint + typecheck + unit + data + component + e2e:smoke`。
 
-只有当前面全部通过时，部署作业才允许运行。
+## GitHub Actions 设计
 
-### 1.2 仅靠 `push main` 后跑工作流，不能阻止坏提交进入 `main`
+- 推荐最终拆成两个 workflow：
+  - `ci.yml`：触发 `pull_request -> main` 与 `workflow_dispatch`；跑快速质量门禁、单元 / 数据 / 组件测试、轻量 smoke。
+  - `deploy.yml`：触发 `push main` 与 `workflow_dispatch`；跑 `main` 完整回归、构建、上传 artifact、部署。
+- 如果暂时不拆，单工作流也要显式保持依赖链：`quality -> tests -> build-pages -> deploy-pages`；`deploy-pages` 只能在 `push main` 且前序全过后运行。
+- 部署门禁关键点：显式 `needs` 依赖构建作业；使用 GitHub Pages 环境；不允许与测试作业并行提前执行。
 
-如果保留“直接推送到 `main`”的开发方式，GitHub Actions 可以做到：
+## Playwright CI 策略
 
-- 阻止坏构建发布到生产
-- 为失败提交留下明确报告
+- CI 优先稳定：`workers = 1`；本地可保持默认并行。
+- 重试：本地 `0`；CI `1`。允许一次重试定位偶发抖动，但 `flaky` 应视为待清零告警，不是健康状态。
+- 失败证据：`trace: 'on-first-retry'`、`screenshot: 'only-on-failure'`、`video` 按成本决定。
+- 路径口径：浏览器级回归必须覆盖 GitHub Pages 项目站路径；不能只测 `http://127.0.0.1:4173/` 根路径，否则会漏掉 `base` 与 `HashRouter` 问题。
 
-但它**不能在提交已经推上 `main` 之后，再阻止这次提交进入 `main` 历史**。
+## 首批必须覆盖的范围
 
-因此要区分两个目标：
+- 规则与数据：`seat` 冲突、`public/data/version.json` 读取、数据路径是否基于 `import.meta.env.BASE_URL`、用户导入解析 / 脱敏、归一化输出必填字段。
+- 页面与路由：首页可开、导航可达、核心页面标题 / 空态 / 基础结构可渲染、数据加载失败有可见反馈。
+- 浏览器级流程：首页进入各一级页面；GitHub Pages 路径下静态资源加载正常；`HashRouter` 路由切换可用；个人数据输入与脱敏预览可跑通。
 
-1. **不让坏东西进生产**：可以通过 `push main` 后完整回归 + 部署依赖回归达成。
-2. **不让坏东西进 main**：需要额外启用分支保护、PR 审核和必过检查。
+## 分阶段状态
 
-### 1.3 推荐最终形态
+- 阶段一：测试基础设施，已完成；包含 `Vitest`、RTL、`Playwright`、脚本骨架。
+- 阶段二：最小可用回归，已完成；已有规则单测、数据路径与版本测试、首页 / 导航组件测试、Playwright 基础回归。
+- 阶段三：完整部署门禁，已完成；当前是“回归通过后才构建，artifact 上传成功后才部署”。
+- 阶段四：主分支治理增强，下一步；补分支保护、PR 必过检查、管理员不绕过检查，必要时要求部署成功后才允许合并。
 
-推荐分三层执行：
+## 当前建议的最终决策
 
-1. **本地层**：开发时运行快速测试，缩短反馈回路。
-2. **PR 层**：在 `pull_request -> main` 时跑快速门禁，尽量在合并前发现问题。
-3. **主分支层**：在 `push main` 时跑完整回归，全部通过后才部署 GitHub Pages。
+1. 逻辑与数据：`Vitest`
+2. 组件与页面集成：`Vitest + React Testing Library`
+3. 浏览器回归：`Playwright`
+4. 主分支门禁：`push main` 跑完整回归，全部通过后才部署 GitHub Pages
+5. 治理增强：后续再把门禁前移到 PR，并启用分支保护
 
-这个结构既满足你“每次 `push main` 要做整体回归”的要求，也能给后续分支保护留出升级空间。
+## 仍需明确的决策点
 
----
+- 是否继续允许直接推 `main`：允许则只能保证“不坏发布”；不允许则应转为“分支 -> PR -> 必过检查 -> 合并 -> `main` 全量回归 -> deploy”。
+- 主分支是否接受 flaky 重试通过：建议允许 1 次重试辅助定位，但把 flaky 视为问题。
+- `main` 全量回归是否一开始就跑全浏览器矩阵：建议先只跑 `chromium`，稳定后再评估 `firefox` / `webkit`。
 
-## 2. 当前仓库现状
+## 依据
 
-### 2.1 已有基础
-
-- 技术栈已固定为 `Vite + React + TypeScript`
-- 已有 GitHub Pages 自定义工作流：`.github/workflows/deploy.yml`
-- 已有质量与回归脚本：
-  - `npm run lint`
-  - `npm run typecheck`
-  - `npm run test:run`
-  - `npm run test:unit`
-  - `npm run test:component`
-  - `npm run test:e2e`
-  - `npm run test:regression`
-  - `npm run build`
-- 页面骨架已具备：
-  - `总览`
-  - `英雄筛选`
-  - `变体限制`
-  - `阵型编辑`
-  - `方案存档`
-  - `个人数据`
-
-### 2.2 当前缺口
-
-- `package.json` 已经补上 `typecheck`、`test:unit`、`test:component`、`test:e2e`、`test:regression` 等脚本，但还没有把数据回归单独拆成 `test:data`
-- 仓库已经接入 `Vitest`、`Playwright`、`React Testing Library`，但业务规则、数据校验和页面流程覆盖面仍需继续补齐
-- 当前部署工作流已经把“完整回归通过”作为部署前置条件，但 `pull_request -> main` 的快速门禁还未拆成独立 workflow
-- 当前本地 `preview` 与 GitHub Pages 的 `base` 路径仍存在差异；页面级回归和产物验收应优先使用 `npm run preview:pages` 这类贴近项目站路径的入口
-
-### 2.3 本阶段设计边界
-
-本次文档维护不再把已经落地的基础设施继续写成待办；本文同时承担两层角色：
-
-1. 记录已经落地的 `main -> 完整回归 -> 部署` 决策。
-2. 说明后续仍需补齐的 PR 门禁、覆盖范围和测试分层演进目标。
-
-当前文档应继续回答清楚：
-
-- 用什么测试分层
-- 哪些内容进入 `main` 的完整回归
-- GitHub Actions 如何串起回归与部署
-- 哪些点必须先做，哪些点可以后补
-
----
-
-## 3. 推荐测试分层
-
-## 3.1 第一层：静态质量门禁
-
-目标：尽早拦截低成本问题。
-
-建议纳入：
-
-- `lint`
-- `typecheck`
-- `build`
-
-建议脚本：
-
-```json
-{
-  "scripts": {
-    "typecheck": "tsc --noEmit",
-    "lint": "eslint .",
-    "build": "tsc -b && vite build"
-  }
-}
-```
-
-职责：
-
-- `lint`：拦语法风格、潜在误用、未处理变量等问题
-- `typecheck`：拦类型漂移、接口变更、字段不一致
-- `build`：拦真实构建阶段错误，确保部署产物能生成
-
-### 3.2 第二层：单元 / 规则 / 数据回归
-
-目标：验证“逻辑是否正确”，而不是页面是否能打开。
-
-推荐使用：
-
-- `Vitest`
-
-建议覆盖：
-
-- `src/rules/`：规则判断，例如阵位冲突、限制判定
-- `src/data/`：数据访问、路径拼接、版本读取、脱敏解析
-- `scripts/`：数据抓取与归一化脚本的纯函数部分
-- `public/data/`：结构化数据文件格式、字段完整性、枚举一致性
-
-建议目录：
-
-```text
-tests/
-  unit/
-  data/
-  fixtures/
-```
-
-建议脚本：
-
-```json
-{
-  "scripts": {
-    "test:unit": "vitest run --project unit",
-    "test:data": "vitest run --project data"
-  }
-}
-```
-
-### 3.3 第三层：组件与页面集成测试
-
-目标：验证组件和页面在 React 环境中的交互闭环，不依赖真实浏览器全链路。
-
-推荐使用：
-
-- `Vitest`
-- `React Testing Library`
-
-建议覆盖：
-
-- 顶层路由与导航是否渲染正确
-- 页面标题、核心说明、空态文案是否出现
-- 筛选表单、基础交互、提示文本、异常态渲染
-- 用户操作后 DOM 是否按预期变化
-
-建议目录：
-
-```text
-tests/
-  component/
-  page/
-```
-
-建议脚本：
-
-```json
-{
-  "scripts": {
-    "test:component": "vitest run --project component"
-  }
-}
-```
-
-### 3.4 第四层：浏览器级回归测试
-
-目标：验证真实浏览器里的页面加载、路由、关键流程与部署路径。
-
-推荐使用：
-
-- `Playwright`
-
-建议目录：
-
-```text
-tests/
-  e2e/
-    smoke/
-    regression/
-```
-
-分成两类：
-
-- `smoke`：页面能打开、导航可达、核心元素存在
-- `regression`：关键用户路径，例如筛选、阵型编辑、个人数据导入入口、数据文件加载、错误提示
-
-建议脚本：
-
-```json
-{
-  "scripts": {
-    "test:e2e:smoke": "playwright test tests/e2e/smoke",
-    "test:e2e:regression": "playwright test tests/e2e/regression"
-  }
-}
-```
-
----
-
-## 4. 为什么这样分层
-
-### 4.1 不把所有问题都压给 Playwright
-
-如果所有测试都放到浏览器端回归：
-
-- 反馈慢
-- 维护成本高
-- 定位失败原因困难
-
-更合理的做法是：
-
-- 规则问题由单元测试先拦
-- 组件问题由组件测试先拦
-- 真实流程问题再由 Playwright 做最终闭环确认
-
-### 4.2 `Vitest` 适合作为本项目的逻辑与组件测试底座
-
-原因：
-
-- 与 `Vite` 技术栈天然兼容
-- 可以用一个 runner 管理多个测试项目
-- 后续如有必要，还能扩展出浏览器模式或更多项目配置
-
-### 4.3 `Playwright` 适合作为主分支生产门禁的最终回归层
-
-原因：
-
-- 可以直接跑真实浏览器
-- 可以产出 HTML 报告、trace、截图等排错材料
-- GitHub Actions 集成路径成熟，适合放进主分支回归
-
----
-
-## 5. `main` 分支完整回归的建议定义
-
-当前仓库已经落地的“完整回归”定义是：
-
-1. `lint`
-2. `typecheck`
-3. `test:run`
-4. `test:e2e`
-5. `build`（由 `pretest:e2e` 触发）
-
-然后才允许：
-
-6. `deploy`
-
-也就是说，**部署不是完整回归的一部分，而是完整回归通过后的后续动作。**
-
-后续如需把失败信号拆得更细，再演进为：
-
-1. `lint`
-2. `typecheck`
-3. `test:unit`
-4. `test:data`
-5. `test:component`
-6. `test:e2e:regression`
-7. `build`
-8. `deploy`
-
----
-
-## 6. GitHub Actions 设计建议
-
-### 6.1 推荐工作流拆分
-
-推荐拆成两个 workflow：
-
-#### A. `ci.yml`
-
-触发：
-
-- `pull_request` 到 `main`
-- `workflow_dispatch`
-
-职责：
-
-- 快速质量门禁
-- 单元、数据、组件测试
-- 轻量浏览器 smoke 测试
-
-目的：
-
-- 在进入 `main` 前尽早发现问题
-
-#### B. `deploy.yml`
-
-触发：
-
-- `push` 到 `main`
-- `workflow_dispatch`
-
-职责：
-
-- 跑 `main` 的完整回归
-- 产出生产构建
-- 上传 Pages artifact
-- 只有全部通过时才部署
-
-### 6.2 如果暂时不想拆两个 workflow
-
-也可以先保守演进：
-
-- 直接重构现有 `.github/workflows/deploy.yml`
-- 把它改成“回归 + 构建 + 部署”的单工作流
-
-建议作业链：
-
-```text
-quality
-  ├─ lint
-  └─ typecheck
-
-tests
-  ├─ unit
-  ├─ data
-  ├─ component
-  └─ e2e-regression
-
-build-pages
-  └─ 依赖上述全部通过
-
-deploy-pages
-  └─ 仅依赖 build-pages 且只在 push main 时执行
-```
-
-### 6.3 主分支部署门禁的关键点
-
-部署作业必须满足：
-
-- 显式依赖构建作业
-- 使用 GitHub Pages 环境
-- 不允许与测试作业并行提前执行
-
-这部分与 GitHub Pages 官方工作流约束一致。
-
----
-
-## 7. Playwright 配置建议
-
-### 7.1 CI 中优先稳定而不是并行速度
-
-建议：
-
-- CI 中 `workers = 1`
-- 本地保持默认并行
-
-这样更稳，更容易复现。
-
-### 7.2 重试策略
-
-建议：
-
-- 本地默认 `retries = 0`
-- CI 使用 `retries = 1`
-
-原因：
-
-- 允许偶发性环境抖动得到一次补救机会
-- 仍然保持结果可读，不把真正不稳定的测试伪装成健康测试
-
-### 7.3 失败证据
-
-建议：
-
-- `trace: 'on-first-retry'`
-- `screenshot: 'only-on-failure'`
-- `video: 'on-first-retry'` 或按成本决定是否启用
-
-这样可以在失败时保留可追溯材料，但不让成功用例的产物过重。
-
-### 7.4 基于 GitHub Pages 路径做回归，而不是只测根路径
-
-这是本项目特有的关键点。
-
-由于生产站点运行在 GitHub Pages Project 站路径下，浏览器级回归应当贴近真实访问方式：
-
-- 要么测试地址直接使用 `/<repo-name>/`
-- 要么在测试服务器里按仓库名挂载构建产物
-
-不建议仅以 `http://127.0.0.1:4173/` 根路径作为唯一回归入口，否则会漏掉 `base` 路径相关问题。
-
----
-
-## 8. 建议的测试目录与脚本框架
-
-## 8.1 目录建议
-
-```text
-tests/
-  unit/
-    rules/
-    data/
-  component/
-  page/
-  e2e/
-    smoke/
-    regression/
-  fixtures/
-```
-
-新增配置文件建议：
-
-```text
-vitest.config.ts
-playwright.config.ts
-```
-
-### 8.2 推荐脚本清单
-
-当前仓库已落地：
-
-```json
-{
-  "scripts": {
-    "typecheck": "tsc -b --pretty false",
-    "test:run": "vitest run",
-    "test:unit": "vitest run --project unit",
-    "test:component": "vitest run --project component",
-    "test:e2e": "playwright test",
-    "test:regression": "npm run lint && npm run typecheck && npm run test:run && npm run test:e2e"
-  }
-}
-```
-
-如果后续要把数据回归、smoke 与 regression 信号拆开，可以继续演进为：
-
-```json
-{
-  "scripts": {
-    "typecheck": "tsc --noEmit",
-    "test:unit": "vitest run --project unit",
-    "test:data": "vitest run --project data",
-    "test:component": "vitest run --project component",
-    "test:e2e:smoke": "playwright test tests/e2e/smoke",
-    "test:e2e:regression": "playwright test tests/e2e/regression",
-    "test:regression:ci": "npm run lint && npm run typecheck && npm run test:unit && npm run test:data && npm run test:component && npm run test:e2e:regression && npm run build"
-  }
-}
-```
-
-说明：
-
-- `test:regression:ci` 对应 `push main` 的完整回归
-- PR 阶段可只跑更轻的组合，例如 `lint + typecheck + unit + data + component + e2e:smoke`
-
----
-
-## 9. 首批必须覆盖的回归范围
-
-第一批不要追求覆盖面极大，先把“生产最容易坏、最值得拦”的地方做起来。
-
-### 9.1 规则与数据
-
-- `seat` 冲突判断
-- 版本文件 `public/data/version.json` 读取
-- 数据路径拼接是否正确使用 `import.meta.env.BASE_URL`
-- 用户导入解析与脱敏逻辑
-- 数据归一化输出的必填字段
-
-### 9.2 页面与路由
-
-- 首页可打开
-- 导航链接可跳到各页面
-- 各核心页面标题、空态说明、基础结构能渲染
-- 数据文件加载失败时有可见反馈，而不是静默白屏
-
-### 9.3 浏览器级流程
-
-- 从首页进入各一级页面
-- GitHub Pages 路径下静态资源能正确加载
-- `HashRouter` 路由切换可用
-- 个人数据页面的输入与脱敏预览流程可跑通
-
----
-
-## 10. 分阶段落地建议
-
-### 阶段一：测试基础设施（已完成）
-
-已完成：
-
-- `Vitest`
-- `React Testing Library`
-- `Playwright`
-- `typecheck` / `test:*` 脚本
-- 回归目录骨架
-
-### 阶段二：最小可用回归（已完成）
-
-已完成或已具备等价能力：
-
-- 规则单元测试
-- 数据路径与版本测试
-- 首页与导航组件测试
-- Playwright 浏览器级基础回归
-
-当前结果：
-
-- `push main` 已经具备“先回归、后部署”的最小门禁能力
-
-### 阶段三：完整部署门禁（已完成）
-
-当前已改成：
-
-- 回归通过后才构建
-- 构建通过后才上传 artifact
-- artifact 上传成功后才部署
-
-### 阶段四：主分支治理增强（下一步）
-
-如果后续要进一步做到“坏东西尽量不要进 `main`”，再补：
-
-- 分支保护
-- PR 必过检查
-- 管理员不绕过检查
-- 可选：要求部署成功后才允许合并
-
----
-
-## 11. 当前建议的最终决策
-
-本项目回归测试框架建议确定为：
-
-1. **逻辑与数据：`Vitest`**
-2. **组件与页面集成：`Vitest + React Testing Library`**
-3. **浏览器回归：`Playwright`**
-4. **主分支门禁：`push main` 跑完整回归，全部通过后才允许 GitHub Pages 部署**
-5. **后续增强：再引入分支保护与 PR 必过检查，减少坏提交进入 `main` 的概率**
-
----
-
-## 12. 待你确认的决策点
-
-### 12.1 是否允许继续直接推送 `main`
-
-如果允许：
-
-- 可以保证“不坏发布”
-- 但不能保证“不坏进入 main”
-
-如果不允许，建议后续改成：
-
-- 开发分支 -> PR -> 必过检查 -> merge main -> main 全量回归 -> deploy
-
-### 12.2 主分支回归是否接受 flaky 重试通过
-
-我当前建议：
-
-- 允许一次重试帮助定位偶发失败
-- 但把 `flaky` 视为需要尽快清零的告警，不应长期接受
-
-### 12.3 `main` 全量回归是否一开始就跑全浏览器矩阵
-
-我当前建议：
-
-- 第一阶段只跑 `chromium`
-- 等用例稳定后，再评估是否补 `firefox` / `webkit`
-
-原因：
-
-- 当前项目还是早期骨架
-- 先保证门禁稳定，比一开始把矩阵铺太大更重要
-
----
-
-## 13. 本次设计依据
-
-### 本地仓库依据
-
-- `package.json`
-- `.github/workflows/deploy.yml`
-- `src/app/App.tsx`
-- `src/data/client.ts`
-- `src/data/userImport.ts`
-- `src/rules/seat.ts`
-- `docs/investigations/runtime/local-run-verification.md`
-
-### 官方资料
-
-- GitHub Docs: About protected branches  
-  https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches
-- GitHub Docs: Using custom workflows with GitHub Pages  
-  https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages
-- GitHub Docs: Configuring a publishing source for your GitHub Pages site  
-  https://docs.github.com/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
-- Playwright Docs: Continuous Integration  
-  https://playwright.dev/docs/ci
-- Playwright Docs: Retries  
-  https://playwright.dev/docs/test-retries
-- Playwright Docs: Configuration  
-  https://playwright.dev/docs/test-configuration
-- React Testing Library Docs: Intro  
-  https://testing-library.com/docs/react-testing-library/intro/
-- Testing Library Docs: About Queries  
-  https://testing-library.com/docs/queries/about/
-- Vitest Docs: Test Projects  
-  https://vitest.dev/guide/projects.html
+- 本地仓库：`package.json`、`.github/workflows/deploy.yml`、`src/app/App.tsx`、`src/data/client.ts`、`src/data/userImport.ts`、`src/rules/seat.ts`、`docs/investigations/runtime/local-run-verification.md`。
+- 官方资料：GitHub protected branches、GitHub Pages custom workflows / publishing source、Playwright CI / retries / configuration、Testing Library、Vitest projects。

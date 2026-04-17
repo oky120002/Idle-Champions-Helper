@@ -3,8 +3,6 @@
 - 调研日期：2026-04-16
 - 结论状态：当前结论基于当天抓取的官方 definitions 快照，适用于本仓库宠物图鉴首版实现。
 
----
-
 ## 1. 官方字段落点
 
 使用官方 definitions 快照核对后，宠物相关字段集中在：
@@ -20,8 +18,6 @@
 
 - `familiar_defines` 当前共有 `323` 条
 - `familiar_skin_defines` 当前共有 `14` 条
-
----
 
 ## 2. 图像字段
 
@@ -45,8 +41,6 @@
 - 这类资源并不是“直接可用的一张 PNG”，而是 **zlib 容器里的 `SkelAnim` 分件动画数据**
 - 因此宠物图标与宠物立绘都不能只做 deflate 解包；构建期必须继续做 `SkelAnim` pose 合成，输出站内最终 PNG
 
----
-
 ## 3. 获取方式字段
 
 `familiar_defines[*].collections_source.type` 当前出现的类型分布：
@@ -66,8 +60,6 @@
 
 因此页面侧的“获取方式”应采用多表合并，而不是单看 `collections_source.type`。
 
----
-
 ## 4. 当前可解释归类
 
 适合作为页面层展示的稳定归类：
@@ -83,8 +75,6 @@
 - `flash_sale` 在当前快照里更接近“限时付费来源”，不应直接解释成抽奖。
 - `patron` 还可以从 `patron_shop_item_defines` 里补出成本和影响力门槛。
 - 一部分 `collections_source` 为空，但仍可通过 `cost.premium_item` 和 `premium_item_defines.effect` 命中实际礼包。
-
----
 
 ## 5. 对本仓库的直接落地建议
 

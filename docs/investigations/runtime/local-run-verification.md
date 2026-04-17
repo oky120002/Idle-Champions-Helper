@@ -4,11 +4,9 @@
 - 验证对象：当前仓库工作树
 - 当前结论：**项目当前可以本地构建；日常开发应使用 `npm run dev`；GitHub Pages 路径校验应使用 `npm run preview:pages`；直接访问 `npm run preview` 的根路径仍会因为生产 `base` 为 `/Idle-Champions-Helper/` 而拿到错位资源。**
 
----
-
 ## 1. 验证结果
 
-### 1.1 构建结果
+### 构建结果
 
 执行：
 
@@ -30,7 +28,7 @@ dist/assets/index-CXHGC9pO.css   10.28 kB │ gzip:  2.79 kB
 dist/assets/index-CprSRZTR.js   306.48 kB │ gzip: 93.66 kB
 ```
 
-### 1.2 `npm run preview` 结果
+### `npm run preview` 结果
 
 执行：
 
@@ -58,7 +56,7 @@ curl -s http://127.0.0.1:4173/Idle-Champions-Helper/assets/index-CprSRZTR.js | s
 - 默认 `vite preview` 没有按 GitHub Pages 项目站的基线路径正确托管这些资源
 - 因此它不能代表“生产路径是否正确”
 
-### 1.3 `npm run preview:pages` 结果
+### `npm run preview:pages` 结果
 
 执行：
 
@@ -85,7 +83,7 @@ curl -s http://127.0.0.1:4173/Idle-Champions-Helper/assets/index-CprSRZTR.js | s
 - `preview:pages` 更贴近 GitHub Pages 项目站的真实访问方式
 - 后续验证构建产物、静态资源路径、`HashRouter` 路由时，应优先使用这个入口
 
-### 1.4 开发服务器结果
+### 开发服务器结果
 
 执行：
 
@@ -110,8 +108,6 @@ curl -s http://127.0.0.1:4174/src/main.tsx | sed -n '1,10p'
 - `npm run dev` 仍是日常开发与页面联调的正确入口
 - 它验证的是开发态行为，不等同于 GitHub Pages 构建产物行为
 
----
-
 ## 2. 当前页面形态
 
 从代码结构和本次预览入口可确认，当前站点已经具备以下页面入口：
@@ -133,15 +129,11 @@ curl -s http://127.0.0.1:4174/src/main.tsx | sed -n '1,10p'
 - 已有导航、视觉样式、数据版本读取和多页面壳层
 - 还不是功能完整的可用版本
 
----
-
 ## 3. 当前建议入口
 
 - 日常开发与联调：`npm run dev`
 - 构建产物与 GitHub Pages 路径校验：`npm run preview:pages`
 - 仅确认 `dist/` 是否能被本地服务拉起：`npm run preview`
-
----
 
 ## 4. 注意事项
 
@@ -150,8 +142,6 @@ curl -s http://127.0.0.1:4174/src/main.tsx | sed -n '1,10p'
 - 还确认了“默认 `vite preview` 不能替代 GitHub Pages 路径验收”
 - `preview:pages` 已经是当前仓库里验证项目站基线路径的推荐入口
 - 这些结论只说明运行与预览链路可用，不代表所有业务页面都已完整实现
-
----
 
 ## 5. 本次验证依据
 
