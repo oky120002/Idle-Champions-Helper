@@ -49,6 +49,13 @@ export interface PresetFormState {
   priority: PresetPriority
 }
 
+export const DEFAULT_PRESET_FORM_STATE: PresetFormState = {
+  name: '',
+  description: '',
+  scenarioTagsInput: '',
+  priority: 'medium',
+}
+
 export interface FormationPageLocationState {
   pendingPresetRestore?: FormationPreset
 }
