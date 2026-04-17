@@ -1,6 +1,6 @@
 # research/deployment 文档入口
 
-- `docs/research/deployment/static-hosting-research.md`：当前正式主路线；GitHub Pages、`HashRouter`、`base` 路径和发布链路
-- `docs/research/deployment/china-static-hosting-research.md`：国内访问体验和托管备选
+- `docs/research/deployment/static-hosting-research.md`：GitHub Pages 作为默认主路线的约束与落地方式
+- `docs/research/deployment/china-hosting/README.md`：国内访问体验与后续托管备选
 
-默认先读 `static-hosting-research.md`；只有在评估国内访问体验或备选托管时再读第二篇。
+只有在判断部署主路线、国内访问优化或托管迁移时才需要加载本目录。

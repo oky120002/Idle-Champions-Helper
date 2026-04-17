@@ -4,7 +4,7 @@
 
 ## 主题入口
 
-- `docs/research/data/README.md`：definitions、静态数据、中文链路、立绘资源与审计
+- `docs/research/data/README.md`：definitions、静态数据、中文链路、资源链路与皮肤立绘研究
 - `docs/research/deployment/README.md`：GitHub Pages 主路线与国内托管备选
 - `docs/research/testing/README.md`：主分支回归门禁与测试分层
 
