@@ -1,6 +1,6 @@
 import { FilterDisclosureSection } from '../../components/FilterDisclosureSection'
+import { FilterChipMultiSelectField } from '../../components/filter-sidebar/FilterChipMultiSelectField'
 import { MechanicFilterFieldGroup } from '../../features/champion-filters/MechanicFilterFieldGroup'
-import { FilterChipFieldGroup } from '../../features/champion-filters/FilterChipFieldGroup'
 import { getMechanicCategoryHint } from '../../features/champion-filters/mechanicHints'
 import { getChampionAttributeGroupLabel, getChampionTagLabel } from '../../domain/championTags'
 import type { IllustrationsPageModel } from './types'
@@ -14,7 +14,7 @@ export function IllustrationsAdditionalFilters({ model }: IllustrationsAdditiona
 
   return (
     <>
-      <div className="champions-sidebar__section-label champions-sidebar__section-label--subtle">
+      <div className="filter-sidebar-panel__section-label filter-sidebar-panel__section-label--subtle">
         {t({ zh: '补充筛选', en: 'Additional filters' })}
       </div>
 
@@ -31,7 +31,7 @@ export function IllustrationsAdditionalFilters({ model }: IllustrationsAdditiona
           onToggle={actions.toggleIdentityFiltersExpanded}
         >
           <div className="filter-panel filter-panel--nested">
-            <FilterChipFieldGroup
+            <FilterChipMultiSelectField
               label={getChampionAttributeGroupLabel('race', locale)}
               hint={t({
                 zh: '支持多选；适合快速收窄到特定种族英雄的全部立绘。',
@@ -47,7 +47,7 @@ export function IllustrationsAdditionalFilters({ model }: IllustrationsAdditiona
               onToggle={actions.toggleRace}
             />
 
-            <FilterChipFieldGroup
+            <FilterChipMultiSelectField
               label={getChampionAttributeGroupLabel('gender', locale)}
               hint={t({
                 zh: '支持多选；用英雄元数据交叉过滤皮肤池。',
@@ -63,7 +63,7 @@ export function IllustrationsAdditionalFilters({ model }: IllustrationsAdditiona
               onToggle={actions.toggleGender}
             />
 
-            <FilterChipFieldGroup
+            <FilterChipMultiSelectField
               label={getChampionAttributeGroupLabel('alignment', locale)}
               hint={t({
                 zh: '支持多选；适合快速抽出守序、混乱或善恶阵营相关的立绘集合。',
@@ -93,7 +93,7 @@ export function IllustrationsAdditionalFilters({ model }: IllustrationsAdditiona
           onToggle={actions.toggleMetaFiltersExpanded}
         >
           <div className="filter-panel filter-panel--nested">
-            <FilterChipFieldGroup
+            <FilterChipMultiSelectField
               label={getChampionAttributeGroupLabel('profession', locale)}
               hint={t({
                 zh: '支持多选；适合快速看同职业英雄在立绘上的风格分布。',
@@ -109,7 +109,7 @@ export function IllustrationsAdditionalFilters({ model }: IllustrationsAdditiona
               onToggle={actions.toggleProfession}
             />
 
-            <FilterChipFieldGroup
+            <FilterChipMultiSelectField
               label={getChampionAttributeGroupLabel('acquisition', locale)}
               hint={t({
                 zh: '支持多选；区分核心、常驻、活动或 Tales 等来源时会更顺手。',

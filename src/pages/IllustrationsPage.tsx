@@ -1,3 +1,4 @@
+import { FilterSidebarLayout } from '../components/filter-sidebar/FilterSidebarLayout'
 import { StatusBanner } from '../components/StatusBanner'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { IllustrationsMetrics } from './illustrations/IllustrationsMetrics'
@@ -58,8 +59,9 @@ export function IllustrationsPage() {
         {state.status === 'ready' ? (
           <>
             <IllustrationsMetrics model={model} />
-            <IllustrationsSidebar model={model} />
-            <IllustrationsResultsSection model={model} />
+            <FilterSidebarLayout sidebar={<IllustrationsSidebar model={model} />}>
+              <IllustrationsResultsSection model={model} />
+            </FilterSidebarLayout>
           </>
         ) : null}
       </SurfaceCard>

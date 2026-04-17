@@ -961,17 +961,21 @@ html[data-ui-locale='en-US'] .site-subtitle {
   color: rgba(255, 248, 236, 0.72);
 }
 
-.champions-workspace {
+.champions-workspace,
+.filter-workspace {
   display: grid;
   gap: 1.25rem;
   margin-top: 1rem;
 }
 
-.champions-sidebar {
+.champions-sidebar,
+.filter-workspace__sidebar,
+.filter-workspace__content {
   min-width: 0;
 }
 
-.champions-sidebar__surface {
+.champions-sidebar__surface,
+.filter-sidebar-panel {
   display: grid;
   gap: 1rem;
   padding: 1rem;
@@ -982,22 +986,31 @@ html[data-ui-locale='en-US'] .site-subtitle {
     rgba(9, 14, 20, 0.42);
 }
 
-.champions-sidebar__header {
+.filter-sidebar-panel__copy {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.champions-sidebar__header,
+.filter-sidebar-panel__header {
   display: grid;
   gap: 0.8rem;
 }
 
-.champions-sidebar__title {
+.champions-sidebar__title,
+.filter-sidebar-panel__title {
   margin-bottom: 0;
 }
 
-.champions-sidebar__hint {
+.champions-sidebar__hint,
+.filter-sidebar-panel__description {
   margin: 0.35rem 0 0;
   color: rgba(242, 239, 230, 0.58);
   font-size: 0.92rem;
 }
 
-.champions-sidebar__badge {
+.champions-sidebar__badge,
+.filter-sidebar-panel__badge {
   justify-self: start;
   padding: 0.38rem 0.78rem;
   border-radius: 999px;
@@ -1009,7 +1022,8 @@ html[data-ui-locale='en-US'] .site-subtitle {
   text-transform: uppercase;
 }
 
-.champions-sidebar__status {
+.champions-sidebar__status,
+.filter-sidebar-panel__status {
   display: grid;
   gap: 0.65rem;
   justify-items: start;
@@ -1021,21 +1035,29 @@ html[data-ui-locale='en-US'] .site-subtitle {
   font-size: 0.8rem;
 }
 
-.champions-sidebar__microcopy {
+.champions-sidebar__microcopy,
+.filter-sidebar-panel__note {
   margin: -0.1rem 0 0;
   color: rgba(242, 239, 230, 0.56);
   font-size: 0.84rem;
 }
 
-.champions-sidebar__section-label {
+.champions-sidebar__section-label,
+.filter-sidebar-panel__section-label {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgba(242, 239, 230, 0.5);
   font-size: 0.76rem;
 }
 
-.champions-sidebar__section-label--subtle {
+.champions-sidebar__section-label--subtle,
+.filter-sidebar-panel__section-label--subtle {
   margin-top: 0.15rem;
+}
+
+.filter-sidebar-panel__content {
+  display: grid;
+  gap: 1rem;
 }
 
 .filter-disclosure-stack {
@@ -4098,30 +4120,35 @@ html[data-ui-locale='en-US'] .site-subtitle {
 }
 
 @media (min-width: 1080px) {
-  .champions-workspace {
+  .champions-workspace,
+  .filter-workspace {
     grid-template-columns: minmax(19rem, var(--champions-sidebar-width)) minmax(0, 1fr);
     align-items: stretch;
   }
 
-  .champions-sidebar__sticky {
+  .champions-sidebar__sticky,
+  .filter-workspace__sidebar-sticky {
     position: sticky;
     top: var(--champions-sticky-top, 10rem);
   }
 
-  .champions-sidebar__surface {
+  .champions-sidebar__surface,
+  .filter-sidebar-panel {
     max-height: calc(100vh - var(--champions-sticky-top, 10rem) - 1rem);
     overflow: auto;
     overscroll-behavior: contain;
     scrollbar-gutter: stable;
   }
 
-  .champions-sidebar__header {
+  .champions-sidebar__header,
+  .filter-sidebar-panel__header {
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: start;
     gap: 0.8rem;
   }
 
-  .champions-sidebar__status {
+  .champions-sidebar__status,
+  .filter-sidebar-panel__status {
     justify-items: end;
   }
 }
