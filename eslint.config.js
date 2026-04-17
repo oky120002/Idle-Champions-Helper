@@ -21,6 +21,19 @@ export default defineConfig([
     },
   },
   {
+    files: ['**/*.ts'],
+    ignores: ['**/*.d.ts'],
+    rules: {
+      'max-lines': ['error', { max: 500, skipBlankLines: true, skipComments: true }],
+    },
+  },
+  {
+    files: ['**/*.tsx'],
+    rules: {
+      'max-lines': ['error', { max: 350, skipBlankLines: true, skipComments: true }],
+    },
+  },
+  {
     files: ['vite.config.ts', 'vitest.config.ts', 'playwright.config.ts'],
     languageOptions: {
       globals: globals.node,
