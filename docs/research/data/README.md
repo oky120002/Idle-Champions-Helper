@@ -19,17 +19,12 @@
 
 ## 皮肤立绘主线
 
+- 总入口：`docs/research/data/skin-illustration/README.md`
 - 为什么会碎、组装数据在哪里：`docs/research/data/skin-illustration-assembly-research.md`
 - 生产主路线为什么选构建期预合成：`docs/research/data/skin-illustration-render-strategy-research.md`
 - 当前仓库已落地的离线渲染链路：`docs/research/data/skin-illustration-render-pipeline-research.md`
-
-## 审计与经验库
-
-- override 候选抽样：`docs/research/data/skin-illustration-override-audit-research.md`
-- current-only alpha 审计：`docs/research/data/skin-illustration-alpha-fragmentation-research.md`
-- current-vs-candidate delta 审计：`docs/research/data/skin-illustration-pose-delta-audit-research.md`
-- 人工复核经验：`docs/research/data/skin-illustration-manual-review-heuristics.md`
+- 审计与人工经验入口：`docs/research/data/skin-illustration-override-audit-research.md`、`docs/research/data/skin-illustration-alpha-fragmentation-research.md`、`docs/research/data/skin-illustration-pose-delta-audit-research.md`、`docs/research/data/skin-illustration-manual-review-heuristics.md`
 
 ## 读取建议
 
-- 做页面功能时，优先读“当前主链路”文档；历史抽样、审计和经验库只在需要修图或追根因时再开。
+- 做页面功能时，优先读当前主链路；历史抽样、审计和经验库只在需要修图、追根因或调 override 时再开。
