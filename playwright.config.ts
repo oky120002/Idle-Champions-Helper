@@ -2,6 +2,10 @@ import { defineConfig, devices } from '@playwright/test'
 
 const port = 4173
 
+// Playwright injects FORCE_COLOR into worker and webServer children.
+// The parent Codex shell exports NO_COLOR, and Node warns when both are inherited together.
+delete process.env.NO_COLOR
+
 export default defineConfig({
   testDir: './tests/e2e',
   fullyParallel: true,
