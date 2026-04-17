@@ -18,26 +18,23 @@ import {
 import {
   getChampionAttributeGroupLabel,
   getChampionAttributeGroups,
-  getChampionMechanicCategoryId,
-  getChampionMechanicCategoryLabel,
   getChampionTagLabel,
-  getChampionTagsForGroup,
 } from '../domain/championTags'
-import type { ChampionMechanicCategoryId } from '../domain/championTags'
 import type { Champion, ChampionVisual, LocalizedText as LocalizedTextValue } from '../domain/types'
+import { ActiveFilterChipBar } from '../features/champion-filters/ActiveFilterChipBar'
+import { isLocalizedEnumGroup, isStringEnumGroup } from '../features/champion-filters/enumGroups'
+import { FilterChipFieldGroup } from '../features/champion-filters/FilterChipFieldGroup'
+import { getMechanicCategoryHint } from '../features/champion-filters/mechanicHints'
+import { MechanicFilterFieldGroup } from '../features/champion-filters/MechanicFilterFieldGroup'
+import { collectAttributeFilterOptions, groupMechanicOptions, seatOptions } from '../features/champion-filters/options'
+import {
+  appendSortedStringValues,
+  readSearchValue,
+  readSeatValues,
+  readStringValues,
+} from '../features/champion-filters/query'
+import type { ActiveFilterChip } from '../features/champion-filters/types'
 import { filterChampions, toggleFilterValue } from '../rules/championFilter'
-
-interface StringEnumGroup {
-  id: string
-  values: string[]
-}
-
-interface LocalizedEnumGroup {
-  id: string
-  values: LocalizedTextValue[]
-}
-
-const seatOptions = Array.from({ length: 12 }, (_, index) => index + 1)
 const MAX_VISIBLE_RESULTS = 48
 const SEARCH_PARAM_QUERY = 'q'
 const SEARCH_PARAM_SEAT = 'seat'
@@ -57,24 +54,7 @@ const RESULTS_RELOCATE_THRESHOLD = 12
 const RESULTS_SCROLL_DURATION_MS = 340
 const RESULTS_QUICK_NAV_THRESHOLD = 10
 
-type AttributeFilterGroupId = 'race' | 'gender' | 'alignment' | 'profession' | 'acquisition' | 'mechanics'
 type ResultsTransitionReason = 'filters' | 'visibility'
-
-interface ActiveFilterChip {
-  id:
-    | 'search'
-    | 'seats'
-    | 'roles'
-    | 'affiliations'
-    | 'races'
-    | 'genders'
-    | 'alignments'
-    | 'professions'
-    | 'acquisitions'
-    | 'mechanics'
-  label: string
-  clearLabel: string
-}
 
 interface PendingResultsTransition {
   previousFilteredCount: number
@@ -88,11 +68,6 @@ interface ResultsQuickNavigationState {
   isVisible: boolean
   canScrollTop: boolean
   canScrollBottom: boolean
-}
-
-interface MechanicOptionGroup {
-  id: ChampionMechanicCategoryId
-  options: string[]
 }
 
 type ChampionState =
@@ -109,95 +84,8 @@ type ChampionState =
       message: string
     }
 
-function isLocalizedText(value: unknown): value is LocalizedTextValue {
-  return (
-    typeof value === 'object' &&
-    value !== null &&
-    'original' in value &&
-    typeof value.original === 'string' &&
-    'display' in value &&
-    typeof value.display === 'string'
-  )
-}
-
-function isLocalizedEnumGroup(value: unknown): value is LocalizedEnumGroup {
-  return (
-    typeof value === 'object' &&
-    value !== null &&
-    'id' in value &&
-    'values' in value &&
-    Array.isArray(value.values) &&
-    value.values.every((item) => isLocalizedText(item))
-  )
-}
-
-function isStringEnumGroup(value: unknown): value is StringEnumGroup {
-  return (
-    typeof value === 'object' &&
-    value !== null &&
-    'id' in value &&
-    'values' in value &&
-    Array.isArray(value.values) &&
-    value.values.every((item) => typeof item === 'string')
-  )
-}
-
-function collectAttributeFilterOptions(
-  champions: Champion[],
-  groupId: AttributeFilterGroupId,
-  locale: 'zh-CN' | 'en-US',
-): string[] {
-  return Array.from(new Set(champions.flatMap((champion) => getChampionTagsForGroup(champion.tags, groupId)))).sort(
-    (left, right) => getChampionTagLabel(left, locale).localeCompare(getChampionTagLabel(right, locale)),
-  )
-}
-
-function groupMechanicOptions(options: string[]): MechanicOptionGroup[] {
-  const orderedCategories: ChampionMechanicCategoryId[] = ['positional', 'control', 'specialization']
-
-  return orderedCategories
-    .map((id) => ({
-      id,
-      options: options.filter((tag) => getChampionMechanicCategoryId(tag) === id),
-    }))
-    .filter((group) => group.options.length > 0)
-}
-
-function readSearchValue(searchParams: URLSearchParams): string {
-  return searchParams.get(SEARCH_PARAM_QUERY)?.trim() ?? ''
-}
-
-function readSeatValues(searchParams: URLSearchParams): number[] {
-  return Array.from(
-    new Set(
-      searchParams
-        .getAll(SEARCH_PARAM_SEAT)
-        .map((value) => Number.parseInt(value, 10))
-        .filter((value) => seatOptions.includes(value)),
-    ),
-  ).sort((left, right) => left - right)
-}
-
-function readStringValues(searchParams: URLSearchParams, key: string): string[] {
-  return Array.from(
-    new Set(
-      searchParams
-        .getAll(key)
-        .map((value) => value.trim())
-        .filter(Boolean),
-    ),
-  )
-}
-
 function readShowAllResults(searchParams: URLSearchParams): boolean {
   return searchParams.get(SEARCH_PARAM_VIEW) === RESULTS_VIEW_ALL
-}
-
-function appendSortedStringValues(searchParams: URLSearchParams, key: string, values: string[]): void {
-  values
-    .slice()
-    .sort((left, right) => left.localeCompare(right))
-    .forEach((value) => searchParams.append(key, value))
 }
 
 function buildFilterSearchParams(filters: {
@@ -1123,39 +1011,14 @@ export function ChampionsPage() {
                       })}
                     </p>
 
-                    {activeFilterChips.length > 0 ? (
-                      <div className="active-filter-bar active-filter-bar--sidebar">
-                        <div className="active-filter-bar__header">
-                          <div className="active-filter-bar__copy">
-                            <strong className="active-filter-bar__title">
-                              {t({ zh: '已选条件', en: 'Selected filters' })}
-                            </strong>
-                            <p className="active-filter-bar__hint">
-                              {t({
-                                zh: '点击任一条件即可单独清空对应维度；全量回退统一用上方的清空全部。',
-                                en: 'Click any filter chip to clear that dimension only, then use the reset button above when you want a full reset.',
-                              })}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="active-filter-bar__chips">
-                          {activeFilterChips.map((chip) => (
-                            <button
-                              key={chip.id}
-                              type="button"
-                              className="active-filter-chip"
-                              aria-label={chip.clearLabel}
-                              onClick={() => clearActiveFilterChip(chip.id)}
-                            >
-                              <span>{chip.label}</span>
-                              <span aria-hidden="true" className="active-filter-chip__dismiss">
-                                ×
-                              </span>
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    ) : null}
+                    <ActiveFilterChipBar
+                      chips={activeFilterChips}
+                      hint={t({
+                        zh: '点击任一条件即可单独清空对应维度；全量回退统一用上方的清空全部。',
+                        en: 'Click any filter chip to clear that dimension only, then use the reset button above when you want a full reset.',
+                      })}
+                      onClearChip={clearActiveFilterChip}
+                    />
 
                     <div className="champions-sidebar__section-label">
                       {t({ zh: '高频条件', en: 'Frequent filters' })}
@@ -1186,116 +1049,65 @@ export function ChampionsPage() {
                         />
                       </FieldGroup>
 
-                      <FieldGroup
+                      <FilterChipFieldGroup
                         label={t({ zh: '座位', en: 'Seat' })}
                         hint={t({
                           zh: '支持多选；同一维度按“或”命中。',
                           en: 'Multi-select is supported, and matches within this group use OR.',
                         })}
-                        className="filter-group"
-                      >
-                        <div className="filter-chip-grid">
-                          <button
-                            type="button"
-                            className={selectedSeats.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
-                            aria-pressed={selectedSeats.length === 0}
-                            onClick={() => runFilterMutation(() => setSelectedSeats([]))}
-                          >
-                            {t({ zh: '全部', en: 'All' })}
-                          </button>
-                          {seatOptions.map((seat) => (
-                            <button
-                              key={seat}
-                              type="button"
-                              className={selectedSeats.includes(seat) ? 'filter-chip filter-chip--active' : 'filter-chip'}
-                              aria-pressed={selectedSeats.includes(seat)}
-                              onClick={() =>
-                                runFilterMutation(() => {
-                                  setSelectedSeats((current) => toggleFilterValue(current, seat))
-                                })
-                              }
-                            >
-                              {formatSeatLabel(seat, locale)}
-                            </button>
-                          ))}
-                        </div>
-                      </FieldGroup>
+                        options={seatOptions.map((seat) => ({
+                          id: seat,
+                          label: formatSeatLabel(seat, locale),
+                        }))}
+                        selectedValues={selectedSeats}
+                        allLabel={t({ zh: '全部', en: 'All' })}
+                        onReset={() => runFilterMutation(() => setSelectedSeats([]))}
+                        onToggle={(seat) =>
+                          runFilterMutation(() => {
+                            setSelectedSeats((current) => toggleFilterValue(current, seat))
+                          })
+                        }
+                      />
 
-                      <FieldGroup
+                      <FilterChipFieldGroup
                         label={t({ zh: '定位', en: 'Role' })}
                         hint={t({
                           zh: '支持多选；会匹配任一已选定位。',
                           en: 'Multi-select is supported, and champions can match any selected role.',
                         })}
-                        className="filter-group"
-                      >
-                        <div className="filter-chip-grid">
-                          <button
-                            type="button"
-                            className={selectedRoles.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
-                            aria-pressed={selectedRoles.length === 0}
-                            onClick={() => runFilterMutation(() => setSelectedRoles([]))}
-                          >
-                            {t({ zh: '全部', en: 'All' })}
-                          </button>
-                          {state.roles.map((role) => (
-                            <button
-                              key={role}
-                              type="button"
-                              className={selectedRoles.includes(role) ? 'filter-chip filter-chip--active' : 'filter-chip'}
-                              aria-pressed={selectedRoles.includes(role)}
-                              onClick={() =>
-                                runFilterMutation(() => {
-                                  setSelectedRoles((current) => toggleFilterValue(current, role))
-                                })
-                              }
-                            >
-                              {getRoleLabel(role, locale)}
-                            </button>
-                          ))}
-                        </div>
-                      </FieldGroup>
+                        options={state.roles.map((role) => ({
+                          id: role,
+                          label: getRoleLabel(role, locale),
+                        }))}
+                        selectedValues={selectedRoles}
+                        allLabel={t({ zh: '全部', en: 'All' })}
+                        onReset={() => runFilterMutation(() => setSelectedRoles([]))}
+                        onToggle={(role) =>
+                          runFilterMutation(() => {
+                            setSelectedRoles((current) => toggleFilterValue(current, role))
+                          })
+                        }
+                      />
 
-                      <FieldGroup
+                      <FilterChipFieldGroup
                         label={t({ zh: '联动队伍', en: 'Affiliation' })}
                         hint={t({
                           zh: '支持多选；适合同时看多个联动队伍候选。',
                           en: 'Multi-select is supported for comparing multiple affiliations at once.',
                         })}
-                        className="filter-group"
-                      >
-                        <div className="filter-chip-grid">
-                          <button
-                            type="button"
-                            className={
-                              selectedAffiliations.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'
-                            }
-                            aria-pressed={selectedAffiliations.length === 0}
-                            onClick={() => runFilterMutation(() => setSelectedAffiliations([]))}
-                          >
-                            {t({ zh: '全部', en: 'All' })}
-                          </button>
-                          {state.affiliations.map((affiliation) => (
-                            <button
-                              key={affiliation.original}
-                              type="button"
-                              className={
-                                selectedAffiliations.includes(affiliation.original)
-                                  ? 'filter-chip filter-chip--active'
-                                  : 'filter-chip'
-                              }
-                              aria-pressed={selectedAffiliations.includes(affiliation.original)}
-                              onClick={() =>
-                                runFilterMutation(() => {
-                                  setSelectedAffiliations((current) => toggleFilterValue(current, affiliation.original))
-                                })
-                              }
-                            >
-                              <LocalizedText text={affiliation} mode="primary" />
-                            </button>
-                          ))}
-                        </div>
-                      </FieldGroup>
+                        options={state.affiliations.map((affiliation) => ({
+                          id: affiliation.original,
+                          label: <LocalizedText text={affiliation} mode="primary" />,
+                        }))}
+                        selectedValues={selectedAffiliations}
+                        allLabel={t({ zh: '全部', en: 'All' })}
+                        onReset={() => runFilterMutation(() => setSelectedAffiliations([]))}
+                        onToggle={(affiliation) =>
+                          runFilterMutation(() => {
+                            setSelectedAffiliations((current) => toggleFilterValue(current, affiliation))
+                          })
+                        }
+                      />
                     </div>
 
                     <div className="champions-sidebar__section-label champions-sidebar__section-label--subtle">
@@ -1321,112 +1133,65 @@ export function ChampionsPage() {
                         onToggle={() => setIdentityFiltersExpanded((current) => !current)}
                       >
                         <div className="filter-panel filter-panel--nested">
-                          <FieldGroup
+                          <FilterChipFieldGroup
                             label={getChampionAttributeGroupLabel('race', locale)}
                             hint={t({
                               zh: '支持多选；适合快速收窄到特定种族组合。',
                               en: 'Multi-select is supported for narrowing the pool to specific races.',
                             })}
-                            className="filter-group"
-                          >
-                            <div className="filter-chip-grid">
-                              <button
-                                type="button"
-                                className={selectedRaces.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
-                                aria-pressed={selectedRaces.length === 0}
-                                onClick={() => runFilterMutation(() => setSelectedRaces([]))}
-                              >
-                                {t({ zh: '全部', en: 'All' })}
-                              </button>
-                              {raceOptions.map((race) => (
-                                <button
-                                  key={race}
-                                  type="button"
-                                  className={selectedRaces.includes(race) ? 'filter-chip filter-chip--active' : 'filter-chip'}
-                                  aria-pressed={selectedRaces.includes(race)}
-                                  onClick={() =>
-                                    runFilterMutation(() => {
-                                      setSelectedRaces((current) => toggleFilterValue(current, race))
-                                    })
-                                  }
-                                >
-                                  {getChampionTagLabel(race, locale)}
-                                </button>
-                              ))}
-                            </div>
-                          </FieldGroup>
+                            options={raceOptions.map((race) => ({
+                              id: race,
+                              label: getChampionTagLabel(race, locale),
+                            }))}
+                            selectedValues={selectedRaces}
+                            allLabel={t({ zh: '全部', en: 'All' })}
+                            onReset={() => runFilterMutation(() => setSelectedRaces([]))}
+                            onToggle={(race) =>
+                              runFilterMutation(() => {
+                                setSelectedRaces((current) => toggleFilterValue(current, race))
+                              })
+                            }
+                          />
 
-                          <FieldGroup
+                          <FilterChipFieldGroup
                             label={getChampionAttributeGroupLabel('gender', locale)}
                             hint={t({
                               zh: '支持多选；同一维度内仍按“或”命中。',
                               en: 'Multi-select is supported, and matches within this group still use OR.',
                             })}
-                            className="filter-group"
-                          >
-                            <div className="filter-chip-grid">
-                              <button
-                                type="button"
-                                className={selectedGenders.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
-                                aria-pressed={selectedGenders.length === 0}
-                                onClick={() => runFilterMutation(() => setSelectedGenders([]))}
-                              >
-                                {t({ zh: '全部', en: 'All' })}
-                              </button>
-                              {genderOptions.map((gender) => (
-                                <button
-                                  key={gender}
-                                  type="button"
-                                  className={selectedGenders.includes(gender) ? 'filter-chip filter-chip--active' : 'filter-chip'}
-                                  aria-pressed={selectedGenders.includes(gender)}
-                                  onClick={() =>
-                                    runFilterMutation(() => {
-                                      setSelectedGenders((current) => toggleFilterValue(current, gender))
-                                    })
-                                  }
-                                >
-                                  {getChampionTagLabel(gender, locale)}
-                                </button>
-                              ))}
-                            </div>
-                          </FieldGroup>
+                            options={genderOptions.map((gender) => ({
+                              id: gender,
+                              label: getChampionTagLabel(gender, locale),
+                            }))}
+                            selectedValues={selectedGenders}
+                            allLabel={t({ zh: '全部', en: 'All' })}
+                            onReset={() => runFilterMutation(() => setSelectedGenders([]))}
+                            onToggle={(gender) =>
+                              runFilterMutation(() => {
+                                setSelectedGenders((current) => toggleFilterValue(current, gender))
+                              })
+                            }
+                          />
 
-                          <FieldGroup
+                          <FilterChipFieldGroup
                             label={getChampionAttributeGroupLabel('alignment', locale)}
                             hint={t({
                               zh: '支持多选；适合先看善恶 / 秩序倾向的英雄池。',
                               en: 'Multi-select is supported for comparing alignment tendencies in one pass.',
                             })}
-                            className="filter-group"
-                          >
-                            <div className="filter-chip-grid">
-                              <button
-                                type="button"
-                                className={selectedAlignments.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
-                                aria-pressed={selectedAlignments.length === 0}
-                                onClick={() => runFilterMutation(() => setSelectedAlignments([]))}
-                              >
-                                {t({ zh: '全部', en: 'All' })}
-                              </button>
-                              {alignmentOptions.map((alignment) => (
-                                <button
-                                  key={alignment}
-                                  type="button"
-                                  className={
-                                    selectedAlignments.includes(alignment) ? 'filter-chip filter-chip--active' : 'filter-chip'
-                                  }
-                                  aria-pressed={selectedAlignments.includes(alignment)}
-                                  onClick={() =>
-                                    runFilterMutation(() => {
-                                      setSelectedAlignments((current) => toggleFilterValue(current, alignment))
-                                    })
-                                  }
-                                >
-                                  {getChampionTagLabel(alignment, locale)}
-                                </button>
-                              ))}
-                            </div>
-                          </FieldGroup>
+                            options={alignmentOptions.map((alignment) => ({
+                              id: alignment,
+                              label: getChampionTagLabel(alignment, locale),
+                            }))}
+                            selectedValues={selectedAlignments}
+                            allLabel={t({ zh: '全部', en: 'All' })}
+                            onReset={() => runFilterMutation(() => setSelectedAlignments([]))}
+                            onToggle={(alignment) =>
+                              runFilterMutation(() => {
+                                setSelectedAlignments((current) => toggleFilterValue(current, alignment))
+                              })
+                            }
+                          />
                         </div>
                       </FilterDisclosureSection>
 
@@ -1448,157 +1213,64 @@ export function ChampionsPage() {
                         onToggle={() => setMetaFiltersExpanded((current) => !current)}
                       >
                         <div className="filter-panel filter-panel--nested">
-                          <FieldGroup
+                          <FilterChipFieldGroup
                             label={getChampionAttributeGroupLabel('profession', locale)}
                             hint={t({
                               zh: '支持多选；便于按职业组合快速找候选英雄。',
                               en: 'Multi-select is supported for filtering by profession combinations.',
                             })}
-                            className="filter-group"
-                          >
-                            <div className="filter-chip-grid">
-                              <button
-                                type="button"
-                                className={
-                                  selectedProfessions.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'
-                                }
-                                aria-pressed={selectedProfessions.length === 0}
-                                onClick={() => runFilterMutation(() => setSelectedProfessions([]))}
-                              >
-                                {t({ zh: '全部', en: 'All' })}
-                              </button>
-                              {professionOptions.map((profession) => (
-                                <button
-                                  key={profession}
-                                  type="button"
-                                  className={
-                                    selectedProfessions.includes(profession)
-                                      ? 'filter-chip filter-chip--active'
-                                      : 'filter-chip'
-                                  }
-                                  aria-pressed={selectedProfessions.includes(profession)}
-                                  onClick={() =>
-                                    runFilterMutation(() => {
-                                      setSelectedProfessions((current) => toggleFilterValue(current, profession))
-                                    })
-                                  }
-                                >
-                                  {getChampionTagLabel(profession, locale)}
-                                </button>
-                              ))}
-                            </div>
-                          </FieldGroup>
+                            options={professionOptions.map((profession) => ({
+                              id: profession,
+                              label: getChampionTagLabel(profession, locale),
+                            }))}
+                            selectedValues={selectedProfessions}
+                            allLabel={t({ zh: '全部', en: 'All' })}
+                            onReset={() => runFilterMutation(() => setSelectedProfessions([]))}
+                            onToggle={(profession) =>
+                              runFilterMutation(() => {
+                                setSelectedProfessions((current) => toggleFilterValue(current, profession))
+                              })
+                            }
+                          />
 
-                          <FieldGroup
+                          <FilterChipFieldGroup
                             label={getChampionAttributeGroupLabel('acquisition', locale)}
                             hint={t({
                               zh: '支持多选；可以区分起始、常驻、活动或 Tales 等来源。',
                               en: 'Multi-select is supported for comparing starter, evergreen, event, or Tales availability.',
                             })}
-                            className="filter-group"
-                          >
-                            <div className="filter-chip-grid">
-                              <button
-                                type="button"
-                                className={
-                                  selectedAcquisitions.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'
-                                }
-                                aria-pressed={selectedAcquisitions.length === 0}
-                                onClick={() => runFilterMutation(() => setSelectedAcquisitions([]))}
-                              >
-                                {t({ zh: '全部', en: 'All' })}
-                              </button>
-                              {acquisitionOptions.map((acquisition) => (
-                                <button
-                                  key={acquisition}
-                                  type="button"
-                                  className={
-                                    selectedAcquisitions.includes(acquisition)
-                                      ? 'filter-chip filter-chip--active'
-                                      : 'filter-chip'
-                                  }
-                                  aria-pressed={selectedAcquisitions.includes(acquisition)}
-                                  onClick={() =>
-                                    runFilterMutation(() => {
-                                      setSelectedAcquisitions((current) => toggleFilterValue(current, acquisition))
-                                    })
-                                  }
-                                >
-                                  {getChampionTagLabel(acquisition, locale)}
-                                </button>
-                              ))}
-                            </div>
-                          </FieldGroup>
+                            options={acquisitionOptions.map((acquisition) => ({
+                              id: acquisition,
+                              label: getChampionTagLabel(acquisition, locale),
+                            }))}
+                            selectedValues={selectedAcquisitions}
+                            allLabel={t({ zh: '全部', en: 'All' })}
+                            onReset={() => runFilterMutation(() => setSelectedAcquisitions([]))}
+                            onToggle={(acquisition) =>
+                              runFilterMutation(() => {
+                                setSelectedAcquisitions((current) => toggleFilterValue(current, acquisition))
+                              })
+                            }
+                          />
 
-                          <FieldGroup
+                          <MechanicFilterFieldGroup
+                            locale={locale}
                             label={getChampionAttributeGroupLabel('mechanics', locale)}
                             hint={t({
                               zh: '支持多选；这里只收会直接影响阵型取舍的特殊玩法标签，不等于完整技能说明。',
                               en: 'Multi-select is supported for the combat tags that most directly affect formation building, not the full ability text.',
                             })}
-                            className="filter-group"
-                          >
-                            <div className="filter-chip-grid">
-                              <button
-                                type="button"
-                                className={selectedMechanics.length === 0 ? 'filter-chip filter-chip--active' : 'filter-chip'}
-                                aria-pressed={selectedMechanics.length === 0}
-                                onClick={() => runFilterMutation(() => setSelectedMechanics([]))}
-                              >
-                                {t({ zh: '全部', en: 'All' })}
-                              </button>
-                            </div>
-
-                            <div className="filter-subgroup-stack">
-                              {mechanicOptionGroups.map((group) => (
-                                <section key={group.id} className="filter-subgroup">
-                                  <div className="filter-subgroup__header">
-                                    <strong className="filter-subgroup__title">
-                                      {getChampionMechanicCategoryLabel(group.id, locale)}
-                                    </strong>
-                                    <p className="filter-subgroup__hint">
-                                      {group.id === 'positional'
-                                        ? t({
-                                            zh: '前后排、相邻位或固定站位会直接影响这类英雄的发挥。',
-                                            en: 'These champions care about adjacency, rows, or specific formation slots.',
-                                          })
-                                        : group.id === 'control'
-                                          ? t({
-                                              zh: '会直接施加眩晕、减速、击退、定身或位移等控制效果。',
-                                              en: 'These champions directly apply effects like stun, slow, knockback, root, or repositioning.',
-                                            })
-                                          : t({
-                                              zh: '专精分支会偏向金币、速度、减益或特定敌人猎杀。',
-                                              en: 'Their specialization paths lean toward gold, speed, debuffs, or hunting certain enemy types.',
-                                            })}
-                                    </p>
-                                  </div>
-
-                                  <div className="filter-chip-grid">
-                                    {group.options.map((mechanic) => (
-                                      <button
-                                        key={mechanic}
-                                        type="button"
-                                        className={
-                                          selectedMechanics.includes(mechanic)
-                                            ? 'filter-chip filter-chip--active'
-                                            : 'filter-chip'
-                                        }
-                                        aria-pressed={selectedMechanics.includes(mechanic)}
-                                        onClick={() =>
-                                          runFilterMutation(() => {
-                                            setSelectedMechanics((current) => toggleFilterValue(current, mechanic))
-                                          })
-                                        }
-                                      >
-                                        {getChampionTagLabel(mechanic, locale)}
-                                      </button>
-                                    ))}
-                                  </div>
-                                </section>
-                              ))}
-                            </div>
-                          </FieldGroup>
+                            groups={mechanicOptionGroups}
+                            selectedValues={selectedMechanics}
+                            allLabel={t({ zh: '全部', en: 'All' })}
+                            onReset={() => runFilterMutation(() => setSelectedMechanics([]))}
+                            onToggle={(mechanic) =>
+                              runFilterMutation(() => {
+                                setSelectedMechanics((current) => toggleFilterValue(current, mechanic))
+                              })
+                            }
+                            groupHint={(groupId) => getMechanicCategoryHint(groupId, t)}
+                          />
                         </div>
                       </FilterDisclosureSection>
                     </div>
