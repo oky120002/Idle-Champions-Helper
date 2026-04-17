@@ -7,7 +7,7 @@
 
 ## 结论
 
-- 后端能做；更准确地说，是构建期 Node 数据管线能做，不需要长期在线服务。
+- “后端能做”在当前项目里更准确的说法是：构建期 Node 数据管线能做，不需要长期在线服务。
 - 前端也能做，但前提是构建期先把原始 SkelAnim 转成浏览器可直接消费的 atlas + metadata。
 - 当前项目若只选一条生产主路线，应选“构建期预合成最终立绘”。
 - 前端实时合成更适合二阶段增强：姿态切换、单图高清、简单动画或调试工具，而不是首发主链路。
@@ -25,68 +25,37 @@
 
 ## 两条路线
 
-### A：构建期预合成最终立绘
+| 路线 | 核心流程 | 页面最终拿到什么 |
+| --- | --- | --- |
+| A：构建期预合成最终立绘 | 读取 `Characters/...` 的 SkelAnim 二进制 -> 解析 atlas、piece、frame、pivot、rotation、scale、position、depth -> 选择展示用 `sequence + frame` -> 在 Node 侧离线合成为完整立绘 -> 裁透明边并输出 `display / thumb` | 已组装图片 + 审计元数据；前端不再理解 atlas、piece 或 frame |
+| B：前端实时合成 | 构建期先发布 atlas PNG / WebP、规范化 metadata 和默认 `sequence + frame`；浏览器只做 Canvas 绘制 | atlas + metadata + 前端合成结果 |
 
-1. 读取 `Characters/...` 的 SkelAnim 二进制
-2. 解析 atlas、piece、frame、pivot、rotation、scale、position、depth
-3. 选择展示用 `sequence + frame`
-4. 在 Node 侧离线合成为完整立绘
-5. 裁透明边并输出 `display / thumb`
-6. 页面只显示最终静态图片
-
-页面拿到的是：已组装图片 + 审计元数据；前端不再理解 atlas、piece 或 frame。
-
-### B：前端实时合成
-
-推荐定义不是“浏览器直接啃原始二进制”，而是：构建期先发布 atlas PNG / WebP、规范化 metadata 和默认 `sequence + frame`，浏览器只做 Canvas 绘制。
-
-不推荐的变体是：浏览器自己做 zlib 解压、二进制协议解析、atlas / frame 生成再实时绘制。
+不推荐的变体是：让浏览器自己做 zlib 解压、二进制协议解析、atlas / frame 生成再实时绘制。
 
 ## 可行性与代价
 
-### A 为什么可行
+### A：构建期预合成
 
 - 已有调研已证明 SkelAnim 可解析，piece / frame / pivot / depth 数据真实存在。
 - 仓库本来就依赖构建期脚本同步官方数据；把 `scripts/sync-idle-champions-illustrations.mjs` 从“下载 -> 解包 atlas”升级为“下载 -> 解析 -> 合成 -> 输出最终图”即可成立。
-- 建议输出两层产物：
-  - 页面产物：`public/data/v1/champion-illustrations/thumbs/...`、`public/data/v1/champion-illustrations/display/...`
-  - 调试元数据：`champion-illustrations.json` 中的 `sourceGraphic / renderSequence / renderFrame / bounds / sourceVersion`
+- 建议输出两层页面产物，例如 `champion-illustrations` 下的 `thumbs/`、`display/` 目录；调试元数据保留在 `champion-illustrations.json` 的 `sourceGraphic / renderSequence / renderFrame / bounds / sourceVersion`。
 - 当前展示单元是 `833` 张：`161` 个英雄本体 + `672` 个皮肤；构建成本发生在离线阶段，不在每个终端重复支付。
 - 已核到的资源复杂度样例：`Hero_Evandra_Plushie_2xup` 单序列 `28` 个 piece，`Hero_BBEG_Modron_2xup` `56` 个，`Hero_Evelyn_Spelljammer` 某些序列 `173` 个；这进一步说明重活更该放构建侧。
 
-### A 的优点
+优点：浏览器最轻、跨浏览器一致性最好、列表页和图鉴页更稳。代价：需要补 Node 渲染器、构建时间会上升、仍要解决 `sequence / frame` 选择；以后若要做动画，还需额外暴露 atlas + metadata。
 
-- 浏览器最轻：页面只显示普通图片。
-- 结果最一致：Chrome / Safari / Firefox / iPad / Android 不会因现场合成出现细微差异。
-- 页面逻辑最简单，视觉回归和自动化测试最稳。
-- 更适合列表页、筛选页、图鉴页一次展示大量缩略图。
-
-### A 的代价
-
-- 需要补 Node 侧渲染器。
-- 构建时间会上升。
-- 仍要解决“哪个 `sequence / frame` 最像正式主立绘”的选择问题。
-- 如果以后要做动画，还需再暴露 atlas + metadata。
-
-### B 为什么可行
+### B：前端实时合成
 
 前端路线成立的前提是构建期至少发布：atlas、piece UV / 尺寸 / pivot、默认 `sequence / frame`、以及该 frame 下每个 piece 的 `depth / x / y / scaleX / scaleY / rotation`。只给当前 atlas PNG 不够。
 
-浏览器侧若只做 B1 这种“绘制不解析”的路线，依赖的 API 都是基础能力：`CanvasRenderingContext2D.drawImage()`、`HTMLImageElement.decode()`、`HTMLCanvasElement.toBlob()`；`createImageBitmap()` 与 `OffscreenCanvas` 只应作为可选优化，不该是硬依赖。
+若只做“浏览器绘制、不解析原始二进制”，依赖的 API 仍是基础能力：`CanvasRenderingContext2D.drawImage()`、`HTMLImageElement.decode()`、`HTMLCanvasElement.toBlob()`；`createImageBitmap()` 与 `OffscreenCanvas` 只应作为可选优化，不该是硬依赖。
 
-### B 的优点
-
-- 更适合以后做姿态切换、局部显隐、简单动画。
-- 单张详情弹窗按需渲染的峰值成本可接受。
-- 可按容器或 DPR 自适应更高分辨率输出。
-
-### B 的主要风险
+优点：更适合以后做姿态切换、局部显隐、简单动画，单张详情弹窗按需渲染也可接受。主要风险：
 
 - 跨浏览器一致性弱于预合成：抗锯齿、亚像素取整、浮点变换、缩放插值都会带来细微差异。
-- 移动端首次打开峰值更高：已见 `2048 x 2048` atlas，且单序列可到 `173` 个 piece；首次打开会集中发生“解码 atlas + 建高 DPR canvas + 多次 transform / drawImage”。
+- 移动端首次打开峰值更高：已见 `2048 x 2048` atlas，且单序列可到 `173` 个 piece；首次打开会集中发生 atlas 解码、高 DPR canvas 创建和多次 `transform / drawImage`。
 - “保留分片资源”不等于更省流量：当前错误 atlas 式 PNG 产物目录 `public/data/v1/champion-illustrations/` 已约 `125 MB`，还没算运行时 metadata 与缓存图。
-- 列表页 / 缩略图墙不划算：同页多图时，前端合成优势快速下降。
-- 缓存策略更复杂：要额外处理 atlas、metadata、合成结果、Blob URL / ImageBitmap 复用与内存回收。
+- 列表页 / 缩略图墙不划算；缓存策略也会更复杂。
 - 不能把“原始二进制解压 + 解析”也压到浏览器：当前这条链路会依赖 `DecompressionStream`；Compression Streams API 的 Baseline 时间是 2023 年 5 月，把它当主依赖会明显抬高兼容性与调试风险。
 
 ## 正面对比
@@ -113,14 +82,7 @@
 
 1. 先把正确的静态图做出来：扩展 `scripts/sync-idle-champions-illustrations.mjs`，输出 `thumb`、`display` 与 `renderSequence / renderFrame / renderBounds / sourceGraphic`。
 2. 再保留前端增强入口：必要时额外产出 `runtime/<id>.json` 与 `runtime/<id>-atlas-0.png`，但页面默认仍显示预合成图。
-3. 如果一定要做前端合成，至少遵守这些底线：
-   - 只依赖 `HTMLCanvasElement + CanvasRenderingContext2D`
-   - `OffscreenCanvas`、`createImageBitmap()` 仅做可选优化
-   - 不在浏览器里解析原始 SkelAnim 二进制
-   - 一次只合成当前打开的一张图
-   - 缩略图仍用构建期产物
-   - 移动端按 DPR 或容器尺寸降档
-   - 失败时随时回退静态图
+3. 如果一定要做前端合成，至少遵守这些底线：只依赖 `HTMLCanvasElement + CanvasRenderingContext2D`；`OffscreenCanvas`、`createImageBitmap()` 仅做可选优化；不在浏览器里解析原始 SkelAnim 二进制；一次只合成当前打开的一张图；缩略图仍用构建期产物；移动端按 DPR 或容器尺寸降档；失败时随时回退静态图。
 
 ## 直接回答
 

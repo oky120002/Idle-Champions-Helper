@@ -1,83 +1,37 @@
 # 官方阵型布局提取调研
 
-- 调研日期：2026-04-13
-- 最后确认时间：2026-04-13 20:05 CST
-- 调研目标：确认《Idle Champions》官方 definitions 是否已经包含阵型布局数据、字段落点在哪里，以及本仓库应如何把这些数据归一化到 `public/data/v1/formations.json`。
+- 日期：2026-04-13
+- 目标：确认官方 definitions 是否已包含阵型布局、字段落点在哪里，以及仓库应如何归一化到 `public/data/v1/formations.json`
 
-## 1. 结论先行
+## 结论
 
-- 官方 definitions **已经包含阵型布局数据**，不需要继续手工维护 MVP 示例布局作为主来源。
-- 阵型字段不在单独的 `formation_defines` 集合里，而是挂在：
+- 官方 definitions 已包含阵型布局数据，不需要继续手工维护 MVP 示例布局作为主来源
+- 布局字段不在独立 `formation_defines` 集合里，而是挂在：
   - `campaign_defines[].game_changes[].formation`
   - `adventure_defines[].game_changes[].formation`
-- 单个 `formation` 槽位对象可见字段包括：
-  - `x`
-  - `y`
-  - `col`
-  - `row`（部分布局缺失）
-  - `adj`
-- 以 2026-04-13 抓到的最新快照计算：
-  - 有阵型数据的 `campaign` 共 28 个
-  - 有阵型数据的普通 `adventure` 共 283 个
-  - 有阵型数据的 `variant` 共 554 个
-  - 总上下文数共 865 个
-  - 经过按布局签名去重后，得到 **157 个唯一阵型布局**
-- 因此，本仓库应采用：
-  1. 官方 definitions 自动提取阵型布局
-  2. 归并重复布局
-  3. 为每个唯一布局保留 `sourceContexts / applicableContexts`
-  4. 仅把 `scripts/data/manual-overrides.json` 作为必要覆写层，而不是主数据源
+- 单个槽位对象当前可见：`x`、`y`、`col`、`row`（部分缺失）、`adj`
+- 以 2026-04-13 最新快照计算：
+  - 带阵型的 `campaign`：28
+  - 带阵型的普通 `adventure`：283
+  - 带阵型的 `variant`：554
+  - 总上下文：865
+  - 去重后唯一布局：157
+- 因此仓库应采用：官方自动提取 -> 去重归并 -> 为每个唯一布局保留 `sourceContexts / applicableContexts` -> `scripts/data/manual-overrides.json` 仅作为必要覆写层
 
-## 2. 本次核实使用的原始来源
+## 本次原始来源
 
-### 英文快照
+- 英文快照：`tmp/idle-champions-api/definitions-2026-04-13T11-51-00.099Z-inspect-en.json`
+- 英文元信息：`tmp/idle-champions-api/definitions-2026-04-13T11-51-00.099Z-inspect-en.meta.json`
+- 中文快照：`tmp/idle-champions-api/definitions-2026-04-13T11-56-42.025Z-inspect-zh.json`
+- 中文元信息：`tmp/idle-champions-api/definitions-2026-04-13T11-56-42.025Z-inspect-zh.meta.json`
 
-- 快照文件：`tmp/idle-champions-api/definitions-2026-04-13T11-51-00.099Z-inspect-en.json`
-- 元信息：`tmp/idle-champions-api/definitions-2026-04-13T11-51-00.099Z-inspect-en.meta.json`
-- 发现接口：
-  - `https://master.idlechampions.com/~idledragons/post.php?call=getPlayServerForDefinitions&mobile_client_version=999&network_id=11`
-- definitions 接口：
-  - `https://ps27.idlechampions.com/~idledragons/post.php?call=getDefinitions&new_achievements=1&mobile_client_version=99999&language_id=1`
+## 字段落点
 
-### 中文快照
+- `campaign_defines[].game_changes[].formation`：campaign 默认布局
+- `adventure_defines[].game_changes[].formation`：普通冒险与变体覆盖布局
+- 当前仓库沿用 `variant_adventure_id / base_adventure_id / variant_id / adventure_variant_id` 判断普通冒险与变体
 
-- 快照文件：`tmp/idle-champions-api/definitions-2026-04-13T11-56-42.025Z-inspect-zh.json`
-- 元信息：`tmp/idle-champions-api/definitions-2026-04-13T11-56-42.025Z-inspect-zh.meta.json`
-- definitions 接口：
-  - `https://ps27.idlechampions.com/~idledragons/post.php?call=getDefinitions&new_achievements=1&mobile_client_version=99999&language_id=7`
-
-## 3. 字段落点确认
-
-### campaign 默认布局
-
-`campaign_defines` 中可以直接看到默认阵型：
-
-```text
-campaign_defines[].game_changes[].formation
-```
-
-示例：`campaign_defines[id=1]`（`A Grand Tour of the Sword Coast / 剑湾之旅`）包含 9 槽布局。
-
-### adventure / variant 覆盖布局
-
-`adventure_defines` 中同样可以直接看到布局覆盖：
-
-```text
-adventure_defines[].game_changes[].formation
-```
-
-普通冒险与变体的区分，当前沿用仓库已有判断：
-
-- `variant_adventure_id`
-- `base_adventure_id`
-- `variant_id`
-- `adventure_variant_id`
-
-只要其中任一字段存在，就按 `variant` 处理。
-
-### 单个槽位字段
-
-本次抓取中可见的槽位字段如下：
+单个槽位样例：
 
 ```json
 {
@@ -89,77 +43,34 @@ adventure_defines[].game_changes[].formation
 }
 ```
 
-补充说明：
+归一化注意点：
 
-- `col` 是 0 基列号，归一化到前端网格时需要转成 1 基。
-- `row` 有些布局缺失，此时可以回退到 `y` 做行分层。
-- `adj` 是基于官方原始数组下标的邻接关系；归一化后需要改写成稳定的 `slot id`。
+- `col` 是 0 基列号，前端网格需转成 1 基
+- `row` 缺失时可回退到 `y` 分层
+- `adj` 基于官方原始数组下标，归一化后应改写成稳定 `slotId`
 
-## 4. 去重结果
+## 去重结果
 
-### 去重前
+- 去重前上下文：865
+- 去重后唯一布局：157
+- 槽位数量分布：9 槽 1 个、10 槽 152 个、11 槽 3 个、13 槽 1 个
+- 仓库实现使用“归一化槽位串 + `sha1` 截断”生成稳定布局 ID；签名至少应包含 `column / row / x / y / adjacentSlotIds`
 
-- `campaign`：28
-- `adventure`：283
-- `variant`：554
-- 总上下文：865
+## 对仓库实现的影响
 
-### 去重后
+- `public/data/v1/formations.json` 应承载唯一官方布局集合，并保留：`name.original / name.display`、`notes.original / notes.display`、`slots`、`applicableContexts`、`sourceContexts`
+- `scripts/data/manual-overrides.json` 从“布局主来源”降级为必要覆写、中文补充说明和未来缺口补丁
+- 阵型页文案应从“手工 MVP 布局”切换到“官方 definitions 自动提取的布局库”
 
-- 唯一布局：157
-- 槽位数量分布：
-  - 9 槽：1
-  - 10 槽：152
-  - 11 槽：3
-  - 13 槽：1
+## 当前边界
 
-### 去重签名建议
+- `language_id=7` 对部分新冒险或时空门条目仍可能回退英文
+- 官方中文个别文本可能有翻译质量问题；当前策略应是优先保留官方返回，再为必要缺口补人工覆写
+- 本次接入的是“布局数据自动提取”，还不是“按战役 / 冒险 / 变体筛选布局”的完整交互方案
 
-同一布局的判定不应依赖原始数组顺序，而应基于归一化后的槽位信息组合签名：
+## 最终判断
 
-- `column`
-- `row`
-- `x`
-- `y`
-- `adjacentSlotIds`
-
-仓库实现里使用了“归一化槽位串 + `sha1` 截断”的稳定布局 ID。
-
-## 5. 对仓库实现的影响
-
-### `public/data/v1/formations.json`
-
-应从“手工 4 个示例布局”改为：
-
-- 官方自动提取的唯一布局集合
-- 每个布局保留：
-  - `name.original / name.display`
-  - `notes.original / notes.display`
-  - `slots`
-  - `applicableContexts`
-  - `sourceContexts`
-
-### `scripts/data/manual-overrides.json`
-
-阵型布局不再作为主来源维护；这里只保留：
-
-- 必要的人工覆写
-- 中文补充说明
-- 未来发现官方缺口时的兜底补丁
-
-### 阵型页文案
-
-应从“手工 MVP 布局”改为“官方 definitions 自动提取的布局库”。
-
-## 6. 当前已知边界
-
-- `language_id=7` 不是所有新冒险或时空门条目都有稳定中文；部分上下文名称仍会回退到英文原文。
-- 官方中文个别文本可能存在串位或翻译质量问题；当前仓库策略应是**优先保留官方返回，再为必要缺口补人工覆写**，不要静默改写所有字段。
-- 这次接入的是“布局数据自动提取”，**还不是**“按战役 / 冒险 / 变体筛选布局”的完整交互方案；后续页面可以继续利用 `sourceContexts` 做筛选、搜索和定位。
-
-## 7. 结论
-
-1. 阵型布局数据已经在官方 definitions 中，可直接自动提取。
-2. 当前仓库原先的 4 个手工示例布局应退出主链路。
-3. `public/data/v1/formations.json` 现在应承载 157 个唯一官方布局，并保留上下文映射。
-4. 人工补充层仍然需要保留，但定位从“主来源”改成“必要覆写层”。
+1. 阵型布局数据已在官方 definitions 中，可直接自动提取
+2. 原先的 4 个手工示例布局应退出主链路
+3. `public/data/v1/formations.json` 应承载 157 个唯一官方布局与上下文映射
+4. 人工补充层仍需保留，但定位已从主来源变为必要覆写层
