@@ -37,8 +37,7 @@ async function fetchJson(url) {
   return response.json()
 }
 
-export async function fetchDefinitionsSnapshot(options = {}) {
-  const outDir = path.resolve(options.outDir ?? DEFAULT_OUT_DIR)
+export async function fetchDefinitionsPayload(options = {}) {
   const masterApiUrl = ensureTrailingSlash(options.masterApiUrl ?? DEFAULT_MASTER_API_URL)
   const playserverClientVersion = String(
     options.playserverClientVersion ?? DEFAULT_PLAYSERVER_CLIENT_VERSION,
@@ -74,15 +73,7 @@ export async function fetchDefinitionsSnapshot(options = {}) {
 
   const definitionsUrl = `${playServer}post.php?${definitionsQuery.toString()}`
   const definitionsPayload = await fetchJson(definitionsUrl)
-
   const fetchedAt = new Date()
-  const stamp = buildTimestampLabel(fetchedAt)
-
-  await mkdir(outDir, { recursive: true })
-
-  const rawFile = path.join(outDir, `definitions-${stamp}${fileSuffix}.json`)
-  const metaFile = path.join(outDir, `definitions-${stamp}${fileSuffix}.meta.json`)
-
   const meta = {
     fetchedAt: fetchedAt.toISOString(),
     discoveryUrl,
@@ -93,16 +84,38 @@ export async function fetchDefinitionsSnapshot(options = {}) {
     languageId,
   }
 
-  await writeFile(rawFile, `${JSON.stringify(definitionsPayload, null, 2)}\n`, 'utf8')
-  await writeFile(metaFile, `${JSON.stringify(meta, null, 2)}\n`, 'utf8')
-
   return {
-    rawFile,
-    metaFile,
+    definitionsPayload,
+    meta,
     playServer,
     fetchedAt: meta.fetchedAt,
     discoveryUrl,
     definitionsUrl,
+  }
+}
+
+export async function fetchDefinitionsSnapshot(options = {}) {
+  const outDir = path.resolve(options.outDir ?? DEFAULT_OUT_DIR)
+  const fileSuffix = buildFileSuffix(options.languageId, options.fileLabel)
+  const fetched = await fetchDefinitionsPayload(options)
+
+  const stamp = buildTimestampLabel(new Date(fetched.fetchedAt))
+
+  await mkdir(outDir, { recursive: true })
+
+  const rawFile = path.join(outDir, `definitions-${stamp}${fileSuffix}.json`)
+  const metaFile = path.join(outDir, `definitions-${stamp}${fileSuffix}.meta.json`)
+
+  await writeFile(rawFile, `${JSON.stringify(fetched.definitionsPayload, null, 2)}\n`, 'utf8')
+  await writeFile(metaFile, `${JSON.stringify(fetched.meta, null, 2)}\n`, 'utf8')
+
+  return {
+    rawFile,
+    metaFile,
+    playServer: fetched.playServer,
+    fetchedAt: fetched.meta.fetchedAt,
+    discoveryUrl: fetched.discoveryUrl,
+    definitionsUrl: fetched.definitionsUrl,
   }
 }
 

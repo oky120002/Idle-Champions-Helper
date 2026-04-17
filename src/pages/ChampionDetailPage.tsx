@@ -19,6 +19,7 @@ export function ChampionDetailPage() {
     specializationGraphicsById,
     isArtworkDialogOpen,
     selectedSkin,
+    selectedSkinAnimation,
     selectedSkinArtworkIds,
     selectedSkinIllustration,
     selectedSkinPreviewUrl,
@@ -143,6 +144,7 @@ export function ChampionDetailPage() {
           openArtworkDialog={openArtworkDialog}
           isArtworkDialogOpen={isArtworkDialogOpen}
           selectedSkin={selectedSkin}
+          selectedSkinAnimation={selectedSkinAnimation}
           selectedSkinArtworkIds={selectedSkinArtworkIds}
           selectedSkinIllustration={selectedSkinIllustration}
           selectedSkinPreviewUrl={selectedSkinPreviewUrl}

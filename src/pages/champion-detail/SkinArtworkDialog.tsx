@@ -1,4 +1,5 @@
-import type { ChampionDetail, ChampionIllustration, ChampionSkinDetail } from '../../domain/types'
+import { SkelAnimCanvas } from '../../features/skelanim-player/SkelAnimCanvas'
+import type { ChampionAnimation, ChampionDetail, ChampionIllustration, ChampionSkinDetail } from '../../domain/types'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import { buildSkinPreviewAlt, getSkinArtworkIds } from './detail-card-model'
 import { DetailField, LocalizedTextStack } from './detail-cards'
@@ -11,6 +12,7 @@ interface SkinArtworkDialogProps {
   t: (text: { zh: string; en: string }) => string
   isArtworkDialogOpen: boolean
   selectedSkin: ChampionSkinDetail | null
+  selectedSkinAnimation: ChampionAnimation | null
   selectedSkinIllustration: ChampionIllustration | null
   selectedSkinArtworkIds: SkinArtworkIds | null
   selectedSkinPreviewUrl: string | null
@@ -24,6 +26,7 @@ export function SkinArtworkDialog({
   t,
   isArtworkDialogOpen,
   selectedSkin,
+  selectedSkinAnimation,
   selectedSkinIllustration,
   selectedSkinArtworkIds,
   selectedSkinPreviewUrl,
@@ -73,11 +76,20 @@ export function SkinArtworkDialog({
           <div className="skin-artwork-dialog__stage">
             <div className="skin-artwork-dialog__canvas">
               {selectedSkinPreviewUrl ? (
-                <img
-                  className="skin-artwork-dialog__image"
-                  src={selectedSkinPreviewUrl}
+                <SkelAnimCanvas
+                  key={selectedSkin.id}
+                  animation={selectedSkinAnimation}
+                  fallbackSrc={selectedSkinPreviewUrl}
                   alt={buildSkinPreviewAlt(selectedSkin, locale)}
-                  loading="eager"
+                  labels={{
+                    loading: t({ zh: '正在载入动态预览…', en: 'Loading animated preview…' }),
+                    play: t({ zh: '播放动画', en: 'Play animation' }),
+                    pause: t({ zh: '暂停动画', en: 'Pause animation' }),
+                    reducedMotion: t({ zh: '已遵循减少动态偏好', en: 'Reduced motion is active' }),
+                    error: t({ zh: '动态预览加载失败', en: 'Animated preview failed to load' }),
+                    animated: t({ zh: '动态预览已启用', en: 'Animated preview enabled' }),
+                    fallback: t({ zh: '当前显示静态立绘回退', en: 'Showing the static illustration fallback' }),
+                  }}
                 />
               ) : (
                 <div className="skin-artwork-dialog__fallback">
@@ -88,6 +100,7 @@ export function SkinArtworkDialog({
 
             <div className="detail-field-grid detail-field-grid--compact">
               <DetailField label={t({ zh: '本地立绘', en: 'Local illustration' })} value={selectedSkinIllustration ? t({ zh: '已命中', en: 'Available' }) : t({ zh: '未命中', en: 'Missing' })} variant="compact" />
+              <DetailField label={t({ zh: '动态预览', en: 'Animated preview' })} value={selectedSkinAnimation ? t({ zh: '已命中', en: 'Available' }) : t({ zh: '未命中', en: 'Missing' })} variant="compact" />
               <DetailField label={t({ zh: '来源槽位', en: 'Source slot' })} value={selectedSkinIllustration?.sourceSlot ?? t({ zh: '未知', en: 'Unknown' })} variant="compact" />
               <DetailField label={t({ zh: 'Base Graphic ID', en: 'Base graphic ID' })} value={formatNullableText(selectedSkinArtworkIds?.baseGraphicId ?? null, locale)} variant="compact" />
               <DetailField label={t({ zh: 'Large Graphic ID', en: 'Large graphic ID' })} value={formatNullableText(selectedSkinArtworkIds?.largeGraphicId ?? null, locale)} variant="compact" />

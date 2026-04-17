@@ -128,7 +128,7 @@ function createDecodedPngAsset({ graphicId, sourceGraphic, color, remotePath }) 
   }
 }
 
-function createSkelAnimAsset({ graphicId, sourceGraphic, remotePath }) {
+function createSkelAnimRawBuffer() {
   const texture = createSolidTexture(2, 2, (x, y) => {
     if (x === 0 && y === 0) {
       return [255, 0, 0, 255]
@@ -145,7 +145,7 @@ function createSkelAnimAsset({ graphicId, sourceGraphic, remotePath }) {
     return [255, 255, 0, 255]
   })
 
-  const rawBuffer = buildSkelAnimAssetBuffer({
+  return buildSkelAnimAssetBuffer({
     sheetWidth: 2,
     sheetHeight: 2,
     textures: [texture],
@@ -226,16 +226,133 @@ function createSkelAnimAsset({ graphicId, sourceGraphic, remotePath }) {
       },
     ],
   })
+}
 
+function createSkinAnimationManifestItem({
+  championId,
+  skinId,
+  seat,
+  championName,
+  illustrationName,
+  sourceSlot = 'xl',
+  sourceGraphicId = `anim-${skinId}`,
+  sourceGraphic = `Skin_${skinId}_Anim`,
+  sourceVersion = 1,
+  defaultSequenceIndex = 1,
+  defaultFrameIndex = 1,
+  assetBytes,
+}) {
   return {
-    graphicId,
+    id: `skin:${skinId}`,
+    championId,
+    skinId,
+    kind: 'skin',
+    seat,
+    championName,
+    illustrationName,
+    sourceSlot,
+    sourceGraphicId,
     sourceGraphic,
-    sourceVersion: 1,
-    remotePath,
-    remoteUrl: toDataUrl(rawBuffer),
-    delivery: 'zlib-png',
-    uses: [],
+    sourceVersion,
+    fps: 24,
+    defaultSequenceIndex,
+    defaultFrameIndex,
+    asset: {
+      path: `v1/champion-animations/skins/${skinId}.bin`,
+      bytes: assetBytes,
+      format: 'skelanim-zlib',
+    },
+    sequences: [
+      {
+        sequenceIndex: 0,
+        frameCount: 1,
+        pieceCount: 1,
+        firstRenderableFrameIndex: 0,
+        bounds: { minX: 0, minY: 0, maxX: 1, maxY: 1 },
+      },
+      {
+        sequenceIndex: 1,
+        frameCount: 2,
+        pieceCount: 2,
+        firstRenderableFrameIndex: 0,
+        bounds: { minX: 0, minY: 0, maxX: 1, maxY: 1 },
+      },
+    ],
   }
+}
+
+function createHeroAnimationManifestItem({
+  championId,
+  seat,
+  championName,
+  sourceGraphicId = `hero-${championId}-anim`,
+  sourceGraphic = `Hero_${championId}_Anim`,
+  sourceVersion = 1,
+  defaultSequenceIndex = 1,
+  defaultFrameIndex = 1,
+  assetBytes,
+}) {
+  return {
+    id: `hero:${championId}`,
+    championId,
+    skinId: null,
+    kind: 'hero-base',
+    seat,
+    championName,
+    illustrationName: championName,
+    sourceSlot: 'base',
+    sourceGraphicId,
+    sourceGraphic,
+    sourceVersion,
+    fps: 24,
+    defaultSequenceIndex,
+    defaultFrameIndex,
+    asset: {
+      path: `v1/champion-animations/heroes/${championId}.bin`,
+      bytes: assetBytes,
+      format: 'skelanim-zlib',
+    },
+    sequences: [
+      {
+        sequenceIndex: 0,
+        frameCount: 1,
+        pieceCount: 1,
+        firstRenderableFrameIndex: 0,
+        bounds: { minX: 0, minY: 0, maxX: 1, maxY: 1 },
+      },
+      {
+        sequenceIndex: 1,
+        frameCount: 2,
+        pieceCount: 2,
+        firstRenderableFrameIndex: 0,
+        bounds: { minX: 0, minY: 0, maxX: 1, maxY: 1 },
+      },
+    ],
+  }
+}
+
+async function writeAnimationCollection(tempDir, items, rawBuffer = createSkelAnimRawBuffer()) {
+  await mkdir(path.join(tempDir, 'champion-animations', 'heroes'), { recursive: true })
+  await mkdir(path.join(tempDir, 'champion-animations', 'skins'), { recursive: true })
+
+  for (const item of items) {
+    const group = item.kind === 'hero-base' ? 'heroes' : 'skins'
+    const fileId = item.kind === 'hero-base' ? item.championId : item.skinId
+    await writeFile(path.join(tempDir, 'champion-animations', group, `${fileId}.bin`), rawBuffer)
+  }
+
+  await writeJson(path.join(tempDir, 'champion-animations.json'), {
+    updatedAt: '2026-04-16',
+    items: items.map((item) => ({
+      ...item,
+      asset: {
+        ...item.asset,
+        bytes: rawBuffer.length,
+      },
+    })),
+  })
+
+  return rawBuffer
 }
 
 async function createTempDir(t) {
@@ -246,10 +363,34 @@ async function createTempDir(t) {
   return tempDir
 }
 
-test('syncChampionIllustrations 支持按 skinId 覆盖 slot 选择', async (t) => {
+test('syncChampionIllustrations 的皮肤与 hero-base 静态图都复用本地动画默认帧', async (t) => {
   const tempDir = await createTempDir(t)
   const visualsFile = path.join(tempDir, 'champion-visuals.json')
-  const overridesFile = path.join(tempDir, 'champion-illustration-overrides.json')
+  const championName = { original: 'Animation Hero', display: '动画像英雄' }
+  const skinName = { original: 'Preferred Animation Frame', display: '动画默认帧' }
+  const heroItem = createHeroAnimationManifestItem({
+    championId: '101',
+    seat: 1,
+    championName,
+    sourceGraphicId: 'hero-101-anim',
+    sourceGraphic: 'Hero_101_Anim',
+    defaultSequenceIndex: 1,
+    defaultFrameIndex: 1,
+    assetBytes: 0,
+  })
+  const skinItem = createSkinAnimationManifestItem({
+    championId: '101',
+    skinId: '501',
+    seat: 1,
+    championName,
+    illustrationName: skinName,
+    sourceSlot: 'xl',
+    sourceGraphicId: 'g-xl',
+    sourceGraphic: 'Skin_XL',
+    defaultSequenceIndex: 1,
+    defaultFrameIndex: 1,
+    assetBytes: 0,
+  })
 
   await writeJson(visualsFile, {
     updatedAt: '2026-04-16',
@@ -257,73 +398,58 @@ test('syncChampionIllustrations 支持按 skinId 覆盖 slot 选择', async (t) 
       {
         championId: '101',
         seat: 1,
-        name: { original: 'Skin Override Hero', display: '皮肤覆盖英雄' },
+        name: championName,
         portrait: null,
-        base: null,
+        base: createDecodedPngAsset({
+          graphicId: 'hero-static',
+          sourceGraphic: 'Hero_Static',
+          color: [12, 34, 56],
+          remotePath: '/Portraits/Hero_Static',
+        }),
         skins: [
           {
             id: '501',
-            name: { original: 'Preferred Base', display: '优先 base' },
+            name: skinName,
             portrait: null,
-            base: createDecodedPngAsset({
-              graphicId: 'g-base',
-              sourceGraphic: 'Skin_Base',
-              color: [0, 255, 0],
-              remotePath: '/Portraits/Skin_Base',
-            }),
+            base: null,
             large: null,
-            xl: createDecodedPngAsset({
-              graphicId: 'g-xl',
-              sourceGraphic: 'Skin_XL',
-              color: [255, 0, 0],
-              remotePath: '/Portraits/Skin_XL',
-            }),
+            xl: null,
           },
         ],
       },
     ],
   })
-
-  await writeJson(overridesFile, {
-    _notes: ['测试用覆盖文件'],
-    items: [
-      {
-        skinId: '501',
-        slot: 'base',
-        notes: ['皮肤 501 应优先 base'],
-      },
-    ],
-  })
+  await writeAnimationCollection(tempDir, [heroItem, skinItem])
 
   await syncChampionIllustrations({
     visualsFile,
     outputDir: tempDir,
     currentVersion: 'v1',
-    illustrationOverrides: overridesFile,
   })
 
   const output = JSON.parse(await readFile(path.join(tempDir, 'champion-illustrations.json'), 'utf8'))
-  const illustration = output.items.find((item) => item.id === 'skin:501')
-  const png = PNG.sync.read(await readFile(path.join(tempDir, 'champion-illustrations', 'skins', '501.png')))
+  const heroIllustration = output.items.find((item) => item.id === 'hero:101')
+  const skinIllustration = output.items.find((item) => item.id === 'skin:501')
+  const heroPng = PNG.sync.read(await readFile(path.join(tempDir, 'champion-illustrations', 'heroes', '101.png')))
+  const skinPng = PNG.sync.read(await readFile(path.join(tempDir, 'champion-illustrations', 'skins', '501.png')))
 
-  assert.ok(illustration)
-  assert.equal(illustration.sourceSlot, 'base')
-  assert.deepEqual(illustration.manualOverride, {
-    matchedBy: ['skinId'],
-    requestedSlot: 'base',
-    candidateMatchedSlot: true,
-    preferredSequenceIndexes: [],
-    preferredFrameIndexes: [],
-    notes: ['皮肤 501 应优先 base'],
-  })
-  assert.deepEqual(Array.from(png.data), [0, 255, 0, 255])
+  assert.ok(heroIllustration)
+  assert.ok(skinIllustration)
+  assert.equal(heroIllustration.sourceGraphicId, 'hero-101-anim')
+  assert.equal(heroIllustration.render.sequenceIndex, 1)
+  assert.equal(heroIllustration.render.frameIndex, 1)
+  assert.equal(heroIllustration.sourceSlot, 'base')
+  assert.equal(skinIllustration.sourceGraphicId, 'g-xl')
+  assert.equal(skinIllustration.render.sequenceIndex, 1)
+  assert.equal(skinIllustration.render.frameIndex, 1)
+  assert.equal(skinIllustration.sourceSlot, 'xl')
+  assert.deepEqual(Array.from(heroPng.data), [255, 255, 0, 255])
+  assert.deepEqual(Array.from(skinPng.data), [255, 255, 0, 255])
 })
 
-test('syncChampionIllustrations 合并 championId 与 graphicId 覆盖到 pose 选择', async (t) => {
+test('syncChampionIllustrations 在 hero-base 没有动画包时回退现有静态渲染逻辑', async (t) => {
   const tempDir = await createTempDir(t)
   const visualsFile = path.join(tempDir, 'champion-visuals.json')
-  const overridesFile = path.join(tempDir, 'champion-illustration-overrides.json')
-  const definitionsFile = path.join(tempDir, 'definitions.json')
 
   await writeJson(visualsFile, {
     updatedAt: '2026-04-16',
@@ -331,51 +457,27 @@ test('syncChampionIllustrations 合并 championId 与 graphicId 覆盖到 pose �
       {
         championId: '201',
         seat: 2,
-        name: { original: 'Pose Override Hero', display: '姿态覆盖英雄' },
+        name: { original: 'Fallback Hero', display: '回退英雄' },
         portrait: null,
-        base: createSkelAnimAsset({
-          graphicId: '2001',
-          sourceGraphic: 'Hero_Pose_Override',
-          remotePath: '/Characters/Hero_Pose_Override',
+        base: createDecodedPngAsset({
+          graphicId: 'hero-201',
+          sourceGraphic: 'Hero_201',
+          color: [0, 255, 0],
+          remotePath: '/Portraits/Hero_201',
         }),
         skins: [],
       },
     ],
   })
-
-  await writeJson(definitionsFile, {
-    graphic_defines: [
-      {
-        id: 2001,
-        export_params: {
-          sequence_override: [1],
-        },
-      },
-    ],
-  })
-
-  await writeJson(overridesFile, {
-    _notes: ['测试用覆盖文件'],
-    items: [
-      {
-        championId: '201',
-        preferredFrameIndexes: [1],
-        notes: ['冠军兜底优先第 1 帧'],
-      },
-      {
-        graphicId: '2001',
-        preferredSequenceIndexes: [1],
-        notes: ['指定 graphic 优先第 1 个 sequence'],
-      },
-    ],
+  await writeJson(path.join(tempDir, 'champion-animations.json'), {
+    updatedAt: '2026-04-16',
+    items: [],
   })
 
   await syncChampionIllustrations({
-    input: definitionsFile,
     visualsFile,
     outputDir: tempDir,
     currentVersion: 'v1',
-    illustrationOverrides: overridesFile,
   })
 
   const output = JSON.parse(await readFile(path.join(tempDir, 'champion-illustrations.json'), 'utf8'))
@@ -383,23 +485,31 @@ test('syncChampionIllustrations 合并 championId 与 graphicId 覆盖到 pose �
   const png = PNG.sync.read(await readFile(path.join(tempDir, 'champion-illustrations', 'heroes', '201.png')))
 
   assert.ok(illustration)
-  assert.equal(illustration.render.sequenceIndex, 1)
-  assert.equal(illustration.render.frameIndex, 1)
-  assert.deepEqual(illustration.manualOverride, {
-    matchedBy: ['championId', 'graphicId'],
-    requestedSlot: null,
-    candidateMatchedSlot: null,
-    preferredSequenceIndexes: [1],
-    preferredFrameIndexes: [1],
-    notes: ['冠军兜底优先第 1 帧', '指定 graphic 优先第 1 个 sequence'],
-  })
-  assert.deepEqual(Array.from(png.data), [255, 255, 0, 255])
+  assert.equal(illustration.sourceGraphicId, 'hero-201')
+  assert.equal(illustration.render.pipeline, 'decoded-png')
+  assert.equal(illustration.render.sequenceIndex, null)
+  assert.equal(illustration.render.frameIndex, null)
+  assert.deepEqual(Array.from(png.data), [0, 255, 0, 255])
 })
 
 test('syncChampionIllustrations 在 skinIds 局部重渲染时保留既有清单与图片', async (t) => {
   const tempDir = await createTempDir(t)
   const visualsFile = path.join(tempDir, 'champion-visuals.json')
   const illustrationRoot = path.join(tempDir, 'champion-illustrations')
+  const rawBuffer = createSkelAnimRawBuffer()
+  const animationItem = createSkinAnimationManifestItem({
+    championId: '101',
+    skinId: '501',
+    seat: 1,
+    championName: { original: 'Hero One', display: '英雄一' },
+    illustrationName: { original: 'Skin One', display: '皮肤一' },
+    sourceSlot: 'large',
+    sourceGraphicId: 'skin-501-anim',
+    sourceGraphic: 'Skin_501_Anim',
+    defaultSequenceIndex: 1,
+    defaultFrameIndex: 1,
+    assetBytes: rawBuffer.length,
+  })
 
   await writeJson(visualsFile, {
     updatedAt: '2026-04-16',
@@ -420,12 +530,7 @@ test('syncChampionIllustrations 在 skinIds 局部重渲染时保留既有清单
             id: '501',
             name: { original: 'Skin One', display: '皮肤一' },
             portrait: null,
-            base: createDecodedPngAsset({
-              graphicId: 'skin-501',
-              sourceGraphic: 'Skin_501',
-              color: [12, 34, 56],
-              remotePath: '/Portraits/Skin_501',
-            }),
+            base: null,
             large: null,
             xl: null,
           },
@@ -447,12 +552,7 @@ test('syncChampionIllustrations 在 skinIds 局部重渲染时保留既有清单
             id: '601',
             name: { original: 'Skin Two', display: '皮肤二' },
             portrait: null,
-            base: createDecodedPngAsset({
-              graphicId: 'skin-601',
-              sourceGraphic: 'Skin_601',
-              color: [65, 43, 21],
-              remotePath: '/Portraits/Skin_601',
-            }),
+            base: null,
             large: null,
             xl: null,
           },
@@ -530,6 +630,7 @@ test('syncChampionIllustrations 在 skinIds 局部重渲染时保留既有清单
       },
     ],
   })
+  await writeAnimationCollection(tempDir, [animationItem], rawBuffer)
 
   await syncChampionIllustrations({
     visualsFile,
@@ -544,7 +645,9 @@ test('syncChampionIllustrations 在 skinIds 局部重渲染时保留既有清单
 
   assert.deepEqual(ids, ['skin:501', 'skin:601', 'hero:999'])
   assert.ok(updatedSkin)
-  assert.equal(updatedSkin.sourceGraphicId, 'skin-501')
+  assert.equal(updatedSkin.sourceGraphicId, 'skin-501-anim')
+  assert.equal(updatedSkin.render.sequenceIndex, 1)
+  assert.equal(updatedSkin.render.frameIndex, 1)
   assert.deepEqual(await readFile(path.join(illustrationRoot, 'heroes', '999.png')), Buffer.from('keep-hero'))
   assert.deepEqual(await readFile(path.join(illustrationRoot, 'skins', '601.png')), Buffer.from('keep-skin'))
 })

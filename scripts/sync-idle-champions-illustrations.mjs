@@ -2,26 +2,16 @@ import { mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
-import { decodeRemoteGraphicBuffer, readPngDimensions } from './data/mobile-asset-codec.mjs'
-import {
-  loadChampionIllustrationOverrides,
-  resolveChampionIllustrationOverride,
-} from './data/champion-illustration-overrides.mjs'
+import { createChampionGraphicResourceCache } from './data/champion-graphic-resource-cache.mjs'
 import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.mjs'
 import { renderSkelAnimPoseToPngBuffer } from './data/skelanim-renderer.mjs'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'
 const DEFAULT_VISUALS_FILE = 'champion-visuals.json'
-const DEFAULT_ILLUSTRATION_OVERRIDES = 'scripts/data/champion-illustration-overrides.json'
+const DEFAULT_ANIMATIONS_FILE = 'champion-animations.json'
 const DEFAULT_CONCURRENCY = 6
 const CHAMPION_ILLUSTRATION_DIR_NAME = 'champion-illustrations'
-
-const SLOT_PRIORITY = {
-  xl: 3,
-  large: 2,
-  base: 1,
-}
 
 function buildIllustrationImagePath(currentVersion, group, id) {
   return `${currentVersion}/${CHAMPION_ILLUSTRATION_DIR_NAME}/${group}/${id}.png`
@@ -56,46 +46,6 @@ function parseIdFilter(rawValue) {
   return ids.length > 0 ? new Set(ids) : null
 }
 
-function compareCandidateMetrics(left, right) {
-  const leftSlotPriority = SLOT_PRIORITY[left.slot] ?? 0
-  const rightSlotPriority = SLOT_PRIORITY[right.slot] ?? 0
-
-  if (leftSlotPriority !== rightSlotPriority) {
-    return rightSlotPriority - leftSlotPriority
-  }
-
-  const leftStatic = Boolean(left.render?.isStaticPose)
-  const rightStatic = Boolean(right.render?.isStaticPose)
-
-  if (leftStatic !== rightStatic) {
-    return rightStatic ? 1 : -1
-  }
-
-  const leftPixels = left.width * left.height
-  const rightPixels = right.width * right.height
-
-  if (leftPixels !== rightPixels) {
-    return rightPixels - leftPixels
-  }
-
-  if (left.height !== right.height) {
-    return right.height - left.height
-  }
-
-  return 0
-}
-
-function compareCandidatePriority(left, right) {
-  const leftPriority = left.manualOverride?.priorityScore ?? 0
-  const rightPriority = right.manualOverride?.priorityScore ?? 0
-
-  if (leftPriority !== rightPriority) {
-    return rightPriority - leftPriority
-  }
-
-  return compareCandidateMetrics(left, right)
-}
-
 function sortIllustrations(left, right) {
   return (
     left.seat - right.seat ||
@@ -127,132 +77,14 @@ async function runWithConcurrency(items, concurrency, worker) {
   return results
 }
 
-function isSkelAnimAsset(asset) {
-  return asset.remotePath.includes('/Characters/')
+function buildAnimationMap(animationCollection) {
+  return new Map((animationCollection?.items ?? []).map((item) => [item.id, item]))
 }
 
-function mergePreferredIndexes(...groups) {
-  const ordered = []
-  const seen = new Set()
-
-  for (const group of groups) {
-    for (const value of group ?? []) {
-      if (!Number.isInteger(value) || value < 0 || seen.has(value)) {
-        continue
-      }
-
-      seen.add(value)
-      ordered.push(value)
-    }
-  }
-
-  return ordered
-}
-
-function resolvePreferredSequenceIndexes(asset, graphicDefById) {
-  const graphicDef = graphicDefById.get(String(asset.graphicId))
-  const sequenceOverride = graphicDef?.export_params?.sequence_override
-
-  if (!Array.isArray(sequenceOverride) || sequenceOverride.length === 0) {
-    return []
-  }
-
-  return sequenceOverride
-    .map((value) => Number(value) - 1)
-    .filter((value) => Number.isInteger(value) && value >= 0)
-}
-
-async function fetchDecodedCandidate(candidate, graphicDefById, manualOverride = null) {
-  const { asset } = candidate
-  const response = await fetch(asset.remoteUrl, { cache: 'no-store' })
-
-  if (!response.ok) {
-    throw new Error(`下载资源失败：HTTP ${response.status}`)
-  }
-
-  const rawBuffer = Buffer.from(await response.arrayBuffer())
-
-  if (isSkelAnimAsset(asset)) {
-    const skelAnim = decodeSkelAnimGraphicBuffer(asset, rawBuffer)
-    const rendered = await renderSkelAnimPoseToPngBuffer(skelAnim, {
-      preferredSequenceIndexes: mergePreferredIndexes(
-        manualOverride?.preferredSequenceIndexes ?? [],
-        resolvePreferredSequenceIndexes(asset, graphicDefById),
-      ),
-      preferredFrameIndexes: manualOverride?.preferredFrameIndexes ?? [],
-    })
-
-    return {
-      asset,
-      bytes: rendered.bytes,
-      width: rendered.width,
-      height: rendered.height,
-      render: {
-        pipeline: 'skelanim',
-        sequenceIndex: rendered.render.sequenceIndex,
-        sequenceLength: rendered.render.sequenceLength,
-        isStaticPose: rendered.render.isStaticPose,
-        frameIndex: rendered.render.frameIndex,
-        visiblePieceCount: rendered.render.visiblePieceCount,
-        bounds: rendered.render.bounds,
-      },
-    }
-  }
-
-  const decodedBuffer = decodeRemoteGraphicBuffer(asset, rawBuffer)
-  const dimensions = readPngDimensions(decodedBuffer)
-
-  return {
-    asset,
-    bytes: decodedBuffer,
-    width: dimensions.width,
-    height: dimensions.height,
-      render: {
-        pipeline: 'decoded-png',
-        sequenceIndex: null,
-        sequenceLength: null,
-        isStaticPose: null,
-        frameIndex: null,
-        visiblePieceCount: null,
-        bounds: null,
-    },
-  }
-}
-
-async function selectBestIllustrationCandidate(entry, graphicDefById) {
-  const candidates = []
-  const errors = []
-
-  for (const candidate of entry.candidates) {
-    const manualOverride = resolveChampionIllustrationOverride(entry, candidate, entry.illustrationOverrides)
-
-    try {
-      const decoded = await fetchDecodedCandidate(candidate, graphicDefById, manualOverride)
-      candidates.push({
-        slot: candidate.slot,
-        manualOverride,
-        ...decoded,
-      })
-    } catch (error) {
-      errors.push({
-        slot: candidate.slot,
-        message: error instanceof Error ? error.message : String(error),
-      })
-    }
-  }
-
-  if (candidates.length === 0) {
-    const message = errors.map((item) => `${item.slot}:${item.message}`).join(' | ') || '没有可用候选资源'
-    throw new Error(`${entry.id} 无法生成立绘：${message}`)
-  }
-
-  candidates.sort(compareCandidatePriority)
-  return candidates[0]
-}
-
-function buildHeroIllustrationTasks(visuals) {
+function buildHeroIllustrationTasks(visuals, animationCollection) {
   const championIdFilter = parseIdFilter(visuals.filters?.championIds ?? null)
   const skinIdFilter = parseIdFilter(visuals.filters?.skinIds ?? null)
+  const animationById = buildAnimationMap(animationCollection)
   const tasks = []
 
   if (skinIdFilter && !championIdFilter) {
@@ -279,17 +111,20 @@ function buildHeroIllustrationTasks(visuals) {
       portraitPath: visual.portrait?.localPath ?? null,
       outputGroup: 'heroes',
       outputFileName: `${visual.championId}.png`,
-      candidates: [{ slot: 'base', asset: visual.base }],
+      animation: animationById.get(`hero:${visual.championId}`) ?? null,
+      fallbackAsset: visual.base,
     })
   }
 
   return tasks
 }
 
-function buildSkinIllustrationTasks(visuals) {
+function buildSkinIllustrationTasks(visuals, animationCollection) {
   const championIdFilter = parseIdFilter(visuals.filters?.championIds ?? null)
   const skinIdFilter = parseIdFilter(visuals.filters?.skinIds ?? null)
+  const animationById = buildAnimationMap(animationCollection)
   const tasks = []
+  const missingSkinIds = []
 
   for (const visual of visuals.items ?? []) {
     if (championIdFilter && !championIdFilter.has(visual.championId)) {
@@ -301,13 +136,10 @@ function buildSkinIllustrationTasks(visuals) {
         continue
       }
 
-      const candidates = [
-        skin.large ? { slot: 'large', asset: skin.large } : null,
-        skin.base ? { slot: 'base', asset: skin.base } : null,
-        skin.xl ? { slot: 'xl', asset: skin.xl } : null,
-      ].filter(Boolean)
+      const animation = animationById.get(`skin:${skin.id}`)
 
-      if (candidates.length === 0) {
+      if (!animation) {
+        missingSkinIds.push(skin.id)
         continue
       }
 
@@ -322,28 +154,128 @@ function buildSkinIllustrationTasks(visuals) {
         portraitPath: visual.portrait?.localPath ?? null,
         outputGroup: 'skins',
         outputFileName: `${skin.id}.png`,
-        candidates,
+        animation,
+        fallbackAsset: null,
       })
     }
   }
 
+  if (missingSkinIds.length > 0) {
+    throw new Error(`以下皮肤缺少本地动画清单，请先同步 champion-animations：${missingSkinIds.join(', ')}`)
+  }
+
   return tasks
+}
+
+function resolvePublishedAssetFile(outputDir, currentVersion, assetPath) {
+  if (!assetPath) {
+    throw new Error('动画资源缺少 asset.path')
+  }
+
+  const normalizedPath = assetPath.replace(/^\/+/, '')
+  const versionPrefix = `${currentVersion}/`
+  const relativePath = normalizedPath.startsWith(versionPrefix)
+    ? normalizedPath.slice(versionPrefix.length)
+    : normalizedPath
+
+  return path.join(outputDir, relativePath)
+}
+
+function normalizeAnimationIndexes(animation, taskId) {
+  const sequenceIndex = Number(animation.defaultSequenceIndex)
+  const frameIndex = Number(animation.defaultFrameIndex)
+
+  if (!Number.isInteger(sequenceIndex) || sequenceIndex < 0) {
+    throw new Error(`${taskId} 的 defaultSequenceIndex 无效`)
+  }
+
+  if (!Number.isInteger(frameIndex) || frameIndex < 0) {
+    throw new Error(`${taskId} 的 defaultFrameIndex 无效`)
+  }
+
+  return { sequenceIndex, frameIndex }
+}
+
+async function renderAnimationIllustrationTask(task, outputDir, currentVersion) {
+  if (task.animation.asset?.format !== 'skelanim-zlib') {
+    throw new Error(`${task.id} 的动画资源格式不是 skelanim-zlib`)
+  }
+
+  const animationFile = resolvePublishedAssetFile(outputDir, currentVersion, task.animation.asset.path)
+  const rawBuffer = await readFile(animationFile)
+  const { sequenceIndex, frameIndex } = normalizeAnimationIndexes(task.animation, task.id)
+  const skelAnim = decodeSkelAnimGraphicBuffer(
+    {
+      graphicId: task.animation.sourceGraphicId,
+      sourceGraphic: task.animation.sourceGraphic,
+      sourceVersion: task.animation.sourceVersion,
+      remotePath: task.animation.asset.path,
+      delivery: 'zlib-png',
+    },
+    rawBuffer,
+  )
+  const rendered = await renderSkelAnimPoseToPngBuffer(skelAnim, {
+    sequenceIndex,
+    frameIndex,
+  })
+
+  return {
+    sourceSlot: task.animation.sourceSlot,
+    sourceGraphicId: task.animation.sourceGraphicId,
+    sourceGraphic: task.animation.sourceGraphic,
+    sourceVersion: task.animation.sourceVersion,
+    bytes: rendered.bytes,
+    width: rendered.width,
+    height: rendered.height,
+    render: {
+      pipeline: 'skelanim',
+      sequenceIndex: rendered.render.sequenceIndex,
+      sequenceLength: rendered.render.sequenceLength,
+      isStaticPose: rendered.render.isStaticPose,
+      frameIndex: rendered.render.frameIndex,
+      visiblePieceCount: rendered.render.visiblePieceCount,
+      bounds: rendered.render.bounds,
+    },
+  }
+}
+
+async function renderFallbackIllustrationTask(task, graphicCache) {
+  if (!task.fallbackAsset) {
+    throw new Error(`${task.id} 缺少 fallbackAsset`)
+  }
+
+  const rendered = await graphicCache.renderIllustrationCandidate({
+    slot: 'base',
+    asset: task.fallbackAsset,
+  })
+
+  return {
+    sourceSlot: 'base',
+    sourceGraphicId: rendered.asset.graphicId,
+    sourceGraphic: rendered.asset.sourceGraphic,
+    sourceVersion: rendered.asset.sourceVersion,
+    bytes: rendered.bytes,
+    width: rendered.width,
+    height: rendered.height,
+    render: rendered.render,
+  }
 }
 
 export async function syncChampionIllustrations(options = {}) {
   const outputDir = path.resolve(options.outputDir ?? DEFAULT_OUTPUT_DIR)
   const currentVersion = options.currentVersion ?? DEFAULT_CURRENT_VERSION
   const visualsFile = path.resolve(options.visualsFile ?? path.join(outputDir, DEFAULT_VISUALS_FILE))
-  const illustrationOverridesFile = path.resolve(options.illustrationOverrides ?? DEFAULT_ILLUSTRATION_OVERRIDES)
+  const animationsFile = path.resolve(options.animationsFile ?? path.join(outputDir, DEFAULT_ANIMATIONS_FILE))
   const definitionsInput = options.input ? path.resolve(options.input) : null
   const concurrency = Math.max(1, Number(options.concurrency ?? DEFAULT_CONCURRENCY))
   const championIdFilter = parseIdFilter(options.championIds ?? null)
   const skinIdFilter = parseIdFilter(options.skinIds ?? null)
   const hasSelectionFilters = Boolean(championIdFilter || skinIdFilter)
   const visuals = await readJson(visualsFile)
+  const animations = await readJsonIfExists(animationsFile)
   const definitions = definitionsInput ? await readJson(definitionsInput) : null
-  const illustrationOverrides = await loadChampionIllustrationOverrides(illustrationOverridesFile)
   const graphicDefById = new Map((definitions?.graphic_defines ?? []).map((item) => [String(item.id), item]))
+  const graphicCache = createChampionGraphicResourceCache({ graphicDefById })
   const filteredVisuals = {
     ...visuals,
     filters: {
@@ -354,12 +286,9 @@ export async function syncChampionIllustrations(options = {}) {
 
   const illustrationRoot = path.join(outputDir, CHAMPION_ILLUSTRATION_DIR_NAME)
   const tasks = [
-    ...buildHeroIllustrationTasks(filteredVisuals),
-    ...buildSkinIllustrationTasks(filteredVisuals),
-  ].map((task) => ({
-    ...task,
-    illustrationOverrides,
-  }))
+    ...buildHeroIllustrationTasks(filteredVisuals, animations),
+    ...buildSkinIllustrationTasks(filteredVisuals, animations),
+  ]
   const collectionFile = path.join(outputDir, 'champion-illustrations.json')
 
   if (!hasSelectionFilters) {
@@ -370,10 +299,12 @@ export async function syncChampionIllustrations(options = {}) {
   await mkdir(path.join(illustrationRoot, 'skins'), { recursive: true })
 
   const writtenIllustrations = await runWithConcurrency(tasks, concurrency, async (task) => {
-    const selected = await selectBestIllustrationCandidate(task, graphicDefById)
+    const rendered = task.animation
+      ? await renderAnimationIllustrationTask(task, outputDir, currentVersion)
+      : await renderFallbackIllustrationTask(task, graphicCache)
     const outputFile = path.join(illustrationRoot, task.outputGroup, task.outputFileName)
 
-    await writeFile(outputFile, selected.bytes)
+    await writeFile(outputFile, rendered.bytes)
 
     return {
       id: task.id,
@@ -384,17 +315,16 @@ export async function syncChampionIllustrations(options = {}) {
       championName: task.championName,
       illustrationName: task.illustrationName,
       portraitPath: task.portraitPath,
-      sourceSlot: selected.slot,
-      sourceGraphicId: selected.asset.graphicId,
-      sourceGraphic: selected.asset.sourceGraphic,
-      sourceVersion: selected.asset.sourceVersion,
-      ...(selected.manualOverride?.audit ? { manualOverride: selected.manualOverride.audit } : {}),
-      render: selected.render,
+      sourceSlot: rendered.sourceSlot,
+      sourceGraphicId: rendered.sourceGraphicId,
+      sourceGraphic: rendered.sourceGraphic,
+      sourceVersion: rendered.sourceVersion,
+      render: rendered.render,
       image: {
         path: buildIllustrationImagePath(currentVersion, task.outputGroup, task.outputFileName.replace(/\.png$/u, '')),
-        width: selected.width,
-        height: selected.height,
-        bytes: selected.bytes.length,
+        width: rendered.width,
+        height: rendered.height,
+        bytes: rendered.bytes.length,
         format: 'png',
       },
     }
@@ -420,6 +350,7 @@ export async function syncChampionIllustrations(options = {}) {
   return {
     outputDir,
     visualsFile,
+    animationsFile,
     currentVersion,
     totalBytes,
     counts: {
@@ -432,10 +363,10 @@ export async function syncChampionIllustrations(options = {}) {
 
 function printUsage() {
   console.log(`用法：
-  node scripts/sync-idle-champions-illustrations.mjs [--input <definitions.json>] [--visualsFile <file>] [--outputDir <dir>] [--illustrationOverrides <file>]
+  node scripts/sync-idle-champions-illustrations.mjs [--input <definitions.json>] [--visualsFile <file>] [--animationsFile <file>] [--outputDir <dir>] [--championIds <ids>] [--skinIds <ids>]
 
 说明：
-  基于 champion-visuals.json 拉取、解析 SkelAnim 并写出页面可直接消费的本地立绘资源。
+  优先复用本地 champion-animations 清单中的默认 sequence/frame，把 hero-base / skin 的本地 .bin 渲染为站内静态 PNG；仅当 hero-base 不存在动画包时，才回退到直接静态渲染。
 `)
 }
 
@@ -444,9 +375,9 @@ async function main() {
     options: {
       input: { type: 'string' },
       visualsFile: { type: 'string' },
+      animationsFile: { type: 'string' },
       outputDir: { type: 'string' },
       currentVersion: { type: 'string' },
-      illustrationOverrides: { type: 'string' },
       concurrency: { type: 'string' },
       championIds: { type: 'string' },
       skinIds: { type: 'string' },
@@ -463,6 +394,7 @@ async function main() {
 
   console.log(`立绘静态资源同步完成：`)
   console.log(`- visuals file: ${result.visualsFile}`)
+  console.log(`- animations file: ${result.animationsFile}`)
   console.log(`- output dir: ${result.outputDir}`)
   console.log(`- hero illustrations: ${result.counts.heroIllustrations}`)
   console.log(`- skin illustrations: ${result.counts.skinIllustrations}`)

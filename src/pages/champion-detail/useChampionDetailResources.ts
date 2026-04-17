@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { loadChampionDetail, loadCollection } from '../../data/client'
 import type {
+  ChampionAnimation,
   ChampionIllustration,
   ChampionSpecializationGraphic,
 } from '../../domain/types'
@@ -9,6 +10,7 @@ import type { ChampionDetailState } from './types'
 
 export function useChampionDetailResources(championId: string | undefined) {
   const [state, setState] = useState<ChampionDetailState>({ status: 'idle' })
+  const [skinAnimationsById, setSkinAnimationsById] = useState<Map<string, ChampionAnimation>>(new Map())
   const [skinIllustrationsById, setSkinIllustrationsById] = useState<Map<string, ChampionIllustration>>(new Map())
   const [specializationGraphicsById, setSpecializationGraphicsById] = useState<
     Map<string, ChampionSpecializationGraphic>
@@ -52,6 +54,36 @@ export function useChampionDetailResources(championId: string | undefined) {
       disposed = true
     }
   }, [championId])
+
+  useEffect(() => {
+    let disposed = false
+
+    loadCollection<ChampionAnimation>('champion-animations')
+      .then((collection) => {
+        if (disposed) {
+          return
+        }
+
+        setSkinAnimationsById(
+          new Map(
+            collection.items
+              .filter((animation) => animation.kind === 'skin' && animation.skinId)
+              .map((animation) => [animation.skinId as string, animation]),
+          ),
+        )
+      })
+      .catch(() => {
+        if (disposed) {
+          return
+        }
+
+        setSkinAnimationsById(new Map())
+      })
+
+    return () => {
+      disposed = true
+    }
+  }, [])
 
   useEffect(() => {
     let disposed = false
@@ -125,6 +157,7 @@ export function useChampionDetailResources(championId: string | undefined) {
       (state.status === 'not-found' && state.championId !== championId) ||
       (state.status === 'error' && state.championId !== championId))
   const selectedSkinArtworkIds = selectedSkin ? getSkinArtworkIds(selectedSkin) : null
+  const selectedSkinAnimation = selectedSkin ? skinAnimationsById.get(selectedSkin.id) ?? null : null
   const selectedSkinIllustration = selectedSkin ? skinIllustrationsById.get(selectedSkin.id) ?? null : null
   const selectedSkinPreviewUrl =
     detail && selectedSkin
@@ -177,6 +210,7 @@ export function useChampionDetailResources(championId: string | undefined) {
     specializationGraphicsById,
     isArtworkDialogOpen,
     selectedSkin,
+    selectedSkinAnimation,
     selectedSkinArtworkIds,
     selectedSkinIllustration,
     selectedSkinPreviewUrl,
