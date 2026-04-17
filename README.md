@@ -54,7 +54,8 @@ npm run data:pets -- --input tmp/idle-champions-api/<english>.json --localizedIn
 
 ## 仓库入口
 
-- `src/`：页面、组件、领域模型、规则与样式
+- `src/`：页面容器、按页面拆分的子目录、共享特性模块、组件、领域模型、规则与样式
+- `src/features/`：跨页面复用的筛选、展示与交互特性模块
 - `public/data/`：版本化公共数据与静态资源
 - `scripts/`：数据抓取、归一化、资源同步与预览脚本
 - `tests/e2e/`：Playwright 用例
