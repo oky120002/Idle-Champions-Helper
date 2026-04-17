@@ -677,7 +677,7 @@ describe('ChampionDetailPage', () => {
     renderChampionDetailPage()
 
     const upgradeButtons = await screen.findAllByRole('button', { name: '升级' })
-    fireEvent.click(upgradeButtons[0])
+    fireEvent.click(upgradeButtons[0]!)
 
     screen.getAllByRole('button', { name: '升级' }).forEach((button) => {
       expect(button).toHaveAttribute('aria-pressed', 'true')

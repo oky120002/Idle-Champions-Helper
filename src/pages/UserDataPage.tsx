@@ -97,7 +97,13 @@ export function UserDataPage() {
     [importMethods],
   )
 
-  const selectedMethod = importMethods.find((item) => item.id === method) ?? importMethods[0]
+  const fallbackMethod = importMethods[0]
+
+  if (!fallbackMethod) {
+    throw new Error('User import modes must define at least one input method.')
+  }
+
+  const selectedMethod = importMethods.find((item) => item.id === method) ?? fallbackMethod
   const maskedCredentials =
     parseState.status === 'success' ? buildMaskedCredentials(parseState.credentials) : null
 

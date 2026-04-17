@@ -15,11 +15,16 @@
 - 当前工作树如果位于 `main`，或分支与任务明显无关，应新开工作树；只有任务连续且分支高度相关时才复用。
 - 默认按 TDD 或至少“先补验证、后改实现”的方式推进；改动后执行最小充分验证，无法验证时明确缺口与风险。
 - 合并回 `main` 前必须完成当前可用的最大全量回归；未验证完成的结果不要进入 `main`。
+- 仓库默认按 AI-first 方式组织 TS / TSX：优先降低单次任务的上下文体积、误改风险和 token 消耗，详细规则见 `docs/product/ai-first-ts-tsx-guidelines.md`。
 - 核心规则、状态转换和副作用不要直接写死在页面层；新增模块需保持可隔离测试。
+- 页面组件默认只做编排；大型规则、映射表、状态机、长链式数据变换应拆到 `model.ts`、`useXxx.ts`、`types.ts` 或相邻 `.ts` 文件。
+- 新增或重构 feature 时，优先使用稳定加载顺序：入口页 / 入口组件 -> 状态 Hook -> `sections/` -> `model.ts` -> `types.ts` -> `constants.ts`。
+- 禁止新增泛化兜底文件：`utils.ts`、`helpers.ts`、`common.ts`、`misc.ts`；公共能力要按领域命名、按职责落位。
+- Barrel 只允许局部、稳定、低扇出的聚合；禁止跨 feature 的全量 re-export 扩散。
 - 形成可独立识别的阶段性成功后及时提交；提交信息使用 `type:summary`，保持单提交单目标。
 - 远端 GitHub 交互优先 `gh` / `gh api`；凡是改动了远端状态，必须同步本地分支、工作树和相关说明。
-- `.ts` 建议不超过 300 行，超过 400 行应评估拆分，超过 500 行必须拆分，优先按单一职责、高内聚、低耦合重构。
-- `.tsx` 建议不超过 250 行，超过 300 行应评估拆分，超过 350 行必须拆分，优先按单一职责、高内聚、低耦合重构。
+- `.ts` 建议不超过 200 行，超过 250 行应评估拆分，超过 300 行必须拆分，优先按单一职责、高内聚、低耦合重构。
+- `.tsx` 建议不超过 180 行，超过 220 行应评估拆分，超过 250 行应优先拆分；页面级入口硬上限为 300 行，前提是区块、状态和模型层已外置。
 - 长字符串、大型常量 / 枚举、schema、静态映射表、生成代码，或必须保持高内聚的复杂算法 / 逻辑可按职责适度豁免，但仍应保证可读性与可测试性。
 
 ## 3. 文档约束
@@ -35,6 +40,7 @@
 - 不预加载整棵 `docs/`；只按当前任务主题读取最相关的文档。
 - 项目定位、阶段目标、范围裁剪：`docs/product/idle-champions-roadmap.md`
 - 文档职责、精简原则、扫描触发条件：`docs/product/documentation-governance.md`
+- AI-first 的 TS / TSX 结构、类型边界和渐进式加载规范：`docs/product/ai-first-ts-tsx-guidelines.md`
 - `docs/` 目录结构与落位规则：`docs/README.md`
 - 主题局部索引：`docs/product/README.md`、`docs/research/README.md`、`docs/modules/README.md`、`docs/investigations/README.md`
 - 移动端布局与横向滚动禁令：`docs/product/mobile-compatibility-guidelines.md`

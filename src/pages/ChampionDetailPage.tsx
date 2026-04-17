@@ -151,11 +151,11 @@ interface LedgerUpgradeRow {
   category: UpgradeCategoryMeta
 }
 
-function isJsonObject(value: JsonValue): value is Record<string, JsonValue> {
+function isJsonObject(value: unknown): value is Record<string, JsonValue> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
 }
 
-function isJsonPrimitive(value: JsonValue): value is string | number | boolean | null {
+function isJsonPrimitive(value: unknown): value is string | number | boolean | null {
   return value === null || typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean'
 }
 
@@ -497,7 +497,7 @@ function parseEffectPayload(value: string): ParsedEffectPayload | null {
     if (parsed && isJsonObject(parsed) && typeof parsed.effect_string === 'string') {
       const [kind, ...args] = parsed.effect_string.split(',')
 
-      if (!/^[a-z_][a-z0-9_]*$/i.test(kind)) {
+      if (!kind || !/^[a-z_][a-z0-9_]*$/i.test(kind)) {
         return null
       }
 
@@ -516,7 +516,7 @@ function parseEffectPayload(value: string): ParsedEffectPayload | null {
 
   const [kind, ...args] = trimmed.split(',')
 
-  if (!/^[a-z_][a-z0-9_]*$/i.test(kind)) {
+  if (!kind || !/^[a-z_][a-z0-9_]*$/i.test(kind)) {
     return null
   }
 
@@ -536,7 +536,7 @@ function summarizeTargetLabels(labels: string[], locale: AppLocale): { summary: 
   }
 
   if (labels.length === 1) {
-    return { summary: labels[0], detail: null }
+    return { summary: labels[0] ?? null, detail: null }
   }
 
   const normalizedPrefixes = labels
@@ -544,7 +544,7 @@ function summarizeTargetLabels(labels: string[], locale: AppLocale): { summary: 
     .filter((value) => value.length > 0)
   const sharedPrefix =
     normalizedPrefixes.length === labels.length && new Set(normalizedPrefixes).size === 1
-      ? normalizedPrefixes[0]
+      ? (normalizedPrefixes[0] ?? null)
       : null
 
   if (sharedPrefix) {
@@ -646,7 +646,7 @@ function resolveEffectDescription(
   }
 
   return description
-    .replace(/\$\(([^)]+)\)/g, (_match, token) => resolveToken(token))
+    .replace(/\$\(([^)]+)\)/g, (_match: string, token: string) => resolveToken(token))
     .replace(/\$amount\b/g, formatNumberishToken(numericArgs[0] ?? null, effectContext.locale))
 }
 
@@ -842,11 +842,12 @@ function buildEffectDefinitionPresentation(
     }
   }
 
+  const descriptionValue = snapshot.description
   const description =
-    isJsonObject(snapshot.description) && typeof snapshot.description.desc === 'string'
-      ? snapshot.description.desc
-      : typeof snapshot.description === 'string'
-        ? snapshot.description
+    isJsonObject(descriptionValue) && typeof descriptionValue.desc === 'string'
+      ? descriptionValue.desc
+      : typeof descriptionValue === 'string'
+        ? descriptionValue
         : null
   const effectKeys = Array.isArray(snapshot.effect_keys)
     ? snapshot.effect_keys.filter(isJsonObject)
@@ -1062,7 +1063,7 @@ function formatStructuredPrimitive(
   return trimmed
 }
 
-function formatTimeWindow(value: JsonValue, locale: AppLocale): string | null {
+function formatTimeWindow(value: JsonValue | undefined, locale: AppLocale): string | null {
   if (!isJsonObject(value)) {
     return null
   }
@@ -1103,7 +1104,7 @@ function buildOverviewPropertyFields(
   const pushPrimitiveField = (key: keyof typeof propertyLabels) => {
     const rawValue = properties[key]
 
-    if (!isJsonPrimitive(rawValue)) {
+    if (rawValue === undefined || !isJsonPrimitive(rawValue)) {
       return
     }
 
@@ -1358,7 +1359,11 @@ function readGraphicId(value: JsonValue, key: string): string | null {
     return null
   }
 
-  const normalized = String(candidate).trim()
+  if (typeof candidate !== 'string' && typeof candidate !== 'number' && typeof candidate !== 'boolean') {
+    return null
+  }
+
+  const normalized = `${candidate}`.trim()
   return normalized.length > 0 ? normalized : null
 }
 
@@ -2133,7 +2138,7 @@ export function ChampionDetailPage() {
     sectionLinks.findIndex((section) => section.id === activeSectionId),
     0,
   )
-  const activeSectionLabel = sectionLinks[activeSectionIndex]?.label ?? sectionLinks[0].label
+  const activeSectionLabel = sectionLinks[activeSectionIndex]?.label ?? sectionLinks[0]?.label ?? ''
   const sectionProgressValue = `${((activeSectionIndex + 1) / sectionLinks.length) * 100}%`
   const getSectionProgressState = (index: number): DetailSectionProgressState => {
     if (index < activeSectionIndex) {
@@ -2325,7 +2330,7 @@ export function ChampionDetailPage() {
             // leaving the page does not race with the section-hash sync effect and bounce back.
             event.preventDefault()
             isLeavingPageRef.current = true
-            navigate(backToChampions)
+            void navigate(backToChampions)
           }}
         >
           {t({ zh: '← 返回英雄筛选', en: '← Back to champions' })}
