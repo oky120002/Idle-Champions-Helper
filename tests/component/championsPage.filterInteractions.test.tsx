@@ -1,134 +1,23 @@
-import { render, screen, waitFor, within } from '@testing-library/react'
+import { screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { MemoryRouter } from 'react-router-dom'
 
 vi.mock('../../src/data/client', () => ({
   loadCollection: vi.fn(),
 }))
 
-import { I18nProvider } from '../../src/app/i18n'
-import { loadCollection } from '../../src/data/client'
-import { ChampionsPage } from '../../src/pages/ChampionsPage'
-import type { Champion, DataCollection, LocalizedText } from '../../src/domain/types'
-
-interface StringEnumGroup {
-  id: string
-  values: string[]
-}
-
-interface LocalizedEnumGroup {
-  id: string
-  values: LocalizedText[]
-}
-
-function localized(original: string, display: string): LocalizedText {
-  return { original, display }
-}
-
-const hall = localized('Companions of the Hall', '大厅伙伴团')
-const adversaries = localized('Absolute Adversaries', '绝对宿敌')
-const oxventurers = localized('Oxventurers Guild', '牛冒险者公会')
-
-const championsFixture: DataCollection<Champion> = {
-  updatedAt: '2026-04-13',
-  items: [
-    {
-      id: 'alpha',
-      name: localized('Alpha', '阿尔法'),
-      seat: 1,
-      roles: ['support'],
-      affiliations: [hall],
-      tags: ['support', 'human', 'male', 'good', 'lawful', 'warlock', 'event', 'y2', 'control_slow', 'starter'],
-    },
-    {
-      id: 'beta',
-      name: localized('Beta', '贝塔'),
-      seat: 2,
-      roles: ['healing'],
-      affiliations: [hall],
-      tags: ['healing', 'elf', 'female', 'good', 'cleric', 'event', 'spec_gold'],
-    },
-    {
-      id: 'gamma',
-      name: localized('Gamma', '伽马'),
-      seat: 2,
-      roles: ['dps'],
-      affiliations: [adversaries],
-      tags: ['dps', 'drow', 'male', 'evil', 'rogue', 'event', 'control_stun'],
-    },
-    {
-      id: 'delta',
-      name: localized('Delta', '德尔塔'),
-      seat: 3,
-      roles: ['tank'],
-      affiliations: [oxventurers],
-      tags: ['tank', 'human', 'female', 'lawful', 'fighter', 'core', 'positional'],
-    },
-  ],
-}
-
-const enumsFixture: DataCollection<StringEnumGroup | LocalizedEnumGroup> = {
-  updatedAt: '2026-04-13',
-  items: [
-    {
-      id: 'roles',
-      values: ['support', 'healing', 'dps', 'tank'],
-    },
-    {
-      id: 'affiliations',
-      values: [hall, adversaries, oxventurers],
-    },
-  ],
-}
-
-const generatedRoleGroups = [['support'], ['healing'], ['dps'], ['tank']] as const
-const generatedAffiliationGroups = [[hall], [adversaries], [oxventurers]] as const
-
-const manyChampionsFixture: DataCollection<Champion> = {
-  updatedAt: '2026-04-13',
-  items: Array.from({ length: 60 }, (_, index) => ({
-    id: `generated-${index + 1}`,
-    name: localized(`Generated Hero ${index + 1}`, `测试英雄 ${index + 1}`),
-    seat: (index % 12) + 1,
-    roles: [...generatedRoleGroups[index % generatedRoleGroups.length]!],
-    affiliations: [...generatedAffiliationGroups[index % generatedAffiliationGroups.length]!],
-    tags: [`tag-${index + 1}`],
-  })),
-}
-
-const mockedLoadCollection = vi.mocked(loadCollection)
-
-function renderChampionsPage(initialEntries: string[] = ['/champions']) {
-  return render(
-    <I18nProvider>
-      <MemoryRouter initialEntries={initialEntries}>
-        <ChampionsPage />
-      </MemoryRouter>
-    </I18nProvider>,
-  )
-}
-
-beforeEach(() => {
-  window.sessionStorage.clear()
-  mockedLoadCollection.mockImplementation(async (name) => {
-    if (name === 'champions') {
-      return championsFixture
-    }
-
-    if (name === 'enums') {
-      return enumsFixture
-    }
-
-    throw new Error(`unexpected collection: ${name}`)
-  })
-})
-
-afterEach(() => {
-  vi.restoreAllMocks()
-})
+import { mockChampionsPageCollections, renderChampionsPage } from './champions-page/championsPageTestHarness'
 
 describe('ChampionsPage filters', () => {
+  beforeEach(() => {
+    window.sessionStorage.clear()
+    mockChampionsPageCollections()
+  })
+
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
   it('支持座位多选，并且再次点击已选项会取消选择', async () => {
     const user = userEvent.setup()
 
@@ -302,96 +191,5 @@ describe('ChampionsPage filters', () => {
     expect(screen.getByRole('button', { name: '清空获取方式：活动英雄' })).toBeInTheDocument()
     expect(screen.queryByText('伽马')).not.toBeInTheDocument()
     expect(screen.queryByText('德尔塔')).not.toBeInTheDocument()
-  })
-
-  it('无匹配时仍可通过唯一的清空入口快速回到全量结果', async () => {
-    const user = userEvent.setup()
-
-    renderChampionsPage()
-
-    expect(await screen.findByText('阿尔法')).toBeInTheDocument()
-
-    await user.type(screen.getByPlaceholderText('搜英雄名、标签、联动队伍'), '德')
-    await user.click(screen.getByRole('button', { name: '1 号位' }))
-
-    expect(
-      screen.getByText(
-        '当前筛选条件下没有匹配英雄。可以直接点左侧已选条件逐项回退，或用筛选头部的清空全部重新开始。',
-      ),
-    ).toBeInTheDocument()
-    expect(screen.getAllByRole('button', { name: '清空全部' })).toHaveLength(1)
-
-    await user.click(within(screen.getByRole('group', { name: '筛选状态操作' })).getByRole('button', { name: '清空全部' }))
-
-    await waitFor(() => {
-      expect(screen.getByText('阿尔法')).toBeInTheDocument()
-    })
-
-    expect(screen.getByPlaceholderText('搜英雄名、标签、联动队伍')).toHaveValue('')
-  })
-
-  it('支持从 URL 恢复筛选条件，并恢复上次滚动位置', async () => {
-    const scrollToSpy = vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
-    const search = '?q=alpha&seat=1&role=support&race=human&mechanic=control_slow'
-    window.sessionStorage.setItem(`champions-page-scroll:${search}`, '640')
-
-    renderChampionsPage([`/champions${search}`])
-
-    expect(await screen.findByDisplayValue('alpha')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: '1 号位' })).toHaveAttribute('aria-pressed', 'true')
-    expect(screen.getByRole('button', { name: '辅助' })).toHaveAttribute('aria-pressed', 'true')
-    expect(screen.getByRole('button', { name: '人类' })).toHaveAttribute('aria-pressed', 'true')
-    expect(screen.getByRole('button', { name: '减速控制' })).toHaveAttribute('aria-pressed', 'true')
-    expect(screen.getByText('阿尔法')).toBeInTheDocument()
-    expect(screen.queryByText('贝塔')).not.toBeInTheDocument()
-
-    await waitFor(() => {
-      expect(scrollToSpy).toHaveBeenCalledWith({ top: 640, left: 0, behavior: 'auto' })
-    })
-
-    expect(window.sessionStorage.getItem(`champions-page-scroll:${search}`)).toBeNull()
-    expect(screen.getByRole('link', { name: '查看详情：阿尔法' })).toHaveAttribute(
-      'href',
-      '/champions/alpha?q=alpha&seat=1&role=support&race=human&mechanic=control_slow',
-    )
-  })
-
-  it('默认先展示 48 名英雄，并支持切换到显示全部再收起', async () => {
-    const user = userEvent.setup()
-
-    mockedLoadCollection.mockImplementation(async (name) => {
-      if (name === 'champions') {
-        return manyChampionsFixture
-      }
-
-      if (name === 'enums') {
-        return enumsFixture
-      }
-
-      throw new Error(`unexpected collection: ${name}`)
-    })
-
-    renderChampionsPage()
-
-    expect(await screen.findByText('测试英雄 1')).toBeInTheDocument()
-    expect(screen.getByText('默认先展示 48 名英雄')).toBeInTheDocument()
-    expect(screen.getByText(/^当前展示 48 \/ 60 名英雄/)).toBeInTheDocument()
-    expect(screen.queryByText('测试英雄 60')).not.toBeInTheDocument()
-
-    await user.click(screen.getByRole('button', { name: '显示全部 60 名' }))
-
-    await waitFor(() => {
-      expect(screen.getByText('测试英雄 60')).toBeInTheDocument()
-    })
-
-    expect(screen.getByText(/^当前展示 60 \/ 60 名英雄/)).toBeInTheDocument()
-
-    await user.click(screen.getAllByRole('button', { name: '收起到默认 48 名' })[0]!)
-
-    await waitFor(() => {
-      expect(screen.queryByText('测试英雄 60')).not.toBeInTheDocument()
-    })
-
-    expect(screen.getByText(/^当前展示 48 \/ 60 名英雄/)).toBeInTheDocument()
   })
 })
