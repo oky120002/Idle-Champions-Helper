@@ -20,6 +20,16 @@ async function fetchJson<T>(relativePath: string, init?: RequestInit): Promise<T
   return (await response.json()) as T
 }
 
+async function fetchArrayBuffer(relativePath: string, init?: RequestInit): Promise<ArrayBuffer> {
+  const response = await fetch(resolveDataUrl(relativePath), init)
+
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}`)
+  }
+
+  return response.arrayBuffer()
+}
+
 export async function loadVersion(): Promise<DataVersion> {
   const cacheKey = 'version'
   const cached = memoryCache.get(cacheKey)
@@ -49,6 +59,19 @@ export async function loadCollectionAtVersion<T>(version: string, name: string):
 export async function loadCollection<T>(name: string): Promise<DataCollection<T>> {
   const version = await loadVersion()
   return loadCollectionAtVersion<T>(version.current, name)
+}
+
+export async function loadBinaryData(relativePath: string): Promise<ArrayBuffer> {
+  const cacheKey = `binary:${relativePath}`
+  const cached = memoryCache.get(cacheKey)
+
+  if (cached) {
+    return cached as ArrayBuffer
+  }
+
+  const buffer = await fetchArrayBuffer(relativePath)
+  memoryCache.set(cacheKey, buffer)
+  return buffer
 }
 
 export async function loadChampionDetailAtVersion(

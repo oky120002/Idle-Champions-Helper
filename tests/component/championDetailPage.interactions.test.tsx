@@ -1,3 +1,4 @@
+import { deflateSync } from 'node:zlib'
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -6,14 +7,21 @@ vi.mock('../../src/data/client', async () => {
 
   return {
     ...actual,
+    loadBinaryData: vi.fn(),
     loadChampionDetail: vi.fn(),
     loadCollection: vi.fn(),
   }
 })
 
-import { detailFixture } from './champion-detail/championDetailPageTestData'
+import {
+  animatedSkinFixture,
+  detailFixture,
+  illustrationFixture,
+  specializationGraphicFixture,
+} from './champion-detail/championDetailPageTestData'
 import {
   mockChampionDetailCollections,
+  mockedLoadBinaryData,
   mockedLoadChampionDetail,
   mockedLoadCollection,
   prepareChampionDetailDomEnvironment,
@@ -28,10 +36,84 @@ beforeEach(() => {
 
 afterEach(() => {
   mockedLoadChampionDetail.mockReset()
+  mockedLoadBinaryData.mockReset()
   mockedLoadCollection.mockReset()
   restoreChampionDetailDomEnvironment()
   vi.restoreAllMocks()
+  vi.unstubAllGlobals()
 })
+
+function encodeUInt32LE(value: number) {
+  const buffer = Buffer.alloc(4)
+  buffer.writeUInt32LE(value, 0)
+  return buffer
+}
+
+function encodeInt32LE(value: number) {
+  const buffer = Buffer.alloc(4)
+  buffer.writeInt32LE(value, 0)
+  return buffer
+}
+
+function encodeInt16LE(value: number) {
+  const buffer = Buffer.alloc(2)
+  buffer.writeInt16LE(value, 0)
+  return buffer
+}
+
+function encodeDoubleLE(value: number) {
+  const buffer = Buffer.alloc(8)
+  buffer.writeDoubleLE(value, 0)
+  return buffer
+}
+
+function encodeBoolean(value: boolean) {
+  return Buffer.from([value ? 1 : 0])
+}
+
+function encodeString(value: string) {
+  const bytes = Buffer.from(value, 'utf8')
+  return Buffer.concat([encodeInt16LE(bytes.length), bytes])
+}
+
+function buildTestSkelAnimBuffer() {
+  const chunks = [
+    encodeUInt32LE(1),
+    encodeUInt32LE(1),
+    encodeUInt32LE(1),
+    encodeUInt32LE(4),
+    Buffer.from([1, 2, 3, 4]),
+    encodeUInt32LE(1),
+    encodeString('TestHero'),
+    encodeUInt32LE(1),
+    encodeUInt32LE(2),
+    encodeUInt32LE(1),
+    encodeUInt32LE(0),
+    encodeUInt32LE(0),
+    encodeUInt32LE(0),
+    encodeUInt32LE(1),
+    encodeUInt32LE(1),
+    encodeInt32LE(0),
+    encodeInt32LE(0),
+    encodeBoolean(true),
+    encodeUInt32LE(0),
+    encodeDoubleLE(0),
+    encodeDoubleLE(1),
+    encodeDoubleLE(1),
+    encodeDoubleLE(0),
+    encodeDoubleLE(0),
+    encodeBoolean(true),
+    encodeUInt32LE(0),
+    encodeDoubleLE(0),
+    encodeDoubleLE(1),
+    encodeDoubleLE(1),
+    encodeDoubleLE(1),
+    encodeDoubleLE(0),
+  ]
+
+  const compressed = deflateSync(Buffer.concat(chunks))
+  return compressed.buffer.slice(compressed.byteOffset, compressed.byteOffset + compressed.byteLength)
+}
 
 describe('ChampionDetailPage interactions', () => {
   it('默认收起自身增伤和全队增伤，并允许按类型重新展开等级列表', async () => {
@@ -83,5 +165,40 @@ describe('ChampionDetailPage interactions', () => {
         '/data/v1/champion-illustrations/skins/5.png',
       )
     })
+  })
+
+  it('命中动画资源时在皮肤预览里切到 canvas 动态播放', async () => {
+    mockedLoadChampionDetail.mockResolvedValue(detailFixture)
+    mockedLoadCollection.mockImplementation(async (name) => {
+      if (name === 'champion-animations') {
+        return {
+          updatedAt: '2026-04-17',
+          items: [animatedSkinFixture],
+        }
+      }
+
+      if (name === 'champion-illustrations') {
+        return illustrationFixture
+      }
+
+      if (name === 'champion-specialization-graphics') {
+        return specializationGraphicFixture
+      }
+
+      throw new Error(`unexpected collection: ${name}`)
+    })
+    mockedLoadBinaryData.mockResolvedValue(buildTestSkelAnimBuffer())
+    vi.stubGlobal('createImageBitmap', vi.fn(async () => ({ width: 1, height: 1 })))
+
+    renderChampionDetailPage()
+
+    await screen.findByRole('heading', { level: 2, name: '明斯克' })
+    fireEvent.click(screen.getByRole('button', { name: '打开皮肤立绘预览' }))
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog', { name: '皮肤立绘预览' })).toBeInTheDocument()
+    })
+    expect(await screen.findByRole('button', { name: '暂停动画' })).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: '巨型布布服装皮肤预览' }).tagName).toBe('CANVAS')
   })
 })

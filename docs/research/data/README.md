@@ -1,6 +1,6 @@
 # research/data 文档入口
 
-- 作用：收纳数据来源、字段合同、资源链路、静态存储和皮肤立绘研究；只加载当前问题直接相关的子主题。
+- 作用：收纳数据来源、字段合同、资源链路、静态存储和皮肤 / 英雄立绘动画方案；只加载当前问题直接相关的子主题。
 
 ## 先读哪组
 
@@ -16,14 +16,14 @@
 - 英雄头像：`docs/research/data/portrait-asset/README.md`
 - 英雄 / 皮肤资源引用与尺寸边界：`docs/research/data/visual-asset/README.md`
 
-## 皮肤立绘主线
+## 立绘与动画主线
 
 - 总入口：`docs/research/data/skin-illustration/README.md`
-- 为什么会碎、组装数据在哪里：`docs/research/data/skin-illustration-assembly-research.md`
-- 生产主路线为什么选构建期预合成：`docs/research/data/skin-illustration-render-strategy-research.md`
-- 当前仓库已落地的离线渲染链路：`docs/research/data/skin-illustration-render-pipeline-research.md`
-- 审计与人工经验入口：`docs/research/data/skin-illustration-override-audit-research.md`、`docs/research/data/skin-illustration-alpha-fragmentation-research.md`、`docs/research/data/skin-illustration-pose-delta-audit-research.md`、`docs/research/data/skin-illustration-manual-review-heuristics.md`
+- 为什么旧静态图会碎、字段边界在哪里：`docs/research/data/skin-illustration/problem/README.md`
+- 官方运行时格式与二进制证据：`docs/research/data/skin-illustration/runtime-format.md`
+- 动画实现调研与 GitHub Pages 约束下的方案：`docs/research/data/skin-illustration/implementation/README.md`
+- 当前仓库动画 / 默认帧流水线：`docs/research/data/skin-illustration/pipeline-overview.md`
 
 ## 读取建议
 
-- 做页面功能时，优先读当前主链路；历史抽样、审计和经验库只在需要修图、追根因或调 override 时再开。
+- 默认只读当前主链路；旧的 override / alpha / delta 审计资料已在 2026-04-17 清理，不再作为现行方案入口。

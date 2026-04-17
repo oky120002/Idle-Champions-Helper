@@ -1,4 +1,5 @@
 import type {
+  ChampionAnimation,
   ChampionDetail,
   ChampionIllustration,
   ChampionSkinDetail,
@@ -53,6 +54,7 @@ interface ChampionDetailBodyProps {
   openArtworkDialog: (skinId?: string) => void
   isArtworkDialogOpen: boolean
   selectedSkin: ChampionSkinDetail | null
+  selectedSkinAnimation: ChampionAnimation | null
   selectedSkinIllustration: ChampionIllustration | null
   selectedSkinArtworkIds: SkinArtworkIds | null
   selectedSkinPreviewUrl: string | null
@@ -117,6 +119,7 @@ export function ChampionDetailBody(props: ChampionDetailBodyProps) {
         t={props.t}
         isArtworkDialogOpen={props.isArtworkDialogOpen}
         selectedSkin={props.selectedSkin}
+        selectedSkinAnimation={props.selectedSkinAnimation}
         selectedSkinIllustration={props.selectedSkinIllustration}
         selectedSkinArtworkIds={props.selectedSkinArtworkIds}
         selectedSkinPreviewUrl={props.selectedSkinPreviewUrl}

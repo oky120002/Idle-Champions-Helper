@@ -87,15 +87,6 @@ export interface ChampionIllustrationRender {
   bounds: ChampionIllustrationRenderBounds | null
 }
 
-export interface ChampionIllustrationManualOverride {
-  matchedBy: Array<'championId' | 'graphicId' | 'skinId'>
-  requestedSlot: ChampionIllustrationSourceSlot | null
-  candidateMatchedSlot: boolean | null
-  preferredSequenceIndexes: number[]
-  preferredFrameIndexes: number[]
-  notes: string[]
-}
-
 export interface ChampionIllustration {
   id: string
   championId: string
@@ -109,9 +100,43 @@ export interface ChampionIllustration {
   sourceGraphicId: string
   sourceGraphic: string
   sourceVersion: number | null
-  manualOverride?: ChampionIllustrationManualOverride | null
   render: ChampionIllustrationRender
   image: ChampionIllustrationImage
+}
+
+export type ChampionAnimationKind = 'hero-base' | 'skin'
+
+export interface ChampionAnimationAsset {
+  path: string
+  bytes: number
+  format: 'skelanim-zlib'
+}
+
+export interface ChampionAnimationSequence {
+  sequenceIndex: number
+  frameCount: number
+  pieceCount: number
+  firstRenderableFrameIndex: number | null
+  bounds: ChampionIllustrationRenderBounds | null
+}
+
+export interface ChampionAnimation {
+  id: string
+  championId: string
+  skinId: string | null
+  kind: ChampionAnimationKind
+  seat: number
+  championName: LocalizedText
+  illustrationName: LocalizedText
+  sourceSlot: ChampionIllustrationSourceSlot
+  sourceGraphicId: string
+  sourceGraphic: string
+  sourceVersion: number | null
+  fps: number
+  defaultSequenceIndex: number
+  defaultFrameIndex: number
+  asset: ChampionAnimationAsset
+  sequences: ChampionAnimationSequence[]
 }
 
 export interface PetImage {

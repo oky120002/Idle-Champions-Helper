@@ -1,4 +1,5 @@
 import type {
+  ChampionAnimation,
   ChampionDetail,
   ChampionIllustration,
   ChampionSpecializationGraphic,
@@ -117,6 +118,53 @@ export const illustrationFixture: DataCollection<ChampionIllustration> = {
         height: 1024,
         bytes: 65000,
         format: 'png',
+      },
+    },
+  ],
+}
+
+export const animationFixture: DataCollection<ChampionAnimation> = {
+  updatedAt: '2026-04-17',
+  items: [],
+}
+
+export const animatedSkinFixture: ChampionAnimation = {
+  id: 'skin:4',
+  championId: '7',
+  skinId: '4',
+  kind: 'skin',
+  seat: 7,
+  championName: {
+    original: 'Minsc',
+    display: '明斯克',
+  },
+  illustrationName: {
+    original: 'Giant Boo Costume',
+    display: '巨型布布服装',
+  },
+  sourceSlot: 'large',
+  sourceGraphicId: '4471',
+  sourceGraphic: 'Characters/Hero_Minsc_GiantBoo_2xup',
+  sourceVersion: 1,
+  fps: 24,
+  defaultSequenceIndex: 0,
+  defaultFrameIndex: 0,
+  asset: {
+    path: 'v1/champion-animations/skins/4.bin',
+    bytes: 128,
+    format: 'skelanim-zlib',
+  },
+  sequences: [
+    {
+      sequenceIndex: 0,
+      frameCount: 2,
+      pieceCount: 1,
+      firstRenderableFrameIndex: 0,
+      bounds: {
+        minX: 0,
+        minY: 0,
+        maxX: 1,
+        maxY: 1,
       },
     },
   ],

@@ -6,6 +6,7 @@ vi.mock('../../src/data/client', async () => {
 
   return {
     ...actual,
+    loadBinaryData: vi.fn(),
     loadChampionDetail: vi.fn(),
     loadCollection: vi.fn(),
   }

@@ -35,7 +35,6 @@ export function createIllustration(
     sourceGraphicId: overrides.sourceGraphicId ?? `graphic-${overrides.id}`,
     sourceGraphic: overrides.sourceGraphic ?? `Characters/${overrides.id}`,
     sourceVersion: overrides.sourceVersion ?? 1,
-    manualOverride: overrides.manualOverride ?? null,
     render:
       overrides.render ??
       {

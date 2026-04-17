@@ -1,29 +1,30 @@
-# 皮肤立绘落地：剩余技术点与核对来源
+# 动画 / 立绘落地：剩余技术点与核对来源
 
-- 日期：2026-04-16
-- 目标：收纳仍待验证的问题与当前用到的核对来源。
+- 日期：2026-04-17
+- 目标：收纳现行方案还需要关注的问题，以及当前用到的核对来源。
 
-## 仍待补完的技术点
+## 当前剩余技术点
 
-- 静态 pose 选择：同一资源可能有多个 sequence；`sequence_override` 是否总能代表页面主立绘，仍需继续核实。
-- 坐标系还原：`x / y / scaleX / scaleY / rotation` 已能从 IL 读到一层，但仍需样例渲染继续核对最终边界。
-- 特殊替换件：`noarm_graphic`、`nosword_graphic`、`companion_graphic_ids` 等变体，后续要决定页面是否统一渲染为主 pose。
-- 样例基准：仍要用少量皮肤 PoC 与游戏内视觉对齐，再批量生成全量立绘。
+- 默认 sequence / frame 选择目前依赖 `sequence_override` 和首个可渲染 frame；如果官方以后调整导出语义，仍需回归验证。
+- 当前动态播放优先接在详情弹层；如果未来扩到列表页，需要重新评估 CPU、内存与懒加载策略。
+- 动画增量复用目前依赖 definitions 元数据，不做远端内容哈希比对；如果后续观察到“版本不变但资源变了”，再补更重的校验链路。
 
 ## 仓库内来源
 
-- `src/pages/ChampionDetailPage.tsx`
+- `scripts/sync-idle-champions-animations.mjs`
 - `scripts/sync-idle-champions-illustrations.mjs`
-- `scripts/data/mobile-asset-codec.mjs`
-- `public/data/v1/champion-visuals.json`
+- `scripts/data/champion-graphic-resource-cache.mjs`
+- `scripts/data/skelanim-codec.mjs`
+- `scripts/data/skelanim-renderer.mjs`
+- `src/features/skelanim-player/SkelAnimCanvas.tsx`
+- `public/data/v1/champion-animations.json`
 - `public/data/v1/champion-illustrations.json`
-- `tmp/idle-champions-api/definitions-2026-04-16T03-48-29.427Z-latest-en.json`
+- `tmp/idle-champions-api-audit/definitions-2026-04-17T14-56-39.643Z-audit-latest.json`
 
 ## 仓库外来源
 
 - 官方线上：
   1. `https://master.idlechampions.com/~idledragons/post.php?call=getPlayServerForDefinitions&mobile_client_version=999&network_id=11`
   2. `https://ps30.idlechampions.com/~idledragons/post.php?call=getDefinitions&new_achievements=1&mobile_client_version=99999&language_id=1`
-  3. `https://master.idlechampions.com/~idledragons/mobile_assets/Characters/Event/Hero_BBEG_Modron_2xup`
-  4. `https://master.idlechampions.com/~idledragons/mobile_assets/Characters/Hero_Evandra_Plushie_2xup`
-- 仓库外本地：Steam 缓存 `~/Library/Application Support/Steam/steamapps/common/IdleChampions/IdleDragonsMac.app/Contents/Resources/Data/StreamingAssets/downloaded_files/`；反编译临时文件 `/tmp/idlechampions-assembly.il`
+  3. `https://master.idlechampions.com/~idledragons/mobile_assets/Characters/Event/Hero_Strix`
+- 对照站点：`https://idle.kleho.ru/hero/strix/skins/`
