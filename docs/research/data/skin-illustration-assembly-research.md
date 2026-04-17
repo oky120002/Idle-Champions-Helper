@@ -6,11 +6,11 @@
 
 ## 先读哪篇
 
-- 根因、definitions 能给什么 / 不能给什么：`docs/research/data/skin-illustration/problem-and-evidence.md`
+- 根因、definitions 字段边界与常见误解：`docs/research/data/skin-illustration/problem/README.md`
 - 客户端缓存、二进制结构与运行时证据：`docs/research/data/skin-illustration/runtime-format.md`
-- 仓库落地方案、剩余技术点与核对来源：`docs/research/data/skin-illustration/implementation-path.md`
+- 仓库落地方案、剩余技术点与核对来源：`docs/research/data/skin-illustration/implementation/README.md`
 
 ## 何时加载
 
-- 只要问题是“为什么会碎”或“官方有没有完整组装规则”，先读本页，再只进目标子文档。
+- 只要问题是“为什么会碎”或“官方有没有完整组装规则”，先读本页，再只进目标子主题。
 - 如果问题已经变成“当前仓库怎么渲染”，改读 `docs/research/data/skin-illustration-render-pipeline-research.md`。

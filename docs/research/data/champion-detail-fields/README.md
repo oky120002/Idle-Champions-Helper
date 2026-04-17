@@ -4,5 +4,5 @@
 
 ## 先读哪篇
 
-- 当前摘要数据缺口与官方 definitions 可用字段：`docs/research/data/champion-detail-fields/available-fields.md`
-- 推荐数据合同、页面结构与使用边界：`docs/research/data/champion-detail-fields/contract-and-page-shape.md`
+- 摘要数据缺口、`hero_defines` 与攻击字段：`docs/research/data/champion-detail-fields/summary-gap-and-core-fields.md`
+- 升级 / 天赋 / 皮肤字段，以及推荐数据合同与页面结构：`docs/research/data/champion-detail-fields/advanced-fields-and-contract.md`

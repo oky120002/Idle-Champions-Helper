@@ -6,5 +6,5 @@
 
 ## 先读哪篇
 
-- 约束、两条路线的输入条件与代价：`docs/research/data/skin-illustration/strategy-constraints-and-options.md`
+- 约束、两条路线的输入条件与代价：`docs/research/data/skin-illustration/strategy/README.md`
 - 对比结论、推荐方案、落地顺序与直接回答：`docs/research/data/skin-illustration/strategy-decision-and-rollout.md`

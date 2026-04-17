@@ -6,5 +6,5 @@
 
 ## 先读哪篇
 
-- 方法、结果总览、4 条已落地 override：`docs/research/data/skin-illustration/audit-overview.md`
+- 共性字段、抽样信号与脚本入口：`docs/research/data/skin-illustration/override-audit/README.md`
 - 各批人工复核样本、经验点与下一步建议：`docs/research/data/skin-illustration/audit-reviewed-samples.md`
