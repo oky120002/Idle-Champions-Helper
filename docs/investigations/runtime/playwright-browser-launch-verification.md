@@ -3,15 +3,11 @@
 - 确认时间：`2026-04-13`
 - 目标：验证当前工作树中“最近草稿保存 / 恢复 + 命名方案库”是否能在不同 Codex 会话权限下通过 Playwright 完成真实页面验收。
 
----
-
 ## 1. 环境前提
 
 - 工作树：当次独立任务工作树；具体路径会随 Codex 会话变化，不作为长期文档约束
 - Playwright 浏览器目录：长期共享浏览器目录
 - 已验证 `PLAYWRIGHT_BROWSERS_PATH` 已指向该长期目录
-
----
 
 ## 2. 第一轮：受限会话验证
 
@@ -21,11 +17,9 @@
 2. 用 Playwright helper 启动本地 Vite 服务后，尝试跑完整页面验收脚本
 3. 直接启动 Firefox / Chromium 二进制，和 Playwright 启动路径做对照
 
----
-
 ## 3. 第一轮结果摘要
 
-### 3.1 Playwright 直接启动失败
+### Playwright 直接启动失败
 
 - `firefox.launch(headless=True)`：
   - 浏览器进程能被拉起
@@ -40,12 +34,10 @@
 - `webkit.launch(headless=True)`：
   - 同样无法在当前 Codex CLI 沙箱环境内完成启动
 
-### 3.2 浏览器二进制本身可直接启动
+### 浏览器二进制本身可直接启动
 
 - 直接执行 Firefox headless 二进制时，可以进入 headless 模式，不是“浏览器未安装”
 - 这说明问题主要出在 Playwright 与浏览器之间的控制链路，而不是浏览器文件缺失
-
----
 
 ## 4. 第一轮结论
 
@@ -59,8 +51,6 @@
   - `npm run typecheck`
   - `npm run test:run`
 - 若要完成真实页面自动化验收，应改在更宽松的会话环境中运行，而不是继续依赖当前受限会话
-
----
 
 ## 5. 第二轮：`danger-full-access` 会话验证
 
@@ -87,8 +77,6 @@
 - 完整页面验收脚本：通过
 - 结果标记：`VERIFICATION_OK`
 - 验证截图目录：本地临时输出目录（会随会话变化，不作为仓库契约）
-
----
 
 ## 6. 最终结论
 

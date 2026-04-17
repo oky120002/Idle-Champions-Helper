@@ -1,22 +1,19 @@
 # investigations 文档入口
 
-本目录存放排查、验证、环境确认和历史问题记录；只在需要复现或核对结论时按主题读取。
+- 作用：收纳排查、验证、环境确认和历史问题记录；只在需要复现或核对结论时进入。
 
-## 主题索引
+## runtime
 
-- `docs/investigations/runtime/`：本地运行、预览、浏览器行为和页面异常排查
-- `docs/investigations/repository/`：仓库结构、Git 与历史配置问题排查
+- `docs/investigations/runtime/local-run-verification.md`：`dev`、`preview`、`preview:pages` 的差异和当前推荐入口。
+- `docs/investigations/runtime/champions-filter-scroll-stability-investigation.md`：英雄筛选长列表滚动跳动、回顶和结果区稳定性修复。
+- `docs/investigations/runtime/playwright-browser-launch-verification.md`：Playwright 在受限会话与完全访问会话下的差异验证。
 
-## 当前入口文件
+## repository
 
-- `docs/investigations/runtime/local-run-verification.md`
-- `docs/investigations/runtime/champions-filter-scroll-stability-investigation.md`
-- `docs/investigations/runtime/playwright-browser-launch-verification.md`
-- `docs/investigations/repository/github-directory-commit-investigation.md`
-- `docs/investigations/repository/agents-layering-verification.md`
+- `docs/investigations/repository/github-directory-commit-investigation.md`：`.github` 空目录不被 Git 跟踪的原因与修复方式。
+- `docs/investigations/repository/agents-layering-verification.md`：仓库内外 `AGENTS.md` 分层核对记录。
 
-## 使用约定
+## 读取建议
 
-- 只保留可复用结论，不写长流水账
-- 问题已经沉淀成通用摘要后，优先把入口补到 `docs/troubleshooting-log.md`
-- 历史问题要明确说明当前是否仍有效
+- 先看 `docs/troubleshooting-log.md` 判断有没有现成摘要；只有需要复现、核对证据或看完整边界时，再打开专题排查文档。
+- 排查文档必须明确“当前是否仍有效”；已经沉淀成通用摘要的问题，应优先回填到 `docs/troubleshooting-log.md`。
