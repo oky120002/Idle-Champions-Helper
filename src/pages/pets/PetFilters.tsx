@@ -1,7 +1,7 @@
+import { FilterChipSingleSelectField } from '../../components/filter-sidebar/FilterChipSingleSelectField'
 import { FilterSearchField } from '../../components/filter-sidebar/FilterSearchField'
 import { FilterSegmentedField } from '../../components/filter-sidebar/FilterSegmentedField'
 import { FilterSidebarPanel } from '../../components/filter-sidebar/FilterSidebarPanel'
-import { FilterSingleSelectField } from '../../components/filter-sidebar/FilterSingleSelectField'
 import { useI18n } from '../../app/i18n'
 import type { AssetFilter, SourceFilter } from './types'
 
@@ -32,8 +32,8 @@ export function PetFilters({
       title={t({ zh: '筛选条件', en: 'Filter controls' })}
       titleAs="h3"
       description={t({
-        zh: '先用搜索、来源和图像状态把宠物目录缩到可读范围，再去右侧对比具体卡片。',
-        en: 'Narrow the pet catalog with search, source, and asset state first, then compare the cards on the right.',
+        zh: '先用搜索、来源和图像状态把宠物目录缩到可读范围，再去右侧对比立绘与获取方式。',
+        en: 'Narrow the pet catalog with search, source, and asset state first, then compare illustrations and acquisition details on the right.',
       })}
       status={
         <>
@@ -54,8 +54,8 @@ export function PetFilters({
         </>
       }
       note={t({
-        zh: '这组字段按控件类型组织：搜索框负责关键字，单选下拉负责来源，分段单选负责图像状态。',
-        en: 'These controls are grouped by field type: search for keywords, a single-select dropdown for source, and segmented single-select for asset state.',
+        zh: '来源改成了更直观的芯片切换；搜索负责关键字，图像状态负责快速区分完整资源和待补图目。',
+        en: 'Source now uses direct filter chips. Search handles keywords, while the asset-state toggle quickly separates complete entries from missing-art rows.',
       })}
       ariaLabel={t({ zh: '宠物筛选侧边栏', en: 'Pet filter sidebar' })}
     >
@@ -70,13 +70,14 @@ export function PetFilters({
         placeholder={t({ zh: '搜索宠物、描述或礼包名', en: 'Search pets, descriptions, or pack names' })}
       />
 
-      <FilterSingleSelectField
+      <FilterChipSingleSelectField
         label={t({ zh: '来源', en: 'Source' })}
         value={sourceFilter}
         onChange={onSourceFilterChange}
+        groupLabel={t({ zh: '宠物来源', en: 'Pet source' })}
         hint={t({
-          zh: '按宝石、付费、赞助商商店等官方来源切分目录。',
-          en: 'Split the catalog by official source such as gems, premium, or the patron shop.',
+          zh: '直接点来源芯片，快速切到宝石商店、付费包、赞助商商店或暂未开放条目。',
+          en: 'Use the source chips to jump directly into gem shop, premium, patron, or not-yet-available entries.',
         })}
         options={[
           { value: 'all', label: t({ zh: '全部来源', en: 'All sources' }) },

@@ -1,8 +1,7 @@
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { ChampionDetailPage } from '../pages/ChampionDetailPage'
 import { ChampionsPage } from '../pages/ChampionsPage'
 import { FormationPage } from '../pages/FormationPage'
-import { HomePage } from '../pages/HomePage'
 import { IllustrationsPage } from '../pages/IllustrationsPage'
 import { PetsPage } from '../pages/PetsPage'
 import { PresetsPage } from '../pages/PresetsPage'
@@ -24,7 +23,7 @@ export function App() {
 
       <main className="site-main">
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<Navigate to="/champions" replace />} />
           <Route path="/champions" element={<ChampionsPage />} />
           <Route path="/champions/:championId" element={<ChampionDetailPage />} />
           <Route path="/illustrations" element={<IllustrationsPage />} />
@@ -33,7 +32,7 @@ export function App() {
           <Route path="/formation" element={<FormationPage />} />
           <Route path="/presets" element={<PresetsPage />} />
           <Route path="/user-data" element={<UserDataPage />} />
-          <Route path="*" element={<HomePage />} />
+          <Route path="*" element={<Navigate to="/champions" replace />} />
         </Routes>
       </main>
     </div>

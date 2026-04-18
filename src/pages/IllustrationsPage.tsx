@@ -1,4 +1,5 @@
 import { FilterSidebarLayout } from '../components/filter-sidebar/FilterSidebarLayout'
+import { PageTabHeader } from '../components/PageTabHeader'
 import { StatusBanner } from '../components/StatusBanner'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { IllustrationsMetrics } from './illustrations/IllustrationsMetrics'
@@ -13,8 +14,18 @@ export function IllustrationsPage() {
   return (
     <div className="page-shell illustrations-page">
       <SurfaceCard
-        title={t({ zh: '英雄立绘页', en: 'Champion illustrations' })}
-        headerAside={state.status === 'ready' ? <IllustrationsMetrics model={model} /> : null}
+        headerContent={
+          <PageTabHeader
+            eyebrow={t({ zh: '立绘图鉴', en: 'Illustration catalog' })}
+            accentLabel="ART CODEX"
+            title={t({ zh: '按本体、皮肤、座位与标签浏览英雄立绘', en: 'Browse champion art by base form, skin, seat, and tags' })}
+            description={t({
+              zh: '支持随机打散结果、悬停预览动态资源，并直接跳回英雄详情页继续核对技能与机制。',
+              en: 'Shuffle the current result set, preview motion on hover, and jump straight back into the champion dossier when you need gameplay context.',
+            })}
+            aside={state.status === 'ready' ? <IllustrationsMetrics model={model} /> : null}
+          />
+        }
       >
         {state.status === 'loading' ? (
           <StatusBanner

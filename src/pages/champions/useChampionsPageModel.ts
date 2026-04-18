@@ -79,6 +79,7 @@ export function useChampionsPageModel(): ChampionsPageModel {
     visibleChampions: derived.visibleChampions,
     selectedChampion: derived.selectedChampion,
     selectedChampionVisual: derived.selectedChampionVisual,
+    heroIllustrationByChampionId: derived.heroIllustrationByChampionId,
     matchedSeats: derived.matchedSeats,
     canToggleResultVisibility: derived.canToggleResultVisibility,
     showAllResults: filterState.showAllResults,

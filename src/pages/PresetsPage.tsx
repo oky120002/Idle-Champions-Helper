@@ -1,3 +1,4 @@
+import { PageTabHeader } from '../components/PageTabHeader'
 import { StatusBanner } from '../components/StatusBanner'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { PresetsListSection } from './presets/PresetsListSection'
@@ -12,13 +13,18 @@ export function PresetsPage() {
   return (
     <div className="page-stack">
       <SurfaceCard
-        eyebrow={t({ zh: '方案存档', en: 'Presets' })}
-        title={t({ zh: '命名方案已落到浏览器本地 IndexedDB', en: 'Named presets now live in browser-local IndexedDB' })}
-        description={t({
-          zh: '命名方案与最近草稿分层管理；这里的所有内容都只保存在当前浏览器，不上传到外部服务。',
-          en: 'Named presets are managed separately from recent drafts. Everything here stays in the current browser and never uploads elsewhere.',
-        })}
-        headerAside={state.status === 'ready' ? <PresetsMetrics model={model} /> : null}
+        headerContent={
+          <PageTabHeader
+            eyebrow={t({ zh: '方案存档', en: 'Presets' })}
+            accentLabel="PRESETS"
+            title={t({ zh: '管理保存在当前浏览器里的命名阵型方案', en: 'Manage named formation presets stored in the current browser' })}
+            description={t({
+              zh: '最近草稿和正式方案分层管理；恢复时会先校验数据版本，再决定是原样恢复还是兼容恢复。',
+              en: 'Recent drafts and named presets stay separate. Restore validates the saved data version first, then decides whether to do a direct or compatibility restore.',
+            })}
+            aside={state.status === 'ready' ? <PresetsMetrics model={model} /> : null}
+          />
+        }
       >
         {state.status === 'loading' ? (
           <StatusBanner tone="info">{t({ zh: '正在读取本地方案存档…', en: 'Loading local presets…' })}</StatusBanner>

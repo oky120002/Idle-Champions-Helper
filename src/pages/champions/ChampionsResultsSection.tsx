@@ -50,8 +50,8 @@ export function ChampionsResultsSection({ model }: ChampionsResultsSectionProps)
             <p className="supporting-text">
               {filteredChampions.length > 0
                 ? t({
-                    zh: `当前展示 ${visibleChampions.length} / ${filteredChampions.length} 名英雄。如果结果过多，优先加关键词、座位、定位、联动队伍、种族、性别、阵营、职业、获取方式或特殊机制缩小范围。`,
-                    en: `Showing ${visibleChampions.length} / ${filteredChampions.length} champions. Narrow things down with a keyword, seat, role, affiliation, race, gender, alignment, profession, availability, or special mechanic if the list feels too broad.`,
+                    zh: `当前展示 ${visibleChampions.length} / ${filteredChampions.length} 名英雄。如果结果过多，优先加关键词、座位、定位、联动队伍、种族、性别、阵营、职业、获取方式或特殊机制缩小范围；点卡片直达详情，右下按钮可展开视觉档案。`,
+                    en: `Showing ${visibleChampions.length} / ${filteredChampions.length} champions. Narrow things down with a keyword, seat, role, affiliation, race, gender, alignment, profession, availability, or special mechanic if the list feels too broad. Click a card to open details, or use the lower-right button for the visual dossier.`,
                   })
                 : t({
                     zh: '当前筛选条件下没有匹配英雄。可以直接点左侧已选条件逐项回退，或用筛选头部的清空全部重新开始。',

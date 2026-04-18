@@ -20,6 +20,7 @@ import {
   prepareChampionDetailDomEnvironment,
   renderChampionDetailPage,
   renderChampionDetailPageWithBackRoute,
+  renderChampionDetailPageWithLocationState,
   renderChampionDetailPageWithSearch,
   restoreChampionDetailDomEnvironment,
 } from './champion-detail/championDetailPageTestHarness'
@@ -82,7 +83,7 @@ describe('ChampionDetailPage content', () => {
 
     renderChampionDetailPageWithSearch()
 
-    expect(await screen.findByRole('link', { name: '← 返回英雄筛选' })).toHaveAttribute(
+    expect(await screen.findByRole('link', { name: '返回英雄筛选' })).toHaveAttribute(
       'href',
       '/champions?q=alpha&seat=1&role=support',
     )
@@ -93,12 +94,32 @@ describe('ChampionDetailPage content', () => {
 
     renderChampionDetailPageWithBackRoute('/champions/7?seat=7')
 
-    expect(await screen.findByRole('link', { name: '← 返回英雄筛选' })).toHaveAttribute('href', '/champions?seat=7')
+    expect(await screen.findByRole('link', { name: '返回英雄筛选' })).toHaveAttribute('href', '/champions?seat=7')
     fireEvent.click(await screen.findByTestId('sidebar-section-upgrades'))
     expect(await screen.findByText('当前浏览 · 升级')).toBeInTheDocument()
 
-    fireEvent.click(screen.getByRole('link', { name: '← 返回英雄筛选' }))
+    fireEvent.click(screen.getByRole('link', { name: '返回英雄筛选' }))
 
     expect(await screen.findByText('筛选页占位')).toBeInTheDocument()
+  })
+
+  it('从立绘图鉴进入时会优先返回立绘图鉴', async () => {
+    mockedLoadChampionDetail.mockResolvedValue(detailFixture)
+
+    renderChampionDetailPageWithLocationState({
+      pathname: '/champions/7',
+      state: {
+        returnTo: {
+          pathname: '/illustrations',
+          search: '?scope=skin',
+        },
+        returnLabel: {
+          zh: '返回立绘图鉴',
+          en: 'Back to illustrations',
+        },
+      },
+    })
+
+    expect(await screen.findByRole('link', { name: '返回立绘图鉴' })).toHaveAttribute('href', '/illustrations?scope=skin')
   })
 })

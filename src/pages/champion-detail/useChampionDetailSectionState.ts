@@ -24,6 +24,7 @@ export function useChampionDetailSectionState(
   detail: ChampionDetail | null,
   location: PageLocation,
   navigate: NavigateFn,
+  backTarget: BackTarget,
   t: Translation,
 ) {
   const [activeSectionId, setActiveSectionId] = useState<DetailSectionId>(DETAIL_SECTION_IDS[0])
@@ -181,15 +182,10 @@ export function useChampionDetailSectionState(
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
-  const backToChampions = {
-    pathname: '/champions',
-    search: location.search,
-  } as const
-
   const handleBackClick = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault()
     isLeavingPageRef.current = true
-    void navigate(backToChampions)
+    void navigate(backTarget)
   }
 
   return {
@@ -201,7 +197,7 @@ export function useChampionDetailSectionState(
     getSectionProgressState,
     getSectionProgressText,
     scrollToSection,
-    backToChampions,
+    backToChampions: backTarget,
     handleBackClick,
   }
 }

@@ -4,17 +4,27 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('../../src/data/client', () => ({
   loadCollection: vi.fn(),
+  loadVersion: vi.fn(),
 }))
 
+import { loadVersion } from '../../src/data/client'
 import { mockChampionsPageCollections, renderChampionsPage } from './champions-page/championsPageTestHarness'
+
+const mockedLoadVersion = vi.mocked(loadVersion)
 
 describe('ChampionsPage filters', () => {
   beforeEach(() => {
     window.sessionStorage.clear()
     mockChampionsPageCollections()
+    mockedLoadVersion.mockResolvedValue({
+      current: 'v1',
+      updatedAt: '2026-04-18',
+      notes: [],
+    })
   })
 
   afterEach(() => {
+    mockedLoadVersion.mockReset()
     vi.restoreAllMocks()
   })
 

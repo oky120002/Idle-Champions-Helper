@@ -49,7 +49,7 @@ test('非首页滚动后顶部大标题应自动收紧，回顶后再展开', as
 
   await page.setViewportSize({ width: 1440, height: 900 })
   await page.goto('./#/champions')
-  await expect(page.getByRole('heading', { level: 2, name: '先用真实公共数据把查询入口跑起来' })).toBeVisible()
+  await expect(page.getByRole('heading', { level: 2, name: '按座位、定位与联动快速缩小候选英雄' })).toBeVisible()
 
   const initialMetrics = await getHeaderMetrics(page)
 

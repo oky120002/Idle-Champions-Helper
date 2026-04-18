@@ -8,15 +8,17 @@ vi.mock('../../src/data/client', async () => {
   return {
     ...actual,
     loadCollection: vi.fn(),
+    loadVersion: vi.fn(),
   }
 })
 
 import { I18nProvider } from '../../src/app/i18n'
-import { loadCollection } from '../../src/data/client'
+import { loadCollection, loadVersion } from '../../src/data/client'
 import type { DataCollection, Pet } from '../../src/domain/types'
 import { PetsPage } from '../../src/pages/PetsPage'
 
 const mockedLoadCollection = vi.mocked(loadCollection)
+const mockedLoadVersion = vi.mocked(loadVersion)
 
 const petsFixture: DataCollection<Pet> = {
   updatedAt: '2026-04-18T00:00:00.000Z',
@@ -89,10 +91,16 @@ describe('PetsPage filters', () => {
 
       throw new Error(`unexpected collection: ${name}`)
     })
+    mockedLoadVersion.mockResolvedValue({
+      current: 'v1',
+      updatedAt: '2026-04-18',
+      notes: [],
+    })
   })
 
   afterEach(() => {
     mockedLoadCollection.mockReset()
+    mockedLoadVersion.mockReset()
     vi.restoreAllMocks()
   })
 
@@ -103,13 +111,13 @@ describe('PetsPage filters', () => {
 
     expect(await screen.findByRole('heading', { level: 3, name: '筛选条件' })).toBeInTheDocument()
     expect(screen.getByRole('searchbox', { name: /^搜索/ })).toBeInTheDocument()
-    expect(screen.getByRole('combobox', { name: /^来源/ })).toBeInTheDocument()
+    expect(screen.getByRole('group', { name: /^宠物来源/ })).toBeInTheDocument()
 
     const initialResults = await screen.findByLabelText('宠物结果')
     expect(within(initialResults).getByText('发条小猫')).toBeInTheDocument()
     expect(within(initialResults).getByText('秘法猫头鹰')).toBeInTheDocument()
 
-    await user.selectOptions(screen.getByRole('combobox', { name: /^来源/ }), 'premium')
+    await user.click(screen.getByRole('button', { name: '付费购买' }))
 
     await waitFor(() => {
       expect(screen.queryByText('发条小猫')).not.toBeInTheDocument()

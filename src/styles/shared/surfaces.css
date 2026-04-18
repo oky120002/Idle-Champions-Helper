@@ -118,6 +118,84 @@
   margin-top: 1rem;
 }
 
+.page-tab-header {
+  display: grid;
+  gap: 1rem;
+  align-items: start;
+}
+
+.page-tab-header__copy {
+  min-width: 0;
+}
+
+.page-tab-header__eyebrow {
+  margin: 0 0 0.45rem;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  color: #c8a77f;
+  font-size: 0.76rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.page-tab-header__eyebrow-accent {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.24rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(200, 167, 127, 0.18);
+  background: rgba(200, 167, 127, 0.08);
+  color: #ffe7bf;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+}
+
+.page-tab-header__title {
+  margin: 0;
+  font-size: clamp(1.55rem, 3vw, 2.35rem);
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+}
+
+.page-tab-header__description {
+  margin: 0.7rem 0 0;
+  max-width: 64ch;
+  color: rgba(242, 239, 230, 0.72);
+}
+
+.page-tab-header__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.65rem;
+  align-items: center;
+  margin-top: 0.78rem;
+}
+
+.page-tab-header__meta-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.9rem;
+  padding: 0.26rem 0.62rem;
+  border-radius: 999px;
+  border: 1px solid rgba(227, 214, 193, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff1d6;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.page-tab-header__meta-text {
+  color: rgba(242, 239, 230, 0.64);
+  font-size: 0.84rem;
+}
+
+.page-tab-header__aside {
+  min-width: 0;
+}
+
 .page-header-metrics {
   display: flex;
   flex-wrap: wrap;
@@ -236,6 +314,22 @@
   .hero-panel,
     .surface-card {
       border-radius: 22px;
+    }
+
+  .page-tab-header {
+      gap: 0.8rem;
+    }
+
+  .page-tab-header__title {
+      font-size: clamp(1.28rem, 6vw, 1.7rem);
+    }
+
+  .page-tab-header__description {
+      margin-top: 0.58rem;
+    }
+
+  .page-tab-header__meta {
+      margin-top: 0.66rem;
     }
 
   .page-header-metric {

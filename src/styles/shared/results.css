@@ -211,7 +211,8 @@
 }
 
 .result-card {
-  padding: 1rem;
+  position: relative;
+  padding: 0.9rem;
   border-radius: 22px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(227, 214, 193, 0.08);
@@ -219,10 +220,11 @@
 
 .result-card--champion {
   background:
-    radial-gradient(circle at 88% 10%, rgba(200, 167, 127, 0.2), transparent 27%),
-    radial-gradient(circle at 12% 100%, rgba(62, 113, 147, 0.12), transparent 24%),
+    radial-gradient(circle at 86% 8%, rgba(200, 167, 127, 0.16), transparent 28%),
+    radial-gradient(circle at 14% 96%, rgba(62, 113, 147, 0.1), transparent 25%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.038), rgba(255, 255, 255, 0.022));
   overflow: clip;
+  isolation: isolate;
 }
 
 .result-card--interactive {
@@ -250,6 +252,8 @@
 }
 
 .result-card--link {
+  position: relative;
+  z-index: 1;
   display: block;
   color: inherit;
   text-decoration: none;
@@ -269,19 +273,19 @@
   grid-template-columns: auto minmax(0, 1fr);
   gap: 0.85rem;
   align-items: center;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.7rem;
 }
 
 .result-card__identity--spotlight {
   position: relative;
   display: block;
-  min-height: 6.4rem;
-  margin: -0.1rem 0 1rem;
-  padding: 0.1rem 5.75rem 0 0;
+  min-height: 5.9rem;
+  margin: -0.08rem 0 0.82rem;
+  padding: 0.08rem 5.05rem 0 0;
 }
 
 .result-card__header--spotlight {
-  max-width: 17rem;
+  max-width: 16rem;
 }
 
 .result-card__header {
@@ -290,6 +294,28 @@
 
 .result-card__section {
   margin-top: 1rem;
+}
+
+.result-card__artbackdrop {
+  position: absolute;
+  inset: -0.1rem -0.1rem -0.25rem 38%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.34;
+  mask-image: linear-gradient(90deg, transparent 0%, transparent 12%, rgba(0, 0, 0, 0.82) 36%, rgba(0, 0, 0, 0.95) 84%, transparent 100%);
+}
+
+.result-card__artbackdrop-image {
+  position: absolute;
+  right: -0.45rem;
+  bottom: -0.2rem;
+  width: auto;
+  height: 110%;
+  max-width: none;
+  object-fit: contain;
+  filter: saturate(0.94) contrast(1.03) brightness(0.98) drop-shadow(0 16px 32px rgba(1, 4, 9, 0.18));
+  transform: scale(1.02);
 }
 
 .result-card__eyebrow {
@@ -412,7 +438,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-top: 1rem;
+  margin-top: 0.78rem;
 }
 
 .result-block__title {
@@ -431,6 +457,42 @@
   display: grid;
   gap: 0.85rem;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+.result-card__role-row {
+  margin-bottom: 0.62rem;
+}
+
+.result-card__role-row .tag-pill {
+  padding: 0.28rem 0.56rem;
+  font-size: 0.76rem;
+}
+
+.result-card__role-overflow {
+  letter-spacing: 0.08em;
+}
+
+.result-card__affiliation {
+  margin: 0 0 0.72rem;
+  font-size: 0.88rem;
+}
+
+.result-card__attributes {
+  margin-top: 0.68rem;
+}
+
+.result-card__attribute-tags .tag-pill {
+  padding: 0.24rem 0.5rem;
+  font-size: 0.72rem;
+}
+
+.result-card__attribute-group {
+  gap: 0.45rem;
+}
+
+.results-visibility-toggle--ghost {
+  background: rgba(9, 14, 20, 0.18);
+  box-shadow: none;
 }
 
 .champion-avatar--slot-mini {
@@ -453,20 +515,20 @@
 
 @media (max-width: 720px) {
   .result-card__identity--spotlight {
-      min-height: 5.7rem;
-      padding-right: 5rem;
+      min-height: 5.4rem;
+      padding-right: 4.4rem;
     }
 
   .result-card__portrait-stage {
-      top: -0.72rem;
-      right: -0.72rem;
-      width: 6.4rem;
-      min-width: 6.4rem;
+      top: -0.68rem;
+      right: -0.68rem;
+      width: 5.9rem;
+      min-width: 5.9rem;
     }
 
   .champion-avatar--spotlight {
-      width: 5rem;
-      height: 5rem;
+      width: 4.8rem;
+      height: 4.8rem;
     }
 
   .result-card__portrait-chip {

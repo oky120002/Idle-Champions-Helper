@@ -58,6 +58,13 @@ export function useChampionsPageDerived({
         : null,
     [selectedChampion, state],
   )
+  const heroIllustrationByChampionId = useMemo(
+    () =>
+      state.status === 'ready'
+        ? new Map(state.heroIllustrations.map((illustration) => [illustration.championId, illustration]))
+        : new Map(),
+    [state],
+  )
   const matchedSeats = useMemo(
     () => new Set(filteredChampions.map((champion) => champion.seat)).size,
     [filteredChampions],
@@ -130,6 +137,7 @@ export function useChampionsPageDerived({
     visibleChampions,
     selectedChampion,
     selectedChampionVisual,
+    heroIllustrationByChampionId,
     matchedSeats,
     roles,
     affiliations,

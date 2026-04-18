@@ -106,6 +106,32 @@ function renderAtRoute(initialEntry: string, includeBackRoute: boolean) {
   )
 }
 
+function renderAtRouteWithState(
+  initialEntry: {
+    pathname: string
+    search?: string
+    state?: unknown
+  },
+  includeBackRoute: boolean,
+) {
+  return render(
+    createElement(
+      I18nProvider,
+      null,
+      createElement(
+        MemoryRouter,
+        { initialEntries: [initialEntry] },
+        createElement(
+          Routes,
+          null,
+          includeBackRoute ? createElement(Route, { path: '/champions', element: createElement('div', null, '筛选页占位') }) : null,
+          createElement(Route, { path: '/champions/:championId', element: createElement(ChampionDetailPage) }),
+        ),
+      ),
+    ),
+  )
+}
+
 export function renderChampionDetailPage() {
   return renderChampionDetailPageAt('/champions/7')
 }
@@ -120,4 +146,14 @@ export function renderChampionDetailPageWithSearch() {
 
 export function renderChampionDetailPageWithBackRoute(initialEntry: string) {
   return renderAtRoute(initialEntry, true)
+}
+
+export function renderChampionDetailPageWithLocationState(
+  initialEntry: {
+    pathname: string
+    search?: string
+    state?: unknown
+  },
+) {
+  return renderAtRouteWithState(initialEntry, true)
 }

@@ -1,13 +1,12 @@
 import { useI18n } from '../../app/i18n'
 import { StatusBanner } from '../../components/StatusBanner'
 import { resolveDataUrl } from '../../data/client'
-import { getPrimaryLocalizedText, getSecondaryLocalizedText } from '../../domain/localizedText'
+import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import type { Pet } from '../../domain/types'
 import {
   buildAcquisitionDetail,
   buildAcquisitionLabel,
-  buildAcquisitionNote,
-  buildIconAlt,
+  buildAcquisitionNotes,
   buildIllustrationAlt,
   buildStatusLabel,
 } from './formatting'
@@ -36,11 +35,10 @@ export function PetResultsGrid({ pets }: PetResultsGridProps) {
     <div className="pets-grid" aria-label={t({ zh: '宠物结果', en: 'Pet results' })}>
       {pets.map((pet) => {
         const primaryName = getPrimaryLocalizedText(pet.name, locale)
-        const secondaryName = getSecondaryLocalizedText(pet.name, locale)
         const primaryDescription = pet.description ? getPrimaryLocalizedText(pet.description, locale) : null
         const acquisitionLabel = buildAcquisitionLabel(pet.acquisition, locale)
         const acquisitionDetail = buildAcquisitionDetail(pet.acquisition, locale)
-        const acquisitionNote = buildAcquisitionNote(pet.acquisition, locale)
+        const acquisitionNotes = buildAcquisitionNotes(pet.acquisition, locale)
 
         return (
           <article key={pet.id} className="pet-card">
@@ -66,21 +64,6 @@ export function PetResultsGrid({ pets }: PetResultsGridProps) {
                   </span>
                 </div>
               )}
-
-              <div className="pet-card__icon-frame">
-                {pet.icon ? (
-                  <img
-                    className="pet-card__icon"
-                    src={resolveDataUrl(pet.icon.path)}
-                    alt={buildIconAlt(pet, locale)}
-                    loading="lazy"
-                    width={pet.icon.width}
-                    height={pet.icon.height}
-                  />
-                ) : (
-                  <span className="pet-card__icon-fallback">?</span>
-                )}
-              </div>
             </div>
 
             <div className="pet-card__body">
@@ -92,7 +75,6 @@ export function PetResultsGrid({ pets }: PetResultsGridProps) {
               </div>
 
               <h3 className="pet-card__title">{primaryName}</h3>
-              {secondaryName ? <p className="pet-card__secondary">{secondaryName}</p> : null}
               {primaryDescription ? <p className="pet-card__description">{primaryDescription}</p> : null}
 
               <div className="pet-card__acquisition">
@@ -100,13 +82,27 @@ export function PetResultsGrid({ pets }: PetResultsGridProps) {
                 <strong className="pet-card__acquisition-detail">
                   {acquisitionDetail ?? t({ zh: '当前 definitions 没有给出稳定来源。', en: 'Current definitions do not expose a stable source.' })}
                 </strong>
-                {acquisitionNote ? <span className="pet-card__acquisition-note">{acquisitionNote}</span> : null}
+                {acquisitionNotes.map((note) => (
+                  <span key={`${pet.id}-${note}`} className="pet-card__acquisition-note">
+                    {note}
+                  </span>
+                ))}
               </div>
 
               <div className="pet-card__facts">
-                <span>{pet.iconGraphicId ? `icon #${pet.iconGraphicId}` : t({ zh: 'icon 缺失', en: 'icon missing' })}</span>
-                <span>{pet.illustrationGraphicId ? `xl #${pet.illustrationGraphicId}` : t({ zh: 'xl 缺失', en: 'xl missing' })}</span>
-                <span>{pet.acquisition.sourceType ?? t({ zh: '未标注 sourceType', en: 'No sourceType' })}</span>
+                <span>
+                  {pet.iconGraphicId
+                    ? t({ zh: `头像资源 #${pet.iconGraphicId}`, en: `Icon asset #${pet.iconGraphicId}` })
+                    : t({ zh: '头像资源缺失', en: 'Icon asset missing' })}
+                </span>
+                <span>
+                  {pet.illustrationGraphicId
+                    ? t({ zh: `立绘资源 #${pet.illustrationGraphicId}`, en: `Illustration asset #${pet.illustrationGraphicId}` })
+                    : t({ zh: '立绘资源缺失', en: 'Illustration asset missing' })}
+                </span>
+                {pet.acquisition.sourceType ? (
+                  <span>{t({ zh: `来源标记 ${pet.acquisition.sourceType}`, en: `Source marker ${pet.acquisition.sourceType}` })}</span>
+                ) : null}
               </div>
             </div>
           </article>

@@ -11,6 +11,20 @@ export function ChampionDetailPage() {
   const location = useLocation()
   const navigate = useNavigate()
   const { locale, t } = useI18n()
+  const locationState = location.state as
+    | {
+        returnTo?: {
+          pathname: string
+          search: string
+        }
+        returnLabel?: {
+          zh: string
+          en: string
+        }
+      }
+    | null
+  const backTarget = locationState?.returnTo ?? { pathname: '/champions', search: location.search }
+  const backLabel = locationState?.returnLabel ?? { zh: '返回英雄筛选', en: 'Back to champions' }
   const {
     state,
     detail,
@@ -57,13 +71,13 @@ export function ChampionDetailPage() {
     scrollToSection,
     backToChampions,
     handleBackClick,
-  } = useChampionDetailSectionState(detail, location, navigate, t)
+  } = useChampionDetailSectionState(detail, location, navigate, backTarget, t)
 
   return (
     <div className="page-stack champion-detail-page">
       <div className="page-backlink-row">
         <Link className="page-backlink" to={backToChampions} onClick={handleBackClick}>
-          {t({ zh: '← 返回英雄筛选', en: '← Back to champions' })}
+          {t(backLabel)}
         </Link>
       </div>
 

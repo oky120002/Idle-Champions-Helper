@@ -27,8 +27,8 @@ export function IllustrationsResultsSection({ model }: IllustrationsResultsSecti
         <p className="supporting-text">
           {hasMatches
             ? t({
-                zh: `当前展示 ${results.visibleIllustrationEntries.length} / ${results.filteredIllustrationEntries.length} 张立绘（${results.filteredHeroCount} 张本体 / ${results.filteredSkinCount} 张皮肤）。若列表仍偏大，优先加关键词、范围、座位、定位、联动队伍或标签缩小范围。`,
-                en: `Showing ${results.visibleIllustrationEntries.length} / ${results.filteredIllustrationEntries.length} illustrations (${results.filteredHeroCount} hero base / ${results.filteredSkinCount} skins). If the list still feels broad, narrow it with a keyword, scope, seat, role, affiliation, or tags.`,
+                zh: `当前展示 ${results.visibleIllustrationEntries.length} / ${results.filteredIllustrationEntries.length} 张立绘（${results.filteredHeroCount} 张本体 / ${results.filteredSkinCount} 张皮肤）。若列表仍偏大，优先加关键词、范围、座位、定位、联动队伍或标签缩小范围；悬停可预览动态资源，点卡片可直达英雄详情。`,
+                en: `Showing ${results.visibleIllustrationEntries.length} / ${results.filteredIllustrationEntries.length} illustrations (${results.filteredHeroCount} hero base / ${results.filteredSkinCount} skins). If the list still feels broad, narrow it with a keyword, scope, seat, role, affiliation, or tags. Hover for motion previews, then open the card to jump into the champion dossier.`,
               })
             : t({
                 zh: '当前筛选条件下没有匹配立绘。可以直接点上方已选条件逐项回退，或用清空全部重新开始。',

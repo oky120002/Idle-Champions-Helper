@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import type { AppLocale } from '../../app/i18n'
 import { resolveDataUrl } from '../../data/client'
 import { formatSeatLabel, getPrimaryLocalizedText, getRoleLabel, getSecondaryLocalizedText } from '../../domain/localizedText'
@@ -17,6 +17,7 @@ type IllustrationResultCardProps = {
 }
 
 export function IllustrationResultCard({ entry, animation, locale, t }: IllustrationResultCardProps) {
+  const location = useLocation()
   const { illustration, champion } = entry
   const [isPreviewActive, setPreviewActive] = useState(false)
   const championPrimaryName = getPrimaryLocalizedText(illustration.championName, locale)
@@ -31,6 +32,16 @@ export function IllustrationResultCard({ entry, animation, locale, t }: Illustra
     <Link
       className="illustration-card illustration-card--interactive"
       to={`/champions/${illustration.championId}`}
+      state={{
+        returnTo: {
+          pathname: '/illustrations',
+          search: location.search,
+        },
+        returnLabel:
+          locale === 'zh-CN'
+            ? { zh: '返回立绘图鉴', en: 'Back to illustrations' }
+            : { zh: '返回立绘图鉴', en: 'Back to illustrations' },
+      }}
       aria-label={t({
         zh: `查看英雄：${championPrimaryName}（${illustrationPrimaryName}）`,
         en: `Open champion: ${championPrimaryName} (${illustrationPrimaryName})`,

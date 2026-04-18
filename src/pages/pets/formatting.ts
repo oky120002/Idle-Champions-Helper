@@ -86,23 +86,51 @@ export function buildAcquisitionDetail(acquisition: PetAcquisition, locale: AppL
   return null
 }
 
-export function buildAcquisitionNote(acquisition: PetAcquisition, locale: AppLocale) {
+export function buildAcquisitionNotes(acquisition: PetAcquisition, locale: AppLocale): string[] {
+  const notes: string[] = []
+
   if (acquisition.kind === 'patron' && acquisition.patronInfluence !== null) {
     const amount = formatNumber(acquisition.patronInfluence, locale)
-    return locale === 'zh-CN' ? `需要 ${amount} 影响力解锁` : `Requires ${amount} influence to unlock`
+    notes.push(locale === 'zh-CN' ? `需要 ${amount} 影响力解锁` : `Requires ${amount} influence to unlock`)
+  }
+
+  if (acquisition.kind === 'premium' && acquisition.premiumPackDescription) {
+    notes.push(getPrimaryLocalizedText(acquisition.premiumPackDescription, locale))
+  }
+
+  if (acquisition.kind === 'gems' && acquisition.sourceType === 'shop') {
+    notes.push(locale === 'zh-CN' ? '归类为常驻宝石商店条目。' : 'Classified as a permanent gem-shop entry.')
+  }
+
+  if (acquisition.kind === 'premium' && acquisition.sourceType === 'dlc') {
+    notes.push(locale === 'zh-CN' ? '当前映射到固定 DLC / 付费包。' : 'Currently mapped to a fixed DLC or premium pack.')
   }
 
   if (acquisition.kind === 'premium' && acquisition.sourceType === 'flash_sale' && !acquisition.premiumPackName) {
-    return locale === 'zh-CN'
-      ? '当前 definitions 只标记为 flash_sale，未映射到固定礼包。'
-      : 'Current definitions only mark this pet as flash_sale without a fixed pack mapping.'
+    notes.push(
+      locale === 'zh-CN'
+        ? '当前 definitions 只标记为 flash_sale，未映射到固定礼包。'
+        : 'Current definitions only mark this pet as flash_sale without a fixed pack mapping.',
+    )
   }
 
   if (acquisition.kind === 'unknown' && !acquisition.sourceType) {
-    return locale === 'zh-CN' ? '当前 definitions 里没有稳定来源标注。' : 'Current definitions do not include a stable source marker.'
+    notes.push(
+      locale === 'zh-CN'
+        ? '当前 definitions 里没有稳定来源标注。'
+        : 'Current definitions do not include a stable source marker.',
+    )
   }
 
-  return null
+  if (acquisition.sourceType && acquisition.kind !== 'gems' && acquisition.kind !== 'premium') {
+    notes.push(
+      locale === 'zh-CN'
+        ? `来源标记：${acquisition.sourceType}`
+        : `Source marker: ${acquisition.sourceType}`,
+    )
+  }
+
+  return notes
 }
 
 export function buildStatusLabel(pet: Pet, locale: AppLocale) {

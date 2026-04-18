@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useI18n } from '../app/i18n'
 import { FilterSidebarLayout } from '../components/filter-sidebar/FilterSidebarLayout'
+import { PageTabHeader } from '../components/PageTabHeader'
 import { StatusBanner } from '../components/StatusBanner'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollection } from '../data/client'
@@ -8,6 +9,7 @@ import type { Pet } from '../domain/types'
 import { PetFilters } from './pets/PetFilters'
 import { PetsMetrics } from './pets/PetsMetrics'
 import { PetsResultsSection } from './pets/PetsResultsSection'
+import { shufflePets } from './pets/pet-results-order'
 import { matchesPetQuery } from './pets/search'
 import type { AssetFilter, SourceFilter } from './pets/types'
 
@@ -24,6 +26,7 @@ export function PetsPage() {
   const [query, setQuery] = useState('')
   const [sourceFilter, setSourceFilter] = useState<SourceFilter>('all')
   const [assetFilter, setAssetFilter] = useState<AssetFilter>('all')
+  const [randomOrderSeed, setRandomOrderSeed] = useState<number | null>(null)
 
   useEffect(() => {
     let disposed = false
@@ -54,7 +57,7 @@ export function PetsPage() {
 
   const pets = state.status === 'ready' ? state.pets : EMPTY_PETS
   const filteredPets = useMemo(() => {
-    return pets.filter((pet) => {
+    const nextPets = pets.filter((pet) => {
       if (sourceFilter !== 'all' && pet.acquisition.kind !== sourceFilter) {
         return false
       }
@@ -71,7 +74,9 @@ export function PetsPage() {
 
       return matchesPetQuery(pet, query)
     })
-  }, [assetFilter, pets, query, sourceFilter])
+
+    return randomOrderSeed === null ? nextPets : shufflePets(nextPets, randomOrderSeed)
+  }, [assetFilter, pets, query, randomOrderSeed, sourceFilter])
 
   const summary = useMemo(
     () => ({
@@ -94,13 +99,18 @@ export function PetsPage() {
   return (
     <div className="page-shell pets-page">
       <SurfaceCard
-        eyebrow={t({ zh: '官方 familiar definitions', en: 'Official familiar definitions' })}
-        title={t({ zh: '宠物图鉴', en: 'Pet catalog' })}
-        description={t({
-          zh: '本页基于官方 `familiar_defines`、`premium_item_defines` 与 `patron_shop_item_defines` 归一化生成，并在构建期把宠物图标与 4x 立绘同步为站内静态资源。',
-          en: 'This page is normalized from official familiar, premium item, and patron shop definitions, then syncs pet icons and 4x illustrations into local static assets at build time.',
-        })}
-        headerAside={state.status === 'ready' ? <PetsMetrics summary={summary} /> : null}
+        headerContent={
+          <PageTabHeader
+            eyebrow={t({ zh: '宠物图鉴', en: 'Pet catalog' })}
+            accentLabel="PETS"
+            title={t({ zh: '按来源与图像状态整理宠物目录', en: 'Organize the pet catalog by source and asset coverage' })}
+            description={t({
+              zh: '先用搜索和来源缩小范围，再比较立绘、获取方式与资源完整度；如果想换一批视觉顺序，也可以直接随机打散当前结果。',
+              en: 'Narrow the catalog with search and source first, then compare illustration coverage, acquisition details, and asset completeness. Shuffle the current result set whenever you want a fresh scan order.',
+            })}
+            aside={state.status === 'ready' ? <PetsMetrics summary={summary} /> : null}
+          />
+        }
       >
         <FilterSidebarLayout
           sidebar={
@@ -144,7 +154,14 @@ export function PetsPage() {
             />
           ) : null}
 
-          {state.status === 'ready' ? <PetsResultsSection pets={filteredPets} totalPets={pets.length} /> : null}
+          {state.status === 'ready' ? (
+            <PetsResultsSection
+              pets={filteredPets}
+              totalPets={pets.length}
+              hasRandomOrder={randomOrderSeed !== null}
+              onRandomizeResultOrder={() => setRandomOrderSeed((current) => (current === null ? 1 : current + 1))}
+            />
+          ) : null}
         </FilterSidebarLayout>
       </SurfaceCard>
     </div>

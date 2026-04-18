@@ -1,3 +1,4 @@
+import { PageTabHeader } from '../../components/PageTabHeader'
 import { SurfaceCard } from '../../components/SurfaceCard'
 import type { UserDataPageModel } from './types'
 
@@ -10,12 +11,17 @@ export function UserDataIntroCard({ model }: UserDataIntroCardProps) {
 
   return (
     <SurfaceCard
-      eyebrow={t({ zh: '个人数据', en: 'User data' })}
-      title={t({ zh: '先把本地导入链路和安全边界立住', en: 'Establish the local import flow and safety boundary first' })}
-      description={t({
-        zh: '当前这一步只做浏览器内解析和校验，不会联网请求官方接口，也不会把凭证上传到任何地方。',
-        en: 'This step only parses and validates inside the browser. It does not call official endpoints or upload credentials anywhere.',
-      })}
+      headerContent={
+        <PageTabHeader
+          eyebrow={t({ zh: '个人数据', en: 'User data' })}
+          accentLabel="USER DATA"
+          title={t({ zh: '在本地解析账号凭证并检查导入条件', en: 'Parse account credentials locally and check import readiness' })}
+          description={t({
+            zh: '这里只做浏览器内解析、校验和脱敏预览；不会调用官方接口，也不会把凭证上传到任何外部服务。',
+            en: 'This page stays inside the browser for parsing, validation, and masked previews only. It does not call official endpoints or upload credentials anywhere.',
+          })}
+        />
+      }
     >
       <div className="split-grid">
         <div>

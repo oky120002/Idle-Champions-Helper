@@ -1,3 +1,4 @@
+import { PageTabHeader } from '../components/PageTabHeader'
 import { StatusBanner } from '../components/StatusBanner'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { ChampionsMetrics } from './champions/ChampionsMetrics'
@@ -12,13 +13,18 @@ export function ChampionsPage() {
   return (
     <div className="page-stack">
       <SurfaceCard
-        eyebrow={t({ zh: '英雄筛选', en: 'Champion filters' })}
-        title={t({ zh: '先用真实公共数据把查询入口跑起来', en: 'Make the real-data entry point feel instant' })}
-        description={t({
-          zh: '当前版本先接官方 definitions 归一化后的英雄数据，并保留官方原文与 `language_id=7` 中文展示名，优先把座位、定位、联动队伍和标签过滤闭环做通。',
-          en: 'This pass uses normalized official definitions, keeps both official source names and `language_id=7` Chinese labels, and focuses on closing the loop on seat, role, affiliation, and tag filtering.',
-        })}
-        headerAside={state.status === 'ready' ? <ChampionsMetrics model={model} /> : null}
+        headerContent={
+          <PageTabHeader
+            eyebrow={t({ zh: '英雄筛选', en: 'Champion filters' })}
+            accentLabel="CHAMPIONS"
+            title={t({ zh: '按座位、定位与联动快速缩小候选英雄', en: 'Narrow champion candidates by seat, role, and affiliation' })}
+            description={t({
+              zh: '先用高频条件缩小候选，再按身份、获取方式和机制标签补精度；点卡片进入详情，点“视觉档案”对照立绘资源。',
+              en: 'Use the high-frequency filters first, then refine with identity, acquisition, and mechanic tags. Open the card for full details, or toggle the visual dossier to compare art assets.',
+            })}
+            aside={state.status === 'ready' ? <ChampionsMetrics model={model} /> : null}
+          />
+        }
       >
         {state.status === 'loading' ? (
           <StatusBanner tone="info">{t({ zh: '正在读取英雄数据…', en: 'Loading champion data…' })}</StatusBanner>
