@@ -2,6 +2,10 @@
   gap: 1.05rem;
 }
 
+.champion-detail-page__mobile-backlink {
+  display: none;
+}
+
 .detail-section {
   --detail-section-glow: rgba(200, 167, 127, 0.16);
   --detail-section-glow-secondary: rgba(62, 113, 147, 0.14);
@@ -351,6 +355,10 @@
 }
 
 @media (max-width: 720px) {
+  .champion-detail-page__mobile-backlink {
+      display: flex;
+    }
+
   .section-jump-bar__button {
       min-height: 2.8rem;
       gap: 0.48rem;

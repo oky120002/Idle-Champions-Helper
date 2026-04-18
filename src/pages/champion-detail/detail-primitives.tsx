@@ -17,10 +17,14 @@ export function LocalizedTextStack({ value }: { value: LocalizedText }) {
   )
 }
 
-export function DetailSectionHeader({ title, badges }: DetailSectionHeaderProps) {
+export function DetailSectionHeader({ eyebrow, description, title, badges }: DetailSectionHeaderProps) {
   return (
     <header className="detail-section-header">
-      <h2 className="detail-section-header__title">{title}</h2>
+      <div className="detail-section-header__copy">
+        {eyebrow ? <p className="detail-section-header__eyebrow">{eyebrow}</p> : null}
+        <h2 className="detail-section-header__title">{title}</h2>
+        {description ? <p className="detail-section-header__description">{description}</p> : null}
+      </div>
       {badges.length > 0 ? (
         <div className="detail-section-header__badge-row">
           {badges.map((badge) => (

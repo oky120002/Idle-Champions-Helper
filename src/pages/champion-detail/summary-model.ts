@@ -6,6 +6,13 @@ import { isJsonObject, isJsonPrimitive, parseInlineJsonValue } from './detail-js
 import { localizeSourceType, localizeStructuredKey } from './detail-localization'
 import { buildNotAvailableLabel, formatBoolean, formatNumber, formatTimestamp } from './detail-value-formatters'
 
+const REDACTED_AVAILABILITY_KEYS = new Set([
+  'allow_time_gate',
+  'available_in_store',
+  'store_blackout',
+  'time_gate_blackout',
+])
+
 export function formatStructuredPrimitive(
   value: string | number | boolean | null,
   locale: AppLocale,
@@ -61,25 +68,6 @@ export function formatStructuredPrimitive(
   return trimmed
 }
 
-export function formatTimeWindow(value: JsonValue | undefined, locale: AppLocale): string | null {
-  if (!isJsonObject(value)) {
-    return null
-  }
-
-  const start = typeof value.start === 'string' ? value.start.trim() : ''
-  const end = typeof value.end === 'string' ? value.end.trim() : ''
-
-  if (!start && !end) {
-    return null
-  }
-
-  if (start && end) {
-    return locale === 'zh-CN' ? `${start} 至 ${end}` : `${start} to ${end}`
-  }
-
-  return start || end
-}
-
 export function buildOverviewPropertyFields(
   detail: ChampionDetail,
   locale: AppLocale,
@@ -92,11 +80,7 @@ export function buildOverviewPropertyFields(
   const properties = detail.properties
   const fields: DetailFieldProps[] = []
   const propertyLabels = {
-    available_in_store: locale === 'zh-CN' ? '商店上架时间' : 'Store availability',
-    allow_time_gate: locale === 'zh-CN' ? '时间门开放' : 'Time Gate availability',
     weekly_buff: locale === 'zh-CN' ? '周增益' : 'Weekly buff',
-    store_blackout: locale === 'zh-CN' ? '商店黑名单' : 'Store blackout',
-    time_gate_blackout: locale === 'zh-CN' ? '时间门黑名单' : 'Time Gate blackout',
   } as const
 
   const pushPrimitiveField = (key: keyof typeof propertyLabels) => {
@@ -118,22 +102,7 @@ export function buildOverviewPropertyFields(
     })
   }
 
-  pushPrimitiveField('available_in_store')
-  pushPrimitiveField('allow_time_gate')
   pushPrimitiveField('weekly_buff')
-
-  ;(['store_blackout', 'time_gate_blackout'] as const).forEach((key) => {
-    const formatted = formatTimeWindow(properties[key], locale)
-
-    if (!formatted) {
-      return
-    }
-
-    fields.push({
-      label: propertyLabels[key],
-      value: formatted,
-    })
-  })
 
   return fields
 }
@@ -148,6 +117,10 @@ export function collectStructuredSummaryTags(
   effectContext: EffectContext,
   parentKey: string | null = null,
 ): string[] {
+  if (parentKey && REDACTED_AVAILABILITY_KEYS.has(parentKey)) {
+    return []
+  }
+
   if (Array.isArray(value)) {
     return Array.from(
       new Set(
@@ -162,7 +135,7 @@ export function collectStructuredSummaryTags(
     return Array.from(
       new Set(
         Object.entries(value).flatMap(([key, itemValue]) =>
-          collectStructuredSummaryTags(itemValue, locale, effectContext, key),
+          REDACTED_AVAILABILITY_KEYS.has(key) ? [] : collectStructuredSummaryTags(itemValue, locale, effectContext, key),
         ),
       ),
     )
