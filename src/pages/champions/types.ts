@@ -80,6 +80,7 @@ export interface ChampionsPageModel {
   matchedSeats: number
   canToggleResultVisibility: boolean
   showAllResults: boolean
+  hasRandomOrder: boolean
   showResultsQuickNavTop: boolean
   showResultsQuickNavBottom: boolean
   resultsShellHeight: number | null
@@ -121,6 +122,7 @@ export interface ChampionsPageModel {
   resetMechanic: () => void
   toggleMechanic: (mechanic: string) => void
   toggleResultVisibility: () => void
+  randomizeResultOrder: () => void
   toggleChampionVisual: (championId: string) => void
   clearSelectedChampion: () => void
   scrollResultsToBoundary: (direction: 'top' | 'bottom') => void

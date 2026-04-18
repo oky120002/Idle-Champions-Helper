@@ -55,38 +55,43 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
           </div>
         ) : null}
 
-        <ChampionIdentity
-          champion={champion}
-          locale={locale}
-          eyebrow={formatSeatLabel(champion.seat, locale)}
-          avatarClassName="champion-avatar--spotlight"
-          variant="spotlight"
-        />
+        <div className="result-card__hero-shell">
+          <ChampionIdentity
+            champion={champion}
+            locale={locale}
+            eyebrow={formatSeatLabel(champion.seat, locale)}
+            avatarClassName="champion-avatar--spotlight"
+            variant="spotlight"
+          />
 
-        <div className="tag-row result-card__role-row">
-          {rolePills.map((role) => (
-            <span key={role} className="tag-pill">
-              {getRoleLabel(role, locale)}
-            </span>
-          ))}
-          {roleOverflowCount > 0 ? (
-            <span className="tag-pill tag-pill--muted result-card__role-overflow">
-              {t({ zh: `+${roleOverflowCount}`, en: `+${roleOverflowCount}` })}
-            </span>
-          ) : null}
+          <div className="result-card__meta-strip">
+            <div className="tag-row result-card__role-row">
+              {rolePills.map((role) => (
+                <span key={role} className="tag-pill">
+                  {getRoleLabel(role, locale)}
+                </span>
+              ))}
+              {roleOverflowCount > 0 ? (
+                <span className="tag-pill tag-pill--muted result-card__role-overflow">
+                  {t({ zh: `+${roleOverflowCount}`, en: `+${roleOverflowCount}` })}
+                </span>
+              ) : null}
+            </div>
+
+            <p className="supporting-text result-card__affiliation">
+              <span className="result-card__meta-label">{t({ zh: '联动队伍', en: 'Affiliation' })}</span>
+              <span className="result-card__meta-value">
+                {champion.affiliations.length > 0
+                  ? champion.affiliations.map((affiliation) => getLocalizedTextPair(affiliation, locale)).join(' / ')
+                  : t({ zh: '暂无', en: 'None yet' })}
+              </span>
+            </p>
+          </div>
         </div>
 
-        <p className="supporting-text result-card__affiliation">
-          {t({ zh: '联动队伍', en: 'Affiliation' })}：
-          {champion.affiliations.length > 0
-            ? champion.affiliations.map((affiliation) => getLocalizedTextPair(affiliation, locale)).join(' / ')
-            : t({ zh: '暂无', en: 'None yet' })}
-        </p>
-
-        <div className="result-block result-card__attributes">
-          <strong className="result-block__title">{t({ zh: '属性概览', en: 'Attributes' })}</strong>
+        <div className="result-card__attributes">
           {attributeGroups.length > 0 ? (
-            <div className="result-attribute-grid">
+            <div className="result-attribute-grid result-attribute-grid--compact">
               {attributeGroups.map((group) => (
                 <div key={group.id} className="result-block result-block--compact result-card__attribute-group">
                   <strong className="result-block__title result-block__title--small">
@@ -108,7 +113,7 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
               ))}
             </div>
           ) : (
-            <p className="supporting-text">
+            <p className="supporting-text result-card__attributes-empty">
               {t({
                 zh: '当前数据里还没有更多属性标签。',
                 en: 'No extra attribute tags are exposed in the current dataset yet.',
@@ -116,7 +121,6 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
             </p>
           )}
         </div>
-
       </Link>
 
       <div className="result-card__actions">
