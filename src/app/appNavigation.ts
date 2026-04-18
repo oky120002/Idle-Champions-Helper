@@ -28,3 +28,52 @@ export function isNavigationItemActive(pathname: string, to: string): boolean {
 
   return pathname === to || pathname.startsWith(`${to}/`)
 }
+
+function findNavigationItemByTo(to: string | null): AppNavigationItem | null {
+  if (!to) {
+    return null
+  }
+
+  return navigation.find((item) => item.to === to) ?? null
+}
+
+function isNavigationLocationState(value: unknown): value is {
+  activeNavigationTo?: string
+  returnTo?: {
+    pathname?: string
+  }
+} {
+  return typeof value === 'object' && value !== null
+}
+
+function resolveNavigationSourceTo(state: unknown): string | null {
+  if (!isNavigationLocationState(state)) {
+    return null
+  }
+
+  if (typeof state.activeNavigationTo === 'string') {
+    return state.activeNavigationTo
+  }
+
+  if (typeof state.returnTo?.pathname === 'string') {
+    return state.returnTo.pathname
+  }
+
+  return null
+}
+
+export function resolveActiveNavigationItem(pathname: string, state: unknown): AppNavigationItem {
+  const fallbackNavigationItem = navigation[0]
+
+  if (!fallbackNavigationItem) {
+    throw new Error('Site navigation requires at least one navigation item.')
+  }
+
+  const explicitSourceNavigationItem = findNavigationItemByTo(resolveNavigationSourceTo(state))
+
+  if (explicitSourceNavigationItem && pathname.startsWith('/champions/')) {
+    return explicitSourceNavigationItem
+  }
+
+  return navigation.find((item) => isNavigationItemActive(pathname, item.to)) ?? explicitSourceNavigationItem ?? fallbackNavigationItem
+}

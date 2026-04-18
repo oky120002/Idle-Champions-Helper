@@ -36,6 +36,7 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
           pathname: `/champions/${champion.id}`,
           search: locationSearch,
         }}
+        state={{ activeNavigationTo: '/champions' }}
         aria-label={t({
           zh: `查看详情：${getPrimaryLocalizedText(champion.name, locale)}`,
           en: `Open details for ${getPrimaryLocalizedText(champion.name, locale)}`,

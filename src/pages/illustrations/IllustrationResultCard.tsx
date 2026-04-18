@@ -29,6 +29,7 @@ export function IllustrationResultCard({ entry, animation, locale, t }: Illustra
       className="illustration-card illustration-card--interactive"
       to={`/champions/${illustration.championId}`}
       state={{
+        activeNavigationTo: '/illustrations',
         returnTo: {
           pathname: '/illustrations',
           search: location.search,

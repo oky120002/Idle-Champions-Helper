@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
 
 interface HeaderMetrics {
+  compactBrandInset: number
   contentHeight: number
   compactBrandOpacity: number
   height: number
@@ -26,7 +27,10 @@ async function getHeaderMetrics(page: Page): Promise<HeaderMetrics> {
       throw new Error('顶部导航关键节点不存在。')
     }
 
+    const headerRect = element.getBoundingClientRect()
+
     return {
+      compactBrandInset: Math.round(compactBrand.getBoundingClientRect().left - headerRect.left),
       contentHeight: Math.round(contentShell.getBoundingClientRect().height),
       compactBrandOpacity: Number(window.getComputedStyle(compactBrand).opacity),
       height: Math.round(element.getBoundingClientRect().height),
@@ -41,6 +45,8 @@ async function getHeaderMetrics(page: Page): Promise<HeaderMetrics> {
     }
   })
 }
+
+const headerCondenseAnimationWaitMs = 620
 
 test('非首页滚动后顶部大标题应自动收紧，回顶后再展开', async ({ page }) => {
   await page.addInitScript(() => {
@@ -59,7 +65,7 @@ test('非首页滚动后顶部大标题应自动收紧，回顶后再展开', as
   expect(Math.max(...initialMetrics.navLinkTops) - Math.min(...initialMetrics.navLinkTops)).toBeLessThanOrEqual(6)
 
   await page.evaluate(() => window.scrollTo({ top: 320, behavior: 'instant' }))
-  await page.waitForTimeout(320)
+  await page.waitForTimeout(headerCondenseAnimationWaitMs)
 
   const condensedMetrics = await getHeaderMetrics(page)
 
@@ -68,11 +74,12 @@ test('非首页滚动后顶部大标题应自动收紧，回顶后再展开', as
   expect(condensedMetrics.height).toBeLessThanOrEqual(92)
   expect(condensedMetrics.contentHeight).toBeLessThanOrEqual(4)
   expect(condensedMetrics.compactBrandOpacity).toBeGreaterThan(0.9)
+  expect(condensedMetrics.compactBrandInset).toBeGreaterThanOrEqual(12)
   expect(condensedMetrics.kickerDisplay).toBe('none')
   expect(Math.abs(condensedMetrics.navTop - condensedMetrics.topbarActionsTop)).toBeLessThanOrEqual(6)
 
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }))
-  await page.waitForTimeout(320)
+  await page.waitForTimeout(headerCondenseAnimationWaitMs)
 
   const expandedMetrics = await getHeaderMetrics(page)
 
