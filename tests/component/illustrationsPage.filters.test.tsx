@@ -20,11 +20,13 @@ import {
 
 describe('IllustrationsPage filters', () => {
   beforeEach(() => {
+    window.localStorage.clear()
     installClipboardMock()
     mockIllustrationsPageCollections()
   })
 
   afterEach(() => {
+    window.localStorage.clear()
     mockedLoadCollection.mockReset()
     vi.restoreAllMocks()
   })
@@ -76,6 +78,38 @@ describe('IllustrationsPage filters', () => {
 
     expect(searchParams.get('scope')).toBe('skin')
     expect(searchParams.getAll('role')).toEqual(['support'])
+  })
+
+  it('卡片标题在中文模式下只显示当前语言，并把皮肤名和英雄本名合并到同一行', async () => {
+    renderIllustrationsPage()
+
+    const baseCard = await screen.findByRole('link', { name: '查看英雄：布鲁诺（布鲁诺）' })
+    const skinCard = screen.getByRole('link', { name: '查看英雄：布鲁诺（海盗布鲁诺）' })
+    const baseTitle = within(baseCard).getByRole('heading', { name: '布鲁诺' })
+    const skinTitle = within(skinCard).getByRole('heading', { level: 3 })
+
+    expect(baseTitle).toBeInTheDocument()
+    expect(within(baseCard).queryByText('Bruenor')).not.toBeInTheDocument()
+    expect(skinTitle).toHaveAttribute('title', '海盗布鲁诺 · 布鲁诺')
+    expect(skinTitle).toHaveTextContent(/海盗布鲁诺\s*·\s*布鲁诺/)
+    expect(within(skinCard).queryByText('Pirate Bruenor')).not.toBeInTheDocument()
+  })
+
+  it('卡片标题在英文模式下只显示当前语言，并保留单行联合展示', async () => {
+    window.localStorage.setItem('idle-champions-helper.locale', 'en-US')
+
+    renderIllustrationsPage()
+
+    const baseCard = await screen.findByRole('link', { name: 'Open champion: Bruenor (Bruenor)' })
+    const skinCard = screen.getByRole('link', { name: 'Open champion: Bruenor (Pirate Bruenor)' })
+    const baseTitle = within(baseCard).getByRole('heading', { name: 'Bruenor' })
+    const skinTitle = within(skinCard).getByRole('heading', { level: 3 })
+
+    expect(baseTitle).toBeInTheDocument()
+    expect(within(baseCard).queryByText('布鲁诺')).not.toBeInTheDocument()
+    expect(skinTitle).toHaveAttribute('title', 'Pirate Bruenor · Bruenor')
+    expect(skinTitle).toHaveTextContent(/Pirate Bruenor\s*·\s*Bruenor/)
+    expect(within(skinCard).queryByText('海盗布鲁诺')).not.toBeInTheDocument()
   })
 
   it('支持复制当前筛选链接', async () => {

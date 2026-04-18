@@ -136,20 +136,22 @@
 
 .illustration-card__body {
   display: grid;
-  gap: 0.42rem;
+  gap: 0.52rem;
 }
 
 .illustration-card__title {
   display: flex;
   align-items: baseline;
-  gap: 0.45rem;
+  gap: 0.32rem;
   min-width: 0;
   margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
   color: #fff7eb;
 }
 
 .illustration-card__title-primary,
-.illustration-card__title-secondary {
+.illustration-card__title-context {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -157,33 +159,28 @@
 }
 
 .illustration-card__title-primary {
+  flex: 0 1 auto;
   font-size: 1.02rem;
   font-weight: 700;
   letter-spacing: 0.01em;
 }
 
-.illustration-card__title-secondary {
-  font-size: 0.72rem;
-  line-height: 1.1;
-  color: rgba(244, 239, 226, 0.6);
-  padding: 0.16rem 0.42rem;
-  border-radius: 999px;
-  border: 1px solid rgba(227, 214, 193, 0.12);
-  background: rgba(255, 255, 255, 0.035);
+.illustration-card__title-divider {
+  flex: 0 0 auto;
+  color: rgba(244, 239, 226, 0.4);
+  font-size: 0.78rem;
 }
 
-.illustration-card__champion,
+.illustration-card__title-context {
+  flex: 1 1 auto;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: rgba(244, 239, 226, 0.68);
+}
+
 .illustration-card__supporting {
   margin: 0;
-}
-
-.illustration-card__champion {
-  font-size: 0.92rem;
-  font-weight: 650;
-  color: rgba(249, 243, 231, 0.9);
-}
-
-.illustration-card__supporting {
   color: rgba(244, 239, 226, 0.62);
   font-size: 0.84rem;
 }
@@ -257,7 +254,8 @@
     font-size: 0.98rem;
   }
 
-  .illustration-card__title-secondary {
-    max-width: 40%;
+  .illustration-card__title-context {
+    max-width: 48%;
+    font-size: 0.74rem;
   }
 }
