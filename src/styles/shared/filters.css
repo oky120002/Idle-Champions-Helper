@@ -6,7 +6,7 @@
 
 .filter-panel--sidebar {
   margin-top: 0;
-  gap: 1.1rem;
+  gap: 1rem;
 }
 
 .filter-panel--nested {
@@ -100,7 +100,7 @@
 
 .active-filter-bar--sidebar {
   margin-top: 0;
-  padding: 0.8rem;
+  padding: 0.74rem 0.78rem;
   border-radius: 20px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.032), rgba(255, 255, 255, 0.018)),
@@ -166,21 +166,19 @@
 .champions-workspace,
 .filter-workspace {
   display: grid;
-  gap: 1.25rem;
-  margin-top: 1rem;
+  gap: 1.1rem;
+  margin-top: 0.82rem;
 }
 
-.champions-sidebar,
 .filter-workspace__sidebar,
 .filter-workspace__content {
   min-width: 0;
 }
 
-.champions-sidebar__surface,
 .filter-sidebar-panel {
   display: grid;
-  gap: 1rem;
-  padding: 1rem;
+  gap: 0.92rem;
+  padding: 0.94rem 0.96rem 0.9rem;
   border-radius: 24px;
   border: 1px solid rgba(227, 214, 193, 0.1);
   background:
@@ -214,28 +212,25 @@
 
 .filter-sidebar-panel__copy {
   display: grid;
-  gap: 0.35rem;
+  gap: 0.28rem;
 }
 
-.champions-sidebar__header,
 .filter-sidebar-panel__header {
   display: grid;
-  gap: 0.8rem;
+  gap: 0.72rem;
 }
 
-.champions-sidebar__title,
 .filter-sidebar-panel__title {
   margin-bottom: 0;
 }
 
-.champions-sidebar__hint,
 .filter-sidebar-panel__description {
-  margin: 0.35rem 0 0;
+  margin: 0.18rem 0 0;
   color: rgba(242, 239, 230, 0.58);
-  font-size: 0.92rem;
+  font-size: 0.9rem;
+  line-height: 1.52;
 }
 
-.champions-sidebar__badge,
 .filter-sidebar-panel__badge {
   justify-self: start;
   padding: 0.38rem 0.78rem;
@@ -248,41 +243,39 @@
   text-transform: uppercase;
 }
 
-.champions-sidebar__status,
 .filter-sidebar-panel__status {
   display: grid;
-  gap: 0.65rem;
+  gap: 0.55rem;
   justify-items: start;
 }
 
-.champions-sidebar__microcopy,
 .filter-sidebar-panel__note {
-  margin: -0.1rem 0 0;
+  margin: -0.04rem 0 0;
   color: rgba(242, 239, 230, 0.56);
-  font-size: 0.84rem;
+  font-size: 0.82rem;
+  line-height: 1.48;
 }
 
-.champions-sidebar__section-label,
 .filter-sidebar-panel__section-label {
+  margin: 0;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgba(242, 239, 230, 0.5);
   font-size: 0.76rem;
 }
 
-.champions-sidebar__section-label--subtle,
 .filter-sidebar-panel__section-label--subtle {
-  margin-top: 0.15rem;
+  margin-top: 0.08rem;
 }
 
 .filter-sidebar-panel__content {
   display: grid;
-  gap: 1rem;
+  gap: 0.92rem;
 }
 
 .filter-disclosure-stack {
   display: grid;
-  gap: 0.8rem;
+  gap: 0.72rem;
 }
 
 .filter-disclosure {
@@ -409,29 +402,25 @@
       align-items: stretch;
     }
 
-  .champions-sidebar__sticky,
-    .filter-workspace__sidebar-sticky {
-      position: sticky;
-      top: var(--champions-sticky-top, 10rem);
-    }
+  .filter-workspace__sidebar-sticky {
+    position: sticky;
+    top: var(--champions-sticky-top, 10rem);
+  }
 
-  .champions-sidebar__surface,
   .filter-sidebar-panel {
-      max-height: calc(100vh - var(--champions-sticky-top, 10rem) - 1rem);
+      max-height: calc(100vh - var(--champions-sticky-top, 10rem) - 0.55rem);
       overflow: auto;
       overscroll-behavior: contain;
       scrollbar-gutter: stable;
     }
 
-  .champions-sidebar__header,
-    .filter-sidebar-panel__header {
-      grid-template-columns: minmax(0, 1fr) auto;
-      align-items: start;
-      gap: 0.8rem;
-    }
+  .filter-sidebar-panel__header {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 0.72rem;
+  }
 
-  .champions-sidebar__status,
-    .filter-sidebar-panel__status {
-      justify-items: end;
-    }
+  .filter-sidebar-panel__status {
+    justify-items: end;
+  }
 }

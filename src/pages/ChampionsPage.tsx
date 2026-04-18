@@ -1,3 +1,4 @@
+import { FilterSidebarLayout } from '../components/filter-sidebar/FilterSidebarLayout'
 import { PageTabHeader } from '../components/PageTabHeader'
 import { StatusBanner } from '../components/StatusBanner'
 import { SurfaceCard } from '../components/SurfaceCard'
@@ -35,12 +36,13 @@ export function ChampionsPage() {
         ) : null}
 
         {state.status === 'ready' ? (
-          <>
-            <div className="champions-workspace" style={championsWorkspaceStyle}>
-              <ChampionsSidebar model={model} />
-              <ChampionsResultsSection model={model} />
-            </div>
-          </>
+          <FilterSidebarLayout
+            sidebar={<ChampionsSidebar model={model} />}
+            className="champions-workspace"
+            style={championsWorkspaceStyle}
+          >
+            <ChampionsResultsSection model={model} />
+          </FilterSidebarLayout>
         ) : null}
       </SurfaceCard>
     </div>

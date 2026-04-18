@@ -21,9 +21,7 @@ export function ChampionsPrimaryFilters({ model }: ChampionsPrimaryFiltersProps)
     roles,
     affiliations,
     activeFilterChips,
-    hasActiveFilters,
     updateSearch,
-    clearAllFilters,
     clearActiveFilterChip,
     resetSeats,
     toggleSeat,
@@ -35,41 +33,6 @@ export function ChampionsPrimaryFilters({ model }: ChampionsPrimaryFiltersProps)
 
   return (
     <>
-      <div className="champions-sidebar__header">
-        <div>
-          <h3 className="section-heading champions-sidebar__title">{t({ zh: '筛选条件', en: 'Filter controls' })}</h3>
-          <p className="champions-sidebar__hint">
-            {t({
-              zh: '往下浏览卡片时，筛选区会稳稳留在视线附近；所有回退动作都收束到一个入口，减少反复找按钮。',
-              en: 'The filters stay close while you browse deeper results, with one clear reset entry instead of scattered actions.',
-            })}
-          </p>
-        </div>
-        <div className="champions-sidebar__status" role="group" aria-label={t({ zh: '筛选状态操作', en: 'Filter status actions' })}>
-          <span className="champions-sidebar__badge">
-            {activeFilterChips.length > 0
-              ? t({ zh: `${activeFilterChips.length} 项已启用`, en: `${activeFilterChips.length} active` })
-              : t({ zh: '未启用', en: 'Idle' })}
-          </span>
-          {hasActiveFilters ? (
-            <button
-              type="button"
-              className="action-button action-button--secondary action-button--compact"
-              onClick={clearAllFilters}
-            >
-              {t({ zh: '清空全部', en: 'Clear all' })}
-            </button>
-          ) : null}
-        </div>
-      </div>
-
-      <p className="champions-sidebar__microcopy">
-        {t({
-          zh: '关键词、座位、定位和联动队伍始终直接可见；低频标签型条件会分层收纳，减少大屏浏览时的视觉来回跳。',
-          en: 'Keyword, seat, role, and affiliation stay visible while lower-frequency tag filters are folded into calmer sections.',
-        })}
-      </p>
-
       <ActiveFilterChipBar
         chips={activeFilterChips}
         hint={t({
@@ -79,7 +42,7 @@ export function ChampionsPrimaryFilters({ model }: ChampionsPrimaryFiltersProps)
         onClearChip={clearActiveFilterChip}
       />
 
-      <div className="champions-sidebar__section-label">{t({ zh: '高频条件', en: 'Frequent filters' })}</div>
+      <div className="filter-sidebar-panel__section-label">{t({ zh: '高频条件', en: 'Frequent filters' })}</div>
 
       <div className="filter-panel filter-panel--sidebar">
         <FieldGroup
@@ -135,4 +98,3 @@ export function ChampionsPrimaryFilters({ model }: ChampionsPrimaryFiltersProps)
     </>
   )
 }
-
