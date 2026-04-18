@@ -19,10 +19,6 @@ export function VariantsPage() {
             eyebrow={t({ zh: '变体筛选', en: 'Variant filters' })}
             accentLabel="VARIANTS"
             title={t({ zh: '按战役、限制与场景变化筛选官方变体', en: 'Filter official variants by campaign, restrictions, and battlefield shifts' })}
-            description={t({
-              zh: '先看战役与冒险分组，再快速扫阵型图、敌人结构和区域节奏，最后决定是否细看限制文本。',
-              en: 'Start with the campaign and adventure grouping, scan the formation map, enemy mix, and area pacing, then decide which restriction sets deserve a closer read.',
-            })}
             aside={state.status === 'ready' ? <VariantsMetrics model={model} /> : null}
           />
         }

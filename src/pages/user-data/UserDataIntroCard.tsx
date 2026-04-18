@@ -16,10 +16,6 @@ export function UserDataIntroCard({ model }: UserDataIntroCardProps) {
           eyebrow={t({ zh: '个人数据', en: 'User data' })}
           accentLabel="USER DATA"
           title={t({ zh: '在本地解析账号凭证并检查导入条件', en: 'Parse account credentials locally and check import readiness' })}
-          description={t({
-            zh: '这里只做浏览器内解析、校验和脱敏预览；不会调用官方接口，也不会把凭证上传到任何外部服务。',
-            en: 'This page stays inside the browser for parsing, validation, and masked previews only. It does not call official endpoints or upload credentials anywhere.',
-          })}
         />
       }
     >
