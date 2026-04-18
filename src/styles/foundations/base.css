@@ -8,9 +8,17 @@ body,
   min-height: 100%;
 }
 
+html {
+  background-color: var(--color-bg-bottom);
+}
+
 body {
   margin: 0;
   min-width: 320px;
+  color: var(--color-text);
+  background: transparent;
+  font-family: var(--font-sans);
+  letter-spacing: 0.01em;
 }
 
 html,
@@ -28,4 +36,44 @@ input,
 select,
 textarea {
   font: inherit;
+}
+
+img,
+picture,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: color-mix(in oklch, var(--color-copper) 28%, transparent);
+  color: var(--color-text);
+}
+
+:focus-visible {
+  outline: 2px solid color-mix(in oklch, var(--color-copper) 72%, white 8%);
+  outline-offset: 2px;
+}
+
+body::-webkit-scrollbar {
+  width: 12px;
+}
+
+body::-webkit-scrollbar-track {
+  background: rgba(6, 10, 15, 0.6);
+}
+
+body::-webkit-scrollbar-thumb {
+  border: 2px solid rgba(6, 10, 15, 0.72);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, color-mix(in oklch, var(--color-copper) 44%, transparent), color-mix(in oklch, var(--color-steel) 36%, transparent)),
+    rgba(255, 255, 255, 0.08);
+}
+
+:is(h1, h2, h3, .site-title, .surface-card__title, .page-tab-header__title, .hero-panel__title) {
+  font-family: var(--font-display);
+  font-weight: 600;
 }

@@ -33,8 +33,12 @@ export function SurfaceCard({
       </>
     ) : null)
 
+  const surfaceCardClassName = ['surface-card', !resolvedHeader ? 'surface-card--headerless' : '', className]
+    .filter(Boolean)
+    .join(' ')
+
   return (
-    <section className={className ? `surface-card ${className}` : 'surface-card'}>
+    <section className={surfaceCardClassName}>
       {resolvedHeader ? <div className="surface-card__header">{resolvedHeader}</div> : null}
       <div className="surface-card__body">{children}</div>
       {footer ? <div className="surface-card__footer">{footer}</div> : null}

@@ -1,17 +1,45 @@
 :root {
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
   --layout-max-width: 1400px;
   --layout-inline-gap: clamp(1rem, 2vw, 1.75rem);
   --champions-sidebar-width: 22rem;
   --champions-results-card-min: 260px;
+  --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-display: "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", serif;
+  --color-bg-top: oklch(22% 0.02 250);
+  --color-bg-mid: oklch(18% 0.018 248);
+  --color-bg-bottom: oklch(15% 0.014 246);
+  --color-surface-top: oklch(24% 0.018 248 / 0.94);
+  --color-surface-mid: oklch(20% 0.015 246 / 0.96);
+  --color-surface-bottom: oklch(17% 0.012 244 / 0.98);
+  --color-border-soft: oklch(78% 0.012 84 / 0.14);
+  --color-border: oklch(80% 0.015 82 / 0.2);
+  --color-border-strong: oklch(82% 0.018 78 / 0.28);
+  --color-text: oklch(95% 0.012 80);
+  --color-text-muted: oklch(82% 0.013 82 / 0.82);
+  --color-text-soft: oklch(73% 0.012 82 / 0.78);
+  --color-copper: oklch(80% 0.09 72);
+  --color-copper-soft: oklch(80% 0.09 72 / 0.16);
+  --color-steel: oklch(74% 0.05 232);
+  --color-steel-soft: oklch(74% 0.05 232 / 0.16);
+  --shadow-surface: 0 24px 72px rgba(1, 4, 9, 0.34);
+  --shadow-floating: 0 16px 42px rgba(1, 4, 9, 0.24);
   color-scheme: dark;
-  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-family: var(--font-sans);
   line-height: 1.5;
   font-weight: 400;
-  color: #f2efe6;
+  color: var(--color-text);
   background:
-    radial-gradient(circle at top left, rgba(198, 140, 92, 0.16), transparent 28%),
-    radial-gradient(circle at 80% 10%, rgba(62, 113, 147, 0.18), transparent 24%),
-    linear-gradient(180deg, #0b1622 0%, #111c29 48%, #0d141c 100%);
+    radial-gradient(circle at top left, oklch(80% 0.08 72 / 0.14), transparent 24%),
+    radial-gradient(circle at 82% 10%, oklch(72% 0.05 232 / 0.16), transparent 30%),
+    radial-gradient(circle at 46% 18%, oklch(68% 0.04 224 / 0.08), transparent 32%),
+    linear-gradient(180deg, var(--color-bg-top) 0%, var(--color-bg-mid) 38%, var(--color-bg-bottom) 100%);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -20,28 +48,28 @@
 
 @media (min-width: 1440px) {
   :root {
-      --layout-max-width: 1560px;
-    }
+    --layout-max-width: 1560px;
+  }
 }
 
 @media (min-width: 1680px) {
   :root {
-      --layout-max-width: 1760px;
-      --champions-sidebar-width: 22.5rem;
-    }
+    --layout-max-width: 1760px;
+    --champions-sidebar-width: 22.5rem;
+  }
 }
 
 @media (min-width: 1920px) {
   :root {
-      --layout-max-width: 1960px;
-      --champions-sidebar-width: 23rem;
-    }
+    --layout-max-width: 1960px;
+    --champions-sidebar-width: 23rem;
+  }
 }
 
 @media (min-width: 2240px) {
   :root {
-      --layout-max-width: 2200px;
-      --layout-inline-gap: clamp(1.25rem, 1.8vw, 2.25rem);
-      --champions-sidebar-width: 23.5rem;
-    }
+    --layout-max-width: 2200px;
+    --layout-inline-gap: clamp(1.25rem, 1.8vw, 2.25rem);
+    --champions-sidebar-width: 23.5rem;
+  }
 }
