@@ -18,6 +18,7 @@ export function ChampionsPage() {
           zh: '当前版本先接官方 definitions 归一化后的英雄数据，并保留官方原文与 `language_id=7` 中文展示名，优先把座位、定位、联动队伍和标签过滤闭环做通。',
           en: 'This pass uses normalized official definitions, keeps both official source names and `language_id=7` Chinese labels, and focuses on closing the loop on seat, role, affiliation, and tag filtering.',
         })}
+        headerAside={state.status === 'ready' ? <ChampionsMetrics model={model} /> : null}
       >
         {state.status === 'loading' ? (
           <StatusBanner tone="info">{t({ zh: '正在读取英雄数据…', en: 'Loading champion data…' })}</StatusBanner>
@@ -33,7 +34,6 @@ export function ChampionsPage() {
 
         {state.status === 'ready' ? (
           <>
-            <ChampionsMetrics model={model} />
             <div className="champions-workspace" style={championsWorkspaceStyle}>
               <ChampionsSidebar model={model} />
               <ChampionsResultsSection model={model} />

@@ -5,4 +5,5 @@
 ## 先读哪份
 
 - 项目范围、阶段路线、技术方向：`docs/product/roadmap/README.md`
+- 页面级视觉规范、标题统计区块或导航壳层调整：`docs/product/design/README.md`
 - 历史路径或旧入口跳转：`docs/product/idle-champions-roadmap.md`

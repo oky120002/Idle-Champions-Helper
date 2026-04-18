@@ -19,38 +19,40 @@ export function IllustrationsSidebar({ model }: IllustrationsSidebarProps) {
         en: 'This follows the champion filter flow: use the frequent controls first, then open the lower-frequency tag groups only when you need them.',
       })}
       status={
-        <>
-          <span className="filter-sidebar-panel__badge">
-            {activeFilterChips.length > 0
-              ? t({ zh: `${activeFilterChips.length} 项已启用`, en: `${activeFilterChips.length} active` })
-              : t({ zh: '未启用', en: 'Idle' })}
-          </span>
-          <button
-            type="button"
-            className={
-              ui.shareLinkState === 'success'
-                ? 'action-button action-button--ghost action-button--compact action-button--toggled'
-                : 'action-button action-button--ghost action-button--compact'
-            }
-            onClick={() => {
-              void actions.copyCurrentLink()
-            }}
-          >
-            {ui.shareButtonLabel}
-          </button>
-          {hasActiveFilters ? (
+        <div className="illustrations-page__sidebar-status">
+          <div className="illustrations-page__sidebar-actions">
+            <span className="filter-sidebar-panel__badge">
+              {activeFilterChips.length > 0
+                ? t({ zh: `${activeFilterChips.length} 项已启用`, en: `${activeFilterChips.length} active` })
+                : t({ zh: '未启用', en: 'Idle' })}
+            </span>
             <button
               type="button"
-              className="action-button action-button--secondary action-button--compact"
-              onClick={actions.clearAllFilters}
+              className={
+                ui.shareLinkState === 'success'
+                  ? 'action-button action-button--ghost action-button--compact action-button--toggled illustrations-page__share-button'
+                  : 'action-button action-button--ghost action-button--compact illustrations-page__share-button'
+              }
+              onClick={() => {
+                void actions.copyCurrentLink()
+              }}
             >
-              {t({ zh: '清空全部', en: 'Clear all' })}
+              {ui.shareButtonLabel}
             </button>
-          ) : null}
+            {hasActiveFilters ? (
+              <button
+                type="button"
+                className="action-button action-button--secondary action-button--compact"
+                onClick={actions.clearAllFilters}
+              >
+                {t({ zh: '清空全部', en: 'Clear all' })}
+              </button>
+            ) : null}
+          </div>
           <span className="illustrations-page__share-status" role="status" aria-live="polite">
             {ui.shareStatusMessage}
           </span>
-        </>
+        </div>
       }
       note={t({
         zh: '默认只渲染前一批结果卡片；只有继续点“显示全部”，剩余立绘才会进入页面并触发图片加载。',

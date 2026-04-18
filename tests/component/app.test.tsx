@@ -55,17 +55,15 @@ describe('App', () => {
       </I18nProvider>,
     )
 
-    const localeTrigger = screen.getByRole('button', { name: '界面语言，当前中文' })
-    const toolbarSwitcher = localeTrigger.closest('.locale-switcher')
+    const toolbarSwitcher = document.querySelector('.locale-switcher--toolbar')
 
     if (!(toolbarSwitcher instanceof HTMLElement)) {
       throw new Error('桌面语言入口不存在。')
     }
 
-    await user.click(localeTrigger)
     await user.click(within(toolbarSwitcher).getByRole('button', { name: 'English' }))
 
-    expect(screen.getByRole('button', { name: 'Interface language, current English' })).toBeInTheDocument()
+    expect(within(toolbarSwitcher).getByRole('button', { name: 'English' })).toHaveAttribute('aria-pressed', 'true')
     expect(screen.getByRole('heading', { level: 1, name: 'Growth-Oriented Formation Desk' })).toBeInTheDocument()
   })
 })

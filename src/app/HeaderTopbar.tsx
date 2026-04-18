@@ -1,31 +1,22 @@
-import type { RefObject } from 'react'
 import type { AppLocale } from './i18n'
 import { MobileMenuIcon } from './AppIcons'
-import type { AppNavigationItem, LocaleOption, TranslationFn } from './appNavigation'
+import type { AppNavigationItem, TranslationFn } from './appNavigation'
 import { ToolbarLocaleSwitcher } from './LocaleSwitcher'
 
 interface HeaderTopbarProps {
-  activeLocaleOption: LocaleOption
   activeNavigationItem: AppNavigationItem
-  isLocaleMenuOpen: boolean
   isMobileNavOpen: boolean
   locale: AppLocale
-  localeSwitcherRef: RefObject<HTMLDivElement | null>
   onLocaleSelect: (locale: AppLocale) => void
-  onLocaleToggle: () => void
   onMobileNavToggle: () => void
   t: TranslationFn
 }
 
 export function HeaderTopbar({
-  activeLocaleOption,
   activeNavigationItem,
-  isLocaleMenuOpen,
   isMobileNavOpen,
   locale,
-  localeSwitcherRef,
   onLocaleSelect,
-  onLocaleToggle,
   onMobileNavToggle,
   t,
 }: HeaderTopbarProps) {
@@ -41,15 +32,7 @@ export function HeaderTopbar({
         </div>
       </div>
       <div className="site-header__topbar-actions">
-        <ToolbarLocaleSwitcher
-          activeLocaleOption={activeLocaleOption}
-          isOpen={isLocaleMenuOpen}
-          locale={locale}
-          localeSwitcherRef={localeSwitcherRef}
-          onSelect={onLocaleSelect}
-          onToggle={onLocaleToggle}
-          t={t}
-        />
+        <ToolbarLocaleSwitcher locale={locale} onSelect={onLocaleSelect} t={t} />
 
         <button
           type="button"

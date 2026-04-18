@@ -8,8 +8,9 @@ type IllustrationsResultsSectionProps = {
 }
 
 export function IllustrationsResultsSection({ model }: IllustrationsResultsSectionProps) {
-  const { locale, t, activeFilters, filters, results, actions } = model
+  const { locale, t, activeFilters, filters, results, actions, animationByIllustrationId } = model
   const hasMatches = results.filteredIllustrationEntries.length > 0
+  const randomOrderLabel = uiHasRandomOrderLabel(model.ui.hasRandomOrder)
 
   return (
     <section className="results-panel" aria-label={t({ zh: '立绘筛选结果', en: 'Illustration filter results' })}>
@@ -67,6 +68,10 @@ export function IllustrationsResultsSection({ model }: IllustrationsResultsSecti
                     })}
               </button>
             ) : null}
+
+            <button type="button" className="results-visibility-toggle results-visibility-toggle--ghost" onClick={actions.randomizeResultOrder}>
+              {t(randomOrderLabel)}
+            </button>
           </div>
         ) : null}
       </div>
@@ -75,7 +80,13 @@ export function IllustrationsResultsSection({ model }: IllustrationsResultsSecti
         <>
           <div className="illustrations-grid" aria-label={t({ zh: '立绘结果', en: 'Illustration results' })}>
             {results.visibleIllustrationEntries.map((entry) => (
-              <IllustrationResultCard key={entry.illustration.id} entry={entry} locale={locale} t={t} />
+              <IllustrationResultCard
+                key={entry.illustration.id}
+                entry={entry}
+                animation={animationByIllustrationId.get(entry.illustration.id) ?? null}
+                locale={locale}
+                t={t}
+              />
             ))}
           </div>
 
@@ -113,4 +124,10 @@ export function IllustrationsResultsSection({ model }: IllustrationsResultsSecti
       )}
     </section>
   )
+}
+
+function uiHasRandomOrderLabel(hasRandomOrder: boolean) {
+  return hasRandomOrder
+    ? { zh: '重新随机', en: 'Reshuffle' }
+    : { zh: '随机排序', en: 'Shuffle order' }
 }

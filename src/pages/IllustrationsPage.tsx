@@ -8,24 +8,13 @@ import { useIllustrationsPageModel } from './illustrations/useIllustrationsPageM
 
 export function IllustrationsPage() {
   const model = useIllustrationsPageModel()
-  const { state, results, t } = model
+  const { state, t } = model
 
   return (
     <div className="page-shell illustrations-page">
       <SurfaceCard
-        eyebrow={t({ zh: '本地静态资源', en: 'Local static assets' })}
         title={t({ zh: '英雄立绘页', en: 'Champion illustrations' })}
-        description={t({
-          zh: '本页只消费站内版本化立绘资源，不依赖浏览器运行时跨域抓官方图片。现在会先按筛选结果展示一批卡片，再由你决定是否继续展开全部。',
-          en: 'This page only consumes versioned local illustration assets, avoids runtime cross-origin image fetches, and now starts with a focused batch before you decide whether to reveal the full catalog.',
-        })}
-        footer={
-          <div className="illustrations-page__summary">
-            <span>{t({ zh: `共 ${results.illustrations.length} 张立绘`, en: `${results.illustrations.length} illustrations` })}</span>
-            <span>{t({ zh: `${results.totalHeroCount} 张本体`, en: `${results.totalHeroCount} hero base` })}</span>
-            <span>{t({ zh: `${results.totalSkinCount} 张皮肤`, en: `${results.totalSkinCount} skins` })}</span>
-          </div>
-        }
+        headerAside={state.status === 'ready' ? <IllustrationsMetrics model={model} /> : null}
       >
         {state.status === 'loading' ? (
           <StatusBanner
@@ -58,7 +47,6 @@ export function IllustrationsPage() {
 
         {state.status === 'ready' ? (
           <>
-            <IllustrationsMetrics model={model} />
             <FilterSidebarLayout sidebar={<IllustrationsSidebar model={model} />}>
               <IllustrationsResultsSection model={model} />
             </FilterSidebarLayout>

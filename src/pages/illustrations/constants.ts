@@ -1,4 +1,4 @@
-export const MAX_VISIBLE_ILLUSTRATIONS = 24
+export const MAX_VISIBLE_ILLUSTRATIONS = 50
 export const SHARE_RESET_DELAY_MS = 2200
 export const SEARCH_PARAM_QUERY = 'q'
 export const SEARCH_PARAM_SCOPE = 'scope'

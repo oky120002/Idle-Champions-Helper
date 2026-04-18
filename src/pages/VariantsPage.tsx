@@ -19,6 +19,7 @@ export function VariantsPage() {
           zh: '这一页只消费游戏官方基座归一化后的战役、冒险、怪物与阵型数据。参考站只借了信息排布思路，实际筛选与展示都来自官方 definitions。',
           en: 'This page consumes only normalized official campaign, adventure, monster, and formation data. Reference sites inform the layout direction, but the actual filtering and rendering come from official definitions.',
         })}
+        headerAside={state.status === 'ready' ? <VariantsMetrics model={model} /> : null}
       >
         {state.status === 'loading' ? (
           <StatusBanner tone="info">{t({ zh: '正在读取官方变体数据…', en: 'Loading official variant data…' })}</StatusBanner>
@@ -34,7 +35,6 @@ export function VariantsPage() {
 
         {state.status === 'ready' ? (
           <>
-            <VariantsMetrics model={model} />
             <div className="variants-workspace">
               <VariantsFilterBar model={model} />
               <VariantsResultsSection model={model} />

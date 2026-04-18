@@ -6,8 +6,8 @@ import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollection } from '../data/client'
 import type { Pet } from '../domain/types'
 import { PetFilters } from './pets/PetFilters'
+import { PetsMetrics } from './pets/PetsMetrics'
 import { PetsResultsSection } from './pets/PetsResultsSection'
-import { PetSummaryFooter } from './pets/PetSummaryFooter'
 import { matchesPetQuery } from './pets/search'
 import type { AssetFilter, SourceFilter } from './pets/types'
 
@@ -100,7 +100,7 @@ export function PetsPage() {
           zh: '本页基于官方 `familiar_defines`、`premium_item_defines` 与 `patron_shop_item_defines` 归一化生成，并在构建期把宠物图标与 4x 立绘同步为站内静态资源。',
           en: 'This page is normalized from official familiar, premium item, and patron shop definitions, then syncs pet icons and 4x illustrations into local static assets at build time.',
         })}
-        footer={<PetSummaryFooter summary={summary} />}
+        headerAside={state.status === 'ready' ? <PetsMetrics summary={summary} /> : null}
       >
         <FilterSidebarLayout
           sidebar={

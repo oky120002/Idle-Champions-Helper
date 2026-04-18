@@ -39,6 +39,35 @@ export function countIllustrationEntriesByKind(entries: FilterableIllustration[]
   }
 }
 
+function createSeededRandom(seed: number) {
+  let value = seed || 1
+
+  return () => {
+    value = (value * 16807) % 2147483647
+    return (value - 1) / 2147483646
+  }
+}
+
+export function shuffleIllustrationEntries(entries: FilterableIllustration[], seed: number): FilterableIllustration[] {
+  const nextEntries = entries.slice()
+  const random = createSeededRandom(seed)
+
+  for (let index = nextEntries.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(random() * (index + 1))
+    const current = nextEntries[index]
+    const swap = nextEntries[swapIndex]
+
+    if (!current || !swap) {
+      continue
+    }
+
+    nextEntries[index] = swap
+    nextEntries[swapIndex] = current
+  }
+
+  return nextEntries
+}
+
 export function hasActiveIllustrationFilters(filters: IllustrationsFilterState): boolean {
   return (
     filters.search.trim().length > 0 ||

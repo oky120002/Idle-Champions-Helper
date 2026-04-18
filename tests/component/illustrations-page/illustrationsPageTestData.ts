@@ -1,4 +1,10 @@
-import type { Champion, ChampionIllustration, DataCollection, LocalizedText } from '../../../src/domain/types'
+import type {
+  Champion,
+  ChampionAnimation,
+  ChampionIllustration,
+  DataCollection,
+  LocalizedText,
+} from '../../../src/domain/types'
 
 export interface StringEnumGroup {
   id: string
@@ -63,6 +69,55 @@ export function createIllustration(
   }
 }
 
+export function createAnimation(
+  overrides: Partial<ChampionAnimation> & Pick<ChampionAnimation, 'id' | 'championId' | 'kind' | 'seat'>,
+): ChampionAnimation {
+  const championName = overrides.championName ?? localized('Bruenor', '布鲁诺')
+  const illustrationName =
+    overrides.illustrationName ??
+    (overrides.kind === 'hero-base' ? localized('Bruenor', '布鲁诺') : localized('Pirate Bruenor', '海盗布鲁诺'))
+
+  return {
+    id: overrides.id,
+    championId: overrides.championId,
+    skinId: overrides.skinId ?? null,
+    kind: overrides.kind,
+    seat: overrides.seat,
+    championName,
+    illustrationName,
+    sourceSlot: overrides.sourceSlot ?? (overrides.kind === 'hero-base' ? 'base' : 'large'),
+    sourceGraphicId: overrides.sourceGraphicId ?? `graphic-${overrides.id}`,
+    sourceGraphic: overrides.sourceGraphic ?? `Characters/${overrides.id}`,
+    sourceVersion: overrides.sourceVersion ?? 1,
+    fps: overrides.fps ?? 24,
+    defaultSequenceIndex: overrides.defaultSequenceIndex ?? 0,
+    defaultFrameIndex: overrides.defaultFrameIndex ?? 0,
+    asset:
+      overrides.asset ??
+      {
+        path: `v1/champion-animations/${overrides.kind === 'hero-base' ? 'heroes' : 'skins'}/${overrides.id}.bin`,
+        bytes: 4096,
+        format: 'skelanim-zlib',
+      },
+    sequences:
+      overrides.sequences ??
+      [
+        {
+          sequenceIndex: 0,
+          frameCount: 12,
+          pieceCount: 8,
+          firstRenderableFrameIndex: 0,
+          bounds: {
+            minX: -24,
+            minY: -18,
+            maxX: 320,
+            maxY: 720,
+          },
+        },
+      ],
+  }
+}
+
 export const hall = localized('Companions of the Hall', '大厅伙伴团')
 export const emerald = localized('Emerald Enclave', '翡翠飞地')
 
@@ -106,7 +161,7 @@ export const illustrationFixture: DataCollection<ChampionIllustration> = {
   updatedAt: '2026-04-15',
   items: [
     createIllustration({
-      id: 'hero-1',
+      id: 'hero:1',
       championId: '1',
       kind: 'hero-base',
       seat: 1,
@@ -124,7 +179,7 @@ export const illustrationFixture: DataCollection<ChampionIllustration> = {
       },
     }),
     createIllustration({
-      id: 'skin-3001',
+      id: 'skin:3001',
       championId: '1',
       kind: 'skin',
       seat: 1,
@@ -143,7 +198,7 @@ export const illustrationFixture: DataCollection<ChampionIllustration> = {
       },
     }),
     createIllustration({
-      id: 'hero-2',
+      id: 'hero:2',
       championId: '2',
       kind: 'hero-base',
       seat: 10,
@@ -158,6 +213,39 @@ export const illustrationFixture: DataCollection<ChampionIllustration> = {
         height: 1024,
         bytes: 81234,
         format: 'png',
+      },
+    }),
+  ],
+}
+
+export const animationFixture: DataCollection<ChampionAnimation> = {
+  updatedAt: '2026-04-15',
+  items: [
+    createAnimation({
+      id: 'hero:1',
+      championId: '1',
+      kind: 'hero-base',
+      seat: 1,
+      championName: localized('Bruenor', '布鲁诺'),
+      illustrationName: localized('Bruenor', '布鲁诺'),
+      asset: {
+        path: 'v1/champion-animations/heroes/1.bin',
+        bytes: 4096,
+        format: 'skelanim-zlib',
+      },
+    }),
+    createAnimation({
+      id: 'skin:3001',
+      championId: '1',
+      kind: 'skin',
+      seat: 1,
+      skinId: '3001',
+      championName: localized('Bruenor', '布鲁诺'),
+      illustrationName: localized('Pirate Bruenor', '海盗布鲁诺'),
+      asset: {
+        path: 'v1/champion-animations/skins/3001.bin',
+        bytes: 4096,
+        format: 'skelanim-zlib',
       },
     }),
   ],
@@ -185,6 +273,7 @@ type CrowdedIllustrationFixtureOptions = {
   englishNamePrefix: string
   chineseNamePrefix: string
   sourceGraphicPrefix: string
+  count?: number
 }
 
 export function buildCrowdedIllustrationsFixture({
@@ -193,10 +282,11 @@ export function buildCrowdedIllustrationsFixture({
   englishNamePrefix,
   chineseNamePrefix,
   sourceGraphicPrefix,
+  count = 26,
 }: CrowdedIllustrationFixtureOptions): DataCollection<ChampionIllustration> {
   return {
     updatedAt,
-    items: Array.from({ length: 26 }, (_, index) =>
+    items: Array.from({ length: count }, (_, index) =>
       createIllustration({
         id: `${idPrefix}-${index + 1}`,
         championId: '1',
@@ -214,6 +304,7 @@ export function buildCrowdedIllustrationsFixture({
 
 export type IllustrationsPageCollectionOverrides = {
   illustrations?: DataCollection<ChampionIllustration>
+  animations?: DataCollection<ChampionAnimation>
   champions?: DataCollection<Champion>
   enums?: DataCollection<StringEnumGroup | LocalizedEnumGroup>
 }
