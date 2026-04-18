@@ -3,33 +3,92 @@
   min-height: 100vh;
   overflow-x: clip;
   overflow-y: visible;
+  isolation: isolate;
+}
+
+.app-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 16%),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.018) 0,
+      rgba(255, 255, 255, 0.018) 1px,
+      transparent 1px,
+      transparent 112px
+    ),
+    repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.018) 0,
+      rgba(255, 255, 255, 0.018) 1px,
+      transparent 1px,
+      transparent 112px
+    );
+  opacity: 0.26;
+}
+
+.app-shell::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 16% 12%, rgba(62, 113, 147, 0.18), transparent 26%),
+    radial-gradient(circle at 84% 8%, rgba(198, 140, 92, 0.18), transparent 28%),
+    linear-gradient(180deg, transparent 0%, rgba(1, 4, 9, 0.14) 100%);
 }
 
 .background-orb {
-  position: absolute;
+  position: fixed;
   border-radius: 999px;
-  filter: blur(32px);
+  filter: blur(52px);
   pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.7;
 }
 
 .background-orb--one {
-  top: -6rem;
-  right: -4rem;
-  width: 16rem;
-  height: 16rem;
-  background: rgba(198, 140, 92, 0.16);
+  top: -3rem;
+  right: -7rem;
+  width: 24rem;
+  height: 24rem;
+  background: radial-gradient(circle, rgba(198, 140, 92, 0.28) 0%, rgba(198, 140, 92, 0) 68%);
 }
 
 .background-orb--two {
-  left: -5rem;
-  top: 30%;
-  width: 14rem;
-  height: 14rem;
-  background: rgba(62, 113, 147, 0.14);
+  left: -7rem;
+  top: 32%;
+  width: 20rem;
+  height: 20rem;
+  background: radial-gradient(circle, rgba(62, 113, 147, 0.22) 0%, rgba(62, 113, 147, 0) 70%);
 }
 
 .site-main {
+  position: relative;
+  z-index: 1;
   width: min(var(--layout-max-width), calc(100% - (var(--layout-inline-gap) * 2)));
   margin: 0 auto;
-  padding: 1rem 0 4rem;
+  padding: clamp(1rem, 2vw, 1.6rem) 0 5rem;
+}
+
+@media (max-width: 720px) {
+  .background-orb--one {
+    top: -5rem;
+    right: -9rem;
+  }
+
+  .background-orb--two {
+    left: -9rem;
+    top: 36%;
+  }
+
+  .site-main {
+    padding-top: 0.9rem;
+    padding-bottom: 4rem;
+  }
 }
