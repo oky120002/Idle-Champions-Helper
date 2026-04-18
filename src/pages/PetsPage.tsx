@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useI18n } from '../app/i18n'
 import { FilterSidebarLayout } from '../components/filter-sidebar/FilterSidebarLayout'
 import { PageTabHeader } from '../components/PageTabHeader'
 import { StatusBanner } from '../components/StatusBanner'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollection } from '../data/client'
-import type { Pet } from '../domain/types'
+import type { Pet, PetAnimation } from '../domain/types'
 import { MAX_VISIBLE_PETS } from './pets/constants'
 import { PetFilters } from './pets/PetFilters'
 import { PetsMetrics } from './pets/PetsMetrics'
@@ -16,10 +16,11 @@ import type { AssetFilter, SourceFilter } from './pets/types'
 
 type PetState =
   | { status: 'loading' }
-  | { status: 'ready'; pets: Pet[] }
+  | { status: 'ready'; pets: Pet[]; animations: PetAnimation[] }
   | { status: 'error'; message: string }
 
 const EMPTY_PETS: Pet[] = []
+const EMPTY_ANIMATIONS: PetAnimation[] = []
 
 export function PetsPage() {
   const { t } = useI18n()
@@ -29,6 +30,7 @@ export function PetsPage() {
   const [assetFilter, setAssetFilter] = useState<AssetFilter>('all')
   const [showAllResults, setShowAllResults] = useState(false)
   const [randomOrderSeed, setRandomOrderSeed] = useState<number | null>(null)
+  const animationCacheRef = useRef<PetAnimation[] | null>(null)
 
   useEffect(() => {
     let disposed = false
@@ -39,7 +41,11 @@ export function PetsPage() {
           return
         }
 
-        setState({ status: 'ready', pets: collection.items })
+        setState({
+          status: 'ready',
+          pets: collection.items,
+          animations: animationCacheRef.current ?? [],
+        })
       })
       .catch((error: unknown) => {
         if (disposed) {
@@ -57,7 +63,54 @@ export function PetsPage() {
     }
   }, [])
 
+  useEffect(() => {
+    let disposed = false
+
+    loadCollection<PetAnimation>('pet-animations')
+      .then((collection) => {
+        if (disposed) {
+          return
+        }
+
+        animationCacheRef.current = collection.items
+
+        setState((current) => {
+          if (current.status !== 'ready') {
+            return current
+          }
+
+          return {
+            ...current,
+            animations: collection.items,
+          }
+        })
+      })
+      .catch(() => {
+        if (disposed) {
+          return
+        }
+
+        animationCacheRef.current = []
+
+        setState((current) => {
+          if (current.status !== 'ready') {
+            return current
+          }
+
+          return {
+            ...current,
+            animations: [],
+          }
+        })
+      })
+
+    return () => {
+      disposed = true
+    }
+  }, [])
+
   const pets = state.status === 'ready' ? state.pets : EMPTY_PETS
+  const animations = state.status === 'ready' ? state.animations : EMPTY_ANIMATIONS
   const filteredPets = useMemo(() => {
     const nextPets = pets.filter((pet) => {
       if (sourceFilter !== 'all' && pet.acquisition.kind !== sourceFilter) {
@@ -79,6 +132,7 @@ export function PetsPage() {
 
     return randomOrderSeed === null ? nextPets : shufflePets(nextPets, randomOrderSeed)
   }, [assetFilter, pets, query, randomOrderSeed, sourceFilter])
+  const animationByPetId = useMemo(() => new Map(animations.map((animation) => [animation.petId, animation])), [animations])
   const visiblePets = useMemo(
     () => (showAllResults ? filteredPets : filteredPets.slice(0, MAX_VISIBLE_PETS)),
     [filteredPets, showAllResults],
@@ -140,8 +194,8 @@ export function PetsPage() {
               tone="info"
               title={t({ zh: '正在加载宠物目录', en: 'Loading pet catalog' })}
               detail={t({
-                zh: '正在读取本地版本化的宠物清单与静态图像。',
-                en: 'Reading the local versioned pet manifest and static images.',
+                zh: '正在读取本地版本化的宠物清单、静态图像与动图索引。',
+                en: 'Reading the local versioned pet manifest, static art, and motion preview manifest.',
               })}
             />
           ) : null}
@@ -168,6 +222,7 @@ export function PetsPage() {
             <PetsResultsSection
               filteredPets={filteredPets}
               visiblePets={visiblePets}
+              animationByPetId={animationByPetId}
               totalPets={pets.length}
               showAllResults={showAllResults}
               canToggleResultVisibility={canToggleResultVisibility}

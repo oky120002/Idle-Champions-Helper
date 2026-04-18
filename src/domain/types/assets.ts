@@ -106,13 +106,13 @@ export interface ChampionIllustration {
 
 export type ChampionAnimationKind = 'hero-base' | 'skin'
 
-export interface ChampionAnimationAsset {
+export interface SkelAnimAsset {
   path: string
   bytes: number
   format: 'skelanim-zlib'
 }
 
-export interface ChampionAnimationSequence {
+export interface SkelAnimSequenceSummary {
   sequenceIndex: number
   frameCount: number
   pieceCount: number
@@ -120,7 +120,22 @@ export interface ChampionAnimationSequence {
   bounds: ChampionIllustrationRenderBounds | null
 }
 
-export interface ChampionAnimation {
+export interface SkelAnimManifest {
+  sourceGraphicId: string
+  sourceGraphic: string
+  sourceVersion: number | null
+  fps: number
+  defaultSequenceIndex: number
+  defaultFrameIndex: number
+  asset: SkelAnimAsset
+  sequences: SkelAnimSequenceSummary[]
+}
+
+export type ChampionAnimationAsset = SkelAnimAsset
+
+export type ChampionAnimationSequence = SkelAnimSequenceSummary
+
+export interface ChampionAnimation extends SkelAnimManifest {
   id: string
   championId: string
   skinId: string | null
@@ -129,14 +144,15 @@ export interface ChampionAnimation {
   championName: LocalizedText
   illustrationName: LocalizedText
   sourceSlot: ChampionIllustrationSourceSlot
-  sourceGraphicId: string
-  sourceGraphic: string
-  sourceVersion: number | null
-  fps: number
-  defaultSequenceIndex: number
-  defaultFrameIndex: number
-  asset: ChampionAnimationAsset
-  sequences: ChampionAnimationSequence[]
+}
+
+export type PetAnimationSourceSlot = 'illustration'
+
+export interface PetAnimation extends SkelAnimManifest {
+  id: string
+  petId: string
+  name: LocalizedText
+  sourceSlot: PetAnimationSourceSlot
 }
 
 export interface PetImage {

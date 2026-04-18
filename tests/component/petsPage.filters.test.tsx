@@ -14,7 +14,7 @@ vi.mock('../../src/data/client', async () => {
 
 import { I18nProvider } from '../../src/app/i18n'
 import { loadCollection, loadVersion } from '../../src/data/client'
-import type { DataCollection, Pet } from '../../src/domain/types'
+import type { DataCollection, Pet, PetAnimation } from '../../src/domain/types'
 import { PetsPage } from '../../src/pages/PetsPage'
 
 const mockedLoadCollection = vi.mocked(loadCollection)
@@ -74,6 +74,11 @@ const petsFixture: DataCollection<Pet> = {
   ],
 }
 
+const petAnimationsFixture: DataCollection<PetAnimation> = {
+  updatedAt: '2026-04-18T00:00:00.000Z',
+  items: [],
+}
+
 function buildPet(index: number): Pet {
   const id = index + 1
   const name = `测试宠物 ${id}`
@@ -125,6 +130,10 @@ describe('PetsPage filters', () => {
     mockedLoadCollection.mockImplementation(async (name) => {
       if (name === 'pets') {
         return petsFixture
+      }
+
+      if (name === 'pet-animations') {
+        return petAnimationsFixture
       }
 
       throw new Error(`unexpected collection: ${name}`)
@@ -179,6 +188,10 @@ describe('PetsPage filters', () => {
     mockedLoadCollection.mockImplementation(async (name) => {
       if (name === 'pets') {
         return crowdedPetsFixture
+      }
+
+      if (name === 'pet-animations') {
+        return petAnimationsFixture
       }
 
       throw new Error(`unexpected collection: ${name}`)

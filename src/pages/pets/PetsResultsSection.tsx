@@ -1,11 +1,12 @@
 import { useI18n } from '../../app/i18n'
-import type { Pet } from '../../domain/types'
+import type { Pet, PetAnimation } from '../../domain/types'
 import { MAX_VISIBLE_PETS } from './constants'
 import { PetResultsGrid } from './PetResultsGrid'
 
 interface PetsResultsSectionProps {
   filteredPets: Pet[]
   visiblePets: Pet[]
+  animationByPetId: ReadonlyMap<string, PetAnimation>
   totalPets: number
   showAllResults: boolean
   canToggleResultVisibility: boolean
@@ -17,6 +18,7 @@ interface PetsResultsSectionProps {
 export function PetsResultsSection({
   filteredPets,
   visiblePets,
+  animationByPetId,
   totalPets,
   showAllResults,
   canToggleResultVisibility,
@@ -36,8 +38,8 @@ export function PetsResultsSection({
         <p className="supporting-text">
           {hasMatches
             ? t({
-                zh: `当前展示 ${visiblePets.length} / ${filteredPets.length} / ${totalPets} 只宠物。若结果仍偏多，优先用左侧搜索、来源或图像状态继续缩小范围；想换一批浏览顺序时，可以直接随机打散当前结果。`,
-                en: `Showing ${visiblePets.length} / ${filteredPets.length} / ${totalPets} pets. Narrow the list further with the left-side search, source, or asset-state filters, or reshuffle the current set when you want a different scan order.`,
+                zh: `当前展示 ${visiblePets.length} / ${filteredPets.length} / ${totalPets} 只宠物。若结果仍偏多，优先用左侧搜索、来源或图像状态继续缩小范围；想换一批浏览顺序时可以直接随机打散，悬停卡片还能快速查看动图预览。`,
+                en: `Showing ${visiblePets.length} / ${filteredPets.length} / ${totalPets} pets. Narrow the list further with the left-side search, source, or asset-state filters, reshuffle the current set when you want a different scan order, and hover a card for a quick motion preview.`,
               })
             : t({
                 zh: '当前筛选条件下没有匹配宠物。可以先清空搜索词，或把来源和图像状态放宽一点再继续看。',
@@ -87,7 +89,7 @@ export function PetsResultsSection({
         ) : null}
       </div>
 
-      <PetResultsGrid pets={visiblePets} />
+      <PetResultsGrid pets={visiblePets} animationByPetId={animationByPetId} />
 
       {hasMatches && canToggleResultVisibility ? (
         <div className="results-panel__tail">

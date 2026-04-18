@@ -1,4 +1,4 @@
-import type { ChampionAnimation } from '../../domain/types'
+import type { SkelAnimManifest } from '../../domain/types'
 
 export interface SkelAnimTexture {
   textureId: number
@@ -73,7 +73,7 @@ export interface SkelAnimCanvasLabels {
 }
 
 export interface SkelAnimCanvasProps {
-  animation: ChampionAnimation | null
+  animation: SkelAnimManifest | null
   fallbackSrc: string | null
   alt: string
   labels: SkelAnimCanvasLabels
