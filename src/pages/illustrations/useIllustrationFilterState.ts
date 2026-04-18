@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { Dispatch, SetStateAction } from 'react'
 import { SHARE_RESET_DELAY_MS } from './constants'
-import { readInitialFilterExpansion, readInitialFilterState } from './query-state'
+import { buildFilterSearchParams, readInitialFilterExpansion, readInitialFilterState } from './query-state'
 import type { IllustrationsFilterState, ShareLinkState, ViewFilter } from './types'
 
 export type IllustrationFilterStateController = {
@@ -29,6 +29,8 @@ export type IllustrationFilterStateController = {
 export function useIllustrationFilterState(searchString: string): IllustrationFilterStateController {
   const initialFilters = useMemo(() => readInitialFilterState(searchString), [searchString])
   const initialExpansion = useMemo(() => readInitialFilterExpansion(searchString), [searchString])
+  const normalizedSearchString = useMemo(() => new URLSearchParams(searchString).toString(), [searchString])
+  const lastAppliedSearchStringRef = useRef(normalizedSearchString)
 
   const [search, setSearch] = useState(initialFilters.search)
   const [viewFilter, setViewFilter] = useState(initialFilters.scope)
@@ -90,6 +92,48 @@ export function useIllustrationFilterState(searchString: string): IllustrationFi
       showAllResults,
     ],
   )
+
+  useEffect(() => {
+    if (normalizedSearchString === lastAppliedSearchStringRef.current) {
+      return
+    }
+
+    lastAppliedSearchStringRef.current = normalizedSearchString
+    const currentFilterSearch = buildFilterSearchParams(filters).toString()
+
+    if (currentFilterSearch === normalizedSearchString) {
+      return
+    }
+
+    const nextFilters = readInitialFilterState(searchString)
+    const nextExpansion = readInitialFilterExpansion(searchString)
+    let cancelled = false
+
+    queueMicrotask(() => {
+      if (cancelled) {
+        return
+      }
+
+      setSearch(nextFilters.search)
+      setViewFilter(nextFilters.scope)
+      setSelectedSeats(nextFilters.selectedSeats)
+      setSelectedRoles(nextFilters.selectedRoles)
+      setSelectedAffiliations(nextFilters.selectedAffiliations)
+      setSelectedRaces(nextFilters.selectedRaces)
+      setSelectedGenders(nextFilters.selectedGenders)
+      setSelectedAlignments(nextFilters.selectedAlignments)
+      setSelectedProfessions(nextFilters.selectedProfessions)
+      setSelectedAcquisitions(nextFilters.selectedAcquisitions)
+      setSelectedMechanics(nextFilters.selectedMechanics)
+      setShowAllResults(nextFilters.showAllResults)
+      setIdentityFiltersExpanded(nextExpansion.identity)
+      setMetaFiltersExpanded(nextExpansion.meta)
+    })
+
+    return () => {
+      cancelled = true
+    }
+  }, [filters, normalizedSearchString, searchString])
 
   return {
     filters,
