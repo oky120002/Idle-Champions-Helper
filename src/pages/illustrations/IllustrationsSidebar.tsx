@@ -58,6 +58,7 @@ export function IllustrationsSidebar({ model }: IllustrationsSidebarProps) {
         zh: '默认只渲染前一批结果卡片；只有继续点“显示全部”，剩余立绘才会进入页面并触发图片加载。',
         en: 'Only the first batch of result cards is rendered by default; the remaining illustrations stay out of the DOM until you ask to reveal everything.',
       })}
+      statusAriaLabel={t({ zh: '筛选状态操作', en: 'Filter status actions' })}
       ariaLabel={t({ zh: '立绘筛选侧边栏', en: 'Illustration filter sidebar' })}
       className="illustrations-page__filter-surface"
     >

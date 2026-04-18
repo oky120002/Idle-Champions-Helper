@@ -51,15 +51,22 @@
 }
 
 .illustration-card {
+  position: relative;
+  overflow: clip;
+  isolation: isolate;
   display: grid;
   gap: 0.88rem;
   padding: 0.86rem;
   border-radius: 22px;
   border: 1px solid rgba(227, 214, 193, 0.12);
   background:
-    radial-gradient(circle at top, rgba(210, 173, 120, 0.14), transparent 58%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.02));
-  box-shadow: 0 16px 38px rgba(11, 8, 4, 0.22);
+    radial-gradient(circle at top, rgba(210, 173, 120, 0.16), transparent 58%),
+    radial-gradient(circle at 12% 100%, rgba(62, 113, 147, 0.12), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.02)),
+    rgba(8, 13, 19, 0.38);
+  box-shadow:
+    var(--shadow-surface-soft),
+    inset 0 1px 0 rgba(255, 243, 223, 0.04);
   color: inherit;
   text-decoration: none;
   transition:
@@ -67,6 +74,17 @@
     border-color 180ms ease,
     box-shadow 180ms ease,
     background-color 180ms ease;
+}
+
+.illustration-card::before {
+  content: "";
+  position: absolute;
+  left: 0.9rem;
+  right: 0.9rem;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 243, 223, 0.16), transparent);
+  pointer-events: none;
 }
 
 .illustration-card--interactive:hover,
@@ -91,6 +109,8 @@
   background:
     radial-gradient(circle at top, rgba(207, 168, 112, 0.18), transparent 48%),
     linear-gradient(180deg, rgba(17, 24, 38, 0.92), rgba(8, 12, 20, 0.92));
+  border: 1px solid rgba(227, 214, 193, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.04);
   pointer-events: none;
 }
 
@@ -136,7 +156,7 @@
 
 .illustration-card__body {
   display: grid;
-  gap: 0.52rem;
+  gap: 0.58rem;
 }
 
 .illustration-card__title {

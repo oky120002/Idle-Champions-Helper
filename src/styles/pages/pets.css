@@ -17,19 +17,37 @@
 }
 
 .pet-card {
+  position: relative;
+  overflow: clip;
+  isolation: isolate;
   display: grid;
   gap: 0.8rem;
   padding: 0.82rem;
   border-radius: 22px;
   border: 1px solid rgba(227, 214, 193, 0.12);
   background:
-    radial-gradient(circle at top, rgba(210, 173, 120, 0.12), transparent 58%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.018));
-  box-shadow: 0 16px 36px rgba(11, 8, 4, 0.22);
+    radial-gradient(circle at top, rgba(210, 173, 120, 0.14), transparent 58%),
+    radial-gradient(circle at 12% 100%, rgba(62, 113, 147, 0.12), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.018)),
+    rgba(8, 13, 19, 0.38);
+  box-shadow:
+    var(--shadow-surface-soft),
+    inset 0 1px 0 rgba(255, 243, 223, 0.04);
 }
 
 .pet-card--animated {
   will-change: transform;
+}
+
+.pet-card::before {
+  content: "";
+  position: absolute;
+  left: 0.88rem;
+  right: 0.88rem;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 243, 223, 0.16), transparent);
+  pointer-events: none;
 }
 
 .pet-card__stage {
@@ -43,6 +61,8 @@
   background:
     radial-gradient(circle at top, rgba(205, 167, 110, 0.18), transparent 48%),
     linear-gradient(180deg, rgba(16, 23, 34, 0.94), rgba(9, 13, 22, 0.94));
+  border: 1px solid rgba(227, 214, 193, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.04);
 }
 
 .pet-card__stage-grid {
@@ -111,7 +131,7 @@
 
 .pet-card__body {
   display: grid;
-  gap: 0.46rem;
+  gap: 0.52rem;
 }
 
 .pet-card__meta-row,
@@ -127,10 +147,13 @@
   align-items: center;
   padding: 0.32rem 0.62rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.038), rgba(255, 255, 255, 0.012)),
+    rgba(9, 14, 20, 0.36);
   color: rgba(255, 246, 232, 0.86);
   font-size: 0.78rem;
   font-weight: 700;
+  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.04);
 }
 
 .pet-card__status--muted {
@@ -167,6 +190,8 @@
   display: grid;
   gap: 0.16rem;
   margin-top: 0.08rem;
+  padding-top: 0.62rem;
+  border-top: 1px solid rgba(227, 214, 193, 0.08);
 }
 
 .pet-card__acquisition-label {
@@ -192,6 +217,7 @@
   color: rgba(223, 212, 193, 0.68);
   font-size: 0.78rem;
   gap: 0.4rem;
+  padding-top: 0.28rem;
 }
 
 @media (max-width: 720px) {

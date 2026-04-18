@@ -14,16 +14,35 @@
 }
 
 .variants-sidebar__surface {
+  position: relative;
+  overflow: clip;
   display: grid;
   gap: 1rem;
   padding: 1rem;
   border-radius: 26px;
   border: 1px solid rgba(227, 214, 193, 0.1);
   background:
-    radial-gradient(circle at top right, rgba(200, 167, 127, 0.16), transparent 28%),
+    radial-gradient(circle at top right, rgba(200, 167, 127, 0.18), transparent 28%),
+    radial-gradient(circle at 10% 0%, rgba(62, 113, 147, 0.14), transparent 34%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.038), rgba(255, 255, 255, 0.018)),
     rgba(8, 13, 19, 0.42);
-  box-shadow: 0 20px 44px rgba(1, 4, 9, 0.2);
+  box-shadow:
+    var(--shadow-surface-soft),
+    inset 0 1px 0 rgba(255, 243, 223, 0.04);
+}
+
+.variants-sidebar__surface::before,
+.variant-campaign-group::before,
+.variant-adventure::before,
+.variant-entry::before {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 243, 223, 0.16), transparent);
+  pointer-events: none;
 }
 
 .variants-sidebar__header {
@@ -41,7 +60,9 @@
   padding: 0.38rem 0.76rem;
   border-radius: 999px;
   border: 1px solid rgba(62, 113, 147, 0.24);
-  background: rgba(62, 113, 147, 0.12);
+  background:
+    radial-gradient(circle at top right, rgba(62, 113, 147, 0.18), transparent 58%),
+    rgba(62, 113, 147, 0.12);
   color: #e7f3ff;
   font-size: 0.78rem;
   letter-spacing: 0.08em;
@@ -65,16 +86,31 @@
   padding: 0.58rem 0.92rem;
   border: 1px solid rgba(227, 214, 193, 0.14);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.04);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.032), rgba(255, 255, 255, 0.012)),
+    rgba(9, 14, 20, 0.34);
   color: #fff3df;
   cursor: pointer;
-  transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease;
+  box-shadow:
+    var(--shadow-interactive),
+    inset 0 1px 0 rgba(255, 243, 223, 0.04);
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .variants-sidebar__reset:hover {
   transform: translateY(-1px);
   border-color: rgba(200, 167, 127, 0.36);
-  background: rgba(200, 167, 127, 0.08);
+  background:
+    radial-gradient(circle at top right, rgba(200, 167, 127, 0.18), transparent 58%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.032), rgba(255, 255, 255, 0.012)),
+    rgba(9, 14, 20, 0.4);
+  box-shadow:
+    var(--shadow-interactive-strong),
+    inset 0 1px 0 rgba(255, 243, 223, 0.05);
 }
 
 .variants-area-filter {
@@ -100,6 +136,8 @@
 }
 
 .variant-campaign-group {
+  position: relative;
+  overflow: clip;
   display: grid;
   gap: 1rem;
   padding: 1.05rem;
@@ -107,9 +145,12 @@
   border: 1px solid rgba(227, 214, 193, 0.1);
   background:
     radial-gradient(circle at 100% 0%, rgba(62, 113, 147, 0.18), transparent 26%),
+    radial-gradient(circle at 0% 100%, rgba(200, 167, 127, 0.12), transparent 30%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.038), rgba(255, 255, 255, 0.02)),
     rgba(7, 12, 18, 0.4);
-  box-shadow: 0 20px 42px rgba(1, 4, 9, 0.2);
+  box-shadow:
+    var(--shadow-surface-soft),
+    inset 0 1px 0 rgba(255, 243, 223, 0.04);
 }
 
 .variant-campaign-group__header {
@@ -172,14 +213,20 @@
 }
 
 .variant-adventure {
+  position: relative;
+  overflow: clip;
   display: grid;
   gap: 1rem;
   padding: 1rem;
   border-radius: 24px;
   border: 1px solid rgba(227, 214, 193, 0.08);
   background:
+    radial-gradient(circle at top right, rgba(200, 167, 127, 0.14), transparent 30%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.016)),
     rgba(5, 9, 14, 0.42);
+  box-shadow:
+    var(--shadow-surface-soft),
+    inset 0 1px 0 rgba(255, 243, 223, 0.035);
 }
 
 .variant-adventure__hero {
@@ -227,14 +274,19 @@
   padding: 0.32rem 0.7rem;
   border-radius: 999px;
   border: 1px solid rgba(227, 214, 193, 0.14);
-  background: rgba(255, 255, 255, 0.04);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.032), rgba(255, 255, 255, 0.012)),
+    rgba(9, 14, 20, 0.32);
   color: #fff3df;
   font-size: 0.82rem;
+  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.04);
 }
 
 .variant-meta-pill--accent {
   border-color: rgba(200, 167, 127, 0.24);
-  background: rgba(200, 167, 127, 0.1);
+  background:
+    radial-gradient(circle at top right, rgba(200, 167, 127, 0.18), transparent 58%),
+    rgba(200, 167, 127, 0.1);
 }
 
 .variant-meta-pill--small {
@@ -244,7 +296,9 @@
 }
 
 .variant-chip--soft {
-  background: rgba(62, 113, 147, 0.12);
+  background:
+    linear-gradient(180deg, rgba(62, 113, 147, 0.2), rgba(12, 21, 32, 0.92)),
+    rgba(62, 113, 147, 0.12);
   border-color: rgba(62, 113, 147, 0.18);
   color: #e8f4ff;
 }
@@ -262,8 +316,11 @@
   padding: 0.85rem 0.9rem;
   border-radius: 20px;
   background:
+    radial-gradient(circle at top right, rgba(62, 113, 147, 0.12), transparent 54%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.024), rgba(255, 255, 255, 0.012)),
     rgba(8, 13, 19, 0.34);
+  border: 1px solid rgba(227, 214, 193, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.03);
 }
 
 .variant-adventure__intel-label,
@@ -306,14 +363,21 @@
 }
 
 .variant-entry {
+  position: relative;
+  overflow: clip;
   display: grid;
   gap: 0.85rem;
   padding: 0.95rem 1rem;
   border-radius: 22px;
   border: 1px solid rgba(227, 214, 193, 0.08);
   background:
-    radial-gradient(circle at top right, rgba(200, 167, 127, 0.12), transparent 24%),
-    rgba(255, 255, 255, 0.03);
+    radial-gradient(circle at top right, rgba(200, 167, 127, 0.14), transparent 24%),
+    radial-gradient(circle at 0% 100%, rgba(62, 113, 147, 0.1), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.012)),
+    rgba(8, 13, 19, 0.34);
+  box-shadow:
+    var(--shadow-surface-soft),
+    inset 0 1px 0 rgba(255, 243, 223, 0.03);
 }
 
 .variant-entry__header {
@@ -360,7 +424,11 @@
   border: 1px solid rgba(227, 214, 193, 0.08);
   background:
     radial-gradient(circle at top, rgba(200, 167, 127, 0.12), transparent 46%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.024), rgba(255, 255, 255, 0.01)),
     rgba(7, 12, 18, 0.48);
+  box-shadow:
+    var(--shadow-surface-soft),
+    inset 0 1px 0 rgba(255, 243, 223, 0.03);
 }
 
 .variant-mini-board__header {
