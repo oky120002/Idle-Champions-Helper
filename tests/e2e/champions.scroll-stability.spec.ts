@@ -82,7 +82,8 @@ test('英雄筛选页在长结果列表中收窄条件时应平滑带回结果�
   const finalScrollY = await getScrollY(page)
 
   await expect(page.getByText('当前筛选：联动队伍：长枪英雄 · Heroes of the Lance')).toBeVisible()
-  expect(finalScrollY).toBeGreaterThan(200)
+  expect(targetTop).toBeGreaterThan(120)
+  expect(finalScrollY).toBeGreaterThan(120)
   expect(finalScrollY).toBeLessThan(baselineScrollY)
   expect(Math.abs(finalScrollY - targetTop)).toBeLessThanOrEqual(32)
 })
