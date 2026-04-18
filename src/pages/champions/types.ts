@@ -1,7 +1,7 @@
 import type { CSSProperties, RefObject } from 'react'
 import type { AppLocale, LocaleText } from '../../app/i18n'
 import type { ChampionMechanicCategoryId } from '../../domain/championTags'
-import type { Champion, ChampionVisual, LocalizedText } from '../../domain/types'
+import type { Champion, ChampionIllustration, ChampionVisual, LocalizedText } from '../../domain/types'
 import type { ActiveFilterChip, MechanicOptionGroup } from '../../features/champion-filters/types'
 
 export type ResultsTransitionReason = 'filters' | 'visibility'
@@ -26,6 +26,7 @@ export type ChampionState =
       status: 'ready'
       champions: Champion[]
       visuals: ChampionVisual[]
+      heroIllustrations: ChampionIllustration[]
       roles: string[]
       affiliations: LocalizedText[]
     }
@@ -75,6 +76,7 @@ export interface ChampionsPageModel {
   visibleChampions: Champion[]
   selectedChampion: Champion | null
   selectedChampionVisual: ChampionVisual | null
+  heroIllustrationByChampionId: ReadonlyMap<string, ChampionIllustration>
   matchedSeats: number
   canToggleResultVisibility: boolean
   showAllResults: boolean

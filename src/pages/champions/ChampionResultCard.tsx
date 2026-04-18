@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ChampionIdentity } from '../../components/ChampionIdentity'
+import { resolveDataUrl } from '../../data/client'
 import { getChampionAttributeGroupLabel, getChampionAttributeGroups, getChampionTagLabel } from '../../domain/championTags'
 import { formatSeatLabel, getLocalizedTextPair, getPrimaryLocalizedText, getRoleLabel } from '../../domain/localizedText'
 import type { Champion } from '../../domain/types'
@@ -10,10 +11,16 @@ interface ChampionResultCardProps {
   model: ChampionsPageModel
 }
 
+const MAX_ROLE_PILLS = 4
+
 export function ChampionResultCard({ champion, model }: ChampionResultCardProps) {
-  const { locale, t, selectedChampion, toggleChampionVisual, locationSearch, saveListScroll } = model
+  const { locale, t, selectedChampion, toggleChampionVisual, locationSearch, saveListScroll, heroIllustrationByChampionId } =
+    model
   const attributeGroups = getChampionAttributeGroups(champion.tags)
   const isSelected = champion.id === selectedChampion?.id
+  const rolePills = champion.roles.slice(0, MAX_ROLE_PILLS)
+  const roleOverflowCount = champion.roles.length - rolePills.length
+  const heroIllustration = heroIllustrationByChampionId.get(champion.id) ?? null
 
   return (
     <article
@@ -35,6 +42,19 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
         })}
         onClick={saveListScroll}
       >
+        {heroIllustration ? (
+          <div className="result-card__artbackdrop" aria-hidden="true">
+            <img
+              className="result-card__artbackdrop-image"
+              src={resolveDataUrl(heroIllustration.image.path)}
+              alt=""
+              loading="lazy"
+              width={heroIllustration.image.width}
+              height={heroIllustration.image.height}
+            />
+          </div>
+        ) : null}
+
         <ChampionIdentity
           champion={champion}
           locale={locale}
@@ -43,36 +63,46 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
           variant="spotlight"
         />
 
-        <div className="tag-row">
-          {champion.roles.map((role) => (
+        <div className="tag-row result-card__role-row">
+          {rolePills.map((role) => (
             <span key={role} className="tag-pill">
               {getRoleLabel(role, locale)}
             </span>
           ))}
+          {roleOverflowCount > 0 ? (
+            <span className="tag-pill tag-pill--muted result-card__role-overflow">
+              {t({ zh: `+${roleOverflowCount}`, en: `+${roleOverflowCount}` })}
+            </span>
+          ) : null}
         </div>
 
-        <p className="supporting-text">
+        <p className="supporting-text result-card__affiliation">
           {t({ zh: '联动队伍', en: 'Affiliation' })}：
           {champion.affiliations.length > 0
             ? champion.affiliations.map((affiliation) => getLocalizedTextPair(affiliation, locale)).join(' / ')
             : t({ zh: '暂无', en: 'None yet' })}
         </p>
 
-        <div className="result-block">
+        <div className="result-block result-card__attributes">
           <strong className="result-block__title">{t({ zh: '属性概览', en: 'Attributes' })}</strong>
           {attributeGroups.length > 0 ? (
             <div className="result-attribute-grid">
               {attributeGroups.map((group) => (
-                <div key={group.id} className="result-block result-block--compact">
+                <div key={group.id} className="result-block result-block--compact result-card__attribute-group">
                   <strong className="result-block__title result-block__title--small">
                     {getChampionAttributeGroupLabel(group.id, locale)}
                   </strong>
-                  <div className="tag-row tag-row--tight">
-                    {group.tags.map((tag) => (
+                  <div className="tag-row tag-row--tight result-card__attribute-tags">
+                    {group.tags.slice(0, 3).map((tag) => (
                       <span key={tag} className="tag-pill tag-pill--muted">
                         {getChampionTagLabel(tag, locale)}
                       </span>
                     ))}
+                    {group.tags.length > 3 ? (
+                      <span className="tag-pill tag-pill--muted result-card__role-overflow">
+                        {t({ zh: `+${group.tags.length - 3}`, en: `+${group.tags.length - 3}` })}
+                      </span>
+                    ) : null}
                   </div>
                 </div>
               ))}
@@ -87,9 +117,6 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
           )}
         </div>
 
-        <div className="result-card__section">
-          <span className="result-card__link">{t({ zh: '点击卡片查看详情', en: 'Open details from the card' })}</span>
-        </div>
       </Link>
 
       <div className="result-card__actions">

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { loadCollection } from '../../data/client'
-import type { Champion, ChampionVisual } from '../../domain/types'
+import type { Champion, ChampionIllustration, ChampionVisual } from '../../domain/types'
 import type { LocalizedEnumGroup, StringEnumGroup } from '../../features/champion-filters/types'
 import { isLocalizedEnumGroup, isStringEnumGroup } from '../../features/champion-filters/enumGroups'
 import type { ChampionState } from './types'
@@ -18,8 +18,12 @@ export function useChampionCollectionState() {
         updatedAt: '',
         items: [],
       })),
+      loadCollection<ChampionIllustration>('champion-illustrations').catch(() => ({
+        updatedAt: '',
+        items: [],
+      })),
     ])
-      .then(([championCollection, enumCollection, visualCollection]) => {
+      .then(([championCollection, enumCollection, visualCollection, illustrationCollection]) => {
         if (disposed) {
           return
         }
@@ -33,6 +37,7 @@ export function useChampionCollectionState() {
           status: 'ready',
           champions: championCollection.items,
           visuals: visualCollection.items,
+          heroIllustrations: illustrationCollection.items.filter((illustration) => illustration.kind === 'hero-base'),
           roles,
           affiliations,
         })

@@ -188,6 +188,30 @@
     rgba(9, 14, 20, 0.42);
 }
 
+.filter-sidebar-panel {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(200, 167, 127, 0.42) transparent;
+}
+
+.filter-sidebar-panel::-webkit-scrollbar {
+  width: 0.7rem;
+}
+
+.filter-sidebar-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.filter-sidebar-panel::-webkit-scrollbar-thumb {
+  border: 0.2rem solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+  background-color: rgba(200, 167, 127, 0.34);
+}
+
+.filter-sidebar-panel::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(200, 167, 127, 0.5);
+}
+
 .filter-sidebar-panel__copy {
   display: grid;
   gap: 0.35rem;
@@ -392,7 +416,7 @@
     }
 
   .champions-sidebar__surface,
-    .filter-sidebar-panel {
+  .filter-sidebar-panel {
       max-height: calc(100vh - var(--champions-sticky-top, 10rem) - 1rem);
       overflow: auto;
       overscroll-behavior: contain;
