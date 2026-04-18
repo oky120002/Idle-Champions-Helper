@@ -309,8 +309,8 @@ html[data-ui-locale='en-US'] .site-subtitle {
   .site-header--subpage.site-header--condensed {
       grid-template-columns: auto minmax(0, 1fr) auto;
       align-items: center;
-      gap: 0.5rem 0.85rem;
-      padding: 0.24rem 0;
+      gap: 0.32rem 0.75rem;
+      padding: 0.12rem 0;
     }
 
   .site-header--subpage.site-header--condensed .site-header__content-shell {
@@ -332,7 +332,8 @@ html[data-ui-locale='en-US'] .site-subtitle {
     }
 
   .site-header--subpage.site-header--condensed .site-header__compact-brand {
-      padding: 0.24rem 0.56rem;
+      gap: 0.5rem;
+      padding: 0.18rem 0.48rem;
       border-color: rgba(227, 214, 193, 0.08);
       background: rgba(9, 14, 20, 0.14);
     }
@@ -345,12 +346,13 @@ html[data-ui-locale='en-US'] .site-subtitle {
       justify-content: flex-end;
       align-self: start;
       gap: 0.42rem;
+      padding: 0.16rem;
     }
 
   .site-header--subpage.site-header--condensed .nav-link {
-      min-height: 1.94rem;
-      padding: 0.3rem 0.66rem;
-      font-size: 0.84rem;
+      min-height: 1.72rem;
+      padding: 0.22rem 0.58rem;
+      font-size: 0.8rem;
       flex: 0 0 auto;
       white-space: nowrap;
       text-wrap: nowrap;
@@ -364,6 +366,25 @@ html[data-ui-locale='en-US'] .site-subtitle {
       align-self: start;
       align-items: center;
       justify-self: end;
+    }
+
+  .site-header--subpage.site-header--condensed .locale-switcher--toolbar .locale-switcher__controls {
+      padding: 0.1rem;
+      border-radius: 16px;
+    }
+
+  .site-header--subpage.site-header--condensed .locale-switcher__button {
+      min-height: 1.72rem;
+      padding: 0.22rem 0.46rem;
+      border-radius: 11px;
+    }
+
+  .site-header--subpage.site-header--condensed .locale-switcher__button-title {
+      font-size: 0.72rem;
+    }
+
+  .site-header--subpage.site-header--condensed .locale-switcher__button-short {
+      font-size: 0.56rem;
     }
 }
 
