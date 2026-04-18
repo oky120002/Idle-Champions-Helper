@@ -53,6 +53,7 @@ export function PetFilters({
           ) : null}
         </>
       }
+      statusLabel={t({ zh: '宠物筛选状态操作', en: 'Pet filter status actions' })}
       note={t({
         zh: '来源改成了更直观的芯片切换；搜索负责关键字，图像状态负责快速区分完整资源和待补图目。',
         en: 'Source now uses direct filter chips. Search handles keywords, while the asset-state toggle quickly separates complete entries from missing-art rows.',

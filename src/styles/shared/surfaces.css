@@ -1,4 +1,5 @@
-.page-stack {
+.page-stack,
+.page-shell {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
@@ -7,13 +8,18 @@
 .hero-panel,
 .surface-card {
   position: relative;
+  overflow: clip;
+  isolation: isolate;
   border: 1px solid var(--color-border-soft);
   border-radius: 30px;
   background:
-    radial-gradient(circle at top right, color-mix(in oklch, var(--color-copper) 16%, transparent), transparent 36%),
-    radial-gradient(circle at left bottom, color-mix(in oklch, var(--color-steel) 14%, transparent), transparent 40%),
+    radial-gradient(circle at top right, color-mix(in oklch, var(--color-copper) 18%, transparent), transparent 34%),
+    radial-gradient(circle at left bottom, color-mix(in oklch, var(--color-steel) 16%, transparent), transparent 40%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0.012)),
     linear-gradient(180deg, var(--color-surface-top), var(--color-surface-mid) 52%, var(--color-surface-bottom));
-  box-shadow: var(--shadow-surface);
+  box-shadow:
+    var(--shadow-surface),
+    inset 0 1px 0 rgba(255, 243, 223, 0.04);
 }
 
 .hero-panel::before,
@@ -30,7 +36,8 @@
   inset: 1px;
   border-radius: 29px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.042), transparent 18%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.048), transparent 18%),
+    radial-gradient(circle at top center, rgba(255, 243, 223, 0.045), transparent 42%),
     repeating-linear-gradient(
       90deg,
       rgba(255, 255, 255, 0.014) 0,
@@ -43,9 +50,9 @@
 
 .hero-panel::after,
 .surface-card::after {
-  inset: auto 1.2rem 0.9rem;
+  inset: auto 1.15rem 0.9rem;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 243, 223, 0.12), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 243, 223, 0.18), transparent);
 }
 
 .hero-panel {
@@ -157,7 +164,7 @@
   display: grid;
   gap: 1rem;
   padding-bottom: 1.05rem;
-  border-bottom: 1px solid rgba(255, 243, 223, 0.08);
+  border-bottom: 1px solid rgba(255, 243, 223, 0.09);
 }
 
 .surface-card__header-copy,
@@ -168,6 +175,9 @@
 }
 
 .surface-card__body {
+  display: grid;
+  gap: 1.05rem;
+  align-content: start;
   margin-top: 1.05rem;
 }
 
@@ -176,7 +186,9 @@
 }
 
 .surface-card__footer {
-  margin-top: 1rem;
+  margin-top: 1.08rem;
+  padding-top: 0.92rem;
+  border-top: 1px solid rgba(255, 243, 223, 0.08);
 }
 
 .page-tab-header {
@@ -195,7 +207,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem 0.72rem;
+  gap: 0.54rem 0.72rem;
 }
 
 .page-tab-header__eyebrow {
@@ -236,21 +248,29 @@
 .page-tab-header__meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.44rem 0.64rem;
+  gap: 0.44rem 0.56rem;
   align-items: center;
   margin-top: 0;
+  padding: 0.22rem 0.26rem 0.22rem 0.22rem;
+  border: 1px solid color-mix(in oklch, var(--color-border-soft) 92%, transparent);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at top left, color-mix(in oklch, var(--color-steel) 12%, transparent), transparent 54%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.034), rgba(255, 255, 255, 0.014)),
+    rgba(6, 11, 17, 0.34);
+  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.03);
 }
 
 .page-tab-header__meta-pill {
   display: inline-flex;
   align-items: center;
   min-height: 1.72rem;
-  padding: 0.22rem 0.56rem;
-  border: 1px solid var(--color-border-soft);
+  padding: 0.2rem 0.56rem;
+  border: 1px solid rgba(227, 214, 193, 0.12);
   border-radius: 999px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.034), rgba(255, 255, 255, 0.012)),
-    rgba(8, 12, 17, 0.28);
+    linear-gradient(180deg, color-mix(in oklch, var(--color-copper) 14%, transparent), transparent),
+    rgba(8, 12, 17, 0.32);
   color: #fff1d6;
   font-size: 0.68rem;
   letter-spacing: 0.12em;
@@ -258,8 +278,9 @@
 }
 
 .page-tab-header__meta-text {
-  color: var(--color-text-soft);
-  font-size: 0.78rem;
+  color: rgba(242, 239, 230, 0.68);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
 }
 
 .page-tab-header__aside {
@@ -269,7 +290,7 @@
 .page-header-metrics {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.48rem;
+  gap: 0.52rem;
   justify-content: flex-start;
 }
 
@@ -278,14 +299,17 @@
   display: grid;
   gap: 0.18rem;
   min-width: clamp(6.4rem, 9vw, 7.8rem);
-  padding: 0.52rem 0.7rem 0.56rem;
+  padding: 0.56rem 0.72rem 0.6rem;
   border: 1px solid color-mix(in oklch, var(--color-border-soft) 88%, transparent);
   border-radius: 16px;
   background:
     radial-gradient(circle at top right, color-mix(in oklch, var(--color-steel) 14%, transparent), transparent 44%),
+    radial-gradient(circle at bottom left, color-mix(in oklch, var(--color-copper) 10%, transparent), transparent 42%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.036), rgba(255, 255, 255, 0.014)),
     rgba(6, 11, 17, 0.4);
-  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.03);
+  box-shadow:
+    0 14px 28px rgba(1, 4, 9, 0.14),
+    inset 0 1px 0 rgba(255, 243, 223, 0.03);
 }
 
 .page-header-metric::before {
@@ -405,6 +429,30 @@
 
   .page-header-metrics {
     justify-content: flex-end;
+  }
+}
+
+@media (max-width: 720px) {
+  .surface-card {
+    padding: 1.2rem;
+    border-radius: 26px;
+  }
+
+  .surface-card::before {
+    border-radius: 25px;
+  }
+
+  .page-tab-header__meta {
+    width: 100%;
+    border-radius: 20px;
+  }
+
+  .page-header-metrics {
+    gap: 0.44rem;
+  }
+
+  .page-header-metric {
+    min-width: min(100%, 8rem);
   }
 }
 

@@ -71,19 +71,27 @@
 
 .filter-chip {
   padding: 0.5rem 0.85rem;
-  background: rgba(255, 255, 255, 0.03);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.034), rgba(255, 255, 255, 0.014)),
+    rgba(7, 12, 18, 0.32);
   color: rgba(242, 239, 230, 0.82);
   cursor: pointer;
-  transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease;
+  box-shadow:
+    0 10px 20px rgba(1, 4, 9, 0.14),
+    inset 0 1px 0 rgba(255, 243, 223, 0.03);
+  transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
 }
 
 .filter-chip:hover {
   transform: translateY(-1px);
   border-color: rgba(200, 167, 127, 0.4);
+  box-shadow: 0 14px 24px rgba(1, 4, 9, 0.18);
 }
 
 .filter-chip--active {
-  background: rgba(200, 167, 127, 0.14);
+  background:
+    linear-gradient(180deg, color-mix(in oklch, var(--color-copper) 16%, transparent), transparent),
+    rgba(200, 167, 127, 0.12);
   border-color: rgba(200, 167, 127, 0.58);
   color: #fff3df;
 }
@@ -176,14 +184,51 @@
 }
 
 .filter-sidebar-panel {
+  position: relative;
   display: grid;
   gap: 0.92rem;
-  padding: 0.94rem 0.96rem 0.9rem;
+  overflow: clip;
+  padding: 1rem;
   border-radius: 24px;
   border: 1px solid rgba(227, 214, 193, 0.1);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02)),
-    rgba(9, 14, 20, 0.42);
+    radial-gradient(circle at top right, rgba(200, 167, 127, 0.14), transparent 30%),
+    radial-gradient(circle at bottom left, rgba(62, 113, 147, 0.14), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.042), rgba(255, 255, 255, 0.018)),
+    rgba(9, 14, 20, 0.44);
+  box-shadow:
+    0 20px 44px rgba(1, 4, 9, 0.2),
+    inset 0 1px 0 rgba(255, 243, 223, 0.04);
+}
+
+.filter-sidebar-panel::before,
+.filter-sidebar-panel::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.filter-sidebar-panel::before {
+  inset: 1px;
+  border-radius: 23px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.034), transparent 16%),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.014) 0,
+      rgba(255, 255, 255, 0.014) 1px,
+      transparent 1px,
+      transparent 128px
+    );
+  opacity: 0.8;
+}
+
+.filter-sidebar-panel::after {
+  left: 1rem;
+  right: 1rem;
+  bottom: 0.82rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 243, 223, 0.16), transparent);
 }
 
 .filter-sidebar-panel {
@@ -226,17 +271,19 @@
 
 .filter-sidebar-panel__description {
   margin: 0.18rem 0 0;
-  color: rgba(242, 239, 230, 0.58);
+  color: rgba(242, 239, 230, 0.64);
   font-size: 0.9rem;
   line-height: 1.52;
 }
 
 .filter-sidebar-panel__badge {
   justify-self: start;
-  padding: 0.38rem 0.78rem;
+  padding: 0.4rem 0.78rem;
   border-radius: 999px;
-  border: 1px solid rgba(200, 167, 127, 0.18);
-  background: rgba(200, 167, 127, 0.08);
+  border: 1px solid rgba(200, 167, 127, 0.22);
+  background:
+    linear-gradient(180deg, color-mix(in oklch, var(--color-copper) 16%, transparent), transparent),
+    rgba(200, 167, 127, 0.08);
   color: rgba(255, 243, 223, 0.88);
   font-size: 0.82rem;
   letter-spacing: 0.06em;
@@ -251,7 +298,9 @@
 
 .filter-sidebar-panel__note {
   margin: -0.04rem 0 0;
-  color: rgba(242, 239, 230, 0.56);
+  padding-top: 0.18rem;
+  border-top: 1px solid rgba(255, 243, 223, 0.07);
+  color: rgba(242, 239, 230, 0.58);
   font-size: 0.82rem;
   line-height: 1.48;
 }
@@ -282,9 +331,11 @@
   border: 1px solid rgba(227, 214, 193, 0.08);
   border-radius: 20px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0.014)),
+    radial-gradient(circle at top right, rgba(200, 167, 127, 0.1), transparent 32%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.014)),
     rgba(7, 11, 17, 0.34);
   overflow: clip;
+  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.03);
 }
 
 .filter-disclosure__toggle {
@@ -397,10 +448,10 @@
 
 @media (min-width: 1080px) {
   .champions-workspace,
-    .filter-workspace {
-      grid-template-columns: minmax(19rem, var(--champions-sidebar-width)) minmax(0, 1fr);
-      align-items: stretch;
-    }
+  .filter-workspace {
+    grid-template-columns: minmax(19rem, var(--champions-sidebar-width)) minmax(0, 1fr);
+    align-items: stretch;
+  }
 
   .filter-workspace__sidebar-sticky {
     position: sticky;
@@ -408,11 +459,11 @@
   }
 
   .filter-sidebar-panel {
-      max-height: calc(100vh - var(--champions-sticky-top, 10rem) - 0.55rem);
-      overflow: auto;
-      overscroll-behavior: contain;
-      scrollbar-gutter: stable;
-    }
+    max-height: calc(100vh - var(--champions-sticky-top, 10rem) - 0.55rem);
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
 
   .filter-sidebar-panel__header {
     grid-template-columns: minmax(0, 1fr) auto;

@@ -1,3 +1,4 @@
+import { FilterSidebarLayout } from '../components/filter-sidebar/FilterSidebarLayout'
 import { PageTabHeader } from '../components/PageTabHeader'
 import { StatusBanner } from '../components/StatusBanner'
 import { SurfaceCard } from '../components/SurfaceCard'
@@ -36,12 +37,13 @@ export function VariantsPage() {
         ) : null}
 
         {state.status === 'ready' ? (
-          <>
-            <div className="variants-workspace">
-              <VariantsFilterBar model={model} />
-              <VariantsResultsSection model={model} />
-            </div>
-          </>
+          <FilterSidebarLayout
+            sidebar={<VariantsFilterBar model={model} />}
+            className="variants-workspace"
+            contentClassName="variants-results"
+          >
+            <VariantsResultsSection model={model} />
+          </FilterSidebarLayout>
         ) : null}
       </SurfaceCard>
     </div>
