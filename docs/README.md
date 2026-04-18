@@ -4,20 +4,21 @@
 - 默认读取顺序：`README.md` -> `docs/README.md` -> 主题目录 `README.md` -> 子主题 `README.md` -> 单篇叶子文档。
 - 原则：入口文档只保留导航、边界和触发条件；实现细节、证据、操作步骤和审计结果全部下沉。
 
-## 先去哪一层
+## 高频直达
 
-- 项目边界、路线图、移动端规则、AI-first 开发规范与文档治理：`docs/product/README.md`
+- 文档治理：`docs/product/documentation-governance.md`
+- TS / TSX 规范：`docs/product/ai-first-ts-tsx-guidelines.md`
+- CSS 规范：`docs/product/ai-first-css-guidelines.md`
+- 移动端硬约束：`docs/product/mobile-compatibility-guidelines.md`
+
+## 低频主题再走索引
+
+- 项目边界、路线图或不确定该看哪份产品文档时：`docs/product/README.md`
 - 数据、部署、测试与外部事实：`docs/research/README.md`
 - 模块设计稿与局部交互方案：`docs/modules/README.md`
 - 运行、仓库、环境排查与验证：`docs/investigations/README.md`
 - 常见故障与可复用修复路径：`docs/troubleshooting/README.md`
 - 通用问题摘要台账：`docs/troubleshooting-log.md`
-
-## 文档治理入口
-
-- `docs/product/documentation-governance.md`：文档扫描、精简、归档与更新触发条件。
-- `docs/product/ai-first-ts-tsx-guidelines.md`：面向 AI 开发的 TypeScript / React 结构、token 控制与渐进式加载规范。
-- `docs/product/mobile-compatibility-guidelines.md`：移动端布局与交互硬约束，尤其是横向滚动禁令。
 
 ## 放置规则
 
