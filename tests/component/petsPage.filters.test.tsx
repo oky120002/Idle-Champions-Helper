@@ -74,6 +74,44 @@ const petsFixture: DataCollection<Pet> = {
   ],
 }
 
+function buildPet(index: number): Pet {
+  const id = index + 1
+  const name = `测试宠物 ${id}`
+
+  return {
+    id: `pet-${id}`,
+    name: { original: `Test Pet ${id}`, display: name },
+    description: { original: `Fixture pet ${id}`, display: `${name} 的测试描述。` },
+    isAvailable: true,
+    iconGraphicId: `${100 + id}`,
+    illustrationGraphicId: `${200 + id}`,
+    acquisition: {
+      kind: 'gems',
+      sourceType: 'shop',
+      gemCost: 50000 + id,
+      premiumPackName: null,
+      premiumPackDescription: null,
+      patronName: null,
+      patronCurrency: null,
+      patronCost: null,
+      patronInfluence: null,
+    },
+    icon: { path: `v1/pets/icons/test-pet-${id}.png`, width: 128, height: 128, bytes: 1024, format: 'png' },
+    illustration: {
+      path: `v1/pets/illustrations/test-pet-${id}.png`,
+      width: 512,
+      height: 512,
+      bytes: 4096,
+      format: 'png',
+    },
+  }
+}
+
+const crowdedPetsFixture: DataCollection<Pet> = {
+  updatedAt: '2026-04-18T00:00:00.000Z',
+  items: Array.from({ length: 52 }, (_, index) => buildPet(index)),
+}
+
 function renderPetsPage() {
   return render(
     <I18nProvider>
@@ -133,5 +171,33 @@ describe('PetsPage filters', () => {
       expect(screen.getByText('发条小猫')).toBeInTheDocument()
       expect(screen.getByText('秘法猫头鹰')).toBeInTheDocument()
     })
+  })
+
+  it('默认仅展示前 50 只宠物，并支持展开与筛选后收起', async () => {
+    const user = userEvent.setup()
+
+    mockedLoadCollection.mockImplementation(async (name) => {
+      if (name === 'pets') {
+        return crowdedPetsFixture
+      }
+
+      throw new Error(`unexpected collection: ${name}`)
+    })
+
+    renderPetsPage()
+
+    const results = await screen.findByLabelText('宠物结果')
+    expect(within(results).getAllByRole('heading', { level: 3 })).toHaveLength(50)
+
+    await user.click(screen.getByRole('button', { name: '显示全部 52 只' }))
+    expect(within(results).getAllByRole('heading', { level: 3 })).toHaveLength(52)
+
+    await user.click(screen.getByRole('button', { name: '完整图像' }))
+
+    await waitFor(() => {
+      expect(within(results).getAllByRole('heading', { level: 3 })).toHaveLength(50)
+    })
+
+    expect(screen.getByRole('button', { name: '显示全部 52 只' })).toBeInTheDocument()
   })
 })

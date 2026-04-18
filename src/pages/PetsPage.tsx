@@ -6,6 +6,7 @@ import { StatusBanner } from '../components/StatusBanner'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { loadCollection } from '../data/client'
 import type { Pet } from '../domain/types'
+import { MAX_VISIBLE_PETS } from './pets/constants'
 import { PetFilters } from './pets/PetFilters'
 import { PetsMetrics } from './pets/PetsMetrics'
 import { PetsResultsSection } from './pets/PetsResultsSection'
@@ -26,6 +27,7 @@ export function PetsPage() {
   const [query, setQuery] = useState('')
   const [sourceFilter, setSourceFilter] = useState<SourceFilter>('all')
   const [assetFilter, setAssetFilter] = useState<AssetFilter>('all')
+  const [showAllResults, setShowAllResults] = useState(false)
   const [randomOrderSeed, setRandomOrderSeed] = useState<number | null>(null)
 
   useEffect(() => {
@@ -77,6 +79,11 @@ export function PetsPage() {
 
     return randomOrderSeed === null ? nextPets : shufflePets(nextPets, randomOrderSeed)
   }, [assetFilter, pets, query, randomOrderSeed, sourceFilter])
+  const visiblePets = useMemo(
+    () => (showAllResults ? filteredPets : filteredPets.slice(0, MAX_VISIBLE_PETS)),
+    [filteredPets, showAllResults],
+  )
+  const canToggleResultVisibility = filteredPets.length > MAX_VISIBLE_PETS
 
   const summary = useMemo(
     () => ({
@@ -90,10 +97,17 @@ export function PetsPage() {
     [pets],
   )
 
+  function runFilterMutation(mutation: () => void) {
+    setShowAllResults(false)
+    mutation()
+  }
+
   function clearAllFilters() {
-    setQuery('')
-    setSourceFilter('all')
-    setAssetFilter('all')
+    runFilterMutation(() => {
+      setQuery('')
+      setSourceFilter('all')
+      setAssetFilter('all')
+    })
   }
 
   return (
@@ -118,9 +132,9 @@ export function PetsPage() {
               query={query}
               sourceFilter={sourceFilter}
               assetFilter={assetFilter}
-              onQueryChange={setQuery}
-              onSourceFilterChange={setSourceFilter}
-              onAssetFilterChange={setAssetFilter}
+              onQueryChange={(value) => runFilterMutation(() => setQuery(value))}
+              onSourceFilterChange={(value) => runFilterMutation(() => setSourceFilter(value))}
+              onAssetFilterChange={(value) => runFilterMutation(() => setAssetFilter(value))}
               onClearAllFilters={clearAllFilters}
             />
           }
@@ -156,9 +170,13 @@ export function PetsPage() {
 
           {state.status === 'ready' ? (
             <PetsResultsSection
-              pets={filteredPets}
+              filteredPets={filteredPets}
+              visiblePets={visiblePets}
               totalPets={pets.length}
+              showAllResults={showAllResults}
+              canToggleResultVisibility={canToggleResultVisibility}
               hasRandomOrder={randomOrderSeed !== null}
+              onToggleResultVisibility={() => setShowAllResults((current) => !current)}
               onRandomizeResultOrder={() => setRandomOrderSeed((current) => (current === null ? 1 : current + 1))}
             />
           ) : null}
