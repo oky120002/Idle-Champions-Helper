@@ -15,7 +15,7 @@
 - 结果卡与列表：`shared/results.css`
 - 阵型棋盘：`shared/formation.css`
 - 表单、按钮、反馈：`shared/controls.css`
-- 英雄详情：`pages/champion-detail/shell.css` -> `dossier.css` -> `sections.css` -> `progression.css` -> `media.css`
+- 英雄详情：`pages/champion-detail/shell.css` -> `dossier.css` -> `sections.css` -> `upgrades.css` -> `feats.css` -> `media.css`
 - 视觉工作台：`components/visual-workbench.css`
 - 其他页面：直接读对应 `pages/*.css`
 
