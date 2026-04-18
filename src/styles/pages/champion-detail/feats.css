@@ -1,52 +1,16 @@
-.feat-card {
-  background:
-    radial-gradient(circle at top right, rgba(62, 113, 147, 0.18), transparent 30%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0)),
-    rgba(7, 12, 18, 0.28);
-}
-
-.feat-card__masthead {
-  display: grid;
-  gap: 0.5rem;
-  padding-bottom: 0.1rem;
-  border-bottom: 1px solid rgba(227, 214, 193, 0.08);
-}
-
-.feat-card__heading {
-  display: grid;
-  gap: 0.12rem;
-}
-
-.feat-card__rarity {
-  background: rgba(62, 113, 147, 0.14);
-  border-color: rgba(62, 113, 147, 0.2);
-  color: #e1efff;
-}
-
-.feat-card__summary {
-  padding: 0.76rem 0.82rem;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.feat-card__panels {
-  display: grid;
-  gap: 0.65rem;
-  padding: 0.76rem 0.82rem;
-  border-radius: 16px;
-  border: 1px solid rgba(227, 214, 193, 0.06);
-  background: rgba(7, 12, 18, 0.18);
-}
-
-.feat-card .detail-data-panel {
-  min-height: 100%;
-  background: rgba(7, 12, 18, 0.26);
-}
-
 .feat-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
   gap: 0.95rem;
+}
+
+.feat-card {
+  gap: 0.78rem;
+  align-self: start;
+  background:
+    radial-gradient(circle at top right, rgba(62, 113, 147, 0.18), transparent 30%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0)),
+    rgba(7, 12, 18, 0.28);
 }
 
 .feat-card__topline {
@@ -65,13 +29,11 @@
   gap: 0.22rem;
 }
 
-.feat-card {
-  gap: 0.78rem;
-  align-self: start;
-}
-
 .feat-card__rarity {
   white-space: nowrap;
+  background: rgba(62, 113, 147, 0.14);
+  border-color: rgba(62, 113, 147, 0.2);
+  color: #e1efff;
 }
 
 .feat-card__summary {
@@ -148,11 +110,11 @@
 
 @media (max-width: 720px) {
   .feat-grid {
-        grid-template-columns: 1fr;
-      }
+    grid-template-columns: 1fr;
+  }
 
   .feat-card__topline {
-        flex-direction: column;
-        align-items: flex-start;
-      }
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

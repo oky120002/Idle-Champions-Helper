@@ -20,19 +20,6 @@
   font-size: 0.95rem;
 }
 
-.illustrations-page__filters {
-  display: grid;
-  grid-template-columns: minmax(16rem, 2fr) minmax(10rem, 0.75fr) minmax(16rem, 1.5fr);
-  gap: 1rem;
-  align-items: end;
-}
-
-.illustrations-page__search,
-.illustrations-page__view-filter {
-  display: grid;
-  gap: 0.55rem;
-}
-
 .illustrations-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
@@ -143,13 +130,6 @@
   font-size: 0.86rem;
 }
 
-@media (max-width: 1040px) {
-  .pets-page__filters,
-    .illustrations-page__filters {
-      grid-template-columns: 1fr;
-    }
-}
-
 @media (max-width: 720px) {
   .illustration-card__image-shell {
       min-height: 17rem;
@@ -157,8 +137,7 @@
 }
 
 @media (max-width: 520px) {
-  .pets-grid,
-    .illustrations-grid {
+  .illustrations-grid {
       grid-template-columns: 1fr;
     }
 }

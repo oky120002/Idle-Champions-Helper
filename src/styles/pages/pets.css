@@ -10,19 +10,6 @@
   font-size: 0.95rem;
 }
 
-.pets-page__filters {
-  display: grid;
-  grid-template-columns: minmax(16rem, 2fr) minmax(11rem, 0.85fr) minmax(16rem, 1.4fr);
-  gap: 1rem;
-  align-items: end;
-}
-
-.pets-page__search,
-.pets-page__asset-filter {
-  display: grid;
-  gap: 0.55rem;
-}
-
 .pets-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(18.5rem, 1fr));
@@ -213,13 +200,6 @@
   font-size: 0.84rem;
 }
 
-@media (max-width: 1040px) {
-  .pets-page__filters,
-    .illustrations-page__filters {
-      grid-template-columns: 1fr;
-    }
-}
-
 @media (max-width: 720px) {
   .pet-card__stage {
       min-height: 15rem;
@@ -227,8 +207,7 @@
 }
 
 @media (max-width: 520px) {
-  .pets-grid,
-    .illustrations-grid {
+  .pets-grid {
       grid-template-columns: 1fr;
     }
 
