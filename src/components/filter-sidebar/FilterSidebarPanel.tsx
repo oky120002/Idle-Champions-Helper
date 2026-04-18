@@ -5,6 +5,7 @@ interface FilterSidebarPanelProps {
   children: ReactNode
   description?: ReactNode
   status?: ReactNode
+  statusLabel?: string
   note?: ReactNode
   ariaLabel?: string
   className?: string
@@ -16,6 +17,7 @@ export function FilterSidebarPanel({
   children,
   description,
   status,
+  statusLabel,
   note,
   ariaLabel,
   className,
@@ -33,7 +35,15 @@ export function FilterSidebarPanel({
           <TitleTag className="section-heading filter-sidebar-panel__title">{title}</TitleTag>
           {description !== undefined ? <p className="filter-sidebar-panel__description">{description}</p> : null}
         </div>
-        {status !== undefined ? <div className="filter-sidebar-panel__status">{status}</div> : null}
+        {status !== undefined ? (
+          <div
+            className="filter-sidebar-panel__status"
+            role={statusLabel ? 'group' : undefined}
+            aria-label={statusLabel}
+          >
+            {status}
+          </div>
+        ) : null}
       </div>
       {note !== undefined ? <p className="filter-sidebar-panel__note">{note}</p> : null}
       <div className="filter-sidebar-panel__content">{children}</div>
