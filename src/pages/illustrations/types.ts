@@ -1,5 +1,11 @@
 import type { AppLocale, LocaleText } from '../../app/i18n'
-import type { Champion, ChampionIllustration, ChampionIllustrationKind, LocalizedText } from '../../domain/types'
+import type {
+  Champion,
+  ChampionAnimation,
+  ChampionIllustration,
+  ChampionIllustrationKind,
+  LocalizedText,
+} from '../../domain/types'
 import type { ActiveFilterChip, MechanicOptionGroup } from '../../features/champion-filters/types'
 import type { FilterableIllustration } from '../../rules/illustrationFilter'
 
@@ -12,6 +18,7 @@ export type IllustrationState =
   | {
       status: 'ready'
       illustrations: ChampionIllustration[]
+      animations: ChampionAnimation[]
       champions: Champion[]
       roles: string[]
       affiliations: LocalizedText[]
@@ -46,6 +53,7 @@ export type IllustrationsPageUiState = {
   shareLinkState: ShareLinkState
   shareButtonLabel: string
   shareStatusMessage: string
+  hasRandomOrder: boolean
 }
 
 export type IllustrationsPageOptions = {
@@ -97,6 +105,7 @@ export type IllustrationsPageActions = {
   toggleIdentityFiltersExpanded: () => void
   toggleMetaFiltersExpanded: () => void
   toggleResultVisibility: () => void
+  randomizeResultOrder: () => void
   copyCurrentLink: () => Promise<void>
 }
 
@@ -108,6 +117,7 @@ export type IllustrationsPageModel = {
   ui: IllustrationsPageUiState
   options: IllustrationsPageOptions
   results: IllustrationsPageResults
+  animationByIllustrationId: ReadonlyMap<string, ChampionAnimation>
   activeFilterChips: ActiveFilterChip[]
   activeFilters: string[]
   hasActiveFilters: boolean

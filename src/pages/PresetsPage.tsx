@@ -18,6 +18,7 @@ export function PresetsPage() {
           zh: '命名方案与最近草稿分层管理；这里的所有内容都只保存在当前浏览器，不上传到外部服务。',
           en: 'Named presets are managed separately from recent drafts. Everything here stays in the current browser and never uploads elsewhere.',
         })}
+        headerAside={state.status === 'ready' ? <PresetsMetrics model={model} /> : null}
       >
         {state.status === 'loading' ? (
           <StatusBanner tone="info">{t({ zh: '正在读取本地方案存档…', en: 'Loading local presets…' })}</StatusBanner>
@@ -34,7 +35,6 @@ export function PresetsPage() {
         {state.status === 'ready' ? (
           <>
             {pageStatus ? <StatusBanner tone={pageStatus.tone} title={pageStatus.title} detail={pageStatus.detail} /> : null}
-            <PresetsMetrics model={model} />
             <PresetsOverview model={model} />
           </>
         ) : null}

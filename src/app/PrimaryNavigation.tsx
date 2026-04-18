@@ -43,7 +43,7 @@ export function PrimaryNavigation({
           </span>
         </div>
       </div>
-      {navigation.map((item, index) => (
+      {navigation.map((item) => (
         <NavLink
           key={item.to}
           to={item.to}
@@ -51,9 +51,6 @@ export function PrimaryNavigation({
           className={({ isActive }) => getNavClassName(isActive)}
           onClick={onNavigate}
         >
-          <span className="nav-link__index" aria-hidden="true">
-            {String(index + 1).padStart(2, '0')}
-          </span>
           <span className="nav-link__label">{t(item.label)}</span>
         </NavLink>
       ))}

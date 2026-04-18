@@ -1,7 +1,7 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useLocation, useSearchParams } from 'react-router-dom'
 import { useI18n } from '../../app/i18n'
-import type { Champion, ChampionIllustration, LocalizedText } from '../../domain/types'
+import type { Champion, ChampionAnimation, ChampionIllustration, LocalizedText } from '../../domain/types'
 import { collectAttributeFilterOptions, groupMechanicOptions, seatOptions } from '../../features/champion-filters/options'
 import { filterIllustrations } from '../../rules/illustrationFilter'
 import { MAX_VISIBLE_ILLUSTRATIONS } from './constants'
@@ -12,6 +12,7 @@ import {
   countIllustrationEntriesByKind,
   countIllustrationsByKind,
   hasActiveIllustrationFilters,
+  shuffleIllustrationEntries,
 } from './illustration-model'
 import { buildFilterSearchParams, buildShareUrl } from './query-state'
 import type { IllustrationsPageActions, IllustrationsPageModel } from './types'
@@ -19,6 +20,7 @@ import { useIllustrationCollectionState } from './useIllustrationCollectionState
 import { useIllustrationFilterState } from './useIllustrationFilterState'
 
 const EMPTY_ILLUSTRATIONS: ChampionIllustration[] = []
+const EMPTY_ANIMATIONS: ChampionAnimation[] = []
 const EMPTY_CHAMPIONS: Champion[] = []
 const EMPTY_STRINGS: string[] = []
 const EMPTY_LOCALIZED_TEXTS: LocalizedText[] = []
@@ -28,6 +30,7 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
   const [, setSearchParams] = useSearchParams()
   const { locale, t } = useI18n()
   const state = useIllustrationCollectionState()
+  const [randomOrderSeed, setRandomOrderSeed] = useState<number | null>(null)
   const {
     filters,
     isIdentityFiltersExpanded,
@@ -61,10 +64,12 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
   }, [filters, location.search, setSearchParams])
 
   const illustrations = state.status === 'ready' ? state.illustrations : EMPTY_ILLUSTRATIONS
+  const animations = state.status === 'ready' ? state.animations : EMPTY_ANIMATIONS
   const champions = state.status === 'ready' ? state.champions : EMPTY_CHAMPIONS
   const roles = state.status === 'ready' ? state.roles : EMPTY_STRINGS
   const affiliations = state.status === 'ready' ? state.affiliations : EMPTY_LOCALIZED_TEXTS
   const championMap = useMemo(() => new Map(champions.map((champion) => [champion.id, champion])), [champions])
+  const animationByIllustrationId = useMemo(() => new Map(animations.map((animation) => [animation.id, animation])), [animations])
   const availableChampionIds = useMemo(() => new Set(illustrations.map((illustration) => illustration.championId)), [illustrations])
   const availableChampions = useMemo(
     () => champions.filter((champion) => availableChampionIds.has(champion.id)),
@@ -96,9 +101,16 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
       }),
     [illustrationEntries, filters],
   )
+  const orderedIllustrationEntries = useMemo(
+    () =>
+      randomOrderSeed === null
+        ? filteredIllustrationEntries
+        : shuffleIllustrationEntries(filteredIllustrationEntries, randomOrderSeed),
+    [filteredIllustrationEntries, randomOrderSeed],
+  )
   const visibleIllustrationEntries = filters.showAllResults
-    ? filteredIllustrationEntries
-    : filteredIllustrationEntries.slice(0, MAX_VISIBLE_ILLUSTRATIONS)
+    ? orderedIllustrationEntries
+    : orderedIllustrationEntries.slice(0, MAX_VISIBLE_ILLUSTRATIONS)
   const roleOptions = roles.filter((role) => availableRoles.has(role))
   const affiliationOptions = affiliations.filter((affiliation) => availableAffiliationIds.has(affiliation.original))
   const raceOptions = collectAttributeFilterOptions(availableChampions, 'race', locale)
@@ -134,7 +146,7 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
   const activeFilters = activeFilterChips.map((chip) => chip.label)
   const hasActiveFilters = hasActiveIllustrationFilters(filters)
   const { totalHeroCount, totalSkinCount } = countIllustrationsByKind(illustrations)
-  const filteredKindCounts = countIllustrationEntriesByKind(filteredIllustrationEntries)
+  const filteredKindCounts = countIllustrationEntriesByKind(orderedIllustrationEntries)
   const identityFiltersSelectedCount =
     filters.selectedRaces.length + filters.selectedGenders.length + filters.selectedAlignments.length
   const metaFiltersSelectedCount =
@@ -196,6 +208,7 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
     toggleIdentityFiltersExpanded,
     toggleMetaFiltersExpanded,
     toggleResultVisibility: () => setShowAllResults((current) => !current),
+    randomizeResultOrder: () => setRandomOrderSeed((current) => (current === null ? 1 : current + 1)),
     copyCurrentLink,
   }
 
@@ -210,6 +223,7 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
       shareLinkState,
       shareButtonLabel,
       shareStatusMessage,
+      hasRandomOrder: randomOrderSeed !== null,
     },
     options: {
       roleOptions,
@@ -224,14 +238,15 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
     },
     results: {
       illustrations,
-      filteredIllustrationEntries,
+      filteredIllustrationEntries: orderedIllustrationEntries,
       visibleIllustrationEntries,
       totalHeroCount,
       totalSkinCount,
       filteredHeroCount: filteredKindCounts.totalHeroCount,
       filteredSkinCount: filteredKindCounts.totalSkinCount,
-      canToggleResultVisibility: filteredIllustrationEntries.length > MAX_VISIBLE_ILLUSTRATIONS,
+      canToggleResultVisibility: orderedIllustrationEntries.length > MAX_VISIBLE_ILLUSTRATIONS,
     },
+    animationByIllustrationId,
     activeFilterChips,
     activeFilters,
     hasActiveFilters,

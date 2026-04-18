@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { loadCollection } from '../../data/client'
-import type { Champion, ChampionIllustration, DataCollection } from '../../domain/types'
+import type { Champion, ChampionAnimation, ChampionIllustration, DataCollection } from '../../domain/types'
 import { isLocalizedEnumGroup, isStringEnumGroup } from '../../features/champion-filters/enumGroups'
 import type { IllustrationState } from './types'
 
@@ -16,6 +16,7 @@ const EMPTY_UNKNOWN_COLLECTION: DataCollection<unknown> = {
 
 export function useIllustrationCollectionState(): IllustrationState {
   const [state, setState] = useState<IllustrationState>({ status: 'loading' })
+  const animationCacheRef = useRef<ChampionAnimation[] | null>(null)
 
   useEffect(() => {
     let disposed = false
@@ -38,6 +39,7 @@ export function useIllustrationCollectionState(): IllustrationState {
         setState({
           status: 'ready',
           illustrations: illustrationCollection.items,
+          animations: animationCacheRef.current ?? [],
           champions: championCollection.items,
           roles,
           affiliations,
@@ -51,6 +53,52 @@ export function useIllustrationCollectionState(): IllustrationState {
         setState({
           status: 'error',
           message: error instanceof Error ? error.message : '',
+        })
+      })
+
+    return () => {
+      disposed = true
+    }
+  }, [])
+
+  useEffect(() => {
+    let disposed = false
+
+    loadCollection<ChampionAnimation>('champion-animations')
+      .then((animationCollection) => {
+        if (disposed) {
+          return
+        }
+
+        animationCacheRef.current = animationCollection.items
+
+        setState((current) => {
+          if (current.status !== 'ready') {
+            return current
+          }
+
+          return {
+            ...current,
+            animations: animationCollection.items,
+          }
+        })
+      })
+      .catch(() => {
+        if (disposed) {
+          return
+        }
+
+        animationCacheRef.current = []
+
+        setState((current) => {
+          if (current.status !== 'ready') {
+            return current
+          }
+
+          return {
+            ...current,
+            animations: [],
+          }
         })
       })
 

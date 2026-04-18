@@ -1,5 +1,5 @@
 import type { AppLocale } from './i18n'
-import { localeOptions, navigation, isNavigationItemActive } from './appNavigation'
+import { navigation, isNavigationItemActive } from './appNavigation'
 import { HeaderTopbar } from './HeaderTopbar'
 import { PrimaryNavigation } from './PrimaryNavigation'
 import { useSiteHeaderState } from './useSiteHeaderState'
@@ -13,41 +13,24 @@ interface SiteHeaderProps {
 
 export function SiteHeader({ locale, setLocale, pathname, t }: SiteHeaderProps) {
   const fallbackNavigationItem = navigation[0]
-  const fallbackLocaleOption = localeOptions[0]
 
-  if (!fallbackNavigationItem || !fallbackLocaleOption) {
-    throw new Error('Site navigation requires at least one navigation item and locale option.')
+  if (!fallbackNavigationItem) {
+    throw new Error('Site navigation requires at least one navigation item.')
   }
 
-  const {
-    closeMobileNav,
-    headerClassName,
-    isLocaleMenuOpen,
-    isMobileNavOpen,
-    localeSwitcherRef,
-    setLocaleMenuOpen,
-    toggleMobileNav,
-  } = useSiteHeaderState(pathname)
+  const { closeMobileNav, headerClassName, isMobileNavOpen, toggleMobileNav } = useSiteHeaderState(pathname)
   const activeNavigationItem =
     navigation.find((item) => isNavigationItemActive(pathname, item.to)) ?? fallbackNavigationItem
-  const activeLocaleOption = localeOptions.find((option) => option.id === locale) ?? fallbackLocaleOption
 
-  const handleLocaleSelect = (nextLocale: AppLocale) => {
-    setLocale(nextLocale)
-    setLocaleMenuOpen(false)
-  }
+  const handleLocaleSelect = (nextLocale: AppLocale) => setLocale(nextLocale)
 
   return (
     <header className={headerClassName}>
       <HeaderTopbar
-        activeLocaleOption={activeLocaleOption}
         activeNavigationItem={activeNavigationItem}
-        isLocaleMenuOpen={isLocaleMenuOpen}
         isMobileNavOpen={isMobileNavOpen}
         locale={locale}
-        localeSwitcherRef={localeSwitcherRef}
         onLocaleSelect={handleLocaleSelect}
-        onLocaleToggle={() => setLocaleMenuOpen((current) => !current)}
         onMobileNavToggle={toggleMobileNav}
         t={t}
       />

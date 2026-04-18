@@ -1,30 +1,19 @@
+import { PageHeaderMetrics, type PageHeaderMetricItem } from '../../components/PageHeaderMetrics'
 import type { IllustrationsPageModel } from './types'
 
-type IllustrationsMetricsProps = {
+interface IllustrationsMetricsProps {
   model: IllustrationsPageModel
 }
 
 export function IllustrationsMetrics({ model }: IllustrationsMetricsProps) {
-  const { t, results } = model
+  const { results, t } = model
 
-  return (
-    <div className="metric-grid">
-      <article className="metric-card">
-        <span className="metric-card__label">{t({ zh: '立绘总数', en: 'Illustrations' })}</span>
-        <strong className="metric-card__value">{results.illustrations.length}</strong>
-      </article>
-      <article className="metric-card">
-        <span className="metric-card__label">{t({ zh: '当前匹配', en: 'Matches' })}</span>
-        <strong className="metric-card__value">{results.filteredIllustrationEntries.length}</strong>
-      </article>
-      <article className="metric-card">
-        <span className="metric-card__label">{t({ zh: '英雄本体', en: 'Hero base' })}</span>
-        <strong className="metric-card__value">{results.totalHeroCount}</strong>
-      </article>
-      <article className="metric-card">
-        <span className="metric-card__label">{t({ zh: '皮肤立绘', en: 'Skin art' })}</span>
-        <strong className="metric-card__value">{results.totalSkinCount}</strong>
-      </article>
-    </div>
-  )
+  const items: PageHeaderMetricItem[] = [
+    { label: t({ zh: '立绘总数', en: 'Illustrations' }), value: results.illustrations.length },
+    { label: t({ zh: '当前匹配', en: 'Matches' }), value: results.filteredIllustrationEntries.length },
+    { label: t({ zh: '英雄本体', en: 'Hero base' }), value: results.totalHeroCount },
+    { label: t({ zh: '皮肤立绘', en: 'Skins' }), value: results.totalSkinCount },
+  ]
+
+  return <PageHeaderMetrics items={items} />
 }

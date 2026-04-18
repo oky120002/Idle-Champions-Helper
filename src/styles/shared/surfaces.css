@@ -97,12 +97,59 @@
   padding: 1.35rem;
 }
 
+.surface-card__header {
+  display: grid;
+  gap: 0.95rem;
+}
+
+.surface-card__header-copy {
+  min-width: 0;
+}
+
+.surface-card__header-aside {
+  min-width: 0;
+}
+
 .surface-card__body {
   margin-top: 1rem;
 }
 
 .surface-card__footer {
   margin-top: 1rem;
+}
+
+.page-header-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  justify-content: flex-start;
+}
+
+.page-header-metric {
+  display: grid;
+  gap: 0.14rem;
+  min-width: clamp(7rem, 10vw, 8.6rem);
+  padding: 0.56rem 0.74rem 0.58rem;
+  border-radius: 18px;
+  border: 1px solid rgba(227, 214, 193, 0.1);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.036), rgba(255, 255, 255, 0.014)),
+    rgba(6, 11, 17, 0.42);
+  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.03);
+}
+
+.page-header-metric__label {
+  display: block;
+  color: rgba(242, 239, 230, 0.56);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.page-header-metric__value {
+  color: #fff7ea;
+  font-size: 0.94rem;
+  line-height: 1.15;
 }
 
 .section-heading {
@@ -191,6 +238,10 @@
       border-radius: 22px;
     }
 
+  .page-header-metric {
+      min-width: calc(50% - 0.28rem);
+    }
+
   .surface-card.detail-section {
       padding: 0.94rem 0.96rem 0.98rem;
     }
@@ -215,6 +266,29 @@
 }
 
 @media (max-width: 520px) {
+  .surface-card__body {
+      margin-top: 0.9rem;
+    }
+
+  .page-header-metrics {
+      gap: 0.45rem;
+    }
+
+  .page-header-metric {
+      min-width: calc(50% - 0.24rem);
+      padding: 0.48rem 0.64rem 0.5rem;
+      border-radius: 16px;
+    }
+
+  .page-header-metric__label {
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+    }
+
+  .page-header-metric__value {
+      font-size: 0.88rem;
+    }
+
   .surface-card.detail-section {
       padding: 0.84rem 0.82rem 0.9rem;
       border-radius: 20px;
@@ -236,5 +310,21 @@
 
   .surface-card.detail-section--headerless .surface-card__body {
       padding-top: 0;
+    }
+}
+
+@media (min-width: 960px) {
+  .surface-card__header {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: start;
+      gap: 1rem 1.2rem;
+    }
+
+  .surface-card__header-aside {
+      justify-self: end;
+    }
+
+  .page-header-metrics {
+      justify-content: flex-end;
     }
 }

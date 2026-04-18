@@ -1,0 +1,63 @@
+.skelanim-player {
+  display: grid;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.skelanim-player__stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: inherit;
+}
+
+.skelanim-player__canvas,
+.skelanim-player__fallback-image {
+  display: block;
+  max-width: 100%;
+}
+
+.skelanim-player__badge {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  padding: 0.32rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(5, 9, 14, 0.72);
+  border: 1px solid rgba(227, 214, 193, 0.16);
+  color: rgba(242, 239, 230, 0.82);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+}
+
+.skelanim-player__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.skelanim-player__status {
+  color: rgba(242, 239, 230, 0.62);
+  font-size: 0.82rem;
+}
+
+.skelanim-player__button {
+  border: 1px solid rgba(200, 167, 127, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff8ee;
+  padding: 0.5rem 0.85rem;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.skelanim-player__button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(200, 167, 127, 0.4);
+  background: rgba(200, 167, 127, 0.1);
+}

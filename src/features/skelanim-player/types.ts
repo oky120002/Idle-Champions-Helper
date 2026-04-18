@@ -77,6 +77,10 @@ export interface SkelAnimCanvasProps {
   fallbackSrc: string | null
   alt: string
   labels: SkelAnimCanvasLabels
+  className?: string
+  showStatus?: boolean
+  showControls?: boolean
+  playbackMode?: 'manual' | 'play' | 'pause'
 }
 
 export interface PreparedSkelAnimEntry {

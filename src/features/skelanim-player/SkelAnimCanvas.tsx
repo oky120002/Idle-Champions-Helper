@@ -1,20 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { loadBinaryData } from '../../data/client'
-import { decodeSkelAnimBuffer } from './browser-codec'
+import { prepareSkelAnim, readReducedMotionPreference } from './asset-loader'
 import { computeFrameBounds, findNextRenderableFrameIndex, listVisiblePieces, resolveRenderableFrameIndex } from './model'
 import type {
-  PreparedSkelAnimData,
   PreparedSkelAnimEntry,
   SkelAnimBounds,
   SkelAnimCanvasProps,
   SkelAnimLoadErrorEntry,
 } from './types'
-
-const preparedCache = new Map<string, Promise<PreparedSkelAnimData>>()
-
-function toArrayBuffer(bytes: Uint8Array) {
-  return Uint8Array.from(bytes).buffer
-}
 
 function getBoundsSize(bounds: SkelAnimBounds) {
   return {
@@ -23,62 +15,16 @@ function getBoundsSize(bounds: SkelAnimBounds) {
   }
 }
 
-async function loadTextureImage(bytes: Uint8Array): Promise<CanvasImageSource> {
-  const blob = new Blob([toArrayBuffer(bytes)], { type: 'image/png' })
-
-  if (typeof createImageBitmap === 'function') {
-    return createImageBitmap(blob)
-  }
-
-  const objectUrl = URL.createObjectURL(blob)
-
-  return new Promise((resolve, reject) => {
-    const image = new Image()
-    image.onload = () => {
-      URL.revokeObjectURL(objectUrl)
-      resolve(image)
-    }
-    image.onerror = () => {
-      URL.revokeObjectURL(objectUrl)
-      reject(new Error('PNG 纹理加载失败'))
-    }
-    image.src = objectUrl
-  })
-}
-
-async function prepareSkelAnim(assetPath: string) {
-  const cached = preparedCache.get(assetPath)
-
-  if (cached) {
-    return cached
-  }
-
-  const pending = (async () => {
-    const rawBuffer = await loadBinaryData(assetPath)
-    const data = await decodeSkelAnimBuffer(rawBuffer)
-    const textures = await Promise.all(
-      data.textures.map(async (texture) => ({
-        textureId: texture.textureId,
-        image: await loadTextureImage(texture.bytes),
-      })),
-    )
-
-    return { data, textures }
-  })()
-
-  preparedCache.set(assetPath, pending)
-  return pending
-}
-
-function readReducedMotionPreference() {
-  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
-    return false
-  }
-
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
-}
-
-export function SkelAnimCanvas({ animation, fallbackSrc, alt, labels }: SkelAnimCanvasProps) {
+export function SkelAnimCanvas({
+  animation,
+  fallbackSrc,
+  alt,
+  labels,
+  className,
+  showStatus = true,
+  showControls = true,
+  playbackMode = 'manual',
+}: SkelAnimCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const assetPath = animation?.asset.path ?? null
   const [preparedEntry, setPreparedEntry] = useState<PreparedSkelAnimEntry | null>(null)
@@ -144,7 +90,12 @@ export function SkelAnimCanvas({ animation, fallbackSrc, alt, labels }: SkelAnim
   const prepared = assetPath && preparedEntry?.assetPath === assetPath ? preparedEntry.value : null
   const loadError = assetPath && loadErrorEntry?.assetPath === assetPath ? loadErrorEntry.message : null
   const isLoading = Boolean(assetPath && !prepared && !loadError)
-  const isPlaying = isPlaybackEnabled && !prefersReducedMotion
+  const isPlaying =
+    playbackMode === 'play'
+      ? !prefersReducedMotion
+      : playbackMode === 'pause'
+        ? false
+        : isPlaybackEnabled && !prefersReducedMotion
 
   const sequenceSelection = useMemo(() => {
     if (!animation || !prepared) {
@@ -265,14 +216,15 @@ export function SkelAnimCanvas({ animation, fallbackSrc, alt, labels }: SkelAnim
     : showCanvas
       ? `${labels.animated}${prefersReducedMotion ? ` · ${labels.reducedMotion}` : ''}`
       : labels.fallback
+  const rootClassName = className ? `skelanim-player ${className}` : 'skelanim-player'
 
   return (
-    <div className="skelanim-player">
+    <div className={rootClassName}>
       <div className="skelanim-player__stage">
         {showCanvas ? (
           <canvas ref={canvasRef} className="skelanim-player__canvas" role="img" aria-label={alt} />
         ) : fallbackSrc ? (
-          <img className="skin-artwork-dialog__image" src={fallbackSrc} alt={alt} loading="eager" />
+          <img className="skelanim-player__fallback-image skin-artwork-dialog__image" src={fallbackSrc} alt={alt} loading="eager" />
         ) : (
           <div className="skin-artwork-dialog__fallback">{loadError ?? labels.error}</div>
         )}
@@ -280,18 +232,20 @@ export function SkelAnimCanvas({ animation, fallbackSrc, alt, labels }: SkelAnim
         {isLoading ? <div className="skelanim-player__badge">{labels.loading}</div> : null}
       </div>
 
-      <div className="skelanim-player__toolbar">
-        <span className="skelanim-player__status">{statusText}</span>
-        {showCanvas ? (
-          <button
-            type="button"
-            className="skelanim-player__button"
-            onClick={() => setIsPlaybackEnabled((value) => !value)}
-          >
-            {isPlaying ? labels.pause : labels.play}
-          </button>
-        ) : null}
-      </div>
+      {showStatus || (showControls && showCanvas) ? (
+        <div className="skelanim-player__toolbar">
+          {showStatus ? <span className="skelanim-player__status">{statusText}</span> : <span />}
+          {showControls && showCanvas && playbackMode === 'manual' ? (
+            <button
+              type="button"
+              className="skelanim-player__button"
+              onClick={() => setIsPlaybackEnabled((value) => !value)}
+            >
+              {isPlaying ? labels.pause : labels.play}
+            </button>
+          ) : null}
+        </div>
+      ) : null}
     </div>
   )
 }

@@ -6,6 +6,7 @@ import { I18nProvider } from '../../../src/app/i18n'
 import { loadCollection } from '../../../src/data/client'
 import { IllustrationsPage } from '../../../src/pages/IllustrationsPage'
 import {
+  animationFixture,
   championsFixture,
   enumsFixture,
   illustrationFixture,
@@ -35,6 +36,7 @@ export function installClipboardMock() {
 export function mockIllustrationsPageCollections(overrides: IllustrationsPageCollectionOverrides = {}) {
   const {
     illustrations = illustrationFixture,
+    animations = animationFixture,
     champions = championsFixture,
     enums = enumsFixture,
   } = overrides
@@ -46,6 +48,10 @@ export function mockIllustrationsPageCollections(overrides: IllustrationsPageCol
 
     if (name === 'champions') {
       return champions
+    }
+
+    if (name === 'champion-animations') {
+      return animations
     }
 
     if (name === 'enums') {
