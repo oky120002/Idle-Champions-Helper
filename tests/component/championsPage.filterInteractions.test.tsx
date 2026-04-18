@@ -33,6 +33,7 @@ describe('ChampionsPage filters', () => {
 
     renderChampionsPage()
 
+    expect(await screen.findByRole('heading', { level: 3, name: '英雄筛选' })).toBeInTheDocument()
     const alphaName = await screen.findByText('阿尔法')
     expect(alphaName).toBeInTheDocument()
     expect(screen.getByRole('link', { name: '查看详情：阿尔法' })).toHaveAttribute('href', '/champions/alpha')

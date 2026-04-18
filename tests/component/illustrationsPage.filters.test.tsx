@@ -36,6 +36,7 @@ describe('IllustrationsPage filters', () => {
 
     renderIllustrationsPage()
 
+    expect(await screen.findByRole('heading', { level: 3, name: '立绘筛选' })).toBeInTheDocument()
     const results = await screen.findByLabelText('立绘结果')
     expect(within(results).getByRole('img', { name: '布鲁诺本体立绘' })).toHaveAttribute(
       'src',

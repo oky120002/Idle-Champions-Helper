@@ -29,7 +29,7 @@ export function PetFilters({
 
   return (
     <FilterSidebarPanel
-      title={t({ zh: '筛选条件', en: 'Filter controls' })}
+      title={t({ zh: '宠物筛选', en: 'Pet filters' })}
       titleAs="h3"
       description={t({
         zh: '先用搜索、来源和图像状态把宠物目录缩到可读范围，再去右侧对比立绘与获取方式。',

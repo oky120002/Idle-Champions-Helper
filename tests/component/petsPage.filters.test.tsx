@@ -147,7 +147,7 @@ describe('PetsPage filters', () => {
 
     renderPetsPage()
 
-    expect(await screen.findByRole('heading', { level: 3, name: '筛选条件' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { level: 3, name: '宠物筛选' })).toBeInTheDocument()
     expect(screen.getByRole('searchbox', { name: /^搜索/ })).toBeInTheDocument()
     expect(screen.getByRole('group', { name: /^宠物来源/ })).toBeInTheDocument()
 
