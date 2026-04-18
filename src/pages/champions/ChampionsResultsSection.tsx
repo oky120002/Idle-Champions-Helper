@@ -18,15 +18,18 @@ export function ChampionsResultsSection({ model }: ChampionsResultsSectionProps)
     activeFilters,
     canToggleResultVisibility,
     showAllResults,
+    hasRandomOrder,
     resultsShellHeight,
     resultsShellRef,
     resultsContentRef,
     showResultsQuickNavTop,
     showResultsQuickNavBottom,
     toggleResultVisibility,
+    randomizeResultOrder,
     clearSelectedChampion,
     scrollResultsToBoundary,
   } = model
+  const randomOrderLabel = getRandomOrderLabel(hasRandomOrder)
 
   return (
     <section className="champions-results">
@@ -76,6 +79,14 @@ export function ChampionsResultsSection({ model }: ChampionsResultsSectionProps)
                       : t({ zh: `显示全部 ${filteredChampions.length} 名`, en: `Show all ${filteredChampions.length}` })}
                   </button>
                 ) : null}
+
+                <button
+                  type="button"
+                  className="results-visibility-toggle results-visibility-toggle--ghost"
+                  onClick={randomizeResultOrder}
+                >
+                  {t(randomOrderLabel)}
+                </button>
               </div>
             ) : null}
           </div>
@@ -161,6 +172,12 @@ export function ChampionsResultsSection({ model }: ChampionsResultsSectionProps)
       ) : null}
     </section>
   )
+}
+
+function getRandomOrderLabel(hasRandomOrder: boolean) {
+  return hasRandomOrder
+    ? { zh: '重新随机', en: 'Reshuffle' }
+    : { zh: '随机排序', en: 'Shuffle order' }
 }
 
 function ResultsQuickNavIcon({ direction }: { direction: 'up' | 'down' }) {

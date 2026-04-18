@@ -13,6 +13,7 @@ export function useChampionsPageModel(): ChampionsPageModel {
   const { locale, t } = useI18n()
   const state = useChampionCollectionState()
   const filterState = useChampionsFilterState()
+  const [randomOrderSeed, setRandomOrderSeed] = useState<number | null>(null)
   const [selectedChampionId, setSelectedChampionId] = useState<string | null>(null)
 
   const derived = useChampionsPageDerived({
@@ -20,6 +21,7 @@ export function useChampionsPageModel(): ChampionsPageModel {
     t,
     state,
     filters: filterState.filters,
+    randomOrderSeed,
     selectedChampionId,
   })
   const motion = useChampionResultsMotion({
@@ -83,6 +85,7 @@ export function useChampionsPageModel(): ChampionsPageModel {
     matchedSeats: derived.matchedSeats,
     canToggleResultVisibility: derived.canToggleResultVisibility,
     showAllResults: filterState.showAllResults,
+    hasRandomOrder: randomOrderSeed !== null,
     showResultsQuickNavTop,
     showResultsQuickNavBottom,
     resultsShellHeight: motion.resultsShellHeight,
@@ -106,6 +109,9 @@ export function useChampionsPageModel(): ChampionsPageModel {
     toggleResultVisibility: () => {
       motion.prepareResultsViewportTransition('visibility')
       filterState.setShowAllResults((current) => !current)
+    },
+    randomizeResultOrder: () => {
+      setRandomOrderSeed((current) => (current === null ? 1 : current + 1))
     },
     toggleChampionVisual: (championId) => {
       setSelectedChampionId((current) => (current === championId ? null : championId))

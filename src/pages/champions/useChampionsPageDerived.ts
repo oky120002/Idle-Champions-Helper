@@ -3,6 +3,7 @@ import type { AppLocale } from '../../app/i18n'
 import { collectAttributeFilterOptions, groupMechanicOptions, seatOptions } from '../../features/champion-filters/options'
 import { filterChampions } from '../../rules/championFilter'
 import { buildActiveFilterChips } from './champion-filter-model'
+import { shuffleChampions } from './champion-results-order'
 import { MAX_VISIBLE_RESULTS } from './constants'
 import type { ChampionState, ChampionsFilterState, ChampionsPageTranslator } from './types'
 
@@ -11,6 +12,7 @@ type UseChampionsPageDerivedOptions = {
   t: ChampionsPageTranslator
   state: ChampionState
   filters: ChampionsFilterState
+  randomOrderSeed: number | null
   selectedChampionId: string | null
 }
 
@@ -19,6 +21,7 @@ export function useChampionsPageDerived({
   t,
   state,
   filters,
+  randomOrderSeed,
   selectedChampionId,
 }: UseChampionsPageDerivedOptions) {
   const filteredChampions = useMemo(() => {
@@ -39,10 +42,14 @@ export function useChampionsPageDerived({
       mechanics: filters.selectedMechanics,
     })
   }, [filters, state])
+  const orderedChampions = useMemo(
+    () => (randomOrderSeed === null ? filteredChampions : shuffleChampions(filteredChampions, randomOrderSeed)),
+    [filteredChampions, randomOrderSeed],
+  )
 
   const visibleChampions = useMemo(
-    () => (filters.showAllResults ? filteredChampions : filteredChampions.slice(0, MAX_VISIBLE_RESULTS)),
-    [filteredChampions, filters.showAllResults],
+    () => (filters.showAllResults ? orderedChampions : orderedChampions.slice(0, MAX_VISIBLE_RESULTS)),
+    [filters.showAllResults, orderedChampions],
   )
   const selectedChampion = useMemo(
     () =>
@@ -66,8 +73,8 @@ export function useChampionsPageDerived({
     [state],
   )
   const matchedSeats = useMemo(
-    () => new Set(filteredChampions.map((champion) => champion.seat)).size,
-    [filteredChampions],
+    () => new Set(orderedChampions.map((champion) => champion.seat)).size,
+    [orderedChampions],
   )
 
   const roles = state.status === 'ready' ? state.roles : []
