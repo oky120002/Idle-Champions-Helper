@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation, useSearchParams } from 'react-router-dom'
 import { buildChampionsTransitionKey } from './champion-filter-model'
 import { buildFilterSearchParams, readInitialFilterExpansion, readInitialFilterState } from './query-state'
@@ -9,6 +9,11 @@ export function useChampionsFilterState() {
   const [, setSearchParams] = useSearchParams()
   const initialFilters = useMemo(() => readInitialFilterState(location.search), [location.search])
   const initialExpansion = useMemo(() => readInitialFilterExpansion(location.search), [location.search])
+  const normalizedLocationSearch = useMemo(
+    () => new URLSearchParams(location.search).toString(),
+    [location.search],
+  )
+  const lastAppliedLocationSearchRef = useRef(normalizedLocationSearch)
 
   const [search, setSearch] = useState(initialFilters.search)
   const [selectedSeats, setSelectedSeats] = useState(initialFilters.selectedSeats)
@@ -63,6 +68,47 @@ export function useChampionsFilterState() {
       setSearchParams(nextSearchParams, { replace: true })
     }
   }, [filters, location.search, setSearchParams])
+
+  useEffect(() => {
+    if (normalizedLocationSearch === lastAppliedLocationSearchRef.current) {
+      return
+    }
+
+    lastAppliedLocationSearchRef.current = normalizedLocationSearch
+    const currentFilterSearch = buildFilterSearchParams(filters).toString()
+
+    if (currentFilterSearch === normalizedLocationSearch) {
+      return
+    }
+
+    const nextFilters = readInitialFilterState(location.search)
+    const nextExpansion = readInitialFilterExpansion(location.search)
+    let cancelled = false
+
+    queueMicrotask(() => {
+      if (cancelled) {
+        return
+      }
+
+      setSearch(nextFilters.search)
+      setSelectedSeats(nextFilters.selectedSeats)
+      setSelectedRoles(nextFilters.selectedRoles)
+      setSelectedAffiliations(nextFilters.selectedAffiliations)
+      setSelectedRaces(nextFilters.selectedRaces)
+      setSelectedGenders(nextFilters.selectedGenders)
+      setSelectedAlignments(nextFilters.selectedAlignments)
+      setSelectedProfessions(nextFilters.selectedProfessions)
+      setSelectedAcquisitions(nextFilters.selectedAcquisitions)
+      setSelectedMechanics(nextFilters.selectedMechanics)
+      setShowAllResults(nextFilters.showAllResults)
+      setIdentityFiltersExpanded(nextExpansion.identity)
+      setMetaFiltersExpanded(nextExpansion.meta)
+    })
+
+    return () => {
+      cancelled = true
+    }
+  }, [filters, location.search, normalizedLocationSearch])
 
   return {
     locationSearch: location.search,

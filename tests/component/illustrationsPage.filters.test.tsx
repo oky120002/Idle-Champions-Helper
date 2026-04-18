@@ -138,4 +138,28 @@ describe('IllustrationsPage filters', () => {
     expect(copiedUrl).toContain('#/illustrations?scope=skin&role=support')
     expect(screen.getByRole('button', { name: '已复制链接' })).toBeInTheDocument()
   })
+
+  it('会在 URL 查询参数变化后重新同步立绘筛选 UI', async () => {
+    const { router } = renderIllustrationsPage(['/illustrations?scope=skin&role=support'])
+
+    await screen.findByLabelText('立绘结果')
+
+    expect(screen.getByRole('button', { name: '皮肤' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('button', { name: '辅助' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('img', { name: '布鲁诺海盗布鲁诺皮肤立绘' })).toBeInTheDocument()
+    expect(screen.queryByRole('img', { name: '提里尔本体立绘' })).not.toBeInTheDocument()
+
+    await router.navigate('/illustrations?scope=hero-base&role=tank')
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: '本体' })).toHaveAttribute('aria-pressed', 'true')
+    })
+
+    expect(screen.getByRole('button', { name: '皮肤' })).toHaveAttribute('aria-pressed', 'false')
+    expect(screen.getByRole('button', { name: '坦克' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('button', { name: '辅助' })).toHaveAttribute('aria-pressed', 'false')
+    expect(screen.getByTestId('location-search')).toHaveTextContent('?scope=hero-base&role=tank')
+    expect(screen.getByRole('img', { name: '提里尔本体立绘' })).toBeInTheDocument()
+    expect(screen.queryByRole('img', { name: '布鲁诺海盗布鲁诺皮肤立绘' })).not.toBeInTheDocument()
+  })
 })
