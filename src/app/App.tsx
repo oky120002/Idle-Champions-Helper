@@ -8,18 +8,26 @@ import { PresetsPage } from '../pages/PresetsPage'
 import { UserDataPage } from '../pages/UserDataPage'
 import { VariantsPage } from '../pages/VariantsPage'
 import { SiteHeader } from './SiteHeader'
+import { resolveActiveNavigationItem } from './appNavigation'
 import { useI18n } from './i18n'
 
 export function App() {
   const { locale, setLocale, t } = useI18n()
   const location = useLocation()
+  const activeNavigationItem = resolveActiveNavigationItem(location.pathname, location.state)
 
   return (
     <div className="app-shell">
       <div className="background-orb background-orb--one" />
       <div className="background-orb background-orb--two" />
 
-      <SiteHeader locale={locale} setLocale={setLocale} pathname={location.pathname} t={t} />
+      <SiteHeader
+        activeNavigationItem={activeNavigationItem}
+        locale={locale}
+        setLocale={setLocale}
+        pathname={location.pathname}
+        t={t}
+      />
 
       <main className="site-main">
         <Routes>
