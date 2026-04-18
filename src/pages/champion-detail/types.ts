@@ -59,6 +59,8 @@ export interface DetailSectionBadge {
 }
 
 export interface DetailSectionHeaderProps {
+  eyebrow?: string
+  description?: string
   title: string
   badges: DetailSectionBadge[]
 }

@@ -31,6 +31,7 @@ export function PrimaryNavigation({
       className={isMobileNavOpen ? 'site-nav site-nav--mobile-open' : 'site-nav'}
       aria-label={t({ zh: '主导航', en: 'Primary navigation' })}
     >
+      <div id="site-nav-leading-slot" className="site-nav__leading-slot" />
       <div className="site-nav__mobile-head" aria-hidden="true">
         <span className="site-nav__eyebrow">{t({ zh: '切换工作台', en: 'Switch workspaces' })}</span>
         <div className="site-nav__summary">

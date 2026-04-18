@@ -2,6 +2,7 @@ import { SurfaceCard } from '../../components/SurfaceCard'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import type { ChampionDetail } from '../../domain/types'
 import { AttackPanel, DetailField, LocalizedTextStack } from './detail-cards'
+import { DetailSectionHeader } from './detail-primitives'
 import { formatDigitString, formatNumber } from './detail-value-formatters'
 
 type DetailCombatSectionProps = {
@@ -12,16 +13,18 @@ type DetailCombatSectionProps = {
 
 export function DetailCombatSection({ detail, locale, t }: DetailCombatSectionProps) {
   return (
-    <SurfaceCard
-      className="detail-section detail-section--combat"
-      eyebrow={t({ zh: '战斗', en: 'Combat' })}
-      title={t({ zh: '基础数值、普攻、大招与活动升级', en: 'Base stats, attacks, ultimate, and event upgrades' })}
-      description={t({
-        zh: '这里把会直接影响理解英雄机制的字段集中起来。',
-        en: 'This section groups the fields that most directly explain how the champion behaves in combat.',
-      })}
-    >
+    <SurfaceCard className="detail-section detail-section--combat detail-section--headerless">
       <div id="combat" className="detail-section-anchor" />
+      <DetailSectionHeader
+        eyebrow={t({ zh: '战斗', en: 'Combat' })}
+        title={t({ zh: '基础数值、普攻、大招与活动升级', en: 'Base stats, attacks, ultimate, and event upgrades' })}
+        description={t({
+          zh: '把会直接影响英雄机制理解的字段收拢到统一标题结构下，和升级区块保持同一阅读节奏。',
+          en: 'Group the fields that most directly explain the champion’s combat behavior under the same section header structure used by upgrades.',
+        })}
+        badges={[]}
+      />
+
       <div className="detail-field-grid">
         <DetailField label={t({ zh: '基础花费', en: 'Base cost' })} value={formatDigitString(detail.baseCost, locale)} />
         <DetailField label={t({ zh: '基础伤害', en: 'Base damage' })} value={formatDigitString(detail.baseDamage, locale)} />
