@@ -5,6 +5,9 @@ interface HeaderMetrics {
   compactBrandOpacity: number
   height: number
   kickerDisplay: string
+  navClientWidth: number
+  navLinkTops: number[]
+  navScrollWidth: number
   navTop: number
   topbarActionsTop: number
 }
@@ -17,8 +20,9 @@ async function getHeaderMetrics(page: Page): Promise<HeaderMetrics> {
 
     const contentShell = element.querySelector('.site-header__content-shell')
     const compactBrand = element.querySelector('.site-header__compact-brand')
+    const nav = element.querySelector('.site-nav')
 
-    if (!(contentShell instanceof HTMLElement) || !(compactBrand instanceof HTMLElement)) {
+    if (!(contentShell instanceof HTMLElement) || !(compactBrand instanceof HTMLElement) || !(nav instanceof HTMLElement)) {
       throw new Error('顶部导航关键节点不存在。')
     }
 
@@ -27,7 +31,12 @@ async function getHeaderMetrics(page: Page): Promise<HeaderMetrics> {
       compactBrandOpacity: Number(window.getComputedStyle(compactBrand).opacity),
       height: Math.round(element.getBoundingClientRect().height),
       kickerDisplay: window.getComputedStyle(element.querySelector('.site-kicker') as Element).display,
-      navTop: Math.round((element.querySelector('.site-nav') as HTMLElement).getBoundingClientRect().top),
+      navClientWidth: Math.round(nav.clientWidth),
+      navLinkTops: Array.from(nav.querySelectorAll('.nav-link')).map((navLink) =>
+        Math.round((navLink as HTMLElement).getBoundingClientRect().top),
+      ),
+      navScrollWidth: Math.round(nav.scrollWidth),
+      navTop: Math.round(nav.getBoundingClientRect().top),
       topbarActionsTop: Math.round((element.querySelector('.site-header__topbar-actions') as HTMLElement).getBoundingClientRect().top),
     }
   })
@@ -46,6 +55,8 @@ test('非首页滚动后顶部大标题应自动收紧，回顶后再展开', as
 
   await expect(page.locator('.site-header')).not.toHaveClass(/site-header--condensed/)
   expect(initialMetrics.contentHeight).toBeGreaterThan(60)
+  expect(initialMetrics.navScrollWidth - initialMetrics.navClientWidth).toBeLessThanOrEqual(1)
+  expect(Math.max(...initialMetrics.navLinkTops) - Math.min(...initialMetrics.navLinkTops)).toBeLessThanOrEqual(6)
 
   await page.evaluate(() => window.scrollTo({ top: 320, behavior: 'instant' }))
   await page.waitForTimeout(320)
