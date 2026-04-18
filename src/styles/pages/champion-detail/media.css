@@ -1,0 +1,248 @@
+.skin-artwork-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.skin-artwork-dialog__backdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top, rgba(62, 113, 147, 0.18), transparent 36%),
+    rgba(2, 5, 9, 0.76);
+  backdrop-filter: blur(10px);
+}
+
+.skin-artwork-dialog__panel {
+  position: relative;
+  width: min(1120px, 100%);
+  max-height: min(88vh, 960px);
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1rem, 2.4vw, 1.5rem);
+  overflow: auto;
+  border-radius: 32px;
+  border: 1px solid rgba(227, 214, 193, 0.14);
+  background:
+    radial-gradient(circle at top left, rgba(200, 167, 127, 0.14), transparent 28%),
+    radial-gradient(circle at 85% 18%, rgba(62, 113, 147, 0.16), transparent 24%),
+    linear-gradient(180deg, rgba(15, 23, 33, 0.96), rgba(7, 11, 17, 0.98));
+  box-shadow: 0 32px 120px rgba(0, 0, 0, 0.42);
+}
+
+.skin-artwork-dialog__header {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.skin-artwork-dialog__copy {
+  display: grid;
+  gap: 0.5rem;
+  max-width: 44rem;
+}
+
+.skin-artwork-dialog__title,
+.skin-artwork-dialog__hint,
+.skin-artwork-dialog__selector-title {
+  margin: 0;
+}
+
+.skin-artwork-dialog__title {
+  font-size: clamp(1.45rem, 2.4vw, 2.3rem);
+  line-height: 0.96;
+}
+
+.skin-artwork-dialog__hint {
+  color: rgba(242, 239, 230, 0.68);
+}
+
+.skin-artwork-dialog__close {
+  width: 2.7rem;
+  height: 2.7rem;
+  border: 1px solid rgba(227, 214, 193, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff6e8;
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease;
+}
+
+.skin-artwork-dialog__close:hover {
+  transform: translateY(-1px);
+  border-color: rgba(200, 167, 127, 0.42);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.skin-artwork-dialog__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.82fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.skin-artwork-dialog__stage,
+.skin-artwork-dialog__selector {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.skin-artwork-dialog__canvas {
+  position: relative;
+  min-height: 26rem;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border-radius: 28px;
+  border: 1px solid rgba(227, 214, 193, 0.12);
+  background:
+    radial-gradient(circle at top, rgba(62, 113, 147, 0.16), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012)),
+    rgba(5, 9, 14, 0.72);
+  overflow: hidden;
+}
+
+.skin-artwork-dialog__image {
+  max-width: 100%;
+  max-height: min(62vh, 48rem);
+  object-fit: contain;
+  filter: drop-shadow(0 22px 40px rgba(0, 0, 0, 0.28));
+}
+
+.skelanim-player {
+  display: grid;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.skelanim-player__stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: inherit;
+}
+
+.skelanim-player__canvas {
+  display: block;
+  max-width: 100%;
+  max-height: min(62vh, 48rem);
+  filter: drop-shadow(0 22px 40px rgba(0, 0, 0, 0.28));
+}
+
+.skelanim-player__badge {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  padding: 0.32rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(5, 9, 14, 0.72);
+  border: 1px solid rgba(227, 214, 193, 0.16);
+  color: rgba(242, 239, 230, 0.82);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+}
+
+.skelanim-player__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.skelanim-player__status {
+  color: rgba(242, 239, 230, 0.62);
+  font-size: 0.82rem;
+}
+
+.skelanim-player__button {
+  border: 1px solid rgba(200, 167, 127, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff8ee;
+  padding: 0.5rem 0.85rem;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.skelanim-player__button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(200, 167, 127, 0.4);
+  background: rgba(200, 167, 127, 0.1);
+}
+
+.skin-artwork-dialog__fallback {
+  max-width: 28rem;
+  color: rgba(242, 239, 230, 0.74);
+  text-align: center;
+}
+
+.skin-artwork-dialog__selector-title {
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(242, 239, 230, 0.56);
+}
+
+.skin-artwork-dialog__tabs {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.skin-artwork-dialog__tab {
+  display: grid;
+  gap: 0.22rem;
+  padding: 0.86rem 0.92rem;
+  border: 1px solid rgba(227, 214, 193, 0.1);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(242, 239, 230, 0.8);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.skin-artwork-dialog__tab:hover {
+  transform: translateY(-1px);
+  border-color: rgba(200, 167, 127, 0.32);
+}
+
+.skin-artwork-dialog__tab--active {
+  border-color: rgba(200, 167, 127, 0.42);
+  background:
+    linear-gradient(180deg, rgba(200, 167, 127, 0.16), rgba(62, 113, 147, 0.08)),
+    rgba(9, 14, 20, 0.3);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 248, 230, 0.08),
+    0 16px 34px rgba(1, 4, 9, 0.18);
+}
+
+.skin-artwork-dialog__tab-title {
+  color: #fff8ee;
+}
+
+.skin-artwork-dialog__tab-meta {
+  color: rgba(242, 239, 230, 0.58);
+  font-size: 0.82rem;
+}
+
+@media (max-width: 1040px) {
+  .skin-artwork-dialog__body {
+      grid-template-columns: 1fr;
+    }
+
+  .skin-artwork-dialog__canvas {
+      min-height: 19rem;
+    }
+}
