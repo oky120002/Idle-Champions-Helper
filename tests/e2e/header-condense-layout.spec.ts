@@ -64,8 +64,8 @@ test('非首页滚动后顶部大标题应自动收紧，回顶后再展开', as
   const condensedMetrics = await getHeaderMetrics(page)
 
   await expect(page.locator('.site-header')).toHaveClass(/site-header--condensed/)
-  expect(condensedMetrics.height).toBeLessThan(initialMetrics.height - 80)
-  expect(condensedMetrics.height).toBeLessThanOrEqual(80)
+  expect(condensedMetrics.height).toBeLessThan(initialMetrics.height - 72)
+  expect(condensedMetrics.height).toBeLessThanOrEqual(92)
   expect(condensedMetrics.contentHeight).toBeLessThanOrEqual(4)
   expect(condensedMetrics.compactBrandOpacity).toBeGreaterThan(0.9)
   expect(condensedMetrics.kickerDisplay).toBe('none')

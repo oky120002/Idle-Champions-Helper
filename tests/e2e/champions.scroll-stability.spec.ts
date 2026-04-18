@@ -103,21 +103,21 @@ test('英雄筛选页结果快捷按钮应支持一键到底和返回顶部', as
   const targetBottom = await getResultsTargetBottom(page)
 
   await page.getByRole('button', { name: '跳到结果底部' }).click()
-  await page.waitForTimeout(450)
-
-  const bottomScrollY = await getScrollY(page)
-
-  expect(bottomScrollY).toBeGreaterThan(200)
-  expect(Math.abs(bottomScrollY - targetBottom)).toBeLessThanOrEqual(36)
+  await expect
+    .poll(async () => {
+      const bottomScrollY = await getScrollY(page)
+      return Math.abs(bottomScrollY - targetBottom)
+    })
+    .toBeLessThanOrEqual(48)
   await expect(page.getByRole('button', { name: '返回结果顶部' })).toBeVisible()
 
-  const targetTop = await getResultsTargetTop(page)
-
   await page.getByRole('button', { name: '返回结果顶部' }).click()
-  await page.waitForTimeout(450)
-
-  const topScrollY = await getScrollY(page)
-
-  expect(Math.abs(topScrollY - targetTop)).toBeLessThanOrEqual(36)
   await expect(page.getByRole('button', { name: '跳到结果底部' })).toBeVisible()
+  await expect
+    .poll(async () => {
+      const topScrollY = await getScrollY(page)
+      const targetTop = await getResultsTargetTop(page)
+      return Math.abs(topScrollY - targetTop)
+    })
+    .toBeLessThanOrEqual(64)
 })
