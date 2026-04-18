@@ -40,6 +40,7 @@ export function ChampionsSidebar({ model }: ChampionsSidebarProps) {
         zh: '关键词、座位、定位和联动队伍保持常驻可见；补充标签折叠收纳，滚动时也能维持同一套浏览节奏。',
         en: 'Keyword, seat, role, and affiliation stay visible, while the supplemental tags stay folded until needed so the panel keeps the same browsing rhythm while you scroll.',
       })}
+      statusAriaLabel={t({ zh: '筛选状态操作', en: 'Filter status actions' })}
       ariaLabel={t({ zh: '英雄筛选侧边栏', en: 'Champion filter sidebar' })}
     >
       <ChampionsPrimaryFilters model={model} />
