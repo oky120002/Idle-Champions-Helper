@@ -118,10 +118,6 @@ export function PetsPage() {
             eyebrow={t({ zh: '宠物图鉴', en: 'Pet catalog' })}
             accentLabel="PETS"
             title={t({ zh: '按来源与图像状态整理宠物目录', en: 'Organize the pet catalog by source and asset coverage' })}
-            description={t({
-              zh: '先用搜索和来源缩小范围，再比较立绘、获取方式与资源完整度；如果想换一批视觉顺序，也可以直接随机打散当前结果。',
-              en: 'Narrow the catalog with search and source first, then compare illustration coverage, acquisition details, and asset completeness. Shuffle the current result set whenever you want a fresh scan order.',
-            })}
             aside={state.status === 'ready' ? <PetsMetrics summary={summary} /> : null}
           />
         }
