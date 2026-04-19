@@ -19,7 +19,10 @@ test('GitHub Pages 基线路径下可以完成主页与个人数据 smoke 回归
   await page.getByRole('link', { name: '个人数据' }).click()
   await expect(page.getByRole('heading', { level: 2, name: '在本地解析账号凭证并检查导入条件' })).toBeVisible()
 
+  const supportUrlInput = page.getByRole('textbox', { name: /Support URL/ })
+
   await page.getByRole('button', { name: '填入脱敏示例' }).click()
+  await expect(supportUrlInput).toHaveValue(/user_id=/)
   await page.getByRole('button', { name: '读取并校验' }).click()
 
   await expect(page.getByText('已在本地解析出一组合法凭证，当前页面仅展示脱敏结果，不会自动保存。')).toBeVisible()
