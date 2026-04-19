@@ -4,6 +4,7 @@ import { resolveDataUrl } from '../../data/client'
 import { getChampionAttributeGroupLabel, getChampionAttributeGroups, getChampionTagLabel } from '../../domain/championTags'
 import { formatSeatLabel, getLocalizedTextPair, getPrimaryLocalizedText, getRoleLabel } from '../../domain/localizedText'
 import type { Champion } from '../../domain/types'
+import { filterChampionCardAttributeGroups } from './champion-card-model'
 import type { ChampionsPageModel } from './types'
 
 interface ChampionResultCardProps {
@@ -11,16 +12,19 @@ interface ChampionResultCardProps {
   model: ChampionsPageModel
 }
 
-const MAX_ROLE_PILLS = 4
-
 export function ChampionResultCard({ champion, model }: ChampionResultCardProps) {
   const { locale, t, selectedChampion, toggleChampionVisual, locationSearch, saveListScroll, heroIllustrationByChampionId } =
     model
-  const attributeGroups = getChampionAttributeGroups(champion.tags)
+  const attributeGroups = filterChampionCardAttributeGroups(getChampionAttributeGroups(champion.tags), {
+    selectedAcquisitions: model.selectedAcquisitions,
+    selectedMechanics: model.selectedMechanics,
+  })
   const isSelected = champion.id === selectedChampion?.id
-  const rolePills = champion.roles.slice(0, MAX_ROLE_PILLS)
-  const roleOverflowCount = champion.roles.length - rolePills.length
   const heroIllustration = heroIllustrationByChampionId.get(champion.id) ?? null
+  const affiliationText =
+    champion.affiliations.length > 0
+      ? champion.affiliations.map((affiliation) => getLocalizedTextPair(affiliation, locale)).join(' / ')
+      : null
 
   return (
     <article
@@ -67,26 +71,12 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
 
           <div className="result-card__meta-strip">
             <div className="tag-row result-card__role-row">
-              {rolePills.map((role) => (
+              {champion.roles.map((role) => (
                 <span key={role} className="tag-pill">
                   {getRoleLabel(role, locale)}
                 </span>
               ))}
-              {roleOverflowCount > 0 ? (
-                <span className="tag-pill tag-pill--muted result-card__role-overflow">
-                  {t({ zh: `+${roleOverflowCount}`, en: `+${roleOverflowCount}` })}
-                </span>
-              ) : null}
             </div>
-
-            <p className="supporting-text result-card__affiliation">
-              <span className="result-card__meta-label">{t({ zh: '联动队伍', en: 'Affiliation' })}</span>
-              <span className="result-card__meta-value">
-                {champion.affiliations.length > 0
-                  ? champion.affiliations.map((affiliation) => getLocalizedTextPair(affiliation, locale)).join(' / ')
-                  : t({ zh: '暂无', en: 'None yet' })}
-              </span>
-            </p>
           </div>
         </div>
 
@@ -122,6 +112,8 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
             </p>
           )}
         </div>
+
+        {affiliationText ? <p className="result-card__affiliation">{affiliationText}</p> : null}
       </Link>
 
       <div className="result-card__actions">

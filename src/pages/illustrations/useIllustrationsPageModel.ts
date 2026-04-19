@@ -146,15 +146,6 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
       : shareLinkState === 'error'
         ? t({ zh: '复制失败', en: 'Copy failed' })
         : t({ zh: '复制当前链接', en: 'Copy current link' })
-  const shareStatusMessage =
-    shareLinkState === 'success'
-      ? t({ zh: '当前筛选链接已复制到剪贴板。', en: 'The current filter link has been copied to the clipboard.' })
-      : shareLinkState === 'error'
-        ? t({
-            zh: '当前环境暂时不能复制链接，请稍后重试。',
-            en: 'This environment cannot copy the link right now. Please try again later.',
-          })
-        : ''
 
   function runFilterMutation(mutation: () => void) {
     setShowAllResults(false)
@@ -211,7 +202,6 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
       isMetaFiltersExpanded,
       shareLinkState,
       shareButtonLabel,
-      shareStatusMessage,
       hasRandomOrder: randomOrderSeed !== null,
     },
     options: {

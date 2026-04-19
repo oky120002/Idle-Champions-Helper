@@ -20,15 +20,9 @@
 }
 
 .illustrations-page__share-button {
-  min-width: 8.4rem;
+  min-width: 0;
+  padding-inline: 0.74rem;
   justify-content: center;
-}
-
-.illustrations-page__share-status {
-  min-height: 1rem;
-  color: rgba(242, 239, 230, 0.6);
-  font-size: 0.76rem;
-  line-height: 1.45;
 }
 
 .illustrations-page .results-panel__meta > .supporting-text:first-child {
@@ -235,20 +229,12 @@
 }
 
 @media (min-width: 1080px) {
-  .illustrations-page__filter-surface .filter-sidebar-panel__header {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
   .illustrations-page__filter-surface .filter-sidebar-panel__status {
     justify-items: start;
   }
 
   .illustrations-page__sidebar-actions {
     justify-content: flex-start;
-  }
-
-  .illustrations-page__share-status {
-    text-align: left;
   }
 }
 
