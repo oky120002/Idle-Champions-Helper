@@ -161,10 +161,22 @@
 }
 
 .surface-card__header {
+  position: relative;
   display: grid;
   gap: 1rem;
   padding-bottom: 1.05rem;
   border-bottom: 1px solid rgba(255, 243, 223, 0.09);
+}
+
+.surface-card__header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 243, 223, 0.12), transparent);
+  pointer-events: none;
 }
 
 .surface-card__header-copy,
@@ -172,6 +184,11 @@
 .page-tab-header__copy,
 .page-tab-header__aside {
   min-width: 0;
+}
+
+.page-tab-header__copy {
+  display: grid;
+  gap: 0.28rem;
 }
 
 .surface-card__body {
@@ -183,6 +200,10 @@
 
 .surface-card--headerless .surface-card__body {
   margin-top: 0;
+}
+
+.surface-card__body > * {
+  min-width: 0;
 }
 
 .surface-card__footer {
@@ -230,11 +251,15 @@
   border: 1px solid color-mix(in oklch, var(--color-copper) 24%, transparent);
   border-radius: 999px;
   background:
+    radial-gradient(circle at top right, color-mix(in oklch, var(--color-copper) 18%, transparent), transparent 62%),
     linear-gradient(180deg, color-mix(in oklch, var(--color-copper) 12%, transparent), transparent),
     rgba(255, 243, 223, 0.03);
   color: #ffe7bf;
   font-size: 0.66rem;
   letter-spacing: 0.18em;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 243, 223, 0.05),
+    0 10px 24px rgba(1, 4, 9, 0.16);
 }
 
 .page-tab-header__title {
@@ -243,6 +268,7 @@
   font-size: clamp(1.7rem, 2.6vw, 2.35rem);
   line-height: 1.01;
   letter-spacing: -0.05em;
+  text-wrap: balance;
 }
 
 .page-tab-header__meta {
@@ -275,6 +301,7 @@
   font-size: 0.68rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.04);
 }
 
 .page-tab-header__meta-text {
@@ -324,23 +351,37 @@
 
 .page-header-metric__label {
   display: block;
-  color: rgba(242, 239, 230, 0.56);
-  font-size: 0.6rem;
-  letter-spacing: 0.14em;
+  color: rgba(242, 239, 230, 0.62);
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
 }
 
 .page-header-metric__value {
   color: #fff7ea;
   font-family: var(--font-display);
-  font-size: 0.92rem;
+  font-size: 0.98rem;
   line-height: 1.1;
 }
 
 .section-heading {
-  margin: 0 0 0.65rem;
-  color: #fff3df;
-  font-size: 1rem;
+  margin: 0 0 0.72rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: #fff0d6;
+  font-size: 0.86rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.section-heading::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 243, 223, 0.96) 0%, rgba(198, 140, 92, 0.82) 58%, rgba(198, 140, 92, 0) 100%);
+  box-shadow: 0 0 0 0.22rem rgba(198, 140, 92, 0.12);
 }
 
 .bullet-list,
