@@ -82,7 +82,9 @@ describe('ChampionsPage filters', () => {
     ).toBeInTheDocument()
   })
 
-  it('结果卡会把属性拆成结构化分组展示', async () => {
+  it('结果卡会按当前筛选展示结构化属性分组', async () => {
+    const user = userEvent.setup()
+
     renderChampionsPage()
 
     const alphaTitle = await screen.findByRole('heading', { level: 3, name: '阿尔法' })
@@ -101,6 +103,17 @@ describe('ChampionsPage filters', () => {
     expect(alphaScope.getByText('守序')).toBeInTheDocument()
     expect(alphaScope.getByText('职业')).toBeInTheDocument()
     expect(alphaScope.getByText('邪术师')).toBeInTheDocument()
+    expect(alphaScope.queryByText('获取方式')).not.toBeInTheDocument()
+    expect(alphaScope.queryByText('活动英雄')).not.toBeInTheDocument()
+    expect(alphaScope.queryByText('第 2 年活动')).not.toBeInTheDocument()
+    expect(alphaScope.queryByText('起始英雄')).not.toBeInTheDocument()
+    expect(alphaScope.queryByText('特殊机制')).not.toBeInTheDocument()
+    expect(alphaScope.queryByText('减速控制')).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: /来源与特殊机制/ }))
+    await user.click(screen.getByRole('button', { name: '活动英雄' }))
+    await user.click(screen.getByRole('button', { name: '减速控制' }))
+
     expect(alphaScope.getByText('获取方式')).toBeInTheDocument()
     expect(alphaScope.getByText('活动英雄')).toBeInTheDocument()
     expect(alphaScope.getByText('第 2 年活动')).toBeInTheDocument()
