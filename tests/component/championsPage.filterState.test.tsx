@@ -110,4 +110,26 @@ describe('ChampionsPage filter state', () => {
 
     expect(screen.getByText(/^当前展示 48 \/ 60 名英雄/)).toBeInTheDocument()
   })
+
+  it('会在 URL 查询参数变化后重新同步筛选 UI', async () => {
+    const { router } = renderChampionsPage(['/champions?seat=1&role=support'])
+
+    expect(await screen.findByRole('button', { name: '1 号位' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('button', { name: '辅助' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByText('阿尔法')).toBeInTheDocument()
+    expect(screen.queryByText('德尔塔')).not.toBeInTheDocument()
+
+    await router.navigate('/champions?seat=3&role=tank')
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: '3 号位' })).toHaveAttribute('aria-pressed', 'true')
+    })
+
+    expect(screen.getByRole('button', { name: '1 号位' })).toHaveAttribute('aria-pressed', 'false')
+    expect(screen.getByRole('button', { name: '坦克' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('button', { name: '辅助' })).toHaveAttribute('aria-pressed', 'false')
+    expect(screen.getByTestId('location-search')).toHaveTextContent('?seat=3&role=tank')
+    expect(screen.getByText('德尔塔')).toBeInTheDocument()
+    expect(screen.queryByText('阿尔法')).not.toBeInTheDocument()
+  })
 })

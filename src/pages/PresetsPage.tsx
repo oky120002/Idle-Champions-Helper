@@ -18,10 +18,6 @@ export function PresetsPage() {
             eyebrow={t({ zh: '方案存档', en: 'Presets' })}
             accentLabel="PRESETS"
             title={t({ zh: '管理保存在当前浏览器里的命名阵型方案', en: 'Manage named formation presets stored in the current browser' })}
-            description={t({
-              zh: '最近草稿和正式方案分层管理；恢复时会先校验数据版本，再决定是原样恢复还是兼容恢复。',
-              en: 'Recent drafts and named presets stay separate. Restore validates the saved data version first, then decides whether to do a direct or compatibility restore.',
-            })}
             aside={state.status === 'ready' ? <PresetsMetrics model={model} /> : null}
           />
         }

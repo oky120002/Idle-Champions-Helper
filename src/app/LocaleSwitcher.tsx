@@ -8,10 +8,6 @@ interface LocaleSwitcherProps {
   surface: 'toolbar' | 'panel'
 }
 
-function buildCurrentLocaleLabel(locale: AppLocale) {
-  return locale === 'zh-CN' ? '中文' : 'English'
-}
-
 function buildNextLocale(locale: AppLocale): AppLocale {
   return locale === 'zh-CN' ? 'en-US' : 'zh-CN'
 }
@@ -47,12 +43,6 @@ function LocaleSwitcher({ locale, onSelect, t, surface }: LocaleSwitcherProps) {
             <span className="locale-switcher__toggle-option locale-switcher__toggle-option--zh">中</span>
             <span className="locale-switcher__toggle-option locale-switcher__toggle-option--en">EN</span>
             <span className="locale-switcher__toggle-thumb" />
-          </span>
-          <span className="locale-switcher__toggle-copy">
-            <span className="locale-switcher__toggle-label">
-              {t({ zh: '界面语言', en: 'Interface language' })}
-            </span>
-            <strong className="locale-switcher__toggle-value">{buildCurrentLocaleLabel(locale)}</strong>
           </span>
         </button>
       </div>

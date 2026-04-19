@@ -4,7 +4,7 @@ import type { ChampionDetail, ChampionUpgradeDetail } from '../../domain/types'
 import { buildUpgradeCategoryMeta, buildUpgradePresentation } from './effect-model'
 import { buildOverviewPropertyFields } from './summary-model'
 import { isJsonObject } from './detail-json'
-import { formatNumber } from './detail-value-formatters'
+import { formatDateText, formatNumber, formatTimestamp } from './detail-value-formatters'
 import type { DetailFieldProps, EffectContext, LedgerUpgradeRow, UpgradeCategoryMeta } from './types'
 
 export function buildSpotlightUpgrades(detail: ChampionDetail | null): ChampionUpgradeDetail[] {
@@ -183,13 +183,13 @@ export function buildOverviewFields(options: {
       : []),
     {
       label: t({ zh: '首次可用', en: 'Date available' }),
-      value: detail.dateAvailable?.trim() || (locale === 'zh-CN' ? '暂无' : 'Not available'),
+      value: formatDateText(detail.dateAvailable, locale),
     },
     ...(detail.lastReworkDate
       ? [
           {
             label: t({ zh: '最后重做', en: 'Last rework' }),
-            value: detail.lastReworkDate?.trim() || (locale === 'zh-CN' ? '暂无' : 'Not available'),
+            value: formatDateText(detail.lastReworkDate, locale),
           },
         ]
       : []),
@@ -197,10 +197,7 @@ export function buildOverviewFields(options: {
       ? [
           {
             label: t({ zh: '下次活动时间', en: 'Next event time' }),
-            value: new Intl.DateTimeFormat(locale, {
-              dateStyle: 'medium',
-              timeStyle: 'short',
-            }).format(new Date(detail.availability.nextEventTimestamp * 1000)),
+            value: formatTimestamp(detail.availability.nextEventTimestamp, locale),
           },
         ]
       : []),
@@ -229,22 +226,6 @@ export function buildSummaryAvailabilityBadges(
     badges.push({
       key: 'available',
       label: t({ zh: '当前可用', en: 'Currently available' }),
-      active: true,
-    })
-  }
-
-  if (detail.availability.availableInShop) {
-    badges.push({
-      key: 'shop',
-      label: t({ zh: '商店可得', en: 'Available in shop' }),
-      active: true,
-    })
-  }
-
-  if (detail.availability.availableInTimeGate) {
-    badges.push({
-      key: 'time-gate',
-      label: t({ zh: '时间门可得', en: 'Available in Time Gate' }),
       active: true,
     })
   }

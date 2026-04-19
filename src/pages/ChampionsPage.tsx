@@ -1,3 +1,4 @@
+import { FilterSidebarLayout } from '../components/filter-sidebar/FilterSidebarLayout'
 import { PageTabHeader } from '../components/PageTabHeader'
 import { StatusBanner } from '../components/StatusBanner'
 import { SurfaceCard } from '../components/SurfaceCard'
@@ -18,10 +19,6 @@ export function ChampionsPage() {
             eyebrow={t({ zh: '英雄筛选', en: 'Champion filters' })}
             accentLabel="CHAMPIONS"
             title={t({ zh: '按座位、定位与联动快速缩小候选英雄', en: 'Narrow champion candidates by seat, role, and affiliation' })}
-            description={t({
-              zh: '先用高频条件缩小候选，再按身份、获取方式和机制标签补精度；点卡片进入详情，点“视觉档案”对照立绘资源。',
-              en: 'Use the high-frequency filters first, then refine with identity, acquisition, and mechanic tags. Open the card for full details, or toggle the visual dossier to compare art assets.',
-            })}
             aside={state.status === 'ready' ? <ChampionsMetrics model={model} /> : null}
           />
         }
@@ -39,12 +36,13 @@ export function ChampionsPage() {
         ) : null}
 
         {state.status === 'ready' ? (
-          <>
-            <div className="champions-workspace" style={championsWorkspaceStyle}>
-              <ChampionsSidebar model={model} />
-              <ChampionsResultsSection model={model} />
-            </div>
-          </>
+          <FilterSidebarLayout
+            sidebar={<ChampionsSidebar model={model} />}
+            className="champions-workspace"
+            style={championsWorkspaceStyle}
+          >
+            <ChampionsResultsSection model={model} />
+          </FilterSidebarLayout>
         ) : null}
       </SurfaceCard>
     </div>

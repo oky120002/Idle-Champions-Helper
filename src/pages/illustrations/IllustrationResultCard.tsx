@@ -2,11 +2,11 @@ import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import type { AppLocale } from '../../app/i18n'
 import { resolveDataUrl } from '../../data/client'
-import { formatSeatLabel, getPrimaryLocalizedText, getRoleLabel, getSecondaryLocalizedText } from '../../domain/localizedText'
+import { formatSeatLabel, getPrimaryLocalizedText, getRoleLabel } from '../../domain/localizedText'
 import type { ChampionAnimation } from '../../domain/types'
 import { SkelAnimCanvas } from '../../features/skelanim-player/SkelAnimCanvas'
 import type { FilterableIllustration } from '../../rules/illustrationFilter'
-import { buildIllustrationAlt, buildKindLabel } from './illustration-model'
+import { buildIllustrationAlt, buildIllustrationCardTitle, buildKindLabel } from './illustration-model'
 import type { IllustrationsPageTranslator } from './types'
 
 type IllustrationResultCardProps = {
@@ -21,18 +21,15 @@ export function IllustrationResultCard({ entry, animation, locale, t }: Illustra
   const { illustration, champion } = entry
   const [isPreviewActive, setPreviewActive] = useState(false)
   const championPrimaryName = getPrimaryLocalizedText(illustration.championName, locale)
-  const illustrationPrimaryName = getPrimaryLocalizedText(illustration.illustrationName, locale)
-  const illustrationSecondaryName = getSecondaryLocalizedText(illustration.illustrationName, locale)
+  const title = buildIllustrationCardTitle(illustration, locale)
   const fallbackSrc = resolveDataUrl(illustration.image.path)
-  const titleText = illustrationSecondaryName
-    ? `${illustrationPrimaryName} · ${illustrationSecondaryName}`
-    : illustrationPrimaryName
 
   return (
     <Link
       className="illustration-card illustration-card--interactive"
       to={`/champions/${illustration.championId}`}
       state={{
+        activeNavigationTo: '/illustrations',
         returnTo: {
           pathname: '/illustrations',
           search: location.search,
@@ -43,8 +40,8 @@ export function IllustrationResultCard({ entry, animation, locale, t }: Illustra
             : { zh: '返回立绘图鉴', en: 'Back to illustrations' },
       }}
       aria-label={t({
-        zh: `查看英雄：${championPrimaryName}（${illustrationPrimaryName}）`,
-        en: `Open champion: ${championPrimaryName} (${illustrationPrimaryName})`,
+        zh: `查看英雄：${championPrimaryName}（${title.primary}）`,
+        en: `Open champion: ${championPrimaryName} (${title.primary})`,
       })}
       onMouseEnter={() => setPreviewActive(true)}
       onMouseLeave={() => setPreviewActive(false)}
@@ -84,14 +81,17 @@ export function IllustrationResultCard({ entry, animation, locale, t }: Illustra
       </div>
 
       <div className="illustration-card__body">
-        <h3 className="illustration-card__title" title={titleText}>
-          <span className="illustration-card__title-primary">{illustrationPrimaryName}</span>
-          {illustrationSecondaryName ? (
-            <span className="illustration-card__title-secondary">{illustrationSecondaryName}</span>
+        <h3 className="illustration-card__title" title={title.text}>
+          <span className="illustration-card__title-primary">{title.primary}</span>
+          {title.secondary ? (
+            <>
+              <span className="illustration-card__title-divider" aria-hidden="true">
+                ·
+              </span>
+              <span className="illustration-card__title-context">{title.secondary}</span>
+            </>
           ) : null}
         </h3>
-
-        <p className="illustration-card__champion">{championPrimaryName}</p>
 
         <div className="illustration-card__facts">
           <span className="illustration-card__fact illustration-card__fact--accent">

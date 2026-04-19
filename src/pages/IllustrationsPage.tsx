@@ -19,10 +19,6 @@ export function IllustrationsPage() {
             eyebrow={t({ zh: '立绘图鉴', en: 'Illustration catalog' })}
             accentLabel="ART CODEX"
             title={t({ zh: '按本体、皮肤、座位与标签浏览英雄立绘', en: 'Browse champion art by base form, skin, seat, and tags' })}
-            description={t({
-              zh: '支持随机打散结果、悬停预览动态资源，并直接跳回英雄详情页继续核对技能与机制。',
-              en: 'Shuffle the current result set, preview motion on hover, and jump straight back into the champion dossier when you need gameplay context.',
-            })}
             aside={state.status === 'ready' ? <IllustrationsMetrics model={model} /> : null}
           />
         }

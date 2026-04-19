@@ -1,5 +1,5 @@
 import { execFile } from 'node:child_process'
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs, promisify } from 'node:util'
 import { pathToFileURL } from 'node:url'
@@ -12,15 +12,21 @@ import {
 } from './data/champion-asset-helpers.mjs'
 import { extractWrappedPngBuffer } from './data/mobile-asset-codec.mjs'
 import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.mjs'
-import { renderSkelAnimPoseToPngBuffer } from './data/skelanim-renderer.mjs'
+import { computeSkelAnimFrameBounds, renderSkelAnimPoseToPngBuffer } from './data/skelanim-renderer.mjs'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'
 const DEFAULT_CONCURRENCY = 8
+const DEFAULT_FPS = 24
 const FETCH_TIMEOUT_MS = 20_000
 const PET_ICON_DIR_NAME = 'pets/icons'
 const PET_ILLUSTRATION_DIR_NAME = 'pets/illustrations'
+const PET_ANIMATION_DIR_NAME = 'pet-animations'
 const execFileAsync = promisify(execFile)
+
+function buildPetAnimationAssetPath(currentVersion, petId) {
+  return `${currentVersion}/${PET_ANIMATION_DIR_NAME}/illustrations/${petId}.bin`
+}
 
 function toText(value) {
   if (typeof value === 'string') {
@@ -367,6 +373,69 @@ function resolvePreferredSequenceIndexes(graphicDefinition) {
     .filter((value) => Number.isInteger(value) && value >= 0)
 }
 
+function mergeBounds(base, next) {
+  if (!next) {
+    return base
+  }
+
+  if (!base) {
+    return {
+      minX: next.minX,
+      minY: next.minY,
+      maxX: next.maxX,
+      maxY: next.maxY,
+    }
+  }
+
+  return {
+    minX: Math.min(base.minX, next.minX),
+    minY: Math.min(base.minY, next.minY),
+    maxX: Math.max(base.maxX, next.maxX),
+    maxY: Math.max(base.maxY, next.maxY),
+  }
+}
+
+function summarizeSequence(sequence) {
+  let bounds = null
+  let firstRenderableFrameIndex = null
+
+  for (let frameIndex = 0; frameIndex < sequence.length; frameIndex += 1) {
+    const frameBounds = computeSkelAnimFrameBounds(sequence, frameIndex)
+
+    if (!frameBounds) {
+      continue
+    }
+
+    if (firstRenderableFrameIndex === null) {
+      firstRenderableFrameIndex = frameIndex
+    }
+
+    bounds = mergeBounds(bounds, frameBounds)
+  }
+
+  return {
+    sequenceIndex: sequence.sequenceIndex,
+    frameCount: sequence.length,
+    pieceCount: sequence.pieces.length,
+    firstRenderableFrameIndex,
+    bounds,
+  }
+}
+
+function resolveDefaultSequence(sequenceSummaries, preferredSequenceIndexes) {
+  const sequenceByIndex = new Map(sequenceSummaries.map((summary) => [summary.sequenceIndex, summary]))
+
+  for (const preferredIndex of preferredSequenceIndexes) {
+    const summary = sequenceByIndex.get(preferredIndex)
+
+    if (summary?.firstRenderableFrameIndex !== null) {
+      return summary
+    }
+  }
+
+  return sequenceSummaries.find((summary) => summary.firstRenderableFrameIndex !== null) ?? null
+}
+
 function findOpaqueBounds(png) {
   let left = png.width
   let top = png.height
@@ -562,6 +631,50 @@ async function downloadPetAsset(task) {
   }
 }
 
+async function downloadPetAnimation(task) {
+  try {
+    const rawBuffer = await downloadRawAsset({ remoteUrl: task.asset.remoteUrl })
+    const decoded = decodeSkelAnimGraphicBuffer(task.asset, rawBuffer)
+    const character = decoded.characters[0]
+
+    if (!character) {
+      throw new Error('缺少可用角色数据')
+    }
+
+    const sequences = character.sequences.map(summarizeSequence)
+    const defaultSequence = resolveDefaultSequence(sequences, task.preferredSequenceIndexes)
+
+    if (!defaultSequence) {
+      throw new Error('没有可播放的 sequence')
+    }
+
+    await writeFile(task.outputFile, rawBuffer)
+
+    return {
+      id: task.petId,
+      petId: task.petId,
+      name: task.name,
+      sourceSlot: 'illustration',
+      sourceGraphicId: task.asset.graphicId,
+      sourceGraphic: task.asset.sourceGraphic,
+      sourceVersion: task.asset.sourceVersion,
+      fps: DEFAULT_FPS,
+      defaultSequenceIndex: defaultSequence.sequenceIndex,
+      defaultFrameIndex: defaultSequence.firstRenderableFrameIndex ?? 0,
+      asset: {
+        path: task.outputPath,
+        bytes: rawBuffer.length,
+        format: 'skelanim-zlib',
+      },
+      sequences,
+    }
+  } catch (error) {
+    throw new Error(
+      `解析 pet=${task.petId} animation 失败 (${task.asset.remoteUrl}): ${error instanceof Error ? error.message : String(error)}`,
+    )
+  }
+}
+
 export async function syncPetsCatalog(options = {}) {
   if (!options.input) {
     throw new Error('缺少 --input，无法根据 definitions 快照同步宠物目录')
@@ -592,9 +705,12 @@ export async function syncPetsCatalog(options = {}) {
 
   await mkdir(path.join(outputDir, 'pets', 'icons'), { recursive: true })
   await mkdir(path.join(outputDir, 'pets', 'illustrations'), { recursive: true })
+  await rm(path.join(outputDir, PET_ANIMATION_DIR_NAME), { recursive: true, force: true })
+  await mkdir(path.join(outputDir, PET_ANIMATION_DIR_NAME, 'illustrations'), { recursive: true })
 
   const pets = []
   const tasks = []
+  const animationTasks = []
 
   for (const definition of rawDefinitions.familiar_defines ?? []) {
     const petId = String(definition.id)
@@ -642,6 +758,8 @@ export async function syncPetsCatalog(options = {}) {
     const iconOutputPath = `${currentVersion}/${PET_ICON_DIR_NAME}/${petId}.png`
     const illustrationOutputFile = path.join(outputDir, 'pets', 'illustrations', `${petId}.png`)
     const illustrationOutputPath = `${currentVersion}/${PET_ILLUSTRATION_DIR_NAME}/${petId}.png`
+    const animationOutputFile = path.join(outputDir, PET_ANIMATION_DIR_NAME, 'illustrations', `${petId}.bin`)
+    const animationOutputPath = buildPetAnimationAssetPath(currentVersion, petId)
 
     pet.icon = await readExistingImage(iconOutputFile, iconOutputPath)
     pet.illustration = await readExistingImage(illustrationOutputFile, illustrationOutputPath)
@@ -672,10 +790,22 @@ export async function syncPetsCatalog(options = {}) {
       })
     }
 
+    if (illustrationAsset?.sourceGraphic && isSkelAnimGraphicDefinition(illustrationGraphic)) {
+      animationTasks.push({
+        petId,
+        name: pet.name,
+        asset: illustrationAsset,
+        preferredSequenceIndexes: resolvePreferredSequenceIndexes(illustrationGraphic),
+        outputFile: animationOutputFile,
+        outputPath: animationOutputPath,
+      })
+    }
+
     pets.push(pet)
   }
 
   const downloadedAssets = await runWithConcurrency(tasks, concurrency, downloadPetAsset)
+  const animations = await runWithConcurrency(animationTasks, concurrency, downloadPetAnimation)
   const petById = new Map(pets.map((pet) => [pet.id, pet]))
 
   for (const asset of downloadedAssets) {
@@ -695,9 +825,16 @@ export async function syncPetsCatalog(options = {}) {
   const sortedPets = [...pets].sort(
     (left, right) => compareLocalizedText(left.name, right.name) || Number(left.id) - Number(right.id),
   )
+  const sortedAnimations = [...animations].sort(
+    (left, right) => compareLocalizedText(left.name, right.name) || Number(left.petId) - Number(right.petId),
+  )
 
   await writeJson(path.join(outputDir, 'pets.json'), {
     items: sortedPets,
+    updatedAt,
+  })
+  await writeJson(path.join(outputDir, 'pet-animations.json'), {
+    items: sortedAnimations,
     updatedAt,
   })
 
@@ -709,6 +846,7 @@ export async function syncPetsCatalog(options = {}) {
     counts: {
       icons: sortedPets.filter((pet) => Boolean(pet.icon)).length,
       illustrations: sortedPets.filter((pet) => Boolean(pet.illustration)).length,
+      animations: sortedAnimations.length,
       gems: sortedPets.filter((pet) => pet.acquisition.kind === 'gems').length,
       premium: sortedPets.filter((pet) => pet.acquisition.kind === 'premium').length,
       patron: sortedPets.filter((pet) => pet.acquisition.kind === 'patron').length,
@@ -758,6 +896,7 @@ async function main() {
   console.log(`- local assets: ${result.assetCount}`)
   console.log(`- icons: ${result.counts.icons}`)
   console.log(`- illustrations: ${result.counts.illustrations}`)
+  console.log(`- animations: ${result.counts.animations}`)
   console.log(`- gems: ${result.counts.gems}`)
   console.log(`- premium: ${result.counts.premium}`)
   console.log(`- patron: ${result.counts.patron}`)

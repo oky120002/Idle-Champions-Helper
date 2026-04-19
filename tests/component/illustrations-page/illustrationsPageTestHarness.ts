@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react'
-import { createElement } from 'react'
-import { MemoryRouter, useLocation } from 'react-router-dom'
+import { createElement, Fragment } from 'react'
+import { createMemoryRouter, RouterProvider, useLocation } from 'react-router-dom'
 import { vi } from 'vitest'
 import { I18nProvider } from '../../../src/app/i18n'
 import { loadCollection } from '../../../src/data/client'
@@ -15,12 +15,6 @@ import {
 
 export const mockedLoadCollection = vi.mocked(loadCollection)
 export const writeClipboardText = vi.fn<(_: string) => Promise<void>>()
-
-function LocationProbe() {
-  const location = useLocation()
-
-  return createElement('output', { 'data-testid': 'location-search' }, location.search)
-}
 
 export function installClipboardMock() {
   writeClipboardText.mockReset()
@@ -63,16 +57,35 @@ export function mockIllustrationsPageCollections(overrides: IllustrationsPageCol
 }
 
 export function renderIllustrationsPage(initialEntries: string[] = ['/illustrations']) {
-  return render(
-    createElement(
-      I18nProvider,
+  function IllustrationsPageRoute() {
+    const location = useLocation()
+
+    return createElement(
+      Fragment,
       null,
+      createElement(IllustrationsPage),
+      createElement('output', { 'data-testid': 'location-search' }, location.search),
+    )
+  }
+
+  const router = createMemoryRouter(
+    [
+      {
+        path: '/illustrations',
+        element: createElement(IllustrationsPageRoute),
+      },
+    ],
+    { initialEntries },
+  )
+
+  return {
+    router,
+    ...render(
       createElement(
-        MemoryRouter,
-        { initialEntries },
-        createElement(IllustrationsPage),
-        createElement(LocationProbe),
+        I18nProvider,
+        null,
+        createElement(RouterProvider, { router }),
       ),
     ),
-  )
+  }
 }

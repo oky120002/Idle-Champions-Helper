@@ -40,6 +40,7 @@ async function main() {
   5. 详情页升级区本地专精图资源
   6. 详情页动态 hero-base / skin 动画原始资源
   7. 基于动画默认帧生成本地静态立绘（无动画包时再回退）
+  8. 宠物目录、静态图与可播放的本地动图清单
 
 推荐入口：
   npm run data:official
@@ -104,7 +105,7 @@ async function main() {
   })
 
   console.log(`官方基座数据流水线完成：`)
-  console.log(`- included: definitions(source + zh) + normalized collections + champion portraits + champion illustrations + champion animations + pet catalog`)
+  console.log(`- included: definitions(source + zh) + normalized collections + champion portraits + champion illustrations + champion animations + pet catalog + pet animations`)
   console.log(`- source raw: ${fetched.rawFile}`)
   console.log(`- display raw: ${localizedFetched.rawFile}`)
   console.log(`- normalized dir: ${normalized.outputDir}`)
@@ -112,7 +113,7 @@ async function main() {
   console.log(`- specialization graphics dir: ${specializationGraphics.outputDir}`)
   console.log(`- illustrations dir: ${illustrations.outputDir}`)
   console.log(`- animations dir: ${animations.outputDir} (${animations.count} items)`)
-  console.log(`- pets: ${pets.count} (assets ${pets.assetCount})`)
+  console.log(`- pets: ${pets.count} (assets ${pets.assetCount}, animations ${pets.counts.animations})`)
   console.log(`- version file: ${normalized.versionFile}`)
 }
 

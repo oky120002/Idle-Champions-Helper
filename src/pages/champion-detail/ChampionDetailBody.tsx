@@ -70,6 +70,7 @@ export function ChampionDetailBody(props: ChampionDetailBodyProps) {
         locale={props.locale}
         t={props.t}
         summaryAvailabilityBadges={props.summaryAvailabilityBadges}
+        overviewFields={props.overviewFields}
         sectionLinks={props.sectionLinks}
         activeSectionId={props.activeSectionId}
         scrollToSection={props.scrollToSection}
@@ -81,7 +82,6 @@ export function ChampionDetailBody(props: ChampionDetailBodyProps) {
           detail={props.detail}
           locale={props.locale}
           t={props.t}
-          overviewFields={props.overviewFields}
           effectContext={props.effectContext}
           upgradeSectionBadges={props.upgradeSectionBadges}
           featSectionBadges={props.featSectionBadges}

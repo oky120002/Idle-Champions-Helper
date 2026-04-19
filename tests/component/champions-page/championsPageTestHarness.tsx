@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
+import { createElement, Fragment } from 'react'
+import { createMemoryRouter, RouterProvider, useLocation } from 'react-router-dom'
 import { vi } from 'vitest'
 import { I18nProvider } from '../../../src/app/i18n'
 import { loadCollection } from '../../../src/data/client'
@@ -33,11 +34,33 @@ export function mockChampionsPageCollections(overrides: ChampionsPageCollectionO
 }
 
 export function renderChampionsPage(initialEntries: string[] = ['/champions']) {
-  return render(
-    <I18nProvider>
-      <MemoryRouter initialEntries={initialEntries}>
-        <ChampionsPage />
-      </MemoryRouter>
-    </I18nProvider>,
+  function ChampionsPageRoute() {
+    const location = useLocation()
+
+    return createElement(
+      Fragment,
+      null,
+      createElement(ChampionsPage),
+      createElement('output', { 'data-testid': 'location-search' }, location.search),
+    )
+  }
+
+  const router = createMemoryRouter(
+    [
+      {
+        path: '/champions',
+        element: createElement(ChampionsPageRoute),
+      },
+    ],
+    { initialEntries },
   )
+
+  return {
+    router,
+    ...render(
+      <I18nProvider>
+        <RouterProvider router={router} />
+      </I18nProvider>,
+    ),
+  }
 }

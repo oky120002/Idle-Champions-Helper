@@ -151,7 +151,6 @@ export function localizeStructuredKey(key: string, locale: AppLocale): string {
     amount_updated_listeners: '更新监听器',
     attack_sound: '攻击音效 ID',
     available_at_time: '开放时间',
-    available_in_store: '商店上架时间',
     base_attack_taunts: '普攻附带嘲讽',
     base_graphic_id: 'Base Graphic ID',
     chest_type_id: '宝箱类型 ID',

@@ -1,7 +1,8 @@
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useI18n } from '../app/i18n'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { ChampionDetailBody } from './champion-detail/ChampionDetailBody'
+import { ChampionDetailNavBackLink } from './champion-detail/ChampionDetailNavBackLink'
 import { useChampionDetailDerived } from './champion-detail/useChampionDetailDerived'
 import { useChampionDetailResources } from './champion-detail/useChampionDetailResources'
 import { useChampionDetailSectionState } from './champion-detail/useChampionDetailSectionState'
@@ -75,11 +76,7 @@ export function ChampionDetailPage() {
 
   return (
     <div className="page-stack champion-detail-page">
-      <div className="page-backlink-row">
-        <Link className="page-backlink" to={backToChampions} onClick={handleBackClick}>
-          {t(backLabel)}
-        </Link>
-      </div>
+      <ChampionDetailNavBackLink backLabel={backLabel} backTarget={backToChampions} onBackClick={handleBackClick} t={t} />
 
       {isLoading ? (
         <SurfaceCard
