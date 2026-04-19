@@ -1,5 +1,8 @@
 import { defineConfig } from 'vitest/config'
 
+const nodeMajorVersion = Number.parseInt(process.versions.node.split('.')[0] ?? '0', 10)
+const componentExecArgv = nodeMajorVersion >= 25 ? ['--no-experimental-webstorage'] : []
+
 export default defineConfig({
   test: {
     projects: [
@@ -18,7 +21,7 @@ export default defineConfig({
           setupFiles: ['./tests/setup/vitest.setup.ts'],
           // Node 25's experimental webstorage collides with jsdom teardown reads of localStorage.
           // Keep component workers on jsdom's storage implementation only.
-          execArgv: ['--no-experimental-webstorage'],
+          execArgv: componentExecArgv,
         },
       },
     ],

@@ -97,6 +97,21 @@ export function buildIllustrationAlt(illustration: ChampionIllustration, locale:
     : `${championName} ${illustrationName} skin illustration`
 }
 
+export function buildIllustrationCardTitle(
+  illustration: Pick<ChampionIllustration, 'championName' | 'illustrationName' | 'kind'>,
+  locale: 'zh-CN' | 'en-US',
+): { primary: string; secondary: string | null; text: string } {
+  const championName = getPrimaryLocalizedText(illustration.championName, locale)
+  const illustrationName = getPrimaryLocalizedText(illustration.illustrationName, locale)
+  const secondary = illustration.kind === 'skin' && illustrationName !== championName ? championName : null
+
+  return {
+    primary: illustrationName,
+    secondary,
+    text: secondary ? `${illustrationName} · ${secondary}` : illustrationName,
+  }
+}
+
 export function buildKindLabel(kind: ChampionIllustrationKind, locale: 'zh-CN' | 'en-US'): string {
   if (kind === 'hero-base') {
     return locale === 'zh-CN' ? '英雄本体' : 'Hero base'

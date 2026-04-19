@@ -63,6 +63,8 @@ describe('App', () => {
 
     const localeSwitch = within(toolbarSwitcher).getByRole('switch', { name: '界面语言' })
     expect(localeSwitch).toHaveAttribute('aria-checked', 'false')
+    expect(localeSwitch).toHaveTextContent('中EN')
+    expect(toolbarSwitcher.querySelector('.locale-switcher__toggle-copy')).toBeNull()
 
     await user.click(localeSwitch)
 

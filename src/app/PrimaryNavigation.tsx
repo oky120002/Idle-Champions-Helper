@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import type { AppLocale } from './i18n'
 import {
   getNavClassName,
@@ -31,6 +31,7 @@ export function PrimaryNavigation({
       className={isMobileNavOpen ? 'site-nav site-nav--mobile-open' : 'site-nav'}
       aria-label={t({ zh: '主导航', en: 'Primary navigation' })}
     >
+      <div id="site-nav-leading-slot" className="site-nav__leading-slot" />
       <div className="site-nav__mobile-head" aria-hidden="true">
         <span className="site-nav__eyebrow">{t({ zh: '切换工作台', en: 'Switch workspaces' })}</span>
         <div className="site-nav__summary">
@@ -43,20 +44,21 @@ export function PrimaryNavigation({
           </span>
         </div>
       </div>
-      {navigation.map((item, index) => (
-        <NavLink
-          key={item.to}
-          to={item.to}
-          end={item.to === '/'}
-          className={({ isActive }) => getNavClassName(isActive)}
-          onClick={onNavigate}
-        >
-          <span className="nav-link__index" aria-hidden="true">
-            {String(index + 1).padStart(2, '0')}
-          </span>
-          <span className="nav-link__label">{t(item.label)}</span>
-        </NavLink>
-      ))}
+      {navigation.map((item) => {
+        const isActive = activeNavigationItem.to === item.to
+
+        return (
+          <Link
+            key={item.to}
+            to={item.to}
+            aria-current={isActive ? 'page' : undefined}
+            className={getNavClassName(isActive)}
+            onClick={onNavigate}
+          >
+            <span className="nav-link__label">{t(item.label)}</span>
+          </Link>
+        )
+      })}
       <div className="site-nav__locale-panel">
         <span className="site-nav__eyebrow">{t({ zh: '低频设置', en: 'Low-frequency setting' })}</span>
         <div className="site-nav__locale-card">

@@ -20,11 +20,13 @@ import {
 
 describe('IllustrationsPage filters', () => {
   beforeEach(() => {
+    window.localStorage.clear()
     installClipboardMock()
     mockIllustrationsPageCollections()
   })
 
   afterEach(() => {
+    window.localStorage.clear()
     mockedLoadCollection.mockReset()
     vi.restoreAllMocks()
   })
@@ -34,6 +36,7 @@ describe('IllustrationsPage filters', () => {
 
     renderIllustrationsPage()
 
+    expect(await screen.findByRole('heading', { level: 3, name: '立绘筛选' })).toBeInTheDocument()
     const results = await screen.findByLabelText('立绘结果')
     expect(within(results).getByRole('img', { name: '布鲁诺本体立绘' })).toHaveAttribute(
       'src',
@@ -78,6 +81,38 @@ describe('IllustrationsPage filters', () => {
     expect(searchParams.getAll('role')).toEqual(['support'])
   })
 
+  it('卡片标题在中文模式下只显示当前语言，并把皮肤名和英雄本名合并到同一行', async () => {
+    renderIllustrationsPage()
+
+    const baseCard = await screen.findByRole('link', { name: '查看英雄：布鲁诺（布鲁诺）' })
+    const skinCard = screen.getByRole('link', { name: '查看英雄：布鲁诺（海盗布鲁诺）' })
+    const baseTitle = within(baseCard).getByRole('heading', { name: '布鲁诺' })
+    const skinTitle = within(skinCard).getByRole('heading', { level: 3 })
+
+    expect(baseTitle).toBeInTheDocument()
+    expect(within(baseCard).queryByText('Bruenor')).not.toBeInTheDocument()
+    expect(skinTitle).toHaveAttribute('title', '海盗布鲁诺 · 布鲁诺')
+    expect(skinTitle).toHaveTextContent(/海盗布鲁诺\s*·\s*布鲁诺/)
+    expect(within(skinCard).queryByText('Pirate Bruenor')).not.toBeInTheDocument()
+  })
+
+  it('卡片标题在英文模式下只显示当前语言，并保留单行联合展示', async () => {
+    window.localStorage.setItem('idle-champions-helper.locale', 'en-US')
+
+    renderIllustrationsPage()
+
+    const baseCard = await screen.findByRole('link', { name: 'Open champion: Bruenor (Bruenor)' })
+    const skinCard = screen.getByRole('link', { name: 'Open champion: Bruenor (Pirate Bruenor)' })
+    const baseTitle = within(baseCard).getByRole('heading', { name: 'Bruenor' })
+    const skinTitle = within(skinCard).getByRole('heading', { level: 3 })
+
+    expect(baseTitle).toBeInTheDocument()
+    expect(within(baseCard).queryByText('布鲁诺')).not.toBeInTheDocument()
+    expect(skinTitle).toHaveAttribute('title', 'Pirate Bruenor · Bruenor')
+    expect(skinTitle).toHaveTextContent(/Pirate Bruenor\s*·\s*Bruenor/)
+    expect(within(skinCard).queryByText('海盗布鲁诺')).not.toBeInTheDocument()
+  })
+
   it('支持复制当前筛选链接', async () => {
     const user = userEvent.setup()
     const writeTextSpy = vi.spyOn(navigator.clipboard, 'writeText')
@@ -102,5 +137,29 @@ describe('IllustrationsPage filters', () => {
 
     expect(copiedUrl).toContain('#/illustrations?scope=skin&role=support')
     expect(screen.getByRole('button', { name: '已复制链接' })).toBeInTheDocument()
+  })
+
+  it('会在 URL 查询参数变化后重新同步立绘筛选 UI', async () => {
+    const { router } = renderIllustrationsPage(['/illustrations?scope=skin&role=support'])
+
+    await screen.findByLabelText('立绘结果')
+
+    expect(screen.getByRole('button', { name: '皮肤' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('button', { name: '辅助' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('img', { name: '布鲁诺海盗布鲁诺皮肤立绘' })).toBeInTheDocument()
+    expect(screen.queryByRole('img', { name: '提里尔本体立绘' })).not.toBeInTheDocument()
+
+    await router.navigate('/illustrations?scope=hero-base&role=tank')
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: '本体' })).toHaveAttribute('aria-pressed', 'true')
+    })
+
+    expect(screen.getByRole('button', { name: '皮肤' })).toHaveAttribute('aria-pressed', 'false')
+    expect(screen.getByRole('button', { name: '坦克' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('button', { name: '辅助' })).toHaveAttribute('aria-pressed', 'false')
+    expect(screen.getByTestId('location-search')).toHaveTextContent('?scope=hero-base&role=tank')
+    expect(screen.getByRole('img', { name: '提里尔本体立绘' })).toBeInTheDocument()
+    expect(screen.queryByRole('img', { name: '布鲁诺海盗布鲁诺皮肤立绘' })).not.toBeInTheDocument()
   })
 })

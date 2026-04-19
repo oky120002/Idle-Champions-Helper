@@ -35,8 +35,42 @@ export function formatTimestamp(value: number | null, locale: AppLocale): string
 
   return new Intl.DateTimeFormat(locale, {
     dateStyle: 'medium',
-    timeStyle: 'short',
+    timeZone: 'UTC',
   }).format(new Date(value * 1000))
+}
+
+export function formatDateText(value: string | null, locale: AppLocale): string {
+  if (!value?.trim()) {
+    return buildNotAvailableLabel(locale)
+  }
+
+  const trimmed = value.trim()
+  const calendarDateMatch = trimmed.match(/^(\d{4})-(\d{2})-(\d{2})/)
+
+  if (calendarDateMatch) {
+    const [, yearToken, monthToken, dayToken] = calendarDateMatch
+    const year = Number(yearToken)
+    const month = Number(monthToken)
+    const day = Number(dayToken)
+
+    if (Number.isFinite(year) && Number.isFinite(month) && Number.isFinite(day)) {
+      return new Intl.DateTimeFormat(locale, {
+        dateStyle: 'medium',
+        timeZone: 'UTC',
+      }).format(new Date(Date.UTC(year, month - 1, day)))
+    }
+  }
+
+  const parsedDate = new Date(trimmed)
+
+  if (!Number.isNaN(parsedDate.getTime())) {
+    return new Intl.DateTimeFormat(locale, {
+      dateStyle: 'medium',
+      timeZone: 'UTC',
+    }).format(parsedDate)
+  }
+
+  return trimmed
 }
 
 export function formatNullableText(value: string | null, locale: AppLocale): string {

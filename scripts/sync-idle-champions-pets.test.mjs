@@ -301,13 +301,16 @@ test('syncPetsCatalog 输出宠物目录、获取方式与本地图像', async (
   assert.equal(result.count, 5)
   assert.equal(result.counts.icons, 4)
   assert.equal(result.counts.illustrations, 4)
+  assert.equal(result.counts.animations, 0)
   assert.equal(result.counts.gems, 1)
   assert.equal(result.counts.patron, 1)
   assert.equal(result.counts.premium, 2)
   assert.equal(result.counts.unavailable, 1)
 
   const pets = await readJson(path.join(outputDir, 'pets.json'))
+  const animations = await readJson(path.join(outputDir, 'pet-animations.json'))
   const byId = new Map(pets.items.map((item) => [item.id, item]))
+  assert.deepEqual(animations.items, [])
 
   const gemPet = byId.get('1')
   assert.deepEqual(gemPet.name, { original: 'Gem Sprite', display: '宝石小精灵' })
@@ -471,20 +474,30 @@ test('syncPetsCatalog 会把 type=3 的宠物分件资源离线合成为单张 P
   assert.equal(result.count, 1)
   assert.equal(result.counts.icons, 1)
   assert.equal(result.counts.illustrations, 1)
+  assert.equal(result.counts.animations, 1)
 
   const pets = await readJson(path.join(outputDir, 'pets.json'))
   const pet = pets.items[0]
+  const animations = await readJson(path.join(outputDir, 'pet-animations.json'))
+  const animation = animations.items[0]
 
   assert.equal(pet.icon.width, 4)
   assert.equal(pet.icon.height, 4)
   assert.equal(pet.illustration.width, 4)
   assert.equal(pet.illustration.height, 2)
+  assert.equal(animation.petId, '7')
+  assert.equal(animation.asset.path, 'v1/pet-animations/illustrations/7.bin')
+  assert.equal(animation.defaultSequenceIndex, 0)
+  assert.equal(animation.defaultFrameIndex, 0)
+  assert.equal(animation.sequences.length, 1)
 
   const iconPng = PNG.sync.read(await readFile(path.join(outputDir, 'pets', 'icons', '7.png')))
   const illustrationPng = PNG.sync.read(await readFile(path.join(outputDir, 'pets', 'illustrations', '7.png')))
+  const animationBin = await readFile(path.join(outputDir, 'pet-animations', 'illustrations', '7.bin'))
 
   assert.equal(iconPng.width, 4)
   assert.equal(iconPng.height, 4)
   assert.equal(illustrationPng.width, 4)
   assert.equal(illustrationPng.height, 2)
+  assert.ok(animationBin.length > 0)
 })

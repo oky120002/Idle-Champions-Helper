@@ -47,7 +47,7 @@ export function ChampionsAdditionalFilters({ model }: ChampionsAdditionalFilters
 
   return (
     <>
-      <div className="champions-sidebar__section-label champions-sidebar__section-label--subtle">
+      <div className="filter-sidebar-panel__section-label filter-sidebar-panel__section-label--subtle">
         {t({ zh: '补充筛选', en: 'Additional filters' })}
       </div>
 

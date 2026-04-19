@@ -2,10 +2,8 @@ import type { ChampionDetail, ChampionSpecializationGraphic } from '../../domain
 import { DetailCharacterSection } from './DetailCharacterSection'
 import { DetailCombatSection } from './DetailCombatSection'
 import { DetailFeatSection } from './DetailFeatSection'
-import { DetailOverviewSection } from './DetailOverviewSection'
 import { DetailUpgradeSection } from './DetailUpgradeSection'
 import type {
-  DetailFieldProps,
   DetailSectionBadge,
   EffectContext,
   LedgerUpgradeRow,
@@ -17,7 +15,6 @@ interface DetailSectionPanelsProps {
   detail: ChampionDetail
   locale: 'zh-CN' | 'en-US'
   t: (text: { zh: string; en: string }) => string
-  overviewFields: DetailFieldProps[]
   effectContext: EffectContext
   upgradeSectionBadges: DetailSectionBadge[]
   featSectionBadges: DetailSectionBadge[]
@@ -39,7 +36,6 @@ interface DetailSectionPanelsProps {
 export function DetailSectionPanels(props: DetailSectionPanelsProps) {
   return (
     <div className="champion-detail-content">
-      <DetailOverviewSection t={props.t} overviewFields={props.overviewFields} />
       <DetailCharacterSection detail={props.detail} locale={props.locale} t={props.t} />
       <DetailCombatSection detail={props.detail} locale={props.locale} t={props.t} />
       <DetailUpgradeSection
