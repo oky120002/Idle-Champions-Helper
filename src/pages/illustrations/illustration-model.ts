@@ -114,10 +114,10 @@ export function buildIllustrationCardTitle(
 
 export function buildKindLabel(kind: ChampionIllustrationKind, locale: 'zh-CN' | 'en-US'): string {
   if (kind === 'hero-base') {
-    return locale === 'zh-CN' ? '英雄本体' : 'Hero base'
+    return locale === 'zh-CN' ? '本体' : 'Base'
   }
 
-  return locale === 'zh-CN' ? '皮肤立绘' : 'Skin illustration'
+  return locale === 'zh-CN' ? '皮肤' : 'Skin'
 }
 
 export function buildViewFilterLabel(view: ViewFilter, locale: 'zh-CN' | 'en-US'): string {

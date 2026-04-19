@@ -14,6 +14,21 @@ export function IllustrationsSidebar({ model }: IllustrationsSidebarProps) {
     <FilterSidebarPanel
       title={t({ zh: '立绘筛选', en: 'Illustration filters' })}
       titleAs="h3"
+      titleTrailing={
+        <button
+          type="button"
+          className={
+            ui.shareLinkState === 'success'
+              ? 'action-button action-button--ghost action-button--compact action-button--toggled illustrations-page__share-button'
+              : 'action-button action-button--ghost action-button--compact illustrations-page__share-button'
+          }
+          onClick={() => {
+            void actions.copyCurrentLink()
+          }}
+        >
+          {ui.shareButtonLabel}
+        </button>
+      }
       description={t({
         zh: '沿用英雄筛选页的主线：先用高频条件迅速缩小范围，再按需展开低频标签条件，避免一上来把整页立绘全砸出来。',
         en: 'This follows the champion filter flow: use the frequent controls first, then open the lower-frequency tag groups only when you need them.',
@@ -26,19 +41,6 @@ export function IllustrationsSidebar({ model }: IllustrationsSidebarProps) {
                 ? t({ zh: `${activeFilterChips.length} 项已启用`, en: `${activeFilterChips.length} active` })
                 : t({ zh: '未启用', en: 'Idle' })}
             </span>
-            <button
-              type="button"
-              className={
-                ui.shareLinkState === 'success'
-                  ? 'action-button action-button--ghost action-button--compact action-button--toggled illustrations-page__share-button'
-                  : 'action-button action-button--ghost action-button--compact illustrations-page__share-button'
-              }
-              onClick={() => {
-                void actions.copyCurrentLink()
-              }}
-            >
-              {ui.shareButtonLabel}
-            </button>
             {hasActiveFilters ? (
               <button
                 type="button"
@@ -49,9 +51,6 @@ export function IllustrationsSidebar({ model }: IllustrationsSidebarProps) {
               </button>
             ) : null}
           </div>
-          <span className="illustrations-page__share-status" role="status" aria-live="polite">
-            {ui.shareStatusMessage}
-          </span>
         </div>
       }
       statusLabel={t({ zh: '立绘筛选状态操作', en: 'Illustration filter status actions' })}
