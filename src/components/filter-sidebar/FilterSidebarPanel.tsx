@@ -4,6 +4,7 @@ interface FilterSidebarPanelProps {
   title: ReactNode
   children: ReactNode
   description?: ReactNode
+  titleTrailing?: ReactNode
   status?: ReactNode
   statusLabel?: string
   note?: ReactNode
@@ -16,6 +17,7 @@ export function FilterSidebarPanel({
   title,
   children,
   description,
+  titleTrailing,
   status,
   statusLabel,
   note,
@@ -32,7 +34,12 @@ export function FilterSidebarPanel({
     >
       <div className="filter-sidebar-panel__header">
         <div className="filter-sidebar-panel__copy">
-          <TitleTag className="section-heading filter-sidebar-panel__title">{title}</TitleTag>
+          <div className="filter-sidebar-panel__title-row">
+            <TitleTag className="section-heading filter-sidebar-panel__title">{title}</TitleTag>
+            {titleTrailing !== undefined ? (
+              <div className="filter-sidebar-panel__title-trailing">{titleTrailing}</div>
+            ) : null}
+          </div>
           {description !== undefined ? <p className="filter-sidebar-panel__description">{description}</p> : null}
         </div>
         {status !== undefined ? (

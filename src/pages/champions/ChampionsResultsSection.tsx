@@ -103,7 +103,7 @@ export function ChampionsResultsSection({ model }: ChampionsResultsSectionProps)
                 />
               ) : null}
 
-              <div className="results-grid results-grid--stable">
+              <div className="results-grid results-grid--stable champions-results__grid">
                 {visibleChampions.map((champion) => (
                   <ChampionResultCard key={champion.id} champion={champion} model={model} />
                 ))}
