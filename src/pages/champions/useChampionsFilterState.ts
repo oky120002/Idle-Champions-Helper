@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useLocation, useSearchParams } from 'react-router-dom'
 import { buildChampionsTransitionKey } from './champion-filter-model'
 import { buildFilterSearchParams, readInitialFilterExpansion, readInitialFilterState } from './query-state'
@@ -14,6 +14,7 @@ export function useChampionsFilterState() {
     [location.search],
   )
   const lastAppliedLocationSearchRef = useRef(normalizedLocationSearch)
+  const pendingLocationSyncSearchRef = useRef<string | null>(null)
 
   const [search, setSearch] = useState(initialFilters.search)
   const [selectedSeats, setSelectedSeats] = useState(initialFilters.selectedSeats)
@@ -63,13 +64,22 @@ export function useChampionsFilterState() {
     const nextSearchParams = buildFilterSearchParams(filters)
     const nextSearch = nextSearchParams.toString()
     const currentSearch = new URLSearchParams(location.search).toString()
+    const pendingLocationSyncSearch = pendingLocationSyncSearchRef.current
+
+    if (pendingLocationSyncSearch !== null && currentSearch === pendingLocationSyncSearch) {
+      if (nextSearch === currentSearch) {
+        pendingLocationSyncSearchRef.current = null
+      }
+
+      return
+    }
 
     if (nextSearch !== currentSearch) {
       setSearchParams(nextSearchParams, { replace: true })
     }
   }, [filters, location.search, setSearchParams])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (normalizedLocationSearch === lastAppliedLocationSearchRef.current) {
       return
     }
@@ -78,15 +88,17 @@ export function useChampionsFilterState() {
     const currentFilterSearch = buildFilterSearchParams(filters).toString()
 
     if (currentFilterSearch === normalizedLocationSearch) {
+      pendingLocationSyncSearchRef.current = null
       return
     }
 
     const nextFilters = readInitialFilterState(location.search)
     const nextExpansion = readInitialFilterExpansion(location.search)
+    pendingLocationSyncSearchRef.current = normalizedLocationSearch
     let cancelled = false
 
     queueMicrotask(() => {
-      if (cancelled) {
+      if (cancelled || pendingLocationSyncSearchRef.current !== normalizedLocationSearch) {
         return
       }
 

@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import type { Dispatch, SetStateAction } from 'react'
+import { useLocation, useSearchParams } from 'react-router-dom'
 import { SHARE_RESET_DELAY_MS } from './constants'
 import { buildFilterSearchParams, readInitialFilterExpansion, readInitialFilterState } from './query-state'
 import type { IllustrationsFilterState, ShareLinkState, ViewFilter } from './types'
@@ -26,11 +27,14 @@ export type IllustrationFilterStateController = {
   toggleMetaFiltersExpanded: () => void
 }
 
-export function useIllustrationFilterState(searchString: string): IllustrationFilterStateController {
-  const initialFilters = useMemo(() => readInitialFilterState(searchString), [searchString])
-  const initialExpansion = useMemo(() => readInitialFilterExpansion(searchString), [searchString])
-  const normalizedSearchString = useMemo(() => new URLSearchParams(searchString).toString(), [searchString])
+export function useIllustrationFilterState(): IllustrationFilterStateController {
+  const location = useLocation()
+  const [, setSearchParams] = useSearchParams()
+  const initialFilters = useMemo(() => readInitialFilterState(location.search), [location.search])
+  const initialExpansion = useMemo(() => readInitialFilterExpansion(location.search), [location.search])
+  const normalizedSearchString = useMemo(() => new URLSearchParams(location.search).toString(), [location.search])
   const lastAppliedSearchStringRef = useRef(normalizedSearchString)
+  const pendingLocationSyncSearchRef = useRef<string | null>(null)
 
   const [search, setSearch] = useState(initialFilters.search)
   const [viewFilter, setViewFilter] = useState(initialFilters.scope)
@@ -94,6 +98,25 @@ export function useIllustrationFilterState(searchString: string): IllustrationFi
   )
 
   useEffect(() => {
+    const nextSearchParams = buildFilterSearchParams(filters)
+    const nextSearch = nextSearchParams.toString()
+    const currentSearch = new URLSearchParams(location.search).toString()
+    const pendingLocationSyncSearch = pendingLocationSyncSearchRef.current
+
+    if (pendingLocationSyncSearch !== null && currentSearch === pendingLocationSyncSearch) {
+      if (nextSearch === currentSearch) {
+        pendingLocationSyncSearchRef.current = null
+      }
+
+      return
+    }
+
+    if (nextSearch !== currentSearch) {
+      setSearchParams(nextSearchParams, { replace: true })
+    }
+  }, [filters, location.search, setSearchParams])
+
+  useLayoutEffect(() => {
     if (normalizedSearchString === lastAppliedSearchStringRef.current) {
       return
     }
@@ -102,15 +125,17 @@ export function useIllustrationFilterState(searchString: string): IllustrationFi
     const currentFilterSearch = buildFilterSearchParams(filters).toString()
 
     if (currentFilterSearch === normalizedSearchString) {
+      pendingLocationSyncSearchRef.current = null
       return
     }
 
-    const nextFilters = readInitialFilterState(searchString)
-    const nextExpansion = readInitialFilterExpansion(searchString)
+    const nextFilters = readInitialFilterState(location.search)
+    const nextExpansion = readInitialFilterExpansion(location.search)
+    pendingLocationSyncSearchRef.current = normalizedSearchString
     let cancelled = false
 
     queueMicrotask(() => {
-      if (cancelled) {
+      if (cancelled || pendingLocationSyncSearchRef.current !== normalizedSearchString) {
         return
       }
 
@@ -133,7 +158,7 @@ export function useIllustrationFilterState(searchString: string): IllustrationFi
     return () => {
       cancelled = true
     }
-  }, [filters, normalizedSearchString, searchString])
+  }, [filters, location.search, normalizedSearchString])
 
   return {
     filters,

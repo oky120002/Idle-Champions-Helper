@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
-import { useLocation, useSearchParams } from 'react-router-dom'
+import { useMemo, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { useI18n } from '../../app/i18n'
 import type { Champion, ChampionAnimation, ChampionIllustration, LocalizedText } from '../../domain/types'
 import { collectAttributeFilterOptions, groupMechanicOptions, seatOptions } from '../../features/champion-filters/options'
@@ -14,7 +14,7 @@ import {
   hasActiveIllustrationFilters,
   shuffleIllustrationEntries,
 } from './illustration-model'
-import { buildFilterSearchParams, buildShareUrl } from './query-state'
+import { buildShareUrl } from './query-state'
 import type { IllustrationsPageActions, IllustrationsPageModel } from './types'
 import { useIllustrationCollectionState } from './useIllustrationCollectionState'
 import { useIllustrationFilterState } from './useIllustrationFilterState'
@@ -27,7 +27,6 @@ const EMPTY_LOCALIZED_TEXTS: LocalizedText[] = []
 
 export function useIllustrationsPageModel(): IllustrationsPageModel {
   const location = useLocation()
-  const [, setSearchParams] = useSearchParams()
   const { locale, t } = useI18n()
   const state = useIllustrationCollectionState()
   const [randomOrderSeed, setRandomOrderSeed] = useState<number | null>(null)
@@ -51,17 +50,7 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
     setShareLinkState,
     toggleIdentityFiltersExpanded,
     toggleMetaFiltersExpanded,
-  } = useIllustrationFilterState(location.search)
-
-  useEffect(() => {
-    const nextSearchParams = buildFilterSearchParams(filters)
-    const nextSearch = nextSearchParams.toString()
-    const currentSearch = new URLSearchParams(location.search).toString()
-
-    if (nextSearch !== currentSearch) {
-      setSearchParams(nextSearchParams, { replace: true })
-    }
-  }, [filters, location.search, setSearchParams])
+  } = useIllustrationFilterState()
 
   const illustrations = state.status === 'ready' ? state.illustrations : EMPTY_ILLUSTRATIONS
   const animations = state.status === 'ready' ? state.animations : EMPTY_ANIMATIONS
