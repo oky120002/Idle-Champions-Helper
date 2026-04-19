@@ -13,6 +13,16 @@ interface HeaderMetrics {
   topbarActionsTop: number
 }
 
+async function scrollWindowInstantly(page: Page, top: number): Promise<void> {
+  await page.evaluate((nextTop) => {
+    window.scrollTo(0, nextTop)
+  }, top)
+
+  await expect
+    .poll(async () => page.evaluate(() => Math.round(window.scrollY)))
+    .toBe(top)
+}
+
 async function getHeaderMetrics(page: Page): Promise<HeaderMetrics> {
   return page.locator('.site-header').evaluate((element) => {
     if (!(element instanceof HTMLElement)) {
@@ -56,6 +66,7 @@ test('非首页滚动后顶部大标题应自动收紧，回顶后再展开', as
   await page.setViewportSize({ width: 1440, height: 900 })
   await page.goto('./#/champions')
   await expect(page.getByRole('heading', { level: 2, name: '按座位、定位与联动快速缩小候选英雄' })).toBeVisible()
+  await expect(page.getByText(/^当前展示 \d+ \/ \d+ 名英雄/)).toBeVisible()
 
   const initialMetrics = await getHeaderMetrics(page)
 
@@ -64,7 +75,7 @@ test('非首页滚动后顶部大标题应自动收紧，回顶后再展开', as
   expect(initialMetrics.navScrollWidth - initialMetrics.navClientWidth).toBeLessThanOrEqual(1)
   expect(Math.max(...initialMetrics.navLinkTops) - Math.min(...initialMetrics.navLinkTops)).toBeLessThanOrEqual(6)
 
-  await page.evaluate(() => window.scrollTo({ top: 320, behavior: 'instant' }))
+  await scrollWindowInstantly(page, 320)
   await page.waitForTimeout(headerCondenseAnimationWaitMs)
 
   const condensedMetrics = await getHeaderMetrics(page)
@@ -78,7 +89,7 @@ test('非首页滚动后顶部大标题应自动收紧，回顶后再展开', as
   expect(condensedMetrics.kickerDisplay).toBe('none')
   expect(Math.abs(condensedMetrics.navTop - condensedMetrics.topbarActionsTop)).toBeLessThanOrEqual(6)
 
-  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }))
+  await scrollWindowInstantly(page, 0)
   await page.waitForTimeout(headerCondenseAnimationWaitMs)
 
   const expandedMetrics = await getHeaderMetrics(page)
