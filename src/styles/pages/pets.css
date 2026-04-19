@@ -18,6 +18,8 @@
 
 .pet-card {
   position: relative;
+  overflow: clip;
+  isolation: isolate;
   display: grid;
   gap: 0.8rem;
   overflow: clip;
@@ -37,6 +39,17 @@
   will-change: transform;
 }
 
+.pet-card::before {
+  content: "";
+  position: absolute;
+  left: 0.88rem;
+  right: 0.88rem;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 243, 223, 0.16), transparent);
+  pointer-events: none;
+}
+
 .pet-card__stage {
   position: relative;
   display: grid;
@@ -48,6 +61,8 @@
   background:
     radial-gradient(circle at top, rgba(205, 167, 110, 0.18), transparent 48%),
     linear-gradient(180deg, rgba(16, 23, 34, 0.94), rgba(9, 13, 22, 0.94));
+  border: 1px solid rgba(227, 214, 193, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.04);
 }
 
 .pet-card__stage-grid {
@@ -210,6 +225,7 @@
   color: rgba(223, 212, 193, 0.68);
   font-size: 0.78rem;
   gap: 0.4rem;
+  padding-top: 0.28rem;
 }
 
 .pet-card__facts span {
