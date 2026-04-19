@@ -52,7 +52,6 @@ export type IllustrationsPageUiState = {
   isMetaFiltersExpanded: boolean
   shareLinkState: ShareLinkState
   shareButtonLabel: string
-  shareStatusMessage: string
   hasRandomOrder: boolean
 }
 
