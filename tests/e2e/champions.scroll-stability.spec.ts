@@ -44,6 +44,7 @@ test('英雄筛选页点击筛选按钮时不应发生意外滚动跳转', async
 
   await page.evaluate(() => window.scrollTo({ top: 320, behavior: 'instant' }))
   await page.waitForTimeout(100)
+  await expect(page.locator('.site-header')).toHaveClass(/site-header--condensed/)
 
   const baseline = await getScrollY(page)
   const seatFilterGroup = page.locator('.filter-group').first()

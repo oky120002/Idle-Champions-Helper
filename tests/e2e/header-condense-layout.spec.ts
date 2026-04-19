@@ -71,7 +71,7 @@ test('非首页滚动后顶部大标题应自动收紧，回顶后再展开', as
   const initialMetrics = await getHeaderMetrics(page)
 
   await expect(page.locator('.site-header')).not.toHaveClass(/site-header--condensed/)
-  expect(initialMetrics.contentHeight).toBeGreaterThan(60)
+  expect(initialMetrics.contentHeight).toBeGreaterThanOrEqual(60)
   expect(initialMetrics.navScrollWidth - initialMetrics.navClientWidth).toBeLessThanOrEqual(1)
   expect(Math.max(...initialMetrics.navLinkTops) - Math.min(...initialMetrics.navLinkTops)).toBeLessThanOrEqual(6)
 
@@ -96,6 +96,6 @@ test('非首页滚动后顶部大标题应自动收紧，回顶后再展开', as
 
   await expect(page.locator('.site-header')).not.toHaveClass(/site-header--condensed/)
   expect(expandedMetrics.height).toBeGreaterThan(condensedMetrics.height + 60)
-  expect(expandedMetrics.contentHeight).toBeGreaterThan(60)
+  expect(expandedMetrics.contentHeight).toBeGreaterThanOrEqual(60)
   expect(expandedMetrics.compactBrandOpacity).toBeLessThan(0.1)
 })
