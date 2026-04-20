@@ -150,6 +150,7 @@
   display: flex;
   align-items: center;
   min-height: 100%;
+  min-width: 0;
 }
 
 .site-kicker {
@@ -190,6 +191,12 @@
   line-height: 0.94;
   letter-spacing: -0.055em;
   text-wrap: balance;
+}
+
+html[data-ui-locale='zh-CN'] .site-title {
+  max-width: none;
+  white-space: nowrap;
+  text-wrap: nowrap;
 }
 
 .site-header__menu-toggle {
@@ -288,9 +295,9 @@ html[data-ui-locale='en-US'] .site-title {
 
 @media (min-width: 1260px) {
   .site-header:not(.site-header--subpage.site-header--condensed) {
-    grid-template-columns: minmax(0, 1fr) minmax(36rem, 46rem);
-    align-items: stretch;
-    gap: 0.72rem 0.9rem;
+    grid-template-columns: minmax(24rem, 0.9fr) minmax(48rem, 1.7fr);
+    align-items: center;
+    gap: 0.62rem 0.78rem;
   }
 
   .site-header:not(.site-header--subpage.site-header--condensed) .site-header__topbar {
@@ -300,17 +307,46 @@ html[data-ui-locale='en-US'] .site-title {
   .site-header:not(.site-header--subpage.site-header--condensed) .site-header__content-shell {
     grid-column: 1;
     grid-row: 2;
+    align-self: center;
+    min-height: 3.9rem;
+  }
+
+  .site-header:not(.site-header--subpage.site-header--condensed) .site-header__content {
+    align-items: center;
     min-height: 100%;
   }
 
   .site-header:not(.site-header--subpage.site-header--condensed) .site-nav {
     grid-column: 2;
     grid-row: 2;
-    align-self: stretch;
+    align-self: center;
+  }
+
+  .site-header:not(.site-header--subpage.site-header--condensed) .site-header__title-line {
+    gap: 1rem;
+  }
+
+  .site-header:not(.site-header--subpage.site-header--condensed) .site-header__title-line::after {
+    content: "";
+    flex: 1 1 10rem;
+    min-width: 8rem;
+    height: 1px;
+    transform: translateY(0.22rem);
+    background: linear-gradient(
+      90deg,
+      color-mix(in oklch, var(--color-copper) 56%, transparent),
+      rgba(255, 243, 223, 0.14) 24%,
+      transparent 88%
+    );
+    opacity: 0.76;
   }
 
   .site-header:not(.site-header--subpage.site-header--condensed) .site-title {
-    max-width: 11ch;
-    font-size: clamp(2.4rem, 4.3vw, 3.9rem);
+    font-size: clamp(2.34rem, 3.2vw, 3.72rem);
+  }
+
+  html[data-ui-locale='zh-CN'] .site-header:not(.site-header--subpage.site-header--condensed) .site-title {
+    white-space: nowrap;
+    text-wrap: nowrap;
   }
 }

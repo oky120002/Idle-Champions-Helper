@@ -1,39 +1,40 @@
 @media (min-width: 1260px) {
   .site-header:not(.site-header--subpage.site-header--condensed) .site-nav {
-    --site-nav-radius: 24px;
-    gap: 0.34rem;
-    padding: 0.3rem;
+    --site-nav-radius: 23px;
+    gap: 0.28rem;
+    padding: 0.24rem 0.28rem;
   }
 
   .site-header:not(.site-header--subpage.site-header--condensed) .nav-link {
-    min-width: clamp(4.8rem, 5.8vw, 6.55rem);
-    min-height: 3.12rem;
-    padding: 0.62rem 0.84rem;
-    border-radius: 17px;
+    min-width: clamp(4.7rem, 5.4vw, 6.4rem);
+    min-height: 2.78rem;
+    padding: 0.46rem 0.76rem 0.52rem;
+    border-radius: 16px;
   }
 
   .site-header:not(.site-header--subpage.site-header--condensed) .nav-link__label {
-    font-size: 0.9rem;
+    font-size: 0.86rem;
+    line-height: 1.04;
     letter-spacing: 0.012em;
   }
 
   .site-header:not(.site-header--subpage.site-header--condensed) .nav-link--active::before {
     inset: 2px;
-    border-radius: 14px;
+    border-radius: 13px;
   }
 
   .site-header:not(.site-header--subpage.site-header--condensed) .nav-link--active::after {
-    left: 0.82rem;
-    right: 0.82rem;
-    bottom: 0.34rem;
+    left: 0.76rem;
+    right: 0.76rem;
+    bottom: 0.3rem;
   }
 
   html[data-ui-locale='en-US'] .site-header:not(.site-header--subpage.site-header--condensed) .nav-link {
-    min-width: clamp(5.1rem, 6.2vw, 7rem);
+    min-width: clamp(5rem, 5.8vw, 6.8rem);
   }
 
   html[data-ui-locale='en-US'] .site-header:not(.site-header--subpage.site-header--condensed) .nav-link__label {
-    font-size: 0.84rem;
+    font-size: 0.8rem;
   }
 }
 
