@@ -17,10 +17,6 @@
   min-width: 0;
 }
 
-.filter-workspace__sidebar {
-  align-self: start;
-}
-
 .filter-workspace__sidebar-sticky {
   display: grid;
   gap: 0.78rem;
@@ -163,6 +159,10 @@
   .filter-workspace {
     grid-template-columns: minmax(18.5rem, var(--filter-sidebar-width, var(--champions-sidebar-width))) minmax(0, 1fr);
     align-items: stretch;
+  }
+
+  .filter-workspace__sidebar {
+    height: 100%;
   }
 
   .filter-workspace--collapsed {
