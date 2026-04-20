@@ -1,0 +1,202 @@
+.page-stack,
+.page-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.hero-panel,
+.surface-card {
+  position: relative;
+  overflow: clip;
+  isolation: isolate;
+  border: 1px solid var(--color-border-soft);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at top right, color-mix(in oklch, var(--color-copper) 18%, transparent), transparent 34%),
+    radial-gradient(circle at left bottom, color-mix(in oklch, var(--color-steel) 16%, transparent), transparent 40%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0.012)),
+    linear-gradient(180deg, var(--color-surface-top), var(--color-surface-mid) 52%, var(--color-surface-bottom));
+  box-shadow:
+    var(--shadow-surface),
+    inset 0 1px 0 rgba(255, 243, 223, 0.04);
+}
+
+.hero-panel::before,
+.surface-card::before,
+.hero-panel::after,
+.surface-card::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.hero-panel::before,
+.surface-card::before {
+  inset: 1px;
+  border-radius: 29px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.048), transparent 18%),
+    radial-gradient(circle at top center, rgba(255, 243, 223, 0.045), transparent 42%),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.014) 0,
+      rgba(255, 255, 255, 0.014) 1px,
+      transparent 1px,
+      transparent 120px
+    );
+  opacity: 0.86;
+}
+
+.hero-panel::after,
+.surface-card::after {
+  inset: auto 1.15rem 0.9rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 243, 223, 0.18), transparent);
+}
+
+.hero-panel {
+  display: grid;
+  gap: 1.5rem;
+  padding: 1.65rem;
+}
+
+.hero-panel__eyebrow,
+.surface-card__eyebrow {
+  margin: 0 0 0.48rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-copper);
+  font-size: 0.76rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.hero-panel__title,
+.surface-card__title {
+  margin: 0;
+  color: rgba(255, 248, 237, 0.98);
+  font-size: clamp(1.8rem, 3.2vw, 2.75rem);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+}
+
+.hero-panel__description,
+.surface-card__description,
+.supporting-text,
+.surface-card__body {
+  color: var(--color-text-muted);
+}
+
+.hero-panel__description,
+.surface-card__description,
+.supporting-text {
+  margin: 0.78rem 0 0;
+}
+
+.supporting-text--placeholder {
+  visibility: hidden;
+}
+
+.metric-grid,
+.card-grid,
+.split-grid {
+  display: grid;
+  gap: 0.95rem;
+}
+
+.metric-grid {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.metric-card {
+  position: relative;
+  padding: 1rem 1rem 1.05rem;
+  border: 1px solid var(--color-border-soft);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at top right, color-mix(in oklch, var(--color-copper) 12%, transparent), transparent 42%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.034), rgba(255, 255, 255, 0.012)),
+    rgba(8, 12, 17, 0.32);
+  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.04);
+}
+
+.metric-card::before {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 243, 223, 0.16), transparent);
+}
+
+.metric-card__label {
+  display: block;
+  margin-bottom: 0.52rem;
+  color: rgba(242, 239, 230, 0.58);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.metric-card__value {
+  color: #fff8ec;
+  font-family: var(--font-display);
+  font-size: 1.12rem;
+  line-height: 1.1;
+}
+
+.card-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.card-grid--wide {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.surface-card {
+  padding: 1.45rem;
+}
+
+.surface-card__header {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  padding-bottom: 1.05rem;
+  border-bottom: 1px solid rgba(255, 243, 223, 0.09);
+}
+
+.surface-card__header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 243, 223, 0.12), transparent);
+  pointer-events: none;
+}
+
+
+.surface-card__body {
+  display: grid;
+  gap: 1.05rem;
+  align-content: start;
+  margin-top: 1.05rem;
+}
+
+.surface-card--headerless .surface-card__body {
+  margin-top: 0;
+}
+
+.surface-card__body > * {
+  min-width: 0;
+}
+
+.surface-card__footer {
+  margin-top: 1.08rem;
+  padding-top: 0.92rem;
+  border-top: 1px solid rgba(255, 243, 223, 0.08);
+}

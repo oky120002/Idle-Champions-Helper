@@ -1,19 +1,20 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { prepareSkelAnim, readReducedMotionPreference } from './asset-loader'
-import { computeFrameBounds, findNextRenderableFrameIndex, listVisiblePieces, resolveRenderableFrameIndex } from './model'
+import {
+  buildSkelAnimRootClassName,
+  buildSkelAnimStatusText,
+  getBoundsSize,
+  resolvePreparedAssetState,
+  resolveSequenceSelection,
+  resolveSkelAnimPlayback,
+} from './skelanim-canvas-model'
+import { findNextRenderableFrameIndex, listVisiblePieces } from './model'
 import type {
   PreparedSkelAnimEntry,
-  SkelAnimBounds,
   SkelAnimCanvasProps,
   SkelAnimLoadErrorEntry,
 } from './types'
-
-function getBoundsSize(bounds: SkelAnimBounds) {
-  return {
-    width: Math.max(1, Math.ceil(bounds.maxX - bounds.minX)),
-    height: Math.max(1, Math.ceil(bounds.maxY - bounds.minY)),
-  }
-}
+import { useReducedMotionPreference } from './useReducedMotionPreference'
 
 export function SkelAnimCanvas({
   animation,
@@ -29,31 +30,8 @@ export function SkelAnimCanvas({
   const assetPath = animation?.asset.path ?? null
   const [preparedEntry, setPreparedEntry] = useState<PreparedSkelAnimEntry | null>(null)
   const [loadErrorEntry, setLoadErrorEntry] = useState<SkelAnimLoadErrorEntry | null>(null)
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(readReducedMotionPreference)
+  const prefersReducedMotion = useReducedMotionPreference()
   const [isPlaybackEnabled, setIsPlaybackEnabled] = useState(() => !readReducedMotionPreference())
-
-  useEffect(() => {
-    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
-      return undefined
-    }
-
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const handleChange = (event: MediaQueryListEvent) => {
-      setPrefersReducedMotion(event.matches)
-    }
-
-    if (typeof mediaQuery.addEventListener === 'function') {
-      mediaQuery.addEventListener('change', handleChange)
-      return () => {
-        mediaQuery.removeEventListener('change', handleChange)
-      }
-    }
-
-    mediaQuery.addListener(handleChange)
-    return () => {
-      mediaQuery.removeListener(handleChange)
-    }
-  }, [])
 
   useEffect(() => {
     if (!assetPath) {
@@ -87,46 +65,17 @@ export function SkelAnimCanvas({
     }
   }, [assetPath, labels.error])
 
-  const prepared = assetPath && preparedEntry?.assetPath === assetPath ? preparedEntry.value : null
-  const loadError = assetPath && loadErrorEntry?.assetPath === assetPath ? loadErrorEntry.message : null
-  const isLoading = Boolean(assetPath && !prepared && !loadError)
-  const isPlaying =
-    playbackMode === 'play'
-      ? !prefersReducedMotion
-      : playbackMode === 'pause'
-        ? false
-        : isPlaybackEnabled && !prefersReducedMotion
-
-  const sequenceSelection = useMemo(() => {
-    if (!animation || !prepared) {
-      return null
-    }
-
-    const character = prepared.data.characters[0]
-    const sequence = character?.sequences.find((item) => item.sequenceIndex === animation.defaultSequenceIndex)
-
-    if (!sequence) {
-      return null
-    }
-
-    const startFrameIndex = resolveRenderableFrameIndex(sequence, animation.defaultFrameIndex)
-
-    if (startFrameIndex === null) {
-      return null
-    }
-
-    const fallbackBounds = computeFrameBounds(sequence, startFrameIndex)
-    const manifestBounds = animation.sequences.find((item) => item.sequenceIndex === sequence.sequenceIndex)?.bounds ?? null
-    const bounds = manifestBounds ?? fallbackBounds
-
-    return bounds
-      ? {
-          sequence,
-          startFrameIndex,
-          bounds,
-        }
-      : null
-  }, [animation, prepared])
+  const { prepared, loadError, isLoading } = resolvePreparedAssetState(
+    assetPath,
+    preparedEntry,
+    loadErrorEntry,
+  )
+  const sequenceSelection = resolveSequenceSelection(animation, prepared)
+  const isPlaying = resolveSkelAnimPlayback(
+    playbackMode,
+    prefersReducedMotion,
+    isPlaybackEnabled,
+  )
 
   useEffect(() => {
     if (!assetPath || !prepared || !sequenceSelection || !canvasRef.current) {
@@ -211,12 +160,13 @@ export function SkelAnimCanvas({
   }, [animation?.fps, assetPath, isPlaying, labels.error, prepared, sequenceSelection])
 
   const showCanvas = Boolean(animation && prepared && sequenceSelection && !loadError)
-  const statusText = loadError
-    ? `${labels.error} · ${loadError}`
-    : showCanvas
-      ? `${labels.animated}${prefersReducedMotion ? ` · ${labels.reducedMotion}` : ''}`
-      : labels.fallback
-  const rootClassName = className ? `skelanim-player ${className}` : 'skelanim-player'
+  const statusText = buildSkelAnimStatusText({
+    loadError,
+    showCanvas,
+    prefersReducedMotion,
+    labels,
+  })
+  const rootClassName = buildSkelAnimRootClassName(className)
 
   return (
     <div className={rootClassName}>

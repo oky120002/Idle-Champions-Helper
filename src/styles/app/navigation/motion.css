@@ -1,0 +1,24 @@
+@keyframes site-nav-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-0.45rem) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-nav,
+  .site-nav--mobile-open {
+    animation: none;
+  }
+
+  .nav-link,
+  .locale-switcher__toggle,
+  .locale-switcher__toggle-thumb {
+    transition: none;
+  }
+}

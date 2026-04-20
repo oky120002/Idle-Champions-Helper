@@ -1,0 +1,122 @@
+.filter-panel {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.filter-panel--sidebar {
+  margin-top: 0;
+  gap: 1rem;
+}
+
+.filter-panel--nested {
+  margin-top: 0;
+  gap: 1rem;
+}
+
+.filter-panel--compact {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.filter-group {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.filter-subgroup-stack {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.filter-subgroup {
+  position: relative;
+  display: grid;
+  gap: 0.65rem;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid rgba(227, 214, 193, 0.08);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at top right, color-mix(in oklch, var(--color-steel) 14%, transparent), transparent 42%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015)),
+    rgba(7, 12, 18, 0.38);
+  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.035);
+}
+
+.filter-subgroup::before {
+  content: "";
+  position: absolute;
+  left: 0.95rem;
+  right: 0.95rem;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 243, 223, 0.14), transparent);
+}
+
+.filter-subgroup__header {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.filter-subgroup__title {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #fff3df;
+}
+
+.filter-subgroup__hint {
+  margin: 0;
+  font-size: 0.84rem;
+  color: rgba(242, 239, 230, 0.58);
+}
+
+.filter-chip-grid,
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.filter-chip,
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.95rem;
+  border: 1px solid rgba(227, 214, 193, 0.14);
+  border-radius: 999px;
+}
+
+.filter-chip {
+  padding: 0.5rem 0.85rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.034), rgba(255, 255, 255, 0.014)),
+    rgba(7, 12, 18, 0.32);
+  color: rgba(242, 239, 230, 0.82);
+  cursor: pointer;
+  box-shadow:
+    0 10px 20px rgba(1, 4, 9, 0.14),
+    inset 0 1px 0 rgba(255, 243, 223, 0.03);
+  transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+}
+
+.tag-pill {
+  padding: 0.42rem 0.72rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0.01)),
+    rgba(9, 14, 20, 0.24);
+  color: rgba(242, 239, 230, 0.82);
+  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.03);
+}
+
+.filter-chip:hover {
+  transform: translateY(-1px);
+  border-color: rgba(200, 167, 127, 0.4);
+  box-shadow: 0 14px 24px rgba(1, 4, 9, 0.18);
+}
+
+.filter-chip--active {
+  background:
+    linear-gradient(180deg, color-mix(in oklch, var(--color-copper) 16%, transparent), transparent),
+    rgba(200, 167, 127, 0.12);
+  border-color: rgba(200, 167, 127, 0.58);
+  color: #fff3df;
+}
