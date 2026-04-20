@@ -17,8 +17,9 @@ export function VariantsPage() {
         className="variants-page"
         headerContent={
           <PageTabHeader
+            eyebrow={t({ zh: '变体筛选', en: 'Variant filters' })}
             accentLabel="VARIANTS"
-            title={t({ zh: '变体筛选', en: 'Variant filters' })}
+            title={t({ zh: '按战役、限制与场景变化筛选官方变体', en: 'Filter official variants by campaign, restrictions, and battlefield shifts' })}
             aside={state.status === 'ready' ? <VariantsMetrics model={model} /> : null}
             layout="headline"
           />

@@ -41,15 +41,6 @@ export function ChampionsResultsSection({ model }: ChampionsResultsSectionProps)
       >
         <div ref={resultsContentRef} className="results-panel">
           <div className="results-panel__meta">
-            <p
-              className={activeFilters.length > 0 ? 'supporting-text' : 'supporting-text supporting-text--placeholder'}
-              aria-hidden={activeFilters.length === 0}
-            >
-              {activeFilters.length > 0
-                ? `${t({ zh: '当前筛选：', en: 'Active filters: ' })}${activeFilters.join(' · ')}`
-                : t({ zh: '当前筛选：', en: 'Active filters: ' })}
-            </p>
-
             <p className="supporting-text">
               {filteredChampions.length > 0
                 ? t({
@@ -61,6 +52,12 @@ export function ChampionsResultsSection({ model }: ChampionsResultsSectionProps)
                     en: 'No champions match this filter set yet. Peel the left-side chips back one by one, or use the reset button in the filter header to start over.',
                   })}
             </p>
+
+            {activeFilters.length > 0 ? (
+              <p className="results-panel__filter-summary">
+                {`${t({ zh: '当前筛选：', en: 'Active filters: ' })}${activeFilters.join(' · ')}`}
+              </p>
+            ) : null}
 
             {filteredChampions.length > 0 ? (
               <div className="results-panel__actions">

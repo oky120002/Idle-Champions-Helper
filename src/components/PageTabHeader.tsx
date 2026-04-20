@@ -25,7 +25,7 @@ export function PageTabHeader({
       <div className="page-tab-header__topline">
         <div className="page-tab-header__signals">
           <p className={eyebrow ? 'page-tab-header__eyebrow' : 'page-tab-header__eyebrow page-tab-header__eyebrow--accent-only'}>
-            {eyebrow ? <span>{eyebrow}</span> : null}
+            {eyebrow ? <span className="page-tab-header__eyebrow-label">{eyebrow}</span> : null}
             <span className="page-tab-header__eyebrow-accent">{accentLabel}</span>
           </p>
           {versionState.status === 'ready' ? (

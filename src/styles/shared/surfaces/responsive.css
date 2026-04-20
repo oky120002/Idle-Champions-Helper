@@ -29,6 +29,11 @@
     border-radius: 20px;
   }
 
+  .page-tab-header__aside {
+    flex-basis: 100%;
+    margin-left: 0;
+  }
+
   .page-header-metrics {
     gap: 0.44rem;
   }
@@ -72,12 +77,25 @@
     gap: 0.42rem 0.56rem;
   }
 
+  .page-tab-header__eyebrow {
+    gap: 0.34rem;
+  }
+
+  .page-tab-header__eyebrow-label {
+    font-size: 0.64rem;
+    letter-spacing: 0.14em;
+  }
+
+  .page-tab-header__eyebrow-label::after {
+    width: 1rem;
+  }
+
   .page-tab-header__title {
-    font-size: clamp(1.4rem, 6vw, 1.92rem);
+    font-size: clamp(1.28rem, 5.2vw, 1.62rem);
   }
 
   .page-tab-header--headline .page-tab-header__title {
-    font-size: clamp(1.72rem, 7vw, 2.3rem);
+    font-size: clamp(1.38rem, 5.6vw, 1.78rem);
   }
 
   .page-tab-header__meta {
@@ -156,7 +174,7 @@
   }
 
   .page-header-metrics--compact .page-header-metric {
-    padding: 0.3rem 0.56rem 0.34rem;
+    padding: 0.26rem 0.5rem 0.3rem;
     border-radius: 999px;
   }
 
@@ -166,7 +184,7 @@
   }
 
   .page-header-metrics--compact .page-header-metric__label {
-    font-size: 0.56rem;
+    font-size: 0.52rem;
   }
 
   .page-header-metric__value {
@@ -174,7 +192,7 @@
   }
 
   .page-header-metrics--compact .page-header-metric__value {
-    font-size: 0.78rem;
+    font-size: 0.72rem;
   }
 
   .surface-card.detail-section {

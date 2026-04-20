@@ -15,15 +15,6 @@ export function IllustrationsResultsSection({ model }: IllustrationsResultsSecti
   return (
     <section className="results-panel" aria-label={t({ zh: '立绘筛选结果', en: 'Illustration filter results' })}>
       <div className="results-panel__meta">
-        <p
-          className={activeFilters.length > 0 ? 'supporting-text' : 'supporting-text supporting-text--placeholder'}
-          aria-hidden={activeFilters.length === 0}
-        >
-          {activeFilters.length > 0
-            ? `${t({ zh: '当前筛选：', en: 'Active filters: ' })}${activeFilters.join(' · ')}`
-            : t({ zh: '当前筛选：', en: 'Active filters: ' })}
-        </p>
-
         <p className="supporting-text">
           {hasMatches
             ? t({
@@ -35,6 +26,12 @@ export function IllustrationsResultsSection({ model }: IllustrationsResultsSecti
                 en: 'No illustrations match this filter set yet. Roll chips back one by one, or reset everything to start over.',
               })}
         </p>
+
+        {activeFilters.length > 0 ? (
+          <p className="results-panel__filter-summary">
+            {`${t({ zh: '当前筛选：', en: 'Active filters: ' })}${activeFilters.join(' · ')}`}
+          </p>
+        ) : null}
 
         {hasMatches ? (
           <div className="results-panel__actions">
