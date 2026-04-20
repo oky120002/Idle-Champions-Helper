@@ -8,6 +8,15 @@
 .page-tab-header__copy {
   display: grid;
   gap: 0.28rem;
+  min-width: 0;
+  flex: 0 1 auto;
+}
+
+.page-tab-header__body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.72rem 1rem;
 }
 
 .page-tab-header {
@@ -41,6 +50,10 @@
   text-transform: uppercase;
 }
 
+.page-tab-header__eyebrow--accent-only {
+  gap: 0;
+}
+
 .page-tab-header__eyebrow-accent {
   display: inline-flex;
   align-items: center;
@@ -67,6 +80,21 @@
   line-height: 1.01;
   letter-spacing: -0.05em;
   text-wrap: balance;
+}
+
+.page-tab-header--headline {
+  gap: 0.62rem;
+}
+
+.page-tab-header--headline .page-tab-header__body {
+  align-items: center;
+  gap: 0.64rem 1rem;
+}
+
+.page-tab-header--headline .page-tab-header__title {
+  font-size: clamp(2rem, 3.3vw, 2.85rem);
+  line-height: 0.95;
+  letter-spacing: -0.062em;
 }
 
 .page-tab-header__meta {
@@ -109,5 +137,7 @@
 }
 
 .page-tab-header__aside {
-  align-self: start;
+  align-self: center;
+  min-width: 0;
+  flex: 1 1 24rem;
 }

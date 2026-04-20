@@ -11,7 +11,7 @@ vi.mock('../../src/data/useDataVersionState', () => ({
 const mockedUseDataVersionState = vi.mocked(useDataVersionState)
 
 describe('PageTabHeader', () => {
-  it('把公共数据元信息并到首行，并且不再渲染副标题', () => {
+  it('headline 布局会把统计移到正文行，并允许只显示 accent 标签', () => {
     mockedUseDataVersionState.mockReturnValue({
       status: 'ready',
       data: {
@@ -24,23 +24,26 @@ describe('PageTabHeader', () => {
     const { container } = render(
       <I18nProvider>
         <PageTabHeader
-          eyebrow="英雄筛选"
           accentLabel="CHAMPIONS"
-          title="按座位、定位与联动快速缩小候选英雄"
+          title="英雄筛选"
           aside={<span>总览统计</span>}
+          layout="headline"
         />
       </I18nProvider>,
     )
 
     const topline = container.querySelector('.page-tab-header__topline')
+    const body = container.querySelector('.page-tab-header__body')
+    const eyebrow = container.querySelector('.page-tab-header__eyebrow')
 
     expect(topline).toBeInTheDocument()
-    expect(topline).toContainElement(screen.getByText('英雄筛选'))
     expect(topline).toContainElement(screen.getByText('CHAMPIONS'))
     expect(topline).toContainElement(screen.getByText('公共数据 v1'))
     expect(topline).toContainElement(screen.getByText('采集 2026-04-18'))
-    expect(topline).toContainElement(screen.getByText('总览统计'))
-    expect(screen.getByRole('heading', { level: 2, name: '按座位、定位与联动快速缩小候选英雄' })).toBeInTheDocument()
+    expect(body).toContainElement(screen.getByText('总览统计'))
+    expect(screen.getByRole('heading', { level: 2, name: '英雄筛选' })).toBeInTheDocument()
+    expect(container.querySelector('.page-tab-header')).toHaveClass('page-tab-header--headline')
+    expect(eyebrow).toHaveClass('page-tab-header__eyebrow--accent-only')
     expect(container.querySelector('.page-tab-header__description')).toBeNull()
   })
 })
