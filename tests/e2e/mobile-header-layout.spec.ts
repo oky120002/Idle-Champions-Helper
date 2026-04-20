@@ -11,7 +11,7 @@ test('移动端顶部导航应保持紧凑且不依赖横向滑动', async ({ pa
 
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('./#/champions')
-  await expect(page.getByRole('heading', { level: 2, name: '英雄筛选' })).toBeVisible()
+  await expect(page.getByRole('heading', { level: 2, name: '按座位、定位与联动快速缩小候选英雄' })).toBeVisible()
 
   const headerMetrics = await page.locator('.site-header').evaluate((element) => {
     if (!(element instanceof HTMLElement)) {

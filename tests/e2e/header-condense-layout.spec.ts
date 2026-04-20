@@ -6,10 +6,12 @@ interface HeaderMetrics {
   compactBrandOpacity: number
   height: number
   kickerDisplay: string
+  navHeight: number
   navClientWidth: number
   navLinkTops: number[]
   navScrollWidth: number
   navTop: number
+  topbarActionsHeight: number
   topbarActionsTop: number
 }
 
@@ -32,12 +34,20 @@ async function getHeaderMetrics(page: Page): Promise<HeaderMetrics> {
     const contentShell = element.querySelector('.site-header__content-shell')
     const compactBrand = element.querySelector('.site-header__compact-brand')
     const nav = element.querySelector('.site-nav')
+    const topbarActions = element.querySelector('.site-header__topbar-actions')
 
-    if (!(contentShell instanceof HTMLElement) || !(compactBrand instanceof HTMLElement) || !(nav instanceof HTMLElement)) {
+    if (
+      !(contentShell instanceof HTMLElement)
+      || !(compactBrand instanceof HTMLElement)
+      || !(nav instanceof HTMLElement)
+      || !(topbarActions instanceof HTMLElement)
+    ) {
       throw new Error('顶部导航关键节点不存在。')
     }
 
     const headerRect = element.getBoundingClientRect()
+    const navRect = nav.getBoundingClientRect()
+    const topbarActionsRect = topbarActions.getBoundingClientRect()
 
     return {
       compactBrandInset: Math.round(compactBrand.getBoundingClientRect().left - headerRect.left),
@@ -45,13 +55,15 @@ async function getHeaderMetrics(page: Page): Promise<HeaderMetrics> {
       compactBrandOpacity: Number(window.getComputedStyle(compactBrand).opacity),
       height: Math.round(element.getBoundingClientRect().height),
       kickerDisplay: window.getComputedStyle(element.querySelector('.site-kicker') as Element).display,
+      navHeight: Math.round(navRect.height),
       navClientWidth: Math.round(nav.clientWidth),
       navLinkTops: Array.from(nav.querySelectorAll('.nav-link')).map((navLink) =>
         Math.round((navLink as HTMLElement).getBoundingClientRect().top),
       ),
       navScrollWidth: Math.round(nav.scrollWidth),
-      navTop: Math.round(nav.getBoundingClientRect().top),
-      topbarActionsTop: Math.round((element.querySelector('.site-header__topbar-actions') as HTMLElement).getBoundingClientRect().top),
+      navTop: Math.round(navRect.top),
+      topbarActionsHeight: Math.round(topbarActionsRect.height),
+      topbarActionsTop: Math.round(topbarActionsRect.top),
     }
   })
 }
@@ -65,7 +77,7 @@ test('非首页滚动后顶部大标题应自动收紧，回顶后再展开', as
 
   await page.setViewportSize({ width: 1440, height: 900 })
   await page.goto('./#/champions')
-  await expect(page.getByRole('heading', { level: 2, name: '英雄筛选' })).toBeVisible()
+  await expect(page.getByRole('heading', { level: 2, name: '按座位、定位与联动快速缩小候选英雄' })).toBeVisible()
   await expect(page.getByText(/^当前展示 \d+ \/ \d+ 名英雄/)).toBeVisible()
 
   const initialMetrics = await getHeaderMetrics(page)
@@ -87,7 +99,12 @@ test('非首页滚动后顶部大标题应自动收紧，回顶后再展开', as
   expect(condensedMetrics.compactBrandOpacity).toBeGreaterThan(0.9)
   expect(condensedMetrics.compactBrandInset).toBeGreaterThanOrEqual(12)
   expect(condensedMetrics.kickerDisplay).toBe('none')
-  expect(Math.abs(condensedMetrics.navTop - condensedMetrics.topbarActionsTop)).toBeLessThanOrEqual(6)
+  expect(
+    Math.abs(
+      condensedMetrics.navTop + condensedMetrics.navHeight / 2
+        - (condensedMetrics.topbarActionsTop + condensedMetrics.topbarActionsHeight / 2),
+    ),
+  ).toBeLessThanOrEqual(6)
 
   await scrollWindowInstantly(page, 0)
   await page.waitForTimeout(headerCondenseAnimationWaitMs)

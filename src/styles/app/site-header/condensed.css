@@ -92,7 +92,7 @@
 @media (min-width: 961px) {
   .site-header--subpage.site-header--condensed {
     grid-template-columns: auto minmax(0, 1fr) auto;
-    align-items: start;
+    align-items: center;
     gap: 0.4rem 0.75rem;
   }
 
@@ -107,6 +107,7 @@
   .site-header--subpage.site-header--condensed .site-header__brand-group {
     grid-column: 1;
     grid-row: 1;
+    align-self: center;
   }
 
   .site-header--subpage.site-header--condensed .site-kicker {
@@ -116,17 +117,14 @@
   .site-header--subpage.site-header--condensed .site-nav {
     grid-column: 2;
     grid-row: 1;
+    align-self: center;
   }
 
   .site-header--subpage.site-header--condensed .site-header__topbar-actions {
     grid-column: 3;
     grid-row: 1;
     margin-left: 0;
-    align-self: start;
+    align-self: center;
     justify-self: end;
-  }
-
-  .site-header--subpage.site-header--condensed .site-nav {
-    align-self: start;
   }
 }

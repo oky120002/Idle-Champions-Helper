@@ -24,15 +24,6 @@ export function VariantsResultsSection({ model }: VariantsResultsSectionProps) {
     <section className="variants-results" aria-label={t({ zh: '变体筛选结果', en: 'Variant filter results' })}>
       <div className="results-panel">
         <div className="results-panel__meta">
-          <p
-            className={activeFilters.length > 0 ? 'supporting-text' : 'supporting-text supporting-text--placeholder'}
-            aria-hidden={activeFilters.length === 0}
-          >
-            {activeFilters.length > 0
-              ? `${t({ zh: '当前筛选：', en: 'Active filters: ' })}${activeFilters.join(' · ')}`
-              : t({ zh: '当前筛选：', en: 'Active filters: ' })}
-          </p>
-
           <p className="supporting-text">
             {hasMatches
               ? t({
@@ -44,6 +35,12 @@ export function VariantsResultsSection({ model }: VariantsResultsSectionProps) {
                   en: 'No variants match the current filter set. Loosen one dimension first, then tighten it back down for a steadier search flow.',
                 })}
           </p>
+
+          {activeFilters.length > 0 ? (
+            <p className="results-panel__filter-summary">
+              {`${t({ zh: '当前筛选：', en: 'Active filters: ' })}${activeFilters.join(' · ')}`}
+            </p>
+          ) : null}
 
           {hasMatches ? (
             <div className="results-panel__actions">
