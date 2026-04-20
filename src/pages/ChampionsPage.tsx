@@ -36,7 +36,11 @@ export function ChampionsPage() {
         ) : null}
 
         {state.status === 'ready' ? (
-          <FilterSidebarLayout sidebar={<ChampionsSidebar model={model} />} className="champions-workspace">
+          <FilterSidebarLayout
+            storageKey="champions"
+            sidebar={<ChampionsSidebar model={model} />}
+            className="champions-workspace"
+          >
             <ChampionsResultsSection model={model} />
           </FilterSidebarLayout>
         ) : null}

@@ -177,6 +177,7 @@ export function PetsPage() {
         }
       >
         <FilterSidebarLayout
+          storageKey="pets"
           sidebar={
             <PetFilters
               query={query}

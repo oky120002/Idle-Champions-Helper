@@ -28,3 +28,17 @@ export function DisclosureCaretIcon({ isOpen }: { isOpen: boolean }) {
     </svg>
   )
 }
+
+export function SidebarToggleIcon({ isCollapsed }: { isCollapsed: boolean }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+      <path d="M5.75 5.75h12.5v12.5H5.75z" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M10.25 5.75v12.5" strokeLinecap="round" strokeOpacity="0.3" />
+      {isCollapsed ? (
+        <path d="m13 9 3.25 3L13 15" strokeLinecap="round" strokeLinejoin="round" />
+      ) : (
+        <path d="m15.25 9-3.25 3 3.25 3" strokeLinecap="round" strokeLinejoin="round" />
+      )}
+    </svg>
+  )
+}

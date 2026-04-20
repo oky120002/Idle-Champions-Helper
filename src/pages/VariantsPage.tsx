@@ -38,6 +38,7 @@ export function VariantsPage() {
 
         {state.status === 'ready' ? (
           <FilterSidebarLayout
+            storageKey="variants"
             sidebar={<VariantsFilterBar model={model} />}
             className="variants-workspace"
             contentClassName="variants-results"
