@@ -54,7 +54,6 @@ export function useResultsViewportTransition({
         previousFilteredCount: filteredCount,
         previousVisibleCount: visibleCount,
         shouldRelocate,
-        targetTop,
         reason,
       }
 
@@ -93,7 +92,11 @@ export function useResultsViewportTransition({
       setResultsShellHeight(nextHeight)
 
       if (shouldRelocate) {
-        scrollWindowTo(pendingTransition.targetTop)
+        const shell = resultsShellRef.current
+
+        if (shell) {
+          scrollWindowTo(getResultsTargetTop(shell))
+        }
       }
 
       releaseResultsHeightTimeoutRef.current = window.setTimeout(() => {

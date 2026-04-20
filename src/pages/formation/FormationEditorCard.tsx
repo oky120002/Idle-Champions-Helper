@@ -19,7 +19,6 @@ export function FormationEditorCard({ model }: FormationEditorCardProps) {
         <PageTabHeader
           eyebrow={t({ zh: '阵型编辑', en: 'Formation editor' })}
           accentLabel="FORMATION"
-          title={t({ zh: '在本地草稿里编辑阵型并校验站位', en: 'Edit formations locally and validate slot placement' })}
         />
       }
     >

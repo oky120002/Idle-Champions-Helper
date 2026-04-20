@@ -1,8 +1,8 @@
 export function getResultsTargetTop(shell: HTMLElement): number {
   const siteHeader = document.querySelector('.site-header')
-  const headerHeight = siteHeader instanceof HTMLElement ? siteHeader.getBoundingClientRect().height : 0
+  const headerBottom = siteHeader instanceof HTMLElement ? siteHeader.getBoundingClientRect().bottom : 0
 
-  return Math.max(Math.round(shell.getBoundingClientRect().top + window.scrollY - headerHeight - 16), 0)
+  return Math.max(Math.round(shell.getBoundingClientRect().top + window.scrollY - headerBottom - 16), 0)
 }
 
 export function getResultsTargetBottom(shell: HTMLElement): number {

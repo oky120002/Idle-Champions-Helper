@@ -29,8 +29,12 @@
     border-radius: 20px;
   }
 
-  .page-tab-header__aside {
-    flex-basis: 100%;
+  .page-tab-header__topline-aside {
+    width: 100%;
+  }
+
+  .page-tab-header__topline-aside .page-header-metrics {
+    width: 100%;
     margin-left: 0;
   }
 
@@ -69,12 +73,12 @@
     gap: 0.64rem;
   }
 
-  .page-tab-header__topline {
-    gap: 0.6rem;
+  .page-tab-header--titleless {
+    gap: 0.42rem;
   }
 
-  .page-tab-header__signals {
-    gap: 0.42rem 0.56rem;
+  .page-tab-header__topline {
+    gap: 0.6rem;
   }
 
   .page-tab-header__eyebrow {

@@ -76,6 +76,17 @@
   padding: clamp(0.72rem, 1.45vw, 0.96rem) 0 5rem;
 }
 
+@media (min-width: 961px) {
+  .site-main {
+    --site-header-sticky-top: 116px;
+    padding-top: 188px;
+  }
+
+  .site-header--subpage.site-header--condensed ~ .site-main {
+    --site-header-sticky-top: 116px;
+  }
+}
+
 @media (max-width: 720px) {
   .background-orb--one {
     top: -5rem;

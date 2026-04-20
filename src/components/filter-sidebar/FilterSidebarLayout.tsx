@@ -1,5 +1,4 @@
 import type { CSSProperties, ReactNode } from 'react'
-import { useSiteHeaderOffset } from '../../app/useSiteHeaderOffset'
 
 interface FilterSidebarLayoutProps {
   sidebar: ReactNode
@@ -16,14 +15,8 @@ export function FilterSidebarLayout({
   contentClassName,
   style,
 }: FilterSidebarLayoutProps) {
-  const stickyTop = useSiteHeaderOffset()
-  const workspaceStyle = {
-    '--champions-sticky-top': `${stickyTop}px`,
-    ...style,
-  } as CSSProperties
-
   return (
-    <div className={className ? `filter-workspace ${className}` : 'filter-workspace'} style={workspaceStyle}>
+    <div className={className ? `filter-workspace ${className}` : 'filter-workspace'} style={style}>
       <aside className="filter-workspace__sidebar">
         <div className="filter-workspace__sidebar-sticky">{sidebar}</div>
       </aside>

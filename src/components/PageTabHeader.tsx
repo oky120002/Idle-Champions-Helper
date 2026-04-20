@@ -5,7 +5,7 @@ import { useDataVersionState } from '../data/useDataVersionState'
 interface PageTabHeaderProps {
   eyebrow?: string
   accentLabel: string
-  title: string
+  title?: string
   aside?: ReactNode
   layout?: 'default' | 'headline'
 }
@@ -19,35 +19,44 @@ export function PageTabHeader({
 }: PageTabHeaderProps) {
   const { locale } = useI18n()
   const versionState = useDataVersionState()
+  const hasTitle = Boolean(title)
 
   return (
-    <div className={layout === 'headline' ? 'page-tab-header page-tab-header--headline' : 'page-tab-header'}>
+    <div
+      className={[
+        'page-tab-header',
+        layout === 'headline' ? 'page-tab-header--headline' : '',
+        hasTitle ? '' : 'page-tab-header--titleless',
+      ]
+        .filter(Boolean)
+        .join(' ')}
+    >
       <div className="page-tab-header__topline">
-        <div className="page-tab-header__signals">
-          <p className={eyebrow ? 'page-tab-header__eyebrow' : 'page-tab-header__eyebrow page-tab-header__eyebrow--accent-only'}>
-            {eyebrow ? <span className="page-tab-header__eyebrow-label">{eyebrow}</span> : null}
-            <span className="page-tab-header__eyebrow-accent">{accentLabel}</span>
-          </p>
-          {versionState.status === 'ready' ? (
-            <div className="page-tab-header__meta" aria-label={locale === 'zh-CN' ? '公共数据版本' : 'Public data version'}>
-              <span className="page-tab-header__meta-pill">
-                {locale === 'zh-CN' ? `公共数据 ${versionState.data.current}` : `Data ${versionState.data.current}`}
-              </span>
-              <span className="page-tab-header__meta-text">
-                {locale === 'zh-CN'
-                  ? `采集 ${versionState.data.updatedAt}`
-                  : `Collected ${versionState.data.updatedAt}`}
-              </span>
-            </div>
-          ) : null}
-        </div>
+        <p className={eyebrow ? 'page-tab-header__eyebrow' : 'page-tab-header__eyebrow page-tab-header__eyebrow--accent-only'}>
+          {eyebrow ? <span className="page-tab-header__eyebrow-label">{eyebrow}</span> : null}
+          <span className="page-tab-header__eyebrow-accent">{accentLabel}</span>
+        </p>
+        {versionState.status === 'ready' ? (
+          <div className="page-tab-header__meta" aria-label={locale === 'zh-CN' ? '公共数据版本' : 'Public data version'}>
+            <span className="page-tab-header__meta-pill">
+              {locale === 'zh-CN' ? `公共数据 ${versionState.data.current}` : `Data ${versionState.data.current}`}
+            </span>
+            <span className="page-tab-header__meta-text">
+              {locale === 'zh-CN'
+                ? `采集 ${versionState.data.updatedAt}`
+                : `Collected ${versionState.data.updatedAt}`}
+            </span>
+          </div>
+        ) : null}
+        {aside ? <div className="page-tab-header__topline-aside">{aside}</div> : null}
       </div>
-      <div className="page-tab-header__body">
-        <div className="page-tab-header__copy">
-          <h2 className="page-tab-header__title">{title}</h2>
+      {hasTitle ? (
+        <div className="page-tab-header__body">
+          <div className="page-tab-header__copy">
+            <h2 className="page-tab-header__title">{title}</h2>
+          </div>
         </div>
-        {aside ? <div className="page-tab-header__aside">{aside}</div> : null}
-      </div>
+      ) : null}
     </div>
   )
 }

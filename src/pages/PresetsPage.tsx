@@ -17,7 +17,6 @@ export function PresetsPage() {
           <PageTabHeader
             eyebrow={t({ zh: '方案存档', en: 'Presets' })}
             accentLabel="PRESETS"
-            title={t({ zh: '管理保存在当前浏览器里的命名阵型方案', en: 'Manage named formation presets stored in the current browser' })}
             aside={state.status === 'ready' ? <PresetsMetrics model={model} /> : null}
           />
         }

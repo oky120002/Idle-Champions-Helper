@@ -1,27 +1,67 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+
+const HEADER_CONDENSE_SCROLL_TOP = 56
+const HEADER_EXPAND_SCROLL_TOP = 24
+
+function shouldCondenseHeader(pathname: string, isCurrentlyCondensed: boolean) {
+  if (typeof window === 'undefined' || pathname === '/') {
+    return false
+  }
+
+  return isCurrentlyCondensed ? window.scrollY > HEADER_EXPAND_SCROLL_TOP : window.scrollY > HEADER_CONDENSE_SCROLL_TOP
+}
 
 export function useSiteHeaderState(pathname: string) {
   const [mobileNavState, setMobileNavState] = useState(() => ({
     isOpen: false,
     pathname,
   }))
-  const [scrollY, setScrollY] = useState(() => (typeof window === 'undefined' ? 0 : window.scrollY))
+  const [isHeaderCondensed, setIsHeaderCondensed] = useState(() => shouldCondenseHeader(pathname, false))
+  const isHeaderCondensedRef = useRef(isHeaderCondensed)
 
   useEffect(() => {
-    const syncScrollY = () => {
-      setScrollY(window.scrollY)
+    isHeaderCondensedRef.current = isHeaderCondensed
+  }, [isHeaderCondensed])
+
+  useEffect(() => {
+    let frameId: number | null = null
+
+    const syncHeaderCondensedState = () => {
+      const nextIsHeaderCondensed = shouldCondenseHeader(pathname, isHeaderCondensedRef.current)
+
+      if (nextIsHeaderCondensed === isHeaderCondensedRef.current) {
+        return
+      }
+
+      isHeaderCondensedRef.current = nextIsHeaderCondensed
+      setIsHeaderCondensed(nextIsHeaderCondensed)
     }
 
-    window.addEventListener('scroll', syncScrollY, { passive: true })
+    const scheduleHeaderCondensedSync = () => {
+      if (frameId !== null) {
+        return
+      }
+
+      frameId = window.requestAnimationFrame(() => {
+        frameId = null
+        syncHeaderCondensedState()
+      })
+    }
+
+    syncHeaderCondensedState()
+    window.addEventListener('scroll', scheduleHeaderCondensedSync, { passive: true })
 
     return () => {
-      window.removeEventListener('scroll', syncScrollY)
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId)
+      }
+
+      window.removeEventListener('scroll', scheduleHeaderCondensedSync)
     }
-  }, [])
+  }, [pathname])
 
   const isHomeRoute = pathname === '/'
   const isMobileNavOpen = mobileNavState.isOpen && mobileNavState.pathname === pathname
-  const isHeaderCondensed = !isHomeRoute && Math.max(scrollY, typeof window === 'undefined' ? 0 : window.scrollY) > 56
   const headerClassName = [
     'site-header',
     !isHomeRoute ? 'site-header--subpage' : '',

@@ -17,7 +17,14 @@ describe('App', () => {
       </I18nProvider>,
     )
 
-    expect(await screen.findByRole('heading', { level: 2, name: '在本地解析账号凭证并检查导入条件' })).toBeInTheDocument()
+    await screen.findByRole('button', { name: '填入脱敏示例' })
+    const initialHeader = document.querySelector('.page-tab-header')
+
+    if (!(initialHeader instanceof HTMLElement)) {
+      throw new Error('页面页头不存在。')
+    }
+
+    expect(within(initialHeader).getByText('个人数据')).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: '填入脱敏示例' }))
     await user.click(screen.getByRole('button', { name: '读取并校验' }))
@@ -39,10 +46,17 @@ describe('App', () => {
       </I18nProvider>,
     )
 
-    await screen.findByRole('heading', { level: 2, name: '在本地解析账号凭证并检查导入条件' })
+    await screen.findByRole('button', { name: '填入脱敏示例' })
+    const initialHeader = document.querySelector('.page-tab-header')
+
+    if (!(initialHeader instanceof HTMLElement)) {
+      throw new Error('页面页头不存在。')
+    }
+
+    await within(initialHeader).findByText('个人数据')
     await user.click(screen.getByRole('link', { name: '方案存档' }))
 
-    expect(await screen.findByRole('heading', { level: 2, name: '管理保存在当前浏览器里的命名阵型方案' })).toBeInTheDocument()
+    expect(await screen.findByText('已保存方案')).toBeInTheDocument()
   })
 
   it('通过低频语言设置入口切换到英文界面', async () => {

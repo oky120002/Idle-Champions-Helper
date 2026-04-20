@@ -9,7 +9,7 @@ import { useChampionsPageModel } from './champions/useChampionsPageModel'
 
 export function ChampionsPage() {
   const model = useChampionsPageModel()
-  const { state, t, championsWorkspaceStyle } = model
+  const { state, t } = model
 
   return (
     <div className="page-stack">
@@ -18,7 +18,6 @@ export function ChampionsPage() {
           <PageTabHeader
             eyebrow={t({ zh: '英雄筛选', en: 'Champion filters' })}
             accentLabel="CHAMPIONS"
-            title={t({ zh: '按座位、定位与联动快速缩小候选英雄', en: 'Narrow champion candidates by seat, role, and affiliation' })}
             aside={state.status === 'ready' ? <ChampionsMetrics model={model} /> : null}
             layout="headline"
           />
@@ -37,11 +36,7 @@ export function ChampionsPage() {
         ) : null}
 
         {state.status === 'ready' ? (
-          <FilterSidebarLayout
-            sidebar={<ChampionsSidebar model={model} />}
-            className="champions-workspace"
-            style={championsWorkspaceStyle}
-          >
+          <FilterSidebarLayout sidebar={<ChampionsSidebar model={model} />} className="champions-workspace">
             <ChampionsResultsSection model={model} />
           </FilterSidebarLayout>
         ) : null}
