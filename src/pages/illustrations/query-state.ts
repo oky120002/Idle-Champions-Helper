@@ -1,9 +1,9 @@
 import {
-  appendSortedStringValues,
-  readSearchValue,
-  readSeatValues,
-  readStringValues,
-} from '../../features/champion-filters/query'
+  appendCommonFilterSearchParams,
+  readCommonFilterExpansion,
+  readCommonFilterState,
+  type CommonFilterSearchParamKeys,
+} from '../../features/champion-filters/query-state'
 import {
   RESULTS_VIEW_ALL,
   SEARCH_PARAM_ACQUISITION,
@@ -21,6 +21,19 @@ import {
 } from './constants'
 import type { IllustrationFilterExpansion, IllustrationsFilterState, ViewFilter } from './types'
 
+const ILLUSTRATION_FILTER_PARAM_KEYS: CommonFilterSearchParamKeys = {
+  query: SEARCH_PARAM_QUERY,
+  seat: SEARCH_PARAM_SEAT,
+  role: SEARCH_PARAM_ROLE,
+  affiliation: SEARCH_PARAM_AFFILIATION,
+  race: SEARCH_PARAM_RACE,
+  gender: SEARCH_PARAM_GENDER,
+  alignment: SEARCH_PARAM_ALIGNMENT,
+  profession: SEARCH_PARAM_PROFESSION,
+  acquisition: SEARCH_PARAM_ACQUISITION,
+  mechanic: SEARCH_PARAM_MECHANIC,
+}
+
 export function readScopeValue(searchParams: URLSearchParams): ViewFilter {
   const scope = searchParams.get(SEARCH_PARAM_SCOPE)
 
@@ -37,28 +50,12 @@ export function readShowAllResults(searchParams: URLSearchParams): boolean {
 
 export function buildFilterSearchParams(filters: IllustrationsFilterState): URLSearchParams {
   const searchParams = new URLSearchParams()
-  const normalizedSearch = filters.search.trim()
-
-  if (normalizedSearch) {
-    searchParams.set(SEARCH_PARAM_QUERY, normalizedSearch)
-  }
 
   if (filters.scope !== 'all') {
     searchParams.set(SEARCH_PARAM_SCOPE, filters.scope)
   }
 
-  filters.selectedSeats
-    .slice()
-    .sort((left, right) => left - right)
-    .forEach((seat) => searchParams.append(SEARCH_PARAM_SEAT, String(seat)))
-  appendSortedStringValues(searchParams, SEARCH_PARAM_ROLE, filters.selectedRoles)
-  appendSortedStringValues(searchParams, SEARCH_PARAM_AFFILIATION, filters.selectedAffiliations)
-  appendSortedStringValues(searchParams, SEARCH_PARAM_RACE, filters.selectedRaces)
-  appendSortedStringValues(searchParams, SEARCH_PARAM_GENDER, filters.selectedGenders)
-  appendSortedStringValues(searchParams, SEARCH_PARAM_ALIGNMENT, filters.selectedAlignments)
-  appendSortedStringValues(searchParams, SEARCH_PARAM_PROFESSION, filters.selectedProfessions)
-  appendSortedStringValues(searchParams, SEARCH_PARAM_ACQUISITION, filters.selectedAcquisitions)
-  appendSortedStringValues(searchParams, SEARCH_PARAM_MECHANIC, filters.selectedMechanics)
+  appendCommonFilterSearchParams(searchParams, filters, ILLUSTRATION_FILTER_PARAM_KEYS)
 
   if (filters.showAllResults) {
     searchParams.set(SEARCH_PARAM_RESULTS, RESULTS_VIEW_ALL)
@@ -82,32 +79,12 @@ export function readInitialFilterState(search: string): IllustrationsFilterState
   const searchParams = new URLSearchParams(search)
 
   return {
-    search: readSearchValue(searchParams),
     scope: readScopeValue(searchParams),
-    selectedSeats: readSeatValues(searchParams),
-    selectedRoles: readStringValues(searchParams, SEARCH_PARAM_ROLE),
-    selectedAffiliations: readStringValues(searchParams, SEARCH_PARAM_AFFILIATION),
-    selectedRaces: readStringValues(searchParams, SEARCH_PARAM_RACE),
-    selectedGenders: readStringValues(searchParams, SEARCH_PARAM_GENDER),
-    selectedAlignments: readStringValues(searchParams, SEARCH_PARAM_ALIGNMENT),
-    selectedProfessions: readStringValues(searchParams, SEARCH_PARAM_PROFESSION),
-    selectedAcquisitions: readStringValues(searchParams, SEARCH_PARAM_ACQUISITION),
-    selectedMechanics: readStringValues(searchParams, SEARCH_PARAM_MECHANIC),
+    ...readCommonFilterState(searchParams, ILLUSTRATION_FILTER_PARAM_KEYS),
     showAllResults: readShowAllResults(searchParams),
   }
 }
 
 export function readInitialFilterExpansion(search: string): IllustrationFilterExpansion {
-  const searchParams = new URLSearchParams(search)
-
-  return {
-    identity:
-      readStringValues(searchParams, SEARCH_PARAM_RACE).length > 0 ||
-      readStringValues(searchParams, SEARCH_PARAM_GENDER).length > 0 ||
-      readStringValues(searchParams, SEARCH_PARAM_ALIGNMENT).length > 0,
-    meta:
-      readStringValues(searchParams, SEARCH_PARAM_PROFESSION).length > 0 ||
-      readStringValues(searchParams, SEARCH_PARAM_ACQUISITION).length > 0 ||
-      readStringValues(searchParams, SEARCH_PARAM_MECHANIC).length > 0,
-  }
+  return readCommonFilterExpansion(new URLSearchParams(search), ILLUSTRATION_FILTER_PARAM_KEYS)
 }

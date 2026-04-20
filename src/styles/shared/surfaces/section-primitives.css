@@ -1,0 +1,92 @@
+.section-heading {
+  margin: 0 0 0.72rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: #fff0d6;
+  font-size: 0.86rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.section-heading::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 243, 223, 0.96) 0%, rgba(198, 140, 92, 0.82) 58%, rgba(198, 140, 92, 0) 100%);
+  box-shadow: 0 0 0 0.22rem rgba(198, 140, 92, 0.12);
+}
+
+.bullet-list,
+.ordered-list {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.bullet-list li::marker,
+.ordered-list li::marker {
+  color: var(--color-copper);
+}
+
+.split-grid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.surface-card.detail-section {
+  padding: 1.12rem 1.18rem 1.14rem;
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at top right, color-mix(in oklch, var(--color-copper) 14%, transparent), transparent 38%),
+    linear-gradient(180deg, rgba(18, 27, 38, 0.96), rgba(9, 14, 20, 0.98));
+  box-shadow: 0 18px 56px rgba(1, 4, 9, 0.28);
+}
+
+.surface-card.detail-section::before {
+  border-radius: 25px;
+}
+
+.surface-card.detail-section .surface-card__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  margin: 0;
+  min-height: 1.72rem;
+  padding: 0.3rem 0.56rem;
+  border: 1px solid color-mix(in oklch, var(--color-copper) 22%, transparent);
+  border-radius: 999px;
+  background: rgba(255, 246, 232, 0.04);
+  color: #d8bb97;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+}
+
+.surface-card.detail-section .surface-card__title {
+  max-width: 30rem;
+  font-size: clamp(1.38rem, 2vw, 1.8rem);
+  line-height: 0.98;
+}
+
+.surface-card.detail-section .surface-card__description {
+  margin-top: 0.48rem;
+  max-width: 60ch;
+  color: var(--color-text-soft);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.surface-card.detail-section .surface-card__body {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 0.84rem;
+  padding-top: 0.88rem;
+  border-top: 1px solid rgba(227, 214, 193, 0.08);
+}
+
+.surface-card.detail-section--headerless .surface-card__body {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}

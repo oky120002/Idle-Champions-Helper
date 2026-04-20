@@ -14,10 +14,6 @@ export interface ChampionFilters {
   mechanics: string[]
 }
 
-export function toggleFilterValue<T>(values: T[], value: T): T[] {
-  return values.includes(value) ? values.filter((item) => item !== value) : [...values, value]
-}
-
 export function filterChampions(champions: Champion[], filters: ChampionFilters): Champion[] {
   const query = filters.search.trim().toLowerCase()
 

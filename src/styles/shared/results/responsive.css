@@ -1,0 +1,47 @@
+@media (max-width: 720px) {
+  .champions-results {
+    --champions-results-card-min: 100%;
+  }
+
+  .results-grid.champions-results__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .result-card__role-row {
+    flex-wrap: wrap;
+  }
+
+  .result-card__identity--spotlight {
+    gap: 0.78rem;
+  }
+
+  .result-attribute-grid--compact {
+    grid-template-columns: 1fr;
+  }
+
+  .result-card__portrait-stage {
+    width: 5.9rem;
+    min-width: 5.9rem;
+  }
+
+  .champion-avatar--spotlight {
+    width: 4.8rem;
+    height: 4.8rem;
+  }
+
+  .result-card__portrait-chip {
+    left: 0.5rem;
+    bottom: 0.55rem;
+    padding: 0.26rem 0.5rem;
+    font-size: 0.62rem;
+  }
+
+  .result-card__artbackdrop {
+    opacity: 0.26;
+  }
+
+  .champion-avatar--dossier {
+    width: 5.6rem;
+    height: 5.6rem;
+  }
+}

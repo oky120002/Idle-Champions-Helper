@@ -17,12 +17,12 @@ describe('App', () => {
       </I18nProvider>,
     )
 
-    expect(screen.getByRole('heading', { level: 2, name: '在本地解析账号凭证并检查导入条件' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { level: 2, name: '在本地解析账号凭证并检查导入条件' })).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: '填入脱敏示例' }))
     await user.click(screen.getByRole('button', { name: '读取并校验' }))
 
-    expect(screen.getByText('已在本地解析出一组合法凭证，当前页面仅展示脱敏结果，不会自动保存。')).toBeInTheDocument()
+    expect(await screen.findByText('已在本地解析出一组合法凭证，当前页面仅展示脱敏结果，不会自动保存。')).toBeInTheDocument()
     expect(screen.getByText('12***89')).toBeInTheDocument()
     expect(screen.getByText('abcdef***7890')).toBeInTheDocument()
     expect(screen.getByText('mobile')).toBeInTheDocument()
@@ -39,9 +39,10 @@ describe('App', () => {
       </I18nProvider>,
     )
 
+    await screen.findByRole('heading', { level: 2, name: '在本地解析账号凭证并检查导入条件' })
     await user.click(screen.getByRole('link', { name: '方案存档' }))
 
-    expect(screen.getByRole('heading', { level: 2, name: '管理保存在当前浏览器里的命名阵型方案' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { level: 2, name: '管理保存在当前浏览器里的命名阵型方案' })).toBeInTheDocument()
   })
 
   it('通过低频语言设置入口切换到英文界面', async () => {
