@@ -1,9 +1,8 @@
-import { useCallback, useRef, type CSSProperties } from 'react'
+import { useCallback, useRef } from 'react'
 import { getResultsTargetBottom, getResultsTargetTop } from './results-motion/results-scroll-targets'
 import { useResultsQuickNavigation } from './results-motion/useResultsQuickNavigation'
 import { useResultsScrollAnimator } from './results-motion/useResultsScrollAnimator'
 import { useResultsScrollRestore } from './results-motion/useResultsScrollRestore'
-import { useResultsStickyTop } from './results-motion/useResultsStickyTop'
 import { useResultsViewportTransition } from './results-motion/useResultsViewportTransition'
 import type { ResultsTransitionReason } from './types'
 
@@ -26,7 +25,6 @@ export function useChampionResultsMotion({
 }: UseChampionResultsMotionOptions) {
   const resultsShellRef = useRef<HTMLElement | null>(null)
   const resultsContentRef = useRef<HTMLDivElement | null>(null)
-  const stickyTop = useResultsStickyTop()
   const { scrollWindowTo } = useResultsScrollAnimator()
 
   useResultsScrollRestore({
@@ -71,13 +69,8 @@ export function useChampionResultsMotion({
     [scrollWindowTo, setResultsQuickNavigation],
   )
 
-  const championsWorkspaceStyle = {
-    '--champions-sticky-top': `${stickyTop}px`,
-  } as CSSProperties
-
   return {
     resultsShellHeight,
-    championsWorkspaceStyle,
     resultsShellRef,
     resultsContentRef,
     resultsQuickNavigation,

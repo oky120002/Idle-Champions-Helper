@@ -15,7 +15,6 @@ export function UserDataIntroCard({ model }: UserDataIntroCardProps) {
         <PageTabHeader
           eyebrow={t({ zh: '个人数据', en: 'User data' })}
           accentLabel="USER DATA"
-          title={t({ zh: '在本地解析账号凭证并检查导入条件', en: 'Parse account credentials locally and check import readiness' })}
         />
       }
     >

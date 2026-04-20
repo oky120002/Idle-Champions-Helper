@@ -89,7 +89,6 @@ export function useChampionsPageModel(): ChampionsPageModel {
     showResultsQuickNavTop,
     showResultsQuickNavBottom,
     resultsShellHeight: motion.resultsShellHeight,
-    championsWorkspaceStyle: motion.championsWorkspaceStyle,
     resultsShellRef: motion.resultsShellRef,
     resultsContentRef: motion.resultsContentRef,
     roles: derived.roles,

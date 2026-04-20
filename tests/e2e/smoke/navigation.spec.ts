@@ -17,7 +17,7 @@ test('GitHub Pages 基线路径下可以完成主页与个人数据 smoke 回归
   await expect(page.getByText(`采集 ${versionMeta.updatedAt}`)).toBeVisible()
 
   await page.getByRole('link', { name: '个人数据' }).click()
-  await expect(page.getByRole('heading', { level: 2, name: '在本地解析账号凭证并检查导入条件' })).toBeVisible()
+  await expect(page.locator('.page-tab-header').getByText('个人数据', { exact: true })).toBeVisible()
 
   const supportUrlInput = page.getByRole('textbox', { name: /Support URL/ })
 

@@ -1,7 +1,7 @@
 .surface-card__header-copy,
 .surface-card__header-aside,
 .page-tab-header__copy,
-.page-tab-header__aside {
+.page-tab-header__topline-aside {
   min-width: 0;
 }
 
@@ -25,13 +25,11 @@
   align-items: start;
 }
 
-.page-tab-header__topline {
-  display: grid;
-  gap: 0.56rem 0.9rem;
-  align-items: start;
+.page-tab-header--titleless {
+  gap: 0.28rem;
 }
 
-.page-tab-header__signals {
+.page-tab-header__topline {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -55,7 +53,7 @@
   align-items: center;
   gap: 0.46rem;
   color: color-mix(in oklch, var(--color-copper) 88%, white 2%);
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -80,7 +78,7 @@
     linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0.012)),
     rgba(7, 11, 16, 0.28);
   color: rgba(242, 239, 230, 0.72);
-  font-size: 0.62rem;
+  font-size: 0.66rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.03);
@@ -149,7 +147,7 @@
     linear-gradient(180deg, color-mix(in oklch, var(--color-copper) 14%, transparent), transparent),
     rgba(8, 12, 17, 0.32);
   color: #fff1d6;
-  font-size: 0.64rem;
+  font-size: 0.68rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.04);
@@ -157,17 +155,14 @@
 
 .page-tab-header__meta-text {
   color: rgba(242, 239, 230, 0.68);
-  font-size: 0.7rem;
+  font-size: 0.74rem;
   letter-spacing: 0.04em;
 }
 
-.page-tab-header__aside {
-  align-self: end;
+.page-tab-header__topline-aside {
   min-width: 0;
-  margin-left: auto;
-  flex: 1 1 28rem;
 }
 
-.page-tab-header__aside .page-header-metrics {
-  justify-content: flex-end;
+.page-tab-header__topline-aside .page-header-metrics {
+  justify-content: flex-start;
 }

@@ -172,11 +172,11 @@
 
   .filter-workspace__sidebar-sticky {
     position: sticky;
-    top: var(--champions-sticky-top, 10rem);
+    top: var(--champions-sticky-top, var(--site-header-sticky-top, 10rem));
   }
 
   .filter-sidebar-panel {
-    max-height: calc(100vh - var(--champions-sticky-top, 10rem) - 0.55rem);
+    max-height: calc(100vh - var(--champions-sticky-top, var(--site-header-sticky-top, 10rem)) - 0.55rem);
     overflow: auto;
     overscroll-behavior: contain;
     scrollbar-gutter: stable;

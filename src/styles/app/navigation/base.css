@@ -18,11 +18,10 @@
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.04),
     0 16px 38px rgba(1, 4, 9, 0.2);
-  backdrop-filter: blur(16px);
   transition:
-    gap var(--site-header-condense-duration, 520ms) var(--site-header-condense-ease, cubic-bezier(0.22, 1, 0.36, 1)),
-    padding var(--site-header-condense-duration, 520ms) var(--site-header-condense-ease, cubic-bezier(0.22, 1, 0.36, 1)),
-    border-radius var(--site-header-condense-duration, 520ms) var(--site-header-condense-ease, cubic-bezier(0.22, 1, 0.36, 1));
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease;
 }
 
 .site-nav::before,
@@ -88,11 +87,7 @@
     border-color 160ms ease,
     background-color 160ms ease,
     color 160ms ease,
-    box-shadow 160ms ease,
-    min-height var(--site-header-condense-duration, 520ms) var(--site-header-condense-ease, cubic-bezier(0.22, 1, 0.36, 1)),
-    padding var(--site-header-condense-duration, 520ms) var(--site-header-condense-ease, cubic-bezier(0.22, 1, 0.36, 1)),
-    border-radius var(--site-header-condense-duration, 520ms) var(--site-header-condense-ease, cubic-bezier(0.22, 1, 0.36, 1)),
-    font-size var(--site-header-condense-duration, 520ms) var(--site-header-condense-ease, cubic-bezier(0.22, 1, 0.36, 1));
+    box-shadow 160ms ease;
 }
 
 .nav-link {
@@ -120,10 +115,7 @@
     border-color 160ms ease,
     background-color 160ms ease,
     box-shadow 160ms ease,
-    color 160ms ease,
-    min-height var(--site-header-condense-duration, 520ms) var(--site-header-condense-ease, cubic-bezier(0.22, 1, 0.36, 1)),
-    padding var(--site-header-condense-duration, 520ms) var(--site-header-condense-ease, cubic-bezier(0.22, 1, 0.36, 1)),
-    border-radius var(--site-header-condense-duration, 520ms) var(--site-header-condense-ease, cubic-bezier(0.22, 1, 0.36, 1));
+    color 160ms ease;
 }
 
 .nav-link__label {

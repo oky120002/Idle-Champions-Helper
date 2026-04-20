@@ -171,7 +171,6 @@ export function PetsPage() {
           <PageTabHeader
             eyebrow={t({ zh: '宠物图鉴', en: 'Pet catalog' })}
             accentLabel="PETS"
-            title={t({ zh: '按来源与图像状态整理宠物目录', en: 'Organize the pet catalog by source and asset coverage' })}
             aside={state.status === 'ready' ? <PetsMetrics summary={summary} /> : null}
             layout="headline"
           />

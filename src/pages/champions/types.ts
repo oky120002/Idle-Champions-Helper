@@ -1,4 +1,4 @@
-import type { CSSProperties, RefObject } from 'react'
+import type { RefObject } from 'react'
 import type { AppLocale, LocaleText } from '../../app/i18n'
 import type { ChampionMechanicCategoryId } from '../../domain/championTags'
 import type { Champion, ChampionIllustration, ChampionVisual, LocalizedText } from '../../domain/types'
@@ -10,7 +10,6 @@ export interface PendingResultsTransition {
   previousFilteredCount: number
   previousVisibleCount: number
   shouldRelocate: boolean
-  targetTop: number
   reason: ResultsTransitionReason
 }
 
@@ -84,7 +83,6 @@ export interface ChampionsPageModel {
   showResultsQuickNavTop: boolean
   showResultsQuickNavBottom: boolean
   resultsShellHeight: number | null
-  championsWorkspaceStyle: CSSProperties
   resultsShellRef: RefObject<HTMLElement | null>
   resultsContentRef: RefObject<HTMLDivElement | null>
   roles: string[]

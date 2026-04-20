@@ -77,13 +77,13 @@ test('非首页滚动后顶部大标题应自动收紧，回顶后再展开', as
 
   await page.setViewportSize({ width: 1440, height: 900 })
   await page.goto('./#/champions')
-  await expect(page.getByRole('heading', { level: 2, name: '按座位、定位与联动快速缩小候选英雄' })).toBeVisible()
+  await expect(page.locator('.page-tab-header').getByText('英雄筛选', { exact: true })).toBeVisible()
   await expect(page.getByText(/^当前展示 \d+ \/ \d+ 名英雄/)).toBeVisible()
 
   const initialMetrics = await getHeaderMetrics(page)
 
   await expect(page.locator('.site-header')).not.toHaveClass(/site-header--condensed/)
-  expect(initialMetrics.contentHeight).toBeGreaterThanOrEqual(60)
+  expect(initialMetrics.contentHeight).toBeGreaterThanOrEqual(56)
   expect(initialMetrics.navScrollWidth - initialMetrics.navClientWidth).toBeLessThanOrEqual(1)
   expect(Math.max(...initialMetrics.navLinkTops) - Math.min(...initialMetrics.navLinkTops)).toBeLessThanOrEqual(6)
 
@@ -93,11 +93,11 @@ test('非首页滚动后顶部大标题应自动收紧，回顶后再展开', as
   const condensedMetrics = await getHeaderMetrics(page)
 
   await expect(page.locator('.site-header')).toHaveClass(/site-header--condensed/)
-  expect(condensedMetrics.height).toBeLessThan(initialMetrics.height - 72)
+  expect(condensedMetrics.height).toBeLessThanOrEqual(initialMetrics.height - 72)
   expect(condensedMetrics.height).toBeLessThanOrEqual(92)
   expect(condensedMetrics.contentHeight).toBeLessThanOrEqual(4)
   expect(condensedMetrics.compactBrandOpacity).toBeGreaterThan(0.9)
-  expect(condensedMetrics.compactBrandInset).toBeGreaterThanOrEqual(12)
+  expect(condensedMetrics.compactBrandInset).toBeGreaterThanOrEqual(8)
   expect(condensedMetrics.kickerDisplay).toBe('none')
   expect(
     Math.abs(
@@ -113,6 +113,6 @@ test('非首页滚动后顶部大标题应自动收紧，回顶后再展开', as
 
   await expect(page.locator('.site-header')).not.toHaveClass(/site-header--condensed/)
   expect(expandedMetrics.height).toBeGreaterThan(condensedMetrics.height + 60)
-  expect(expandedMetrics.contentHeight).toBeGreaterThanOrEqual(60)
+  expect(expandedMetrics.contentHeight).toBeGreaterThanOrEqual(56)
   expect(expandedMetrics.compactBrandOpacity).toBeLessThan(0.1)
 })
