@@ -75,14 +75,21 @@ test('英雄筛选页在长结果列表中收窄条件时应平滑带回结果�
   await page.waitForTimeout(100)
 
   const baselineScrollY = await getScrollY(page)
-  const targetTop = await getResultsTargetTop(page)
 
   await page.locator('.filter-group').nth(2).getByRole('button', { name: '长枪英雄', exact: true }).click()
-  await page.waitForTimeout(450)
+  await expect(page.getByText('当前筛选：联动队伍：长枪英雄 · Heroes of the Lance')).toBeVisible()
+  await expect
+    .poll(async () => {
+      const finalScrollY = await getScrollY(page)
+      const targetTop = await getResultsTargetTop(page)
+
+      return Math.abs(finalScrollY - targetTop)
+    })
+    .toBeLessThanOrEqual(32)
 
   const finalScrollY = await getScrollY(page)
+  const targetTop = await getResultsTargetTop(page)
 
-  await expect(page.getByText('当前筛选：联动队伍：长枪英雄 · Heroes of the Lance')).toBeVisible()
   expect(targetTop).toBeGreaterThan(120)
   expect(finalScrollY).toBeGreaterThan(120)
   expect(finalScrollY).toBeLessThan(baselineScrollY)
