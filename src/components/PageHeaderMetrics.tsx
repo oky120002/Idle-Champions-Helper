@@ -8,15 +8,20 @@ export interface PageHeaderMetricItem {
 interface PageHeaderMetricsProps {
   items: PageHeaderMetricItem[]
   className?: string
+  variant?: 'default' | 'compact'
 }
 
-export function PageHeaderMetrics({ items, className }: PageHeaderMetricsProps) {
+export function PageHeaderMetrics({ items, className, variant = 'default' }: PageHeaderMetricsProps) {
   if (items.length === 0) {
     return null
   }
 
+  const classes = ['page-header-metrics', variant === 'compact' ? 'page-header-metrics--compact' : '', className]
+    .filter(Boolean)
+    .join(' ')
+
   return (
-    <div className={className ? `page-header-metrics ${className}` : 'page-header-metrics'}>
+    <div className={classes}>
       {items.map((item) => (
         <article key={item.label} className="page-header-metric">
           <span className="page-header-metric__label">{item.label}</span>

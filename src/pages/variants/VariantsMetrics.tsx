@@ -19,5 +19,5 @@ export function VariantsMetrics({ model }: VariantsMetricsProps) {
     { label: t({ zh: '覆盖战役 / 场景', en: 'Campaigns / scenes' }), value: `${campaignsWithResults} / ${scenesWithResults}` },
   ]
 
-  return <PageHeaderMetrics items={items} />
+  return <PageHeaderMetrics items={items} variant="compact" />
 }

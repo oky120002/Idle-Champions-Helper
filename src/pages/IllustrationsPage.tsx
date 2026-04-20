@@ -16,10 +16,10 @@ export function IllustrationsPage() {
       <SurfaceCard
         headerContent={
           <PageTabHeader
-            eyebrow={t({ zh: '立绘图鉴', en: 'Illustration catalog' })}
             accentLabel="ART CODEX"
-            title={t({ zh: '按本体、皮肤、座位与标签浏览英雄立绘', en: 'Browse champion art by base form, skin, seat, and tags' })}
+            title={t({ zh: '立绘图鉴', en: 'Illustration catalog' })}
             aside={state.status === 'ready' ? <IllustrationsMetrics model={model} /> : null}
+            layout="headline"
           />
         }
       >
