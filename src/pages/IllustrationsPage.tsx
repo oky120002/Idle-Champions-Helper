@@ -54,7 +54,7 @@ export function IllustrationsPage() {
 
         {state.status === 'ready' ? (
           <>
-            <FilterSidebarLayout sidebar={<IllustrationsSidebar model={model} />}>
+            <FilterSidebarLayout storageKey="illustrations" sidebar={<IllustrationsSidebar model={model} />}>
               <IllustrationsResultsSection model={model} />
             </FilterSidebarLayout>
           </>

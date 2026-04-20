@@ -8,7 +8,8 @@
   --space-2xl: 3rem;
   --layout-max-width: 1400px;
   --layout-inline-gap: clamp(1rem, 2vw, 1.75rem);
-  --champions-sidebar-width: 22rem;
+  --filter-sidebar-width: 20.25rem;
+  --champions-sidebar-width: var(--filter-sidebar-width);
   --champions-results-card-min: 260px;
   --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   --font-display: "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", serif;
@@ -64,14 +65,14 @@
 @media (min-width: 1680px) {
   :root {
     --layout-max-width: 1760px;
-    --champions-sidebar-width: 22.5rem;
+    --filter-sidebar-width: 20.75rem;
   }
 }
 
 @media (min-width: 1920px) {
   :root {
     --layout-max-width: 1960px;
-    --champions-sidebar-width: 23rem;
+    --filter-sidebar-width: 21.25rem;
   }
 }
 
@@ -79,6 +80,6 @@
   :root {
     --layout-max-width: 2200px;
     --layout-inline-gap: clamp(1.25rem, 1.8vw, 2.25rem);
-    --champions-sidebar-width: 23.5rem;
+    --filter-sidebar-width: 21.75rem;
   }
 }
