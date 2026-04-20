@@ -24,5 +24,5 @@ export function PetsMetrics({ summary }: PetsMetricsProps) {
     { label: t({ zh: '暂未开放', en: 'Unavailable' }), value: summary.unavailable },
   ]
 
-  return <PageHeaderMetrics items={items} />
+  return <PageHeaderMetrics items={items} variant="compact" />
 }
