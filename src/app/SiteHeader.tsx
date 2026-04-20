@@ -33,12 +33,6 @@ export function SiteHeader({ activeNavigationItem, locale, setLocale, pathname, 
           <div className="site-header__copy">
             <div className="site-header__title-line">
               <h1 className="site-title">{t({ zh: '个人成长决策台', en: 'Growth-Oriented Formation Desk' })}</h1>
-              <p className="site-subtitle">
-                {t({
-                  zh: '筛英雄 · 查立绘 · 排阵型 · 存方案',
-                  en: 'Filters · Art · Formations · Presets',
-                })}
-              </p>
             </div>
           </div>
         </div>

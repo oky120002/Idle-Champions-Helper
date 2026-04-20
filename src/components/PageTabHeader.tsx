@@ -3,10 +3,11 @@ import { useI18n } from '../app/i18n'
 import { useDataVersionState } from '../data/useDataVersionState'
 
 interface PageTabHeaderProps {
-  eyebrow: string
+  eyebrow?: string
   accentLabel: string
   title: string
   aside?: ReactNode
+  layout?: 'default' | 'headline'
 }
 
 export function PageTabHeader({
@@ -14,16 +15,17 @@ export function PageTabHeader({
   accentLabel,
   title,
   aside,
+  layout = 'default',
 }: PageTabHeaderProps) {
   const { locale } = useI18n()
   const versionState = useDataVersionState()
 
   return (
-    <div className="page-tab-header">
+    <div className={layout === 'headline' ? 'page-tab-header page-tab-header--headline' : 'page-tab-header'}>
       <div className="page-tab-header__topline">
         <div className="page-tab-header__signals">
-          <p className="page-tab-header__eyebrow">
-            <span>{eyebrow}</span>
+          <p className={eyebrow ? 'page-tab-header__eyebrow' : 'page-tab-header__eyebrow page-tab-header__eyebrow--accent-only'}>
+            {eyebrow ? <span>{eyebrow}</span> : null}
             <span className="page-tab-header__eyebrow-accent">{accentLabel}</span>
           </p>
           {versionState.status === 'ready' ? (
@@ -39,10 +41,12 @@ export function PageTabHeader({
             </div>
           ) : null}
         </div>
-        {aside ? <div className="page-tab-header__aside">{aside}</div> : null}
       </div>
-      <div className="page-tab-header__copy">
-        <h2 className="page-tab-header__title">{title}</h2>
+      <div className="page-tab-header__body">
+        <div className="page-tab-header__copy">
+          <h2 className="page-tab-header__title">{title}</h2>
+        </div>
+        {aside ? <div className="page-tab-header__aside">{aside}</div> : null}
       </div>
     </div>
   )

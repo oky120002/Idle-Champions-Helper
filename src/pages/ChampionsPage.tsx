@@ -16,10 +16,10 @@ export function ChampionsPage() {
       <SurfaceCard
         headerContent={
           <PageTabHeader
-            eyebrow={t({ zh: '英雄筛选', en: 'Champion filters' })}
             accentLabel="CHAMPIONS"
-            title={t({ zh: '按座位、定位与联动快速缩小候选英雄', en: 'Narrow champion candidates by seat, role, and affiliation' })}
+            title={t({ zh: '英雄筛选', en: 'Champion filters' })}
             aside={state.status === 'ready' ? <ChampionsMetrics model={model} /> : null}
+            layout="headline"
           />
         }
       >
