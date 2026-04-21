@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useI18n } from '../app/i18n'
 import { FilterSidebarLayout } from '../components/filter-sidebar/FilterSidebarLayout'
+import { FilterSidebarToolbar } from '../components/filter-sidebar/FilterSidebarToolbar'
 import { PageTabHeader } from '../components/PageTabHeader'
 import { StatusBanner } from '../components/StatusBanner'
 import { SurfaceCard } from '../components/SurfaceCard'
@@ -138,6 +139,8 @@ export function PetsPage() {
     [filteredPets, showAllResults],
   )
   const canToggleResultVisibility = filteredPets.length > MAX_VISIBLE_PETS
+  const activeFilterCount =
+    Number(query.trim().length > 0) + Number(sourceFilter !== 'all') + Number(assetFilter !== 'all')
 
   const summary = useMemo(
     () => ({
@@ -178,6 +181,33 @@ export function PetsPage() {
       >
         <FilterSidebarLayout
           storageKey="pets"
+          toolbar={
+            <FilterSidebarToolbar
+              title={t({ zh: '宠物筛选抽屉', en: 'Pet filter drawer' })}
+              description={t({
+                zh: '默认把更多横向空间留给图鉴卡片，需要时再滑出左侧目录条件。',
+                en: 'Leave more horizontal space for the catalog cards by default, then slide the left drawer back in when you need it.',
+              })}
+              status={
+                <span className="filter-sidebar-toolbar__badge">
+                  {activeFilterCount > 0
+                    ? t({ zh: `${activeFilterCount} 项已启用`, en: `${activeFilterCount} active` })
+                    : t({ zh: '当前未启用条件', en: 'No active filters' })}
+                </span>
+              }
+              actions={
+                activeFilterCount > 0 ? (
+                  <button
+                    type="button"
+                    className="action-button action-button--secondary action-button--compact"
+                    onClick={clearAllFilters}
+                  >
+                    {t({ zh: '清空全部', en: 'Clear all' })}
+                  </button>
+                ) : null
+              }
+            />
+          }
           sidebar={
             <PetFilters
               query={query}
