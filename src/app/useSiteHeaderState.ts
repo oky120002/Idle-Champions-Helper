@@ -8,6 +8,10 @@ function shouldCondenseHeader(pathname: string, isCurrentlyCondensed: boolean) {
     return false
   }
 
+  if (pathname === '/champions' && window.innerWidth >= 1080) {
+    return true
+  }
+
   return isCurrentlyCondensed ? window.scrollY > HEADER_EXPAND_SCROLL_TOP : window.scrollY > HEADER_CONDENSE_SCROLL_TOP
 }
 

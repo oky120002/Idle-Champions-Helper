@@ -41,7 +41,7 @@ describe('ChampionsPage filter state', () => {
 
     expect(
       screen.getByText(
-        '当前筛选条件下没有匹配英雄。可以直接点左侧已选条件逐项回退，或用筛选头部的清空全部重新开始。',
+        '当前筛选条件下没有匹配英雄。先回退一个维度，再逐步缩回来，会比一次清空全部更稳。',
       ),
     ).toBeInTheDocument()
     expect(screen.getAllByRole('button', { name: '清空全部' })).toHaveLength(1)
@@ -56,9 +56,8 @@ describe('ChampionsPage filter state', () => {
   })
 
   it('支持从 URL 恢复筛选条件，并恢复上次滚动位置', async () => {
-    const scrollToSpy = vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
     const search = '?q=alpha&seat=1&role=support&race=human&mechanic=control_slow'
-    window.sessionStorage.setItem(`champions-page-scroll:${search}`, '640')
+    window.sessionStorage.setItem(`champions-pane-scroll:${search}`, '640')
 
     renderChampionsPage([`/champions${search}`])
 
@@ -71,10 +70,16 @@ describe('ChampionsPage filter state', () => {
     expect(screen.queryByText('贝塔')).not.toBeInTheDocument()
 
     await waitFor(() => {
-      expect(scrollToSpy).toHaveBeenCalledWith({ top: 640, left: 0, behavior: 'auto' })
+      const pane = document.querySelector('.filter-workbench__content-scroll')
+
+      if (!(pane instanceof HTMLElement)) {
+        throw new Error('结果滚动面板不存在。')
+      }
+
+      expect(pane.scrollTop).toBe(640)
     })
 
-    expect(window.sessionStorage.getItem(`champions-page-scroll:${search}`)).toBeNull()
+    expect(window.sessionStorage.getItem(`champions-pane-scroll:${search}`)).toBeNull()
     expect(screen.getByRole('link', { name: '查看详情：阿尔法' })).toHaveAttribute(
       'href',
       '/champions/alpha?q=alpha&seat=1&role=support&race=human&mechanic=control_slow',

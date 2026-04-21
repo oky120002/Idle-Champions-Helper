@@ -4,6 +4,15 @@ import { RESULTS_SCROLL_DURATION_MS } from '../constants'
 export function useResultsScrollAnimator() {
   const scrollAnimationFrameRef = useRef<number | null>(null)
 
+  const updatePaneScrollTop = useCallback((pane: HTMLElement, top: number) => {
+    if (typeof pane.scrollTo === 'function') {
+      pane.scrollTo({ top, behavior: 'auto' })
+      return
+    }
+
+    pane.scrollTop = top
+  }, [])
+
   const cancelScrollAnimation = useCallback(() => {
     if (scrollAnimationFrameRef.current === null) {
       return
@@ -14,21 +23,19 @@ export function useResultsScrollAnimator() {
   }, [])
 
   const scrollWindowTo = useCallback(
-    (targetTop: number, onComplete?: () => void) => {
+    (pane: HTMLElement, targetTop: number, onComplete?: () => void) => {
       cancelScrollAnimation()
 
       if (typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        window.scrollTo({ top: targetTop, behavior: 'auto' })
-        window.dispatchEvent(new Event('scroll'))
+        updatePaneScrollTop(pane, targetTop)
         onComplete?.()
         return
       }
 
-      const startTop = window.scrollY
+      const startTop = pane.scrollTop
       const distance = targetTop - startTop
 
       if (Math.abs(distance) < 2) {
-        window.dispatchEvent(new Event('scroll'))
         onComplete?.()
         return
       }
@@ -43,10 +50,7 @@ export function useResultsScrollAnimator() {
 
         const progress = Math.min((now - startTime) / RESULTS_SCROLL_DURATION_MS, 1)
 
-        window.scrollTo({
-          top: startTop + distance * easeOutQuart(progress),
-          behavior: 'auto',
-        })
+        updatePaneScrollTop(pane, startTop + distance * easeOutQuart(progress))
 
         if (progress < 1) {
           scrollAnimationFrameRef.current = window.requestAnimationFrame(step)
@@ -54,18 +58,17 @@ export function useResultsScrollAnimator() {
         }
 
         scrollAnimationFrameRef.current = null
-        window.dispatchEvent(new Event('scroll'))
         onComplete?.()
       }
 
       scrollAnimationFrameRef.current = window.requestAnimationFrame(step)
     },
-    [cancelScrollAnimation],
+    [cancelScrollAnimation, updatePaneScrollTop],
   )
 
   useEffect(() => cancelScrollAnimation, [cancelScrollAnimation])
 
   return {
-    scrollWindowTo,
+    scrollPaneTo: scrollWindowTo,
   }
 }

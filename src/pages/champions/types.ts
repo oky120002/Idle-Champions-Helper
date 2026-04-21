@@ -82,9 +82,8 @@ export interface ChampionsPageModel {
   hasRandomOrder: boolean
   showResultsQuickNavTop: boolean
   showResultsQuickNavBottom: boolean
-  resultsShellHeight: number | null
-  resultsShellRef: RefObject<HTMLElement | null>
-  resultsContentRef: RefObject<HTMLDivElement | null>
+  resultsPaneRef: RefObject<HTMLDivElement | null>
+  resultsPaneSectionRef: RefObject<HTMLElement | null>
   roles: string[]
   affiliations: LocalizedText[]
   raceOptions: string[]
