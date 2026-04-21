@@ -2,7 +2,7 @@
 
 - 日期：2026-04-21
 - 作用：沉淀 `Champions` 页从“左筛选右列表”升级到“悬浮工作台”的结构方案、交互状态和实施边界。
-- 当前状态：首轮只落 `Champions` 样板页；其他筛选页继续沿用旧抽屉布局，等样板验证后再决定是否推广。
+- 当前状态：本篇只记录 `Champions` 工作台的起源设计与局部状态约束；四个筛选页的跨页推广与旧实现清退计划见 `docs/modules/shared-components/filter-workbench-rollout-plan.md`。
 
 ## 目标与非目标
 
