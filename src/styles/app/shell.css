@@ -87,6 +87,31 @@
   }
 }
 
+@media (min-width: 1080px) {
+  html.page-scroll-locked,
+  body.page-scroll-locked {
+    height: 100dvh;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  .app-shell--champions-workbench {
+    min-height: 100dvh;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  .site-main--champions-workbench {
+    height: 100dvh;
+    padding-bottom: 0;
+    overflow: hidden;
+  }
+
+  .site-main--champions-workbench > * {
+    min-height: 0;
+  }
+}
+
 @media (max-width: 720px) {
   .background-orb--one {
     top: -5rem;

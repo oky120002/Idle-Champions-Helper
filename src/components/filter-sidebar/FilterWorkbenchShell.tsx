@@ -11,6 +11,7 @@ interface FilterWorkbenchShellProps {
   sidebarHeader?: ReactNode
   sidebar: ReactNode
   contentHeader?: ReactNode
+  contentOverlay?: ReactNode
   children: ReactNode
   className?: string
   contentScrollRef?: RefObject<HTMLDivElement | null>
@@ -24,6 +25,7 @@ export function FilterWorkbenchShell({
   sidebarHeader,
   sidebar,
   contentHeader,
+  contentOverlay,
   children,
   className,
   contentScrollRef,
@@ -52,36 +54,51 @@ export function FilterWorkbenchShell({
       data-filter-sidebar-collapsed={isCollapsed ? 'true' : 'false'}
       aria-label={t({ zh: '英雄筛选工作台', en: 'Champion filter workbench' })}
     >
-      <div className="filter-workbench__chrome">
-        <div className="filter-workbench__chrome-sidebar">
-          <button
-            type="button"
-            className="filter-workspace__toggle filter-workbench__toggle"
-            onClick={toggleCollapsed}
-            aria-expanded={!isCollapsed}
-            aria-controls={sidebarId}
-            aria-label={toggleLabel}
-            title={toggleLabel}
-          >
-            <span className="filter-workspace__toggle-icon filter-workbench__toggle-icon" aria-hidden="true">
-              <SidebarToggleIcon isCollapsed={isCollapsed} />
-            </span>
-            <span className="filter-workspace__toggle-copy filter-workbench__toggle-copy">
-              <strong className="filter-workspace__toggle-title filter-workbench__toggle-title">{toggleLabel}</strong>
-              <span className="filter-workspace__toggle-note filter-workbench__toggle-note">{toggleHint}</span>
-            </span>
-          </button>
-          {toolbarLead !== undefined ? <div className="filter-workbench__chrome-lead">{toolbarLead}</div> : null}
-        </div>
+      {isCollapsed ? (
+        <button
+          type="button"
+          className="filter-workspace__toggle filter-workbench__toggle filter-workbench__collapsed-toggle"
+          onClick={toggleCollapsed}
+          aria-expanded={!isCollapsed}
+          aria-controls={sidebarId}
+          aria-label={toggleLabel}
+          title={toggleLabel}
+        >
+          <span className="filter-workspace__toggle-icon filter-workbench__toggle-icon" aria-hidden="true">
+            <SidebarToggleIcon isCollapsed={isCollapsed} />
+          </span>
+          <span className="filter-workspace__toggle-copy filter-workbench__toggle-copy">
+            <strong className="filter-workspace__toggle-title filter-workbench__toggle-title">{toggleLabel}</strong>
+            <span className="filter-workspace__toggle-note filter-workbench__toggle-note">{toggleHint}</span>
+          </span>
+        </button>
+      ) : null}
 
-        <div className="filter-workbench__chrome-main">
-          <div className="filter-workbench__chrome-primary">{toolbarPrimary}</div>
-          {toolbarActions !== undefined ? <div className="filter-workbench__chrome-actions">{toolbarActions}</div> : null}
-        </div>
-      </div>
+      <div className="filter-workbench__body">
+        <aside className="filter-workbench__pane filter-workbench__pane--sidebar filter-workbench__sidebar">
+          <div className="filter-workbench__chrome filter-workbench__chrome-sidebar">
+            {!isCollapsed ? (
+              <button
+                type="button"
+                className="filter-workspace__toggle filter-workbench__toggle"
+                onClick={toggleCollapsed}
+                aria-expanded={!isCollapsed}
+                aria-controls={sidebarId}
+                aria-label={toggleLabel}
+                title={toggleLabel}
+              >
+                <span className="filter-workspace__toggle-icon filter-workbench__toggle-icon" aria-hidden="true">
+                  <SidebarToggleIcon isCollapsed={isCollapsed} />
+                </span>
+                <span className="filter-workspace__toggle-copy filter-workbench__toggle-copy">
+                  <strong className="filter-workspace__toggle-title filter-workbench__toggle-title">{toggleLabel}</strong>
+                  <span className="filter-workspace__toggle-note filter-workbench__toggle-note">{toggleHint}</span>
+                </span>
+              </button>
+            ) : null}
+            {toolbarLead !== undefined ? <div className="filter-workbench__chrome-lead">{toolbarLead}</div> : null}
+          </div>
 
-      <div className="filter-workspace__layout filter-workbench__body">
-        <aside className="filter-workspace__sidebar filter-workbench__sidebar">
           <div className="filter-workbench__sidebar-shell">
             <div
               id={sidebarId}
@@ -94,12 +111,18 @@ export function FilterWorkbenchShell({
           </div>
         </aside>
 
-        <div className="filter-workspace__content filter-workbench__content">
+        <div className="filter-workbench__pane filter-workbench__pane--content filter-workbench__content">
+          <div className="filter-workbench__chrome filter-workbench__chrome-main">
+            <div className="filter-workbench__chrome-primary">{toolbarPrimary}</div>
+            {toolbarActions !== undefined ? <div className="filter-workbench__chrome-actions">{toolbarActions}</div> : null}
+          </div>
+
           <div className="filter-workbench__content-shell">
             <div ref={contentScrollRef} className="filter-workbench__content-scroll">
               {contentHeader !== undefined ? <div className="filter-workbench__content-head">{contentHeader}</div> : null}
               <div className="filter-workbench__content-body">{children}</div>
             </div>
+            {contentOverlay != null ? <div className="filter-workbench__content-overlay">{contentOverlay}</div> : null}
           </div>
         </div>
       </div>

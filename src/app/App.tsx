@@ -1,4 +1,4 @@
-import { lazy, Suspense, type ComponentType } from 'react'
+import { lazy, Suspense, useEffect, type ComponentType } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { SiteHeader } from './SiteHeader'
 import { resolveActiveNavigationItem } from './appNavigation'
@@ -30,9 +30,45 @@ export function App() {
   const { locale, setLocale, t } = useI18n()
   const location = useLocation()
   const activeNavigationItem = resolveActiveNavigationItem(location.pathname, location.state)
+  const isChampionsWorkbenchRoute = location.pathname === '/champions'
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return
+    }
+
+    const root = document.documentElement
+    const body = document.body
+    const mediaQuery = window.matchMedia('(min-width: 1080px)')
+    const syncScrollLock = () => {
+      const shouldLockScroll = isChampionsWorkbenchRoute && mediaQuery.matches
+
+      root.classList.toggle('page-scroll-locked', shouldLockScroll)
+      body.classList.toggle('page-scroll-locked', shouldLockScroll)
+    }
+
+    syncScrollLock()
+
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', syncScrollLock)
+    } else {
+      mediaQuery.addListener(syncScrollLock)
+    }
+
+    return () => {
+      root.classList.remove('page-scroll-locked')
+      body.classList.remove('page-scroll-locked')
+
+      if (typeof mediaQuery.removeEventListener === 'function') {
+        mediaQuery.removeEventListener('change', syncScrollLock)
+      } else {
+        mediaQuery.removeListener(syncScrollLock)
+      }
+    }
+  }, [isChampionsWorkbenchRoute])
 
   return (
-    <div className="app-shell">
+    <div className={['app-shell', isChampionsWorkbenchRoute ? 'app-shell--champions-workbench' : ''].filter(Boolean).join(' ')}>
       <div className="background-orb background-orb--one" />
       <div className="background-orb background-orb--two" />
 
@@ -44,7 +80,7 @@ export function App() {
         t={t}
       />
 
-      <main className="site-main">
+      <main className={['site-main', isChampionsWorkbenchRoute ? 'site-main--champions-workbench' : ''].filter(Boolean).join(' ')}>
         <Suspense
           fallback={(
             <section className="surface-card page-shell" aria-live="polite">
