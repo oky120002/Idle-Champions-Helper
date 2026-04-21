@@ -5,16 +5,18 @@
 ## 推荐加载顺序
 
 1. `src/components/filter-sidebar/FilterSidebarLayout.tsx`
-   - 左右列布局、收起 / 展开状态、localStorage 持久化和移动端 / 桌面端共用开关入口。
+   - 顶部工具条、桌面抽屉开合、localStorage 持久化和移动端 / 桌面端共用开关入口。
 2. `src/components/filter-sidebar/FilterSidebarPanel.tsx`
    - 侧栏表面壳层，只负责标题、说明、状态区和内容承载。
-3. `src/components/filter-sidebar/useFilterSidebarCollapse.ts`
+3. `src/components/filter-sidebar/FilterSidebarToolbar.tsx`
+   - 桌面端工具条里的状态摘要与快捷动作壳层。
+4. `src/components/filter-sidebar/useFilterSidebarCollapse.ts`
    - 共享持久化状态读取与写回；页面只传稳定 `storageKey`，不要自己重复造轮子。
-4. `src/styles/shared/filters/sidebar-layout.css`
-   - 布局宽度、桌面导轨、移动端折叠过渡和 sticky 行为。
-5. `src/styles/shared/filters/sidebar.css`
+5. `src/styles/shared/filters/sidebar-layout.css`
+   - 布局宽度、桌面工具条、抽屉滑动过渡和 sticky 行为。
+6. `src/styles/shared/filters/sidebar.css`
    - 侧栏面板表面、状态徽记和滚动约束。
-6. 具体字段组件
+7. 具体字段组件
    - `FilterSearchField.tsx`
    - `FilterChipSingleSelectField.tsx`
    - `FilterChipMultiSelectField.tsx`
@@ -29,12 +31,14 @@
 - `FilterSidebarPanel.tsx`
   - 不持有布局状态。
   - 页面级标题、说明、按钮和状态徽记都放这里拼装。
+- `FilterSidebarToolbar.tsx`
+  - 只负责桌面端顶部细工具条的标题、摘要和快捷动作。
 - 各字段组件
   - 维持“输入即业务值”的薄壳，不在组件内部重复维护筛选业务规则。
 
 ## 关键不变量
 
-- 桌面端展开时开关固定在侧栏顶部工具位；收起后再切换为窄导轨入口，避免与侧栏内部滚动条冲突。
+- 桌面端始终保留一条细工具条承接开关、状态和快捷动作；左侧筛选体本身以抽屉方式滑入 / 滑出，收起后不应留下残余窄轨。
 - 移动端不能只剩图标开关；必须保留完整文案入口，避免误触成本过高。
 - 收起状态只影响侧栏可见性，不应清空任何筛选条件。
 - `FilterSidebarLayout` 不依赖具体页面路由；页面自己提供 `storageKey`。

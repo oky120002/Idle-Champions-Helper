@@ -7,6 +7,7 @@ interface FilterSidebarLayoutProps {
   storageKey: string
   sidebar: ReactNode
   children: ReactNode
+  toolbar?: ReactNode
   className?: string
   contentClassName?: string
   style?: CSSProperties
@@ -16,6 +17,7 @@ export function FilterSidebarLayout({
   storageKey,
   sidebar,
   children,
+  toolbar,
   className,
   contentClassName,
   style,
@@ -36,34 +38,40 @@ export function FilterSidebarLayout({
 
   return (
     <div className={rootClassName} style={style} data-filter-sidebar-collapsed={isCollapsed ? 'true' : 'false'}>
-      <aside className="filter-workspace__sidebar">
-        <div className="filter-workspace__sidebar-sticky">
-          <button
-            type="button"
-            className="filter-workspace__toggle"
-            onClick={toggleCollapsed}
-            aria-expanded={!isCollapsed}
-            aria-controls={sidebarId}
-            aria-label={toggleLabel}
-            title={toggleLabel}
-          >
-            <span className="filter-workspace__toggle-icon" aria-hidden="true">
-              <SidebarToggleIcon isCollapsed={isCollapsed} />
-            </span>
-            <span className="filter-workspace__toggle-copy" aria-hidden="true">
-              <strong className="filter-workspace__toggle-title">{toggleLabel}</strong>
-              <span className="filter-workspace__toggle-note">{toggleNote}</span>
-            </span>
-          </button>
+      <div className="filter-workspace__topbar">
+        <button
+          type="button"
+          className="filter-workspace__toggle"
+          onClick={toggleCollapsed}
+          aria-expanded={!isCollapsed}
+          aria-controls={sidebarId}
+          aria-label={toggleLabel}
+          title={toggleLabel}
+        >
+          <span className="filter-workspace__toggle-icon" aria-hidden="true">
+            <SidebarToggleIcon isCollapsed={isCollapsed} />
+          </span>
+          <span className="filter-workspace__toggle-copy" aria-hidden="true">
+            <strong className="filter-workspace__toggle-title">{toggleLabel}</strong>
+            <span className="filter-workspace__toggle-note">{toggleNote}</span>
+          </span>
+        </button>
 
-          <div className="filter-workspace__sidebar-body">
-            <div id={sidebarId} className="filter-workspace__sidebar-frame" aria-hidden={isCollapsed}>
-              {sidebar}
+        {toolbar !== undefined ? <div className="filter-workspace__toolbar-slot">{toolbar}</div> : null}
+      </div>
+
+      <div className="filter-workspace__layout">
+        <aside className="filter-workspace__sidebar">
+          <div className="filter-workspace__sidebar-sticky">
+            <div className="filter-workspace__sidebar-body">
+              <div id={sidebarId} className="filter-workspace__sidebar-frame" aria-hidden={isCollapsed}>
+                {sidebar}
+              </div>
             </div>
           </div>
-        </div>
-      </aside>
-      <div className={contentRootClassName}>{children}</div>
+        </aside>
+        <div className={contentRootClassName}>{children}</div>
+      </div>
     </div>
   )
 }

@@ -1,4 +1,5 @@
 import { FilterSidebarLayout } from '../components/filter-sidebar/FilterSidebarLayout'
+import { FilterSidebarToolbar } from '../components/filter-sidebar/FilterSidebarToolbar'
 import { PageTabHeader } from '../components/PageTabHeader'
 import { StatusBanner } from '../components/StatusBanner'
 import { SurfaceCard } from '../components/SurfaceCard'
@@ -9,7 +10,8 @@ import { useChampionsPageModel } from './champions/useChampionsPageModel'
 
 export function ChampionsPage() {
   const model = useChampionsPageModel()
-  const { state, t } = model
+  const { state, t, activeFilterChips, hasActiveFilters, clearAllFilters } = model
+  const activeFilterCount = activeFilterChips.length
 
   return (
     <div className="page-stack">
@@ -40,6 +42,33 @@ export function ChampionsPage() {
             storageKey="champions"
             sidebar={<ChampionsSidebar model={model} />}
             className="champions-workspace"
+            toolbar={
+              <FilterSidebarToolbar
+                title={t({ zh: '英雄筛选抽屉', en: 'Champion filter drawer' })}
+                description={t({
+                  zh: '左侧条件按需滑出，收起后让结果列表完整吃满横向空间。',
+                  en: 'Slide the left-side controls in only when you need them, and let the results take the full width when closed.',
+                })}
+                status={
+                  <span className="filter-sidebar-toolbar__badge">
+                    {activeFilterCount > 0
+                      ? t({ zh: `${activeFilterCount} 项已启用`, en: `${activeFilterCount} active` })
+                      : t({ zh: '当前未启用条件', en: 'No active filters' })}
+                  </span>
+                }
+                actions={
+                  hasActiveFilters ? (
+                    <button
+                      type="button"
+                      className="action-button action-button--secondary action-button--compact"
+                      onClick={clearAllFilters}
+                    >
+                      {t({ zh: '清空全部', en: 'Clear all' })}
+                    </button>
+                  ) : null
+                }
+              />
+            }
           >
             <ChampionsResultsSection model={model} />
           </FilterSidebarLayout>
