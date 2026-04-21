@@ -67,23 +67,33 @@ test('英雄筛选页桌面端应显示统一工作台大壳，并让工具栏�
   const workbench = page.locator('.filter-workbench')
   const chromeSidebar = page.locator('.filter-workbench__chrome-sidebar')
   const chromeMain = page.locator('.filter-workbench__chrome-main')
+  const sidebarShell = page.locator('.filter-workbench__sidebar-shell')
+  const contentShell = page.locator('.filter-workbench__content-shell')
 
   await expect(workbench).toBeVisible()
 
-  const [sidebarBox, mainBox] = await Promise.all([chromeSidebar.boundingBox(), chromeMain.boundingBox()])
+  const [sidebarBox, mainBox, sidebarShellBox, contentShellBox] = await Promise.all([
+    chromeSidebar.boundingBox(),
+    chromeMain.boundingBox(),
+    sidebarShell.boundingBox(),
+    contentShell.boundingBox(),
+  ])
 
-  if (!sidebarBox || !mainBox) {
+  if (!sidebarBox || !mainBox || !sidebarShellBox || !contentShellBox) {
     throw new Error('工作台工具栏不可见，无法验证合并关系。')
   }
 
   expect(Math.abs(Math.round(sidebarBox.x + sidebarBox.width) - Math.round(mainBox.x))).toBeLessThanOrEqual(2)
+  expect(Math.abs(Math.round(sidebarBox.y + sidebarBox.height) - Math.round(mainBox.y + mainBox.height))).toBeLessThanOrEqual(2)
+  expect(Math.abs(Math.round(sidebarShellBox.y) - Math.round(contentShellBox.y))).toBeLessThanOrEqual(2)
 })
 
-test('英雄筛选页桌面端收起抽屉后，左侧边框和空轨道应一起退场', async ({ page }) => {
+test('英雄筛选页桌面端收起抽屉后，应完全收起左栏并只保留展开入口', async ({ page }) => {
   await page.addInitScript(() => {
     window.localStorage.removeItem('idle-champions-helper.locale')
   })
 
+  await page.setViewportSize({ width: 1440, height: 960 })
   await page.goto('./#/champions')
   await expect(page.getByRole('button', { name: '收起筛选抽屉' })).toBeVisible()
 
@@ -93,15 +103,15 @@ test('英雄筛选页桌面端收起抽屉后，左侧边框和空轨道应一�
   const expandedSidebarWidth = await getElementWidth(sidebar)
 
   await toggle.click()
-  await page.waitForTimeout(220)
+  await page.waitForTimeout(420)
 
   const collapsedSidebarWidth = await getElementWidth(sidebar)
   const contentLeft = await content.evaluate((element) => Math.round((element as HTMLElement).getBoundingClientRect().left))
   const workbenchLeft = await page.locator('.filter-workbench').evaluate((element) => Math.round((element as HTMLElement).getBoundingClientRect().left))
 
   expect(expandedSidebarWidth).toBeGreaterThanOrEqual(280)
-  expect(collapsedSidebarWidth).toBeLessThanOrEqual(1)
-  expect(Math.abs(contentLeft - workbenchLeft - 16)).toBeLessThanOrEqual(16)
+  expect(collapsedSidebarWidth).toBeLessThanOrEqual(2)
+  expect(Math.abs(contentLeft - workbenchLeft)).toBeLessThanOrEqual(10)
   await expect(page.getByRole('button', { name: '展开筛选抽屉' })).toBeVisible()
 })
 

@@ -16,6 +16,24 @@ export function ChampionsPage() {
         storageKey="champions"
         className="champions-workbench"
         contentScrollRef={model.resultsPaneRef}
+        contentOverlay={(
+          model.showResultsQuickNavTop ? (
+            <button
+              type="button"
+              className="champions-workbench__floating-top-button"
+              onClick={() => model.scrollResultsToBoundary('top')}
+              aria-label={t({ zh: '返回结果顶部', en: 'Back to results top' })}
+            >
+              <span className="champions-workbench__floating-top-icon" aria-hidden="true">
+                <ResultsReturnTopIcon />
+              </span>
+              <span className="champions-workbench__floating-top-copy">
+                <strong>{t({ zh: '返回顶部', en: 'Back to top' })}</strong>
+                <span>{t({ zh: '结果列表', en: 'Results list' })}</span>
+              </span>
+            </button>
+          ) : null
+        )}
         toolbarLead={(
           <div className="champions-workbench__toolbar-mark" aria-hidden="true">
             <span className="champions-workbench__toolbar-mark-dot" />
@@ -103,4 +121,14 @@ export function ChampionsPage() {
 
 function ChampionsWorkbenchSidebarLoading() {
   return <div className="champions-workbench__sidebar-loading" aria-hidden="true" />
+}
+
+function ResultsReturnTopIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+      <path d="M12 17.25v-10.5" strokeLinecap="round" />
+      <path d="M7.75 10.25 12 6l4.25 4.25" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M6 18.25h12" strokeLinecap="round" />
+    </svg>
+  )
 }

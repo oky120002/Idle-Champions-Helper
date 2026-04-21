@@ -14,11 +14,8 @@ export function ChampionsWorkbenchContentHeader({ model }: ChampionsWorkbenchCon
     canToggleResultVisibility,
     showAllResults,
     hasRandomOrder,
-    showResultsQuickNavTop,
-    showResultsQuickNavBottom,
     toggleResultVisibility,
     randomizeResultOrder,
-    scrollResultsToBoundary,
     t,
   } = model
 
@@ -91,24 +88,6 @@ export function ChampionsWorkbenchContentHeader({ model }: ChampionsWorkbenchCon
             onClick={randomizeResultOrder}
           >
             {randomOrderLabel}
-          </button>
-
-          <button
-            type="button"
-            className="results-visibility-toggle results-visibility-toggle--ghost"
-            onClick={() => scrollResultsToBoundary('top')}
-            hidden={!showResultsQuickNavTop}
-          >
-            {t({ zh: '返回结果顶部', en: 'Back to results top' })}
-          </button>
-
-          <button
-            type="button"
-            className="results-visibility-toggle results-visibility-toggle--ghost"
-            onClick={() => scrollResultsToBoundary('bottom')}
-            hidden={!showResultsQuickNavBottom}
-          >
-            {t({ zh: '跳到结果底部', en: 'Jump to results bottom' })}
           </button>
         </div>
       </div>

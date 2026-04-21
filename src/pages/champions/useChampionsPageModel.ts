@@ -55,8 +55,6 @@ export function useChampionsPageModel(): ChampionsPageModel {
 
   const showResultsQuickNavTop =
     motion.resultsQuickNavigation.isVisible && motion.resultsQuickNavigation.canScrollTop
-  const showResultsQuickNavBottom =
-    motion.resultsQuickNavigation.isVisible && motion.resultsQuickNavigation.canScrollBottom
 
   return {
     locale,
@@ -87,7 +85,6 @@ export function useChampionsPageModel(): ChampionsPageModel {
     showAllResults: filterState.showAllResults,
     hasRandomOrder: randomOrderSeed !== null,
     showResultsQuickNavTop,
-    showResultsQuickNavBottom,
     resultsPaneRef: motion.resultsPaneRef,
     resultsPaneSectionRef: motion.resultsPaneSectionRef,
     roles: derived.roles,
