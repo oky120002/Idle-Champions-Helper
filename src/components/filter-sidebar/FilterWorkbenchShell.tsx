@@ -44,58 +44,37 @@ export function FilterWorkbenchShell({
   const toggleLabel = isCollapsed
     ? t({ zh: '展开筛选抽屉', en: 'Open filter drawer' })
     : t({ zh: '收起筛选抽屉', en: 'Collapse filter drawer' })
-  const toggleHint = isCollapsed
-    ? t({ zh: '恢复左侧筛选台', en: 'Restore the left filter rail' })
-    : t({ zh: '让主画布吃满宽度', en: 'Let the main canvas take the full width' })
+  const toggleClassName = [
+    'filter-workspace__toggle',
+    'filter-workbench__toggle',
+    'filter-workbench__anchor-toggle',
+    isCollapsed ? 'filter-workbench__anchor-toggle--collapsed' : 'filter-workbench__anchor-toggle--expanded',
+  ].join(' ')
 
   return (
     <section
       className={shellClassName}
       data-filter-sidebar-collapsed={isCollapsed ? 'true' : 'false'}
       aria-label={t({ zh: '英雄筛选工作台', en: 'Champion filter workbench' })}
-    >
-      {isCollapsed ? (
+      >
         <button
           type="button"
-          className="filter-workspace__toggle filter-workbench__toggle filter-workbench__collapsed-toggle"
+          className={toggleClassName}
           onClick={toggleCollapsed}
           aria-expanded={!isCollapsed}
           aria-controls={sidebarId}
           aria-label={toggleLabel}
           title={toggleLabel}
+          data-state={isCollapsed ? 'collapsed' : 'expanded'}
         >
           <span className="filter-workspace__toggle-icon filter-workbench__toggle-icon" aria-hidden="true">
             <SidebarToggleIcon isCollapsed={isCollapsed} />
           </span>
-          <span className="filter-workspace__toggle-copy filter-workbench__toggle-copy">
-            <strong className="filter-workspace__toggle-title filter-workbench__toggle-title">{toggleLabel}</strong>
-            <span className="filter-workspace__toggle-note filter-workbench__toggle-note">{toggleHint}</span>
-          </span>
         </button>
-      ) : null}
 
       <div className="filter-workbench__body">
         <aside className="filter-workbench__pane filter-workbench__pane--sidebar filter-workbench__sidebar">
           <div className="filter-workbench__chrome filter-workbench__chrome-sidebar">
-            {!isCollapsed ? (
-              <button
-                type="button"
-                className="filter-workspace__toggle filter-workbench__toggle"
-                onClick={toggleCollapsed}
-                aria-expanded={!isCollapsed}
-                aria-controls={sidebarId}
-                aria-label={toggleLabel}
-                title={toggleLabel}
-              >
-                <span className="filter-workspace__toggle-icon filter-workbench__toggle-icon" aria-hidden="true">
-                  <SidebarToggleIcon isCollapsed={isCollapsed} />
-                </span>
-                <span className="filter-workspace__toggle-copy filter-workbench__toggle-copy">
-                  <strong className="filter-workspace__toggle-title filter-workbench__toggle-title">{toggleLabel}</strong>
-                  <span className="filter-workspace__toggle-note filter-workbench__toggle-note">{toggleHint}</span>
-                </span>
-              </button>
-            ) : null}
             {toolbarLead !== undefined ? <div className="filter-workbench__chrome-lead">{toolbarLead}</div> : null}
           </div>
 
