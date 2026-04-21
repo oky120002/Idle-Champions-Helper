@@ -11,7 +11,7 @@
 - 站点头部：`src/styles/app/site-header/shell.css` -> `src/styles/app/site-header/condensed.css` -> `src/styles/app/site-header/responsive.css`
 - 主导航：`src/styles/app/navigation/base.css` -> `src/styles/app/navigation/motion.css` -> `src/styles/app/navigation/responsive.css`
 - 通用表面：`src/styles/shared/surfaces/panels.css` -> `page-tab-header.css` -> `page-header-metrics.css` -> `section-primitives.css` -> `responsive.css`
-- 筛选：`src/styles/shared/filters/base.css` -> `active-filter-bar.css` -> `sidebar.css` -> `disclosure.css`
+- 筛选：`src/styles/shared/filters/base.css` -> `active-filter-bar.css` -> `sidebar.css` -> `workbench-shell.css` -> `disclosure.css`
 - 结果卡：`src/styles/shared/results/layout.css` -> `avatar.css` -> `card.css` -> `responsive.css`
 - 阵型：`src/styles/shared/formation/library.css` -> `board.css` -> `mobile-editor.css` -> `responsive.css`
 - 英雄详情：`src/styles/pages/champion-detail/shell.css` -> `dossier.css` -> `sections.css` -> `upgrades.css` -> `feats.css` -> `media.css`

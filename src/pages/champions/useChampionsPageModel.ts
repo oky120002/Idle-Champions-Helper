@@ -88,9 +88,8 @@ export function useChampionsPageModel(): ChampionsPageModel {
     hasRandomOrder: randomOrderSeed !== null,
     showResultsQuickNavTop,
     showResultsQuickNavBottom,
-    resultsShellHeight: motion.resultsShellHeight,
-    resultsShellRef: motion.resultsShellRef,
-    resultsContentRef: motion.resultsContentRef,
+    resultsPaneRef: motion.resultsPaneRef,
+    resultsPaneSectionRef: motion.resultsPaneSectionRef,
     roles: derived.roles,
     affiliations: derived.affiliations,
     raceOptions: derived.raceOptions,
@@ -121,7 +120,7 @@ export function useChampionsPageModel(): ChampionsPageModel {
     scrollResultsToBoundary: motion.scrollResultsToBoundary,
     getMechanicCategoryHint: (groupId) => getMechanicCategoryHint(groupId, t),
     saveListScroll: () => {
-      saveChampionListScroll(filterState.locationSearch)
+      saveChampionListScroll(filterState.locationSearch, motion.resultsPaneRef.current?.scrollTop ?? 0)
     },
     locationSearch: filterState.locationSearch,
   }

@@ -6,17 +6,21 @@
 
 1. `src/components/filter-sidebar/FilterSidebarLayout.tsx`
    - 顶部工具条、桌面抽屉开合、localStorage 持久化和移动端 / 桌面端共用开关入口。
-2. `src/components/filter-sidebar/FilterSidebarPanel.tsx`
+2. `src/components/filter-sidebar/FilterWorkbenchShell.tsx`
+   - 悬浮工作台壳层；负责统一外层大壳、合并工具栏、桌面端双栏内滚和左抽屉退场逻辑。
+3. `src/components/filter-sidebar/FilterSidebarPanel.tsx`
    - 侧栏表面壳层，只负责标题、说明、状态区和内容承载。
-3. `src/components/filter-sidebar/FilterSidebarToolbar.tsx`
+4. `src/components/filter-sidebar/FilterSidebarToolbar.tsx`
    - 桌面端工具条里的状态摘要与快捷动作壳层。
-4. `src/components/filter-sidebar/useFilterSidebarCollapse.ts`
+5. `src/components/filter-sidebar/useFilterSidebarCollapse.ts`
    - 共享持久化状态读取与写回；页面只传稳定 `storageKey`，不要自己重复造轮子。
-5. `src/styles/shared/filters/sidebar-layout.css`
+6. `src/styles/shared/filters/sidebar-layout.css`
    - 布局宽度、桌面工具条、抽屉滑动过渡和 sticky 行为。
-6. `src/styles/shared/filters/sidebar.css`
+7. `src/styles/shared/filters/sidebar.css`
    - 侧栏面板表面、状态徽记和滚动约束。
-7. 具体字段组件
+8. `src/styles/shared/filters/workbench-shell.css`
+   - 悬浮工作台外壳、合并工具栏、桌面端重叠关系和内滚容器。
+9. 具体字段组件
    - `FilterSearchField.tsx`
    - `FilterChipSingleSelectField.tsx`
    - `FilterChipMultiSelectField.tsx`
@@ -28,6 +32,9 @@
 - `FilterSidebarLayout.tsx`
   - 只做共享布局和交互壳层。
   - 页面必须传稳定的 `storageKey`，保证不同页面的收起状态互不串页。
+- `FilterWorkbenchShell.tsx`
+  - 用于“统一外层大壳 + 工具栏合并 + 双栏内滚”的工作台场景。
+  - 首轮只被 `Champions` 使用；后续其他页面迁移前，先确认这套结构已经稳定。
 - `FilterSidebarPanel.tsx`
   - 不持有布局状态。
   - 页面级标题、说明、按钮和状态徽记都放这里拼装。
@@ -39,6 +46,7 @@
 ## 关键不变量
 
 - 桌面端始终保留一条细工具条承接开关、状态和快捷动作；左侧筛选体本身以抽屉方式滑入 / 滑出，收起后不应留下残余窄轨。
+- `FilterWorkbenchShell` 的收起态只保留紧凑展开入口；左抽屉主体、边框和残余 gutter 必须一起退场。
 - 移动端不能只剩图标开关；必须保留完整文案入口，避免误触成本过高。
 - 收起状态只影响侧栏可见性，不应清空任何筛选条件。
 - `FilterSidebarLayout` 不依赖具体页面路由；页面自己提供 `storageKey`。

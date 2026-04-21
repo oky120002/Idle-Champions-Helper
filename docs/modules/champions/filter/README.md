@@ -6,3 +6,4 @@
 
 - 模块定位、数据合同、当前代码落点和页面结构：`docs/modules/champions/filter/scope-and-data.md`
 - 当前筛选规则、MVP 缺口、架构边界、扩展顺序与验收：`docs/modules/champions/filter/rules-and-acceptance.md`
+- Champions 页悬浮工作台壳层、工具栏合并态与滚动模型：`docs/modules/champions/filter/workbench-shell-redesign-design.md`

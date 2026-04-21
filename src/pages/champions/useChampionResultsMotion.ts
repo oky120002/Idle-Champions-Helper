@@ -1,5 +1,5 @@
 import { useCallback, useRef } from 'react'
-import { getResultsTargetBottom, getResultsTargetTop } from './results-motion/results-scroll-targets'
+import { getResultsPaneTargetBottom, getResultsPaneTargetTop } from './results-motion/results-scroll-targets'
 import { useResultsQuickNavigation } from './results-motion/useResultsQuickNavigation'
 import { useResultsScrollAnimator } from './results-motion/useResultsScrollAnimator'
 import { useResultsScrollRestore } from './results-motion/useResultsScrollRestore'
@@ -23,56 +23,56 @@ export function useChampionResultsMotion({
   showAllResults,
   transitionKey,
 }: UseChampionResultsMotionOptions) {
-  const resultsShellRef = useRef<HTMLElement | null>(null)
-  const resultsContentRef = useRef<HTMLDivElement | null>(null)
-  const { scrollWindowTo } = useResultsScrollAnimator()
+  const resultsPaneRef = useRef<HTMLDivElement | null>(null)
+  const resultsPaneSectionRef = useRef<HTMLElement | null>(null)
+  const { scrollPaneTo } = useResultsScrollAnimator()
 
   useResultsScrollRestore({
     locationSearch,
     stateStatus,
     showAllResults,
     visibleCount,
+    resultsPaneRef,
   })
 
-  const { resultsShellHeight, prepareResultsViewportTransition } = useResultsViewportTransition({
-    filteredCount,
-    visibleCount,
+  const { prepareResultsViewportTransition } = useResultsViewportTransition({
     transitionKey,
-    resultsShellRef,
-    resultsContentRef,
-    scrollWindowTo,
+    resultsPaneRef,
+    scrollPaneTo,
   })
   const { resultsQuickNavigation, setResultsQuickNavigation } = useResultsQuickNavigation({
     filteredCount,
     visibleCount,
-    resultsShellHeight,
     transitionKey,
-    resultsShellRef,
+    resultsPaneRef,
   })
 
   const scrollResultsToBoundary = useCallback(
     (direction: 'top' | 'bottom') => {
-      const shell = resultsShellRef.current
+      const pane = resultsPaneRef.current
 
-      if (!shell) {
+      if (!pane) {
         return
       }
 
-      scrollWindowTo(direction === 'top' ? getResultsTargetTop(shell) : getResultsTargetBottom(shell), () => {
-        setResultsQuickNavigation({
-          isVisible: true,
-          canScrollTop: direction === 'bottom',
-          canScrollBottom: direction === 'top',
-        })
-      })
+      scrollPaneTo(
+        pane,
+        direction === 'top' ? getResultsPaneTargetTop() : getResultsPaneTargetBottom(pane),
+        () => {
+          setResultsQuickNavigation({
+            isVisible: true,
+            canScrollTop: direction === 'bottom',
+            canScrollBottom: direction === 'top',
+          })
+        },
+      )
     },
-    [scrollWindowTo, setResultsQuickNavigation],
+    [resultsPaneRef, scrollPaneTo, setResultsQuickNavigation],
   )
 
   return {
-    resultsShellHeight,
-    resultsShellRef,
-    resultsContentRef,
+    resultsPaneRef,
+    resultsPaneSectionRef,
     resultsQuickNavigation,
     prepareResultsViewportTransition: (reason: ResultsTransitionReason = 'filters') => {
       prepareResultsViewportTransition(reason)

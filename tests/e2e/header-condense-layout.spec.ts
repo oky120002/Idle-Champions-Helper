@@ -15,14 +15,17 @@ interface HeaderMetrics {
   topbarActionsTop: number
 }
 
-async function scrollWindowInstantly(page: Page, top: number): Promise<void> {
-  await page.evaluate((nextTop) => {
+async function scrollWindowInstantly(page: Page, top: number): Promise<number> {
+  const actualTop = await page.evaluate((nextTop) => {
     window.scrollTo(0, nextTop)
+    return Math.round(window.scrollY)
   }, top)
 
   await expect
     .poll(async () => page.evaluate(() => Math.round(window.scrollY)))
-    .toBe(top)
+    .toBe(actualTop)
+
+  return actualTop
 }
 
 async function getHeaderMetrics(page: Page): Promise<HeaderMetrics> {
@@ -70,35 +73,35 @@ async function getHeaderMetrics(page: Page): Promise<HeaderMetrics> {
 
 const headerCondenseAnimationWaitMs = 620
 
-test('非首页滚动后顶部大标题应自动收紧，回顶后再展开', async ({ page }) => {
+test('英雄筛选页桌面端应默认使用紧凑头部，不再依赖整页滚动触发收紧', async ({ page }) => {
   await page.addInitScript(() => {
     window.localStorage.removeItem('idle-champions-helper.locale')
   })
 
   await page.setViewportSize({ width: 1440, height: 900 })
   await page.goto('./#/champions')
-  await expect(page.locator('.page-tab-header').getByText('英雄筛选', { exact: true })).toBeVisible()
-  await expect(page.getByText(/^当前展示 \d+ \/ \d+ 名英雄/)).toBeVisible()
+  await expect(page.getByRole('heading', { level: 2, name: '英雄筛选' })).toBeVisible()
 
   const initialMetrics = await getHeaderMetrics(page)
 
-  await expect(page.locator('.site-header')).not.toHaveClass(/site-header--condensed/)
-  expect(initialMetrics.contentHeight).toBeGreaterThanOrEqual(56)
+  await expect(page.locator('.site-header')).toHaveClass(/site-header--condensed/)
+  expect(initialMetrics.height).toBeLessThanOrEqual(92)
+  expect(initialMetrics.contentHeight).toBeLessThanOrEqual(4)
+  expect(initialMetrics.compactBrandOpacity).toBeGreaterThan(0.9)
+  expect(initialMetrics.kickerDisplay).toBe('none')
   expect(initialMetrics.navScrollWidth - initialMetrics.navClientWidth).toBeLessThanOrEqual(1)
   expect(Math.max(...initialMetrics.navLinkTops) - Math.min(...initialMetrics.navLinkTops)).toBeLessThanOrEqual(6)
 
-  await scrollWindowInstantly(page, 320)
+  const scrolledTop = await scrollWindowInstantly(page, 320)
+  expect(scrolledTop).toBeGreaterThan(0)
   await page.waitForTimeout(headerCondenseAnimationWaitMs)
 
   const condensedMetrics = await getHeaderMetrics(page)
 
   await expect(page.locator('.site-header')).toHaveClass(/site-header--condensed/)
-  expect(condensedMetrics.height).toBeLessThanOrEqual(initialMetrics.height - 72)
-  expect(condensedMetrics.height).toBeLessThanOrEqual(92)
-  expect(condensedMetrics.contentHeight).toBeLessThanOrEqual(4)
-  expect(condensedMetrics.compactBrandOpacity).toBeGreaterThan(0.9)
+  expect(Math.abs(condensedMetrics.height - initialMetrics.height)).toBeLessThanOrEqual(4)
+  expect(Math.abs(condensedMetrics.contentHeight - initialMetrics.contentHeight)).toBeLessThanOrEqual(2)
   expect(condensedMetrics.compactBrandInset).toBeGreaterThanOrEqual(8)
-  expect(condensedMetrics.kickerDisplay).toBe('none')
   expect(
     Math.abs(
       condensedMetrics.navTop + condensedMetrics.navHeight / 2
@@ -108,11 +111,5 @@ test('非首页滚动后顶部大标题应自动收紧，回顶后再展开', as
 
   await scrollWindowInstantly(page, 0)
   await page.waitForTimeout(headerCondenseAnimationWaitMs)
-
-  const expandedMetrics = await getHeaderMetrics(page)
-
-  await expect(page.locator('.site-header')).not.toHaveClass(/site-header--condensed/)
-  expect(expandedMetrics.height).toBeGreaterThan(condensedMetrics.height + 60)
-  expect(expandedMetrics.contentHeight).toBeGreaterThanOrEqual(56)
-  expect(expandedMetrics.compactBrandOpacity).toBeLessThan(0.1)
+  await expect(page.locator('.site-header')).toHaveClass(/site-header--condensed/)
 })

@@ -1,117 +1,61 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react'
-import { MAX_VISIBLE_RESULTS, RESULTS_HEIGHT_TRANSITION_MS, RESULTS_RELOCATE_THRESHOLD } from '../constants'
+import { useCallback, useLayoutEffect, useRef, type RefObject } from 'react'
 import type { PendingResultsTransition, ResultsTransitionReason } from '../types'
-import { getResultsTargetTop } from './results-scroll-targets'
+import { getResultsPaneTargetTop } from './results-scroll-targets'
 
 type UseResultsViewportTransitionOptions = {
-  filteredCount: number
-  visibleCount: number
   transitionKey: string
-  resultsShellRef: RefObject<HTMLElement | null>
-  resultsContentRef: RefObject<HTMLDivElement | null>
-  scrollWindowTo: (targetTop: number, onComplete?: () => void) => void
+  resultsPaneRef: RefObject<HTMLElement | null>
+  scrollPaneTo: (pane: HTMLElement, targetTop: number, onComplete?: () => void) => void
 }
 
 export function useResultsViewportTransition({
-  filteredCount,
-  visibleCount,
   transitionKey,
-  resultsShellRef,
-  resultsContentRef,
-  scrollWindowTo,
+  resultsPaneRef,
+  scrollPaneTo,
 }: UseResultsViewportTransitionOptions) {
-  const [resultsShellHeight, setResultsShellHeight] = useState<number | null>(null)
   const pendingResultsTransitionRef = useRef<PendingResultsTransition | null>(null)
-  const releaseResultsHeightTimeoutRef = useRef<number | null>(null)
-
-  const clearResultsHeightRelease = useCallback(() => {
-    if (releaseResultsHeightTimeoutRef.current === null) {
-      return
-    }
-
-    window.clearTimeout(releaseResultsHeightTimeoutRef.current)
-    releaseResultsHeightTimeoutRef.current = null
-  }, [])
+  const lastTransitionKeyRef = useRef(transitionKey)
 
   const prepareResultsViewportTransition = useCallback(
     (reason: ResultsTransitionReason = 'filters') => {
-      const shell = resultsShellRef.current
+      const pane = resultsPaneRef.current
 
-      if (!shell) {
+      if (!pane) {
         return
       }
 
-      const targetTop = getResultsTargetTop(shell)
-      const shouldRelocate = window.scrollY > targetTop + 48
-
-      if (!shouldRelocate) {
-        pendingResultsTransitionRef.current = null
-        return
-      }
-
-      clearResultsHeightRelease()
       pendingResultsTransitionRef.current = {
-        previousFilteredCount: filteredCount,
-        previousVisibleCount: visibleCount,
-        shouldRelocate,
+        previousFilteredCount: 0,
+        previousVisibleCount: 0,
+        shouldRelocate: pane.scrollTop > 8,
         reason,
       }
-
-      setResultsShellHeight(Math.ceil(shell.getBoundingClientRect().height))
     },
-    [clearResultsHeightRelease, filteredCount, resultsShellRef, visibleCount],
+    [resultsPaneRef],
   )
 
-  useEffect(() => clearResultsHeightRelease, [clearResultsHeightRelease])
-
   useLayoutEffect(() => {
-    const pendingTransition = pendingResultsTransitionRef.current
-    const content = resultsContentRef.current
+    if (lastTransitionKeyRef.current === transitionKey) {
+      return
+    }
 
-    if (!pendingTransition || !content || resultsShellHeight === null) {
+    lastTransitionKeyRef.current = transitionKey
+    const pendingTransition = pendingResultsTransitionRef.current
+    const pane = resultsPaneRef.current
+
+    if (!pendingTransition || !pane) {
       return
     }
 
     pendingResultsTransitionRef.current = null
-
-    const nextHeight = Math.ceil(content.getBoundingClientRect().height)
-    const filteredCollapsedToFew =
-      filteredCount < pendingTransition.previousFilteredCount && filteredCount <= RESULTS_RELOCATE_THRESHOLD
-    const visibleCollapsed = visibleCount < pendingTransition.previousVisibleCount
-    const collapsedBackToDefaultWindow =
-      pendingTransition.previousVisibleCount > MAX_VISIBLE_RESULTS &&
-      visibleCount <= MAX_VISIBLE_RESULTS &&
-      visibleCollapsed
-    const shouldRelocate =
-      pendingTransition.shouldRelocate &&
-      (pendingTransition.reason === 'filters'
-        ? filteredCollapsedToFew || collapsedBackToDefaultWindow
-        : visibleCollapsed)
-
-    const animationFrameId = window.requestAnimationFrame(() => {
-      setResultsShellHeight(nextHeight)
-
-      if (shouldRelocate) {
-        const shell = resultsShellRef.current
-
-        if (shell) {
-          scrollWindowTo(getResultsTargetTop(shell))
-        }
-      }
-
-      releaseResultsHeightTimeoutRef.current = window.setTimeout(() => {
-        setResultsShellHeight(null)
-        releaseResultsHeightTimeoutRef.current = null
-      }, RESULTS_HEIGHT_TRANSITION_MS)
-    })
-
-    return () => {
-      window.cancelAnimationFrame(animationFrameId)
+    if (!pendingTransition.shouldRelocate) {
+      return
     }
-  }, [clearResultsHeightRelease, filteredCount, resultsContentRef, resultsShellHeight, scrollWindowTo, transitionKey, visibleCount])
+
+    scrollPaneTo(pane, getResultsPaneTargetTop())
+  }, [resultsPaneRef, scrollPaneTo, transitionKey])
 
   return {
-    resultsShellHeight,
     prepareResultsViewportTransition,
   }
 }

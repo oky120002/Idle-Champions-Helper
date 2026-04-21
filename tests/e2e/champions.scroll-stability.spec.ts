@@ -1,132 +1,131 @@
 import { expect, test, type Page } from '@playwright/test'
 
-async function getScrollY(page: Page): Promise<number> {
-  return page.evaluate(() => Math.round(window.scrollY))
-}
+async function getPaneScrollTop(page: Page): Promise<number> {
+  return page.locator('.filter-workbench__content-scroll').evaluate((element) => {
+    if (!(element instanceof HTMLElement)) {
+      throw new Error('结果滚动面板不存在。')
+    }
 
-async function getResultsTargetTop(page: Page): Promise<number> {
-  return page.locator('.results-panel-shell').evaluate((shell) => {
-    const siteHeader = document.querySelector('.site-header')
-    const headerBottom = siteHeader instanceof HTMLElement ? siteHeader.getBoundingClientRect().bottom : 0
-
-    return Math.max(Math.round(shell.getBoundingClientRect().top + window.scrollY - headerBottom - 16), 0)
+    return Math.round(element.scrollTop)
   })
 }
 
-async function getResultsTargetBottom(page: Page): Promise<number> {
-  return page.locator('.results-panel-shell').evaluate((shell) => {
-    const maxScrollTop = Math.max(document.documentElement.scrollHeight - window.innerHeight, 0)
-    const shellBottom = shell.getBoundingClientRect().bottom + window.scrollY
-    const targetTop = Math.round(shellBottom - window.innerHeight + 24)
+async function getPaneMaxScrollTop(page: Page): Promise<number> {
+  return page.locator('.filter-workbench__content-scroll').evaluate((element) => {
+    if (!(element instanceof HTMLElement)) {
+      throw new Error('结果滚动面板不存在。')
+    }
 
-    return Math.min(Math.max(targetTop, 0), maxScrollTop)
+    return Math.max(Math.round(element.scrollHeight - element.clientHeight), 0)
   })
 }
 
-async function scrollIntoResultsQuickNavZone(page: Page): Promise<void> {
-  const targetTop = await getResultsTargetTop(page)
-  const activationTop = Math.max(targetTop - 120, 260)
+async function setPaneScrollTop(page: Page, top: number): Promise<void> {
+  await page.locator('.filter-workbench__content-scroll').evaluate((element, nextTop) => {
+    if (!(element instanceof HTMLElement)) {
+      throw new Error('结果滚动面板不存在。')
+    }
 
-  await page.evaluate((top) => {
-    window.scrollTo({ top, behavior: 'instant' })
-  }, activationTop)
-  await page.waitForTimeout(120)
+    element.scrollTop = nextTop
+    element.dispatchEvent(new Event('scroll'))
+  }, top)
 }
 
-test('英雄筛选页点击筛选按钮时不应发生意外滚动跳转', async ({ page }) => {
-  await page.addInitScript(() => {
-    window.localStorage.removeItem('idle-champions-helper.locale')
-  })
+async function clickVisibleResultLink(page: Page): Promise<void> {
+  const linkIndex = await page.locator('.results-grid .result-card--link').evaluateAll((elements) => {
+    const pane = document.querySelector('.filter-workbench__content-scroll')
 
-  await page.goto('./#/champions')
-  await expect(page.locator('.page-tab-header').getByText('英雄筛选', { exact: true })).toBeVisible()
-  await expect(page.locator('.filter-group').first().getByRole('button', { name: '1 号位', exact: true })).toBeVisible()
+    if (!(pane instanceof HTMLElement)) {
+      throw new Error('结果滚动面板不存在。')
+    }
 
-  await page.evaluate(() => window.scrollTo({ top: 320, behavior: 'instant' }))
-  await page.waitForTimeout(100)
-  await expect(page.locator('.site-header')).toHaveClass(/site-header--condensed/)
+    const paneRect = pane.getBoundingClientRect()
 
-  const baseline = await getScrollY(page)
-  const seatFilterGroup = page.locator('.filter-group').first()
+    return elements.findIndex((element) => {
+      if (!(element instanceof HTMLElement)) {
+        return false
+      }
 
-  await seatFilterGroup.getByRole('button', { name: '1 号位', exact: true }).click()
-  await page.waitForTimeout(100)
-  expect(Math.abs((await getScrollY(page)) - baseline)).toBeLessThanOrEqual(2)
+      const rect = element.getBoundingClientRect()
+      const centerY = rect.top + rect.height / 2
 
-  await seatFilterGroup.getByRole('button', { name: '2 号位', exact: true }).click()
-  await page.waitForTimeout(100)
-  expect(Math.abs((await getScrollY(page)) - baseline)).toBeLessThanOrEqual(2)
-
-  await seatFilterGroup.getByRole('button', { name: '全部', exact: true }).click()
-  await page.waitForTimeout(100)
-  expect(Math.abs((await getScrollY(page)) - baseline)).toBeLessThanOrEqual(2)
-})
-
-test('英雄筛选页在长结果列表中收窄条件时应平滑带回结果区，而不是把整页夹到顶部', async ({ page }) => {
-  await page.addInitScript(() => {
-    window.localStorage.removeItem('idle-champions-helper.locale')
-  })
-
-  await page.goto('./#/champions')
-  await expect(page.locator('.page-tab-header').getByText('英雄筛选', { exact: true })).toBeVisible()
-  await expect(page.locator('.filter-group').nth(2).getByRole('button', { name: '长枪英雄', exact: true })).toBeVisible()
-
-  await page.evaluate(() => window.scrollTo({ top: 1040, behavior: 'instant' }))
-  await page.waitForTimeout(100)
-
-  const baselineScrollY = await getScrollY(page)
-
-  await page.locator('.filter-group').nth(2).getByRole('button', { name: '长枪英雄', exact: true }).click()
-  await expect(page.getByText('当前筛选：联动队伍：长枪英雄 · Heroes of the Lance')).toBeVisible()
-  await page.waitForTimeout(420)
-  await expect
-    .poll(async () => {
-      const finalScrollY = await getScrollY(page)
-      const targetTop = await getResultsTargetTop(page)
-
-      return Math.abs(finalScrollY - targetTop)
+      return centerY >= paneRect.top + 48 && centerY <= paneRect.bottom - 48
     })
-    .toBeLessThanOrEqual(32)
+  })
 
-  const finalScrollY = await getScrollY(page)
-  const targetTop = await getResultsTargetTop(page)
+  if (linkIndex < 0) {
+    throw new Error('没有找到当前视口内可点击的结果卡链接。')
+  }
 
-  expect(targetTop).toBeGreaterThan(96)
-  expect(finalScrollY).toBeGreaterThan(96)
-  expect(finalScrollY).toBeLessThan(baselineScrollY)
-  expect(Math.abs(finalScrollY - targetTop)).toBeLessThanOrEqual(32)
-})
+  await page.locator('.results-grid .result-card--link').nth(linkIndex).click()
+}
 
-test('英雄筛选页结果快捷按钮应支持一键到底和返回顶部', async ({ page }) => {
+test('英雄筛选页在右侧面板深处改筛选时，应把右面板带回顶部摘要区', async ({ page }) => {
   await page.addInitScript(() => {
     window.localStorage.removeItem('idle-champions-helper.locale')
   })
 
   await page.goto('./#/champions')
-  await expect(page.locator('.page-tab-header').getByText('英雄筛选', { exact: true })).toBeVisible()
-  await expect(page.getByText(/^当前展示 \d+ \/ \d+ 名英雄/)).toBeVisible()
-  await scrollIntoResultsQuickNavZone(page)
+  await expect(page.getByRole('heading', { level: 2, name: '英雄筛选' })).toBeVisible()
+  await setPaneScrollTop(page, 720)
 
+  expect(await getPaneScrollTop(page)).toBeGreaterThanOrEqual(680)
+
+  await page.getByRole('button', { name: '1 号位', exact: true }).click()
+  await page.waitForTimeout(420)
+
+  expect(await getPaneScrollTop(page)).toBeLessThanOrEqual(24)
+})
+
+test('英雄筛选页结果快捷按钮应滚动右侧面板，而不是滚动整页', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.localStorage.removeItem('idle-champions-helper.locale')
+  })
+
+  await page.goto('./#/champions')
+  await expect(page.getByRole('heading', { level: 2, name: '英雄筛选' })).toBeVisible()
+
+  await setPaneScrollTop(page, 840)
+  await expect(page.getByRole('button', { name: '返回结果顶部' })).toBeVisible()
   await expect(page.getByRole('button', { name: '跳到结果底部' })).toBeVisible()
 
-  const targetBottom = await getResultsTargetBottom(page)
+  const baselineWindowScroll = await page.evaluate(() => Math.round(window.scrollY))
+  const maxScrollTop = await getPaneMaxScrollTop(page)
 
   await page.getByRole('button', { name: '跳到结果底部' }).click()
   await expect
-    .poll(async () => {
-      const bottomScrollY = await getScrollY(page)
-      return Math.abs(bottomScrollY - targetBottom)
-    })
-    .toBeLessThanOrEqual(48)
-  await expect(page.getByRole('button', { name: '返回结果顶部' })).toBeVisible()
+    .poll(async () => Math.abs((await getPaneScrollTop(page)) - maxScrollTop))
+    .toBeLessThanOrEqual(36)
 
-  await page.getByRole('button', { name: '返回结果顶部' }).click()
-  await expect(page.getByRole('button', { name: '跳到结果底部' })).toBeVisible()
+  expect(await page.evaluate(() => Math.round(window.scrollY))).toBe(baselineWindowScroll)
+
+  const backToTopButton = page.getByRole('button', { name: '返回结果顶部' })
+  await expect(backToTopButton).toBeVisible()
+  await backToTopButton.click()
   await expect
-    .poll(async () => {
-      const topScrollY = await getScrollY(page)
-      const targetTop = await getResultsTargetTop(page)
-      return Math.abs(topScrollY - targetTop)
-    })
-    .toBeLessThanOrEqual(64)
+    .poll(async () => await getPaneScrollTop(page))
+    .toBeLessThanOrEqual(24)
+})
+
+test('英雄详情返回后应恢复右侧面板滚动位置与筛选参数', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.localStorage.removeItem('idle-champions-helper.locale')
+  })
+
+  await page.goto('./#/champions?seat=1')
+  await expect(page.getByText(/^当前筛选：座位：1 号位/)).toBeVisible()
+
+  await setPaneScrollTop(page, 680)
+  const savedScrollTop = await getPaneScrollTop(page)
+
+  await clickVisibleResultLink(page)
+  await expect(page).toHaveURL(/#\/champions\/[^?]+\?seat=1/)
+
+  await page.getByRole('link', { name: '返回英雄筛选' }).click()
+  await expect(page).toHaveURL(/#\/champions\?seat=1$/)
+  await expect(page.getByText(/^当前筛选：座位：1 号位/)).toBeVisible()
+
+  await expect
+    .poll(async () => await getPaneScrollTop(page))
+    .toBeGreaterThanOrEqual(savedScrollTop - 24)
 })

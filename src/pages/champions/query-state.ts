@@ -50,15 +50,15 @@ export function buildFilterSearchParams(filters: ChampionsFilterState): URLSearc
 }
 
 export function buildScrollRestoreKey(search: string): string {
-  return `champions-page-scroll:${search || DEFAULT_SCROLL_KEY}`
+  return `champions-pane-scroll:${search || DEFAULT_SCROLL_KEY}`
 }
 
-export function saveChampionListScroll(search: string): void {
+export function saveChampionListScroll(search: string, scrollTop: number): void {
   if (typeof window === 'undefined') {
     return
   }
 
-  window.sessionStorage.setItem(buildScrollRestoreKey(search), String(window.scrollY))
+  window.sessionStorage.setItem(buildScrollRestoreKey(search), String(scrollTop))
 }
 
 export function readInitialFilterState(search: string): ChampionsFilterState {
