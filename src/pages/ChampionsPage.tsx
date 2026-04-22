@@ -9,9 +9,10 @@ import {
 } from '../components/workbench/WorkbenchScaffold'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { StatusBanner } from '../components/StatusBanner'
+import { ChampionsAdditionalFilters } from './champions/ChampionsAdditionalFilters'
+import { ChampionsPrimaryFilters } from './champions/ChampionsPrimaryFilters'
 import { ChampionsResultsSection } from './champions/ChampionsResultsSection'
 import { ChampionsWorkbenchContentHeader } from './champions/ChampionsWorkbenchContentHeader'
-import { ChampionsWorkbenchSidebar } from './champions/ChampionsWorkbenchSidebar'
 import { useChampionsPageModel } from './champions/useChampionsPageModel'
 
 export function ChampionsPage() {
@@ -83,7 +84,14 @@ export function ChampionsPage() {
             )}
           />
         )}
-        sidebar={state.status === 'ready' ? <ChampionsWorkbenchSidebar model={model} /> : <WorkbenchSidebarLoading />}
+        sidebar={state.status === 'ready'
+          ? (
+              <div className="workbench-page__sidebar-stack">
+                <ChampionsPrimaryFilters model={model} />
+                <ChampionsAdditionalFilters model={model} />
+              </div>
+            )
+          : <WorkbenchSidebarLoading />}
         contentHeader={state.status === 'ready' ? <ChampionsWorkbenchContentHeader model={model} /> : null}
       >
         {state.status === 'loading' ? (

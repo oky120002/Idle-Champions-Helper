@@ -1,6 +1,6 @@
+import { PageHeaderMetrics, type PageHeaderMetricItem } from '../../components/PageHeaderMetrics'
 import { WorkbenchFilterResultsHeader } from '../../components/workbench/WorkbenchScaffold'
 import { MAX_VISIBLE_PETS } from './constants'
-import { PetsMetrics } from './PetsMetrics'
 import type { PetsPageModel } from './types'
 
 interface PetsWorkbenchContentHeaderProps {
@@ -13,6 +13,14 @@ export function PetsWorkbenchContentHeader({ model }: PetsWorkbenchContentHeader
   const randomOrderLabel = ui.hasRandomOrder
     ? t({ zh: '重新随机', en: 'Reshuffle' })
     : t({ zh: '随机排序', en: 'Shuffle order' })
+  const metricItems: PageHeaderMetricItem[] = [
+    { label: t({ zh: '宠物总数', en: 'Pets' }), value: summary.total },
+    { label: t({ zh: '完整图像', en: 'Full art' }), value: summary.completeArt },
+    { label: t({ zh: '宝石商店', en: 'Gem shop' }), value: summary.gems },
+    { label: t({ zh: '付费来源', en: 'Premium' }), value: summary.premium },
+    { label: t({ zh: '赞助商商店', en: 'Patron shop' }), value: summary.patron },
+    { label: t({ zh: '暂未开放', en: 'Unavailable' }), value: summary.unavailable },
+  ]
 
   return (
     <WorkbenchFilterResultsHeader
@@ -29,7 +37,7 @@ export function PetsWorkbenchContentHeader({ model }: PetsWorkbenchContentHeader
               en: 'No pets match yet. Loosen source or asset state first, then narrow things down again.',
             })
       }
-      metrics={<PetsMetrics summary={summary} />}
+      metrics={<PageHeaderMetrics items={metricItems} variant="compact" />}
       summaryBadge={
         hasMatches ? (
           <span className="results-summary-pill workbench-filter-header__pill">

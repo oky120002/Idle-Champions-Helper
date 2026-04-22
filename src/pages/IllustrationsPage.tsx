@@ -9,8 +9,9 @@ import {
 } from '../components/workbench/WorkbenchScaffold'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { StatusBanner } from '../components/StatusBanner'
+import { IllustrationsAdditionalFilters } from './illustrations/IllustrationsAdditionalFilters'
+import { IllustrationsPrimaryFilters } from './illustrations/IllustrationsPrimaryFilters'
 import { IllustrationsResultsSection } from './illustrations/IllustrationsResultsSection'
-import { IllustrationsSidebar } from './illustrations/IllustrationsSidebar'
 import { IllustrationsWorkbenchContentHeader } from './illustrations/IllustrationsWorkbenchContentHeader'
 import { useIllustrationsPageModel } from './illustrations/useIllustrationsPageModel'
 
@@ -63,9 +64,9 @@ export function IllustrationsPage() {
             status={(
               <>
                 <WorkbenchToolbarBadge variant="filter">
-                {activeFilterChips.length > 0
-                  ? t({ zh: `${activeFilterChips.length} 项已启用`, en: `${activeFilterChips.length} active` })
-                  : t({ zh: '当前未启用条件', en: 'No active filters' })}
+                  {activeFilterChips.length > 0
+                    ? t({ zh: `${activeFilterChips.length} 项已启用`, en: `${activeFilterChips.length} active` })
+                    : t({ zh: '当前未启用条件', en: 'No active filters' })}
                 </WorkbenchToolbarBadge>
                 {hasActiveFilters ? (
                   <button
@@ -80,7 +81,14 @@ export function IllustrationsPage() {
             )}
           />
         )}
-        sidebar={state.status === 'ready' ? <IllustrationsSidebar model={model} /> : <WorkbenchSidebarLoading />}
+        sidebar={state.status === 'ready'
+          ? (
+              <div className="workbench-page__sidebar-stack">
+                <IllustrationsPrimaryFilters model={model} />
+                <IllustrationsAdditionalFilters model={model} />
+              </div>
+            )
+          : <WorkbenchSidebarLoading />}
         contentHeader={state.status === 'ready' ? <IllustrationsWorkbenchContentHeader model={model} /> : null}
       >
         {state.status === 'loading' ? (
