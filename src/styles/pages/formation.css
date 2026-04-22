@@ -102,6 +102,19 @@
   gap: 0.9rem;
 }
 
+.formation-workbench .formation-layout-library__hero,
+.formation-workbench .formation-layout-library__workspace,
+.formation-workbench .formation-layout-library__stats {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.formation-workbench .formation-layout-library__title,
+.formation-workbench .formation-layout-library__selected-title,
+.formation-workbench .formation-layout-library__stat-value--compact {
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+
 @media (max-width: 720px) {
   .formation-workbench__toolbar-detail,
   .formation-workbench__sidebar-description {
