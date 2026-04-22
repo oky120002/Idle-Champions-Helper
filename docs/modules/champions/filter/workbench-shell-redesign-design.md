@@ -2,7 +2,7 @@
 
 - 日期：2026-04-21
 - 作用：沉淀 `Champions` 页从“左筛选右列表”升级到“悬浮工作台”的结构方案、交互状态和实施边界。
-- 当前状态：本篇只记录 `Champions` 工作台的起源设计与局部状态约束；全站统一推广与旧实现清退见 `docs/modules/shared-components/filter-workbench-rollout-plan.md`。
+- 当前状态：本篇只记录 `Champions` 工作台的起源设计与局部状态约束；当前全站通用结构细节见 `docs/modules/shared-components/page-workbench-design.md`，推广与旧实现清退见 `docs/modules/shared-components/filter-workbench-rollout-plan.md`。
 
 ## 目标与非目标
 
@@ -68,6 +68,7 @@
 ## 实施边界
 
 - 工作台壳层已从 `Champions` 推广为全站统一 `PageWorkbenchShell`；跨页推广与旧实现清退以 shared-components rollout 文档为准。
+- 当前顶部小导航、左右 pane、收起态和滚动模型等共性细节，已上收为 shared-components 下的页面工作台设计规范。
 - 共享抽取边界已经从筛选页专用实现迁到 `src/components/workbench/`。
 - 允许继续复用现有筛选字段组件、结果卡组件和视觉档案组件；不因为壳层变化就重新抽一轮通用卡片。
 - 参考图当前以“结构示意图”方式入仓，用来锁定状态关系；如果后续需要更高保真截图，再补充替换同路径资产。

@@ -51,4 +51,4 @@ type ChampionFilterContext =
 - `src/rules/championFilter.ts`：纯筛选逻辑
 - `src/features/champion-filters/`：枚举分组、筛选项、交互组件
 
-页面结构包括：顶部说明卡、指标区、筛选区、结果区，以及内嵌的“英雄视觉档案”工作台；桌面端筛选区使用粘性侧栏，移动端退化为单列和折叠筛选，不依赖横向滑动。
+页面当前已切到统一工作台结构：桌面端使用“上方紧凑小导航 + 下方页面工作台壳层”，左侧是筛选抽屉与状态头，右侧是结果工具条、视觉档案与结果区；移动端继续退化为单列网页滚动。共性壳层细节见 `docs/modules/shared-components/page-workbench-design.md`。

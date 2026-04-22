@@ -2,7 +2,7 @@
 
 - 日期：2026-04-13
 - 目标：治理跨页面高度重复、语义稳定的 UI 与国际化实现，减少页面层散落逻辑，同时避免为了“去重”而过度抽象。
-- 当前结论：已完成两轮治理——第一轮沉淀双语展示组件；第二轮确认 `StatusBanner` 和 `FieldGroup` 适合共享，结果卡整体仍暂不抽取。
+- 当前结论：已完成三轮治理——第一轮沉淀双语展示组件；第二轮确认 `StatusBanner` 和 `FieldGroup` 适合共享；第三轮把全站页面壳层统一收口到 `PageWorkbenchShell`。当前工作台结构与视觉规范见 `docs/modules/shared-components/page-workbench-design.md`。
 
 ## 模块定位
 
@@ -17,6 +17,8 @@
 - `LocalizedText`：承接游戏数据双语展示
 - `StatusBanner`：承接状态提示条结构
 - `FieldGroup`：承接 `label + 控件 + hint` 字段块
+- `PageWorkbenchShell`：承接全站桌面工作台外壳、左右 pane 结构与工具条语义
+- `WorkbenchFloatingTopButton`：承接右区统一悬浮回顶入口
 - `formatSeatLabel`：保留为 helper，不为短标签增加额外 DOM
 - 暂不抽：结果卡整体、优先级按钮组
 
@@ -34,11 +36,12 @@
 ## 开发流程
 
 1. 先查 `docs/modules/shared-components/shared-components-catalog.md`
-2. 盘点重复点、语义一致性和故意不抽的部分
-3. 先写测试，再实现共享组件
-4. 组件只承接稳定能力，不塞页面私有布局和临时文案
-5. 接入页面后至少跑受影响组件 / 页面测试与 `lint` / `typecheck`
-6. 同步更新 catalog 与本设计稿中的经验沉淀
+2. 如果命中页面壳层或页面级布局，再查 `docs/modules/shared-components/page-workbench-design.md`
+3. 盘点重复点、语义一致性和故意不抽的部分
+4. 先写测试，再实现共享组件
+5. 组件只承接稳定能力，不塞页面私有布局和临时文案
+6. 接入页面后至少跑受影响组件 / 页面测试与 `lint` / `typecheck`
+7. 同步更新 catalog 与本设计稿中的经验沉淀
 
 ## 测试要求
 

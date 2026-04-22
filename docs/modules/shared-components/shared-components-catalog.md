@@ -7,4 +7,5 @@
 ## 先读哪篇
 
 - 组件目录与当前使用位置：`docs/modules/shared-components/component-list.md`
+- 页面工作台结构与视觉规范：`docs/modules/shared-components/page-workbench-design.md`
 - helper 清单、选择建议和当前不建议抽取的模式：`docs/modules/shared-components/helper-list-and-selection.md`

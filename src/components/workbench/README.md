@@ -1,6 +1,6 @@
 # workbench 目录说明
 
-全站页面现在统一走工作台壳层；这里收纳与“页面工作台”直接相关的共享组件和 hook。
+全站页面现在统一走工作台壳层；这里收纳与“页面工作台”直接相关的共享组件和 hook。结构与视觉基线见 `docs/modules/shared-components/page-workbench-design.md`。
 
 ## 推荐加载顺序
 
