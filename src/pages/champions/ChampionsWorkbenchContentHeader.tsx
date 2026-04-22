@@ -34,7 +34,7 @@ export function ChampionsWorkbenchContentHeader({ model }: ChampionsWorkbenchCon
             {
               label: t({ zh: '当前展示', en: 'Showing' }),
               value: t({
-                zh: `${visibleChampions.length} / ${filteredChampions.length} 名英雄`,
+                zh: `${visibleChampions.length} / ${filteredChampions.length}`,
                 en: `${visibleChampions.length} / ${filteredChampions.length} champions`,
               }),
             },
@@ -64,8 +64,8 @@ export function ChampionsWorkbenchContentHeader({ model }: ChampionsWorkbenchCon
           <span className="results-summary-pill workbench-filter-header__pill">
             {canToggleResultVisibility
               ? showAllResults
-                ? t({ zh: `已展开全部 ${filteredChampions.length} 名英雄`, en: `Showing all ${filteredChampions.length} champions` })
-                : t({ zh: `默认先展示 ${MAX_VISIBLE_RESULTS} 名英雄`, en: `Defaulting to the first ${MAX_VISIBLE_RESULTS} champions` })
+                ? t({ zh: `已展开全部 ${filteredChampions.length}`, en: `Showing all ${filteredChampions.length} champions` })
+                : t({ zh: `默认先展示 ${MAX_VISIBLE_RESULTS}`, en: `Defaulting to the first ${MAX_VISIBLE_RESULTS} champions` })
               : t({ zh: '当前结果已全部展开', en: 'The current result set is already fully visible' })}
           </span>
         ) : (
@@ -77,16 +77,20 @@ export function ChampionsWorkbenchContentHeader({ model }: ChampionsWorkbenchCon
       actions={(
         <>
           {canToggleResultVisibility ? (
-            <button type="button" className="results-visibility-toggle" onClick={toggleResultVisibility}>
+            <button
+              type="button"
+              className="results-visibility-toggle results-visibility-toggle--primary"
+              onClick={toggleResultVisibility}
+            >
               {showAllResults
-                ? t({ zh: `收起到默认 ${MAX_VISIBLE_RESULTS} 名`, en: `Collapse back to ${MAX_VISIBLE_RESULTS}` })
-                : t({ zh: `显示全部 ${filteredChampions.length} 名`, en: `Show all ${filteredChampions.length}` })}
+                ? t({ zh: `收起到默认 ${MAX_VISIBLE_RESULTS}`, en: `Collapse back to ${MAX_VISIBLE_RESULTS}` })
+                : t({ zh: `显示全部 ${filteredChampions.length}`, en: `Show all ${filteredChampions.length}` })}
             </button>
           ) : null}
 
           <button
             type="button"
-            className="results-visibility-toggle results-visibility-toggle--ghost"
+            className="results-visibility-toggle results-visibility-toggle--secondary"
             onClick={randomizeResultOrder}
           >
             {randomOrderLabel}

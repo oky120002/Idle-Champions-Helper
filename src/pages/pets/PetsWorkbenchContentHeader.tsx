@@ -17,7 +17,7 @@ export function PetsWorkbenchContentHeader({ model }: PetsWorkbenchContentHeader
     {
       label: t({ zh: '当前展示', en: 'Showing' }),
       value: t({
-        zh: `${results.visiblePets.length} / ${results.filteredPets.length} 只宠物`,
+        zh: `${results.visiblePets.length} / ${results.filteredPets.length}`,
         en: `${results.visiblePets.length} / ${results.filteredPets.length} pets`,
       }),
     },
@@ -37,8 +37,8 @@ export function PetsWorkbenchContentHeader({ model }: PetsWorkbenchContentHeader
           <span className="results-summary-pill workbench-filter-header__pill">
             {results.canToggleResultVisibility
               ? filters.showAllResults
-                ? t({ zh: `已展开全部 ${results.filteredPets.length} 只宠物`, en: `Showing all ${results.filteredPets.length} pets` })
-                : t({ zh: `默认先展示 ${MAX_VISIBLE_PETS} 只宠物`, en: `Defaulting to the first ${MAX_VISIBLE_PETS} pets` })
+                ? t({ zh: `已展开全部 ${results.filteredPets.length}`, en: `Showing all ${results.filteredPets.length} pets` })
+                : t({ zh: `默认先展示 ${MAX_VISIBLE_PETS}`, en: `Defaulting to the first ${MAX_VISIBLE_PETS} pets` })
               : t({ zh: '当前结果已全部展开', en: 'The current result set is already fully visible' })}
           </span>
         ) : (
@@ -50,14 +50,22 @@ export function PetsWorkbenchContentHeader({ model }: PetsWorkbenchContentHeader
       actions={(
         <>
           {results.canToggleResultVisibility ? (
-            <button type="button" className="results-visibility-toggle" onClick={actions.toggleResultVisibility}>
+            <button
+              type="button"
+              className="results-visibility-toggle results-visibility-toggle--primary"
+              onClick={actions.toggleResultVisibility}
+            >
               {filters.showAllResults
-                ? t({ zh: `收起到默认 ${MAX_VISIBLE_PETS} 只`, en: `Collapse back to ${MAX_VISIBLE_PETS}` })
-                : t({ zh: `显示全部 ${results.filteredPets.length} 只`, en: `Show all ${results.filteredPets.length}` })}
+                ? t({ zh: `收起到默认 ${MAX_VISIBLE_PETS}`, en: `Collapse back to ${MAX_VISIBLE_PETS}` })
+                : t({ zh: `显示全部 ${results.filteredPets.length}`, en: `Show all ${results.filteredPets.length}` })}
             </button>
           ) : null}
 
-          <button type="button" className="results-visibility-toggle results-visibility-toggle--ghost" onClick={actions.randomizeResultOrder}>
+          <button
+            type="button"
+            className="results-visibility-toggle results-visibility-toggle--secondary"
+            onClick={actions.randomizeResultOrder}
+          >
             {randomOrderLabel}
           </button>
         </>

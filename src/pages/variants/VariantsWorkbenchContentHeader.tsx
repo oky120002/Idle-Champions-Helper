@@ -16,7 +16,7 @@ export function VariantsWorkbenchContentHeader({ model }: VariantsWorkbenchConte
           {
             label: t({ zh: '当前展示', en: 'Showing' }),
             value: t({
-              zh: `${visibleVariants.length} / ${filteredVariants.length} 个变体`,
+              zh: `${visibleVariants.length} / ${filteredVariants.length}`,
               en: `${visibleVariants.length} / ${filteredVariants.length} variants`,
             }),
           },
@@ -42,8 +42,8 @@ export function VariantsWorkbenchContentHeader({ model }: VariantsWorkbenchConte
           <span className="results-summary-pill workbench-filter-header__pill">
             {canToggleResultVisibility
               ? filters.showAllResults
-                ? t({ zh: `已展开全部 ${filteredVariants.length} 个变体`, en: `Showing all ${filteredVariants.length} variants` })
-                : t({ zh: `默认先展示 ${MAX_VISIBLE_VARIANTS} 个变体`, en: `Defaulting to the first ${MAX_VISIBLE_VARIANTS} variants` })
+                ? t({ zh: `已展开全部 ${filteredVariants.length}`, en: `Showing all ${filteredVariants.length} variants` })
+                : t({ zh: `默认先展示 ${MAX_VISIBLE_VARIANTS}`, en: `Defaulting to the first ${MAX_VISIBLE_VARIANTS} variants` })
               : t({ zh: '当前结果已全部展开', en: 'The current result set is already fully visible' })}
           </span>
         ) : (
@@ -54,10 +54,14 @@ export function VariantsWorkbenchContentHeader({ model }: VariantsWorkbenchConte
       }
       actions={
         canToggleResultVisibility ? (
-          <button type="button" className="results-visibility-toggle" onClick={model.toggleResultVisibility}>
+          <button
+            type="button"
+            className="results-visibility-toggle results-visibility-toggle--primary"
+            onClick={model.toggleResultVisibility}
+          >
             {filters.showAllResults
-              ? t({ zh: `收起到默认 ${MAX_VISIBLE_VARIANTS} 个`, en: `Collapse back to ${MAX_VISIBLE_VARIANTS}` })
-              : t({ zh: `显示全部 ${filteredVariants.length} 个`, en: `Show all ${filteredVariants.length}` })}
+              ? t({ zh: `收起到默认 ${MAX_VISIBLE_VARIANTS}`, en: `Collapse back to ${MAX_VISIBLE_VARIANTS}` })
+              : t({ zh: `显示全部 ${filteredVariants.length}`, en: `Show all ${filteredVariants.length}` })}
           </button>
         ) : null
       }
