@@ -43,7 +43,7 @@ export function PetsPage() {
             </WorkbenchToolbarBadge>
             {state.status === 'ready' ? (
               <WorkbenchToolbarBadge variant="filter" tone="muted">
-                {t({ zh: `${model.results.filteredPets.length} 只命中`, en: `${model.results.filteredPets.length} matches` })}
+                {t({ zh: `${model.results.filteredPets.length} 命中`, en: `${model.results.filteredPets.length} matches` })}
               </WorkbenchToolbarBadge>
             ) : null}
             <WorkbenchShareButton state={ui.shareLinkState} onCopy={actions.copyCurrentLink} />

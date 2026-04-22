@@ -46,7 +46,7 @@ export function IllustrationsPage() {
             </WorkbenchToolbarBadge>
             {state.status === 'ready' ? (
               <WorkbenchToolbarBadge variant="filter" tone="muted">
-                {t({ zh: `${model.results.filteredIllustrationEntries.length} 张命中`, en: `${model.results.filteredIllustrationEntries.length} matches` })}
+                {t({ zh: `${model.results.filteredIllustrationEntries.length} 命中`, en: `${model.results.filteredIllustrationEntries.length} matches` })}
               </WorkbenchToolbarBadge>
             ) : null}
             <WorkbenchShareButton state={ui.shareLinkState} onCopy={actions.copyCurrentLink} />

@@ -43,7 +43,7 @@ export function VariantsPage() {
             </WorkbenchToolbarBadge>
             {state.status === 'ready' ? (
               <WorkbenchToolbarBadge variant="filter" tone="muted">
-                {t({ zh: `${model.filteredVariants.length} 个命中`, en: `${model.filteredVariants.length} matches` })}
+                {t({ zh: `${model.filteredVariants.length} 命中`, en: `${model.filteredVariants.length} matches` })}
               </WorkbenchToolbarBadge>
             ) : null}
             <WorkbenchShareButton state={model.shareLinkState} onCopy={model.copyCurrentLink} />

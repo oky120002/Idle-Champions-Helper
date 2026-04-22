@@ -49,7 +49,7 @@ export function ChampionsPage() {
             </WorkbenchToolbarBadge>
             {state.status === 'ready' ? (
               <WorkbenchToolbarBadge variant="filter" tone="muted">
-                {t({ zh: `${filteredChampions.length} 名命中`, en: `${filteredChampions.length} matches` })}
+                {t({ zh: `${filteredChampions.length} 命中`, en: `${filteredChampions.length} matches` })}
               </WorkbenchToolbarBadge>
             ) : null}
             <WorkbenchShareButton state={model.shareLinkState} onCopy={model.copyCurrentLink} />

@@ -26,7 +26,7 @@ export function IllustrationsWorkbenchContentHeader({ model }: IllustrationsWork
     {
       label: t({ zh: '当前展示', en: 'Showing' }),
       value: t({
-        zh: `${results.visibleIllustrationEntries.length} / ${results.filteredIllustrationEntries.length} 张立绘`,
+        zh: `${results.visibleIllustrationEntries.length} / ${results.filteredIllustrationEntries.length}`,
         en: `${results.visibleIllustrationEntries.length} / ${results.filteredIllustrationEntries.length} illustrations`,
       }),
     },
@@ -55,8 +55,8 @@ export function IllustrationsWorkbenchContentHeader({ model }: IllustrationsWork
           <span className="results-summary-pill workbench-filter-header__pill">
             {results.canToggleResultVisibility
               ? filters.showAllResults
-                ? t({ zh: `已展开全部 ${results.filteredIllustrationEntries.length} 张立绘`, en: `Showing all ${results.filteredIllustrationEntries.length} illustrations` })
-                : t({ zh: `默认先展示 ${MAX_VISIBLE_ILLUSTRATIONS} 张立绘`, en: `Defaulting to the first ${MAX_VISIBLE_ILLUSTRATIONS} illustrations` })
+                ? t({ zh: `已展开全部 ${results.filteredIllustrationEntries.length}`, en: `Showing all ${results.filteredIllustrationEntries.length} illustrations` })
+                : t({ zh: `默认先展示 ${MAX_VISIBLE_ILLUSTRATIONS}`, en: `Defaulting to the first ${MAX_VISIBLE_ILLUSTRATIONS} illustrations` })
               : t({ zh: '当前结果已全部展开', en: 'The current result set is already fully visible' })}
           </span>
         ) : (
@@ -68,14 +68,22 @@ export function IllustrationsWorkbenchContentHeader({ model }: IllustrationsWork
       actions={(
         <>
           {results.canToggleResultVisibility ? (
-            <button type="button" className="results-visibility-toggle" onClick={actions.toggleResultVisibility}>
+            <button
+              type="button"
+              className="results-visibility-toggle results-visibility-toggle--primary"
+              onClick={actions.toggleResultVisibility}
+            >
               {filters.showAllResults
-                ? t({ zh: `收起到默认 ${MAX_VISIBLE_ILLUSTRATIONS} 张`, en: `Collapse back to ${MAX_VISIBLE_ILLUSTRATIONS}` })
-                : t({ zh: `显示全部 ${results.filteredIllustrationEntries.length} 张`, en: `Show all ${results.filteredIllustrationEntries.length}` })}
+                ? t({ zh: `收起到默认 ${MAX_VISIBLE_ILLUSTRATIONS}`, en: `Collapse back to ${MAX_VISIBLE_ILLUSTRATIONS}` })
+                : t({ zh: `显示全部 ${results.filteredIllustrationEntries.length}`, en: `Show all ${results.filteredIllustrationEntries.length}` })}
             </button>
           ) : null}
 
-          <button type="button" className="results-visibility-toggle results-visibility-toggle--ghost" onClick={actions.randomizeResultOrder}>
+          <button
+            type="button"
+            className="results-visibility-toggle results-visibility-toggle--secondary"
+            onClick={actions.randomizeResultOrder}
+          >
             {randomOrderLabel}
           </button>
         </>
