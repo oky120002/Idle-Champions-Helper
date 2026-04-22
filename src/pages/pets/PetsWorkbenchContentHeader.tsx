@@ -14,6 +14,13 @@ export function PetsWorkbenchContentHeader({ model }: PetsWorkbenchContentHeader
     ? t({ zh: '重新随机', en: 'Reshuffle' })
     : t({ zh: '随机排序', en: 'Shuffle order' })
   const metricItems: PageHeaderMetricItem[] = [
+    {
+      label: t({ zh: '当前展示', en: 'Showing' }),
+      value: t({
+        zh: `${results.visiblePets.length} / ${results.filteredPets.length} 只宠物`,
+        en: `${results.visiblePets.length} / ${results.filteredPets.length} pets`,
+      }),
+    },
     { label: t({ zh: '宠物总数', en: 'Pets' }), value: summary.total },
     { label: t({ zh: '完整图像', en: 'Full art' }), value: summary.completeArt },
     { label: t({ zh: '宝石商店', en: 'Gem shop' }), value: summary.gems },
@@ -24,19 +31,6 @@ export function PetsWorkbenchContentHeader({ model }: PetsWorkbenchContentHeader
 
   return (
     <WorkbenchFilterResultsHeader
-      eyebrow="PETS"
-      title={t({ zh: '宠物图鉴', en: 'Pet catalog' })}
-      description={
-        hasMatches
-          ? t({
-              zh: `当前展示 ${results.visiblePets.length} / ${results.filteredPets.length} / ${summary.total} 只宠物。左侧先定范围，右侧再看立绘、来源与资源完整度。`,
-              en: `Showing ${results.visiblePets.length} / ${results.filteredPets.length} / ${summary.total} pets. Narrow the roster on the left, then compare art, source, and asset completeness on the right.`,
-            })
-          : t({
-              zh: '当前筛选条件下没有匹配宠物。先放宽来源或图像状态，再继续缩回来。',
-              en: 'No pets match yet. Loosen source or asset state first, then narrow things down again.',
-            })
-      }
       metrics={<PageHeaderMetrics items={metricItems} variant="compact" />}
       summaryBadge={
         hasMatches ? (

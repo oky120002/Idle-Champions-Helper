@@ -13,6 +13,10 @@ import { manyChampionsFixture } from './champions-page/championsPageTestData'
 
 const mockedLoadVersion = vi.mocked(loadVersion)
 
+function getMetricByText(text: string) {
+  return Array.from(document.querySelectorAll('.page-header-metric')).find((element) => element.textContent === text)
+}
+
 describe('ChampionsPage filter state', () => {
   beforeEach(() => {
     window.sessionStorage.clear()
@@ -39,11 +43,8 @@ describe('ChampionsPage filter state', () => {
     await user.type(screen.getByPlaceholderText('搜英雄名、标签、联动队伍'), '德')
     await user.click(screen.getByRole('button', { name: '1 号位' }))
 
-    expect(
-      screen.getByText(
-        '当前筛选条件下没有匹配英雄。先回退一个维度，再逐步缩回来，会比一次清空全部更稳。',
-      ),
-    ).toBeInTheDocument()
+    expect(getMetricByText('当前展示0 / 0 名英雄')).toBeTruthy()
+    expect(screen.getByText('等待新的筛选命中')).toBeInTheDocument()
     expect(screen.getAllByRole('button', { name: '清空全部' })).toHaveLength(1)
 
     await user.click(within(screen.getByRole('group', { name: '筛选状态操作' })).getByRole('button', { name: '清空全部' }))
@@ -96,7 +97,7 @@ describe('ChampionsPage filter state', () => {
 
     expect(await screen.findByText('测试英雄 1')).toBeInTheDocument()
     expect(screen.getByText('默认先展示 48 名英雄')).toBeInTheDocument()
-    expect(screen.getByText(/^当前展示 48 \/ 60 名英雄/)).toBeInTheDocument()
+    expect(getMetricByText('当前展示48 / 60 名英雄')).toBeTruthy()
     expect(screen.queryByText('测试英雄 60')).not.toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: '显示全部 60 名' }))
@@ -105,7 +106,7 @@ describe('ChampionsPage filter state', () => {
       expect(screen.getByText('测试英雄 60')).toBeInTheDocument()
     })
 
-    expect(screen.getByText(/^当前展示 60 \/ 60 名英雄/)).toBeInTheDocument()
+    expect(getMetricByText('当前展示60 / 60 名英雄')).toBeTruthy()
 
     await user.click(screen.getAllByRole('button', { name: '收起到默认 48 名' })[0]!)
 
@@ -113,7 +114,7 @@ describe('ChampionsPage filter state', () => {
       expect(screen.queryByText('测试英雄 60')).not.toBeInTheDocument()
     })
 
-    expect(screen.getByText(/^当前展示 48 \/ 60 名英雄/)).toBeInTheDocument()
+    expect(getMetricByText('当前展示48 / 60 名英雄')).toBeTruthy()
   })
 
   it('会在 URL 查询参数变化后重新同步筛选 UI', async () => {

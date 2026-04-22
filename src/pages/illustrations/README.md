@@ -5,7 +5,7 @@
 ## 推荐加载顺序
 
 1. `src/pages/IllustrationsPage.tsx`
-   - 只看页面级编排、标题统计区块和 ready / loading / error 分支。
+   - 只看页面级编排、工作台 chrome 和 ready / loading / error 分支。
 2. `src/pages/illustrations/useIllustrationsPageModel.ts`
    - 看筛选数据、结果数据、随机排序、分享链接与 actions 如何装配。
 3. `src/pages/illustrations/useIllustrationFilterState.ts`
@@ -17,7 +17,7 @@
 6. `src/pages/illustrations/IllustrationsResultsSection.tsx`
    - 结果摘要、默认 50 张限制、展开 / 收起按钮和随机排序入口。
 7. `src/pages/illustrations/IllustrationsWorkbenchContentHeader.tsx`
-   - 页头摘要、紧凑 metrics、展开/收起和随机排序按钮。
+   - 实时结果统计、紧凑 metrics、展开/收起和随机排序按钮。
 8. `src/pages/illustrations/illustration-model.ts`
    - 纯逻辑：active chips、立绘文案、kind 统计、结果 entry 组装与随机打散。
 9. `src/pages/illustrations/query-state.ts`
@@ -30,7 +30,7 @@
 - `illustration-filter-actions.ts`: 所有筛选 mutation 的统一出口。
 - `useIllustrationCollectionState.ts`: 立绘 / 动态预览 / 英雄 / enums 读取。
 - `IllustrationResultCard.tsx`: 单张结果卡片、整卡跳转与 hover 动态预览。
-- `IllustrationsWorkbenchContentHeader.tsx`: 页头文案、metrics 和结果动作的合并入口。
+- `IllustrationsWorkbenchContentHeader.tsx`: 实时结果统计、metrics 和结果动作的合并入口。
 - `IllustrationsPage.tsx`: 直接拼接主筛选区与补充筛选区，不再保留只做转发的 sidebar wrapper。
 
 ## 关键不变量

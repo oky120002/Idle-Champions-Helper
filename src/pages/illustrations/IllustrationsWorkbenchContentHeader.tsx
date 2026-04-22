@@ -23,8 +23,14 @@ export function IllustrationsWorkbenchContentHeader({ model }: IllustrationsWork
   )
   const summary = collectChampionFacetSummary(champions, model.locale)
   const metricItems: PageHeaderMetricItem[] = [
+    {
+      label: t({ zh: '当前展示', en: 'Showing' }),
+      value: t({
+        zh: `${results.visibleIllustrationEntries.length} / ${results.filteredIllustrationEntries.length} 张立绘`,
+        en: `${results.visibleIllustrationEntries.length} / ${results.filteredIllustrationEntries.length} illustrations`,
+      }),
+    },
     { label: t({ zh: '立绘总数', en: 'Illustrations' }), value: results.illustrations.length },
-    { label: t({ zh: '当前匹配', en: 'Matches' }), value: results.filteredIllustrationEntries.length },
     { label: t({ zh: '覆盖英雄', en: 'Champions' }), value: champions.length },
     { label: t({ zh: '本体', en: 'Base' }), value: results.filteredHeroCount },
     { label: t({ zh: '皮肤', en: 'Skins' }), value: results.filteredSkinCount },
@@ -38,19 +44,6 @@ export function IllustrationsWorkbenchContentHeader({ model }: IllustrationsWork
 
   return (
     <WorkbenchFilterResultsHeader
-      eyebrow="ART CODEX"
-      title={t({ zh: '立绘图鉴', en: 'Illustration catalog' })}
-      description={
-        hasMatches
-          ? t({
-              zh: `当前展示 ${results.visibleIllustrationEntries.length} / ${results.filteredIllustrationEntries.length} 张立绘。左侧先缩范围，右侧再比较本体、皮肤和动态资源。`,
-              en: `Showing ${results.visibleIllustrationEntries.length} / ${results.filteredIllustrationEntries.length} illustrations. Narrow the scope on the left, then compare base art, skins, and motion resources on the right.`,
-            })
-          : t({
-              zh: '当前筛选条件下没有匹配立绘。先放宽一个维度，再逐步缩回来，会比直接清空更稳。',
-              en: 'No illustrations match yet. Loosen one dimension first, then tighten it back down for a steadier search flow.',
-            })
-      }
       metrics={<PageHeaderMetrics items={metricItems} variant="compact" />}
       filterSummary={
         activeFilters.length > 0

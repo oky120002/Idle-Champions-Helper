@@ -13,8 +13,14 @@ export function VariantsWorkbenchContentHeader({ model }: VariantsWorkbenchConte
   const metricItems: PageHeaderMetricItem[] =
     model.state.status === 'ready'
       ? [
+          {
+            label: t({ zh: '当前展示', en: 'Showing' }),
+            value: t({
+              zh: `${visibleVariants.length} / ${filteredVariants.length} 个变体`,
+              en: `${visibleVariants.length} / ${filteredVariants.length} variants`,
+            }),
+          },
           { label: t({ zh: '变体总数', en: 'Variants' }), value: model.state.variants.length },
-          { label: t({ zh: '当前匹配', en: 'Matches' }), value: filteredVariants.length },
           { label: t({ zh: '可见冒险分组', en: 'Adventure groups' }), value: model.adventuresWithResults },
           {
             label: t({ zh: '覆盖战役 / 场景', en: 'Campaigns / scenes' }),
@@ -25,19 +31,6 @@ export function VariantsWorkbenchContentHeader({ model }: VariantsWorkbenchConte
 
   return (
     <WorkbenchFilterResultsHeader
-      eyebrow="VARIANTS"
-      title={t({ zh: '变体筛选', en: 'Variant filters' })}
-      description={
-        hasMatches
-          ? t({
-              zh: `当前展示 ${visibleVariants.length} / ${filteredVariants.length} 个变体，并继续按战役 -> 冒险两层结构展开。`,
-              en: `Showing ${visibleVariants.length} / ${filteredVariants.length} variants while preserving the campaign -> adventure reading model.`,
-            })
-          : t({
-              zh: '当前筛选条件下没有匹配变体。先放宽一个维度，再逐步缩回来，会比一次勾很多条件更稳。',
-              en: 'No variants match yet. Loosen one dimension first, then tighten it back down for a steadier search flow.',
-            })
-      }
       metrics={metricItems.length > 0 ? <PageHeaderMetrics items={metricItems} variant="compact" /> : null}
       filterSummary={
         activeFilters.length > 0
