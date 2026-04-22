@@ -1,7 +1,6 @@
 import { PageHeaderMetrics, type PageHeaderMetricItem } from '../../components/PageHeaderMetrics'
 import { WorkbenchFilterResultsHeader } from '../../components/workbench/WorkbenchScaffold'
 import { collectChampionFacetSummary } from '../../features/champion-filters/headerMetrics'
-import { MAX_VISIBLE_RESULTS } from './constants'
 import type { ChampionsPageModel } from './types'
 
 interface ChampionsWorkbenchContentHeaderProps {
@@ -9,22 +8,7 @@ interface ChampionsWorkbenchContentHeaderProps {
 }
 
 export function ChampionsWorkbenchContentHeader({ model }: ChampionsWorkbenchContentHeaderProps) {
-  const {
-    filteredChampions,
-    visibleChampions,
-    activeFilters,
-    canToggleResultVisibility,
-    showAllResults,
-    hasRandomOrder,
-    toggleResultVisibility,
-    randomizeResultOrder,
-    t,
-  } = model
-
-  const hasMatches = filteredChampions.length > 0
-  const randomOrderLabel = hasRandomOrder
-    ? t({ zh: '重新随机', en: 'Reshuffle' })
-    : t({ zh: '随机排序', en: 'Shuffle order' })
+  const { filteredChampions, visibleChampions, activeFilters, t } = model
   const metricItems: PageHeaderMetricItem[] =
     model.state.status === 'ready'
       ? (() => {
@@ -59,44 +43,6 @@ export function ChampionsWorkbenchContentHeader({ model }: ChampionsWorkbenchCon
           ? `${t({ zh: '当前筛选：', en: 'Active filters: ' })}${activeFilters.join(' · ')}`
           : null
       }
-      summaryBadge={
-        hasMatches ? (
-          <span className="results-summary-pill workbench-filter-header__pill">
-            {canToggleResultVisibility
-              ? showAllResults
-                ? t({ zh: `已展开全部 ${filteredChampions.length}`, en: `Showing all ${filteredChampions.length} champions` })
-                : t({ zh: `默认先展示 ${MAX_VISIBLE_RESULTS}`, en: `Defaulting to the first ${MAX_VISIBLE_RESULTS} champions` })
-              : t({ zh: '当前结果已全部展开', en: 'The current result set is already fully visible' })}
-          </span>
-        ) : (
-          <span className="results-summary-pill workbench-filter-header__pill workbench-filter-header__pill--muted">
-            {t({ zh: '等待新的筛选命中', en: 'Waiting for the next match set' })}
-          </span>
-        )
-      }
-      actions={(
-        <>
-          {canToggleResultVisibility ? (
-            <button
-              type="button"
-              className="results-visibility-toggle results-visibility-toggle--primary"
-              onClick={toggleResultVisibility}
-            >
-              {showAllResults
-                ? t({ zh: `收起到默认 ${MAX_VISIBLE_RESULTS}`, en: `Collapse back to ${MAX_VISIBLE_RESULTS}` })
-                : t({ zh: `显示全部 ${filteredChampions.length}`, en: `Show all ${filteredChampions.length}` })}
-            </button>
-          ) : null}
-
-          <button
-            type="button"
-            className="results-visibility-toggle results-visibility-toggle--secondary"
-            onClick={randomizeResultOrder}
-          >
-            {randomOrderLabel}
-          </button>
-        </>
-      )}
     />
   )
 }

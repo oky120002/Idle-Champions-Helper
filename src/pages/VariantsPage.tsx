@@ -7,8 +7,10 @@ import {
   WorkbenchToolbarCopy,
   WorkbenchToolbarMark,
 } from '../components/workbench/WorkbenchScaffold'
+import { WorkbenchToolbarActionButton } from '../components/workbench/WorkbenchToolbarActionButton'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { StatusBanner } from '../components/StatusBanner'
+import { MAX_VISIBLE_VARIANTS } from './variants/constants'
 import { VariantsFilterBar } from './variants/VariantsFilterBar'
 import { VariantsResultsSection } from './variants/VariantsResultsSection'
 import { VariantsWorkbenchContentHeader } from './variants/VariantsWorkbenchContentHeader'
@@ -17,6 +19,14 @@ import { useVariantsPageModel } from './variants/useVariantsPageModel'
 export function VariantsPage() {
   const model = useVariantsPageModel()
   const { state, t, activeFilters, clearAllFilters, showResultsQuickNavTop, scrollResultsToTop } = model
+  const resultVisibilityLabel = model.canToggleResultVisibility
+    ? model.filters.showAllResults
+      ? t({ zh: `收起到默认 ${MAX_VISIBLE_VARIANTS}`, en: `Collapse to default ${MAX_VISIBLE_VARIANTS}` })
+      : t({
+          zh: `显示全部 ${model.filteredVariants.length}（默认 ${MAX_VISIBLE_VARIANTS}）`,
+          en: `Show all ${model.filteredVariants.length} (default ${MAX_VISIBLE_VARIANTS})`,
+        })
+    : null
 
   return (
     <div className="variants-page workbench-page">
@@ -46,6 +56,15 @@ export function VariantsPage() {
                 {t({ zh: `${model.filteredVariants.length} 命中`, en: `${model.filteredVariants.length} matches` })}
               </WorkbenchToolbarBadge>
             ) : null}
+            {state.status === 'ready' && resultVisibilityLabel != null ? (
+              <WorkbenchToolbarActionButton
+                isActive={model.filters.showAllResults}
+                ariaPressed={model.filters.showAllResults}
+                onClick={model.toggleResultVisibility}
+              >
+                {resultVisibilityLabel}
+              </WorkbenchToolbarActionButton>
+            ) : null}
             <WorkbenchShareButton state={model.shareLinkState} onCopy={model.copyCurrentLink} />
           </>
         )}
@@ -61,9 +80,9 @@ export function VariantsPage() {
             status={(
               <>
                 <WorkbenchToolbarBadge variant="filter">
-                {activeFilters.length > 0
-                  ? t({ zh: `${activeFilters.length} 项已启用`, en: `${activeFilters.length} active` })
-                  : t({ zh: '当前未启用条件', en: 'No active filters' })}
+                  {activeFilters.length > 0
+                    ? t({ zh: `${activeFilters.length} 项已启用`, en: `${activeFilters.length} active` })
+                    : t({ zh: '当前未启用条件', en: 'No active filters' })}
                 </WorkbenchToolbarBadge>
                 {activeFilters.length > 0 ? (
                   <button

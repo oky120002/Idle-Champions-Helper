@@ -16,20 +16,16 @@ describe('WorkbenchFilterResultsHeader', () => {
             items={[
               {
                 label: '当前展示',
-                value: '48 / 60 名英雄',
+                value: '48 / 60',
               },
             ]}
             variant="compact"
           />
         )}
-        summaryBadge={<span>默认先展示 48 名英雄</span>}
-        actions={<button type="button">显示全部 60 名</button>}
       />,
     )
 
     expect(screen.queryByRole('heading')).toBeNull()
-    expect(getMetricByText('当前展示48 / 60 名英雄')).toBeTruthy()
-    expect(screen.getByText('默认先展示 48 名英雄')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: '显示全部 60 名' })).toBeInTheDocument()
+    expect(getMetricByText('当前展示48 / 60')).toBeTruthy()
   })
 })

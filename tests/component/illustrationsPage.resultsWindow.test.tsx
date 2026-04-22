@@ -54,7 +54,7 @@ describe('IllustrationsPage results window', () => {
     const results = await screen.findByLabelText('立绘结果')
     expect(within(results).getAllByRole('img')).toHaveLength(50)
 
-    await user.click(screen.getByRole('button', { name: '显示全部 52 张' }))
+    await user.click(screen.getByRole('button', { name: '显示全部 52（默认 50）' }))
 
     expect(within(results).getAllByRole('img')).toHaveLength(52)
   })
@@ -78,7 +78,7 @@ describe('IllustrationsPage results window', () => {
     expect(within(results).getAllByRole('img')).toHaveLength(52)
     expect(screen.getByRole('button', { name: '皮肤' })).toHaveAttribute('aria-pressed', 'true')
     expect(screen.getByRole('button', { name: '辅助' })).toHaveAttribute('aria-pressed', 'true')
-    expect(screen.getByRole('button', { name: '收起到默认 50 张' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '收起到默认 50' })).toBeInTheDocument()
   })
 
   it('支持在当前筛选结果内重新随机排序', async () => {

@@ -52,8 +52,6 @@ interface WorkbenchFilterResultsHeaderProps {
   description?: ReactNode
   metrics?: ReactNode
   filterSummary?: ReactNode
-  summaryBadge?: ReactNode
-  actions?: ReactNode
   className?: string
 }
 
@@ -196,8 +194,6 @@ export function WorkbenchFilterResultsHeader({
   description,
   metrics,
   filterSummary,
-  summaryBadge,
-  actions,
   className,
 }: WorkbenchFilterResultsHeaderProps) {
   const hasCopy = eyebrow != null || title != null || description != null
@@ -238,15 +234,6 @@ export function WorkbenchFilterResultsHeader({
           </p>
         ) : null}
       </div>
-
-      {summaryBadge != null || actions != null ? (
-        <div className="workbench-filter-header__actions">
-          {summaryBadge}
-          {actions != null ? (
-            <div className="workbench-filter-header__action-row">{actions}</div>
-          ) : null}
-        </div>
-      ) : null}
     </div>
   )
 }

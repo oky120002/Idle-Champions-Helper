@@ -1,6 +1,5 @@
 import { PageHeaderMetrics, type PageHeaderMetricItem } from '../../components/PageHeaderMetrics'
 import { WorkbenchFilterResultsHeader } from '../../components/workbench/WorkbenchScaffold'
-import { MAX_VISIBLE_VARIANTS } from './constants'
 import type { VariantsPageModel } from './types'
 
 interface VariantsWorkbenchContentHeaderProps {
@@ -8,8 +7,7 @@ interface VariantsWorkbenchContentHeaderProps {
 }
 
 export function VariantsWorkbenchContentHeader({ model }: VariantsWorkbenchContentHeaderProps) {
-  const { t, activeFilters, filteredVariants, visibleVariants, canToggleResultVisibility, filters } = model
-  const hasMatches = filteredVariants.length > 0
+  const { t, activeFilters, filteredVariants, visibleVariants } = model
   const metricItems: PageHeaderMetricItem[] =
     model.state.status === 'ready'
       ? [
@@ -36,34 +34,6 @@ export function VariantsWorkbenchContentHeader({ model }: VariantsWorkbenchConte
         activeFilters.length > 0
           ? `${t({ zh: '当前筛选：', en: 'Active filters: ' })}${activeFilters.join(' · ')}`
           : null
-      }
-      summaryBadge={
-        hasMatches ? (
-          <span className="results-summary-pill workbench-filter-header__pill">
-            {canToggleResultVisibility
-              ? filters.showAllResults
-                ? t({ zh: `已展开全部 ${filteredVariants.length}`, en: `Showing all ${filteredVariants.length} variants` })
-                : t({ zh: `默认先展示 ${MAX_VISIBLE_VARIANTS}`, en: `Defaulting to the first ${MAX_VISIBLE_VARIANTS} variants` })
-              : t({ zh: '当前结果已全部展开', en: 'The current result set is already fully visible' })}
-          </span>
-        ) : (
-          <span className="results-summary-pill workbench-filter-header__pill workbench-filter-header__pill--muted">
-            {t({ zh: '等待新的变体命中', en: 'Waiting for the next match set' })}
-          </span>
-        )
-      }
-      actions={
-        canToggleResultVisibility ? (
-          <button
-            type="button"
-            className="results-visibility-toggle results-visibility-toggle--primary"
-            onClick={model.toggleResultVisibility}
-          >
-            {filters.showAllResults
-              ? t({ zh: `收起到默认 ${MAX_VISIBLE_VARIANTS}`, en: `Collapse back to ${MAX_VISIBLE_VARIANTS}` })
-              : t({ zh: `显示全部 ${filteredVariants.length}`, en: `Show all ${filteredVariants.length}` })}
-          </button>
-        ) : null
       }
     />
   )

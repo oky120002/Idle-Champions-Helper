@@ -7,9 +7,11 @@ import {
   WorkbenchToolbarCopy,
   WorkbenchToolbarMark,
 } from '../components/workbench/WorkbenchScaffold'
+import { WorkbenchToolbarActionButton } from '../components/workbench/WorkbenchToolbarActionButton'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { StatusBanner } from '../components/StatusBanner'
 import { PetFilters } from './pets/PetFilters'
+import { MAX_VISIBLE_PETS } from './pets/constants'
 import { PetsResultsSection } from './pets/PetsResultsSection'
 import { PetsWorkbenchContentHeader } from './pets/PetsWorkbenchContentHeader'
 import { usePetsPageModel } from './pets/usePetsPageModel'
@@ -17,6 +19,17 @@ import { usePetsPageModel } from './pets/usePetsPageModel'
 export function PetsPage() {
   const model = usePetsPageModel()
   const { state, t, activeFilterCount, filters, actions, ui } = model
+  const resultVisibilityLabel = model.results.canToggleResultVisibility
+    ? filters.showAllResults
+      ? t({ zh: `收起到默认 ${MAX_VISIBLE_PETS}`, en: `Collapse to default ${MAX_VISIBLE_PETS}` })
+      : t({
+          zh: `显示全部 ${model.results.filteredPets.length}（默认 ${MAX_VISIBLE_PETS}）`,
+          en: `Show all ${model.results.filteredPets.length} (default ${MAX_VISIBLE_PETS})`,
+        })
+    : null
+  const randomOrderLabel = ui.hasRandomOrder
+    ? t({ zh: '重新随机', en: 'Reshuffle' })
+    : t({ zh: '随机排序', en: 'Shuffle order' })
 
   return (
     <div className="pets-page workbench-page">
@@ -46,6 +59,20 @@ export function PetsPage() {
                 {t({ zh: `${model.results.filteredPets.length} 命中`, en: `${model.results.filteredPets.length} matches` })}
               </WorkbenchToolbarBadge>
             ) : null}
+            {state.status === 'ready' && resultVisibilityLabel != null ? (
+              <WorkbenchToolbarActionButton
+                isActive={filters.showAllResults}
+                ariaPressed={filters.showAllResults}
+                onClick={actions.toggleResultVisibility}
+              >
+                {resultVisibilityLabel}
+              </WorkbenchToolbarActionButton>
+            ) : null}
+            {state.status === 'ready' && model.results.filteredPets.length > 1 ? (
+              <WorkbenchToolbarActionButton isActive={ui.hasRandomOrder} onClick={actions.randomizeResultOrder}>
+                {randomOrderLabel}
+              </WorkbenchToolbarActionButton>
+            ) : null}
             <WorkbenchShareButton state={ui.shareLinkState} onCopy={actions.copyCurrentLink} />
           </>
         )}
@@ -61,9 +88,9 @@ export function PetsPage() {
             status={(
               <>
                 <WorkbenchToolbarBadge variant="filter">
-                {activeFilterCount > 0
-                  ? t({ zh: `${activeFilterCount} 项已启用`, en: `${activeFilterCount} active` })
-                  : t({ zh: '当前未启用条件', en: 'No active filters' })}
+                  {activeFilterCount > 0
+                    ? t({ zh: `${activeFilterCount} 项已启用`, en: `${activeFilterCount} active` })
+                    : t({ zh: '当前未启用条件', en: 'No active filters' })}
                 </WorkbenchToolbarBadge>
                 {activeFilterCount > 0 ? (
                   <button

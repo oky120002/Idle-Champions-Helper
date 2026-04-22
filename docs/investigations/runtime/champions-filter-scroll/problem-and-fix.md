@@ -20,7 +20,7 @@
 
 ### 页面层：结果区高度过渡，而不是固定小窗
 
-`src/pages/ChampionsPage.tsx` 中把结果区域改为自然高度的 `results-panel-shell` / `results-panel` 结构，并在 `src/styles/global.css` 中维护 `results-panel-shell`、`results-panel`、`results-panel__meta`、`results-grid--stable` 等样式。
+`src/pages/ChampionsPage.tsx` 中把结果区域改为自然高度的 `results-panel-shell` / `results-panel` 结构，并在共享结果样式中维护 `results-panel-shell`、`results-panel`、`results-grid--stable` 等过渡样式。
 
 目的：保持页面仍然是正常整页滚动，不牺牲大屏 / 小屏下的卡片可见数量；当结果从很多条骤减到很少时，先临时保留旧高度，再过渡到新高度。
 
@@ -35,7 +35,7 @@
 ### 其他补充稳定措施
 
 - 首次出现“当前筛选”摘要时预留占位，避免第一条筛选一出现就把结果头部主统计整体向下推一行。
-- 结果默认先展示 `48` 名，并提供“显示全部 / 收起”切换。
+- 结果默认先展示 `50` 条，并把“显示全部 / 收起”上提到工作台 toolbar。
 - 空结果时补“放开筛选 / 一键清空”快捷操作。
 - 增加结果区 `顶部 / 到底` 快捷按钮，并放宽桌面端页面宽度。
 

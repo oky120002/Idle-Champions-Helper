@@ -1,4 +1,4 @@
-export const MAX_VISIBLE_RESULTS = 48
+export const MAX_VISIBLE_RESULTS = 50
 export const SEARCH_PARAM_QUERY = 'q'
 export const SEARCH_PARAM_SEAT = 'seat'
 export const SEARCH_PARAM_ROLE = 'role'

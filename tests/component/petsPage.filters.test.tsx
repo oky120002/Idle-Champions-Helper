@@ -185,7 +185,7 @@ describe('PetsPage filters', () => {
     })
   })
 
-  it('默认仅展示前 50 只宠物，并支持展开与筛选后收起', async () => {
+  it('默认仅展示前 50 条宠物结果，并支持展开与筛选后收起', async () => {
     const user = userEvent.setup()
 
     mockedLoadCollection.mockImplementation(async (name) => {
@@ -205,7 +205,7 @@ describe('PetsPage filters', () => {
     const results = await screen.findByLabelText('宠物结果')
     expect(within(results).getAllByRole('heading', { level: 3 })).toHaveLength(50)
 
-    await user.click(screen.getByRole('button', { name: '显示全部 52 只' }))
+    await user.click(screen.getByRole('button', { name: '显示全部 52（默认 50）' }))
     expect(within(results).getAllByRole('heading', { level: 3 })).toHaveLength(52)
 
     await user.click(screen.getByRole('button', { name: '完整图像' }))
@@ -214,6 +214,6 @@ describe('PetsPage filters', () => {
       expect(within(results).getAllByRole('heading', { level: 3 })).toHaveLength(50)
     })
 
-    expect(screen.getByRole('button', { name: '显示全部 52 只' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '显示全部 52（默认 50）' })).toBeInTheDocument()
   })
 })
