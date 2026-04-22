@@ -14,8 +14,11 @@ export function ChampionsWorkbenchContentHeader({ model }: ChampionsWorkbenchCon
     canToggleResultVisibility,
     showAllResults,
     hasRandomOrder,
+    shareLinkState,
+    shareButtonLabel,
     toggleResultVisibility,
     randomizeResultOrder,
+    copyCurrentLink,
     t,
   } = model
 
@@ -88,6 +91,20 @@ export function ChampionsWorkbenchContentHeader({ model }: ChampionsWorkbenchCon
             onClick={randomizeResultOrder}
           >
             {randomOrderLabel}
+          </button>
+
+          <button
+            type="button"
+            className={
+              shareLinkState === 'success'
+                ? 'results-visibility-toggle results-visibility-toggle--ghost action-button--toggled'
+                : 'results-visibility-toggle results-visibility-toggle--ghost'
+            }
+            onClick={() => {
+              void copyCurrentLink()
+            }}
+          >
+            {shareButtonLabel}
           </button>
         </div>
       </div>

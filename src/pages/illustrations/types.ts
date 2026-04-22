@@ -1,4 +1,6 @@
+import type { RefObject } from 'react'
 import type { AppLocale, LocaleText } from '../../app/i18n'
+import type { WorkbenchShareLinkState } from '../../components/filter-sidebar/useWorkbenchShareLink'
 import type {
   Champion,
   ChampionAnimation,
@@ -10,8 +12,6 @@ import type { ActiveFilterChip, MechanicOptionGroup } from '../../features/champ
 import type { FilterableIllustration } from '../../rules/illustrationFilter'
 
 export type ViewFilter = 'all' | ChampionIllustrationKind
-
-export type ShareLinkState = 'idle' | 'success' | 'error'
 
 export type IllustrationState =
   | { status: 'loading' }
@@ -50,9 +50,10 @@ export type IllustrationsPageTranslator = (text: LocaleText) => string
 export type IllustrationsPageUiState = {
   isIdentityFiltersExpanded: boolean
   isMetaFiltersExpanded: boolean
-  shareLinkState: ShareLinkState
+  shareLinkState: WorkbenchShareLinkState
   shareButtonLabel: string
   hasRandomOrder: boolean
+  showResultsQuickNavTop: boolean
 }
 
 export type IllustrationsPageOptions = {
@@ -105,6 +106,8 @@ export type IllustrationsPageActions = {
   toggleMetaFiltersExpanded: () => void
   toggleResultVisibility: () => void
   randomizeResultOrder: () => void
+  saveListScroll: () => void
+  scrollResultsToTop: () => void
   copyCurrentLink: () => Promise<void>
 }
 
@@ -122,5 +125,6 @@ export type IllustrationsPageModel = {
   hasActiveFilters: boolean
   identityFiltersSelectedCount: number
   metaFiltersSelectedCount: number
+  resultsPaneRef: RefObject<HTMLDivElement | null>
   actions: IllustrationsPageActions
 }

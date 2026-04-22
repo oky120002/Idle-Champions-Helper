@@ -14,9 +14,10 @@ type IllustrationResultCardProps = {
   animation: ChampionAnimation | null
   locale: AppLocale
   t: IllustrationsPageTranslator
+  onOpenChampion: () => void
 }
 
-export function IllustrationResultCard({ entry, animation, locale, t }: IllustrationResultCardProps) {
+export function IllustrationResultCard({ entry, animation, locale, t, onOpenChampion }: IllustrationResultCardProps) {
   const location = useLocation()
   const { illustration, champion } = entry
   const [isPreviewActive, setPreviewActive] = useState(false)
@@ -47,6 +48,7 @@ export function IllustrationResultCard({ entry, animation, locale, t }: Illustra
       onMouseLeave={() => setPreviewActive(false)}
       onFocus={() => setPreviewActive(true)}
       onBlur={() => setPreviewActive(false)}
+      onClick={onOpenChampion}
     >
       <div className="illustration-card__image-shell">
         {animation && isPreviewActive ? (

@@ -1,7 +1,6 @@
 import { FilterChipSingleSelectField } from '../../components/filter-sidebar/FilterChipSingleSelectField'
 import { FilterSearchField } from '../../components/filter-sidebar/FilterSearchField'
 import { FilterSegmentedField } from '../../components/filter-sidebar/FilterSegmentedField'
-import { FilterSidebarPanel } from '../../components/filter-sidebar/FilterSidebarPanel'
 import { useI18n } from '../../app/i18n'
 import type { AssetFilter, SourceFilter } from './types'
 
@@ -12,7 +11,6 @@ interface PetFiltersProps {
   onQueryChange: (value: string) => void
   onSourceFilterChange: (value: SourceFilter) => void
   onAssetFilterChange: (value: AssetFilter) => void
-  onClearAllFilters: () => void
 }
 
 export function PetFilters({
@@ -22,44 +20,11 @@ export function PetFilters({
   onQueryChange,
   onSourceFilterChange,
   onAssetFilterChange,
-  onClearAllFilters,
 }: PetFiltersProps) {
   const { t } = useI18n()
-  const activeFilterCount = Number(query.trim().length > 0) + Number(sourceFilter !== 'all') + Number(assetFilter !== 'all')
 
   return (
-    <FilterSidebarPanel
-      title={t({ zh: '宠物筛选', en: 'Pet filters' })}
-      titleAs="h3"
-      description={t({
-        zh: '先用搜索、来源和图像状态把宠物目录缩到可读范围，再去右侧对比立绘与获取方式。',
-        en: 'Narrow the pet catalog with search, source, and asset state first, then compare illustrations and acquisition details on the right.',
-      })}
-      status={
-        <>
-          <span className="filter-sidebar-panel__badge">
-            {activeFilterCount > 0
-              ? t({ zh: `${activeFilterCount} 项已启用`, en: `${activeFilterCount} active` })
-              : t({ zh: '未启用', en: 'Idle' })}
-          </span>
-          {activeFilterCount > 0 ? (
-            <button
-              type="button"
-              className="action-button action-button--secondary action-button--compact"
-              onClick={onClearAllFilters}
-            >
-              {t({ zh: '清空全部', en: 'Clear all' })}
-            </button>
-          ) : null}
-        </>
-      }
-      statusLabel={t({ zh: '宠物筛选状态操作', en: 'Pet filter status actions' })}
-      note={t({
-        zh: '来源改成了更直观的芯片切换；搜索负责关键字，图像状态负责快速区分完整资源和待补图目。',
-        en: 'Source now uses direct filter chips. Search handles keywords, while the asset-state toggle quickly separates complete entries from missing-art rows.',
-      })}
-      ariaLabel={t({ zh: '宠物筛选侧边栏', en: 'Pet filter sidebar' })}
-    >
+    <div className="pets-workbench__sidebar-stack">
       <FilterSearchField
         label={t({ zh: '搜索', en: 'Search' })}
         value={query}
@@ -105,6 +70,6 @@ export function PetFilters({
           { value: 'missing', label: t({ zh: '缺图像', en: 'Missing art' }) },
         ]}
       />
-    </FilterSidebarPanel>
+    </div>
   )
 }

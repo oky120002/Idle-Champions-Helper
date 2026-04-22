@@ -5,6 +5,7 @@ import { useFilterSidebarCollapse } from './useFilterSidebarCollapse'
 
 interface FilterWorkbenchShellProps {
   storageKey: string
+  ariaLabel?: string
   toolbarLead?: ReactNode
   toolbarPrimary: ReactNode
   toolbarActions?: ReactNode
@@ -19,6 +20,7 @@ interface FilterWorkbenchShellProps {
 
 export function FilterWorkbenchShell({
   storageKey,
+  ariaLabel,
   toolbarLead,
   toolbarPrimary,
   toolbarActions,
@@ -35,7 +37,6 @@ export function FilterWorkbenchShell({
   const { isCollapsed, toggleCollapsed } = useFilterSidebarCollapse(storageKey)
   const shellClassName = [
     'filter-workbench',
-    'champions-workspace',
     isCollapsed ? 'filter-workbench--collapsed' : '',
     className,
   ]
@@ -55,22 +56,22 @@ export function FilterWorkbenchShell({
     <section
       className={shellClassName}
       data-filter-sidebar-collapsed={isCollapsed ? 'true' : 'false'}
-      aria-label={t({ zh: '英雄筛选工作台', en: 'Champion filter workbench' })}
+      aria-label={ariaLabel ?? t({ zh: '筛选工作台', en: 'Filter workbench' })}
+    >
+      <button
+        type="button"
+        className={toggleClassName}
+        onClick={toggleCollapsed}
+        aria-expanded={!isCollapsed}
+        aria-controls={sidebarId}
+        aria-label={toggleLabel}
+        title={toggleLabel}
+        data-state={isCollapsed ? 'collapsed' : 'expanded'}
       >
-        <button
-          type="button"
-          className={toggleClassName}
-          onClick={toggleCollapsed}
-          aria-expanded={!isCollapsed}
-          aria-controls={sidebarId}
-          aria-label={toggleLabel}
-          title={toggleLabel}
-          data-state={isCollapsed ? 'collapsed' : 'expanded'}
-        >
-          <span className="filter-workspace__toggle-icon filter-workbench__toggle-icon" aria-hidden="true">
-            <SidebarToggleIcon isCollapsed={isCollapsed} />
-          </span>
-        </button>
+        <span className="filter-workspace__toggle-icon filter-workbench__toggle-icon" aria-hidden="true">
+          <SidebarToggleIcon isCollapsed={isCollapsed} />
+        </span>
+      </button>
 
       <div className="filter-workbench__body">
         <aside className="filter-workbench__pane filter-workbench__pane--sidebar filter-workbench__sidebar">

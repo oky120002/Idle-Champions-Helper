@@ -1,4 +1,6 @@
+import type { RefObject } from 'react'
 import type { AppLocale, LocaleText } from '../../app/i18n'
+import type { WorkbenchShareLinkState } from '../../components/filter-sidebar/useWorkbenchShareLink'
 import type {
   FormationLayout,
   LocalizedOption,
@@ -15,6 +17,17 @@ export type VariantFilterOption = {
   id: string
   label: string
   count: number
+}
+
+export type VariantsFilterState = {
+  search: string
+  selectedCampaign: string
+  selectedSceneIds: string[]
+  selectedEnemyTypeIds: string[]
+  selectedAttackProfile: AttackProfileFilterId
+  selectedSpecialEnemyRange: SpecialEnemyFilterId
+  areaSearch: string
+  showAllResults: boolean
 }
 
 export type CampaignEnumGroup = {
@@ -62,14 +75,10 @@ export type VariantsPageModel = {
   locale: AppLocale
   t: VariantsPageTranslator
   state: VariantState
-  search: string
-  selectedCampaign: string
-  selectedSceneIds: string[]
-  selectedEnemyTypeIds: string[]
-  selectedAttackProfile: AttackProfileFilterId
-  selectedSpecialEnemyRange: SpecialEnemyFilterId
-  areaSearch: string
-  showAllResults: boolean
+  filters: VariantsFilterState
+  shareLinkState: WorkbenchShareLinkState
+  shareButtonLabel: string
+  showResultsQuickNavTop: boolean
   filteredVariants: Variant[]
   visibleVariants: Variant[]
   visibleCampaignGroups: VariantCampaignGroup[]
@@ -82,6 +91,7 @@ export type VariantsPageModel = {
   sceneOptions: VariantFilterOption[]
   commonObjectiveAreas: number[]
   canToggleResultVisibility: boolean
+  resultsPaneRef: RefObject<HTMLDivElement | null>
   updateSearch: (value: string) => void
   updateSelectedCampaign: (value: string) => void
   updateAreaSearch: (value: string) => void
@@ -93,4 +103,6 @@ export type VariantsPageModel = {
   toggleScene: (value: string) => void
   clearAllFilters: () => void
   toggleResultVisibility: () => void
+  scrollResultsToTop: () => void
+  copyCurrentLink: () => Promise<void>
 }

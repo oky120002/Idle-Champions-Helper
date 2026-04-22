@@ -1,16 +1,18 @@
 import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { useI18n } from '../../app/i18n'
+import { saveWorkbenchResultsPaneScroll, useWorkbenchResultsMotion } from '../../components/filter-sidebar/useWorkbenchResultsMotion'
+import { useWorkbenchShareLink } from '../../components/filter-sidebar/useWorkbenchShareLink'
 import { getMechanicCategoryHint } from '../../features/champion-filters/mechanicHints'
 import { buildChampionFilterActions } from './champion-filter-actions'
-import { saveChampionListScroll } from './query-state'
 import { useChampionCollectionState } from './useChampionCollectionState'
-import { useChampionResultsMotion } from './useChampionResultsMotion'
 import { useChampionsFilterState } from './useChampionsFilterState'
 import { useChampionsPageDerived } from './useChampionsPageDerived'
 import type { ChampionsPageModel } from './types'
 
 export function useChampionsPageModel(): ChampionsPageModel {
   const { locale, t } = useI18n()
+  const location = useLocation()
   const state = useChampionCollectionState()
   const filterState = useChampionsFilterState()
   const [randomOrderSeed, setRandomOrderSeed] = useState<number | null>(null)
@@ -24,7 +26,8 @@ export function useChampionsPageModel(): ChampionsPageModel {
     randomOrderSeed,
     selectedChampionId,
   })
-  const motion = useChampionResultsMotion({
+  const motion = useWorkbenchResultsMotion({
+    storageKey: 'champions',
     locationSearch: filterState.locationSearch,
     stateStatus: state.status,
     filteredCount: derived.filteredChampions.length,
@@ -32,6 +35,13 @@ export function useChampionsPageModel(): ChampionsPageModel {
     showAllResults: filterState.showAllResults,
     transitionKey: filterState.transitionKey,
   })
+  const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
+  const shareButtonLabel =
+    shareLinkState === 'success'
+      ? t({ zh: '已复制链接', en: 'Link copied' })
+      : shareLinkState === 'error'
+        ? t({ zh: '复制失败', en: 'Copy failed' })
+        : t({ zh: '复制当前链接', en: 'Copy current link' })
 
   function runFilterMutation(mutation: () => void) {
     motion.prepareResultsViewportTransition('filters')
@@ -53,8 +63,7 @@ export function useChampionsPageModel(): ChampionsPageModel {
     setSelectedMechanics: filterState.setSelectedMechanics,
   })
 
-  const showResultsQuickNavTop =
-    motion.resultsQuickNavigation.isVisible && motion.resultsQuickNavigation.canScrollTop
+  const showResultsQuickNavTop = motion.showResultsQuickNavTop
 
   return {
     locale,
@@ -84,9 +93,10 @@ export function useChampionsPageModel(): ChampionsPageModel {
     canToggleResultVisibility: derived.canToggleResultVisibility,
     showAllResults: filterState.showAllResults,
     hasRandomOrder: randomOrderSeed !== null,
+    shareLinkState,
+    shareButtonLabel,
     showResultsQuickNavTop,
     resultsPaneRef: motion.resultsPaneRef,
-    resultsPaneSectionRef: motion.resultsPaneSectionRef,
     roles: derived.roles,
     affiliations: derived.affiliations,
     raceOptions: derived.raceOptions,
@@ -114,10 +124,11 @@ export function useChampionsPageModel(): ChampionsPageModel {
     clearSelectedChampion: () => {
       setSelectedChampionId(null)
     },
-    scrollResultsToBoundary: motion.scrollResultsToBoundary,
+    scrollResultsToTop: motion.scrollResultsToTop,
+    copyCurrentLink,
     getMechanicCategoryHint: (groupId) => getMechanicCategoryHint(groupId, t),
     saveListScroll: () => {
-      saveChampionListScroll(filterState.locationSearch, motion.resultsPaneRef.current?.scrollTop ?? 0)
+      saveWorkbenchResultsPaneScroll('champions', filterState.locationSearch, motion.resultsPaneRef.current?.scrollTop ?? 0)
     },
     locationSearch: filterState.locationSearch,
   }

@@ -9,5 +9,5 @@
 | `LocalizedText` | `src/components/LocalizedText.tsx` | 游戏数据双语字段 `{ original, display }` | 统一主文本 / 副文本渲染，支持 `primary / pair / stacked` | `ChampionsPage.tsx`、`VariantsPage.tsx`、`FormationPage.tsx` |
 | `StatusBanner` | `src/components/StatusBanner.tsx` | 加载、成功、错误、兼容恢复提醒 | 统一 `tone / title / detail / meta / actions` 结构 | `ChampionsPage.tsx`、`VariantsPage.tsx`、`UserDataPage.tsx`、`FormationPage.tsx`、`PresetsPage.tsx` |
 | `FieldGroup` | `src/components/FieldGroup.tsx` | 带 `label` / `hint` 的字段块和筛选区 | 统一标题、提示和容器结构 | `ChampionsPage.tsx`、`VariantsPage.tsx`、`UserDataPage.tsx`、`FormationPage.tsx`、`PresetsPage.tsx` |
-| `FilterSidebarLayout` | `src/components/filter-sidebar/FilterSidebarLayout.tsx` | 左侧筛选抽屉 + 右侧结果区的双栏筛选页面 | 统一桌面端顶部细工具条、抽屉滑出 / 滑入、移动端折叠入口、localStorage 持久化收起状态和结果区宽度释放 | `ChampionsPage.tsx`、`IllustrationsPage.tsx`、`PetsPage.tsx`、`VariantsPage.tsx` |
-| `FilterSidebarPanel` | `src/components/filter-sidebar/FilterSidebarPanel.tsx` | 共享筛选侧栏表面壳层 | 统一标题、说明、状态区、备注和滚动约束，避免每页自己重做筛选面板外壳 | `ChampionsSidebar.tsx`、`IllustrationsSidebar.tsx`、`PetFilters.tsx`、`VariantsFilterBar.tsx` |
+| `FilterWorkbenchShell` | `src/components/filter-sidebar/FilterWorkbenchShell.tsx` | 四个筛选页统一桌面工作台壳层 | 统一合并工具栏、左抽屉开合、双栏内滚、桌面锁滚和工作台大壳视觉 | `ChampionsPage.tsx`、`IllustrationsPage.tsx`、`PetsPage.tsx`、`VariantsPage.tsx` |
+| `WorkbenchResultsFloatingTopButton` | `src/components/filter-sidebar/WorkbenchResultsFloatingTopButton.tsx` | 工作台右侧结果区回顶入口 | 统一悬浮返回顶部按钮的文案、图标和交互骨架 | `ChampionsPage.tsx`、`IllustrationsPage.tsx`、`PetsPage.tsx`、`VariantsPage.tsx` |

@@ -1,15 +1,13 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import type { Dispatch, SetStateAction } from 'react'
 import { useLocation, useSearchParams } from 'react-router-dom'
-import { SHARE_RESET_DELAY_MS } from './constants'
 import { buildFilterSearchParams, readInitialFilterExpansion, readInitialFilterState } from './query-state'
-import type { IllustrationsFilterState, ShareLinkState, ViewFilter } from './types'
+import type { IllustrationsFilterState, ViewFilter } from './types'
 
 export type IllustrationFilterStateController = {
   filters: IllustrationsFilterState
   isIdentityFiltersExpanded: boolean
   isMetaFiltersExpanded: boolean
-  shareLinkState: ShareLinkState
   setSearch: Dispatch<SetStateAction<string>>
   setViewFilter: Dispatch<SetStateAction<ViewFilter>>
   setSelectedSeats: Dispatch<SetStateAction<number[]>>
@@ -22,7 +20,6 @@ export type IllustrationFilterStateController = {
   setSelectedAcquisitions: Dispatch<SetStateAction<string[]>>
   setSelectedMechanics: Dispatch<SetStateAction<string[]>>
   setShowAllResults: Dispatch<SetStateAction<boolean>>
-  setShareLinkState: Dispatch<SetStateAction<ShareLinkState>>
   toggleIdentityFiltersExpanded: () => void
   toggleMetaFiltersExpanded: () => void
 }
@@ -50,21 +47,6 @@ export function useIllustrationFilterState(): IllustrationFilterStateController 
   const [isIdentityFiltersExpanded, setIdentityFiltersExpanded] = useState(initialExpansion.identity)
   const [isMetaFiltersExpanded, setMetaFiltersExpanded] = useState(initialExpansion.meta)
   const [showAllResults, setShowAllResults] = useState(initialFilters.showAllResults)
-  const [shareLinkState, setShareLinkState] = useState<ShareLinkState>('idle')
-
-  useEffect(() => {
-    if (shareLinkState === 'idle') {
-      return undefined
-    }
-
-    const timeoutId = window.setTimeout(() => {
-      setShareLinkState('idle')
-    }, SHARE_RESET_DELAY_MS)
-
-    return () => {
-      window.clearTimeout(timeoutId)
-    }
-  }, [shareLinkState])
 
   const filters = useMemo<IllustrationsFilterState>(
     () => ({
@@ -164,7 +146,6 @@ export function useIllustrationFilterState(): IllustrationFilterStateController 
     filters,
     isIdentityFiltersExpanded,
     isMetaFiltersExpanded,
-    shareLinkState,
     setSearch,
     setViewFilter,
     setSelectedSeats,
@@ -177,7 +158,6 @@ export function useIllustrationFilterState(): IllustrationFilterStateController 
     setSelectedAcquisitions,
     setSelectedMechanics,
     setShowAllResults,
-    setShareLinkState,
     toggleIdentityFiltersExpanded: () => setIdentityFiltersExpanded((current) => !current),
     toggleMetaFiltersExpanded: () => setMetaFiltersExpanded((current) => !current),
   }

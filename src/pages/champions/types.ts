@@ -1,23 +1,9 @@
 import type { RefObject } from 'react'
 import type { AppLocale, LocaleText } from '../../app/i18n'
+import type { WorkbenchShareLinkState } from '../../components/filter-sidebar/useWorkbenchShareLink'
 import type { ChampionMechanicCategoryId } from '../../domain/championTags'
 import type { Champion, ChampionIllustration, ChampionVisual, LocalizedText } from '../../domain/types'
 import type { ActiveFilterChip, MechanicOptionGroup } from '../../features/champion-filters/types'
-
-export type ResultsTransitionReason = 'filters' | 'visibility'
-
-export interface PendingResultsTransition {
-  previousFilteredCount: number
-  previousVisibleCount: number
-  shouldRelocate: boolean
-  reason: ResultsTransitionReason
-}
-
-export interface ResultsQuickNavigationState {
-  isVisible: boolean
-  canScrollTop: boolean
-  canScrollBottom: boolean
-}
 
 export type ChampionState =
   | { status: 'loading' }
@@ -80,9 +66,10 @@ export interface ChampionsPageModel {
   canToggleResultVisibility: boolean
   showAllResults: boolean
   hasRandomOrder: boolean
+  shareLinkState: WorkbenchShareLinkState
+  shareButtonLabel: string
   showResultsQuickNavTop: boolean
   resultsPaneRef: RefObject<HTMLDivElement | null>
-  resultsPaneSectionRef: RefObject<HTMLElement | null>
   roles: string[]
   affiliations: LocalizedText[]
   raceOptions: string[]
@@ -121,7 +108,8 @@ export interface ChampionsPageModel {
   randomizeResultOrder: () => void
   toggleChampionVisual: (championId: string) => void
   clearSelectedChampion: () => void
-  scrollResultsToBoundary: (direction: 'top' | 'bottom') => void
+  scrollResultsToTop: () => void
+  copyCurrentLink: () => Promise<void>
   getMechanicCategoryHint: (groupId: ChampionMechanicCategoryId) => string
   saveListScroll: () => void
   locationSearch: string

@@ -1,4 +1,5 @@
 import { FilterWorkbenchShell } from '../components/filter-sidebar/FilterWorkbenchShell'
+import { WorkbenchResultsFloatingTopButton } from '../components/filter-sidebar/WorkbenchResultsFloatingTopButton'
 import { StatusBanner } from '../components/StatusBanner'
 import { ChampionsResultsSection } from './champions/ChampionsResultsSection'
 import { ChampionsWorkbenchContentHeader } from './champions/ChampionsWorkbenchContentHeader'
@@ -14,24 +15,12 @@ export function ChampionsPage() {
     <div className="page-stack champions-page champions-page--workbench">
       <FilterWorkbenchShell
         storageKey="champions"
+        ariaLabel={t({ zh: '英雄筛选工作台', en: 'Champion filter workbench' })}
         className="champions-workbench"
         contentScrollRef={model.resultsPaneRef}
         contentOverlay={(
           model.showResultsQuickNavTop ? (
-            <button
-              type="button"
-              className="champions-workbench__floating-top-button"
-              onClick={() => model.scrollResultsToBoundary('top')}
-              aria-label={t({ zh: '返回结果顶部', en: 'Back to results top' })}
-            >
-              <span className="champions-workbench__floating-top-icon" aria-hidden="true">
-                <ResultsReturnTopIcon />
-              </span>
-              <span className="champions-workbench__floating-top-copy">
-                <strong>{t({ zh: '返回顶部', en: 'Back to top' })}</strong>
-                <span>{t({ zh: '结果列表', en: 'Results list' })}</span>
-              </span>
-            </button>
+            <WorkbenchResultsFloatingTopButton onClick={model.scrollResultsToTop} />
           ) : null
         )}
         toolbarLead={(
@@ -51,13 +40,13 @@ export function ChampionsPage() {
         )}
         toolbarActions={(
           <>
-            <span className="filter-sidebar-toolbar__badge champions-workbench__toolbar-badge">
+            <span className="filter-sidebar-panel__badge champions-workbench__toolbar-badge">
               {activeFilterCount > 0
                 ? t({ zh: `${activeFilterCount} 项条件`, en: `${activeFilterCount} active` })
                 : t({ zh: '条件待命', en: 'Filters idle' })}
             </span>
             {state.status === 'ready' ? (
-              <span className="filter-sidebar-toolbar__badge champions-workbench__toolbar-badge champions-workbench__toolbar-badge--muted">
+              <span className="filter-sidebar-panel__badge champions-workbench__toolbar-badge champions-workbench__toolbar-badge--muted">
                 {t({ zh: `${filteredChampions.length} 名命中`, en: `${filteredChampions.length} matches` })}
               </span>
             ) : null}
@@ -121,14 +110,4 @@ export function ChampionsPage() {
 
 function ChampionsWorkbenchSidebarLoading() {
   return <div className="champions-workbench__sidebar-loading" aria-hidden="true" />
-}
-
-function ResultsReturnTopIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-      <path d="M12 17.25v-10.5" strokeLinecap="round" />
-      <path d="M7.75 10.25 12 6l4.25 4.25" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M6 18.25h12" strokeLinecap="round" />
-    </svg>
-  )
 }
