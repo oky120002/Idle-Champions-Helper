@@ -43,8 +43,7 @@ describe('ChampionsPage filter state', () => {
     await user.type(screen.getByPlaceholderText('搜英雄名、标签、联动队伍'), '德')
     await user.click(screen.getByRole('button', { name: '1 号位' }))
 
-    expect(getMetricByText('当前展示0 / 0 名英雄')).toBeTruthy()
-    expect(screen.getByText('等待新的筛选命中')).toBeInTheDocument()
+    expect(getMetricByText('当前展示0 / 0')).toBeTruthy()
     expect(screen.getAllByRole('button', { name: '清空全部' })).toHaveLength(1)
 
     await user.click(within(screen.getByRole('group', { name: '筛选状态操作' })).getByRole('button', { name: '清空全部' }))
@@ -87,7 +86,7 @@ describe('ChampionsPage filter state', () => {
     )
   })
 
-  it('默认先展示 48 名英雄，并支持切换到显示全部再收起', async () => {
+  it('默认先展示前 50 条结果，并支持切换到显示全部再收起', async () => {
     const user = userEvent.setup()
 
     mockChampionsPageCollections({
@@ -96,25 +95,25 @@ describe('ChampionsPage filter state', () => {
     renderChampionsPage()
 
     expect(await screen.findByText('测试英雄 1')).toBeInTheDocument()
-    expect(screen.getByText('默认先展示 48 名英雄')).toBeInTheDocument()
-    expect(getMetricByText('当前展示48 / 60 名英雄')).toBeTruthy()
+    expect(screen.getByRole('button', { name: '显示全部 60（默认 50）' })).toBeInTheDocument()
+    expect(getMetricByText('当前展示50 / 60')).toBeTruthy()
     expect(screen.queryByText('测试英雄 60')).not.toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: '显示全部 60 名' }))
+    await user.click(screen.getByRole('button', { name: '显示全部 60（默认 50）' }))
 
     await waitFor(() => {
       expect(screen.getByText('测试英雄 60')).toBeInTheDocument()
     })
 
-    expect(getMetricByText('当前展示60 / 60 名英雄')).toBeTruthy()
+    expect(getMetricByText('当前展示60 / 60')).toBeTruthy()
 
-    await user.click(screen.getAllByRole('button', { name: '收起到默认 48 名' })[0]!)
+    await user.click(screen.getByRole('button', { name: '收起到默认 50' }))
 
     await waitFor(() => {
       expect(screen.queryByText('测试英雄 60')).not.toBeInTheDocument()
     })
 
-    expect(getMetricByText('当前展示48 / 60 名英雄')).toBeTruthy()
+    expect(getMetricByText('当前展示50 / 60')).toBeTruthy()
   })
 
   it('会在 URL 查询参数变化后重新同步筛选 UI', async () => {

@@ -7,18 +7,43 @@ import {
   WorkbenchToolbarCopy,
   WorkbenchToolbarMark,
 } from '../components/workbench/WorkbenchScaffold'
+import { WorkbenchToolbarActionButton } from '../components/workbench/WorkbenchToolbarActionButton'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { StatusBanner } from '../components/StatusBanner'
 import { ChampionsAdditionalFilters } from './champions/ChampionsAdditionalFilters'
 import { ChampionsPrimaryFilters } from './champions/ChampionsPrimaryFilters'
 import { ChampionsResultsSection } from './champions/ChampionsResultsSection'
 import { ChampionsWorkbenchContentHeader } from './champions/ChampionsWorkbenchContentHeader'
+import { MAX_VISIBLE_RESULTS } from './champions/constants'
 import { useChampionsPageModel } from './champions/useChampionsPageModel'
 
 export function ChampionsPage() {
   const model = useChampionsPageModel()
-  const { filteredChampions, state, t, activeFilterChips, hasActiveFilters, clearAllFilters } = model
+  const {
+    filteredChampions,
+    state,
+    t,
+    activeFilterChips,
+    hasActiveFilters,
+    clearAllFilters,
+    canToggleResultVisibility,
+    showAllResults,
+    toggleResultVisibility,
+    hasRandomOrder,
+    randomizeResultOrder,
+  } = model
   const activeFilterCount = activeFilterChips.length
+  const resultVisibilityLabel = canToggleResultVisibility
+    ? showAllResults
+      ? t({ zh: `收起到默认 ${MAX_VISIBLE_RESULTS}`, en: `Collapse to default ${MAX_VISIBLE_RESULTS}` })
+      : t({
+          zh: `显示全部 ${filteredChampions.length}（默认 ${MAX_VISIBLE_RESULTS}）`,
+          en: `Show all ${filteredChampions.length} (default ${MAX_VISIBLE_RESULTS})`,
+        })
+    : null
+  const randomOrderLabel = hasRandomOrder
+    ? t({ zh: '重新随机', en: 'Reshuffle' })
+    : t({ zh: '随机排序', en: 'Shuffle order' })
 
   return (
     <div className="champions-page workbench-page">
@@ -51,6 +76,20 @@ export function ChampionsPage() {
               <WorkbenchToolbarBadge variant="filter" tone="muted">
                 {t({ zh: `${filteredChampions.length} 命中`, en: `${filteredChampions.length} matches` })}
               </WorkbenchToolbarBadge>
+            ) : null}
+            {state.status === 'ready' && resultVisibilityLabel != null ? (
+              <WorkbenchToolbarActionButton
+                isActive={showAllResults}
+                ariaPressed={showAllResults}
+                onClick={toggleResultVisibility}
+              >
+                {resultVisibilityLabel}
+              </WorkbenchToolbarActionButton>
+            ) : null}
+            {state.status === 'ready' && filteredChampions.length > 1 ? (
+              <WorkbenchToolbarActionButton isActive={hasRandomOrder} onClick={randomizeResultOrder}>
+                {randomOrderLabel}
+              </WorkbenchToolbarActionButton>
             ) : null}
             <WorkbenchShareButton state={model.shareLinkState} onCopy={model.copyCurrentLink} />
           </>

@@ -7,9 +7,11 @@ import {
   WorkbenchToolbarCopy,
   WorkbenchToolbarMark,
 } from '../components/workbench/WorkbenchScaffold'
+import { WorkbenchToolbarActionButton } from '../components/workbench/WorkbenchToolbarActionButton'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { StatusBanner } from '../components/StatusBanner'
 import { IllustrationsAdditionalFilters } from './illustrations/IllustrationsAdditionalFilters'
+import { MAX_VISIBLE_ILLUSTRATIONS } from './illustrations/constants'
 import { IllustrationsPrimaryFilters } from './illustrations/IllustrationsPrimaryFilters'
 import { IllustrationsResultsSection } from './illustrations/IllustrationsResultsSection'
 import { IllustrationsWorkbenchContentHeader } from './illustrations/IllustrationsWorkbenchContentHeader'
@@ -18,6 +20,17 @@ import { useIllustrationsPageModel } from './illustrations/useIllustrationsPageM
 export function IllustrationsPage() {
   const model = useIllustrationsPageModel()
   const { state, t, activeFilterChips, hasActiveFilters, ui, actions } = model
+  const resultVisibilityLabel = model.results.canToggleResultVisibility
+    ? model.filters.showAllResults
+      ? t({ zh: `收起到默认 ${MAX_VISIBLE_ILLUSTRATIONS}`, en: `Collapse to default ${MAX_VISIBLE_ILLUSTRATIONS}` })
+      : t({
+          zh: `显示全部 ${model.results.filteredIllustrationEntries.length}（默认 ${MAX_VISIBLE_ILLUSTRATIONS}）`,
+          en: `Show all ${model.results.filteredIllustrationEntries.length} (default ${MAX_VISIBLE_ILLUSTRATIONS})`,
+        })
+    : null
+  const randomOrderLabel = ui.hasRandomOrder
+    ? t({ zh: '重新随机', en: 'Reshuffle' })
+    : t({ zh: '随机排序', en: 'Shuffle order' })
 
   return (
     <div className="illustrations-page workbench-page">
@@ -48,6 +61,20 @@ export function IllustrationsPage() {
               <WorkbenchToolbarBadge variant="filter" tone="muted">
                 {t({ zh: `${model.results.filteredIllustrationEntries.length} 命中`, en: `${model.results.filteredIllustrationEntries.length} matches` })}
               </WorkbenchToolbarBadge>
+            ) : null}
+            {state.status === 'ready' && resultVisibilityLabel != null ? (
+              <WorkbenchToolbarActionButton
+                isActive={model.filters.showAllResults}
+                ariaPressed={model.filters.showAllResults}
+                onClick={actions.toggleResultVisibility}
+              >
+                {resultVisibilityLabel}
+              </WorkbenchToolbarActionButton>
+            ) : null}
+            {state.status === 'ready' && model.results.filteredIllustrationEntries.length > 1 ? (
+              <WorkbenchToolbarActionButton isActive={ui.hasRandomOrder} onClick={actions.randomizeResultOrder}>
+                {randomOrderLabel}
+              </WorkbenchToolbarActionButton>
             ) : null}
             <WorkbenchShareButton state={ui.shareLinkState} onCopy={actions.copyCurrentLink} />
           </>

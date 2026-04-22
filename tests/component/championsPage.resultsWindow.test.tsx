@@ -45,13 +45,13 @@ describe('ChampionsPage results window', () => {
     expect(await screen.findByText('测试英雄 1')).toBeInTheDocument()
 
     const beforeShuffle = readVisibleChampionNames()
-    expect(beforeShuffle).toHaveLength(48)
+    expect(beforeShuffle).toHaveLength(50)
 
     await user.click(screen.getByRole('button', { name: '随机排序' }))
 
     const afterShuffle = readVisibleChampionNames()
 
-    expect(afterShuffle).toHaveLength(48)
+    expect(afterShuffle).toHaveLength(50)
     expect(afterShuffle).not.toEqual(beforeShuffle)
     expect(screen.getByRole('button', { name: '重新随机' })).toBeInTheDocument()
   })

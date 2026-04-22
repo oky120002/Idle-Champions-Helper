@@ -36,6 +36,7 @@
   - `toolbarLead`：页面标记、返回入口或左侧识别信息；
   - `toolbarPrimary`：页面主标题、kicker、上下文说明；
   - `toolbarActions`：badge、复制当前链接、稳定动作。
+- 结果区内部优先只保留 compact metrics、筛选摘要和必要状态；高频结果动作（如随机排序、显示全部 / 收起）默认上提到 `toolbarActions`，不要留在结果头内部。
 - 这三段的稳定展示骨架统一由 `src/components/workbench/WorkbenchScaffold.tsx` 承接；页面只负责传业务文案、统计值和动作回调。
 - 有左栏时：
   - `toolbarLead` 留在左 pane 顶部；

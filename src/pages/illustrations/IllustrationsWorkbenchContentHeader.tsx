@@ -1,7 +1,6 @@
 import { PageHeaderMetrics, type PageHeaderMetricItem } from '../../components/PageHeaderMetrics'
 import { WorkbenchFilterResultsHeader } from '../../components/workbench/WorkbenchScaffold'
 import { collectChampionFacetSummary } from '../../features/champion-filters/headerMetrics'
-import { MAX_VISIBLE_ILLUSTRATIONS } from './constants'
 import type { IllustrationsPageModel } from './types'
 
 interface IllustrationsWorkbenchContentHeaderProps {
@@ -9,11 +8,7 @@ interface IllustrationsWorkbenchContentHeaderProps {
 }
 
 export function IllustrationsWorkbenchContentHeader({ model }: IllustrationsWorkbenchContentHeaderProps) {
-  const { t, activeFilters, results, filters, ui, actions } = model
-  const hasMatches = results.filteredIllustrationEntries.length > 0
-  const randomOrderLabel = ui.hasRandomOrder
-    ? t({ zh: '重新随机', en: 'Reshuffle' })
-    : t({ zh: '随机排序', en: 'Shuffle order' })
+  const { t, activeFilters, results } = model
   const champions = Array.from(
     new Map(
       results.filteredIllustrationEntries.flatMap(({ champion }) =>
@@ -50,44 +45,6 @@ export function IllustrationsWorkbenchContentHeader({ model }: IllustrationsWork
           ? `${t({ zh: '当前筛选：', en: 'Active filters: ' })}${activeFilters.join(' · ')}`
           : null
       }
-      summaryBadge={
-        hasMatches ? (
-          <span className="results-summary-pill workbench-filter-header__pill">
-            {results.canToggleResultVisibility
-              ? filters.showAllResults
-                ? t({ zh: `已展开全部 ${results.filteredIllustrationEntries.length}`, en: `Showing all ${results.filteredIllustrationEntries.length} illustrations` })
-                : t({ zh: `默认先展示 ${MAX_VISIBLE_ILLUSTRATIONS}`, en: `Defaulting to the first ${MAX_VISIBLE_ILLUSTRATIONS} illustrations` })
-              : t({ zh: '当前结果已全部展开', en: 'The current result set is already fully visible' })}
-          </span>
-        ) : (
-          <span className="results-summary-pill workbench-filter-header__pill workbench-filter-header__pill--muted">
-            {t({ zh: '等待新的立绘命中', en: 'Waiting for the next match set' })}
-          </span>
-        )
-      }
-      actions={(
-        <>
-          {results.canToggleResultVisibility ? (
-            <button
-              type="button"
-              className="results-visibility-toggle results-visibility-toggle--primary"
-              onClick={actions.toggleResultVisibility}
-            >
-              {filters.showAllResults
-                ? t({ zh: `收起到默认 ${MAX_VISIBLE_ILLUSTRATIONS}`, en: `Collapse back to ${MAX_VISIBLE_ILLUSTRATIONS}` })
-                : t({ zh: `显示全部 ${results.filteredIllustrationEntries.length}`, en: `Show all ${results.filteredIllustrationEntries.length}` })}
-            </button>
-          ) : null}
-
-          <button
-            type="button"
-            className="results-visibility-toggle results-visibility-toggle--secondary"
-            onClick={actions.randomizeResultOrder}
-          >
-            {randomOrderLabel}
-          </button>
-        </>
-      )}
     />
   )
 }
