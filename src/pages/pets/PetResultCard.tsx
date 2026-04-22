@@ -102,23 +102,6 @@ export function PetResultCard({ pet, animation }: PetResultCardProps) {
             </span>
           ))}
         </div>
-
-        <div className="pet-card__facts">
-          <span>
-            {pet.iconGraphicId
-              ? t({ zh: `头像资源 #${pet.iconGraphicId}`, en: `Icon asset #${pet.iconGraphicId}` })
-              : t({ zh: '头像资源缺失', en: 'Icon asset missing' })}
-          </span>
-          <span>
-            {pet.illustrationGraphicId
-              ? t({ zh: `立绘资源 #${pet.illustrationGraphicId}`, en: `Illustration asset #${pet.illustrationGraphicId}` })
-              : t({ zh: '立绘资源缺失', en: 'Illustration asset missing' })}
-          </span>
-          {animation ? <span>{t({ zh: '悬停可看动图', en: 'Hover for motion' })}</span> : null}
-          {pet.acquisition.sourceType ? (
-            <span>{t({ zh: `来源标记 ${pet.acquisition.sourceType}`, en: `Source marker ${pet.acquisition.sourceType}` })}</span>
-          ) : null}
-        </div>
       </div>
     </article>
   )
