@@ -47,9 +47,9 @@ interface WorkbenchContentStackProps {
 }
 
 interface WorkbenchFilterResultsHeaderProps {
-  eyebrow: string
-  title: ReactNode
-  description: ReactNode
+  eyebrow?: string
+  title?: ReactNode
+  description?: ReactNode
   metrics?: ReactNode
   filterSummary?: ReactNode
   summaryBadge?: ReactNode
@@ -198,17 +198,32 @@ export function WorkbenchFilterResultsHeader({
   actions,
   className,
 }: WorkbenchFilterResultsHeaderProps) {
+  const hasCopy = eyebrow != null || title != null || description != null
+
   return (
-    <div className={joinClasses('workbench-filter-header', 'page-tab-header', className)}>
+    <div
+      className={joinClasses(
+        'workbench-filter-header',
+        'page-tab-header',
+        !hasCopy && 'workbench-filter-header--metrics-only',
+        className,
+      )}
+    >
       <div className="workbench-filter-header__summary">
         <div className="workbench-filter-header__titlebar">
-          <div className="workbench-filter-header__copy">
-            <p className="page-tab-header__eyebrow page-tab-header__eyebrow--accent-only workbench-filter-header__kicker">
-              <span className="page-tab-header__eyebrow-accent">{eyebrow}</span>
-            </p>
-            <h2 className="workbench-filter-header__title">{title}</h2>
-            <p className="supporting-text workbench-filter-header__description">{description}</p>
-          </div>
+          {hasCopy ? (
+            <div className="workbench-filter-header__copy">
+              {eyebrow != null ? (
+                <p className="page-tab-header__eyebrow page-tab-header__eyebrow--accent-only workbench-filter-header__kicker">
+                  <span className="page-tab-header__eyebrow-accent">{eyebrow}</span>
+                </p>
+              ) : null}
+              {title != null ? <h2 className="workbench-filter-header__title">{title}</h2> : null}
+              {description != null ? (
+                <p className="supporting-text workbench-filter-header__description">{description}</p>
+              ) : null}
+            </div>
+          ) : null}
 
           {metrics != null ? (
             <div className="workbench-filter-header__metrics">{metrics}</div>

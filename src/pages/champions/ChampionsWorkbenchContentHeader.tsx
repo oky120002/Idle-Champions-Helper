@@ -31,8 +31,14 @@ export function ChampionsWorkbenchContentHeader({ model }: ChampionsWorkbenchCon
           const summary = collectChampionFacetSummary(filteredChampions, model.locale)
 
           return [
+            {
+              label: t({ zh: '当前展示', en: 'Showing' }),
+              value: t({
+                zh: `${visibleChampions.length} / ${filteredChampions.length} 名英雄`,
+                en: `${visibleChampions.length} / ${filteredChampions.length} champions`,
+              }),
+            },
             { label: t({ zh: '英雄总数', en: 'Roster' }), value: model.state.champions.length },
-            { label: t({ zh: '当前匹配', en: 'Matches' }), value: filteredChampions.length },
             { label: t({ zh: '覆盖座位', en: 'Seats' }), value: summary.seatCount },
             { label: t({ zh: '联动队伍', en: 'Affiliations' }), value: summary.affiliationCount },
             { label: t({ zh: '种族', en: 'Races' }), value: summary.raceCount },
@@ -47,19 +53,6 @@ export function ChampionsWorkbenchContentHeader({ model }: ChampionsWorkbenchCon
 
   return (
     <WorkbenchFilterResultsHeader
-      eyebrow="CHAMPIONS"
-      title={t({ zh: '英雄筛选', en: 'Champion filters' })}
-      description={
-        hasMatches
-          ? t({
-              zh: `当前展示 ${visibleChampions.length} / ${filteredChampions.length} 名英雄。先用左侧抽屉缩小候选池，再在这里对比视觉档案、属性标签与联动队伍。`,
-              en: `Showing ${visibleChampions.length} / ${filteredChampions.length} champions. Narrow the pool in the left drawer, then compare visuals, tags, and affiliations here.`,
-            })
-          : t({
-              zh: '当前筛选条件下没有匹配英雄。先回退一个维度，再逐步缩回来，会比一次清空全部更稳。',
-              en: 'No champions match the current filter set. Roll one dimension back first, then narrow things down again.',
-            })
-      }
       metrics={metricItems.length > 0 ? <PageHeaderMetrics items={metricItems} variant="compact" /> : null}
       filterSummary={
         activeFilters.length > 0

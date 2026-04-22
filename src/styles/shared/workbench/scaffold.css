@@ -140,6 +140,11 @@
     inset 0 1px 0 rgba(255, 243, 223, 0.04);
 }
 
+.workbench-filter-header--metrics-only {
+  gap: 0.62rem;
+  padding-top: 1.1rem;
+}
+
 .workbench-filter-header__titlebar,
 .workbench-filter-header__actions,
 .workbench-filter-header__action-row {
@@ -152,6 +157,10 @@
 .workbench-filter-header__titlebar,
 .workbench-filter-header__actions {
   justify-content: space-between;
+}
+
+.workbench-filter-header--metrics-only .workbench-filter-header__titlebar {
+  justify-content: flex-end;
 }
 
 .workbench-filter-header__kicker {
@@ -210,6 +219,10 @@
     margin-inline: -0.88rem;
     padding: 1.64rem 0.88rem 0.82rem;
     border-radius: 0 0 16px 16px;
+  }
+
+  .workbench-filter-header--metrics-only {
+    padding-top: 0.98rem;
   }
 
   .workbench-filter-header__titlebar,
