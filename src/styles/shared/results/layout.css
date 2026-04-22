@@ -8,6 +8,18 @@
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--champions-results-card-min)), 1fr));
 }
 
+.champions-results .results-panel-shell {
+  overflow: visible;
+}
+
+.champions-results .results-panel {
+  gap: 0.86rem;
+}
+
+.champions-results .results-grid {
+  margin-top: 0;
+}
+
 .results-panel-shell {
   overflow: clip;
   transition: height 320ms cubic-bezier(0.22, 1, 0.36, 1);

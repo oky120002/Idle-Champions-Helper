@@ -51,7 +51,6 @@ export type IllustrationsPageUiState = {
   isIdentityFiltersExpanded: boolean
   isMetaFiltersExpanded: boolean
   shareLinkState: WorkbenchShareLinkState
-  shareButtonLabel: string
   hasRandomOrder: boolean
   showResultsQuickNavTop: boolean
 }

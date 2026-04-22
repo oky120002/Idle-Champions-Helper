@@ -18,7 +18,7 @@ describe('App', () => {
     )
 
     await screen.findByRole('button', { name: '填入脱敏示例' })
-    const toolbarTitle = document.querySelector('.user-data-workbench__toolbar-title')
+    const toolbarTitle = document.querySelector('.workbench-page__toolbar-title')
 
     if (!(toolbarTitle instanceof HTMLElement)) {
       throw new Error('个人数据工具条标题不存在。')
@@ -47,7 +47,7 @@ describe('App', () => {
     )
 
     await screen.findByRole('button', { name: '填入脱敏示例' })
-    const toolbarTitle = document.querySelector('.user-data-workbench__toolbar-title')
+    const toolbarTitle = document.querySelector('.workbench-page__toolbar-title')
 
     if (!(toolbarTitle instanceof HTMLElement)) {
       throw new Error('个人数据工具条标题不存在。')
@@ -56,7 +56,7 @@ describe('App', () => {
     expect(toolbarTitle).toHaveTextContent('个人数据')
     await user.click(screen.getByRole('link', { name: '方案存档' }))
 
-    const presetsToolbarTitle = await screen.findByText('方案存档', { selector: '.presets-workbench__toolbar-title' })
+    const presetsToolbarTitle = await screen.findByText('方案存档', { selector: '.workbench-page__toolbar-title' })
     expect(presetsToolbarTitle).toBeInTheDocument()
   })
 

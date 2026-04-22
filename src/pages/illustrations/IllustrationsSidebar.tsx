@@ -8,7 +8,7 @@ type IllustrationsSidebarProps = {
 
 export function IllustrationsSidebar({ model }: IllustrationsSidebarProps) {
   return (
-    <div className="illustrations-workbench__sidebar-stack">
+    <div className="workbench-page__sidebar-stack">
       <IllustrationsPrimaryFilters model={model} />
       <IllustrationsAdditionalFilters model={model} />
     </div>

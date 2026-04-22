@@ -187,12 +187,6 @@ export function useVariantsPageModel(): VariantsPageModel {
     transitionKey,
   })
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
-  const shareButtonLabel =
-    shareLinkState === 'success'
-      ? t({ zh: '已复制链接', en: 'Link copied' })
-      : shareLinkState === 'error'
-        ? t({ zh: '复制失败', en: 'Copy failed' })
-        : t({ zh: '复制当前链接', en: 'Copy current link' })
 
   const runFilterMutation = (mutation: () => void) => {
     motion.prepareResultsViewportTransition('filters')
@@ -225,7 +219,6 @@ export function useVariantsPageModel(): VariantsPageModel {
     state,
     filters,
     shareLinkState,
-    shareButtonLabel,
     showResultsQuickNavTop: motion.showResultsQuickNavTop,
     filteredVariants,
     visibleVariants,

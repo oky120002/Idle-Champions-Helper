@@ -67,7 +67,6 @@ export interface ChampionsPageModel {
   showAllResults: boolean
   hasRandomOrder: boolean
   shareLinkState: WorkbenchShareLinkState
-  shareButtonLabel: string
   showResultsQuickNavTop: boolean
   resultsPaneRef: RefObject<HTMLDivElement | null>
   roles: string[]

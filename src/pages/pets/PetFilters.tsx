@@ -24,7 +24,7 @@ export function PetFilters({
   const { t } = useI18n()
 
   return (
-    <div className="pets-workbench__sidebar-stack">
+    <div className="workbench-page__sidebar-stack">
       <FilterSearchField
         label={t({ zh: '搜索', en: 'Search' })}
         value={query}

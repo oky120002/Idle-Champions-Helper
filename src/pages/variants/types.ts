@@ -77,7 +77,6 @@ export type VariantsPageModel = {
   state: VariantState
   filters: VariantsFilterState
   shareLinkState: WorkbenchShareLinkState
-  shareButtonLabel: string
   showResultsQuickNavTop: boolean
   filteredVariants: Variant[]
   visibleVariants: Variant[]

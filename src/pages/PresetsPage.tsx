@@ -1,6 +1,13 @@
 import { useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
+import {
+  WorkbenchContentStack,
+  WorkbenchShareButton,
+  WorkbenchToolbarBadge,
+  WorkbenchToolbarCopy,
+  WorkbenchToolbarMark,
+} from '../components/workbench/WorkbenchScaffold'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { useWorkbenchScrollNavigation } from '../components/workbench/useWorkbenchScrollNavigation'
 import { useWorkbenchShareLink } from '../components/workbench/useWorkbenchShareLink'
@@ -17,19 +24,13 @@ export function PresetsPage() {
   const { showScrollTop, scrollToTop } = useWorkbenchScrollNavigation({ scrollRef: contentScrollRef })
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
   const { state, t, pageStatus, metrics } = model
-  const shareButtonLabel =
-    shareLinkState === 'success'
-      ? t({ zh: '链接已复制', en: 'Link copied' })
-      : shareLinkState === 'error'
-        ? t({ zh: '复制失败', en: 'Copy failed' })
-        : t({ zh: '复制当前链接', en: 'Copy current link' })
 
   return (
-    <div className="presets-page presets-page--workbench">
+    <div className="presets-page workbench-page">
       <PageWorkbenchShell
         storageKey="presets"
         ariaLabel={t({ zh: '方案存档工作台', en: 'Preset library workbench' })}
-        className="presets-workbench"
+        className="workbench-page__shell presets-workbench"
         contentScrollRef={contentScrollRef}
         contentOverlay={
           showScrollTop ? (
@@ -39,40 +40,21 @@ export function PresetsPage() {
             />
           ) : null
         }
-        toolbarLead={(
-          <div className="presets-workbench__toolbar-mark" aria-hidden="true">
-            <span className="presets-workbench__toolbar-mark-dot" />
-            <span className="presets-workbench__toolbar-mark-label">PRESETS</span>
-          </div>
-        )}
+        toolbarLead={<WorkbenchToolbarMark label="PRESETS" accentTone="steel" />}
         toolbarPrimary={(
-          <div className="presets-workbench__toolbar-copy">
-            <span className="presets-workbench__toolbar-kicker">{t({ zh: '归档工作台', en: 'Archive workbench' })}</span>
-            <strong className="presets-workbench__toolbar-title">{t({ zh: '方案存档', en: 'Preset library' })}</strong>
-            <span className="presets-workbench__toolbar-detail">
-              {t({ zh: '统一查看、恢复和整理本地命名阵型方案', en: 'Review, restore, and curate named local formation presets' })}
-            </span>
-          </div>
+          <WorkbenchToolbarCopy
+            kicker={t({ zh: '归档工作台', en: 'Archive workbench' })}
+            title={t({ zh: '方案存档', en: 'Preset library' })}
+            detail={t({ zh: '统一查看、恢复和整理本地命名阵型方案', en: 'Review, restore, and curate named local formation presets' })}
+          />
         )}
         toolbarActions={(
           <>
-            <span className="presets-workbench__toolbar-badge">{t({ zh: `${metrics.total} 条命名方案`, en: `${metrics.total} presets` })}</span>
-            <span className="presets-workbench__toolbar-badge presets-workbench__toolbar-badge--muted">
+            <WorkbenchToolbarBadge>{t({ zh: `${metrics.total} 条命名方案`, en: `${metrics.total} presets` })}</WorkbenchToolbarBadge>
+            <WorkbenchToolbarBadge tone="muted">
               {t({ zh: `${metrics.recoverable} 条可恢复`, en: `${metrics.recoverable} recoverable` })}
-            </span>
-            <button
-              type="button"
-              className={
-                shareLinkState === 'success'
-                  ? 'action-button action-button--ghost action-button--compact action-button--toggled'
-                  : 'action-button action-button--ghost action-button--compact'
-              }
-              onClick={() => {
-                void copyCurrentLink()
-              }}
-            >
-              {shareButtonLabel}
-            </button>
+            </WorkbenchToolbarBadge>
+            <WorkbenchShareButton state={shareLinkState} onCopy={copyCurrentLink} />
           </>
         )}
         contentHeader={pageStatus ? <StatusBanner tone={pageStatus.tone} title={pageStatus.title} detail={pageStatus.detail} /> : null}
@@ -90,7 +72,7 @@ export function PresetsPage() {
         ) : null}
 
         {state.status === 'ready' ? (
-          <div className="presets-workbench__content-stack">
+          <WorkbenchContentStack>
             <SurfaceCard
               eyebrow={t({ zh: '当前范围', en: 'Current scope' })}
               title={t({ zh: '先确认当前支持的方案管理闭环', en: 'Confirm the current preset management loop' })}
@@ -106,7 +88,7 @@ export function PresetsPage() {
             >
               <PresetsListSection model={model} />
             </SurfaceCard>
-          </div>
+          </WorkbenchContentStack>
         ) : null}
       </PageWorkbenchShell>
     </div>

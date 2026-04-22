@@ -2,7 +2,7 @@
 
 - 日期：2026-04-13
 - 目标：治理跨页面高度重复、语义稳定的 UI 与国际化实现，减少页面层散落逻辑，同时避免为了“去重”而过度抽象。
-- 当前结论：已完成三轮治理——第一轮沉淀双语展示组件；第二轮确认 `StatusBanner` 和 `FieldGroup` 适合共享；第三轮把全站页面壳层统一收口到 `PageWorkbenchShell`。当前工作台结构与视觉规范见 `docs/modules/shared-components/page-workbench-design.md`。
+- 当前结论：已完成四轮治理——第一轮沉淀双语展示组件；第二轮确认 `StatusBanner` 和 `FieldGroup` 适合共享；第三轮把全站页面壳层统一收口到 `PageWorkbenchShell`；第四轮把工作台内部稳定 chrome 收口到 `WorkbenchScaffold`。当前工作台结构与视觉规范见 `docs/modules/shared-components/page-workbench-design.md`。
 
 ## 模块定位
 
@@ -18,6 +18,7 @@
 - `StatusBanner`：承接状态提示条结构
 - `FieldGroup`：承接 `label + 控件 + hint` 字段块
 - `PageWorkbenchShell`：承接全站桌面工作台外壳、左右 pane 结构与工具条语义
+- `WorkbenchScaffold`：承接工作台内部稳定展示骨架，例如标题 copy、badge、复制链接按钮、sidebar header 和筛选结果头
 - `WorkbenchFloatingTopButton`：承接右区统一悬浮回顶入口
 - `formatSeatLabel`：保留为 helper，不为短标签增加额外 DOM
 - 暂不抽：结果卡整体、优先级按钮组
@@ -64,5 +65,6 @@
 - UI 文案 `{ zh, en }` 与游戏数据双语字段 `{ original, display }` 是两类文本，不要共用同一 API
 - “可复用”不等于“所有重复都抽组件”；`seat` 更适合做 helper
 - 组件目录和文档索引必须一起长，否则后续智能体仍会在页面里重复造轮子
+- 当四个以上页面已经出现同一类工作台 chrome 时，优先抽“展示骨架”而不是抽页面业务数据；业务 copy 和指标来源继续留在页面 feature 内。
 - 结果卡要按“整卡复用”而不是“局部长得像”来判断；当前字段差异仍太大
 - 英雄展示优先复用 `ChampionAvatar`、`ChampionIdentity`、`ChampionPill` 这组组件，而不是重新拼头像、双语名称和回退逻辑

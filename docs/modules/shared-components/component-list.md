@@ -10,4 +10,5 @@
 | `StatusBanner` | `src/components/StatusBanner.tsx` | 加载、成功、错误、兼容恢复提醒 | 统一 `tone / title / detail / meta / actions` 结构 | `ChampionsPage.tsx`、`VariantsPage.tsx`、`UserDataPage.tsx`、`FormationPage.tsx`、`PresetsPage.tsx` |
 | `FieldGroup` | `src/components/FieldGroup.tsx` | 带 `label` / `hint` 的字段块和筛选区 | 统一标题、提示和容器结构 | `ChampionsPage.tsx`、`VariantsPage.tsx`、`UserDataPage.tsx`、`FormationPage.tsx`、`PresetsPage.tsx` |
 | `PageWorkbenchShell` | `src/components/workbench/PageWorkbenchShell.tsx` | 全站统一桌面工作台壳层 | 统一合并工具条、左抽屉开合、无左栏隐藏模式、双栏内滚和桌面锁滚 | `ChampionsPage.tsx`、`IllustrationsPage.tsx`、`PetsPage.tsx`、`VariantsPage.tsx`、`FormationPage.tsx`、`PresetsPage.tsx`、`UserDataPage.tsx`、`ChampionDetailPage.tsx` |
+| `WorkbenchScaffold` | `src/components/workbench/WorkbenchScaffold.tsx` | 工作台内部稳定展示骨架 | 统一 toolbar mark、标题 copy、badge、复制链接按钮、sidebar header、content stack 和筛选结果头 | `ChampionsPage.tsx`、`IllustrationsPage.tsx`、`PetsPage.tsx`、`VariantsPage.tsx`、`FormationPage.tsx`、`PresetsPage.tsx`、`UserDataPage.tsx`、`ChampionDetailPage.tsx` |
 | `WorkbenchFloatingTopButton` | `src/components/workbench/WorkbenchFloatingTopButton.tsx` | 工作台右侧主滚动区回顶入口 | 统一悬浮返回顶部按钮的文案、图标和交互骨架 | 全站工作台页面 |
