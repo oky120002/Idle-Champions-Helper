@@ -126,6 +126,25 @@ test('移动端英雄详情分区导航不应退化为横向滑动条', async ({
     }
   })
 
+  const dossierMetrics = await page.locator('.champion-dossier__grid').evaluate((element) => {
+    if (!(element instanceof HTMLElement)) {
+      throw new Error('英雄卷宗首屏网格不存在。')
+    }
+
+    const identity = element.querySelector('.champion-dossier__identity')
+    const stats = element.querySelector('.champion-dossier__stats-panel')
+
+    if (!(identity instanceof HTMLElement) || !(stats instanceof HTMLElement)) {
+      throw new Error('英雄卷宗首屏区块不存在。')
+    }
+
+    return {
+      gridTemplateColumns: window.getComputedStyle(element).gridTemplateColumns,
+      identityWidth: Math.round(identity.getBoundingClientRect().width),
+      statsWidth: Math.round(stats.getBoundingClientRect().width),
+    }
+  })
+
   const buttonTops = await page.locator('.section-jump-bar .section-jump-bar__button').evaluateAll((elements) =>
     elements.map((element) => {
       if (!(element instanceof HTMLElement)) {
@@ -139,5 +158,8 @@ test('移动端英雄详情分区导航不应退化为横向滑动条', async ({
   expect(sectionBarMetrics.display).toBe('grid')
   expect(sectionBarMetrics.scrollWidth - sectionBarMetrics.clientWidth).toBeLessThanOrEqual(1)
   expect(Math.max(...buttonTops) - Math.min(...buttonTops)).toBeGreaterThan(20)
+  expect(dossierMetrics.gridTemplateColumns).not.toContain('280px')
+  expect(dossierMetrics.identityWidth).toBeGreaterThanOrEqual(280)
+  expect(dossierMetrics.statsWidth).toBeGreaterThanOrEqual(280)
   expect(await getDocumentHorizontalOverflow(page)).toBeLessThanOrEqual(1)
 })
