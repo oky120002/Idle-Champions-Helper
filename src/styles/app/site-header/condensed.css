@@ -36,6 +36,43 @@
   display: none;
 }
 
+.site-header--subpage.site-header--condensed .site-nav {
+  --site-nav-radius: 22px;
+  gap: 0.24rem;
+  padding: 0.2rem 0.24rem;
+}
+
+.site-header--subpage.site-header--condensed .nav-link {
+  min-width: clamp(4.5rem, 5vw, 6rem);
+  min-height: 2.52rem;
+  padding: 0.38rem 0.76rem 0.42rem;
+  border-radius: 14px;
+}
+
+.site-header--subpage.site-header--condensed .nav-link__label {
+  font-size: 0.84rem;
+  line-height: 1.04;
+}
+
+.site-header--subpage.site-header--condensed .nav-link--active::before {
+  inset: 2px;
+  border-radius: 11px;
+}
+
+.site-header--subpage.site-header--condensed .nav-link--active::after {
+  left: 0.68rem;
+  right: 0.68rem;
+  bottom: 0.24rem;
+}
+
+html[data-ui-locale='en-US'] .site-header--subpage.site-header--condensed .nav-link {
+  min-width: clamp(4.8rem, 5.3vw, 6.3rem);
+}
+
+html[data-ui-locale='en-US'] .site-header--subpage.site-header--condensed .nav-link__label {
+  font-size: 0.78rem;
+}
+
 @media (min-width: 961px) {
   .site-header--subpage.site-header--condensed .site-header__content-shell {
     display: none;
@@ -60,9 +97,9 @@
   }
 
   .site-header--subpage.site-header--condensed .nav-link {
-    min-height: 2rem;
+    min-height: 2.02rem;
     min-width: 0;
-    padding: 0.42rem 0.72rem;
+    padding: 0.38rem 0.68rem;
     border-radius: 15px;
   }
 
