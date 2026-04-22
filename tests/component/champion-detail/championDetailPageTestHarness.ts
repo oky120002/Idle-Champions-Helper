@@ -48,6 +48,10 @@ export function prepareChampionDetailDomEnvironment() {
 
   vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(function mockBoundingClientRect(this: Element) {
     if (this instanceof HTMLElement) {
+      if (this.classList.contains('page-workbench__content-scroll')) {
+        return createDomRect(112)
+      }
+
       return createDomRect(sectionTopMap[this.id] ?? 4000)
     }
 

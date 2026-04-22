@@ -57,7 +57,7 @@ describe('ChampionsPage filter state', () => {
 
   it('支持从 URL 恢复筛选条件，并恢复上次滚动位置', async () => {
     const search = '?q=alpha&seat=1&role=support&race=human&mechanic=control_slow'
-    window.sessionStorage.setItem(`champions-pane-scroll:${search}`, '640')
+    window.sessionStorage.setItem(`workbench-pane-scroll:champions:${search}`, '640')
 
     renderChampionsPage([`/champions${search}`])
 
@@ -70,7 +70,7 @@ describe('ChampionsPage filter state', () => {
     expect(screen.queryByText('贝塔')).not.toBeInTheDocument()
 
     await waitFor(() => {
-      const pane = document.querySelector('.filter-workbench__content-scroll')
+      const pane = document.querySelector('.page-workbench__content-scroll')
 
       if (!(pane instanceof HTMLElement)) {
         throw new Error('结果滚动面板不存在。')
@@ -79,7 +79,7 @@ describe('ChampionsPage filter state', () => {
       expect(pane.scrollTop).toBe(640)
     })
 
-    expect(window.sessionStorage.getItem(`champions-pane-scroll:${search}`)).toBeNull()
+    expect(window.sessionStorage.getItem(`workbench-pane-scroll:champions:${search}`)).toBeNull()
     expect(screen.getByRole('link', { name: '查看详情：阿尔法' })).toHaveAttribute(
       'href',
       '/champions/alpha?q=alpha&seat=1&role=support&race=human&mechanic=control_slow',

@@ -78,7 +78,7 @@ describe('IllustrationsPage results window', () => {
     expect(within(results).getAllByRole('img')).toHaveLength(52)
     expect(screen.getByRole('button', { name: '皮肤' })).toHaveAttribute('aria-pressed', 'true')
     expect(screen.getByRole('button', { name: '辅助' })).toHaveAttribute('aria-pressed', 'true')
-    expect(screen.getAllByRole('button', { name: '收起到默认 50 张' })).toHaveLength(2)
+    expect(screen.getByRole('button', { name: '收起到默认 50 张' })).toBeInTheDocument()
   })
 
   it('支持在当前筛选结果内重新随机排序', async () => {

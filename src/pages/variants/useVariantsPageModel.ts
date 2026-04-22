@@ -1,8 +1,8 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useLocation, useSearchParams } from 'react-router-dom'
 import { useI18n } from '../../app/i18n'
-import { useWorkbenchResultsMotion } from '../../components/filter-sidebar/useWorkbenchResultsMotion'
-import { useWorkbenchShareLink } from '../../components/filter-sidebar/useWorkbenchShareLink'
+import { useWorkbenchResultsMotion } from '../../components/workbench/useWorkbenchResultsMotion'
+import { useWorkbenchShareLink } from '../../components/workbench/useWorkbenchShareLink'
 import { ALL_CAMPAIGNS, MAX_VISIBLE_VARIANTS } from './constants'
 import { buildVariantsFilterSearchParams, readInitialVariantsFilterState } from './query-state'
 import {

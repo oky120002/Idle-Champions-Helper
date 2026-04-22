@@ -1,5 +1,5 @@
-import { FilterWorkbenchShell } from '../components/filter-sidebar/FilterWorkbenchShell'
-import { WorkbenchResultsFloatingTopButton } from '../components/filter-sidebar/WorkbenchResultsFloatingTopButton'
+import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
+import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { StatusBanner } from '../components/StatusBanner'
 import { ChampionsResultsSection } from './champions/ChampionsResultsSection'
 import { ChampionsWorkbenchContentHeader } from './champions/ChampionsWorkbenchContentHeader'
@@ -12,15 +12,15 @@ export function ChampionsPage() {
   const activeFilterCount = activeFilterChips.length
 
   return (
-    <div className="page-stack champions-page champions-page--workbench">
-      <FilterWorkbenchShell
+    <div className="champions-page champions-page--workbench">
+      <PageWorkbenchShell
         storageKey="champions"
         ariaLabel={t({ zh: '英雄筛选工作台', en: 'Champion filter workbench' })}
         className="champions-workbench"
         contentScrollRef={model.resultsPaneRef}
         contentOverlay={(
           model.showResultsQuickNavTop ? (
-            <WorkbenchResultsFloatingTopButton onClick={model.scrollResultsToTop} />
+            <WorkbenchFloatingTopButton onClick={model.scrollResultsToTop} />
           ) : null
         )}
         toolbarLead={(
@@ -50,6 +50,19 @@ export function ChampionsPage() {
                 {t({ zh: `${filteredChampions.length} 名命中`, en: `${filteredChampions.length} matches` })}
               </span>
             ) : null}
+            <button
+              type="button"
+              className={
+                model.shareLinkState === 'success'
+                  ? 'action-button action-button--ghost action-button--compact action-button--toggled'
+                  : 'action-button action-button--ghost action-button--compact'
+              }
+              onClick={() => {
+                void model.copyCurrentLink()
+              }}
+            >
+              {model.shareButtonLabel}
+            </button>
           </>
         )}
         sidebarHeader={(
@@ -103,7 +116,7 @@ export function ChampionsPage() {
         ) : null}
 
         {state.status === 'ready' ? <ChampionsResultsSection model={model} /> : null}
-      </FilterWorkbenchShell>
+      </PageWorkbenchShell>
     </div>
   )
 }

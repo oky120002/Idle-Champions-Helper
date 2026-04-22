@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
 
 async function getPaneScrollTop(page: Page): Promise<number> {
-  return page.locator('.filter-workbench__content-scroll').evaluate((element) => {
+  return page.locator('.page-workbench__content-scroll').evaluate((element) => {
     if (!(element instanceof HTMLElement)) {
       throw new Error('结果滚动面板不存在。')
     }
@@ -11,7 +11,7 @@ async function getPaneScrollTop(page: Page): Promise<number> {
 }
 
 async function setPaneScrollTop(page: Page, top: number): Promise<void> {
-  await page.locator('.filter-workbench__content-scroll').evaluate((element, nextTop) => {
+  await page.locator('.page-workbench__content-scroll').evaluate((element, nextTop) => {
     if (!(element instanceof HTMLElement)) {
       throw new Error('结果滚动面板不存在。')
     }
@@ -23,7 +23,7 @@ async function setPaneScrollTop(page: Page, top: number): Promise<void> {
 
 async function clickVisibleResultLink(page: Page): Promise<void> {
   const linkIndex = await page.locator('.results-grid .result-card--link').evaluateAll((elements) => {
-    const pane = document.querySelector('.filter-workbench__content-scroll')
+    const pane = document.querySelector('.page-workbench__content-scroll')
 
     if (!(pane instanceof HTMLElement)) {
       throw new Error('结果滚动面板不存在。')
@@ -77,7 +77,7 @@ test('英雄筛选页下拉后应出现悬浮返回顶部按钮，并只滚动�
   await expect(page.getByRole('heading', { level: 2, name: '英雄筛选' })).toBeVisible()
 
   await setPaneScrollTop(page, 840)
-  const backToTopButton = page.getByRole('button', { name: '返回结果顶部' })
+  const backToTopButton = page.getByRole('button', { name: '返回顶部' })
   await expect(backToTopButton).toBeVisible()
 
   const baselineWindowScroll = await page.evaluate(() => Math.round(window.scrollY))
@@ -85,7 +85,7 @@ test('英雄筛选页下拉后应出现悬浮返回顶部按钮，并只滚动�
 
   const [buttonBox, paneBox] = await Promise.all([
     backToTopButton.boundingBox(),
-    page.locator('.filter-workbench__content-shell').boundingBox(),
+    page.locator('.page-workbench__content-shell').boundingBox(),
   ])
 
   if (!buttonBox || !paneBox) {

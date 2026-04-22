@@ -1,5 +1,6 @@
 import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('../../src/data/client', async () => {
@@ -87,7 +88,9 @@ const petAnimationsFixture: DataCollection<PetAnimation> = {
 function renderPetsPage() {
   return render(
     <I18nProvider>
-      <PetsPage />
+      <MemoryRouter initialEntries={['/pets']}>
+        <PetsPage />
+      </MemoryRouter>
     </I18nProvider>,
   )
 }

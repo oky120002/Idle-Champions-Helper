@@ -1,5 +1,5 @@
-import { FilterWorkbenchShell } from '../components/filter-sidebar/FilterWorkbenchShell'
-import { WorkbenchResultsFloatingTopButton } from '../components/filter-sidebar/WorkbenchResultsFloatingTopButton'
+import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
+import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { StatusBanner } from '../components/StatusBanner'
 import { PetFilters } from './pets/PetFilters'
 import { PetsResultsSection } from './pets/PetsResultsSection'
@@ -11,13 +11,13 @@ export function PetsPage() {
   const { state, t, activeFilterCount, filters, actions, ui } = model
 
   return (
-    <div className="page-stack pets-page pets-page--workbench">
-      <FilterWorkbenchShell
+    <div className="pets-page pets-page--workbench">
+      <PageWorkbenchShell
         storageKey="pets"
         ariaLabel={t({ zh: '宠物图鉴工作台', en: 'Pet workbench' })}
         className="pets-workbench"
         contentScrollRef={model.resultsPaneRef}
-        contentOverlay={ui.showResultsQuickNavTop ? <WorkbenchResultsFloatingTopButton onClick={actions.scrollResultsToTop} /> : null}
+        contentOverlay={ui.showResultsQuickNavTop ? <WorkbenchFloatingTopButton onClick={actions.scrollResultsToTop} /> : null}
         toolbarLead={(
           <div className="pets-workbench__toolbar-mark" aria-hidden="true">
             <span className="pets-workbench__toolbar-mark-dot" />
@@ -45,6 +45,19 @@ export function PetsPage() {
                 {t({ zh: `${model.results.filteredPets.length} 只命中`, en: `${model.results.filteredPets.length} matches` })}
               </span>
             ) : null}
+            <button
+              type="button"
+              className={
+                ui.shareLinkState === 'success'
+                  ? 'action-button action-button--ghost action-button--compact action-button--toggled'
+                  : 'action-button action-button--ghost action-button--compact'
+              }
+              onClick={() => {
+                void actions.copyCurrentLink()
+              }}
+            >
+              {ui.shareButtonLabel}
+            </button>
           </>
         )}
         sidebarHeader={(
@@ -122,7 +135,7 @@ export function PetsPage() {
         ) : null}
 
         {state.status === 'ready' ? <PetsResultsSection model={model} /> : null}
-      </FilterWorkbenchShell>
+      </PageWorkbenchShell>
     </div>
   )
 }

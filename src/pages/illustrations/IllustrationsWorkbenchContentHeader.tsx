@@ -74,20 +74,6 @@ export function IllustrationsWorkbenchContentHeader({ model }: IllustrationsWork
           <button type="button" className="results-visibility-toggle results-visibility-toggle--ghost" onClick={actions.randomizeResultOrder}>
             {randomOrderLabel}
           </button>
-
-          <button
-            type="button"
-            className={
-              ui.shareLinkState === 'success'
-                ? 'results-visibility-toggle results-visibility-toggle--ghost action-button--toggled'
-                : 'results-visibility-toggle results-visibility-toggle--ghost'
-            }
-            onClick={() => {
-              void actions.copyCurrentLink()
-            }}
-          >
-            {ui.shareButtonLabel}
-          </button>
         </div>
       </div>
     </div>

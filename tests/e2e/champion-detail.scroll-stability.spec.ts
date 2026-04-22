@@ -1,7 +1,24 @@
 import { expect, test, type Page } from '@playwright/test'
 
-async function getScrollY(page: Page): Promise<number> {
-  return page.evaluate(() => Math.round(window.scrollY))
+async function getPaneScrollTop(page: Page): Promise<number> {
+  return page.locator('.page-workbench__content-scroll').evaluate((element) => {
+    if (!(element instanceof HTMLElement)) {
+      throw new Error('详情滚动面板不存在。')
+    }
+
+    return Math.round(element.scrollTop)
+  })
+}
+
+async function scrollPaneBy(page: Page, amount: number): Promise<void> {
+  await page.locator('.page-workbench__content-scroll').evaluate((element, nextAmount) => {
+    if (!(element instanceof HTMLElement)) {
+      throw new Error('详情滚动面板不存在。')
+    }
+
+    element.scrollTop += nextAmount
+    element.dispatchEvent(new Event('scroll'))
+  }, amount)
 }
 
 test('英雄详情页连续向下滚动时不会被快速索引的 hash 同步拉回', async ({ page }) => {
@@ -12,24 +29,22 @@ test('英雄详情页连续向下滚动时不会被快速索引的 hash 同步�
   await page.goto('./#/champions/7')
   await expect(page.getByRole('heading', { level: 2, name: '明斯克' })).toBeVisible()
 
-  await page.evaluate(() => window.scrollTo({ top: 1320, behavior: 'instant' }))
+  await scrollPaneBy(page, 1320)
   await page.waitForTimeout(150)
 
-  const firstScrollY = await getScrollY(page)
+  const firstScrollTop = await getPaneScrollTop(page)
 
-  await page.evaluate(() => window.scrollBy({ top: 1400, behavior: 'instant' }))
+  await scrollPaneBy(page, 1400)
   await page.waitForTimeout(250)
 
-  const secondScrollY = await getScrollY(page)
+  const secondScrollTop = await getPaneScrollTop(page)
 
-  await page.evaluate(() => window.scrollBy({ top: 1400, behavior: 'instant' }))
+  await scrollPaneBy(page, 1400)
   await page.waitForTimeout(250)
 
-  const thirdScrollY = await getScrollY(page)
+  const thirdScrollTop = await getPaneScrollTop(page)
 
-  expect(secondScrollY).toBeGreaterThan(firstScrollY + 240)
-  expect(thirdScrollY).toBeGreaterThan(secondScrollY + 240)
-  await expect(page).toHaveURL(
-    /#\/champions\/7#section-(character-sheet|combat|upgrades|feats)$/,
-  )
+  expect(secondScrollTop).toBeGreaterThan(firstScrollTop + 240)
+  expect(thirdScrollTop).toBeGreaterThan(secondScrollTop + 240)
+  await expect(page).toHaveURL(/#\/champions\/7#section-(character-sheet|combat|upgrades|feats)$/)
 })

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { isFilterWorkbenchRoute } from './workbenchRoutes'
+import { isWorkbenchRoute } from './workbenchRoutes'
 
 const HEADER_CONDENSE_SCROLL_TOP = 56
 const HEADER_EXPAND_SCROLL_TOP = 24
@@ -9,7 +9,7 @@ function shouldCondenseHeader(pathname: string, isCurrentlyCondensed: boolean) {
     return false
   }
 
-  if (isFilterWorkbenchRoute(pathname) && window.innerWidth >= 1080) {
+  if (isWorkbenchRoute(pathname) && window.innerWidth >= 1080) {
     return true
   }
 

@@ -7,7 +7,7 @@ interface VariantsWorkbenchContentHeaderProps {
 }
 
 export function VariantsWorkbenchContentHeader({ model }: VariantsWorkbenchContentHeaderProps) {
-  const { t, activeFilters, filteredVariants, visibleVariants, canToggleResultVisibility, filters, copyCurrentLink, shareLinkState, shareButtonLabel } = model
+  const { t, activeFilters, filteredVariants, visibleVariants, canToggleResultVisibility, filters } = model
   const hasMatches = filteredVariants.length > 0
 
   return (
@@ -68,19 +68,6 @@ export function VariantsWorkbenchContentHeader({ model }: VariantsWorkbenchConte
             </button>
           ) : null}
 
-          <button
-            type="button"
-            className={
-              shareLinkState === 'success'
-                ? 'results-visibility-toggle results-visibility-toggle--ghost action-button--toggled'
-                : 'results-visibility-toggle results-visibility-toggle--ghost'
-            }
-            onClick={() => {
-              void copyCurrentLink()
-            }}
-          >
-            {shareButtonLabel}
-          </button>
         </div>
       </div>
     </div>

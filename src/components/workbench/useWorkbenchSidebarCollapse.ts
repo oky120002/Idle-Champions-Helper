@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const STORAGE_PREFIX = 'idle-champions-helper.filter-sidebar.'
+const STORAGE_PREFIX = 'idle-champions-helper.workbench.'
 
 function getStorage(): Storage | null {
   if (typeof window === 'undefined') {
@@ -30,7 +30,7 @@ function readCollapsed(storageKey: string): boolean {
   return storage.getItem(buildStorageKey(storageKey)) === 'true'
 }
 
-export function useFilterSidebarCollapse(storageKey: string) {
+export function useWorkbenchSidebarCollapse(storageKey: string) {
   const [isCollapsed, setIsCollapsed] = useState(() => readCollapsed(storageKey))
 
   useEffect(() => {

@@ -48,7 +48,7 @@ test('立绘图鉴进入详情后，返回链接应回到立绘图鉴当前筛�
   })
 
   await page.goto('./#/illustrations?scope=skin')
-  await expect(page.locator('.page-tab-header').getByText('立绘图鉴', { exact: true })).toBeVisible()
+  await expect(page.locator('.illustrations-workbench__toolbar-title')).toHaveText('立绘图鉴')
 
   const illustrationCard = page.locator('.illustration-card').first()
   await expect(illustrationCard).toBeVisible()
@@ -62,5 +62,5 @@ test('立绘图鉴进入详情后，返回链接应回到立绘图鉴当前筛�
   await page.getByRole('link', { name: '返回立绘图鉴' }).click()
 
   await expect(page).toHaveURL(/#\/illustrations\?scope=skin$/)
-  await expect(page.locator('.page-tab-header').getByText('立绘图鉴', { exact: true })).toBeVisible()
+  await expect(page.locator('.illustrations-workbench__toolbar-title')).toHaveText('立绘图鉴')
 })

@@ -19,7 +19,7 @@ test('移动端阵型页应以无横滑棋盘配合槽位编辑卡完成编辑',
 
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('./#/formation')
-  await expect(page.locator('.page-tab-header').getByText('阵型编辑', { exact: true })).toBeVisible()
+  await expect(page.locator('.formation-workbench__toolbar-title')).toHaveText('阵型编辑')
   await expect(page.getByTestId('formation-mobile-editor')).toBeVisible()
 
   const boardMetrics = await page.locator('.formation-board').evaluate((element) => {

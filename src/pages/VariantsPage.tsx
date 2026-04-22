@@ -1,5 +1,5 @@
-import { FilterWorkbenchShell } from '../components/filter-sidebar/FilterWorkbenchShell'
-import { WorkbenchResultsFloatingTopButton } from '../components/filter-sidebar/WorkbenchResultsFloatingTopButton'
+import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
+import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { StatusBanner } from '../components/StatusBanner'
 import { VariantsFilterBar } from './variants/VariantsFilterBar'
 import { VariantsResultsSection } from './variants/VariantsResultsSection'
@@ -11,13 +11,13 @@ export function VariantsPage() {
   const { state, t, activeFilters, clearAllFilters, showResultsQuickNavTop, scrollResultsToTop } = model
 
   return (
-    <div className="page-stack variants-page variants-page--workbench">
-      <FilterWorkbenchShell
+    <div className="variants-page variants-page--workbench">
+      <PageWorkbenchShell
         storageKey="variants"
         ariaLabel={t({ zh: '变体筛选工作台', en: 'Variant workbench' })}
         className="variants-workbench"
         contentScrollRef={model.resultsPaneRef}
-        contentOverlay={showResultsQuickNavTop ? <WorkbenchResultsFloatingTopButton onClick={scrollResultsToTop} /> : null}
+        contentOverlay={showResultsQuickNavTop ? <WorkbenchFloatingTopButton onClick={scrollResultsToTop} /> : null}
         toolbarLead={(
           <div className="variants-workbench__toolbar-mark" aria-hidden="true">
             <span className="variants-workbench__toolbar-mark-dot" />
@@ -45,6 +45,19 @@ export function VariantsPage() {
                 {t({ zh: `${model.filteredVariants.length} 个命中`, en: `${model.filteredVariants.length} matches` })}
               </span>
             ) : null}
+            <button
+              type="button"
+              className={
+                model.shareLinkState === 'success'
+                  ? 'action-button action-button--ghost action-button--compact action-button--toggled'
+                  : 'action-button action-button--ghost action-button--compact'
+              }
+              onClick={() => {
+                void model.copyCurrentLink()
+              }}
+            >
+              {model.shareButtonLabel}
+            </button>
           </>
         )}
         sidebarHeader={(
@@ -94,7 +107,7 @@ export function VariantsPage() {
         ) : null}
 
         {state.status === 'ready' ? <VariantsResultsSection model={model} /> : null}
-      </FilterWorkbenchShell>
+      </PageWorkbenchShell>
     </div>
   )
 }

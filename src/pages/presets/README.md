@@ -5,7 +5,7 @@
 ## 推荐加载顺序
 
 1. `src/pages/PresetsPage.tsx`
-   - 只看页面级卡片编排、loading / error / ready 分支。
+   - 先看页面如何接入全站工作台壳层、工具条和右侧内容区。
 2. `src/pages/presets/usePresetsPageModel.ts`
    - 看读取、刷新、编辑、删除、恢复的状态与动作装配。
 3. `src/pages/presets/PresetsListSection.tsx`
@@ -21,7 +21,6 @@
 
 - `constants.ts`: schema version、优先级选项、空编辑器默认值。
 - `types.ts`: feature 内部类型边界。
-- `PresetsMetrics.tsx`: 顶部指标卡。
 - `PresetsOverview.tsx`: “当前范围 / 当前边界”说明块。
 
 ## 关键不变量

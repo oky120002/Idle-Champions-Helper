@@ -1,5 +1,6 @@
 import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('../../src/data/client', async () => {
@@ -120,7 +121,9 @@ const crowdedPetsFixture: DataCollection<Pet> = {
 function renderPetsPage() {
   return render(
     <I18nProvider>
-      <PetsPage />
+      <MemoryRouter initialEntries={['/pets']}>
+        <PetsPage />
+      </MemoryRouter>
     </I18nProvider>,
   )
 }
@@ -156,7 +159,7 @@ describe('PetsPage filters', () => {
 
     renderPetsPage()
 
-    expect(await screen.findByRole('heading', { level: 3, name: '宠物筛选' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { level: 3, name: '左侧缩小宠物目录' })).toBeInTheDocument()
     expect(screen.getByRole('searchbox', { name: /^搜索/ })).toBeInTheDocument()
     expect(screen.getByRole('group', { name: /^宠物来源/ })).toBeInTheDocument()
 

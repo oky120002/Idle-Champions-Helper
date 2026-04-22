@@ -3,7 +3,9 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { SiteHeader } from './SiteHeader'
 import { resolveActiveNavigationItem } from './appNavigation'
 import { useI18n } from './i18n'
-import { isFilterWorkbenchRoute } from './workbenchRoutes'
+import { isWorkbenchRoute } from './workbenchRoutes'
+
+type MediaQueryListener = (event: MediaQueryListEvent) => void
 
 function lazyNamedPage<TModule extends Record<string, ComponentType>, TKey extends keyof TModule>(
   load: () => Promise<TModule>,
@@ -31,7 +33,7 @@ export function App() {
   const { locale, setLocale, t } = useI18n()
   const location = useLocation()
   const activeNavigationItem = resolveActiveNavigationItem(location.pathname, location.state)
-  const isFilterWorkbench = isFilterWorkbenchRoute(location.pathname)
+  const isWorkbench = isWorkbenchRoute(location.pathname)
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -40,9 +42,22 @@ export function App() {
 
     const root = document.documentElement
     const body = document.body
-    const mediaQuery = window.matchMedia('(min-width: 1080px)')
+    const mediaQuery =
+      typeof window.matchMedia === 'function'
+        ? window.matchMedia('(min-width: 1080px)')
+        : {
+            matches: false,
+            addEventListener: undefined as ((type: 'change', listener: MediaQueryListener) => void) | undefined,
+            removeEventListener: undefined as ((type: 'change', listener: MediaQueryListener) => void) | undefined,
+            addListener: (listener: MediaQueryListener) => {
+              void listener
+            },
+            removeListener: (listener: MediaQueryListener) => {
+              void listener
+            },
+          }
     const syncScrollLock = () => {
-      const shouldLockScroll = isFilterWorkbench && mediaQuery.matches
+      const shouldLockScroll = isWorkbench && mediaQuery.matches
 
       root.classList.toggle('page-scroll-locked', shouldLockScroll)
       body.classList.toggle('page-scroll-locked', shouldLockScroll)
@@ -66,10 +81,10 @@ export function App() {
         mediaQuery.removeListener(syncScrollLock)
       }
     }
-  }, [isFilterWorkbench])
+  }, [isWorkbench])
 
   return (
-    <div className={['app-shell', isFilterWorkbench ? 'app-shell--filter-workbench' : ''].filter(Boolean).join(' ')}>
+    <div className={['app-shell', isWorkbench ? 'app-shell--workbench' : ''].filter(Boolean).join(' ')}>
       <div className="background-orb background-orb--one" />
       <div className="background-orb background-orb--two" />
 
@@ -81,7 +96,7 @@ export function App() {
         t={t}
       />
 
-      <main className={['site-main', isFilterWorkbench ? 'site-main--filter-workbench' : ''].filter(Boolean).join(' ')}>
+      <main className={['site-main', isWorkbench ? 'site-main--workbench' : ''].filter(Boolean).join(' ')}>
         <Suspense
           fallback={(
             <section className="surface-card page-shell" aria-live="polite">
