@@ -1,39 +1,39 @@
 .active-filter-bar {
   position: relative;
   display: grid;
-  gap: 0.78rem;
+  gap: 0.72rem;
   margin-top: 1rem;
-  padding: 0.88rem;
-  border-radius: 22px;
-  border: 1px solid rgba(227, 214, 193, 0.1);
+  padding: 0.8rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(227, 214, 193, 0.08);
   background:
-    radial-gradient(circle at top right, color-mix(in oklch, var(--color-copper) 16%, transparent), transparent 44%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.038), rgba(255, 255, 255, 0.016)),
-    rgba(8, 13, 19, 0.38);
+    radial-gradient(circle at top right, color-mix(in oklch, var(--color-copper) 10%, transparent), transparent 44%),
+    var(--surface-gloss),
+    rgba(8, 13, 19, 0.28);
   box-shadow:
     var(--shadow-surface-soft),
-    inset 0 1px 0 rgba(255, 243, 223, 0.035);
+    inset 0 1px 0 rgba(255, 243, 223, 0.03);
 }
 
 .active-filter-bar::before {
   content: "";
   position: absolute;
-  left: 0.9rem;
-  right: 0.9rem;
+  left: 0.82rem;
+  right: 0.82rem;
   top: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 243, 223, 0.14), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 243, 223, 0.12), transparent);
   pointer-events: none;
 }
 
 .active-filter-bar--sidebar {
   margin-top: 0;
-  padding: 0.74rem 0.78rem;
-  border-radius: 20px;
+  padding: 0.68rem 0.72rem;
+  border-radius: var(--radius-md);
   background:
-    radial-gradient(circle at top right, color-mix(in oklch, var(--color-copper) 14%, transparent), transparent 42%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.032), rgba(255, 255, 255, 0.018)),
-    rgba(6, 11, 17, 0.36);
+    radial-gradient(circle at top right, color-mix(in oklch, var(--color-copper) 8%, transparent), transparent 42%),
+    var(--surface-gloss),
+    rgba(6, 11, 17, 0.24);
 }
 
 .active-filter-bar__header,
@@ -51,7 +51,7 @@
 
 .active-filter-bar__copy {
   display: grid;
-  gap: 0.28rem;
+  gap: 0.24rem;
 }
 
 .active-filter-bar__title {
@@ -61,42 +61,42 @@
 .active-filter-bar__hint {
   margin: 0;
   color: rgba(242, 239, 230, 0.62);
-  font-size: 0.84rem;
+  font-size: 0.82rem;
 }
 
 .active-filter-bar__chips {
-  gap: 0.5rem;
+  gap: 0.45rem;
 }
 
 .active-filter-chip {
-  gap: 0.5rem;
+  gap: 0.45rem;
   align-items: center;
-  padding: 0.42rem 0.74rem;
-  border: 1px solid rgba(62, 113, 147, 0.34);
+  padding: 0.36rem 0.66rem;
+  border: 1px solid rgba(62, 113, 147, 0.24);
   border-radius: 999px;
   background:
-    linear-gradient(135deg, rgba(62, 113, 147, 0.22), rgba(200, 167, 127, 0.12)),
-    rgba(12, 18, 26, 0.86);
+    linear-gradient(135deg, rgba(62, 113, 147, 0.16), rgba(200, 167, 127, 0.1)),
+    rgba(12, 18, 26, 0.64);
   color: #e7f3ff;
   cursor: pointer;
-  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.04);
+  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.03);
   transition:
     transform 160ms ease,
     border-color 160ms ease,
     background-color 160ms ease,
     box-shadow 160ms ease;
-  font-size: 0.84rem;
+  font-size: 0.82rem;
 }
 
 .active-filter-chip:hover {
-  transform: translateY(-1px);
-  border-color: rgba(200, 167, 127, 0.42);
+  transform: translateY(-0.5px);
+  border-color: rgba(200, 167, 127, 0.34);
   background:
-    linear-gradient(135deg, rgba(62, 113, 147, 0.28), rgba(200, 167, 127, 0.16)),
-    rgba(12, 18, 26, 0.9);
+    linear-gradient(135deg, rgba(62, 113, 147, 0.2), rgba(200, 167, 127, 0.12)),
+    rgba(12, 18, 26, 0.72);
   box-shadow:
     var(--shadow-interactive),
-    inset 0 1px 0 rgba(255, 243, 223, 0.05);
+    inset 0 1px 0 rgba(255, 243, 223, 0.04);
 }
 
 .active-filter-chip__dismiss {

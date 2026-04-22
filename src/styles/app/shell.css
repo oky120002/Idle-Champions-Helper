@@ -13,22 +13,15 @@
   z-index: -2;
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 16%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 14%),
     repeating-linear-gradient(
       90deg,
-      rgba(255, 255, 255, 0.018) 0,
-      rgba(255, 255, 255, 0.018) 1px,
+      rgba(255, 255, 255, 0.012) 0,
+      rgba(255, 255, 255, 0.012) 1px,
       transparent 1px,
-      transparent 112px
-    ),
-    repeating-linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.018) 0,
-      rgba(255, 255, 255, 0.018) 1px,
-      transparent 1px,
-      transparent 112px
+      transparent 128px
     );
-  opacity: 0.26;
+  opacity: 0.16;
 }
 
 .app-shell::after {
@@ -38,34 +31,33 @@
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(circle at 16% 12%, rgba(62, 113, 147, 0.18), transparent 26%),
-    radial-gradient(circle at 84% 8%, rgba(198, 140, 92, 0.18), transparent 28%),
-    linear-gradient(180deg, transparent 0%, rgba(1, 4, 9, 0.14) 100%);
+    radial-gradient(circle at 16% 12%, rgba(62, 113, 147, 0.1), transparent 24%),
+    radial-gradient(circle at 84% 8%, rgba(198, 140, 92, 0.1), transparent 26%),
+    linear-gradient(180deg, transparent 0%, rgba(1, 4, 9, 0.1) 100%);
 }
 
 .background-orb {
   position: fixed;
   border-radius: 999px;
-  filter: blur(52px);
+  filter: blur(68px);
   pointer-events: none;
-  mix-blend-mode: screen;
-  opacity: 0.7;
+  opacity: 0.48;
 }
 
 .background-orb--one {
-  top: -3rem;
-  right: -7rem;
-  width: 24rem;
-  height: 24rem;
-  background: radial-gradient(circle, rgba(198, 140, 92, 0.28) 0%, rgba(198, 140, 92, 0) 68%);
+  top: -4rem;
+  right: -8rem;
+  width: 20rem;
+  height: 20rem;
+  background: radial-gradient(circle, rgba(198, 140, 92, 0.16) 0%, rgba(198, 140, 92, 0) 70%);
 }
 
 .background-orb--two {
-  left: -7rem;
-  top: 32%;
-  width: 20rem;
-  height: 20rem;
-  background: radial-gradient(circle, rgba(62, 113, 147, 0.22) 0%, rgba(62, 113, 147, 0) 70%);
+  left: -8rem;
+  top: 34%;
+  width: 18rem;
+  height: 18rem;
+  background: radial-gradient(circle, rgba(62, 113, 147, 0.14) 0%, rgba(62, 113, 147, 0) 72%);
 }
 
 .site-main {
@@ -78,17 +70,17 @@
 
 @media (min-width: 961px) {
   .site-main {
-    --site-header-sticky-top: 116px;
-    padding-top: 188px;
+    --site-header-sticky-top: 112px;
+    padding-top: 176px;
   }
 
   .site-main--workbench {
-    --site-workbench-top-clearance: 6.55rem;
+    --site-workbench-top-clearance: 6.15rem;
     padding-top: var(--site-workbench-top-clearance);
   }
 
   .site-header--subpage.site-header--condensed ~ .site-main {
-    --site-header-sticky-top: 116px;
+    --site-header-sticky-top: 112px;
   }
 }
 
