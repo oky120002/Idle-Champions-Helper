@@ -80,10 +80,12 @@
   align-items: center;
   gap: 0.5rem;
   min-width: 0;
-  padding: 0.3rem 0.66rem;
+  padding: 0.28rem 0.62rem;
   border: 1px solid var(--color-border-soft);
   border-radius: 999px;
-  background: rgba(8, 12, 17, 0.22);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0)),
+    rgba(8, 12, 17, 0.18);
   color: rgba(255, 243, 223, 0.86);
   opacity: 0;
   transform: translateY(0.25rem);
@@ -101,16 +103,16 @@
   flex: 0 0 auto;
   border-radius: 999px;
   background: var(--color-copper);
-  box-shadow: 0 0 0 0.18rem color-mix(in oklch, var(--color-copper) 18%, transparent);
+  box-shadow: 0 0 0 0.14rem color-mix(in oklch, var(--color-copper) 16%, transparent);
 }
 
 .site-header__compact-title {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   line-height: 1;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   white-space: nowrap;
   text-transform: uppercase;
 }
@@ -190,8 +192,9 @@ html[data-ui-locale='zh-CN'] .site-title {
   border: 1px solid var(--color-border);
   border-radius: 999px;
   background:
+    radial-gradient(circle at top left, rgba(62, 113, 147, 0.06), transparent 52%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0.01)),
-    rgba(8, 12, 17, 0.28);
+    rgba(8, 12, 17, 0.24);
   color: rgba(242, 239, 230, 0.82);
   text-align: left;
   cursor: pointer;
@@ -236,7 +239,9 @@ html[data-ui-locale='zh-CN'] .site-title {
   height: 1.78rem;
   border: 1px solid var(--color-border-soft);
   border-radius: 999px;
-  background: rgba(6, 10, 15, 0.32);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.024), rgba(255, 255, 255, 0)),
+    rgba(6, 10, 15, 0.28);
 }
 
 .site-header__menu-toggle-indicator-text {
@@ -248,14 +253,14 @@ html[data-ui-locale='zh-CN'] .site-title {
 
 .site-header__menu-toggle:hover {
   transform: translateY(-0.5px);
-  border-color: color-mix(in oklch, var(--color-copper) 30%, transparent);
+  border-color: color-mix(in oklch, var(--color-copper) 24%, transparent);
 }
 
 .site-header__menu-toggle--active {
-  border-color: color-mix(in oklch, var(--color-copper) 42%, transparent);
+  border-color: color-mix(in oklch, var(--color-copper) 34%, transparent);
   background:
-    radial-gradient(circle at top left, color-mix(in oklch, var(--color-copper) 14%, transparent), transparent 56%),
-    rgba(32, 23, 16, 0.28);
+    radial-gradient(circle at top left, color-mix(in oklch, var(--color-copper) 12%, transparent), transparent 56%),
+    rgba(32, 23, 16, 0.24);
   color: #fff3df;
 }
 
