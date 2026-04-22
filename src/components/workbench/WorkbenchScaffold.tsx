@@ -136,8 +136,10 @@ export function WorkbenchShareButton({
       type="button"
       className={joinClasses(
         state === 'success'
-          ? 'action-button action-button--ghost action-button--compact action-button--toggled'
-          : 'action-button action-button--ghost action-button--compact',
+          ? 'workbench-page__toolbar-action workbench-page__toolbar-action--success action-button action-button--ghost action-button--compact action-button--toggled'
+          : state === 'error'
+            ? 'workbench-page__toolbar-action workbench-page__toolbar-action--error action-button action-button--ghost action-button--compact'
+            : 'workbench-page__toolbar-action action-button action-button--ghost action-button--compact',
         className,
       )}
       onClick={() => {

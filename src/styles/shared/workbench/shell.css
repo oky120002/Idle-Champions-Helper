@@ -303,8 +303,13 @@
 .page-workbench__chrome-actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: flex-end;
-  gap: 0.55rem;
+  gap: 0.42rem;
+}
+
+.page-workbench__chrome-actions > * {
+  flex: 0 0 auto;
 }
 
 .page-workbench__chrome-lead {
