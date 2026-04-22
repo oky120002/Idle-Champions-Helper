@@ -29,8 +29,11 @@ export function buildSectionHash(pathname: string, search: string, sectionId: De
   return `#${pathname}${search}#${DETAIL_HASH_PREFIX}${sectionId}`
 }
 
-export function resolveActiveSectionId(): DetailSectionId {
+export function resolveActiveSectionId(scrollContainer?: HTMLElement | null): DetailSectionId {
   const activationOffset = 196
+  const activationLine = scrollContainer
+    ? scrollContainer.getBoundingClientRect().top + activationOffset
+    : activationOffset
   let activeSectionId: DetailSectionId = DETAIL_SECTION_IDS[0]
 
   for (const sectionId of DETAIL_SECTION_IDS) {
@@ -40,7 +43,7 @@ export function resolveActiveSectionId(): DetailSectionId {
       continue
     }
 
-    if (element.getBoundingClientRect().top <= activationOffset) {
+    if (element.getBoundingClientRect().top <= activationLine) {
       activeSectionId = sectionId
     } else {
       break

@@ -1,4 +1,3 @@
-import { PageTabHeader } from '../../components/PageTabHeader'
 import { SurfaceCard } from '../../components/SurfaceCard'
 import type { UserDataPageModel } from './types'
 
@@ -11,12 +10,9 @@ export function UserDataIntroCard({ model }: UserDataIntroCardProps) {
 
   return (
     <SurfaceCard
-      headerContent={
-        <PageTabHeader
-          eyebrow={t({ zh: '个人数据', en: 'User data' })}
-          accentLabel="USER DATA"
-        />
-      }
+      eyebrow={t({ zh: '导入边界', en: 'Import boundary' })}
+      title={t({ zh: '先把本地优先的数据导入骨架搭稳', en: 'Stabilize the local-first import skeleton first' })}
+      description={t({ zh: '这一页先验证浏览器内可完成的解析与脱敏预览，不把敏感凭证带到站外。', en: 'This page validates browser-side parsing and masked previews first so sensitive credentials never need to leave the local app.' })}
     >
       <div className="split-grid">
         <div>

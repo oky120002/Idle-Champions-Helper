@@ -1,5 +1,5 @@
-import { FilterWorkbenchShell } from '../components/filter-sidebar/FilterWorkbenchShell'
-import { WorkbenchResultsFloatingTopButton } from '../components/filter-sidebar/WorkbenchResultsFloatingTopButton'
+import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
+import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { StatusBanner } from '../components/StatusBanner'
 import { IllustrationsResultsSection } from './illustrations/IllustrationsResultsSection'
 import { IllustrationsSidebar } from './illustrations/IllustrationsSidebar'
@@ -11,14 +11,14 @@ export function IllustrationsPage() {
   const { state, t, activeFilterChips, hasActiveFilters, ui, actions } = model
 
   return (
-    <div className="page-stack illustrations-page illustrations-page--workbench">
-      <FilterWorkbenchShell
+    <div className="illustrations-page illustrations-page--workbench">
+      <PageWorkbenchShell
         storageKey="illustrations"
         ariaLabel={t({ zh: '立绘图鉴工作台', en: 'Illustration workbench' })}
         className="illustrations-workbench"
         contentScrollRef={model.resultsPaneRef}
         contentOverlay={(
-          ui.showResultsQuickNavTop ? <WorkbenchResultsFloatingTopButton onClick={actions.scrollResultsToTop} /> : null
+          ui.showResultsQuickNavTop ? <WorkbenchFloatingTopButton onClick={actions.scrollResultsToTop} /> : null
         )}
         toolbarLead={(
           <div className="illustrations-workbench__toolbar-mark" aria-hidden="true">
@@ -47,6 +47,19 @@ export function IllustrationsPage() {
                 {t({ zh: `${model.results.filteredIllustrationEntries.length} 张命中`, en: `${model.results.filteredIllustrationEntries.length} matches` })}
               </span>
             ) : null}
+            <button
+              type="button"
+              className={
+                ui.shareLinkState === 'success'
+                  ? 'action-button action-button--ghost action-button--compact action-button--toggled'
+                  : 'action-button action-button--ghost action-button--compact'
+              }
+              onClick={() => {
+                void actions.copyCurrentLink()
+              }}
+            >
+              {ui.shareButtonLabel}
+            </button>
           </>
         )}
         sidebarHeader={(
@@ -113,7 +126,7 @@ export function IllustrationsPage() {
         ) : null}
 
         {state.status === 'ready' ? <IllustrationsResultsSection model={model} /> : null}
-      </FilterWorkbenchShell>
+      </PageWorkbenchShell>
     </div>
   )
 }

@@ -82,6 +82,11 @@
     padding-top: 188px;
   }
 
+  .site-main--workbench {
+    --site-workbench-top-clearance: 6.55rem;
+    padding-top: var(--site-workbench-top-clearance);
+  }
+
   .site-header--subpage.site-header--condensed ~ .site-main {
     --site-header-sticky-top: 116px;
   }
@@ -95,19 +100,19 @@
     overscroll-behavior: none;
   }
 
-  .app-shell--filter-workbench {
+  .app-shell--workbench {
     min-height: 100dvh;
     height: 100dvh;
     overflow: hidden;
   }
 
-  .site-main--filter-workbench {
+  .site-main--workbench {
     height: 100dvh;
     padding-bottom: 0;
     overflow: hidden;
   }
 
-  .site-main--filter-workbench > * {
+  .site-main--workbench > * {
     min-height: 0;
   }
 }

@@ -1,6 +1,6 @@
 import type { RefObject } from 'react'
 import type { AppLocale, LocaleText } from '../../app/i18n'
-import type { WorkbenchShareLinkState } from '../../components/filter-sidebar/useWorkbenchShareLink'
+import type { WorkbenchShareLinkState } from '../../components/workbench/useWorkbenchShareLink'
 import type {
   Champion,
   ChampionAnimation,

@@ -5,7 +5,7 @@
 ## 推荐加载顺序
 
 1. `src/pages/UserDataPage.tsx`
-   - 只看三张卡片的页面级编排。
+   - 先看页面如何接入全站工作台壳层、工具条和右侧内容区。
 2. `src/pages/user-data/useUserDataPageModel.ts`
    - 看当前输入状态、导入方式切换、解析动作和 sample 填充。
 3. `src/pages/user-data/UserDataWorkbench.tsx`

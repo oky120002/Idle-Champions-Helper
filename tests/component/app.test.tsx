@@ -18,13 +18,13 @@ describe('App', () => {
     )
 
     await screen.findByRole('button', { name: '填入脱敏示例' })
-    const initialHeader = document.querySelector('.page-tab-header')
+    const toolbarTitle = document.querySelector('.user-data-workbench__toolbar-title')
 
-    if (!(initialHeader instanceof HTMLElement)) {
-      throw new Error('页面页头不存在。')
+    if (!(toolbarTitle instanceof HTMLElement)) {
+      throw new Error('个人数据工具条标题不存在。')
     }
 
-    expect(within(initialHeader).getByText('个人数据')).toBeInTheDocument()
+    expect(toolbarTitle).toHaveTextContent('个人数据')
 
     await user.click(screen.getByRole('button', { name: '填入脱敏示例' }))
     await user.click(screen.getByRole('button', { name: '读取并校验' }))
@@ -47,16 +47,17 @@ describe('App', () => {
     )
 
     await screen.findByRole('button', { name: '填入脱敏示例' })
-    const initialHeader = document.querySelector('.page-tab-header')
+    const toolbarTitle = document.querySelector('.user-data-workbench__toolbar-title')
 
-    if (!(initialHeader instanceof HTMLElement)) {
-      throw new Error('页面页头不存在。')
+    if (!(toolbarTitle instanceof HTMLElement)) {
+      throw new Error('个人数据工具条标题不存在。')
     }
 
-    await within(initialHeader).findByText('个人数据')
+    expect(toolbarTitle).toHaveTextContent('个人数据')
     await user.click(screen.getByRole('link', { name: '方案存档' }))
 
-    expect(await screen.findByText('已保存方案')).toBeInTheDocument()
+    const presetsToolbarTitle = await screen.findByText('方案存档', { selector: '.presets-workbench__toolbar-title' })
+    expect(presetsToolbarTitle).toBeInTheDocument()
   })
 
   it('通过低频语言设置入口切换到英文界面', async () => {

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type MouseEvent } from 'react'
+import { useEffect, useRef, useState, type MouseEvent, type RefObject } from 'react'
 import { DETAIL_SECTION_IDS, type DetailSectionId, type DetailSectionLink, type DetailSectionProgressState } from './types'
 import { buildSectionHash, resolveActiveSectionId, resolveSectionIdFromBrowserHash, resolveSectionIdFromHashValue } from './navigation'
 import type { ChampionDetail } from '../../domain/types'
@@ -25,6 +25,7 @@ export function useChampionDetailSectionState(
   location: PageLocation,
   navigate: NavigateFn,
   backTarget: BackTarget,
+  scrollContainerRef: RefObject<HTMLDivElement | null>,
   t: Translation,
 ) {
   const [activeSectionId, setActiveSectionId] = useState<DetailSectionId>(DETAIL_SECTION_IDS[0])
@@ -84,8 +85,11 @@ export function useChampionDetailSectionState(
       return undefined
     }
 
+    const scrollContainer = scrollContainerRef.current
+    const scrollSource: HTMLElement | Window = scrollContainer ?? window
+
     const updateActiveSection = () => {
-      const nextSectionId = resolveActiveSectionId()
+      const nextSectionId = resolveActiveSectionId(scrollContainer)
 
       if (pendingHashSectionIdRef.current) {
         if (nextSectionId === pendingHashSectionIdRef.current) {
@@ -100,14 +104,14 @@ export function useChampionDetailSectionState(
     }
 
     updateActiveSection()
-    window.addEventListener('scroll', updateActiveSection, { passive: true })
+    scrollSource.addEventListener('scroll', updateActiveSection, { passive: true })
     window.addEventListener('resize', updateActiveSection)
 
     return () => {
-      window.removeEventListener('scroll', updateActiveSection)
+      scrollSource.removeEventListener('scroll', updateActiveSection)
       window.removeEventListener('resize', updateActiveSection)
     }
-  }, [detail])
+  }, [detail, scrollContainerRef])
 
   useEffect(() => {
     if (!detail || !hashSectionId || typeof window === 'undefined') {

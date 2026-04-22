@@ -1,5 +1,13 @@
-const FILTER_WORKBENCH_ROUTE_PATHS = new Set(['/champions', '/illustrations', '/pets', '/variants'])
+const WORKBENCH_ROUTE_PATHS = new Set([
+  '/champions',
+  '/illustrations',
+  '/pets',
+  '/variants',
+  '/formation',
+  '/presets',
+  '/user-data',
+])
 
-export function isFilterWorkbenchRoute(pathname: string): boolean {
-  return FILTER_WORKBENCH_ROUTE_PATHS.has(pathname)
+export function isWorkbenchRoute(pathname: string): boolean {
+  return WORKBENCH_ROUTE_PATHS.has(pathname) || pathname.startsWith('/champions/')
 }

@@ -2,7 +2,7 @@
 
 - 日期：2026-04-21
 - 作用：沉淀 `Champions` 页从“左筛选右列表”升级到“悬浮工作台”的结构方案、交互状态和实施边界。
-- 当前状态：本篇只记录 `Champions` 工作台的起源设计与局部状态约束；四个筛选页的跨页推广与旧实现清退计划见 `docs/modules/shared-components/filter-workbench-rollout-plan.md`。
+- 当前状态：本篇只记录 `Champions` 工作台的起源设计与局部状态约束；全站统一推广与旧实现清退见 `docs/modules/shared-components/filter-workbench-rollout-plan.md`。
 
 ## 目标与非目标
 
@@ -15,7 +15,7 @@
 
 ### 非目标
 
-- 不重写 `Variants / Illustrations / Pets` 页面。
+- 不重写 `Champions` 的筛选业务规则、结果卡契约与详情跳转协议。
 - 不引入新的筛选业务维度，也不改 `HashRouter` / GitHub Pages 兼容方式。
 - 不复制桌面系统红绿灯或整套原生窗口细节；只借“壳层关系”和“工具栏合并”的结构语言。
 
@@ -53,16 +53,13 @@
 
 - 左顶部区：筛选状态 badge、`清空全部`、简短提示。
 - 左主体区：现有 `ChampionsPrimaryFilters` + `ChampionsAdditionalFilters`，不改规则，只重排表面和节奏。
-- 右顶部区：页面标题、当前命中说明、compact metrics、当前筛选摘要、`显示全部/收起`、`随机排序`。
+- 右顶部区：页面标题、当前命中说明、compact metrics、当前筛选摘要、`显示全部/收起`、`随机排序`、`复制当前链接`。
 - 右主体区：现有视觉档案 + 结果卡网格 + 空态。
 
 ## 滚动模型
 
 - 桌面端：工作台使用固定可视高度；左抽屉和右主区各自滚动。
-- 右主区滚动容器负责承载：
-  - 顶部说明与结果操作
-  - 视觉档案
-  - 结果卡列表
+- 右主区滚动容器负责承载顶部说明、结果操作、视觉档案和结果卡列表。
 - 筛选变更、默认窗口展开/收起后，右主区回到顶部摘要区。
 - 随机排序不强制回顶。
 - 进入详情再返回时，恢复的是右主区滚动位置，不再恢复整页 `window.scrollY`。
@@ -70,8 +67,8 @@
 
 ## 实施边界
 
-- 工作台壳层已推广到 `Champions / Illustrations / Pets / Variants` 四个筛选页；跨页推广与旧实现清退以 shared-components rollout 文档为准。
-- 共享抽取边界只先落在 `src/components/filter-sidebar/`；等第二个页面确认复用后，再更新 `shared-components` catalog。
+- 工作台壳层已从 `Champions` 推广为全站统一 `PageWorkbenchShell`；跨页推广与旧实现清退以 shared-components rollout 文档为准。
+- 共享抽取边界已经从筛选页专用实现迁到 `src/components/workbench/`。
 - 允许继续复用现有筛选字段组件、结果卡组件和视觉档案组件；不因为壳层变化就重新抽一轮通用卡片。
 - 参考图当前以“结构示意图”方式入仓，用来锁定状态关系；如果后续需要更高保真截图，再补充替换同路径资产。
 

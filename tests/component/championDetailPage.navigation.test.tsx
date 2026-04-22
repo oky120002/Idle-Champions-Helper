@@ -109,6 +109,11 @@ describe('ChampionDetailPage navigation', () => {
     renderChampionDetailPage()
 
     await screen.findByRole('heading', { level: 2, name: '明斯克' })
+    const contentScroll = document.querySelector('.page-workbench__content-scroll')
+
+    if (!(contentScroll instanceof HTMLDivElement)) {
+      throw new Error('详情工作台右侧滚动容器不存在。')
+    }
 
     Object.assign(sectionTopMap, {
       overview: -360,
@@ -118,7 +123,7 @@ describe('ChampionDetailPage navigation', () => {
       feats: 720,
     })
 
-    fireEvent.scroll(window)
+    fireEvent.scroll(contentScroll)
 
     await waitFor(() => {
       expect(screen.getByText('当前浏览 · 升级')).toBeInTheDocument()

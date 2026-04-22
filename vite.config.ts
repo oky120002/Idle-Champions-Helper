@@ -34,8 +34,8 @@ function resolveManualChunk(id: string) {
 
   if (
     normalizedId.endsWith('/src/components/StatusBanner.tsx')
-    || normalizedId.endsWith('/src/components/PageTabHeader.tsx')
     || normalizedId.endsWith('/src/components/SurfaceCard.tsx')
+    || normalizedId.includes('/src/components/workbench/')
   ) {
     return 'shared-page-ui'
   }
