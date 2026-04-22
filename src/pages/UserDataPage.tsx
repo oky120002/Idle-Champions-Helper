@@ -11,8 +11,7 @@ import {
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { useWorkbenchScrollNavigation } from '../components/workbench/useWorkbenchScrollNavigation'
 import { useWorkbenchShareLink } from '../components/workbench/useWorkbenchShareLink'
-import { UserDataIntroCard } from './user-data/UserDataIntroCard'
-import { UserDataNextStageCard } from './user-data/UserDataNextStageCard'
+import { SurfaceCard } from '../components/SurfaceCard'
 import { UserDataWorkbench } from './user-data/UserDataWorkbench'
 import { useUserDataPageModel } from './user-data/useUserDataPageModel'
 
@@ -61,9 +60,52 @@ export function UserDataPage() {
         )}
       >
         <WorkbenchContentStack>
-          <UserDataIntroCard model={model} />
+          <SurfaceCard
+            eyebrow={model.t({ zh: '导入边界', en: 'Import boundary' })}
+            title={model.t({ zh: '先把本地优先的数据导入骨架搭稳', en: 'Stabilize the local-first import skeleton first' })}
+            description={model.t({ zh: '这一页先验证浏览器内可完成的解析与脱敏预览，不把敏感凭证带到站外。', en: 'This page validates browser-side parsing and masked previews first so sensitive credentials never need to leave the local app.' })}
+          >
+            <div className="split-grid">
+              <div>
+                <h3 className="section-heading">{model.t({ zh: '当前已经支持的骨架', en: 'What already exists' })}</h3>
+                <ul className="bullet-list">
+                  <li>{model.t({ zh: 'Support URL 本地解析', en: 'Local Support URL parsing' })}</li>
+                  <li>{model.t({ zh: '手动输入 User ID + Hash 校验', en: 'Manual User ID + Hash validation' })}</li>
+                  <li>{model.t({ zh: '日志文本提取 user_id / hash', en: 'Extracting user_id / hash from log text' })}</li>
+                  <li>{model.t({ zh: '脱敏预览结果展示', en: 'Masked preview output' })}</li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="section-heading">{model.t({ zh: '当前明确不做', en: 'What it explicitly does not do' })}</h3>
+                <ul className="bullet-list">
+                  <li>{model.t({ zh: '不调用真实账号接口', en: 'No live account API calls' })}</li>
+                  <li>{model.t({ zh: '不在页面自动持久化敏感凭证', en: 'No automatic persistence of sensitive credentials' })}</li>
+                  <li>{model.t({ zh: '不上传到你的服务端', en: 'No upload to your server' })}</li>
+                  <li>{model.t({ zh: '不做隐式后台同步', en: 'No implicit background sync' })}</li>
+                </ul>
+              </div>
+            </div>
+          </SurfaceCard>
           <UserDataWorkbench model={model} />
-          <UserDataNextStageCard model={model} />
+          <SurfaceCard
+            eyebrow={model.t({ zh: '下一阶段', en: 'Next stage' })}
+            title={model.t({
+              zh: '接真实本地同步时，也不要让静态站直连官方接口',
+              en: 'Keep official endpoints out of the static site even when local sync grows up',
+            })}
+            description={model.t({
+              zh: '后续真正接个人数据，也应该继续沿用 local-first + 用户主动导入，不把官方请求链路放进静态站。',
+              en: 'When personal data gets wired in for real, it should still stay local-first and user-imported instead of embedding official request flows in the static site.',
+            })}
+          >
+            <ol className="ordered-list">
+              <li>{model.t({ zh: '浏览器里解析 Support URL / 日志文本，拿到 `user_id + hash`', en: 'Parse the Support URL / log text in the browser to get `user_id + hash`' })}</li>
+              <li>{model.t({ zh: '继续扩展用户主动提供的本地导入源，例如脱敏日志片段、离线导出文本或手动补充字段', en: 'Expand only user-provided local inputs such as redacted log snippets, offline exports, or manual field entry' })}</li>
+              <li>{model.t({ zh: '把已归一化的个人数据写入 `IndexedDB`，而不是上传到后端', en: 'Write normalized personal data to `IndexedDB` instead of uploading it to a backend' })}</li>
+              <li>{model.t({ zh: '页面再消费本地画像做英雄可用性、拥有状态和阵型建议', en: 'Let the UI consume the local profile for availability, ownership state, and formation suggestions' })}</li>
+            </ol>
+          </SurfaceCard>
         </WorkbenchContentStack>
       </PageWorkbenchShell>
     </div>
