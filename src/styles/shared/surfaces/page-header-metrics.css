@@ -54,7 +54,7 @@
 
 .workbench-page .page-header-metrics--compact .page-header-metric {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
   gap: 0.32rem;
   min-width: 0;
   min-height: var(--workbench-chip-min-height);
@@ -75,13 +75,18 @@
 }
 
 .workbench-page .page-header-metrics--compact .page-header-metric__label {
+  display: inline-flex;
+  align-items: center;
   color: rgba(242, 239, 230, 0.5);
   font-size: 0.54rem;
+  line-height: 1;
   letter-spacing: 0.12em;
   white-space: nowrap;
 }
 
 .workbench-page .page-header-metrics--compact .page-header-metric__value {
+  display: inline-flex;
+  align-items: center;
   color: var(--workbench-chip-text);
   font-family: inherit;
   font-size: 0.76rem;
