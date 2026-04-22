@@ -11,9 +11,9 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at top, rgba(62, 113, 147, 0.18), transparent 36%),
-    rgba(2, 5, 9, 0.76);
-  backdrop-filter: blur(10px);
+    radial-gradient(circle at top, rgba(62, 113, 147, 0.14), transparent 36%),
+    rgba(2, 5, 9, 0.72);
+  backdrop-filter: blur(8px);
 }
 
 .skin-artwork-dialog__panel {
@@ -21,28 +21,28 @@
   width: min(1120px, 100%);
   max-height: min(88vh, 960px);
   display: grid;
-  gap: 1rem;
-  padding: clamp(1rem, 2.4vw, 1.5rem);
+  gap: 0.92rem;
+  padding: clamp(0.94rem, 2.2vw, 1.35rem);
   overflow: auto;
-  border-radius: 32px;
-  border: 1px solid rgba(227, 214, 193, 0.14);
+  border-radius: var(--radius-2xl);
+  border: 1px solid rgba(227, 214, 193, 0.12);
   background:
-    radial-gradient(circle at top left, rgba(200, 167, 127, 0.14), transparent 28%),
-    radial-gradient(circle at 85% 18%, rgba(62, 113, 147, 0.16), transparent 24%),
-    linear-gradient(180deg, rgba(15, 23, 33, 0.96), rgba(7, 11, 17, 0.98));
-  box-shadow: 0 32px 120px rgba(0, 0, 0, 0.42);
+    radial-gradient(circle at top left, rgba(200, 167, 127, 0.12), transparent 28%),
+    radial-gradient(circle at 85% 18%, rgba(62, 113, 147, 0.12), transparent 24%),
+    linear-gradient(180deg, rgba(15, 23, 33, 0.94), rgba(7, 11, 17, 0.96));
+  box-shadow: 0 22px 72px rgba(0, 0, 0, 0.34);
 }
 
 .skin-artwork-dialog__header {
   display: flex;
-  gap: 1rem;
+  gap: 0.92rem;
   align-items: flex-start;
   justify-content: space-between;
 }
 
 .skin-artwork-dialog__copy {
   display: grid;
-  gap: 0.5rem;
+  gap: 0.42rem;
   max-width: 44rem;
 }
 
@@ -53,42 +53,42 @@
 }
 
 .skin-artwork-dialog__title {
-  font-size: clamp(1.45rem, 2.4vw, 2.3rem);
-  line-height: 0.96;
+  font-size: clamp(1.34rem, 2.2vw, 2.04rem);
+  line-height: 0.98;
 }
 
 .skin-artwork-dialog__hint {
-  color: rgba(242, 239, 230, 0.68);
+  color: rgba(242, 239, 230, 0.66);
 }
 
 .skin-artwork-dialog__close {
-  width: 2.7rem;
-  height: 2.7rem;
-  border: 1px solid rgba(227, 214, 193, 0.12);
+  width: 2.52rem;
+  height: 2.52rem;
+  border: 1px solid rgba(227, 214, 193, 0.1);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.03);
   color: #fff6e8;
   cursor: pointer;
   transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease;
 }
 
 .skin-artwork-dialog__close:hover {
-  transform: translateY(-1px);
-  border-color: rgba(200, 167, 127, 0.42);
-  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-0.5px);
+  border-color: rgba(200, 167, 127, 0.32);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .skin-artwork-dialog__body {
   display: grid;
   grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.82fr);
-  gap: 1rem;
+  gap: 0.92rem;
   align-items: start;
 }
 
 .skin-artwork-dialog__stage,
 .skin-artwork-dialog__selector {
   display: grid;
-  gap: 0.9rem;
+  gap: 0.82rem;
 }
 
 .skin-artwork-dialog__canvas {
@@ -96,13 +96,13 @@
   min-height: 26rem;
   display: grid;
   place-items: center;
-  padding: clamp(1rem, 3vw, 1.5rem);
-  border-radius: 28px;
-  border: 1px solid rgba(227, 214, 193, 0.12);
+  padding: clamp(0.92rem, 2.8vw, 1.35rem);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(227, 214, 193, 0.1);
   background:
-    radial-gradient(circle at top, rgba(62, 113, 147, 0.16), transparent 28%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012)),
-    rgba(5, 9, 14, 0.72);
+    radial-gradient(circle at top, rgba(62, 113, 147, 0.12), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0.01)),
+    rgba(5, 9, 14, 0.64);
   overflow: hidden;
 }
 
@@ -110,14 +110,14 @@
   max-width: 100%;
   max-height: min(62vh, 48rem);
   object-fit: contain;
-  filter: drop-shadow(0 22px 40px rgba(0, 0, 0, 0.28));
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.22));
 }
 
 .skin-artwork-dialog__canvas .skelanim-player__canvas,
 .skin-artwork-dialog__canvas .skelanim-player__fallback-image {
   max-height: min(62vh, 48rem);
   object-fit: contain;
-  filter: drop-shadow(0 22px 40px rgba(0, 0, 0, 0.28));
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.22));
 }
 
 .skin-artwork-dialog__fallback {
@@ -127,7 +127,7 @@
 }
 
 .skin-artwork-dialog__selector-title {
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: rgba(242, 239, 230, 0.56);
@@ -135,17 +135,17 @@
 
 .skin-artwork-dialog__tabs {
   display: grid;
-  gap: 0.75rem;
+  gap: 0.65rem;
 }
 
 .skin-artwork-dialog__tab {
   display: grid;
   gap: 0.22rem;
-  padding: 0.86rem 0.92rem;
-  border: 1px solid rgba(227, 214, 193, 0.1);
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.03);
-  color: rgba(242, 239, 230, 0.8);
+  padding: 0.78rem 0.84rem;
+  border: 1px solid rgba(227, 214, 193, 0.08);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.024);
+  color: rgba(242, 239, 230, 0.78);
   text-align: left;
   cursor: pointer;
   transition:
@@ -156,18 +156,18 @@
 }
 
 .skin-artwork-dialog__tab:hover {
-  transform: translateY(-1px);
-  border-color: rgba(200, 167, 127, 0.32);
+  transform: translateY(-0.5px);
+  border-color: rgba(200, 167, 127, 0.24);
 }
 
 .skin-artwork-dialog__tab--active {
-  border-color: rgba(200, 167, 127, 0.42);
+  border-color: rgba(200, 167, 127, 0.34);
   background:
-    linear-gradient(180deg, rgba(200, 167, 127, 0.16), rgba(62, 113, 147, 0.08)),
-    rgba(9, 14, 20, 0.3);
+    linear-gradient(180deg, rgba(200, 167, 127, 0.12), rgba(62, 113, 147, 0.05)),
+    rgba(9, 14, 20, 0.24);
   box-shadow:
-    inset 0 1px 0 rgba(255, 248, 230, 0.08),
-    0 16px 34px rgba(1, 4, 9, 0.18);
+    inset 0 1px 0 rgba(255, 248, 230, 0.05),
+    0 10px 22px rgba(1, 4, 9, 0.12);
 }
 
 .skin-artwork-dialog__tab-title {
@@ -175,16 +175,16 @@
 }
 
 .skin-artwork-dialog__tab-meta {
-  color: rgba(242, 239, 230, 0.58);
-  font-size: 0.82rem;
+  color: rgba(242, 239, 230, 0.56);
+  font-size: 0.8rem;
 }
 
 @media (max-width: 1040px) {
   .skin-artwork-dialog__body {
-      grid-template-columns: 1fr;
-    }
+    grid-template-columns: 1fr;
+  }
 
   .skin-artwork-dialog__canvas {
-      min-height: 19rem;
-    }
+    min-height: 19rem;
+  }
 }
