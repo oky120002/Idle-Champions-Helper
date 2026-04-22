@@ -3,6 +3,11 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useI18n } from '../app/i18n'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
+import {
+  WorkbenchShareButton,
+  WorkbenchToolbarBadge,
+  WorkbenchToolbarCopy,
+} from '../components/workbench/WorkbenchScaffold'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { useWorkbenchScrollNavigation } from '../components/workbench/useWorkbenchScrollNavigation'
 import { useWorkbenchShareLink } from '../components/workbench/useWorkbenchShareLink'
@@ -83,23 +88,17 @@ export function ChampionDetailPage() {
   } = useChampionDetailSectionState(detail, location, navigate, backTarget, contentScrollRef, t)
   const shareHash = detail ? `#${DETAIL_HASH_PREFIX}${activeSectionId}` : location.hash
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, shareHash)
-  const shareButtonLabel =
-    shareLinkState === 'success'
-      ? t({ zh: '链接已复制', en: 'Link copied' })
-      : shareLinkState === 'error'
-        ? t({ zh: '复制失败', en: 'Copy failed' })
-        : t({ zh: '复制当前链接', en: 'Copy current link' })
   const toolbarTitle = detail ? getPrimaryLocalizedText(detail.summary.name, locale) : t({ zh: '英雄详情', en: 'Champion detail' })
   const toolbarDetail = detail
     ? t({ zh: `${detail.summary.seat} 号位 · ${activeSectionLabel}`, en: `Seat ${detail.summary.seat} · ${activeSectionLabel}` })
     : t({ zh: '战术卷宗与章节索引', en: 'Tactical dossier and section index' })
 
   return (
-    <div className="champion-detail-page champion-detail-page--workbench">
+    <div className="champion-detail-page workbench-page">
       <PageWorkbenchShell
         storageKey="champion-detail"
         ariaLabel={t({ zh: '英雄详情工作台', en: 'Champion detail workbench' })}
-        className="champion-detail-workbench"
+        className="workbench-page__shell champion-detail-workbench"
         contentScrollRef={contentScrollRef}
         contentOverlay={
           showScrollTop ? (
@@ -115,37 +114,25 @@ export function ChampionDetailPage() {
           </Link>
         )}
         toolbarPrimary={(
-          <div className="champion-detail-workbench__toolbar-copy">
-            <span className="champion-detail-workbench__toolbar-kicker">{t({ zh: '战术卷宗', en: 'Tactical dossier' })}</span>
-            <strong className="champion-detail-workbench__toolbar-title">{toolbarTitle}</strong>
-            <span className="champion-detail-workbench__toolbar-detail">{toolbarDetail}</span>
-          </div>
+          <WorkbenchToolbarCopy
+            kicker={t({ zh: '战术卷宗', en: 'Tactical dossier' })}
+            title={toolbarTitle}
+            detail={toolbarDetail}
+          />
         )}
         toolbarActions={(
           <>
             {detail ? (
-              <span className="champion-detail-workbench__toolbar-badge">
+              <WorkbenchToolbarBadge>
                 {t({ zh: `章节 ${activeSectionIndex + 1}/${sectionLinks.length}`, en: `Section ${activeSectionIndex + 1}/${sectionLinks.length}` })}
-              </span>
+              </WorkbenchToolbarBadge>
             ) : null}
             {detail ? (
-              <span className="champion-detail-workbench__toolbar-badge champion-detail-workbench__toolbar-badge--muted">
+              <WorkbenchToolbarBadge tone="muted">
                 {t({ zh: `${detail.skins.length} 套皮肤`, en: `${detail.skins.length} skins` })}
-              </span>
+              </WorkbenchToolbarBadge>
             ) : null}
-            <button
-              type="button"
-              className={
-                shareLinkState === 'success'
-                  ? 'action-button action-button--ghost action-button--compact action-button--toggled'
-                  : 'action-button action-button--ghost action-button--compact'
-              }
-              onClick={() => {
-                void copyCurrentLink()
-              }}
-            >
-              {shareButtonLabel}
-            </button>
+            <WorkbenchShareButton state={shareLinkState} onCopy={copyCurrentLink} />
           </>
         )}
       >

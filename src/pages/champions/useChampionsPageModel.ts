@@ -36,12 +36,6 @@ export function useChampionsPageModel(): ChampionsPageModel {
     transitionKey: filterState.transitionKey,
   })
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
-  const shareButtonLabel =
-    shareLinkState === 'success'
-      ? t({ zh: '已复制链接', en: 'Link copied' })
-      : shareLinkState === 'error'
-        ? t({ zh: '复制失败', en: 'Copy failed' })
-        : t({ zh: '复制当前链接', en: 'Copy current link' })
 
   function runFilterMutation(mutation: () => void) {
     motion.prepareResultsViewportTransition('filters')
@@ -94,7 +88,6 @@ export function useChampionsPageModel(): ChampionsPageModel {
     showAllResults: filterState.showAllResults,
     hasRandomOrder: randomOrderSeed !== null,
     shareLinkState,
-    shareButtonLabel,
     showResultsQuickNavTop,
     resultsPaneRef: motion.resultsPaneRef,
     roles: derived.roles,

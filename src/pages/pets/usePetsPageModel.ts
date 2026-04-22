@@ -75,12 +75,6 @@ export function usePetsPageModel(): PetsPageModel {
     transitionKey: filterState.transitionKey,
   })
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
-  const shareButtonLabel =
-    shareLinkState === 'success'
-      ? t({ zh: '已复制链接', en: 'Link copied' })
-      : shareLinkState === 'error'
-        ? t({ zh: '复制失败', en: 'Copy failed' })
-        : t({ zh: '复制当前链接', en: 'Copy current link' })
 
   function runFilterMutation(mutation: () => void) {
     motion.prepareResultsViewportTransition('filters')
@@ -95,7 +89,6 @@ export function usePetsPageModel(): PetsPageModel {
     filters: filterState.filters,
     ui: {
       shareLinkState,
-      shareButtonLabel,
       hasRandomOrder: randomOrderSeed !== null,
       showResultsQuickNavTop: motion.showResultsQuickNavTop,
     },

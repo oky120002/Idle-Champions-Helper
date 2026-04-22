@@ -136,7 +136,7 @@ test('阵型页左侧布局抽屉不应把标题和当前布局信息挤成窄�
 
   await page.setViewportSize({ width: 1440, height: 960 })
   await page.goto('./#/formation')
-  await expect(page.locator('.formation-workbench__toolbar-title')).toHaveText('阵型编辑')
+  await expect(page.locator('.workbench-page__toolbar-title')).toHaveText('阵型编辑')
 
   const layoutLibraryMetrics = await page.locator('.formation-layout-library').evaluate((element) => {
     if (!(element instanceof HTMLElement)) {

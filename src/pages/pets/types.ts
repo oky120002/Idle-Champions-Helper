@@ -31,7 +31,6 @@ export type PetsSummary = {
 
 export type PetsPageUiState = {
   shareLinkState: WorkbenchShareLinkState
-  shareButtonLabel: string
   hasRandomOrder: boolean
   showResultsQuickNavTop: boolean
 }

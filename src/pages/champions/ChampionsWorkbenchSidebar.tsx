@@ -8,7 +8,7 @@ interface ChampionsWorkbenchSidebarProps {
 
 export function ChampionsWorkbenchSidebar({ model }: ChampionsWorkbenchSidebarProps) {
   return (
-    <div className="champions-workbench__sidebar-stack">
+    <div className="workbench-page__sidebar-stack">
       <ChampionsPrimaryFilters model={model} />
       <ChampionsAdditionalFilters model={model} />
     </div>

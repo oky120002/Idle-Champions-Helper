@@ -98,7 +98,7 @@ export function VariantsFilterBar({ model }: VariantsFilterBarProps) {
   }))
 
   return (
-    <div className="variants-workbench__sidebar-stack filter-panel filter-panel--sidebar">
+    <div className="workbench-page__sidebar-stack variants-workbench__sidebar filter-panel filter-panel--sidebar">
       <FieldGroup
         label={t({ zh: '关键词', en: 'Keyword' })}
         hint={t({

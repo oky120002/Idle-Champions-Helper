@@ -1,4 +1,12 @@
 import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
+import {
+  WorkbenchShareButton,
+  WorkbenchSidebarHeader,
+  WorkbenchSidebarLoading,
+  WorkbenchToolbarBadge,
+  WorkbenchToolbarCopy,
+  WorkbenchToolbarMark,
+} from '../components/workbench/WorkbenchScaffold'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { StatusBanner } from '../components/StatusBanner'
 import { IllustrationsResultsSection } from './illustrations/IllustrationsResultsSection'
@@ -11,89 +19,68 @@ export function IllustrationsPage() {
   const { state, t, activeFilterChips, hasActiveFilters, ui, actions } = model
 
   return (
-    <div className="illustrations-page illustrations-page--workbench">
+    <div className="illustrations-page workbench-page">
       <PageWorkbenchShell
         storageKey="illustrations"
         ariaLabel={t({ zh: '立绘图鉴工作台', en: 'Illustration workbench' })}
-        className="illustrations-workbench"
+        className="workbench-page__shell illustrations-workbench"
         contentScrollRef={model.resultsPaneRef}
         contentOverlay={(
           ui.showResultsQuickNavTop ? <WorkbenchFloatingTopButton onClick={actions.scrollResultsToTop} /> : null
         )}
-        toolbarLead={(
-          <div className="illustrations-workbench__toolbar-mark" aria-hidden="true">
-            <span className="illustrations-workbench__toolbar-mark-dot" />
-            <span className="illustrations-workbench__toolbar-mark-label">ART CODEX</span>
-          </div>
-        )}
+        toolbarLead={<WorkbenchToolbarMark label="ART CODEX" />}
         toolbarPrimary={(
-          <div className="illustrations-workbench__toolbar-copy">
-            <span className="illustrations-workbench__toolbar-kicker">{t({ zh: '悬浮工作台', en: 'Floating workbench' })}</span>
-            <strong className="illustrations-workbench__toolbar-title">{t({ zh: '立绘图鉴', en: 'Illustration catalog' })}</strong>
-            <span className="illustrations-workbench__toolbar-detail">
-              {t({ zh: '立绘筛选与动态资源对照', en: 'Filter artwork and compare motion resources' })}
-            </span>
-          </div>
+          <WorkbenchToolbarCopy
+            kicker={t({ zh: '悬浮工作台', en: 'Floating workbench' })}
+            title={t({ zh: '立绘图鉴', en: 'Illustration catalog' })}
+            detail={t({ zh: '立绘筛选与动态资源对照', en: 'Filter artwork and compare motion resources' })}
+          />
         )}
         toolbarActions={(
           <>
-            <span className="filter-sidebar-panel__badge illustrations-workbench__toolbar-badge">
+            <WorkbenchToolbarBadge variant="filter">
               {activeFilterChips.length > 0
                 ? t({ zh: `${activeFilterChips.length} 项条件`, en: `${activeFilterChips.length} active` })
                 : t({ zh: '条件待命', en: 'Filters idle' })}
-            </span>
+            </WorkbenchToolbarBadge>
             {state.status === 'ready' ? (
-              <span className="filter-sidebar-panel__badge illustrations-workbench__toolbar-badge illustrations-workbench__toolbar-badge--muted">
+              <WorkbenchToolbarBadge variant="filter" tone="muted">
                 {t({ zh: `${model.results.filteredIllustrationEntries.length} 张命中`, en: `${model.results.filteredIllustrationEntries.length} matches` })}
-              </span>
+              </WorkbenchToolbarBadge>
             ) : null}
-            <button
-              type="button"
-              className={
-                ui.shareLinkState === 'success'
-                  ? 'action-button action-button--ghost action-button--compact action-button--toggled'
-                  : 'action-button action-button--ghost action-button--compact'
-              }
-              onClick={() => {
-                void actions.copyCurrentLink()
-              }}
-            >
-              {ui.shareButtonLabel}
-            </button>
+            <WorkbenchShareButton state={ui.shareLinkState} onCopy={actions.copyCurrentLink} />
           </>
         )}
         sidebarHeader={(
-          <div className="illustrations-workbench__sidebar-header">
-            <div className="illustrations-workbench__sidebar-copy">
-              <p className="illustrations-workbench__sidebar-kicker">{t({ zh: '筛选抽屉', en: 'Filter drawer' })}</p>
-              <h3 className="illustrations-workbench__sidebar-title">{t({ zh: '左侧缩小画库范围', en: 'Narrow the art library on the left' })}</h3>
-              <p className="illustrations-workbench__sidebar-description">
-                {t({
-                  zh: '先锁范围、座位、定位和联动队伍，再按需展开身份和机制标签；右侧保留更大的画布给预览卡片与动图资源。',
-                  en: 'Lock scope, seat, role, and affiliations first, then expand identity and mechanic tags only when you need them.',
-                })}
-              </p>
-            </div>
-
-            <div className="illustrations-workbench__sidebar-status" role="group" aria-label={t({ zh: '立绘筛选状态操作', en: 'Illustration filter status actions' })}>
-              <span className="filter-sidebar-panel__badge">
+          <WorkbenchSidebarHeader
+            kicker={t({ zh: '筛选抽屉', en: 'Filter drawer' })}
+            title={t({ zh: '左侧缩小画库范围', en: 'Narrow the art library on the left' })}
+            description={t({
+              zh: '先锁范围、座位、定位和联动队伍，再按需展开身份和机制标签；右侧保留更大的画布给预览卡片与动图资源。',
+              en: 'Lock scope, seat, role, and affiliations first, then expand identity and mechanic tags only when you need them.',
+            })}
+            statusLabel={t({ zh: '立绘筛选状态操作', en: 'Illustration filter status actions' })}
+            status={(
+              <>
+                <WorkbenchToolbarBadge variant="filter">
                 {activeFilterChips.length > 0
                   ? t({ zh: `${activeFilterChips.length} 项已启用`, en: `${activeFilterChips.length} active` })
                   : t({ zh: '当前未启用条件', en: 'No active filters' })}
-              </span>
-              {hasActiveFilters ? (
-                <button
-                  type="button"
-                  className="action-button action-button--secondary action-button--compact"
-                  onClick={actions.clearAllFilters}
-                >
-                  {t({ zh: '清空全部', en: 'Clear all' })}
-                </button>
-              ) : null}
-            </div>
-          </div>
+                </WorkbenchToolbarBadge>
+                {hasActiveFilters ? (
+                  <button
+                    type="button"
+                    className="action-button action-button--secondary action-button--compact"
+                    onClick={actions.clearAllFilters}
+                  >
+                    {t({ zh: '清空全部', en: 'Clear all' })}
+                  </button>
+                ) : null}
+              </>
+            )}
+          />
         )}
-        sidebar={state.status === 'ready' ? <IllustrationsSidebar model={model} /> : <div className="illustrations-workbench__sidebar-loading" aria-hidden="true" />}
+        sidebar={state.status === 'ready' ? <IllustrationsSidebar model={model} /> : <WorkbenchSidebarLoading />}
         contentHeader={state.status === 'ready' ? <IllustrationsWorkbenchContentHeader model={model} /> : null}
       >
         {state.status === 'loading' ? (

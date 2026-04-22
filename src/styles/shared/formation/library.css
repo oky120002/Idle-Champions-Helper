@@ -104,6 +104,17 @@
   align-items: stretch;
 }
 
+.formation-workbench .workbench-page__sidebar-title {
+  margin: 0;
+  font-size: 1.12rem;
+}
+
+.formation-workbench .formation-layout-library__hero,
+.formation-workbench .formation-layout-library__workspace,
+.formation-workbench .formation-layout-library__stats {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .formation-layout-library__filters {
   display: grid;
   gap: 0.95rem;
@@ -257,6 +268,13 @@
     rgba(200, 167, 127, 0.12);
   color: #fff0d5;
   white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .formation-workbench .workbench-page__toolbar-detail,
+  .formation-workbench .workbench-page__sidebar-description {
+    font-size: 0.74rem;
+  }
 }
 
 .formation-layout-card__source {
