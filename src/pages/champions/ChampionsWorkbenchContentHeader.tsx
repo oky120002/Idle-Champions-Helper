@@ -1,5 +1,6 @@
+import { PageHeaderMetrics, type PageHeaderMetricItem } from '../../components/PageHeaderMetrics'
 import { WorkbenchFilterResultsHeader } from '../../components/workbench/WorkbenchScaffold'
-import { ChampionsMetrics } from './ChampionsMetrics'
+import { collectChampionFacetSummary } from '../../features/champion-filters/headerMetrics'
 import { MAX_VISIBLE_RESULTS } from './constants'
 import type { ChampionsPageModel } from './types'
 
@@ -24,6 +25,25 @@ export function ChampionsWorkbenchContentHeader({ model }: ChampionsWorkbenchCon
   const randomOrderLabel = hasRandomOrder
     ? t({ zh: '重新随机', en: 'Reshuffle' })
     : t({ zh: '随机排序', en: 'Shuffle order' })
+  const metricItems: PageHeaderMetricItem[] =
+    model.state.status === 'ready'
+      ? (() => {
+          const summary = collectChampionFacetSummary(filteredChampions, model.locale)
+
+          return [
+            { label: t({ zh: '英雄总数', en: 'Roster' }), value: model.state.champions.length },
+            { label: t({ zh: '当前匹配', en: 'Matches' }), value: filteredChampions.length },
+            { label: t({ zh: '覆盖座位', en: 'Seats' }), value: summary.seatCount },
+            { label: t({ zh: '联动队伍', en: 'Affiliations' }), value: summary.affiliationCount },
+            { label: t({ zh: '种族', en: 'Races' }), value: summary.raceCount },
+            { label: t({ zh: '性别', en: 'Genders' }), value: summary.genderCount },
+            { label: t({ zh: '阵营', en: 'Alignments' }), value: summary.alignmentCount },
+            { label: t({ zh: '职业', en: 'Professions' }), value: summary.professionCount },
+            { label: t({ zh: '获取方式', en: 'Availability' }), value: summary.acquisitionCount },
+            { label: t({ zh: '特殊机制', en: 'Mechanics' }), value: summary.mechanicCount },
+          ]
+        })()
+      : []
 
   return (
     <WorkbenchFilterResultsHeader
@@ -40,7 +60,7 @@ export function ChampionsWorkbenchContentHeader({ model }: ChampionsWorkbenchCon
               en: 'No champions match the current filter set. Roll one dimension back first, then narrow things down again.',
             })
       }
-      metrics={<ChampionsMetrics model={model} />}
+      metrics={metricItems.length > 0 ? <PageHeaderMetrics items={metricItems} variant="compact" /> : null}
       filterSummary={
         activeFilters.length > 0
           ? `${t({ zh: '当前筛选：', en: 'Active filters: ' })}${activeFilters.join(' · ')}`

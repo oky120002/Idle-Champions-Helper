@@ -1,6 +1,6 @@
+import { PageHeaderMetrics, type PageHeaderMetricItem } from '../../components/PageHeaderMetrics'
 import { WorkbenchFilterResultsHeader } from '../../components/workbench/WorkbenchScaffold'
 import { MAX_VISIBLE_VARIANTS } from './constants'
-import { VariantsMetrics } from './VariantsMetrics'
 import type { VariantsPageModel } from './types'
 
 interface VariantsWorkbenchContentHeaderProps {
@@ -10,6 +10,18 @@ interface VariantsWorkbenchContentHeaderProps {
 export function VariantsWorkbenchContentHeader({ model }: VariantsWorkbenchContentHeaderProps) {
   const { t, activeFilters, filteredVariants, visibleVariants, canToggleResultVisibility, filters } = model
   const hasMatches = filteredVariants.length > 0
+  const metricItems: PageHeaderMetricItem[] =
+    model.state.status === 'ready'
+      ? [
+          { label: t({ zh: '变体总数', en: 'Variants' }), value: model.state.variants.length },
+          { label: t({ zh: '当前匹配', en: 'Matches' }), value: filteredVariants.length },
+          { label: t({ zh: '可见冒险分组', en: 'Adventure groups' }), value: model.adventuresWithResults },
+          {
+            label: t({ zh: '覆盖战役 / 场景', en: 'Campaigns / scenes' }),
+            value: `${model.campaignsWithResults} / ${model.scenesWithResults}`,
+          },
+        ]
+      : []
 
   return (
     <WorkbenchFilterResultsHeader
@@ -26,7 +38,7 @@ export function VariantsWorkbenchContentHeader({ model }: VariantsWorkbenchConte
               en: 'No variants match yet. Loosen one dimension first, then tighten it back down for a steadier search flow.',
             })
       }
-      metrics={<VariantsMetrics model={model} />}
+      metrics={metricItems.length > 0 ? <PageHeaderMetrics items={metricItems} variant="compact" /> : null}
       filterSummary={
         activeFilters.length > 0
           ? `${t({ zh: '当前筛选：', en: 'Active filters: ' })}${activeFilters.join(' · ')}`

@@ -16,9 +16,11 @@
    - 低频标签筛选区与折叠面板。
 6. `src/pages/illustrations/IllustrationsResultsSection.tsx`
    - 结果摘要、默认 50 张限制、展开 / 收起按钮和随机排序入口。
-7. `src/pages/illustrations/illustration-model.ts`
+7. `src/pages/illustrations/IllustrationsWorkbenchContentHeader.tsx`
+   - 页头摘要、紧凑 metrics、展开/收起和随机排序按钮。
+8. `src/pages/illustrations/illustration-model.ts`
    - 纯逻辑：active chips、立绘文案、kind 统计、结果 entry 组装与随机打散。
-8. `src/pages/illustrations/query-state.ts`
+9. `src/pages/illustrations/query-state.ts`
    - URL 查询参数读写与 share URL 组装。
 
 ## 文件职责
@@ -28,8 +30,8 @@
 - `illustration-filter-actions.ts`: 所有筛选 mutation 的统一出口。
 - `useIllustrationCollectionState.ts`: 立绘 / 动态预览 / 英雄 / enums 读取。
 - `IllustrationResultCard.tsx`: 单张结果卡片、整卡跳转与 hover 动态预览。
-- `IllustrationsMetrics.tsx`: 页头指标卡。
-- `IllustrationsSidebar.tsx`: 把主筛选区和补充筛选区拼起来。
+- `IllustrationsWorkbenchContentHeader.tsx`: 页头文案、metrics 和结果动作的合并入口。
+- `IllustrationsPage.tsx`: 直接拼接主筛选区与补充筛选区，不再保留只做转发的 sidebar wrapper。
 
 ## 关键不变量
 
