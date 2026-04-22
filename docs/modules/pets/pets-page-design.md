@@ -2,6 +2,7 @@
 
 - 生效日期：2026-04-16
 - 当前状态：首版实现已落地，页面入口为 `src/pages/PetsPage.tsx`，导航页签为 `宠物图鉴`。
+- 页面壳层：宠物页当前桌面端已纳入全站页面工作台规范；小导航、左右结构、滚动与动效细节见 `docs/modules/shared-components/page-workbench-design.md`。
 
 ## 目标
 

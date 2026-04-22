@@ -3,6 +3,7 @@
 - 日期：2026-04-22
 - 作用：把 `Champions` 已验证的工作台壳层升级为全站统一页面结构，并作为后续实现、复核与清理旧实现的单一事实源。
 - 起点设计：`docs/modules/champions/filter/workbench-shell-redesign-design.md`
+- 当前已落地的结构与视觉细节：`docs/modules/shared-components/page-workbench-design.md`
 
 ## 已锁产品决策
 
@@ -16,6 +17,7 @@
 ## 共享组件与实现边界
 
 - `PageWorkbenchShell` 是全站唯一工作台壳层。
+- 页面结构、顶部小导航、左右 pane 关系、滚动模型和动效细节以 `docs/modules/shared-components/page-workbench-design.md` 为准；本计划不重复展开视觉签名。
 - `src/components/workbench/` 负责：壳层、抽屉持久化、筛选页右区滚动恢复、通用悬浮返回顶部、复制链接。
 - `src/components/filter-sidebar/` 只保留筛选字段组件与筛选视觉基元，不再承载页面壳层职责。
 - `isWorkbenchRoute` 统一覆盖全部工作台页面和 `/champions/:championId` 详情页；桌面锁滚、头部紧凑与主内容高度锁定统一挂在这条路由判定上。
