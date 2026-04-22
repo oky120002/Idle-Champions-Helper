@@ -183,86 +183,6 @@
   margin-top: 0;
 }
 
-.champions-workbench__floating-top-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.7rem;
-  min-height: 3.05rem;
-  padding: 0.48rem 0.72rem 0.48rem 0.5rem;
-  border: 1px solid rgba(227, 214, 193, 0.14);
-  border-radius: 999px;
-  background:
-    radial-gradient(circle at top right, rgba(200, 167, 127, 0.14), transparent 36%),
-    linear-gradient(180deg, rgba(17, 26, 37, 0.92), rgba(9, 14, 20, 0.94)),
-    rgba(8, 13, 19, 0.46);
-  color: rgba(255, 245, 229, 0.96);
-  cursor: pointer;
-  backdrop-filter: blur(16px);
-  box-shadow:
-    0 18px 34px rgba(1, 4, 9, 0.28),
-    inset 0 1px 0 rgba(255, 243, 223, 0.04);
-  transition:
-    transform 180ms ease,
-    border-color 180ms ease,
-    background-color 180ms ease,
-    box-shadow 180ms ease,
-    opacity 180ms ease;
-}
-
-.champions-workbench__floating-top-button:hover {
-  transform: translateY(-1px);
-  border-color: rgba(200, 167, 127, 0.32);
-  box-shadow:
-    0 22px 38px rgba(1, 4, 9, 0.3),
-    inset 0 1px 0 rgba(255, 243, 223, 0.05);
-}
-
-.champions-workbench__floating-top-button:focus-visible {
-  outline: none;
-  box-shadow:
-    var(--focus-ring),
-    0 22px 38px rgba(1, 4, 9, 0.3);
-}
-
-.champions-workbench__floating-top-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.08rem;
-  height: 2.08rem;
-  border-radius: 999px;
-  border: 1px solid rgba(227, 214, 193, 0.1);
-  background:
-    linear-gradient(180deg, rgba(62, 113, 147, 0.3), rgba(17, 30, 44, 0.56)),
-    rgba(255, 255, 255, 0.04);
-  color: rgba(255, 243, 223, 0.92);
-  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.04);
-}
-
-.champions-workbench__floating-top-icon svg {
-  width: 0.98rem;
-  height: 0.98rem;
-}
-
-.champions-workbench__floating-top-copy {
-  display: grid;
-  gap: 0.08rem;
-  min-width: 0;
-  text-align: left;
-}
-
-.champions-workbench__floating-top-copy strong {
-  font-size: 0.84rem;
-  line-height: 1.05;
-}
-
-.champions-workbench__floating-top-copy span {
-  color: rgba(242, 239, 230, 0.62);
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
 @media (min-width: 1080px) {
   .champions-page--workbench {
     margin-top: -4rem;
@@ -301,15 +221,6 @@
   .champions-workbench__results-metrics .page-header-metrics {
     justify-content: flex-start;
   }
-
-  .champions-workbench__floating-top-button {
-    min-height: 2.8rem;
-    padding-right: 0.68rem;
-  }
-
-  .champions-workbench__floating-top-copy span {
-    letter-spacing: 0.06em;
-  }
 }
 
 @media (max-width: 720px) {
@@ -324,9 +235,5 @@
 
   .champions-workbench__results-title {
     font-size: 1.28rem;
-  }
-
-  .champions-workbench__floating-top-copy span {
-    display: none;
   }
 }

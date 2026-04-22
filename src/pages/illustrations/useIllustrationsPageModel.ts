@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useI18n } from '../../app/i18n'
+import { saveWorkbenchResultsPaneScroll, useWorkbenchResultsMotion } from '../../components/filter-sidebar/useWorkbenchResultsMotion'
+import { useWorkbenchShareLink } from '../../components/filter-sidebar/useWorkbenchShareLink'
 import type { Champion, ChampionAnimation, ChampionIllustration, LocalizedText } from '../../domain/types'
 import { collectAttributeFilterOptions, groupMechanicOptions, seatOptions } from '../../features/champion-filters/options'
 import { filterIllustrations } from '../../rules/illustrationFilter'
@@ -14,7 +16,7 @@ import {
   hasActiveIllustrationFilters,
   shuffleIllustrationEntries,
 } from './illustration-model'
-import { buildShareUrl } from './query-state'
+import { buildFilterSearchParams } from './query-state'
 import type { IllustrationsPageActions, IllustrationsPageModel } from './types'
 import { useIllustrationCollectionState } from './useIllustrationCollectionState'
 import { useIllustrationFilterState } from './useIllustrationFilterState'
@@ -34,7 +36,6 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
     filters,
     isIdentityFiltersExpanded,
     isMetaFiltersExpanded,
-    shareLinkState,
     setSearch,
     setViewFilter,
     setSelectedSeats,
@@ -47,7 +48,6 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
     setSelectedAcquisitions,
     setSelectedMechanics,
     setShowAllResults,
-    setShareLinkState,
     toggleIdentityFiltersExpanded,
     toggleMetaFiltersExpanded,
   } = useIllustrationFilterState()
@@ -140,6 +140,17 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
     filters.selectedRaces.length + filters.selectedGenders.length + filters.selectedAlignments.length
   const metaFiltersSelectedCount =
     filters.selectedProfessions.length + filters.selectedAcquisitions.length + filters.selectedMechanics.length
+  const transitionKey = useMemo(() => buildFilterSearchParams(filters).toString(), [filters])
+  const motion = useWorkbenchResultsMotion({
+    storageKey: 'illustrations',
+    locationSearch: location.search,
+    stateStatus: state.status,
+    filteredCount: orderedIllustrationEntries.length,
+    visibleCount: visibleIllustrationEntries.length,
+    showAllResults: filters.showAllResults,
+    transitionKey,
+  })
+  const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
   const shareButtonLabel =
     shareLinkState === 'success'
       ? t({ zh: '已复制链接', en: 'Link copied' })
@@ -148,6 +159,7 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
         : t({ zh: '复制当前链接', en: 'Copy current link' })
 
   function runFilterMutation(mutation: () => void) {
+    motion.prepareResultsViewportTransition('filters')
     setShowAllResults(false)
     mutation()
   }
@@ -167,28 +179,19 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
     setSelectedMechanics,
   })
 
-  async function copyCurrentLink() {
-    const shareUrl = buildShareUrl(location.pathname, location.search, location.hash)
-
-    if (!shareUrl || typeof navigator === 'undefined' || !navigator.clipboard?.writeText) {
-      setShareLinkState('error')
-      return
-    }
-
-    try {
-      await navigator.clipboard.writeText(shareUrl)
-      setShareLinkState('success')
-    } catch {
-      setShareLinkState('error')
-    }
-  }
-
   const actions: IllustrationsPageActions = {
     ...filterActions,
     toggleIdentityFiltersExpanded,
     toggleMetaFiltersExpanded,
-    toggleResultVisibility: () => setShowAllResults((current) => !current),
+    toggleResultVisibility: () => {
+      motion.prepareResultsViewportTransition('visibility')
+      setShowAllResults((current) => !current)
+    },
     randomizeResultOrder: () => setRandomOrderSeed((current) => (current === null ? 1 : current + 1)),
+    saveListScroll: () => {
+      saveWorkbenchResultsPaneScroll('illustrations', location.search, motion.resultsPaneRef.current?.scrollTop ?? 0)
+    },
+    scrollResultsToTop: motion.scrollResultsToTop,
     copyCurrentLink,
   }
 
@@ -203,6 +206,7 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
       shareLinkState,
       shareButtonLabel,
       hasRandomOrder: randomOrderSeed !== null,
+      showResultsQuickNavTop: motion.showResultsQuickNavTop,
     },
     options: {
       roleOptions,
@@ -231,6 +235,7 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
     hasActiveFilters,
     identityFiltersSelectedCount,
     metaFiltersSelectedCount,
+    resultsPaneRef: motion.resultsPaneRef,
     actions,
   }
 }

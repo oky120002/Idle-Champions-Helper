@@ -70,7 +70,7 @@
 
 ## 实施边界
 
-- 首轮新增一套工作台壳层组件，与旧 `FilterSidebarLayout` 并存；不直接把其他页面拖进这次重构。
+- 工作台壳层已推广到 `Champions / Illustrations / Pets / Variants` 四个筛选页；跨页推广与旧实现清退以 shared-components rollout 文档为准。
 - 共享抽取边界只先落在 `src/components/filter-sidebar/`；等第二个页面确认复用后，再更新 `shared-components` catalog。
 - 允许继续复用现有筛选字段组件、结果卡组件和视觉档案组件；不因为壳层变化就重新抽一轮通用卡片。
 - 参考图当前以“结构示意图”方式入仓，用来锁定状态关系；如果后续需要更高保真截图，再补充替换同路径资产。

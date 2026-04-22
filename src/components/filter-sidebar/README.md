@@ -1,26 +1,24 @@
 # filter-sidebar 目录说明
 
-面向共享筛选侧栏的最小加载入口，避免每次改页面筛选 UI 都把四个页面和整套样式重新扫一遍。
+桌面端四个筛选页现在统一走工作台壳层，不再保留旧 `FilterSidebarLayout` / `FilterSidebarToolbar` 路线。
 
 ## 推荐加载顺序
 
-1. `src/components/filter-sidebar/FilterSidebarLayout.tsx`
-   - 顶部工具条、桌面抽屉开合、localStorage 持久化和移动端 / 桌面端共用开关入口。
-2. `src/components/filter-sidebar/FilterWorkbenchShell.tsx`
-   - 悬浮工作台壳层；负责统一外层大壳、合并工具栏、桌面端双栏内滚和左抽屉退场逻辑。
-3. `src/components/filter-sidebar/FilterSidebarPanel.tsx`
-   - 侧栏表面壳层，只负责标题、说明、状态区和内容承载。
-4. `src/components/filter-sidebar/FilterSidebarToolbar.tsx`
-   - 桌面端工具条里的状态摘要与快捷动作壳层。
-5. `src/components/filter-sidebar/useFilterSidebarCollapse.ts`
-   - 共享持久化状态读取与写回；页面只传稳定 `storageKey`，不要自己重复造轮子。
-6. `src/styles/shared/filters/sidebar-layout.css`
-   - 布局宽度、桌面工具条、抽屉滑动过渡和 sticky 行为。
+1. `src/components/filter-sidebar/FilterWorkbenchShell.tsx`
+   - 统一外层工作台大壳、左抽屉开合、合并工具栏和桌面端双栏内滚。
+2. `src/components/filter-sidebar/useWorkbenchResultsMotion.ts`
+   - 统一右侧结果区滚动恢复、筛选回顶和悬浮返回顶部按钮显隐。
+3. `src/components/filter-sidebar/useWorkbenchShareLink.ts`
+   - 统一四页 `复制当前链接` 状态机与 HashRouter 分享地址拼装。
+4. `src/components/filter-sidebar/useFilterSidebarCollapse.ts`
+   - 共享抽屉开合状态持久化；页面只传稳定 `storageKey`。
+5. `src/components/filter-sidebar/WorkbenchResultsFloatingTopButton.tsx`
+   - 统一右下角悬浮返回顶部按钮。
+6. `src/styles/shared/filters/workbench-shell.css`
+   - 工作台外壳、抽屉动画、悬浮按钮和内滚容器。
 7. `src/styles/shared/filters/sidebar.css`
-   - 侧栏面板表面、状态徽记和滚动约束。
-8. `src/styles/shared/filters/workbench-shell.css`
-   - 悬浮工作台外壳、合并工具栏、桌面端重叠关系和内滚容器。
-9. 具体字段组件
+   - 共享 badge / section label 等筛选视觉基元。
+8. 具体字段组件
    - `FilterSearchField.tsx`
    - `FilterChipSingleSelectField.tsx`
    - `FilterChipMultiSelectField.tsx`
@@ -29,30 +27,20 @@
 
 ## 目录职责
 
-- `FilterSidebarLayout.tsx`
-  - 只做共享布局和交互壳层。
-  - 页面必须传稳定的 `storageKey`，保证不同页面的收起状态互不串页。
 - `FilterWorkbenchShell.tsx`
-  - 用于“统一外层大壳 + 工具栏合并 + 双栏内滚”的工作台场景。
-  - 首轮只被 `Champions` 使用；后续其他页面迁移前，先确认这套结构已经稳定。
-- `FilterSidebarPanel.tsx`
-  - 不持有布局状态。
-  - 页面级标题、说明、按钮和状态徽记都放这里拼装。
-- `FilterSidebarToolbar.tsx`
-  - 只负责桌面端顶部细工具条的标题、摘要和快捷动作。
-- 各字段组件
+  - 是四个筛选页唯一的桌面端工作台壳层。
+  - 页面必须传稳定的 `storageKey`，保证不同页面的抽屉状态互不串页。
+- `useWorkbenchResultsMotion.ts`
+  - 只处理右侧结果区滚动语义，不关心具体业务过滤规则。
+- `useWorkbenchShareLink.ts`
+  - 只处理复制链接与短暂反馈，不持有页面筛选状态。
+- 字段组件
   - 维持“输入即业务值”的薄壳，不在组件内部重复维护筛选业务规则。
 
 ## 关键不变量
 
-- 桌面端始终保留一条细工具条承接开关、状态和快捷动作；左侧筛选体本身以抽屉方式滑入 / 滑出，收起后不应留下残余窄轨。
-- `FilterWorkbenchShell` 的收起态只保留紧凑展开入口；左抽屉主体、边框和残余 gutter 必须一起退场。
-- 移动端不能只剩图标开关；必须保留完整文案入口，避免误触成本过高。
-- 收起状态只影响侧栏可见性，不应清空任何筛选条件。
-- `FilterSidebarLayout` 不依赖具体页面路由；页面自己提供 `storageKey`。
-- 共享样式改动后，要回看冠军、立绘、宠物、变体四页，确认没有出现导轨宽度串用或 sticky 裁切。
-
-## 何时继续拆分
-
-- 如果后续再增加桌面拖拽调宽、按断点切换导轨文案或更复杂的侧栏记忆规则，优先继续拆到 `useFilterSidebarCollapse.ts` 邻近模块。
-- 如果字段组件开始出现跨页面特化分支，不要继续往共享组件里堆 `variant`；应回到页面目录拆局部组件。
+- 桌面端四个筛选页都必须使用 `FilterWorkbenchShell`；不再新增或恢复旧双栏布局分支。
+- 收起态只保留紧凑展开入口；左抽屉主体、边框和残余 gutter 必须一起退场。
+- 筛选变更和结果展开 / 收起后，只回顶右侧结果区，不操作整页 `window.scrollY`。
+- 移动端继续退化为普通单列网页滚动，不维持桌面工作台高度锁定。
+- 共享样式改动后，要回看 Champions / Illustrations / Pets / Variants 四页，确认抽屉开合和工具栏合并关系保持一致。

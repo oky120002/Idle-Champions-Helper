@@ -9,12 +9,11 @@ function renderFilterWorkbenchShell(storageKey: string) {
     <I18nProvider>
       <FilterWorkbenchShell
         storageKey={storageKey}
-        toolbarLead={<span>CHAMPIONS</span>}
-        toolbarPrimary={<strong>英雄筛选</strong>}
-        toolbarActions={<button type="button">随机排序</button>}
-        sidebarHeader={<h3>筛选抽屉</h3>}
-        sidebar={<label><span>搜索</span><input type="text" /></label>}
-        contentHeader={<h2>结果总览</h2>}
+        ariaLabel="测试工作台"
+        toolbarLead={<span>左侧标记</span>}
+        toolbarPrimary={<span>主工具栏</span>}
+        sidebarHeader={<h3>测试筛选</h3>}
+        sidebar={<label>搜索<input type="text" /></label>}
       >
         <section aria-label="测试结果">结果区域</section>
       </FilterWorkbenchShell>
@@ -27,27 +26,43 @@ describe('FilterWorkbenchShell', () => {
     window.localStorage.clear()
   })
 
-  it('支持收起状态持久化，并在重新挂载后恢复为紧凑展开入口', async () => {
+  it('支持收起后持久化，并在重新挂载时恢复状态', async () => {
     const user = userEvent.setup()
-    const storageKey = 'component-workbench-test'
-    const persistenceKey = 'idle-champions-helper.filter-sidebar.component-workbench-test.collapsed'
+    const storageKey = 'component-test'
+    const persistenceKey = 'idle-champions-helper.filter-sidebar.component-test.collapsed'
     const view = renderFilterWorkbenchShell(storageKey)
 
-    expect(screen.getByRole('heading', { level: 3, name: '筛选抽屉' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 3, name: '测试筛选' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '收起筛选抽屉' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: '随机排序' })).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: '收起筛选抽屉' }))
 
-    expect(screen.queryByRole('heading', { level: 3, name: '筛选抽屉' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { level: 3, name: '测试筛选' })).not.toBeInTheDocument()
     expect(screen.getByRole('button', { name: '展开筛选抽屉' })).toBeInTheDocument()
     expect(window.localStorage.getItem(persistenceKey)).toBe('true')
 
     view.unmount()
     renderFilterWorkbenchShell(storageKey)
 
-    expect(screen.queryByRole('heading', { level: 3, name: '筛选抽屉' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { level: 3, name: '测试筛选' })).not.toBeInTheDocument()
     expect(screen.getByRole('button', { name: '展开筛选抽屉' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: '随机排序' })).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: '展开筛选抽屉' }))
+
+    expect(screen.getByRole('heading', { level: 3, name: '测试筛选' })).toBeInTheDocument()
+    expect(window.localStorage.getItem(persistenceKey)).toBe('false')
+  })
+
+  it('不同 storageKey 的抽屉收起状态互不串页', async () => {
+    const user = userEvent.setup()
+
+    const firstView = renderFilterWorkbenchShell('page-a')
+    await user.click(screen.getByRole('button', { name: '收起筛选抽屉' }))
+    firstView.unmount()
+
+    renderFilterWorkbenchShell('page-b')
+
+    expect(screen.getByRole('heading', { level: 3, name: '测试筛选' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '收起筛选抽屉' })).toBeInTheDocument()
   })
 })

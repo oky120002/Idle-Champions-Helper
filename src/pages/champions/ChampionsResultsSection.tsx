@@ -14,12 +14,11 @@ export function ChampionsResultsSection({ model }: ChampionsResultsSectionProps)
     selectedChampion,
     selectedChampionVisual,
     clearSelectedChampion,
-    resultsPaneSectionRef,
     t,
   } = model
 
   return (
-    <section ref={resultsPaneSectionRef} className="champions-results" aria-label={t({ zh: '英雄筛选结果', en: 'Champion filter results' })}>
+    <section className="champions-results" aria-label={t({ zh: '英雄筛选结果', en: 'Champion filter results' })}>
       <section
         className="results-panel-shell"
       >
