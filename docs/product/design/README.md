@@ -6,6 +6,7 @@
 
 - 页面标题、说明文案与统计条的一致布局：`docs/product/design/page-header-metrics-guidelines.md`
 - 全局导航、语言切换和壳层密度约束：`docs/product/design/navigation-and-locale-guidelines.md`
+- 整站低浮雕扁平化重构与执行顺序：`docs/product/design/low-relief-visual-rebuild-plan.md`
 
 ## 何时补文档
 
