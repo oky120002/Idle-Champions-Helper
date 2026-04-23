@@ -41,7 +41,7 @@ export function ChampionsWorkbenchContentHeader({ model }: ChampionsWorkbenchCon
       filterSummary={
         activeFilters.length > 0
           ? `${t({ zh: '当前筛选：', en: 'Active filters: ' })}${activeFilters.join(' · ')}`
-          : null
+          : ''
       }
     />
   )

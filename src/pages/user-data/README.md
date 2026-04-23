@@ -23,4 +23,4 @@
 - 切换导入方式时必须把 `parseState` 重置回 `idle`。
 - `填入脱敏示例` 只填充当前所选导入方式的字段。
 - Support URL 成功解析后必须继续展示 `network` 卡片；其他方式不展示。
-- 回归至少跑 `tests/component/app.test.tsx` 与 `tests/unit/data/userImport.test.ts`。
+- 回归至少跑 `tests/component/userDataPage.importModes.test.tsx`、`tests/component/app.test.tsx` 与 `tests/unit/data/userImport.test.ts`。
