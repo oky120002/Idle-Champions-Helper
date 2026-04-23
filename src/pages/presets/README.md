@@ -27,4 +27,4 @@
 - 恢复按钮只有 `prompt.kind === 'restore'` 时可用。
 - 编辑保存会刷新方案列表，并保留最新 `dataVersion / formations / champions` 上下文重建 prompt。
 - 删除后若当前正编辑同一方案，编辑态必须一起关闭。
-- IndexedDB 行为回归至少跑 `tests/component/presetsPage.restore.test.tsx`。
+- IndexedDB 行为回归至少跑 `tests/component/presetsPage.restore.test.tsx` 与 `tests/component/presetsPage.management.test.tsx`。

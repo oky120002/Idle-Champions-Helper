@@ -228,8 +228,8 @@ export function WorkbenchFilterResultsHeader({
           ) : null}
         </div>
 
-        {filterSummary != null ? (
-          <p className="results-panel__filter-summary workbench-filter-header__filter-summary">
+        {filterSummary !== undefined ? (
+          <p className="results-panel__filter-summary workbench-filter-header__filter-summary" aria-live="polite">
             {filterSummary}
           </p>
         ) : null}
