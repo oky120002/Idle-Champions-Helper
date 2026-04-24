@@ -1,13 +1,15 @@
 import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
 import {
-  WorkbenchShareButton,
+  WorkbenchSidebarFilterStatus,
   WorkbenchSidebarHeader,
   WorkbenchSidebarLoading,
-  WorkbenchToolbarBadge,
   WorkbenchToolbarCopy,
-  WorkbenchToolbarMark,
+  WorkbenchToolbarFilterStatus,
 } from '../components/workbench/WorkbenchScaffold'
-import { WorkbenchToolbarActionButton } from '../components/workbench/WorkbenchToolbarActionButton'
+import {
+  WorkbenchToolbarActions,
+  type WorkbenchToolbarActionConfig,
+} from '../components/workbench/WorkbenchToolbarActions'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { StatusBanner } from '../components/StatusBanner'
 import { PetFilters } from './pets/PetFilters'
@@ -30,6 +32,30 @@ export function PetsPage() {
   const randomOrderLabel = ui.hasRandomOrder
     ? t({ zh: '重新随机', en: 'Reshuffle' })
     : t({ zh: '随机排序', en: 'Shuffle order' })
+  const toolbarActions: WorkbenchToolbarActionConfig[] = [
+    {
+      id: 'toggle-visibility',
+      label: resultVisibilityLabel ?? '',
+      onClick: actions.toggleResultVisibility,
+      isActive: filters.showAllResults,
+      ariaPressed: filters.showAllResults,
+      variant: 'prominent',
+      hidden: state.status !== 'ready' || resultVisibilityLabel == null,
+    },
+    {
+      id: 'shuffle-results',
+      label: randomOrderLabel,
+      onClick: actions.randomizeResultOrder,
+      isActive: ui.hasRandomOrder,
+      hidden: state.status !== 'ready' || model.results.filteredPets.length <= 1,
+    },
+    {
+      id: 'share-link',
+      kind: 'share',
+      state: ui.shareLinkState,
+      onCopy: actions.copyCurrentLink,
+    },
+  ]
 
   return (
     <div className="pets-page workbench-page">
@@ -39,7 +65,7 @@ export function PetsPage() {
         className="workbench-page__shell pets-workbench"
         contentScrollRef={model.resultsPaneRef}
         contentOverlay={ui.showResultsQuickNavTop ? <WorkbenchFloatingTopButton onClick={actions.scrollResultsToTop} /> : null}
-        toolbarLead={<WorkbenchToolbarMark label="PETS" />}
+        toolbarLead={<WorkbenchToolbarFilterStatus label="PETS" activeCount={activeFilterCount} />}
         toolbarPrimary={(
           <WorkbenchToolbarCopy
             kicker={t({ zh: '悬浮工作台', en: 'Floating workbench' })}
@@ -47,35 +73,7 @@ export function PetsPage() {
             detail={t({ zh: '宠物筛选与资源完整度排查', en: 'Filter pets and audit asset completeness' })}
           />
         )}
-        toolbarActions={(
-          <>
-            <WorkbenchToolbarBadge variant="filter">
-              {activeFilterCount > 0
-                ? t({ zh: `${activeFilterCount} 项条件`, en: `${activeFilterCount} active` })
-                : t({ zh: '条件待命', en: 'Filters idle' })}
-            </WorkbenchToolbarBadge>
-            {state.status === 'ready' ? (
-              <WorkbenchToolbarBadge variant="filter" tone="muted">
-                {t({ zh: `${model.results.filteredPets.length} 命中`, en: `${model.results.filteredPets.length} matches` })}
-              </WorkbenchToolbarBadge>
-            ) : null}
-            {state.status === 'ready' && resultVisibilityLabel != null ? (
-              <WorkbenchToolbarActionButton
-                isActive={filters.showAllResults}
-                ariaPressed={filters.showAllResults}
-                onClick={actions.toggleResultVisibility}
-              >
-                {resultVisibilityLabel}
-              </WorkbenchToolbarActionButton>
-            ) : null}
-            {state.status === 'ready' && model.results.filteredPets.length > 1 ? (
-              <WorkbenchToolbarActionButton isActive={ui.hasRandomOrder} onClick={actions.randomizeResultOrder}>
-                {randomOrderLabel}
-              </WorkbenchToolbarActionButton>
-            ) : null}
-            <WorkbenchShareButton state={ui.shareLinkState} onCopy={actions.copyCurrentLink} />
-          </>
-        )}
+        toolbarActions={<WorkbenchToolbarActions actions={toolbarActions} />}
         sidebarHeader={(
           <WorkbenchSidebarHeader
             kicker={t({ zh: '筛选抽屉', en: 'Filter drawer' })}
@@ -87,11 +85,7 @@ export function PetsPage() {
             statusLabel={t({ zh: '宠物筛选状态操作', en: 'Pet filter status actions' })}
             status={(
               <>
-                <WorkbenchToolbarBadge variant="filter">
-                  {activeFilterCount > 0
-                    ? t({ zh: `${activeFilterCount} 项已启用`, en: `${activeFilterCount} active` })
-                    : t({ zh: '当前未启用条件', en: 'No active filters' })}
-                </WorkbenchToolbarBadge>
+                <WorkbenchSidebarFilterStatus activeCount={activeFilterCount} />
                 {activeFilterCount > 0 ? (
                   <button
                     type="button"

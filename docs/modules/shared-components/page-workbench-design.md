@@ -33,9 +33,9 @@
 ## 工具条语义
 
 - 工作台工具条统一拆成三段：
-  - `toolbarLead`：页面标记、返回入口或左侧识别信息；
+  - `toolbarLead`：页面标记、返回入口或左侧识别信息；筛选页默认把“条件待命 / N 项条件”也收进这里；
   - `toolbarPrimary`：页面主标题、kicker、上下文说明；
-  - `toolbarActions`：badge、复制当前链接、稳定动作。
+  - `toolbarActions`：复制当前链接、显示全部 / 收起、随机排序等稳定动作；不再重复放筛选命中 badge，多个动作默认收进一组更紧凑的 action cluster，而不是平铺成 badge 风格大药丸。
 - 结果区内部优先只保留 compact metrics、筛选摘要和必要状态；高频结果动作（如随机排序、显示全部 / 收起）默认上提到 `toolbarActions`，不要留在结果头内部。
 - 这三段的稳定展示骨架统一由 `src/components/workbench/WorkbenchScaffold.tsx` 承接；页面只负责传业务文案、统计值和动作回调。
 - 有左栏时：

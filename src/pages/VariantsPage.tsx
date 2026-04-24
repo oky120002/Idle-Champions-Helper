@@ -1,13 +1,15 @@
 import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
 import {
-  WorkbenchShareButton,
+  WorkbenchSidebarFilterStatus,
   WorkbenchSidebarHeader,
   WorkbenchSidebarLoading,
-  WorkbenchToolbarBadge,
   WorkbenchToolbarCopy,
-  WorkbenchToolbarMark,
+  WorkbenchToolbarFilterStatus,
 } from '../components/workbench/WorkbenchScaffold'
-import { WorkbenchToolbarActionButton } from '../components/workbench/WorkbenchToolbarActionButton'
+import {
+  WorkbenchToolbarActions,
+  type WorkbenchToolbarActionConfig,
+} from '../components/workbench/WorkbenchToolbarActions'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { StatusBanner } from '../components/StatusBanner'
 import { MAX_VISIBLE_VARIANTS } from './variants/constants'
@@ -27,6 +29,23 @@ export function VariantsPage() {
           en: `Show all ${model.filteredVariants.length} (default ${MAX_VISIBLE_VARIANTS})`,
         })
     : null
+  const toolbarActions: WorkbenchToolbarActionConfig[] = [
+    {
+      id: 'toggle-visibility',
+      label: resultVisibilityLabel ?? '',
+      onClick: model.toggleResultVisibility,
+      isActive: model.filters.showAllResults,
+      ariaPressed: model.filters.showAllResults,
+      variant: 'prominent',
+      hidden: state.status !== 'ready' || resultVisibilityLabel == null,
+    },
+    {
+      id: 'share-link',
+      kind: 'share',
+      state: model.shareLinkState,
+      onCopy: model.copyCurrentLink,
+    },
+  ]
 
   return (
     <div className="variants-page workbench-page">
@@ -36,7 +55,7 @@ export function VariantsPage() {
         className="workbench-page__shell variants-workbench"
         contentScrollRef={model.resultsPaneRef}
         contentOverlay={showResultsQuickNavTop ? <WorkbenchFloatingTopButton onClick={scrollResultsToTop} /> : null}
-        toolbarLead={<WorkbenchToolbarMark label="VARIANTS" accentTone="steel" />}
+        toolbarLead={<WorkbenchToolbarFilterStatus label="VARIANTS" activeCount={activeFilters.length} accentTone="steel" />}
         toolbarPrimary={(
           <WorkbenchToolbarCopy
             kicker={t({ zh: '悬浮工作台', en: 'Floating workbench' })}
@@ -44,30 +63,7 @@ export function VariantsPage() {
             detail={t({ zh: '战役压力、敌人与阵型阅读台', en: 'Campaign pressure, enemy, and formation reading desk' })}
           />
         )}
-        toolbarActions={(
-          <>
-            <WorkbenchToolbarBadge variant="filter">
-              {activeFilters.length > 0
-                ? t({ zh: `${activeFilters.length} 项条件`, en: `${activeFilters.length} active` })
-                : t({ zh: '条件待命', en: 'Filters idle' })}
-            </WorkbenchToolbarBadge>
-            {state.status === 'ready' ? (
-              <WorkbenchToolbarBadge variant="filter" tone="muted">
-                {t({ zh: `${model.filteredVariants.length} 命中`, en: `${model.filteredVariants.length} matches` })}
-              </WorkbenchToolbarBadge>
-            ) : null}
-            {state.status === 'ready' && resultVisibilityLabel != null ? (
-              <WorkbenchToolbarActionButton
-                isActive={model.filters.showAllResults}
-                ariaPressed={model.filters.showAllResults}
-                onClick={model.toggleResultVisibility}
-              >
-                {resultVisibilityLabel}
-              </WorkbenchToolbarActionButton>
-            ) : null}
-            <WorkbenchShareButton state={model.shareLinkState} onCopy={model.copyCurrentLink} />
-          </>
-        )}
+        toolbarActions={<WorkbenchToolbarActions actions={toolbarActions} />}
         sidebarHeader={(
           <WorkbenchSidebarHeader
             kicker={t({ zh: '筛选抽屉', en: 'Filter drawer' })}
@@ -79,11 +75,7 @@ export function VariantsPage() {
             statusLabel={t({ zh: '变体筛选状态操作', en: 'Variant filter status actions' })}
             status={(
               <>
-                <WorkbenchToolbarBadge variant="filter">
-                  {activeFilters.length > 0
-                    ? t({ zh: `${activeFilters.length} 项已启用`, en: `${activeFilters.length} active` })
-                    : t({ zh: '当前未启用条件', en: 'No active filters' })}
-                </WorkbenchToolbarBadge>
+                <WorkbenchSidebarFilterStatus activeCount={activeFilters.length} />
                 {activeFilters.length > 0 ? (
                   <button
                     type="button"

@@ -5,6 +5,7 @@ interface WorkbenchToolbarActionButtonProps {
   onClick: () => void | Promise<void>
   isActive?: boolean
   ariaPressed?: boolean
+  variant?: 'default' | 'prominent'
   className?: string
 }
 
@@ -17,6 +18,7 @@ export function WorkbenchToolbarActionButton({
   onClick,
   isActive = false,
   ariaPressed,
+  variant = 'default',
   className,
 }: WorkbenchToolbarActionButtonProps) {
   return (
@@ -24,6 +26,7 @@ export function WorkbenchToolbarActionButton({
       type="button"
       className={joinClasses(
         'workbench-page__toolbar-action',
+        variant === 'prominent' && 'workbench-page__toolbar-action--prominent',
         'action-button',
         'action-button--ghost',
         'action-button--compact',
