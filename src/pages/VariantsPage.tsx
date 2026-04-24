@@ -1,11 +1,15 @@
 import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
 import {
-  WorkbenchSidebarFilterStatus,
   WorkbenchSidebarHeader,
   WorkbenchSidebarLoading,
   WorkbenchToolbarCopy,
   WorkbenchToolbarFilterStatus,
 } from '../components/workbench/WorkbenchScaffold'
+import {
+  WorkbenchSidebarFilterActions,
+  createWorkbenchResultVisibilityItem,
+  createWorkbenchShareItem,
+} from '../components/workbench/WorkbenchFilterActions'
 import {
   WorkbenchToolbarItems,
   type WorkbenchToolbarItemConfig,
@@ -21,30 +25,20 @@ import { useVariantsPageModel } from './variants/useVariantsPageModel'
 export function VariantsPage() {
   const model = useVariantsPageModel()
   const { state, t, activeFilters, clearAllFilters, showResultsQuickNavTop, scrollResultsToTop } = model
-  const resultVisibilityLabel = model.canToggleResultVisibility
-    ? model.filters.showAllResults
-      ? t({ zh: `收起到默认 ${MAX_VISIBLE_VARIANTS}`, en: `Collapse to default ${MAX_VISIBLE_VARIANTS}` })
-      : t({
-          zh: `显示全部 ${model.filteredVariants.length}（默认 ${MAX_VISIBLE_VARIANTS}）`,
-          en: `Show all ${model.filteredVariants.length} (default ${MAX_VISIBLE_VARIANTS})`,
-        })
-    : null
   const toolbarItems: WorkbenchToolbarItemConfig[] = [
-    {
-      id: 'toggle-visibility',
-      label: resultVisibilityLabel ?? '',
+    createWorkbenchResultVisibilityItem({
+      t,
+      defaultVisibleCount: MAX_VISIBLE_VARIANTS,
+      filteredCount: model.filteredVariants.length,
+      showAllResults: model.filters.showAllResults,
+      canToggle: model.canToggleResultVisibility,
+      isReady: state.status === 'ready',
       onClick: model.toggleResultVisibility,
-      isActive: model.filters.showAllResults,
-      ariaPressed: model.filters.showAllResults,
-      variant: 'prominent',
-      hidden: state.status !== 'ready' || resultVisibilityLabel == null,
-    },
-    {
-      id: 'share-link',
-      kind: 'share',
+    }),
+    createWorkbenchShareItem({
       state: model.shareLinkState,
       onCopy: model.copyCurrentLink,
-    },
+    }),
   ]
 
   return (
@@ -74,18 +68,11 @@ export function VariantsPage() {
             })}
             statusLabel={t({ zh: '变体筛选状态操作', en: 'Variant filter status actions' })}
             status={(
-              <>
-                <WorkbenchSidebarFilterStatus activeCount={activeFilters.length} />
-                {activeFilters.length > 0 ? (
-                  <button
-                    type="button"
-                    className="action-button action-button--secondary action-button--compact"
-                    onClick={clearAllFilters}
-                  >
-                    {t({ zh: '清空全部', en: 'Clear all' })}
-                  </button>
-                ) : null}
-              </>
+              <WorkbenchSidebarFilterActions
+                activeCount={activeFilters.length}
+                clearLabel={t({ zh: '清空全部', en: 'Clear all' })}
+                {...(activeFilters.length > 0 ? { onClear: clearAllFilters } : {})}
+              />
             )}
           />
         )}

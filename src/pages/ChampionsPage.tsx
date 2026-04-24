@@ -1,11 +1,16 @@
 import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
 import {
-  WorkbenchSidebarFilterStatus,
   WorkbenchSidebarHeader,
   WorkbenchSidebarLoading,
   WorkbenchToolbarCopy,
   WorkbenchToolbarFilterStatus,
 } from '../components/workbench/WorkbenchScaffold'
+import {
+  WorkbenchSidebarFilterActions,
+  createWorkbenchResultVisibilityItem,
+  createWorkbenchShareItem,
+  createWorkbenchShuffleItem,
+} from '../components/workbench/WorkbenchFilterActions'
 import {
   WorkbenchToolbarItems,
   type WorkbenchToolbarItemConfig,
@@ -35,40 +40,27 @@ export function ChampionsPage() {
     randomizeResultOrder,
   } = model
   const activeFilterCount = activeFilterChips.length
-  const resultVisibilityLabel = canToggleResultVisibility
-    ? showAllResults
-      ? t({ zh: `收起到默认 ${MAX_VISIBLE_RESULTS}`, en: `Collapse to default ${MAX_VISIBLE_RESULTS}` })
-      : t({
-          zh: `显示全部 ${filteredChampions.length}（默认 ${MAX_VISIBLE_RESULTS}）`,
-          en: `Show all ${filteredChampions.length} (default ${MAX_VISIBLE_RESULTS})`,
-        })
-    : null
-  const randomOrderLabel = hasRandomOrder
-    ? t({ zh: '重新随机', en: 'Reshuffle' })
-    : t({ zh: '随机排序', en: 'Shuffle order' })
   const toolbarItems: WorkbenchToolbarItemConfig[] = [
-    {
-      id: 'toggle-visibility',
-      label: resultVisibilityLabel ?? '',
+    createWorkbenchResultVisibilityItem({
+      t,
+      defaultVisibleCount: MAX_VISIBLE_RESULTS,
+      filteredCount: filteredChampions.length,
+      showAllResults,
+      canToggle: canToggleResultVisibility,
+      isReady: state.status === 'ready',
       onClick: toggleResultVisibility,
-      isActive: showAllResults,
-      ariaPressed: showAllResults,
-      variant: 'prominent',
-      hidden: state.status !== 'ready' || resultVisibilityLabel == null,
-    },
-    {
-      id: 'shuffle-results',
-      label: randomOrderLabel,
+    }),
+    createWorkbenchShuffleItem({
+      t,
+      resultCount: filteredChampions.length,
+      hasRandomOrder,
+      isReady: state.status === 'ready',
       onClick: randomizeResultOrder,
-      isActive: hasRandomOrder,
-      hidden: state.status !== 'ready' || filteredChampions.length <= 1,
-    },
-    {
-      id: 'share-link',
-      kind: 'share',
+    }),
+    createWorkbenchShareItem({
       state: model.shareLinkState,
       onCopy: model.copyCurrentLink,
-    },
+    }),
   ]
 
   return (
@@ -107,18 +99,11 @@ export function ChampionsPage() {
             })}
             statusLabel={t({ zh: '筛选状态操作', en: 'Filter status actions' })}
             status={(
-              <>
-                <WorkbenchSidebarFilterStatus activeCount={activeFilterCount} />
-                {hasActiveFilters ? (
-                  <button
-                    type="button"
-                    className="action-button action-button--secondary action-button--compact"
-                    onClick={clearAllFilters}
-                  >
-                    {t({ zh: '清空全部', en: 'Clear all' })}
-                  </button>
-                ) : null}
-              </>
+              <WorkbenchSidebarFilterActions
+                activeCount={activeFilterCount}
+                clearLabel={t({ zh: '清空全部', en: 'Clear all' })}
+                {...(hasActiveFilters ? { onClear: clearAllFilters } : {})}
+              />
             )}
           />
         )}

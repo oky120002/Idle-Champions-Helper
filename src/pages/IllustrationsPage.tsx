@@ -1,11 +1,16 @@
 import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
 import {
-  WorkbenchSidebarFilterStatus,
   WorkbenchSidebarHeader,
   WorkbenchSidebarLoading,
   WorkbenchToolbarCopy,
   WorkbenchToolbarFilterStatus,
 } from '../components/workbench/WorkbenchScaffold'
+import {
+  WorkbenchSidebarFilterActions,
+  createWorkbenchResultVisibilityItem,
+  createWorkbenchShareItem,
+  createWorkbenchShuffleItem,
+} from '../components/workbench/WorkbenchFilterActions'
 import {
   WorkbenchToolbarItems,
   type WorkbenchToolbarItemConfig,
@@ -22,40 +27,27 @@ import { useIllustrationsPageModel } from './illustrations/useIllustrationsPageM
 export function IllustrationsPage() {
   const model = useIllustrationsPageModel()
   const { state, t, activeFilterChips, hasActiveFilters, ui, actions } = model
-  const resultVisibilityLabel = model.results.canToggleResultVisibility
-    ? model.filters.showAllResults
-      ? t({ zh: `收起到默认 ${MAX_VISIBLE_ILLUSTRATIONS}`, en: `Collapse to default ${MAX_VISIBLE_ILLUSTRATIONS}` })
-      : t({
-          zh: `显示全部 ${model.results.filteredIllustrationEntries.length}（默认 ${MAX_VISIBLE_ILLUSTRATIONS}）`,
-          en: `Show all ${model.results.filteredIllustrationEntries.length} (default ${MAX_VISIBLE_ILLUSTRATIONS})`,
-        })
-    : null
-  const randomOrderLabel = ui.hasRandomOrder
-    ? t({ zh: '重新随机', en: 'Reshuffle' })
-    : t({ zh: '随机排序', en: 'Shuffle order' })
   const toolbarItems: WorkbenchToolbarItemConfig[] = [
-    {
-      id: 'toggle-visibility',
-      label: resultVisibilityLabel ?? '',
+    createWorkbenchResultVisibilityItem({
+      t,
+      defaultVisibleCount: MAX_VISIBLE_ILLUSTRATIONS,
+      filteredCount: model.results.filteredIllustrationEntries.length,
+      showAllResults: model.filters.showAllResults,
+      canToggle: model.results.canToggleResultVisibility,
+      isReady: state.status === 'ready',
       onClick: actions.toggleResultVisibility,
-      isActive: model.filters.showAllResults,
-      ariaPressed: model.filters.showAllResults,
-      variant: 'prominent',
-      hidden: state.status !== 'ready' || resultVisibilityLabel == null,
-    },
-    {
-      id: 'shuffle-results',
-      label: randomOrderLabel,
+    }),
+    createWorkbenchShuffleItem({
+      t,
+      resultCount: model.results.filteredIllustrationEntries.length,
+      hasRandomOrder: ui.hasRandomOrder,
+      isReady: state.status === 'ready',
       onClick: actions.randomizeResultOrder,
-      isActive: ui.hasRandomOrder,
-      hidden: state.status !== 'ready' || model.results.filteredIllustrationEntries.length <= 1,
-    },
-    {
-      id: 'share-link',
-      kind: 'share',
+    }),
+    createWorkbenchShareItem({
       state: ui.shareLinkState,
       onCopy: actions.copyCurrentLink,
-    },
+    }),
   ]
 
   return (
@@ -87,18 +79,11 @@ export function IllustrationsPage() {
             })}
             statusLabel={t({ zh: '立绘筛选状态操作', en: 'Illustration filter status actions' })}
             status={(
-              <>
-                <WorkbenchSidebarFilterStatus activeCount={activeFilterChips.length} />
-                {hasActiveFilters ? (
-                  <button
-                    type="button"
-                    className="action-button action-button--secondary action-button--compact"
-                    onClick={actions.clearAllFilters}
-                  >
-                    {t({ zh: '清空全部', en: 'Clear all' })}
-                  </button>
-                ) : null}
-              </>
+              <WorkbenchSidebarFilterActions
+                activeCount={activeFilterChips.length}
+                clearLabel={t({ zh: '清空全部', en: 'Clear all' })}
+                {...(hasActiveFilters ? { onClear: actions.clearAllFilters } : {})}
+              />
             )}
           />
         )}
