@@ -11,6 +11,10 @@ import {
   WorkbenchToolbarItems,
   type WorkbenchToolbarItemConfig,
 } from '../components/workbench/WorkbenchToolbarItems'
+import {
+  createWorkbenchBadgeItem,
+  createWorkbenchShareItem,
+} from '../components/workbench/WorkbenchToolbarItemBuilders'
 import { useWorkbenchScrollNavigation } from '../components/workbench/useWorkbenchScrollNavigation'
 import { useWorkbenchShareLink } from '../components/workbench/useWorkbenchShareLink'
 import { SurfaceCard } from '../components/SurfaceCard'
@@ -24,27 +28,23 @@ export function UserDataPage() {
   const { showScrollTop, scrollToTop } = useWorkbenchScrollNavigation({ scrollRef: contentScrollRef })
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
   const toolbarItems: WorkbenchToolbarItemConfig[] = [
-    {
+    createWorkbenchBadgeItem({
       id: 'selected-method',
-      kind: 'badge',
       label: model.selectedMethod.label,
-    },
-    {
+    }),
+    createWorkbenchBadgeItem({
       id: 'parse-status',
-      kind: 'badge',
       tone: 'muted',
       label: model.parseState.status === 'success'
         ? model.t({ zh: '解析成功', en: 'Parsed' })
         : model.parseState.status === 'error'
           ? model.t({ zh: '需要修正', en: 'Needs fixes' })
           : model.t({ zh: '等待输入', en: 'Waiting for input' }),
-    },
-    {
-      id: 'share-link',
-      kind: 'share',
+    }),
+    createWorkbenchShareItem({
       state: shareLinkState,
       onCopy: copyCurrentLink,
-    },
+    }),
   ]
 
   return (
