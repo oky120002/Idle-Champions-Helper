@@ -23,7 +23,7 @@ export function VariantsFilterChipGroup({ options }: VariantsFilterChipGroupProp
           onClick={option.onSelect}
         >
           {option.label}
-          {option.count !== undefined ? <span className="variants-filter__count">{option.count}</span> : null}
+          {option.count !== undefined ? <span className="filter-chip__count">{option.count}</span> : null}
         </button>
       ))}
     </div>
