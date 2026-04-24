@@ -4,6 +4,7 @@ import { FieldGroup } from '../FieldGroup'
 interface FilterChipSingleSelectOption<T extends string> {
   value: T
   label: ReactNode
+  count?: number
 }
 
 interface FilterChipSingleSelectFieldProps<T extends string> {
@@ -37,6 +38,7 @@ export function FilterChipSingleSelectField<T extends string>({
             onClick={() => onChange(option.value)}
           >
             {option.label}
+            {option.count !== undefined ? <span className="filter-chip__count">{option.count}</span> : null}
           </button>
         ))}
       </div>

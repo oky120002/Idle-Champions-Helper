@@ -4,6 +4,7 @@ import { FieldGroup } from '../FieldGroup'
 interface FilterChipOption<T extends string | number> {
   id: T
   label: ReactNode
+  count?: number
 }
 
 interface FilterChipMultiSelectFieldProps<T extends string | number> {
@@ -47,6 +48,7 @@ export function FilterChipMultiSelectField<T extends string | number>({
             onClick={() => onToggle(option.id)}
           >
             {option.label}
+            {option.count !== undefined ? <span className="filter-chip__count">{option.count}</span> : null}
           </button>
         ))}
       </div>

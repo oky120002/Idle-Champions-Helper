@@ -3,6 +3,7 @@ import { FilterDisclosureSection } from '../FilterDisclosureSection'
 import { FilterChipMultiSelectField } from './FilterChipMultiSelectField'
 import { FilterChipSingleSelectField } from './FilterChipSingleSelectField'
 import { FilterSearchField } from './FilterSearchField'
+import { FilterSingleSelectField } from './FilterSingleSelectField'
 import { FilterSegmentedField } from './FilterSegmentedField'
 
 type FilterSidebarFieldValue = string | number
@@ -33,13 +34,23 @@ interface FilterSidebarSegmentedFieldSchema extends FilterSidebarBaseFieldSchema
   className?: string
 }
 
+interface FilterSidebarSelectFieldSchema extends FilterSidebarBaseFieldSchema {
+  kind: 'select'
+  label: ReactNode
+  value: string
+  onChange: (value: string) => void
+  options: Array<{ value: string; label: ReactNode }>
+  hint?: ReactNode
+  className?: string
+}
+
 interface FilterSidebarChipSingleFieldSchema extends FilterSidebarBaseFieldSchema {
   kind: 'chip-single'
   label: ReactNode
   value: string
   onChange: (value: string) => void
   groupLabel: string
-  options: Array<{ value: string; label: ReactNode }>
+  options: Array<{ value: string; label: ReactNode; count?: number }>
   hint?: ReactNode
   className?: string
 }
@@ -47,7 +58,7 @@ interface FilterSidebarChipSingleFieldSchema extends FilterSidebarBaseFieldSchem
 interface FilterSidebarChipMultiFieldSchema extends FilterSidebarBaseFieldSchema {
   kind: 'chip-multi'
   label: ReactNode
-  options: Array<{ id: FilterSidebarFieldValue; label: ReactNode }>
+  options: Array<{ id: FilterSidebarFieldValue; label: ReactNode; count?: number }>
   selectedValues: FilterSidebarFieldValue[]
   onReset: () => void
   onToggle: (value: FilterSidebarFieldValue) => void
@@ -64,6 +75,7 @@ interface FilterSidebarCustomFieldSchema extends FilterSidebarBaseFieldSchema {
 export type FilterSidebarFieldSchema =
   | FilterSidebarSearchFieldSchema
   | FilterSidebarSegmentedFieldSchema
+  | FilterSidebarSelectFieldSchema
   | FilterSidebarChipSingleFieldSchema
   | FilterSidebarChipMultiFieldSchema
   | FilterSidebarCustomFieldSchema
@@ -124,6 +136,18 @@ function renderField(field: FilterSidebarFieldSchema) {
           options={field.options}
           onChange={field.onChange}
           groupLabel={field.groupLabel}
+          {...(field.hint !== undefined ? { hint: field.hint } : {})}
+          {...(field.className !== undefined ? { className: field.className } : {})}
+        />
+      )
+    case 'select':
+      return (
+        <FilterSingleSelectField
+          key={field.id}
+          label={field.label}
+          value={field.value}
+          options={field.options}
+          onChange={field.onChange}
           {...(field.hint !== undefined ? { hint: field.hint } : {})}
           {...(field.className !== undefined ? { className: field.className } : {})}
         />
