@@ -8,8 +8,8 @@
    - 全站唯一页面工作台壳层；负责合并工具条、左抽屉开合、无左栏隐藏模式和桌面双栏内滚。
 2. `src/components/workbench/WorkbenchScaffold.tsx`
    - 工作台内部稳定的展示骨架；统一 `toolbar mark / toolbar filter status / toolbar copy / toolbar badge / share button / sidebar header / content stack / filter results header`。
-3. `src/components/workbench/WorkbenchToolbarActions.tsx`
-   - 配置驱动的右侧动作组件；页面只传按钮定义、状态和回调，不再手写动作区结构。
+3. `src/components/workbench/WorkbenchToolbarItems.tsx`
+   - 配置驱动的右侧 toolbar items 组件；页面只传 badge / button / share 配置和回调，不再手写右侧区结构。
 4. `src/components/workbench/useWorkbenchResultsMotion.ts`
    - 处理筛选页右侧面板滚动恢复、筛选回顶和悬浮返回顶部显隐。
 5. `src/components/workbench/useWorkbenchScrollNavigation.ts`

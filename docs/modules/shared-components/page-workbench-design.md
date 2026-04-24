@@ -38,6 +38,7 @@
   - `toolbarActions`：复制当前链接、显示全部 / 收起、随机排序等稳定动作；不再重复放筛选命中 badge，多个动作默认收进一组更紧凑的 action cluster，而不是平铺成 badge 风格大药丸。
 - 结果区内部优先只保留 compact metrics、筛选摘要和必要状态；高频结果动作（如随机排序、显示全部 / 收起）默认上提到 `toolbarActions`，不要留在结果头内部。
 - 这三段的稳定展示骨架统一由 `src/components/workbench/WorkbenchScaffold.tsx` 承接；页面只负责传业务文案、统计值和动作回调。
+- 右侧 `toolbarActions` 里的 badge / button / share 默认优先走配置驱动的 `src/components/workbench/WorkbenchToolbarItems.tsx`，避免页面重复手写结构。
 - 有左栏时：
   - `toolbarLead` 留在左 pane 顶部；
   - `toolbarPrimary + toolbarActions` 留在右 pane 顶部；

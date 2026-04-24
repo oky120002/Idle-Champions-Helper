@@ -7,9 +7,9 @@ import {
   WorkbenchToolbarFilterStatus,
 } from '../components/workbench/WorkbenchScaffold'
 import {
-  WorkbenchToolbarActions,
-  type WorkbenchToolbarActionConfig,
-} from '../components/workbench/WorkbenchToolbarActions'
+  WorkbenchToolbarItems,
+  type WorkbenchToolbarItemConfig,
+} from '../components/workbench/WorkbenchToolbarItems'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { StatusBanner } from '../components/StatusBanner'
 import { IllustrationsAdditionalFilters } from './illustrations/IllustrationsAdditionalFilters'
@@ -33,7 +33,7 @@ export function IllustrationsPage() {
   const randomOrderLabel = ui.hasRandomOrder
     ? t({ zh: '重新随机', en: 'Reshuffle' })
     : t({ zh: '随机排序', en: 'Shuffle order' })
-  const toolbarActions: WorkbenchToolbarActionConfig[] = [
+  const toolbarItems: WorkbenchToolbarItemConfig[] = [
     {
       id: 'toggle-visibility',
       label: resultVisibilityLabel ?? '',
@@ -76,7 +76,7 @@ export function IllustrationsPage() {
             detail={t({ zh: '立绘筛选与动态资源对照', en: 'Filter artwork and compare motion resources' })}
           />
         )}
-        toolbarActions={<WorkbenchToolbarActions actions={toolbarActions} />}
+        toolbarActions={<WorkbenchToolbarItems items={toolbarItems} layout="cluster" />}
         sidebarHeader={(
           <WorkbenchSidebarHeader
             kicker={t({ zh: '筛选抽屉', en: 'Filter drawer' })}

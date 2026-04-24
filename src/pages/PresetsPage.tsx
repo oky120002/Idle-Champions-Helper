@@ -3,12 +3,14 @@ import { useLocation } from 'react-router-dom'
 import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
 import {
   WorkbenchContentStack,
-  WorkbenchShareButton,
-  WorkbenchToolbarBadge,
   WorkbenchToolbarCopy,
   WorkbenchToolbarMark,
 } from '../components/workbench/WorkbenchScaffold'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
+import {
+  WorkbenchToolbarItems,
+  type WorkbenchToolbarItemConfig,
+} from '../components/workbench/WorkbenchToolbarItems'
 import { useWorkbenchScrollNavigation } from '../components/workbench/useWorkbenchScrollNavigation'
 import { useWorkbenchShareLink } from '../components/workbench/useWorkbenchShareLink'
 import { StatusBanner } from '../components/StatusBanner'
@@ -23,6 +25,25 @@ export function PresetsPage() {
   const { showScrollTop, scrollToTop } = useWorkbenchScrollNavigation({ scrollRef: contentScrollRef })
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
   const { state, t, pageStatus, metrics } = model
+  const toolbarItems: WorkbenchToolbarItemConfig[] = [
+    {
+      id: 'preset-total',
+      kind: 'badge',
+      label: t({ zh: `${metrics.total} 条命名方案`, en: `${metrics.total} presets` }),
+    },
+    {
+      id: 'preset-recoverable',
+      kind: 'badge',
+      tone: 'muted',
+      label: t({ zh: `${metrics.recoverable} 条可恢复`, en: `${metrics.recoverable} recoverable` }),
+    },
+    {
+      id: 'share-link',
+      kind: 'share',
+      state: shareLinkState,
+      onCopy: copyCurrentLink,
+    },
+  ]
 
   return (
     <div className="presets-page workbench-page">
@@ -47,15 +68,7 @@ export function PresetsPage() {
             detail={t({ zh: '统一查看、恢复和整理本地命名阵型方案', en: 'Review, restore, and curate named local formation presets' })}
           />
         )}
-        toolbarActions={(
-          <>
-            <WorkbenchToolbarBadge>{t({ zh: `${metrics.total} 条命名方案`, en: `${metrics.total} presets` })}</WorkbenchToolbarBadge>
-            <WorkbenchToolbarBadge tone="muted">
-              {t({ zh: `${metrics.recoverable} 条可恢复`, en: `${metrics.recoverable} recoverable` })}
-            </WorkbenchToolbarBadge>
-            <WorkbenchShareButton state={shareLinkState} onCopy={copyCurrentLink} />
-          </>
-        )}
+        toolbarActions={<WorkbenchToolbarItems items={toolbarItems} />}
         contentHeader={pageStatus ? <StatusBanner tone={pageStatus.tone} title={pageStatus.title} detail={pageStatus.detail} /> : null}
       >
         {state.status === 'loading' ? (

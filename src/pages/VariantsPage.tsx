@@ -7,9 +7,9 @@ import {
   WorkbenchToolbarFilterStatus,
 } from '../components/workbench/WorkbenchScaffold'
 import {
-  WorkbenchToolbarActions,
-  type WorkbenchToolbarActionConfig,
-} from '../components/workbench/WorkbenchToolbarActions'
+  WorkbenchToolbarItems,
+  type WorkbenchToolbarItemConfig,
+} from '../components/workbench/WorkbenchToolbarItems'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { StatusBanner } from '../components/StatusBanner'
 import { MAX_VISIBLE_VARIANTS } from './variants/constants'
@@ -29,7 +29,7 @@ export function VariantsPage() {
           en: `Show all ${model.filteredVariants.length} (default ${MAX_VISIBLE_VARIANTS})`,
         })
     : null
-  const toolbarActions: WorkbenchToolbarActionConfig[] = [
+  const toolbarItems: WorkbenchToolbarItemConfig[] = [
     {
       id: 'toggle-visibility',
       label: resultVisibilityLabel ?? '',
@@ -63,7 +63,7 @@ export function VariantsPage() {
             detail={t({ zh: '战役压力、敌人与阵型阅读台', en: 'Campaign pressure, enemy, and formation reading desk' })}
           />
         )}
-        toolbarActions={<WorkbenchToolbarActions actions={toolbarActions} />}
+        toolbarActions={<WorkbenchToolbarItems items={toolbarItems} layout="cluster" />}
         sidebarHeader={(
           <WorkbenchSidebarHeader
             kicker={t({ zh: '筛选抽屉', en: 'Filter drawer' })}

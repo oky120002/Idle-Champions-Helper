@@ -156,6 +156,18 @@
   color: var(--workbench-chip-text-muted);
 }
 
+.workbench-page__toolbar-items {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.workbench-page__toolbar-items > * {
+  min-width: 0;
+}
+
 .workbench-page__toolbar-action-cluster {
   display: inline-flex;
   align-items: center;
