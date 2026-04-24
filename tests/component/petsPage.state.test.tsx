@@ -175,6 +175,21 @@ describe('PetsPage state', () => {
     vi.restoreAllMocks()
   })
 
+  it('把筛选状态收进左侧工具栏，并移除右侧重复的命中徽标', async () => {
+    const user = userEvent.setup()
+
+    renderPetsPage()
+
+    expect(await screen.findByLabelText('宠物筛选结果')).toBeInTheDocument()
+    expect(screen.getByText('条件待命', { selector: '.workbench-page__toolbar-lead-status' })).toBeInTheDocument()
+    expect(screen.queryByText('3 命中')).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: '付费购买' }))
+
+    expect(screen.getByText('1 项条件', { selector: '.workbench-page__toolbar-lead-status' })).toBeInTheDocument()
+    expect(screen.queryByText('1 命中')).not.toBeInTheDocument()
+  })
+
   it('会把筛选状态同步进 URL，并在路由变化后回灌 UI', async () => {
     const user = userEvent.setup()
     const { router } = renderPetsPage()

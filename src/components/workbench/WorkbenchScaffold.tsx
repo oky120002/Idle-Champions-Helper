@@ -4,7 +4,7 @@ import { useI18n } from '../../app/i18n'
 type WorkbenchAccentTone = 'copper' | 'steel'
 type WorkbenchBadgeVariant = 'chrome' | 'filter'
 type WorkbenchBadgeTone = 'default' | 'muted'
-type WorkbenchShareState = 'idle' | 'success' | 'error'
+export type WorkbenchShareState = 'idle' | 'success' | 'error'
 
 interface WorkbenchToolbarMarkProps {
   label: string
@@ -12,10 +12,35 @@ interface WorkbenchToolbarMarkProps {
   className?: string
 }
 
+interface WorkbenchToolbarLeadStatusProps {
+  label: string
+  status: ReactNode
+  statusTitle?: string
+  accentTone?: WorkbenchAccentTone
+  className?: string
+}
+
+interface WorkbenchToolbarFilterStatusProps {
+  label: string
+  activeCount: number
+  accentTone?: WorkbenchAccentTone
+  className?: string
+}
+
+interface WorkbenchSidebarFilterStatusProps {
+  activeCount: number
+  className?: string
+}
+
 interface WorkbenchToolbarCopyProps {
   kicker: ReactNode
   title: ReactNode
   detail?: ReactNode
+  className?: string
+}
+
+interface WorkbenchToolbarActionClusterProps {
+  children: ReactNode
   className?: string
 }
 
@@ -81,6 +106,56 @@ export function WorkbenchToolbarMark({
   )
 }
 
+export function WorkbenchToolbarLeadStatus({
+  label,
+  status,
+  statusTitle,
+  accentTone = 'copper',
+  className,
+}: WorkbenchToolbarLeadStatusProps) {
+  return (
+    <div className={joinClasses('workbench-page__toolbar-lead-status-group', className)}>
+      <WorkbenchToolbarMark
+        label={label}
+        accentTone={accentTone}
+        className="workbench-page__toolbar-lead-status-mark"
+      />
+      <span
+        className="workbench-page__toolbar-lead-status"
+        aria-live="polite"
+        title={statusTitle}
+      >
+        {status}
+      </span>
+    </div>
+  )
+}
+
+export function WorkbenchToolbarFilterStatus({
+  label,
+  activeCount,
+  accentTone = 'copper',
+  className,
+}: WorkbenchToolbarFilterStatusProps) {
+  const { t } = useI18n()
+  const status = activeCount > 0
+    ? t({ zh: `${activeCount} 项条件`, en: `${activeCount} active` })
+    : t({ zh: '条件待命', en: 'Filters idle' })
+  const statusTitle = activeCount > 0
+    ? t({ zh: `${activeCount} 项筛选条件已启用`, en: `${activeCount} active filters enabled` })
+    : status
+
+  return (
+    <WorkbenchToolbarLeadStatus
+      label={label}
+      status={status}
+      statusTitle={statusTitle}
+      accentTone={accentTone}
+      {...(className !== undefined ? { className } : {})}
+    />
+  )
+}
+
 export function WorkbenchToolbarCopy({
   kicker,
   title,
@@ -94,6 +169,13 @@ export function WorkbenchToolbarCopy({
       {detail != null ? <span className="workbench-page__toolbar-detail">{detail}</span> : null}
     </div>
   )
+}
+
+export function WorkbenchToolbarActionCluster({
+  children,
+  className,
+}: WorkbenchToolbarActionClusterProps) {
+  return <div className={joinClasses('workbench-page__toolbar-action-cluster', className)}>{children}</div>
 }
 
 export function WorkbenchToolbarBadge({
@@ -116,6 +198,21 @@ export function WorkbenchToolbarBadge({
   )
 }
 
+export function WorkbenchSidebarFilterStatus({
+  activeCount,
+  className,
+}: WorkbenchSidebarFilterStatusProps) {
+  const { t } = useI18n()
+
+  return (
+    <WorkbenchToolbarBadge variant="filter" {...(className !== undefined ? { className } : {})}>
+      {activeCount > 0
+        ? t({ zh: `${activeCount} 项已启用`, en: `${activeCount} active` })
+        : t({ zh: '当前未启用条件', en: 'No active filters' })}
+    </WorkbenchToolbarBadge>
+  )
+}
+
 export function WorkbenchShareButton({
   state,
   onCopy,
@@ -134,10 +231,10 @@ export function WorkbenchShareButton({
       type="button"
       className={joinClasses(
         state === 'success'
-          ? 'workbench-page__toolbar-action workbench-page__toolbar-action--success action-button action-button--ghost action-button--compact action-button--toggled'
+          ? 'workbench-page__toolbar-action workbench-page__toolbar-action--share workbench-page__toolbar-action--success action-button action-button--ghost action-button--compact action-button--toggled'
           : state === 'error'
-            ? 'workbench-page__toolbar-action workbench-page__toolbar-action--error action-button action-button--ghost action-button--compact'
-            : 'workbench-page__toolbar-action action-button action-button--ghost action-button--compact',
+            ? 'workbench-page__toolbar-action workbench-page__toolbar-action--share workbench-page__toolbar-action--error action-button action-button--ghost action-button--compact'
+            : 'workbench-page__toolbar-action workbench-page__toolbar-action--share action-button action-button--ghost action-button--compact',
         className,
       )}
       onClick={() => {

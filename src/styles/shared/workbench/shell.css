@@ -306,10 +306,12 @@
   align-items: center;
   justify-content: flex-end;
   gap: 0.42rem;
+  min-width: 0;
 }
 
 .page-workbench__chrome-actions > * {
-  flex: 0 0 auto;
+  flex: 0 1 auto;
+  min-width: 0;
 }
 
 .page-workbench__chrome-lead {
@@ -556,6 +558,11 @@
 
   .site-main--workbench .page-workbench {
     height: calc(100dvh - var(--site-workbench-top-clearance, 7.8rem));
+  }
+
+  .page-workbench__chrome-actions {
+    flex-wrap: nowrap;
+    overflow: hidden;
   }
 }
 

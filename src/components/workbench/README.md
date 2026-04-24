@@ -7,20 +7,22 @@
 1. `src/components/workbench/PageWorkbenchShell.tsx`
    - 全站唯一页面工作台壳层；负责合并工具条、左抽屉开合、无左栏隐藏模式和桌面双栏内滚。
 2. `src/components/workbench/WorkbenchScaffold.tsx`
-   - 工作台内部稳定的展示骨架；统一 `toolbar mark / toolbar copy / toolbar badge / share button / sidebar header / content stack / filter results header`。
-3. `src/components/workbench/useWorkbenchResultsMotion.ts`
+   - 工作台内部稳定的展示骨架；统一 `toolbar mark / toolbar filter status / toolbar copy / toolbar badge / share button / sidebar header / content stack / filter results header`。
+3. `src/components/workbench/WorkbenchToolbarActions.tsx`
+   - 配置驱动的右侧动作组件；页面只传按钮定义、状态和回调，不再手写动作区结构。
+4. `src/components/workbench/useWorkbenchResultsMotion.ts`
    - 处理筛选页右侧面板滚动恢复、筛选回顶和悬浮返回顶部显隐。
-4. `src/components/workbench/useWorkbenchScrollNavigation.ts`
+5. `src/components/workbench/useWorkbenchScrollNavigation.ts`
    - 处理非筛选页右侧面板的悬浮返回顶部显隐。
-5. `src/components/workbench/useWorkbenchShareLink.ts`
+6. `src/components/workbench/useWorkbenchShareLink.ts`
    - 统一复制当前链接状态机与 HashRouter 分享地址拼装。
-6. `src/components/workbench/useWorkbenchSidebarCollapse.ts`
+7. `src/components/workbench/useWorkbenchSidebarCollapse.ts`
    - 统一左抽屉开合持久化；页面只传稳定 `storageKey`。
-7. `src/components/workbench/WorkbenchFloatingTopButton.tsx`
+8. `src/components/workbench/WorkbenchFloatingTopButton.tsx`
    - 统一右下角悬浮返回顶部按钮。
-8. `src/styles/shared/workbench/scaffold.css`
+9. `src/styles/shared/workbench/scaffold.css`
    - 工作台稳定骨架的共享样式；收纳 toolbar、sidebar header 和 filter content header 的视觉基线。
-9. `src/styles/shared/workbench/shell.css`
+10. `src/styles/shared/workbench/shell.css`
    - 工作台外壳、抽屉动画、无左栏模式、悬浮按钮和内滚容器。
 
 ## 关键不变量

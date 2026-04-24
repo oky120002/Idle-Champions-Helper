@@ -28,6 +28,21 @@ describe('ChampionsPage filters', () => {
     vi.restoreAllMocks()
   })
 
+  it('把筛选状态收进左侧工具栏，并移除右侧重复的命中徽标', async () => {
+    const user = userEvent.setup()
+
+    renderChampionsPage()
+
+    expect(await screen.findByText('阿尔法')).toBeInTheDocument()
+    expect(screen.getByText('条件待命', { selector: '.workbench-page__toolbar-lead-status' })).toBeInTheDocument()
+    expect(screen.queryByText('4 命中')).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: '1 号位' }))
+
+    expect(screen.getByText('1 项条件', { selector: '.workbench-page__toolbar-lead-status' })).toBeInTheDocument()
+    expect(screen.queryByText('1 命中')).not.toBeInTheDocument()
+  })
+
   it('支持座位多选，并且再次点击已选项会取消选择', async () => {
     const user = userEvent.setup()
 

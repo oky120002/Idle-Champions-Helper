@@ -1,13 +1,15 @@
 import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
 import {
-  WorkbenchShareButton,
+  WorkbenchSidebarFilterStatus,
   WorkbenchSidebarHeader,
   WorkbenchSidebarLoading,
-  WorkbenchToolbarBadge,
   WorkbenchToolbarCopy,
-  WorkbenchToolbarMark,
+  WorkbenchToolbarFilterStatus,
 } from '../components/workbench/WorkbenchScaffold'
-import { WorkbenchToolbarActionButton } from '../components/workbench/WorkbenchToolbarActionButton'
+import {
+  WorkbenchToolbarActions,
+  type WorkbenchToolbarActionConfig,
+} from '../components/workbench/WorkbenchToolbarActions'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { StatusBanner } from '../components/StatusBanner'
 import { ChampionsAdditionalFilters } from './champions/ChampionsAdditionalFilters'
@@ -44,6 +46,30 @@ export function ChampionsPage() {
   const randomOrderLabel = hasRandomOrder
     ? t({ zh: '重新随机', en: 'Reshuffle' })
     : t({ zh: '随机排序', en: 'Shuffle order' })
+  const toolbarActions: WorkbenchToolbarActionConfig[] = [
+    {
+      id: 'toggle-visibility',
+      label: resultVisibilityLabel ?? '',
+      onClick: toggleResultVisibility,
+      isActive: showAllResults,
+      ariaPressed: showAllResults,
+      variant: 'prominent',
+      hidden: state.status !== 'ready' || resultVisibilityLabel == null,
+    },
+    {
+      id: 'shuffle-results',
+      label: randomOrderLabel,
+      onClick: randomizeResultOrder,
+      isActive: hasRandomOrder,
+      hidden: state.status !== 'ready' || filteredChampions.length <= 1,
+    },
+    {
+      id: 'share-link',
+      kind: 'share',
+      state: model.shareLinkState,
+      onCopy: model.copyCurrentLink,
+    },
+  ]
 
   return (
     <div className="champions-page workbench-page">
@@ -57,7 +83,12 @@ export function ChampionsPage() {
             <WorkbenchFloatingTopButton onClick={model.scrollResultsToTop} />
           ) : null
         )}
-        toolbarLead={<WorkbenchToolbarMark label="CHAMPIONS" />}
+        toolbarLead={(
+          <WorkbenchToolbarFilterStatus
+            label="CHAMPIONS"
+            activeCount={activeFilterCount}
+          />
+        )}
         toolbarPrimary={(
           <WorkbenchToolbarCopy
             kicker={t({ zh: '悬浮工作台', en: 'Floating workbench' })}
@@ -65,35 +96,7 @@ export function ChampionsPage() {
             detail={t({ zh: '候选池收缩与资料对比', en: 'Narrow the roster and compare dossiers' })}
           />
         )}
-        toolbarActions={(
-          <>
-            <WorkbenchToolbarBadge variant="filter">
-              {activeFilterCount > 0
-                ? t({ zh: `${activeFilterCount} 项条件`, en: `${activeFilterCount} active` })
-                : t({ zh: '条件待命', en: 'Filters idle' })}
-            </WorkbenchToolbarBadge>
-            {state.status === 'ready' ? (
-              <WorkbenchToolbarBadge variant="filter" tone="muted">
-                {t({ zh: `${filteredChampions.length} 命中`, en: `${filteredChampions.length} matches` })}
-              </WorkbenchToolbarBadge>
-            ) : null}
-            {state.status === 'ready' && resultVisibilityLabel != null ? (
-              <WorkbenchToolbarActionButton
-                isActive={showAllResults}
-                ariaPressed={showAllResults}
-                onClick={toggleResultVisibility}
-              >
-                {resultVisibilityLabel}
-              </WorkbenchToolbarActionButton>
-            ) : null}
-            {state.status === 'ready' && filteredChampions.length > 1 ? (
-              <WorkbenchToolbarActionButton isActive={hasRandomOrder} onClick={randomizeResultOrder}>
-                {randomOrderLabel}
-              </WorkbenchToolbarActionButton>
-            ) : null}
-            <WorkbenchShareButton state={model.shareLinkState} onCopy={model.copyCurrentLink} />
-          </>
-        )}
+        toolbarActions={<WorkbenchToolbarActions actions={toolbarActions} />}
         sidebarHeader={(
           <WorkbenchSidebarHeader
             kicker={t({ zh: '筛选抽屉', en: 'Filter drawer' })}
@@ -105,11 +108,7 @@ export function ChampionsPage() {
             statusLabel={t({ zh: '筛选状态操作', en: 'Filter status actions' })}
             status={(
               <>
-                <WorkbenchToolbarBadge variant="filter">
-                  {activeFilterCount > 0
-                    ? t({ zh: `${activeFilterCount} 项已启用`, en: `${activeFilterCount} active` })
-                    : t({ zh: '当前未启用条件', en: 'No active filters' })}
-                </WorkbenchToolbarBadge>
+                <WorkbenchSidebarFilterStatus activeCount={activeFilterCount} />
                 {hasActiveFilters ? (
                   <button
                     type="button"
