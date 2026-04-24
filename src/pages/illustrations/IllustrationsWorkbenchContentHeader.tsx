@@ -1,5 +1,5 @@
-import { PageHeaderMetrics, type PageHeaderMetricItem } from '../../components/PageHeaderMetrics'
-import { WorkbenchFilterResultsHeader } from '../../components/workbench/WorkbenchScaffold'
+import type { PageHeaderMetricItem } from '../../components/PageHeaderMetrics'
+import { WorkbenchFilterMetricsHeader } from '../../components/workbench/WorkbenchFilterMetricsHeader'
 import { collectChampionFacetSummary } from '../../features/champion-filters/headerMetrics'
 import type { IllustrationsPageModel } from './types'
 
@@ -38,13 +38,10 @@ export function IllustrationsWorkbenchContentHeader({ model }: IllustrationsWork
   ]
 
   return (
-    <WorkbenchFilterResultsHeader
-      metrics={<PageHeaderMetrics items={metricItems} variant="compact" />}
-      filterSummary={
-        activeFilters.length > 0
-          ? `${t({ zh: '当前筛选：', en: 'Active filters: ' })}${activeFilters.join(' · ')}`
-          : ''
-      }
+    <WorkbenchFilterMetricsHeader
+      items={metricItems}
+      activeFilters={activeFilters}
+      filterSummaryPrefix={t({ zh: '当前筛选：', en: 'Active filters: ' })}
     />
   )
 }
