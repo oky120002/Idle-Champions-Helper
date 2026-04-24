@@ -11,6 +11,10 @@ import {
   WorkbenchToolbarItems,
   type WorkbenchToolbarItemConfig,
 } from '../components/workbench/WorkbenchToolbarItems'
+import {
+  createWorkbenchBadgeItem,
+  createWorkbenchShareItem,
+} from '../components/workbench/WorkbenchToolbarItemBuilders'
 import { useWorkbenchScrollNavigation } from '../components/workbench/useWorkbenchScrollNavigation'
 import { useWorkbenchShareLink } from '../components/workbench/useWorkbenchShareLink'
 import { StatusBanner } from '../components/StatusBanner'
@@ -26,23 +30,19 @@ export function PresetsPage() {
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
   const { state, t, pageStatus, metrics } = model
   const toolbarItems: WorkbenchToolbarItemConfig[] = [
-    {
+    createWorkbenchBadgeItem({
       id: 'preset-total',
-      kind: 'badge',
       label: t({ zh: `${metrics.total} 条命名方案`, en: `${metrics.total} presets` }),
-    },
-    {
+    }),
+    createWorkbenchBadgeItem({
       id: 'preset-recoverable',
-      kind: 'badge',
       tone: 'muted',
       label: t({ zh: `${metrics.recoverable} 条可恢复`, en: `${metrics.recoverable} recoverable` }),
-    },
-    {
-      id: 'share-link',
-      kind: 'share',
+    }),
+    createWorkbenchShareItem({
       state: shareLinkState,
       onCopy: copyCurrentLink,
-    },
+    }),
   ]
 
   return (

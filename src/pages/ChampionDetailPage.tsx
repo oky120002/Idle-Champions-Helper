@@ -11,6 +11,10 @@ import {
   WorkbenchToolbarItems,
   type WorkbenchToolbarItemConfig,
 } from '../components/workbench/WorkbenchToolbarItems'
+import {
+  createWorkbenchBadgeItem,
+  createWorkbenchShareItem,
+} from '../components/workbench/WorkbenchToolbarItemBuilders'
 import { useWorkbenchScrollNavigation } from '../components/workbench/useWorkbenchScrollNavigation'
 import { useWorkbenchShareLink } from '../components/workbench/useWorkbenchShareLink'
 import { getPrimaryLocalizedText } from '../domain/localizedText'
@@ -95,25 +99,21 @@ export function ChampionDetailPage() {
     ? t({ zh: `${detail.summary.seat} 号位 · ${activeSectionLabel}`, en: `Seat ${detail.summary.seat} · ${activeSectionLabel}` })
     : t({ zh: '战术卷宗与章节索引', en: 'Tactical dossier and section index' })
   const toolbarItems: WorkbenchToolbarItemConfig[] = [
-    {
+    createWorkbenchBadgeItem({
       id: 'section-progress',
-      kind: 'badge',
       label: t({ zh: `章节 ${activeSectionIndex + 1}/${sectionLinks.length}`, en: `Section ${activeSectionIndex + 1}/${sectionLinks.length}` }),
       hidden: detail == null,
-    },
-    {
+    }),
+    createWorkbenchBadgeItem({
       id: 'skin-count',
-      kind: 'badge',
       tone: 'muted',
       label: detail ? t({ zh: `${detail.skins.length} 套皮肤`, en: `${detail.skins.length} skins` }) : '',
       hidden: detail == null,
-    },
-    {
-      id: 'share-link',
-      kind: 'share',
+    }),
+    createWorkbenchShareItem({
       state: shareLinkState,
       onCopy: copyCurrentLink,
-    },
+    }),
   ]
 
   return (

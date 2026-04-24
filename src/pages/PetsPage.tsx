@@ -6,11 +6,11 @@ import {
   WorkbenchToolbarFilterStatus,
 } from '../components/workbench/WorkbenchScaffold'
 import {
-  WorkbenchSidebarFilterActions,
   createWorkbenchResultVisibilityItem,
   createWorkbenchShareItem,
   createWorkbenchShuffleItem,
-} from '../components/workbench/WorkbenchFilterActions'
+} from '../components/workbench/WorkbenchToolbarItemBuilders'
+import { WorkbenchSidebarFilterActions } from '../components/workbench/WorkbenchSidebarFilterActions'
 import {
   WorkbenchToolbarItems,
   type WorkbenchToolbarItemConfig,

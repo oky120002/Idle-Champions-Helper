@@ -14,6 +14,10 @@ import {
   WorkbenchToolbarItems,
   type WorkbenchToolbarItemConfig,
 } from '../components/workbench/WorkbenchToolbarItems'
+import {
+  createWorkbenchBadgeItem,
+  createWorkbenchShareItem,
+} from '../components/workbench/WorkbenchToolbarItemBuilders'
 import { useWorkbenchScrollNavigation } from '../components/workbench/useWorkbenchScrollNavigation'
 import { useWorkbenchShareLink } from '../components/workbench/useWorkbenchShareLink'
 import { StatusBanner } from '../components/StatusBanner'
@@ -31,23 +35,19 @@ export function FormationPage() {
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
   const activeSidebarFilterCount = (model.layoutSearch.trim() ? 1 : 0) + (model.selectedContextKind === 'all' ? 0 : 1)
   const toolbarItems: WorkbenchToolbarItemConfig[] = [
-    {
+    createWorkbenchBadgeItem({
       id: 'selected-layout',
-      kind: 'badge',
       label: model.selectedLayoutLabel ?? model.t({ zh: '未选择布局', en: 'No layout selected' }),
-    },
-    {
+    }),
+    createWorkbenchBadgeItem({
       id: 'placed-count',
-      kind: 'badge',
       tone: 'muted',
       label: model.t({ zh: `${model.selectedChampions.length} 名已放置`, en: `${model.selectedChampions.length} placed` }),
-    },
-    {
-      id: 'share-link',
-      kind: 'share',
+    }),
+    createWorkbenchShareItem({
       state: shareLinkState,
       onCopy: copyCurrentLink,
-    },
+    }),
   ]
 
   return (

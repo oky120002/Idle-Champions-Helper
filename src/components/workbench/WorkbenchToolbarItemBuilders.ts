@@ -1,14 +1,14 @@
 import type { LocaleText } from '../../app/i18n'
-import { WorkbenchSidebarFilterStatus } from './WorkbenchScaffold'
 import type { WorkbenchToolbarItemConfig } from './WorkbenchToolbarItems'
 import type { WorkbenchShareLinkState } from './useWorkbenchShareLink'
 
 type WorkbenchTranslate = (text: LocaleText) => string
 
-interface WorkbenchSidebarFilterActionsProps {
-  activeCount: number
-  clearLabel: string
-  onClear?: () => void
+interface WorkbenchBadgeItemOptions {
+  id: string
+  label: string
+  tone?: 'default' | 'muted'
+  hidden?: boolean
 }
 
 interface WorkbenchResultVisibilityItemOptions {
@@ -34,25 +34,19 @@ interface WorkbenchShareItemOptions {
   onCopy: () => Promise<void>
 }
 
-export function WorkbenchSidebarFilterActions({
-  activeCount,
-  clearLabel,
-  onClear,
-}: WorkbenchSidebarFilterActionsProps) {
-  return (
-    <>
-      <WorkbenchSidebarFilterStatus activeCount={activeCount} />
-      {activeCount > 0 && onClear !== undefined ? (
-        <button
-          type="button"
-          className="action-button action-button--secondary action-button--compact"
-          onClick={onClear}
-        >
-          {clearLabel}
-        </button>
-      ) : null}
-    </>
-  )
+export function createWorkbenchBadgeItem({
+  id,
+  label,
+  tone,
+  hidden,
+}: WorkbenchBadgeItemOptions): WorkbenchToolbarItemConfig {
+  return {
+    id,
+    kind: 'badge',
+    label,
+    ...(tone !== undefined ? { tone } : {}),
+    ...(hidden !== undefined ? { hidden } : {}),
+  }
 }
 
 export function createWorkbenchResultVisibilityItem({
