@@ -1,5 +1,5 @@
-import { PageHeaderMetrics, type PageHeaderMetricItem } from '../../components/PageHeaderMetrics'
-import { WorkbenchFilterResultsHeader } from '../../components/workbench/WorkbenchScaffold'
+import type { PageHeaderMetricItem } from '../../components/PageHeaderMetrics'
+import { WorkbenchFilterMetricsHeader } from '../../components/workbench/WorkbenchFilterMetricsHeader'
 import type { PetsPageModel } from './types'
 
 interface PetsWorkbenchContentHeaderProps {
@@ -24,5 +24,5 @@ export function PetsWorkbenchContentHeader({ model }: PetsWorkbenchContentHeader
     { label: t({ zh: '暂未开放', en: 'Unavailable' }), value: summary.unavailable },
   ]
 
-  return <WorkbenchFilterResultsHeader metrics={<PageHeaderMetrics items={metricItems} variant="compact" />} />
+  return <WorkbenchFilterMetricsHeader items={metricItems} />
 }
