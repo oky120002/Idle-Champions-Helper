@@ -3,12 +3,14 @@ import { useLocation } from 'react-router-dom'
 import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
 import {
   WorkbenchContentStack,
-  WorkbenchShareButton,
-  WorkbenchToolbarBadge,
   WorkbenchToolbarCopy,
   WorkbenchToolbarMark,
 } from '../components/workbench/WorkbenchScaffold'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
+import {
+  WorkbenchToolbarItems,
+  type WorkbenchToolbarItemConfig,
+} from '../components/workbench/WorkbenchToolbarItems'
 import { useWorkbenchScrollNavigation } from '../components/workbench/useWorkbenchScrollNavigation'
 import { useWorkbenchShareLink } from '../components/workbench/useWorkbenchShareLink'
 import { SurfaceCard } from '../components/SurfaceCard'
@@ -21,6 +23,29 @@ export function UserDataPage() {
   const contentScrollRef = useRef<HTMLDivElement | null>(null)
   const { showScrollTop, scrollToTop } = useWorkbenchScrollNavigation({ scrollRef: contentScrollRef })
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
+  const toolbarItems: WorkbenchToolbarItemConfig[] = [
+    {
+      id: 'selected-method',
+      kind: 'badge',
+      label: model.selectedMethod.label,
+    },
+    {
+      id: 'parse-status',
+      kind: 'badge',
+      tone: 'muted',
+      label: model.parseState.status === 'success'
+        ? model.t({ zh: '解析成功', en: 'Parsed' })
+        : model.parseState.status === 'error'
+          ? model.t({ zh: '需要修正', en: 'Needs fixes' })
+          : model.t({ zh: '等待输入', en: 'Waiting for input' }),
+    },
+    {
+      id: 'share-link',
+      kind: 'share',
+      state: shareLinkState,
+      onCopy: copyCurrentLink,
+    },
+  ]
 
   return (
     <div className="user-data-page workbench-page">
@@ -45,19 +70,7 @@ export function UserDataPage() {
             detail={model.t({ zh: '统一管理支持 URL、手填凭证和日志片段导入', en: 'Manage Support URL, manual credentials, and log snippet imports in one place' })}
           />
         )}
-        toolbarActions={(
-          <>
-            <WorkbenchToolbarBadge>{model.selectedMethod.label}</WorkbenchToolbarBadge>
-            <WorkbenchToolbarBadge tone="muted">
-              {model.parseState.status === 'success'
-                ? model.t({ zh: '解析成功', en: 'Parsed' })
-                : model.parseState.status === 'error'
-                  ? model.t({ zh: '需要修正', en: 'Needs fixes' })
-                  : model.t({ zh: '等待输入', en: 'Waiting for input' })}
-            </WorkbenchToolbarBadge>
-            <WorkbenchShareButton state={shareLinkState} onCopy={copyCurrentLink} />
-          </>
-        )}
+        toolbarActions={<WorkbenchToolbarItems items={toolbarItems} />}
       >
         <WorkbenchContentStack>
           <SurfaceCard

@@ -4,11 +4,13 @@ import { useI18n } from '../app/i18n'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
 import {
-  WorkbenchShareButton,
-  WorkbenchToolbarBadge,
   WorkbenchToolbarCopy,
 } from '../components/workbench/WorkbenchScaffold'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
+import {
+  WorkbenchToolbarItems,
+  type WorkbenchToolbarItemConfig,
+} from '../components/workbench/WorkbenchToolbarItems'
 import { useWorkbenchScrollNavigation } from '../components/workbench/useWorkbenchScrollNavigation'
 import { useWorkbenchShareLink } from '../components/workbench/useWorkbenchShareLink'
 import { getPrimaryLocalizedText } from '../domain/localizedText'
@@ -92,6 +94,27 @@ export function ChampionDetailPage() {
   const toolbarDetail = detail
     ? t({ zh: `${detail.summary.seat} 号位 · ${activeSectionLabel}`, en: `Seat ${detail.summary.seat} · ${activeSectionLabel}` })
     : t({ zh: '战术卷宗与章节索引', en: 'Tactical dossier and section index' })
+  const toolbarItems: WorkbenchToolbarItemConfig[] = [
+    {
+      id: 'section-progress',
+      kind: 'badge',
+      label: t({ zh: `章节 ${activeSectionIndex + 1}/${sectionLinks.length}`, en: `Section ${activeSectionIndex + 1}/${sectionLinks.length}` }),
+      hidden: detail == null,
+    },
+    {
+      id: 'skin-count',
+      kind: 'badge',
+      tone: 'muted',
+      label: detail ? t({ zh: `${detail.skins.length} 套皮肤`, en: `${detail.skins.length} skins` }) : '',
+      hidden: detail == null,
+    },
+    {
+      id: 'share-link',
+      kind: 'share',
+      state: shareLinkState,
+      onCopy: copyCurrentLink,
+    },
+  ]
 
   return (
     <div className="champion-detail-page workbench-page">
@@ -120,21 +143,7 @@ export function ChampionDetailPage() {
             detail={toolbarDetail}
           />
         )}
-        toolbarActions={(
-          <>
-            {detail ? (
-              <WorkbenchToolbarBadge>
-                {t({ zh: `章节 ${activeSectionIndex + 1}/${sectionLinks.length}`, en: `Section ${activeSectionIndex + 1}/${sectionLinks.length}` })}
-              </WorkbenchToolbarBadge>
-            ) : null}
-            {detail ? (
-              <WorkbenchToolbarBadge tone="muted">
-                {t({ zh: `${detail.skins.length} 套皮肤`, en: `${detail.skins.length} skins` })}
-              </WorkbenchToolbarBadge>
-            ) : null}
-            <WorkbenchShareButton state={shareLinkState} onCopy={copyCurrentLink} />
-          </>
-        )}
+        toolbarActions={<WorkbenchToolbarItems items={toolbarItems} />}
       >
         {isLoading ? (
           <SurfaceCard

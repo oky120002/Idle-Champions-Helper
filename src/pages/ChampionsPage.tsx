@@ -7,9 +7,9 @@ import {
   WorkbenchToolbarFilterStatus,
 } from '../components/workbench/WorkbenchScaffold'
 import {
-  WorkbenchToolbarActions,
-  type WorkbenchToolbarActionConfig,
-} from '../components/workbench/WorkbenchToolbarActions'
+  WorkbenchToolbarItems,
+  type WorkbenchToolbarItemConfig,
+} from '../components/workbench/WorkbenchToolbarItems'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { StatusBanner } from '../components/StatusBanner'
 import { ChampionsAdditionalFilters } from './champions/ChampionsAdditionalFilters'
@@ -46,7 +46,7 @@ export function ChampionsPage() {
   const randomOrderLabel = hasRandomOrder
     ? t({ zh: '重新随机', en: 'Reshuffle' })
     : t({ zh: '随机排序', en: 'Shuffle order' })
-  const toolbarActions: WorkbenchToolbarActionConfig[] = [
+  const toolbarItems: WorkbenchToolbarItemConfig[] = [
     {
       id: 'toggle-visibility',
       label: resultVisibilityLabel ?? '',
@@ -96,7 +96,7 @@ export function ChampionsPage() {
             detail={t({ zh: '候选池收缩与资料对比', en: 'Narrow the roster and compare dossiers' })}
           />
         )}
-        toolbarActions={<WorkbenchToolbarActions actions={toolbarActions} />}
+        toolbarActions={<WorkbenchToolbarItems items={toolbarItems} layout="cluster" />}
         sidebarHeader={(
           <WorkbenchSidebarHeader
             kicker={t({ zh: '筛选抽屉', en: 'Filter drawer' })}

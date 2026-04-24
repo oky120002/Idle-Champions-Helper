@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom'
 import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
 import {
   WorkbenchContentStack,
-  WorkbenchShareButton,
   WorkbenchSidebarHeader,
   WorkbenchSidebarLoading,
   WorkbenchToolbarBadge,
@@ -11,6 +10,10 @@ import {
   WorkbenchToolbarMark,
 } from '../components/workbench/WorkbenchScaffold'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
+import {
+  WorkbenchToolbarItems,
+  type WorkbenchToolbarItemConfig,
+} from '../components/workbench/WorkbenchToolbarItems'
 import { useWorkbenchScrollNavigation } from '../components/workbench/useWorkbenchScrollNavigation'
 import { useWorkbenchShareLink } from '../components/workbench/useWorkbenchShareLink'
 import { StatusBanner } from '../components/StatusBanner'
@@ -27,6 +30,25 @@ export function FormationPage() {
   const { showScrollTop, scrollToTop } = useWorkbenchScrollNavigation({ scrollRef: contentScrollRef })
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
   const activeSidebarFilterCount = (model.layoutSearch.trim() ? 1 : 0) + (model.selectedContextKind === 'all' ? 0 : 1)
+  const toolbarItems: WorkbenchToolbarItemConfig[] = [
+    {
+      id: 'selected-layout',
+      kind: 'badge',
+      label: model.selectedLayoutLabel ?? model.t({ zh: '未选择布局', en: 'No layout selected' }),
+    },
+    {
+      id: 'placed-count',
+      kind: 'badge',
+      tone: 'muted',
+      label: model.t({ zh: `${model.selectedChampions.length} 名已放置`, en: `${model.selectedChampions.length} placed` }),
+    },
+    {
+      id: 'share-link',
+      kind: 'share',
+      state: shareLinkState,
+      onCopy: copyCurrentLink,
+    },
+  ]
 
   return (
     <div className="formation-page workbench-page">
@@ -51,17 +73,7 @@ export function FormationPage() {
             detail={model.t({ zh: '左侧筛选布局，右侧编辑当前阵型与方案摘要', en: 'Filter layouts on the left, edit the board and preset summary on the right' })}
           />
         )}
-        toolbarActions={(
-          <>
-            <WorkbenchToolbarBadge>
-              {model.selectedLayoutLabel ?? model.t({ zh: '未选择布局', en: 'No layout selected' })}
-            </WorkbenchToolbarBadge>
-            <WorkbenchToolbarBadge tone="muted">
-              {model.t({ zh: `${model.selectedChampions.length} 名已放置`, en: `${model.selectedChampions.length} placed` })}
-            </WorkbenchToolbarBadge>
-            <WorkbenchShareButton state={shareLinkState} onCopy={copyCurrentLink} />
-          </>
-        )}
+        toolbarActions={<WorkbenchToolbarItems items={toolbarItems} />}
         sidebarHeader={
           model.state.status === 'ready' ? (
             <WorkbenchSidebarHeader

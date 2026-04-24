@@ -7,9 +7,9 @@ import {
   WorkbenchToolbarFilterStatus,
 } from '../components/workbench/WorkbenchScaffold'
 import {
-  WorkbenchToolbarActions,
-  type WorkbenchToolbarActionConfig,
-} from '../components/workbench/WorkbenchToolbarActions'
+  WorkbenchToolbarItems,
+  type WorkbenchToolbarItemConfig,
+} from '../components/workbench/WorkbenchToolbarItems'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { StatusBanner } from '../components/StatusBanner'
 import { PetFilters } from './pets/PetFilters'
@@ -32,7 +32,7 @@ export function PetsPage() {
   const randomOrderLabel = ui.hasRandomOrder
     ? t({ zh: '重新随机', en: 'Reshuffle' })
     : t({ zh: '随机排序', en: 'Shuffle order' })
-  const toolbarActions: WorkbenchToolbarActionConfig[] = [
+  const toolbarItems: WorkbenchToolbarItemConfig[] = [
     {
       id: 'toggle-visibility',
       label: resultVisibilityLabel ?? '',
@@ -73,7 +73,7 @@ export function PetsPage() {
             detail={t({ zh: '宠物筛选与资源完整度排查', en: 'Filter pets and audit asset completeness' })}
           />
         )}
-        toolbarActions={<WorkbenchToolbarActions actions={toolbarActions} />}
+        toolbarActions={<WorkbenchToolbarItems items={toolbarItems} layout="cluster" />}
         sidebarHeader={(
           <WorkbenchSidebarHeader
             kicker={t({ zh: '筛选抽屉', en: 'Filter drawer' })}
