@@ -14,21 +14,23 @@
    - 收敛筛选页左侧 `active count + 清空全部` 状态区；页面不再手写 badge 与 clear button 组合。
 5. `src/components/workbench/WorkbenchToolbarItemBuilders.ts`
    - 统一构造 badge / share / `显示全部` / `随机排序` 等 toolbar item 配置，页面只传文案与事件。
-6. `src/components/workbench/WorkbenchToolbarItems.tsx`
+6. `src/components/workbench/WorkbenchResultsScaffold.tsx`
+   - 统一筛选结果区的包壳与空态；页面只传 aria label、容器类名、empty copy 和结果内容。
+7. `src/components/workbench/WorkbenchToolbarItems.tsx`
    - 配置驱动的右侧 toolbar items 组件；页面只传 badge / button / share 配置和回调，不再手写右侧区结构。
-7. `src/components/workbench/useWorkbenchResultsMotion.ts`
+8. `src/components/workbench/useWorkbenchResultsMotion.ts`
    - 处理筛选页右侧面板滚动恢复、筛选回顶和悬浮返回顶部显隐。
-8. `src/components/workbench/useWorkbenchScrollNavigation.ts`
+9. `src/components/workbench/useWorkbenchScrollNavigation.ts`
    - 处理非筛选页右侧面板的悬浮返回顶部显隐。
-9. `src/components/workbench/useWorkbenchShareLink.ts`
+10. `src/components/workbench/useWorkbenchShareLink.ts`
    - 统一复制当前链接状态机与 HashRouter 分享地址拼装。
-10. `src/components/workbench/useWorkbenchSidebarCollapse.ts`
+11. `src/components/workbench/useWorkbenchSidebarCollapse.ts`
    - 统一左抽屉开合持久化；页面只传稳定 `storageKey`。
-11. `src/components/workbench/WorkbenchFloatingTopButton.tsx`
+12. `src/components/workbench/WorkbenchFloatingTopButton.tsx`
    - 统一右下角悬浮返回顶部按钮。
-12. `src/styles/shared/workbench/scaffold.css`
+13. `src/styles/shared/workbench/scaffold.css`
    - 工作台稳定骨架的共享样式；收纳 toolbar、sidebar header 和 filter content header 的视觉基线。
-13. `src/styles/shared/workbench/shell.css`
+14. `src/styles/shared/workbench/shell.css`
    - 工作台外壳、抽屉动画、无左栏模式、悬浮按钮和内滚容器。
 
 ## 关键不变量
