@@ -1,4 +1,5 @@
 import { FieldGroup } from '../../components/FieldGroup'
+import { LabeledValueCardGrid } from '../../components/LabeledValueCardGrid'
 import { ChampionIdentity } from '../../components/ChampionIdentity'
 import { StatusBanner } from '../../components/StatusBanner'
 import { SurfaceCard } from '../../components/SurfaceCard'
@@ -28,6 +29,24 @@ export function FormationPresetCard({ model }: FormationPresetCardProps) {
     handleOpenPresetsPage,
     getPresetPriorityLabel,
   } = model
+  const previewItems = [
+    {
+      id: 'selected-layout',
+      label: t({ zh: '当前布局', en: 'Current layout' }),
+      value: selectedLayout ? getFormationLayoutLabel(selectedLayout, locale) : t({ zh: '未选择', en: 'Not selected' }),
+    },
+    { id: 'savable-champions', label: t({ zh: '可保存英雄数', en: 'Savable champions' }), value: selectedChampions.length },
+    {
+      id: 'seat-conflicts',
+      label: t({ zh: 'seat 冲突', en: 'Seat conflicts' }),
+      value: conflictingSeats.length > 0 ? conflictingSeats.join(', ') : t({ zh: '无', en: 'None' }),
+    },
+    {
+      id: 'scenario-context',
+      label: t({ zh: '场景上下文', en: 'Scenario context' }),
+      value: scenarioRef ? `${scenarioRef.kind}:${scenarioRef.id}` : t({ zh: '当前未绑定', en: 'Not linked yet' }),
+    },
+  ]
 
   return (
     <SurfaceCard
@@ -130,21 +149,13 @@ export function FormationPresetCard({ model }: FormationPresetCardProps) {
           ) : null}
         </div>
 
-        <div className="preview-grid">
-          <PreviewCard
-            label={t({ zh: '当前布局', en: 'Current layout' })}
-            value={selectedLayout ? getFormationLayoutLabel(selectedLayout, locale) : t({ zh: '未选择', en: 'Not selected' })}
-          />
-          <PreviewCard label={t({ zh: '可保存英雄数', en: 'Savable champions' })} value={selectedChampions.length} />
-          <PreviewCard
-            label={t({ zh: 'seat 冲突', en: 'Seat conflicts' })}
-            value={conflictingSeats.length > 0 ? conflictingSeats.join(', ') : t({ zh: '无', en: 'None' })}
-          />
-          <PreviewCard
-            label={t({ zh: '场景上下文', en: 'Scenario context' })}
-            value={scenarioRef ? `${scenarioRef.kind}:${scenarioRef.id}` : t({ zh: '当前未绑定', en: 'Not linked yet' })}
-          />
-        </div>
+        <LabeledValueCardGrid
+          items={previewItems}
+          gridClassName="preview-grid"
+          cardClassName="preview-card"
+          labelClassName="preview-card__label"
+          valueClassName="preview-card__value"
+        />
       </div>
 
       {selectedChampions.length === 0 ? (
@@ -178,19 +189,5 @@ export function FormationPresetCard({ model }: FormationPresetCardProps) {
         </div>
       )}
     </SurfaceCard>
-  )
-}
-
-interface PreviewCardProps {
-  label: string
-  value: string | number
-}
-
-function PreviewCard({ label, value }: PreviewCardProps) {
-  return (
-    <article className="preview-card">
-      <span className="preview-card__label">{label}</span>
-      <strong className="preview-card__value">{value}</strong>
-    </article>
   )
 }

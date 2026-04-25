@@ -1,3 +1,4 @@
+import { LabeledValueCardGrid } from '../../components/LabeledValueCardGrid'
 import { StatusBanner } from '../../components/StatusBanner'
 import type { UserDataPageModel } from './types'
 
@@ -7,6 +8,33 @@ type UserImportResultPanelProps = {
 
 export function UserImportResultPanel({ model }: UserImportResultPanelProps) {
   const { locale, t, parseState, importMethodLabels, maskedCredentials } = model
+  const previewItems = parseState.status === 'success' && maskedCredentials
+    ? [
+        {
+          id: 'import-mode',
+          label: t({ zh: '导入方式', en: 'Import mode' }),
+          value: importMethodLabels[parseState.method],
+        },
+        {
+          id: 'masked-user-id',
+          label: locale === 'zh-CN' ? '脱敏 User ID' : 'Masked User ID',
+          value: maskedCredentials.userId,
+        },
+        {
+          id: 'masked-hash',
+          label: locale === 'zh-CN' ? '脱敏 Hash' : 'Masked Hash',
+          value: maskedCredentials.hash,
+          valueClassName: 'preview-card__value--mono',
+        },
+        ...(parseState.method === 'supportUrl'
+          ? [{
+              id: 'detected-network',
+              label: t({ zh: '推断 network', en: 'Detected network' }),
+              value: parseState.network ?? t({ zh: '当前输入未包含 network', en: 'No network value found in the input' }),
+            }]
+          : []),
+      ]
+    : []
 
   return (
     <>
@@ -31,28 +59,13 @@ export function UserImportResultPanel({ model }: UserImportResultPanelProps) {
       ) : null}
 
       {parseState.status === 'success' && maskedCredentials ? (
-        <div className="preview-grid">
-          <article className="preview-card">
-            <span className="preview-card__label">{t({ zh: '导入方式', en: 'Import mode' })}</span>
-            <strong className="preview-card__value">{importMethodLabels[parseState.method]}</strong>
-          </article>
-          <article className="preview-card">
-            <span className="preview-card__label">{locale === 'zh-CN' ? '脱敏 User ID' : 'Masked User ID'}</span>
-            <strong className="preview-card__value">{maskedCredentials.userId}</strong>
-          </article>
-          <article className="preview-card">
-            <span className="preview-card__label">{locale === 'zh-CN' ? '脱敏 Hash' : 'Masked Hash'}</span>
-            <strong className="preview-card__value preview-card__value--mono">{maskedCredentials.hash}</strong>
-          </article>
-          {parseState.method === 'supportUrl' ? (
-            <article className="preview-card">
-              <span className="preview-card__label">{t({ zh: '推断 network', en: 'Detected network' })}</span>
-              <strong className="preview-card__value">
-                {parseState.network ?? t({ zh: '当前输入未包含 network', en: 'No network value found in the input' })}
-              </strong>
-            </article>
-          ) : null}
-        </div>
+        <LabeledValueCardGrid
+          items={previewItems}
+          gridClassName="preview-grid"
+          cardClassName="preview-card"
+          labelClassName="preview-card__label"
+          valueClassName="preview-card__value"
+        />
       ) : null}
     </>
   )
