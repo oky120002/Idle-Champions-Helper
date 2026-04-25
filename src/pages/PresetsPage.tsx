@@ -17,7 +17,7 @@ import {
 } from '../components/workbench/WorkbenchToolbarItemBuilders'
 import { useWorkbenchScrollNavigation } from '../components/workbench/useWorkbenchScrollNavigation'
 import { useWorkbenchShareLink } from '../components/workbench/useWorkbenchShareLink'
-import { StatusBanner } from '../components/StatusBanner'
+import { StatusBannerStack, type StatusBannerStackItem } from '../components/StatusBannerStack'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { PresetCard } from './presets/PresetCard'
 import { usePresetsPageModel } from './presets/usePresetsPageModel'
@@ -29,6 +29,29 @@ export function PresetsPage() {
   const { showScrollTop, scrollToTop } = useWorkbenchScrollNavigation({ scrollRef: contentScrollRef })
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
   const { state, t, pageStatus, metrics } = model
+  const headerStatusItems: StatusBannerStackItem[] = pageStatus
+    ? [{
+        id: 'page-status',
+        tone: pageStatus.tone,
+        title: pageStatus.title,
+        detail: pageStatus.detail,
+      }]
+    : []
+  const contentStatusItems: StatusBannerStackItem[] = [
+    {
+      id: 'loading',
+      tone: 'info',
+      children: t({ zh: '正在读取本地方案存档…', en: 'Loading local presets…' }),
+      hidden: state.status !== 'loading',
+    },
+    {
+      id: 'error',
+      tone: 'error',
+      title: t({ zh: '方案列表读取失败', en: 'Preset list failed to load' }),
+      ...(state.status === 'error' ? { detail: state.message } : {}),
+      hidden: state.status !== 'error',
+    },
+  ]
   const toolbarItems: WorkbenchToolbarItemConfig[] = [
     createWorkbenchBadgeItem({
       id: 'preset-total',
@@ -69,19 +92,9 @@ export function PresetsPage() {
           />
         )}
         toolbarActions={<WorkbenchToolbarItems items={toolbarItems} />}
-        contentHeader={pageStatus ? <StatusBanner tone={pageStatus.tone} title={pageStatus.title} detail={pageStatus.detail} /> : null}
+        contentHeader={<StatusBannerStack items={headerStatusItems} />}
       >
-        {state.status === 'loading' ? (
-          <StatusBanner tone="info">{t({ zh: '正在读取本地方案存档…', en: 'Loading local presets…' })}</StatusBanner>
-        ) : null}
-
-        {state.status === 'error' ? (
-          <StatusBanner
-            tone="error"
-            title={t({ zh: '方案列表读取失败', en: 'Preset list failed to load' })}
-            detail={state.message}
-          />
-        ) : null}
+        <StatusBannerStack items={contentStatusItems} />
 
         {state.status === 'ready' ? (
           <WorkbenchContentStack>
@@ -118,12 +131,18 @@ export function PresetsPage() {
               description={t({ zh: '恢复时会优先按保存时的数据版本校验；如果只能做兼容恢复，页面会明确提示。', en: 'Restore first validates against the saved data version, and the page clearly warns when only a compatible restore is possible.' })}
             >
               {state.items.length === 0 ? (
-                <StatusBanner tone="info">
-                  {t({
-                    zh: '这里还没有命名方案。先去阵型页摆出一套阵容，再点击“保存为方案”。',
-                    en: 'There are no named presets yet. Build a formation first, then click “Save as preset.”',
-                  })}
-                </StatusBanner>
+                <StatusBannerStack
+                  items={[
+                    {
+                      id: 'empty-presets',
+                      tone: 'info',
+                      children: t({
+                        zh: '这里还没有命名方案。先去阵型页摆出一套阵容，再点击“保存为方案”。',
+                        en: 'There are no named presets yet. Build a formation first, then click “Save as preset.”',
+                      }),
+                    },
+                  ]}
+                />
               ) : (
                 <div className="results-grid">
                   {state.items.map((view) => (

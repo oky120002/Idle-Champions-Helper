@@ -1,5 +1,5 @@
 import { ChampionPill } from '../../components/ChampionPill'
-import { StatusBanner } from '../../components/StatusBanner'
+import { StatusBannerStack, type StatusBannerStackItem } from '../../components/StatusBannerStack'
 import { buildRestoreStatusDetail } from '../../data/formationPersistence'
 import {
   buildChampionSummary,
@@ -23,6 +23,28 @@ export function PresetCard({ model, view }: PresetCardProps) {
   const showCompatibilityNotice = isCompatibleRestore(view) || hasDroppedReferences(view)
   const isEditing = editingPresetId === view.preset.id
   const isDeleteConfirming = deleteConfirmId === view.preset.id
+  const statusItems: StatusBannerStackItem[] = [
+    {
+      id: 'invalid-prompt',
+      tone: 'error',
+      ...(view.prompt.kind === 'invalid'
+        ? {
+            title: view.prompt.title,
+            detail: view.prompt.detail,
+          }
+        : {}),
+      hidden: view.prompt.kind !== 'invalid',
+    },
+    {
+      id: 'compatibility-notice',
+      tone: 'info',
+      title: t({ zh: '恢复时会带兼容处理', en: 'Restore will apply compatibility handling' }),
+      ...(view.prompt.kind === 'restore' && showCompatibilityNotice
+        ? { detail: buildRestoreStatusDetail(view.prompt.preview) }
+        : {}),
+      hidden: view.prompt.kind !== 'restore' || !showCompatibilityNotice,
+    },
+  ]
 
   return (
     <article className="result-card">
@@ -72,15 +94,7 @@ export function PresetCard({ model, view }: PresetCardProps) {
         </div>
       ) : null}
 
-      {view.prompt.kind === 'invalid' ? <StatusBanner tone="error" title={view.prompt.title} detail={view.prompt.detail} /> : null}
-
-      {view.prompt.kind === 'restore' && showCompatibilityNotice ? (
-        <StatusBanner
-          tone="info"
-          title={t({ zh: '恢复时会带兼容处理', en: 'Restore will apply compatibility handling' })}
-          detail={buildRestoreStatusDetail(view.prompt.preview)}
-        />
-      ) : null}
+      <StatusBannerStack items={statusItems} />
 
       <div className="button-row result-card__section">
         <button

@@ -16,7 +16,7 @@ import {
   type WorkbenchToolbarItemConfig,
 } from '../components/workbench/WorkbenchToolbarItems'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
-import { StatusBanner } from '../components/StatusBanner'
+import { StatusBannerStack, type StatusBannerStackItem } from '../components/StatusBannerStack'
 import { PetFilters } from './pets/PetFilters'
 import { MAX_VISIBLE_PETS } from './pets/constants'
 import { PetsResultsSection } from './pets/PetsResultsSection'
@@ -26,6 +26,37 @@ import { usePetsPageModel } from './pets/usePetsPageModel'
 export function PetsPage() {
   const model = usePetsPageModel()
   const { state, t, activeFilterCount, filters, actions, ui } = model
+  const contentStatusItems: StatusBannerStackItem[] = [
+    {
+      id: 'loading',
+      tone: 'info',
+      title: t({ zh: '正在加载宠物目录', en: 'Loading pet catalog' }),
+      detail: t({
+        zh: '正在读取本地版本化的宠物清单、静态图像与动图索引。',
+        en: 'Reading the local versioned pet manifest, static art, and motion preview manifest.',
+      }),
+      hidden: state.status !== 'loading',
+    },
+    {
+      id: 'error',
+      tone: 'error',
+      title: t({ zh: '宠物目录加载失败', en: 'Failed to load pet catalog' }),
+      ...(state.status === 'error'
+        ? {
+            detail: state.message
+              ? t({
+                  zh: `无法读取 pets 数据：${state.message}`,
+                  en: `Unable to read pets data: ${state.message}`,
+                })
+              : t({
+                  zh: '无法读取 pets 数据。',
+                  en: 'Unable to read pets data.',
+                }),
+          }
+        : {}),
+      hidden: state.status !== 'error',
+    },
+  ]
   const toolbarItems: WorkbenchToolbarItemConfig[] = [
     createWorkbenchResultVisibilityItem({
       t,
@@ -98,34 +129,7 @@ export function PetsPage() {
         )}
         contentHeader={state.status === 'ready' ? <PetsWorkbenchContentHeader model={model} /> : null}
       >
-        {state.status === 'loading' ? (
-          <StatusBanner
-            tone="info"
-            title={t({ zh: '正在加载宠物目录', en: 'Loading pet catalog' })}
-            detail={t({
-              zh: '正在读取本地版本化的宠物清单、静态图像与动图索引。',
-              en: 'Reading the local versioned pet manifest, static art, and motion preview manifest.',
-            })}
-          />
-        ) : null}
-
-        {state.status === 'error' ? (
-          <StatusBanner
-            tone="error"
-            title={t({ zh: '宠物目录加载失败', en: 'Failed to load pet catalog' })}
-            detail={
-              state.message
-                ? t({
-                    zh: `无法读取 pets 数据：${state.message}`,
-                    en: `Unable to read pets data: ${state.message}`,
-                  })
-                : t({
-                    zh: '无法读取 pets 数据。',
-                    en: 'Unable to read pets data.',
-                  })
-            }
-          />
-        ) : null}
+        <StatusBannerStack items={contentStatusItems} />
 
         {state.status === 'ready' ? <PetsResultsSection model={model} /> : null}
       </PageWorkbenchShell>

@@ -20,7 +20,7 @@ import {
 } from '../components/workbench/WorkbenchToolbarItemBuilders'
 import { useWorkbenchScrollNavigation } from '../components/workbench/useWorkbenchScrollNavigation'
 import { useWorkbenchShareLink } from '../components/workbench/useWorkbenchShareLink'
-import { StatusBanner } from '../components/StatusBanner'
+import { StatusBannerStack, type StatusBannerStackItem } from '../components/StatusBannerStack'
 import { FormationBoardEditor } from './formation/FormationBoardEditor'
 import { FormationDraftBanner } from './formation/FormationDraftBanner'
 import { FormationLayoutFilters } from './formation/FormationLayoutFilters'
@@ -34,6 +34,21 @@ export function FormationPage() {
   const { showScrollTop, scrollToTop } = useWorkbenchScrollNavigation({ scrollRef: contentScrollRef })
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
   const activeSidebarFilterCount = (model.layoutSearch.trim() ? 1 : 0) + (model.selectedContextKind === 'all' ? 0 : 1)
+  const contentStatusItems: StatusBannerStackItem[] = [
+    {
+      id: 'loading',
+      tone: 'info',
+      children: model.t({ zh: '正在读取阵型布局和英雄数据…', en: 'Loading layouts and champion data…' }),
+      hidden: model.state.status !== 'loading',
+    },
+    {
+      id: 'error',
+      tone: 'error',
+      title: model.t({ zh: '阵型数据读取失败', en: 'Formation data failed to load' }),
+      ...(model.state.status === 'error' ? { detail: model.state.message } : {}),
+      hidden: model.state.status !== 'error',
+    },
+  ]
   const toolbarItems: WorkbenchToolbarItemConfig[] = [
     createWorkbenchBadgeItem({
       id: 'selected-layout',
@@ -100,19 +115,7 @@ export function FormationPage() {
         }
         contentHeader={model.state.status === 'ready' ? <FormationDraftBanner model={model} /> : null}
       >
-        {model.state.status === 'loading' ? (
-          <StatusBanner tone="info">
-            {model.t({ zh: '正在读取阵型布局和英雄数据…', en: 'Loading layouts and champion data…' })}
-          </StatusBanner>
-        ) : null}
-
-        {model.state.status === 'error' ? (
-          <StatusBanner
-            tone="error"
-            title={model.t({ zh: '阵型数据读取失败', en: 'Formation data failed to load' })}
-            detail={model.state.message}
-          />
-        ) : null}
+        <StatusBannerStack items={contentStatusItems} />
 
         {model.state.status === 'ready' ? (
           <WorkbenchContentStack>
