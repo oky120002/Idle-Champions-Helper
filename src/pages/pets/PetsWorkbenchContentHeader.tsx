@@ -1,5 +1,5 @@
-import type { PageHeaderMetricItem } from '../../components/PageHeaderMetrics'
-import { WorkbenchFilterMetricsHeader } from '../../components/workbench/WorkbenchFilterMetricsHeader'
+import { ConfiguredWorkbenchMetricsHeader } from '../../components/workbench/ConfiguredWorkbenchMetricsHeader'
+import { createWorkbenchShowingMetricItem } from '../../components/workbench/workbenchMetricItemBuilders'
 import type { PetsPageModel } from './types'
 
 interface PetsWorkbenchContentHeaderProps {
@@ -8,14 +8,13 @@ interface PetsWorkbenchContentHeaderProps {
 
 export function PetsWorkbenchContentHeader({ model }: PetsWorkbenchContentHeaderProps) {
   const { t, results, summary } = model
-  const metricItems: PageHeaderMetricItem[] = [
-    {
-      label: t({ zh: '当前展示', en: 'Showing' }),
-      value: t({
-        zh: `${results.visiblePets.length} / ${results.filteredPets.length}`,
-        en: `${results.visiblePets.length} / ${results.filteredPets.length} pets`,
-      }),
-    },
+  const metricItems = [
+    createWorkbenchShowingMetricItem({
+      t,
+      visibleCount: results.visiblePets.length,
+      filteredCount: results.filteredPets.length,
+      enUnitLabel: 'pets',
+    }),
     { label: t({ zh: '宠物总数', en: 'Pets' }), value: summary.total },
     { label: t({ zh: '完整图像', en: 'Full art' }), value: summary.completeArt },
     { label: t({ zh: '宝石商店', en: 'Gem shop' }), value: summary.gems },
@@ -24,5 +23,5 @@ export function PetsWorkbenchContentHeader({ model }: PetsWorkbenchContentHeader
     { label: t({ zh: '暂未开放', en: 'Unavailable' }), value: summary.unavailable },
   ]
 
-  return <WorkbenchFilterMetricsHeader items={metricItems} />
+  return <ConfiguredWorkbenchMetricsHeader items={metricItems} />
 }

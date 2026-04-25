@@ -1,5 +1,5 @@
-import type { PageHeaderMetricItem } from '../../components/PageHeaderMetrics'
-import { WorkbenchFilterMetricsHeader } from '../../components/workbench/WorkbenchFilterMetricsHeader'
+import { ConfiguredWorkbenchMetricsHeader } from '../../components/workbench/ConfiguredWorkbenchMetricsHeader'
+import { createWorkbenchShowingMetricItem } from '../../components/workbench/workbenchMetricItemBuilders'
 import { collectChampionFacetSummary } from '../../features/champion-filters/headerMetrics'
 import type { ChampionsPageModel } from './types'
 
@@ -9,19 +9,18 @@ interface ChampionsWorkbenchContentHeaderProps {
 
 export function ChampionsWorkbenchContentHeader({ model }: ChampionsWorkbenchContentHeaderProps) {
   const { filteredChampions, visibleChampions, activeFilters, t } = model
-  const metricItems: PageHeaderMetricItem[] =
+  const metricItems =
     model.state.status === 'ready'
       ? (() => {
           const summary = collectChampionFacetSummary(filteredChampions, model.locale)
 
           return [
-            {
-              label: t({ zh: '当前展示', en: 'Showing' }),
-              value: t({
-                zh: `${visibleChampions.length} / ${filteredChampions.length}`,
-                en: `${visibleChampions.length} / ${filteredChampions.length} champions`,
-              }),
-            },
+            createWorkbenchShowingMetricItem({
+              t,
+              visibleCount: visibleChampions.length,
+              filteredCount: filteredChampions.length,
+              enUnitLabel: 'champions',
+            }),
             { label: t({ zh: '英雄总数', en: 'Roster' }), value: model.state.champions.length },
             { label: t({ zh: '覆盖座位', en: 'Seats' }), value: summary.seatCount },
             { label: t({ zh: '联动队伍', en: 'Affiliations' }), value: summary.affiliationCount },
@@ -35,11 +34,5 @@ export function ChampionsWorkbenchContentHeader({ model }: ChampionsWorkbenchCon
         })()
       : []
 
-  return (
-    <WorkbenchFilterMetricsHeader
-      items={metricItems}
-      activeFilters={activeFilters}
-      filterSummaryPrefix={t({ zh: '当前筛选：', en: 'Active filters: ' })}
-    />
-  )
+  return <ConfiguredWorkbenchMetricsHeader items={metricItems} activeFilters={activeFilters} />
 }
