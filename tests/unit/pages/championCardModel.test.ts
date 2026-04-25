@@ -2,16 +2,16 @@ import { describe, expect, it } from 'vitest'
 import { filterChampionCardAttributeGroups, getChampionCardVisibleAttributeGroupIds } from '../../../src/pages/champions/champion-card-model'
 
 describe('champion card model', () => {
-  it('默认只保留基础身份标签组', () => {
+  it('默认展示英雄卡里全部可筛标签组', () => {
     expect(
       getChampionCardVisibleAttributeGroupIds({
         selectedAcquisitions: [],
         selectedMechanics: [],
       }),
-    ).toEqual(['race', 'alignment', 'profession', 'gender'])
+    ).toEqual(['race', 'alignment', 'profession', 'gender', 'acquisition', 'mechanics'])
   })
 
-  it('仅在对应筛选启用时追加获取方式和特殊机制', () => {
+  it('结果卡会过滤掉不在卡片展示清单里的标签组', () => {
     expect(
       filterChampionCardAttributeGroups(
         [
@@ -24,8 +24,8 @@ describe('champion card model', () => {
           { id: 'other', tags: ['nerds'] },
         ],
         {
-          selectedAcquisitions: ['event'],
-          selectedMechanics: ['gold_find'],
+          selectedAcquisitions: [],
+          selectedMechanics: [],
         },
       ).map((group) => group.id),
     ).toEqual(['race', 'alignment', 'profession', 'gender', 'acquisition', 'mechanics'])

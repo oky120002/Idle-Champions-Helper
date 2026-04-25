@@ -242,6 +242,7 @@ test('英雄筛选页超宽屏下仍应放宽到接近六列结果卡', async ({
   await page.setViewportSize({ width: 2545, height: 1500 })
   await page.goto('./#/champions')
   await expect(page.locator('.workbench-page__toolbar-title')).toHaveText('英雄筛选')
+  await expect(page.locator('.results-grid .result-card--link').first()).toBeVisible()
 
   const firstRowCardCount = await getFirstRowCardCount(page.locator('.results-grid .result-card--link'))
 
@@ -256,6 +257,7 @@ test('英雄筛选页移动端宽度下结果区应自然收敛为单列', async
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('./#/champions')
   await expect(page.locator('.workbench-page__toolbar-title')).toHaveText('英雄筛选')
+  await expect(page.locator('.results-grid .result-card--link').first()).toBeVisible()
 
   const firstRowCardCount = await getFirstRowCardCount(page.locator('.results-grid .result-card--link'))
 
