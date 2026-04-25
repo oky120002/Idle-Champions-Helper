@@ -1,5 +1,6 @@
 import { LabeledValueCardGrid } from '../../components/LabeledValueCardGrid'
 import { StatusBannerStack, type StatusBannerStackItem } from '../../components/StatusBannerStack'
+import { createExclusiveStatusBannerItems } from '../../components/statusBannerStackItemBuilders'
 import type { UserDataPageModel } from './types'
 
 type UserImportResultPanelProps = {
@@ -8,32 +9,35 @@ type UserImportResultPanelProps = {
 
 export function UserImportResultPanel({ model }: UserImportResultPanelProps) {
   const { locale, t, parseState, importMethodLabels, maskedCredentials } = model
-  const statusItems: StatusBannerStackItem[] = [
-    {
-      id: 'success',
-      tone: 'success',
-      children: t({
-        zh: '已在本地解析出一组合法凭证，当前页面仅展示脱敏结果，不会自动保存。',
-        en: 'A valid credential pair was parsed locally. This page only shows the masked result and does not save it automatically.',
-      }),
-      hidden: parseState.status !== 'success',
-    },
-    {
-      id: 'error',
-      tone: 'error',
-      ...(parseState.status === 'error' ? { children: parseState.message } : {}),
-      hidden: parseState.status !== 'error',
-    },
-    {
-      id: 'idle',
-      tone: 'info',
-      children: t({
-        zh: '这里适合先用脱敏样本验证格式，再考虑接真实导入和本地同步。',
-        en: 'Use masked samples here to validate the format first, then move on to real imports and local sync.',
-      }),
-      hidden: parseState.status !== 'idle',
-    },
-  ]
+  const statusItems: StatusBannerStackItem[] = createExclusiveStatusBannerItems({
+    status: parseState.status,
+    items: [
+      {
+        id: 'success',
+        when: 'success',
+        tone: 'success',
+        children: t({
+          zh: '已在本地解析出一组合法凭证，当前页面仅展示脱敏结果，不会自动保存。',
+          en: 'A valid credential pair was parsed locally. This page only shows the masked result and does not save it automatically.',
+        }),
+      },
+      {
+        id: 'error',
+        when: 'error',
+        tone: 'error',
+        ...(parseState.status === 'error' ? { children: parseState.message } : {}),
+      },
+      {
+        id: 'idle',
+        when: 'idle',
+        tone: 'info',
+        children: t({
+          zh: '这里适合先用脱敏样本验证格式，再考虑接真实导入和本地同步。',
+          en: 'Use masked samples here to validate the format first, then move on to real imports and local sync.',
+        }),
+      },
+    ],
+  })
   const previewItems = parseState.status === 'success' && maskedCredentials
     ? [
         {

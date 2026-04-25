@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { createAsyncStatusBannerItems } from '../../src/components/statusBannerStackItemBuilders'
+import {
+  createAsyncStatusBannerItems,
+  createExclusiveStatusBannerItems,
+} from '../../src/components/statusBannerStackItemBuilders'
 
 describe('statusBannerStackItemBuilders', () => {
   it('根据 loading 状态构造可见的 loading banner', () => {
@@ -53,6 +56,39 @@ describe('statusBannerStackItemBuilders', () => {
         tone: 'error',
         title: '数据读取失败',
         detail: '文件缺失',
+        hidden: false,
+      }),
+    ])
+  })
+
+  it('根据互斥状态构造单个可见 banner', () => {
+    expect(
+      createExclusiveStatusBannerItems({
+        status: 'error',
+        items: [
+          {
+            id: 'success',
+            when: 'success',
+            tone: 'success',
+            children: '解析成功',
+          },
+          {
+            id: 'error',
+            when: 'error',
+            tone: 'error',
+            children: '解析失败',
+          },
+        ],
+      }),
+    ).toEqual([
+      expect.objectContaining({
+        id: 'success',
+        hidden: true,
+      }),
+      expect.objectContaining({
+        id: 'error',
+        tone: 'error',
+        children: '解析失败',
         hidden: false,
       }),
     ])

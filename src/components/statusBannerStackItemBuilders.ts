@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import type { StatusTone } from './StatusBanner'
 import type { StatusBannerStackItem } from './StatusBannerStack'
 
 type AsyncStatus = 'loading' | 'ready' | 'error'
@@ -16,6 +17,17 @@ interface AsyncStatusBannerItemsOptions {
     title: ReactNode
     detail?: ReactNode
   }
+}
+
+interface ExclusiveStatusBannerItemConfig<TStatus extends string> extends AsyncStatusContent {
+  id: string
+  when: TStatus
+  tone: StatusTone
+}
+
+interface ExclusiveStatusBannerItemsOptions<TStatus extends string> {
+  status: TStatus
+  items: ExclusiveStatusBannerItemConfig<TStatus>[]
 }
 
 export function createAsyncStatusBannerItems({
@@ -40,4 +52,18 @@ export function createAsyncStatusBannerItems({
       hidden: status !== 'error',
     },
   ]
+}
+
+export function createExclusiveStatusBannerItems<TStatus extends string>({
+  status,
+  items,
+}: ExclusiveStatusBannerItemsOptions<TStatus>): StatusBannerStackItem[] {
+  return items.map((item) => ({
+    id: item.id,
+    tone: item.tone,
+    ...(item.title !== undefined ? { title: item.title } : {}),
+    ...(item.detail !== undefined ? { detail: item.detail } : {}),
+    ...(item.children !== undefined ? { children: item.children } : {}),
+    hidden: item.when !== status,
+  }))
 }
