@@ -1,3 +1,4 @@
+import { SegmentedButtonGroup } from '../../components/SegmentedButtonGroup'
 import { SurfaceCard } from '../../components/SurfaceCard'
 import { UserImportFields } from './UserImportFields'
 import { UserImportResultPanel } from './UserImportResultPanel'
@@ -29,24 +30,16 @@ export function UserDataWorkbench({ model }: UserDataWorkbenchProps) {
         </div>
       }
     >
-      <div className="segmented-control" role="tablist" aria-label={t({ zh: '个人数据导入方式', en: 'User data import mode' })}>
-        {importMethods.map((item) => (
-          <button
-            key={item.id}
-            type="button"
-            role="tab"
-            aria-selected={item.id === method}
-            className={
-              item.id === method
-                ? 'segmented-control__button segmented-control__button--active'
-                : 'segmented-control__button'
-            }
-            onClick={() => handleSelectMethod(item.id)}
-          >
-            {item.label}
-          </button>
-        ))}
-      </div>
+      <SegmentedButtonGroup
+        value={method}
+        items={importMethods.map((item) => ({
+          value: item.id,
+          label: item.label,
+        }))}
+        ariaLabel={t({ zh: '个人数据导入方式', en: 'User data import mode' })}
+        onChange={handleSelectMethod}
+        mode="tablist"
+      />
 
       <UserImportFields model={model} />
       <UserImportResultPanel model={model} />
