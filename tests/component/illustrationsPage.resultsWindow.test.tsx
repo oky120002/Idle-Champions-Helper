@@ -1,4 +1,4 @@
-import { screen, within } from '@testing-library/react'
+import { screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -75,7 +75,7 @@ describe('IllustrationsPage results window', () => {
     renderIllustrationsPage(['/illustrations?scope=skin&role=support&results=all'])
 
     const results = await screen.findByLabelText('立绘结果')
-    expect(within(results).getAllByRole('img')).toHaveLength(52)
+    await waitFor(() => expect(within(results).getAllByRole('img')).toHaveLength(52))
     expect(screen.getByRole('button', { name: '皮肤' })).toHaveAttribute('aria-pressed', 'true')
     expect(screen.getByRole('button', { name: '辅助' })).toHaveAttribute('aria-pressed', 'true')
     expect(screen.getByRole('button', { name: '收起到默认 50' })).toBeInTheDocument()

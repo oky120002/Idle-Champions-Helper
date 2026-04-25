@@ -70,10 +70,10 @@ describe('ChampionsPage avatars', () => {
     )
 
     const avatar = await screen.findByRole('img', { name: '布鲁诺头像' })
-    const seatChip = container.querySelector('.result-card__portrait-chip')
+    const seatChip = container.querySelector('.tag-pill--seat')
 
     expect(avatar).toHaveAttribute('src', '/data/v1/champion-portraits/1.png')
-    expect(seatChip).toHaveTextContent('1 号位')
+    expect(seatChip).toHaveTextContent('1位')
     expect(screen.getByText('布鲁诺')).toBeInTheDocument()
   })
 })

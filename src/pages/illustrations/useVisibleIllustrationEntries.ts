@@ -15,22 +15,19 @@ export function useVisibleIllustrationEntries(
   const totalCount = orderedIllustrationEntries.length
   const defaultVisibleCount = resolveDefaultVisibleCount(totalCount)
   const [visibleCount, setVisibleCount] = useState(defaultVisibleCount)
+  const shouldProgressivelyReveal =
+    showAllResults && totalCount > MAX_VISIBLE_ILLUSTRATIONS && typeof window !== 'undefined'
+  const visibleLimit = shouldProgressivelyReveal
+    ? Math.min(totalCount, Math.max(defaultVisibleCount, visibleCount))
+    : totalCount
 
   useEffect(() => {
-    if (!showAllResults) {
-      setVisibleCount(defaultVisibleCount)
-      return
-    }
-
-    if (totalCount <= MAX_VISIBLE_ILLUSTRATIONS || typeof window === 'undefined') {
-      setVisibleCount(totalCount)
+    if (!shouldProgressivelyReveal) {
       return
     }
 
     let cancelled = false
     let frameId = 0
-
-    setVisibleCount((current) => Math.min(totalCount, Math.max(defaultVisibleCount, current)))
 
     const pumpVisibleCount = () => {
       if (cancelled) {
@@ -38,11 +35,13 @@ export function useVisibleIllustrationEntries(
       }
 
       setVisibleCount((current) => {
-        if (current >= totalCount) {
+        const normalizedCurrent = Math.min(totalCount, Math.max(defaultVisibleCount, current))
+
+        if (normalizedCurrent >= totalCount) {
           return totalCount
         }
 
-        const nextCount = Math.min(totalCount, current + PROGRESSIVE_BATCH_SIZE)
+        const nextCount = Math.min(totalCount, normalizedCurrent + PROGRESSIVE_BATCH_SIZE)
 
         if (nextCount < totalCount) {
           frameId = window.requestAnimationFrame(pumpVisibleCount)
@@ -61,10 +60,10 @@ export function useVisibleIllustrationEntries(
         window.cancelAnimationFrame(frameId)
       }
     }
-  }, [defaultVisibleCount, showAllResults, totalCount])
+  }, [defaultVisibleCount, shouldProgressivelyReveal, totalCount])
 
   return useMemo(
-    () => orderedIllustrationEntries.slice(0, showAllResults ? visibleCount : defaultVisibleCount),
-    [defaultVisibleCount, orderedIllustrationEntries, showAllResults, visibleCount],
+    () => orderedIllustrationEntries.slice(0, showAllResults ? visibleLimit : defaultVisibleCount),
+    [defaultVisibleCount, orderedIllustrationEntries, showAllResults, visibleLimit],
   )
 }

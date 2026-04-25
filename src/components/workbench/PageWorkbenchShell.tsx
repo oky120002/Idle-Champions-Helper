@@ -7,7 +7,7 @@ const DESKTOP_SIDEBAR_ANIMATION_MS = 340
 const OPENING_WIDTH_LOCK_RELEASE_MS = 240
 
 function shouldAnimateSidebarLayout(): boolean {
-  if (typeof window === 'undefined') {
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
     return false
   }
 
