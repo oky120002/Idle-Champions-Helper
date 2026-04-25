@@ -17,6 +17,7 @@ import {
 } from '../components/workbench/WorkbenchToolbarItemBuilders'
 import { useWorkbenchScrollNavigation } from '../components/workbench/useWorkbenchScrollNavigation'
 import { useWorkbenchShareLink } from '../components/workbench/useWorkbenchShareLink'
+import { SurfaceCardContentSections, type SurfaceCardContentSection } from '../components/SurfaceCardContentSections'
 import { StatusBannerStack, type StatusBannerStackItem } from '../components/StatusBannerStack'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { PresetCard } from './presets/PresetCard'
@@ -50,6 +51,38 @@ export function PresetsPage() {
       title: t({ zh: '方案列表读取失败', en: 'Preset list failed to load' }),
       ...(state.status === 'error' ? { detail: state.message } : {}),
       hidden: state.status !== 'error',
+    },
+  ]
+  const managementScopeSections: SurfaceCardContentSection[] = [
+    {
+      id: 'what-works-now',
+      title: t({ zh: '当前范围', en: 'What works now' }),
+      items: [
+        {
+          id: 'browse-presets',
+          content: t({ zh: '查看命名方案列表', en: 'Browse named presets' }),
+        },
+        {
+          id: 'edit-presets',
+          content: t({ zh: '编辑方案名、备注、标签与优先级', en: 'Edit names, notes, tags, and priority' }),
+        },
+        {
+          id: 'delete-presets',
+          content: t({ zh: '删除不再需要的方案', en: 'Delete presets you no longer need' }),
+        },
+        {
+          id: 'restore-presets',
+          content: t({ zh: '把方案恢复回阵型页继续编辑', en: 'Restore a preset back to the formation page' }),
+        },
+      ],
+    },
+    {
+      id: 'current-boundary',
+      title: t({ zh: '当前边界', en: 'Current boundary' }),
+      detail: t({
+        zh: '最近草稿继续留在阵型页自动保存；这里管理的是已命名方案。若要新增方案，请回到阵型页点击“保存为方案”。',
+        en: 'Recent drafts remain on the formation page for auto-save; this page manages only named presets. To add one, go back to the formation page and choose “Save as preset.”',
+      }),
     },
   ]
   const toolbarItems: WorkbenchToolbarItemConfig[] = [
@@ -98,32 +131,13 @@ export function PresetsPage() {
 
         {state.status === 'ready' ? (
           <WorkbenchContentStack>
-            <SurfaceCard
+            <SurfaceCardContentSections
               eyebrow={t({ zh: '当前范围', en: 'Current scope' })}
               title={t({ zh: '先确认当前支持的方案管理闭环', en: 'Confirm the current preset management loop' })}
               description={t({ zh: '命名方案继续由阵型页产出；这里负责浏览、编辑、删除与恢复。', en: 'Named presets are still produced from the formation page, while this view focuses on browsing, editing, deleting, and restoring.' })}
-            >
-              <div className="split-grid">
-                <div>
-                  <h3 className="section-heading">{t({ zh: '当前范围', en: 'What works now' })}</h3>
-                  <ul className="bullet-list">
-                    <li>{t({ zh: '查看命名方案列表', en: 'Browse named presets' })}</li>
-                    <li>{t({ zh: '编辑方案名、备注、标签与优先级', en: 'Edit names, notes, tags, and priority' })}</li>
-                    <li>{t({ zh: '删除不再需要的方案', en: 'Delete presets you no longer need' })}</li>
-                    <li>{t({ zh: '把方案恢复回阵型页继续编辑', en: 'Restore a preset back to the formation page' })}</li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="section-heading">{t({ zh: '当前边界', en: 'Current boundary' })}</h3>
-                  <p className="supporting-text">
-                    {t({
-                      zh: '最近草稿继续留在阵型页自动保存；这里管理的是已命名方案。若要新增方案，请回到阵型页点击“保存为方案”。',
-                      en: 'Recent drafts remain on the formation page for auto-save; this page manages only named presets. To add one, go back to the formation page and choose “Save as preset.”',
-                    })}
-                  </p>
-                </div>
-              </div>
-            </SurfaceCard>
+              sections={managementScopeSections}
+              layout="split"
+            />
 
             <SurfaceCard
               eyebrow={t({ zh: '已保存方案', en: 'Saved presets' })}
