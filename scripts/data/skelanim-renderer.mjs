@@ -1,15 +1,15 @@
 import { createCanvas, loadImage } from '@napi-rs/canvas'
 
 function buildAffineTransform(frame) {
-  const angle = -frame.rotation
+  const angle = frame.rotation
   const cos = Math.cos(angle)
   const sin = Math.sin(angle)
 
   return {
-    a: cos * frame.scaleX,
-    b: sin * frame.scaleX,
-    c: -sin * frame.scaleY,
-    d: cos * frame.scaleY,
+    a: frame.scaleX * cos,
+    b: frame.scaleY * sin,
+    c: -frame.scaleX * sin,
+    d: frame.scaleY * cos,
     e: frame.x,
     f: frame.y,
   }
@@ -225,8 +225,8 @@ export async function renderSkelAnimPoseToPngBuffer(skelAnim, options = {}) {
 
     context.save()
     context.translate(frame.x - pose.bounds.minX, frame.y - pose.bounds.minY)
-    context.rotate(-frame.rotation)
     context.scale(frame.scaleX, frame.scaleY)
+    context.rotate(frame.rotation)
     context.drawImage(
       image,
       piece.sourceX,

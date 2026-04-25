@@ -47,3 +47,9 @@
 6. 按 `depth` 排序绘制
 
 因此，把 zlib 解包后的 atlas 直接写盘，只完成了纹理层，离最终立绘还差整个渲染层。
+
+## Web 端复刻补充
+
+- 直接对照 [kleho 的英雄皮肤页](https://idle.kleho.ru/list/) 所加载的 `build.js` 与 `/assets/animations/*.json` 可确认，网页端的 skeletal canvas 复刻采用的是：`translate(tx, ty) -> scale(sx, sy) -> rotate(rot) -> drawImage(..., -cx, -cy, ...)`。
+- 这意味着在浏览器 canvas 里，SkelAnim 的 `rotation` 要按正弧度使用，而且非等比缩放必须先于旋转进入矩阵；如果写成 `rotate(-rotation)` 或把 `rotate` 放在 `scale` 前面，就会在大量英雄上出现四肢错位、关节脱节的观感。
+- Unity 客户端 IL 里看到的 `rotation * -180 / π` 仍说明原始运行时存在坐标系换算；但对站内当前这套离线导出数据和浏览器渲染来说，和 kleho 对齐才是更可靠的可视化真值。
