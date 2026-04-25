@@ -2,9 +2,9 @@ import { mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
-import { createChampionGraphicResourceCache } from './data/champion-graphic-resource-cache.mjs'
 import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.mjs'
 import { renderSkelAnimPoseToPngBuffer } from './data/skelanim-renderer.mjs'
+import { resolveWalkPosterPose } from './data/skelanim-walk-selection.mjs'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'
@@ -86,6 +86,7 @@ function buildHeroIllustrationTasks(visuals, animationCollection) {
   const skinIdFilter = parseIdFilter(visuals.filters?.skinIds ?? null)
   const animationById = buildAnimationMap(animationCollection)
   const tasks = []
+  const missingHeroIds = []
 
   if (skinIdFilter && !championIdFilter) {
     return tasks
@@ -96,7 +97,10 @@ function buildHeroIllustrationTasks(visuals, animationCollection) {
       continue
     }
 
-    if (!visual.base) {
+    const animation = animationById.get(`hero:${visual.championId}`)
+
+    if (!animation) {
+      missingHeroIds.push(visual.championId)
       continue
     }
 
@@ -111,9 +115,12 @@ function buildHeroIllustrationTasks(visuals, animationCollection) {
       portraitPath: visual.portrait?.localPath ?? null,
       outputGroup: 'heroes',
       outputFileName: `${visual.championId}.png`,
-      animation: animationById.get(`hero:${visual.championId}`) ?? null,
-      fallbackAsset: visual.base,
+      animation,
     })
+  }
+
+  if (missingHeroIds.length > 0) {
+    throw new Error(`以下英雄缺少本地动画清单，请先同步 champion-animations：${missingHeroIds.join(', ')}`)
   }
 
   return tasks
@@ -155,7 +162,6 @@ function buildSkinIllustrationTasks(visuals, animationCollection) {
         outputGroup: 'skins',
         outputFileName: `${skin.id}.png`,
         animation,
-        fallbackAsset: null,
       })
     }
   }
@@ -196,6 +202,18 @@ function normalizeAnimationIndexes(animation, taskId) {
   return { sequenceIndex, frameIndex }
 }
 
+function resolveIllustrationRasterScale(viewportBounds) {
+  const width = Math.max(1, Math.ceil(viewportBounds.maxX - viewportBounds.minX))
+  const height = Math.max(1, Math.ceil(viewportBounds.maxY - viewportBounds.minY))
+  const maxEdge = Math.max(width, height)
+
+  if (maxEdge >= 320) {
+    return 1
+  }
+
+  return 2
+}
+
 async function renderAnimationIllustrationTask(task, outputDir, currentVersion) {
   if (task.animation.asset?.format !== 'skelanim-zlib') {
     throw new Error(`${task.id} 的动画资源格式不是 skelanim-zlib`)
@@ -214,9 +232,14 @@ async function renderAnimationIllustrationTask(task, outputDir, currentVersion) 
     },
     rawBuffer,
   )
+  const walkPosterPose = resolveWalkPosterPose(task.animation, skelAnim)
   const rendered = await renderSkelAnimPoseToPngBuffer(skelAnim, {
-    sequenceIndex,
-    frameIndex,
+    sequenceIndex: walkPosterPose?.sequenceIndex ?? sequenceIndex,
+    frameIndex: walkPosterPose?.frameIndex ?? frameIndex,
+    viewportBounds: walkPosterPose?.viewportBounds ?? undefined,
+    rasterScale: walkPosterPose?.viewportBounds
+      ? resolveIllustrationRasterScale(walkPosterPose.viewportBounds)
+      : 1,
   })
 
   return {
@@ -239,43 +262,17 @@ async function renderAnimationIllustrationTask(task, outputDir, currentVersion) 
   }
 }
 
-async function renderFallbackIllustrationTask(task, graphicCache) {
-  if (!task.fallbackAsset) {
-    throw new Error(`${task.id} 缺少 fallbackAsset`)
-  }
-
-  const rendered = await graphicCache.renderIllustrationCandidate({
-    slot: 'base',
-    asset: task.fallbackAsset,
-  })
-
-  return {
-    sourceSlot: 'base',
-    sourceGraphicId: rendered.asset.graphicId,
-    sourceGraphic: rendered.asset.sourceGraphic,
-    sourceVersion: rendered.asset.sourceVersion,
-    bytes: rendered.bytes,
-    width: rendered.width,
-    height: rendered.height,
-    render: rendered.render,
-  }
-}
-
 export async function syncChampionIllustrations(options = {}) {
   const outputDir = path.resolve(options.outputDir ?? DEFAULT_OUTPUT_DIR)
   const currentVersion = options.currentVersion ?? DEFAULT_CURRENT_VERSION
   const visualsFile = path.resolve(options.visualsFile ?? path.join(outputDir, DEFAULT_VISUALS_FILE))
   const animationsFile = path.resolve(options.animationsFile ?? path.join(outputDir, DEFAULT_ANIMATIONS_FILE))
-  const definitionsInput = options.input ? path.resolve(options.input) : null
   const concurrency = Math.max(1, Number(options.concurrency ?? DEFAULT_CONCURRENCY))
   const championIdFilter = parseIdFilter(options.championIds ?? null)
   const skinIdFilter = parseIdFilter(options.skinIds ?? null)
   const hasSelectionFilters = Boolean(championIdFilter || skinIdFilter)
   const visuals = await readJson(visualsFile)
   const animations = await readJsonIfExists(animationsFile)
-  const definitions = definitionsInput ? await readJson(definitionsInput) : null
-  const graphicDefById = new Map((definitions?.graphic_defines ?? []).map((item) => [String(item.id), item]))
-  const graphicCache = createChampionGraphicResourceCache({ graphicDefById })
   const filteredVisuals = {
     ...visuals,
     filters: {
@@ -299,9 +296,7 @@ export async function syncChampionIllustrations(options = {}) {
   await mkdir(path.join(illustrationRoot, 'skins'), { recursive: true })
 
   const writtenIllustrations = await runWithConcurrency(tasks, concurrency, async (task) => {
-    const rendered = task.animation
-      ? await renderAnimationIllustrationTask(task, outputDir, currentVersion)
-      : await renderFallbackIllustrationTask(task, graphicCache)
+    const rendered = await renderAnimationIllustrationTask(task, outputDir, currentVersion)
     const outputFile = path.join(illustrationRoot, task.outputGroup, task.outputFileName)
 
     await writeFile(outputFile, rendered.bytes)
@@ -363,17 +358,16 @@ export async function syncChampionIllustrations(options = {}) {
 
 function printUsage() {
   console.log(`用法：
-  node scripts/sync-idle-champions-illustrations.mjs [--input <definitions.json>] [--visualsFile <file>] [--animationsFile <file>] [--outputDir <dir>] [--championIds <ids>] [--skinIds <ids>]
+  node scripts/sync-idle-champions-illustrations.mjs [--visualsFile <file>] [--animationsFile <file>] [--outputDir <dir>] [--championIds <ids>] [--skinIds <ids>]
 
 说明：
-  优先复用本地 champion-animations 清单中的默认 sequence/frame，把 hero-base / skin 的本地 .bin 渲染为站内静态 PNG；仅当 hero-base 不存在动画包时，才回退到直接静态渲染。
+  统一复用本地 champion-animations 清单中的默认 sequence/frame，把 hero-base / skin 的本地 .bin 渲染为站内静态 PNG；缺少动画包会直接报错，不再回退官方静态图。
 `)
 }
 
 async function main() {
   const { values } = parseArgs({
     options: {
-      input: { type: 'string' },
       visualsFile: { type: 'string' },
       animationsFile: { type: 'string' },
       outputDir: { type: 'string' },

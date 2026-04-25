@@ -161,7 +161,7 @@ export function useChampionDetailResources(championId: string | undefined) {
   const selectedSkinIllustration = selectedSkin ? skinIllustrationsById.get(selectedSkin.id) ?? null : null
   const selectedSkinPreviewUrl =
     detail && selectedSkin
-      ? resolveSkinPreviewUrl(selectedSkinIllustration, detail.summary)
+      ? resolveSkinPreviewUrl(selectedSkinIllustration)
       : null
 
   const openArtworkDialog = (skinId?: string) => {

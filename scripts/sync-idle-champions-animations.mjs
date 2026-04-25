@@ -3,7 +3,18 @@ import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import { createChampionGraphicResourceCache } from './data/champion-graphic-resource-cache.mjs'
-import { computeSkelAnimFrameBounds } from './data/skelanim-renderer.mjs'
+import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.mjs'
+import {
+  resolvePreferredSequenceIndexes,
+  scoreAnimationSequenceMetrics,
+  selectAnimationIdleDefaultMetrics,
+  summarizeAnimationSequence,
+  summarizeAnimationSequenceMetrics,
+} from './data/champion-animation-idle-selection.mjs'
+import {
+  DEFAULT_CHAMPION_ANIMATION_IDLE_OVERRIDES_FILE,
+  readChampionAnimationIdleOverrides,
+} from './data/champion-animation-idle-overrides.mjs'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'
@@ -84,81 +95,6 @@ function isSkelAnimGraphicDefinition(graphicDefinition) {
 function isSkelAnimAsset(asset, graphicDefById) {
   const graphicDefinition = graphicDefById.get(String(asset.graphicId))
   return isSkelAnimGraphicDefinition(graphicDefinition) || asset.remotePath.includes('/Characters/')
-}
-
-function resolvePreferredSequenceIndexes(graphicDefinition) {
-  const sequenceOverride = graphicDefinition?.export_params?.sequence_override
-
-  if (!Array.isArray(sequenceOverride) || sequenceOverride.length === 0) {
-    return []
-  }
-
-  return sequenceOverride
-    .map((value) => Number(value) - 1)
-    .filter((value) => Number.isInteger(value) && value >= 0)
-}
-
-function mergeBounds(base, next) {
-  if (!next) {
-    return base
-  }
-
-  if (!base) {
-    return {
-      minX: next.minX,
-      minY: next.minY,
-      maxX: next.maxX,
-      maxY: next.maxY,
-    }
-  }
-
-  return {
-    minX: Math.min(base.minX, next.minX),
-    minY: Math.min(base.minY, next.minY),
-    maxX: Math.max(base.maxX, next.maxX),
-    maxY: Math.max(base.maxY, next.maxY),
-  }
-}
-
-function summarizeSequence(sequence) {
-  let bounds = null
-  let firstRenderableFrameIndex = null
-
-  for (let frameIndex = 0; frameIndex < sequence.length; frameIndex += 1) {
-    const frameBounds = computeSkelAnimFrameBounds(sequence, frameIndex)
-
-    if (!frameBounds) {
-      continue
-    }
-
-    if (firstRenderableFrameIndex === null) {
-      firstRenderableFrameIndex = frameIndex
-    }
-
-    bounds = mergeBounds(bounds, frameBounds)
-  }
-
-  return {
-    sequenceIndex: sequence.sequenceIndex,
-    frameCount: sequence.length,
-    pieceCount: sequence.pieces.length,
-    firstRenderableFrameIndex,
-    bounds,
-  }
-}
-
-function resolveDefaultSequence(sequenceSummaries, preferredSequenceIndexes) {
-  const sequenceByIndex = new Map(sequenceSummaries.map((summary) => [summary.sequenceIndex, summary]))
-
-  for (const preferredIndex of preferredSequenceIndexes) {
-    const summary = sequenceByIndex.get(preferredIndex)
-
-    if (summary?.firstRenderableFrameIndex !== null) {
-      return summary
-    }
-  }
-
-  return sequenceSummaries.find((summary) => summary.firstRenderableFrameIndex !== null) ?? null
 }
 
 function sortAnimations(left, right) {
@@ -279,10 +215,47 @@ function canReuseExistingAnimation(task, existingAnimation, currentVersion) {
     existingAnimation.sourceGraphic === task.asset.sourceGraphic &&
     (existingAnimation.sourceVersion ?? null) === (task.asset.sourceVersion ?? null) &&
     existingAnimation.asset?.path === buildAnimationAssetPath(currentVersion, task.outputGroup, task.outputId) &&
-    existingAnimation.asset?.format === 'skelanim-zlib' &&
-    Array.isArray(existingAnimation.sequences) &&
-    existingAnimation.sequences.length > 0
+    existingAnimation.asset?.format === 'skelanim-zlib'
   )
+}
+
+function decodeAnimationGraphic(task, rawBuffer) {
+  return decodeSkelAnimGraphicBuffer(
+    {
+      graphicId: task.asset.graphicId,
+      sourceGraphic: task.asset.sourceGraphic,
+      sourceVersion: task.asset.sourceVersion,
+      remotePath: task.asset.remotePath,
+      delivery: task.asset.delivery,
+    },
+    rawBuffer,
+  )
+}
+
+function selectDefaultSequenceForTask(task, character, animationIdleOverride) {
+  const preferredSequenceIndexes = resolvePreferredSequenceIndexes(task.graphicDefinition)
+  const sequenceSummaries = character.sequences.map(summarizeAnimationSequence)
+  const sequenceSummaryByIndex = new Map(sequenceSummaries.map((item) => [item.sequenceIndex, item]))
+  const scoredMetrics = scoreAnimationSequenceMetrics(
+    character.sequences.map((sequence) =>
+      summarizeAnimationSequenceMetrics(sequence, sequenceSummaryByIndex.get(sequence.sequenceIndex) ?? null),
+    ),
+  )
+  const selectedMetrics = selectAnimationIdleDefaultMetrics({
+    scoredMetrics,
+    preferredSequenceIndexes,
+    blockedSequenceIndexes: animationIdleOverride?.blockedSequenceIndexes ?? [],
+    fixedSequenceIndex: animationIdleOverride?.fixedSequenceIndex ?? null,
+  })
+
+  if (!selectedMetrics) {
+    throw new Error(`${task.id} 没有可播放的 sequence`)
+  }
+
+  return {
+    selectedMetrics,
+    sequenceSummaries,
+  }
 }
 
 async function cleanupAnimationDir(dirPath, expectedFiles) {
@@ -302,6 +275,9 @@ export async function syncChampionAnimations(options = {}) {
   const currentVersion = options.currentVersion ?? DEFAULT_CURRENT_VERSION
   const visualsFile = path.resolve(options.visualsFile ?? path.join(outputDir, DEFAULT_VISUALS_FILE))
   const definitionsInput = options.input ? path.resolve(options.input) : null
+  const idleOverridesFile = path.resolve(
+    options.idleOverridesFile ?? DEFAULT_CHAMPION_ANIMATION_IDLE_OVERRIDES_FILE,
+  )
   const concurrency = Math.max(1, Number(options.concurrency ?? DEFAULT_CONCURRENCY))
   const championIdFilter = parseIdFilter(options.championIds ?? null)
   const skinIdFilter = parseIdFilter(options.skinIds ?? null)
@@ -325,6 +301,7 @@ export async function syncChampionAnimations(options = {}) {
   ]
   const baseCollection = await readJsonIfExists(collectionFile)
   const existingAnimationMap = new Map((baseCollection?.items ?? []).map((item) => [item.id, item]))
+  const idleOverrides = await readChampionAnimationIdleOverrides(idleOverridesFile)
 
   await mkdir(path.join(animationRoot, 'heroes'), { recursive: true })
   await mkdir(path.join(animationRoot, 'skins'), { recursive: true })
@@ -334,64 +311,26 @@ export async function syncChampionAnimations(options = {}) {
     const existingAnimation = existingAnimationMap.get(task.id)
     const canReuse =
       canReuseExistingAnimation(task, existingAnimation, currentVersion) && (await pathExists(outputFile))
-
-    if (canReuse) {
-      const defaultSequence = resolveDefaultSequence(
-        existingAnimation.sequences,
-        resolvePreferredSequenceIndexes(task.graphicDefinition),
-      )
-
-      if (defaultSequence) {
-        return {
-          mode: 'reused',
-          item: {
-            id: task.id,
-            championId: task.championId,
-            skinId: task.skinId,
-            kind: task.kind,
-            seat: task.seat,
-            championName: task.championName,
-            illustrationName: task.illustrationName,
-            sourceSlot: task.sourceSlot,
-            sourceGraphicId: task.asset.graphicId,
-            sourceGraphic: task.asset.sourceGraphic,
-            sourceVersion: task.asset.sourceVersion,
-            fps: existingAnimation.fps ?? DEFAULT_FPS,
-            defaultSequenceIndex: defaultSequence.sequenceIndex,
-            defaultFrameIndex: defaultSequence.firstRenderableFrameIndex ?? 0,
-            asset: {
-              path: buildAnimationAssetPath(currentVersion, task.outputGroup, task.outputId),
-              bytes: existingAnimation.asset.bytes,
-              format: 'skelanim-zlib',
-            },
-            sequences: existingAnimation.sequences,
-          },
-        }
-      }
-    }
-
-    const rawBuffer = await graphicCache.readRawGraphicBuffer(task.asset)
-    const decoded = await graphicCache.readSkelAnimGraphic(task.asset)
+    const rawBuffer = canReuse ? await readFile(outputFile) : await graphicCache.readRawGraphicBuffer(task.asset)
+    const decoded = decodeAnimationGraphic(task, rawBuffer)
     const character = decoded.characters[0]
 
     if (!character) {
       throw new Error(`${task.id} 缺少可用角色数据`)
     }
 
-    const sequences = character.sequences.map(summarizeSequence)
-    const defaultSequence = resolveDefaultSequence(
-      sequences,
-      resolvePreferredSequenceIndexes(task.graphicDefinition),
+    const { selectedMetrics, sequenceSummaries } = selectDefaultSequenceForTask(
+      task,
+      character,
+      idleOverrides.get(task.id) ?? null,
     )
 
-    if (!defaultSequence) {
-      throw new Error(`${task.id} 没有可播放的 sequence`)
+    if (!canReuse) {
+      await writeFile(outputFile, rawBuffer)
     }
 
-    await writeFile(outputFile, rawBuffer)
-
     return {
-      mode: 'downloaded',
+      mode: canReuse ? 'reused' : 'downloaded',
       item: {
         id: task.id,
         championId: task.championId,
@@ -404,15 +343,15 @@ export async function syncChampionAnimations(options = {}) {
         sourceGraphicId: task.asset.graphicId,
         sourceGraphic: task.asset.sourceGraphic,
         sourceVersion: task.asset.sourceVersion,
-        fps: DEFAULT_FPS,
-        defaultSequenceIndex: defaultSequence.sequenceIndex,
-        defaultFrameIndex: defaultSequence.firstRenderableFrameIndex ?? 0,
+        fps: existingAnimation?.fps ?? DEFAULT_FPS,
+        defaultSequenceIndex: selectedMetrics.sequenceIndex,
+        defaultFrameIndex: selectedMetrics.frameIndex ?? 0,
         asset: {
           path: buildAnimationAssetPath(currentVersion, task.outputGroup, task.outputId),
-          bytes: rawBuffer.length,
+          bytes: canReuse ? (existingAnimation?.asset?.bytes ?? rawBuffer.length) : rawBuffer.length,
           format: 'skelanim-zlib',
         },
-        sequences,
+        sequences: sequenceSummaries,
       },
     }
   })
@@ -462,7 +401,7 @@ export async function syncChampionAnimations(options = {}) {
 
 function printUsage() {
   console.log(`用法：
-  node scripts/sync-idle-champions-animations.mjs [--input <definitions.json>] [--visualsFile <file>] [--outputDir <dir>] [--championIds <ids>] [--skinIds <ids>]
+  node scripts/sync-idle-champions-animations.mjs [--input <definitions.json>] [--visualsFile <file>] [--outputDir <dir>] [--idleOverridesFile <file>] [--championIds <ids>] [--skinIds <ids>]
 
 说明：
   基于 champion-visuals.json 选择可播放的 hero-base / skin SkelAnim 原始资源，输出供前端 canvas 动画播放和静态默认帧渲染复用的本地二进制资源与索引清单。
@@ -477,6 +416,7 @@ async function main() {
       outputDir: { type: 'string' },
       currentVersion: { type: 'string' },
       concurrency: { type: 'string' },
+      idleOverridesFile: { type: 'string' },
       championIds: { type: 'string' },
       skinIds: { type: 'string' },
       help: { type: 'boolean' },

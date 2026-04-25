@@ -1,13 +1,13 @@
 import type { SkelAnimBounds, SkelAnimFrame, SkelAnimSequence } from './types'
 
 export function applyTransform(frame: SkelAnimFrame, x: number, y: number) {
-  const angle = -frame.rotation
+  const angle = frame.rotation
   const cos = Math.cos(angle)
   const sin = Math.sin(angle)
 
   return {
-    x: cos * frame.scaleX * x + -sin * frame.scaleY * y + frame.x,
-    y: sin * frame.scaleX * x + cos * frame.scaleY * y + frame.y,
+    x: frame.scaleX * (cos * x - sin * y) + frame.x,
+    y: frame.scaleY * (sin * x + cos * y) + frame.y,
   }
 }
 

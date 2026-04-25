@@ -3,7 +3,11 @@ import assert from 'node:assert/strict'
 import zlib from 'node:zlib'
 import { PNG } from 'pngjs'
 import { decodeSkelAnimGraphicBuffer } from './skelanim-codec.mjs'
-import { renderSkelAnimPoseToPngBuffer, selectBestSkelAnimPose } from './skelanim-renderer.mjs'
+import {
+  computeSkelAnimFrameBounds,
+  renderSkelAnimPoseToPngBuffer,
+  selectBestSkelAnimPose,
+} from './skelanim-renderer.mjs'
 
 function createSolidTexture(width, height, colorByPixel) {
   const png = new PNG({ width, height })
@@ -323,6 +327,120 @@ test('renderSkelAnimPoseToPngBuffer 以正 y 向下堆叠 piece', async () => {
   assert.deepEqual(Array.from(topPixel), [255, 0, 0, 255])
   assert.deepEqual(Array.from(middlePixel), [0, 0, 0, 0])
   assert.deepEqual(Array.from(bottomPixel), [0, 0, 255, 255])
+})
+
+test('renderSkelAnimPoseToPngBuffer 支持用更大的 viewport 输出首帧 poster', async () => {
+  const texture = createSolidTexture(1, 1, () => [0, 255, 0, 255])
+  const rawBuffer = buildSkelAnimAssetBuffer({
+    sheetWidth: 1,
+    sheetHeight: 1,
+    textures: [texture],
+    characters: [
+      {
+        name: 'PosterHero',
+        sequences: [
+          {
+            length: 1,
+            pieces: [
+              {
+                textureId: 0,
+                sourceX: 0,
+                sourceY: 0,
+                sourceWidth: 1,
+                sourceHeight: 1,
+                centerX: 0,
+                centerY: 0,
+                frames: [
+                  {
+                    depth: 0,
+                    rotation: 0,
+                    scaleX: 1,
+                    scaleY: 1,
+                    x: 1,
+                    y: 0,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  })
+  const decoded = decodeSkelAnimGraphicBuffer(testAsset, rawBuffer)
+  const rendered = await renderSkelAnimPoseToPngBuffer(decoded, {
+    sequenceIndex: 0,
+    frameIndex: 0,
+    viewportBounds: { minX: 0, minY: 0, maxX: 3, maxY: 1 },
+  })
+  const png = PNG.sync.read(rendered.bytes)
+
+  assert.equal(rendered.width, 3)
+  assert.equal(rendered.height, 1)
+  assert.deepEqual(rendered.render.bounds, { minX: 0, minY: 0, maxX: 3, maxY: 1 })
+  assert.deepEqual(Array.from(png.data.subarray(0, 4)), [0, 0, 0, 0])
+  assert.deepEqual(Array.from(png.data.subarray(4, 8)), [0, 255, 0, 255])
+  assert.deepEqual(Array.from(png.data.subarray(8, 12)), [0, 0, 0, 0])
+})
+
+test('SkelAnim 几何遵循 kleho 的正 rotation 与先 scale 后 rotate', async () => {
+  const texture = createSolidTexture(1, 1, () => [255, 0, 0, 255])
+  const rawBuffer = buildSkelAnimAssetBuffer({
+    sheetWidth: 1,
+    sheetHeight: 1,
+    textures: [texture],
+    characters: [
+      {
+        name: 'RotationHero',
+        sequences: [
+          {
+            length: 1,
+            pieces: [
+              {
+                textureId: 0,
+                sourceX: 0,
+                sourceY: 0,
+                sourceWidth: 1,
+                sourceHeight: 1,
+                centerX: 0,
+                centerY: 0,
+                frames: [
+                  {
+                    depth: 0,
+                    rotation: Math.PI / 2,
+                    scaleX: 2,
+                    scaleY: 1,
+                    x: 0,
+                    y: 0,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  })
+  const decoded = decodeSkelAnimGraphicBuffer(testAsset, rawBuffer)
+  const bounds = computeSkelAnimFrameBounds(decoded.characters[0].sequences[0], 0)
+  const rendered = await renderSkelAnimPoseToPngBuffer(decoded, {
+    sequenceIndex: 0,
+    frameIndex: 0,
+  })
+  const png = PNG.sync.read(rendered.bytes)
+
+  assert.ok(bounds)
+  assert.ok(Math.abs(bounds.minX + 2) < 1e-9)
+  assert.ok(Math.abs(bounds.minY) < 1e-9)
+  assert.ok(Math.abs(bounds.maxX) < 1e-9)
+  assert.ok(Math.abs(bounds.maxY - 1) < 1e-9)
+  assert.equal(bounds.width, 2)
+  assert.equal(bounds.height, 1)
+  assert.equal(bounds.visiblePieceCount, 1)
+  assert.equal(rendered.width, 2)
+  assert.equal(rendered.height, 1)
+  assert.deepEqual(Array.from(png.data.subarray(0, 4)), [255, 0, 0, 255])
+  assert.deepEqual(Array.from(png.data.subarray(4, 8)), [255, 0, 0, 255])
 })
 
 test('selectBestSkelAnimPose 默认选择第一个 sequence 的首帧', () => {

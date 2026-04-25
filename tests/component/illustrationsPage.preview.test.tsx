@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react'
+import { screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -12,7 +12,26 @@ vi.mock('../../src/data/client', async () => {
 })
 
 vi.mock('../../src/features/skelanim-player/SkelAnimCanvas', () => ({
-  SkelAnimCanvas: ({ alt }: { alt: string }) => <div data-testid="skelanim-preview">{alt}</div>,
+  SkelAnimCanvas: ({
+    alt,
+    playbackMode,
+    sequenceIntent,
+    viewportBounds,
+  }: {
+    alt: string
+    playbackMode?: 'manual' | 'play' | 'pause'
+    sequenceIntent?: 'default' | 'walk'
+    viewportBounds?: { minX: number; minY: number; maxX: number; maxY: number } | null
+  }) => (
+    <div
+      data-testid="skelanim-preview"
+      data-playback-mode={playbackMode ?? 'manual'}
+      data-sequence-intent={sequenceIntent ?? 'default'}
+      data-viewport-width={viewportBounds ? String(viewportBounds.maxX - viewportBounds.minX) : 'none'}
+    >
+      {alt}
+    </div>
+  ),
 }))
 
 import {
@@ -43,16 +62,23 @@ describe('IllustrationsPage hover preview', () => {
       expect(mockedLoadCollection).toHaveBeenCalledWith('champion-animations')
     })
 
-    expect(screen.queryByTestId('skelanim-preview')).not.toBeInTheDocument()
+    const preview = () => within(cardLink).getByTestId('skelanim-preview')
+
+    expect(within(cardLink).queryByTestId('skelanim-preview')).not.toBeInTheDocument()
 
     await user.hover(cardLink)
 
     await waitFor(() => {
-      expect(screen.getByTestId('skelanim-preview')).toHaveTextContent('布鲁诺本体立绘')
+      expect(preview()).toHaveTextContent('布鲁诺本体立绘')
+      expect(preview()).toHaveAttribute('data-sequence-intent', 'walk')
+      expect(preview()).toHaveAttribute('data-playback-mode', 'play')
+      expect(preview()).toHaveAttribute('data-viewport-width', '452')
     })
 
     await user.unhover(cardLink)
 
-    expect(screen.queryByTestId('skelanim-preview')).not.toBeInTheDocument()
+    await waitFor(() => {
+      expect(preview()).toHaveAttribute('data-playback-mode', 'pause')
+    })
   })
 })
