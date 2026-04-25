@@ -210,11 +210,18 @@ export async function renderSkelAnimPoseToPngBuffer(skelAnim, options = {}) {
   const sequence = character.sequences.find((item) => item.sequenceIndex === pose.sequenceIndex)
   const textureImages = await loadTextureImages(skelAnim.textures)
   const textureImageById = new Map(textureImages.map((item) => [item.textureId, item.image]))
-  const width = Math.max(1, Math.ceil(pose.bounds.width))
-  const height = Math.max(1, Math.ceil(pose.bounds.height))
+  const viewportBounds = options.viewportBounds ?? pose.bounds
+  const logicalWidth = Math.max(1, Math.ceil(viewportBounds.maxX - viewportBounds.minX))
+  const logicalHeight = Math.max(1, Math.ceil(viewportBounds.maxY - viewportBounds.minY))
+  const rasterScale = Math.max(1, Number(options.rasterScale ?? 1))
+  const width = Math.max(1, Math.ceil(logicalWidth * rasterScale))
+  const height = Math.max(1, Math.ceil(logicalHeight * rasterScale))
   const canvas = createCanvas(width, height)
   const context = canvas.getContext('2d')
   const visiblePieces = listVisiblePieces(sequence, pose.frameIndex).sort((left, right) => left.frame.depth - right.frame.depth)
+
+  context.setTransform(rasterScale, 0, 0, rasterScale, 0, 0)
+  context.imageSmoothingEnabled = false
 
   for (const { piece, frame } of visiblePieces) {
     const image = textureImageById.get(piece.textureId)
@@ -224,7 +231,7 @@ export async function renderSkelAnimPoseToPngBuffer(skelAnim, options = {}) {
     }
 
     context.save()
-    context.translate(frame.x - pose.bounds.minX, frame.y - pose.bounds.minY)
+    context.translate(frame.x - viewportBounds.minX, frame.y - viewportBounds.minY)
     context.scale(frame.scaleX, frame.scaleY)
     context.rotate(frame.rotation)
     context.drawImage(
@@ -251,10 +258,10 @@ export async function renderSkelAnimPoseToPngBuffer(skelAnim, options = {}) {
       isStaticPose: pose.sequenceLength === 1,
       frameIndex: pose.frameIndex,
       bounds: {
-        minX: pose.bounds.minX,
-        minY: pose.bounds.minY,
-        maxX: pose.bounds.maxX,
-        maxY: pose.bounds.maxY,
+        minX: viewportBounds.minX,
+        minY: viewportBounds.minY,
+        maxX: viewportBounds.maxX,
+        maxY: viewportBounds.maxY,
       },
       visiblePieceCount: pose.bounds.visiblePieceCount,
     },

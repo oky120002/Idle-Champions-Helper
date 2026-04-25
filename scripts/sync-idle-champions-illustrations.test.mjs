@@ -228,6 +228,63 @@ function createSkelAnimRawBuffer() {
   })
 }
 
+function createWalkPosterRawBuffer() {
+  const texture = createSolidTexture(2, 1, (x) => (x === 0 ? [255, 0, 0, 255] : [0, 255, 0, 255]))
+
+  return buildSkelAnimAssetBuffer({
+    sheetWidth: 2,
+    sheetHeight: 1,
+    textures: [texture],
+    characters: [
+      {
+        name: 'WalkPosterHero',
+        sequences: [
+          {
+            length: 4,
+            pieces: [
+              {
+                textureId: 0,
+                sourceX: 0,
+                sourceY: 0,
+                sourceWidth: 1,
+                sourceHeight: 1,
+                centerX: 0,
+                centerY: 0,
+                frames: [
+                  { depth: 0, rotation: 0, scaleX: 1, scaleY: 1, x: 0, y: 0 },
+                  { depth: 0, rotation: 0.01, scaleX: 1, scaleY: 1, x: 0.05, y: 0 },
+                  { depth: 0, rotation: -0.01, scaleX: 1, scaleY: 1, x: -0.05, y: 0 },
+                  { depth: 0, rotation: 0, scaleX: 1, scaleY: 1, x: 0, y: 0 },
+                ],
+              },
+            ],
+          },
+          {
+            length: 4,
+            pieces: [
+              {
+                textureId: 0,
+                sourceX: 1,
+                sourceY: 0,
+                sourceWidth: 1,
+                sourceHeight: 1,
+                centerX: 0,
+                centerY: 0,
+                frames: [
+                  { depth: 0, rotation: 0, scaleX: 1, scaleY: 1, x: 0, y: 0 },
+                  { depth: 0, rotation: 0.11, scaleX: 1, scaleY: 1, x: 2, y: 0 },
+                  { depth: 0, rotation: -0.08, scaleX: 1, scaleY: 1, x: 1, y: 0 },
+                  { depth: 0, rotation: -0.03, scaleX: 1, scaleY: 1, x: 2, y: 0 },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  })
+}
+
 function createSkinAnimationManifestItem({
   championId,
   skinId,
@@ -363,7 +420,7 @@ async function createTempDir(t) {
   return tempDir
 }
 
-test('syncChampionIllustrations 的皮肤与 hero-base 静态图都复用本地动画默认帧', async (t) => {
+test('syncChampionIllustrations 的皮肤与 hero-base 静态图会复用动画链路生成 poster', async (t) => {
   const tempDir = await createTempDir(t)
   const visualsFile = path.join(tempDir, 'champion-visuals.json')
   const championName = { original: 'Animation Hero', display: '动画像英雄' }
@@ -443,11 +500,93 @@ test('syncChampionIllustrations 的皮肤与 hero-base 静态图都复用本地�
   assert.equal(skinIllustration.render.sequenceIndex, 1)
   assert.equal(skinIllustration.render.frameIndex, 1)
   assert.equal(skinIllustration.sourceSlot, 'xl')
-  assert.deepEqual(Array.from(heroPng.data), [255, 255, 0, 255])
-  assert.deepEqual(Array.from(skinPng.data), [255, 255, 0, 255])
+  assert.equal(heroIllustration.image.width, 2)
+  assert.equal(heroIllustration.image.height, 2)
+  assert.equal(skinIllustration.image.width, 2)
+  assert.equal(skinIllustration.image.height, 2)
+  assert.equal(heroPng.data[3], 255)
+  assert.equal(skinPng.data[3], 255)
+  assert.ok(heroPng.data[0] > 0 || heroPng.data[1] > 0 || heroPng.data[2] > 0)
+  assert.ok(skinPng.data[0] > 0 || skinPng.data[1] > 0 || skinPng.data[2] > 0)
 })
 
-test('syncChampionIllustrations 在 hero-base 没有动画包时回退现有静态渲染逻辑', async (t) => {
+test('syncChampionIllustrations 会把 walk-like 动效首帧渲染成与 hover 一致的 poster', async (t) => {
+  const tempDir = await createTempDir(t)
+  const visualsFile = path.join(tempDir, 'champion-visuals.json')
+  const championName = { original: 'Walk Poster Hero', display: '步行动效海报' }
+  const rawBuffer = createWalkPosterRawBuffer()
+  const heroItem = createHeroAnimationManifestItem({
+    championId: '301',
+    seat: 3,
+    championName,
+    sourceGraphicId: 'hero-301-anim',
+    sourceGraphic: 'Hero_301_Anim',
+    defaultSequenceIndex: 0,
+    defaultFrameIndex: 0,
+    assetBytes: rawBuffer.length,
+  })
+
+  heroItem.sequences = [
+    {
+      sequenceIndex: 0,
+      frameCount: 4,
+      pieceCount: 1,
+      firstRenderableFrameIndex: 0,
+      bounds: { minX: -0.05, minY: 0, maxX: 1.05, maxY: 1 },
+    },
+    {
+      sequenceIndex: 1,
+      frameCount: 4,
+      pieceCount: 1,
+      firstRenderableFrameIndex: 0,
+      bounds: { minX: 0, minY: 0, maxX: 3, maxY: 1 },
+    },
+  ]
+
+  await writeJson(visualsFile, {
+    updatedAt: '2026-04-25',
+    items: [
+      {
+        championId: '301',
+        seat: 3,
+        name: championName,
+        portrait: null,
+        base: createDecodedPngAsset({
+          graphicId: 'hero-301-static',
+          sourceGraphic: 'Hero_301_Static',
+          color: [12, 34, 56],
+          remotePath: '/Portraits/Hero_301_Static',
+        }),
+        skins: [],
+      },
+    ],
+  })
+  await writeAnimationCollection(tempDir, [heroItem], rawBuffer)
+
+  await syncChampionIllustrations({
+    visualsFile,
+    outputDir: tempDir,
+    currentVersion: 'v1',
+  })
+
+  const output = JSON.parse(await readFile(path.join(tempDir, 'champion-illustrations.json'), 'utf8'))
+  const heroIllustration = output.items.find((item) => item.id === 'hero:301')
+  const heroPng = PNG.sync.read(await readFile(path.join(tempDir, 'champion-illustrations', 'heroes', '301.png')))
+
+  assert.ok(heroIllustration)
+  assert.equal(heroIllustration.render.sequenceIndex, 1)
+  assert.equal(heroIllustration.render.frameIndex, 0)
+  assert.deepEqual(heroIllustration.render.bounds, { minX: 0, minY: 0, maxX: 3, maxY: 1 })
+  assert.equal(heroIllustration.image.width, 6)
+  assert.equal(heroIllustration.image.height, 2)
+  assert.ok(heroPng.data[1] > heroPng.data[0])
+  assert.equal(heroPng.data[3], 255)
+  assert.ok(heroPng.data[5] > heroPng.data[4])
+  assert.equal(heroPng.data[7], 255)
+  assert.deepEqual(Array.from(heroPng.data.subarray(8, 12)), [0, 0, 0, 0])
+})
+
+test('syncChampionIllustrations 在 hero-base 没有动画包时直接报错，不再回退静态渲染', async (t) => {
   const tempDir = await createTempDir(t)
   const visualsFile = path.join(tempDir, 'champion-visuals.json')
 
@@ -474,22 +613,15 @@ test('syncChampionIllustrations 在 hero-base 没有动画包时回退现有静�
     items: [],
   })
 
-  await syncChampionIllustrations({
-    visualsFile,
-    outputDir: tempDir,
-    currentVersion: 'v1',
-  })
-
-  const output = JSON.parse(await readFile(path.join(tempDir, 'champion-illustrations.json'), 'utf8'))
-  const illustration = output.items.find((item) => item.id === 'hero:201')
-  const png = PNG.sync.read(await readFile(path.join(tempDir, 'champion-illustrations', 'heroes', '201.png')))
-
-  assert.ok(illustration)
-  assert.equal(illustration.sourceGraphicId, 'hero-201')
-  assert.equal(illustration.render.pipeline, 'decoded-png')
-  assert.equal(illustration.render.sequenceIndex, null)
-  assert.equal(illustration.render.frameIndex, null)
-  assert.deepEqual(Array.from(png.data), [0, 255, 0, 255])
+  await assert.rejects(
+    () =>
+      syncChampionIllustrations({
+        visualsFile,
+        outputDir: tempDir,
+        currentVersion: 'v1',
+      }),
+    /以下英雄缺少本地动画清单，请先同步 champion-animations：201/,
+  )
 })
 
 test('syncChampionIllustrations 在 skinIds 局部重渲染时保留既有清单与图片', async (t) => {

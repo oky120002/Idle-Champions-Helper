@@ -55,10 +55,10 @@ export function SkinArtworkDialog({
               {t({
                 zh: selectedSkinIllustration
                   ? '当前预览来自站内版本化立绘静态资源；下方继续保留原始 graphic id 与来源槽位，方便核对基座。'
-                  : '当前没有命中本地皮肤立绘时，会回退到英雄头像；下方继续保留原始 graphic id，方便排查缺口。',
+                  : '当前这套皮肤还没有站内立绘资源。为保证全站静态立绘统一来自动画导出，这里不再回退英雄头像。',
                 en: selectedSkinIllustration
                   ? 'This preview is now served from the versioned local illustration asset while the original graphic ids stay visible below for verification.'
-                  : 'When a local skin illustration is unavailable, this preview falls back to the champion portrait while keeping the original graphic ids visible below.',
+                  : 'This skin does not have a local illustration yet. To keep every static illustration sourced from animation exports, the dialog no longer falls back to the champion portrait.',
               })}
             </p>
           </div>
