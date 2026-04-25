@@ -1,33 +1,25 @@
 import type { ReactNode } from 'react'
-
-type ActionButtonTone = 'primary' | 'secondary' | 'ghost'
+import { ActionButton, type ActionButtonTone } from './ActionButton'
 
 export interface ActionButtonItem {
   id: string
   label: ReactNode
-  onClick: () => void
+  onClick: () => void | Promise<void>
   tone?: ActionButtonTone
   disabled?: boolean
   hidden?: boolean
+  compact?: boolean
+  toggled?: boolean
   className?: string
   type?: 'button' | 'submit' | 'reset'
+  ariaPressed?: boolean
+  ariaLabel?: string
 }
 
 interface ActionButtonsProps {
   items: ActionButtonItem[]
   wrap?: boolean
   className?: string
-}
-
-function getActionButtonClassName(item: ActionButtonItem): string {
-  const toneClassName =
-    item.tone === 'secondary'
-      ? 'action-button--secondary'
-      : item.tone === 'ghost'
-        ? 'action-button--ghost'
-        : ''
-
-  return ['action-button', toneClassName, item.className].filter(Boolean).join(' ')
 }
 
 export function ActionButtons({
@@ -42,15 +34,20 @@ export function ActionButtons({
   }
 
   const buttons = visibleItems.map((item) => (
-    <button
+    <ActionButton
       key={item.id}
-      type={item.type ?? 'button'}
-      className={getActionButtonClassName(item)}
-      {...(item.disabled ? { disabled: true } : {})}
+      type={item.type}
+      tone={item.tone}
+      disabled={item.disabled}
+      compact={item.compact}
+      toggled={item.toggled}
+      className={item.className}
+      ariaPressed={item.ariaPressed}
+      ariaLabel={item.ariaLabel}
       onClick={item.onClick}
     >
       {item.label}
-    </button>
+    </ActionButton>
   ))
 
   if (!wrap) {

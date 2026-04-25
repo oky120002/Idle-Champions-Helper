@@ -1,9 +1,7 @@
 import type { CSSProperties, ReactNode } from 'react'
 import { useI18n } from '../../app/i18n'
-
 type WorkbenchAccentTone = 'copper' | 'steel'
-export type WorkbenchBadgeVariant = 'chrome' | 'filter'
-export type WorkbenchBadgeTone = 'default' | 'muted'
+export type WorkbenchBadgeVariant = 'chrome' | 'filter'; export type WorkbenchBadgeTone = 'default' | 'muted'
 export type WorkbenchShareState = 'idle' | 'success' | 'error'
 
 interface WorkbenchToolbarMarkProps {
@@ -27,11 +25,6 @@ interface WorkbenchToolbarFilterStatusProps {
   className?: string
 }
 
-interface WorkbenchSidebarFilterStatusProps {
-  activeCount: number
-  className?: string
-}
-
 interface WorkbenchToolbarCopyProps {
   kicker: ReactNode
   title: ReactNode
@@ -48,12 +41,6 @@ interface WorkbenchToolbarBadgeProps {
   children: ReactNode
   variant?: WorkbenchBadgeVariant
   tone?: WorkbenchBadgeTone
-  className?: string
-}
-
-interface WorkbenchShareButtonProps {
-  state: WorkbenchShareState
-  onCopy: () => void | Promise<void>
   className?: string
 }
 
@@ -195,54 +182,6 @@ export function WorkbenchToolbarBadge({
     >
       {children}
     </span>
-  )
-}
-
-export function WorkbenchSidebarFilterStatus({
-  activeCount,
-  className,
-}: WorkbenchSidebarFilterStatusProps) {
-  const { t } = useI18n()
-
-  return (
-    <WorkbenchToolbarBadge variant="filter" {...(className !== undefined ? { className } : {})}>
-      {activeCount > 0
-        ? t({ zh: `${activeCount} 项已启用`, en: `${activeCount} active` })
-        : t({ zh: '当前未启用条件', en: 'No active filters' })}
-    </WorkbenchToolbarBadge>
-  )
-}
-
-export function WorkbenchShareButton({
-  state,
-  onCopy,
-  className,
-}: WorkbenchShareButtonProps) {
-  const { t } = useI18n()
-  const label =
-    state === 'success'
-      ? t({ zh: '已复制链接', en: 'Link copied' })
-      : state === 'error'
-        ? t({ zh: '复制失败', en: 'Copy failed' })
-        : t({ zh: '复制当前链接', en: 'Copy current link' })
-
-  return (
-    <button
-      type="button"
-      className={joinClasses(
-        state === 'success'
-          ? 'workbench-page__toolbar-action workbench-page__toolbar-action--share workbench-page__toolbar-action--success action-button action-button--ghost action-button--compact action-button--toggled'
-          : state === 'error'
-            ? 'workbench-page__toolbar-action workbench-page__toolbar-action--share workbench-page__toolbar-action--error action-button action-button--ghost action-button--compact'
-            : 'workbench-page__toolbar-action workbench-page__toolbar-action--share action-button action-button--ghost action-button--compact',
-        className,
-      )}
-      onClick={() => {
-        void onCopy()
-      }}
-    >
-      {label}
-    </button>
   )
 }
 

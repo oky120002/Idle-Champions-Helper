@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { ActionButton } from '../ActionButton'
 
 interface WorkbenchToolbarActionButtonProps {
   children: ReactNode
@@ -22,23 +23,19 @@ export function WorkbenchToolbarActionButton({
   className,
 }: WorkbenchToolbarActionButtonProps) {
   return (
-    <button
-      type="button"
+    <ActionButton
+      tone="ghost"
+      compact
+      toggled={isActive}
       className={joinClasses(
         'workbench-page__toolbar-action',
         variant === 'prominent' && 'workbench-page__toolbar-action--prominent',
-        'action-button',
-        'action-button--ghost',
-        'action-button--compact',
-        isActive && 'action-button--toggled',
         className,
       )}
-      aria-pressed={ariaPressed}
-      onClick={() => {
-        void onClick()
-      }}
+      ariaPressed={ariaPressed}
+      onClick={onClick}
     >
       {children}
-    </button>
+    </ActionButton>
   )
 }
