@@ -2,7 +2,7 @@ import { ActionButtons } from '../../components/ActionButtons'
 import { LabeledValueCardGrid } from '../../components/LabeledValueCardGrid'
 import { ChampionIdentity } from '../../components/ChampionIdentity'
 import { PresetFormFields } from '../../components/PresetFormFields'
-import { StatusBanner } from '../../components/StatusBanner'
+import { StatusMessageBanner } from '../../components/StatusMessageBanner'
 import { SurfaceCard } from '../../components/SurfaceCard'
 import { formatSeatLabel, getLocalizedTextPair, getRoleLabel } from '../../domain/localizedText'
 import { getFormationLayoutLabel } from '../../domain/formationLayout'
@@ -111,9 +111,7 @@ export function FormationPresetCard({ model }: FormationPresetCardProps) {
             ]}
           />
 
-          {presetStatus ? (
-            <StatusBanner tone={presetStatus.tone} title={presetStatus.title} detail={presetStatus.detail} />
-          ) : null}
+          <StatusMessageBanner message={presetStatus} />
         </div>
 
         <LabeledValueCardGrid
