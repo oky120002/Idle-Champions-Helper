@@ -1,13 +1,7 @@
 import { FilterWorkbenchPage } from '../components/workbench/FilterWorkbenchPage'
 import {
-  WorkbenchToolbarCopy,
-  WorkbenchToolbarFilterStatus,
-} from '../components/workbench/WorkbenchScaffold'
-import {
   createWorkbenchFilterToolbarItems,
 } from '../components/workbench/WorkbenchToolbarItemBuilders'
-import { WorkbenchToolbarItems } from '../components/workbench/WorkbenchToolbarItems'
-import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { createAsyncStatusBannerItems } from '../components/statusBannerStackItemBuilders'
 import { ChampionsAdditionalFilters } from './champions/ChampionsAdditionalFilters'
 import { ChampionsPrimaryFilters } from './champions/ChampionsPrimaryFilters'
@@ -67,25 +61,15 @@ export function ChampionsPage() {
       ariaLabel={t({ zh: '英雄筛选工作台', en: 'Champion filter workbench' })}
       shellClassName="workbench-page__shell champions-workbench"
       contentScrollRef={model.resultsPaneRef}
-      contentOverlay={
-          model.showResultsQuickNavTop ? (
-            <WorkbenchFloatingTopButton onClick={model.scrollResultsToTop} />
-          ) : null
-      }
-      toolbarLead={
-          <WorkbenchToolbarFilterStatus
-            label="CHAMPIONS"
-            activeCount={activeFilterCount}
-          />
-      }
-      toolbarPrimary={
-          <WorkbenchToolbarCopy
-            kicker={t({ zh: '悬浮工作台', en: 'Floating workbench' })}
-            title={t({ zh: '英雄筛选', en: 'Champion filters' })}
-            detail={t({ zh: '候选池收缩与资料对比', en: 'Narrow the roster and compare dossiers' })}
-          />
-      }
-        toolbarActions={<WorkbenchToolbarItems items={toolbarItems} layout="cluster" />}
+      floatingTopButton={model.showResultsQuickNavTop ? { onClick: model.scrollResultsToTop } : undefined}
+      toolbarIntro={{
+        label: 'CHAMPIONS',
+        activeCount: activeFilterCount,
+        kicker: t({ zh: '悬浮工作台', en: 'Floating workbench' }),
+        title: t({ zh: '英雄筛选', en: 'Champion filters' }),
+        detail: t({ zh: '候选池收缩与资料对比', en: 'Narrow the roster and compare dossiers' }),
+      }}
+      toolbarItems={toolbarItems}
       sidebarHeader={{
         kicker: t({ zh: '筛选抽屉', en: 'Filter drawer' }),
         title: t({ zh: '左侧缩小候选池', en: 'Narrow the roster on the left' }),

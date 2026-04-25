@@ -1,13 +1,7 @@
 import { FilterWorkbenchPage } from '../components/workbench/FilterWorkbenchPage'
 import {
-  WorkbenchToolbarCopy,
-  WorkbenchToolbarFilterStatus,
-} from '../components/workbench/WorkbenchScaffold'
-import {
   createWorkbenchFilterToolbarItems,
 } from '../components/workbench/WorkbenchToolbarItemBuilders'
-import { WorkbenchToolbarItems } from '../components/workbench/WorkbenchToolbarItems'
-import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { createAsyncStatusBannerItems } from '../components/statusBannerStackItemBuilders'
 import { MAX_VISIBLE_VARIANTS } from './variants/constants'
 import { VariantsFilterBar } from './variants/VariantsFilterBar'
@@ -49,16 +43,16 @@ export function VariantsPage() {
       ariaLabel={t({ zh: '变体筛选工作台', en: 'Variant workbench' })}
       shellClassName="workbench-page__shell variants-workbench"
       contentScrollRef={model.resultsPaneRef}
-      contentOverlay={showResultsQuickNavTop ? <WorkbenchFloatingTopButton onClick={scrollResultsToTop} /> : null}
-        toolbarLead={<WorkbenchToolbarFilterStatus label="VARIANTS" activeCount={activeFilters.length} accentTone="steel" />}
-      toolbarPrimary={
-          <WorkbenchToolbarCopy
-            kicker={t({ zh: '悬浮工作台', en: 'Floating workbench' })}
-            title={t({ zh: '变体筛选', en: 'Variant filters' })}
-            detail={t({ zh: '战役压力、敌人与阵型阅读台', en: 'Campaign pressure, enemy, and formation reading desk' })}
-          />
-      }
-        toolbarActions={<WorkbenchToolbarItems items={toolbarItems} layout="cluster" />}
+      floatingTopButton={showResultsQuickNavTop ? { onClick: scrollResultsToTop } : undefined}
+      toolbarIntro={{
+        label: 'VARIANTS',
+        activeCount: activeFilters.length,
+        accentTone: 'steel',
+        kicker: t({ zh: '悬浮工作台', en: 'Floating workbench' }),
+        title: t({ zh: '变体筛选', en: 'Variant filters' }),
+        detail: t({ zh: '战役压力、敌人与阵型阅读台', en: 'Campaign pressure, enemy, and formation reading desk' }),
+      }}
+      toolbarItems={toolbarItems}
       sidebarHeader={{
         kicker: t({ zh: '筛选抽屉', en: 'Filter drawer' }),
         title: t({ zh: '左侧缩小压力范围', en: 'Narrow variant pressure on the left' }),

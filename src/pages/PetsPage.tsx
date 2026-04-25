@@ -1,13 +1,7 @@
 import { FilterWorkbenchPage } from '../components/workbench/FilterWorkbenchPage'
 import {
-  WorkbenchToolbarCopy,
-  WorkbenchToolbarFilterStatus,
-} from '../components/workbench/WorkbenchScaffold'
-import {
   createWorkbenchFilterToolbarItems,
 } from '../components/workbench/WorkbenchToolbarItemBuilders'
-import { WorkbenchToolbarItems } from '../components/workbench/WorkbenchToolbarItems'
-import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { createAsyncStatusBannerItems } from '../components/statusBannerStackItemBuilders'
 import { PetFilters } from './pets/PetFilters'
 import { MAX_VISIBLE_PETS } from './pets/constants'
@@ -67,16 +61,15 @@ export function PetsPage() {
       ariaLabel={t({ zh: '宠物图鉴工作台', en: 'Pet workbench' })}
       shellClassName="workbench-page__shell pets-workbench"
       contentScrollRef={model.resultsPaneRef}
-      contentOverlay={ui.showResultsQuickNavTop ? <WorkbenchFloatingTopButton onClick={actions.scrollResultsToTop} /> : null}
-        toolbarLead={<WorkbenchToolbarFilterStatus label="PETS" activeCount={activeFilterCount} />}
-      toolbarPrimary={
-          <WorkbenchToolbarCopy
-            kicker={t({ zh: '悬浮工作台', en: 'Floating workbench' })}
-            title={t({ zh: '宠物图鉴', en: 'Pet catalog' })}
-            detail={t({ zh: '宠物筛选与资源完整度排查', en: 'Filter pets and audit asset completeness' })}
-          />
-      }
-        toolbarActions={<WorkbenchToolbarItems items={toolbarItems} layout="cluster" />}
+      floatingTopButton={ui.showResultsQuickNavTop ? { onClick: actions.scrollResultsToTop } : undefined}
+      toolbarIntro={{
+        label: 'PETS',
+        activeCount: activeFilterCount,
+        kicker: t({ zh: '悬浮工作台', en: 'Floating workbench' }),
+        title: t({ zh: '宠物图鉴', en: 'Pet catalog' }),
+        detail: t({ zh: '宠物筛选与资源完整度排查', en: 'Filter pets and audit asset completeness' }),
+      }}
+      toolbarItems={toolbarItems}
       sidebarHeader={{
         kicker: t({ zh: '筛选抽屉', en: 'Filter drawer' }),
         title: t({ zh: '左侧缩小宠物目录', en: 'Narrow the pet catalog on the left' }),

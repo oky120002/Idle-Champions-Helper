@@ -1,13 +1,7 @@
 import { FilterWorkbenchPage } from '../components/workbench/FilterWorkbenchPage'
 import {
-  WorkbenchToolbarCopy,
-  WorkbenchToolbarFilterStatus,
-} from '../components/workbench/WorkbenchScaffold'
-import {
   createWorkbenchFilterToolbarItems,
 } from '../components/workbench/WorkbenchToolbarItemBuilders'
-import { WorkbenchToolbarItems } from '../components/workbench/WorkbenchToolbarItems'
-import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import { createAsyncStatusBannerItems } from '../components/statusBannerStackItemBuilders'
 import { IllustrationsAdditionalFilters } from './illustrations/IllustrationsAdditionalFilters'
 import { MAX_VISIBLE_ILLUSTRATIONS } from './illustrations/constants'
@@ -68,18 +62,15 @@ export function IllustrationsPage() {
       ariaLabel={t({ zh: '立绘图鉴工作台', en: 'Illustration workbench' })}
       shellClassName="workbench-page__shell illustrations-workbench"
       contentScrollRef={model.resultsPaneRef}
-      contentOverlay={
-          ui.showResultsQuickNavTop ? <WorkbenchFloatingTopButton onClick={actions.scrollResultsToTop} /> : null
-      }
-        toolbarLead={<WorkbenchToolbarFilterStatus label="ART CODEX" activeCount={activeFilterChips.length} />}
-        toolbarPrimary={
-          <WorkbenchToolbarCopy
-            kicker={t({ zh: '悬浮工作台', en: 'Floating workbench' })}
-            title={t({ zh: '立绘图鉴', en: 'Illustration catalog' })}
-            detail={t({ zh: '立绘筛选与动态资源对照', en: 'Filter artwork and compare motion resources' })}
-          />
-        }
-        toolbarActions={<WorkbenchToolbarItems items={toolbarItems} layout="cluster" />}
+      floatingTopButton={ui.showResultsQuickNavTop ? { onClick: actions.scrollResultsToTop } : undefined}
+      toolbarIntro={{
+        label: 'ART CODEX',
+        activeCount: activeFilterChips.length,
+        kicker: t({ zh: '悬浮工作台', en: 'Floating workbench' }),
+        title: t({ zh: '立绘图鉴', en: 'Illustration catalog' }),
+        detail: t({ zh: '立绘筛选与动态资源对照', en: 'Filter artwork and compare motion resources' }),
+      }}
+      toolbarItems={toolbarItems}
       sidebarHeader={{
         kicker: t({ zh: '筛选抽屉', en: 'Filter drawer' }),
         title: t({ zh: '左侧缩小画库范围', en: 'Narrow the art library on the left' }),
