@@ -8,7 +8,7 @@ import {
 } from '../components/workbench/WorkbenchToolbarItemBuilders'
 import { WorkbenchToolbarItems } from '../components/workbench/WorkbenchToolbarItems'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
-import type { StatusBannerStackItem } from '../components/StatusBannerStack'
+import { createAsyncStatusBannerItems } from '../components/statusBannerStackItemBuilders'
 import { ChampionsAdditionalFilters } from './champions/ChampionsAdditionalFilters'
 import { ChampionsPrimaryFilters } from './champions/ChampionsPrimaryFilters'
 import { ChampionsResultsSection } from './champions/ChampionsResultsSection'
@@ -32,23 +32,18 @@ export function ChampionsPage() {
     randomizeResultOrder,
   } = model
   const activeFilterCount = activeFilterChips.length
-  const contentStatusItems: StatusBannerStackItem[] = [
-    {
-      id: 'loading',
-      tone: 'info',
+  const contentStatusItems = createAsyncStatusBannerItems({
+    status: state.status,
+    loading: {
       children: t({ zh: '正在读取英雄数据…', en: 'Loading champion data…' }),
-      hidden: state.status !== 'loading',
     },
-    {
-      id: 'error',
-      tone: 'error',
+    error: {
       title: t({ zh: '英雄数据读取失败', en: 'Champion data failed to load' }),
       ...(state.status === 'error'
         ? { detail: state.message || t({ zh: '未知错误', en: 'Unknown error' }) }
         : {}),
-      hidden: state.status !== 'error',
     },
-  ]
+  })
   const toolbarItems = createWorkbenchFilterToolbarItems({
     t,
     defaultVisibleCount: MAX_VISIBLE_RESULTS,

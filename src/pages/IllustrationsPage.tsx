@@ -8,7 +8,7 @@ import {
 } from '../components/workbench/WorkbenchToolbarItemBuilders'
 import { WorkbenchToolbarItems } from '../components/workbench/WorkbenchToolbarItems'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
-import type { StatusBannerStackItem } from '../components/StatusBannerStack'
+import { createAsyncStatusBannerItems } from '../components/statusBannerStackItemBuilders'
 import { IllustrationsAdditionalFilters } from './illustrations/IllustrationsAdditionalFilters'
 import { MAX_VISIBLE_ILLUSTRATIONS } from './illustrations/constants'
 import { IllustrationsPrimaryFilters } from './illustrations/IllustrationsPrimaryFilters'
@@ -19,20 +19,16 @@ import { useIllustrationsPageModel } from './illustrations/useIllustrationsPageM
 export function IllustrationsPage() {
   const model = useIllustrationsPageModel()
   const { state, t, activeFilterChips, hasActiveFilters, ui, actions } = model
-  const contentStatusItems: StatusBannerStackItem[] = [
-    {
-      id: 'loading',
-      tone: 'info',
+  const contentStatusItems = createAsyncStatusBannerItems({
+    status: state.status,
+    loading: {
       title: t({ zh: '正在加载立绘目录', en: 'Loading illustration catalog' }),
       detail: t({
         zh: '正在读取本地版本化立绘清单与英雄筛选元数据。',
         en: 'Reading the local illustration manifest and champion filter metadata.',
       }),
-      hidden: state.status !== 'loading',
     },
-    {
-      id: 'error',
-      tone: 'error',
+    error: {
       title: t({ zh: '立绘目录加载失败', en: 'Failed to load illustration catalog' }),
       ...(state.status === 'error'
         ? {
@@ -47,9 +43,8 @@ export function IllustrationsPage() {
                 }),
           }
         : {}),
-      hidden: state.status !== 'error',
     },
-  ]
+  })
   const toolbarItems = createWorkbenchFilterToolbarItems({
     t,
     defaultVisibleCount: MAX_VISIBLE_ILLUSTRATIONS,

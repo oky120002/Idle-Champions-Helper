@@ -8,7 +8,7 @@ import {
 } from '../components/workbench/WorkbenchToolbarItemBuilders'
 import { WorkbenchToolbarItems } from '../components/workbench/WorkbenchToolbarItems'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
-import type { StatusBannerStackItem } from '../components/StatusBannerStack'
+import { createAsyncStatusBannerItems } from '../components/statusBannerStackItemBuilders'
 import { PetFilters } from './pets/PetFilters'
 import { MAX_VISIBLE_PETS } from './pets/constants'
 import { PetsResultsSection } from './pets/PetsResultsSection'
@@ -18,20 +18,16 @@ import { usePetsPageModel } from './pets/usePetsPageModel'
 export function PetsPage() {
   const model = usePetsPageModel()
   const { state, t, activeFilterCount, filters, actions, ui } = model
-  const contentStatusItems: StatusBannerStackItem[] = [
-    {
-      id: 'loading',
-      tone: 'info',
+  const contentStatusItems = createAsyncStatusBannerItems({
+    status: state.status,
+    loading: {
       title: t({ zh: '正在加载宠物目录', en: 'Loading pet catalog' }),
       detail: t({
         zh: '正在读取本地版本化的宠物清单、静态图像与动图索引。',
         en: 'Reading the local versioned pet manifest, static art, and motion preview manifest.',
       }),
-      hidden: state.status !== 'loading',
     },
-    {
-      id: 'error',
-      tone: 'error',
+    error: {
       title: t({ zh: '宠物目录加载失败', en: 'Failed to load pet catalog' }),
       ...(state.status === 'error'
         ? {
@@ -46,9 +42,8 @@ export function PetsPage() {
                 }),
           }
         : {}),
-      hidden: state.status !== 'error',
     },
-  ]
+  })
   const toolbarItems = createWorkbenchFilterToolbarItems({
     t,
     defaultVisibleCount: MAX_VISIBLE_PETS,
