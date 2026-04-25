@@ -1,17 +1,13 @@
 import { useRef } from 'react'
 import { useLocation } from 'react-router-dom'
-import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
+import { ConfiguredWorkbenchPage } from '../components/workbench/ConfiguredWorkbenchPage'
 import {
   WorkbenchContentStack,
   WorkbenchSidebarHeader,
   WorkbenchSidebarLoading,
   WorkbenchToolbarBadge,
-  WorkbenchToolbarCopy,
-  WorkbenchToolbarMark,
 } from '../components/workbench/WorkbenchScaffold'
-import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import {
-  WorkbenchToolbarItems,
   type WorkbenchToolbarItemConfig,
 } from '../components/workbench/WorkbenchToolbarItems'
 import {
@@ -62,64 +58,65 @@ export function FormationPage() {
   ]
 
   return (
-    <div className="formation-page workbench-page">
-      <PageWorkbenchShell
-        storageKey="formation"
-        ariaLabel={model.t({ zh: '阵型编辑工作台', en: 'Formation workbench' })}
-        className="workbench-page__shell formation-workbench"
-        contentScrollRef={contentScrollRef}
-        contentOverlay={
-          showScrollTop ? (
-            <WorkbenchFloatingTopButton
-              onClick={scrollToTop}
-              detailLabel={model.t({ zh: '阵型内容', en: 'Formation pane' })}
-            />
-          ) : null
-        }
-        toolbarLead={<WorkbenchToolbarMark label="FORMATION" />}
-        toolbarPrimary={(
-          <WorkbenchToolbarCopy
-            kicker={model.t({ zh: '战术工作台', en: 'Tactical workbench' })}
-            title={model.t({ zh: '阵型编辑', en: 'Formation editor' })}
-            detail={model.t({ zh: '左侧筛选布局，右侧编辑当前阵型与方案摘要', en: 'Filter layouts on the left, edit the board and preset summary on the right' })}
+    <ConfiguredWorkbenchPage
+      pageClassName="formation-page"
+      storageKey="formation"
+      ariaLabel={model.t({ zh: '阵型编辑工作台', en: 'Formation workbench' })}
+      shellClassName="workbench-page__shell formation-workbench"
+      contentScrollRef={contentScrollRef}
+      floatingTopButton={
+        showScrollTop
+          ? {
+              onClick: scrollToTop,
+              detailLabel: model.t({ zh: '阵型内容', en: 'Formation pane' }),
+            }
+          : undefined
+      }
+      toolbarIntro={{
+        mark: {
+          label: 'FORMATION',
+        },
+        copy: {
+          kicker: model.t({ zh: '战术工作台', en: 'Tactical workbench' }),
+          title: model.t({ zh: '阵型编辑', en: 'Formation editor' }),
+          detail: model.t({ zh: '左侧筛选布局，右侧编辑当前阵型与方案摘要', en: 'Filter layouts on the left, edit the board and preset summary on the right' }),
+        },
+      }}
+      toolbarItems={toolbarItems}
+      sidebarHeader={
+        model.state.status === 'ready' ? (
+          <WorkbenchSidebarHeader
+            kicker={model.t({ zh: '布局抽屉', en: 'Layout drawer' })}
+            title={model.t({ zh: '先锁场景，再挑当前画板', en: 'Choose the scenario before the board' })}
+            description={model.t({ zh: '左侧持续保留布局搜索、场景类型与当前布局摘要，右侧只专注当前阵型编辑。', en: 'Keep layout search, scenario type, and the selected board summary on the left so the right side stays focused on editing.' })}
+            statusLabel={model.t({ zh: '布局筛选状态', en: 'Layout filter status' })}
+            status={(
+              <WorkbenchToolbarBadge>
+                {activeSidebarFilterCount > 0
+                  ? model.t({ zh: `${activeSidebarFilterCount} 项条件`, en: `${activeSidebarFilterCount} active` })
+                  : model.t({ zh: '布局筛选待命', en: 'Filters idle' })}
+              </WorkbenchToolbarBadge>
+            )}
           />
-        )}
-        toolbarActions={<WorkbenchToolbarItems items={toolbarItems} />}
-        sidebarHeader={
-          model.state.status === 'ready' ? (
-            <WorkbenchSidebarHeader
-              kicker={model.t({ zh: '布局抽屉', en: 'Layout drawer' })}
-              title={model.t({ zh: '先锁场景，再挑当前画板', en: 'Choose the scenario before the board' })}
-              description={model.t({ zh: '左侧持续保留布局搜索、场景类型与当前布局摘要，右侧只专注当前阵型编辑。', en: 'Keep layout search, scenario type, and the selected board summary on the left so the right side stays focused on editing.' })}
-              statusLabel={model.t({ zh: '布局筛选状态', en: 'Layout filter status' })}
-              status={(
-                <WorkbenchToolbarBadge>
-                  {activeSidebarFilterCount > 0
-                    ? model.t({ zh: `${activeSidebarFilterCount} 项条件`, en: `${activeSidebarFilterCount} active` })
-                    : model.t({ zh: '布局筛选待命', en: 'Filters idle' })}
-                </WorkbenchToolbarBadge>
-              )}
-            />
-          ) : null
-        }
-        sidebar={
-          model.state.status === 'ready' ? (
-            <FormationLayoutFilters model={model} />
-          ) : (
-            <WorkbenchSidebarLoading />
-          )
-        }
-        contentHeader={model.state.status === 'ready' ? <FormationDraftBanner model={model} /> : null}
-      >
-        <StatusBannerStack items={contentStatusItems} />
+        ) : null
+      }
+      sidebar={
+        model.state.status === 'ready' ? (
+          <FormationLayoutFilters model={model} />
+        ) : (
+          <WorkbenchSidebarLoading />
+        )
+      }
+      contentHeader={model.state.status === 'ready' ? <FormationDraftBanner model={model} /> : null}
+    >
+      <StatusBannerStack items={contentStatusItems} />
 
-        {model.state.status === 'ready' ? (
-          <WorkbenchContentStack>
-            <FormationBoardEditor model={model} />
-            <FormationPresetCard model={model} />
-          </WorkbenchContentStack>
-        ) : null}
-      </PageWorkbenchShell>
-    </div>
+      {model.state.status === 'ready' ? (
+        <WorkbenchContentStack>
+          <FormationBoardEditor model={model} />
+          <FormationPresetCard model={model} />
+        </WorkbenchContentStack>
+      ) : null}
+    </ConfiguredWorkbenchPage>
   )
 }

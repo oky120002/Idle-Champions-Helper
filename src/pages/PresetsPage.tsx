@@ -1,14 +1,10 @@
 import { useRef } from 'react'
 import { useLocation } from 'react-router-dom'
-import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
+import { ConfiguredWorkbenchPage } from '../components/workbench/ConfiguredWorkbenchPage'
 import {
   WorkbenchContentStack,
-  WorkbenchToolbarCopy,
-  WorkbenchToolbarMark,
 } from '../components/workbench/WorkbenchScaffold'
-import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import {
-  WorkbenchToolbarItems,
   type WorkbenchToolbarItemConfig,
 } from '../components/workbench/WorkbenchToolbarItems'
 import {
@@ -102,72 +98,74 @@ export function PresetsPage() {
   ]
 
   return (
-    <div className="presets-page workbench-page">
-      <PageWorkbenchShell
-        storageKey="presets"
-        ariaLabel={t({ zh: '方案存档工作台', en: 'Preset library workbench' })}
-        className="workbench-page__shell presets-workbench"
-        contentScrollRef={contentScrollRef}
-        contentOverlay={
-          showScrollTop ? (
-            <WorkbenchFloatingTopButton
-              onClick={scrollToTop}
-              detailLabel={t({ zh: '方案内容', en: 'Preset pane' })}
-            />
-          ) : null
-        }
-        toolbarLead={<WorkbenchToolbarMark label="PRESETS" accentTone="steel" />}
-        toolbarPrimary={(
-          <WorkbenchToolbarCopy
-            kicker={t({ zh: '归档工作台', en: 'Archive workbench' })}
-            title={t({ zh: '方案存档', en: 'Preset library' })}
-            detail={t({ zh: '统一查看、恢复和整理本地命名阵型方案', en: 'Review, restore, and curate named local formation presets' })}
+    <ConfiguredWorkbenchPage
+      pageClassName="presets-page"
+      storageKey="presets"
+      ariaLabel={t({ zh: '方案存档工作台', en: 'Preset library workbench' })}
+      shellClassName="workbench-page__shell presets-workbench"
+      contentScrollRef={contentScrollRef}
+      floatingTopButton={
+        showScrollTop
+          ? {
+              onClick: scrollToTop,
+              detailLabel: t({ zh: '方案内容', en: 'Preset pane' }),
+            }
+          : undefined
+      }
+      toolbarIntro={{
+        mark: {
+          label: 'PRESETS',
+          accentTone: 'steel',
+        },
+        copy: {
+          kicker: t({ zh: '归档工作台', en: 'Archive workbench' }),
+          title: t({ zh: '方案存档', en: 'Preset library' }),
+          detail: t({ zh: '统一查看、恢复和整理本地命名阵型方案', en: 'Review, restore, and curate named local formation presets' }),
+        },
+      }}
+      toolbarItems={toolbarItems}
+      contentHeader={<StatusBannerStack items={headerStatusItems} />}
+    >
+      <StatusBannerStack items={contentStatusItems} />
+
+      {state.status === 'ready' ? (
+        <WorkbenchContentStack>
+          <SurfaceCardContentSections
+            eyebrow={t({ zh: '当前范围', en: 'Current scope' })}
+            title={t({ zh: '先确认当前支持的方案管理闭环', en: 'Confirm the current preset management loop' })}
+            description={t({ zh: '命名方案继续由阵型页产出；这里负责浏览、编辑、删除与恢复。', en: 'Named presets are still produced from the formation page, while this view focuses on browsing, editing, deleting, and restoring.' })}
+            sections={managementScopeSections}
+            layout="split"
           />
-        )}
-        toolbarActions={<WorkbenchToolbarItems items={toolbarItems} />}
-        contentHeader={<StatusBannerStack items={headerStatusItems} />}
-      >
-        <StatusBannerStack items={contentStatusItems} />
 
-        {state.status === 'ready' ? (
-          <WorkbenchContentStack>
-            <SurfaceCardContentSections
-              eyebrow={t({ zh: '当前范围', en: 'Current scope' })}
-              title={t({ zh: '先确认当前支持的方案管理闭环', en: 'Confirm the current preset management loop' })}
-              description={t({ zh: '命名方案继续由阵型页产出；这里负责浏览、编辑、删除与恢复。', en: 'Named presets are still produced from the formation page, while this view focuses on browsing, editing, deleting, and restoring.' })}
-              sections={managementScopeSections}
-              layout="split"
-            />
-
-            <SurfaceCard
-              eyebrow={t({ zh: '已保存方案', en: 'Saved presets' })}
-              title={t({ zh: '按最近编辑排序管理你的本地阵型方案', en: 'Manage local formation presets sorted by latest edit' })}
-              description={t({ zh: '恢复时会优先按保存时的数据版本校验；如果只能做兼容恢复，页面会明确提示。', en: 'Restore first validates against the saved data version, and the page clearly warns when only a compatible restore is possible.' })}
-            >
-              {state.items.length === 0 ? (
-                <StatusBannerStack
-                  items={[
-                    {
-                      id: 'empty-presets',
-                      tone: 'info',
-                      children: t({
-                        zh: '这里还没有命名方案。先去阵型页摆出一套阵容，再点击“保存为方案”。',
-                        en: 'There are no named presets yet. Build a formation first, then click “Save as preset.”',
-                      }),
-                    },
-                  ]}
-                />
-              ) : (
-                <div className="results-grid">
-                  {state.items.map((view) => (
-                    <PresetCard key={view.preset.id} model={model} view={view} />
-                  ))}
-                </div>
-              )}
-            </SurfaceCard>
-          </WorkbenchContentStack>
-        ) : null}
-      </PageWorkbenchShell>
-    </div>
+          <SurfaceCard
+            eyebrow={t({ zh: '已保存方案', en: 'Saved presets' })}
+            title={t({ zh: '按最近编辑排序管理你的本地阵型方案', en: 'Manage local formation presets sorted by latest edit' })}
+            description={t({ zh: '恢复时会优先按保存时的数据版本校验；如果只能做兼容恢复，页面会明确提示。', en: 'Restore first validates against the saved data version, and the page clearly warns when only a compatible restore is possible.' })}
+          >
+            {state.items.length === 0 ? (
+              <StatusBannerStack
+                items={[
+                  {
+                    id: 'empty-presets',
+                    tone: 'info',
+                    children: t({
+                      zh: '这里还没有命名方案。先去阵型页摆出一套阵容，再点击“保存为方案”。',
+                      en: 'There are no named presets yet. Build a formation first, then click “Save as preset.”',
+                    }),
+                  },
+                ]}
+              />
+            ) : (
+              <div className="results-grid">
+                {state.items.map((view) => (
+                  <PresetCard key={view.preset.id} model={model} view={view} />
+                ))}
+              </div>
+            )}
+          </SurfaceCard>
+        </WorkbenchContentStack>
+      ) : null}
+    </ConfiguredWorkbenchPage>
   )
 }

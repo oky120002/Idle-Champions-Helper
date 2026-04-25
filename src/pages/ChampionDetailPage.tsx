@@ -2,13 +2,8 @@ import { useRef } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useI18n } from '../app/i18n'
 import { SurfaceCardStatusStack, type SurfaceCardStatusStackItem } from '../components/SurfaceCardStatusStack'
-import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
+import { ConfiguredWorkbenchPage } from '../components/workbench/ConfiguredWorkbenchPage'
 import {
-  WorkbenchToolbarCopy,
-} from '../components/workbench/WorkbenchScaffold'
-import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
-import {
-  WorkbenchToolbarItems,
   type WorkbenchToolbarItemConfig,
 } from '../components/workbench/WorkbenchToolbarItems'
 import {
@@ -175,79 +170,78 @@ export function ChampionDetailPage() {
   ]
 
   return (
-    <div className="champion-detail-page workbench-page">
-      <PageWorkbenchShell
-        storageKey="champion-detail"
-        ariaLabel={t({ zh: '英雄详情工作台', en: 'Champion detail workbench' })}
-        className="workbench-page__shell champion-detail-workbench"
-        contentScrollRef={contentScrollRef}
-        contentOverlay={
-          showScrollTop ? (
-            <WorkbenchFloatingTopButton
-              onClick={scrollToTop}
-              detailLabel={t({ zh: '英雄卷宗', en: 'Champion dossier' })}
-            />
-          ) : null
-        }
-        toolbarLead={(
-          <Link className="page-backlink champion-detail-workbench__toolbar-back" to={backToChampions} onClick={handleBackClick}>
-            {t(backLabel)}
-          </Link>
-        )}
-        toolbarPrimary={(
-          <WorkbenchToolbarCopy
-            kicker={t({ zh: '战术卷宗', en: 'Tactical dossier' })}
-            title={toolbarTitle}
-            detail={toolbarDetail}
-          />
-        )}
-        toolbarActions={<WorkbenchToolbarItems items={toolbarItems} />}
-      >
-        <SurfaceCardStatusStack items={statusCardItems} />
+    <ConfiguredWorkbenchPage
+      pageClassName="champion-detail-page"
+      storageKey="champion-detail"
+      ariaLabel={t({ zh: '英雄详情工作台', en: 'Champion detail workbench' })}
+      shellClassName="workbench-page__shell champion-detail-workbench"
+      contentScrollRef={contentScrollRef}
+      floatingTopButton={
+        showScrollTop
+          ? {
+              onClick: scrollToTop,
+              detailLabel: t({ zh: '英雄卷宗', en: 'Champion dossier' }),
+            }
+          : undefined
+      }
+      toolbarLead={(
+        <Link className="page-backlink champion-detail-workbench__toolbar-back" to={backToChampions} onClick={handleBackClick}>
+          {t(backLabel)}
+        </Link>
+      )}
+      toolbarIntro={{
+        copy: {
+          kicker: t({ zh: '战术卷宗', en: 'Tactical dossier' }),
+          title: toolbarTitle,
+          detail: toolbarDetail,
+        },
+      }}
+      toolbarItems={toolbarItems}
+    >
+      <SurfaceCardStatusStack items={statusCardItems} />
 
-        {detail && effectContext ? (
-          <ChampionDetailBody
-            detail={detail}
-            locale={locale}
-            t={t}
-            activeSectionId={activeSectionId}
-            sectionLinks={sectionLinks}
-            activeSectionLabel={activeSectionLabel}
-            activeSectionIndex={activeSectionIndex}
-            sectionProgressValue={sectionProgressValue}
-            getSectionProgressState={getSectionProgressState}
-            getSectionProgressText={getSectionProgressText}
-            scrollToSection={scrollToSection}
-            summaryAvailabilityBadges={summaryAvailabilityBadges}
-            overviewFields={overviewFields}
-            upgradeSectionBadges={upgradeSectionBadges}
-            featSectionBadges={featSectionBadges}
-            effectContext={effectContext}
-            upgradePresentations={upgradePresentations}
-            specializationGraphicsById={specializationGraphicsById}
-            spotlightUpgrades={spotlightUpgrades}
-            ledgerRows={ledgerRows}
-            ledgerFilterOptions={ledgerFilterOptions}
-            activeLedgerFilterKeySet={activeLedgerFilterKeySet}
-            visibleLedgerRows={visibleLedgerRows}
-            hiddenLedgerSummary={hiddenLedgerSummary}
-            hasCustomLedgerFilterState={hasCustomLedgerFilterState}
-            isShowingAllLedgerTypes={isShowingAllLedgerTypes}
-            toggleLedgerFilter={toggleLedgerFilter}
-            resetLedgerFilters={resetLedgerFilters}
-            enableAllLedgerFilters={enableAllLedgerFilters}
-            openArtworkDialog={openArtworkDialog}
-            isArtworkDialogOpen={isArtworkDialogOpen}
-            selectedSkin={selectedSkin}
-            selectedSkinAnimation={selectedSkinAnimation}
-            selectedSkinArtworkIds={selectedSkinArtworkIds}
-            selectedSkinIllustration={selectedSkinIllustration}
-            selectedSkinPreviewUrl={selectedSkinPreviewUrl}
-            closeArtworkDialog={closeArtworkDialog}
-            setSelectedSkinId={setSelectedSkinId}
-          />
-        ) : null}
-      </PageWorkbenchShell>
-    </div>
+      {detail && effectContext ? (
+        <ChampionDetailBody
+          detail={detail}
+          locale={locale}
+          t={t}
+          activeSectionId={activeSectionId}
+          sectionLinks={sectionLinks}
+          activeSectionLabel={activeSectionLabel}
+          activeSectionIndex={activeSectionIndex}
+          sectionProgressValue={sectionProgressValue}
+          getSectionProgressState={getSectionProgressState}
+          getSectionProgressText={getSectionProgressText}
+          scrollToSection={scrollToSection}
+          summaryAvailabilityBadges={summaryAvailabilityBadges}
+          overviewFields={overviewFields}
+          upgradeSectionBadges={upgradeSectionBadges}
+          featSectionBadges={featSectionBadges}
+          effectContext={effectContext}
+          upgradePresentations={upgradePresentations}
+          specializationGraphicsById={specializationGraphicsById}
+          spotlightUpgrades={spotlightUpgrades}
+          ledgerRows={ledgerRows}
+          ledgerFilterOptions={ledgerFilterOptions}
+          activeLedgerFilterKeySet={activeLedgerFilterKeySet}
+          visibleLedgerRows={visibleLedgerRows}
+          hiddenLedgerSummary={hiddenLedgerSummary}
+          hasCustomLedgerFilterState={hasCustomLedgerFilterState}
+          isShowingAllLedgerTypes={isShowingAllLedgerTypes}
+          toggleLedgerFilter={toggleLedgerFilter}
+          resetLedgerFilters={resetLedgerFilters}
+          enableAllLedgerFilters={enableAllLedgerFilters}
+          openArtworkDialog={openArtworkDialog}
+          isArtworkDialogOpen={isArtworkDialogOpen}
+          selectedSkin={selectedSkin}
+          selectedSkinAnimation={selectedSkinAnimation}
+          selectedSkinArtworkIds={selectedSkinArtworkIds}
+          selectedSkinIllustration={selectedSkinIllustration}
+          selectedSkinPreviewUrl={selectedSkinPreviewUrl}
+          closeArtworkDialog={closeArtworkDialog}
+          setSelectedSkinId={setSelectedSkinId}
+        />
+      ) : null}
+    </ConfiguredWorkbenchPage>
   )
 }
