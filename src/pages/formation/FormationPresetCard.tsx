@@ -1,6 +1,6 @@
-import { FieldGroup } from '../../components/FieldGroup'
 import { LabeledValueCardGrid } from '../../components/LabeledValueCardGrid'
 import { ChampionIdentity } from '../../components/ChampionIdentity'
+import { PresetFormFields } from '../../components/PresetFormFields'
 import { StatusBanner } from '../../components/StatusBanner'
 import { SurfaceCard } from '../../components/SurfaceCard'
 import { formatSeatLabel, getLocalizedTextPair, getRoleLabel } from '../../domain/localizedText'
@@ -24,7 +24,6 @@ export function FormationPresetCard({ model }: FormationPresetCardProps) {
     locale,
     t,
     updatePresetForm,
-    handlePriorityChange,
     handleSavePreset,
     handleOpenPresetsPage,
     getPresetPriorityLabel,
@@ -62,73 +61,36 @@ export function FormationPresetCard({ model }: FormationPresetCardProps) {
     >
       <div className="split-grid">
         <div className="form-stack">
-          <FieldGroup label={t({ zh: '方案名称', en: 'Preset name' })} labelFor="preset-name">
-            <input
-              id="preset-name"
-              className="text-input"
-              type="text"
-              value={presetForm.name}
-              onChange={(event) => updatePresetForm('name', event.target.value)}
-              placeholder={t({
-                zh: '例如：速刷常用 10 槽波形',
-                en: 'Example: Speed farm core wave 10',
-              })}
-            />
-          </FieldGroup>
-
-          <FieldGroup label={t({ zh: '方案备注', en: 'Preset notes' })} labelFor="preset-description">
-            <textarea
-              id="preset-description"
-              className="text-area"
-              rows={4}
-              value={presetForm.description}
-              onChange={(event) => updatePresetForm('description', event.target.value)}
-              placeholder={t({
-                zh: '记录这套阵容适合什么目标、还有哪些待补位。',
-                en: 'Describe what this formation is for and what still needs tuning.',
-              })}
-            />
-          </FieldGroup>
-
-          <FieldGroup
-            label={t({ zh: '场景标签', en: 'Scenario tags' })}
-            labelFor="preset-tags"
-            hint={t({
+          <PresetFormFields
+            value={presetForm}
+            priorityOptions={PRESET_PRIORITY_OPTIONS}
+            nameInputId="preset-name"
+            descriptionInputId="preset-description"
+            tagsInputId="preset-tags"
+            namePlaceholder={t({
+              zh: '例如：速刷常用 10 槽波形',
+              en: 'Example: Speed farm core wave 10',
+            })}
+            descriptionPlaceholder={t({
+              zh: '记录这套阵容适合什么目标、还有哪些待补位。',
+              en: 'Describe what this formation is for and what still needs tuning.',
+            })}
+            tagsHint={t({
               zh: '仅作用户可读标签，不作为恢复主键；可用中英文逗号分隔。',
               en: 'These are reader-friendly tags only, not restore keys. Use commas to separate them.',
             })}
-          >
-            <input
-              id="preset-tags"
-              className="text-input"
-              type="text"
-              value={presetForm.scenarioTagsInput}
-              onChange={(event) => updatePresetForm('scenarioTagsInput', event.target.value)}
-              placeholder={t({
-                zh: '例如：推图，速刷，Time Gate',
-                en: 'Example: Push, speed, Time Gate',
-              })}
-            />
-          </FieldGroup>
-
-          <FieldGroup label={t({ zh: '优先级', en: 'Priority' })}>
-            <div className="segmented-control">
-              {PRESET_PRIORITY_OPTIONS.map((option) => (
-                <button
-                  key={option}
-                  type="button"
-                  className={
-                    presetForm.priority === option
-                      ? 'segmented-control__button segmented-control__button--active'
-                      : 'segmented-control__button'
-                  }
-                  onClick={() => handlePriorityChange(option)}
-                >
-                  {getPresetPriorityLabel(option)}
-                </button>
-              ))}
-            </div>
-          </FieldGroup>
+            tagsPlaceholder={t({
+              zh: '例如：推图，速刷，Time Gate',
+              en: 'Example: Push, speed, Time Gate',
+            })}
+            nameLabel={t({ zh: '方案名称', en: 'Preset name' })}
+            descriptionLabel={t({ zh: '方案备注', en: 'Preset notes' })}
+            tagsLabel={t({ zh: '场景标签', en: 'Scenario tags' })}
+            priorityLabel={t({ zh: '优先级', en: 'Priority' })}
+            getPriorityOptionLabel={getPresetPriorityLabel}
+            onChange={updatePresetForm}
+            includeStackClass={false}
+          />
 
           <div className="button-row">
             <button
