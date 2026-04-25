@@ -31,7 +31,10 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
       : null
 
   return (
-    <article className="result-card result-card--champion result-card--interactive">
+    <article
+      className="result-card result-card--champion result-card--interactive"
+      data-grid-motion-key={champion.id}
+    >
       <Link
         className="result-card--link"
         to={{

@@ -47,12 +47,11 @@ export function useWorkbenchSidebarCollapse(storageKey: string) {
     storage.setItem(buildStorageKey(storageKey), isCollapsed ? 'true' : 'false')
   }, [isCollapsed, storageKey])
 
-  const toggleCollapsed = () => {
-    setIsCollapsed((current) => !current)
-  }
-
   return {
     isCollapsed,
-    toggleCollapsed,
+    setCollapsed: setIsCollapsed,
+    toggleCollapsed: () => {
+      setIsCollapsed((current) => !current)
+    },
   }
 }

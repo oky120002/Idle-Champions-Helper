@@ -385,6 +385,11 @@
   min-height: 1.3rem;
 }
 
+.workbench-filter-header__filter-summary[data-empty="true"] {
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .workbench-filter-header__metrics .page-header-metrics {
   justify-content: flex-end;
 }
