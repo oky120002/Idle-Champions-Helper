@@ -81,6 +81,23 @@ describe('IllustrationsPage filters', () => {
     expect(screen.queryByRole('img', { name: '布鲁诺海盗布鲁诺皮肤立绘' })).not.toBeInTheDocument()
   })
 
+  it('支持展开补充筛选，并按种族与获取方式过滤立绘结果', async () => {
+    const user = userEvent.setup()
+
+    renderIllustrationsPage()
+
+    await screen.findByLabelText('立绘结果')
+
+    await user.click(screen.getByRole('button', { name: /身份画像/ }))
+    await user.click(screen.getByRole('button', { name: /玩法标签/ }))
+    await user.click(screen.getByRole('button', { name: '矮人' }))
+    await user.click(screen.getByRole('button', { name: '活动英雄' }))
+
+    expect(screen.getByRole('img', { name: '布鲁诺本体立绘' })).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: '布鲁诺海盗布鲁诺皮肤立绘' })).toBeInTheDocument()
+    expect(screen.queryByRole('img', { name: '提里尔本体立绘' })).not.toBeInTheDocument()
+  })
+
   it('会把筛选状态同步进 URL 查询参数', async () => {
     const user = userEvent.setup()
 
