@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { FieldGroup } from '../../components/FieldGroup'
+import { FormFieldSchemaRenderer, type FormFieldSchema } from '../../components/FormFieldSchemaRenderer'
 
 interface FormationLayoutLibraryStatItem {
   id: string
@@ -7,27 +7,6 @@ interface FormationLayoutLibraryStatItem {
   value: ReactNode
   compact?: boolean
 }
-
-type FormationLayoutLibraryFieldSchema =
-  | {
-      kind: 'search'
-      id: string
-      inputId: string
-      label: ReactNode
-      value: string
-      onChange: (value: string) => void
-      hint?: ReactNode
-      placeholder?: string
-    }
-  | {
-      kind: 'chip-single'
-      id: string
-      label: ReactNode
-      selectedValue: string
-      onChange: (value: string) => void
-      hint?: ReactNode
-      options: Array<{ value: string; label: ReactNode }>
-    }
 
 interface FormationLayoutLibrarySelectionPill {
   id: string
@@ -53,7 +32,7 @@ interface FormationLayoutLibraryScaffoldProps {
   description: ReactNode
   statsLabel: string
   stats: FormationLayoutLibraryStatItem[]
-  fields: FormationLayoutLibraryFieldSchema[]
+  fields: FormFieldSchema[]
   selection: {
     kicker: ReactNode
     title: ReactNode
@@ -64,51 +43,6 @@ interface FormationLayoutLibraryScaffoldProps {
   resultsDescription: ReactNode
   cardsAriaLabel: string
   cards: FormationLayoutLibraryCardItem[]
-}
-
-function renderField(field: FormationLayoutLibraryFieldSchema) {
-  if (field.kind === 'search') {
-    return (
-      <FieldGroup
-        key={field.id}
-        label={field.label}
-        className="form-field"
-        labelFor={field.inputId}
-        {...(field.hint !== undefined ? { hint: field.hint } : {})}
-      >
-        <input
-          id={field.inputId}
-          className="text-input"
-          type="text"
-          value={field.value}
-          onChange={(event) => field.onChange(event.target.value)}
-          {...(field.placeholder !== undefined ? { placeholder: field.placeholder } : {})}
-        />
-      </FieldGroup>
-    )
-  }
-
-  return (
-    <FieldGroup
-      key={field.id}
-      label={field.label}
-      className="form-field"
-      {...(field.hint !== undefined ? { hint: field.hint } : {})}
-    >
-      <div className="filter-chip-grid">
-        {field.options.map((option) => (
-          <button
-            key={option.value}
-            type="button"
-            className={field.selectedValue === option.value ? 'filter-chip filter-chip--active' : 'filter-chip'}
-            onClick={() => field.onChange(option.value)}
-          >
-            {option.label}
-          </button>
-        ))}
-      </div>
-    </FieldGroup>
-  )
 }
 
 export function FormationLayoutLibraryScaffold({
@@ -153,7 +87,7 @@ export function FormationLayoutLibraryScaffold({
       </div>
 
       <div className="formation-layout-library__workspace">
-        <div className="formation-layout-library__filters">{fields.map(renderField)}</div>
+        <FormFieldSchemaRenderer fields={fields} className="formation-layout-library__filters" />
 
         <article className="formation-layout-library__selected-card">
           <span className="formation-layout-library__selected-kicker">{selection.kicker}</span>

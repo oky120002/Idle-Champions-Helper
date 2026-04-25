@@ -1,6 +1,7 @@
 import { getFormationLayoutLabel } from '../../domain/formationLayout'
 import { getLocalizedTextPair } from '../../domain/localizedText'
 import type { FormationLayout } from '../../domain/types'
+import type { FormFieldSchema } from '../../components/FormFieldSchemaRenderer'
 import { LAYOUT_FILTER_OPTIONS, type FormationPageModel, type LayoutFilterKind } from './types'
 import { FormationLayoutLibraryScaffold } from './FormationLayoutLibraryScaffold'
 
@@ -38,9 +39,9 @@ export function FormationLayoutFilters({ model }: FormationLayoutFiltersProps) {
       compact: true,
     },
   ]
-  const fields = [
+  const fields: FormFieldSchema[] = [
     {
-      kind: 'search' as const,
+      kind: 'input',
       id: 'keyword',
       inputId: 'formation-layout-search',
       label: t({ zh: '关键词', en: 'Keyword' }),
@@ -54,21 +55,24 @@ export function FormationLayoutFilters({ model }: FormationLayoutFiltersProps) {
         zh: '搜布局名、来源战役、冒险或变体',
         en: 'Search layouts, campaigns, adventures, or variants',
       }),
+      className: 'form-field',
     },
     {
-      kind: 'chip-single' as const,
+      kind: 'chip-single',
       id: 'scenario-type',
       label: t({ zh: '场景类型', en: 'Scenario type' }),
-      selectedValue: selectedContextKind,
+      value: selectedContextKind,
       onChange: (value: string) => setSelectedContextKind(value as LayoutFilterKind),
       hint: t({
         zh: '筛选只影响布局库，不会自动清空正在编辑的布局。',
         en: 'Filters only affect the library and never clear the layout currently being edited.',
       }),
+      groupLabel: t({ zh: '场景类型', en: 'Scenario type' }),
       options: LAYOUT_FILTER_OPTIONS.map((kind) => ({
         value: kind,
         label: getLayoutFilterLabel(kind),
       })),
+      className: 'form-field',
     },
   ]
   const selectionPills = selectedLayout
