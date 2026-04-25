@@ -1,5 +1,4 @@
-import { render, screen, within } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { render, screen } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
 
@@ -168,26 +167,11 @@ beforeEach(() => {
 })
 
 describe('ChampionsPage visuals', () => {
-  it('支持打开英雄视觉档案并切换到皮肤 xl 资源槽位，同时不暴露官方请求入口', async () => {
-    const user = userEvent.setup()
-
+  it('结果卡不再暴露视觉档案入口，详情链接直接进入英雄详情页', async () => {
     renderChampionsPage()
 
     expect(await screen.findByText('阿尔法')).toBeInTheDocument()
-
-    await user.click(screen.getByRole('button', { name: '查看 阿尔法 视觉档案' }))
-
-    const panel = await screen.findByLabelText('当前英雄视觉档案')
-
-    expect(within(panel).getByRole('button', { name: '本体立绘' })).toBeInTheDocument()
-    expect(within(panel).getByText(/静态站不会请求官方资源/)).toBeInTheDocument()
-    expect(within(panel).queryByText('https://example.com/mobile_assets/Characters/Hero_Alpha')).not.toBeInTheDocument()
-    expect(within(panel).queryByRole('link', { name: '打开原始地址' })).not.toBeInTheDocument()
-    expect(within(panel).getByText('构建期同步 / 站内不请求')).toBeInTheDocument()
-
-    await user.click(within(panel).getByRole('button', { name: '皮肤 xl' }))
-
-    expect(within(panel).getByText('Characters/Hero_AlphaPrime_4xup')).toBeInTheDocument()
-    expect(within(panel).getByText('graphic #1005')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: '查看 阿尔法 视觉档案' })).not.toBeInTheDocument()
+    expect(screen.getByRole('link', { name: '查看详情：阿尔法' })).toHaveAttribute('href', '/champions/alpha')
   })
 })

@@ -13,7 +13,6 @@ type UseChampionsPageDerivedOptions = {
   state: ChampionState
   filters: ChampionsFilterState
   randomOrderSeed: number | null
-  selectedChampionId: string | null
 }
 
 export function useChampionsPageDerived({
@@ -22,7 +21,6 @@ export function useChampionsPageDerived({
   state,
   filters,
   randomOrderSeed,
-  selectedChampionId,
 }: UseChampionsPageDerivedOptions) {
   const filteredChampions = useMemo(() => {
     if (state.status !== 'ready') {
@@ -50,20 +48,6 @@ export function useChampionsPageDerived({
   const visibleChampions = useMemo(
     () => (filters.showAllResults ? orderedChampions : orderedChampions.slice(0, MAX_VISIBLE_RESULTS)),
     [filters.showAllResults, orderedChampions],
-  )
-  const selectedChampion = useMemo(
-    () =>
-      selectedChampionId !== null
-        ? visibleChampions.find((champion) => champion.id === selectedChampionId) ?? null
-        : null,
-    [selectedChampionId, visibleChampions],
-  )
-  const selectedChampionVisual = useMemo(
-    () =>
-      state.status === 'ready' && selectedChampion
-        ? state.visuals.find((visual) => visual.championId === selectedChampion.id) ?? null
-        : null,
-    [selectedChampion, state],
   )
   const heroIllustrationByChampionId = useMemo(
     () =>
@@ -142,8 +126,6 @@ export function useChampionsPageDerived({
   return {
     filteredChampions,
     visibleChampions,
-    selectedChampion,
-    selectedChampionVisual,
     heroIllustrationByChampionId,
     matchedSeats,
     roles,
