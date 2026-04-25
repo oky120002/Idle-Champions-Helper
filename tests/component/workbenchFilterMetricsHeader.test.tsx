@@ -40,7 +40,7 @@ describe('WorkbenchFilterMetricsHeader', () => {
     expect(document.querySelector('.workbench-filter-header__filter-summary')).toBeNull()
   })
 
-  it('提供摘要前缀但没有 active filters 时不保留空白摘要行', () => {
+  it('提供摘要前缀但没有 active filters 时保留隐藏占位行', () => {
     render(
       <WorkbenchFilterMetricsHeader
         items={[
@@ -54,6 +54,10 @@ describe('WorkbenchFilterMetricsHeader', () => {
       />,
     )
 
-    expect(document.querySelector('.workbench-filter-header__filter-summary')).toBeNull()
+    const summary = document.querySelector('.workbench-filter-header__filter-summary')
+
+    expect(summary).not.toBeNull()
+    expect(summary).toHaveAttribute('data-empty', 'true')
+    expect(summary).toHaveAttribute('aria-hidden', 'true')
   })
 })

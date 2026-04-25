@@ -29,6 +29,7 @@ export function WorkbenchFilterMetricsHeader({
   return (
     <WorkbenchFilterResultsHeader
       metrics={items.length > 0 ? <PageHeaderMetrics items={items} variant="compact" /> : null}
+      reserveFilterSummarySpace={filterSummaryPrefix !== undefined}
       {...(eyebrow !== undefined ? { eyebrow } : {})}
       {...(title !== undefined ? { title } : {})}
       {...(description !== undefined ? { description } : {})}

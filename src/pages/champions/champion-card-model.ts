@@ -21,8 +21,10 @@ export interface ChampionCardAttributePill {
 }
 
 export function getChampionCardVisibleAttributeGroupIds(
-  _filters: ChampionCardFilterState,
+  filters: ChampionCardFilterState,
 ): ChampionAttributeGroupId[] {
+  void filters
+
   return DEFAULT_VISIBLE_ATTRIBUTE_GROUPS
 }
 

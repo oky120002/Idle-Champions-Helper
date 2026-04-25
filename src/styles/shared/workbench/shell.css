@@ -2,10 +2,14 @@
   --page-workbench-sidebar-open-size: clamp(17.5rem, 19vw, 19rem);
   --page-workbench-sidebar-collapsed-size: 0rem;
   --page-workbench-sidebar-size: var(--page-workbench-sidebar-open-size);
+  --page-workbench-sidebar-slide-offset: calc(-1 * var(--page-workbench-sidebar-open-size));
   --page-workbench-pane-merge-size: 1.2rem;
   --page-workbench-collapsed-toggle-inline-offset: 0.8rem;
   --page-workbench-collapsed-toggle-size: 2.48rem;
   --page-workbench-chrome-size: 3.56rem;
+  --page-workbench-layout-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --page-workbench-layout-duration: 340ms;
+  --page-workbench-layout-duration-fast: 280ms;
   --page-workbench-collapsed-toggle-block-offset:
     calc((var(--page-workbench-chrome-size) - var(--page-workbench-collapsed-toggle-size)) / 2);
   --page-workbench-content-inline-inset: 1.44rem;
@@ -26,7 +30,7 @@
     inset 0 1px 0 rgba(255, 243, 223, 0.035);
 }
 
-.page-workbench--collapsed {
+.page-workbench--layout-collapsed {
   --page-workbench-sidebar-size: var(--page-workbench-sidebar-collapsed-size);
 }
 
@@ -58,7 +62,6 @@
   min-width: 0;
   min-height: 0;
   height: 100%;
-  transition: grid-template-columns 380ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .page-workbench--sidebarless .page-workbench__body {
@@ -234,7 +237,11 @@
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.014), rgba(255, 255, 255, 0.004)),
     rgba(11, 17, 24, 0.24);
-  transition: background-color 180ms ease;
+  will-change: transform, opacity;
+  transition:
+    transform var(--page-workbench-layout-duration) var(--page-workbench-layout-ease),
+    opacity 180ms ease,
+    background-color 180ms ease;
 }
 
 .page-workbench__sidebar::after {
@@ -253,6 +260,13 @@
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.012), rgba(255, 255, 255, 0.004)),
     rgba(8, 12, 17, 0.22);
+  will-change: transform;
+  transition: transform var(--page-workbench-layout-duration) var(--page-workbench-layout-ease);
+}
+
+.page-workbench--layout-syncing .page-workbench__sidebar,
+.page-workbench--layout-syncing .page-workbench__content {
+  transition: none;
 }
 
 .page-workbench__chrome {
@@ -285,8 +299,8 @@
   padding-inline-start: var(--page-workbench-content-inline-inset);
   padding-inline-end: var(--page-workbench-content-inline-inset);
   transition:
-    padding-inline-start 380ms cubic-bezier(0.16, 1, 0.3, 1),
-    padding-inline-end 380ms cubic-bezier(0.16, 1, 0.3, 1);
+    padding-inline-start var(--page-workbench-layout-duration) var(--page-workbench-layout-ease),
+    padding-inline-end var(--page-workbench-layout-duration) var(--page-workbench-layout-ease);
 }
 
 .page-workbench__chrome-main::before {
@@ -331,7 +345,7 @@
   transform-origin: left center;
   transition:
     opacity 180ms ease,
-    transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+    transform var(--page-workbench-layout-duration-fast) var(--page-workbench-layout-ease);
 }
 
 .page-workbench__chrome-inline-lead {
@@ -413,7 +427,7 @@
   will-change: transform, opacity;
   transition:
     opacity 180ms ease,
-    transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+    transform var(--page-workbench-layout-duration-fast) var(--page-workbench-layout-ease);
 }
 
 .page-workbench__sidebar-head {
@@ -528,6 +542,20 @@
   font-size: 0.66rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.page-workbench--collapsed:not(.page-workbench--layout-collapsed) .page-workbench__sidebar {
+  transform: translateX(-0.56rem);
+}
+
+.page-workbench--collapsed:not(.page-workbench--layout-collapsed) .page-workbench__content,
+.page-workbench--opening:not(.page-workbench--layout-collapsed) .page-workbench__content {
+  width: calc(100% + var(--page-workbench-sidebar-open-size));
+  max-width: none;
+}
+
+.page-workbench--collapsed:not(.page-workbench--layout-collapsed) .page-workbench__content {
+  transform: translateX(var(--page-workbench-sidebar-slide-offset));
 }
 
 .page-workbench--collapsed .page-workbench__chrome-lead {
@@ -667,7 +695,9 @@
 @media (prefers-reduced-motion: reduce) {
   .page-workbench__body,
   .page-workbench__chrome-lead,
-  .page-workbench__sidebar-scroll {
+  .page-workbench__sidebar-scroll,
+  .page-workbench__sidebar,
+  .page-workbench__content {
     transition: none;
   }
 }

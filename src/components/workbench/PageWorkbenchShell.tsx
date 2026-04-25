@@ -1,7 +1,21 @@
-import { useId, type ReactNode, type RefObject } from 'react'
+import { useCallback, useEffect, useId, useRef, useState, type ReactNode, type RefObject } from 'react'
 import { SidebarToggleIcon } from '../../app/AppIcons'
 import { useI18n } from '../../app/i18n'
 import { useWorkbenchSidebarCollapse } from './useWorkbenchSidebarCollapse'
+
+const DESKTOP_SIDEBAR_ANIMATION_MS = 340
+const OPENING_WIDTH_LOCK_RELEASE_MS = 240
+
+function shouldAnimateSidebarLayout(): boolean {
+  if (typeof window === 'undefined') {
+    return false
+  }
+
+  return (
+    window.matchMedia('(min-width: 1080px)').matches
+    && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  )
+}
 
 interface PageWorkbenchShellProps {
   storageKey: string
@@ -35,11 +49,99 @@ export function PageWorkbenchShell({
   const { t } = useI18n()
   const sidebarId = useId()
   const hasSidebar = sidebar !== undefined && sidebar !== null
-  const { isCollapsed, toggleCollapsed } = useWorkbenchSidebarCollapse(storageKey)
+  const { isCollapsed, setCollapsed } = useWorkbenchSidebarCollapse(storageKey)
+  const [isLayoutCollapsed, setIsLayoutCollapsed] = useState(isCollapsed)
+  const [isLayoutSyncing, setIsLayoutSyncing] = useState(false)
+  const [isOpening, setIsOpening] = useState(false)
+  const [isAnimating, setIsAnimating] = useState(false)
+  const animationTimeoutRef = useRef<number | null>(null)
+  const openingWidthReleaseTimeoutRef = useRef<number | null>(null)
+  const animationFrameRef = useRef<number | null>(null)
   const isSidebarCollapsed = hasSidebar ? isCollapsed : false
+  const clearPendingAnimation = useCallback(() => {
+    if (animationTimeoutRef.current !== null) {
+      window.clearTimeout(animationTimeoutRef.current)
+      animationTimeoutRef.current = null
+    }
+
+    if (openingWidthReleaseTimeoutRef.current !== null) {
+      window.clearTimeout(openingWidthReleaseTimeoutRef.current)
+      openingWidthReleaseTimeoutRef.current = null
+    }
+
+    if (animationFrameRef.current !== null) {
+      window.cancelAnimationFrame(animationFrameRef.current)
+      animationFrameRef.current = null
+    }
+  }, [])
+
+  useEffect(() => clearPendingAnimation, [clearPendingAnimation])
+
+  const toggleCollapsed = useCallback(() => {
+    if (!hasSidebar || isAnimating) {
+      return
+    }
+
+    const nextCollapsed = !isCollapsed
+
+    if (!shouldAnimateSidebarLayout()) {
+      clearPendingAnimation()
+      setCollapsed(nextCollapsed)
+      setIsLayoutCollapsed(nextCollapsed)
+      setIsLayoutSyncing(false)
+      setIsOpening(false)
+      setIsAnimating(false)
+      return
+    }
+
+    clearPendingAnimation()
+    setIsAnimating(true)
+
+    if (nextCollapsed) {
+      setIsLayoutSyncing(false)
+      setIsOpening(false)
+      setCollapsed(true)
+      animationTimeoutRef.current = window.setTimeout(() => {
+        setIsLayoutSyncing(true)
+        setIsLayoutCollapsed(true)
+        animationTimeoutRef.current = null
+        animationFrameRef.current = window.requestAnimationFrame(() => {
+          setIsLayoutSyncing(false)
+          setIsOpening(false)
+          setIsAnimating(false)
+          animationFrameRef.current = null
+        })
+      }, DESKTOP_SIDEBAR_ANIMATION_MS)
+      return
+    }
+
+    setIsOpening(true)
+    setIsLayoutSyncing(true)
+    setIsLayoutCollapsed(false)
+    animationFrameRef.current = window.requestAnimationFrame(() => {
+      setIsLayoutSyncing(false)
+      animationFrameRef.current = window.requestAnimationFrame(() => {
+        setCollapsed(false)
+        openingWidthReleaseTimeoutRef.current = window.setTimeout(() => {
+          setIsOpening(false)
+          openingWidthReleaseTimeoutRef.current = null
+        }, OPENING_WIDTH_LOCK_RELEASE_MS)
+        animationTimeoutRef.current = window.setTimeout(() => {
+          setIsAnimating(false)
+          animationTimeoutRef.current = null
+        }, DESKTOP_SIDEBAR_ANIMATION_MS)
+        animationFrameRef.current = null
+      })
+    })
+  }, [clearPendingAnimation, hasSidebar, isAnimating, isCollapsed, setCollapsed])
+
   const shellClassName = [
     'page-workbench',
+    hasSidebar && isLayoutCollapsed ? 'page-workbench--layout-collapsed' : '',
+    isLayoutSyncing ? 'page-workbench--layout-syncing' : '',
+    isOpening ? 'page-workbench--opening' : '',
     isSidebarCollapsed ? 'page-workbench--collapsed' : '',
+    isAnimating ? 'page-workbench--animating' : '',
     hasSidebar ? '' : 'page-workbench--sidebarless',
     className,
   ]

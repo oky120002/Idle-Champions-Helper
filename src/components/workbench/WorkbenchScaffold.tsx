@@ -64,6 +64,7 @@ interface WorkbenchFilterResultsHeaderProps {
   description?: ReactNode
   metrics?: ReactNode
   filterSummary?: ReactNode
+  reserveFilterSummarySpace?: boolean
   className?: string
 }
 
@@ -76,11 +77,7 @@ function joinClasses(...classNames: Array<string | undefined | false>) {
   return classNames.filter(Boolean).join(' ')
 }
 
-export function WorkbenchToolbarMark({
-  label,
-  accentTone = 'copper',
-  className,
-}: WorkbenchToolbarMarkProps) {
+export function WorkbenchToolbarMark({ label, accentTone = 'copper', className }: WorkbenchToolbarMarkProps) {
   return (
     <div
       className={joinClasses('workbench-page__toolbar-mark', className)}
@@ -143,12 +140,7 @@ export function WorkbenchToolbarFilterStatus({
   )
 }
 
-export function WorkbenchToolbarCopy({
-  kicker,
-  title,
-  detail,
-  className,
-}: WorkbenchToolbarCopyProps) {
+export function WorkbenchToolbarCopy({ kicker, title, detail, className }: WorkbenchToolbarCopyProps) {
   return (
     <div className={joinClasses('workbench-page__toolbar-copy', className)}>
       <span className="workbench-page__toolbar-kicker">{kicker}</span>
@@ -225,12 +217,7 @@ export function WorkbenchContentStack({
 }
 
 export function WorkbenchFilterResultsHeader({
-  eyebrow,
-  title,
-  description,
-  metrics,
-  filterSummary,
-  className,
+  eyebrow, title, description, metrics, filterSummary, reserveFilterSummarySpace = false, className,
 }: WorkbenchFilterResultsHeaderProps) {
   const hasCopy = eyebrow != null || title != null || description != null
 
@@ -264,9 +251,13 @@ export function WorkbenchFilterResultsHeader({
           ) : null}
         </div>
 
-        {filterSummary !== undefined ? (
-          <p className="results-panel__filter-summary workbench-filter-header__filter-summary" aria-live="polite">
-            {filterSummary}
+        {filterSummary !== undefined || reserveFilterSummarySpace ? (
+          <p
+            className="results-panel__filter-summary workbench-filter-header__filter-summary"
+            {...(filterSummary !== undefined ? { 'aria-live': 'polite' } : { 'aria-hidden': true })}
+            data-empty={filterSummary === undefined ? 'true' : undefined}
+          >
+            {filterSummary ?? '\u00A0'}
           </p>
         ) : null}
       </div>
