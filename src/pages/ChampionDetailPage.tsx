@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useI18n } from '../app/i18n'
-import { SurfaceCard } from '../components/SurfaceCard'
+import { SurfaceCardStatusStack, type SurfaceCardStatusStackItem } from '../components/SurfaceCardStatusStack'
 import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
 import {
   WorkbenchToolbarCopy,
@@ -115,6 +115,64 @@ export function ChampionDetailPage() {
       onCopy: copyCurrentLink,
     }),
   ]
+  const statusCardItems: SurfaceCardStatusStackItem[] = [
+    {
+      id: 'loading',
+      eyebrow: t({ zh: '英雄详情', en: 'Champion detail' }),
+      title: t({ zh: '正在整理英雄卷宗…', en: 'Building the champion dossier…' }),
+      description: t({
+        zh: '当前会加载结构化详情、成长轨道与技能信息。',
+        en: 'This loads the structured profile, progression track, and combat details.',
+      }),
+      statusItems: [
+        {
+          id: 'loading-banner',
+          tone: 'info',
+          children: t({ zh: '正在读取详情数据…', en: 'Loading detail data…' }),
+        },
+      ],
+      hidden: !isLoading,
+    },
+    {
+      id: 'missing-champion',
+      eyebrow: t({ zh: '英雄详情', en: 'Champion detail' }),
+      title: t({ zh: '没有找到这个英雄', en: 'Champion not found' }),
+      description: t({
+        zh: '可能是链接里的英雄 ID 不存在，或当前静态数据版本还没有这份详情文件。',
+        en: 'The champion id may be invalid, or this data version does not have a detail file yet.',
+      }),
+      statusItems: [
+        {
+          id: 'missing-banner',
+          tone: 'info',
+          children: t({
+            zh: '你可以返回筛选页重新进入，或检查当前数据版本是否已重新生成。',
+            en: 'Return to the champions page or regenerate the current data version.',
+          }),
+        },
+      ],
+      hidden: !(isMissingChampionId || (state.status === 'not-found' && state.championId === championId)),
+    },
+    {
+      id: 'error',
+      eyebrow: t({ zh: '英雄详情', en: 'Champion detail' }),
+      title: t({ zh: '详情数据读取失败', en: 'Detail data failed to load' }),
+      description: t({
+        zh: '可能是静态文件缺失，也可能是当前数据合同和页面实现不一致。',
+        en: 'The static file may be missing, or the data contract may be out of sync with the page.',
+      }),
+      statusItems: [
+        {
+          id: 'error-banner',
+          tone: 'error',
+          ...(state.status === 'error' && state.championId === championId
+            ? { children: state.message || t({ zh: '未知错误', en: 'Unknown error' }) }
+            : {}),
+        },
+      ],
+      hidden: state.status !== 'error' || state.championId !== championId,
+    },
+  ]
 
   return (
     <div className="champion-detail-page workbench-page">
@@ -145,39 +203,7 @@ export function ChampionDetailPage() {
         )}
         toolbarActions={<WorkbenchToolbarItems items={toolbarItems} />}
       >
-        {isLoading ? (
-          <SurfaceCard
-            eyebrow={t({ zh: '英雄详情', en: 'Champion detail' })}
-            title={t({ zh: '正在整理英雄卷宗…', en: 'Building the champion dossier…' })}
-            description={t({ zh: '当前会加载结构化详情、成长轨道与技能信息。', en: 'This loads the structured profile, progression track, and combat details.' })}
-          >
-            <div className="status-banner status-banner--info">{t({ zh: '正在读取详情数据…', en: 'Loading detail data…' })}</div>
-          </SurfaceCard>
-        ) : null}
-
-        {isMissingChampionId || (state.status === 'not-found' && state.championId === championId) ? (
-          <SurfaceCard
-            eyebrow={t({ zh: '英雄详情', en: 'Champion detail' })}
-            title={t({ zh: '没有找到这个英雄', en: 'Champion not found' })}
-            description={t({ zh: '可能是链接里的英雄 ID 不存在，或当前静态数据版本还没有这份详情文件。', en: 'The champion id may be invalid, or this data version does not have a detail file yet.' })}
-          >
-            <div className="status-banner status-banner--info">
-              {t({ zh: '你可以返回筛选页重新进入，或检查当前数据版本是否已重新生成。', en: 'Return to the champions page or regenerate the current data version.' })}
-            </div>
-          </SurfaceCard>
-        ) : null}
-
-        {state.status === 'error' && state.championId === championId ? (
-          <SurfaceCard
-            eyebrow={t({ zh: '英雄详情', en: 'Champion detail' })}
-            title={t({ zh: '详情数据读取失败', en: 'Detail data failed to load' })}
-            description={t({ zh: '可能是静态文件缺失，也可能是当前数据合同和页面实现不一致。', en: 'The static file may be missing, or the data contract may be out of sync with the page.' })}
-          >
-            <div className="status-banner status-banner--error">
-              {state.message || t({ zh: '未知错误', en: 'Unknown error' })}
-            </div>
-          </SurfaceCard>
-        ) : null}
+        <SurfaceCardStatusStack items={statusCardItems} />
 
         {detail && effectContext ? (
           <ChampionDetailBody
