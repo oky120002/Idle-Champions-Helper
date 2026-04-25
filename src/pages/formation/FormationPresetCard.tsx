@@ -1,3 +1,4 @@
+import { ActionButtons } from '../../components/ActionButtons'
 import { LabeledValueCardGrid } from '../../components/LabeledValueCardGrid'
 import { ChampionIdentity } from '../../components/ChampionIdentity'
 import { PresetFormFields } from '../../components/PresetFormFields'
@@ -92,19 +93,23 @@ export function FormationPresetCard({ model }: FormationPresetCardProps) {
             includeStackClass={false}
           />
 
-          <div className="button-row">
-            <button
-              type="button"
-              className="action-button action-button--secondary"
-              onClick={handleSavePreset}
-              disabled={!canSavePreset}
-            >
-              {isSavingPreset ? t({ zh: '保存中…', en: 'Saving…' }) : t({ zh: '保存为方案', en: 'Save as preset' })}
-            </button>
-            <button type="button" className="action-button action-button--ghost" onClick={handleOpenPresetsPage}>
-              {t({ zh: '查看方案存档', en: 'Open preset library' })}
-            </button>
-          </div>
+          <ActionButtons
+            items={[
+              {
+                id: 'save-preset',
+                label: isSavingPreset ? t({ zh: '保存中…', en: 'Saving…' }) : t({ zh: '保存为方案', en: 'Save as preset' }),
+                tone: 'secondary',
+                disabled: !canSavePreset,
+                onClick: handleSavePreset,
+              },
+              {
+                id: 'open-preset-library',
+                label: t({ zh: '查看方案存档', en: 'Open preset library' }),
+                tone: 'ghost',
+                onClick: handleOpenPresetsPage,
+              },
+            ]}
+          />
 
           {presetStatus ? (
             <StatusBanner tone={presetStatus.tone} title={presetStatus.title} detail={presetStatus.detail} />

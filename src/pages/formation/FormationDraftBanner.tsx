@@ -1,3 +1,4 @@
+import { ActionButtons } from '../../components/ActionButtons'
 import { ChampionPill } from '../../components/ChampionPill'
 import { StatusBanner } from '../../components/StatusBanner'
 import { buildRestoreStatusDetail } from '../../data/formationPersistence'
@@ -27,31 +28,30 @@ export function FormationDraftBanner({ model }: FormationDraftBannerProps) {
             : draftPrompt.detail
         }
         actions={
-          <>
-            {draftPrompt.kind === 'restore' ? (
-              <button
-                type="button"
-                className="action-button action-button--secondary"
-                onClick={model.handleRestoreRecentDraft}
-              >
-                {t({ zh: '恢复最近草稿', en: 'Restore draft' })}
-              </button>
-            ) : null}
-            <button
-              type="button"
-              className="action-button action-button--ghost"
-              onClick={model.handleKeepDraftWithoutRestore}
-            >
-              {t({ zh: '先保留不恢复', en: 'Keep for now' })}
-            </button>
-            <button
-              type="button"
-              className="action-button action-button--ghost"
-              onClick={model.handleDiscardRecentDraft}
-            >
-              {t({ zh: '丢弃旧草稿', en: 'Discard draft' })}
-            </button>
-          </>
+          <ActionButtons
+            wrap={false}
+            items={[
+              {
+                id: 'restore-draft',
+                label: t({ zh: '恢复最近草稿', en: 'Restore draft' }),
+                tone: 'secondary',
+                hidden: draftPrompt.kind !== 'restore',
+                onClick: model.handleRestoreRecentDraft,
+              },
+              {
+                id: 'keep-draft',
+                label: t({ zh: '先保留不恢复', en: 'Keep for now' }),
+                tone: 'ghost',
+                onClick: model.handleKeepDraftWithoutRestore,
+              },
+              {
+                id: 'discard-draft',
+                label: t({ zh: '丢弃旧草稿', en: 'Discard draft' }),
+                tone: 'ghost',
+                onClick: model.handleDiscardRecentDraft,
+              },
+            ]}
+          />
         }
       >
         {draftPrompt.kind === 'restore' ? (

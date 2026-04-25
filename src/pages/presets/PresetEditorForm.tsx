@@ -1,3 +1,4 @@
+import { ActionButtons } from '../../components/ActionButtons'
 import { PresetFormFields } from '../../components/PresetFormFields'
 import { buildPriorityLabel } from './preset-model'
 import type { PresetsPageModel, PresetView } from './types'
@@ -27,19 +28,23 @@ export function PresetEditorForm({ model, view }: PresetEditorFormProps) {
         includeStackClass={false}
       />
 
-      <div className="button-row">
-        <button
-          type="button"
-          className="action-button action-button--secondary"
-          disabled={editor.name.trim().length === 0}
-          onClick={() => savePresetEdit(view.preset)}
-        >
-          {t({ zh: '保存修改', en: 'Save changes' })}
-        </button>
-        <button type="button" className="action-button action-button--ghost" onClick={cancelEditingPreset}>
-          {t({ zh: '取消编辑', en: 'Cancel edit' })}
-        </button>
-      </div>
+      <ActionButtons
+        items={[
+          {
+            id: 'save-edit',
+            label: t({ zh: '保存修改', en: 'Save changes' }),
+            tone: 'secondary',
+            disabled: editor.name.trim().length === 0,
+            onClick: () => savePresetEdit(view.preset),
+          },
+          {
+            id: 'cancel-edit',
+            label: t({ zh: '取消编辑', en: 'Cancel edit' }),
+            tone: 'ghost',
+            onClick: cancelEditingPreset,
+          },
+        ]}
+      />
     </div>
   )
 }
