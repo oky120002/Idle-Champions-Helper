@@ -4,7 +4,7 @@ import { resolveDataUrl } from '../../data/client'
 import { getChampionAttributeGroupLabel, getChampionAttributeGroups, getChampionTagLabel } from '../../domain/championTags'
 import { getLocalizedTextPair, getPrimaryLocalizedText, getRoleLabel } from '../../domain/localizedText'
 import type { Champion } from '../../domain/types'
-import { filterChampionCardAttributeGroups } from './champion-card-model'
+import { buildChampionCardAttributePills } from './champion-card-model'
 import type { ChampionsPageModel } from './types'
 
 interface ChampionResultCardProps {
@@ -14,7 +14,7 @@ interface ChampionResultCardProps {
 
 export function ChampionResultCard({ champion, model }: ChampionResultCardProps) {
   const { locale, t, locationSearch, saveListScroll, heroIllustrationByChampionId } = model
-  const attributeGroups = filterChampionCardAttributeGroups(getChampionAttributeGroups(champion.tags), {
+  const attributePills = buildChampionCardAttributePills(getChampionAttributeGroups(champion.tags), {
     selectedAcquisitions: model.selectedAcquisitions,
     selectedMechanics: model.selectedMechanics,
   })
@@ -88,22 +88,22 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
         </div>
 
         <div className="result-card__attributes">
-          {attributeGroups.length > 0 ? (
-            <div className="result-attribute-grid result-attribute-grid--compact">
-              {attributeGroups.map((group) => (
-                <div key={group.id} className="result-block result-block--compact result-card__attribute-group">
-                  <strong className="result-block__title result-block__title--small">
-                    {getChampionAttributeGroupLabel(group.id, locale)}
-                  </strong>
-                  <div className="tag-row tag-row--tight result-card__attribute-tags">
-                    {group.tags.map((tag) => (
-                      <span key={tag} className="tag-pill tag-pill--muted">
-                        {getChampionTagLabel(tag, locale)}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
+          {attributePills.length > 0 ? (
+            <div className="tag-row result-card__attribute-trail">
+              {attributePills.map((attribute) => {
+                const tagLabel = getChampionTagLabel(attribute.tag, locale)
+                const groupLabel = getChampionAttributeGroupLabel(attribute.groupId, locale)
+
+                return (
+                  <span
+                    key={attribute.key}
+                    className={`tag-pill tag-pill--muted result-card__attribute-pill result-card__attribute-pill--${attribute.groupId}`}
+                    title={`${groupLabel} · ${tagLabel}`}
+                  >
+                    {tagLabel}
+                  </span>
+                )
+              })}
             </div>
           ) : (
             <p className="supporting-text result-card__attributes-empty">
