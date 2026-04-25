@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import type { AppLocale } from '../../app/i18n'
 import { resolveDataUrl } from '../../data/client'
@@ -17,13 +17,20 @@ type IllustrationResultCardProps = {
   onOpenChampion: () => void
 }
 
-export function IllustrationResultCard({ entry, animation, locale, t, onOpenChampion }: IllustrationResultCardProps) {
+function IllustrationResultCardInner({ entry, animation, locale, t, onOpenChampion }: IllustrationResultCardProps) {
   const location = useLocation()
   const { illustration, champion } = entry
   const [isPreviewActive, setPreviewActive] = useState(false)
+  const [hasPreviewActivated, setHasPreviewActivated] = useState(false)
   const championPrimaryName = getPrimaryLocalizedText(illustration.championName, locale)
   const title = buildIllustrationCardTitle(illustration, locale)
   const fallbackSrc = resolveDataUrl(illustration.image.path)
+  const shouldRenderPreview = Boolean(animation && hasPreviewActivated)
+
+  const activatePreview = () => {
+    setHasPreviewActivated(true)
+    setPreviewActive(true)
+  }
 
   return (
     <Link
@@ -44,19 +51,20 @@ export function IllustrationResultCard({ entry, animation, locale, t, onOpenCham
         zh: `查看英雄：${championPrimaryName}（${title.primary}）`,
         en: `Open champion: ${championPrimaryName} (${title.primary})`,
       })}
-      onMouseEnter={() => setPreviewActive(true)}
+      onMouseEnter={activatePreview}
       onMouseLeave={() => setPreviewActive(false)}
-      onFocus={() => setPreviewActive(true)}
+      onFocus={activatePreview}
       onBlur={() => setPreviewActive(false)}
       onClick={onOpenChampion}
     >
       <div className="illustration-card__image-shell">
-        {animation && isPreviewActive ? (
+        {shouldRenderPreview ? (
           <SkelAnimCanvas
             className="illustration-card__preview"
             animation={animation}
             fallbackSrc={fallbackSrc}
             alt={buildIllustrationAlt(illustration, locale)}
+            viewportBounds={illustration.render.bounds}
             labels={{
               loading: t({ zh: '载入动图…', en: 'Loading motion…' }),
               play: t({ zh: '播放动画', en: 'Play animation' }),
@@ -66,7 +74,9 @@ export function IllustrationResultCard({ entry, animation, locale, t, onOpenCham
               animated: t({ zh: '动态预览已启用', en: 'Animated preview enabled' }),
               fallback: t({ zh: '当前显示静态立绘', en: 'Showing static illustration' }),
             }}
-            playbackMode="play"
+            playbackMode={isPreviewActive ? 'play' : 'pause'}
+            sequenceIntent="walk"
+            showLoadingBadge={false}
             showControls={false}
             showStatus={false}
           />
@@ -118,3 +128,5 @@ export function IllustrationResultCard({ entry, animation, locale, t, onOpenCham
     </Link>
   )
 }
+
+export const IllustrationResultCard = memo(IllustrationResultCardInner)

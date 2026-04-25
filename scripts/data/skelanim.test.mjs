@@ -329,6 +329,60 @@ test('renderSkelAnimPoseToPngBuffer 以正 y 向下堆叠 piece', async () => {
   assert.deepEqual(Array.from(bottomPixel), [0, 0, 255, 255])
 })
 
+test('renderSkelAnimPoseToPngBuffer 支持用更大的 viewport 输出首帧 poster', async () => {
+  const texture = createSolidTexture(1, 1, () => [0, 255, 0, 255])
+  const rawBuffer = buildSkelAnimAssetBuffer({
+    sheetWidth: 1,
+    sheetHeight: 1,
+    textures: [texture],
+    characters: [
+      {
+        name: 'PosterHero',
+        sequences: [
+          {
+            length: 1,
+            pieces: [
+              {
+                textureId: 0,
+                sourceX: 0,
+                sourceY: 0,
+                sourceWidth: 1,
+                sourceHeight: 1,
+                centerX: 0,
+                centerY: 0,
+                frames: [
+                  {
+                    depth: 0,
+                    rotation: 0,
+                    scaleX: 1,
+                    scaleY: 1,
+                    x: 1,
+                    y: 0,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  })
+  const decoded = decodeSkelAnimGraphicBuffer(testAsset, rawBuffer)
+  const rendered = await renderSkelAnimPoseToPngBuffer(decoded, {
+    sequenceIndex: 0,
+    frameIndex: 0,
+    viewportBounds: { minX: 0, minY: 0, maxX: 3, maxY: 1 },
+  })
+  const png = PNG.sync.read(rendered.bytes)
+
+  assert.equal(rendered.width, 3)
+  assert.equal(rendered.height, 1)
+  assert.deepEqual(rendered.render.bounds, { minX: 0, minY: 0, maxX: 3, maxY: 1 })
+  assert.deepEqual(Array.from(png.data.subarray(0, 4)), [0, 0, 0, 0])
+  assert.deepEqual(Array.from(png.data.subarray(4, 8)), [0, 255, 0, 255])
+  assert.deepEqual(Array.from(png.data.subarray(8, 12)), [0, 0, 0, 0])
+})
+
 test('SkelAnim 几何遵循 kleho 的正 rotation 与先 scale 后 rotate', async () => {
   const texture = createSolidTexture(1, 1, () => [255, 0, 0, 255])
   const rawBuffer = buildSkelAnimAssetBuffer({

@@ -41,7 +41,7 @@ async function main() {
   4. 官方英雄头像资源
   5. 详情页升级区本地专精图资源
   6. 详情页动态 hero-base / skin 动画原始资源
-  7. 基于动画默认帧生成本地静态立绘（无动画包时再回退）
+  7. 基于动画默认帧生成本地静态立绘（缺动画直接报错）
   8. 宠物目录、静态图与可播放的本地动图清单
 
 推荐入口：
@@ -99,7 +99,6 @@ async function main() {
     skinIds: values.animationSkinIds,
   })
   const illustrations = await syncChampionIllustrations({
-    input: fetched.rawFile,
     outputDir: values.outputDir,
     currentVersion: values.currentVersion,
     championIds: values.animationChampionIds,
