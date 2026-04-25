@@ -12,6 +12,12 @@ export interface ChampionCardFilterState {
   selectedMechanics: string[]
 }
 
+export interface ChampionCardAttributePill {
+  key: string
+  groupId: ChampionAttributeGroupId
+  tag: string
+}
+
 export function getChampionCardVisibleAttributeGroupIds(
   filters: ChampionCardFilterState,
 ): ChampionAttributeGroupId[] {
@@ -29,4 +35,19 @@ export function filterChampionCardAttributeGroups(
   const visibleGroupIds = new Set(getChampionCardVisibleAttributeGroupIds(filters))
 
   return attributeGroups.filter((group) => visibleGroupIds.has(group.id))
+}
+
+export function buildChampionCardAttributePills(
+  attributeGroups: ChampionAttributeGroup[],
+  filters: ChampionCardFilterState,
+): ChampionCardAttributePill[] {
+  const groupById = new Map(attributeGroups.map((group) => [group.id, group]))
+
+  return getChampionCardVisibleAttributeGroupIds(filters).flatMap((groupId) =>
+    (groupById.get(groupId)?.tags ?? []).map((tag) => ({
+      key: `${groupId}:${tag}`,
+      groupId,
+      tag,
+    })),
+  )
 }

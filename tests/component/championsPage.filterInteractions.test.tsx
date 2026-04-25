@@ -98,7 +98,7 @@ describe('ChampionsPage filters', () => {
     ).toBeInTheDocument()
   })
 
-  it('结果卡会按当前筛选展示结构化属性分组', async () => {
+  it('结果卡会把属性压平成颜色编码的流式标签，并按筛选追加低频属性', async () => {
     const user = userEvent.setup()
 
     renderChampionsPage()
@@ -110,14 +110,14 @@ describe('ChampionsPage filters', () => {
 
     const alphaScope = within(alphaCard as HTMLElement)
 
-    expect(alphaScope.getByText('种族')).toBeInTheDocument()
+    expect(alphaScope.getByTitle('种族 · 人类')).toBeInTheDocument()
     expect(alphaScope.getByText('人类')).toBeInTheDocument()
-    expect(alphaScope.getByText('性别')).toBeInTheDocument()
+    expect(alphaScope.getByTitle('性别 · 男性')).toBeInTheDocument()
     expect(alphaScope.getByText('男性')).toBeInTheDocument()
-    expect(alphaScope.getByText('阵营')).toBeInTheDocument()
+    expect(alphaScope.getByTitle('阵营 · 善良')).toBeInTheDocument()
     expect(alphaScope.getByText('善良')).toBeInTheDocument()
     expect(alphaScope.getByText('守序')).toBeInTheDocument()
-    expect(alphaScope.getByText('职业')).toBeInTheDocument()
+    expect(alphaScope.getByTitle('职业 · 邪术师')).toBeInTheDocument()
     expect(alphaScope.getByText('邪术师')).toBeInTheDocument()
     expect(alphaScope.queryByText('获取方式')).not.toBeInTheDocument()
     expect(alphaScope.queryByText('活动英雄')).not.toBeInTheDocument()
@@ -130,12 +130,14 @@ describe('ChampionsPage filters', () => {
     await user.click(screen.getByRole('button', { name: '活动英雄' }))
     await user.click(screen.getByRole('button', { name: '减速控制' }))
 
-    expect(alphaScope.getByText('获取方式')).toBeInTheDocument()
+    expect(alphaScope.getByTitle('获取方式 · 活动英雄')).toBeInTheDocument()
     expect(alphaScope.getByText('活动英雄')).toBeInTheDocument()
     expect(alphaScope.getByText('第 2 年活动')).toBeInTheDocument()
     expect(alphaScope.getByText('起始英雄')).toBeInTheDocument()
-    expect(alphaScope.getByText('特殊机制')).toBeInTheDocument()
+    expect(alphaScope.getByTitle('特殊机制 · 减速控制')).toBeInTheDocument()
     expect(alphaScope.getByText('减速控制')).toBeInTheDocument()
+    expect(alphaScope.queryByText('获取方式')).not.toBeInTheDocument()
+    expect(alphaScope.queryByText('特殊机制')).not.toBeInTheDocument()
   })
 
   it('默认把低频标签筛选折叠收纳，展开后才显示补充条件', async () => {
