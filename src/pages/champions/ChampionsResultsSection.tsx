@@ -1,4 +1,3 @@
-import { ChampionVisualWorkbench } from '../../components/ChampionVisualWorkbench'
 import { WorkbenchResultsScaffold } from '../../components/workbench/WorkbenchResultsScaffold'
 import { ChampionResultCard } from './ChampionResultCard'
 import type { ChampionsPageModel } from './types'
@@ -8,14 +7,7 @@ interface ChampionsResultsSectionProps {
 }
 
 export function ChampionsResultsSection({ model }: ChampionsResultsSectionProps) {
-  const {
-    filteredChampions,
-    visibleChampions,
-    selectedChampion,
-    selectedChampionVisual,
-    clearSelectedChampion,
-    t,
-  } = model
+  const { filteredChampions, visibleChampions, t } = model
   const hasMatches = filteredChampions.length > 0
 
   return (
@@ -32,23 +24,11 @@ export function ChampionsResultsSection({ model }: ChampionsResultsSectionProps)
         }),
       }}
     >
-      <>
-        {selectedChampion ? (
-          <ChampionVisualWorkbench
-            key={selectedChampion.id}
-            champion={selectedChampion}
-            visual={selectedChampionVisual}
-            locale={model.locale}
-            onClose={clearSelectedChampion}
-          />
-        ) : null}
-
-        <div className="results-grid results-grid--stable champions-results__grid">
-          {visibleChampions.map((champion) => (
-            <ChampionResultCard key={champion.id} champion={champion} model={model} />
-          ))}
-        </div>
-      </>
+      <div className="results-grid results-grid--stable champions-results__grid">
+        {visibleChampions.map((champion) => (
+          <ChampionResultCard key={champion.id} champion={champion} model={model} />
+        ))}
+      </div>
     </WorkbenchResultsScaffold>
   )
 }

@@ -59,8 +59,6 @@ export interface ChampionsPageModel {
   hasActiveFilters: boolean
   filteredChampions: Champion[]
   visibleChampions: Champion[]
-  selectedChampion: Champion | null
-  selectedChampionVisual: ChampionVisual | null
   heroIllustrationByChampionId: ReadonlyMap<string, ChampionIllustration>
   matchedSeats: number
   canToggleResultVisibility: boolean
@@ -105,8 +103,6 @@ export interface ChampionsPageModel {
   toggleMechanic: (mechanic: string) => void
   toggleResultVisibility: () => void
   randomizeResultOrder: () => void
-  toggleChampionVisual: (championId: string) => void
-  clearSelectedChampion: () => void
   scrollResultsToTop: () => void
   copyCurrentLink: () => Promise<void>
   getMechanicCategoryHint: (groupId: ChampionMechanicCategoryId) => string

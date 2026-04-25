@@ -1,9 +1,8 @@
-import { ActionButton } from '../../components/ActionButton'
 import { Link } from 'react-router-dom'
 import { ChampionIdentity } from '../../components/ChampionIdentity'
 import { resolveDataUrl } from '../../data/client'
 import { getChampionAttributeGroupLabel, getChampionAttributeGroups, getChampionTagLabel } from '../../domain/championTags'
-import { formatSeatLabel, getLocalizedTextPair, getPrimaryLocalizedText, getRoleLabel } from '../../domain/localizedText'
+import { getLocalizedTextPair, getPrimaryLocalizedText, getRoleLabel } from '../../domain/localizedText'
 import type { Champion } from '../../domain/types'
 import { filterChampionCardAttributeGroups } from './champion-card-model'
 import type { ChampionsPageModel } from './types'
@@ -14,27 +13,25 @@ interface ChampionResultCardProps {
 }
 
 export function ChampionResultCard({ champion, model }: ChampionResultCardProps) {
-  const { locale, t, selectedChampion, toggleChampionVisual, locationSearch, saveListScroll, heroIllustrationByChampionId } =
-    model
+  const { locale, t, locationSearch, saveListScroll, heroIllustrationByChampionId } = model
   const attributeGroups = filterChampionCardAttributeGroups(getChampionAttributeGroups(champion.tags), {
     selectedAcquisitions: model.selectedAcquisitions,
     selectedMechanics: model.selectedMechanics,
   })
-  const isSelected = champion.id === selectedChampion?.id
   const heroIllustration = heroIllustrationByChampionId.get(champion.id) ?? null
+  const seatLabel = t({ zh: `${champion.seat}位`, en: `Seat ${champion.seat}` })
+  const affiliationLabel = t({ zh: '所属', en: 'Affiliations' })
   const affiliationText =
+    champion.affiliations.length > 0
+      ? champion.affiliations.map((affiliation) => getPrimaryLocalizedText(affiliation, locale)).join(' / ')
+      : null
+  const affiliationTitle =
     champion.affiliations.length > 0
       ? champion.affiliations.map((affiliation) => getLocalizedTextPair(affiliation, locale)).join(' / ')
       : null
 
   return (
-    <article
-      className={
-        isSelected
-          ? 'result-card result-card--champion result-card--interactive result-card--selected'
-          : 'result-card result-card--champion result-card--interactive'
-      }
-    >
+    <article className="result-card result-card--champion result-card--interactive">
       <Link
         className="result-card--link"
         to={{
@@ -65,13 +62,22 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
           <ChampionIdentity
             champion={champion}
             locale={locale}
-            eyebrow={formatSeatLabel(champion.seat, locale)}
+            eyebrow={seatLabel}
             avatarClassName="champion-avatar--spotlight"
+            supporting={
+              affiliationText ? (
+                <p className="result-card__affiliation" title={affiliationTitle ?? affiliationText}>
+                  <span className="result-card__affiliation-label">{affiliationLabel}</span>
+                  <span className="result-card__affiliation-value">{affiliationText}</span>
+                </p>
+              ) : null
+            }
             variant="spotlight"
           />
 
           <div className="result-card__meta-strip">
             <div className="tag-row result-card__role-row">
+              <span className="tag-pill tag-pill--seat">{seatLabel}</span>
               {champion.roles.map((role) => (
                 <span key={role} className="tag-pill">
                   {getRoleLabel(role, locale)}
@@ -90,16 +96,11 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
                     {getChampionAttributeGroupLabel(group.id, locale)}
                   </strong>
                   <div className="tag-row tag-row--tight result-card__attribute-tags">
-                    {group.tags.slice(0, 3).map((tag) => (
+                    {group.tags.map((tag) => (
                       <span key={tag} className="tag-pill tag-pill--muted">
                         {getChampionTagLabel(tag, locale)}
                       </span>
                     ))}
-                    {group.tags.length > 3 ? (
-                      <span className="tag-pill tag-pill--muted result-card__role-overflow">
-                        {t({ zh: `+${group.tags.length - 3}`, en: `+${group.tags.length - 3}` })}
-                      </span>
-                    ) : null}
                   </div>
                 </div>
               ))}
@@ -113,25 +114,7 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
             </p>
           )}
         </div>
-
-        {affiliationText ? <p className="result-card__affiliation">{affiliationText}</p> : null}
       </Link>
-
-      <div className="result-card__actions">
-        <ActionButton
-          tone={isSelected ? 'secondary' : 'ghost'}
-          compact
-          toggled={isSelected}
-          ariaLabel={t({
-            zh: `查看 ${getPrimaryLocalizedText(champion.name, locale)} 视觉档案`,
-            en: `View ${getPrimaryLocalizedText(champion.name, locale)} visual dossier`,
-          })}
-          ariaPressed={isSelected}
-          onClick={() => toggleChampionVisual(champion.id)}
-        >
-          {isSelected ? t({ zh: '收起视觉档案', en: 'Hide visual dossier' }) : t({ zh: '视觉档案', en: 'Visual dossier' })}
-        </ActionButton>
-      </div>
     </article>
   )
 }

@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import type { AppLocale } from '../app/i18n'
 import { getPrimaryLocalizedText, getSecondaryLocalizedText } from '../domain/localizedText'
 import type { Champion } from '../domain/types'
@@ -8,6 +9,7 @@ interface ChampionIdentityProps {
   locale: AppLocale
   eyebrow: string
   avatarClassName?: string
+  supporting?: ReactNode
   variant?: 'default' | 'spotlight'
 }
 
@@ -16,6 +18,7 @@ export function ChampionIdentity({
   locale,
   eyebrow,
   avatarClassName = 'champion-avatar--card',
+  supporting,
   variant = 'default',
 }: ChampionIdentityProps) {
   const primaryName = getPrimaryLocalizedText(champion.name, locale)
@@ -27,14 +30,13 @@ export function ChampionIdentity({
         <div className="result-card__header result-card__header--spotlight">
           <h3 className="result-card__title">{primaryName}</h3>
           {secondaryName ? <p className="result-card__secondary">{secondaryName}</p> : null}
+          {supporting ? <div className="result-card__supporting-slot">{supporting}</div> : null}
         </div>
 
         <div className="result-card__portrait-stage">
-          <span className="result-card__portrait-halo" />
           <span className="result-card__portrait-frame">
             <ChampionAvatar champion={champion} locale={locale} className={avatarClassName} />
           </span>
-          <span className="result-card__portrait-chip">{eyebrow}</span>
         </div>
       </div>
     )
@@ -50,6 +52,7 @@ export function ChampionIdentity({
         </div>
       </div>
       {secondaryName ? <p className="result-card__secondary">{secondaryName}</p> : null}
+      {supporting ? <div className="result-card__supporting-slot">{supporting}</div> : null}
     </>
   )
 }
