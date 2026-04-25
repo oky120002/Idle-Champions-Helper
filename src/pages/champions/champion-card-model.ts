@@ -5,6 +5,8 @@ const DEFAULT_VISIBLE_ATTRIBUTE_GROUPS: ChampionAttributeGroupId[] = [
   'alignment',
   'profession',
   'gender',
+  'acquisition',
+  'mechanics',
 ]
 
 export interface ChampionCardFilterState {
@@ -19,13 +21,9 @@ export interface ChampionCardAttributePill {
 }
 
 export function getChampionCardVisibleAttributeGroupIds(
-  filters: ChampionCardFilterState,
+  _filters: ChampionCardFilterState,
 ): ChampionAttributeGroupId[] {
-  return [
-    ...DEFAULT_VISIBLE_ATTRIBUTE_GROUPS,
-    ...(filters.selectedAcquisitions.length > 0 ? (['acquisition'] as const) : []),
-    ...(filters.selectedMechanics.length > 0 ? (['mechanics'] as const) : []),
-  ]
+  return DEFAULT_VISIBLE_ATTRIBUTE_GROUPS
 }
 
 export function filterChampionCardAttributeGroups(

@@ -98,9 +98,7 @@ describe('ChampionsPage filters', () => {
     ).toBeInTheDocument()
   })
 
-  it('结果卡会把属性压平成颜色编码的流式标签，并按筛选追加低频属性', async () => {
-    const user = userEvent.setup()
-
+  it('结果卡会默认展示左侧可筛属性，并保持颜色编码的流式布局', async () => {
     renderChampionsPage()
 
     const alphaTitle = await screen.findByRole('heading', { level: 3, name: '阿尔法' })
@@ -119,20 +117,11 @@ describe('ChampionsPage filters', () => {
     expect(alphaScope.getByText('守序')).toBeInTheDocument()
     expect(alphaScope.getByTitle('职业 · 邪术师')).toBeInTheDocument()
     expect(alphaScope.getByText('邪术师')).toBeInTheDocument()
-    expect(alphaScope.queryByText('获取方式')).not.toBeInTheDocument()
-    expect(alphaScope.queryByText('活动英雄')).not.toBeInTheDocument()
-    expect(alphaScope.queryByText('第 2 年活动')).not.toBeInTheDocument()
-    expect(alphaScope.queryByText('起始英雄')).not.toBeInTheDocument()
-    expect(alphaScope.queryByText('特殊机制')).not.toBeInTheDocument()
-    expect(alphaScope.queryByText('减速控制')).not.toBeInTheDocument()
-
-    await user.click(screen.getByRole('button', { name: /来源与特殊机制/ }))
-    await user.click(screen.getByRole('button', { name: '活动英雄' }))
-    await user.click(screen.getByRole('button', { name: '减速控制' }))
-
     expect(alphaScope.getByTitle('获取方式 · 活动英雄')).toBeInTheDocument()
     expect(alphaScope.getByText('活动英雄')).toBeInTheDocument()
+    expect(alphaScope.getByTitle('获取方式 · 第 2 年活动')).toBeInTheDocument()
     expect(alphaScope.getByText('第 2 年活动')).toBeInTheDocument()
+    expect(alphaScope.getByTitle('获取方式 · 起始英雄')).toBeInTheDocument()
     expect(alphaScope.getByText('起始英雄')).toBeInTheDocument()
     expect(alphaScope.getByTitle('特殊机制 · 减速控制')).toBeInTheDocument()
     expect(alphaScope.getByText('减速控制')).toBeInTheDocument()
