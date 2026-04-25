@@ -1,6 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useI18n } from '../../app/i18n'
+import {
+  createErrorStatusMessage,
+  createInfoStatusMessage,
+  createSuccessStatusMessage,
+} from '../../components/statusMessage'
 import { loadCollectionAtVersion, loadVersion } from '../../data/client'
 import { deleteFormationPreset, saveFormationPreset } from '../../data/formationPresetStore'
 import type { Champion, FormationLayout, FormationPreset } from '../../domain/types'
@@ -82,11 +87,7 @@ export function usePresetsPageModel(): PresetsPageModel {
         setPageStatus(successMessage)
       }
     } catch (error: unknown) {
-      setPageStatus({
-        tone: 'error',
-        title: '刷新方案列表失败',
-        detail: getErrorMessage(error),
-      })
+      setPageStatus(createErrorStatusMessage('刷新方案列表失败', getErrorMessage(error)))
     }
   }
 
@@ -135,17 +136,14 @@ export function usePresetsPageModel(): PresetsPageModel {
 
         await saveFormationPreset(nextPreset)
         setEditingPresetId(null)
-        await refreshPresetList({
-          tone: 'success',
-          title: `方案“${nextPreset.name}”已更新`,
-          detail: '名称、备注、标签和优先级已写回本地方案库。',
-        })
+        await refreshPresetList(
+          createSuccessStatusMessage(
+            `方案“${nextPreset.name}”已更新`,
+            '名称、备注、标签和优先级已写回本地方案库。',
+          ),
+        )
       } catch (error: unknown) {
-        setPageStatus({
-          tone: 'error',
-          title: '更新方案失败',
-          detail: getErrorMessage(error),
-        })
+        setPageStatus(createErrorStatusMessage('更新方案失败', getErrorMessage(error)))
       }
     }
 
@@ -158,17 +156,14 @@ export function usePresetsPageModel(): PresetsPageModel {
         await deleteFormationPreset(preset.id)
         setDeleteConfirmId(null)
         setEditingPresetId((current) => (current === preset.id ? null : current))
-        await refreshPresetList({
-          tone: 'info',
-          title: `方案“${preset.name}”已删除`,
-          detail: '这条命名方案已从当前浏览器的 IndexedDB 移除。',
-        })
+        await refreshPresetList(
+          createInfoStatusMessage(
+            `方案“${preset.name}”已删除`,
+            '这条命名方案已从当前浏览器的 IndexedDB 移除。',
+          ),
+        )
       } catch (error: unknown) {
-        setPageStatus({
-          tone: 'error',
-          title: '删除方案失败',
-          detail: getErrorMessage(error),
-        })
+        setPageStatus(createErrorStatusMessage('删除方案失败', getErrorMessage(error)))
       }
     }
 

@@ -1,4 +1,9 @@
 import { useEffect, type Dispatch, type SetStateAction } from 'react'
+import {
+  createErrorStatusMessage,
+  createInfoStatusMessage,
+  createSuccessStatusMessage,
+} from '../../components/statusMessage'
 import { deleteRecentFormationDraft, saveRecentFormationDraft } from '../../data/formationDraftStore'
 import type { ScenarioRef } from '../../domain/types'
 import { formatDateTime, getErrorMessage } from './formation-model-helpers'
@@ -35,11 +40,7 @@ export function useFormationDraftPersistence({
         try {
           if (Object.keys(placements).length === 0) {
             await deleteRecentFormationDraft()
-            setDraftStatus({
-              tone: 'info',
-              title: '最近草稿已清理',
-              detail: '当前阵型为空，浏览器本地不会继续保留最近草稿。',
-            })
+            setDraftStatus(createInfoStatusMessage('最近草稿已清理', '当前阵型为空，浏览器本地不会继续保留最近草稿。'))
             return
           }
 
@@ -53,17 +54,14 @@ export function useFormationDraftPersistence({
           } as const
 
           await saveRecentFormationDraft(nextDraft)
-          setDraftStatus({
-            tone: 'success',
-            title: '最近草稿已自动保存',
-            detail: `${formatDateTime(nextDraft.updatedAt, locale)} · 保存在当前浏览器的 IndexedDB。`,
-          })
+          setDraftStatus(
+            createSuccessStatusMessage(
+              '最近草稿已自动保存',
+              `${formatDateTime(nextDraft.updatedAt, locale)} · 保存在当前浏览器的 IndexedDB。`,
+            ),
+          )
         } catch (error: unknown) {
-          setDraftStatus({
-            tone: 'error',
-            title: '最近草稿保存失败',
-            detail: getErrorMessage(error),
-          })
+          setDraftStatus(createErrorStatusMessage('最近草稿保存失败', getErrorMessage(error)))
         }
       }
 

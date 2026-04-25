@@ -1,4 +1,5 @@
 import type { Dispatch, SetStateAction } from 'react'
+import { createInfoStatusMessage } from '../../components/statusMessage'
 import type { ScenarioRef } from '../../domain/types'
 import type { FormationState, StatusMessage } from './types'
 import { pickPreferredSlotId } from './formation-model-helpers'
@@ -32,11 +33,7 @@ export function buildFormationBoardActions({
     setActiveMobileSlotId(pickPreferredSlotId(nextLayout))
     setPlacements({})
     setScenarioRef(null)
-    setDraftStatus({
-      tone: 'info',
-      title: '已切换布局',
-      detail: '当前布局变化后会重新生成最近草稿；旧的场景上下文不会被沿用。',
-    })
+    setDraftStatus(createInfoStatusMessage('已切换布局', '当前布局变化后会重新生成最近草稿；旧的场景上下文不会被沿用。'))
     setPresetStatus(null)
     bumpEditRevision()
   }
@@ -60,11 +57,7 @@ export function buildFormationBoardActions({
 
   function handleClear() {
     setPlacements({})
-    setDraftStatus({
-      tone: 'info',
-      title: '当前阵型已清空',
-      detail: '如果保持为空，最近草稿会从浏览器本地一起清理。',
-    })
+    setDraftStatus(createInfoStatusMessage('当前阵型已清空', '如果保持为空，最近草稿会从浏览器本地一起清理。'))
     setPresetStatus(null)
     bumpEditRevision()
   }

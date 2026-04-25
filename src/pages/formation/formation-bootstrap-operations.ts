@@ -1,5 +1,10 @@
 import type { Dispatch, SetStateAction } from 'react'
 import type { NavigateFunction } from 'react-router-dom'
+import {
+  createErrorStatusMessage,
+  createInfoStatusMessage,
+  createSuccessStatusMessage,
+} from '../../components/statusMessage'
 import { loadCollectionAtVersion, loadVersion } from '../../data/client'
 import {
   buildFormationSnapshotPrompt,
@@ -95,11 +100,12 @@ export async function loadFormationBootstrapData({
   )
   setSelectedLayoutId(initialLayout?.id ?? '')
   setActiveMobileSlotId(pickPreferredSlotId(initialLayout))
-  setDraftStatus({
-    tone: 'info',
-    title: '最近草稿会自动保存在当前浏览器',
-    detail: '介质为 IndexedDB；只保存在本地，不上传到外部服务。',
-  })
+  setDraftStatus(
+    createInfoStatusMessage(
+      '最近草稿会自动保存在当前浏览器',
+      '介质为 IndexedDB；只保存在本地，不上传到外部服务。',
+    ),
+  )
 
   if (pendingPresetRestore) {
     await restorePendingPreset({
@@ -170,11 +176,7 @@ export async function restorePendingPreset({
 
   if (pendingPrompt.kind !== 'restore') {
     setIsDraftPersistenceArmed(true)
-    setDraftStatus({
-      tone: 'error',
-      title: `方案“${pendingPresetRestore.name}”当前不能恢复`,
-      detail: pendingPrompt.detail,
-    })
+    setDraftStatus(createErrorStatusMessage(`方案“${pendingPresetRestore.name}”当前不能恢复`, pendingPrompt.detail))
     return
   }
 
@@ -215,19 +217,16 @@ export async function restorePendingPreset({
   setDraftPrompt(null)
 
   if (writeBackFailureDetail) {
-    setDraftStatus({
-      tone: 'error',
-      title: '方案已恢复，但最近草稿回写失败',
-      detail: writeBackFailureDetail,
-    })
+    setDraftStatus(createErrorStatusMessage('方案已恢复，但最近草稿回写失败', writeBackFailureDetail))
     return
   }
 
-  setDraftStatus({
-    tone: 'success',
-    title: `已从方案“${pendingPresetRestore.name}”恢复到阵型页`,
-    detail: buildRestoreStatusDetail(pendingPrompt.preview),
-  })
+  setDraftStatus(
+    createSuccessStatusMessage(
+      `已从方案“${pendingPresetRestore.name}”恢复到阵型页`,
+      buildRestoreStatusDetail(pendingPrompt.preview),
+    ),
+  )
 }
 
 export async function loadStoredDraftPrompt({
@@ -271,10 +270,11 @@ export async function loadStoredDraftPrompt({
     }
 
     setIsDraftPersistenceArmed(true)
-    setDraftStatus({
-      tone: 'error',
-      title: '最近草稿读取失败',
-      detail: `${getErrorMessage(error)} 当前仍可继续编辑，但不会自动恢复旧草稿。`,
-    })
+    setDraftStatus(
+      createErrorStatusMessage(
+        '最近草稿读取失败',
+        `${getErrorMessage(error)} 当前仍可继续编辑，但不会自动恢复旧草稿。`,
+      ),
+    )
   }
 }

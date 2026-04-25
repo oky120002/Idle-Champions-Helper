@@ -1,6 +1,11 @@
 import { buildRestoreStatusDetail } from '../../data/formationPersistence'
 import { deleteRecentFormationDraft, saveRecentFormationDraft } from '../../data/formationDraftStore'
 import type { Dispatch, SetStateAction } from 'react'
+import {
+  createErrorStatusMessage,
+  createInfoStatusMessage,
+  createSuccessStatusMessage,
+} from '../../components/statusMessage'
 import type { ScenarioRef } from '../../domain/types'
 import { buildRestoredDraftFromPreview, getErrorMessage, pickPreferredSlotId } from './formation-model-helpers'
 import type { DraftPrompt, FormationState, StatusMessage } from './types'
@@ -54,11 +59,7 @@ export function buildFormationDraftPromptActions({
     setScenarioRef(restoredDraft.scenarioRef)
     setDraftPrompt(null)
     setIsDraftPersistenceArmed(true)
-    setDraftStatus({
-      tone: 'success',
-      title: '最近草稿已恢复',
-      detail: buildRestoreStatusDetail(draftPrompt.preview),
-    })
+    setDraftStatus(createSuccessStatusMessage('最近草稿已恢复', buildRestoreStatusDetail(draftPrompt.preview)))
     void saveRecentFormationDraft(restoredDraft)
     bumpEditRevision()
   }
@@ -71,11 +72,7 @@ export function buildFormationDraftPromptActions({
 
     setDraftPrompt(null)
     setIsDraftPersistenceArmed(true)
-    setDraftStatus({
-      tone: 'info',
-      title: '已保留最近草稿，但本次不恢复',
-      detail,
-    })
+    setDraftStatus(createInfoStatusMessage('已保留最近草稿，但本次不恢复', detail))
   }
 
   function handleDiscardRecentDraft() {
@@ -84,17 +81,9 @@ export function buildFormationDraftPromptActions({
         await deleteRecentFormationDraft()
         setDraftPrompt(null)
         setIsDraftPersistenceArmed(true)
-        setDraftStatus({
-          tone: 'info',
-          title: '最近草稿已丢弃',
-          detail: '当前页面不会再提示恢复这条旧草稿。',
-        })
+        setDraftStatus(createInfoStatusMessage('最近草稿已丢弃', '当前页面不会再提示恢复这条旧草稿。'))
       } catch (error: unknown) {
-        setDraftStatus({
-          tone: 'error',
-          title: '最近草稿删除失败',
-          detail: getErrorMessage(error),
-        })
+        setDraftStatus(createErrorStatusMessage('最近草稿删除失败', getErrorMessage(error)))
       }
     }
 

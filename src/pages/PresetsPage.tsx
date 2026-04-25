@@ -14,6 +14,7 @@ import {
 import { useWorkbenchScrollNavigation } from '../components/workbench/useWorkbenchScrollNavigation'
 import { useWorkbenchShareLink } from '../components/workbench/useWorkbenchShareLink'
 import { SurfaceCardContentSections, type SurfaceCardContentSection } from '../components/SurfaceCardContentSections'
+import { StatusMessageBanner } from '../components/StatusMessageBanner'
 import { StatusBannerStack, type StatusBannerStackItem } from '../components/StatusBannerStack'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { PresetCard } from './presets/PresetCard'
@@ -26,14 +27,6 @@ export function PresetsPage() {
   const { showScrollTop, scrollToTop } = useWorkbenchScrollNavigation({ scrollRef: contentScrollRef })
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
   const { state, t, pageStatus, metrics } = model
-  const headerStatusItems: StatusBannerStackItem[] = pageStatus
-    ? [{
-        id: 'page-status',
-        tone: pageStatus.tone,
-        title: pageStatus.title,
-        detail: pageStatus.detail,
-      }]
-    : []
   const contentStatusItems: StatusBannerStackItem[] = [
     {
       id: 'loading',
@@ -124,7 +117,7 @@ export function PresetsPage() {
         },
       }}
       toolbarItems={toolbarItems}
-      contentHeader={<StatusBannerStack items={headerStatusItems} />}
+      contentHeader={<StatusMessageBanner message={pageStatus} />}
     >
       <StatusBannerStack items={contentStatusItems} />
 

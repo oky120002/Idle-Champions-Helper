@@ -1,6 +1,7 @@
 import { ActionButtons } from '../../components/ActionButtons'
 import { ChampionPill } from '../../components/ChampionPill'
 import { StatusBanner } from '../../components/StatusBanner'
+import { StatusMessageBanner } from '../../components/StatusMessageBanner'
 import { buildRestoreStatusDetail } from '../../data/formationPersistence'
 import { getLocalizedTextPair } from '../../domain/localizedText'
 import { buildDraftPromptSummary } from './formation-model-helpers'
@@ -84,7 +85,7 @@ export function FormationDraftBanner({ model }: FormationDraftBannerProps) {
   }
 
   if (draftStatus) {
-    return <StatusBanner tone={draftStatus.tone} title={draftStatus.title} detail={draftStatus.detail} />
+    return <StatusMessageBanner message={draftStatus} />
   }
 
   return null

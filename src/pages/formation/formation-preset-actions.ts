@@ -1,5 +1,6 @@
 import type { Dispatch, SetStateAction } from 'react'
 import type { NavigateFunction } from 'react-router-dom'
+import { createErrorStatusMessage, createSuccessStatusMessage } from '../../components/statusMessage'
 import { saveFormationPreset } from '../../data/formationPresetStore'
 import type { FormationLayout, PresetPriority, ScenarioRef } from '../../domain/types'
 import { buildPresetId, getErrorMessage, parseScenarioTags } from './formation-model-helpers'
@@ -73,17 +74,14 @@ export function buildFormationPresetActions({
 
         await saveFormationPreset(preset)
         setPresetForm({ ...DEFAULT_PRESET_FORM_STATE })
-        setPresetStatus({
-          tone: 'success',
-          title: `方案“${preset.name}”已保存`,
-          detail: '现在可以去“方案存档”页继续编辑、删除，或重新恢复回阵型页。',
-        })
+        setPresetStatus(
+          createSuccessStatusMessage(
+            `方案“${preset.name}”已保存`,
+            '现在可以去“方案存档”页继续编辑、删除，或重新恢复回阵型页。',
+          ),
+        )
       } catch (error: unknown) {
-        setPresetStatus({
-          tone: 'error',
-          title: '保存方案失败',
-          detail: getErrorMessage(error),
-        })
+        setPresetStatus(createErrorStatusMessage('保存方案失败', getErrorMessage(error)))
       } finally {
         setIsSavingPreset(false)
       }

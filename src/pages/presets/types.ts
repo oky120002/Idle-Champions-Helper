@@ -1,16 +1,11 @@
 import type { AppLocale, LocaleText } from '../../app/i18n'
 import type { FormationSnapshotPrompt } from '../../data/formationPersistence'
 import type { FormationPreset, PresetPriority } from '../../domain/types'
-import type { StatusTone } from '../../components/StatusBanner'
+import type { StatusMessage as SharedStatusMessage } from '../../components/statusMessage'
 import type { Champion, FormationLayout } from '../../domain/types'
 
 export type PresetsPageTranslator = (text: LocaleText) => string
-
-export type StatusMessage = {
-  tone: StatusTone
-  title: string
-  detail: string
-}
+export type StatusMessage = SharedStatusMessage
 
 export type PresetView = {
   preset: FormationPreset

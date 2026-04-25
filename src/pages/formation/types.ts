@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react'
 import type { AppLocale, LocaleText } from '../../app/i18n'
-import type { StatusTone } from '../../components/StatusBanner'
+import type { StatusMessage as SharedStatusMessage } from '../../components/statusMessage'
 import type { FormationSnapshotPrompt } from '../../data/formationPersistence'
 import type {
   Champion,
@@ -20,6 +20,7 @@ export const PRESET_PRIORITY_OPTIONS: PresetPriority[] = ['medium', 'high', 'low
 export const LAYOUT_FILTER_OPTIONS = ['all', 'campaign', 'adventure', 'variant'] as const
 
 export type LayoutFilterKind = (typeof LAYOUT_FILTER_OPTIONS)[number]
+export type StatusMessage = SharedStatusMessage
 
 export type FormationState =
   | { status: 'loading' }
@@ -35,12 +36,6 @@ export type FormationState =
     }
 
 export type ReadyFormationState = Extract<FormationState, { status: 'ready' }>
-
-export interface StatusMessage {
-  tone: StatusTone
-  title: string
-  detail: string
-}
 
 export interface PresetFormState {
   name: string
