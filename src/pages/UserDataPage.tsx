@@ -1,14 +1,10 @@
 import { useRef } from 'react'
 import { useLocation } from 'react-router-dom'
-import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
+import { ConfiguredWorkbenchPage } from '../components/workbench/ConfiguredWorkbenchPage'
 import {
   WorkbenchContentStack,
-  WorkbenchToolbarCopy,
-  WorkbenchToolbarMark,
 } from '../components/workbench/WorkbenchScaffold'
-import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import {
-  WorkbenchToolbarItems,
   type WorkbenchToolbarItemConfig,
 } from '../components/workbench/WorkbenchToolbarItems'
 import {
@@ -118,53 +114,54 @@ export function UserDataPage() {
   ]
 
   return (
-    <div className="user-data-page workbench-page">
-      <PageWorkbenchShell
-        storageKey="user-data"
-        ariaLabel={model.t({ zh: '个人数据工作台', en: 'User data workbench' })}
-        className="workbench-page__shell user-data-workbench"
-        contentScrollRef={contentScrollRef}
-        contentOverlay={
-          showScrollTop ? (
-            <WorkbenchFloatingTopButton
-              onClick={scrollToTop}
-              detailLabel={model.t({ zh: '个人数据内容', en: 'User data pane' })}
-            />
-          ) : null
-        }
-        toolbarLead={<WorkbenchToolbarMark label="USER DATA" />}
-        toolbarPrimary={(
-          <WorkbenchToolbarCopy
-            kicker={model.t({ zh: '本地优先', en: 'Local first' })}
-            title={model.t({ zh: '个人数据', en: 'User data' })}
-            detail={model.t({ zh: '统一管理支持 URL、手填凭证和日志片段导入', en: 'Manage Support URL, manual credentials, and log snippet imports in one place' })}
-          />
-        )}
-        toolbarActions={<WorkbenchToolbarItems items={toolbarItems} />}
-      >
-        <WorkbenchContentStack>
-          <SurfaceCardContentSections
-            eyebrow={model.t({ zh: '导入边界', en: 'Import boundary' })}
-            title={model.t({ zh: '先把本地优先的数据导入骨架搭稳', en: 'Stabilize the local-first import skeleton first' })}
-            description={model.t({ zh: '这一页先验证浏览器内可完成的解析与脱敏预览，不把敏感凭证带到站外。', en: 'This page validates browser-side parsing and masked previews first so sensitive credentials never need to leave the local app.' })}
-            sections={importBoundarySections}
-            layout="split"
-          />
-          <UserDataWorkbench model={model} />
-          <SurfaceCardContentSections
-            eyebrow={model.t({ zh: '下一阶段', en: 'Next stage' })}
-            title={model.t({
-              zh: '接真实本地同步时，也不要让静态站直连官方接口',
-              en: 'Keep official endpoints out of the static site even when local sync grows up',
-            })}
-            description={model.t({
-              zh: '后续真正接个人数据，也应该继续沿用 local-first + 用户主动导入，不把官方请求链路放进静态站。',
-              en: 'When personal data gets wired in for real, it should still stay local-first and user-imported instead of embedding official request flows in the static site.',
-            })}
-            sections={nextStageSections}
-          />
-        </WorkbenchContentStack>
-      </PageWorkbenchShell>
-    </div>
+    <ConfiguredWorkbenchPage
+      pageClassName="user-data-page"
+      storageKey="user-data"
+      ariaLabel={model.t({ zh: '个人数据工作台', en: 'User data workbench' })}
+      shellClassName="workbench-page__shell user-data-workbench"
+      contentScrollRef={contentScrollRef}
+      floatingTopButton={
+        showScrollTop
+          ? {
+              onClick: scrollToTop,
+              detailLabel: model.t({ zh: '个人数据内容', en: 'User data pane' }),
+            }
+          : undefined
+      }
+      toolbarIntro={{
+        mark: {
+          label: 'USER DATA',
+        },
+        copy: {
+          kicker: model.t({ zh: '本地优先', en: 'Local first' }),
+          title: model.t({ zh: '个人数据', en: 'User data' }),
+          detail: model.t({ zh: '统一管理支持 URL、手填凭证和日志片段导入', en: 'Manage Support URL, manual credentials, and log snippet imports in one place' }),
+        },
+      }}
+      toolbarItems={toolbarItems}
+    >
+      <WorkbenchContentStack>
+        <SurfaceCardContentSections
+          eyebrow={model.t({ zh: '导入边界', en: 'Import boundary' })}
+          title={model.t({ zh: '先把本地优先的数据导入骨架搭稳', en: 'Stabilize the local-first import skeleton first' })}
+          description={model.t({ zh: '这一页先验证浏览器内可完成的解析与脱敏预览，不把敏感凭证带到站外。', en: 'This page validates browser-side parsing and masked previews first so sensitive credentials never need to leave the local app.' })}
+          sections={importBoundarySections}
+          layout="split"
+        />
+        <UserDataWorkbench model={model} />
+        <SurfaceCardContentSections
+          eyebrow={model.t({ zh: '下一阶段', en: 'Next stage' })}
+          title={model.t({
+            zh: '接真实本地同步时，也不要让静态站直连官方接口',
+            en: 'Keep official endpoints out of the static site even when local sync grows up',
+          })}
+          description={model.t({
+            zh: '后续真正接个人数据，也应该继续沿用 local-first + 用户主动导入，不把官方请求链路放进静态站。',
+            en: 'When personal data gets wired in for real, it should still stay local-first and user-imported instead of embedding official request flows in the static site.',
+          })}
+          sections={nextStageSections}
+        />
+      </WorkbenchContentStack>
+    </ConfiguredWorkbenchPage>
   )
 }
