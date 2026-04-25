@@ -1,3 +1,4 @@
+import { LabeledValueCardGrid } from '../../components/LabeledValueCardGrid'
 import { useI18n } from '../../app/i18n'
 import type { DataVersion } from '../../domain/types'
 
@@ -20,6 +21,13 @@ export function HomeHeroPanel({ versionState }: HomeHeroPanelProps) {
     versionText = `${t({ zh: '读取失败', en: 'Load failed' })}: ${versionState.errorMessage ?? t({ zh: '未知错误', en: 'Unknown error' })}`
   }
 
+  const metricItems = [
+    { id: 'stack', label: t({ zh: '技术路线', en: 'Stack' }), value: 'Vite + React + TypeScript' },
+    { id: 'router', label: t({ zh: '默认路由', en: 'Router' }), value: 'HashRouter' },
+    { id: 'shared-data', label: t({ zh: '公共数据', en: 'Shared data' }), value: t({ zh: '版本化 JSON', en: 'Versioned JSON' }) },
+    { id: 'data-version', label: t({ zh: '当前数据版本', en: 'Current data version' }), value: versionText },
+  ]
+
   return (
     <section className="hero-panel">
       <div>
@@ -38,24 +46,13 @@ export function HomeHeroPanel({ versionState }: HomeHeroPanelProps) {
         </p>
       </div>
 
-      <div className="metric-grid">
-        <article className="metric-card">
-          <span className="metric-card__label">{t({ zh: '技术路线', en: 'Stack' })}</span>
-          <strong className="metric-card__value">Vite + React + TypeScript</strong>
-        </article>
-        <article className="metric-card">
-          <span className="metric-card__label">{t({ zh: '默认路由', en: 'Router' })}</span>
-          <strong className="metric-card__value">HashRouter</strong>
-        </article>
-        <article className="metric-card">
-          <span className="metric-card__label">{t({ zh: '公共数据', en: 'Shared data' })}</span>
-          <strong className="metric-card__value">{t({ zh: '版本化 JSON', en: 'Versioned JSON' })}</strong>
-        </article>
-        <article className="metric-card">
-          <span className="metric-card__label">{t({ zh: '当前数据版本', en: 'Current data version' })}</span>
-          <strong className="metric-card__value">{versionText}</strong>
-        </article>
-      </div>
+      <LabeledValueCardGrid
+        items={metricItems}
+        gridClassName="metric-grid"
+        cardClassName="metric-card"
+        labelClassName="metric-card__label"
+        valueClassName="metric-card__value"
+      />
     </section>
   )
 }

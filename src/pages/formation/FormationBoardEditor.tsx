@@ -1,3 +1,4 @@
+import { LabeledValueCardGrid } from '../../components/LabeledValueCardGrid'
 import { StatusBanner } from '../../components/StatusBanner'
 import { getLocalizedTextPair } from '../../domain/localizedText'
 import { FormationBoardGrid } from './FormationBoardGrid'
@@ -34,20 +35,29 @@ export function FormationBoardEditor({ model }: FormationBoardEditorProps) {
     )
   }
 
+  const metricItems = [
+    { id: 'selected-layout', label: t({ zh: '当前布局', en: 'Current layout' }), value: selectedLayoutLabel ?? '-' },
+    { id: 'slot-count', label: t({ zh: '槽位数', en: 'Slots' }), value: selectedLayout.slots.length },
+    { id: 'data-version', label: t({ zh: '数据版本', en: 'Data version' }), value: state.status === 'ready' ? state.dataVersion : '-' },
+    { id: 'layout-library', label: t({ zh: '布局库', en: 'Layout library' }), value: state.status === 'ready' ? state.formations.length : 0 },
+    { id: 'matching-layouts', label: t({ zh: '当前匹配布局', en: 'Matching layouts' }), value: filteredLayouts.length },
+    { id: 'placed-champions', label: t({ zh: '已放置英雄', en: 'Placed champions' }), value: selectedChampions.length },
+    {
+      id: 'seat-conflicts',
+      label: t({ zh: 'seat 冲突', en: 'Seat conflicts' }),
+      value: conflictingSeats.length > 0 ? conflictingSeats.join(', ') : t({ zh: '无', en: 'None' }),
+    },
+  ]
+
   return (
     <>
-      <div className="metric-grid">
-        <MetricCard label={t({ zh: '当前布局', en: 'Current layout' })} value={selectedLayoutLabel ?? '-'} />
-        <MetricCard label={t({ zh: '槽位数', en: 'Slots' })} value={selectedLayout.slots.length} />
-        <MetricCard label={t({ zh: '数据版本', en: 'Data version' })} value={state.status === 'ready' ? state.dataVersion : '-'} />
-        <MetricCard label={t({ zh: '布局库', en: 'Layout library' })} value={state.status === 'ready' ? state.formations.length : 0} />
-        <MetricCard label={t({ zh: '当前匹配布局', en: 'Matching layouts' })} value={filteredLayouts.length} />
-        <MetricCard label={t({ zh: '已放置英雄', en: 'Placed champions' })} value={selectedChampions.length} />
-        <MetricCard
-          label={t({ zh: 'seat 冲突', en: 'Seat conflicts' })}
-          value={conflictingSeats.length > 0 ? conflictingSeats.join(', ') : t({ zh: '无', en: 'None' })}
-        />
-      </div>
+      <LabeledValueCardGrid
+        items={metricItems}
+        gridClassName="metric-grid"
+        cardClassName="metric-card"
+        labelClassName="metric-card__label"
+        valueClassName="metric-card__value"
+      />
 
       {!isSelectedLayoutVisible ? (
         <StatusBanner
@@ -96,19 +106,5 @@ export function FormationBoardEditor({ model }: FormationBoardEditorProps) {
         </button>
       </div>
     </>
-  )
-}
-
-interface MetricCardProps {
-  label: string
-  value: string | number
-}
-
-function MetricCard({ label, value }: MetricCardProps) {
-  return (
-    <article className="metric-card">
-      <span className="metric-card__label">{label}</span>
-      <strong className="metric-card__value">{value}</strong>
-    </article>
   )
 }
