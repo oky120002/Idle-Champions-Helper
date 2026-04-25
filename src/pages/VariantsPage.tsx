@@ -8,7 +8,7 @@ import {
 } from '../components/workbench/WorkbenchToolbarItemBuilders'
 import { WorkbenchToolbarItems } from '../components/workbench/WorkbenchToolbarItems'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
-import type { StatusBannerStackItem } from '../components/StatusBannerStack'
+import { createAsyncStatusBannerItems } from '../components/statusBannerStackItemBuilders'
 import { MAX_VISIBLE_VARIANTS } from './variants/constants'
 import { VariantsFilterBar } from './variants/VariantsFilterBar'
 import { VariantsResultsSection } from './variants/VariantsResultsSection'
@@ -18,23 +18,18 @@ import { useVariantsPageModel } from './variants/useVariantsPageModel'
 export function VariantsPage() {
   const model = useVariantsPageModel()
   const { state, t, activeFilters, clearAllFilters, showResultsQuickNavTop, scrollResultsToTop } = model
-  const contentStatusItems: StatusBannerStackItem[] = [
-    {
-      id: 'loading',
-      tone: 'info',
+  const contentStatusItems = createAsyncStatusBannerItems({
+    status: state.status,
+    loading: {
       children: t({ zh: '正在读取官方变体数据…', en: 'Loading official variant data…' }),
-      hidden: state.status !== 'loading',
     },
-    {
-      id: 'error',
-      tone: 'error',
+    error: {
       title: t({ zh: '变体数据读取失败', en: 'Variant data failed to load' }),
       ...(state.status === 'error'
         ? { detail: state.message || t({ zh: '未知错误', en: 'Unknown error' }) }
         : {}),
-      hidden: state.status !== 'error',
     },
-  ]
+  })
   const toolbarItems = createWorkbenchFilterToolbarItems({
     t,
     defaultVisibleCount: MAX_VISIBLE_VARIANTS,

@@ -20,7 +20,8 @@ import {
 } from '../components/workbench/WorkbenchToolbarItemBuilders'
 import { useWorkbenchScrollNavigation } from '../components/workbench/useWorkbenchScrollNavigation'
 import { useWorkbenchShareLink } from '../components/workbench/useWorkbenchShareLink'
-import { StatusBannerStack, type StatusBannerStackItem } from '../components/StatusBannerStack'
+import { StatusBannerStack } from '../components/StatusBannerStack'
+import { createAsyncStatusBannerItems } from '../components/statusBannerStackItemBuilders'
 import { FormationBoardEditor } from './formation/FormationBoardEditor'
 import { FormationDraftBanner } from './formation/FormationDraftBanner'
 import { FormationLayoutFilters } from './formation/FormationLayoutFilters'
@@ -34,21 +35,16 @@ export function FormationPage() {
   const { showScrollTop, scrollToTop } = useWorkbenchScrollNavigation({ scrollRef: contentScrollRef })
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
   const activeSidebarFilterCount = (model.layoutSearch.trim() ? 1 : 0) + (model.selectedContextKind === 'all' ? 0 : 1)
-  const contentStatusItems: StatusBannerStackItem[] = [
-    {
-      id: 'loading',
-      tone: 'info',
+  const contentStatusItems = createAsyncStatusBannerItems({
+    status: model.state.status,
+    loading: {
       children: model.t({ zh: '正在读取阵型布局和英雄数据…', en: 'Loading layouts and champion data…' }),
-      hidden: model.state.status !== 'loading',
     },
-    {
-      id: 'error',
-      tone: 'error',
+    error: {
       title: model.t({ zh: '阵型数据读取失败', en: 'Formation data failed to load' }),
       ...(model.state.status === 'error' ? { detail: model.state.message } : {}),
-      hidden: model.state.status !== 'error',
     },
-  ]
+  })
   const toolbarItems: WorkbenchToolbarItemConfig[] = [
     createWorkbenchBadgeItem({
       id: 'selected-layout',
