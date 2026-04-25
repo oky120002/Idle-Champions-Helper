@@ -1,5 +1,5 @@
 import { LabeledValueCardGrid } from '../../components/LabeledValueCardGrid'
-import { StatusBanner } from '../../components/StatusBanner'
+import { StatusBannerStack, type StatusBannerStackItem } from '../../components/StatusBannerStack'
 import { getLocalizedTextPair } from '../../domain/localizedText'
 import { FormationBoardGrid } from './FormationBoardGrid'
 import { FormationMobileEditor } from './FormationMobileEditor'
@@ -26,15 +26,24 @@ export function FormationBoardEditor({ model }: FormationBoardEditorProps) {
 
   if (!selectedLayout) {
     return (
-      <StatusBanner tone="info">
-        {t({
-          zh: '当前还没有可用布局，请先运行官方数据构建脚本。',
-          en: 'No layouts are available yet. Run the official data build pipeline first.',
-        })}
-      </StatusBanner>
+      <StatusBannerStack
+        items={[
+          {
+            id: 'missing-layouts',
+            tone: 'info',
+            children: t({
+              zh: '当前还没有可用布局，请先运行官方数据构建脚本。',
+              en: 'No layouts are available yet. Run the official data build pipeline first.',
+            }),
+          },
+        ]}
+      />
     )
   }
 
+  const layoutContextDetail = selectedLayoutContextSummary ?? (
+    selectedLayout.notes ? getLocalizedTextPair(selectedLayout.notes, locale) : undefined
+  )
   const metricItems = [
     { id: 'selected-layout', label: t({ zh: '当前布局', en: 'Current layout' }), value: selectedLayoutLabel ?? '-' },
     { id: 'slot-count', label: t({ zh: '槽位数', en: 'Slots' }), value: selectedLayout.slots.length },
@@ -48,6 +57,45 @@ export function FormationBoardEditor({ model }: FormationBoardEditorProps) {
       value: conflictingSeats.length > 0 ? conflictingSeats.join(', ') : t({ zh: '无', en: 'None' }),
     },
   ]
+  const statusItems: StatusBannerStackItem[] = [
+    {
+      id: 'filtered-layout-hidden',
+      tone: 'info',
+      title: t({
+        zh: '当前正在编辑的布局不在筛选结果中',
+        en: 'The layout you are editing is outside the current filter results',
+      }),
+      detail: t({
+        zh: '筛选只影响上方布局选择区；当前布局和已放置英雄会继续保留，放宽条件后可再次看到它。',
+        en: 'Filters only affect the layout picker. Your current layout and placed champions stay intact and will appear again once you broaden the filters.',
+      }),
+      hidden: isSelectedLayoutVisible,
+    },
+    {
+      id: 'no-matching-layouts',
+      tone: 'info',
+      children: t({
+        zh: '当前筛选条件下没有匹配布局，可以先放宽关键词或场景类型。',
+        en: 'No layouts match these filters yet. Try broadening the keyword or scenario type.',
+      }),
+      hidden: filteredLayouts.length > 0,
+    },
+    {
+      id: 'layout-context',
+      tone: 'info',
+      ...(layoutContextDetail !== undefined ? { children: layoutContextDetail } : {}),
+      hidden: layoutContextDetail === undefined,
+    },
+    {
+      id: 'seat-conflicts',
+      tone: 'error',
+      children: t({
+        zh: `当前阵型里出现 seat 冲突：${conflictingSeats.join(', ')}。同一 seat 只能放一名英雄。`,
+        en: `Seat conflicts found in this formation: ${conflictingSeats.join(', ')}. Only one champion may occupy each seat.`,
+      }),
+      hidden: conflictingSeats.length === 0,
+    },
+  ]
 
   return (
     <>
@@ -59,43 +107,7 @@ export function FormationBoardEditor({ model }: FormationBoardEditorProps) {
         valueClassName="metric-card__value"
       />
 
-      {!isSelectedLayoutVisible ? (
-        <StatusBanner
-          tone="info"
-          title={t({
-            zh: '当前正在编辑的布局不在筛选结果中',
-            en: 'The layout you are editing is outside the current filter results',
-          })}
-          detail={t({
-            zh: '筛选只影响上方布局选择区；当前布局和已放置英雄会继续保留，放宽条件后可再次看到它。',
-            en: 'Filters only affect the layout picker. Your current layout and placed champions stay intact and will appear again once you broaden the filters.',
-          })}
-        />
-      ) : null}
-
-      {filteredLayouts.length === 0 ? (
-        <StatusBanner tone="info">
-          {t({
-            zh: '当前筛选条件下没有匹配布局，可以先放宽关键词或场景类型。',
-            en: 'No layouts match these filters yet. Try broadening the keyword or scenario type.',
-          })}
-        </StatusBanner>
-      ) : null}
-
-      {selectedLayoutContextSummary ? (
-        <StatusBanner tone="info">{selectedLayoutContextSummary}</StatusBanner>
-      ) : selectedLayout.notes ? (
-        <StatusBanner tone="info">{getLocalizedTextPair(selectedLayout.notes, locale)}</StatusBanner>
-      ) : null}
-
-      {conflictingSeats.length > 0 ? (
-        <StatusBanner tone="error">
-          {t({
-            zh: `当前阵型里出现 seat 冲突：${conflictingSeats.join(', ')}。同一 seat 只能放一名英雄。`,
-            en: `Seat conflicts found in this formation: ${conflictingSeats.join(', ')}. Only one champion may occupy each seat.`,
-          })}
-        </StatusBanner>
-      ) : null}
+      <StatusBannerStack items={statusItems} />
 
       <FormationBoardGrid model={model} />
       <FormationMobileEditor model={model} />

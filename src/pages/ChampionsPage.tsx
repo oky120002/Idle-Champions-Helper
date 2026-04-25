@@ -16,7 +16,7 @@ import {
   type WorkbenchToolbarItemConfig,
 } from '../components/workbench/WorkbenchToolbarItems'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
-import { StatusBanner } from '../components/StatusBanner'
+import { StatusBannerStack, type StatusBannerStackItem } from '../components/StatusBannerStack'
 import { ChampionsAdditionalFilters } from './champions/ChampionsAdditionalFilters'
 import { ChampionsPrimaryFilters } from './champions/ChampionsPrimaryFilters'
 import { ChampionsResultsSection } from './champions/ChampionsResultsSection'
@@ -40,6 +40,23 @@ export function ChampionsPage() {
     randomizeResultOrder,
   } = model
   const activeFilterCount = activeFilterChips.length
+  const contentStatusItems: StatusBannerStackItem[] = [
+    {
+      id: 'loading',
+      tone: 'info',
+      children: t({ zh: '正在读取英雄数据…', en: 'Loading champion data…' }),
+      hidden: state.status !== 'loading',
+    },
+    {
+      id: 'error',
+      tone: 'error',
+      title: t({ zh: '英雄数据读取失败', en: 'Champion data failed to load' }),
+      ...(state.status === 'error'
+        ? { detail: state.message || t({ zh: '未知错误', en: 'Unknown error' }) }
+        : {}),
+      hidden: state.status !== 'error',
+    },
+  ]
   const toolbarItems: WorkbenchToolbarItemConfig[] = [
     createWorkbenchResultVisibilityItem({
       t,
@@ -117,17 +134,7 @@ export function ChampionsPage() {
           : <WorkbenchSidebarLoading />}
         contentHeader={state.status === 'ready' ? <ChampionsWorkbenchContentHeader model={model} /> : null}
       >
-        {state.status === 'loading' ? (
-          <StatusBanner tone="info">{t({ zh: '正在读取英雄数据…', en: 'Loading champion data…' })}</StatusBanner>
-        ) : null}
-
-        {state.status === 'error' ? (
-          <StatusBanner
-            tone="error"
-            title={t({ zh: '英雄数据读取失败', en: 'Champion data failed to load' })}
-            detail={state.message || t({ zh: '未知错误', en: 'Unknown error' })}
-          />
-        ) : null}
+        <StatusBannerStack items={contentStatusItems} />
 
         {state.status === 'ready' ? <ChampionsResultsSection model={model} /> : null}
       </PageWorkbenchShell>

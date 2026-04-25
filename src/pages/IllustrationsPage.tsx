@@ -16,7 +16,7 @@ import {
   type WorkbenchToolbarItemConfig,
 } from '../components/workbench/WorkbenchToolbarItems'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
-import { StatusBanner } from '../components/StatusBanner'
+import { StatusBannerStack, type StatusBannerStackItem } from '../components/StatusBannerStack'
 import { IllustrationsAdditionalFilters } from './illustrations/IllustrationsAdditionalFilters'
 import { MAX_VISIBLE_ILLUSTRATIONS } from './illustrations/constants'
 import { IllustrationsPrimaryFilters } from './illustrations/IllustrationsPrimaryFilters'
@@ -27,6 +27,37 @@ import { useIllustrationsPageModel } from './illustrations/useIllustrationsPageM
 export function IllustrationsPage() {
   const model = useIllustrationsPageModel()
   const { state, t, activeFilterChips, hasActiveFilters, ui, actions } = model
+  const contentStatusItems: StatusBannerStackItem[] = [
+    {
+      id: 'loading',
+      tone: 'info',
+      title: t({ zh: '正在加载立绘目录', en: 'Loading illustration catalog' }),
+      detail: t({
+        zh: '正在读取本地版本化立绘清单与英雄筛选元数据。',
+        en: 'Reading the local illustration manifest and champion filter metadata.',
+      }),
+      hidden: state.status !== 'loading',
+    },
+    {
+      id: 'error',
+      tone: 'error',
+      title: t({ zh: '立绘目录加载失败', en: 'Failed to load illustration catalog' }),
+      ...(state.status === 'error'
+        ? {
+            detail: state.message
+              ? t({
+                  zh: `无法读取立绘目录数据：${state.message}`,
+                  en: `Unable to read illustration catalog data: ${state.message}`,
+                })
+              : t({
+                  zh: '无法读取立绘目录数据。',
+                  en: 'Unable to read illustration catalog data.',
+                }),
+          }
+        : {}),
+      hidden: state.status !== 'error',
+    },
+  ]
   const toolbarItems: WorkbenchToolbarItemConfig[] = [
     createWorkbenchResultVisibilityItem({
       t,
@@ -97,34 +128,7 @@ export function IllustrationsPage() {
           : <WorkbenchSidebarLoading />}
         contentHeader={state.status === 'ready' ? <IllustrationsWorkbenchContentHeader model={model} /> : null}
       >
-        {state.status === 'loading' ? (
-          <StatusBanner
-            tone="info"
-            title={t({ zh: '正在加载立绘目录', en: 'Loading illustration catalog' })}
-            detail={t({
-              zh: '正在读取本地版本化立绘清单与英雄筛选元数据。',
-              en: 'Reading the local illustration manifest and champion filter metadata.',
-            })}
-          />
-        ) : null}
-
-        {state.status === 'error' ? (
-          <StatusBanner
-            tone="error"
-            title={t({ zh: '立绘目录加载失败', en: 'Failed to load illustration catalog' })}
-            detail={
-              state.message
-                ? t({
-                    zh: `无法读取立绘目录数据：${state.message}`,
-                    en: `Unable to read illustration catalog data: ${state.message}`,
-                  })
-                : t({
-                    zh: '无法读取立绘目录数据。',
-                    en: 'Unable to read illustration catalog data.',
-                  })
-            }
-          />
-        ) : null}
+        <StatusBannerStack items={contentStatusItems} />
 
         {state.status === 'ready' ? <IllustrationsResultsSection model={model} /> : null}
       </PageWorkbenchShell>
