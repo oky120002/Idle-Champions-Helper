@@ -230,18 +230,17 @@
 
 .page-workbench__sidebar {
   overflow: hidden;
-  border-right: 1px solid var(--page-workbench-divider);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.014), rgba(255, 255, 255, 0.004)),
     rgba(11, 17, 24, 0.24);
-  transition: border-right-color 180ms ease, background-color 180ms ease;
+  transition: background-color 180ms ease;
 }
 
 .page-workbench__sidebar::after {
   content: "";
   position: absolute;
-  top: 0;
-  right: -1px;
+  top: var(--page-workbench-chrome-size);
+  right: 0;
   bottom: 0;
   width: 1px;
   background: linear-gradient(180deg, transparent, rgba(255, 243, 223, 0.14) 8%, rgba(255, 243, 223, 0.14) 92%, transparent);
@@ -528,7 +527,6 @@
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.014), rgba(255, 255, 255, 0.004)),
     rgba(10, 16, 23, 0.16);
-  border-right-color: transparent;
 }
 
 .page-workbench--collapsed .page-workbench__sidebar-scroll {
