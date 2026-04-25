@@ -1,5 +1,5 @@
-import type { PageHeaderMetricItem } from '../../components/PageHeaderMetrics'
-import { WorkbenchFilterMetricsHeader } from '../../components/workbench/WorkbenchFilterMetricsHeader'
+import { ConfiguredWorkbenchMetricsHeader } from '../../components/workbench/ConfiguredWorkbenchMetricsHeader'
+import { createWorkbenchShowingMetricItem } from '../../components/workbench/workbenchMetricItemBuilders'
 import { collectChampionFacetSummary } from '../../features/champion-filters/headerMetrics'
 import type { IllustrationsPageModel } from './types'
 
@@ -17,14 +17,13 @@ export function IllustrationsWorkbenchContentHeader({ model }: IllustrationsWork
     ).values(),
   )
   const summary = collectChampionFacetSummary(champions, model.locale)
-  const metricItems: PageHeaderMetricItem[] = [
-    {
-      label: t({ zh: '当前展示', en: 'Showing' }),
-      value: t({
-        zh: `${results.visibleIllustrationEntries.length} / ${results.filteredIllustrationEntries.length}`,
-        en: `${results.visibleIllustrationEntries.length} / ${results.filteredIllustrationEntries.length} illustrations`,
-      }),
-    },
+  const metricItems = [
+    createWorkbenchShowingMetricItem({
+      t,
+      visibleCount: results.visibleIllustrationEntries.length,
+      filteredCount: results.filteredIllustrationEntries.length,
+      enUnitLabel: 'illustrations',
+    }),
     { label: t({ zh: '立绘总数', en: 'Illustrations' }), value: results.illustrations.length },
     { label: t({ zh: '覆盖英雄', en: 'Champions' }), value: champions.length },
     { label: t({ zh: '本体', en: 'Base' }), value: results.filteredHeroCount },
@@ -37,11 +36,5 @@ export function IllustrationsWorkbenchContentHeader({ model }: IllustrationsWork
     { label: t({ zh: '特殊机制', en: 'Mechanics' }), value: summary.mechanicCount },
   ]
 
-  return (
-    <WorkbenchFilterMetricsHeader
-      items={metricItems}
-      activeFilters={activeFilters}
-      filterSummaryPrefix={t({ zh: '当前筛选：', en: 'Active filters: ' })}
-    />
-  )
+  return <ConfiguredWorkbenchMetricsHeader items={metricItems} activeFilters={activeFilters} />
 }

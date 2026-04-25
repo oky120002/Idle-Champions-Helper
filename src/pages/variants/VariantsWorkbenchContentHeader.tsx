@@ -1,5 +1,5 @@
-import type { PageHeaderMetricItem } from '../../components/PageHeaderMetrics'
-import { WorkbenchFilterMetricsHeader } from '../../components/workbench/WorkbenchFilterMetricsHeader'
+import { ConfiguredWorkbenchMetricsHeader } from '../../components/workbench/ConfiguredWorkbenchMetricsHeader'
+import { createWorkbenchShowingMetricItem } from '../../components/workbench/workbenchMetricItemBuilders'
 import type { VariantsPageModel } from './types'
 
 interface VariantsWorkbenchContentHeaderProps {
@@ -8,16 +8,15 @@ interface VariantsWorkbenchContentHeaderProps {
 
 export function VariantsWorkbenchContentHeader({ model }: VariantsWorkbenchContentHeaderProps) {
   const { t, activeFilters, filteredVariants, visibleVariants } = model
-  const metricItems: PageHeaderMetricItem[] =
+  const metricItems =
     model.state.status === 'ready'
       ? [
-          {
-            label: t({ zh: '当前展示', en: 'Showing' }),
-            value: t({
-              zh: `${visibleVariants.length} / ${filteredVariants.length}`,
-              en: `${visibleVariants.length} / ${filteredVariants.length} variants`,
-            }),
-          },
+          createWorkbenchShowingMetricItem({
+            t,
+            visibleCount: visibleVariants.length,
+            filteredCount: filteredVariants.length,
+            enUnitLabel: 'variants',
+          }),
           { label: t({ zh: '变体总数', en: 'Variants' }), value: model.state.variants.length },
           { label: t({ zh: '可见冒险分组', en: 'Adventure groups' }), value: model.adventuresWithResults },
           {
@@ -27,11 +26,5 @@ export function VariantsWorkbenchContentHeader({ model }: VariantsWorkbenchConte
         ]
       : []
 
-  return (
-    <WorkbenchFilterMetricsHeader
-      items={metricItems}
-      activeFilters={activeFilters}
-      filterSummaryPrefix={t({ zh: '当前筛选：', en: 'Active filters: ' })}
-    />
-  )
+  return <ConfiguredWorkbenchMetricsHeader items={metricItems} activeFilters={activeFilters} />
 }
