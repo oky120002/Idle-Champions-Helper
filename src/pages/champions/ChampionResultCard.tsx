@@ -4,6 +4,7 @@ import { resolveDataUrl } from '../../data/client'
 import { getChampionAttributeGroupLabel, getChampionAttributeGroups, getChampionTagLabel } from '../../domain/championTags'
 import { getLocalizedTextPair, getPrimaryLocalizedText, getRoleLabel } from '../../domain/localizedText'
 import type { Champion } from '../../domain/types'
+import { ChampionCardAffiliationText } from './ChampionCardAffiliationText'
 import { buildChampionCardAttributePills } from './champion-card-model'
 import type { ChampionsPageModel } from './types'
 
@@ -20,7 +21,6 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
   })
   const heroIllustration = heroIllustrationByChampionId.get(champion.id) ?? null
   const seatLabel = t({ zh: `${champion.seat}位`, en: `Seat ${champion.seat}` })
-  const affiliationLabel = t({ zh: '所属', en: 'Affiliations' })
   const affiliationText =
     champion.affiliations.length > 0
       ? champion.affiliations.map((affiliation) => getPrimaryLocalizedText(affiliation, locale)).join(' / ')
@@ -69,10 +69,10 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
             avatarClassName="champion-avatar--spotlight"
             supporting={
               affiliationText ? (
-                <p className="result-card__affiliation" title={affiliationTitle ?? affiliationText}>
-                  <span className="result-card__affiliation-label">{affiliationLabel}</span>
-                  <span className="result-card__affiliation-value">{affiliationText}</span>
-                </p>
+                <ChampionCardAffiliationText
+                  text={affiliationText}
+                  title={affiliationTitle ?? affiliationText}
+                />
               ) : null
             }
             variant="spotlight"
