@@ -1,6 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react'
 import { useI18n } from '../../app/i18n'
-type WorkbenchAccentTone = 'copper' | 'steel'
+export type WorkbenchAccentTone = 'copper' | 'steel'
 export type WorkbenchBadgeVariant = 'chrome' | 'filter'; export type WorkbenchBadgeTone = 'default' | 'muted'
 export type WorkbenchShareState = 'idle' | 'success' | 'error'
 

@@ -1,11 +1,29 @@
 import type { ReactNode, RefObject } from 'react'
 import { StatusBannerStack, type StatusBannerStackItem } from '../StatusBannerStack'
 import { PageWorkbenchShell } from './PageWorkbenchShell'
+import { WorkbenchFloatingTopButton } from './WorkbenchFloatingTopButton'
 import {
+  WorkbenchToolbarCopy,
+  WorkbenchToolbarFilterStatus,
+  type WorkbenchAccentTone,
   WorkbenchSidebarHeader,
   WorkbenchSidebarLoading,
 } from './WorkbenchScaffold'
 import { WorkbenchSidebarFilterActions } from './WorkbenchSidebarFilterActions'
+import { WorkbenchToolbarItems, type WorkbenchToolbarItemConfig } from './WorkbenchToolbarItems'
+
+interface FilterWorkbenchPageToolbarIntroConfig {
+  label: string
+  activeCount: number
+  accentTone?: WorkbenchAccentTone
+  kicker: ReactNode
+  title: ReactNode
+  detail?: ReactNode
+}
+
+interface FilterWorkbenchPageFloatingTopButtonConfig {
+  onClick: () => void
+}
 
 interface FilterWorkbenchPageSidebarHeaderConfig {
   kicker: ReactNode
@@ -23,14 +41,17 @@ interface FilterWorkbenchPageProps {
   ariaLabel: string
   shellClassName: string
   contentScrollRef?: RefObject<HTMLDivElement | null> | undefined
-  contentOverlay?: ReactNode
-  toolbarLead?: ReactNode
-  toolbarPrimary: ReactNode
-  toolbarActions?: ReactNode
+  contentOverlay?: ReactNode | undefined
+  floatingTopButton?: FilterWorkbenchPageFloatingTopButtonConfig | undefined
+  toolbarIntro?: FilterWorkbenchPageToolbarIntroConfig | undefined
+  toolbarLead?: ReactNode | undefined
+  toolbarPrimary?: ReactNode | undefined
+  toolbarItems?: WorkbenchToolbarItemConfig[] | undefined
+  toolbarActions?: ReactNode | undefined
   sidebarHeader: FilterWorkbenchPageSidebarHeaderConfig
   isReady: boolean
   sidebar: ReactNode
-  contentHeader?: ReactNode
+  contentHeader?: ReactNode | undefined
   statusItems: StatusBannerStackItem[]
   children: ReactNode
 }
@@ -42,8 +63,11 @@ export function FilterWorkbenchPage({
   shellClassName,
   contentScrollRef,
   contentOverlay,
+  floatingTopButton,
+  toolbarIntro,
   toolbarLead,
   toolbarPrimary,
+  toolbarItems,
   toolbarActions,
   sidebarHeader,
   isReady,
@@ -52,6 +76,31 @@ export function FilterWorkbenchPage({
   statusItems,
   children,
 }: FilterWorkbenchPageProps) {
+  const resolvedToolbarLead = toolbarLead ?? (
+    toolbarIntro !== undefined ? (
+      <WorkbenchToolbarFilterStatus
+        label={toolbarIntro.label}
+        activeCount={toolbarIntro.activeCount}
+        {...(toolbarIntro.accentTone !== undefined ? { accentTone: toolbarIntro.accentTone } : {})}
+      />
+    ) : null
+  )
+  const resolvedToolbarPrimary = toolbarPrimary ?? (
+    toolbarIntro !== undefined ? (
+      <WorkbenchToolbarCopy
+        kicker={toolbarIntro.kicker}
+        title={toolbarIntro.title}
+        {...(toolbarIntro.detail !== undefined ? { detail: toolbarIntro.detail } : {})}
+      />
+    ) : null
+  )
+  const resolvedToolbarActions = toolbarActions ?? (
+    toolbarItems !== undefined ? <WorkbenchToolbarItems items={toolbarItems} layout="cluster" /> : null
+  )
+  const resolvedContentOverlay = contentOverlay ?? (
+    floatingTopButton !== undefined ? <WorkbenchFloatingTopButton onClick={floatingTopButton.onClick} /> : null
+  )
+
   return (
     <div className={`${pageClassName} workbench-page`}>
       <PageWorkbenchShell
@@ -59,10 +108,10 @@ export function FilterWorkbenchPage({
         ariaLabel={ariaLabel}
         className={shellClassName}
         {...(contentScrollRef !== undefined ? { contentScrollRef } : {})}
-        contentOverlay={contentOverlay}
-        toolbarLead={toolbarLead}
-        toolbarPrimary={toolbarPrimary}
-        toolbarActions={toolbarActions}
+        contentOverlay={resolvedContentOverlay}
+        toolbarLead={resolvedToolbarLead}
+        toolbarPrimary={resolvedToolbarPrimary}
+        toolbarActions={resolvedToolbarActions}
         sidebarHeader={(
           <WorkbenchSidebarHeader
             kicker={sidebarHeader.kicker}
