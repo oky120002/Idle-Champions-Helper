@@ -4,14 +4,9 @@ import {
   WorkbenchToolbarFilterStatus,
 } from '../components/workbench/WorkbenchScaffold'
 import {
-  createWorkbenchResultVisibilityItem,
-  createWorkbenchShareItem,
-  createWorkbenchShuffleItem,
+  createWorkbenchFilterToolbarItems,
 } from '../components/workbench/WorkbenchToolbarItemBuilders'
-import {
-  WorkbenchToolbarItems,
-  type WorkbenchToolbarItemConfig,
-} from '../components/workbench/WorkbenchToolbarItems'
+import { WorkbenchToolbarItems } from '../components/workbench/WorkbenchToolbarItems'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import type { StatusBannerStackItem } from '../components/StatusBannerStack'
 import { ChampionsAdditionalFilters } from './champions/ChampionsAdditionalFilters'
@@ -54,28 +49,21 @@ export function ChampionsPage() {
       hidden: state.status !== 'error',
     },
   ]
-  const toolbarItems: WorkbenchToolbarItemConfig[] = [
-    createWorkbenchResultVisibilityItem({
-      t,
-      defaultVisibleCount: MAX_VISIBLE_RESULTS,
-      filteredCount: filteredChampions.length,
-      showAllResults,
-      canToggle: canToggleResultVisibility,
-      isReady: state.status === 'ready',
-      onClick: toggleResultVisibility,
-    }),
-    createWorkbenchShuffleItem({
-      t,
-      resultCount: filteredChampions.length,
+  const toolbarItems = createWorkbenchFilterToolbarItems({
+    t,
+    defaultVisibleCount: MAX_VISIBLE_RESULTS,
+    filteredCount: filteredChampions.length,
+    showAllResults,
+    canToggle: canToggleResultVisibility,
+    isReady: state.status === 'ready',
+    onToggleVisibility: toggleResultVisibility,
+    shareState: model.shareLinkState,
+    onCopy: model.copyCurrentLink,
+    shuffle: {
       hasRandomOrder,
-      isReady: state.status === 'ready',
-      onClick: randomizeResultOrder,
-    }),
-    createWorkbenchShareItem({
-      state: model.shareLinkState,
-      onCopy: model.copyCurrentLink,
-    }),
-  ]
+      onShuffle: randomizeResultOrder,
+    },
+  })
 
   return (
     <FilterWorkbenchPage

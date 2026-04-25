@@ -34,6 +34,24 @@ interface WorkbenchShareItemOptions {
   onCopy: () => Promise<void>
 }
 
+interface WorkbenchFilterToolbarItemsOptions {
+  t: WorkbenchTranslate
+  defaultVisibleCount: number
+  filteredCount: number
+  showAllResults: boolean
+  canToggle: boolean
+  isReady: boolean
+  onToggleVisibility: () => void
+  shareState: WorkbenchShareLinkState
+  onCopy: () => Promise<void>
+  shuffle?:
+    | {
+        hasRandomOrder: boolean
+        onShuffle: () => void
+      }
+    | undefined
+}
+
 export function createWorkbenchBadgeItem({
   id,
   label,
@@ -104,4 +122,44 @@ export function createWorkbenchShareItem({
     state,
     onCopy,
   }
+}
+
+export function createWorkbenchFilterToolbarItems({
+  t,
+  defaultVisibleCount,
+  filteredCount,
+  showAllResults,
+  canToggle,
+  isReady,
+  onToggleVisibility,
+  shareState,
+  onCopy,
+  shuffle,
+}: WorkbenchFilterToolbarItemsOptions): WorkbenchToolbarItemConfig[] {
+  return [
+    createWorkbenchResultVisibilityItem({
+      t,
+      defaultVisibleCount,
+      filteredCount,
+      showAllResults,
+      canToggle,
+      isReady,
+      onClick: onToggleVisibility,
+    }),
+    ...(shuffle !== undefined
+      ? [
+          createWorkbenchShuffleItem({
+            t,
+            resultCount: filteredCount,
+            hasRandomOrder: shuffle.hasRandomOrder,
+            isReady,
+            onClick: shuffle.onShuffle,
+          }),
+        ]
+      : []),
+    createWorkbenchShareItem({
+      state: shareState,
+      onCopy,
+    }),
+  ]
 }

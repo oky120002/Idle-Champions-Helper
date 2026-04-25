@@ -4,14 +4,9 @@ import {
   WorkbenchToolbarFilterStatus,
 } from '../components/workbench/WorkbenchScaffold'
 import {
-  createWorkbenchResultVisibilityItem,
-  createWorkbenchShareItem,
-  createWorkbenchShuffleItem,
+  createWorkbenchFilterToolbarItems,
 } from '../components/workbench/WorkbenchToolbarItemBuilders'
-import {
-  WorkbenchToolbarItems,
-  type WorkbenchToolbarItemConfig,
-} from '../components/workbench/WorkbenchToolbarItems'
+import { WorkbenchToolbarItems } from '../components/workbench/WorkbenchToolbarItems'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import type { StatusBannerStackItem } from '../components/StatusBannerStack'
 import { IllustrationsAdditionalFilters } from './illustrations/IllustrationsAdditionalFilters'
@@ -55,28 +50,21 @@ export function IllustrationsPage() {
       hidden: state.status !== 'error',
     },
   ]
-  const toolbarItems: WorkbenchToolbarItemConfig[] = [
-    createWorkbenchResultVisibilityItem({
-      t,
-      defaultVisibleCount: MAX_VISIBLE_ILLUSTRATIONS,
-      filteredCount: model.results.filteredIllustrationEntries.length,
-      showAllResults: model.filters.showAllResults,
-      canToggle: model.results.canToggleResultVisibility,
-      isReady: state.status === 'ready',
-      onClick: actions.toggleResultVisibility,
-    }),
-    createWorkbenchShuffleItem({
-      t,
-      resultCount: model.results.filteredIllustrationEntries.length,
+  const toolbarItems = createWorkbenchFilterToolbarItems({
+    t,
+    defaultVisibleCount: MAX_VISIBLE_ILLUSTRATIONS,
+    filteredCount: model.results.filteredIllustrationEntries.length,
+    showAllResults: model.filters.showAllResults,
+    canToggle: model.results.canToggleResultVisibility,
+    isReady: state.status === 'ready',
+    onToggleVisibility: actions.toggleResultVisibility,
+    shareState: ui.shareLinkState,
+    onCopy: actions.copyCurrentLink,
+    shuffle: {
       hasRandomOrder: ui.hasRandomOrder,
-      isReady: state.status === 'ready',
-      onClick: actions.randomizeResultOrder,
-    }),
-    createWorkbenchShareItem({
-      state: ui.shareLinkState,
-      onCopy: actions.copyCurrentLink,
-    }),
-  ]
+      onShuffle: actions.randomizeResultOrder,
+    },
+  })
 
   return (
     <FilterWorkbenchPage
