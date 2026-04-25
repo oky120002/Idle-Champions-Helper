@@ -1,7 +1,5 @@
-import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
+import { FilterWorkbenchPage } from '../components/workbench/FilterWorkbenchPage'
 import {
-  WorkbenchSidebarHeader,
-  WorkbenchSidebarLoading,
   WorkbenchToolbarCopy,
   WorkbenchToolbarFilterStatus,
 } from '../components/workbench/WorkbenchScaffold'
@@ -10,13 +8,12 @@ import {
   createWorkbenchShareItem,
   createWorkbenchShuffleItem,
 } from '../components/workbench/WorkbenchToolbarItemBuilders'
-import { WorkbenchSidebarFilterActions } from '../components/workbench/WorkbenchSidebarFilterActions'
 import {
   WorkbenchToolbarItems,
   type WorkbenchToolbarItemConfig,
 } from '../components/workbench/WorkbenchToolbarItems'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
-import { StatusBannerStack, type StatusBannerStackItem } from '../components/StatusBannerStack'
+import type { StatusBannerStackItem } from '../components/StatusBannerStack'
 import { ChampionsAdditionalFilters } from './champions/ChampionsAdditionalFilters'
 import { ChampionsPrimaryFilters } from './champions/ChampionsPrimaryFilters'
 import { ChampionsResultsSection } from './champions/ChampionsResultsSection'
@@ -81,63 +78,54 @@ export function ChampionsPage() {
   ]
 
   return (
-    <div className="champions-page workbench-page">
-      <PageWorkbenchShell
-        storageKey="champions"
-        ariaLabel={t({ zh: '英雄筛选工作台', en: 'Champion filter workbench' })}
-        className="workbench-page__shell champions-workbench"
-        contentScrollRef={model.resultsPaneRef}
-        contentOverlay={(
+    <FilterWorkbenchPage
+      pageClassName="champions-page"
+      storageKey="champions"
+      ariaLabel={t({ zh: '英雄筛选工作台', en: 'Champion filter workbench' })}
+      shellClassName="workbench-page__shell champions-workbench"
+      contentScrollRef={model.resultsPaneRef}
+      contentOverlay={
           model.showResultsQuickNavTop ? (
             <WorkbenchFloatingTopButton onClick={model.scrollResultsToTop} />
           ) : null
-        )}
-        toolbarLead={(
+      }
+      toolbarLead={
           <WorkbenchToolbarFilterStatus
             label="CHAMPIONS"
             activeCount={activeFilterCount}
           />
-        )}
-        toolbarPrimary={(
+      }
+      toolbarPrimary={
           <WorkbenchToolbarCopy
             kicker={t({ zh: '悬浮工作台', en: 'Floating workbench' })}
             title={t({ zh: '英雄筛选', en: 'Champion filters' })}
             detail={t({ zh: '候选池收缩与资料对比', en: 'Narrow the roster and compare dossiers' })}
           />
-        )}
+      }
         toolbarActions={<WorkbenchToolbarItems items={toolbarItems} layout="cluster" />}
-        sidebarHeader={(
-          <WorkbenchSidebarHeader
-            kicker={t({ zh: '筛选抽屉', en: 'Filter drawer' })}
-            title={t({ zh: '左侧缩小候选池', en: 'Narrow the roster on the left' })}
-            description={t({
-              zh: '先锁关键词、座位、定位和联动队伍，再按需展开身份画像与特殊机制，不要一开始就把所有低频条件摊开。',
-              en: 'Lock keyword, seat, role, and affiliation first, then expand identity and mechanics only when you need the lower-frequency filters.',
-            })}
-            statusLabel={t({ zh: '筛选状态操作', en: 'Filter status actions' })}
-            status={(
-              <WorkbenchSidebarFilterActions
-                activeCount={activeFilterCount}
-                clearLabel={t({ zh: '清空全部', en: 'Clear all' })}
-                {...(hasActiveFilters ? { onClear: clearAllFilters } : {})}
-              />
-            )}
-          />
-        )}
-        sidebar={state.status === 'ready'
-          ? (
-              <div className="workbench-page__sidebar-stack">
-                <ChampionsPrimaryFilters model={model} />
-                <ChampionsAdditionalFilters model={model} />
-              </div>
-            )
-          : <WorkbenchSidebarLoading />}
-        contentHeader={state.status === 'ready' ? <ChampionsWorkbenchContentHeader model={model} /> : null}
-      >
-        <StatusBannerStack items={contentStatusItems} />
-
-        {state.status === 'ready' ? <ChampionsResultsSection model={model} /> : null}
-      </PageWorkbenchShell>
-    </div>
+      sidebarHeader={{
+        kicker: t({ zh: '筛选抽屉', en: 'Filter drawer' }),
+        title: t({ zh: '左侧缩小候选池', en: 'Narrow the roster on the left' }),
+        description: t({
+          zh: '先锁关键词、座位、定位和联动队伍，再按需展开身份画像与特殊机制，不要一开始就把所有低频条件摊开。',
+          en: 'Lock keyword, seat, role, and affiliation first, then expand identity and mechanics only when you need the lower-frequency filters.',
+        }),
+        statusLabel: t({ zh: '筛选状态操作', en: 'Filter status actions' }),
+        activeCount: activeFilterCount,
+        clearLabel: t({ zh: '清空全部', en: 'Clear all' }),
+        ...(hasActiveFilters ? { onClear: clearAllFilters } : {}),
+      }}
+      isReady={state.status === 'ready'}
+      sidebar={(
+        <div className="workbench-page__sidebar-stack">
+          <ChampionsPrimaryFilters model={model} />
+          <ChampionsAdditionalFilters model={model} />
+        </div>
+      )}
+      contentHeader={<ChampionsWorkbenchContentHeader model={model} />}
+      statusItems={contentStatusItems}
+    >
+      <ChampionsResultsSection model={model} />
+    </FilterWorkbenchPage>
   )
 }
