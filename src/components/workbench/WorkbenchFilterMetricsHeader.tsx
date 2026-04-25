@@ -22,10 +22,8 @@ export function WorkbenchFilterMetricsHeader({
   className,
 }: WorkbenchFilterMetricsHeaderProps) {
   const filterSummary =
-    filterSummaryPrefix !== undefined
-      ? activeFilters.length > 0
-        ? `${filterSummaryPrefix}${activeFilters.join(' · ')}`
-        : ''
+    filterSummaryPrefix !== undefined && activeFilters.length > 0
+      ? `${filterSummaryPrefix}${activeFilters.join(' · ')}`
       : undefined
 
   return (
