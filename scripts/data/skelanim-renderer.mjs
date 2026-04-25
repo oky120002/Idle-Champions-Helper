@@ -1,15 +1,15 @@
 import { createCanvas, loadImage } from '@napi-rs/canvas'
 
 function buildAffineTransform(frame) {
-  const angle = -frame.rotation
+  const angle = frame.rotation
   const cos = Math.cos(angle)
   const sin = Math.sin(angle)
 
   return {
-    a: cos * frame.scaleX,
-    b: sin * frame.scaleX,
-    c: -sin * frame.scaleY,
-    d: cos * frame.scaleY,
+    a: frame.scaleX * cos,
+    b: frame.scaleY * sin,
+    c: -frame.scaleX * sin,
+    d: frame.scaleY * cos,
     e: frame.x,
     f: frame.y,
   }
@@ -210,11 +210,18 @@ export async function renderSkelAnimPoseToPngBuffer(skelAnim, options = {}) {
   const sequence = character.sequences.find((item) => item.sequenceIndex === pose.sequenceIndex)
   const textureImages = await loadTextureImages(skelAnim.textures)
   const textureImageById = new Map(textureImages.map((item) => [item.textureId, item.image]))
-  const width = Math.max(1, Math.ceil(pose.bounds.width))
-  const height = Math.max(1, Math.ceil(pose.bounds.height))
+  const viewportBounds = options.viewportBounds ?? pose.bounds
+  const logicalWidth = Math.max(1, Math.ceil(viewportBounds.maxX - viewportBounds.minX))
+  const logicalHeight = Math.max(1, Math.ceil(viewportBounds.maxY - viewportBounds.minY))
+  const rasterScale = Math.max(1, Number(options.rasterScale ?? 1))
+  const width = Math.max(1, Math.ceil(logicalWidth * rasterScale))
+  const height = Math.max(1, Math.ceil(logicalHeight * rasterScale))
   const canvas = createCanvas(width, height)
   const context = canvas.getContext('2d')
   const visiblePieces = listVisiblePieces(sequence, pose.frameIndex).sort((left, right) => left.frame.depth - right.frame.depth)
+
+  context.setTransform(rasterScale, 0, 0, rasterScale, 0, 0)
+  context.imageSmoothingEnabled = false
 
   for (const { piece, frame } of visiblePieces) {
     const image = textureImageById.get(piece.textureId)
@@ -224,9 +231,9 @@ export async function renderSkelAnimPoseToPngBuffer(skelAnim, options = {}) {
     }
 
     context.save()
-    context.translate(frame.x - pose.bounds.minX, frame.y - pose.bounds.minY)
-    context.rotate(-frame.rotation)
+    context.translate(frame.x - viewportBounds.minX, frame.y - viewportBounds.minY)
     context.scale(frame.scaleX, frame.scaleY)
+    context.rotate(frame.rotation)
     context.drawImage(
       image,
       piece.sourceX,
@@ -251,10 +258,10 @@ export async function renderSkelAnimPoseToPngBuffer(skelAnim, options = {}) {
       isStaticPose: pose.sequenceLength === 1,
       frameIndex: pose.frameIndex,
       bounds: {
-        minX: pose.bounds.minX,
-        minY: pose.bounds.minY,
-        maxX: pose.bounds.maxX,
-        maxY: pose.bounds.maxY,
+        minX: viewportBounds.minX,
+        minY: viewportBounds.minY,
+        maxX: viewportBounds.maxX,
+        maxY: viewportBounds.maxY,
       },
       visiblePieceCount: pose.bounds.visiblePieceCount,
     },

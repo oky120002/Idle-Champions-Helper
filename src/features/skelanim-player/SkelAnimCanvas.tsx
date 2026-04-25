@@ -4,9 +4,11 @@ import {
   buildSkelAnimRootClassName,
   buildSkelAnimStatusText,
   getBoundsSize,
+  resolveCanvasRasterScale,
   resolvePreparedAssetState,
   resolveSequenceSelection,
   resolveSkelAnimPlayback,
+  resolveSkelAnimViewportLayout,
 } from './skelanim-canvas-model'
 import { findNextRenderableFrameIndex, listVisiblePieces } from './model'
 import type {
@@ -21,15 +23,19 @@ export function SkelAnimCanvas({
   fallbackSrc,
   alt,
   labels,
+  viewportBounds = null,
   className,
   showStatus = true,
   showControls = true,
+  showLoadingBadge = true,
   playbackMode = 'manual',
+  sequenceIntent = 'default',
 }: SkelAnimCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const assetPath = animation?.asset.path ?? null
   const [preparedEntry, setPreparedEntry] = useState<PreparedSkelAnimEntry | null>(null)
   const [loadErrorEntry, setLoadErrorEntry] = useState<SkelAnimLoadErrorEntry | null>(null)
+  const [displaySize, setDisplaySize] = useState<{ width: number; height: number } | null>(null)
   const prefersReducedMotion = useReducedMotionPreference()
   const [isPlaybackEnabled, setIsPlaybackEnabled] = useState(() => !readReducedMotionPreference())
 
@@ -70,12 +76,62 @@ export function SkelAnimCanvas({
     preparedEntry,
     loadErrorEntry,
   )
-  const sequenceSelection = resolveSequenceSelection(animation, prepared)
+  const sequenceSelection = resolveSequenceSelection(animation, prepared, sequenceIntent)
   const isPlaying = resolveSkelAnimPlayback(
     playbackMode,
     prefersReducedMotion,
     isPlaybackEnabled,
   )
+  const showCanvas = Boolean(animation && prepared && sequenceSelection && !loadError)
+  const statusText = buildSkelAnimStatusText({
+    loadError,
+    showCanvas,
+    prefersReducedMotion,
+    labels,
+  })
+  const rootClassName = buildSkelAnimRootClassName(className)
+
+  useEffect(() => {
+    if (!showCanvas || !canvasRef.current) {
+      return undefined
+    }
+
+    const canvasElement = canvasRef.current
+    const updateDisplaySize = () => {
+      const nextDisplaySize = {
+        width: canvasElement.clientWidth,
+        height: canvasElement.clientHeight,
+      }
+
+      setDisplaySize((currentSize) => {
+        if (
+          currentSize &&
+          Math.abs(currentSize.width - nextDisplaySize.width) < 0.5 &&
+          Math.abs(currentSize.height - nextDisplaySize.height) < 0.5
+        ) {
+          return currentSize
+        }
+
+        return nextDisplaySize
+      })
+    }
+
+    updateDisplaySize()
+
+    if (typeof ResizeObserver !== 'function') {
+      return undefined
+    }
+
+    const observer = new ResizeObserver(() => {
+      updateDisplaySize()
+    })
+
+    observer.observe(canvasElement)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [assetPath, showCanvas])
 
   useEffect(() => {
     if (!assetPath || !prepared || !sequenceSelection || !canvasRef.current) {
@@ -94,7 +150,11 @@ export function SkelAnimCanvas({
       return undefined
     }
 
-    const { width, height } = getBoundsSize(sequenceSelection.bounds)
+    context.imageSmoothingEnabled = false
+
+    const viewportLayout = resolveSkelAnimViewportLayout(sequenceSelection.bounds, viewportBounds)
+    const { width, height } = getBoundsSize(viewportLayout.renderBounds)
+    const rasterScale = resolveCanvasRasterScale(viewportLayout.renderBounds, displaySize)
     const textureById = new Map(prepared.textures.map((texture) => [texture.textureId, texture.image]))
     const frameDuration = 1000 / Math.max(1, animation?.fps ?? 1)
     const pixelRatio = Math.max(1, typeof window === 'undefined' ? 1 : window.devicePixelRatio || 1)
@@ -102,13 +162,11 @@ export function SkelAnimCanvas({
     let lastTick = 0
     let frameHandle = 0
 
-    canvasRef.current.width = Math.round(width * pixelRatio)
-    canvasRef.current.height = Math.round(height * pixelRatio)
-    canvasRef.current.style.width = `${width}px`
-    canvasRef.current.style.height = `${height}px`
+    canvasRef.current.width = Math.round(width * rasterScale * pixelRatio)
+    canvasRef.current.height = Math.round(height * rasterScale * pixelRatio)
 
     const drawFrame = (frameIndex: number) => {
-      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
+      context.setTransform(pixelRatio * rasterScale, 0, 0, pixelRatio * rasterScale, 0, 0)
       context.clearRect(0, 0, width, height)
 
       for (const { piece, frame } of listVisiblePieces(sequenceSelection.sequence, frameIndex)) {
@@ -119,9 +177,14 @@ export function SkelAnimCanvas({
         }
 
         context.save()
-        context.translate(frame.x - sequenceSelection.bounds.minX, frame.y - sequenceSelection.bounds.minY)
-        context.rotate(-frame.rotation)
+        context.translate(viewportLayout.offsetX, viewportLayout.offsetY)
+        context.scale(viewportLayout.contentScale, viewportLayout.contentScale)
+        context.translate(
+          frame.x - viewportLayout.contentBounds.minX,
+          frame.y - viewportLayout.contentBounds.minY,
+        )
         context.scale(frame.scaleX, frame.scaleY)
+        context.rotate(frame.rotation)
         context.drawImage(
           image,
           piece.sourceX,
@@ -152,21 +215,27 @@ export function SkelAnimCanvas({
     }
 
     drawFrame(currentFrameIndex)
-    frameHandle = window.requestAnimationFrame(tick)
+
+    if (isPlaying) {
+      frameHandle = window.requestAnimationFrame(tick)
+    }
 
     return () => {
-      window.cancelAnimationFrame(frameHandle)
+      if (frameHandle) {
+        window.cancelAnimationFrame(frameHandle)
+      }
     }
-  }, [animation?.fps, assetPath, isPlaying, labels.error, prepared, sequenceSelection])
-
-  const showCanvas = Boolean(animation && prepared && sequenceSelection && !loadError)
-  const statusText = buildSkelAnimStatusText({
-    loadError,
-    showCanvas,
-    prefersReducedMotion,
-    labels,
-  })
-  const rootClassName = buildSkelAnimRootClassName(className)
+  }, [
+    animation?.fps,
+    assetPath,
+    displaySize,
+    isPlaying,
+    labels.error,
+    prepared,
+    sequenceIntent,
+    sequenceSelection,
+    viewportBounds,
+  ])
 
   return (
     <div className={rootClassName}>
@@ -174,12 +243,17 @@ export function SkelAnimCanvas({
         {showCanvas ? (
           <canvas ref={canvasRef} className="skelanim-player__canvas" role="img" aria-label={alt} />
         ) : fallbackSrc ? (
-          <img className="skelanim-player__fallback-image skin-artwork-dialog__image" src={fallbackSrc} alt={alt} loading="eager" />
+          <img
+            className="skelanim-player__fallback-image skin-artwork-dialog__image"
+            src={fallbackSrc}
+            alt={alt}
+            loading="eager"
+          />
         ) : (
           <div className="skin-artwork-dialog__fallback">{loadError ?? labels.error}</div>
         )}
 
-        {isLoading ? <div className="skelanim-player__badge">{labels.loading}</div> : null}
+        {showLoadingBadge && isLoading ? <div className="skelanim-player__badge">{labels.loading}</div> : null}
       </div>
 
       {showStatus || (showControls && showCanvas) ? (

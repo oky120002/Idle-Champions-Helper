@@ -11,8 +11,8 @@
 | 2 | `scripts/sync-idle-champions-animations.mjs` | 基于 `champion-visuals.json` 发布 hero-base / skin 的本地 `.bin` 与摘要清单 |
 | 3 | `public/data/v1/champion-animations/heroes/*.bin`、`public/data/v1/champion-animations/skins/*.bin` | 保存站内动画原始包，供默认帧渲染与前端 canvas 播放复用 |
 | 4 | `public/data/v1/champion-animations.json` | 保存轻量 manifest：默认 sequence / frame、bounds、bytes、fps、sourceVersion |
-| 5 | `scripts/sync-idle-champions-illustrations.mjs` | 优先用本地动画 manifest 的默认帧渲染 hero-base / skin 静态 PNG |
-| 6 | `public/data/v1/champion-illustrations/heroes/*.png`、`public/data/v1/champion-illustrations/skins/*.png` | 页面稳定展示用静态图；全部来源于本地动画默认帧，只有未来 hero-base 缺动画时才回退 |
+| 5 | `scripts/sync-idle-champions-illustrations.mjs` | 统一用本地动画 manifest 的默认帧渲染 hero-base / skin 静态 PNG；缺动画直接报错 |
+| 6 | `public/data/v1/champion-illustrations/heroes/*.png`、`public/data/v1/champion-illustrations/skins/*.png` | 页面稳定展示用静态图；全部来源于本地动画默认帧，不再回退官方静态立绘 |
 | 7 | `src/features/skelanim-player/*`、`src/pages/champion-detail/SkinArtworkDialog.tsx` | 详情弹层按需读取本地 `.bin`，浏览器端解码后用 `canvas` 播放 |
 
 结果：当前站点既有静态立绘，也有动态动画；浏览器不会直连官方资源，只读取仓库内发布的 manifest、`.bin` 与 `.png`。
@@ -23,15 +23,14 @@
 - 因此 hero-base 与 skin 现在走同一套动画资源主线：
   - 动态展示读取本地 `.bin`
   - 静态立绘截取同一动画包的默认帧
-- 仅保留“未来若某个新 hero-base 没有动画包时，退回静态合成”的兜底路径。
+- 若未来某个 hero-base / skin 缺少动画包，构建期会直接报错，避免站内重新混入官方静态立绘。
 
 ## 关键文件
 
 | 文件 | 当前职责 | 关键结论 |
 | --- | --- | --- |
 | `scripts/sync-idle-champions-animations.mjs` | 选择 hero-base / skin 动画源，写出 `.bin` 与 manifest | 现已支持全量 hero-base + skin 发布，并按 source 元数据增量复用 |
-| `scripts/sync-idle-champions-illustrations.mjs` | 读取本地动画 manifest，截默认帧生成静态 PNG | skin 与 hero-base 不再维护独立 pose 决策链路 |
-| `scripts/data/champion-graphic-resource-cache.mjs` | 统一缓存原始远端包、解码 PNG / SkelAnim | 当前仅保留现行动画渲染所需能力 |
+| `scripts/sync-idle-champions-illustrations.mjs` | 读取本地动画 manifest，截默认帧生成静态 PNG | skin 与 hero-base 不再维护独立 pose 决策链路，也不再回退官方静态图 |
 | `scripts/data/skelanim-codec.mjs` | 解压并解析 `SkelAnim` | 前后端共享同一套二进制格式假设 |
 | `scripts/data/skelanim-renderer.mjs` | 计算 bounds、选择 frame、渲染静态 PNG | 默认帧裁切规则集中在这里 |
 | `src/features/skelanim-player/browser-codec.ts` | 浏览器端解压 / 解码 `.bin` | 让 GitHub Pages 站点在不依赖上游的前提下播放动画 |

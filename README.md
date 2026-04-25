@@ -10,9 +10,11 @@
 
 ## 当前范围
 
-- 当前已路由页面：英雄筛选、英雄详情、立绘页、宠物图鉴、变体筛选、阵型编辑、方案存档、个人数据
+- 当前已路由页面：英雄筛选、英雄详情、立绘页、立绘页下的动图审片台、宠物图鉴、变体筛选、阵型编辑、方案存档、个人数据
 - 根路由 `/` 当前直接重定向到英雄筛选页；仓库里仍保留未挂路由的 `HomePage` 草稿，但它不是当前线上入口
-- 公共数据：`public/data/version.json` 与 `public/data/v1/*.json`，其中包含英雄 / 宠物静态图索引以及 `champion-animations.json`、`pet-animations.json` 动图清单
+- 公共数据：`public/data/version.json` 与 `public/data/v1/*.json`，其中包含英雄 / 宠物静态图索引、`champion-animations.json`、`pet-animations.json` 动图清单，以及 `champion-animation-audit.json` 本地审片清单
+- 动图审片台 `#/illustrations/audit` 支持勾选人工结论、问题标签与备注，并可一键复制 JSON 反馈
+- 英雄 idle 动图的人工覆写沉淀在 `scripts/data/champion-animation-idle-overrides.json`
 - 本地数据：最近草稿与命名方案使用 `IndexedDB`
 - 当前回归基线：`Vitest`、`React Testing Library`、`Playwright`
 
@@ -46,10 +48,13 @@ npm run data:fetch
 npm run data:normalize -- --input tmp/idle-champions-api/<english>.json --localizedInput tmp/idle-champions-api/<zh>.json
 npm run data:portraits -- --input tmp/idle-champions-api/<english>.json
 npm run data:illustrations
+npm run data:animation-audit
 npm run data:pets -- --input tmp/idle-champions-api/<english>.json --localizedInput tmp/idle-champions-api/<zh>.json
 ```
 
 - `data:official` 是当前公共数据构建入口。
+- `data:animation-audit` 会基于站内 `.bin` 和 `champion-animations.json` 重新生成本地 idle 候选审片清单。
+- `sync-idle-champions-animations.mjs` / `audit-idle-champions-animations.mjs` 默认会读取 `scripts/data/champion-animation-idle-overrides.json`。
 - 原始快照默认写入 `tmp/idle-champions-api/`。
 - 个人账号数据不走这组命令。
 

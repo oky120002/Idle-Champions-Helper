@@ -9,5 +9,9 @@ const WORKBENCH_ROUTE_PATHS = new Set([
 ])
 
 export function isWorkbenchRoute(pathname: string): boolean {
-  return WORKBENCH_ROUTE_PATHS.has(pathname) || pathname.startsWith('/champions/')
+  return (
+    WORKBENCH_ROUTE_PATHS.has(pathname) ||
+    pathname.startsWith('/champions/') ||
+    pathname.startsWith('/illustrations/')
+  )
 }

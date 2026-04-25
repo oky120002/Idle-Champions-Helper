@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useI18n } from '../../app/i18n'
 import { saveWorkbenchResultsPaneScroll, useWorkbenchResultsMotion } from '../../components/workbench/useWorkbenchResultsMotion'
@@ -20,6 +20,7 @@ import { buildFilterSearchParams } from './query-state'
 import type { IllustrationsPageActions, IllustrationsPageModel } from './types'
 import { useIllustrationCollectionState } from './useIllustrationCollectionState'
 import { useIllustrationFilterState } from './useIllustrationFilterState'
+import { useVisibleIllustrationEntries } from './useVisibleIllustrationEntries'
 
 const EMPTY_ILLUSTRATIONS: ChampionIllustration[] = []
 const EMPTY_ANIMATIONS: ChampionAnimation[] = []
@@ -97,9 +98,10 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
         : shuffleIllustrationEntries(filteredIllustrationEntries, randomOrderSeed),
     [filteredIllustrationEntries, randomOrderSeed],
   )
-  const visibleIllustrationEntries = filters.showAllResults
-    ? orderedIllustrationEntries
-    : orderedIllustrationEntries.slice(0, MAX_VISIBLE_ILLUSTRATIONS)
+  const visibleIllustrationEntries = useVisibleIllustrationEntries(
+    orderedIllustrationEntries,
+    filters.showAllResults,
+  )
   const roleOptions = roles.filter((role) => availableRoles.has(role))
   const affiliationOptions = affiliations.filter((affiliation) => availableAffiliationIds.has(affiliation.original))
   const raceOptions = collectAttributeFilterOptions(availableChampions, 'race', locale)
@@ -151,6 +153,9 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
     transitionKey,
   })
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
+  const saveListScroll = useCallback(() => {
+    saveWorkbenchResultsPaneScroll('illustrations', location.search, motion.resultsPaneRef.current?.scrollTop ?? 0)
+  }, [location.search, motion.resultsPaneRef])
 
   function runFilterMutation(mutation: () => void) {
     motion.prepareResultsViewportTransition('filters')
@@ -182,9 +187,7 @@ export function useIllustrationsPageModel(): IllustrationsPageModel {
       setShowAllResults((current) => !current)
     },
     randomizeResultOrder: () => setRandomOrderSeed((current) => (current === null ? 1 : current + 1)),
-    saveListScroll: () => {
-      saveWorkbenchResultsPaneScroll('illustrations', location.search, motion.resultsPaneRef.current?.scrollTop ?? 0)
-    },
+    saveListScroll,
     scrollResultsToTop: motion.scrollResultsToTop,
     copyCurrentLink,
   }

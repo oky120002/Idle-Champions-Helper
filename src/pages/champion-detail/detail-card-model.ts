@@ -2,7 +2,6 @@ import type { AppLocale } from '../../app/i18n'
 import { resolveDataUrl } from '../../data/client'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import type {
-  ChampionDetail,
   ChampionIllustration,
   ChampionSkinDetail,
   JsonValue,
@@ -53,11 +52,6 @@ export function buildSkinPreviewAlt(skin: ChampionSkinDetail, locale: AppLocale)
 
 export function resolveSkinPreviewUrl(
   skinIllustration: ChampionIllustration | null,
-  champion: ChampionDetail['summary'],
 ): string | null {
-  if (skinIllustration) {
-    return resolveDataUrl(skinIllustration.image.path)
-  }
-
-  return champion.portrait?.path ? resolveDataUrl(champion.portrait.path) : null
+  return skinIllustration ? resolveDataUrl(skinIllustration.image.path) : null
 }
