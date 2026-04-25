@@ -4,13 +4,9 @@ import {
   WorkbenchToolbarFilterStatus,
 } from '../components/workbench/WorkbenchScaffold'
 import {
-  createWorkbenchResultVisibilityItem,
-  createWorkbenchShareItem,
+  createWorkbenchFilterToolbarItems,
 } from '../components/workbench/WorkbenchToolbarItemBuilders'
-import {
-  WorkbenchToolbarItems,
-  type WorkbenchToolbarItemConfig,
-} from '../components/workbench/WorkbenchToolbarItems'
+import { WorkbenchToolbarItems } from '../components/workbench/WorkbenchToolbarItems'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
 import type { StatusBannerStackItem } from '../components/StatusBannerStack'
 import { MAX_VISIBLE_VARIANTS } from './variants/constants'
@@ -39,21 +35,17 @@ export function VariantsPage() {
       hidden: state.status !== 'error',
     },
   ]
-  const toolbarItems: WorkbenchToolbarItemConfig[] = [
-    createWorkbenchResultVisibilityItem({
-      t,
-      defaultVisibleCount: MAX_VISIBLE_VARIANTS,
-      filteredCount: model.filteredVariants.length,
-      showAllResults: model.filters.showAllResults,
-      canToggle: model.canToggleResultVisibility,
-      isReady: state.status === 'ready',
-      onClick: model.toggleResultVisibility,
-    }),
-    createWorkbenchShareItem({
-      state: model.shareLinkState,
-      onCopy: model.copyCurrentLink,
-    }),
-  ]
+  const toolbarItems = createWorkbenchFilterToolbarItems({
+    t,
+    defaultVisibleCount: MAX_VISIBLE_VARIANTS,
+    filteredCount: model.filteredVariants.length,
+    showAllResults: model.filters.showAllResults,
+    canToggle: model.canToggleResultVisibility,
+    isReady: state.status === 'ready',
+    onToggleVisibility: model.toggleResultVisibility,
+    shareState: model.shareLinkState,
+    onCopy: model.copyCurrentLink,
+  })
 
   return (
     <FilterWorkbenchPage
