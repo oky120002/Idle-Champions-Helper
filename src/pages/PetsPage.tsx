@@ -1,7 +1,5 @@
-import { PageWorkbenchShell } from '../components/workbench/PageWorkbenchShell'
+import { FilterWorkbenchPage } from '../components/workbench/FilterWorkbenchPage'
 import {
-  WorkbenchSidebarHeader,
-  WorkbenchSidebarLoading,
   WorkbenchToolbarCopy,
   WorkbenchToolbarFilterStatus,
 } from '../components/workbench/WorkbenchScaffold'
@@ -10,13 +8,12 @@ import {
   createWorkbenchShareItem,
   createWorkbenchShuffleItem,
 } from '../components/workbench/WorkbenchToolbarItemBuilders'
-import { WorkbenchSidebarFilterActions } from '../components/workbench/WorkbenchSidebarFilterActions'
 import {
   WorkbenchToolbarItems,
   type WorkbenchToolbarItemConfig,
 } from '../components/workbench/WorkbenchToolbarItems'
 import { WorkbenchFloatingTopButton } from '../components/workbench/WorkbenchFloatingTopButton'
-import { StatusBannerStack, type StatusBannerStackItem } from '../components/StatusBannerStack'
+import type { StatusBannerStackItem } from '../components/StatusBannerStack'
 import { PetFilters } from './pets/PetFilters'
 import { MAX_VISIBLE_PETS } from './pets/constants'
 import { PetsResultsSection } from './pets/PetsResultsSection'
@@ -81,58 +78,49 @@ export function PetsPage() {
   ]
 
   return (
-    <div className="pets-page workbench-page">
-      <PageWorkbenchShell
-        storageKey="pets"
-        ariaLabel={t({ zh: '宠物图鉴工作台', en: 'Pet workbench' })}
-        className="workbench-page__shell pets-workbench"
-        contentScrollRef={model.resultsPaneRef}
-        contentOverlay={ui.showResultsQuickNavTop ? <WorkbenchFloatingTopButton onClick={actions.scrollResultsToTop} /> : null}
+    <FilterWorkbenchPage
+      pageClassName="pets-page"
+      storageKey="pets"
+      ariaLabel={t({ zh: '宠物图鉴工作台', en: 'Pet workbench' })}
+      shellClassName="workbench-page__shell pets-workbench"
+      contentScrollRef={model.resultsPaneRef}
+      contentOverlay={ui.showResultsQuickNavTop ? <WorkbenchFloatingTopButton onClick={actions.scrollResultsToTop} /> : null}
         toolbarLead={<WorkbenchToolbarFilterStatus label="PETS" activeCount={activeFilterCount} />}
-        toolbarPrimary={(
+      toolbarPrimary={
           <WorkbenchToolbarCopy
             kicker={t({ zh: '悬浮工作台', en: 'Floating workbench' })}
             title={t({ zh: '宠物图鉴', en: 'Pet catalog' })}
             detail={t({ zh: '宠物筛选与资源完整度排查', en: 'Filter pets and audit asset completeness' })}
           />
-        )}
+      }
         toolbarActions={<WorkbenchToolbarItems items={toolbarItems} layout="cluster" />}
-        sidebarHeader={(
-          <WorkbenchSidebarHeader
-            kicker={t({ zh: '筛选抽屉', en: 'Filter drawer' })}
-            title={t({ zh: '左侧缩小宠物目录', en: 'Narrow the pet catalog on the left' })}
-            description={t({
-              zh: '搜索负责关键词，来源和图像状态负责快速切分完整资源与待补条目；右侧保留更大的图鉴卡片比较区。',
-              en: 'Search handles keywords, while source and asset state separate complete entries from missing-art rows.',
-            })}
-            statusLabel={t({ zh: '宠物筛选状态操作', en: 'Pet filter status actions' })}
-            status={(
-              <WorkbenchSidebarFilterActions
-                activeCount={activeFilterCount}
-                clearLabel={t({ zh: '清空全部', en: 'Clear all' })}
-                {...(activeFilterCount > 0 ? { onClear: actions.clearAllFilters } : {})}
-              />
-            )}
-          />
-        )}
-        sidebar={state.status === 'ready' ? (
-          <PetFilters
-            query={filters.query}
-            sourceFilter={filters.sourceFilter}
-            assetFilter={filters.assetFilter}
-            onQueryChange={actions.updateQuery}
-            onSourceFilterChange={actions.updateSourceFilter}
-            onAssetFilterChange={actions.updateAssetFilter}
-          />
-        ) : (
-          <WorkbenchSidebarLoading />
-        )}
-        contentHeader={state.status === 'ready' ? <PetsWorkbenchContentHeader model={model} /> : null}
-      >
-        <StatusBannerStack items={contentStatusItems} />
-
-        {state.status === 'ready' ? <PetsResultsSection model={model} /> : null}
-      </PageWorkbenchShell>
-    </div>
+      sidebarHeader={{
+        kicker: t({ zh: '筛选抽屉', en: 'Filter drawer' }),
+        title: t({ zh: '左侧缩小宠物目录', en: 'Narrow the pet catalog on the left' }),
+        description: t({
+          zh: '搜索负责关键词，来源和图像状态负责快速切分完整资源与待补条目；右侧保留更大的图鉴卡片比较区。',
+          en: 'Search handles keywords, while source and asset state separate complete entries from missing-art rows.',
+        }),
+        statusLabel: t({ zh: '宠物筛选状态操作', en: 'Pet filter status actions' }),
+        activeCount: activeFilterCount,
+        clearLabel: t({ zh: '清空全部', en: 'Clear all' }),
+        ...(activeFilterCount > 0 ? { onClear: actions.clearAllFilters } : {}),
+      }}
+      isReady={state.status === 'ready'}
+      sidebar={(
+        <PetFilters
+          query={filters.query}
+          sourceFilter={filters.sourceFilter}
+          assetFilter={filters.assetFilter}
+          onQueryChange={actions.updateQuery}
+          onSourceFilterChange={actions.updateSourceFilter}
+          onAssetFilterChange={actions.updateAssetFilter}
+        />
+      )}
+      contentHeader={<PetsWorkbenchContentHeader model={model} />}
+      statusItems={contentStatusItems}
+    >
+      <PetsResultsSection model={model} />
+    </FilterWorkbenchPage>
   )
 }
