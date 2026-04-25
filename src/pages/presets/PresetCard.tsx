@@ -1,6 +1,7 @@
 import { ActionButtons } from '../../components/ActionButtons'
 import { ChampionPill } from '../../components/ChampionPill'
 import { StatusBannerStack, type StatusBannerStackItem } from '../../components/StatusBannerStack'
+import { createExclusiveStatusBannerItems } from '../../components/statusBannerStackItemBuilders'
 import { buildRestoreStatusDetail } from '../../data/formationPersistence'
 import {
   buildChampionSummary,
@@ -24,28 +25,37 @@ export function PresetCard({ model, view }: PresetCardProps) {
   const showCompatibilityNotice = isCompatibleRestore(view) || hasDroppedReferences(view)
   const isEditing = editingPresetId === view.preset.id
   const isDeleteConfirming = deleteConfirmId === view.preset.id
-  const statusItems: StatusBannerStackItem[] = [
-    {
-      id: 'invalid-prompt',
-      tone: 'error',
-      ...(view.prompt.kind === 'invalid'
-        ? {
-            title: view.prompt.title,
-            detail: view.prompt.detail,
-          }
-        : {}),
-      hidden: view.prompt.kind !== 'invalid',
-    },
-    {
-      id: 'compatibility-notice',
-      tone: 'info',
-      title: t({ zh: '恢复时会带兼容处理', en: 'Restore will apply compatibility handling' }),
-      ...(view.prompt.kind === 'restore' && showCompatibilityNotice
-        ? { detail: buildRestoreStatusDetail(view.prompt.preview) }
-        : {}),
-      hidden: view.prompt.kind !== 'restore' || !showCompatibilityNotice,
-    },
-  ]
+  const activeStatus =
+    view.prompt.kind === 'invalid'
+      ? 'invalid'
+      : view.prompt.kind === 'restore' && showCompatibilityNotice
+        ? 'compatibility'
+        : 'none'
+  const statusItems: StatusBannerStackItem[] = createExclusiveStatusBannerItems({
+    status: activeStatus,
+    items: [
+      {
+        id: 'invalid-prompt',
+        when: 'invalid',
+        tone: 'error',
+        ...(view.prompt.kind === 'invalid'
+          ? {
+              title: view.prompt.title,
+              detail: view.prompt.detail,
+            }
+          : {}),
+      },
+      {
+        id: 'compatibility-notice',
+        when: 'compatibility',
+        tone: 'info',
+        title: t({ zh: '恢复时会带兼容处理', en: 'Restore will apply compatibility handling' }),
+        ...(view.prompt.kind === 'restore' && showCompatibilityNotice
+          ? { detail: buildRestoreStatusDetail(view.prompt.preview) }
+          : {}),
+      },
+    ],
+  })
 
   return (
     <article className="result-card">

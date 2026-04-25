@@ -16,6 +16,7 @@ import { useWorkbenchShareLink } from '../components/workbench/useWorkbenchShare
 import { SurfaceCardContentSections, type SurfaceCardContentSection } from '../components/SurfaceCardContentSections'
 import { StatusMessageBanner } from '../components/StatusMessageBanner'
 import { StatusBannerStack, type StatusBannerStackItem } from '../components/StatusBannerStack'
+import { createExclusiveStatusBannerItems } from '../components/statusBannerStackItemBuilders'
 import { SurfaceCard } from '../components/SurfaceCard'
 import { PresetCard } from './presets/PresetCard'
 import { usePresetsPageModel } from './presets/usePresetsPageModel'
@@ -27,21 +28,24 @@ export function PresetsPage() {
   const { showScrollTop, scrollToTop } = useWorkbenchScrollNavigation({ scrollRef: contentScrollRef })
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, location.hash)
   const { state, t, pageStatus, metrics } = model
-  const contentStatusItems: StatusBannerStackItem[] = [
-    {
-      id: 'loading',
-      tone: 'info',
-      children: t({ zh: '正在读取本地方案存档…', en: 'Loading local presets…' }),
-      hidden: state.status !== 'loading',
-    },
-    {
-      id: 'error',
-      tone: 'error',
-      title: t({ zh: '方案列表读取失败', en: 'Preset list failed to load' }),
-      ...(state.status === 'error' ? { detail: state.message } : {}),
-      hidden: state.status !== 'error',
-    },
-  ]
+  const contentStatusItems: StatusBannerStackItem[] = createExclusiveStatusBannerItems({
+    status: state.status,
+    items: [
+      {
+        id: 'loading',
+        when: 'loading',
+        tone: 'info',
+        children: t({ zh: '正在读取本地方案存档…', en: 'Loading local presets…' }),
+      },
+      {
+        id: 'error',
+        when: 'error',
+        tone: 'error',
+        title: t({ zh: '方案列表读取失败', en: 'Preset list failed to load' }),
+        ...(state.status === 'error' ? { detail: state.message } : {}),
+      },
+    ],
+  })
   const managementScopeSections: SurfaceCardContentSection[] = [
     {
       id: 'what-works-now',
