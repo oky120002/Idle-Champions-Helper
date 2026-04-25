@@ -39,4 +39,21 @@ describe('WorkbenchFilterMetricsHeader', () => {
 
     expect(document.querySelector('.workbench-filter-header__filter-summary')).toBeNull()
   })
+
+  it('提供摘要前缀但没有 active filters 时不保留空白摘要行', () => {
+    render(
+      <WorkbenchFilterMetricsHeader
+        items={[
+          {
+            label: '当前展示',
+            value: '48 / 60',
+          },
+        ]}
+        activeFilters={[]}
+        filterSummaryPrefix="当前筛选："
+      />,
+    )
+
+    expect(document.querySelector('.workbench-filter-header__filter-summary')).toBeNull()
+  })
 })
