@@ -1,4 +1,5 @@
 import { FieldGroup } from './FieldGroup'
+import { SegmentedButtonGroup } from './SegmentedButtonGroup'
 import type { PresetPriority } from '../domain/types'
 
 export interface PresetFormFieldValue {
@@ -92,22 +93,15 @@ export function PresetFormFields({
       </FieldGroup>
 
       <FieldGroup label={priorityLabel}>
-        <div className="segmented-control">
-          {priorityOptions.map((option) => (
-            <button
-              key={option}
-              type="button"
-              className={
-                value.priority === option
-                  ? 'segmented-control__button segmented-control__button--active'
-                  : 'segmented-control__button'
-              }
-              onClick={() => onChange('priority', option)}
-            >
-              {getPriorityOptionLabel(option)}
-            </button>
-          ))}
-        </div>
+        <SegmentedButtonGroup
+          value={value.priority}
+          items={priorityOptions.map((option) => ({
+            value: option,
+            label: getPriorityOptionLabel(option),
+          }))}
+          ariaLabel={priorityLabel}
+          onChange={(nextPriority) => onChange('priority', nextPriority)}
+        />
       </FieldGroup>
     </div>
   )
