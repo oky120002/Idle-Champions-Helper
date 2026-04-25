@@ -1,3 +1,4 @@
+import { ActionButtons } from '../../components/ActionButtons'
 import { ChampionPill } from '../../components/ChampionPill'
 import { StatusBannerStack, type StatusBannerStackItem } from '../../components/StatusBannerStack'
 import { buildRestoreStatusDetail } from '../../data/formationPersistence'
@@ -96,33 +97,44 @@ export function PresetCard({ model, view }: PresetCardProps) {
 
       <StatusBannerStack items={statusItems} />
 
-      <div className="button-row result-card__section">
-        <button
-          type="button"
-          className="action-button action-button--secondary"
-          disabled={view.prompt.kind !== 'restore'}
-          onClick={() => restorePreset(view)}
-        >
-          {t({ zh: '恢复到阵型页', en: 'Restore to formation' })}
-        </button>
-        <button type="button" className="action-button action-button--ghost" onClick={() => startEditingPreset(view.preset)}>
-          {t({ zh: '编辑', en: 'Edit' })}
-        </button>
-        {isDeleteConfirming ? (
-          <>
-            <button type="button" className="action-button" onClick={() => deletePreset(view.preset)}>
-              {t({ zh: '确认删除', en: 'Confirm delete' })}
-            </button>
-            <button type="button" className="action-button action-button--ghost" onClick={clearDeleteConfirm}>
-              {t({ zh: '取消', en: 'Cancel' })}
-            </button>
-          </>
-        ) : (
-          <button type="button" className="action-button action-button--ghost" onClick={() => openDeleteConfirm(view.preset.id)}>
-            {t({ zh: '删除', en: 'Delete' })}
-          </button>
-        )}
-      </div>
+      <ActionButtons
+        className="button-row result-card__section"
+        items={[
+          {
+            id: 'restore-preset',
+            label: t({ zh: '恢复到阵型页', en: 'Restore to formation' }),
+            tone: 'secondary',
+            disabled: view.prompt.kind !== 'restore',
+            onClick: () => restorePreset(view),
+          },
+          {
+            id: 'edit-preset',
+            label: t({ zh: '编辑', en: 'Edit' }),
+            tone: 'ghost',
+            onClick: () => startEditingPreset(view.preset),
+          },
+          {
+            id: 'confirm-delete',
+            label: t({ zh: '确认删除', en: 'Confirm delete' }),
+            hidden: !isDeleteConfirming,
+            onClick: () => deletePreset(view.preset),
+          },
+          {
+            id: 'cancel-delete',
+            label: t({ zh: '取消', en: 'Cancel' }),
+            tone: 'ghost',
+            hidden: !isDeleteConfirming,
+            onClick: clearDeleteConfirm,
+          },
+          {
+            id: 'open-delete-confirm',
+            label: t({ zh: '删除', en: 'Delete' }),
+            tone: 'ghost',
+            hidden: isDeleteConfirming,
+            onClick: () => openDeleteConfirm(view.preset.id),
+          },
+        ]}
+      />
 
       {isEditing ? <PresetEditorForm model={model} view={view} /> : null}
     </article>

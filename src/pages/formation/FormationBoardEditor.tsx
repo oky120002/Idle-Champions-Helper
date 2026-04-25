@@ -1,3 +1,4 @@
+import { ActionButtons } from '../../components/ActionButtons'
 import { LabeledValueCardGrid } from '../../components/LabeledValueCardGrid'
 import { StatusBannerStack, type StatusBannerStackItem } from '../../components/StatusBannerStack'
 import { getLocalizedTextPair } from '../../domain/localizedText'
@@ -112,11 +113,16 @@ export function FormationBoardEditor({ model }: FormationBoardEditorProps) {
       <FormationBoardGrid model={model} />
       <FormationMobileEditor model={model} />
 
-      <div className="button-row">
-        <button type="button" className="action-button action-button--ghost" onClick={handleClear}>
-          {t({ zh: '清空当前阵型', en: 'Clear this formation' })}
-        </button>
-      </div>
+      <ActionButtons
+        items={[
+          {
+            id: 'clear-formation',
+            label: t({ zh: '清空当前阵型', en: 'Clear this formation' }),
+            tone: 'ghost',
+            onClick: handleClear,
+          },
+        ]}
+      />
     </>
   )
 }
