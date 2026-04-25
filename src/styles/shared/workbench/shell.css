@@ -2,6 +2,7 @@
   --page-workbench-sidebar-open-size: clamp(17.5rem, 19vw, 19rem);
   --page-workbench-sidebar-collapsed-size: 0rem;
   --page-workbench-sidebar-size: var(--page-workbench-sidebar-open-size);
+  --page-workbench-pane-merge-size: 1.2rem;
   --page-workbench-collapsed-toggle-inline-offset: 0.8rem;
   --page-workbench-collapsed-toggle-size: 2.48rem;
   --page-workbench-chrome-size: 3.56rem;
@@ -239,12 +240,12 @@
 .page-workbench__sidebar::after {
   content: "";
   position: absolute;
-  top: var(--page-workbench-chrome-size);
+  top: calc(var(--page-workbench-chrome-size) + 1.18rem);
   right: 0;
   bottom: 0;
   width: 1px;
-  background: linear-gradient(180deg, transparent, rgba(255, 243, 223, 0.14) 8%, rgba(255, 243, 223, 0.14) 92%, transparent);
-  opacity: 0.72;
+  background: linear-gradient(180deg, transparent, rgba(255, 243, 223, 0.14) 2rem, rgba(255, 243, 223, 0.14) calc(100% - 1.5rem), transparent);
+  opacity: 0.56;
   transition: opacity 180ms ease;
 }
 
@@ -286,6 +287,17 @@
   transition:
     padding-inline-start 380ms cubic-bezier(0.16, 1, 0.3, 1),
     padding-inline-end 380ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.page-workbench__chrome-main::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: -1px;
+  width: var(--page-workbench-pane-merge-size);
+  background: linear-gradient(90deg, rgba(18, 26, 35, 0.92), rgba(18, 26, 35, 0.52) 42%, transparent);
+  pointer-events: none;
 }
 
 .page-workbench__chrome-primary,
@@ -379,6 +391,7 @@
 
 .page-workbench__content-shell::before {
   background:
+    linear-gradient(90deg, rgba(18, 26, 35, 0.72), rgba(18, 26, 35, 0.2) 0.94rem, transparent var(--page-workbench-pane-merge-size)),
     linear-gradient(180deg, rgba(255, 255, 255, 0.014), transparent 8%),
     radial-gradient(circle at top center, rgba(255, 243, 223, 0.014), transparent 36%);
 }
