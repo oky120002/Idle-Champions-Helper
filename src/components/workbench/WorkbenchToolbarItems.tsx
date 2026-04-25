@@ -7,8 +7,8 @@ import type {
 import {
   WorkbenchToolbarActionCluster,
   WorkbenchToolbarBadge,
-  WorkbenchShareButton,
 } from './WorkbenchScaffold'
+import { WorkbenchShareButton } from './WorkbenchShareButton'
 import { WorkbenchToolbarActionButton } from './WorkbenchToolbarActionButton'
 
 interface WorkbenchToolbarBaseAction {

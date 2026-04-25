@@ -1,3 +1,4 @@
+import { ActionButton } from '../ActionButton'
 import { pickLocaleText } from '../../app/i18n'
 import { formatSeatLabel } from '../../domain/localizedText'
 import type { ChampionVisualWorkbenchModel } from './types'
@@ -36,9 +37,9 @@ export function ChampionVisualWorkbenchHeader({ model, onClose }: ChampionVisual
           <span className="visual-workbench__summary-label">{pickLocaleText(locale, { zh: '登记槽位', en: 'Catalog slots' })}</span>
           <strong className="visual-workbench__summary-value">{visualSlotCount}</strong>
         </div>
-        <button type="button" className="action-button action-button--ghost visual-workbench__close" onClick={onClose}>
+        <ActionButton tone="ghost" className="visual-workbench__close" onClick={onClose}>
           {pickLocaleText(locale, { zh: '收起档案', en: 'Hide dossier' })}
-        </button>
+        </ActionButton>
       </div>
     </div>
   )

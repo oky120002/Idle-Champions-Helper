@@ -1,4 +1,5 @@
-import { WorkbenchSidebarFilterStatus } from './WorkbenchScaffold'
+import { ActionButton } from '../ActionButton'
+import { WorkbenchSidebarFilterStatus } from './WorkbenchSidebarFilterStatus'
 
 interface WorkbenchSidebarFilterActionsProps {
   activeCount: number
@@ -15,13 +16,9 @@ export function WorkbenchSidebarFilterActions({
     <>
       <WorkbenchSidebarFilterStatus activeCount={activeCount} />
       {activeCount > 0 && onClear !== undefined ? (
-        <button
-          type="button"
-          className="action-button action-button--secondary action-button--compact"
-          onClick={onClear}
-        >
+        <ActionButton tone="secondary" compact onClick={onClear}>
           {clearLabel}
-        </button>
+        </ActionButton>
       ) : null}
     </>
   )

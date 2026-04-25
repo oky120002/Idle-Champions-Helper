@@ -1,3 +1,4 @@
+import { ActionButton } from '../../components/ActionButton'
 import { Link } from 'react-router-dom'
 import { ChampionIdentity } from '../../components/ChampionIdentity'
 import { resolveDataUrl } from '../../data/client'
@@ -117,22 +118,19 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
       </Link>
 
       <div className="result-card__actions">
-        <button
-          type="button"
-          className={
-            isSelected
-              ? 'action-button action-button--secondary action-button--compact action-button--toggled'
-              : 'action-button action-button--ghost action-button--compact'
-          }
-          aria-label={t({
+        <ActionButton
+          tone={isSelected ? 'secondary' : 'ghost'}
+          compact
+          toggled={isSelected}
+          ariaLabel={t({
             zh: `查看 ${getPrimaryLocalizedText(champion.name, locale)} 视觉档案`,
             en: `View ${getPrimaryLocalizedText(champion.name, locale)} visual dossier`,
           })}
-          aria-pressed={isSelected}
+          ariaPressed={isSelected}
           onClick={() => toggleChampionVisual(champion.id)}
         >
           {isSelected ? t({ zh: '收起视觉档案', en: 'Hide visual dossier' }) : t({ zh: '视觉档案', en: 'Visual dossier' })}
-        </button>
+        </ActionButton>
       </div>
     </article>
   )

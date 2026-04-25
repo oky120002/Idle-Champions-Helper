@@ -1,3 +1,4 @@
+import { ActionButton } from '../../components/ActionButton'
 import { SurfaceCard } from '../../components/SurfaceCard'
 import type { ChampionDetail, ChampionSpecializationGraphic } from '../../domain/types'
 import { buildUpgradePresentation } from './effect-model'
@@ -95,22 +96,22 @@ export function DetailUpgradeSection({
                 })}
               </div>
               <div className="upgrade-filter-bar__actions">
-                <button
-                  type="button"
-                  className="action-button action-button--ghost action-button--compact"
+                <ActionButton
+                  tone="ghost"
+                  compact
                   onClick={resetLedgerFilters}
                   disabled={!hasCustomLedgerFilterState}
                 >
                   {t({ zh: '恢复默认', en: 'Reset default' })}
-                </button>
-                <button
-                  type="button"
-                  className="action-button action-button--secondary action-button--compact"
+                </ActionButton>
+                <ActionButton
+                  tone="secondary"
+                  compact
                   onClick={enableAllLedgerFilters}
                   disabled={isShowingAllLedgerTypes}
                 >
                   {t({ zh: '显示全部', en: 'Show all' })}
-                </button>
+                </ActionButton>
               </div>
             </div>
           </div>

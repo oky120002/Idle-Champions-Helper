@@ -1,3 +1,4 @@
+import { ActionButton } from '../../components/ActionButton'
 import { ChampionAvatar } from '../../components/ChampionAvatar'
 import { formatSeatLabel, getLocalizedTextPair, getRoleLabel } from '../../domain/localizedText'
 import type { FormationPageModel } from './types'
@@ -46,13 +47,13 @@ export function FormationMobileEditor({ model }: FormationMobileEditorProps) {
           </p>
         </div>
         {activeMobileChampion ? (
-          <button
-            type="button"
-            className="action-button action-button--ghost formation-mobile-editor__clear"
+          <ActionButton
+            tone="ghost"
+            className="formation-mobile-editor__clear"
             onClick={() => handleAssignChampion(activeMobileSlot.id, '')}
           >
             {t({ zh: '清空槽位', en: 'Clear slot' })}
-          </button>
+          </ActionButton>
         ) : null}
       </div>
 
