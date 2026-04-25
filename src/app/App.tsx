@@ -23,6 +23,7 @@ function lazyNamedPage<TModule extends Record<string, ComponentType>, TKey exten
 const ChampionsPage = lazyNamedPage(() => import('../pages/ChampionsPage'), 'ChampionsPage')
 const ChampionDetailPage = lazyNamedPage(() => import('../pages/ChampionDetailPage'), 'ChampionDetailPage')
 const IllustrationsPage = lazyNamedPage(() => import('../pages/IllustrationsPage'), 'IllustrationsPage')
+const AnimationAuditPage = lazyNamedPage(() => import('../pages/AnimationAuditPage'), 'AnimationAuditPage')
 const PetsPage = lazyNamedPage(() => import('../pages/PetsPage'), 'PetsPage')
 const VariantsPage = lazyNamedPage(() => import('../pages/VariantsPage'), 'VariantsPage')
 const FormationPage = lazyNamedPage(() => import('../pages/FormationPage'), 'FormationPage')
@@ -124,6 +125,7 @@ export function App() {
             <Route path="/champions" element={<ChampionsPage />} />
             <Route path="/champions/:championId" element={<ChampionDetailPage />} />
             <Route path="/illustrations" element={<IllustrationsPage />} />
+            <Route path="/illustrations/audit" element={<AnimationAuditPage />} />
             <Route path="/pets" element={<PetsPage />} />
             <Route path="/variants" element={<VariantsPage />} />
             <Route path="/formation" element={<FormationPage />} />

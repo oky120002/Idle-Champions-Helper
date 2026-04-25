@@ -1,4 +1,4 @@
-@layer foundations.tokens, foundations.base, app.shell, app.site-header, app.navigation, shared.surfaces, shared.filters, shared.workbench, shared.results, shared.formation, shared.controls, components.visual-workbench, components.skelanim-player, pages.champion-detail.shell, pages.champion-detail.dossier, pages.champion-detail.sections, pages.champion-detail.upgrades, pages.champion-detail.feats, pages.champion-detail.media, pages.variants, pages.illustrations, pages.pets;
+@layer foundations.tokens, foundations.base, app.shell, app.site-header, app.navigation, shared.surfaces, shared.filters, shared.workbench, shared.results, shared.formation, shared.controls, components.visual-workbench, components.skelanim-player, pages.champion-detail.shell, pages.champion-detail.dossier, pages.champion-detail.sections, pages.champion-detail.upgrades, pages.champion-detail.feats, pages.champion-detail.media, pages.variants, pages.illustrations, pages.animation-audit, pages.pets;
 
 @import './foundations/tokens.css' layer(foundations.tokens);
 @import './foundations/base.css' layer(foundations.base);
@@ -38,4 +38,6 @@
 @import './pages/champion-detail/media.css' layer(pages.champion-detail.media);
 @import './pages/variants.css' layer(pages.variants);
 @import './pages/illustrations.css' layer(pages.illustrations);
+@import './pages/animation-audit.css' layer(pages.animation-audit);
+@import './pages/animation-audit-feedback.css' layer(pages.animation-audit);
 @import './pages/pets.css' layer(pages.pets);

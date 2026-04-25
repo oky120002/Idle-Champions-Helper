@@ -120,8 +120,8 @@ export function SkelAnimCanvas({
 
         context.save()
         context.translate(frame.x - sequenceSelection.bounds.minX, frame.y - sequenceSelection.bounds.minY)
-        context.rotate(-frame.rotation)
         context.scale(frame.scaleX, frame.scaleY)
+        context.rotate(frame.rotation)
         context.drawImage(
           image,
           piece.sourceX,

@@ -2,6 +2,7 @@ import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import { fetchDefinitionsSnapshot } from './fetch-idle-champions-definitions.mjs'
 import { normalizeDefinitionsSnapshot } from './normalize-idle-champions-definitions.mjs'
+import { auditChampionAnimations } from './audit-idle-champions-animations.mjs'
 import { syncChampionAnimations } from './sync-idle-champions-animations.mjs'
 import { syncChampionIllustrations } from './sync-idle-champions-illustrations.mjs'
 import { syncPetsCatalog } from './sync-idle-champions-pets.mjs'
@@ -16,6 +17,7 @@ async function main() {
       versionFile: { type: 'string' },
       currentVersion: { type: 'string' },
       manualOverrides: { type: 'string' },
+      idleOverridesFile: { type: 'string' },
       masterApiUrl: { type: 'string' },
       playserverClientVersion: { type: 'string' },
       definitionsClientVersion: { type: 'string' },
@@ -47,7 +49,8 @@ async function main() {
 
 可选参数：
   --animationChampionIds <ids>       仅重建这些 championId 的 hero-base / skin 动画与关联静态图（默认全量）
-  --animationSkinIds <ids>           仅重建这些 skinId 的 skin 动画与关联静态图（默认全量）`)
+  --animationSkinIds <ids>           仅重建这些 skinId 的 skin 动画与关联静态图（默认全量）
+  --idleOverridesFile <file>         idle 动画人工覆写 JSON，默认 scripts/data/champion-animation-idle-overrides.json`)
     return
   }
 
@@ -89,6 +92,12 @@ async function main() {
     championIds: values.animationChampionIds,
     skinIds: values.animationSkinIds,
   })
+  const animationAudit = await auditChampionAnimations({
+    outputDir: values.outputDir,
+    currentVersion: values.currentVersion,
+    championIds: values.animationChampionIds,
+    skinIds: values.animationSkinIds,
+  })
   const illustrations = await syncChampionIllustrations({
     input: fetched.rawFile,
     outputDir: values.outputDir,
@@ -113,6 +122,7 @@ async function main() {
   console.log(`- specialization graphics dir: ${specializationGraphics.outputDir}`)
   console.log(`- illustrations dir: ${illustrations.outputDir}`)
   console.log(`- animations dir: ${animations.outputDir} (${animations.count} items)`)
+  console.log(`- animation audit: ${animationAudit.auditFile} (${animationAudit.reviewedCount} flagged)`)
   console.log(`- pets: ${pets.count} (assets ${pets.assetCount}, animations ${pets.counts.animations})`)
   console.log(`- version file: ${normalized.versionFile}`)
 }
