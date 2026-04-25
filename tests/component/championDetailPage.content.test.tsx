@@ -38,6 +38,15 @@ afterEach(() => {
 })
 
 describe('ChampionDetailPage content', () => {
+  it('加载中会展示共享的状态卡片', () => {
+    mockedLoadChampionDetail.mockImplementation(() => new Promise(() => {}))
+
+    renderChampionDetailPage()
+
+    expect(screen.getByRole('heading', { level: 2, name: '正在整理英雄卷宗…' })).toBeInTheDocument()
+    expect(screen.getByText('正在读取详情数据…')).toBeInTheDocument()
+  })
+
   it('按分区渲染英雄详情，并过滤无意义的详情区块', async () => {
     mockedLoadChampionDetail.mockResolvedValue(detailFixture)
 
@@ -76,6 +85,15 @@ describe('ChampionDetailPage content', () => {
     renderChampionDetailPage()
 
     expect(await screen.findByRole('heading', { level: 2, name: '没有找到这个英雄' })).toBeInTheDocument()
+  })
+
+  it('在非 404 错误时展示读取失败状态', async () => {
+    mockedLoadChampionDetail.mockRejectedValue(new Error('boom'))
+
+    renderChampionDetailPage()
+
+    expect(await screen.findByRole('heading', { level: 2, name: '详情数据读取失败' })).toBeInTheDocument()
+    expect(screen.getByText('boom')).toBeInTheDocument()
   })
 
   it('返回链接会带回筛选页查询参数', async () => {
