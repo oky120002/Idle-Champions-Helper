@@ -16,7 +16,6 @@ interface FilterWorkbenchPageToolbarIntroConfig {
   label: string
   activeCount: number
   accentTone?: WorkbenchAccentTone
-  kicker: ReactNode
   title: ReactNode
   detail?: ReactNode
 }
@@ -88,7 +87,6 @@ export function FilterWorkbenchPage({
   const resolvedToolbarPrimary = toolbarPrimary ?? (
     toolbarIntro !== undefined ? (
       <WorkbenchToolbarCopy
-        kicker={toolbarIntro.kicker}
         title={toolbarIntro.title}
         {...(toolbarIntro.detail !== undefined ? { detail: toolbarIntro.detail } : {})}
       />

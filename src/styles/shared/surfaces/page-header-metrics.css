@@ -67,6 +67,12 @@
   font-variant-numeric: tabular-nums;
 }
 
+.workbench-filter-header__metrics-fit .page-header-metrics--compact {
+  flex-wrap: nowrap;
+  width: max-content;
+  gap: calc(0.38rem * var(--workbench-metrics-scale, 1));
+}
+
 .workbench-page .page-header-metrics--compact .page-header-metric::before {
   left: 0.66rem;
   right: 0.66rem;
@@ -93,4 +99,18 @@
   font-weight: 650;
   line-height: 1;
   white-space: nowrap;
+}
+
+.workbench-filter-header__metrics-fit .page-header-metrics--compact .page-header-metric {
+  min-height: calc(1.72rem * var(--workbench-metrics-scale, 1));
+  padding: calc(0.22rem * var(--workbench-metrics-scale, 1)) calc(0.62rem * var(--workbench-metrics-scale, 1)) calc(0.24rem * var(--workbench-metrics-scale, 1));
+  font-size: calc(0.76rem * var(--workbench-metrics-scale, 1));
+}
+
+.workbench-filter-header__metrics-fit .page-header-metrics--compact .page-header-metric__label {
+  font-size: calc(0.54rem * var(--workbench-metrics-scale, 1));
+}
+
+.workbench-filter-header__metrics-fit .page-header-metrics--compact .page-header-metric__value {
+  font-size: calc(0.76rem * var(--workbench-metrics-scale, 1));
 }

@@ -48,7 +48,6 @@ export function VariantsPage() {
         label: 'VARIANTS',
         activeCount: activeFilters.length,
         accentTone: 'steel',
-        kicker: t({ zh: '悬浮工作台', en: 'Floating workbench' }),
         title: t({ zh: '变体筛选', en: 'Variant filters' }),
         detail: t({ zh: '战役压力、敌人与阵型阅读台', en: 'Campaign pressure, enemy, and formation reading desk' }),
       }}

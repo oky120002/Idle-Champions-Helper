@@ -6,14 +6,12 @@ import type {
   ChampionSpecializationGraphic,
 } from '../../domain/types'
 import { DetailSectionPanels } from './DetailSectionPanels'
-import { DetailSidebar } from './DetailSidebar'
 import { DossierSection } from './DossierSection'
 import { SkinArtworkDialog } from './SkinArtworkDialog'
 import type {
   DetailFieldProps,
   DetailSectionBadge,
   DetailSectionLink,
-  DetailSectionProgressState,
   EffectContext,
   LedgerUpgradeRow,
   SkinArtworkIds,
@@ -27,11 +25,6 @@ interface ChampionDetailBodyProps {
   t: (text: { zh: string; en: string }) => string
   activeSectionId: DetailSectionLink['id']
   sectionLinks: DetailSectionLink[]
-  activeSectionLabel: string
-  activeSectionIndex: number
-  sectionProgressValue: string
-  getSectionProgressState: (index: number) => DetailSectionProgressState
-  getSectionProgressText: (state: DetailSectionProgressState) => string
   scrollToSection: (id: string) => void
   summaryAvailabilityBadges: Array<{ key: string; label: string; active?: boolean }>
   overviewFields: DetailFieldProps[]
@@ -100,17 +93,6 @@ export function ChampionDetailBody(props: ChampionDetailBodyProps) {
           enableAllLedgerFilters={props.enableAllLedgerFilters}
         />
 
-        <DetailSidebar
-          t={props.t}
-          activeSectionId={props.activeSectionId}
-          sectionLinks={props.sectionLinks}
-          activeSectionLabel={props.activeSectionLabel}
-          activeSectionIndex={props.activeSectionIndex}
-          sectionProgressValue={props.sectionProgressValue}
-          getSectionProgressState={props.getSectionProgressState}
-          getSectionProgressText={props.getSectionProgressText}
-          scrollToSection={props.scrollToSection}
-        />
       </div>
 
       <SkinArtworkDialog

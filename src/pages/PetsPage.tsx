@@ -65,7 +65,6 @@ export function PetsPage() {
       toolbarIntro={{
         label: 'PETS',
         activeCount: activeFilterCount,
-        kicker: t({ zh: '悬浮工作台', en: 'Floating workbench' }),
         title: t({ zh: '宠物图鉴', en: 'Pet catalog' }),
         detail: t({ zh: '宠物筛选与资源完整度排查', en: 'Filter pets and audit asset completeness' }),
       }}

@@ -12,7 +12,10 @@ import {
 } from './data/champion-asset-helpers.mjs'
 import { extractWrappedPngBuffer } from './data/mobile-asset-codec.mjs'
 import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.mjs'
-import { computeSkelAnimFrameBounds, renderSkelAnimPoseToPngBuffer } from './data/skelanim-renderer.mjs'
+import {
+  computeSkelAnimFrameBounds,
+  renderSkelAnimPoseToPngBuffer,
+} from './data/skelanim-renderer.mjs'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'
@@ -22,6 +25,8 @@ const FETCH_TIMEOUT_MS = 20_000
 const PET_ICON_DIR_NAME = 'pets/icons'
 const PET_ILLUSTRATION_DIR_NAME = 'pets/illustrations'
 const PET_ANIMATION_DIR_NAME = 'pet-animations'
+const PET_ILLUSTRATION_TARGET_EDGE = 320
+const PET_ILLUSTRATION_MAX_RASTER_SCALE = 4
 const execFileAsync = promisify(execFile)
 
 function buildPetAnimationAssetPath(currentVersion, petId) {
@@ -436,6 +441,51 @@ function resolveDefaultSequence(sequenceSummaries, preferredSequenceIndexes) {
   return sequenceSummaries.find((summary) => summary.firstRenderableFrameIndex !== null) ?? null
 }
 
+function resolvePetIllustrationRasterScale(bounds) {
+  const width = Math.max(1, Math.ceil(bounds.maxX - bounds.minX))
+  const height = Math.max(1, Math.ceil(bounds.maxY - bounds.minY))
+  const maxEdge = Math.max(width, height)
+
+  return Math.max(
+    1,
+    Math.min(PET_ILLUSTRATION_MAX_RASTER_SCALE, Math.ceil(PET_ILLUSTRATION_TARGET_EDGE / maxEdge)),
+  )
+}
+
+async function renderPetSkelAnimPng(task, rawBuffer) {
+  const skelAnim = decodeSkelAnimGraphicBuffer(task.asset, rawBuffer)
+
+  if (task.variant !== 'illustration') {
+    return (
+      await renderSkelAnimPoseToPngBuffer(skelAnim, {
+        preferredSequenceIndexes: task.preferredSequenceIndexes,
+      })
+    ).bytes
+  }
+
+  const character = skelAnim.characters[0]
+
+  if (!character) {
+    throw new Error('SkelAnim 中没有可用角色')
+  }
+
+  const sequences = character.sequences.map(summarizeSequence)
+  const defaultSequence = resolveDefaultSequence(sequences, task.preferredSequenceIndexes)
+
+  if (!defaultSequence?.bounds) {
+    throw new Error('没有可渲染的 illustration sequence')
+  }
+
+  return (
+    await renderSkelAnimPoseToPngBuffer(skelAnim, {
+      sequenceIndex: defaultSequence.sequenceIndex,
+      frameIndex: defaultSequence.firstRenderableFrameIndex ?? 0,
+      viewportBounds: defaultSequence.bounds,
+      rasterScale: resolvePetIllustrationRasterScale(defaultSequence.bounds),
+    })
+  ).bytes
+}
+
 function findOpaqueBounds(png) {
   let left = png.width
   let top = png.height
@@ -599,14 +649,7 @@ async function downloadPetAsset(task) {
     const rawBuffer = await downloadRawAsset(task)
     const decodedPng =
       task.renderMode === 'skelanim'
-        ? (
-            await renderSkelAnimPoseToPngBuffer(
-              decodeSkelAnimGraphicBuffer(task.asset, rawBuffer),
-              {
-                preferredSequenceIndexes: task.preferredSequenceIndexes,
-              },
-            )
-          ).bytes
+        ? await renderPetSkelAnimPng(task, rawBuffer)
         : decodeGraphicBuffer(rawBuffer)
     const processed =
       task.variant === 'icon' ? processIconPng(decodedPng) : processIllustrationPng(decodedPng)
@@ -777,7 +820,10 @@ export async function syncPetsCatalog(options = {}) {
       })
     }
 
-    if (!pet.illustration && illustrationAsset?.sourceGraphic) {
+    if (
+      illustrationAsset?.sourceGraphic &&
+      (!pet.illustration || isSkelAnimGraphicDefinition(illustrationGraphic))
+    ) {
       tasks.push({
         petId,
         variant: 'illustration',

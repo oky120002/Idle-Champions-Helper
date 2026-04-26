@@ -26,7 +26,6 @@ describe('FilterWorkbenchPage', () => {
           toolbarIntro={{
             label: 'PETS',
             activeCount: 2,
-            kicker: '悬浮工作台',
             title: '宠物图鉴',
             detail: '筛选宠物并检查资源完整度',
           }}
@@ -63,6 +62,7 @@ describe('FilterWorkbenchPage', () => {
     expect(screen.getByText('PETS')).toBeInTheDocument()
     expect(screen.getByText('2 项条件')).toBeInTheDocument()
     expect(screen.getByText('宠物图鉴')).toBeInTheDocument()
+    expect(screen.queryByText('悬浮工作台')).not.toBeInTheDocument()
     expect(screen.getByText('24 项结果')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '显示全部' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '返回顶部' })).toBeInTheDocument()
