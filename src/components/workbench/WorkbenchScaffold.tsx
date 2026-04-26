@@ -26,7 +26,7 @@ interface WorkbenchToolbarFilterStatusProps {
 }
 
 interface WorkbenchToolbarCopyProps {
-  kicker: ReactNode
+  kicker?: ReactNode
   title: ReactNode
   detail?: ReactNode
   className?: string
@@ -143,7 +143,7 @@ export function WorkbenchToolbarFilterStatus({
 export function WorkbenchToolbarCopy({ kicker, title, detail, className }: WorkbenchToolbarCopyProps) {
   return (
     <div className={joinClasses('workbench-page__toolbar-copy', className)}>
-      <span className="workbench-page__toolbar-kicker">{kicker}</span>
+      {kicker != null ? <span className="workbench-page__toolbar-kicker">{kicker}</span> : null}
       <strong className="workbench-page__toolbar-title">{title}</strong>
       {detail != null ? <span className="workbench-page__toolbar-detail">{detail}</span> : null}
     </div>

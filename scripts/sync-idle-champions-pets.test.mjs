@@ -483,8 +483,8 @@ test('syncPetsCatalog 会把 type=3 的宠物分件资源离线合成为单张 P
 
   assert.equal(pet.icon.width, 4)
   assert.equal(pet.icon.height, 4)
-  assert.equal(pet.illustration.width, 4)
-  assert.equal(pet.illustration.height, 2)
+  assert.equal(pet.illustration.width, 16)
+  assert.equal(pet.illustration.height, 8)
   assert.equal(animation.petId, '7')
   assert.equal(animation.asset.path, 'v1/pet-animations/illustrations/7.bin')
   assert.equal(animation.defaultSequenceIndex, 0)
@@ -497,7 +497,7 @@ test('syncPetsCatalog 会把 type=3 的宠物分件资源离线合成为单张 P
 
   assert.equal(iconPng.width, 4)
   assert.equal(iconPng.height, 4)
-  assert.equal(illustrationPng.width, 4)
-  assert.equal(illustrationPng.height, 2)
+  assert.equal(illustrationPng.width, 16)
+  assert.equal(illustrationPng.height, 8)
   assert.ok(animationBin.length > 0)
 })

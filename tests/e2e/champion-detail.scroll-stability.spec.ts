@@ -21,7 +21,7 @@ async function scrollPaneBy(page: Page, amount: number): Promise<void> {
   }, amount)
 }
 
-test('英雄详情页连续向下滚动时不会被快速索引的 hash 同步拉回', async ({ page }) => {
+test('英雄详情页连续向下滚动时不会被 hash 同步拉回', async ({ page }) => {
   await page.addInitScript(() => {
     window.localStorage.removeItem('idle-champions-helper.locale')
   })

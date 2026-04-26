@@ -18,22 +18,18 @@ test('英雄筛选卡片进入详情后，详情 hash 与返回链路保持闭�
   await expect(page).toHaveURL(/#\/champions\/7\?seat=7#section-overview$/)
   await expect(page.getByRole('heading', { level: 2, name: '明斯克' })).toBeVisible()
   await expect(page.getByRole('link', { name: '返回英雄筛选' })).toHaveAttribute('href', /#\/champions\?seat=7$/)
-  await expect(page.locator('.champion-detail-sidebar__progress-copy')).toHaveText('当前浏览 · 概览')
-  await expect(page.getByTestId('sidebar-section-skins')).toHaveCount(0)
-  await expect(page.getByTestId('sidebar-section-raw')).toHaveCount(0)
+  await expect(page.getByText('快速索引')).toHaveCount(0)
 
-  await page.getByTestId('sidebar-section-upgrades').click()
+  await page.getByRole('button', { name: '升级' }).click()
 
   await expect(page).toHaveURL(/#\/champions\/7\?seat=7#section-upgrades$/)
-  await expect(page.locator('.champion-detail-sidebar__progress-copy')).toHaveText('当前浏览 · 升级')
-  await expect(page.getByTestId('sidebar-section-overview')).toHaveAttribute('data-progress-state', 'completed')
-  await expect(page.getByTestId('sidebar-section-upgrades')).toHaveAttribute('data-progress-state', 'active')
+  await expect(page.getByRole('button', { name: '概览' })).toHaveAttribute('aria-pressed', 'false')
+  await expect(page.getByRole('button', { name: '升级' })).toHaveAttribute('aria-pressed', 'true')
 
   await page.reload()
 
   await expect(page).toHaveURL(/#\/champions\/7\?seat=7#section-upgrades$/)
-  await expect(page.locator('.champion-detail-sidebar__progress-copy')).toHaveText('当前浏览 · 升级')
-  await expect(page.getByTestId('sidebar-section-upgrades')).toHaveAttribute('data-progress-state', 'active')
+  await expect(page.getByRole('button', { name: '升级' })).toHaveAttribute('aria-pressed', 'true')
 
   await page.getByRole('link', { name: '返回英雄筛选' }).click()
 

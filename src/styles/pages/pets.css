@@ -39,10 +39,13 @@
 }
 
 .pet-card__stage {
+  --pet-card-stage-min-height: 14.6rem;
+  --pet-card-art-max-height: 13.4rem;
+
   position: relative;
   display: grid;
   place-items: center;
-  min-height: 14.6rem;
+  min-height: var(--pet-card-stage-min-height);
   padding: 0.9rem 0.78rem 0.78rem;
   overflow: hidden;
   border-radius: var(--radius-md);
@@ -69,9 +72,9 @@
   position: relative;
   z-index: 1;
   max-width: 100%;
-  max-height: 13.4rem;
-  width: auto;
-  height: auto;
+  max-height: var(--pet-card-art-max-height);
+  width: 100%;
+  height: var(--pet-card-art-max-height);
   object-fit: contain;
   filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.34));
 }
@@ -82,7 +85,7 @@
 }
 
 .pet-card__preview .skelanim-player__stage {
-  min-height: 13.4rem;
+  min-height: var(--pet-card-art-max-height);
   padding: 0;
   background: transparent;
 }
@@ -210,11 +213,8 @@
 
 @media (max-width: 720px) {
   .pet-card__stage {
-    min-height: 13.6rem;
-  }
-
-  .pet-card__preview .skelanim-player__stage {
-    min-height: 12.4rem;
+    --pet-card-stage-min-height: 13.6rem;
+    --pet-card-art-max-height: 12.4rem;
   }
 }
 
@@ -224,11 +224,8 @@
   }
 
   .pet-card__stage {
-    min-height: 12.8rem;
+    --pet-card-stage-min-height: 12.8rem;
+    --pet-card-art-max-height: 11.6rem;
     padding-top: 0.9rem;
-  }
-
-  .pet-card__preview .skelanim-player__stage {
-    min-height: 11.6rem;
   }
 }

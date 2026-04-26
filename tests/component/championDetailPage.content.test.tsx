@@ -72,8 +72,7 @@ describe('ChampionDetailPage content', () => {
     expect(screen.queryByText('软货币')).not.toBeInTheDocument()
     expect(screen.queryByText('Large Graphic ID')).not.toBeInTheDocument()
     expect(screen.queryByText('原始字段')).not.toBeInTheDocument()
-    expect(screen.queryByTestId('sidebar-section-raw')).not.toBeInTheDocument()
-    expect(screen.queryByTestId('sidebar-section-skins')).not.toBeInTheDocument()
+    expect(screen.queryByText('快速索引')).not.toBeInTheDocument()
     expect(screen.queryByText('large_graphic_id')).not.toBeInTheDocument()
     expect(screen.queryByText('未命名 upgrade_ability')).not.toBeInTheDocument()
     expect(screen.queryByText('Hero 快照')).not.toBeInTheDocument()
@@ -113,8 +112,7 @@ describe('ChampionDetailPage content', () => {
     renderChampionDetailPageWithBackRoute('/champions/7?seat=7')
 
     expect(await screen.findByRole('link', { name: '返回英雄筛选' })).toHaveAttribute('href', '/champions?seat=7')
-    fireEvent.click(await screen.findByTestId('sidebar-section-upgrades'))
-    expect(await screen.findByText('当前浏览 · 升级')).toBeInTheDocument()
+    fireEvent.click((await screen.findAllByRole('button', { name: '升级' }))[0]!)
 
     fireEvent.click(screen.getByRole('link', { name: '返回英雄筛选' }))
 

@@ -65,7 +65,6 @@ export function ChampionsPage() {
       toolbarIntro={{
         label: 'CHAMPIONS',
         activeCount: activeFilterCount,
-        kicker: t({ zh: '悬浮工作台', en: 'Floating workbench' }),
         title: t({ zh: '英雄筛选', en: 'Champion filters' }),
         detail: t({ zh: '候选池收缩与资料对比', en: 'Narrow the roster and compare dossiers' }),
       }}

@@ -271,21 +271,25 @@
 }
 
 .result-card__role-row {
+  --champion-card-role-scale: 1;
   margin: 0;
-  flex-wrap: wrap;
-  overflow: visible;
-  gap: 0.3rem;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  width: 100%;
+  gap: calc(0.3rem * var(--champion-card-role-scale));
 }
 
 .result-card__role-row .tag-pill {
-  min-height: 1.64rem;
-  padding: 0.2rem 0.52rem;
+  flex: 0 0 auto;
+  min-height: calc(1.64rem * var(--champion-card-role-scale));
+  padding: calc(0.2rem * var(--champion-card-role-scale)) calc(0.52rem * var(--champion-card-role-scale));
   border-color: rgba(227, 214, 193, 0.08);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.008)),
     rgba(255, 255, 255, 0.02);
-  font-size: 0.72rem;
+  font-size: calc(0.72rem * var(--champion-card-role-scale));
   white-space: nowrap;
+  line-height: 1;
 }
 
 .result-card__role-row .tag-pill--seat {
@@ -316,8 +320,14 @@
 }
 
 .result-card__attribute-trail {
-  gap: 0.3rem;
-  overflow: visible;
+  --champion-card-attribute-scale: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  width: 100%;
+  max-height: calc((1.62rem * 3) + (0.3rem * 2));
+  gap: calc(0.3rem * var(--champion-card-attribute-scale));
+  overflow: hidden;
 }
 
 .result-card__attributes-empty {
@@ -328,10 +338,11 @@
 }
 
 .result-card__attribute-pill {
-  min-height: 1.62rem;
+  flex: 0 0 auto;
+  min-height: calc(1.62rem * var(--champion-card-attribute-scale));
   max-width: 100%;
-  padding: 0.18rem 0.5rem;
-  font-size: 0.72rem;
+  padding: calc(0.18rem * var(--champion-card-attribute-scale)) calc(0.5rem * var(--champion-card-attribute-scale));
+  font-size: calc(0.72rem * var(--champion-card-attribute-scale));
   white-space: normal;
   line-height: 1.12;
   border-color: var(--result-card-attribute-border, rgba(227, 214, 193, 0.08));

@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { ChampionIdentity } from '../../components/ChampionIdentity'
 import { resolveDataUrl } from '../../data/client'
@@ -15,6 +16,8 @@ interface ChampionResultCardProps {
 
 export function ChampionResultCard({ champion, model }: ChampionResultCardProps) {
   const { locale, t, locationSearch, saveListScroll, heroIllustrationByChampionId } = model
+  const roleRowRef = useRef<HTMLDivElement | null>(null)
+  const attributeTrailRef = useRef<HTMLDivElement | null>(null)
   const attributePills = buildChampionCardAttributePills(getChampionAttributeGroups(champion.tags), {
     selectedAcquisitions: model.selectedAcquisitions,
     selectedMechanics: model.selectedMechanics,
@@ -29,6 +32,159 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
     champion.affiliations.length > 0
       ? champion.affiliations.map((affiliation) => getLocalizedTextPair(affiliation, locale)).join(' / ')
       : null
+
+  useLayoutEffect(() => {
+    const element = roleRowRef.current
+
+    if (element === null) {
+      return
+    }
+
+    const MIN_SCALE = 0.58
+    let currentScale = 1
+
+    const applyScale = () => {
+      const target = roleRowRef.current
+
+      if (target === null) {
+        return
+      }
+
+      target.style.setProperty('--champion-card-role-scale', '1')
+
+      const availableWidth = target.clientWidth
+      const naturalWidth = target.scrollWidth
+
+      if (availableWidth <= 0 || naturalWidth <= availableWidth) {
+        if (currentScale !== 1) {
+          currentScale = 1
+          target.style.setProperty('--champion-card-role-scale', '1')
+        }
+
+        return
+      }
+
+      const nextScale = Math.max(MIN_SCALE, availableWidth / naturalWidth)
+
+      if (Math.abs(nextScale - currentScale) < 0.01) {
+        return
+      }
+
+      currentScale = nextScale
+      target.style.setProperty('--champion-card-role-scale', `${nextScale}`)
+    }
+
+    applyScale()
+
+    if (typeof ResizeObserver === 'undefined') {
+      return
+    }
+
+    let frameId: number | null = null
+    const scheduleScale = () => {
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId)
+      }
+
+      frameId = window.requestAnimationFrame(() => {
+        frameId = null
+        applyScale()
+      })
+    }
+
+    const resizeObserver = new ResizeObserver(() => {
+      scheduleScale()
+    })
+    resizeObserver.observe(element)
+
+    return () => {
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId)
+      }
+
+      resizeObserver.disconnect()
+    }
+  }, [champion.id, champion.roles.join('|'), locale])
+
+  useLayoutEffect(() => {
+    const element = attributeTrailRef.current
+
+    if (element === null) {
+      return
+    }
+
+    const MIN_SCALE = 0.5
+    let currentScale = 1
+
+    const applyScale = () => {
+      const target = attributeTrailRef.current
+
+      if (target === null) {
+        return
+      }
+
+      let nextScale = 1
+
+      for (let iteration = 0; iteration < 4; iteration += 1) {
+        target.style.setProperty('--champion-card-attribute-scale', `${nextScale}`)
+
+        const availableHeight = target.clientHeight
+        const naturalHeight = target.scrollHeight
+
+        if (availableHeight <= 0 || naturalHeight <= availableHeight) {
+          break
+        }
+
+        const candidateScale = Math.max(MIN_SCALE, availableHeight / naturalHeight)
+
+        if (Math.abs(candidateScale - nextScale) < 0.01) {
+          nextScale = candidateScale
+          target.style.setProperty('--champion-card-attribute-scale', `${nextScale}`)
+          break
+        }
+
+        nextScale = candidateScale
+      }
+
+      if (Math.abs(nextScale - currentScale) < 0.01) {
+        return
+      }
+
+      currentScale = nextScale
+      target.style.setProperty('--champion-card-attribute-scale', `${nextScale}`)
+    }
+
+    applyScale()
+
+    if (typeof ResizeObserver === 'undefined') {
+      return
+    }
+
+    let frameId: number | null = null
+    const scheduleScale = () => {
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId)
+      }
+
+      frameId = window.requestAnimationFrame(() => {
+        frameId = null
+        applyScale()
+      })
+    }
+
+    const resizeObserver = new ResizeObserver(() => {
+      scheduleScale()
+    })
+    resizeObserver.observe(element)
+
+    return () => {
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId)
+      }
+
+      resizeObserver.disconnect()
+    }
+  }, [attributePills.map((pill) => pill.key).join('|'), champion.id, locale])
 
   return (
     <article
@@ -79,7 +235,7 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
           />
 
           <div className="result-card__meta-strip">
-            <div className="tag-row result-card__role-row">
+            <div ref={roleRowRef} className="tag-row result-card__role-row">
               <span className="tag-pill tag-pill--seat">{seatLabel}</span>
               {champion.roles.map((role) => (
                 <span key={role} className="tag-pill">
@@ -92,7 +248,7 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
 
         <div className="result-card__attributes">
           {attributePills.length > 0 ? (
-            <div className="tag-row result-card__attribute-trail">
+            <div ref={attributeTrailRef} className="tag-row result-card__attribute-trail">
               {attributePills.map((attribute) => {
                 const tagLabel = getChampionTagLabel(attribute.tag, locale)
                 const groupLabel = getChampionAttributeGroupLabel(attribute.groupId, locale)

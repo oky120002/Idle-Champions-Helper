@@ -66,7 +66,6 @@ export function IllustrationsPage() {
       toolbarIntro={{
         label: 'ART CODEX',
         activeCount: activeFilterChips.length,
-        kicker: t({ zh: '悬浮工作台', en: 'Floating workbench' }),
         title: t({ zh: '立绘图鉴', en: 'Illustration catalog' }),
         detail: t({ zh: '立绘筛选与动态资源对照', en: 'Filter artwork and compare motion resources' }),
       }}

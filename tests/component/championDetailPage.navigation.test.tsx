@@ -51,17 +51,13 @@ describe('ChampionDetailPage navigation', () => {
     upgradeButtons.forEach((button) => {
       expect(button).toHaveAttribute('aria-pressed', 'false')
     })
-    expect(screen.getByTestId('sidebar-section-overview')).toHaveAttribute('data-progress-state', 'active')
-    expect(screen.getByTestId('sidebar-section-overview')).toHaveAttribute('aria-current', 'step')
-    expect(screen.getByTestId('sidebar-section-combat')).toHaveAttribute('data-progress-state', 'upcoming')
-    expect(screen.getByText('当前浏览 · 概览')).toBeInTheDocument()
-    expect(screen.getByText('1 / 5')).toBeInTheDocument()
+    expect(screen.queryByText('快速索引')).not.toBeInTheDocument()
     await waitFor(() => {
       expect(window.location.hash).toBe('#/champions/7#section-overview')
     })
   })
 
-  it('点击分区导航后会同步高亮顶部和侧栏按钮', async () => {
+  it('点击分区导航后会同步高亮顶部按钮', async () => {
     mockedLoadChampionDetail.mockResolvedValue(detailFixture)
 
     renderChampionDetailPage()
@@ -75,11 +71,6 @@ describe('ChampionDetailPage navigation', () => {
     screen.getAllByRole('button', { name: '概览' }).forEach((button) => {
       expect(button).toHaveAttribute('aria-pressed', 'false')
     })
-    expect(screen.getByTestId('sidebar-section-overview')).toHaveAttribute('data-progress-state', 'completed')
-    expect(screen.getByTestId('sidebar-section-upgrades')).toHaveAttribute('data-progress-state', 'active')
-    expect(screen.getByTestId('sidebar-section-feats')).toHaveAttribute('data-progress-state', 'upcoming')
-    expect(screen.getByText('当前浏览 · 升级')).toBeInTheDocument()
-    expect(screen.getByText('4 / 5')).toBeInTheDocument()
     await waitFor(() => {
       expect(window.location.hash).toBe('#/champions/7#section-upgrades')
     })
@@ -96,7 +87,6 @@ describe('ChampionDetailPage navigation', () => {
         expect(button).toHaveAttribute('aria-pressed', 'true')
       })
     })
-    expect(screen.getByTestId('sidebar-section-upgrades')).toHaveAttribute('data-progress-state', 'active')
     expect(Element.prototype.scrollIntoView).toHaveBeenCalled()
     await waitFor(() => {
       expect(window.location.hash).toBe('#/champions/7#section-upgrades')
@@ -126,7 +116,9 @@ describe('ChampionDetailPage navigation', () => {
     fireEvent.scroll(contentScroll)
 
     await waitFor(() => {
-      expect(screen.getByText('当前浏览 · 升级')).toBeInTheDocument()
+      screen.getAllByRole('button', { name: '升级' }).forEach((button) => {
+        expect(button).toHaveAttribute('aria-pressed', 'true')
+      })
     })
 
     expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled()

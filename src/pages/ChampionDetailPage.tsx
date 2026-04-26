@@ -80,9 +80,6 @@ export function ChampionDetailPage() {
     sectionLinks,
     activeSectionLabel,
     activeSectionIndex,
-    sectionProgressValue,
-    getSectionProgressState,
-    getSectionProgressText,
     scrollToSection,
     backToChampions,
     handleBackClick,
@@ -207,11 +204,6 @@ export function ChampionDetailPage() {
           t={t}
           activeSectionId={activeSectionId}
           sectionLinks={sectionLinks}
-          activeSectionLabel={activeSectionLabel}
-          activeSectionIndex={activeSectionIndex}
-          sectionProgressValue={sectionProgressValue}
-          getSectionProgressState={getSectionProgressState}
-          getSectionProgressText={getSectionProgressText}
           scrollToSection={scrollToSection}
           summaryAvailabilityBadges={summaryAvailabilityBadges}
           overviewFields={overviewFields}
