@@ -119,7 +119,7 @@ export function WorkbenchFilterMetricsHeader({
 
       resizeObserver.disconnect()
     }
-  }, [items.map((item) => `${item.label}:${String(item.value)}`).join('|'), filterSummary, className])
+  }, [items, filterSummary, className])
 
   return (
     <WorkbenchFilterResultsHeader

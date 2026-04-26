@@ -27,7 +27,6 @@ export function SkelAnimCanvas({
   className,
   showStatus = true,
   showControls = true,
-  showLoadingBadge = true,
   playbackMode = 'manual',
   sequenceIntent = 'default',
 }: SkelAnimCanvasProps) {
@@ -71,7 +70,7 @@ export function SkelAnimCanvas({
     }
   }, [assetPath, labels.error])
 
-  const { prepared, loadError, isLoading } = resolvePreparedAssetState(
+  const { prepared, loadError } = resolvePreparedAssetState(
     assetPath,
     preparedEntry,
     loadErrorEntry,
@@ -253,7 +252,6 @@ export function SkelAnimCanvas({
           <div className="skin-artwork-dialog__fallback">{loadError ?? labels.error}</div>
         )}
 
-        {showLoadingBadge && isLoading ? <div className="skelanim-player__badge">{labels.loading}</div> : null}
       </div>
 
       {showStatus || (showControls && showCanvas) ? (
