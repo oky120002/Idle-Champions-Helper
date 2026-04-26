@@ -82,7 +82,6 @@ export function SkinArtworkDialog({
                   fallbackSrc={selectedSkinPreviewUrl}
                   alt={buildSkinPreviewAlt(selectedSkin, locale)}
                   labels={{
-                    loading: t({ zh: '正在载入动态预览…', en: 'Loading animated preview…' }),
                     play: t({ zh: '播放动画', en: 'Play animation' }),
                     pause: t({ zh: '暂停动画', en: 'Pause animation' }),
                     reducedMotion: t({ zh: '已遵循减少动态偏好', en: 'Reduced motion is active' }),

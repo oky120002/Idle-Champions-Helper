@@ -15,7 +15,6 @@ import type {
 } from '../../../src/features/skelanim-player/types'
 
 const labels: SkelAnimCanvasLabels = {
-  loading: '加载中',
   play: '播放',
   pause: '暂停',
   reducedMotion: '减少动态效果',

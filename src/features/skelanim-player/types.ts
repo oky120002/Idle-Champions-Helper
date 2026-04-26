@@ -63,7 +63,6 @@ export interface PreparedSkelAnimData {
 }
 
 export interface SkelAnimCanvasLabels {
-  loading: string
   play: string
   pause: string
   reducedMotion: string
@@ -81,7 +80,6 @@ export interface SkelAnimCanvasProps {
   className?: string
   showStatus?: boolean
   showControls?: boolean
-  showLoadingBadge?: boolean
   playbackMode?: 'manual' | 'play' | 'pause'
   sequenceIntent?: 'default' | 'walk'
 }

@@ -169,7 +169,6 @@ export function AnimationAuditComparisonRow({
                 fallbackSrc={fallbackSrc}
                 alt={`${title} ${variant.label}`}
                 labels={{
-                  loading: t({ zh: '载入动图…', en: 'Loading motion…' }),
                   play: t({ zh: '播放动画', en: 'Play animation' }),
                   pause: t({ zh: '暂停动画', en: 'Pause animation' }),
                   reducedMotion: t({ zh: '已遵循减少动态偏好', en: 'Reduced motion is active' }),

@@ -66,7 +66,6 @@ function IllustrationResultCardInner({ entry, animation, locale, t, onOpenChampi
             alt={buildIllustrationAlt(illustration, locale)}
             viewportBounds={illustration.render.bounds}
             labels={{
-              loading: t({ zh: '载入动图…', en: 'Loading motion…' }),
               play: t({ zh: '播放动画', en: 'Play animation' }),
               pause: t({ zh: '暂停动画', en: 'Pause animation' }),
               reducedMotion: t({ zh: '已遵循减少动态偏好', en: 'Reduced motion is active' }),
@@ -76,7 +75,6 @@ function IllustrationResultCardInner({ entry, animation, locale, t, onOpenChampi
             }}
             playbackMode={isPreviewActive ? 'play' : 'pause'}
             sequenceIntent="walk"
-            showLoadingBadge={false}
             showControls={false}
             showStatus={false}
           />
