@@ -58,8 +58,7 @@ export function ChampionDetailPage() {
   } = useChampionDetailResources(championId)
   const {
     effectContext,
-    upgradePresentations,
-    spotlightUpgrades,
+    specializationColumns,
     ledgerRows,
     ledgerFilterOptions,
     activeLedgerFilterKeySet,
@@ -210,9 +209,8 @@ export function ChampionDetailPage() {
           upgradeSectionBadges={upgradeSectionBadges}
           featSectionBadges={featSectionBadges}
           effectContext={effectContext}
-          upgradePresentations={upgradePresentations}
           specializationGraphicsById={specializationGraphicsById}
-          spotlightUpgrades={spotlightUpgrades}
+          specializationColumns={specializationColumns}
           ledgerRows={ledgerRows}
           ledgerFilterOptions={ledgerFilterOptions}
           activeLedgerFilterKeySet={activeLedgerFilterKeySet}

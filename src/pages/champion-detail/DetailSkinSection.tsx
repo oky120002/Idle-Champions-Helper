@@ -19,7 +19,7 @@ export function DetailSkinSection({ detail, locale, t, effectContext, openArtwor
     <SurfaceCard className="detail-section detail-section--skins detail-section--headerless">
       <div id="skins" className="detail-section-anchor" />
       <DetailSectionHeader
-        title="Skins"
+        title={t({ zh: '皮肤', en: 'Skins' })}
         badges={[
           {
             label: t({ zh: '皮肤', en: 'Skins' }),

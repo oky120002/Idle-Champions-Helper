@@ -13,6 +13,7 @@ import {
   buildUpgradeSectionBadges,
   buildLedgerUpgrades,
 } from './detail-derived-sections'
+import { buildSpecializationUpgradeColumns } from './specialization-column-model'
 import { useLedgerFilterState } from './useLedgerFilterState'
 
 interface Translation {
@@ -34,6 +35,10 @@ export function useChampionDetailDerived(detail: ChampionDetail | null, locale: 
     [detail, effectContext],
   )
   const spotlightUpgrades = useMemo(() => buildSpotlightUpgrades(detail), [detail])
+  const specializationColumns = useMemo(
+    () => buildSpecializationUpgradeColumns(detail, spotlightUpgrades, effectContext, upgradePresentations),
+    [detail, effectContext, spotlightUpgrades, upgradePresentations],
+  )
   const ledgerUpgrades = useMemo(() => buildLedgerUpgrades(detail), [detail])
   const ledgerRows = useMemo(
     () => buildLedgerRows(ledgerUpgrades, effectContext, locale, upgradePresentations),
@@ -60,13 +65,11 @@ export function useChampionDetailDerived(detail: ChampionDetail | null, locale: 
     () =>
       buildUpgradeSectionBadges({
         detail,
-        spotlightUpgrades,
-        ledgerRows,
-        visibleLedgerRows,
+        specializationColumns,
         locale,
         t,
       }),
-    [detail, ledgerRows, locale, spotlightUpgrades, t, visibleLedgerRows],
+    [detail, locale, specializationColumns, t],
   )
   const featSectionBadges = useMemo(
     () => buildFeatSectionBadges({ detail, availableFeatCount, locale, t }),
@@ -82,6 +85,7 @@ export function useChampionDetailDerived(detail: ChampionDetail | null, locale: 
     effectContext,
     upgradePresentations,
     spotlightUpgrades,
+    specializationColumns,
     ledgerRows,
     ledgerFilterOptions,
     activeLedgerFilterKeySet,

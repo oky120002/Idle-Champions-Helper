@@ -12,8 +12,8 @@ import type {
   DetailSectionLink,
   EffectContext,
   LedgerUpgradeRow,
+  SpecializationUpgradeColumn,
   UpgradeCategoryMeta,
-  UpgradePresentation,
 } from './types'
 
 interface DetailSectionPanelsProps {
@@ -25,8 +25,7 @@ interface DetailSectionPanelsProps {
   upgradeSectionBadges: DetailSectionBadge[]
   featSectionBadges: DetailSectionBadge[]
   overviewFields: DetailFieldProps[]
-  spotlightUpgrades: ChampionDetail['upgrades']
-  upgradePresentations: Map<string, UpgradePresentation>
+  specializationColumns: SpecializationUpgradeColumn[]
   specializationGraphicsById: Map<string, ChampionSpecializationGraphic>
   ledgerRows: LedgerUpgradeRow[]
   ledgerFilterOptions: Array<UpgradeCategoryMeta & { count: number }>
@@ -45,7 +44,21 @@ export function DetailSectionPanels(props: DetailSectionPanelsProps) {
   if (props.activeSectionId === 'abilities') {
     return (
       <div className="champion-detail-content">
-        <DetailCombatSection detail={props.detail} locale={props.locale} t={props.t} />
+        <DetailCombatSection
+          detail={props.detail}
+          locale={props.locale}
+          t={props.t}
+          ledgerRows={props.ledgerRows}
+          ledgerFilterOptions={props.ledgerFilterOptions}
+          activeLedgerFilterKeySet={props.activeLedgerFilterKeySet}
+          visibleLedgerRows={props.visibleLedgerRows}
+          hiddenLedgerSummary={props.hiddenLedgerSummary}
+          hasCustomLedgerFilterState={props.hasCustomLedgerFilterState}
+          isShowingAllLedgerTypes={props.isShowingAllLedgerTypes}
+          toggleLedgerFilter={props.toggleLedgerFilter}
+          resetLedgerFilters={props.resetLedgerFilters}
+          enableAllLedgerFilters={props.enableAllLedgerFilters}
+        />
       </div>
     )
   }
@@ -122,21 +135,9 @@ export function DetailSectionPanels(props: DetailSectionPanelsProps) {
       <DetailUpgradeSection
         locale={props.locale}
         t={props.t}
-        effectContext={props.effectContext}
         upgradeSectionBadges={props.upgradeSectionBadges}
-        spotlightUpgrades={props.spotlightUpgrades}
-        upgradePresentations={props.upgradePresentations}
+        specializationColumns={props.specializationColumns}
         specializationGraphicsById={props.specializationGraphicsById}
-        ledgerRows={props.ledgerRows}
-        ledgerFilterOptions={props.ledgerFilterOptions}
-        activeLedgerFilterKeySet={props.activeLedgerFilterKeySet}
-        visibleLedgerRows={props.visibleLedgerRows}
-        hiddenLedgerSummary={props.hiddenLedgerSummary}
-        hasCustomLedgerFilterState={props.hasCustomLedgerFilterState}
-        isShowingAllLedgerTypes={props.isShowingAllLedgerTypes}
-        toggleLedgerFilter={props.toggleLedgerFilter}
-        resetLedgerFilters={props.resetLedgerFilters}
-        enableAllLedgerFilters={props.enableAllLedgerFilters}
       />
     </div>
   )

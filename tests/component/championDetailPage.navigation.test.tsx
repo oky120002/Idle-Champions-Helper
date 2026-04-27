@@ -37,13 +37,13 @@ afterEach(() => {
 })
 
 describe('ChampionDetailPage navigation', () => {
-  it('默认高亮 Specializations tab', async () => {
+  it('默认高亮专精 tab', async () => {
     mockedLoadChampionDetail.mockResolvedValue(detailFixture)
 
     renderChampionDetailPage()
 
-    const specializationsTab = await screen.findByRole('tab', { name: 'Specializations' })
-    const abilitiesTab = await screen.findByRole('tab', { name: 'Abilities' })
+    const specializationsTab = await screen.findByRole('tab', { name: '专精' })
+    const abilitiesTab = await screen.findByRole('tab', { name: '能力' })
 
     expect(specializationsTab).toHaveAttribute('aria-selected', 'true')
     expect(abilitiesTab).toHaveAttribute('aria-selected', 'false')
@@ -58,10 +58,10 @@ describe('ChampionDetailPage navigation', () => {
 
     renderChampionDetailPage()
 
-    fireEvent.click(await screen.findByRole('tab', { name: 'Feats' }))
+    fireEvent.click(await screen.findByRole('tab', { name: '天赋' }))
 
-    expect(screen.getByRole('tab', { name: 'Feats' })).toHaveAttribute('aria-selected', 'true')
-    expect(screen.getByRole('tab', { name: 'Specializations' })).toHaveAttribute('aria-selected', 'false')
+    expect(screen.getByRole('tab', { name: '天赋' })).toHaveAttribute('aria-selected', 'true')
+    expect(screen.getByRole('tab', { name: '专精' })).toHaveAttribute('aria-selected', 'false')
     await waitFor(() => {
       expect(window.location.hash).toBe('#/champions/7#section-feats')
     })
@@ -74,10 +74,10 @@ describe('ChampionDetailPage navigation', () => {
     renderChampionDetailPageAt('/champions/7#section-upgrades')
 
     await waitFor(() => {
-      expect(screen.getByRole('tab', { name: 'Specializations' })).toHaveAttribute('aria-selected', 'true')
+      expect(screen.getByRole('tab', { name: '能力' })).toHaveAttribute('aria-selected', 'true')
     })
     await waitFor(() => {
-      expect(window.location.hash).toBe('#/champions/7#section-specializations')
+      expect(window.location.hash).toBe('#/champions/7#section-abilities')
     })
   })
 
@@ -103,11 +103,11 @@ describe('ChampionDetailPage navigation', () => {
       'story-misc': 920,
     })
 
-    fireEvent.click(screen.getByRole('tab', { name: 'Feats' }))
+    fireEvent.click(screen.getByRole('tab', { name: '天赋' }))
     fireEvent.scroll(contentScroll)
 
     await waitFor(() => {
-      expect(screen.getByRole('tab', { name: 'Feats' })).toHaveAttribute('aria-selected', 'true')
+      expect(screen.getByRole('tab', { name: '天赋' })).toHaveAttribute('aria-selected', 'true')
     })
 
     await waitFor(() => {

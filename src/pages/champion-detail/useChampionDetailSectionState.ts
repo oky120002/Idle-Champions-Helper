@@ -40,13 +40,13 @@ export function useChampionDetailSectionState(
   }, [detail?.summary.id])
 
   const sectionLinks: DetailSectionLink[] = [
-    { id: 'specializations', label: 'Specializations' },
-    { id: 'abilities', label: 'Abilities' },
-    { id: 'loot', label: 'Loot' },
-    { id: 'legendary', label: 'Legendary' },
-    { id: 'feats', label: 'Feats' },
-    { id: 'skins', label: 'Skins' },
-    { id: 'story-misc', label: 'Story & Misc' },
+    { id: 'specializations', label: t({ zh: '专精', en: 'Specializations' }) },
+    { id: 'abilities', label: t({ zh: '能力', en: 'Abilities' }) },
+    { id: 'loot', label: t({ zh: '装备', en: 'Loot' }) },
+    { id: 'legendary', label: t({ zh: '传奇', en: 'Legendary' }) },
+    { id: 'feats', label: t({ zh: '天赋', en: 'Feats' }) },
+    { id: 'skins', label: t({ zh: '皮肤', en: 'Skins' }) },
+    { id: 'story-misc', label: t({ zh: '故事与杂项', en: 'Story & Misc' }) },
   ]
 
   const activeSectionIndex = Math.max(

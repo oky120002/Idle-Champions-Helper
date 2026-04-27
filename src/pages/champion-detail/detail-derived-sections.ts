@@ -5,7 +5,13 @@ import { buildUpgradeCategoryMeta, buildUpgradePresentation } from './effect-mod
 import { buildOverviewPropertyFields } from './summary-model'
 import { isJsonObject } from './detail-json'
 import { formatDateText, formatNumber, formatTimestamp } from './detail-value-formatters'
-import type { DetailFieldProps, EffectContext, LedgerUpgradeRow, UpgradeCategoryMeta } from './types'
+import type {
+  DetailFieldProps,
+  EffectContext,
+  LedgerUpgradeRow,
+  SpecializationUpgradeColumn,
+  UpgradeCategoryMeta,
+} from './types'
 
 export function buildSpotlightUpgrades(detail: ChampionDetail | null): ChampionUpgradeDetail[] {
   if (!detail) {
@@ -97,29 +103,25 @@ export function buildLedgerFilterOptions(
 
 export function buildUpgradeSectionBadges(options: {
   detail: ChampionDetail | null
-  spotlightUpgrades: ChampionUpgradeDetail[]
-  ledgerRows: LedgerUpgradeRow[]
-  visibleLedgerRows: LedgerUpgradeRow[]
+  specializationColumns: SpecializationUpgradeColumn[]
   locale: AppLocale
   t: (text: { zh: string; en: string }) => string
 }) {
-  const { detail, spotlightUpgrades, ledgerRows, visibleLedgerRows, locale, t } = options
+  const { detail, specializationColumns = [], locale, t } = options
+  const linkedEntryCount = specializationColumns.reduce((total, column) => total + column.entries.length, 0)
 
   return [
     {
-      label: t({ zh: '全部升级', en: 'All' }),
+      label: t({ zh: '专精', en: 'Specs' }),
+      value: formatNumber(specializationColumns.length, locale),
+    },
+    {
+      label: t({ zh: '关联升级', en: 'Linked' }),
+      value: formatNumber(linkedEntryCount, locale),
+    },
+    {
+      label: t({ zh: '全部升级', en: 'All upgrades' }),
       value: formatNumber(detail?.upgrades.length ?? 0, locale),
-    },
-    {
-      label: t({ zh: '重点升级', en: 'Spotlight' }),
-      value: formatNumber(spotlightUpgrades.length, locale),
-    },
-    {
-      label: t({ zh: '数值里程碑', en: 'Ledger' }),
-      value:
-        ledgerRows.length > 0
-          ? `${formatNumber(visibleLedgerRows.length, locale)} / ${formatNumber(ledgerRows.length, locale)}`
-          : formatNumber(ledgerRows.length, locale),
     },
   ]
 }

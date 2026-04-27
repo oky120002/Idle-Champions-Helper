@@ -24,8 +24,8 @@
 - [x] 6. 重构 `ChampionDetailBody` 内容区骨架：全站仍上下结构，内容区内部局部左右布局。
 - [x] 7. 重构左侧资料栏：压缩英雄身份、头像、属性、角色、来源、计数字段。
 - [x] 8. 实现 tab 状态与 hash 兼容：Specializations、Abilities、Loot、Legendary、Feats、Skins、Story & Misc。
-- [x] 9. 实现 `Specializations` tab：默认打开，专精对比 + 关键升级轨道。
-- [x] 10. 实现 `Abilities` tab：基础攻击、大招、事件升级、非专精关键能力。
+- [x] 9. 实现 `Specializations` tab：默认打开，专精对比。
+- [x] 10. 实现 `Abilities` tab：基础攻击、大招、事件升级、非专精关键能力和等级升级列表。
 - [x] 11. 实现 `Loot` tab：装备 slot、稀有度、名称、描述、效果摘要。
 - [x] 12. 实现 `Legendary` tab：按 6 个装备槽位展示传奇效果。
 - [x] 13. 实现 `Feats` tab：复用并压缩现有天赋内容。

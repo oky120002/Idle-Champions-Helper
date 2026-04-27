@@ -123,6 +123,8 @@ describe('ChampionDetailPage interactions', () => {
 
     await screen.findByRole('heading', { level: 2, name: '明斯克' })
 
+    fireEvent.click(screen.getByRole('tab', { name: '能力' }))
+
     expect(screen.getByRole('button', { name: /自身增伤/ })).toHaveAttribute('aria-pressed', 'false')
     expect(screen.getByRole('button', { name: /全队增伤/ })).toHaveAttribute('aria-pressed', 'false')
     expect(screen.getByRole('button', { name: /金币加成/ })).toHaveAttribute('aria-pressed', 'true')

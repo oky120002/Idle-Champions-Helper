@@ -15,8 +15,8 @@ import type {
   EffectContext,
   LedgerUpgradeRow,
   SkinArtworkIds,
+  SpecializationUpgradeColumn,
   UpgradeCategoryMeta,
-  UpgradePresentation,
 } from './types'
 
 interface ChampionDetailBodyProps {
@@ -31,9 +31,8 @@ interface ChampionDetailBodyProps {
   upgradeSectionBadges: DetailSectionBadge[]
   featSectionBadges: DetailSectionBadge[]
   effectContext: EffectContext
-  upgradePresentations: Map<string, UpgradePresentation>
   specializationGraphicsById: Map<string, ChampionSpecializationGraphic>
-  spotlightUpgrades: ChampionDetail['upgrades']
+  specializationColumns: SpecializationUpgradeColumn[]
   ledgerRows: LedgerUpgradeRow[]
   ledgerFilterOptions: Array<UpgradeCategoryMeta & { count: number }>
   activeLedgerFilterKeySet: Set<string>
@@ -106,8 +105,7 @@ export function ChampionDetailBody(props: ChampionDetailBodyProps) {
             upgradeSectionBadges={props.upgradeSectionBadges}
             featSectionBadges={props.featSectionBadges}
             overviewFields={props.overviewFields}
-            spotlightUpgrades={props.spotlightUpgrades}
-            upgradePresentations={props.upgradePresentations}
+            specializationColumns={props.specializationColumns}
             specializationGraphicsById={props.specializationGraphicsById}
             ledgerRows={props.ledgerRows}
             ledgerFilterOptions={props.ledgerFilterOptions}

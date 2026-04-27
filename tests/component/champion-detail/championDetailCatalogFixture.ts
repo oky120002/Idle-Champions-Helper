@@ -96,6 +96,15 @@ export const championDetailCatalogFixture: Pick<
       tipText: null,
     },
     {
+      id: '116', requiredLevel: 80,
+      requiredUpgradeId: null,
+      name: { original: 'Go for the Eyes!', display: '直取双眼！' },
+      upgradeType: 'unlock_ultimate',
+      effectReference: 'set_ultimate_attack,14',
+      effectDefinition: null, staticDpsMult: null, defaultEnabled: true,
+      specializationName: null, specializationDescription: null, specializationGraphicId: null, tipText: null,
+    },
+    {
       id: '107',
       requiredLevel: 20,
       requiredUpgradeId: null,
