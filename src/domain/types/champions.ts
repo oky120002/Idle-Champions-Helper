@@ -136,12 +136,32 @@ export interface ChampionSkinDetail {
   availabilities: JsonValue | null
 }
 
+export interface ChampionLootDetail {
+  id: string
+  name: LocalizedText
+  description: LocalizedText | null
+  graphicId: string | null
+  slotId: number | null
+  rarity: string | null
+  effects: JsonValue
+  allowGoldenEpic: boolean
+  isGoldenEpic: boolean
+}
+
+export interface ChampionLegendaryEffectDetail {
+  id: string
+  slotId: number
+  effects: JsonValue
+}
+
 export interface ChampionDetailRaw {
   hero: ChampionRawSnapshotPair
   attacks: ChampionRawEntry[]
   upgrades: ChampionRawEntry[]
   feats: ChampionRawEntry[]
   skins: ChampionRawEntry[]
+  loot: ChampionRawEntry[]
+  legendaryEffects: ChampionRawEntry[]
 }
 
 export interface ChampionDetail {
@@ -172,6 +192,8 @@ export interface ChampionDetail {
   upgrades: ChampionUpgradeDetail[]
   feats: ChampionFeatDetail[]
   skins: ChampionSkinDetail[]
+  loot: ChampionLootDetail[]
+  legendaryEffects: ChampionLegendaryEffectDetail[]
   raw: ChampionDetailRaw
 }
 

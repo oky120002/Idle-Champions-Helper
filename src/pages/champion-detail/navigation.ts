@@ -1,6 +1,15 @@
 import type { DetailSectionId } from './types'
 import { DETAIL_HASH_PREFIX, DETAIL_SECTION_IDS } from './types'
 
+const LEGACY_SECTION_ID_MAP: Record<string, DetailSectionId> = {
+  overview: 'specializations',
+  upgrades: 'specializations',
+  combat: 'abilities',
+  'character-sheet': 'story-misc',
+  feats: 'feats',
+  skins: 'skins',
+}
+
 export function isDetailSectionId(value: string): value is DetailSectionId {
   return DETAIL_SECTION_IDS.includes(value as DetailSectionId)
 }
@@ -10,6 +19,10 @@ export function resolveSectionIdFromHashValue(hashValue: string): DetailSectionI
   const normalizedSectionId = normalizedHash.startsWith(DETAIL_HASH_PREFIX)
     ? normalizedHash.slice(DETAIL_HASH_PREFIX.length)
     : normalizedHash
+
+  if (LEGACY_SECTION_ID_MAP[normalizedSectionId]) {
+    return LEGACY_SECTION_ID_MAP[normalizedSectionId]
+  }
 
   return isDetailSectionId(normalizedSectionId) ? normalizedSectionId : null
 }

@@ -14,7 +14,7 @@ type DetailCombatSectionProps = {
 export function DetailCombatSection({ detail, locale, t }: DetailCombatSectionProps) {
   return (
     <SurfaceCard className="detail-section detail-section--combat detail-section--headerless">
-      <div id="combat" className="detail-section-anchor" />
+      <div id="abilities" className="detail-section-anchor" />
       <DetailSectionHeader
         eyebrow={t({ zh: '战斗', en: 'Combat' })}
         title={t({ zh: '基础数值、普攻、大招与活动升级', en: 'Base stats, attacks, ultimate, and event upgrades' })}
