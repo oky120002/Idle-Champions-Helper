@@ -117,6 +117,7 @@ export interface EffectDescriptor {
   targetHint: string | null
   summary: string
   detail: string | null
+  isRawEffectKindFallback: boolean
 }
 
 export interface EffectDefinitionPresentation {

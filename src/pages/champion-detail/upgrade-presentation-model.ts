@@ -48,14 +48,15 @@ export function buildEffectDefinitionPresentation(
       return payload ? describeEffectPayload(payload, effectContext) : null
     })
     .filter((value): value is EffectDescriptor => Boolean(value))
+  const readableDescriptors = descriptors.filter((descriptor) => !descriptor.isRawEffectKindFallback)
   const primaryPayload =
     effectKeys.length > 0 && typeof effectKeys[0]?.effect_string === 'string'
       ? parseEffectPayload(effectKeys[0].effect_string)
       : null
   const primaryDescription = primaryPayload && description ? resolveEffectDescription(description, primaryPayload, effectContext) : description
-  const summary = primaryDescription || descriptors[0]?.summary || null
-  const detail = descriptors[0]?.detail ?? null
-  const bullets = descriptors
+  const summary = primaryDescription || readableDescriptors[0]?.summary || null
+  const detail = readableDescriptors[0]?.detail ?? null
+  const bullets = readableDescriptors
     .map((descriptor) => descriptor.summary)
     .filter((item, index, list) => item !== summary && list.indexOf(item) === index)
 
@@ -106,6 +107,8 @@ export function buildUpgradePresentation(
 ): UpgradePresentation {
   const effectPayload = upgrade.effectReference ? parseEffectPayload(upgrade.effectReference) : null
   const validEffectDescriptor = effectPayload ? describeEffectPayload(effectPayload, effectContext) : null
+  const readableEffectDescriptor =
+    validEffectDescriptor && !validEffectDescriptor.isRawEffectKindFallback ? validEffectDescriptor : null
   const effectDefinition = buildEffectDefinitionPresentation(upgrade.effectDefinition, effectContext)
   const typeLabel =
     upgrade.upgradeType
@@ -138,7 +141,7 @@ export function buildUpgradePresentation(
   })()
   const summary =
     effectDefinition.summary ??
-    validEffectDescriptor?.summary ??
+    readableEffectDescriptor?.summary ??
     (upgrade.specializationDescription ? getPrimaryLocalizedText(upgrade.specializationDescription, effectContext.locale) : null) ??
     (upgrade.tipText ? getPrimaryLocalizedText(upgrade.tipText, effectContext.locale) : null)
   const prerequisiteLabel = upgrade.requiredUpgradeId
@@ -154,7 +157,7 @@ export function buildUpgradePresentation(
     upgrade.tipText ? getPrimaryLocalizedText(upgrade.tipText, effectContext.locale) : null,
     effectDefinition.detail,
     ...effectDefinition.bullets,
-    validEffectDescriptor?.detail ?? null,
+    readableEffectDescriptor?.detail ?? null,
   ].filter(
     (value, index, list): value is string => Boolean(value) && list.indexOf(value as string) === index && value !== summary,
   )

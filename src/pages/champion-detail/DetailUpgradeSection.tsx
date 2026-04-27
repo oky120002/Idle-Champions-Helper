@@ -97,6 +97,7 @@ function SpecializationColumnEntryCard({
       <div className="specialization-column__entry-topbar">
         <div className="specialization-column__entry-topline">
           <span className="upgrade-card__level-pill">{formatUpgradeLevel(entry, locale)}</span>
+          <h3 className="specialization-column__entry-title">{entry.presentation.title}</h3>
           {typeBadge ? <span className={typeBadge.className}>{typeBadge.label}</span> : null}
         </div>
         {iconGraphic ? (
@@ -105,9 +106,6 @@ function SpecializationColumnEntryCard({
             alt={locale === 'zh-CN' ? `${entry.presentation.title}图标` : `${entry.presentation.title} icon`}
           />
         ) : null}
-      </div>
-      <div className="specialization-column__entry-heading">
-        <h3 className="specialization-column__entry-title">{entry.presentation.title}</h3>
       </div>
       {entry.presentation.summary ? (
         <p className="specialization-column__entry-summary">{entry.presentation.summary}</p>
