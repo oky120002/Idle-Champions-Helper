@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "81",
     "name": {
@@ -51,7 +51,7 @@
   },
   "dateAvailable": "2021-06-09 13:00:00",
   "lastReworkDate": "2021-06-09 13:00:00",
-  "popularity": 51,
+  "popularity": 47,
   "baseCost": "15000000000000000000",
   "baseDamage": "2500000000000",
   "baseHealth": "403",
@@ -3892,6 +3892,630 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "1921",
+      "name": {
+        "original": "Chipped Blade",
+        "display": "有缺口的剑"
+      },
+      "description": {
+        "original": "Works just as well.",
+        "display": "还是能用的。"
+      },
+      "graphicId": "10636",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1922",
+      "name": {
+        "original": "Found Blade",
+        "display": "找来的剑"
+      },
+      "description": {
+        "original": "Any sword in a storm, right?",
+        "display": "关键时刻，有剑就行，对吧？"
+      },
+      "graphicId": "10636",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1923",
+      "name": {
+        "original": "Solid Sword",
+        "display": "硬剑"
+      },
+      "description": {
+        "original": "I use it to defend my home and my family.",
+        "display": "我用它来保护家园和家人。"
+      },
+      "graphicId": "10637",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1924",
+      "name": {
+        "original": "Neverending Stormblade",
+        "display": "无尽风暴之剑"
+      },
+      "description": {
+        "original": "Vengeance comes but once.",
+        "display": "复仇的机会只有一次。"
+      },
+      "graphicId": "10638",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "1925",
+      "name": {
+        "original": "Woodworking Gloves",
+        "display": "木工手套"
+      },
+      "description": {
+        "original": "They double as good dueling gauntlets.",
+        "display": "作为决斗护臂的效果一样好。"
+      },
+      "graphicId": "10633",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1926",
+      "name": {
+        "original": "Training Gauntlets",
+        "display": "训练护臂"
+      },
+      "description": {
+        "original": "Protects against errant blade knicks.",
+        "display": "能防住砍偏的剑。"
+      },
+      "graphicId": "10633",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1927",
+      "name": {
+        "original": "Battle-Ready Gear",
+        "display": "战备装束"
+      },
+      "description": {
+        "original": "I heard there's trouble! Where's the trouble?",
+        "display": "我听说有麻烦了！麻烦在那里？"
+      },
+      "graphicId": "10634",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1928",
+      "name": {
+        "original": "Ruby-Encrusted Gauntlets",
+        "display": "宝石镶嵌护臂"
+      },
+      "description": {
+        "original": "I got them for the next time we meet the Blackstaff!",
+        "display": "它是我为我们下次遇上黑杖时准备的！"
+      },
+      "graphicId": "10635",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1929",
+      "name": {
+        "original": "Metal Ring",
+        "display": "金属戒指"
+      },
+      "description": {
+        "original": "I carry them to help patch my armor during long rests.",
+        "display": "我带着它是为了在长时间休息时修补盔甲。"
+      },
+      "graphicId": "10639",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "health_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1930",
+      "name": {
+        "original": "Simple Ring",
+        "display": "简易戒指"
+      },
+      "description": {
+        "original": "A simple circle, yet it means so much to so many.",
+        "display": "一个简单的圆环，但对于很多人来说依然意义深远。"
+      },
+      "graphicId": "10639",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "health_mult,30"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1931",
+      "name": {
+        "original": "Tarnished Ring",
+        "display": "失去光泽的戒指"
+      },
+      "description": {
+        "original": "I won't stop until I have vengeance for what I lost.",
+        "display": "在为失去的一切复仇之前，我是不会停下来的。"
+      },
+      "graphicId": "10640",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "health_mult,50"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1932",
+      "name": {
+        "original": "Wedding Band",
+        "display": "婚戒"
+      },
+      "description": {
+        "original": "I'll always hold you close to my heart, my love.",
+        "display": "我会一直把你拥在我的心口，亲爱的。"
+      },
+      "graphicId": "10641",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "health_mult,100"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1933",
+      "name": {
+        "original": "Whittling Tools",
+        "display": "修削工具"
+      },
+      "description": {
+        "original": "It's a wonderful hobby.",
+        "display": "这是个不错的爱好。"
+      },
+      "graphicId": "10645",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,13743"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1934",
+      "name": {
+        "original": "Empty Canvas",
+        "display": "空画布"
+      },
+      "description": {
+        "original": "I can already see it in my head.",
+        "display": "我已经在脑子里都画好了。"
+      },
+      "graphicId": "10645",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,13743"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1935",
+      "name": {
+        "original": "Tiwaz Rune Carving",
+        "display": "提瓦兹符文刻印"
+      },
+      "description": {
+        "original": "Let's see what it turns into.",
+        "display": "我们来看看它会变成什么。"
+      },
+      "graphicId": "10646",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,13743"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1936",
+      "name": {
+        "original": "Carving of the Just",
+        "display": "正义刻印"
+      },
+      "description": {
+        "original": "The rune will help me reconnect with Tyr...eventually.",
+        "display": "这个符文会帮我与提尔重新建立连接......总会成功的。"
+      },
+      "graphicId": "10647",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,13743"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1937",
+      "name": {
+        "original": "Training Shield",
+        "display": "训练用盾"
+      },
+      "description": {
+        "original": "Just hold still. Don't flinch!",
+        "display": "拿稳了。不要退缩！"
+      },
+      "graphicId": "10642",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,13748"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1938",
+      "name": {
+        "original": "Tiwaz Shield",
+        "display": "提瓦兹盾牌"
+      },
+      "description": {
+        "original": "Tyr protect me. Let's do this.",
+        "display": "提尔会保护我的。我们上吧。"
+      },
+      "graphicId": "10642",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,13748"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1939",
+      "name": {
+        "original": "Shield of Hope",
+        "display": "希望之盾"
+      },
+      "description": {
+        "original": "For the longest time, I held on to hope that I'd have my vengeance. Now what?",
+        "display": "在很长的一段时间里，我一直希望我能复仇。但现在呢？"
+      },
+      "graphicId": "10643",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,13748"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1940",
+      "name": {
+        "original": "Psychomancer Shield",
+        "display": "精神术者之盾"
+      },
+      "description": {
+        "original": "Do you know how long I had to practice to get it to come back?",
+        "display": "你知道我练了多久才能让它飞回来吗？"
+      },
+      "graphicId": "10644",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,13748"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1941",
+      "name": {
+        "original": "Soiled Cloak",
+        "display": "弄脏的斗篷"
+      },
+      "description": {
+        "original": "Today was a day. Anyone have prestidigitation prepared?",
+        "display": "今天已经过去了。有人准备了幻术吗？"
+      },
+      "graphicId": "10630",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,13745"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1942",
+      "name": {
+        "original": "Stained Cloak",
+        "display": "污浊的斗篷"
+      },
+      "description": {
+        "original": "I let my inner bear out, oops?",
+        "display": "我不小心把内心的熊给放出来了？"
+      },
+      "graphicId": "10630",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,13745"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1943",
+      "name": {
+        "original": "Bloodhunter Cloak",
+        "display": "血猎手斗篷"
+      },
+      "description": {
+        "original": "Luckily, stains won't show on this one",
+        "display": "幸好污渍在这上面不太明显"
+      },
+      "graphicId": "10631",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,13745"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1944",
+      "name": {
+        "original": "Astorio's Elegant Cloak",
+        "display": "阿斯托里奥的优雅斗篷"
+      },
+      "description": {
+        "original": "Elminster said it looked 'dashing'!",
+        "display": "艾尔明斯特说它看起来很“时髦”！"
+      },
+      "graphicId": "10632",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,13745"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "55",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "male"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Male Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "human"
+            }
+          ],
+          "description": "Increases the damage of all Human Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "37",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "int",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a INT score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "31",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "dex",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a DEX score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "106",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "neutral"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a NEUTRAL alignment"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -4058,7 +4682,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 51,
+        "popularity": 47,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -4264,7 +4888,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 51,
+        "popularity": 47,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -8378,6 +9002,1092 @@
             "availabilities": {
               "in_flash_sales": true
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "1921",
+        "snapshots": {
+          "original": {
+            "id": 1921,
+            "name": "Chipped Blade",
+            "description": "Works just as well.",
+            "graphic_id": 10636,
+            "hero_id": 81,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1921,
+            "name": "有缺口的剑",
+            "description": "还是能用的。",
+            "graphic_id": 10636,
+            "hero_id": 81,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1922",
+        "snapshots": {
+          "original": {
+            "id": 1922,
+            "name": "Found Blade",
+            "description": "Any sword in a storm, right?",
+            "graphic_id": 10636,
+            "hero_id": 81,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1922,
+            "name": "找来的剑",
+            "description": "关键时刻，有剑就行，对吧？",
+            "graphic_id": 10636,
+            "hero_id": 81,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1923",
+        "snapshots": {
+          "original": {
+            "id": 1923,
+            "name": "Solid Sword",
+            "description": "I use it to defend my home and my family.",
+            "graphic_id": 10637,
+            "hero_id": 81,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1923,
+            "name": "硬剑",
+            "description": "我用它来保护家园和家人。",
+            "graphic_id": 10637,
+            "hero_id": 81,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1924",
+        "snapshots": {
+          "original": {
+            "id": 1924,
+            "name": "Neverending Stormblade",
+            "description": "Vengeance comes but once.",
+            "graphic_id": 10638,
+            "hero_id": 81,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1924,
+            "name": "无尽风暴之剑",
+            "description": "复仇的机会只有一次。",
+            "graphic_id": 10638,
+            "hero_id": 81,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1925",
+        "snapshots": {
+          "original": {
+            "id": 1925,
+            "name": "Woodworking Gloves",
+            "description": "They double as good dueling gauntlets.",
+            "graphic_id": 10633,
+            "hero_id": 81,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1925,
+            "name": "木工手套",
+            "description": "作为决斗护臂的效果一样好。",
+            "graphic_id": 10633,
+            "hero_id": 81,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1926",
+        "snapshots": {
+          "original": {
+            "id": 1926,
+            "name": "Training Gauntlets",
+            "description": "Protects against errant blade knicks.",
+            "graphic_id": 10633,
+            "hero_id": 81,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1926,
+            "name": "训练护臂",
+            "description": "能防住砍偏的剑。",
+            "graphic_id": 10633,
+            "hero_id": 81,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1927",
+        "snapshots": {
+          "original": {
+            "id": 1927,
+            "name": "Battle-Ready Gear",
+            "description": "I heard there's trouble! Where's the trouble?",
+            "graphic_id": 10634,
+            "hero_id": 81,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1927,
+            "name": "战备装束",
+            "description": "我听说有麻烦了！麻烦在那里？",
+            "graphic_id": 10634,
+            "hero_id": 81,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1928",
+        "snapshots": {
+          "original": {
+            "id": 1928,
+            "name": "Ruby-Encrusted Gauntlets",
+            "description": "I got them for the next time we meet the Blackstaff!",
+            "graphic_id": 10635,
+            "hero_id": 81,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1928,
+            "name": "宝石镶嵌护臂",
+            "description": "它是我为我们下次遇上黑杖时准备的！",
+            "graphic_id": 10635,
+            "hero_id": 81,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1929",
+        "snapshots": {
+          "original": {
+            "id": 1929,
+            "name": "Metal Ring",
+            "description": "I carry them to help patch my armor during long rests.",
+            "graphic_id": 10639,
+            "hero_id": 81,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "health_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1929,
+            "name": "金属戒指",
+            "description": "我带着它是为了在长时间休息时修补盔甲。",
+            "graphic_id": 10639,
+            "hero_id": 81,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "health_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1930",
+        "snapshots": {
+          "original": {
+            "id": 1930,
+            "name": "Simple Ring",
+            "description": "A simple circle, yet it means so much to so many.",
+            "graphic_id": 10639,
+            "hero_id": 81,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "health_mult,30"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1930,
+            "name": "简易戒指",
+            "description": "一个简单的圆环，但对于很多人来说依然意义深远。",
+            "graphic_id": 10639,
+            "hero_id": 81,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "health_mult,30"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1931",
+        "snapshots": {
+          "original": {
+            "id": 1931,
+            "name": "Tarnished Ring",
+            "description": "I won't stop until I have vengeance for what I lost.",
+            "graphic_id": 10640,
+            "hero_id": 81,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "health_mult,50"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1931,
+            "name": "失去光泽的戒指",
+            "description": "在为失去的一切复仇之前，我是不会停下来的。",
+            "graphic_id": 10640,
+            "hero_id": 81,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "health_mult,50"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1932",
+        "snapshots": {
+          "original": {
+            "id": 1932,
+            "name": "Wedding Band",
+            "description": "I'll always hold you close to my heart, my love.",
+            "graphic_id": 10641,
+            "hero_id": 81,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "health_mult,100"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1932,
+            "name": "婚戒",
+            "description": "我会一直把你拥在我的心口，亲爱的。",
+            "graphic_id": 10641,
+            "hero_id": 81,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "health_mult,100"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1933",
+        "snapshots": {
+          "original": {
+            "id": 1933,
+            "name": "Whittling Tools",
+            "description": "It's a wonderful hobby.",
+            "graphic_id": 10645,
+            "hero_id": 81,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,13743"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1933,
+            "name": "修削工具",
+            "description": "这是个不错的爱好。",
+            "graphic_id": 10645,
+            "hero_id": 81,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,13743"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1934",
+        "snapshots": {
+          "original": {
+            "id": 1934,
+            "name": "Empty Canvas",
+            "description": "I can already see it in my head.",
+            "graphic_id": 10645,
+            "hero_id": 81,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,13743"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1934,
+            "name": "空画布",
+            "description": "我已经在脑子里都画好了。",
+            "graphic_id": 10645,
+            "hero_id": 81,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,13743"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1935",
+        "snapshots": {
+          "original": {
+            "id": 1935,
+            "name": "Tiwaz Rune Carving",
+            "description": "Let's see what it turns into.",
+            "graphic_id": 10646,
+            "hero_id": 81,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,13743"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1935,
+            "name": "提瓦兹符文刻印",
+            "description": "我们来看看它会变成什么。",
+            "graphic_id": 10646,
+            "hero_id": 81,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,13743"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1936",
+        "snapshots": {
+          "original": {
+            "id": 1936,
+            "name": "Carving of the Just",
+            "description": "The rune will help me reconnect with Tyr...eventually.",
+            "graphic_id": 10647,
+            "hero_id": 81,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,13743"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1936,
+            "name": "正义刻印",
+            "description": "这个符文会帮我与提尔重新建立连接......总会成功的。",
+            "graphic_id": 10647,
+            "hero_id": 81,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,13743"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1937",
+        "snapshots": {
+          "original": {
+            "id": 1937,
+            "name": "Training Shield",
+            "description": "Just hold still. Don't flinch!",
+            "graphic_id": 10642,
+            "hero_id": 81,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,13748"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1937,
+            "name": "训练用盾",
+            "description": "拿稳了。不要退缩！",
+            "graphic_id": 10642,
+            "hero_id": 81,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,13748"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1938",
+        "snapshots": {
+          "original": {
+            "id": 1938,
+            "name": "Tiwaz Shield",
+            "description": "Tyr protect me. Let's do this.",
+            "graphic_id": 10642,
+            "hero_id": 81,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,13748"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1938,
+            "name": "提瓦兹盾牌",
+            "description": "提尔会保护我的。我们上吧。",
+            "graphic_id": 10642,
+            "hero_id": 81,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,13748"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1939",
+        "snapshots": {
+          "original": {
+            "id": 1939,
+            "name": "Shield of Hope",
+            "description": "For the longest time, I held on to hope that I'd have my vengeance. Now what?",
+            "graphic_id": 10643,
+            "hero_id": 81,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,13748"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1939,
+            "name": "希望之盾",
+            "description": "在很长的一段时间里，我一直希望我能复仇。但现在呢？",
+            "graphic_id": 10643,
+            "hero_id": 81,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,13748"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1940",
+        "snapshots": {
+          "original": {
+            "id": 1940,
+            "name": "Psychomancer Shield",
+            "description": "Do you know how long I had to practice to get it to come back?",
+            "graphic_id": 10644,
+            "hero_id": 81,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,13748"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1940,
+            "name": "精神术者之盾",
+            "description": "你知道我练了多久才能让它飞回来吗？",
+            "graphic_id": 10644,
+            "hero_id": 81,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,13748"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1941",
+        "snapshots": {
+          "original": {
+            "id": 1941,
+            "name": "Soiled Cloak",
+            "description": "Today was a day. Anyone have prestidigitation prepared?",
+            "graphic_id": 10630,
+            "hero_id": 81,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,13745"
+              }
+            ]
+          },
+          "display": {
+            "id": 1941,
+            "name": "弄脏的斗篷",
+            "description": "今天已经过去了。有人准备了幻术吗？",
+            "graphic_id": 10630,
+            "hero_id": 81,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,13745"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1942",
+        "snapshots": {
+          "original": {
+            "id": 1942,
+            "name": "Stained Cloak",
+            "description": "I let my inner bear out, oops?",
+            "graphic_id": 10630,
+            "hero_id": 81,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,13745"
+              }
+            ]
+          },
+          "display": {
+            "id": 1942,
+            "name": "污浊的斗篷",
+            "description": "我不小心把内心的熊给放出来了？",
+            "graphic_id": 10630,
+            "hero_id": 81,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,13745"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1943",
+        "snapshots": {
+          "original": {
+            "id": 1943,
+            "name": "Bloodhunter Cloak",
+            "description": "Luckily, stains won't show on this one",
+            "graphic_id": 10631,
+            "hero_id": 81,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,13745"
+              }
+            ]
+          },
+          "display": {
+            "id": 1943,
+            "name": "血猎手斗篷",
+            "description": "幸好污渍在这上面不太明显",
+            "graphic_id": 10631,
+            "hero_id": 81,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,13745"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1944",
+        "snapshots": {
+          "original": {
+            "id": 1944,
+            "name": "Astorio's Elegant Cloak",
+            "description": "Elminster said it looked 'dashing'!",
+            "graphic_id": 10632,
+            "hero_id": 81,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,13745"
+              }
+            ]
+          },
+          "display": {
+            "id": 1944,
+            "name": "阿斯托里奥的优雅斗篷",
+            "description": "艾尔明斯特说它看起来很“时髦”！",
+            "graphic_id": 10632,
+            "hero_id": 81,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,13745"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "55",
+        "snapshots": {
+          "original": {
+            "id": 55,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Male Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 55,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "阵型中每有一位男性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "5",
+        "snapshots": {
+          "original": {
+            "id": 5,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "Increases the damage of all Human Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 5,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "使所有人类勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "37",
+        "snapshots": {
+          "original": {
+            "id": 37,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "int",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a INT score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 37,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "int",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有智力大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "31",
+        "snapshots": {
+          "original": {
+            "id": 31,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "dex",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a DEX score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 31,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "dex",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有敏捷大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "106",
+        "snapshots": {
+          "original": {
+            "id": 106,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "neutral"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a NEUTRAL alignment"
+              }
+            ]
+          },
+          "display": {
+            "id": 106,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "neutral"
+                  }
+                ],
+                "description": "阵型中每有一位中立阵营勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

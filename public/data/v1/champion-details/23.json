@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "23",
     "name": {
@@ -3377,6 +3377,630 @@
         "cost": 1680
       },
       "availabilities": null
+    }
+  ],
+  "loot": [
+    {
+      "id": "529",
+      "name": {
+        "original": "Moldy Snacks",
+        "display": "发霉的零食"
+      },
+      "description": {
+        "original": "It's a *good* mold.",
+        "display": "“霉”好的零食。"
+      },
+      "graphicId": "2500",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,12285"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "530",
+      "name": {
+        "original": "Sad Snacks",
+        "display": "伤心的零食"
+      },
+      "description": {
+        "original": "I made them just for you.",
+        "display": "特意为你而做的。"
+      },
+      "graphicId": "2500",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,12285"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "531",
+      "name": {
+        "original": "Flavorful Snacks",
+        "display": "味浓的零食"
+      },
+      "description": {
+        "original": "No promises that the flavors are tasty.",
+        "display": "不保证味道一定是美味的哦。"
+      },
+      "graphicId": "2501",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,12285"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "532",
+      "name": {
+        "original": "Tasty Snicketty Snooks",
+        "display": "美味的小吃"
+      },
+      "description": {
+        "original": "There's barely anything that will kill you!",
+        "display": "世上已经没有任何东西可以伤害到你了！"
+      },
+      "graphicId": "2502",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,12285"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "533",
+      "name": {
+        "original": "Tattered Witch Hat",
+        "display": "破烂的女巫帽"
+      },
+      "description": {
+        "original": "'Get a new hat,' they say. No, I like this one! It's comfy!",
+        "display": "人们总是喜新厌旧。我则不同，我就爱这顶舒适的帽子！"
+      },
+      "graphicId": "2491",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,12287"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "534",
+      "name": {
+        "original": "Torn Witch Hat",
+        "display": "破损的女巫帽"
+      },
+      "description": {
+        "original": "It got caught on a bramble in Barovia.",
+        "display": "在巴洛维亚时被荆棘划破了。"
+      },
+      "graphicId": "2491",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,12287"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "535",
+      "name": {
+        "original": "Holey Witch Hat",
+        "display": "孔洞女巫帽"
+      },
+      "description": {
+        "original": "Holey, not holy! Very much not holy.",
+        "display": "是孔，不是空！你的脑子才空洞呢。"
+      },
+      "graphicId": "2492",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,12287"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "536",
+      "name": {
+        "original": "Snack-Filled Witch Hat",
+        "display": "零食女巫帽"
+      },
+      "description": {
+        "original": "What?! There's all that wasted space!",
+        "display": "啥？！不装点零食太浪费空间了！"
+      },
+      "graphicId": "2493",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,12287"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "537",
+      "name": {
+        "original": "Dirty Pot",
+        "display": "肮脏的锅"
+      },
+      "description": {
+        "original": "That's not dirt, that's Stinky!",
+        "display": "那不是脏，是恶臭！"
+      },
+      "graphicId": "2494",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "538",
+      "name": {
+        "original": "Leaking Pot",
+        "display": "漏水的锅"
+      },
+      "description": {
+        "original": "I really should patch that up someday.",
+        "display": "真的得找个机会修补下它了。"
+      },
+      "graphicId": "2494",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "539",
+      "name": {
+        "original": "Large Heavy Pot",
+        "display": "沉重的大锅"
+      },
+      "description": {
+        "original": "Dang rat's heavier now than he was when he was alive.",
+        "display": "可恶的老鼠，死了比活着时还要沉重。"
+      },
+      "graphicId": "2495",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "540",
+      "name": {
+        "original": "Polished Pot of Stinky's Ashes",
+        "display": "盛放臭臭骨灰的磨光锅"
+      },
+      "description": {
+        "original": "I miss my old cranium rat. RIP, buddy.",
+        "display": "好怀念我的头骨老鼠。安息吧，小兄弟。"
+      },
+      "graphicId": "2496",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "541",
+      "name": {
+        "original": "Assorted Garbage",
+        "display": "各种垃圾"
+      },
+      "description": {
+        "original": "Hey, there's some good stuff in there!",
+        "display": "咦，里头似乎有好东西！"
+      },
+      "graphicId": "2497",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,12288,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "542",
+      "name": {
+        "original": "Pile of Garbage",
+        "display": "一堆垃圾"
+      },
+      "description": {
+        "original": "Garbage? I'll show you garbage!",
+        "display": "垃圾？我来让你见识下真正的垃圾！"
+      },
+      "graphicId": "2497",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,12288,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "543",
+      "name": {
+        "original": "Collected Knick-Knacks",
+        "display": "收藏的小玩意"
+      },
+      "description": {
+        "original": "They're irreplacable!",
+        "display": "它们是无可取代的！"
+      },
+      "graphicId": "2498",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,12288,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "544",
+      "name": {
+        "original": "Super High Quality Garbage",
+        "display": "超高质量的垃圾"
+      },
+      "description": {
+        "original": "I can't believe nobody else wants this stuff! It's priceless!",
+        "display": "万万没想到竟然没有人懂得欣赏这东西！这可是无价之宝呀！"
+      },
+      "graphicId": "2499",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,12288,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "545",
+      "name": {
+        "original": "Dim Staff",
+        "display": "暗淡的法杖"
+      },
+      "description": {
+        "original": "I can't quite make out the runes. They look kinda magic.",
+        "display": "我不认识那些符文。感觉应该是有魔法的吧。"
+      },
+      "graphicId": "2503",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "increase_damage_monster_target_by_bud_mult,25",
+          "description": "Increases the damage of Strix while one of her Ultimates is active by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "546",
+      "name": {
+        "original": "Black Wooden Staff",
+        "display": "黑色木质法杖"
+      },
+      "description": {
+        "original": "A solid staff for someone who knows magic.",
+        "display": "适合懂得运用魔法的人使用。"
+      },
+      "graphicId": "2503",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "increase_damage_monster_target_by_bud_mult,87.5",
+          "description": "Increases the damage of Strix while one of her Ultimates is active by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "547",
+      "name": {
+        "original": "Mystical Runed Staff",
+        "display": "神秘的符文法杖"
+      },
+      "description": {
+        "original": "Do you think maybe it knows magic?",
+        "display": "你觉得它究竟有没有魔法？"
+      },
+      "graphicId": "2504",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "increase_damage_monster_target_by_bud_mult,150",
+          "description": "Increases the damage of Strix while one of her Ultimates is active by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "548",
+      "name": {
+        "original": "Polymorphing Staff of the Trash Witch",
+        "display": "垃圾女巫的变形法杖"
+      },
+      "description": {
+        "original": "I know magic!",
+        "display": "我会魔法了！"
+      },
+      "graphicId": "2505",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "increase_damage_monster_target_by_bud_mult,275",
+          "description": "Increases the damage of Strix while one of her Ultimates is active by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "549",
+      "name": {
+        "original": "Stinky Owlbear Cloak",
+        "display": "发臭的枭熊披肩"
+      },
+      "description": {
+        "original": "Stinky? I don't smell anything.",
+        "display": "有臭味吗？我没闻到呀。"
+      },
+      "graphicId": "2488",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,7"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "550",
+      "name": {
+        "original": "Short Owlbear Cloak",
+        "display": "短小的枭熊披肩"
+      },
+      "description": {
+        "original": "The hem doesn't drag along the ground. I'd rather it did.",
+        "display": "竟然不是拖地的长披肩。真是可惜了。"
+      },
+      "graphicId": "2488",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,14"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "551",
+      "name": {
+        "original": "Warm Owlbear Cloak",
+        "display": "暖和的枭熊披肩"
+      },
+      "description": {
+        "original": "Keeps me cozy in cold places.",
+        "display": "在天寒地冻的气候下为我保暖。"
+      },
+      "graphicId": "2489",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,27"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "552",
+      "name": {
+        "original": "Dark Owlbear Cloak of the Sad Sorcerer",
+        "display": "伤心术士的暗色枭熊披肩"
+      },
+      "description": {
+        "original": "I can hide within its folds if I need to.",
+        "display": "在必要时它可以把我隐匿起来。"
+      },
+      "graphicId": "2490",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,68"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Female Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "tiefling"
+            }
+          ],
+          "description": "Increases the damage of all Tiefling Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "43",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "cha",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a CHA score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "37",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "int",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a INT score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "52",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "chaotic"
+            }
+          ],
+          "description": "Increases the damage of all Chaotic Champions by $(amount)%"
+        }
+      ]
     }
   ],
   "raw": {
@@ -8510,6 +9134,1132 @@
               "item_id": "559",
               "cost": 1680
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "529",
+        "snapshots": {
+          "original": {
+            "id": 529,
+            "name": "Moldy Snacks",
+            "description": "It's a *good* mold.",
+            "graphic_id": 2500,
+            "hero_id": 23,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12285"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 529,
+            "name": "发霉的零食",
+            "description": "“霉”好的零食。",
+            "graphic_id": 2500,
+            "hero_id": 23,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12285"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "530",
+        "snapshots": {
+          "original": {
+            "id": 530,
+            "name": "Sad Snacks",
+            "description": "I made them just for you.",
+            "graphic_id": 2500,
+            "hero_id": 23,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12285"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 530,
+            "name": "伤心的零食",
+            "description": "特意为你而做的。",
+            "graphic_id": 2500,
+            "hero_id": 23,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12285"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "531",
+        "snapshots": {
+          "original": {
+            "id": 531,
+            "name": "Flavorful Snacks",
+            "description": "No promises that the flavors are tasty.",
+            "graphic_id": 2501,
+            "hero_id": 23,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12285"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 531,
+            "name": "味浓的零食",
+            "description": "不保证味道一定是美味的哦。",
+            "graphic_id": 2501,
+            "hero_id": 23,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12285"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "532",
+        "snapshots": {
+          "original": {
+            "id": 532,
+            "name": "Tasty Snicketty Snooks",
+            "description": "There's barely anything that will kill you!",
+            "graphic_id": 2502,
+            "hero_id": 23,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12285"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 532,
+            "name": "美味的小吃",
+            "description": "世上已经没有任何东西可以伤害到你了！",
+            "graphic_id": 2502,
+            "hero_id": 23,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12285"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "533",
+        "snapshots": {
+          "original": {
+            "id": 533,
+            "name": "Tattered Witch Hat",
+            "description": "'Get a new hat,' they say. No, I like this one! It's comfy!",
+            "graphic_id": 2491,
+            "hero_id": 23,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12287"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 533,
+            "name": "破烂的女巫帽",
+            "description": "人们总是喜新厌旧。我则不同，我就爱这顶舒适的帽子！",
+            "graphic_id": 2491,
+            "hero_id": 23,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12287"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "534",
+        "snapshots": {
+          "original": {
+            "id": 534,
+            "name": "Torn Witch Hat",
+            "description": "It got caught on a bramble in Barovia.",
+            "graphic_id": 2491,
+            "hero_id": 23,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12287"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 534,
+            "name": "破损的女巫帽",
+            "description": "在巴洛维亚时被荆棘划破了。",
+            "graphic_id": 2491,
+            "hero_id": 23,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12287"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "535",
+        "snapshots": {
+          "original": {
+            "id": 535,
+            "name": "Holey Witch Hat",
+            "description": "Holey, not holy! Very much not holy.",
+            "graphic_id": 2492,
+            "hero_id": 23,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12287"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 535,
+            "name": "孔洞女巫帽",
+            "description": "是孔，不是空！你的脑子才空洞呢。",
+            "graphic_id": 2492,
+            "hero_id": 23,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12287"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "536",
+        "snapshots": {
+          "original": {
+            "id": 536,
+            "name": "Snack-Filled Witch Hat",
+            "description": "What?! There's all that wasted space!",
+            "graphic_id": 2493,
+            "hero_id": 23,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12287"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 536,
+            "name": "零食女巫帽",
+            "description": "啥？！不装点零食太浪费空间了！",
+            "graphic_id": 2493,
+            "hero_id": 23,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12287"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "537",
+        "snapshots": {
+          "original": {
+            "id": 537,
+            "name": "Dirty Pot",
+            "description": "That's not dirt, that's Stinky!",
+            "graphic_id": 2494,
+            "hero_id": 23,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 537,
+            "name": "肮脏的锅",
+            "description": "那不是脏，是恶臭！",
+            "graphic_id": 2494,
+            "hero_id": 23,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "538",
+        "snapshots": {
+          "original": {
+            "id": 538,
+            "name": "Leaking Pot",
+            "description": "I really should patch that up someday.",
+            "graphic_id": 2494,
+            "hero_id": 23,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 538,
+            "name": "漏水的锅",
+            "description": "真的得找个机会修补下它了。",
+            "graphic_id": 2494,
+            "hero_id": 23,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "539",
+        "snapshots": {
+          "original": {
+            "id": 539,
+            "name": "Large Heavy Pot",
+            "description": "Dang rat's heavier now than he was when he was alive.",
+            "graphic_id": 2495,
+            "hero_id": 23,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 539,
+            "name": "沉重的大锅",
+            "description": "可恶的老鼠，死了比活着时还要沉重。",
+            "graphic_id": 2495,
+            "hero_id": 23,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "540",
+        "snapshots": {
+          "original": {
+            "id": 540,
+            "name": "Polished Pot of Stinky's Ashes",
+            "description": "I miss my old cranium rat. RIP, buddy.",
+            "graphic_id": 2496,
+            "hero_id": 23,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 540,
+            "name": "盛放臭臭骨灰的磨光锅",
+            "description": "好怀念我的头骨老鼠。安息吧，小兄弟。",
+            "graphic_id": 2496,
+            "hero_id": 23,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "541",
+        "snapshots": {
+          "original": {
+            "id": 541,
+            "name": "Assorted Garbage",
+            "description": "Hey, there's some good stuff in there!",
+            "graphic_id": 2497,
+            "hero_id": 23,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12288,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 541,
+            "name": "各种垃圾",
+            "description": "咦，里头似乎有好东西！",
+            "graphic_id": 2497,
+            "hero_id": 23,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12288,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "542",
+        "snapshots": {
+          "original": {
+            "id": 542,
+            "name": "Pile of Garbage",
+            "description": "Garbage? I'll show you garbage!",
+            "graphic_id": 2497,
+            "hero_id": 23,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12288,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 542,
+            "name": "一堆垃圾",
+            "description": "垃圾？我来让你见识下真正的垃圾！",
+            "graphic_id": 2497,
+            "hero_id": 23,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12288,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "543",
+        "snapshots": {
+          "original": {
+            "id": 543,
+            "name": "Collected Knick-Knacks",
+            "description": "They're irreplacable!",
+            "graphic_id": 2498,
+            "hero_id": 23,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12288,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 543,
+            "name": "收藏的小玩意",
+            "description": "它们是无可取代的！",
+            "graphic_id": 2498,
+            "hero_id": 23,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12288,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "544",
+        "snapshots": {
+          "original": {
+            "id": 544,
+            "name": "Super High Quality Garbage",
+            "description": "I can't believe nobody else wants this stuff! It's priceless!",
+            "graphic_id": 2499,
+            "hero_id": 23,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12288,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 544,
+            "name": "超高质量的垃圾",
+            "description": "万万没想到竟然没有人懂得欣赏这东西！这可是无价之宝呀！",
+            "graphic_id": 2499,
+            "hero_id": 23,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12288,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "545",
+        "snapshots": {
+          "original": {
+            "id": 545,
+            "name": "Dim Staff",
+            "description": "I can't quite make out the runes. They look kinda magic.",
+            "graphic_id": 2503,
+            "hero_id": 23,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "increase_damage_monster_target_by_bud_mult,25",
+                "description": "Increases the damage of Strix while one of her Ultimates is active by $(amount)%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 545,
+            "name": "暗淡的法杖",
+            "description": "我不认识那些符文。感觉应该是有魔法的吧。",
+            "graphic_id": 2503,
+            "hero_id": 23,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "increase_damage_monster_target_by_bud_mult,25",
+                "description": "当斯崔克丝的终极技能激活时，使斯崔克丝的伤害提高 $(amount)%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "546",
+        "snapshots": {
+          "original": {
+            "id": 546,
+            "name": "Black Wooden Staff",
+            "description": "A solid staff for someone who knows magic.",
+            "graphic_id": 2503,
+            "hero_id": 23,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "increase_damage_monster_target_by_bud_mult,87.5",
+                "description": "Increases the damage of Strix while one of her Ultimates is active by $(amount)%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 546,
+            "name": "黑色木质法杖",
+            "description": "适合懂得运用魔法的人使用。",
+            "graphic_id": 2503,
+            "hero_id": 23,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "increase_damage_monster_target_by_bud_mult,87.5",
+                "description": "当斯崔克丝的终极技能激活时，使斯崔克丝的伤害提高 $(amount)%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "547",
+        "snapshots": {
+          "original": {
+            "id": 547,
+            "name": "Mystical Runed Staff",
+            "description": "Do you think maybe it knows magic?",
+            "graphic_id": 2504,
+            "hero_id": 23,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "increase_damage_monster_target_by_bud_mult,150",
+                "description": "Increases the damage of Strix while one of her Ultimates is active by $(amount)%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 547,
+            "name": "神秘的符文法杖",
+            "description": "你觉得它究竟有没有魔法？",
+            "graphic_id": 2504,
+            "hero_id": 23,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "increase_damage_monster_target_by_bud_mult,150",
+                "description": "当斯崔克丝的终极技能激活时，使斯崔克丝的伤害提高 $(amount)%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "548",
+        "snapshots": {
+          "original": {
+            "id": 548,
+            "name": "Polymorphing Staff of the Trash Witch",
+            "description": "I know magic!",
+            "graphic_id": 2505,
+            "hero_id": 23,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "increase_damage_monster_target_by_bud_mult,275",
+                "description": "Increases the damage of Strix while one of her Ultimates is active by $(amount)%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 548,
+            "name": "垃圾女巫的变形法杖",
+            "description": "我会魔法了！",
+            "graphic_id": 2505,
+            "hero_id": 23,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "increase_damage_monster_target_by_bud_mult,275",
+                "description": "当斯崔克丝的终极技能激活时，使斯崔克丝的伤害提高 $(amount)%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "549",
+        "snapshots": {
+          "original": {
+            "id": 549,
+            "name": "Stinky Owlbear Cloak",
+            "description": "Stinky? I don't smell anything.",
+            "graphic_id": 2488,
+            "hero_id": 23,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,7"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 549,
+            "name": "发臭的枭熊披肩",
+            "description": "有臭味吗？我没闻到呀。",
+            "graphic_id": 2488,
+            "hero_id": 23,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,7"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "550",
+        "snapshots": {
+          "original": {
+            "id": 550,
+            "name": "Short Owlbear Cloak",
+            "description": "The hem doesn't drag along the ground. I'd rather it did.",
+            "graphic_id": 2488,
+            "hero_id": 23,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,14"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 550,
+            "name": "短小的枭熊披肩",
+            "description": "竟然不是拖地的长披肩。真是可惜了。",
+            "graphic_id": 2488,
+            "hero_id": 23,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,14"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "551",
+        "snapshots": {
+          "original": {
+            "id": 551,
+            "name": "Warm Owlbear Cloak",
+            "description": "Keeps me cozy in cold places.",
+            "graphic_id": 2489,
+            "hero_id": 23,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,27"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 551,
+            "name": "暖和的枭熊披肩",
+            "description": "在天寒地冻的气候下为我保暖。",
+            "graphic_id": 2489,
+            "hero_id": 23,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,27"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "552",
+        "snapshots": {
+          "original": {
+            "id": 552,
+            "name": "Dark Owlbear Cloak of the Sad Sorcerer",
+            "description": "I can hide within its folds if I need to.",
+            "graphic_id": 2490,
+            "hero_id": 23,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,68"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 552,
+            "name": "伤心术士的暗色枭熊披肩",
+            "description": "在必要时它可以把我隐匿起来。",
+            "graphic_id": 2490,
+            "hero_id": 23,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,68"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3",
+        "snapshots": {
+          "original": {
+            "id": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Female Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "使所有女性勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "10",
+        "snapshots": {
+          "original": {
+            "id": 10,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "tiefling"
+                  }
+                ],
+                "description": "Increases the damage of all Tiefling Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 10,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "tiefling"
+                  }
+                ],
+                "description": "使所有提夫林勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "43",
+        "snapshots": {
+          "original": {
+            "id": 43,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "cha",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a CHA score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 43,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "cha",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有魅力大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "37",
+        "snapshots": {
+          "original": {
+            "id": 37,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "int",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a INT score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 37,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "int",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有智力大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "52",
+        "snapshots": {
+          "original": {
+            "id": 52,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "chaotic"
+                  }
+                ],
+                "description": "Increases the damage of all Chaotic Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 52,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "chaotic"
+                  }
+                ],
+                "description": "使所有混乱阵营勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

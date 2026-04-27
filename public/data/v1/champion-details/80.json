@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "80",
     "name": {
@@ -49,7 +49,7 @@
   },
   "dateAvailable": "2021-05-19 00:00:00",
   "lastReworkDate": "2025-01-08 13:00:00",
-  "popularity": 94,
+  "popularity": 89,
   "baseCost": "3750",
   "baseDamage": "2500",
   "baseHealth": "47",
@@ -3743,6 +3743,634 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "1897",
+      "name": {
+        "original": "Worn and Torn Chapbook",
+        "display": "翻到烂了的通俗读物"
+      },
+      "description": {
+        "original": "Havi keeps sneaking these into my haversack.",
+        "display": "哈维老是偷偷把这种书塞进我的背囊里。"
+      },
+      "graphicId": "10707",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,16149"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1898",
+      "name": {
+        "original": "The Lonely Dragonborn",
+        "display": "孤独的龙裔"
+      },
+      "description": {
+        "original": "Havi, this is not subtle.",
+        "display": "哈维，这一点都不微妙。"
+      },
+      "graphicId": "10707",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,16149"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1899",
+      "name": {
+        "original": "Mehen's Travel Reading",
+        "display": "梅亨的旅行读物"
+      },
+      "description": {
+        "original": "That is not mine...but if you lose my place, you're polishing armor til supper.",
+        "display": "这不是我的......但如果你把我的位置弄丢了，就得一直抛光盔甲直到晚饭时间。"
+      },
+      "graphicId": "10708",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,16149"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1900",
+      "name": {
+        "original": "The Viper's Fangs",
+        "display": "毒蛇的尖牙"
+      },
+      "description": {
+        "original": "...I don't know if I'm glad Havi's friends with this woman or if I should worry.",
+        "display": "......哈维跟这个女人交了朋友，我不知道是该高兴还是担心的好。"
+      },
+      "graphicId": "10709",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,16149"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "1901",
+      "name": {
+        "original": "Child's Shortsword",
+        "display": "儿童短剑"
+      },
+      "description": {
+        "original": "Every child should have a sword. How else will they learn?",
+        "display": "每个孩子都应该拥有一把剑。不然他们该怎么学习呢？"
+      },
+      "graphicId": "10704",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,10,16150,16151,16152",
+          "description": "Increases the effect of Mehen's specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1902",
+      "name": {
+        "original": "Worn Sword",
+        "display": "用旧的剑"
+      },
+      "description": {
+        "original": "Farideh favored this before Lorcan came around. She could have been a fighter.",
+        "display": "洛肯来之前法莉德就喜欢上这个了。她本应成为一位战士。"
+      },
+      "graphicId": "10704",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,30,16150,16151,16152",
+          "description": "Increases the effect of Mehen's specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1903",
+      "name": {
+        "original": "Fancy Shortsword",
+        "display": "精致的短剑"
+      },
+      "description": {
+        "original": "More reliable than that cambion of hers, not that Fari wants to hear it.",
+        "display": "比她的魔裔更可靠，但法莉可能不太爱听这话。"
+      },
+      "graphicId": "10705",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,50,16150,16151,16152",
+          "description": "Increases the effect of Mehen's specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1904",
+      "name": {
+        "original": "Unconventional Blade",
+        "display": "简约之刃"
+      },
+      "description": {
+        "original": "I'm just saying: she could use a sword AND eldritch blast.",
+        "display": "我只是随口一说：她可以同时用剑和魔能爆弹。"
+      },
+      "graphicId": "10706",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,100,16150,16151,16152",
+          "description": "Increases the effect of Mehen's specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1905",
+      "name": {
+        "original": "Patchwork Scrap",
+        "display": "拼凑的废铁"
+      },
+      "description": {
+        "original": "I keep it under my chestpiece, close to my heart.",
+        "display": "我把它保存在我的胸甲下，贴近我的心口。"
+      },
+      "graphicId": "10710",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,16146,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1906",
+      "name": {
+        "original": "Baby Blanket Keepsake",
+        "display": "婴儿毛毯纪念品"
+      },
+      "description": {
+        "original": "It's hard to believe my fierce, clever girls were ever so small.",
+        "display": "很难相信我的凶狠而聪明的姑娘也曾经是个小不点。"
+      },
+      "graphicId": "10710",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,16146,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1907",
+      "name": {
+        "original": "Kallan's Poem",
+        "display": "卡尔兰的诗"
+      },
+      "description": {
+        "original": "You have to admire the bravery of a man rhyming 'passion' with 'slashing.'",
+        "display": "你必须承认，一个人的勇敢与“激情”和“砍杀”是挂钩的。"
+      },
+      "graphicId": "10711",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,16146,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1908",
+      "name": {
+        "original": "Message from the Vanquisher",
+        "display": "来自征服者的信息"
+      },
+      "description": {
+        "original": "No one writes Kallan's letters for him--at least not to me. I miss him.",
+        "display": "没人能替卡尔兰写信--至少不能写给我。我很想念他。"
+      },
+      "graphicId": "10712",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,16146,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1909",
+      "name": {
+        "original": "Sharpened Blade",
+        "display": "磨过的利刃"
+      },
+      "description": {
+        "original": "You'll never go wrong with this by your side.",
+        "display": "身上有这东西，你就永远不会出差错。"
+      },
+      "graphicId": "10698",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,16147,0"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1910",
+      "name": {
+        "original": "Wicked Weapon",
+        "display": "邪恶的武器"
+      },
+      "description": {
+        "original": "I'd prefer you back away so I don't have to re-sharpen this once we're done.",
+        "display": "我希望你走开，这样我就不用等完事之后再磨一次这东西了。"
+      },
+      "graphicId": "10698",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,16147,0"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1911",
+      "name": {
+        "original": "Ceremonial Falchion",
+        "display": "仪式用刀"
+      },
+      "description": {
+        "original": "In Tymanther, even ceremonial weapons have an edge.",
+        "display": "在泰曼瑟尔，就连祭祀用的武器都是开刃的。"
+      },
+      "graphicId": "10699",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,16147,0"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1912",
+      "name": {
+        "original": "Fatherly Falchion",
+        "display": "父亲的刀"
+      },
+      "description": {
+        "original": "This is a sweet gift, girls, but Havi, I am not calling it 'Monster Gutter.'",
+        "display": "这是一件好礼物，姑娘，但哈维，我可不会给它起名叫“怪物开膛手”。"
+      },
+      "graphicId": "10700",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,16147,0"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1913",
+      "name": {
+        "original": "Spacers",
+        "display": "衬垫"
+      },
+      "description": {
+        "original": "You can grow your piercing, or get a larger blade to make the cut. Your call.",
+        "display": "你可以扩大你的洞眼，或者找一把更大的刀来切。你自己决定。"
+      },
+      "graphicId": "10701",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,16148,0"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1914",
+      "name": {
+        "original": "Wooden Piercings",
+        "display": "木头洞眼"
+      },
+      "description": {
+        "original": "You get used to being clanless, but in the meantime, these help.",
+        "display": "你会逐渐习惯于脱离部落，但与此同时，这些东西也能帮上忙。"
+      },
+      "graphicId": "10701",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,16148,0"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1915",
+      "name": {
+        "original": "Jade Eye of Blazing Rorn",
+        "display": "燃烧罗恩的玉眼"
+      },
+      "description": {
+        "original": "The piercings of my clan--bunch of tyrannical snobs.",
+        "display": "我的部落--那群泰曼瑟尔势力小人的穿环饰品。"
+      },
+      "graphicId": "10702",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,16148,0"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1916",
+      "name": {
+        "original": "Family Clan Piercings",
+        "display": "家族穿环饰品"
+      },
+      "description": {
+        "original": "Verthisathurgiesh is adaptable after all--my girls and I are a package deal.",
+        "display": "维尔蒂萨瑟吉尔希人毕竟还是很有适应能力的--我和我的姑娘们只打包出售。"
+      },
+      "graphicId": "10703",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,16148,0"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1917",
+      "name": {
+        "original": "Hammered Breastplate",
+        "display": "锻打胸甲"
+      },
+      "description": {
+        "original": "Hit them before they have a chance to hit you.",
+        "display": "在他们有机会攻击你之前，先下手为强。"
+      },
+      "graphicId": "10695",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,5"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1918",
+      "name": {
+        "original": "Battle-Worn Armor",
+        "display": "久经战阵的护甲"
+      },
+      "description": {
+        "original": "Listen, nothing looks good once it's gone through a behir.",
+        "display": "被青足龙蛇蹂躏过的任何东西都不会好看。"
+      },
+      "graphicId": "10695",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,9"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1919",
+      "name": {
+        "original": "Bounty Hunter Chestpiece",
+        "display": "赏金猎人胸甲"
+      },
+      "description": {
+        "original": "Tough and flexible--it does the job.",
+        "display": "坚固而柔韧--能用就行。"
+      },
+      "graphicId": "10696",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,18"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1920",
+      "name": {
+        "original": "Dragonborn Scale Armor",
+        "display": "龙裔鳞甲"
+      },
+      "description": {
+        "original": "It itches and the gems have no defensive purpose.",
+        "display": "弄得人痒得很，而且宝石完全没有防御效果。"
+      },
+      "graphicId": "10697",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,45"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "56",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "65",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,85",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "dragonborn"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Dragonborn Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "43",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "cha",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a CHA score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "30",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "str",
+              "score": 15,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a STR score of 15 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "49",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "good"
+            }
+          ],
+          "description": "Increases the damage of all Good Champions by $(amount)%"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3902,7 +4530,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 94,
+        "popularity": 89,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -4101,7 +4729,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 94,
+        "popularity": 89,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -8474,6 +9102,1124 @@
             "availabilities": {
               "in_flash_sales": true
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "1897",
+        "snapshots": {
+          "original": {
+            "id": 1897,
+            "name": "Worn and Torn Chapbook",
+            "description": "Havi keeps sneaking these into my haversack.",
+            "graphic_id": 10707,
+            "hero_id": 80,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,16149"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1897,
+            "name": "翻到烂了的通俗读物",
+            "description": "哈维老是偷偷把这种书塞进我的背囊里。",
+            "graphic_id": 10707,
+            "hero_id": 80,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,16149"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1898",
+        "snapshots": {
+          "original": {
+            "id": 1898,
+            "name": "The Lonely Dragonborn",
+            "description": "Havi, this is not subtle.",
+            "graphic_id": 10707,
+            "hero_id": 80,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,16149"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1898,
+            "name": "孤独的龙裔",
+            "description": "哈维，这一点都不微妙。",
+            "graphic_id": 10707,
+            "hero_id": 80,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,16149"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1899",
+        "snapshots": {
+          "original": {
+            "id": 1899,
+            "name": "Mehen's Travel Reading",
+            "description": "That is not mine...but if you lose my place, you're polishing armor til supper.",
+            "graphic_id": 10708,
+            "hero_id": 80,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,16149"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1899,
+            "name": "梅亨的旅行读物",
+            "description": "这不是我的......但如果你把我的位置弄丢了，就得一直抛光盔甲直到晚饭时间。",
+            "graphic_id": 10708,
+            "hero_id": 80,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,16149"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1900",
+        "snapshots": {
+          "original": {
+            "id": 1900,
+            "name": "The Viper's Fangs",
+            "description": "...I don't know if I'm glad Havi's friends with this woman or if I should worry.",
+            "graphic_id": 10709,
+            "hero_id": 80,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,16149"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1900,
+            "name": "毒蛇的尖牙",
+            "description": "......哈维跟这个女人交了朋友，我不知道是该高兴还是担心的好。",
+            "graphic_id": 10709,
+            "hero_id": 80,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,16149"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1901",
+        "snapshots": {
+          "original": {
+            "id": 1901,
+            "name": "Child's Shortsword",
+            "description": "Every child should have a sword. How else will they learn?",
+            "graphic_id": 10704,
+            "hero_id": 80,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,10,16150,16151,16152",
+                "description": "Increases the effect of Mehen's specializations by $amount%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1901,
+            "name": "儿童短剑",
+            "description": "每个孩子都应该拥有一把剑。不然他们该怎么学习呢？",
+            "graphic_id": 10704,
+            "hero_id": 80,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,10,16150,16151,16152",
+                "description": "使梅亨的专精效果提高 $amount%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1902",
+        "snapshots": {
+          "original": {
+            "id": 1902,
+            "name": "Worn Sword",
+            "description": "Farideh favored this before Lorcan came around. She could have been a fighter.",
+            "graphic_id": 10704,
+            "hero_id": 80,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,30,16150,16151,16152",
+                "description": "Increases the effect of Mehen's specializations by $amount%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1902,
+            "name": "用旧的剑",
+            "description": "洛肯来之前法莉德就喜欢上这个了。她本应成为一位战士。",
+            "graphic_id": 10704,
+            "hero_id": 80,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,30,16150,16151,16152",
+                "description": "使梅亨的专精效果提高 $amount%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1903",
+        "snapshots": {
+          "original": {
+            "id": 1903,
+            "name": "Fancy Shortsword",
+            "description": "More reliable than that cambion of hers, not that Fari wants to hear it.",
+            "graphic_id": 10705,
+            "hero_id": 80,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,50,16150,16151,16152",
+                "description": "Increases the effect of Mehen's specializations by $amount%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1903,
+            "name": "精致的短剑",
+            "description": "比她的魔裔更可靠，但法莉可能不太爱听这话。",
+            "graphic_id": 10705,
+            "hero_id": 80,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,50,16150,16151,16152",
+                "description": "使梅亨的专精效果提高 $amount%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1904",
+        "snapshots": {
+          "original": {
+            "id": 1904,
+            "name": "Unconventional Blade",
+            "description": "I'm just saying: she could use a sword AND eldritch blast.",
+            "graphic_id": 10706,
+            "hero_id": 80,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,100,16150,16151,16152",
+                "description": "Increases the effect of Mehen's specializations by $amount%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1904,
+            "name": "简约之刃",
+            "description": "我只是随口一说：她可以同时用剑和魔能爆弹。",
+            "graphic_id": 10706,
+            "hero_id": 80,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,100,16150,16151,16152",
+                "description": "使梅亨的专精效果提高 $amount%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1905",
+        "snapshots": {
+          "original": {
+            "id": 1905,
+            "name": "Patchwork Scrap",
+            "description": "I keep it under my chestpiece, close to my heart.",
+            "graphic_id": 10710,
+            "hero_id": 80,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,16146,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1905,
+            "name": "拼凑的废铁",
+            "description": "我把它保存在我的胸甲下，贴近我的心口。",
+            "graphic_id": 10710,
+            "hero_id": 80,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,16146,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1906",
+        "snapshots": {
+          "original": {
+            "id": 1906,
+            "name": "Baby Blanket Keepsake",
+            "description": "It's hard to believe my fierce, clever girls were ever so small.",
+            "graphic_id": 10710,
+            "hero_id": 80,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,16146,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1906,
+            "name": "婴儿毛毯纪念品",
+            "description": "很难相信我的凶狠而聪明的姑娘也曾经是个小不点。",
+            "graphic_id": 10710,
+            "hero_id": 80,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,16146,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1907",
+        "snapshots": {
+          "original": {
+            "id": 1907,
+            "name": "Kallan's Poem",
+            "description": "You have to admire the bravery of a man rhyming 'passion' with 'slashing.'",
+            "graphic_id": 10711,
+            "hero_id": 80,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,16146,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1907,
+            "name": "卡尔兰的诗",
+            "description": "你必须承认，一个人的勇敢与“激情”和“砍杀”是挂钩的。",
+            "graphic_id": 10711,
+            "hero_id": 80,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,16146,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1908",
+        "snapshots": {
+          "original": {
+            "id": 1908,
+            "name": "Message from the Vanquisher",
+            "description": "No one writes Kallan's letters for him--at least not to me. I miss him.",
+            "graphic_id": 10712,
+            "hero_id": 80,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,16146,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1908,
+            "name": "来自征服者的信息",
+            "description": "没人能替卡尔兰写信--至少不能写给我。我很想念他。",
+            "graphic_id": 10712,
+            "hero_id": 80,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,16146,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1909",
+        "snapshots": {
+          "original": {
+            "id": 1909,
+            "name": "Sharpened Blade",
+            "description": "You'll never go wrong with this by your side.",
+            "graphic_id": 10698,
+            "hero_id": 80,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,16147,0"
+              }
+            ]
+          },
+          "display": {
+            "id": 1909,
+            "name": "磨过的利刃",
+            "description": "身上有这东西，你就永远不会出差错。",
+            "graphic_id": 10698,
+            "hero_id": 80,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,16147,0"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1910",
+        "snapshots": {
+          "original": {
+            "id": 1910,
+            "name": "Wicked Weapon",
+            "description": "I'd prefer you back away so I don't have to re-sharpen this once we're done.",
+            "graphic_id": 10698,
+            "hero_id": 80,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,16147,0"
+              }
+            ]
+          },
+          "display": {
+            "id": 1910,
+            "name": "邪恶的武器",
+            "description": "我希望你走开，这样我就不用等完事之后再磨一次这东西了。",
+            "graphic_id": 10698,
+            "hero_id": 80,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,16147,0"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1911",
+        "snapshots": {
+          "original": {
+            "id": 1911,
+            "name": "Ceremonial Falchion",
+            "description": "In Tymanther, even ceremonial weapons have an edge.",
+            "graphic_id": 10699,
+            "hero_id": 80,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,16147,0"
+              }
+            ]
+          },
+          "display": {
+            "id": 1911,
+            "name": "仪式用刀",
+            "description": "在泰曼瑟尔，就连祭祀用的武器都是开刃的。",
+            "graphic_id": 10699,
+            "hero_id": 80,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,16147,0"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1912",
+        "snapshots": {
+          "original": {
+            "id": 1912,
+            "name": "Fatherly Falchion",
+            "description": "This is a sweet gift, girls, but Havi, I am not calling it 'Monster Gutter.'",
+            "graphic_id": 10700,
+            "hero_id": 80,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,16147,0"
+              }
+            ]
+          },
+          "display": {
+            "id": 1912,
+            "name": "父亲的刀",
+            "description": "这是一件好礼物，姑娘，但哈维，我可不会给它起名叫“怪物开膛手”。",
+            "graphic_id": 10700,
+            "hero_id": 80,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,16147,0"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1913",
+        "snapshots": {
+          "original": {
+            "id": 1913,
+            "name": "Spacers",
+            "description": "You can grow your piercing, or get a larger blade to make the cut. Your call.",
+            "graphic_id": 10701,
+            "hero_id": 80,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,16148,0"
+              }
+            ]
+          },
+          "display": {
+            "id": 1913,
+            "name": "衬垫",
+            "description": "你可以扩大你的洞眼，或者找一把更大的刀来切。你自己决定。",
+            "graphic_id": 10701,
+            "hero_id": 80,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,16148,0"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1914",
+        "snapshots": {
+          "original": {
+            "id": 1914,
+            "name": "Wooden Piercings",
+            "description": "You get used to being clanless, but in the meantime, these help.",
+            "graphic_id": 10701,
+            "hero_id": 80,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,16148,0"
+              }
+            ]
+          },
+          "display": {
+            "id": 1914,
+            "name": "木头洞眼",
+            "description": "你会逐渐习惯于脱离部落，但与此同时，这些东西也能帮上忙。",
+            "graphic_id": 10701,
+            "hero_id": 80,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,16148,0"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1915",
+        "snapshots": {
+          "original": {
+            "id": 1915,
+            "name": "Jade Eye of Blazing Rorn",
+            "description": "The piercings of my clan--bunch of tyrannical snobs.",
+            "graphic_id": 10702,
+            "hero_id": 80,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,16148,0"
+              }
+            ]
+          },
+          "display": {
+            "id": 1915,
+            "name": "燃烧罗恩的玉眼",
+            "description": "我的部落--那群泰曼瑟尔势力小人的穿环饰品。",
+            "graphic_id": 10702,
+            "hero_id": 80,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,16148,0"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1916",
+        "snapshots": {
+          "original": {
+            "id": 1916,
+            "name": "Family Clan Piercings",
+            "description": "Verthisathurgiesh is adaptable after all--my girls and I are a package deal.",
+            "graphic_id": 10703,
+            "hero_id": 80,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,16148,0"
+              }
+            ]
+          },
+          "display": {
+            "id": 1916,
+            "name": "家族穿环饰品",
+            "description": "维尔蒂萨瑟吉尔希人毕竟还是很有适应能力的--我和我的姑娘们只打包出售。",
+            "graphic_id": 10703,
+            "hero_id": 80,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,16148,0"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1917",
+        "snapshots": {
+          "original": {
+            "id": 1917,
+            "name": "Hammered Breastplate",
+            "description": "Hit them before they have a chance to hit you.",
+            "graphic_id": 10695,
+            "hero_id": 80,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,5"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1917,
+            "name": "锻打胸甲",
+            "description": "在他们有机会攻击你之前，先下手为强。",
+            "graphic_id": 10695,
+            "hero_id": 80,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,5"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1918",
+        "snapshots": {
+          "original": {
+            "id": 1918,
+            "name": "Battle-Worn Armor",
+            "description": "Listen, nothing looks good once it's gone through a behir.",
+            "graphic_id": 10695,
+            "hero_id": 80,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,9"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1918,
+            "name": "久经战阵的护甲",
+            "description": "被青足龙蛇蹂躏过的任何东西都不会好看。",
+            "graphic_id": 10695,
+            "hero_id": 80,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,9"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1919",
+        "snapshots": {
+          "original": {
+            "id": 1919,
+            "name": "Bounty Hunter Chestpiece",
+            "description": "Tough and flexible--it does the job.",
+            "graphic_id": 10696,
+            "hero_id": 80,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,18"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1919,
+            "name": "赏金猎人胸甲",
+            "description": "坚固而柔韧--能用就行。",
+            "graphic_id": 10696,
+            "hero_id": 80,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,18"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1920",
+        "snapshots": {
+          "original": {
+            "id": 1920,
+            "name": "Dragonborn Scale Armor",
+            "description": "It itches and the gems have no defensive purpose.",
+            "graphic_id": 10697,
+            "hero_id": 80,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,45"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1920,
+            "name": "龙裔鳞甲",
+            "description": "弄得人痒得很，而且宝石完全没有防御效果。",
+            "graphic_id": 10697,
+            "hero_id": 80,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,45"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "56",
+        "snapshots": {
+          "original": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "阵型中每有一位女性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "65",
+        "snapshots": {
+          "original": {
+            "id": 65,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,85",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "dragonborn"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Dragonborn Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 65,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,85",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "dragonborn"
+                  }
+                ],
+                "description": "阵型中每有一位龙裔勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "43",
+        "snapshots": {
+          "original": {
+            "id": 43,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "cha",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a CHA score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 43,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "cha",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有魅力大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "30",
+        "snapshots": {
+          "original": {
+            "id": 30,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a STR score of 15 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 30,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有力量大于等于 15 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "49",
+        "snapshots": {
+          "original": {
+            "id": 49,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "Increases the damage of all Good Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 49,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "使所有善良阵营勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

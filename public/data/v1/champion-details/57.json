@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "57",
     "name": {
@@ -42,7 +42,7 @@
   },
   "dateAvailable": "2020-02-19 00:00:00",
   "lastReworkDate": "2020-02-19 00:00:00",
-  "popularity": 20,
+  "popularity": 16,
   "baseCost": "30",
   "baseDamage": "15",
   "baseHealth": "47",
@@ -2532,6 +2532,634 @@
       "availabilities": null
     }
   ],
+  "loot": [
+    {
+      "id": "1345",
+      "name": {
+        "original": "Sinister Stick",
+        "display": "邪恶之棍"
+      },
+      "description": {
+        "original": "Yes, Isn't it lovely? It's meant to distract you.",
+        "display": "很可爱对不对？这是为了让你分心用的。"
+      },
+      "graphicId": "7234",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1346",
+      "name": {
+        "original": "Snake-Headed Staff",
+        "display": "蛇首手杖"
+      },
+      "description": {
+        "original": "How folks respond to my staff tells me if I'm safe to remove my cloak.",
+        "display": "从人们对我手杖的反应我就能推测出是否可以摘下斗篷现出原形。"
+      },
+      "graphicId": "7234",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1347",
+      "name": {
+        "original": "Solemn Staff",
+        "display": "庄严的手杖"
+      },
+      "description": {
+        "original": "Drop the loot, count yourself lucky, and start running.",
+        "display": "今天算你走运，放下战利品，马上滚蛋吧。"
+      },
+      "graphicId": "7235",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1348",
+      "name": {
+        "original": "Serpent Scepter",
+        "display": "蛇形权杖"
+      },
+      "description": {
+        "original": "Don't you love how the spores worship it?",
+        "display": "见到那些孢子都在向它朝拜是否觉得很神奇呢？"
+      },
+      "graphicId": "7236",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "1349",
+      "name": {
+        "original": "Spare Spores",
+        "display": "备用的孢子"
+      },
+      "description": {
+        "original": "You can never have enough.",
+        "display": "多多益善。"
+      },
+      "graphicId": "7231",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,13250,1"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1350",
+      "name": {
+        "original": "Spore Shaker",
+        "display": "孢子混合器"
+      },
+      "description": {
+        "original": "In case of emergency: throw.",
+        "display": "危险时马上抛出去。"
+      },
+      "graphicId": "7231",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,13250,1"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1351",
+      "name": {
+        "original": "Spore Garden",
+        "display": "孢子公园"
+      },
+      "description": {
+        "original": "It would be in much better shape if we stopped walking all over the Sword Coast!",
+        "display": "要不是我们绕着剑湾走了整整一圈它就不至于落成这个样子！"
+      },
+      "graphicId": "7232",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,13250,1"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1352",
+      "name": {
+        "original": "Fungal Syndicate",
+        "display": "真菌团伙"
+      },
+      "description": {
+        "original": "They each have a purpose.",
+        "display": "每一位成员都有自己的使命。"
+      },
+      "graphicId": "7233",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,13250,1"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1353",
+      "name": {
+        "original": "Creeper Bulb",
+        "display": "匍匐灯泡"
+      },
+      "description": {
+        "original": "I've been studying the bulb's growth. It's terrifyingly fast. I love it!",
+        "display": "我在研究这灯泡的成长。速度真的很惊人。太棒了！"
+      },
+      "graphicId": "7228",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,13251"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1354",
+      "name": {
+        "original": "Yellow Musk Growth",
+        "display": "黄麝香的成长"
+      },
+      "description": {
+        "original": "This should give my garden raider quite the fright.",
+        "display": "那些掠夺我公园的坏蛋这下肯定会吓得大吃一惊。"
+      },
+      "graphicId": "7228",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,13251"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1355",
+      "name": {
+        "original": "Yellow-Musk Zombie Rabbit",
+        "display": "黄麝香僵尸兔子"
+      },
+      "description": {
+        "original": "I just call it Flopsy.",
+        "display": "我就叫它作扑扑吧。"
+      },
+      "graphicId": "7229",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,13251"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1356",
+      "name": {
+        "original": "Zombie Grung",
+        "display": "僵尸格龙蛙人"
+      },
+      "description": {
+        "original": "I can't tell you how many times it's gotten me out of trouble! Just let 'em loose!",
+        "display": "我都数不清它救了我多少次了。快放它们出来吧！"
+      },
+      "graphicId": "7230",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,13251"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1357",
+      "name": {
+        "original": "Snake Ring",
+        "display": "蛇戒"
+      },
+      "description": {
+        "original": "I feel at peace whenever I can feel it on my finger.",
+        "display": "每次抚摸着指头上的戒指我都会心平气和下来。"
+      },
+      "graphicId": "7219",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,13252"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1358",
+      "name": {
+        "original": "Tail Devouring Ring",
+        "display": "噬尾戒"
+      },
+      "description": {
+        "original": "Twisting it around has become a nervous tic. I must control it.",
+        "display": "每当紧张时我都会扭曲它。必须控制住这种小习惯。"
+      },
+      "graphicId": "7219",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,13252"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1359",
+      "name": {
+        "original": "Ouroboros",
+        "display": "衔尾蛇"
+      },
+      "description": {
+        "original": "One decision walks over the last. What decision led you to me?",
+        "display": "一个决定连接着又一个决定。是什么样的决定将你引导到我跟前？"
+      },
+      "graphicId": "7220",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,13252"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1360",
+      "name": {
+        "original": "World Serpents",
+        "display": "世界之蛇"
+      },
+      "description": {
+        "original": "Everything is cyclical.",
+        "display": "一切都在循环之中。"
+      },
+      "graphicId": "7221",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,13252"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1361",
+      "name": {
+        "original": "Sandwich Scimitar",
+        "display": "夹心弯刀"
+      },
+      "description": {
+        "original": "I am civilized, much as that may surprise you.",
+        "display": "或许你看不出来，但我是很有文化的人。"
+      },
+      "graphicId": "7222",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,25"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1362",
+      "name": {
+        "original": "Silent Stiletto",
+        "display": "沉寂短剑"
+      },
+      "description": {
+        "original": "It's an excellent way to make my point.",
+        "display": "这是证明我的论点的绝佳方法。"
+      },
+      "graphicId": "7222",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,87.5"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1363",
+      "name": {
+        "original": "Serrated Sabre",
+        "display": "锯齿军刀"
+      },
+      "description": {
+        "original": "You never know what the jungles of Chult have to offer. Be prepared or be dead.",
+        "display": "楚尔特丛林危机四伏。要么做好万全的准备要么做好受死的准备。"
+      },
+      "graphicId": "7223",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,150"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1364",
+      "name": {
+        "original": "Scimitar of Dendar",
+        "display": "丹德尔的弯刀"
+      },
+      "description": {
+        "original": "The Night Serpent waits...",
+        "display": "梦魇巨蛇在静候......"
+      },
+      "graphicId": "7224",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,275"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1365",
+      "name": {
+        "original": "Sketch",
+        "display": "素描"
+      },
+      "description": {
+        "original": "You can only learn so much from bones.",
+        "display": "从骨头中得到的知识是有限的。"
+      },
+      "graphicId": "7225",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,8"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1366",
+      "name": {
+        "original": "Skeleton on Slate",
+        "display": "石板上的骷髅"
+      },
+      "description": {
+        "original": "I'm aware that it's good. But... thank you.",
+        "display": "我知道是很美味。不过......谢谢我不用。"
+      },
+      "graphicId": "7225",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,16"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1367",
+      "name": {
+        "original": "Spinach-Snacking Saur",
+        "display": "食菠菜龙"
+      },
+      "description": {
+        "original": "The more you know of a foes habits, the easier it is to out-think them.",
+        "display": "越了解敌人的特性，就越能领先敌人一步。"
+      },
+      "graphicId": "7226",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,31"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1368",
+      "name": {
+        "original": "Stomper-Saur",
+        "display": "践踏龙"
+      },
+      "description": {
+        "original": "This one thinks he's sneaky.",
+        "display": "这家伙以为自己很会躲藏呢。"
+      },
+      "graphicId": "7227",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,78"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Female Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "77",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,285",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "yuan-ti"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Yuan-ti Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "97",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,30",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "cha",
+              "check": 13,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a CHA score of 13 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "91",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,30",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "int",
+              "check": 13,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a INT score of 13 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "106",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "neutral"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a NEUTRAL alignment"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -2689,7 +3317,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 20,
+        "popularity": 16,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -2886,7 +3514,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 20,
+        "popularity": 16,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -6210,6 +6838,1140 @@
               "item_id": "548",
               "cost": 1680
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "1345",
+        "snapshots": {
+          "original": {
+            "id": 1345,
+            "name": "Sinister Stick",
+            "description": "Yes, Isn't it lovely? It's meant to distract you.",
+            "graphic_id": 7234,
+            "hero_id": 57,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1345,
+            "name": "邪恶之棍",
+            "description": "很可爱对不对？这是为了让你分心用的。",
+            "graphic_id": 7234,
+            "hero_id": 57,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1346",
+        "snapshots": {
+          "original": {
+            "id": 1346,
+            "name": "Snake-Headed Staff",
+            "description": "How folks respond to my staff tells me if I'm safe to remove my cloak.",
+            "graphic_id": 7234,
+            "hero_id": 57,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1346,
+            "name": "蛇首手杖",
+            "description": "从人们对我手杖的反应我就能推测出是否可以摘下斗篷现出原形。",
+            "graphic_id": 7234,
+            "hero_id": 57,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1347",
+        "snapshots": {
+          "original": {
+            "id": 1347,
+            "name": "Solemn Staff",
+            "description": "Drop the loot, count yourself lucky, and start running.",
+            "graphic_id": 7235,
+            "hero_id": 57,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1347,
+            "name": "庄严的手杖",
+            "description": "今天算你走运，放下战利品，马上滚蛋吧。",
+            "graphic_id": 7235,
+            "hero_id": 57,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1348",
+        "snapshots": {
+          "original": {
+            "id": 1348,
+            "name": "Serpent Scepter",
+            "description": "Don't you love how the spores worship it?",
+            "graphic_id": 7236,
+            "hero_id": 57,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1348,
+            "name": "蛇形权杖",
+            "description": "见到那些孢子都在向它朝拜是否觉得很神奇呢？",
+            "graphic_id": 7236,
+            "hero_id": 57,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1349",
+        "snapshots": {
+          "original": {
+            "id": 1349,
+            "name": "Spare Spores",
+            "description": "You can never have enough.",
+            "graphic_id": 7231,
+            "hero_id": 57,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,13250,1"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1349,
+            "name": "备用的孢子",
+            "description": "多多益善。",
+            "graphic_id": 7231,
+            "hero_id": 57,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,13250,1"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1350",
+        "snapshots": {
+          "original": {
+            "id": 1350,
+            "name": "Spore Shaker",
+            "description": "In case of emergency: throw.",
+            "graphic_id": 7231,
+            "hero_id": 57,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,13250,1"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1350,
+            "name": "孢子混合器",
+            "description": "危险时马上抛出去。",
+            "graphic_id": 7231,
+            "hero_id": 57,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,13250,1"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1351",
+        "snapshots": {
+          "original": {
+            "id": 1351,
+            "name": "Spore Garden",
+            "description": "It would be in much better shape if we stopped walking all over the Sword Coast!",
+            "graphic_id": 7232,
+            "hero_id": 57,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,13250,1"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1351,
+            "name": "孢子公园",
+            "description": "要不是我们绕着剑湾走了整整一圈它就不至于落成这个样子！",
+            "graphic_id": 7232,
+            "hero_id": 57,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,13250,1"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1352",
+        "snapshots": {
+          "original": {
+            "id": 1352,
+            "name": "Fungal Syndicate",
+            "description": "They each have a purpose.",
+            "graphic_id": 7233,
+            "hero_id": 57,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,13250,1"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1352,
+            "name": "真菌团伙",
+            "description": "每一位成员都有自己的使命。",
+            "graphic_id": 7233,
+            "hero_id": 57,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,13250,1"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1353",
+        "snapshots": {
+          "original": {
+            "id": 1353,
+            "name": "Creeper Bulb",
+            "description": "I've been studying the bulb's growth. It's terrifyingly fast. I love it!",
+            "graphic_id": 7228,
+            "hero_id": 57,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,13251"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1353,
+            "name": "匍匐灯泡",
+            "description": "我在研究这灯泡的成长。速度真的很惊人。太棒了！",
+            "graphic_id": 7228,
+            "hero_id": 57,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,13251"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1354",
+        "snapshots": {
+          "original": {
+            "id": 1354,
+            "name": "Yellow Musk Growth",
+            "description": "This should give my garden raider quite the fright.",
+            "graphic_id": 7228,
+            "hero_id": 57,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,13251"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1354,
+            "name": "黄麝香的成长",
+            "description": "那些掠夺我公园的坏蛋这下肯定会吓得大吃一惊。",
+            "graphic_id": 7228,
+            "hero_id": 57,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,13251"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1355",
+        "snapshots": {
+          "original": {
+            "id": 1355,
+            "name": "Yellow-Musk Zombie Rabbit",
+            "description": "I just call it Flopsy.",
+            "graphic_id": 7229,
+            "hero_id": 57,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,13251"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1355,
+            "name": "黄麝香僵尸兔子",
+            "description": "我就叫它作扑扑吧。",
+            "graphic_id": 7229,
+            "hero_id": 57,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,13251"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1356",
+        "snapshots": {
+          "original": {
+            "id": 1356,
+            "name": "Zombie Grung",
+            "description": "I can't tell you how many times it's gotten me out of trouble! Just let 'em loose!",
+            "graphic_id": 7230,
+            "hero_id": 57,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,13251"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1356,
+            "name": "僵尸格龙蛙人",
+            "description": "我都数不清它救了我多少次了。快放它们出来吧！",
+            "graphic_id": 7230,
+            "hero_id": 57,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,13251"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1357",
+        "snapshots": {
+          "original": {
+            "id": 1357,
+            "name": "Snake Ring",
+            "description": "I feel at peace whenever I can feel it on my finger.",
+            "graphic_id": 7219,
+            "hero_id": 57,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,13252"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1357,
+            "name": "蛇戒",
+            "description": "每次抚摸着指头上的戒指我都会心平气和下来。",
+            "graphic_id": 7219,
+            "hero_id": 57,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,13252"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1358",
+        "snapshots": {
+          "original": {
+            "id": 1358,
+            "name": "Tail Devouring Ring",
+            "description": "Twisting it around has become a nervous tic. I must control it.",
+            "graphic_id": 7219,
+            "hero_id": 57,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,13252"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1358,
+            "name": "噬尾戒",
+            "description": "每当紧张时我都会扭曲它。必须控制住这种小习惯。",
+            "graphic_id": 7219,
+            "hero_id": 57,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,13252"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1359",
+        "snapshots": {
+          "original": {
+            "id": 1359,
+            "name": "Ouroboros",
+            "description": "One decision walks over the last. What decision led you to me?",
+            "graphic_id": 7220,
+            "hero_id": 57,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,13252"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1359,
+            "name": "衔尾蛇",
+            "description": "一个决定连接着又一个决定。是什么样的决定将你引导到我跟前？",
+            "graphic_id": 7220,
+            "hero_id": 57,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,13252"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1360",
+        "snapshots": {
+          "original": {
+            "id": 1360,
+            "name": "World Serpents",
+            "description": "Everything is cyclical.",
+            "graphic_id": 7221,
+            "hero_id": 57,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,13252"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1360,
+            "name": "世界之蛇",
+            "description": "一切都在循环之中。",
+            "graphic_id": 7221,
+            "hero_id": 57,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,13252"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1361",
+        "snapshots": {
+          "original": {
+            "id": 1361,
+            "name": "Sandwich Scimitar",
+            "description": "I am civilized, much as that may surprise you.",
+            "graphic_id": 7222,
+            "hero_id": 57,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1361,
+            "name": "夹心弯刀",
+            "description": "或许你看不出来，但我是很有文化的人。",
+            "graphic_id": 7222,
+            "hero_id": 57,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1362",
+        "snapshots": {
+          "original": {
+            "id": 1362,
+            "name": "Silent Stiletto",
+            "description": "It's an excellent way to make my point.",
+            "graphic_id": 7222,
+            "hero_id": 57,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1362,
+            "name": "沉寂短剑",
+            "description": "这是证明我的论点的绝佳方法。",
+            "graphic_id": 7222,
+            "hero_id": 57,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1363",
+        "snapshots": {
+          "original": {
+            "id": 1363,
+            "name": "Serrated Sabre",
+            "description": "You never know what the jungles of Chult have to offer. Be prepared or be dead.",
+            "graphic_id": 7223,
+            "hero_id": 57,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1363,
+            "name": "锯齿军刀",
+            "description": "楚尔特丛林危机四伏。要么做好万全的准备要么做好受死的准备。",
+            "graphic_id": 7223,
+            "hero_id": 57,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1364",
+        "snapshots": {
+          "original": {
+            "id": 1364,
+            "name": "Scimitar of Dendar",
+            "description": "The Night Serpent waits...",
+            "graphic_id": 7224,
+            "hero_id": 57,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1364,
+            "name": "丹德尔的弯刀",
+            "description": "梦魇巨蛇在静候......",
+            "graphic_id": 7224,
+            "hero_id": 57,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1365",
+        "snapshots": {
+          "original": {
+            "id": 1365,
+            "name": "Sketch",
+            "description": "You can only learn so much from bones.",
+            "graphic_id": 7225,
+            "hero_id": 57,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,8"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1365,
+            "name": "素描",
+            "description": "从骨头中得到的知识是有限的。",
+            "graphic_id": 7225,
+            "hero_id": 57,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,8"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1366",
+        "snapshots": {
+          "original": {
+            "id": 1366,
+            "name": "Skeleton on Slate",
+            "description": "I'm aware that it's good. But... thank you.",
+            "graphic_id": 7225,
+            "hero_id": 57,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,16"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1366,
+            "name": "石板上的骷髅",
+            "description": "我知道是很美味。不过......谢谢我不用。",
+            "graphic_id": 7225,
+            "hero_id": 57,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,16"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1367",
+        "snapshots": {
+          "original": {
+            "id": 1367,
+            "name": "Spinach-Snacking Saur",
+            "description": "The more you know of a foes habits, the easier it is to out-think them.",
+            "graphic_id": 7226,
+            "hero_id": 57,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,31"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1367,
+            "name": "食菠菜龙",
+            "description": "越了解敌人的特性，就越能领先敌人一步。",
+            "graphic_id": 7226,
+            "hero_id": 57,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,31"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1368",
+        "snapshots": {
+          "original": {
+            "id": 1368,
+            "name": "Stomper-Saur",
+            "description": "This one thinks he's sneaky.",
+            "graphic_id": 7227,
+            "hero_id": 57,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,78"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1368,
+            "name": "践踏龙",
+            "description": "这家伙以为自己很会躲藏呢。",
+            "graphic_id": 7227,
+            "hero_id": 57,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,78"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3",
+        "snapshots": {
+          "original": {
+            "id": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Female Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "使所有女性勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "77",
+        "snapshots": {
+          "original": {
+            "id": 77,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,285",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "yuan-ti"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Yuan-ti Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 77,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,285",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "yuan-ti"
+                  }
+                ],
+                "description": "阵型中每有一位蛇人勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "97",
+        "snapshots": {
+          "original": {
+            "id": 97,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "cha",
+                    "check": 13,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a CHA score of 13 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 97,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "cha",
+                    "check": 13,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位魅力大于等于 13 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "91",
+        "snapshots": {
+          "original": {
+            "id": 91,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "int",
+                    "check": 13,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a INT score of 13 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 91,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "int",
+                    "check": 13,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位智力大于等于 13 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "106",
+        "snapshots": {
+          "original": {
+            "id": 106,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "neutral"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a NEUTRAL alignment"
+              }
+            ]
+          },
+          "display": {
+            "id": 106,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "neutral"
+                  }
+                ],
+                "description": "阵型中每有一位中立阵营勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

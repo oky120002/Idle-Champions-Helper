@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "96",
     "name": {
@@ -45,7 +45,7 @@
   },
   "dateAvailable": "2022-02-23 00:00:00",
   "lastReworkDate": "2022-02-23 00:00:00",
-  "popularity": 81,
+  "popularity": 88,
   "baseCost": "80000",
   "baseDamage": "22500",
   "baseHealth": "43",
@@ -3053,6 +3053,632 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "2233",
+      "name": {
+        "original": "Heroic Blade",
+        "display": "英勇之刃"
+      },
+      "description": {
+        "original": "You don't need anything fancy.",
+        "display": "你不需要任何花哨的东西。"
+      },
+      "graphicId": "13158",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2234",
+      "name": {
+        "original": "Sword of Promise",
+        "display": "承诺之剑"
+      },
+      "description": {
+        "original": "My father saw a lot of promise in me, but it's not the right sort of promise.",
+        "display": "我父亲在我身上看到了很多承诺，但这不是正确的承诺。"
+      },
+      "graphicId": "13158",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2235",
+      "name": {
+        "original": "Possessed Sword",
+        "display": "附身之剑"
+      },
+      "description": {
+        "original": "When we found Voronika, I had to save her -- by imbuing my sword with her ghost.",
+        "display": "当我们找到沃罗妮卡时，我不得不拯救她--把她的幽魂注入我的剑中。"
+      },
+      "graphicId": "13159",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2236",
+      "name": {
+        "original": "Edge of Sorrow",
+        "display": "悲泣之刃"
+      },
+      "description": {
+        "original": "What the Mists have taken from me, I will repay them in turn.",
+        "display": "迷雾夺走了我的一切，我将以此报答他们。"
+      },
+      "graphicId": "13160",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "2237",
+      "name": {
+        "original": "Practice Weapon",
+        "display": "练习武器"
+      },
+      "description": {
+        "original": "I spent long hours learning to fight.",
+        "display": "我花了很长时间学习战斗。"
+      },
+      "graphicId": "13149",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2238",
+      "name": {
+        "original": "Training Blade",
+        "display": "训练之刃"
+      },
+      "description": {
+        "original": "Fighting came naturally to me--more naturally than politics.",
+        "display": "战斗对我来说是自然而然的，比政治更自然。"
+      },
+      "graphicId": "13149",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2239",
+      "name": {
+        "original": "Hunter's Blade",
+        "display": "猎人之刃"
+      },
+      "description": {
+        "original": "You get the sword. I'll save my claws for a real threat.",
+        "display": "你拿到剑了。我会用爪子来对付真正的威胁。"
+      },
+      "graphicId": "13150",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2240",
+      "name": {
+        "original": "Sword of Koshmarr",
+        "display": "科什马尔之剑"
+      },
+      "description": {
+        "original": "This isn't my destiny, is it?",
+        "display": "这不是我的命运，对吗？"
+      },
+      "graphicId": "13151",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2241",
+      "name": {
+        "original": "Distance Weapon",
+        "display": "远程武器"
+      },
+      "description": {
+        "original": "Sometimes it's best to strike from a distance.",
+        "display": "有时最好从远处攻击。"
+      },
+      "graphicId": "13146",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,7299"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2242",
+      "name": {
+        "original": "Ranger's Crossbow",
+        "display": "巡林客的十字弩"
+      },
+      "description": {
+        "original": "Depending on the prey, I'd rather have my space.",
+        "display": "根据猎物的不同，我的选择也不同。"
+      },
+      "graphicId": "13146",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,7299"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2243",
+      "name": {
+        "original": "Crossbow of the Hunter",
+        "display": "猎手十字弩"
+      },
+      "description": {
+        "original": "My aim is flawless.",
+        "display": "我的瞄准无懈可击。"
+      },
+      "graphicId": "13147",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,7299"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2244",
+      "name": {
+        "original": "Shadowfell Repeater",
+        "display": "堕影冥界连发枪"
+      },
+      "description": {
+        "original": "When clawed things come out of the sky, it's better to shoot first and fast.",
+        "display": "当有爪的东西从天上飞过时，最好先快速射击。"
+      },
+      "graphicId": "13148",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,7299"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2245",
+      "name": {
+        "original": "Haunting Jewelry",
+        "display": "闹鬼珠宝"
+      },
+      "description": {
+        "original": "This was a gift from my father.",
+        "display": "这是来自我父亲的礼物。"
+      },
+      "graphicId": "13161",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,7302"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2246",
+      "name": {
+        "original": "Family Keepsake",
+        "display": "家族纪念品"
+      },
+      "description": {
+        "original": "Feels ominous, getting this as a boy, then being bitten by a werewolf.",
+        "display": "这是件不祥之物。我小时候得到这个，然后被狼人咬了。"
+      },
+      "graphicId": "13161",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,7302"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2247",
+      "name": {
+        "original": "Wolf's Tooth Necklace",
+        "display": "狼牙项链"
+      },
+      "description": {
+        "original": "It's my touchstone. Reminds me who I am and what I came from.",
+        "display": "这是我的试金石。它能提醒我，我是谁，我来自哪里。"
+      },
+      "graphicId": "13162",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,7302"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2248",
+      "name": {
+        "original": "Noble Promise",
+        "display": "崇高诺言"
+      },
+      "description": {
+        "original": "The wolf is in me, and so is Koshmarr.",
+        "display": "狼在我心里，科什马尔也是。"
+      },
+      "graphicId": "13163",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,7302"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2249",
+      "name": {
+        "original": "Roughmade Armor",
+        "display": "粗糙盔甲"
+      },
+      "description": {
+        "original": "You want a piece of me?",
+        "display": "你想要拆了我吗？"
+      },
+      "graphicId": "13152",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,7303"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2250",
+      "name": {
+        "original": "Battered Protection",
+        "display": "破损防护"
+      },
+      "description": {
+        "original": "I don't need this, but I can fight longer with it.",
+        "display": "我不需要这个，但有了它，我可以战斗更长时间。"
+      },
+      "graphicId": "13152",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,7303"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2251",
+      "name": {
+        "original": "Pauldrons of Shadow",
+        "display": "暗影护肩"
+      },
+      "description": {
+        "original": "The deeper we travel, the heavier my armor grows.",
+        "display": "我们走得越远，我的盔甲就越重。"
+      },
+      "graphicId": "13153",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,7303"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2252",
+      "name": {
+        "original": "Pack Lord's Armor",
+        "display": "载神盔甲"
+      },
+      "description": {
+        "original": "If no one else will stand against this evil, I will.",
+        "display": "就算没有其他人反抗这种邪恶，我也会。"
+      },
+      "graphicId": "13154",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,7303"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2253",
+      "name": {
+        "original": "Useful Bag",
+        "display": "实用袋子"
+      },
+      "description": {
+        "original": "You never know what you'll need in the Mists.",
+        "display": "你永远不知道在迷雾中会需要什么。"
+      },
+      "graphicId": "13155",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,25"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2254",
+      "name": {
+        "original": "Sack for Gear",
+        "display": "装备袋"
+      },
+      "description": {
+        "original": "I'm ready for anything.",
+        "display": "我准备好了一切。"
+      },
+      "graphicId": "13155",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,87.5"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2255",
+      "name": {
+        "original": "Storage Pouch",
+        "display": "储物袋"
+      },
+      "description": {
+        "original": "Big enough a large flask in case someone starts talking politics.",
+        "display": "能装下一大瓶酒，以防有人开始谈论政治。"
+      },
+      "graphicId": "13156",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,150"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2256",
+      "name": {
+        "original": "Embroidered Satchel",
+        "display": "绣花挎包"
+      },
+      "description": {
+        "original": "I've picked up a few surprises.",
+        "display": "我得到了一些惊喜。"
+      },
+      "graphicId": "13157",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,275"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "55",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "male"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Male Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "58",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,30",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "human"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Human Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "90",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "int",
+              "check": 11,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a INT score of 11 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "30",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "str",
+              "score": 15,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a STR score of 15 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "52",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "chaotic"
+            }
+          ],
+          "description": "Increases the damage of all Chaotic Champions by $(amount)%"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3214,7 +3840,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 81,
+        "popularity": 88,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3415,7 +4041,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 81,
+        "popularity": 88,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -7328,6 +7954,1096 @@
             "availabilities": {
               "premium_item_id": "689"
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "2233",
+        "snapshots": {
+          "original": {
+            "id": 2233,
+            "name": "Heroic Blade",
+            "description": "You don't need anything fancy.",
+            "graphic_id": 13158,
+            "hero_id": 96,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2233,
+            "name": "英勇之刃",
+            "description": "你不需要任何花哨的东西。",
+            "graphic_id": 13158,
+            "hero_id": 96,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2234",
+        "snapshots": {
+          "original": {
+            "id": 2234,
+            "name": "Sword of Promise",
+            "description": "My father saw a lot of promise in me, but it's not the right sort of promise.",
+            "graphic_id": 13158,
+            "hero_id": 96,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2234,
+            "name": "承诺之剑",
+            "description": "我父亲在我身上看到了很多承诺，但这不是正确的承诺。",
+            "graphic_id": 13158,
+            "hero_id": 96,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2235",
+        "snapshots": {
+          "original": {
+            "id": 2235,
+            "name": "Possessed Sword",
+            "description": "When we found Voronika, I had to save her -- by imbuing my sword with her ghost.",
+            "graphic_id": 13159,
+            "hero_id": 96,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2235,
+            "name": "附身之剑",
+            "description": "当我们找到沃罗妮卡时，我不得不拯救她--把她的幽魂注入我的剑中。",
+            "graphic_id": 13159,
+            "hero_id": 96,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2236",
+        "snapshots": {
+          "original": {
+            "id": 2236,
+            "name": "Edge of Sorrow",
+            "description": "What the Mists have taken from me, I will repay them in turn.",
+            "graphic_id": 13160,
+            "hero_id": 96,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2236,
+            "name": "悲泣之刃",
+            "description": "迷雾夺走了我的一切，我将以此报答他们。",
+            "graphic_id": 13160,
+            "hero_id": 96,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2237",
+        "snapshots": {
+          "original": {
+            "id": 2237,
+            "name": "Practice Weapon",
+            "description": "I spent long hours learning to fight.",
+            "graphic_id": 13149,
+            "hero_id": 96,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2237,
+            "name": "练习武器",
+            "description": "我花了很长时间学习战斗。",
+            "graphic_id": 13149,
+            "hero_id": 96,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2238",
+        "snapshots": {
+          "original": {
+            "id": 2238,
+            "name": "Training Blade",
+            "description": "Fighting came naturally to me--more naturally than politics.",
+            "graphic_id": 13149,
+            "hero_id": 96,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2238,
+            "name": "训练之刃",
+            "description": "战斗对我来说是自然而然的，比政治更自然。",
+            "graphic_id": 13149,
+            "hero_id": 96,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2239",
+        "snapshots": {
+          "original": {
+            "id": 2239,
+            "name": "Hunter's Blade",
+            "description": "You get the sword. I'll save my claws for a real threat.",
+            "graphic_id": 13150,
+            "hero_id": 96,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2239,
+            "name": "猎人之刃",
+            "description": "你拿到剑了。我会用爪子来对付真正的威胁。",
+            "graphic_id": 13150,
+            "hero_id": 96,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2240",
+        "snapshots": {
+          "original": {
+            "id": 2240,
+            "name": "Sword of Koshmarr",
+            "description": "This isn't my destiny, is it?",
+            "graphic_id": 13151,
+            "hero_id": 96,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2240,
+            "name": "科什马尔之剑",
+            "description": "这不是我的命运，对吗？",
+            "graphic_id": 13151,
+            "hero_id": 96,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2241",
+        "snapshots": {
+          "original": {
+            "id": 2241,
+            "name": "Distance Weapon",
+            "description": "Sometimes it's best to strike from a distance.",
+            "graphic_id": 13146,
+            "hero_id": 96,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,7299"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2241,
+            "name": "远程武器",
+            "description": "有时最好从远处攻击。",
+            "graphic_id": 13146,
+            "hero_id": 96,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,7299"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2242",
+        "snapshots": {
+          "original": {
+            "id": 2242,
+            "name": "Ranger's Crossbow",
+            "description": "Depending on the prey, I'd rather have my space.",
+            "graphic_id": 13146,
+            "hero_id": 96,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,7299"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2242,
+            "name": "巡林客的十字弩",
+            "description": "根据猎物的不同，我的选择也不同。",
+            "graphic_id": 13146,
+            "hero_id": 96,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,7299"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2243",
+        "snapshots": {
+          "original": {
+            "id": 2243,
+            "name": "Crossbow of the Hunter",
+            "description": "My aim is flawless.",
+            "graphic_id": 13147,
+            "hero_id": 96,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,7299"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2243,
+            "name": "猎手十字弩",
+            "description": "我的瞄准无懈可击。",
+            "graphic_id": 13147,
+            "hero_id": 96,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,7299"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2244",
+        "snapshots": {
+          "original": {
+            "id": 2244,
+            "name": "Shadowfell Repeater",
+            "description": "When clawed things come out of the sky, it's better to shoot first and fast.",
+            "graphic_id": 13148,
+            "hero_id": 96,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,7299"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2244,
+            "name": "堕影冥界连发枪",
+            "description": "当有爪的东西从天上飞过时，最好先快速射击。",
+            "graphic_id": 13148,
+            "hero_id": 96,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,7299"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2245",
+        "snapshots": {
+          "original": {
+            "id": 2245,
+            "name": "Haunting Jewelry",
+            "description": "This was a gift from my father.",
+            "graphic_id": 13161,
+            "hero_id": 96,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,7302"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2245,
+            "name": "闹鬼珠宝",
+            "description": "这是来自我父亲的礼物。",
+            "graphic_id": 13161,
+            "hero_id": 96,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,7302"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2246",
+        "snapshots": {
+          "original": {
+            "id": 2246,
+            "name": "Family Keepsake",
+            "description": "Feels ominous, getting this as a boy, then being bitten by a werewolf.",
+            "graphic_id": 13161,
+            "hero_id": 96,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,7302"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2246,
+            "name": "家族纪念品",
+            "description": "这是件不祥之物。我小时候得到这个，然后被狼人咬了。",
+            "graphic_id": 13161,
+            "hero_id": 96,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,7302"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2247",
+        "snapshots": {
+          "original": {
+            "id": 2247,
+            "name": "Wolf's Tooth Necklace",
+            "description": "It's my touchstone. Reminds me who I am and what I came from.",
+            "graphic_id": 13162,
+            "hero_id": 96,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,7302"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2247,
+            "name": "狼牙项链",
+            "description": "这是我的试金石。它能提醒我，我是谁，我来自哪里。",
+            "graphic_id": 13162,
+            "hero_id": 96,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,7302"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2248",
+        "snapshots": {
+          "original": {
+            "id": 2248,
+            "name": "Noble Promise",
+            "description": "The wolf is in me, and so is Koshmarr.",
+            "graphic_id": 13163,
+            "hero_id": 96,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,7302"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2248,
+            "name": "崇高诺言",
+            "description": "狼在我心里，科什马尔也是。",
+            "graphic_id": 13163,
+            "hero_id": 96,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,7302"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2249",
+        "snapshots": {
+          "original": {
+            "id": 2249,
+            "name": "Roughmade Armor",
+            "description": "You want a piece of me?",
+            "graphic_id": 13152,
+            "hero_id": 96,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,7303"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2249,
+            "name": "粗糙盔甲",
+            "description": "你想要拆了我吗？",
+            "graphic_id": 13152,
+            "hero_id": 96,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,7303"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2250",
+        "snapshots": {
+          "original": {
+            "id": 2250,
+            "name": "Battered Protection",
+            "description": "I don't need this, but I can fight longer with it.",
+            "graphic_id": 13152,
+            "hero_id": 96,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,7303"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2250,
+            "name": "破损防护",
+            "description": "我不需要这个，但有了它，我可以战斗更长时间。",
+            "graphic_id": 13152,
+            "hero_id": 96,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,7303"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2251",
+        "snapshots": {
+          "original": {
+            "id": 2251,
+            "name": "Pauldrons of Shadow",
+            "description": "The deeper we travel, the heavier my armor grows.",
+            "graphic_id": 13153,
+            "hero_id": 96,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,7303"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2251,
+            "name": "暗影护肩",
+            "description": "我们走得越远，我的盔甲就越重。",
+            "graphic_id": 13153,
+            "hero_id": 96,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,7303"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2252",
+        "snapshots": {
+          "original": {
+            "id": 2252,
+            "name": "Pack Lord's Armor",
+            "description": "If no one else will stand against this evil, I will.",
+            "graphic_id": 13154,
+            "hero_id": 96,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,7303"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2252,
+            "name": "载神盔甲",
+            "description": "就算没有其他人反抗这种邪恶，我也会。",
+            "graphic_id": 13154,
+            "hero_id": 96,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,7303"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2253",
+        "snapshots": {
+          "original": {
+            "id": 2253,
+            "name": "Useful Bag",
+            "description": "You never know what you'll need in the Mists.",
+            "graphic_id": 13155,
+            "hero_id": 96,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ]
+          },
+          "display": {
+            "id": 2253,
+            "name": "实用袋子",
+            "description": "你永远不知道在迷雾中会需要什么。",
+            "graphic_id": 13155,
+            "hero_id": 96,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2254",
+        "snapshots": {
+          "original": {
+            "id": 2254,
+            "name": "Sack for Gear",
+            "description": "I'm ready for anything.",
+            "graphic_id": 13155,
+            "hero_id": 96,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ]
+          },
+          "display": {
+            "id": 2254,
+            "name": "装备袋",
+            "description": "我准备好了一切。",
+            "graphic_id": 13155,
+            "hero_id": 96,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2255",
+        "snapshots": {
+          "original": {
+            "id": 2255,
+            "name": "Storage Pouch",
+            "description": "Big enough a large flask in case someone starts talking politics.",
+            "graphic_id": 13156,
+            "hero_id": 96,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ]
+          },
+          "display": {
+            "id": 2255,
+            "name": "储物袋",
+            "description": "能装下一大瓶酒，以防有人开始谈论政治。",
+            "graphic_id": 13156,
+            "hero_id": 96,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2256",
+        "snapshots": {
+          "original": {
+            "id": 2256,
+            "name": "Embroidered Satchel",
+            "description": "I've picked up a few surprises.",
+            "graphic_id": 13157,
+            "hero_id": 96,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ]
+          },
+          "display": {
+            "id": 2256,
+            "name": "绣花挎包",
+            "description": "我得到了一些惊喜。",
+            "graphic_id": 13157,
+            "hero_id": 96,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "55",
+        "snapshots": {
+          "original": {
+            "id": 55,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Male Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 55,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "阵型中每有一位男性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "58",
+        "snapshots": {
+          "original": {
+            "id": 58,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Human Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 58,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "阵型中每有一位人类勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "90",
+        "snapshots": {
+          "original": {
+            "id": 90,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "int",
+                    "check": 11,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a INT score of 11 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 90,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "int",
+                    "check": 11,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位智力大于等于 11 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "30",
+        "snapshots": {
+          "original": {
+            "id": 30,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a STR score of 15 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 30,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有力量大于等于 15 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "52",
+        "snapshots": {
+          "original": {
+            "id": 52,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "chaotic"
+                  }
+                ],
+                "description": "Increases the damage of all Chaotic Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 52,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "chaotic"
+                  }
+                ],
+                "description": "使所有混乱阵营勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

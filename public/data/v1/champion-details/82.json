@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "82",
     "name": {
@@ -39,7 +39,7 @@
   },
   "dateAvailable": "2021-06-30 13:00:00",
   "lastReworkDate": "2024-11-13 13:00:00",
-  "popularity": 101,
+  "popularity": 102,
   "baseCost": "250000000",
   "baseDamage": "2000000",
   "baseHealth": "115",
@@ -2878,6 +2878,696 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "1945",
+      "name": {
+        "original": "Militia Axe",
+        "display": "民兵斧"
+      },
+      "description": {
+        "original": "Any axe in a storm - right?!",
+        "display": "关键时刻，有斧头就行--对吧？"
+      },
+      "graphicId": "10784",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1946",
+      "name": {
+        "original": "Horde Smasher",
+        "display": "部落击破者"
+      },
+      "description": {
+        "original": "Just keep swinging!",
+        "display": "一直挥，不要停！"
+      },
+      "graphicId": "10784",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1947",
+      "name": {
+        "original": "Protector's Enclave Axe",
+        "display": "保护者阔斧"
+      },
+      "description": {
+        "original": "I have some more work for you, if you're interested.",
+        "display": "如果你感兴趣的话，我有个活可以给你干。"
+      },
+      "graphicId": "10785",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1948",
+      "name": {
+        "original": "Neverwinter Greataxe",
+        "display": "无冬城巨斧"
+      },
+      "description": {
+        "original": "It's ostentatious and it'll paint a target on me in battle. Good.",
+        "display": "它外形太夸张了，在战斗中会让我成为靶子。很好。"
+      },
+      "graphicId": "10786",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "1949",
+      "name": {
+        "original": "Mintarn Wrappings",
+        "display": "明塔恩裹布"
+      },
+      "description": {
+        "original": "Militia training teaches you how to throw your own armor together.",
+        "display": "民兵训练能教会你如何把自己的盔甲穿好。"
+      },
+      "graphicId": "10793",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,15955"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1950",
+      "name": {
+        "original": "Off-Duty Wrap",
+        "display": "离岗裹布"
+      },
+      "description": {
+        "original": "You never know when you'll run into a problem. Best to be prepared.",
+        "display": "谁也不知道什么时候会遇上麻烦。有所准备肯定是最好的。"
+      },
+      "graphicId": "10793",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,15955"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1951",
+      "name": {
+        "original": "Combat Gear",
+        "display": "战斗装备"
+      },
+      "description": {
+        "original": "Let's see Valindra's forces deal with us now!",
+        "display": "现在来瞧瞧瓦琳德拉的手下要怎么应付我们吧！"
+      },
+      "graphicId": "10794",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,15955"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1952",
+      "name": {
+        "original": "Ceremonial Gauntlets",
+        "display": "仪式护臂"
+      },
+      "description": {
+        "original": "I'm a soldier, but I have a responsibility to represent our city.",
+        "display": "我是个士兵，但我也有责任代表我们的城市。"
+      },
+      "graphicId": "10795",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,15955"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1953",
+      "name": {
+        "original": "Sparring Equipment",
+        "display": "拳击装备"
+      },
+      "description": {
+        "original": "You want to end up washed up on a beach somewhere?",
+        "display": "你想试试从某个海滩上被浪冲上来的感觉吗？"
+      },
+      "graphicId": "10799",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,15959",
+          "description": "Increases the effect of all of Sgt. Knox's Specializations by $amount%"
+        },
+        {
+          "effect_string": "buff_upgrade,25,15960,1",
+          "description": "",
+          "skip_effect_key_desc": true
+        },
+        {
+          "effect_string": "buff_upgrade,25,15960,2",
+          "description": "",
+          "skip_effect_key_desc": true
+        },
+        {
+          "effect_string": "buff_upgrade,25,15961,0",
+          "description": "",
+          "skip_effect_key_desc": true
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1954",
+      "name": {
+        "original": "Training Pauldron",
+        "display": "训练肩甲"
+      },
+      "description": {
+        "original": "It's never too early to start training!",
+        "display": "什么时候开始训练都不算早！"
+      },
+      "graphicId": "10799",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,15959",
+          "description": "Increases the effect of all of Sgt. Knox's Specializations by $amount%"
+        },
+        {
+          "effect_string": "buff_upgrade,87.5,15960,1",
+          "description": "",
+          "skip_effect_key_desc": true
+        },
+        {
+          "effect_string": "buff_upgrade,87.5,15960,2",
+          "description": "",
+          "skip_effect_key_desc": true
+        },
+        {
+          "effect_string": "buff_upgrade,87.5,15961,0",
+          "description": "",
+          "skip_effect_key_desc": true
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1955",
+      "name": {
+        "original": "Soldier's Pauldron",
+        "display": "士兵肩甲"
+      },
+      "description": {
+        "original": "Light, solid, and it allows good shoulder rotation. No. You may not borrow it.",
+        "display": "轻便而坚固，能让你灵活地转动肩膀。不。这东西不能借给你。"
+      },
+      "graphicId": "10800",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,15959",
+          "description": "Increases the effect of all of Sgt. Knox's Specializations by $amount%"
+        },
+        {
+          "effect_string": "buff_upgrade,150,15960,1",
+          "description": "",
+          "skip_effect_key_desc": true
+        },
+        {
+          "effect_string": "buff_upgrade,150,15960,2",
+          "description": "",
+          "skip_effect_key_desc": true
+        },
+        {
+          "effect_string": "buff_upgrade,150,15961,0",
+          "description": "",
+          "skip_effect_key_desc": true
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1956",
+      "name": {
+        "original": "Neverember's Protector's Armor",
+        "display": "内威尔伦勃尔的保护者盔甲"
+      },
+      "description": {
+        "original": "Lord Neverember requires assistance.",
+        "display": "内威尔伦勃尔领主需要协助。"
+      },
+      "graphicId": "10801",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,15959",
+          "description": "Increases the effect of all of Sgt. Knox's Specializations by $amount%"
+        },
+        {
+          "effect_string": "buff_upgrade,275,15960,1",
+          "description": "",
+          "skip_effect_key_desc": true
+        },
+        {
+          "effect_string": "buff_upgrade,275,15960,2",
+          "description": "",
+          "skip_effect_key_desc": true
+        },
+        {
+          "effect_string": "buff_upgrade,275,15961,0",
+          "description": "",
+          "skip_effect_key_desc": true
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1957",
+      "name": {
+        "original": "Traveling Lute",
+        "display": "旅行鲁特琴"
+      },
+      "description": {
+        "original": "We've got a campfire, and I've got a lute. Have a seat!",
+        "display": "我们点燃了篝火，我还带来了一架鲁特琴。快坐吧！"
+      },
+      "graphicId": "10796",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,15953,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1958",
+      "name": {
+        "original": "Twostring Lute",
+        "display": "双弦鲁特琴"
+      },
+      "description": {
+        "original": "You could get it from Halambar's, but I prefer an original from Mintarn.",
+        "display": "可以在哈拉姆巴店里买得到，但我更喜欢米塔恩的原版。"
+      },
+      "graphicId": "10796",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,15953,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1959",
+      "name": {
+        "original": "Linkletter's Dagger",
+        "display": "林克莱特的匕首"
+      },
+      "description": {
+        "original": "Lt. Linkletter is an old friend. Could you return thi- wait... I think I'll keep this one.",
+        "display": "林克莱特中尉是我的老朋友。你能把这个还--等等......我还是把它留下吧。"
+      },
+      "graphicId": "10797",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,15953,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1960",
+      "name": {
+        "original": "Token of Neverwinter",
+        "display": "无冬城印记"
+      },
+      "description": {
+        "original": "This token puts the full weight of Neverwinter behind your request. Use it wisely.",
+        "display": "有了这个印记，你的请求将得到整个无冬城的支持。一定要谨慎使用。"
+      },
+      "graphicId": "10798",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,15953,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1961",
+      "name": {
+        "original": "Makeshift Bandage",
+        "display": "临时绷带"
+      },
+      "description": {
+        "original": "The first one is always the most challenging.",
+        "display": "第一个总是最有挑战性的。"
+      },
+      "graphicId": "10790",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,15957"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1962",
+      "name": {
+        "original": "Battlefield Eyepatch",
+        "display": "战地眼罩"
+      },
+      "description": {
+        "original": "Valindra's forces are close. Put this on or you'll be running in circles.",
+        "display": "瓦琳德拉的手下就在附近。把它戴上，不然你只会原地打转。"
+      },
+      "graphicId": "10790",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,15957"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1963",
+      "name": {
+        "original": "Basic Eyepatch",
+        "display": "基础眼罩"
+      },
+      "description": {
+        "original": "Simple and effective. It doesn't invite too many questions.",
+        "display": "简单有效。不会引发太多问题。"
+      },
+      "graphicId": "10791",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,15957"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1964",
+      "name": {
+        "original": "Ceremonial Eyepatch",
+        "display": "仪式用眼罩"
+      },
+      "description": {
+        "original": "Lord Neverember requests an audience with the Champions.",
+        "display": "内威尔伦勃尔领主要召见勇士队。"
+      },
+      "graphicId": "10792",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,15957"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1965",
+      "name": {
+        "original": "Horse Harness",
+        "display": "马具"
+      },
+      "description": {
+        "original": "Go talk to the stablehand over there and get your own.",
+        "display": "去找那边的马夫，自己拿一副去。"
+      },
+      "graphicId": "10787",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,8"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1966",
+      "name": {
+        "original": "Stable Bridle",
+        "display": "稳固马笼头"
+      },
+      "description": {
+        "original": "A simple bridle for a quick ride to Helm's Hold.",
+        "display": "简单的马笼头，方便你尽快骑马前往支配要塞。"
+      },
+      "graphicId": "10787",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,16"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1967",
+      "name": {
+        "original": "Padded Bridle",
+        "display": "加厚马笼头"
+      },
+      "description": {
+        "original": "It's worth the investment, especially if you're taking the horse into battle.",
+        "display": "这钱花得很值得，尤其是如果你想带着马参加战斗的话。"
+      },
+      "graphicId": "10788",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,31"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1968",
+      "name": {
+        "original": "Armored Bridle",
+        "display": "披甲马笼头"
+      },
+      "description": {
+        "original": "Her armor matches mine! That's a nice touch.",
+        "display": "她的盔甲跟我的有点像！这个真不错。"
+      },
+      "graphicId": "10789",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,78"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "56",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "58",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,30",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "human"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Human Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "31",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "dex",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a DEX score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "28",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "str",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a STR score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "99",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "attack_type",
+              "attack": "melee"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Melee Champion in the formation"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3036,7 +3726,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 101,
+        "popularity": 102,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3234,7 +3924,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 101,
+        "popularity": 102,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -6773,6 +7463,1256 @@
             "availabilities": {
               "in_flash_sales": true
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "1945",
+        "snapshots": {
+          "original": {
+            "id": 1945,
+            "name": "Militia Axe",
+            "description": "Any axe in a storm - right?!",
+            "graphic_id": 10784,
+            "hero_id": 82,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1945,
+            "name": "民兵斧",
+            "description": "关键时刻，有斧头就行--对吧？",
+            "graphic_id": 10784,
+            "hero_id": 82,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1946",
+        "snapshots": {
+          "original": {
+            "id": 1946,
+            "name": "Horde Smasher",
+            "description": "Just keep swinging!",
+            "graphic_id": 10784,
+            "hero_id": 82,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1946,
+            "name": "部落击破者",
+            "description": "一直挥，不要停！",
+            "graphic_id": 10784,
+            "hero_id": 82,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1947",
+        "snapshots": {
+          "original": {
+            "id": 1947,
+            "name": "Protector's Enclave Axe",
+            "description": "I have some more work for you, if you're interested.",
+            "graphic_id": 10785,
+            "hero_id": 82,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1947,
+            "name": "保护者阔斧",
+            "description": "如果你感兴趣的话，我有个活可以给你干。",
+            "graphic_id": 10785,
+            "hero_id": 82,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1948",
+        "snapshots": {
+          "original": {
+            "id": 1948,
+            "name": "Neverwinter Greataxe",
+            "description": "It's ostentatious and it'll paint a target on me in battle. Good.",
+            "graphic_id": 10786,
+            "hero_id": 82,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1948,
+            "name": "无冬城巨斧",
+            "description": "它外形太夸张了，在战斗中会让我成为靶子。很好。",
+            "graphic_id": 10786,
+            "hero_id": 82,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1949",
+        "snapshots": {
+          "original": {
+            "id": 1949,
+            "name": "Mintarn Wrappings",
+            "description": "Militia training teaches you how to throw your own armor together.",
+            "graphic_id": 10793,
+            "hero_id": 82,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15955"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1949,
+            "name": "明塔恩裹布",
+            "description": "民兵训练能教会你如何把自己的盔甲穿好。",
+            "graphic_id": 10793,
+            "hero_id": 82,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15955"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1950",
+        "snapshots": {
+          "original": {
+            "id": 1950,
+            "name": "Off-Duty Wrap",
+            "description": "You never know when you'll run into a problem. Best to be prepared.",
+            "graphic_id": 10793,
+            "hero_id": 82,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15955"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1950,
+            "name": "离岗裹布",
+            "description": "谁也不知道什么时候会遇上麻烦。有所准备肯定是最好的。",
+            "graphic_id": 10793,
+            "hero_id": 82,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15955"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1951",
+        "snapshots": {
+          "original": {
+            "id": 1951,
+            "name": "Combat Gear",
+            "description": "Let's see Valindra's forces deal with us now!",
+            "graphic_id": 10794,
+            "hero_id": 82,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15955"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1951,
+            "name": "战斗装备",
+            "description": "现在来瞧瞧瓦琳德拉的手下要怎么应付我们吧！",
+            "graphic_id": 10794,
+            "hero_id": 82,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15955"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1952",
+        "snapshots": {
+          "original": {
+            "id": 1952,
+            "name": "Ceremonial Gauntlets",
+            "description": "I'm a soldier, but I have a responsibility to represent our city.",
+            "graphic_id": 10795,
+            "hero_id": 82,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15955"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1952,
+            "name": "仪式护臂",
+            "description": "我是个士兵，但我也有责任代表我们的城市。",
+            "graphic_id": 10795,
+            "hero_id": 82,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15955"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1953",
+        "snapshots": {
+          "original": {
+            "id": 1953,
+            "name": "Sparring Equipment",
+            "description": "You want to end up washed up on a beach somewhere?",
+            "graphic_id": 10799,
+            "hero_id": 82,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15959",
+                "description": "Increases the effect of all of Sgt. Knox's Specializations by $amount%"
+              },
+              {
+                "effect_string": "buff_upgrade,25,15960,1",
+                "description": "",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,25,15960,2",
+                "description": "",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,25,15961,0",
+                "description": "",
+                "skip_effect_key_desc": true
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1953,
+            "name": "拳击装备",
+            "description": "你想试试从某个海滩上被浪冲上来的感觉吗？",
+            "graphic_id": 10799,
+            "hero_id": 82,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15959",
+                "description": "使诺克斯中士的所有专精效果提高 $amount%"
+              },
+              {
+                "effect_string": "buff_upgrade,25,15960,1",
+                "description": "",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,25,15960,2",
+                "description": "",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,25,15961,0",
+                "description": "",
+                "skip_effect_key_desc": true
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1954",
+        "snapshots": {
+          "original": {
+            "id": 1954,
+            "name": "Training Pauldron",
+            "description": "It's never too early to start training!",
+            "graphic_id": 10799,
+            "hero_id": 82,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15959",
+                "description": "Increases the effect of all of Sgt. Knox's Specializations by $amount%"
+              },
+              {
+                "effect_string": "buff_upgrade,87.5,15960,1",
+                "description": "",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,87.5,15960,2",
+                "description": "",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,87.5,15961,0",
+                "description": "",
+                "skip_effect_key_desc": true
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1954,
+            "name": "训练肩甲",
+            "description": "什么时候开始训练都不算早！",
+            "graphic_id": 10799,
+            "hero_id": 82,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15959",
+                "description": "使诺克斯中士的所有专精效果提高 $amount%"
+              },
+              {
+                "effect_string": "buff_upgrade,87.5,15960,1",
+                "description": "",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,87.5,15960,2",
+                "description": "",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,87.5,15961,0",
+                "description": "",
+                "skip_effect_key_desc": true
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1955",
+        "snapshots": {
+          "original": {
+            "id": 1955,
+            "name": "Soldier's Pauldron",
+            "description": "Light, solid, and it allows good shoulder rotation. No. You may not borrow it.",
+            "graphic_id": 10800,
+            "hero_id": 82,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15959",
+                "description": "Increases the effect of all of Sgt. Knox's Specializations by $amount%"
+              },
+              {
+                "effect_string": "buff_upgrade,150,15960,1",
+                "description": "",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,150,15960,2",
+                "description": "",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,150,15961,0",
+                "description": "",
+                "skip_effect_key_desc": true
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1955,
+            "name": "士兵肩甲",
+            "description": "轻便而坚固，能让你灵活地转动肩膀。不。这东西不能借给你。",
+            "graphic_id": 10800,
+            "hero_id": 82,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15959",
+                "description": "使诺克斯中士的所有专精效果提高 $amount%"
+              },
+              {
+                "effect_string": "buff_upgrade,150,15960,1",
+                "description": "",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,150,15960,2",
+                "description": "",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,150,15961,0",
+                "description": "",
+                "skip_effect_key_desc": true
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1956",
+        "snapshots": {
+          "original": {
+            "id": 1956,
+            "name": "Neverember's Protector's Armor",
+            "description": "Lord Neverember requires assistance.",
+            "graphic_id": 10801,
+            "hero_id": 82,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15959",
+                "description": "Increases the effect of all of Sgt. Knox's Specializations by $amount%"
+              },
+              {
+                "effect_string": "buff_upgrade,275,15960,1",
+                "description": "",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,275,15960,2",
+                "description": "",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,275,15961,0",
+                "description": "",
+                "skip_effect_key_desc": true
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1956,
+            "name": "内威尔伦勃尔的保护者盔甲",
+            "description": "内威尔伦勃尔领主需要协助。",
+            "graphic_id": 10801,
+            "hero_id": 82,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15959",
+                "description": "使诺克斯中士的所有专精效果提高 $amount%"
+              },
+              {
+                "effect_string": "buff_upgrade,275,15960,1",
+                "description": "",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,275,15960,2",
+                "description": "",
+                "skip_effect_key_desc": true
+              },
+              {
+                "effect_string": "buff_upgrade,275,15961,0",
+                "description": "",
+                "skip_effect_key_desc": true
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1957",
+        "snapshots": {
+          "original": {
+            "id": 1957,
+            "name": "Traveling Lute",
+            "description": "We've got a campfire, and I've got a lute. Have a seat!",
+            "graphic_id": 10796,
+            "hero_id": 82,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,15953,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1957,
+            "name": "旅行鲁特琴",
+            "description": "我们点燃了篝火，我还带来了一架鲁特琴。快坐吧！",
+            "graphic_id": 10796,
+            "hero_id": 82,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,15953,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1958",
+        "snapshots": {
+          "original": {
+            "id": 1958,
+            "name": "Twostring Lute",
+            "description": "You could get it from Halambar's, but I prefer an original from Mintarn.",
+            "graphic_id": 10796,
+            "hero_id": 82,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,15953,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1958,
+            "name": "双弦鲁特琴",
+            "description": "可以在哈拉姆巴店里买得到，但我更喜欢米塔恩的原版。",
+            "graphic_id": 10796,
+            "hero_id": 82,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,15953,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1959",
+        "snapshots": {
+          "original": {
+            "id": 1959,
+            "name": "Linkletter's Dagger",
+            "description": "Lt. Linkletter is an old friend. Could you return thi- wait... I think I'll keep this one.",
+            "graphic_id": 10797,
+            "hero_id": 82,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,15953,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1959,
+            "name": "林克莱特的匕首",
+            "description": "林克莱特中尉是我的老朋友。你能把这个还--等等......我还是把它留下吧。",
+            "graphic_id": 10797,
+            "hero_id": 82,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,15953,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1960",
+        "snapshots": {
+          "original": {
+            "id": 1960,
+            "name": "Token of Neverwinter",
+            "description": "This token puts the full weight of Neverwinter behind your request. Use it wisely.",
+            "graphic_id": 10798,
+            "hero_id": 82,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,15953,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1960,
+            "name": "无冬城印记",
+            "description": "有了这个印记，你的请求将得到整个无冬城的支持。一定要谨慎使用。",
+            "graphic_id": 10798,
+            "hero_id": 82,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,15953,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1961",
+        "snapshots": {
+          "original": {
+            "id": 1961,
+            "name": "Makeshift Bandage",
+            "description": "The first one is always the most challenging.",
+            "graphic_id": 10790,
+            "hero_id": 82,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15957"
+              }
+            ]
+          },
+          "display": {
+            "id": 1961,
+            "name": "临时绷带",
+            "description": "第一个总是最有挑战性的。",
+            "graphic_id": 10790,
+            "hero_id": 82,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15957"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1962",
+        "snapshots": {
+          "original": {
+            "id": 1962,
+            "name": "Battlefield Eyepatch",
+            "description": "Valindra's forces are close. Put this on or you'll be running in circles.",
+            "graphic_id": 10790,
+            "hero_id": 82,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15957"
+              }
+            ]
+          },
+          "display": {
+            "id": 1962,
+            "name": "战地眼罩",
+            "description": "瓦琳德拉的手下就在附近。把它戴上，不然你只会原地打转。",
+            "graphic_id": 10790,
+            "hero_id": 82,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15957"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1963",
+        "snapshots": {
+          "original": {
+            "id": 1963,
+            "name": "Basic Eyepatch",
+            "description": "Simple and effective. It doesn't invite too many questions.",
+            "graphic_id": 10791,
+            "hero_id": 82,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15957"
+              }
+            ]
+          },
+          "display": {
+            "id": 1963,
+            "name": "基础眼罩",
+            "description": "简单有效。不会引发太多问题。",
+            "graphic_id": 10791,
+            "hero_id": 82,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15957"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1964",
+        "snapshots": {
+          "original": {
+            "id": 1964,
+            "name": "Ceremonial Eyepatch",
+            "description": "Lord Neverember requests an audience with the Champions.",
+            "graphic_id": 10792,
+            "hero_id": 82,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15957"
+              }
+            ]
+          },
+          "display": {
+            "id": 1964,
+            "name": "仪式用眼罩",
+            "description": "内威尔伦勃尔领主要召见勇士队。",
+            "graphic_id": 10792,
+            "hero_id": 82,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15957"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1965",
+        "snapshots": {
+          "original": {
+            "id": 1965,
+            "name": "Horse Harness",
+            "description": "Go talk to the stablehand over there and get your own.",
+            "graphic_id": 10787,
+            "hero_id": 82,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,8"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1965,
+            "name": "马具",
+            "description": "去找那边的马夫，自己拿一副去。",
+            "graphic_id": 10787,
+            "hero_id": 82,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,8"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1966",
+        "snapshots": {
+          "original": {
+            "id": 1966,
+            "name": "Stable Bridle",
+            "description": "A simple bridle for a quick ride to Helm's Hold.",
+            "graphic_id": 10787,
+            "hero_id": 82,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,16"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1966,
+            "name": "稳固马笼头",
+            "description": "简单的马笼头，方便你尽快骑马前往支配要塞。",
+            "graphic_id": 10787,
+            "hero_id": 82,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,16"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1967",
+        "snapshots": {
+          "original": {
+            "id": 1967,
+            "name": "Padded Bridle",
+            "description": "It's worth the investment, especially if you're taking the horse into battle.",
+            "graphic_id": 10788,
+            "hero_id": 82,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,31"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1967,
+            "name": "加厚马笼头",
+            "description": "这钱花得很值得，尤其是如果你想带着马参加战斗的话。",
+            "graphic_id": 10788,
+            "hero_id": 82,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,31"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1968",
+        "snapshots": {
+          "original": {
+            "id": 1968,
+            "name": "Armored Bridle",
+            "description": "Her armor matches mine! That's a nice touch.",
+            "graphic_id": 10789,
+            "hero_id": 82,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,78"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1968,
+            "name": "披甲马笼头",
+            "description": "她的盔甲跟我的有点像！这个真不错。",
+            "graphic_id": 10789,
+            "hero_id": 82,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,78"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "56",
+        "snapshots": {
+          "original": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "阵型中每有一位女性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "58",
+        "snapshots": {
+          "original": {
+            "id": 58,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Human Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 58,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "阵型中每有一位人类勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "31",
+        "snapshots": {
+          "original": {
+            "id": 31,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "dex",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a DEX score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 31,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "dex",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有敏捷大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "28",
+        "snapshots": {
+          "original": {
+            "id": 28,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a STR score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 28,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有力量大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "99",
+        "snapshots": {
+          "original": {
+            "id": 99,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "attack_type",
+                    "attack": "melee"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Melee Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 99,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "attack_type",
+                    "attack": "melee"
+                  }
+                ],
+                "description": "阵型中每有一位近战勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

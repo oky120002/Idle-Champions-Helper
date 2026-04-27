@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "27",
     "name": {
@@ -38,7 +38,7 @@
   },
   "dateAvailable": "2018-06-13 00:00:00",
   "lastReworkDate": "2026-01-14 13:00:00",
-  "popularity": 4,
+  "popularity": 3,
   "baseCost": "1250",
   "baseDamage": "800",
   "baseHealth": "98",
@@ -3231,6 +3231,640 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "625",
+      "name": {
+        "original": "Rusty Axes",
+        "display": "腐蚀的斧头"
+      },
+      "description": {
+        "original": "Are they sharp? They'll do.",
+        "display": "锋利不？将就用吧。"
+      },
+      "graphicId": "3177",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,50"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "626",
+      "name": {
+        "original": "Looted Axes",
+        "display": "战利品斧头"
+      },
+      "description": {
+        "original": "Don't worry, I've got an intricate two part plan.",
+        "display": "放心吧，我已经想好了一个复杂的双方案计划。"
+      },
+      "graphicId": "3177",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "627",
+      "name": {
+        "original": "Blades of the Dwarf",
+        "display": "矮人之刃"
+      },
+      "description": {
+        "original": "Plan A: We fight our way out of here. Plan B? We'll deal with that later.",
+        "display": "方案一：我们杀出一条血路。至于方案二嘛，到时再说吧。"
+      },
+      "graphicId": "3178",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "628",
+      "name": {
+        "original": "Rook & Ruin",
+        "display": "城堡与废墟"
+      },
+      "description": {
+        "original": "Double axe to the back!",
+        "display": "双斧合璧！"
+      },
+      "graphicId": "3179",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,350"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "629",
+      "name": {
+        "original": "Smelly Hide Cloak",
+        "display": "发臭的皮革斗篷"
+      },
+      "description": {
+        "original": "It's... been around.",
+        "display": "已经穿了......很长一段时间了。"
+      },
+      "graphicId": "3162",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,50"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "630",
+      "name": {
+        "original": "Patchwork Cloak",
+        "display": "拼缝的斗篷"
+      },
+      "description": {
+        "original": "Hey, my mom made it for me!",
+        "display": "喂，那是妈妈亲手给我缝制的。"
+      },
+      "graphicId": "3162",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "631",
+      "name": {
+        "original": "Dashing Cloak",
+        "display": "时髦的斗篷"
+      },
+      "description": {
+        "original": "I've seen a few cloaks in my day. But this one makes me look good!",
+        "display": "我见过的斗篷也不算少了。但没有一件比它更能衬托出我的好看！"
+      },
+      "graphicId": "3163",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "632",
+      "name": {
+        "original": "Bronzebottom's Acid-Washed Cloak",
+        "display": "青铜臀的酸洗斗篷"
+      },
+      "description": {
+        "original": "If I find an acid pit, I can just lay this on top and I'm good, right?",
+        "display": "要是碰到酸水坑，那就把它铺上去就能安全通过了，对吗？"
+      },
+      "graphicId": "3164",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,350"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "633",
+      "name": {
+        "original": "Old Helmet",
+        "display": "旧头盔"
+      },
+      "description": {
+        "original": "It looks like the horn was chewed on by something.",
+        "display": "头盔上的角似乎被什么东西咬过一样。"
+      },
+      "graphicId": "3171",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,18460"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "634",
+      "name": {
+        "original": "Battered Skull Cap",
+        "display": "磨损的无边盔"
+      },
+      "description": {
+        "original": "If the horns fall off, you've got yourself an improvised weapon!",
+        "display": "要是盔上双角被砍下来，那也可以当作武器来使用！"
+      },
+      "graphicId": "3171",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,18460"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "635",
+      "name": {
+        "original": "Helm of Door-bashing",
+        "display": "撞门盔"
+      },
+      "description": {
+        "original": "Best way through a door is headfirst.",
+        "display": "撞门的要诀就是用头撞。"
+      },
+      "graphicId": "3172",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,18460"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "636",
+      "name": {
+        "original": "Helm of the Binwin",
+        "display": "宾温的头盔"
+      },
+      "description": {
+        "original": "Bin it to win it!",
+        "display": "拼了，不要问太多！"
+      },
+      "graphicId": "3173",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,18460"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "637",
+      "name": {
+        "original": "Broken Quest Stone",
+        "display": "碎裂的任务石"
+      },
+      "description": {
+        "original": "Given to me by my mother. She collects this kinda stuff.",
+        "display": "这是妈妈传给我的。她很喜欢收藏这类物品。"
+      },
+      "graphicId": "3174",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,18461"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "638",
+      "name": {
+        "original": "Chatty Quest Stone",
+        "display": "唠叨的任务石"
+      },
+      "description": {
+        "original": "It started talking... and it won't shut up!",
+        "display": "它开始说话了......而且完全停不下来的节奏！"
+      },
+      "graphicId": "3174",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,18461"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "639",
+      "name": {
+        "original": "Dwarven Quest Stone",
+        "display": "矮人任务石"
+      },
+      "description": {
+        "original": "Rewards its bearer with riches, but at what cost?",
+        "display": "能够给佩戴者带来财富，但是代价会是什么呢？"
+      },
+      "graphicId": "3175",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,18461"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "640",
+      "name": {
+        "original": "Lady Phylia",
+        "display": "菲利亚女神"
+      },
+      "description": {
+        "original": "I am Lady Phylia Stoutheart, Dwarven Quest Stone of Friendship and Loyalty.",
+        "display": "我是女神菲利亚·决心，矮人友谊与忠诚之任务石。"
+      },
+      "graphicId": "3176",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,18461"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "641",
+      "name": {
+        "original": "Rusty Barrel",
+        "display": "腐蚀木桶"
+      },
+      "description": {
+        "original": "It wobbles, but it still rolls!",
+        "display": "虽然已经摇摇欲坠，但还是可以翻滚起来的！"
+      },
+      "graphicId": "3165",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,25,18463,18464,18465",
+          "description": "Increases the effect of Binwin's Specializations by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "642",
+      "name": {
+        "original": "Market Barrel",
+        "display": "市集木桶"
+      },
+      "description": {
+        "original": "Follow my lead!",
+        "display": "听我号令！"
+      },
+      "graphicId": "3165",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,87.5,18463,18464,18465",
+          "description": "Increases the effect of Binwin's Specializations by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "643",
+      "name": {
+        "original": "Cask of Skunk Ale",
+        "display": "一桶臭酒"
+      },
+      "description": {
+        "original": "Pungent and potent.",
+        "display": "臭气熏天。"
+      },
+      "graphicId": "3166",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,150,18463,18464,18465",
+          "description": "Increases the effect of Binwin's Specializations by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "644",
+      "name": {
+        "original": "Battleready Brew",
+        "display": "战场特酿"
+      },
+      "description": {
+        "original": "Catchphrase!",
+        "display": "朗朗上口！"
+      },
+      "graphicId": "3167",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,275,18463,18464,18465",
+          "description": "Increases the effect of Binwin's Specializations by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "645",
+      "name": {
+        "original": "Duckling Damsel",
+        "display": "鸭子小姐姐"
+      },
+      "description": {
+        "original": "I'm not the druid. I don't speak duck.",
+        "display": "我不是德鲁伊，我不会说鸭语。"
+      },
+      "graphicId": "3168",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,5"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "646",
+      "name": {
+        "original": "Faithful Duck Companion",
+        "display": "忠诚的鸭子伙伴"
+      },
+      "description": {
+        "original": "QUONK!",
+        "display": "嘎嘎！"
+      },
+      "graphicId": "3168",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,10"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "647",
+      "name": {
+        "original": "Duck Guard",
+        "display": "鸭子守卫"
+      },
+      "description": {
+        "original": "You give a duck ONE magic wand and everybody gets judgy.",
+        "display": "给鸭子一根魔法棒，所有人都会变了个样。"
+      },
+      "graphicId": "3169",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,20"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "648",
+      "name": {
+        "original": "Princess Duckersheim",
+        "display": "鸭克斯海姆公主"
+      },
+      "description": {
+        "original": "Wielder of the wand of wonder, protector of the minions, and my gold.",
+        "display": "惊异魔杖的主人。同时也是我的金库和小喽啰们的守护者。"
+      },
+      "graphicId": "3170",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,49"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "54",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "55",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "male"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Male Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "59",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "dwarf"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Dwarf Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "40",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "wis",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a WIS score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "81",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "str",
+              "check": 11,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a STR score of 11 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "102",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "good"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a GOOD alignment"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3379,7 +4013,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 4,
+        "popularity": 3,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3567,7 +4201,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 4,
+        "popularity": 3,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -7828,6 +8462,1152 @@
             "availabilities": {
               "premium_item_id": "661"
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "625",
+        "snapshots": {
+          "original": {
+            "id": 625,
+            "name": "Rusty Axes",
+            "description": "Are they sharp? They'll do.",
+            "graphic_id": 3177,
+            "hero_id": 27,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 625,
+            "name": "腐蚀的斧头",
+            "description": "锋利不？将就用吧。",
+            "graphic_id": 3177,
+            "hero_id": 27,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "626",
+        "snapshots": {
+          "original": {
+            "id": 626,
+            "name": "Looted Axes",
+            "description": "Don't worry, I've got an intricate two part plan.",
+            "graphic_id": 3177,
+            "hero_id": 27,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 626,
+            "name": "战利品斧头",
+            "description": "放心吧，我已经想好了一个复杂的双方案计划。",
+            "graphic_id": 3177,
+            "hero_id": 27,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "627",
+        "snapshots": {
+          "original": {
+            "id": 627,
+            "name": "Blades of the Dwarf",
+            "description": "Plan A: We fight our way out of here. Plan B? We'll deal with that later.",
+            "graphic_id": 3178,
+            "hero_id": 27,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 627,
+            "name": "矮人之刃",
+            "description": "方案一：我们杀出一条血路。至于方案二嘛，到时再说吧。",
+            "graphic_id": 3178,
+            "hero_id": 27,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "628",
+        "snapshots": {
+          "original": {
+            "id": 628,
+            "name": "Rook & Ruin",
+            "description": "Double axe to the back!",
+            "graphic_id": 3179,
+            "hero_id": 27,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 628,
+            "name": "城堡与废墟",
+            "description": "双斧合璧！",
+            "graphic_id": 3179,
+            "hero_id": 27,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "629",
+        "snapshots": {
+          "original": {
+            "id": 629,
+            "name": "Smelly Hide Cloak",
+            "description": "It's... been around.",
+            "graphic_id": 3162,
+            "hero_id": 27,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 629,
+            "name": "发臭的皮革斗篷",
+            "description": "已经穿了......很长一段时间了。",
+            "graphic_id": 3162,
+            "hero_id": 27,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "630",
+        "snapshots": {
+          "original": {
+            "id": 630,
+            "name": "Patchwork Cloak",
+            "description": "Hey, my mom made it for me!",
+            "graphic_id": 3162,
+            "hero_id": 27,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 630,
+            "name": "拼缝的斗篷",
+            "description": "喂，那是妈妈亲手给我缝制的。",
+            "graphic_id": 3162,
+            "hero_id": 27,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "631",
+        "snapshots": {
+          "original": {
+            "id": 631,
+            "name": "Dashing Cloak",
+            "description": "I've seen a few cloaks in my day. But this one makes me look good!",
+            "graphic_id": 3163,
+            "hero_id": 27,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 631,
+            "name": "时髦的斗篷",
+            "description": "我见过的斗篷也不算少了。但没有一件比它更能衬托出我的好看！",
+            "graphic_id": 3163,
+            "hero_id": 27,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "632",
+        "snapshots": {
+          "original": {
+            "id": 632,
+            "name": "Bronzebottom's Acid-Washed Cloak",
+            "description": "If I find an acid pit, I can just lay this on top and I'm good, right?",
+            "graphic_id": 3164,
+            "hero_id": 27,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 632,
+            "name": "青铜臀的酸洗斗篷",
+            "description": "要是碰到酸水坑，那就把它铺上去就能安全通过了，对吗？",
+            "graphic_id": 3164,
+            "hero_id": 27,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "633",
+        "snapshots": {
+          "original": {
+            "id": 633,
+            "name": "Old Helmet",
+            "description": "It looks like the horn was chewed on by something.",
+            "graphic_id": 3171,
+            "hero_id": 27,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,18460"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 633,
+            "name": "旧头盔",
+            "description": "头盔上的角似乎被什么东西咬过一样。",
+            "graphic_id": 3171,
+            "hero_id": 27,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,18460"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "634",
+        "snapshots": {
+          "original": {
+            "id": 634,
+            "name": "Battered Skull Cap",
+            "description": "If the horns fall off, you've got yourself an improvised weapon!",
+            "graphic_id": 3171,
+            "hero_id": 27,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,18460"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 634,
+            "name": "磨损的无边盔",
+            "description": "要是盔上双角被砍下来，那也可以当作武器来使用！",
+            "graphic_id": 3171,
+            "hero_id": 27,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,18460"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "635",
+        "snapshots": {
+          "original": {
+            "id": 635,
+            "name": "Helm of Door-bashing",
+            "description": "Best way through a door is headfirst.",
+            "graphic_id": 3172,
+            "hero_id": 27,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,18460"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 635,
+            "name": "撞门盔",
+            "description": "撞门的要诀就是用头撞。",
+            "graphic_id": 3172,
+            "hero_id": 27,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,18460"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "636",
+        "snapshots": {
+          "original": {
+            "id": 636,
+            "name": "Helm of the Binwin",
+            "description": "Bin it to win it!",
+            "graphic_id": 3173,
+            "hero_id": 27,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,18460"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 636,
+            "name": "宾温的头盔",
+            "description": "拼了，不要问太多！",
+            "graphic_id": 3173,
+            "hero_id": 27,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,18460"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "637",
+        "snapshots": {
+          "original": {
+            "id": 637,
+            "name": "Broken Quest Stone",
+            "description": "Given to me by my mother. She collects this kinda stuff.",
+            "graphic_id": 3174,
+            "hero_id": 27,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,18461"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 637,
+            "name": "碎裂的任务石",
+            "description": "这是妈妈传给我的。她很喜欢收藏这类物品。",
+            "graphic_id": 3174,
+            "hero_id": 27,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,18461"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "638",
+        "snapshots": {
+          "original": {
+            "id": 638,
+            "name": "Chatty Quest Stone",
+            "description": "It started talking... and it won't shut up!",
+            "graphic_id": 3174,
+            "hero_id": 27,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,18461"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 638,
+            "name": "唠叨的任务石",
+            "description": "它开始说话了......而且完全停不下来的节奏！",
+            "graphic_id": 3174,
+            "hero_id": 27,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,18461"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "639",
+        "snapshots": {
+          "original": {
+            "id": 639,
+            "name": "Dwarven Quest Stone",
+            "description": "Rewards its bearer with riches, but at what cost?",
+            "graphic_id": 3175,
+            "hero_id": 27,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,18461"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 639,
+            "name": "矮人任务石",
+            "description": "能够给佩戴者带来财富，但是代价会是什么呢？",
+            "graphic_id": 3175,
+            "hero_id": 27,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,18461"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "640",
+        "snapshots": {
+          "original": {
+            "id": 640,
+            "name": "Lady Phylia",
+            "description": "I am Lady Phylia Stoutheart, Dwarven Quest Stone of Friendship and Loyalty.",
+            "graphic_id": 3176,
+            "hero_id": 27,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,18461"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 640,
+            "name": "菲利亚女神",
+            "description": "我是女神菲利亚·决心，矮人友谊与忠诚之任务石。",
+            "graphic_id": 3176,
+            "hero_id": 27,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,18461"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "641",
+        "snapshots": {
+          "original": {
+            "id": 641,
+            "name": "Rusty Barrel",
+            "description": "It wobbles, but it still rolls!",
+            "graphic_id": 3165,
+            "hero_id": 27,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,18463,18464,18465",
+                "description": "Increases the effect of Binwin's Specializations by $(amount)%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 641,
+            "name": "腐蚀木桶",
+            "description": "虽然已经摇摇欲坠，但还是可以翻滚起来的！",
+            "graphic_id": 3165,
+            "hero_id": 27,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,18463,18464,18465",
+                "description": "使宾温的专精效果提高 $(amount)%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "642",
+        "snapshots": {
+          "original": {
+            "id": 642,
+            "name": "Market Barrel",
+            "description": "Follow my lead!",
+            "graphic_id": 3165,
+            "hero_id": 27,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,18463,18464,18465",
+                "description": "Increases the effect of Binwin's Specializations by $(amount)%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 642,
+            "name": "市集木桶",
+            "description": "听我号令！",
+            "graphic_id": 3165,
+            "hero_id": 27,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,18463,18464,18465",
+                "description": "使宾温的专精效果提高 $(amount)%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "643",
+        "snapshots": {
+          "original": {
+            "id": 643,
+            "name": "Cask of Skunk Ale",
+            "description": "Pungent and potent.",
+            "graphic_id": 3166,
+            "hero_id": 27,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,18463,18464,18465",
+                "description": "Increases the effect of Binwin's Specializations by $(amount)%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 643,
+            "name": "一桶臭酒",
+            "description": "臭气熏天。",
+            "graphic_id": 3166,
+            "hero_id": 27,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,18463,18464,18465",
+                "description": "使宾温的专精效果提高 $(amount)%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "644",
+        "snapshots": {
+          "original": {
+            "id": 644,
+            "name": "Battleready Brew",
+            "description": "Catchphrase!",
+            "graphic_id": 3167,
+            "hero_id": 27,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,18463,18464,18465",
+                "description": "Increases the effect of Binwin's Specializations by $(amount)%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 644,
+            "name": "战场特酿",
+            "description": "朗朗上口！",
+            "graphic_id": 3167,
+            "hero_id": 27,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,18463,18464,18465",
+                "description": "使宾温的专精效果提高 $(amount)%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "645",
+        "snapshots": {
+          "original": {
+            "id": 645,
+            "name": "Duckling Damsel",
+            "description": "I'm not the druid. I don't speak duck.",
+            "graphic_id": 3168,
+            "hero_id": 27,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,5"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 645,
+            "name": "鸭子小姐姐",
+            "description": "我不是德鲁伊，我不会说鸭语。",
+            "graphic_id": 3168,
+            "hero_id": 27,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,5"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "646",
+        "snapshots": {
+          "original": {
+            "id": 646,
+            "name": "Faithful Duck Companion",
+            "description": "QUONK!",
+            "graphic_id": 3168,
+            "hero_id": 27,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,10"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 646,
+            "name": "忠诚的鸭子伙伴",
+            "description": "嘎嘎！",
+            "graphic_id": 3168,
+            "hero_id": 27,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,10"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "647",
+        "snapshots": {
+          "original": {
+            "id": 647,
+            "name": "Duck Guard",
+            "description": "You give a duck ONE magic wand and everybody gets judgy.",
+            "graphic_id": 3169,
+            "hero_id": 27,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,20"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 647,
+            "name": "鸭子守卫",
+            "description": "给鸭子一根魔法棒，所有人都会变了个样。",
+            "graphic_id": 3169,
+            "hero_id": 27,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,20"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "648",
+        "snapshots": {
+          "original": {
+            "id": 648,
+            "name": "Princess Duckersheim",
+            "description": "Wielder of the wand of wonder, protector of the minions, and my gold.",
+            "graphic_id": 3170,
+            "hero_id": 27,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,49"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 648,
+            "name": "鸭克斯海姆公主",
+            "description": "惊异魔杖的主人。同时也是我的金库和小喽啰们的守护者。",
+            "graphic_id": 3170,
+            "hero_id": 27,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,49"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "54",
+        "snapshots": {
+          "original": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "阵型中每有一位勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "55",
+        "snapshots": {
+          "original": {
+            "id": 55,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Male Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 55,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "阵型中每有一位男性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "59",
+        "snapshots": {
+          "original": {
+            "id": 59,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "dwarf"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Dwarf Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 59,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "dwarf"
+                  }
+                ],
+                "description": "阵型中每有一位矮人勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "40",
+        "snapshots": {
+          "original": {
+            "id": 40,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "wis",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a WIS score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 40,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "wis",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有感知大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "81",
+        "snapshots": {
+          "original": {
+            "id": 81,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "str",
+                    "check": 11,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a STR score of 11 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 81,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "str",
+                    "check": 11,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位力量大于等于 11 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "102",
+        "snapshots": {
+          "original": {
+            "id": 102,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a GOOD alignment"
+              }
+            ]
+          },
+          "display": {
+            "id": 102,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "阵型中每有一位善良阵营勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "124",
     "name": {
@@ -45,7 +45,7 @@
   },
   "dateAvailable": "2023-05-24 00:00:00",
   "lastReworkDate": "2023-05-24 00:00:00",
-  "popularity": 93,
+  "popularity": 92,
   "baseCost": "1750000",
   "baseDamage": "80000",
   "baseHealth": "132",
@@ -3443,6 +3443,634 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "2954",
+      "name": {
+        "original": "Faux Fur Collar",
+        "display": "人造毛皮项圈"
+      },
+      "description": {
+        "original": "Of course it's fake - do you know how much stuff like this costs?",
+        "display": "毛皮当然是假的--你知道真的要多少钱吗？"
+      },
+      "graphicId": "19252",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2955",
+      "name": {
+        "original": "Low-Quality Fur Collar",
+        "display": "劣质毛皮项圈"
+      },
+      "description": {
+        "original": "Made this one myself. There are only a few holes and burn marks on it.",
+        "display": "我亲手做的。上面只有少数几个洞和烧伤痕迹。"
+      },
+      "graphicId": "19252",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2956",
+      "name": {
+        "original": "Dire Fox Skin",
+        "display": "冰原狐狸皮"
+      },
+      "description": {
+        "original": "It may look like it was adorable, but it nearly took my arm off! ...again.",
+        "display": "看起来也许很可爱，但它差点把我的胳膊扯下来......不止一次。"
+      },
+      "graphicId": "19253",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2957",
+      "name": {
+        "original": "Living Collar",
+        "display": "活体项圈"
+      },
+      "description": {
+        "original": "Bandits are very surprised when this comes to life and bites their throats.",
+        "display": "这玩意儿活过来咬断土匪们的喉咙时，他们惊讶极了。"
+      },
+      "graphicId": "19254",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "2958",
+      "name": {
+        "original": "Borrowed Armor",
+        "display": "借来的盔甲"
+      },
+      "description": {
+        "original": "Those guys were already dead when we found them in the alley.",
+        "display": "我们在巷子里发现那些家伙的时候，他们已经死了。"
+      },
+      "graphicId": "19246",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "health_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2959",
+      "name": {
+        "original": "Improved Armor",
+        "display": "改良盔甲"
+      },
+      "description": {
+        "original": "Can you believe this was just lying around in a house we broke into?",
+        "display": "这套盔甲恰好出现在我们闯入的一栋房子里，你敢信吗？"
+      },
+      "graphicId": "19246",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "health_mult,30"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2960",
+      "name": {
+        "original": "Heroic Outfit",
+        "display": "英雄服饰"
+      },
+      "description": {
+        "original": "Oh, I could totally strangle someone with this cape!",
+        "display": "嘿，我完全可以用这件斗篷勒死某个人！"
+      },
+      "graphicId": "19247",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "health_mult,50"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2961",
+      "name": {
+        "original": "Armor of Victory",
+        "display": "胜利盔甲"
+      },
+      "description": {
+        "original": "Won this at a jousting tourney. No thanks to Dargle-bark.",
+        "display": "我在比武大会上赢来的。与达格吠无关。"
+      },
+      "graphicId": "19248",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "health_mult,100"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2962",
+      "name": {
+        "original": "Rented Blade",
+        "display": "租用剑"
+      },
+      "description": {
+        "original": "I checked this out in Stormwood. They didn't even ask for collateral!",
+        "display": "我在斯托姆伍德租借的。他们连抵押品都没要！"
+      },
+      "graphicId": "19258",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,11295"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2963",
+      "name": {
+        "original": "Bandit Sword",
+        "display": "土匪剑"
+      },
+      "description": {
+        "original": "These bandits were strange. 'No, we're guards!' Barely fought back.",
+        "display": "那些土匪很奇怪。他们说：“别，我们是守卫！”然后几乎束手就擒。"
+      },
+      "graphicId": "19258",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,11295"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2964",
+      "name": {
+        "original": "Trusty Long Sword",
+        "display": "可靠的长剑"
+      },
+      "description": {
+        "original": "I've cut off SO many heads with this baby.",
+        "display": "我用这把宝贝割下过很多头颅。"
+      },
+      "graphicId": "19259",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,11295"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2965",
+      "name": {
+        "original": "Blade of Vengeance",
+        "display": "复仇之剑"
+      },
+      "description": {
+        "original": "This sword was forged to kill me, but I killed them first! Easy fight, really.",
+        "display": "这把剑专为杀死我而锻造，但我抢先反杀了！简直易如反掌。"
+      },
+      "graphicId": "19260",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,11295"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2966",
+      "name": {
+        "original": "Unknown Fang",
+        "display": "无名獠牙"
+      },
+      "description": {
+        "original": "Nixie stole this at some point. No idea what it is, but it looks kinda cool.",
+        "display": "妮茜不知啥时候偷来的。不确定它是什么，但看起来有点酷。"
+      },
+      "graphicId": "19261",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,11297"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2967",
+      "name": {
+        "original": "Orc Tooth",
+        "display": "兽人牙齿"
+      },
+      "description": {
+        "original": "Got this off Mogdar during a battle of strength. He says he didn't agree to it.",
+        "display": "比力气获胜后从莫达尔身上赢来的。虽然他号称自己没同意比赛。"
+      },
+      "graphicId": "19261",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,11297"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2968",
+      "name": {
+        "original": "Bearowl Trophy",
+        "display": "熊鸮奖杯"
+      },
+      "description": {
+        "original": "Dargle-bark as a bearowl is really annoying - so I took this to shut him up.",
+        "display": "作为一只熊鸮，达格吠真的很烦人--所以我用这个让他闭嘴。"
+      },
+      "graphicId": "19262",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,11297"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2969",
+      "name": {
+        "original": "Necklace of Fury",
+        "display": "狂怒项链"
+      },
+      "description": {
+        "original": "Pulled this off an eldritch beast after I fell through a portal. No big deal.",
+        "display": "我掉进某个传送门之后，从一头魔能野兽身上扯下来的。小事一桩。"
+      },
+      "graphicId": "19263",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,11297"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2970",
+      "name": {
+        "original": "Dirty Horn",
+        "display": "肮脏兽角"
+      },
+      "description": {
+        "original": "Found this on a dead guard. Don't ask what else I found...",
+        "display": "在某个死去的守卫身上发现的。别问我还找到了什么......"
+      },
+      "graphicId": "19249",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,25,11299,11300,11301"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2971",
+      "name": {
+        "original": "Travel Mead Horn",
+        "display": "旅行蜜酒角杯"
+      },
+      "description": {
+        "original": "Got this on discount after threatening the merchant's family.",
+        "display": "威胁商人全家之后，我以低价买到了它。"
+      },
+      "graphicId": "19249",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,87.5,11299,11300,11301"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2972",
+      "name": {
+        "original": "Rejuvenating Kantsi",
+        "display": "复兴号角"
+      },
+      "description": {
+        "original": "Lorienne blessed this horn to heal me in battle! But it only heals 1 hp...",
+        "display": "罗琳祝福过这个号角，可以在战斗中治愈我！但它只能治疗 1 点生命值......"
+      },
+      "graphicId": "19250",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,150,11299,11300,11301"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2973",
+      "name": {
+        "original": "Horn of the Infinite",
+        "display": "无限之角"
+      },
+      "description": {
+        "original": "This horn never runs out of ale! I don't remember two tendays after getting it!",
+        "display": "这个号角里的麦酒永远喝不完！获得它之后，我失忆了二十天！"
+      },
+      "graphicId": "19251",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,275,11299,11300,11301"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2974",
+      "name": {
+        "original": "Evandra's Left Arm",
+        "display": "伊万德拉的左臂"
+      },
+      "description": {
+        "original": "No big deal. I'll just get Vlithryn to fix it.",
+        "display": "小事一桩。我会让维列瑟琳修复的。"
+      },
+      "graphicId": "19255",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,4"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2975",
+      "name": {
+        "original": "Preserved Limb",
+        "display": "留存肢体"
+      },
+      "description": {
+        "original": "Vlithryn didn't fix it... She just screeched and walked away. Very rude.",
+        "display": "维列瑟琳没有修复好......她只是尖叫着跑开了。太失礼了吧。"
+      },
+      "graphicId": "19255",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,7"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2976",
+      "name": {
+        "original": "Mechanical Arm",
+        "display": "机械手臂"
+      },
+      "description": {
+        "original": "I've beaten so many guards with this. Really gets the anger out.",
+        "display": "我用它殴打过很多守卫。非常适合发泄愤怒。"
+      },
+      "graphicId": "19256",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,14"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2977",
+      "name": {
+        "original": "Head of the Gnoll King",
+        "display": "豺狼人之王头颅"
+      },
+      "description": {
+        "original": "Got a wizard to make it stop decaying because it looks cool on my belt.",
+        "display": "可以当个酷炫的腰带装饰，所以我找法师终止了它的腐烂。"
+      },
+      "graphicId": "19257",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,35"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "54",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "55",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "male"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Male Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "61",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,70",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "half-elf"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Half-Elf Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "34",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "con",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a CON score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "83",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,40",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "str",
+              "check": 15,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a STR score of 15 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "53",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "neutral"
+            }
+          ],
+          "description": "Increases the damage of all Neutral Champions by $(amount)%"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3596,7 +4224,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 93,
+        "popularity": 92,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3789,7 +4417,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 93,
+        "popularity": 92,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -8452,6 +9080,1124 @@
             "availabilities": {
               "premium_item_id": "567"
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "2954",
+        "snapshots": {
+          "original": {
+            "id": 2954,
+            "name": "Faux Fur Collar",
+            "description": "Of course it's fake - do you know how much stuff like this costs?",
+            "graphic_id": 19252,
+            "hero_id": 124,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2954,
+            "name": "人造毛皮项圈",
+            "description": "毛皮当然是假的--你知道真的要多少钱吗？",
+            "graphic_id": 19252,
+            "hero_id": 124,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2955",
+        "snapshots": {
+          "original": {
+            "id": 2955,
+            "name": "Low-Quality Fur Collar",
+            "description": "Made this one myself. There are only a few holes and burn marks on it.",
+            "graphic_id": 19252,
+            "hero_id": 124,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2955,
+            "name": "劣质毛皮项圈",
+            "description": "我亲手做的。上面只有少数几个洞和烧伤痕迹。",
+            "graphic_id": 19252,
+            "hero_id": 124,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2956",
+        "snapshots": {
+          "original": {
+            "id": 2956,
+            "name": "Dire Fox Skin",
+            "description": "It may look like it was adorable, but it nearly took my arm off! ...again.",
+            "graphic_id": 19253,
+            "hero_id": 124,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2956,
+            "name": "冰原狐狸皮",
+            "description": "看起来也许很可爱，但它差点把我的胳膊扯下来......不止一次。",
+            "graphic_id": 19253,
+            "hero_id": 124,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2957",
+        "snapshots": {
+          "original": {
+            "id": 2957,
+            "name": "Living Collar",
+            "description": "Bandits are very surprised when this comes to life and bites their throats.",
+            "graphic_id": 19254,
+            "hero_id": 124,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2957,
+            "name": "活体项圈",
+            "description": "这玩意儿活过来咬断土匪们的喉咙时，他们惊讶极了。",
+            "graphic_id": 19254,
+            "hero_id": 124,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2958",
+        "snapshots": {
+          "original": {
+            "id": 2958,
+            "name": "Borrowed Armor",
+            "description": "Those guys were already dead when we found them in the alley.",
+            "graphic_id": 19246,
+            "hero_id": 124,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "health_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2958,
+            "name": "借来的盔甲",
+            "description": "我们在巷子里发现那些家伙的时候，他们已经死了。",
+            "graphic_id": 19246,
+            "hero_id": 124,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "health_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2959",
+        "snapshots": {
+          "original": {
+            "id": 2959,
+            "name": "Improved Armor",
+            "description": "Can you believe this was just lying around in a house we broke into?",
+            "graphic_id": 19246,
+            "hero_id": 124,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "health_mult,30"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2959,
+            "name": "改良盔甲",
+            "description": "这套盔甲恰好出现在我们闯入的一栋房子里，你敢信吗？",
+            "graphic_id": 19246,
+            "hero_id": 124,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "health_mult,30"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2960",
+        "snapshots": {
+          "original": {
+            "id": 2960,
+            "name": "Heroic Outfit",
+            "description": "Oh, I could totally strangle someone with this cape!",
+            "graphic_id": 19247,
+            "hero_id": 124,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "health_mult,50"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2960,
+            "name": "英雄服饰",
+            "description": "嘿，我完全可以用这件斗篷勒死某个人！",
+            "graphic_id": 19247,
+            "hero_id": 124,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "health_mult,50"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2961",
+        "snapshots": {
+          "original": {
+            "id": 2961,
+            "name": "Armor of Victory",
+            "description": "Won this at a jousting tourney. No thanks to Dargle-bark.",
+            "graphic_id": 19248,
+            "hero_id": 124,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "health_mult,100"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2961,
+            "name": "胜利盔甲",
+            "description": "我在比武大会上赢来的。与达格吠无关。",
+            "graphic_id": 19248,
+            "hero_id": 124,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "health_mult,100"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2962",
+        "snapshots": {
+          "original": {
+            "id": 2962,
+            "name": "Rented Blade",
+            "description": "I checked this out in Stormwood. They didn't even ask for collateral!",
+            "graphic_id": 19258,
+            "hero_id": 124,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,11295"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2962,
+            "name": "租用剑",
+            "description": "我在斯托姆伍德租借的。他们连抵押品都没要！",
+            "graphic_id": 19258,
+            "hero_id": 124,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,11295"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2963",
+        "snapshots": {
+          "original": {
+            "id": 2963,
+            "name": "Bandit Sword",
+            "description": "These bandits were strange. 'No, we're guards!' Barely fought back.",
+            "graphic_id": 19258,
+            "hero_id": 124,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,11295"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2963,
+            "name": "土匪剑",
+            "description": "那些土匪很奇怪。他们说：“别，我们是守卫！”然后几乎束手就擒。",
+            "graphic_id": 19258,
+            "hero_id": 124,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,11295"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2964",
+        "snapshots": {
+          "original": {
+            "id": 2964,
+            "name": "Trusty Long Sword",
+            "description": "I've cut off SO many heads with this baby.",
+            "graphic_id": 19259,
+            "hero_id": 124,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,11295"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2964,
+            "name": "可靠的长剑",
+            "description": "我用这把宝贝割下过很多头颅。",
+            "graphic_id": 19259,
+            "hero_id": 124,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,11295"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2965",
+        "snapshots": {
+          "original": {
+            "id": 2965,
+            "name": "Blade of Vengeance",
+            "description": "This sword was forged to kill me, but I killed them first! Easy fight, really.",
+            "graphic_id": 19260,
+            "hero_id": 124,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,11295"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2965,
+            "name": "复仇之剑",
+            "description": "这把剑专为杀死我而锻造，但我抢先反杀了！简直易如反掌。",
+            "graphic_id": 19260,
+            "hero_id": 124,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,11295"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2966",
+        "snapshots": {
+          "original": {
+            "id": 2966,
+            "name": "Unknown Fang",
+            "description": "Nixie stole this at some point. No idea what it is, but it looks kinda cool.",
+            "graphic_id": 19261,
+            "hero_id": 124,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,11297"
+              }
+            ]
+          },
+          "display": {
+            "id": 2966,
+            "name": "无名獠牙",
+            "description": "妮茜不知啥时候偷来的。不确定它是什么，但看起来有点酷。",
+            "graphic_id": 19261,
+            "hero_id": 124,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,11297"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2967",
+        "snapshots": {
+          "original": {
+            "id": 2967,
+            "name": "Orc Tooth",
+            "description": "Got this off Mogdar during a battle of strength. He says he didn't agree to it.",
+            "graphic_id": 19261,
+            "hero_id": 124,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,11297"
+              }
+            ]
+          },
+          "display": {
+            "id": 2967,
+            "name": "兽人牙齿",
+            "description": "比力气获胜后从莫达尔身上赢来的。虽然他号称自己没同意比赛。",
+            "graphic_id": 19261,
+            "hero_id": 124,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,11297"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2968",
+        "snapshots": {
+          "original": {
+            "id": 2968,
+            "name": "Bearowl Trophy",
+            "description": "Dargle-bark as a bearowl is really annoying - so I took this to shut him up.",
+            "graphic_id": 19262,
+            "hero_id": 124,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,11297"
+              }
+            ]
+          },
+          "display": {
+            "id": 2968,
+            "name": "熊鸮奖杯",
+            "description": "作为一只熊鸮，达格吠真的很烦人--所以我用这个让他闭嘴。",
+            "graphic_id": 19262,
+            "hero_id": 124,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,11297"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2969",
+        "snapshots": {
+          "original": {
+            "id": 2969,
+            "name": "Necklace of Fury",
+            "description": "Pulled this off an eldritch beast after I fell through a portal. No big deal.",
+            "graphic_id": 19263,
+            "hero_id": 124,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,11297"
+              }
+            ]
+          },
+          "display": {
+            "id": 2969,
+            "name": "狂怒项链",
+            "description": "我掉进某个传送门之后，从一头魔能野兽身上扯下来的。小事一桩。",
+            "graphic_id": 19263,
+            "hero_id": 124,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,11297"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2970",
+        "snapshots": {
+          "original": {
+            "id": 2970,
+            "name": "Dirty Horn",
+            "description": "Found this on a dead guard. Don't ask what else I found...",
+            "graphic_id": 19249,
+            "hero_id": 124,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,11299,11300,11301"
+              }
+            ]
+          },
+          "display": {
+            "id": 2970,
+            "name": "肮脏兽角",
+            "description": "在某个死去的守卫身上发现的。别问我还找到了什么......",
+            "graphic_id": 19249,
+            "hero_id": 124,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,11299,11300,11301"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2971",
+        "snapshots": {
+          "original": {
+            "id": 2971,
+            "name": "Travel Mead Horn",
+            "description": "Got this on discount after threatening the merchant's family.",
+            "graphic_id": 19249,
+            "hero_id": 124,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,11299,11300,11301"
+              }
+            ]
+          },
+          "display": {
+            "id": 2971,
+            "name": "旅行蜜酒角杯",
+            "description": "威胁商人全家之后，我以低价买到了它。",
+            "graphic_id": 19249,
+            "hero_id": 124,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,11299,11300,11301"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2972",
+        "snapshots": {
+          "original": {
+            "id": 2972,
+            "name": "Rejuvenating Kantsi",
+            "description": "Lorienne blessed this horn to heal me in battle! But it only heals 1 hp...",
+            "graphic_id": 19250,
+            "hero_id": 124,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,11299,11300,11301"
+              }
+            ]
+          },
+          "display": {
+            "id": 2972,
+            "name": "复兴号角",
+            "description": "罗琳祝福过这个号角，可以在战斗中治愈我！但它只能治疗 1 点生命值......",
+            "graphic_id": 19250,
+            "hero_id": 124,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,11299,11300,11301"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2973",
+        "snapshots": {
+          "original": {
+            "id": 2973,
+            "name": "Horn of the Infinite",
+            "description": "This horn never runs out of ale! I don't remember two tendays after getting it!",
+            "graphic_id": 19251,
+            "hero_id": 124,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,11299,11300,11301"
+              }
+            ]
+          },
+          "display": {
+            "id": 2973,
+            "name": "无限之角",
+            "description": "这个号角里的麦酒永远喝不完！获得它之后，我失忆了二十天！",
+            "graphic_id": 19251,
+            "hero_id": 124,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,11299,11300,11301"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2974",
+        "snapshots": {
+          "original": {
+            "id": 2974,
+            "name": "Evandra's Left Arm",
+            "description": "No big deal. I'll just get Vlithryn to fix it.",
+            "graphic_id": 19255,
+            "hero_id": 124,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,4"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2974,
+            "name": "伊万德拉的左臂",
+            "description": "小事一桩。我会让维列瑟琳修复的。",
+            "graphic_id": 19255,
+            "hero_id": 124,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,4"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2975",
+        "snapshots": {
+          "original": {
+            "id": 2975,
+            "name": "Preserved Limb",
+            "description": "Vlithryn didn't fix it... She just screeched and walked away. Very rude.",
+            "graphic_id": 19255,
+            "hero_id": 124,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,7"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2975,
+            "name": "留存肢体",
+            "description": "维列瑟琳没有修复好......她只是尖叫着跑开了。太失礼了吧。",
+            "graphic_id": 19255,
+            "hero_id": 124,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,7"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2976",
+        "snapshots": {
+          "original": {
+            "id": 2976,
+            "name": "Mechanical Arm",
+            "description": "I've beaten so many guards with this. Really gets the anger out.",
+            "graphic_id": 19256,
+            "hero_id": 124,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,14"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2976,
+            "name": "机械手臂",
+            "description": "我用它殴打过很多守卫。非常适合发泄愤怒。",
+            "graphic_id": 19256,
+            "hero_id": 124,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,14"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2977",
+        "snapshots": {
+          "original": {
+            "id": 2977,
+            "name": "Head of the Gnoll King",
+            "description": "Got a wizard to make it stop decaying because it looks cool on my belt.",
+            "graphic_id": 19257,
+            "hero_id": 124,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,35"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2977,
+            "name": "豺狼人之王头颅",
+            "description": "可以当个酷炫的腰带装饰，所以我找法师终止了它的腐烂。",
+            "graphic_id": 19257,
+            "hero_id": 124,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,35"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "54",
+        "snapshots": {
+          "original": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "阵型中每有一位勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "55",
+        "snapshots": {
+          "original": {
+            "id": 55,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Male Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 55,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "阵型中每有一位男性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "61",
+        "snapshots": {
+          "original": {
+            "id": 61,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,70",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "half-elf"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Half-Elf Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 61,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,70",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "half-elf"
+                  }
+                ],
+                "description": "阵型中每有一位半精灵勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "34",
+        "snapshots": {
+          "original": {
+            "id": 34,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a CON score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 34,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有体质大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "83",
+        "snapshots": {
+          "original": {
+            "id": 83,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,40",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "str",
+                    "check": 15,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a STR score of 15 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 83,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,40",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "str",
+                    "check": 15,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位力量大于等于 15 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "53",
+        "snapshots": {
+          "original": {
+            "id": 53,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "neutral"
+                  }
+                ],
+                "description": "Increases the damage of all Neutral Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 53,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "neutral"
+                  }
+                ],
+                "description": "使所有中立阵营勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

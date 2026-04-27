@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "138",
     "name": {
@@ -46,7 +46,7 @@
   },
   "dateAvailable": "2023-09-27 00:00:00",
   "lastReworkDate": "2023-09-27 00:00:00",
-  "popularity": 66,
+  "popularity": 56,
   "baseCost": "3500000",
   "baseDamage": "200000",
   "baseHealth": "41",
@@ -2753,6 +2753,630 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "3266",
+      "name": {
+        "original": "Starter Chimes",
+        "display": "新手编钟"
+      },
+      "description": {
+        "original": "A gift from Dad. He said I should play these while Uncle Jim is reading.",
+        "display": "老爹送的礼物。他说我应该在吉姆叔叔读书的时候演奏。"
+      },
+      "graphicId": "20538",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3267",
+      "name": {
+        "original": "Expert Cymbals",
+        "display": "专业钹"
+      },
+      "description": {
+        "original": "They said these didn't fit in the school marching band, but I did it anyway.",
+        "display": "他们说这东西不适合学校军乐队，但我还是用上了。"
+      },
+      "graphicId": "20538",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3268",
+      "name": {
+        "original": "Standard Issue Gong",
+        "display": "制式锣"
+      },
+      "description": {
+        "original": "What do you mean a gong isn't a real instrument?! Are you looking for a fight?!",
+        "display": "你说锣不是真正的乐器是什么意思？你想打架吗？！"
+      },
+      "graphicId": "20539",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3269",
+      "name": {
+        "original": "Gong of Activation",
+        "display": "激活之锣"
+      },
+      "description": {
+        "original": "This was lying around headquarters. Dad said something about an acid pit?",
+        "display": "它就放在总部附近。老爹好像提到了一个酸坑？"
+      },
+      "graphicId": "20540",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "3270",
+      "name": {
+        "original": "Fresh Parchment",
+        "display": "新鲜羊皮纸"
+      },
+      "description": {
+        "original": "If you don't get how exciting fresh parchment is -- we can't be friends.",
+        "display": "如果你不明白新鲜羊皮纸有多么令人兴奋的话，我们就做不了朋友。"
+      },
+      "graphicId": "20544",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,12505"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3271",
+      "name": {
+        "original": "Important Documentation",
+        "display": "重要文件"
+      },
+      "description": {
+        "original": "These papers just hold the fate of the company in them, no big deal.",
+        "display": "这些文件只是承载着公司的命运而已，没什么大不了。"
+      },
+      "graphicId": "20544",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,12505"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3272",
+      "name": {
+        "original": "Portfolio Keeper",
+        "display": "投资组合管理者"
+      },
+      "description": {
+        "original": "I wanted something more colorful, but Uncle K'thriss wanted it spooky.",
+        "display": "我想要更色彩丰富的东西，但克里斯叔叔想让它更阴森恐怖一些。"
+      },
+      "graphicId": "20545",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,12505"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3273",
+      "name": {
+        "original": "Acq Inc. Sending Stone",
+        "display": "艾奎兹玄有限责任公司传讯石"
+      },
+      "description": {
+        "original": "Every Acq Inc. member has one of these. The important ones anyway.",
+        "display": "每位艾奎兹玄有限责任公司成员都有一个。至少重要的成员有。"
+      },
+      "graphicId": "20546",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,12505"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3274",
+      "name": {
+        "original": "Old Almanac",
+        "display": "旧年鉴"
+      },
+      "description": {
+        "original": "Found this in my room when I was a kid. No idea where it came from.",
+        "display": "我小时候在房间里找到的。不知道从哪来的。"
+      },
+      "graphicId": "20547",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,12506"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3275",
+      "name": {
+        "original": "New Almanac",
+        "display": "新年鉴"
+      },
+      "description": {
+        "original": "OH! So I -- OKAY, now I get what's going on. Hang on, be right back.",
+        "display": "噢！所以我......好吧，我现在知道怎么回事了。等一下，我马上回来。"
+      },
+      "graphicId": "20547",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,12506"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3276",
+      "name": {
+        "original": "History of Acq Inc.",
+        "display": "艾奎兹玄有限责任公司历史"
+      },
+      "description": {
+        "original": "This book writes itself. I wonder what happens when it runs out of pages.",
+        "display": "这本书能够自动书写。我很好奇当纸张用完时会发生什么。"
+      },
+      "graphicId": "20548",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,12506"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3277",
+      "name": {
+        "original": "Teddy of Time",
+        "display": "时间泰迪"
+      },
+      "description": {
+        "original": "A strange, bald man gave me this in the Feywild. Is that weird?",
+        "display": "这是一个陌生秃头男人在妖精荒野给我的。是不是很奇怪？"
+      },
+      "graphicId": "20549",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,12506"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3278",
+      "name": {
+        "original": "School Reports",
+        "display": "学校报告"
+      },
+      "description": {
+        "original": "Oh, these are just some college papers I aced when I was eight.",
+        "display": "哦，这些只是我八岁时获得满分的一些大学论文。"
+      },
+      "graphicId": "20541",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,12507"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3279",
+      "name": {
+        "original": "College Papers",
+        "display": "大学论文"
+      },
+      "description": {
+        "original": "I told my professors I deserved an A++, but they said 'that isn't real.'",
+        "display": "我告诉教授们我应该得到 A++，但他们说“这不存在”。"
+      },
+      "graphicId": "20541",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,12507"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3280",
+      "name": {
+        "original": "Mandragore Diploma",
+        "display": "曼陀罗文凭"
+      },
+      "description": {
+        "original": "Did you know diplomas could be magic items?",
+        "display": "你是否知道文凭也可以是魔法物品？"
+      },
+      "graphicId": "20542",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,12507"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3281",
+      "name": {
+        "original": "Presage Grimoire",
+        "display": "预兆魔典"
+      },
+      "description": {
+        "original": "It's not that the contents are a secret, you just can't read it.",
+        "display": "内容倒不是秘密，但你读不懂。"
+      },
+      "graphicId": "20543",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,12507"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3282",
+      "name": {
+        "original": "School Bag",
+        "display": "书包"
+      },
+      "description": {
+        "original": "Dad thought it was adorable that, as a kid, I put the AI on this all by myself.",
+        "display": "我小时候在上面自己安了一个 AI，老爹觉得很可爱。"
+      },
+      "graphicId": "20535",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,25,12509,12975"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3283",
+      "name": {
+        "original": "Adventuring Pack",
+        "display": "冒险背包"
+      },
+      "description": {
+        "original": "I made this look so cool they turned it into actual merch.",
+        "display": "我做的这个包超酷，以至于他们将其作为真正的商品推出。"
+      },
+      "graphicId": "20535",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,87.5,12509,12975"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3284",
+      "name": {
+        "original": "Certain Robes",
+        "display": "特定长袍"
+      },
+      "description": {
+        "original": "This is called 'style.' Look it up.",
+        "display": "这就叫“风格”。好好查一下吧。"
+      },
+      "graphicId": "20536",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,150,12509,12975"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3285",
+      "name": {
+        "original": "Cloak of the Secretarian",
+        "display": "秘书的斗篷"
+      },
+      "description": {
+        "original": "Oh, this old thing?",
+        "display": "哦，这件旧衣服？"
+      },
+      "graphicId": "20537",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,275,12509,12975"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3286",
+      "name": {
+        "original": "Hand Made Toy",
+        "display": "手工玩具"
+      },
+      "description": {
+        "original": "I never found out who made this. But I loved it when I was a kid.",
+        "display": "我一直不知道是谁做的。但我小时候很喜欢它。"
+      },
+      "graphicId": "20532",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,7"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3287",
+      "name": {
+        "original": "Carved Model",
+        "display": "雕刻模型"
+      },
+      "description": {
+        "original": "I made this one on my own when I lost my childhood one. Just to show I could.",
+        "display": "这是我把童年那个弄丢之后自己做的。只是为了证明我能做到。"
+      },
+      "graphicId": "20532",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,14"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3288",
+      "name": {
+        "original": "Improved Schematics",
+        "display": "改良结构图"
+      },
+      "description": {
+        "original": "I've got some BIG plans. For a thing.",
+        "display": "我有一些大计划。针对某件事的。"
+      },
+      "graphicId": "20533",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,28"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3289",
+      "name": {
+        "original": "Wonderous Airship Miniature",
+        "display": "奇妙的微型飞艇"
+      },
+      "description": {
+        "original": "Had to call in a lot of favors for this, but now I have an emergency airship!",
+        "display": "为此我托了很多关系，但现在我有一艘应急飞船了！"
+      },
+      "graphicId": "20534",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,70"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Female Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "half-elf"
+            }
+          ],
+          "description": "Increases the damage of all Half-Elf Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "38",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "int",
+              "score": 13,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a INT score of 13 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "97",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,30",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "cha",
+              "check": 13,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a CHA score of 13 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "102",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "good"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a GOOD alignment"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -2904,7 +3528,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 66,
+        "popularity": 56,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3095,7 +3719,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 66,
+        "popularity": 56,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -6592,6 +7216,1108 @@
             "availabilities": {
               "premium_item_id": "616"
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "3266",
+        "snapshots": {
+          "original": {
+            "id": 3266,
+            "name": "Starter Chimes",
+            "description": "A gift from Dad. He said I should play these while Uncle Jim is reading.",
+            "graphic_id": 20538,
+            "hero_id": 138,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3266,
+            "name": "新手编钟",
+            "description": "老爹送的礼物。他说我应该在吉姆叔叔读书的时候演奏。",
+            "graphic_id": 20538,
+            "hero_id": 138,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3267",
+        "snapshots": {
+          "original": {
+            "id": 3267,
+            "name": "Expert Cymbals",
+            "description": "They said these didn't fit in the school marching band, but I did it anyway.",
+            "graphic_id": 20538,
+            "hero_id": 138,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3267,
+            "name": "专业钹",
+            "description": "他们说这东西不适合学校军乐队，但我还是用上了。",
+            "graphic_id": 20538,
+            "hero_id": 138,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3268",
+        "snapshots": {
+          "original": {
+            "id": 3268,
+            "name": "Standard Issue Gong",
+            "description": "What do you mean a gong isn't a real instrument?! Are you looking for a fight?!",
+            "graphic_id": 20539,
+            "hero_id": 138,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3268,
+            "name": "制式锣",
+            "description": "你说锣不是真正的乐器是什么意思？你想打架吗？！",
+            "graphic_id": 20539,
+            "hero_id": 138,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3269",
+        "snapshots": {
+          "original": {
+            "id": 3269,
+            "name": "Gong of Activation",
+            "description": "This was lying around headquarters. Dad said something about an acid pit?",
+            "graphic_id": 20540,
+            "hero_id": 138,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3269,
+            "name": "激活之锣",
+            "description": "它就放在总部附近。老爹好像提到了一个酸坑？",
+            "graphic_id": 20540,
+            "hero_id": 138,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3270",
+        "snapshots": {
+          "original": {
+            "id": 3270,
+            "name": "Fresh Parchment",
+            "description": "If you don't get how exciting fresh parchment is -- we can't be friends.",
+            "graphic_id": 20544,
+            "hero_id": 138,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12505"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3270,
+            "name": "新鲜羊皮纸",
+            "description": "如果你不明白新鲜羊皮纸有多么令人兴奋的话，我们就做不了朋友。",
+            "graphic_id": 20544,
+            "hero_id": 138,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12505"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3271",
+        "snapshots": {
+          "original": {
+            "id": 3271,
+            "name": "Important Documentation",
+            "description": "These papers just hold the fate of the company in them, no big deal.",
+            "graphic_id": 20544,
+            "hero_id": 138,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12505"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3271,
+            "name": "重要文件",
+            "description": "这些文件只是承载着公司的命运而已，没什么大不了。",
+            "graphic_id": 20544,
+            "hero_id": 138,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12505"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3272",
+        "snapshots": {
+          "original": {
+            "id": 3272,
+            "name": "Portfolio Keeper",
+            "description": "I wanted something more colorful, but Uncle K'thriss wanted it spooky.",
+            "graphic_id": 20545,
+            "hero_id": 138,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12505"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3272,
+            "name": "投资组合管理者",
+            "description": "我想要更色彩丰富的东西，但克里斯叔叔想让它更阴森恐怖一些。",
+            "graphic_id": 20545,
+            "hero_id": 138,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12505"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3273",
+        "snapshots": {
+          "original": {
+            "id": 3273,
+            "name": "Acq Inc. Sending Stone",
+            "description": "Every Acq Inc. member has one of these. The important ones anyway.",
+            "graphic_id": 20546,
+            "hero_id": 138,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12505"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3273,
+            "name": "艾奎兹玄有限责任公司传讯石",
+            "description": "每位艾奎兹玄有限责任公司成员都有一个。至少重要的成员有。",
+            "graphic_id": 20546,
+            "hero_id": 138,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12505"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3274",
+        "snapshots": {
+          "original": {
+            "id": 3274,
+            "name": "Old Almanac",
+            "description": "Found this in my room when I was a kid. No idea where it came from.",
+            "graphic_id": 20547,
+            "hero_id": 138,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12506"
+              }
+            ]
+          },
+          "display": {
+            "id": 3274,
+            "name": "旧年鉴",
+            "description": "我小时候在房间里找到的。不知道从哪来的。",
+            "graphic_id": 20547,
+            "hero_id": 138,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12506"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3275",
+        "snapshots": {
+          "original": {
+            "id": 3275,
+            "name": "New Almanac",
+            "description": "OH! So I -- OKAY, now I get what's going on. Hang on, be right back.",
+            "graphic_id": 20547,
+            "hero_id": 138,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12506"
+              }
+            ]
+          },
+          "display": {
+            "id": 3275,
+            "name": "新年鉴",
+            "description": "噢！所以我......好吧，我现在知道怎么回事了。等一下，我马上回来。",
+            "graphic_id": 20547,
+            "hero_id": 138,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12506"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3276",
+        "snapshots": {
+          "original": {
+            "id": 3276,
+            "name": "History of Acq Inc.",
+            "description": "This book writes itself. I wonder what happens when it runs out of pages.",
+            "graphic_id": 20548,
+            "hero_id": 138,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12506"
+              }
+            ]
+          },
+          "display": {
+            "id": 3276,
+            "name": "艾奎兹玄有限责任公司历史",
+            "description": "这本书能够自动书写。我很好奇当纸张用完时会发生什么。",
+            "graphic_id": 20548,
+            "hero_id": 138,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12506"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3277",
+        "snapshots": {
+          "original": {
+            "id": 3277,
+            "name": "Teddy of Time",
+            "description": "A strange, bald man gave me this in the Feywild. Is that weird?",
+            "graphic_id": 20549,
+            "hero_id": 138,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12506"
+              }
+            ]
+          },
+          "display": {
+            "id": 3277,
+            "name": "时间泰迪",
+            "description": "这是一个陌生秃头男人在妖精荒野给我的。是不是很奇怪？",
+            "graphic_id": 20549,
+            "hero_id": 138,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12506"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3278",
+        "snapshots": {
+          "original": {
+            "id": 3278,
+            "name": "School Reports",
+            "description": "Oh, these are just some college papers I aced when I was eight.",
+            "graphic_id": 20541,
+            "hero_id": 138,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12507"
+              }
+            ]
+          },
+          "display": {
+            "id": 3278,
+            "name": "学校报告",
+            "description": "哦，这些只是我八岁时获得满分的一些大学论文。",
+            "graphic_id": 20541,
+            "hero_id": 138,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12507"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3279",
+        "snapshots": {
+          "original": {
+            "id": 3279,
+            "name": "College Papers",
+            "description": "I told my professors I deserved an A++, but they said 'that isn't real.'",
+            "graphic_id": 20541,
+            "hero_id": 138,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12507"
+              }
+            ]
+          },
+          "display": {
+            "id": 3279,
+            "name": "大学论文",
+            "description": "我告诉教授们我应该得到 A++，但他们说“这不存在”。",
+            "graphic_id": 20541,
+            "hero_id": 138,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12507"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3280",
+        "snapshots": {
+          "original": {
+            "id": 3280,
+            "name": "Mandragore Diploma",
+            "description": "Did you know diplomas could be magic items?",
+            "graphic_id": 20542,
+            "hero_id": 138,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12507"
+              }
+            ]
+          },
+          "display": {
+            "id": 3280,
+            "name": "曼陀罗文凭",
+            "description": "你是否知道文凭也可以是魔法物品？",
+            "graphic_id": 20542,
+            "hero_id": 138,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12507"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3281",
+        "snapshots": {
+          "original": {
+            "id": 3281,
+            "name": "Presage Grimoire",
+            "description": "It's not that the contents are a secret, you just can't read it.",
+            "graphic_id": 20543,
+            "hero_id": 138,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12507"
+              }
+            ]
+          },
+          "display": {
+            "id": 3281,
+            "name": "预兆魔典",
+            "description": "内容倒不是秘密，但你读不懂。",
+            "graphic_id": 20543,
+            "hero_id": 138,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12507"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3282",
+        "snapshots": {
+          "original": {
+            "id": 3282,
+            "name": "School Bag",
+            "description": "Dad thought it was adorable that, as a kid, I put the AI on this all by myself.",
+            "graphic_id": 20535,
+            "hero_id": 138,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,12509,12975"
+              }
+            ]
+          },
+          "display": {
+            "id": 3282,
+            "name": "书包",
+            "description": "我小时候在上面自己安了一个 AI，老爹觉得很可爱。",
+            "graphic_id": 20535,
+            "hero_id": 138,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,12509,12975"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3283",
+        "snapshots": {
+          "original": {
+            "id": 3283,
+            "name": "Adventuring Pack",
+            "description": "I made this look so cool they turned it into actual merch.",
+            "graphic_id": 20535,
+            "hero_id": 138,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,12509,12975"
+              }
+            ]
+          },
+          "display": {
+            "id": 3283,
+            "name": "冒险背包",
+            "description": "我做的这个包超酷，以至于他们将其作为真正的商品推出。",
+            "graphic_id": 20535,
+            "hero_id": 138,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,12509,12975"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3284",
+        "snapshots": {
+          "original": {
+            "id": 3284,
+            "name": "Certain Robes",
+            "description": "This is called 'style.' Look it up.",
+            "graphic_id": 20536,
+            "hero_id": 138,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,12509,12975"
+              }
+            ]
+          },
+          "display": {
+            "id": 3284,
+            "name": "特定长袍",
+            "description": "这就叫“风格”。好好查一下吧。",
+            "graphic_id": 20536,
+            "hero_id": 138,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,12509,12975"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3285",
+        "snapshots": {
+          "original": {
+            "id": 3285,
+            "name": "Cloak of the Secretarian",
+            "description": "Oh, this old thing?",
+            "graphic_id": 20537,
+            "hero_id": 138,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,12509,12975"
+              }
+            ]
+          },
+          "display": {
+            "id": 3285,
+            "name": "秘书的斗篷",
+            "description": "哦，这件旧衣服？",
+            "graphic_id": 20537,
+            "hero_id": 138,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,12509,12975"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3286",
+        "snapshots": {
+          "original": {
+            "id": 3286,
+            "name": "Hand Made Toy",
+            "description": "I never found out who made this. But I loved it when I was a kid.",
+            "graphic_id": 20532,
+            "hero_id": 138,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,7"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3286,
+            "name": "手工玩具",
+            "description": "我一直不知道是谁做的。但我小时候很喜欢它。",
+            "graphic_id": 20532,
+            "hero_id": 138,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,7"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3287",
+        "snapshots": {
+          "original": {
+            "id": 3287,
+            "name": "Carved Model",
+            "description": "I made this one on my own when I lost my childhood one. Just to show I could.",
+            "graphic_id": 20532,
+            "hero_id": 138,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,14"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3287,
+            "name": "雕刻模型",
+            "description": "这是我把童年那个弄丢之后自己做的。只是为了证明我能做到。",
+            "graphic_id": 20532,
+            "hero_id": 138,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,14"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3288",
+        "snapshots": {
+          "original": {
+            "id": 3288,
+            "name": "Improved Schematics",
+            "description": "I've got some BIG plans. For a thing.",
+            "graphic_id": 20533,
+            "hero_id": 138,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,28"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3288,
+            "name": "改良结构图",
+            "description": "我有一些大计划。针对某件事的。",
+            "graphic_id": 20533,
+            "hero_id": 138,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,28"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3289",
+        "snapshots": {
+          "original": {
+            "id": 3289,
+            "name": "Wonderous Airship Miniature",
+            "description": "Had to call in a lot of favors for this, but now I have an emergency airship!",
+            "graphic_id": 20534,
+            "hero_id": 138,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,70"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3289,
+            "name": "奇妙的微型飞艇",
+            "description": "为此我托了很多关系，但现在我有一艘应急飞船了！",
+            "graphic_id": 20534,
+            "hero_id": 138,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,70"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3",
+        "snapshots": {
+          "original": {
+            "id": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Female Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "使所有女性勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "8",
+        "snapshots": {
+          "original": {
+            "id": 8,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "half-elf"
+                  }
+                ],
+                "description": "Increases the damage of all Half-Elf Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 8,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "half-elf"
+                  }
+                ],
+                "description": "使所有半精灵勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "38",
+        "snapshots": {
+          "original": {
+            "id": 38,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "int",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a INT score of 13 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 38,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "int",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有智力大于等于 13 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "97",
+        "snapshots": {
+          "original": {
+            "id": 97,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "cha",
+                    "check": 13,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a CHA score of 13 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 97,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "cha",
+                    "check": 13,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位魅力大于等于 13 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "102",
+        "snapshots": {
+          "original": {
+            "id": 102,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a GOOD alignment"
+              }
+            ]
+          },
+          "display": {
+            "id": 102,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "阵型中每有一位善良阵营勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

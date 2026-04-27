@@ -37,63 +37,51 @@ afterEach(() => {
 })
 
 describe('ChampionDetailPage navigation', () => {
-  it('默认高亮概览分区', async () => {
+  it('默认高亮 Specializations tab', async () => {
     mockedLoadChampionDetail.mockResolvedValue(detailFixture)
 
     renderChampionDetailPage()
 
-    const overviewButtons = await screen.findAllByRole('button', { name: '概览' })
-    const upgradeButtons = await screen.findAllByRole('button', { name: '升级' })
+    const specializationsTab = await screen.findByRole('tab', { name: 'Specializations' })
+    const abilitiesTab = await screen.findByRole('tab', { name: 'Abilities' })
 
-    overviewButtons.forEach((button) => {
-      expect(button).toHaveAttribute('aria-pressed', 'true')
-    })
-    upgradeButtons.forEach((button) => {
-      expect(button).toHaveAttribute('aria-pressed', 'false')
-    })
+    expect(specializationsTab).toHaveAttribute('aria-selected', 'true')
+    expect(abilitiesTab).toHaveAttribute('aria-selected', 'false')
     expect(screen.queryByText('快速索引')).not.toBeInTheDocument()
     await waitFor(() => {
-      expect(window.location.hash).toBe('#/champions/7#section-overview')
+      expect(window.location.hash).toBe('#/champions/7#section-specializations')
     })
   })
 
-  it('点击分区导航后会同步高亮顶部按钮', async () => {
+  it('点击 tab 后会同步高亮和 hash', async () => {
     mockedLoadChampionDetail.mockResolvedValue(detailFixture)
 
     renderChampionDetailPage()
 
-    const upgradeButtons = await screen.findAllByRole('button', { name: '升级' })
-    fireEvent.click(upgradeButtons[0]!)
+    fireEvent.click(await screen.findByRole('tab', { name: 'Feats' }))
 
-    screen.getAllByRole('button', { name: '升级' }).forEach((button) => {
-      expect(button).toHaveAttribute('aria-pressed', 'true')
-    })
-    screen.getAllByRole('button', { name: '概览' }).forEach((button) => {
-      expect(button).toHaveAttribute('aria-pressed', 'false')
-    })
+    expect(screen.getByRole('tab', { name: 'Feats' })).toHaveAttribute('aria-selected', 'true')
+    expect(screen.getByRole('tab', { name: 'Specializations' })).toHaveAttribute('aria-selected', 'false')
     await waitFor(() => {
-      expect(window.location.hash).toBe('#/champions/7#section-upgrades')
+      expect(window.location.hash).toBe('#/champions/7#section-feats')
     })
   })
 
-  it('带分区 hash 进入时会直达对应分区并保留该 hash', async () => {
+  it('带旧分区 hash 进入时会映射到新 tab', async () => {
     mockedLoadChampionDetail.mockResolvedValue(detailFixture)
 
     window.history.replaceState(window.history.state, '', '/#/champions/7#section-upgrades')
     renderChampionDetailPageAt('/champions/7#section-upgrades')
 
     await waitFor(() => {
-      screen.getAllByRole('button', { name: '升级' }).forEach((button) => {
-        expect(button).toHaveAttribute('aria-pressed', 'true')
-      })
+      expect(screen.getByRole('tab', { name: 'Specializations' })).toHaveAttribute('aria-selected', 'true')
     })
-    expect(Element.prototype.scrollIntoView).toHaveBeenCalled()
     await waitFor(() => {
-      expect(window.location.hash).toBe('#/champions/7#section-upgrades')
+      expect(window.location.hash).toBe('#/champions/7#section-specializations')
     })
   })
 
-  it('滚动激活新的分区时不会再被 hash 定位拉回原处', async () => {
+  it('切换 tab 后不会再被初始 hash 定位拉回原处', async () => {
     mockedLoadChampionDetail.mockResolvedValue(detailFixture)
 
     renderChampionDetailPage()
@@ -106,24 +94,24 @@ describe('ChampionDetailPage navigation', () => {
     }
 
     Object.assign(sectionTopMap, {
-      overview: -360,
-      'character-sheet': -280,
-      combat: -220,
-      upgrades: 120,
-      feats: 720,
+      specializations: -360,
+      abilities: -280,
+      loot: -220,
+      legendary: -120,
+      feats: 120,
+      skins: 520,
+      'story-misc': 920,
     })
 
+    fireEvent.click(screen.getByRole('tab', { name: 'Feats' }))
     fireEvent.scroll(contentScroll)
 
     await waitFor(() => {
-      screen.getAllByRole('button', { name: '升级' }).forEach((button) => {
-        expect(button).toHaveAttribute('aria-pressed', 'true')
-      })
+      expect(screen.getByRole('tab', { name: 'Feats' })).toHaveAttribute('aria-selected', 'true')
     })
 
-    expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled()
     await waitFor(() => {
-      expect(window.location.hash).toBe('#/champions/7#section-upgrades')
+      expect(window.location.hash).toBe('#/champions/7#section-feats')
     })
   })
 })

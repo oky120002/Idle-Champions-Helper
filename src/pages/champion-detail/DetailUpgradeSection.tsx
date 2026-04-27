@@ -48,8 +48,8 @@ export function DetailUpgradeSection({
 }: DetailUpgradeSectionProps) {
   return (
     <SurfaceCard className="detail-section detail-section--upgrades detail-section--headerless">
-      <div id="upgrades" className="detail-section-anchor" />
-      <DetailSectionHeader title={t({ zh: '升级', en: 'Upgrades' })} badges={upgradeSectionBadges} />
+      <div id="specializations" className="detail-section-anchor" />
+      <DetailSectionHeader title="Specializations" badges={upgradeSectionBadges} />
 
       {spotlightUpgrades.length > 0 ? (
         <div className="upgrade-showcase-grid">

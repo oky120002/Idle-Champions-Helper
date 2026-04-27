@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "79",
     "name": {
@@ -43,7 +43,7 @@
   },
   "dateAvailable": "2021-04-28 00:00:00",
   "lastReworkDate": "2021-04-28 00:00:00",
-  "popularity": 64,
+  "popularity": 67,
   "baseCost": "50000000000000",
   "baseDamage": "7500000000",
   "baseHealth": "45",
@@ -3611,6 +3611,644 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "1873",
+      "name": {
+        "original": "Unlucky Crossbow",
+        "display": "不祥的十字弩"
+      },
+      "description": {
+        "original": "Be careful. I shot myself in the foot with this once. It's a long story.",
+        "display": "小心。我有一次用这东西射中了我的脚。那件事说来话长。"
+      },
+      "graphicId": "10331",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1874",
+      "name": {
+        "original": "Backwater Crossbow",
+        "display": "死水十字弩"
+      },
+      "description": {
+        "original": "You don't mess with someone with a crossbow on their back.",
+        "display": "你可别去惹一个背着十字弩的人。"
+      },
+      "graphicId": "10331",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1875",
+      "name": {
+        "original": "Target Shooter",
+        "display": "标靶射手"
+      },
+      "description": {
+        "original": "Look! No. Over there! Hang on... Watch the bolt.",
+        "display": "你看！不，那边！等等......看着那弩箭。"
+      },
+      "graphicId": "10332",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1876",
+      "name": {
+        "original": "Gold-Plated Crossbow",
+        "display": "镀金十字弩"
+      },
+      "description": {
+        "original": "It might be a bit too extravagant to carry around Waterdeep.",
+        "display": "带着它在深水城到处晃悠可能有点太招摇了。"
+      },
+      "graphicId": "10333",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "1877",
+      "name": {
+        "original": "Old Faithful Blade",
+        "display": "老旧的忠诚之刃"
+      },
+      "description": {
+        "original": "Growing up as a tiefling means knowing when you're in trouble.",
+        "display": "作为一个提夫林，从小到大的经历让我知道什么时候有麻烦。"
+      },
+      "graphicId": "10334",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1878",
+      "name": {
+        "original": "Blade of Avernus",
+        "display": "阿弗纳斯之刃"
+      },
+      "description": {
+        "original": "I lost my patron once. It wasn't great. Neither was he, if I'm being honest.",
+        "display": "我曾失去过一次我的赞助者。那可糟糕了。老实说，他也一样。"
+      },
+      "graphicId": "10334",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1879",
+      "name": {
+        "original": "Luck Blade",
+        "display": "运气之刃"
+      },
+      "description": {
+        "original": "I think it's broken. Unrelated; does anyone have a bandage?",
+        "display": "我想它破了。不相干；有谁有绷带吗？"
+      },
+      "graphicId": "10335",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1880",
+      "name": {
+        "original": "Fancy Blade",
+        "display": "精致之刃"
+      },
+      "description": {
+        "original": "I picked it up in Avernus. Not really sure why it's so fancy.",
+        "display": "这是我在阿弗纳斯捡的。我也不太清楚它为什么这么精致。"
+      },
+      "graphicId": "10336",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1881",
+      "name": {
+        "original": "Scribbled Maze",
+        "display": "胡乱涂画的迷宫"
+      },
+      "description": {
+        "original": "Ooooh... This one is a tough one!",
+        "display": "噢......这个挺难的！"
+      },
+      "graphicId": "10345",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,13416,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1882",
+      "name": {
+        "original": "Fishtank Decoration",
+        "display": "鱼缸装饰品"
+      },
+      "description": {
+        "original": "It gives Brian the brain something to enjoy when he isn't mind blasting.",
+        "display": "当布莱恩不兴奋时，这会给他的大脑一点享受。"
+      },
+      "graphicId": "10345",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,13416,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1883",
+      "name": {
+        "original": "Sculpted Maze",
+        "display": "雕刻的迷宫"
+      },
+      "description": {
+        "original": "It'll look great in Trollskull!",
+        "display": "这要是在巨魔头骨里一定会很好看！"
+      },
+      "graphicId": "10344",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,13416,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1884",
+      "name": {
+        "original": "Maze Brooch",
+        "display": "迷宫胸针"
+      },
+      "description": {
+        "original": "I made it with my parents when I was a kid.",
+        "display": "这是我小时候和我父母一起做的。"
+      },
+      "graphicId": "10343",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,13416,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1885",
+      "name": {
+        "original": "Traveling Robes",
+        "display": "旅行长袍"
+      },
+      "description": {
+        "original": "Whether we're in weird forests or the Nine Hells, you gotta be comfortable.",
+        "display": "不管我们是身处诡异的森林还是九层地狱，你都得舒服才行。"
+      },
+      "graphicId": "10328",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,13417"
+        },
+        {
+          "effect_string": "buff_upgrade,10,13417,2",
+          "description": ""
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1886",
+      "name": {
+        "original": "Vestments of the Lost Warlock",
+        "display": "失落邪术师的法衣"
+      },
+      "description": {
+        "original": "Yeah, my last patron would have hated this outfit.",
+        "display": "没错，我上一个赞助者肯定会讨厌这身衣服的。"
+      },
+      "graphicId": "10328",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,13417"
+        },
+        {
+          "effect_string": "buff_upgrade,30,13417,2",
+          "description": ""
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1887",
+      "name": {
+        "original": "New Robes",
+        "display": "新的长袍"
+      },
+      "description": {
+        "original": "New Patron: New Shaka!",
+        "display": "新的赞助者：新的沙卡！"
+      },
+      "graphicId": "10329",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,13417"
+        },
+        {
+          "effect_string": "buff_upgrade,50,13417,2",
+          "description": ""
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1888",
+      "name": {
+        "original": "Celestial Warlock Robes",
+        "display": "天神邪术师长袍"
+      },
+      "description": {
+        "original": "A gift from my Celestial patron, Kagoya.",
+        "display": "我的天神赞助者鹿屋送的礼物。"
+      },
+      "graphicId": "10330",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,13417"
+        },
+        {
+          "effect_string": "buff_upgrade,100,13417,2",
+          "description": ""
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1889",
+      "name": {
+        "original": "Old Locket",
+        "display": "旧的盒式吊坠"
+      },
+      "description": {
+        "original": "It reminds me of some of our weird adventures.",
+        "display": "这让我想起我们的一些奇怪冒险。"
+      },
+      "graphicId": "10340",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,13418"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1890",
+      "name": {
+        "original": "Rinn's Gifted Locket",
+        "display": "里恩送的盒式吊坠"
+      },
+      "description": {
+        "original": "I keep it close to my heart.",
+        "display": "我把它放在心口的位置，贴身保存。"
+      },
+      "graphicId": "10340",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,13418"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1891",
+      "name": {
+        "original": "Mysterious Locket",
+        "display": "神秘的盒式吊坠"
+      },
+      "description": {
+        "original": "Oh, that glow? Don't worry about that. Also, don't touch.",
+        "display": "噢，那些光吗？不用担心。还有，别碰。"
+      },
+      "graphicId": "10341",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,13418"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1892",
+      "name": {
+        "original": "Locket of the Rivals",
+        "display": "敌人的盒式吊坠"
+      },
+      "description": {
+        "original": "It holds an image of my family.",
+        "display": "里面放着一张我家人的画像。"
+      },
+      "graphicId": "10342",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,13418"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1893",
+      "name": {
+        "original": "Lifelong Cap",
+        "display": "戴了一辈子的帽子"
+      },
+      "description": {
+        "original": "It covers my horns.",
+        "display": "它可以遮住我的角。"
+      },
+      "graphicId": "10337",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,9"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1894",
+      "name": {
+        "original": "Undercover Hat",
+        "display": "卧底帽子"
+      },
+      "description": {
+        "original": "I'm basically invisible, right?",
+        "display": "我基本上是隐形的，对吧？"
+      },
+      "graphicId": "10337",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,18"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1895",
+      "name": {
+        "original": "Cap of the Traveling Tiefling",
+        "display": "旅行的提夫林帽子"
+      },
+      "description": {
+        "original": "Keeps my head cool, and my horns covered!",
+        "display": "让我的头保持凉爽，还能遮住我的角！"
+      },
+      "graphicId": "10338",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,36"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1896",
+      "name": {
+        "original": "Armored Hat of the Puzzler",
+        "display": "谜题者的装甲帽子"
+      },
+      "description": {
+        "original": "Huh? Sorry, I was lost in thought.",
+        "display": "哈？对不起，我刚才想事情想到出神了。"
+      },
+      "graphicId": "10339",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,90"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "54",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "male"
+            }
+          ],
+          "description": "Increases the damage of all Male Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "tiefling"
+            }
+          ],
+          "description": "Increases the damage of all Tiefling Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "44",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "cha",
+              "score": 13,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a CHA score of 13 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "34",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "con",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a CON score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "48",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "attack_type",
+              "attack": "magic"
+            }
+          ],
+          "description": "Increases the damage of all Magic Champions by $(amount)%"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3765,7 +4403,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 64,
+        "popularity": 67,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3953,7 +4591,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 64,
+        "popularity": 67,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -7986,6 +8624,1160 @@
             "availabilities": {
               "in_flash_sales": true
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "1873",
+        "snapshots": {
+          "original": {
+            "id": 1873,
+            "name": "Unlucky Crossbow",
+            "description": "Be careful. I shot myself in the foot with this once. It's a long story.",
+            "graphic_id": 10331,
+            "hero_id": 79,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1873,
+            "name": "不祥的十字弩",
+            "description": "小心。我有一次用这东西射中了我的脚。那件事说来话长。",
+            "graphic_id": 10331,
+            "hero_id": 79,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1874",
+        "snapshots": {
+          "original": {
+            "id": 1874,
+            "name": "Backwater Crossbow",
+            "description": "You don't mess with someone with a crossbow on their back.",
+            "graphic_id": 10331,
+            "hero_id": 79,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1874,
+            "name": "死水十字弩",
+            "description": "你可别去惹一个背着十字弩的人。",
+            "graphic_id": 10331,
+            "hero_id": 79,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1875",
+        "snapshots": {
+          "original": {
+            "id": 1875,
+            "name": "Target Shooter",
+            "description": "Look! No. Over there! Hang on... Watch the bolt.",
+            "graphic_id": 10332,
+            "hero_id": 79,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1875,
+            "name": "标靶射手",
+            "description": "你看！不，那边！等等......看着那弩箭。",
+            "graphic_id": 10332,
+            "hero_id": 79,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1876",
+        "snapshots": {
+          "original": {
+            "id": 1876,
+            "name": "Gold-Plated Crossbow",
+            "description": "It might be a bit too extravagant to carry around Waterdeep.",
+            "graphic_id": 10333,
+            "hero_id": 79,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1876,
+            "name": "镀金十字弩",
+            "description": "带着它在深水城到处晃悠可能有点太招摇了。",
+            "graphic_id": 10333,
+            "hero_id": 79,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1877",
+        "snapshots": {
+          "original": {
+            "id": 1877,
+            "name": "Old Faithful Blade",
+            "description": "Growing up as a tiefling means knowing when you're in trouble.",
+            "graphic_id": 10334,
+            "hero_id": 79,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1877,
+            "name": "老旧的忠诚之刃",
+            "description": "作为一个提夫林，从小到大的经历让我知道什么时候有麻烦。",
+            "graphic_id": 10334,
+            "hero_id": 79,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1878",
+        "snapshots": {
+          "original": {
+            "id": 1878,
+            "name": "Blade of Avernus",
+            "description": "I lost my patron once. It wasn't great. Neither was he, if I'm being honest.",
+            "graphic_id": 10334,
+            "hero_id": 79,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1878,
+            "name": "阿弗纳斯之刃",
+            "description": "我曾失去过一次我的赞助者。那可糟糕了。老实说，他也一样。",
+            "graphic_id": 10334,
+            "hero_id": 79,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1879",
+        "snapshots": {
+          "original": {
+            "id": 1879,
+            "name": "Luck Blade",
+            "description": "I think it's broken. Unrelated; does anyone have a bandage?",
+            "graphic_id": 10335,
+            "hero_id": 79,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1879,
+            "name": "运气之刃",
+            "description": "我想它破了。不相干；有谁有绷带吗？",
+            "graphic_id": 10335,
+            "hero_id": 79,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1880",
+        "snapshots": {
+          "original": {
+            "id": 1880,
+            "name": "Fancy Blade",
+            "description": "I picked it up in Avernus. Not really sure why it's so fancy.",
+            "graphic_id": 10336,
+            "hero_id": 79,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1880,
+            "name": "精致之刃",
+            "description": "这是我在阿弗纳斯捡的。我也不太清楚它为什么这么精致。",
+            "graphic_id": 10336,
+            "hero_id": 79,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1881",
+        "snapshots": {
+          "original": {
+            "id": 1881,
+            "name": "Scribbled Maze",
+            "description": "Ooooh... This one is a tough one!",
+            "graphic_id": 10345,
+            "hero_id": 79,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,13416,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1881,
+            "name": "胡乱涂画的迷宫",
+            "description": "噢......这个挺难的！",
+            "graphic_id": 10345,
+            "hero_id": 79,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,13416,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1882",
+        "snapshots": {
+          "original": {
+            "id": 1882,
+            "name": "Fishtank Decoration",
+            "description": "It gives Brian the brain something to enjoy when he isn't mind blasting.",
+            "graphic_id": 10345,
+            "hero_id": 79,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,13416,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1882,
+            "name": "鱼缸装饰品",
+            "description": "当布莱恩不兴奋时，这会给他的大脑一点享受。",
+            "graphic_id": 10345,
+            "hero_id": 79,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,13416,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1883",
+        "snapshots": {
+          "original": {
+            "id": 1883,
+            "name": "Sculpted Maze",
+            "description": "It'll look great in Trollskull!",
+            "graphic_id": 10344,
+            "hero_id": 79,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,13416,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1883,
+            "name": "雕刻的迷宫",
+            "description": "这要是在巨魔头骨里一定会很好看！",
+            "graphic_id": 10344,
+            "hero_id": 79,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,13416,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1884",
+        "snapshots": {
+          "original": {
+            "id": 1884,
+            "name": "Maze Brooch",
+            "description": "I made it with my parents when I was a kid.",
+            "graphic_id": 10343,
+            "hero_id": 79,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,13416,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1884,
+            "name": "迷宫胸针",
+            "description": "这是我小时候和我父母一起做的。",
+            "graphic_id": 10343,
+            "hero_id": 79,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,13416,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1885",
+        "snapshots": {
+          "original": {
+            "id": 1885,
+            "name": "Traveling Robes",
+            "description": "Whether we're in weird forests or the Nine Hells, you gotta be comfortable.",
+            "graphic_id": 10328,
+            "hero_id": 79,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,13417"
+              },
+              {
+                "effect_string": "buff_upgrade,10,13417,2",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1885,
+            "name": "旅行长袍",
+            "description": "不管我们是身处诡异的森林还是九层地狱，你都得舒服才行。",
+            "graphic_id": 10328,
+            "hero_id": 79,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,13417"
+              },
+              {
+                "effect_string": "buff_upgrade,10,13417,2",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1886",
+        "snapshots": {
+          "original": {
+            "id": 1886,
+            "name": "Vestments of the Lost Warlock",
+            "description": "Yeah, my last patron would have hated this outfit.",
+            "graphic_id": 10328,
+            "hero_id": 79,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,13417"
+              },
+              {
+                "effect_string": "buff_upgrade,30,13417,2",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1886,
+            "name": "失落邪术师的法衣",
+            "description": "没错，我上一个赞助者肯定会讨厌这身衣服的。",
+            "graphic_id": 10328,
+            "hero_id": 79,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,13417"
+              },
+              {
+                "effect_string": "buff_upgrade,30,13417,2",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1887",
+        "snapshots": {
+          "original": {
+            "id": 1887,
+            "name": "New Robes",
+            "description": "New Patron: New Shaka!",
+            "graphic_id": 10329,
+            "hero_id": 79,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,13417"
+              },
+              {
+                "effect_string": "buff_upgrade,50,13417,2",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1887,
+            "name": "新的长袍",
+            "description": "新的赞助者：新的沙卡！",
+            "graphic_id": 10329,
+            "hero_id": 79,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,13417"
+              },
+              {
+                "effect_string": "buff_upgrade,50,13417,2",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1888",
+        "snapshots": {
+          "original": {
+            "id": 1888,
+            "name": "Celestial Warlock Robes",
+            "description": "A gift from my Celestial patron, Kagoya.",
+            "graphic_id": 10330,
+            "hero_id": 79,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,13417"
+              },
+              {
+                "effect_string": "buff_upgrade,100,13417,2",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1888,
+            "name": "天神邪术师长袍",
+            "description": "我的天神赞助者鹿屋送的礼物。",
+            "graphic_id": 10330,
+            "hero_id": 79,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,13417"
+              },
+              {
+                "effect_string": "buff_upgrade,100,13417,2",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1889",
+        "snapshots": {
+          "original": {
+            "id": 1889,
+            "name": "Old Locket",
+            "description": "It reminds me of some of our weird adventures.",
+            "graphic_id": 10340,
+            "hero_id": 79,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,13418"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1889,
+            "name": "旧的盒式吊坠",
+            "description": "这让我想起我们的一些奇怪冒险。",
+            "graphic_id": 10340,
+            "hero_id": 79,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,13418"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1890",
+        "snapshots": {
+          "original": {
+            "id": 1890,
+            "name": "Rinn's Gifted Locket",
+            "description": "I keep it close to my heart.",
+            "graphic_id": 10340,
+            "hero_id": 79,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,13418"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1890,
+            "name": "里恩送的盒式吊坠",
+            "description": "我把它放在心口的位置，贴身保存。",
+            "graphic_id": 10340,
+            "hero_id": 79,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,13418"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1891",
+        "snapshots": {
+          "original": {
+            "id": 1891,
+            "name": "Mysterious Locket",
+            "description": "Oh, that glow? Don't worry about that. Also, don't touch.",
+            "graphic_id": 10341,
+            "hero_id": 79,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,13418"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1891,
+            "name": "神秘的盒式吊坠",
+            "description": "噢，那些光吗？不用担心。还有，别碰。",
+            "graphic_id": 10341,
+            "hero_id": 79,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,13418"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1892",
+        "snapshots": {
+          "original": {
+            "id": 1892,
+            "name": "Locket of the Rivals",
+            "description": "It holds an image of my family.",
+            "graphic_id": 10342,
+            "hero_id": 79,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,13418"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1892,
+            "name": "敌人的盒式吊坠",
+            "description": "里面放着一张我家人的画像。",
+            "graphic_id": 10342,
+            "hero_id": 79,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,13418"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1893",
+        "snapshots": {
+          "original": {
+            "id": 1893,
+            "name": "Lifelong Cap",
+            "description": "It covers my horns.",
+            "graphic_id": 10337,
+            "hero_id": 79,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,9"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1893,
+            "name": "戴了一辈子的帽子",
+            "description": "它可以遮住我的角。",
+            "graphic_id": 10337,
+            "hero_id": 79,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,9"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1894",
+        "snapshots": {
+          "original": {
+            "id": 1894,
+            "name": "Undercover Hat",
+            "description": "I'm basically invisible, right?",
+            "graphic_id": 10337,
+            "hero_id": 79,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,18"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1894,
+            "name": "卧底帽子",
+            "description": "我基本上是隐形的，对吧？",
+            "graphic_id": 10337,
+            "hero_id": 79,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,18"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1895",
+        "snapshots": {
+          "original": {
+            "id": 1895,
+            "name": "Cap of the Traveling Tiefling",
+            "description": "Keeps my head cool, and my horns covered!",
+            "graphic_id": 10338,
+            "hero_id": 79,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,36"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1895,
+            "name": "旅行的提夫林帽子",
+            "description": "让我的头保持凉爽，还能遮住我的角！",
+            "graphic_id": 10338,
+            "hero_id": 79,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,36"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1896",
+        "snapshots": {
+          "original": {
+            "id": 1896,
+            "name": "Armored Hat of the Puzzler",
+            "description": "Huh? Sorry, I was lost in thought.",
+            "graphic_id": 10339,
+            "hero_id": 79,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,90"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1896,
+            "name": "谜题者的装甲帽子",
+            "description": "哈？对不起，我刚才想事情想到出神了。",
+            "graphic_id": 10339,
+            "hero_id": 79,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,90"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "54",
+        "snapshots": {
+          "original": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "阵型中每有一位勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2",
+        "snapshots": {
+          "original": {
+            "id": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "Increases the damage of all Male Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "使所有男性勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "10",
+        "snapshots": {
+          "original": {
+            "id": 10,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "tiefling"
+                  }
+                ],
+                "description": "Increases the damage of all Tiefling Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 10,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "tiefling"
+                  }
+                ],
+                "description": "使所有提夫林勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "44",
+        "snapshots": {
+          "original": {
+            "id": 44,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "cha",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a CHA score of 13 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 44,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "cha",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有魅力大于等于 13 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "34",
+        "snapshots": {
+          "original": {
+            "id": 34,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a CON score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 34,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有体质大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "48",
+        "snapshots": {
+          "original": {
+            "id": 48,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "attack_type",
+                    "attack": "magic"
+                  }
+                ],
+                "description": "Increases the damage of all Magic Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 48,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "attack_type",
+                    "attack": "magic"
+                  }
+                ],
+                "description": "使所有魔法勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

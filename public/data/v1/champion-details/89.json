@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "89",
     "name": {
@@ -47,7 +47,7 @@
   },
   "dateAvailable": "2021-09-29 00:00:00",
   "lastReworkDate": "2021-09-29 00:00:00",
-  "popularity": 16,
+  "popularity": 20,
   "baseCost": "40",
   "baseDamage": "20",
   "baseHealth": "43",
@@ -2926,6 +2926,634 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "2065",
+      "name": {
+        "original": "Old Staffs",
+        "display": "旧木棍"
+      },
+      "description": {
+        "original": "What? I didn't want to get my hands dirty!",
+        "display": "什么？我可不想把手弄脏！"
+      },
+      "graphicId": "11671",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,50"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2066",
+      "name": {
+        "original": "Training Staffs",
+        "display": "训练用棍"
+      },
+      "description": {
+        "original": "Practice makes perfect!",
+        "display": "熟能生巧！"
+      },
+      "graphicId": "11671",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2067",
+      "name": {
+        "original": "Painted Staffs",
+        "display": "上漆的木棍"
+      },
+      "description": {
+        "original": "I know, the paint gets everywhere. Isn't it wonderful!?",
+        "display": "我知道，油漆弄得到处都是。是不是很棒！？"
+      },
+      "graphicId": "11672",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2068",
+      "name": {
+        "original": "Ornamental Staffs",
+        "display": "装饰木棍"
+      },
+      "description": {
+        "original": "I keep them in the corner of my room.",
+        "display": "我把它们放在我房间的角落里。"
+      },
+      "graphicId": "11673",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,350"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "2069",
+      "name": {
+        "original": "Wood Bangles",
+        "display": "木质手镯"
+      },
+      "description": {
+        "original": "They have a satisfying clink when I punch things!",
+        "display": "我揍人的时候它们会发出令人倍感舒畅的咔咔声！"
+      },
+      "graphicId": "11659",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,50"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2070",
+      "name": {
+        "original": "Aarakocran Bangles",
+        "display": "翼爪鸟人手镯"
+      },
+      "description": {
+        "original": "You can tap them together for secret messages while flying.",
+        "display": "你可以在飞行的时候碰撞它们来发出秘密信息。"
+      },
+      "graphicId": "11659",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2071",
+      "name": {
+        "original": "Golden Bangles",
+        "display": "金灿灿手镯"
+      },
+      "description": {
+        "original": "I think these really compliment my sash!",
+        "display": "我觉得这东西真的很衬我的肩带！"
+      },
+      "graphicId": "11660",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2072",
+      "name": {
+        "original": "Exquisite Bangles",
+        "display": "精美手镯"
+      },
+      "description": {
+        "original": "Only for fancy occasions.",
+        "display": "仅用于高调场合。"
+      },
+      "graphicId": "11661",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,350"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2073",
+      "name": {
+        "original": "Dirty Smock",
+        "display": "肮脏罩衫"
+      },
+      "description": {
+        "original": "Is that paint, or blood? Doesn't really matter.",
+        "display": "那是颜料还是血？这真的不重要。"
+      },
+      "graphicId": "11674",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,13710"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2074",
+      "name": {
+        "original": "Painter's Smock",
+        "display": "画家罩衫"
+      },
+      "description": {
+        "original": "For when I need to explore some colors.",
+        "display": "我需要尝试色彩的时候可以用得着。"
+      },
+      "graphicId": "11674",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,13710"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2075",
+      "name": {
+        "original": "Regal Tunic",
+        "display": "宫廷罩衣"
+      },
+      "description": {
+        "original": "Don't distract me, I have a dinner to attend right after I'm done!",
+        "display": "别打扰我，等这里的事搞定了，我还要去赴晚宴呢！"
+      },
+      "graphicId": "11675",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,13710"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2076",
+      "name": {
+        "original": "Pesquet Tunic",
+        "display": "佩斯凯罩衣"
+      },
+      "description": {
+        "original": "Now, this is what I call an UPGRADE!",
+        "display": "这才像是升级嘛！"
+      },
+      "graphicId": "11676",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,13710"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2077",
+      "name": {
+        "original": "Traveller's Sash",
+        "display": "旅者肩带"
+      },
+      "description": {
+        "original": "It also doubles as a headscarf in a storm.",
+        "display": "在风暴里它还能用来当头巾。"
+      },
+      "graphicId": "11668",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,13711"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2078",
+      "name": {
+        "original": "Chultan Sash",
+        "display": "楚尔特肩带"
+      },
+      "description": {
+        "original": "When I was foraging, it was a good sack in a pinch.",
+        "display": "我寻找食物的时候，它是一个很好用的临时口袋。"
+      },
+      "graphicId": "11668",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,13711"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2079",
+      "name": {
+        "original": "Honeycomb Sash",
+        "display": "蜂巢肩带"
+      },
+      "description": {
+        "original": "It reminds me of my favorite snack.",
+        "display": "让我想起了我最爱的零食。"
+      },
+      "graphicId": "11669",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,13711"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2080",
+      "name": {
+        "original": "Saffron Sash",
+        "display": "萨弗隆肩带"
+      },
+      "description": {
+        "original": "It's not often you meet the Open Lord of Waterdeep!",
+        "display": "我可不是经常能遇到深水城的公开领主的！"
+      },
+      "graphicId": "11670",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,13711"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2081",
+      "name": {
+        "original": "Wooden Cup",
+        "display": "木杯"
+      },
+      "description": {
+        "original": "Always keep those paintbrushes handy.",
+        "display": "用来放笔刷很顺手。"
+      },
+      "graphicId": "11665",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,25"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2082",
+      "name": {
+        "original": "Paint Rinse Cup",
+        "display": "颜料精杯"
+      },
+      "description": {
+        "original": "For rinsing, not sipping!",
+        "display": "有颜料，不能喝！"
+      },
+      "graphicId": "11665",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,87.5"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2083",
+      "name": {
+        "original": "Clay Paint Pot",
+        "display": "粘土颜料罐"
+      },
+      "description": {
+        "original": "I'm painting the entrance to Trollskull Manor regal red.",
+        "display": "我要把巨魔头骨庄园的大门涂成庄严的红色。"
+      },
+      "graphicId": "11666",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,150"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2084",
+      "name": {
+        "original": "Telescoping Easel",
+        "display": "嵌套花架"
+      },
+      "description": {
+        "original": "With my art supplies, even my staff gets used.",
+        "display": "我的作画用品这么多，就连木棍都用上了。"
+      },
+      "graphicId": "11667",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,275"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2085",
+      "name": {
+        "original": "Decorated Dart",
+        "display": "装饰飞镖"
+      },
+      "description": {
+        "original": "They'll do for a tavern brawl.",
+        "display": "在酒馆里打架时能用得上。"
+      },
+      "graphicId": "11662",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,4"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2086",
+      "name": {
+        "original": "Cassalanter Dart",
+        "display": "卡萨兰特尔飞镖"
+      },
+      "description": {
+        "original": "I know they are master-crafted, but they just don't feel balanced.",
+        "display": "我知道它们工艺精良，但总觉得有点不太平衡。"
+      },
+      "graphicId": "11662",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,8"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2087",
+      "name": {
+        "original": "Dual Use Dart",
+        "display": "双用途飞镖"
+      },
+      "description": {
+        "original": "No one suspects the paintbrushes!",
+        "display": "谁都不会怀疑笔刷！"
+      },
+      "graphicId": "11663",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,16"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2088",
+      "name": {
+        "original": "Exquisite Dart of the Painter",
+        "display": "精致画家飞镖"
+      },
+      "description": {
+        "original": "It's poison-tipped. Best used with an oil-based paint.",
+        "display": "镖尖上还涂了毒。最好跟油基颜料一起使用。"
+      },
+      "graphicId": "11664",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,40"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "56",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "62",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "aarakocra"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Aarakocra Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "33",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "dex",
+              "score": 15,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a DEX score of 15 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "81",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "str",
+              "check": 11,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a STR score of 11 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "99",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "attack_type",
+              "attack": "melee"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Melee Champion in the formation"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3083,7 +3711,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 16,
+        "popularity": 20,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3280,7 +3908,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 16,
+        "popularity": 20,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -7152,6 +7780,1132 @@
             "availabilities": {
               "premium_item_id": "618"
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "2065",
+        "snapshots": {
+          "original": {
+            "id": 2065,
+            "name": "Old Staffs",
+            "description": "What? I didn't want to get my hands dirty!",
+            "graphic_id": 11671,
+            "hero_id": 89,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2065,
+            "name": "旧木棍",
+            "description": "什么？我可不想把手弄脏！",
+            "graphic_id": 11671,
+            "hero_id": 89,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2066",
+        "snapshots": {
+          "original": {
+            "id": 2066,
+            "name": "Training Staffs",
+            "description": "Practice makes perfect!",
+            "graphic_id": 11671,
+            "hero_id": 89,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2066,
+            "name": "训练用棍",
+            "description": "熟能生巧！",
+            "graphic_id": 11671,
+            "hero_id": 89,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2067",
+        "snapshots": {
+          "original": {
+            "id": 2067,
+            "name": "Painted Staffs",
+            "description": "I know, the paint gets everywhere. Isn't it wonderful!?",
+            "graphic_id": 11672,
+            "hero_id": 89,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2067,
+            "name": "上漆的木棍",
+            "description": "我知道，油漆弄得到处都是。是不是很棒！？",
+            "graphic_id": 11672,
+            "hero_id": 89,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2068",
+        "snapshots": {
+          "original": {
+            "id": 2068,
+            "name": "Ornamental Staffs",
+            "description": "I keep them in the corner of my room.",
+            "graphic_id": 11673,
+            "hero_id": 89,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2068,
+            "name": "装饰木棍",
+            "description": "我把它们放在我房间的角落里。",
+            "graphic_id": 11673,
+            "hero_id": 89,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2069",
+        "snapshots": {
+          "original": {
+            "id": 2069,
+            "name": "Wood Bangles",
+            "description": "They have a satisfying clink when I punch things!",
+            "graphic_id": 11659,
+            "hero_id": 89,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2069,
+            "name": "木质手镯",
+            "description": "我揍人的时候它们会发出令人倍感舒畅的咔咔声！",
+            "graphic_id": 11659,
+            "hero_id": 89,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2070",
+        "snapshots": {
+          "original": {
+            "id": 2070,
+            "name": "Aarakocran Bangles",
+            "description": "You can tap them together for secret messages while flying.",
+            "graphic_id": 11659,
+            "hero_id": 89,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2070,
+            "name": "翼爪鸟人手镯",
+            "description": "你可以在飞行的时候碰撞它们来发出秘密信息。",
+            "graphic_id": 11659,
+            "hero_id": 89,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2071",
+        "snapshots": {
+          "original": {
+            "id": 2071,
+            "name": "Golden Bangles",
+            "description": "I think these really compliment my sash!",
+            "graphic_id": 11660,
+            "hero_id": 89,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2071,
+            "name": "金灿灿手镯",
+            "description": "我觉得这东西真的很衬我的肩带！",
+            "graphic_id": 11660,
+            "hero_id": 89,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2072",
+        "snapshots": {
+          "original": {
+            "id": 2072,
+            "name": "Exquisite Bangles",
+            "description": "Only for fancy occasions.",
+            "graphic_id": 11661,
+            "hero_id": 89,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2072,
+            "name": "精美手镯",
+            "description": "仅用于高调场合。",
+            "graphic_id": 11661,
+            "hero_id": 89,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2073",
+        "snapshots": {
+          "original": {
+            "id": 2073,
+            "name": "Dirty Smock",
+            "description": "Is that paint, or blood? Doesn't really matter.",
+            "graphic_id": 11674,
+            "hero_id": 89,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,13710"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2073,
+            "name": "肮脏罩衫",
+            "description": "那是颜料还是血？这真的不重要。",
+            "graphic_id": 11674,
+            "hero_id": 89,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,13710"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2074",
+        "snapshots": {
+          "original": {
+            "id": 2074,
+            "name": "Painter's Smock",
+            "description": "For when I need to explore some colors.",
+            "graphic_id": 11674,
+            "hero_id": 89,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,13710"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2074,
+            "name": "画家罩衫",
+            "description": "我需要尝试色彩的时候可以用得着。",
+            "graphic_id": 11674,
+            "hero_id": 89,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,13710"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2075",
+        "snapshots": {
+          "original": {
+            "id": 2075,
+            "name": "Regal Tunic",
+            "description": "Don't distract me, I have a dinner to attend right after I'm done!",
+            "graphic_id": 11675,
+            "hero_id": 89,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,13710"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2075,
+            "name": "宫廷罩衣",
+            "description": "别打扰我，等这里的事搞定了，我还要去赴晚宴呢！",
+            "graphic_id": 11675,
+            "hero_id": 89,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,13710"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2076",
+        "snapshots": {
+          "original": {
+            "id": 2076,
+            "name": "Pesquet Tunic",
+            "description": "Now, this is what I call an UPGRADE!",
+            "graphic_id": 11676,
+            "hero_id": 89,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,13710"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2076,
+            "name": "佩斯凯罩衣",
+            "description": "这才像是升级嘛！",
+            "graphic_id": 11676,
+            "hero_id": 89,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,13710"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2077",
+        "snapshots": {
+          "original": {
+            "id": 2077,
+            "name": "Traveller's Sash",
+            "description": "It also doubles as a headscarf in a storm.",
+            "graphic_id": 11668,
+            "hero_id": 89,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,13711"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2077,
+            "name": "旅者肩带",
+            "description": "在风暴里它还能用来当头巾。",
+            "graphic_id": 11668,
+            "hero_id": 89,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,13711"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2078",
+        "snapshots": {
+          "original": {
+            "id": 2078,
+            "name": "Chultan Sash",
+            "description": "When I was foraging, it was a good sack in a pinch.",
+            "graphic_id": 11668,
+            "hero_id": 89,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,13711"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2078,
+            "name": "楚尔特肩带",
+            "description": "我寻找食物的时候，它是一个很好用的临时口袋。",
+            "graphic_id": 11668,
+            "hero_id": 89,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,13711"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2079",
+        "snapshots": {
+          "original": {
+            "id": 2079,
+            "name": "Honeycomb Sash",
+            "description": "It reminds me of my favorite snack.",
+            "graphic_id": 11669,
+            "hero_id": 89,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,13711"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2079,
+            "name": "蜂巢肩带",
+            "description": "让我想起了我最爱的零食。",
+            "graphic_id": 11669,
+            "hero_id": 89,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,13711"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2080",
+        "snapshots": {
+          "original": {
+            "id": 2080,
+            "name": "Saffron Sash",
+            "description": "It's not often you meet the Open Lord of Waterdeep!",
+            "graphic_id": 11670,
+            "hero_id": 89,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,13711"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2080,
+            "name": "萨弗隆肩带",
+            "description": "我可不是经常能遇到深水城的公开领主的！",
+            "graphic_id": 11670,
+            "hero_id": 89,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,13711"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2081",
+        "snapshots": {
+          "original": {
+            "id": 2081,
+            "name": "Wooden Cup",
+            "description": "Always keep those paintbrushes handy.",
+            "graphic_id": 11665,
+            "hero_id": 89,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ]
+          },
+          "display": {
+            "id": 2081,
+            "name": "木杯",
+            "description": "用来放笔刷很顺手。",
+            "graphic_id": 11665,
+            "hero_id": 89,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2082",
+        "snapshots": {
+          "original": {
+            "id": 2082,
+            "name": "Paint Rinse Cup",
+            "description": "For rinsing, not sipping!",
+            "graphic_id": 11665,
+            "hero_id": 89,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ]
+          },
+          "display": {
+            "id": 2082,
+            "name": "颜料精杯",
+            "description": "有颜料，不能喝！",
+            "graphic_id": 11665,
+            "hero_id": 89,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2083",
+        "snapshots": {
+          "original": {
+            "id": 2083,
+            "name": "Clay Paint Pot",
+            "description": "I'm painting the entrance to Trollskull Manor regal red.",
+            "graphic_id": 11666,
+            "hero_id": 89,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ]
+          },
+          "display": {
+            "id": 2083,
+            "name": "粘土颜料罐",
+            "description": "我要把巨魔头骨庄园的大门涂成庄严的红色。",
+            "graphic_id": 11666,
+            "hero_id": 89,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2084",
+        "snapshots": {
+          "original": {
+            "id": 2084,
+            "name": "Telescoping Easel",
+            "description": "With my art supplies, even my staff gets used.",
+            "graphic_id": 11667,
+            "hero_id": 89,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ]
+          },
+          "display": {
+            "id": 2084,
+            "name": "嵌套花架",
+            "description": "我的作画用品这么多，就连木棍都用上了。",
+            "graphic_id": 11667,
+            "hero_id": 89,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2085",
+        "snapshots": {
+          "original": {
+            "id": 2085,
+            "name": "Decorated Dart",
+            "description": "They'll do for a tavern brawl.",
+            "graphic_id": 11662,
+            "hero_id": 89,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,4"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2085,
+            "name": "装饰飞镖",
+            "description": "在酒馆里打架时能用得上。",
+            "graphic_id": 11662,
+            "hero_id": 89,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,4"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2086",
+        "snapshots": {
+          "original": {
+            "id": 2086,
+            "name": "Cassalanter Dart",
+            "description": "I know they are master-crafted, but they just don't feel balanced.",
+            "graphic_id": 11662,
+            "hero_id": 89,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,8"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2086,
+            "name": "卡萨兰特尔飞镖",
+            "description": "我知道它们工艺精良，但总觉得有点不太平衡。",
+            "graphic_id": 11662,
+            "hero_id": 89,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,8"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2087",
+        "snapshots": {
+          "original": {
+            "id": 2087,
+            "name": "Dual Use Dart",
+            "description": "No one suspects the paintbrushes!",
+            "graphic_id": 11663,
+            "hero_id": 89,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,16"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2087,
+            "name": "双用途飞镖",
+            "description": "谁都不会怀疑笔刷！",
+            "graphic_id": 11663,
+            "hero_id": 89,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,16"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2088",
+        "snapshots": {
+          "original": {
+            "id": 2088,
+            "name": "Exquisite Dart of the Painter",
+            "description": "It's poison-tipped. Best used with an oil-based paint.",
+            "graphic_id": 11664,
+            "hero_id": 89,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,40"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2088,
+            "name": "精致画家飞镖",
+            "description": "镖尖上还涂了毒。最好跟油基颜料一起使用。",
+            "graphic_id": 11664,
+            "hero_id": 89,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,40"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "56",
+        "snapshots": {
+          "original": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "阵型中每有一位女性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "62",
+        "snapshots": {
+          "original": {
+            "id": 62,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "aarakocra"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Aarakocra Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 62,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "aarakocra"
+                  }
+                ],
+                "description": "阵型中每有一位翼爪鸟人勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "33",
+        "snapshots": {
+          "original": {
+            "id": 33,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "dex",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a DEX score of 15 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 33,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "dex",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有敏捷大于等于 15 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "81",
+        "snapshots": {
+          "original": {
+            "id": 81,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "str",
+                    "check": 11,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a STR score of 11 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 81,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "str",
+                    "check": 11,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位力量大于等于 11 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "99",
+        "snapshots": {
+          "original": {
+            "id": 99,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "attack_type",
+                    "attack": "melee"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Melee Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 99,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "attack_type",
+                    "attack": "melee"
+                  }
+                ],
+                "description": "阵型中每有一位近战勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

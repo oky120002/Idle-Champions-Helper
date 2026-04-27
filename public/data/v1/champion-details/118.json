@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "118",
     "name": {
@@ -45,7 +45,7 @@
   },
   "dateAvailable": "2023-01-11 00:00:00",
   "lastReworkDate": "2023-01-11 00:00:00",
-  "popularity": 27,
+  "popularity": 25,
   "baseCost": "200000000",
   "baseDamage": "2000000",
   "baseHealth": "43",
@@ -2434,6 +2434,634 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "2810",
+      "name": {
+        "original": "Rune Stone",
+        "display": "符文石"
+      },
+      "description": {
+        "original": "There's a drop of blood in the center of this diamond.",
+        "display": "这颗钻石的中心有一滴血。"
+      },
+      "graphicId": "17481",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,50"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2811",
+      "name": {
+        "original": "Blod Stone",
+        "display": "血石"
+      },
+      "description": {
+        "original": "My remaining connection to Isolde.",
+        "display": "我和伊索德残留的纽带。"
+      },
+      "graphicId": "17481",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2812",
+      "name": {
+        "original": "Portrait of Isolde",
+        "display": "伊索德的肖像"
+      },
+      "description": {
+        "original": "Everything I've done has been for her.",
+        "display": "我所做的一切都是为了她。"
+      },
+      "graphicId": "17482",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2813",
+      "name": {
+        "original": "Shared Tattoo",
+        "display": "共享纹身"
+      },
+      "description": {
+        "original": "This art signifies our love more than a ring ever could.",
+        "display": "这件艺术品比戒指更能彰显我们的爱。"
+      },
+      "graphicId": "17483",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,350"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "2814",
+      "name": {
+        "original": "Tattered Jacket",
+        "display": "破烂的上套"
+      },
+      "description": {
+        "original": "I've had this since I lived down in the Underdark.",
+        "display": "自从我居住在幽暗地域，就一直穿着它。"
+      },
+      "graphicId": "17478",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2815",
+      "name": {
+        "original": "Refurbished Coat",
+        "display": "翻新的外衣"
+      },
+      "description": {
+        "original": "I tore off all the badges I didn't agree with.",
+        "display": "我撕掉了所有道不同不相为谋的徽章。"
+      },
+      "graphicId": "17478",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2816",
+      "name": {
+        "original": "Traveller's Trenchcoat",
+        "display": "旅者风衣"
+      },
+      "description": {
+        "original": "Everyone needs a sturdy coat that repels mist.",
+        "display": "每个人都需要一件耐用的防雾外套。"
+      },
+      "graphicId": "17479",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2817",
+      "name": {
+        "original": "Feywild Duster",
+        "display": "妖精荒野防尘罩衫"
+      },
+      "description": {
+        "original": "Style, substance, and plenty of pockets.",
+        "display": "时髦又厚实，还有大量的口袋。"
+      },
+      "graphicId": "17480",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2818",
+      "name": {
+        "original": "Battered Boots",
+        "display": "穿旧的靴子"
+      },
+      "description": {
+        "original": "They may be worn, but they'll still kick a hole in a zombie.",
+        "display": "虽然已经磨损，但依然能够在僵尸身上踢出一个洞。"
+      },
+      "graphicId": "17475",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,9757"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2819",
+      "name": {
+        "original": "Boots of Wandering",
+        "display": "流浪之靴"
+      },
+      "description": {
+        "original": "I've traveled all through the mists in these.",
+        "display": "我穿着它们踏遍迷雾。"
+      },
+      "graphicId": "17475",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,9757"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2820",
+      "name": {
+        "original": "Brawler's Bracers",
+        "display": "斗士护腕"
+      },
+      "description": {
+        "original": "Go ahead. Let's see what you're made of.",
+        "display": "去吧，让我们瞧瞧你的本事。"
+      },
+      "graphicId": "17476",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,9757"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2821",
+      "name": {
+        "original": "Armored Layer",
+        "display": "多层重甲"
+      },
+      "description": {
+        "original": "You never know when you need to be ready for a fight.",
+        "display": "你永远不知道什么时候需要备战。"
+      },
+      "graphicId": "17477",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,9757"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2822",
+      "name": {
+        "original": "Makeshift Lockpicks",
+        "display": "临时开锁器"
+      },
+      "description": {
+        "original": "When you can't afford to just bash through the door.",
+        "display": "当你不能破门而入的时候。"
+      },
+      "graphicId": "17490",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,9759"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2823",
+      "name": {
+        "original": "Practice Bondbreaker",
+        "display": "练习断键器"
+      },
+      "description": {
+        "original": "I've been at this a while.",
+        "display": "我已经用过一段时间了。"
+      },
+      "graphicId": "17490",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,9759"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2824",
+      "name": {
+        "original": "Thief's Tools",
+        "display": "盗贼的工具"
+      },
+      "description": {
+        "original": "Deep breath, steady hands.",
+        "display": "深呼吸，稳住手。"
+      },
+      "graphicId": "17491",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,9759"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2825",
+      "name": {
+        "original": "Dire Devices",
+        "display": "紧急装置"
+      },
+      "description": {
+        "original": "You don't need to know what these are for.",
+        "display": "你不需要知道这些是干什么的。"
+      },
+      "graphicId": "17492",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,9759"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2826",
+      "name": {
+        "original": "Sharp Edge",
+        "display": "锐缘"
+      },
+      "description": {
+        "original": "The Underdark is full of monsters. I learned the sword early.",
+        "display": "幽暗地域遍布怪物。我很早就学会了用剑。"
+      },
+      "graphicId": "17487",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,25,9761,9762",
+          "description": "Increases the effect of all Fen's Specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2827",
+      "name": {
+        "original": "Adventurer's Blade",
+        "display": "冒险者之刃"
+      },
+      "description": {
+        "original": "The Mists are full of surprises, many of them stabbable.",
+        "display": "迷雾中充满惊喜，其中很多都值得捅上一剑。"
+      },
+      "graphicId": "17487",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,87.5,9761,9762",
+          "description": "Increases the effect of all Fen's Specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2828",
+      "name": {
+        "original": "Longsword of Vengeance",
+        "display": "复仇长剑"
+      },
+      "description": {
+        "original": "Vengeance cuts both ways...but mostly toward my enemies.",
+        "display": "复仇的伤害是双向的......但主要针对我的敌人。"
+      },
+      "graphicId": "17488",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,150,9761,9762",
+          "description": "Increases the effect of all Fen's Specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2829",
+      "name": {
+        "original": "Nepenthe",
+        "display": "忘忧药"
+      },
+      "description": {
+        "original": "I had a score to settle with the Caller. Bearing Nepenthe is worth it.",
+        "display": "我与召唤者有账要算，值得携带忘忧药。"
+      },
+      "graphicId": "17489",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,275,9761,9762",
+          "description": "Increases the effect of all Fen's Specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2830",
+      "name": {
+        "original": "Dried Meat",
+        "display": "干肉"
+      },
+      "description": {
+        "original": "Bringing your own provisions into the mists is a good choice.",
+        "display": "自带食物进入迷雾是个不错的选择。"
+      },
+      "graphicId": "17484",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,2"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2831",
+      "name": {
+        "original": "Beef Jerky",
+        "display": "牛肉干"
+      },
+      "description": {
+        "original": "I'm absolutely certain THIS ONE is beef.",
+        "display": "我绝对肯定这是牛肉。"
+      },
+      "graphicId": "17484",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,3"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2832",
+      "name": {
+        "original": "Goblet of Blood",
+        "display": "鲜血高脚杯"
+      },
+      "description": {
+        "original": "I'm parched.",
+        "display": "我渴了。"
+      },
+      "graphicId": "17485",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,6"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2833",
+      "name": {
+        "original": "Feywild Candy",
+        "display": "妖精荒野糖果"
+      },
+      "description": {
+        "original": "Tasty, but tricky.",
+        "display": "味道不错，但有蹊跷。"
+      },
+      "graphicId": "17486",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,15"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "56",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "elf"
+            }
+          ],
+          "description": "Increases the damage of all Elf Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "93",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "wis",
+              "check": 11,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a WIS score of 11 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "28",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "str",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a STR score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "50",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "evil"
+            }
+          ],
+          "description": "Increases the damage of all Evil Champions by $(amount)%"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -2591,7 +3219,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 27,
+        "popularity": 25,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -2788,7 +3416,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 27,
+        "popularity": 25,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -6013,6 +6641,1124 @@
             "availabilities": {
               "in_flash_sales": true
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "2810",
+        "snapshots": {
+          "original": {
+            "id": 2810,
+            "name": "Rune Stone",
+            "description": "There's a drop of blood in the center of this diamond.",
+            "graphic_id": 17481,
+            "hero_id": 118,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2810,
+            "name": "符文石",
+            "description": "这颗钻石的中心有一滴血。",
+            "graphic_id": 17481,
+            "hero_id": 118,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2811",
+        "snapshots": {
+          "original": {
+            "id": 2811,
+            "name": "Blod Stone",
+            "description": "My remaining connection to Isolde.",
+            "graphic_id": 17481,
+            "hero_id": 118,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2811,
+            "name": "血石",
+            "description": "我和伊索德残留的纽带。",
+            "graphic_id": 17481,
+            "hero_id": 118,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2812",
+        "snapshots": {
+          "original": {
+            "id": 2812,
+            "name": "Portrait of Isolde",
+            "description": "Everything I've done has been for her.",
+            "graphic_id": 17482,
+            "hero_id": 118,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2812,
+            "name": "伊索德的肖像",
+            "description": "我所做的一切都是为了她。",
+            "graphic_id": 17482,
+            "hero_id": 118,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2813",
+        "snapshots": {
+          "original": {
+            "id": 2813,
+            "name": "Shared Tattoo",
+            "description": "This art signifies our love more than a ring ever could.",
+            "graphic_id": 17483,
+            "hero_id": 118,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2813,
+            "name": "共享纹身",
+            "description": "这件艺术品比戒指更能彰显我们的爱。",
+            "graphic_id": 17483,
+            "hero_id": 118,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2814",
+        "snapshots": {
+          "original": {
+            "id": 2814,
+            "name": "Tattered Jacket",
+            "description": "I've had this since I lived down in the Underdark.",
+            "graphic_id": 17478,
+            "hero_id": 118,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ]
+          },
+          "display": {
+            "id": 2814,
+            "name": "破烂的上套",
+            "description": "自从我居住在幽暗地域，就一直穿着它。",
+            "graphic_id": 17478,
+            "hero_id": 118,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2815",
+        "snapshots": {
+          "original": {
+            "id": 2815,
+            "name": "Refurbished Coat",
+            "description": "I tore off all the badges I didn't agree with.",
+            "graphic_id": 17478,
+            "hero_id": 118,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ]
+          },
+          "display": {
+            "id": 2815,
+            "name": "翻新的外衣",
+            "description": "我撕掉了所有道不同不相为谋的徽章。",
+            "graphic_id": 17478,
+            "hero_id": 118,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2816",
+        "snapshots": {
+          "original": {
+            "id": 2816,
+            "name": "Traveller's Trenchcoat",
+            "description": "Everyone needs a sturdy coat that repels mist.",
+            "graphic_id": 17479,
+            "hero_id": 118,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ]
+          },
+          "display": {
+            "id": 2816,
+            "name": "旅者风衣",
+            "description": "每个人都需要一件耐用的防雾外套。",
+            "graphic_id": 17479,
+            "hero_id": 118,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2817",
+        "snapshots": {
+          "original": {
+            "id": 2817,
+            "name": "Feywild Duster",
+            "description": "Style, substance, and plenty of pockets.",
+            "graphic_id": 17480,
+            "hero_id": 118,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ]
+          },
+          "display": {
+            "id": 2817,
+            "name": "妖精荒野防尘罩衫",
+            "description": "时髦又厚实，还有大量的口袋。",
+            "graphic_id": 17480,
+            "hero_id": 118,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2818",
+        "snapshots": {
+          "original": {
+            "id": 2818,
+            "name": "Battered Boots",
+            "description": "They may be worn, but they'll still kick a hole in a zombie.",
+            "graphic_id": 17475,
+            "hero_id": 118,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,9757"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2818,
+            "name": "穿旧的靴子",
+            "description": "虽然已经磨损，但依然能够在僵尸身上踢出一个洞。",
+            "graphic_id": 17475,
+            "hero_id": 118,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,9757"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2819",
+        "snapshots": {
+          "original": {
+            "id": 2819,
+            "name": "Boots of Wandering",
+            "description": "I've traveled all through the mists in these.",
+            "graphic_id": 17475,
+            "hero_id": 118,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,9757"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2819,
+            "name": "流浪之靴",
+            "description": "我穿着它们踏遍迷雾。",
+            "graphic_id": 17475,
+            "hero_id": 118,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,9757"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2820",
+        "snapshots": {
+          "original": {
+            "id": 2820,
+            "name": "Brawler's Bracers",
+            "description": "Go ahead. Let's see what you're made of.",
+            "graphic_id": 17476,
+            "hero_id": 118,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,9757"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2820,
+            "name": "斗士护腕",
+            "description": "去吧，让我们瞧瞧你的本事。",
+            "graphic_id": 17476,
+            "hero_id": 118,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,9757"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2821",
+        "snapshots": {
+          "original": {
+            "id": 2821,
+            "name": "Armored Layer",
+            "description": "You never know when you need to be ready for a fight.",
+            "graphic_id": 17477,
+            "hero_id": 118,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,9757"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2821,
+            "name": "多层重甲",
+            "description": "你永远不知道什么时候需要备战。",
+            "graphic_id": 17477,
+            "hero_id": 118,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,9757"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2822",
+        "snapshots": {
+          "original": {
+            "id": 2822,
+            "name": "Makeshift Lockpicks",
+            "description": "When you can't afford to just bash through the door.",
+            "graphic_id": 17490,
+            "hero_id": 118,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,9759"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2822,
+            "name": "临时开锁器",
+            "description": "当你不能破门而入的时候。",
+            "graphic_id": 17490,
+            "hero_id": 118,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,9759"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2823",
+        "snapshots": {
+          "original": {
+            "id": 2823,
+            "name": "Practice Bondbreaker",
+            "description": "I've been at this a while.",
+            "graphic_id": 17490,
+            "hero_id": 118,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,9759"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2823,
+            "name": "练习断键器",
+            "description": "我已经用过一段时间了。",
+            "graphic_id": 17490,
+            "hero_id": 118,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,9759"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2824",
+        "snapshots": {
+          "original": {
+            "id": 2824,
+            "name": "Thief's Tools",
+            "description": "Deep breath, steady hands.",
+            "graphic_id": 17491,
+            "hero_id": 118,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,9759"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2824,
+            "name": "盗贼的工具",
+            "description": "深呼吸，稳住手。",
+            "graphic_id": 17491,
+            "hero_id": 118,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,9759"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2825",
+        "snapshots": {
+          "original": {
+            "id": 2825,
+            "name": "Dire Devices",
+            "description": "You don't need to know what these are for.",
+            "graphic_id": 17492,
+            "hero_id": 118,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,9759"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2825,
+            "name": "紧急装置",
+            "description": "你不需要知道这些是干什么的。",
+            "graphic_id": 17492,
+            "hero_id": 118,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,9759"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2826",
+        "snapshots": {
+          "original": {
+            "id": 2826,
+            "name": "Sharp Edge",
+            "description": "The Underdark is full of monsters. I learned the sword early.",
+            "graphic_id": 17487,
+            "hero_id": 118,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,9761,9762",
+                "description": "Increases the effect of all Fen's Specializations by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 2826,
+            "name": "锐缘",
+            "description": "幽暗地域遍布怪物。我很早就学会了用剑。",
+            "graphic_id": 17487,
+            "hero_id": 118,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,9761,9762",
+                "description": "使芬的所有专精效果提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2827",
+        "snapshots": {
+          "original": {
+            "id": 2827,
+            "name": "Adventurer's Blade",
+            "description": "The Mists are full of surprises, many of them stabbable.",
+            "graphic_id": 17487,
+            "hero_id": 118,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,9761,9762",
+                "description": "Increases the effect of all Fen's Specializations by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 2827,
+            "name": "冒险者之刃",
+            "description": "迷雾中充满惊喜，其中很多都值得捅上一剑。",
+            "graphic_id": 17487,
+            "hero_id": 118,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,9761,9762",
+                "description": "使芬的所有专精效果提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2828",
+        "snapshots": {
+          "original": {
+            "id": 2828,
+            "name": "Longsword of Vengeance",
+            "description": "Vengeance cuts both ways...but mostly toward my enemies.",
+            "graphic_id": 17488,
+            "hero_id": 118,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,9761,9762",
+                "description": "Increases the effect of all Fen's Specializations by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 2828,
+            "name": "复仇长剑",
+            "description": "复仇的伤害是双向的......但主要针对我的敌人。",
+            "graphic_id": 17488,
+            "hero_id": 118,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,9761,9762",
+                "description": "使芬的所有专精效果提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2829",
+        "snapshots": {
+          "original": {
+            "id": 2829,
+            "name": "Nepenthe",
+            "description": "I had a score to settle with the Caller. Bearing Nepenthe is worth it.",
+            "graphic_id": 17489,
+            "hero_id": 118,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,9761,9762",
+                "description": "Increases the effect of all Fen's Specializations by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 2829,
+            "name": "忘忧药",
+            "description": "我与召唤者有账要算，值得携带忘忧药。",
+            "graphic_id": 17489,
+            "hero_id": 118,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,9761,9762",
+                "description": "使芬的所有专精效果提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2830",
+        "snapshots": {
+          "original": {
+            "id": 2830,
+            "name": "Dried Meat",
+            "description": "Bringing your own provisions into the mists is a good choice.",
+            "graphic_id": 17484,
+            "hero_id": 118,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,2"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2830,
+            "name": "干肉",
+            "description": "自带食物进入迷雾是个不错的选择。",
+            "graphic_id": 17484,
+            "hero_id": 118,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,2"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2831",
+        "snapshots": {
+          "original": {
+            "id": 2831,
+            "name": "Beef Jerky",
+            "description": "I'm absolutely certain THIS ONE is beef.",
+            "graphic_id": 17484,
+            "hero_id": 118,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,3"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2831,
+            "name": "牛肉干",
+            "description": "我绝对肯定这是牛肉。",
+            "graphic_id": 17484,
+            "hero_id": 118,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,3"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2832",
+        "snapshots": {
+          "original": {
+            "id": 2832,
+            "name": "Goblet of Blood",
+            "description": "I'm parched.",
+            "graphic_id": 17485,
+            "hero_id": 118,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,6"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2832,
+            "name": "鲜血高脚杯",
+            "description": "我渴了。",
+            "graphic_id": 17485,
+            "hero_id": 118,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,6"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2833",
+        "snapshots": {
+          "original": {
+            "id": 2833,
+            "name": "Feywild Candy",
+            "description": "Tasty, but tricky.",
+            "graphic_id": 17486,
+            "hero_id": 118,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,15"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2833,
+            "name": "妖精荒野糖果",
+            "description": "味道不错，但有蹊跷。",
+            "graphic_id": 17486,
+            "hero_id": 118,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,15"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "56",
+        "snapshots": {
+          "original": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "阵型中每有一位女性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "7",
+        "snapshots": {
+          "original": {
+            "id": 7,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "elf"
+                  }
+                ],
+                "description": "Increases the damage of all Elf Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 7,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "elf"
+                  }
+                ],
+                "description": "使所有精灵勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "93",
+        "snapshots": {
+          "original": {
+            "id": 93,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "wis",
+                    "check": 11,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a WIS score of 11 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 93,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "wis",
+                    "check": 11,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位感知大于等于 11 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "28",
+        "snapshots": {
+          "original": {
+            "id": 28,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a STR score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 28,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有力量大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "50",
+        "snapshots": {
+          "original": {
+            "id": 50,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "evil"
+                  }
+                ],
+                "description": "Increases the damage of all Evil Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 50,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "evil"
+                  }
+                ],
+                "description": "使所有邪恶阵营勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

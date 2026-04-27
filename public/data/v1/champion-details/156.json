@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "156",
     "name": {
@@ -48,7 +48,7 @@
   },
   "dateAvailable": "2024-12-04 13:00:00",
   "lastReworkDate": "2024-12-04 13:00:00",
-  "popularity": 97,
+  "popularity": 99,
   "baseCost": "12500",
   "baseDamage": "7500",
   "baseHealth": "47",
@@ -3714,6 +3714,632 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "3698",
+      "name": {
+        "original": "Faded Quarterstaff",
+        "display": "褪色短杖"
+      },
+      "description": {
+        "original": "Still serviceable as a walking stick.",
+        "display": "仍然能作为手杖使用。"
+      },
+      "graphicId": "25020",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3699",
+      "name": {
+        "original": "Druid's Staff",
+        "display": "德鲁伊法杖"
+      },
+      "description": {
+        "original": "As much a weapon as it is a symbol.",
+        "display": "既是一种武器，也是一种象征。"
+      },
+      "graphicId": "25020",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3700",
+      "name": {
+        "original": "Nature's Snare",
+        "display": "自然之诱"
+      },
+      "description": {
+        "original": "Wait long enough, and you'll notice the vines moving.",
+        "display": "只要你等待得够久，就会发现藤蔓在移动。"
+      },
+      "graphicId": "25021",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3701",
+      "name": {
+        "original": "Pale Oak",
+        "display": "白橡"
+      },
+      "description": {
+        "original": "Faithwardens defend all of nature's bounty, at any cost.",
+        "display": "信仰守望者们不惜代价捍卫大自然的一切恩惠。"
+      },
+      "graphicId": "25022",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "3702",
+      "name": {
+        "original": "Outgrown Clothes",
+        "display": "穿不下的衣服"
+      },
+      "description": {
+        "original": "This keeps happening...",
+        "display": "总是这样……"
+      },
+      "graphicId": "25008",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3703",
+      "name": {
+        "original": "Grove Garments",
+        "display": "树丛衣装"
+      },
+      "description": {
+        "original": "It reminds me of sun, water, and fur.",
+        "display": "它让我想起太阳、水与毛皮。"
+      },
+      "graphicId": "25008",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3704",
+      "name": {
+        "original": "Druid Leather Armour",
+        "display": "德鲁伊皮甲"
+      },
+      "description": {
+        "original": "Please pay no mind to the stains.",
+        "display": "请不要在意这些污渍。"
+      },
+      "graphicId": "25009",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3705",
+      "name": {
+        "original": "Armour of Moonbasking",
+        "display": "沐月护甲"
+      },
+      "description": {
+        "original": "The power of the bear lies within me.",
+        "display": "我身上寄宿着熊的力量。"
+      },
+      "graphicId": "25010",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3706",
+      "name": {
+        "original": "Inert Venom",
+        "display": "惰性剧毒"
+      },
+      "description": {
+        "original": "This batch is harmless, but could still be studied.",
+        "display": "这一批是无害的，但仍然可以用于研究。"
+      },
+      "graphicId": "25023",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,15962,0",
+          "description": "Increases the pre-stack effect of Halsin's Archdruid of Emerald Grove ability by $amount%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3707",
+      "name": {
+        "original": "Wyvern Toxin",
+        "display": "双足飞龙毒素"
+      },
+      "description": {
+        "original": "It promises a swift death. A mercy, perhaps.",
+        "display": "接触者会立即死亡。或许这也是一种仁慈。"
+      },
+      "graphicId": "25023",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,15962,0",
+          "description": "Increases the pre-stack effect of Halsin's Archdruid of Emerald Grove ability by $amount%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3708",
+      "name": {
+        "original": "Halsin's Journals",
+        "display": "哈尔辛的日记"
+      },
+      "description": {
+        "original": "May Silvanus guide my path, and lend me all his strength for what is to come.",
+        "display": "愿西尔瓦努斯指引我前进的道路，并将他的力量尽数转借于我，让我能够应对即将到来的一切。"
+      },
+      "graphicId": "25024",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,15962,0",
+          "description": "Increases the pre-stack effect of Halsin's Archdruid of Emerald Grove ability by $amount%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3709",
+      "name": {
+        "original": "Stuffed Owlbear Toy",
+        "display": "填充枭熊玩具"
+      },
+      "description": {
+        "original": "Delightful! I shall see that this cub finds a proper home.",
+        "display": "太棒了！我会让这只幼崽找到一个合适的家。"
+      },
+      "graphicId": "25025",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,15962,0",
+          "description": "Increases the pre-stack effect of Halsin's Archdruid of Emerald Grove ability by $amount%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3710",
+      "name": {
+        "original": "Ruined Shoes",
+        "display": "破烂不堪的鞋子"
+      },
+      "description": {
+        "original": "I've walked through one too many briar patches in these.",
+        "display": "我穿着它走过了无数灌木丛。"
+      },
+      "graphicId": "25011",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,15963"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3711",
+      "name": {
+        "original": "Breezy Sandals",
+        "display": "通风凉鞋"
+      },
+      "description": {
+        "original": "These offer little protection, but I can feel the wind between my toes.",
+        "display": "这双鞋几乎起不到保护作用，但我能感觉到脚趾间的风。"
+      },
+      "graphicId": "25011",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,15963"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3712",
+      "name": {
+        "original": "Grovetender Boots",
+        "display": "树妖靴子"
+      },
+      "description": {
+        "original": "These boots have seen much of nature's wonders.",
+        "display": "这双靴子见证了大自然的许多奇迹。"
+      },
+      "graphicId": "25012",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,15963"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3713",
+      "name": {
+        "original": "Boots of Persistence",
+        "display": "坚毅之靴"
+      },
+      "description": {
+        "original": "Nature does not yield.",
+        "display": "大自然是不会屈服的。"
+      },
+      "graphicId": "25013",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,15963"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3714",
+      "name": {
+        "original": "Empty Pouch",
+        "display": "空袋子"
+      },
+      "description": {
+        "original": "I should go foraging again soon.",
+        "display": "我得赶快再去找些吃的了。"
+      },
+      "graphicId": "25014",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,15964"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3715",
+      "name": {
+        "original": "Alchemy Pouch",
+        "display": "炼金口袋"
+      },
+      "description": {
+        "original": "Mugwort, balsam, rogue's morsel, and more. Everything I need.",
+        "display": "艾草、香脂、一点流浪时吃的食物，还有其他东西。我需要的东西都全了。"
+      },
+      "graphicId": "25014",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,15964"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3716",
+      "name": {
+        "original": "Potions of Healing",
+        "display": "治疗药剂"
+      },
+      "description": {
+        "original": "I wouldn't be much use as a healer without a few of these on hand.",
+        "display": "如果手头没有这些东西，我这个治疗师就没什么用了。"
+      },
+      "graphicId": "25015",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,15964"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3717",
+      "name": {
+        "original": "Amulet of Silvanus",
+        "display": "西尔瓦努斯护身符"
+      },
+      "description": {
+        "original": "Omn kept this safely tucked away under a rock, waiting patiently for my return.",
+        "display": "奥姆把它安全地藏在一块石头下面，耐心地等待着我回来。"
+      },
+      "graphicId": "25016",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,15964"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3718",
+      "name": {
+        "original": "Ring of Resistance to Ants",
+        "display": "防蚁指环"
+      },
+      "description": {
+        "original": "Its only magic was to bring a smile to a child who needed it.",
+        "display": "它唯一的魔力就是给需要它的孩子带来微笑。"
+      },
+      "graphicId": "25017",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,8"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3719",
+      "name": {
+        "original": "Crusher's Ring",
+        "display": "粉碎者之戒"
+      },
+      "description": {
+        "original": "All that remains of a certain goblin. Now to put it to better use.",
+        "display": "某个地精的全部遗骸。现在它们可以派上更好的用场了。"
+      },
+      "graphicId": "25017",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,16"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3720",
+      "name": {
+        "original": "Shapeshifter's Boon Ring",
+        "display": "变形怪的祝福之戒"
+      },
+      "description": {
+        "original": "I've met many strange creatures in my time, but that ox was something else.",
+        "display": "我见过很多奇怪的生物，但那头牛与众不同。"
+      },
+      "graphicId": "25018",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,32"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3721",
+      "name": {
+        "original": "Shapeshifter Hat",
+        "display": "变形怪之帽"
+      },
+      "description": {
+        "original": "What I would not give for a chunk of fresh honeycomb.",
+        "display": "要是能给我一大块新鲜的蜂巢，我什么都愿意做。"
+      },
+      "graphicId": "25019",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,80"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "57",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,135",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "!male^!female"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Nonbinary Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "elf"
+            }
+          ],
+          "description": "Increases the damage of all Elf Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "29",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "str",
+              "score": 13,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a STR score of 13 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "35",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "con",
+              "score": 13,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a CON score of 13 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "49",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "good"
+            }
+          ],
+          "description": "Increases the damage of all Good Champions by $(amount)%"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3865,7 +4491,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 97,
+        "popularity": 99,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -4050,7 +4676,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 97,
+        "popularity": 99,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -8853,6 +9479,1168 @@
             "availabilities": {
               "premium_item_id": "650"
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "3698",
+        "snapshots": {
+          "original": {
+            "id": 3698,
+            "name": "Faded Quarterstaff",
+            "description": "Still serviceable as a walking stick.",
+            "graphic_id": 25020,
+            "hero_id": 156,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3698,
+            "name": "褪色短杖",
+            "description": "仍然能作为手杖使用。",
+            "graphic_id": 25020,
+            "hero_id": 156,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3699",
+        "snapshots": {
+          "original": {
+            "id": 3699,
+            "name": "Druid's Staff",
+            "description": "As much a weapon as it is a symbol.",
+            "graphic_id": 25020,
+            "hero_id": 156,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3699,
+            "name": "德鲁伊法杖",
+            "description": "既是一种武器，也是一种象征。",
+            "graphic_id": 25020,
+            "hero_id": 156,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3700",
+        "snapshots": {
+          "original": {
+            "id": 3700,
+            "name": "Nature's Snare",
+            "description": "Wait long enough, and you'll notice the vines moving.",
+            "graphic_id": 25021,
+            "hero_id": 156,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3700,
+            "name": "自然之诱",
+            "description": "只要你等待得够久，就会发现藤蔓在移动。",
+            "graphic_id": 25021,
+            "hero_id": 156,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3701",
+        "snapshots": {
+          "original": {
+            "id": 3701,
+            "name": "Pale Oak",
+            "description": "Faithwardens defend all of nature's bounty, at any cost.",
+            "graphic_id": 25022,
+            "hero_id": 156,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3701,
+            "name": "白橡",
+            "description": "信仰守望者们不惜代价捍卫大自然的一切恩惠。",
+            "graphic_id": 25022,
+            "hero_id": 156,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3702",
+        "snapshots": {
+          "original": {
+            "id": 3702,
+            "name": "Outgrown Clothes",
+            "description": "This keeps happening...",
+            "graphic_id": 25008,
+            "hero_id": 156,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3702,
+            "name": "穿不下的衣服",
+            "description": "总是这样……",
+            "graphic_id": 25008,
+            "hero_id": 156,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3703",
+        "snapshots": {
+          "original": {
+            "id": 3703,
+            "name": "Grove Garments",
+            "description": "It reminds me of sun, water, and fur.",
+            "graphic_id": 25008,
+            "hero_id": 156,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3703,
+            "name": "树丛衣装",
+            "description": "它让我想起太阳、水与毛皮。",
+            "graphic_id": 25008,
+            "hero_id": 156,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3704",
+        "snapshots": {
+          "original": {
+            "id": 3704,
+            "name": "Druid Leather Armour",
+            "description": "Please pay no mind to the stains.",
+            "graphic_id": 25009,
+            "hero_id": 156,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3704,
+            "name": "德鲁伊皮甲",
+            "description": "请不要在意这些污渍。",
+            "graphic_id": 25009,
+            "hero_id": 156,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3705",
+        "snapshots": {
+          "original": {
+            "id": 3705,
+            "name": "Armour of Moonbasking",
+            "description": "The power of the bear lies within me.",
+            "graphic_id": 25010,
+            "hero_id": 156,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3705,
+            "name": "沐月护甲",
+            "description": "我身上寄宿着熊的力量。",
+            "graphic_id": 25010,
+            "hero_id": 156,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3706",
+        "snapshots": {
+          "original": {
+            "id": 3706,
+            "name": "Inert Venom",
+            "description": "This batch is harmless, but could still be studied.",
+            "graphic_id": 25023,
+            "hero_id": 156,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,15962,0",
+                "description": "Increases the pre-stack effect of Halsin's Archdruid of Emerald Grove ability by $amount%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3706,
+            "name": "惰性剧毒",
+            "description": "这一批是无害的，但仍然可以用于研究。",
+            "graphic_id": 25023,
+            "hero_id": 156,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,15962,0",
+                "description": "使哈尔辛的“翠绿林地的大德鲁伊”技能的堆叠前效果提高 $amount%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3707",
+        "snapshots": {
+          "original": {
+            "id": 3707,
+            "name": "Wyvern Toxin",
+            "description": "It promises a swift death. A mercy, perhaps.",
+            "graphic_id": 25023,
+            "hero_id": 156,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,15962,0",
+                "description": "Increases the pre-stack effect of Halsin's Archdruid of Emerald Grove ability by $amount%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3707,
+            "name": "双足飞龙毒素",
+            "description": "接触者会立即死亡。或许这也是一种仁慈。",
+            "graphic_id": 25023,
+            "hero_id": 156,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,15962,0",
+                "description": "使哈尔辛的“翠绿林地的大德鲁伊”技能的堆叠前效果提高 $amount%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3708",
+        "snapshots": {
+          "original": {
+            "id": 3708,
+            "name": "Halsin's Journals",
+            "description": "May Silvanus guide my path, and lend me all his strength for what is to come.",
+            "graphic_id": 25024,
+            "hero_id": 156,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,15962,0",
+                "description": "Increases the pre-stack effect of Halsin's Archdruid of Emerald Grove ability by $amount%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3708,
+            "name": "哈尔辛的日记",
+            "description": "愿西尔瓦努斯指引我前进的道路，并将他的力量尽数转借于我，让我能够应对即将到来的一切。",
+            "graphic_id": 25024,
+            "hero_id": 156,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,15962,0",
+                "description": "使哈尔辛的“翠绿林地的大德鲁伊”技能的堆叠前效果提高 $amount%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3709",
+        "snapshots": {
+          "original": {
+            "id": 3709,
+            "name": "Stuffed Owlbear Toy",
+            "description": "Delightful! I shall see that this cub finds a proper home.",
+            "graphic_id": 25025,
+            "hero_id": 156,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,15962,0",
+                "description": "Increases the pre-stack effect of Halsin's Archdruid of Emerald Grove ability by $amount%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3709,
+            "name": "填充枭熊玩具",
+            "description": "太棒了！我会让这只幼崽找到一个合适的家。",
+            "graphic_id": 25025,
+            "hero_id": 156,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,15962,0",
+                "description": "使哈尔辛的“翠绿林地的大德鲁伊”技能的堆叠前效果提高 $amount%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3710",
+        "snapshots": {
+          "original": {
+            "id": 3710,
+            "name": "Ruined Shoes",
+            "description": "I've walked through one too many briar patches in these.",
+            "graphic_id": 25011,
+            "hero_id": 156,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,15963"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              32570,
+              21631,
+              16161
+            ]
+          },
+          "display": {
+            "id": 3710,
+            "name": "破烂不堪的鞋子",
+            "description": "我穿着它走过了无数灌木丛。",
+            "graphic_id": 25011,
+            "hero_id": 156,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,15963"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              32570,
+              21631,
+              16161
+            ]
+          }
+        }
+      },
+      {
+        "id": "3711",
+        "snapshots": {
+          "original": {
+            "id": 3711,
+            "name": "Breezy Sandals",
+            "description": "These offer little protection, but I can feel the wind between my toes.",
+            "graphic_id": 25011,
+            "hero_id": 156,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,15963"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              32570,
+              21631,
+              16161
+            ]
+          },
+          "display": {
+            "id": 3711,
+            "name": "通风凉鞋",
+            "description": "这双鞋几乎起不到保护作用，但我能感觉到脚趾间的风。",
+            "graphic_id": 25011,
+            "hero_id": 156,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,15963"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              32570,
+              21631,
+              16161
+            ]
+          }
+        }
+      },
+      {
+        "id": "3712",
+        "snapshots": {
+          "original": {
+            "id": 3712,
+            "name": "Grovetender Boots",
+            "description": "These boots have seen much of nature's wonders.",
+            "graphic_id": 25012,
+            "hero_id": 156,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,15963"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              32570,
+              21631,
+              16161
+            ]
+          },
+          "display": {
+            "id": 3712,
+            "name": "树妖靴子",
+            "description": "这双靴子见证了大自然的许多奇迹。",
+            "graphic_id": 25012,
+            "hero_id": 156,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,15963"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              32570,
+              21631,
+              16161
+            ]
+          }
+        }
+      },
+      {
+        "id": "3713",
+        "snapshots": {
+          "original": {
+            "id": 3713,
+            "name": "Boots of Persistence",
+            "description": "Nature does not yield.",
+            "graphic_id": 25013,
+            "hero_id": 156,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,15963"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              32570,
+              21631,
+              16161
+            ]
+          },
+          "display": {
+            "id": 3713,
+            "name": "坚毅之靴",
+            "description": "大自然是不会屈服的。",
+            "graphic_id": 25013,
+            "hero_id": 156,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,15963"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              32570,
+              21631,
+              16161
+            ]
+          }
+        }
+      },
+      {
+        "id": "3714",
+        "snapshots": {
+          "original": {
+            "id": 3714,
+            "name": "Empty Pouch",
+            "description": "I should go foraging again soon.",
+            "graphic_id": 25014,
+            "hero_id": 156,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15964"
+              }
+            ]
+          },
+          "display": {
+            "id": 3714,
+            "name": "空袋子",
+            "description": "我得赶快再去找些吃的了。",
+            "graphic_id": 25014,
+            "hero_id": 156,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15964"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3715",
+        "snapshots": {
+          "original": {
+            "id": 3715,
+            "name": "Alchemy Pouch",
+            "description": "Mugwort, balsam, rogue's morsel, and more. Everything I need.",
+            "graphic_id": 25014,
+            "hero_id": 156,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15964"
+              }
+            ]
+          },
+          "display": {
+            "id": 3715,
+            "name": "炼金口袋",
+            "description": "艾草、香脂、一点流浪时吃的食物，还有其他东西。我需要的东西都全了。",
+            "graphic_id": 25014,
+            "hero_id": 156,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15964"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3716",
+        "snapshots": {
+          "original": {
+            "id": 3716,
+            "name": "Potions of Healing",
+            "description": "I wouldn't be much use as a healer without a few of these on hand.",
+            "graphic_id": 25015,
+            "hero_id": 156,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15964"
+              }
+            ]
+          },
+          "display": {
+            "id": 3716,
+            "name": "治疗药剂",
+            "description": "如果手头没有这些东西，我这个治疗师就没什么用了。",
+            "graphic_id": 25015,
+            "hero_id": 156,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15964"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3717",
+        "snapshots": {
+          "original": {
+            "id": 3717,
+            "name": "Amulet of Silvanus",
+            "description": "Omn kept this safely tucked away under a rock, waiting patiently for my return.",
+            "graphic_id": 25016,
+            "hero_id": 156,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15964"
+              }
+            ]
+          },
+          "display": {
+            "id": 3717,
+            "name": "西尔瓦努斯护身符",
+            "description": "奥姆把它安全地藏在一块石头下面，耐心地等待着我回来。",
+            "graphic_id": 25016,
+            "hero_id": 156,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15964"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3718",
+        "snapshots": {
+          "original": {
+            "id": 3718,
+            "name": "Ring of Resistance to Ants",
+            "description": "Its only magic was to bring a smile to a child who needed it.",
+            "graphic_id": 25017,
+            "hero_id": 156,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,8"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3718,
+            "name": "防蚁指环",
+            "description": "它唯一的魔力就是给需要它的孩子带来微笑。",
+            "graphic_id": 25017,
+            "hero_id": 156,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,8"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3719",
+        "snapshots": {
+          "original": {
+            "id": 3719,
+            "name": "Crusher's Ring",
+            "description": "All that remains of a certain goblin. Now to put it to better use.",
+            "graphic_id": 25017,
+            "hero_id": 156,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,16"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3719,
+            "name": "粉碎者之戒",
+            "description": "某个地精的全部遗骸。现在它们可以派上更好的用场了。",
+            "graphic_id": 25017,
+            "hero_id": 156,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,16"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3720",
+        "snapshots": {
+          "original": {
+            "id": 3720,
+            "name": "Shapeshifter's Boon Ring",
+            "description": "I've met many strange creatures in my time, but that ox was something else.",
+            "graphic_id": 25018,
+            "hero_id": 156,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,32"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3720,
+            "name": "变形怪的祝福之戒",
+            "description": "我见过很多奇怪的生物，但那头牛与众不同。",
+            "graphic_id": 25018,
+            "hero_id": 156,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,32"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3721",
+        "snapshots": {
+          "original": {
+            "id": 3721,
+            "name": "Shapeshifter Hat",
+            "description": "What I would not give for a chunk of fresh honeycomb.",
+            "graphic_id": 25019,
+            "hero_id": 156,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,80"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3721,
+            "name": "变形怪之帽",
+            "description": "要是能给我一大块新鲜的蜂巢，我什么都愿意做。",
+            "graphic_id": 25019,
+            "hero_id": 156,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,80"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "57",
+        "snapshots": {
+          "original": {
+            "id": 57,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,135",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "!male^!female"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Nonbinary Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 57,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,135",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "!male^!female"
+                  }
+                ],
+                "description": "阵型中每有一位非二元性别勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "7",
+        "snapshots": {
+          "original": {
+            "id": 7,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "elf"
+                  }
+                ],
+                "description": "Increases the damage of all Elf Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 7,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "elf"
+                  }
+                ],
+                "description": "使所有精灵勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "29",
+        "snapshots": {
+          "original": {
+            "id": 29,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a STR score of 13 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 29,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有力量大于等于 13 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "35",
+        "snapshots": {
+          "original": {
+            "id": 35,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a CON score of 13 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 35,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有体质大于等于 13 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "49",
+        "snapshots": {
+          "original": {
+            "id": 49,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "Increases the damage of all Good Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 49,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "使所有善良阵营勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

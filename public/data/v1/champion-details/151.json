@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "151",
     "name": {
@@ -40,7 +40,7 @@
   },
   "dateAvailable": "2024-07-03 12:00:00",
   "lastReworkDate": "2024-07-03 12:00:00",
-  "popularity": 80,
+  "popularity": 83,
   "baseCost": "42500000000",
   "baseDamage": "220000000",
   "baseHealth": "242",
@@ -3068,6 +3068,632 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "3578",
+      "name": {
+        "original": "A Lifeline",
+        "display": "生命线"
+      },
+      "description": {
+        "original": "When I could not see my potential...",
+        "display": "当我看不到自己的潜力时……"
+      },
+      "graphicId": "23742",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3579",
+      "name": {
+        "original": "Druidic Stave",
+        "display": "德鲁伊棒"
+      },
+      "description": {
+        "original": "...Brenton Lonefire showed me who I could become.",
+        "display": "……布伦顿·洛恩法尔让我知道了我能成为什么样的人。"
+      },
+      "graphicId": "23742",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3580",
+      "name": {
+        "original": "Staff of the Hive",
+        "display": "蜂巢之杖"
+      },
+      "description": {
+        "original": "Apologies for the bees. Errr, they keep me company.",
+        "display": "我替这些蜜蜂向你道歉。呃，它们给我作伴。"
+      },
+      "graphicId": "23743",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3581",
+      "name": {
+        "original": "Honeycomb's Heart",
+        "display": "蜂巢之心"
+      },
+      "description": {
+        "original": "The magic of this staff seems to keep the bees happier.",
+        "display": "这根手杖的魔力似乎能让蜜蜂们更快乐。"
+      },
+      "graphicId": "23744",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "3582",
+      "name": {
+        "original": "What It Takes",
+        "display": "代价是什么"
+      },
+      "description": {
+        "original": "Part of learning survival is understanding what little you need to live.",
+        "display": "学习生存的一部分就是认识到你活着所需的东西是多么少。"
+      },
+      "graphicId": "23736",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "health_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3583",
+      "name": {
+        "original": "Foraging Spoils",
+        "display": "在战利品中觅食"
+      },
+      "description": {
+        "original": "This was a feast on some of Brenton's expeditions.",
+        "display": "这是一场享用布伦顿探险战利品的盛宴。"
+      },
+      "graphicId": "23736",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "health_mult,30"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3584",
+      "name": {
+        "original": "Harrowdale Pie",
+        "display": "哈罗谷馅饼"
+      },
+      "description": {
+        "original": "They may be known for their fishing, but their bakers are marvelously skilled.",
+        "display": "虽然他们的渔业很出名，但他们的面包师手艺精湛。"
+      },
+      "graphicId": "23737",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "health_mult,50"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3585",
+      "name": {
+        "original": "King Salmon",
+        "display": "鲑鱼王"
+      },
+      "description": {
+        "original": "It's bulky, yes, but the inconvenience will be worth it once it's cooked up.",
+        "display": "它的块头确实很大，但一旦煮好了，所有的不便都是值得的。"
+      },
+      "graphicId": "23738",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "health_mult,100"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3586",
+      "name": {
+        "original": "Natural Understanding",
+        "display": "自然的理解"
+      },
+      "description": {
+        "original": "Death is a part of nature...",
+        "display": "死亡是自然的一部分……"
+      },
+      "graphicId": "23739",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,15048"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3587",
+      "name": {
+        "original": "Skinning Knife",
+        "display": "剥皮刀"
+      },
+      "description": {
+        "original": "...and nothing should go to waste.",
+        "display": "……而任何东西都不该浪费。"
+      },
+      "graphicId": "23739",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,15048"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3588",
+      "name": {
+        "original": "Obsidian Blade",
+        "display": "黑曜石之刃"
+      },
+      "description": {
+        "original": "A finer tool makes a cleaner job.",
+        "display": "工欲善其事必先利其器。"
+      },
+      "graphicId": "23740",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,15048"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3589",
+      "name": {
+        "original": "Dragontooth Dagger",
+        "display": "龙牙匕首"
+      },
+      "description": {
+        "original": "I am not a slayer of dragons, but an old friend was. I cherish this gift.",
+        "display": "我不是屠龙者，但我的一个老朋友是。我很珍惜这件礼物。"
+      },
+      "graphicId": "23741",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,15048"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3590",
+      "name": {
+        "original": "Constant Reminder",
+        "display": "持续的提醒"
+      },
+      "description": {
+        "original": "Err, I only need them when reading...",
+        "display": "呃，我只在看书的时候需要它……"
+      },
+      "graphicId": "23733",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,15050"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3591",
+      "name": {
+        "original": "Spectacles",
+        "display": "眼镜"
+      },
+      "description": {
+        "original": "...and sometimes writing - but besides those, I am fine!",
+        "display": "……有时写字时也需要，但除此之外，我都不需要它！"
+      },
+      "graphicId": "23733",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,15050"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3592",
+      "name": {
+        "original": "Journal & Emerald Pen",
+        "display": "日记和翡翠笔"
+      },
+      "description": {
+        "original": "Not everything needs to be kept floating around in my grey matter.",
+        "display": "并不是所有东西都需要留在我的大脑灰质里的。"
+      },
+      "graphicId": "23734",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,15050"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3593",
+      "name": {
+        "original": "Disguise Kit",
+        "display": "伪装工具箱"
+      },
+      "description": {
+        "original": "Sometimes, you need more than guile and deception to solve a case.",
+        "display": "有时候，破案需要的不仅仅是诡计和欺骗。"
+      },
+      "graphicId": "23735",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,15050"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3594",
+      "name": {
+        "original": "Her Favorite Set",
+        "display": "她最喜欢的套装"
+      },
+      "description": {
+        "original": "Incredible that she kept these after all these years.",
+        "display": "真是难以置信，这么多年了她还留着这些。"
+      },
+      "graphicId": "23730",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,25,15052,15053,15054"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3595",
+      "name": {
+        "original": "Thieves' Tools",
+        "display": "盗贼工具"
+      },
+      "description": {
+        "original": "We found these in her hideout after she... Well, you know what happened.",
+        "display": "在她……你知道发生了什么，总之在那之后，我们在她的藏身处找到了这些。"
+      },
+      "graphicId": "23730",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,87.5,15052,15053,15054"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3596",
+      "name": {
+        "original": "Dagger of Venom",
+        "display": "毒液匕首"
+      },
+      "description": {
+        "original": "Cruel for my tastes, but for Sliver, this was just another tool.",
+        "display": "对我而言有些残酷，但对斯莱弗而言，这不过是另一件工具。"
+      },
+      "graphicId": "23731",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,150,15052,15053,15054"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3597",
+      "name": {
+        "original": "Zhentarim Medallion",
+        "display": "散塔林会徽章"
+      },
+      "description": {
+        "original": "Errr, there was plenty of other evidence. I needed to hold onto this.",
+        "display": "呃，当时还有很多其他证据，我需要留着这个。"
+      },
+      "graphicId": "23732",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,275,15052,15053,15054"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3598",
+      "name": {
+        "original": "Favorite Scent",
+        "display": "最喜欢的气味"
+      },
+      "description": {
+        "original": "The bear may be full of rage, but a whiff of these will always calm me.",
+        "display": "虽然熊充满了愤怒，但闻到这气味总能让我平静下来。"
+      },
+      "graphicId": "23727",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,6"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3599",
+      "name": {
+        "original": "Cormyrean Flowers",
+        "display": "科米尔人之花"
+      },
+      "description": {
+        "original": "I learned these calmed me down on... Errr, a date. That is all I will say.",
+        "display": "我在一次……呃，约会中得知这花会让我平静下来。这就是我要说的。"
+      },
+      "graphicId": "23727",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,11"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3600",
+      "name": {
+        "original": "Enchanted Honeycomb",
+        "display": "魔法蜂巢"
+      },
+      "description": {
+        "original": "The bees of my staff make the bear's most favorite of treats.",
+        "display": "我手杖的蜜蜂会做出熊最爱的甜食。"
+      },
+      "graphicId": "23728",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,22"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3601",
+      "name": {
+        "original": "Jar of Endless Honey",
+        "display": "无尽蜂蜜罐"
+      },
+      "description": {
+        "original": "The case was difficult, but the reward was beyond my wildest dreams!",
+        "display": "这个案子很难办，但报酬却是我做梦也想不到的！"
+      },
+      "graphicId": "23729",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,55"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "56",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "human"
+            }
+          ],
+          "description": "Increases the damage of all Human Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "89",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,40",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "con",
+              "check": 15,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a CON score of 15 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "42",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "wis",
+              "score": 15,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a WIS score of 15 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "104",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,30",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "lawful"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a LAWFUL alignment"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3222,7 +3848,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 80,
+        "popularity": 83,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3410,7 +4036,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 80,
+        "popularity": 83,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -7069,6 +7695,1136 @@
             "availabilities": {
               "in_flash_sales": true
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "3578",
+        "snapshots": {
+          "original": {
+            "id": 3578,
+            "name": "A Lifeline",
+            "description": "When I could not see my potential...",
+            "graphic_id": 23742,
+            "hero_id": 151,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3578,
+            "name": "生命线",
+            "description": "当我看不到自己的潜力时……",
+            "graphic_id": 23742,
+            "hero_id": 151,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3579",
+        "snapshots": {
+          "original": {
+            "id": 3579,
+            "name": "Druidic Stave",
+            "description": "...Brenton Lonefire showed me who I could become.",
+            "graphic_id": 23742,
+            "hero_id": 151,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3579,
+            "name": "德鲁伊棒",
+            "description": "……布伦顿·洛恩法尔让我知道了我能成为什么样的人。",
+            "graphic_id": 23742,
+            "hero_id": 151,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3580",
+        "snapshots": {
+          "original": {
+            "id": 3580,
+            "name": "Staff of the Hive",
+            "description": "Apologies for the bees. Errr, they keep me company.",
+            "graphic_id": 23743,
+            "hero_id": 151,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3580,
+            "name": "蜂巢之杖",
+            "description": "我替这些蜜蜂向你道歉。呃，它们给我作伴。",
+            "graphic_id": 23743,
+            "hero_id": 151,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3581",
+        "snapshots": {
+          "original": {
+            "id": 3581,
+            "name": "Honeycomb's Heart",
+            "description": "The magic of this staff seems to keep the bees happier.",
+            "graphic_id": 23744,
+            "hero_id": 151,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3581,
+            "name": "蜂巢之心",
+            "description": "这根手杖的魔力似乎能让蜜蜂们更快乐。",
+            "graphic_id": 23744,
+            "hero_id": 151,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3582",
+        "snapshots": {
+          "original": {
+            "id": 3582,
+            "name": "What It Takes",
+            "description": "Part of learning survival is understanding what little you need to live.",
+            "graphic_id": 23736,
+            "hero_id": 151,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "health_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3582,
+            "name": "代价是什么",
+            "description": "学习生存的一部分就是认识到你活着所需的东西是多么少。",
+            "graphic_id": 23736,
+            "hero_id": 151,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "health_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3583",
+        "snapshots": {
+          "original": {
+            "id": 3583,
+            "name": "Foraging Spoils",
+            "description": "This was a feast on some of Brenton's expeditions.",
+            "graphic_id": 23736,
+            "hero_id": 151,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "health_mult,30"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3583,
+            "name": "在战利品中觅食",
+            "description": "这是一场享用布伦顿探险战利品的盛宴。",
+            "graphic_id": 23736,
+            "hero_id": 151,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "health_mult,30"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3584",
+        "snapshots": {
+          "original": {
+            "id": 3584,
+            "name": "Harrowdale Pie",
+            "description": "They may be known for their fishing, but their bakers are marvelously skilled.",
+            "graphic_id": 23737,
+            "hero_id": 151,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "health_mult,50"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3584,
+            "name": "哈罗谷馅饼",
+            "description": "虽然他们的渔业很出名，但他们的面包师手艺精湛。",
+            "graphic_id": 23737,
+            "hero_id": 151,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "health_mult,50"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3585",
+        "snapshots": {
+          "original": {
+            "id": 3585,
+            "name": "King Salmon",
+            "description": "It's bulky, yes, but the inconvenience will be worth it once it's cooked up.",
+            "graphic_id": 23738,
+            "hero_id": 151,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "health_mult,100"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3585,
+            "name": "鲑鱼王",
+            "description": "它的块头确实很大，但一旦煮好了，所有的不便都是值得的。",
+            "graphic_id": 23738,
+            "hero_id": 151,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "health_mult,100"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3586",
+        "snapshots": {
+          "original": {
+            "id": 3586,
+            "name": "Natural Understanding",
+            "description": "Death is a part of nature...",
+            "graphic_id": 23739,
+            "hero_id": 151,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15048"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3586,
+            "name": "自然的理解",
+            "description": "死亡是自然的一部分……",
+            "graphic_id": 23739,
+            "hero_id": 151,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15048"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3587",
+        "snapshots": {
+          "original": {
+            "id": 3587,
+            "name": "Skinning Knife",
+            "description": "...and nothing should go to waste.",
+            "graphic_id": 23739,
+            "hero_id": 151,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15048"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3587,
+            "name": "剥皮刀",
+            "description": "……而任何东西都不该浪费。",
+            "graphic_id": 23739,
+            "hero_id": 151,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15048"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3588",
+        "snapshots": {
+          "original": {
+            "id": 3588,
+            "name": "Obsidian Blade",
+            "description": "A finer tool makes a cleaner job.",
+            "graphic_id": 23740,
+            "hero_id": 151,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15048"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3588,
+            "name": "黑曜石之刃",
+            "description": "工欲善其事必先利其器。",
+            "graphic_id": 23740,
+            "hero_id": 151,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15048"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3589",
+        "snapshots": {
+          "original": {
+            "id": 3589,
+            "name": "Dragontooth Dagger",
+            "description": "I am not a slayer of dragons, but an old friend was. I cherish this gift.",
+            "graphic_id": 23741,
+            "hero_id": 151,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15048"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3589,
+            "name": "龙牙匕首",
+            "description": "我不是屠龙者，但我的一个老朋友是。我很珍惜这件礼物。",
+            "graphic_id": 23741,
+            "hero_id": 151,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15048"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3590",
+        "snapshots": {
+          "original": {
+            "id": 3590,
+            "name": "Constant Reminder",
+            "description": "Err, I only need them when reading...",
+            "graphic_id": 23733,
+            "hero_id": 151,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15050"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3590,
+            "name": "持续的提醒",
+            "description": "呃，我只在看书的时候需要它……",
+            "graphic_id": 23733,
+            "hero_id": 151,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15050"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3591",
+        "snapshots": {
+          "original": {
+            "id": 3591,
+            "name": "Spectacles",
+            "description": "...and sometimes writing - but besides those, I am fine!",
+            "graphic_id": 23733,
+            "hero_id": 151,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15050"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3591,
+            "name": "眼镜",
+            "description": "……有时写字时也需要，但除此之外，我都不需要它！",
+            "graphic_id": 23733,
+            "hero_id": 151,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15050"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3592",
+        "snapshots": {
+          "original": {
+            "id": 3592,
+            "name": "Journal & Emerald Pen",
+            "description": "Not everything needs to be kept floating around in my grey matter.",
+            "graphic_id": 23734,
+            "hero_id": 151,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15050"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3592,
+            "name": "日记和翡翠笔",
+            "description": "并不是所有东西都需要留在我的大脑灰质里的。",
+            "graphic_id": 23734,
+            "hero_id": 151,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15050"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3593",
+        "snapshots": {
+          "original": {
+            "id": 3593,
+            "name": "Disguise Kit",
+            "description": "Sometimes, you need more than guile and deception to solve a case.",
+            "graphic_id": 23735,
+            "hero_id": 151,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15050"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3593,
+            "name": "伪装工具箱",
+            "description": "有时候，破案需要的不仅仅是诡计和欺骗。",
+            "graphic_id": 23735,
+            "hero_id": 151,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15050"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3594",
+        "snapshots": {
+          "original": {
+            "id": 3594,
+            "name": "Her Favorite Set",
+            "description": "Incredible that she kept these after all these years.",
+            "graphic_id": 23730,
+            "hero_id": 151,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,15052,15053,15054"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3594,
+            "name": "她最喜欢的套装",
+            "description": "真是难以置信，这么多年了她还留着这些。",
+            "graphic_id": 23730,
+            "hero_id": 151,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,15052,15053,15054"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3595",
+        "snapshots": {
+          "original": {
+            "id": 3595,
+            "name": "Thieves' Tools",
+            "description": "We found these in her hideout after she... Well, you know what happened.",
+            "graphic_id": 23730,
+            "hero_id": 151,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,15052,15053,15054"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3595,
+            "name": "盗贼工具",
+            "description": "在她……你知道发生了什么，总之在那之后，我们在她的藏身处找到了这些。",
+            "graphic_id": 23730,
+            "hero_id": 151,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,15052,15053,15054"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3596",
+        "snapshots": {
+          "original": {
+            "id": 3596,
+            "name": "Dagger of Venom",
+            "description": "Cruel for my tastes, but for Sliver, this was just another tool.",
+            "graphic_id": 23731,
+            "hero_id": 151,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,15052,15053,15054"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3596,
+            "name": "毒液匕首",
+            "description": "对我而言有些残酷，但对斯莱弗而言，这不过是另一件工具。",
+            "graphic_id": 23731,
+            "hero_id": 151,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,15052,15053,15054"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3597",
+        "snapshots": {
+          "original": {
+            "id": 3597,
+            "name": "Zhentarim Medallion",
+            "description": "Errr, there was plenty of other evidence. I needed to hold onto this.",
+            "graphic_id": 23732,
+            "hero_id": 151,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,15052,15053,15054"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3597,
+            "name": "散塔林会徽章",
+            "description": "呃，当时还有很多其他证据，我需要留着这个。",
+            "graphic_id": 23732,
+            "hero_id": 151,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,15052,15053,15054"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3598",
+        "snapshots": {
+          "original": {
+            "id": 3598,
+            "name": "Favorite Scent",
+            "description": "The bear may be full of rage, but a whiff of these will always calm me.",
+            "graphic_id": 23727,
+            "hero_id": 151,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,6"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3598,
+            "name": "最喜欢的气味",
+            "description": "虽然熊充满了愤怒，但闻到这气味总能让我平静下来。",
+            "graphic_id": 23727,
+            "hero_id": 151,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,6"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3599",
+        "snapshots": {
+          "original": {
+            "id": 3599,
+            "name": "Cormyrean Flowers",
+            "description": "I learned these calmed me down on... Errr, a date. That is all I will say.",
+            "graphic_id": 23727,
+            "hero_id": 151,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,11"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3599,
+            "name": "科米尔人之花",
+            "description": "我在一次……呃，约会中得知这花会让我平静下来。这就是我要说的。",
+            "graphic_id": 23727,
+            "hero_id": 151,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,11"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3600",
+        "snapshots": {
+          "original": {
+            "id": 3600,
+            "name": "Enchanted Honeycomb",
+            "description": "The bees of my staff make the bear's most favorite of treats.",
+            "graphic_id": 23728,
+            "hero_id": 151,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,22"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3600,
+            "name": "魔法蜂巢",
+            "description": "我手杖的蜜蜂会做出熊最爱的甜食。",
+            "graphic_id": 23728,
+            "hero_id": 151,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,22"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3601",
+        "snapshots": {
+          "original": {
+            "id": 3601,
+            "name": "Jar of Endless Honey",
+            "description": "The case was difficult, but the reward was beyond my wildest dreams!",
+            "graphic_id": 23729,
+            "hero_id": 151,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,55"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3601,
+            "name": "无尽蜂蜜罐",
+            "description": "这个案子很难办，但报酬却是我做梦也想不到的！",
+            "graphic_id": 23729,
+            "hero_id": 151,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,55"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "56",
+        "snapshots": {
+          "original": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "阵型中每有一位女性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "5",
+        "snapshots": {
+          "original": {
+            "id": 5,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "Increases the damage of all Human Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 5,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "使所有人类勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "89",
+        "snapshots": {
+          "original": {
+            "id": 89,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,40",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "con",
+                    "check": 15,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a CON score of 15 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 89,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,40",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "con",
+                    "check": 15,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位体质大于等于 15 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "42",
+        "snapshots": {
+          "original": {
+            "id": 42,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "wis",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a WIS score of 15 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 42,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "wis",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有感知大于等于 15 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "104",
+        "snapshots": {
+          "original": {
+            "id": 104,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "lawful"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a LAWFUL alignment"
+              }
+            ]
+          },
+          "display": {
+            "id": 104,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "lawful"
+                  }
+                ],
+                "description": "阵型中每有一位守序阵营勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

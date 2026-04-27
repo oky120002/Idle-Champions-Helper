@@ -2,7 +2,7 @@ import type { ChampionDetail } from '../../../src/domain/types'
 
 export const championDetailBaseFixture: Omit<
   ChampionDetail,
-  'upgrades' | 'feats' | 'skins' | 'raw'
+  'upgrades' | 'feats' | 'skins' | 'loot' | 'legendaryEffects' | 'raw'
 > = {
   updatedAt: '2026-04-13',
   summary: {

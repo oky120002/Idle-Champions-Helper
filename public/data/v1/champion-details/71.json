@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "71",
     "name": {
@@ -53,7 +53,7 @@
   },
   "dateAvailable": "2020-11-11 13:00:00",
   "lastReworkDate": "2024-04-03 12:00:00",
-  "popularity": 72,
+  "popularity": 74,
   "baseCost": "10000000000000000000",
   "baseDamage": "2500000000000",
   "baseHealth": "37",
@@ -3690,6 +3690,638 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "1681",
+      "name": {
+        "original": "Gnarled Staff",
+        "display": "粗糙的手杖"
+      },
+      "description": {
+        "original": "Can you see the Minotaur!?",
+        "display": "你能看见牛头人吗？"
+      },
+      "graphicId": "9141",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1682",
+      "name": {
+        "original": "Traveling Staff",
+        "display": "旅行手杖"
+      },
+      "description": {
+        "original": "I don't mind walking to waterdeep, I have a fish friend there!",
+        "display": "我不介意走路去深水城。我有一位鱼朋友在那里！"
+      },
+      "graphicId": "9141",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1683",
+      "name": {
+        "original": "Staff of the Woodlands",
+        "display": "林地之杖"
+      },
+      "description": {
+        "original": "It makes me taller.",
+        "display": "它能让我变得更高。"
+      },
+      "graphicId": "9142",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1684",
+      "name": {
+        "original": "Cloud Reacher",
+        "display": "直插云霄"
+      },
+      "description": {
+        "original": "Shhh! Stay here and keep quiet till I talk us out of this!",
+        "display": "嘘！留在这儿别出声，我想办法说点什么让我们脱身！"
+      },
+      "graphicId": "9143",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "1685",
+      "name": {
+        "original": "Berry Drawing",
+        "display": "浆果画"
+      },
+      "description": {
+        "original": "Look what I drew!",
+        "display": "看看我画了什么！"
+      },
+      "graphicId": "9135",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,14699"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1686",
+      "name": {
+        "original": "Friends",
+        "display": "朋友"
+      },
+      "description": {
+        "original": "I got to ride a unicorn with Orkira once. That was nice.",
+        "display": "我跟奥尔基拉一起骑过一次独角兽。那真是太棒了。"
+      },
+      "graphicId": "9135",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,14699"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1687",
+      "name": {
+        "original": "Best Friends",
+        "display": "好朋友"
+      },
+      "description": {
+        "original": "I love my friends.",
+        "display": "我爱我的朋友。"
+      },
+      "graphicId": "9136",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,14699"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1688",
+      "name": {
+        "original": "The Neverending Story",
+        "display": "说不完的故事"
+      },
+      "description": {
+        "original": "Friends last forever. So does stone.",
+        "display": "友谊永存，石头也一样。"
+      },
+      "graphicId": "9137",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,14699"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1689",
+      "name": {
+        "original": "Painted Rock",
+        "display": "刷了油漆的石头"
+      },
+      "description": {
+        "original": "It's time for adventure! IT'S TIME FOR ADVENTURE!",
+        "display": "是时候冒险了！是时候冒险了！"
+      },
+      "graphicId": "9126",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,14701,1",
+          "description": "Increases the healing of Penelope's Chwinga Mask Healing Charm by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1690",
+      "name": {
+        "original": "Chipped Mask",
+        "display": "有缺损的面具"
+      },
+      "description": {
+        "original": "If I stand really still I'll become invisible, right?",
+        "display": "如果我站得直挺挺的，我就会隐形了，对吧？"
+      },
+      "graphicId": "9126",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,14701,1",
+          "description": "Increases the healing of Penelope's Chwinga Mask Healing Charm by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1691",
+      "name": {
+        "original": "Magical Chwinga Mask",
+        "display": "魔法楚因加面具"
+      },
+      "description": {
+        "original": "I am as elusive as a golden beetle.",
+        "display": "我像黄金甲虫一样难以找到。"
+      },
+      "graphicId": "9127",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,14701,1",
+          "description": "Increases the healing of Penelope's Chwinga Mask Healing Charm by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1692",
+      "name": {
+        "original": "Mask of the Perian Clan",
+        "display": "佩里安部落面具"
+      },
+      "description": {
+        "original": "It glows in the dark!",
+        "display": "它在黑暗中会发光！"
+      },
+      "graphicId": "9128",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,14701,1",
+          "description": "Increases the healing of Penelope's Chwinga Mask Healing Charm by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1693",
+      "name": {
+        "original": "Berry Blaster",
+        "display": "浆果捣碎器"
+      },
+      "description": {
+        "original": "Taste THIS!",
+        "display": "试试这个吧！"
+      },
+      "graphicId": "9138",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,14701,2",
+          "description": "Increases the effect of Penelope's Chwinga Mask Tools for the Job Charm by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1694",
+      "name": {
+        "original": "Cockroach Catapult",
+        "display": "蟑螂弹弓"
+      },
+      "description": {
+        "original": "Spurt! Grab a centipede and get over here!",
+        "display": "斯普特！抓一条蜈蚣过来！"
+      },
+      "graphicId": "9138",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,14701,2",
+          "description": "Increases the effect of Penelope's Chwinga Mask Tools for the Job Charm by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1695",
+      "name": {
+        "original": "Stone Slinger",
+        "display": "投石者"
+      },
+      "description": {
+        "original": "This is the point when something bad is supposed to happen!",
+        "display": "这就是应该有坏事发生的时候！"
+      },
+      "graphicId": "9139",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,14701,2",
+          "description": "Increases the effect of Penelope's Chwinga Mask Tools for the Job Charm by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1696",
+      "name": {
+        "original": "Penelope's Pea Pitcher",
+        "display": "佩内洛普的豆子抛射器"
+      },
+      "description": {
+        "original": "Freely helped me grow Penelo-peas! They go squish.",
+        "display": "弗里帮我种了佩内洛豆！它们要压坏了。"
+      },
+      "graphicId": "9140",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,14701,2",
+          "description": "Increases the effect of Penelope's Chwinga Mask Tools for the Job Charm by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1697",
+      "name": {
+        "original": "Acorn of Courage",
+        "display": "勇气橡子"
+      },
+      "description": {
+        "original": "Does this mean the end of our vacation?",
+        "display": "这是不是意味着我们的假期要结束了？"
+      },
+      "graphicId": "9132",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,10,14703,14704,14705"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1698",
+      "name": {
+        "original": "Acorn-Acorn",
+        "display": "橡子橡子"
+      },
+      "description": {
+        "original": "Do doooo do-do-do!",
+        "display": "嘟嘟，嘟，嘟，嘟！"
+      },
+      "graphicId": "9132",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,30,14703,14704,14705"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1699",
+      "name": {
+        "original": "Neverember's Acorn of Bravery",
+        "display": "内威尔伦勃尔的勇敢橡子"
+      },
+      "description": {
+        "original": "It makes me braver.",
+        "display": "它让我变得更勇敢。"
+      },
+      "graphicId": "9133",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,50,14703,14704,14705"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1700",
+      "name": {
+        "original": "Neverember's Fancy Acorn",
+        "display": "内威尔伦勃尔的精致橡子"
+      },
+      "description": {
+        "original": "Neverember survived the fire. I'll bet he's fireproof.",
+        "display": "内威尔伦勃尔在那场大火中存活了下来。我敢打赌他不怕火。"
+      },
+      "graphicId": "9134",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,100,14703,14704,14705"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1701",
+      "name": {
+        "original": "Mossy Growth",
+        "display": "长满苔藓的植物"
+      },
+      "description": {
+        "original": "LOOK! I'm a shrub!",
+        "display": "快看！我是灌木！"
+      },
+      "graphicId": "9129",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,6"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1702",
+      "name": {
+        "original": "Shrub Cloak",
+        "display": "灌木斗篷"
+      },
+      "description": {
+        "original": "EEP! Shrub mode!",
+        "display": "哈！灌木模式！"
+      },
+      "graphicId": "9129",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,11"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1703",
+      "name": {
+        "original": "Cloak of the Forest Floor",
+        "display": "森林地面斗篷"
+      },
+      "description": {
+        "original": "Shhhh. I'm hiding.",
+        "display": "嘘，我在躲着呢。"
+      },
+      "graphicId": "9130",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,22"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1704",
+      "name": {
+        "original": "Penelope's Bug Cloak",
+        "display": "佩内洛普长虫的斗篷"
+      },
+      "description": {
+        "original": "SPURT! Don't eat them!",
+        "display": "斯普特！别吃那些东西！"
+      },
+      "graphicId": "9131",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,55"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "male"
+            }
+          ],
+          "description": "Increases the damage of all Male Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "15",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "halfling"
+            }
+          ],
+          "description": "Increases the damage of all Halfing Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "84",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "dex",
+              "check": 11,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a DEX score of 11 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "42",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "wis",
+              "score": 15,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a WIS score of 15 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "99",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "attack_type",
+              "attack": "melee"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Melee Champion in the formation"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3853,7 +4485,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 72,
+        "popularity": 74,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -4050,7 +4682,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 72,
+        "popularity": 74,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -7927,6 +8559,1132 @@
             "availabilities": {
               "in_flash_sales": true
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "1681",
+        "snapshots": {
+          "original": {
+            "id": 1681,
+            "name": "Gnarled Staff",
+            "description": "Can you see the Minotaur!?",
+            "graphic_id": 9141,
+            "hero_id": 71,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1681,
+            "name": "粗糙的手杖",
+            "description": "你能看见牛头人吗？",
+            "graphic_id": 9141,
+            "hero_id": 71,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1682",
+        "snapshots": {
+          "original": {
+            "id": 1682,
+            "name": "Traveling Staff",
+            "description": "I don't mind walking to waterdeep, I have a fish friend there!",
+            "graphic_id": 9141,
+            "hero_id": 71,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1682,
+            "name": "旅行手杖",
+            "description": "我不介意走路去深水城。我有一位鱼朋友在那里！",
+            "graphic_id": 9141,
+            "hero_id": 71,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1683",
+        "snapshots": {
+          "original": {
+            "id": 1683,
+            "name": "Staff of the Woodlands",
+            "description": "It makes me taller.",
+            "graphic_id": 9142,
+            "hero_id": 71,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1683,
+            "name": "林地之杖",
+            "description": "它能让我变得更高。",
+            "graphic_id": 9142,
+            "hero_id": 71,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1684",
+        "snapshots": {
+          "original": {
+            "id": 1684,
+            "name": "Cloud Reacher",
+            "description": "Shhh! Stay here and keep quiet till I talk us out of this!",
+            "graphic_id": 9143,
+            "hero_id": 71,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1684,
+            "name": "直插云霄",
+            "description": "嘘！留在这儿别出声，我想办法说点什么让我们脱身！",
+            "graphic_id": 9143,
+            "hero_id": 71,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1685",
+        "snapshots": {
+          "original": {
+            "id": 1685,
+            "name": "Berry Drawing",
+            "description": "Look what I drew!",
+            "graphic_id": 9135,
+            "hero_id": 71,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,14699"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1685,
+            "name": "浆果画",
+            "description": "看看我画了什么！",
+            "graphic_id": 9135,
+            "hero_id": 71,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,14699"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1686",
+        "snapshots": {
+          "original": {
+            "id": 1686,
+            "name": "Friends",
+            "description": "I got to ride a unicorn with Orkira once. That was nice.",
+            "graphic_id": 9135,
+            "hero_id": 71,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,14699"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1686,
+            "name": "朋友",
+            "description": "我跟奥尔基拉一起骑过一次独角兽。那真是太棒了。",
+            "graphic_id": 9135,
+            "hero_id": 71,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,14699"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1687",
+        "snapshots": {
+          "original": {
+            "id": 1687,
+            "name": "Best Friends",
+            "description": "I love my friends.",
+            "graphic_id": 9136,
+            "hero_id": 71,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,14699"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1687,
+            "name": "好朋友",
+            "description": "我爱我的朋友。",
+            "graphic_id": 9136,
+            "hero_id": 71,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,14699"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1688",
+        "snapshots": {
+          "original": {
+            "id": 1688,
+            "name": "The Neverending Story",
+            "description": "Friends last forever. So does stone.",
+            "graphic_id": 9137,
+            "hero_id": 71,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,14699"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1688,
+            "name": "说不完的故事",
+            "description": "友谊永存，石头也一样。",
+            "graphic_id": 9137,
+            "hero_id": 71,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,14699"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1689",
+        "snapshots": {
+          "original": {
+            "id": 1689,
+            "name": "Painted Rock",
+            "description": "It's time for adventure! IT'S TIME FOR ADVENTURE!",
+            "graphic_id": 9126,
+            "hero_id": 71,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,14701,1",
+                "description": "Increases the healing of Penelope's Chwinga Mask Healing Charm by $(amount)%."
+              }
+            ]
+          },
+          "display": {
+            "id": 1689,
+            "name": "刷了油漆的石头",
+            "description": "是时候冒险了！是时候冒险了！",
+            "graphic_id": 9126,
+            "hero_id": 71,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,14701,1",
+                "description": "使佩内洛普的楚因加面具“治愈”符咒的治疗效果提高 $(amount)%。"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1690",
+        "snapshots": {
+          "original": {
+            "id": 1690,
+            "name": "Chipped Mask",
+            "description": "If I stand really still I'll become invisible, right?",
+            "graphic_id": 9126,
+            "hero_id": 71,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,14701,1",
+                "description": "Increases the healing of Penelope's Chwinga Mask Healing Charm by $(amount)%."
+              }
+            ]
+          },
+          "display": {
+            "id": 1690,
+            "name": "有缺损的面具",
+            "description": "如果我站得直挺挺的，我就会隐形了，对吧？",
+            "graphic_id": 9126,
+            "hero_id": 71,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,14701,1",
+                "description": "使佩内洛普的楚因加面具“治愈”符咒的治疗效果提高 $(amount)%。"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1691",
+        "snapshots": {
+          "original": {
+            "id": 1691,
+            "name": "Magical Chwinga Mask",
+            "description": "I am as elusive as a golden beetle.",
+            "graphic_id": 9127,
+            "hero_id": 71,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,14701,1",
+                "description": "Increases the healing of Penelope's Chwinga Mask Healing Charm by $(amount)%."
+              }
+            ]
+          },
+          "display": {
+            "id": 1691,
+            "name": "魔法楚因加面具",
+            "description": "我像黄金甲虫一样难以找到。",
+            "graphic_id": 9127,
+            "hero_id": 71,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,14701,1",
+                "description": "使佩内洛普的楚因加面具“治愈”符咒的治疗效果提高 $(amount)%。"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1692",
+        "snapshots": {
+          "original": {
+            "id": 1692,
+            "name": "Mask of the Perian Clan",
+            "description": "It glows in the dark!",
+            "graphic_id": 9128,
+            "hero_id": 71,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,14701,1",
+                "description": "Increases the healing of Penelope's Chwinga Mask Healing Charm by $(amount)%."
+              }
+            ]
+          },
+          "display": {
+            "id": 1692,
+            "name": "佩里安部落面具",
+            "description": "它在黑暗中会发光！",
+            "graphic_id": 9128,
+            "hero_id": 71,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,14701,1",
+                "description": "使佩内洛普的楚因加面具“治愈”符咒的治疗效果提高 $(amount)%。"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1693",
+        "snapshots": {
+          "original": {
+            "id": 1693,
+            "name": "Berry Blaster",
+            "description": "Taste THIS!",
+            "graphic_id": 9138,
+            "hero_id": 71,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,14701,2",
+                "description": "Increases the effect of Penelope's Chwinga Mask Tools for the Job Charm by $(amount)%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1693,
+            "name": "浆果捣碎器",
+            "description": "试试这个吧！",
+            "graphic_id": 9138,
+            "hero_id": 71,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,14701,2",
+                "description": "使佩内洛普的楚因加面具“物尽其用”符咒的效果提高 $(amount)%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1694",
+        "snapshots": {
+          "original": {
+            "id": 1694,
+            "name": "Cockroach Catapult",
+            "description": "Spurt! Grab a centipede and get over here!",
+            "graphic_id": 9138,
+            "hero_id": 71,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,14701,2",
+                "description": "Increases the effect of Penelope's Chwinga Mask Tools for the Job Charm by $(amount)%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1694,
+            "name": "蟑螂弹弓",
+            "description": "斯普特！抓一条蜈蚣过来！",
+            "graphic_id": 9138,
+            "hero_id": 71,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,14701,2",
+                "description": "使佩内洛普的楚因加面具“物尽其用”符咒的效果提高 $(amount)%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1695",
+        "snapshots": {
+          "original": {
+            "id": 1695,
+            "name": "Stone Slinger",
+            "description": "This is the point when something bad is supposed to happen!",
+            "graphic_id": 9139,
+            "hero_id": 71,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,14701,2",
+                "description": "Increases the effect of Penelope's Chwinga Mask Tools for the Job Charm by $(amount)%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1695,
+            "name": "投石者",
+            "description": "这就是应该有坏事发生的时候！",
+            "graphic_id": 9139,
+            "hero_id": 71,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,14701,2",
+                "description": "使佩内洛普的楚因加面具“物尽其用”符咒的效果提高 $(amount)%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1696",
+        "snapshots": {
+          "original": {
+            "id": 1696,
+            "name": "Penelope's Pea Pitcher",
+            "description": "Freely helped me grow Penelo-peas! They go squish.",
+            "graphic_id": 9140,
+            "hero_id": 71,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,14701,2",
+                "description": "Increases the effect of Penelope's Chwinga Mask Tools for the Job Charm by $(amount)%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1696,
+            "name": "佩内洛普的豆子抛射器",
+            "description": "弗里帮我种了佩内洛豆！它们要压坏了。",
+            "graphic_id": 9140,
+            "hero_id": 71,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,14701,2",
+                "description": "使佩内洛普的楚因加面具“物尽其用”符咒的效果提高 $(amount)%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1697",
+        "snapshots": {
+          "original": {
+            "id": 1697,
+            "name": "Acorn of Courage",
+            "description": "Does this mean the end of our vacation?",
+            "graphic_id": 9132,
+            "hero_id": 71,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,10,14703,14704,14705"
+              }
+            ]
+          },
+          "display": {
+            "id": 1697,
+            "name": "勇气橡子",
+            "description": "这是不是意味着我们的假期要结束了？",
+            "graphic_id": 9132,
+            "hero_id": 71,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,10,14703,14704,14705"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1698",
+        "snapshots": {
+          "original": {
+            "id": 1698,
+            "name": "Acorn-Acorn",
+            "description": "Do doooo do-do-do!",
+            "graphic_id": 9132,
+            "hero_id": 71,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,30,14703,14704,14705"
+              }
+            ]
+          },
+          "display": {
+            "id": 1698,
+            "name": "橡子橡子",
+            "description": "嘟嘟，嘟，嘟，嘟！",
+            "graphic_id": 9132,
+            "hero_id": 71,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,30,14703,14704,14705"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1699",
+        "snapshots": {
+          "original": {
+            "id": 1699,
+            "name": "Neverember's Acorn of Bravery",
+            "description": "It makes me braver.",
+            "graphic_id": 9133,
+            "hero_id": 71,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,50,14703,14704,14705"
+              }
+            ]
+          },
+          "display": {
+            "id": 1699,
+            "name": "内威尔伦勃尔的勇敢橡子",
+            "description": "它让我变得更勇敢。",
+            "graphic_id": 9133,
+            "hero_id": 71,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,50,14703,14704,14705"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1700",
+        "snapshots": {
+          "original": {
+            "id": 1700,
+            "name": "Neverember's Fancy Acorn",
+            "description": "Neverember survived the fire. I'll bet he's fireproof.",
+            "graphic_id": 9134,
+            "hero_id": 71,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,100,14703,14704,14705"
+              }
+            ]
+          },
+          "display": {
+            "id": 1700,
+            "name": "内威尔伦勃尔的精致橡子",
+            "description": "内威尔伦勃尔在那场大火中存活了下来。我敢打赌他不怕火。",
+            "graphic_id": 9134,
+            "hero_id": 71,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,100,14703,14704,14705"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1701",
+        "snapshots": {
+          "original": {
+            "id": 1701,
+            "name": "Mossy Growth",
+            "description": "LOOK! I'm a shrub!",
+            "graphic_id": 9129,
+            "hero_id": 71,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,6"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1701,
+            "name": "长满苔藓的植物",
+            "description": "快看！我是灌木！",
+            "graphic_id": 9129,
+            "hero_id": 71,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,6"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1702",
+        "snapshots": {
+          "original": {
+            "id": 1702,
+            "name": "Shrub Cloak",
+            "description": "EEP! Shrub mode!",
+            "graphic_id": 9129,
+            "hero_id": 71,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,11"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1702,
+            "name": "灌木斗篷",
+            "description": "哈！灌木模式！",
+            "graphic_id": 9129,
+            "hero_id": 71,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,11"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1703",
+        "snapshots": {
+          "original": {
+            "id": 1703,
+            "name": "Cloak of the Forest Floor",
+            "description": "Shhhh. I'm hiding.",
+            "graphic_id": 9130,
+            "hero_id": 71,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,22"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1703,
+            "name": "森林地面斗篷",
+            "description": "嘘，我在躲着呢。",
+            "graphic_id": 9130,
+            "hero_id": 71,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,22"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1704",
+        "snapshots": {
+          "original": {
+            "id": 1704,
+            "name": "Penelope's Bug Cloak",
+            "description": "SPURT! Don't eat them!",
+            "graphic_id": 9131,
+            "hero_id": 71,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,55"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1704,
+            "name": "佩内洛普长虫的斗篷",
+            "description": "斯普特！别吃那些东西！",
+            "graphic_id": 9131,
+            "hero_id": 71,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,55"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2",
+        "snapshots": {
+          "original": {
+            "id": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "Increases the damage of all Male Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "使所有男性勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "15",
+        "snapshots": {
+          "original": {
+            "id": 15,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "halfling"
+                  }
+                ],
+                "description": "Increases the damage of all Halfing Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 15,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "halfling"
+                  }
+                ],
+                "description": "使所有半身人勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "84",
+        "snapshots": {
+          "original": {
+            "id": 84,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "dex",
+                    "check": 11,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a DEX score of 11 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 84,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "dex",
+                    "check": 11,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位敏捷大于等于 11 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "42",
+        "snapshots": {
+          "original": {
+            "id": 42,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "wis",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a WIS score of 15 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 42,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "wis",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有感知大于等于 15 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "99",
+        "snapshots": {
+          "original": {
+            "id": 99,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "attack_type",
+                    "attack": "melee"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Melee Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 99,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "attack_type",
+                    "attack": "melee"
+                  }
+                ],
+                "description": "阵型中每有一位近战勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

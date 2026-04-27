@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "46",
     "name": {
@@ -44,7 +44,7 @@
   },
   "dateAvailable": "2019-07-03 00:00:00",
   "lastReworkDate": "2019-07-03 00:00:00",
-  "popularity": 74,
+  "popularity": 76,
   "baseCost": "150000000000",
   "baseDamage": "80000000",
   "baseHealth": "270",
@@ -3024,6 +3024,626 @@
       "availabilities": null
     }
   ],
+  "loot": [
+    {
+      "id": "1081",
+      "name": {
+        "original": "Lost Token",
+        "display": "丢失的代币"
+      },
+      "description": {
+        "original": "You know you can't lose these, right? HOW DID THIS GET LOST?!",
+        "display": "你知道这是不可能弄丢的吧？怎么就会给弄丢了呢？！"
+      },
+      "graphicId": "5761",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1082",
+      "name": {
+        "original": "Franchise Tag",
+        "display": "连锁标签"
+      },
+      "description": {
+        "original": "You want to start a franchise? Pick up the book and get in line.",
+        "display": "你想要开设连锁店？先去排队慢慢等吧。"
+      },
+      "graphicId": "5761",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1083",
+      "name": {
+        "original": "Acquisitions Inc Logo",
+        "display": "艾奎兹玄有限责任公司商标"
+      },
+      "description": {
+        "original": "A decent mock-up.",
+        "display": "像模像样的模型。"
+      },
+      "graphicId": "5762",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1084",
+      "name": {
+        "original": "Badge of Acquisition",
+        "display": "艾奎兹玄徽章"
+      },
+      "description": {
+        "original": "New franchises are rare. Or at least they were till someone wrote the rules down!",
+        "display": "新的连锁店本来是很罕见的，直到有人开始把流程传播开来！"
+      },
+      "graphicId": "5763",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "1085",
+      "name": {
+        "original": "Worn Pouch",
+        "display": "磨损的袋子"
+      },
+      "description": {
+        "original": "It's not magic. It uses a squirrel as a courier.",
+        "display": "这不是魔法。而是使用了松鼠为信使。"
+      },
+      "graphicId": "5764",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,2386"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1086",
+      "name": {
+        "original": "Bag of Documents",
+        "display": "公文袋"
+      },
+      "description": {
+        "original": "I've got it here somewhere...",
+        "display": "我记得有带来的，就放在这里头......"
+      },
+      "graphicId": "5764",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,2386"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1087",
+      "name": {
+        "original": "Documancy Satchel",
+        "display": "记录术小袋子"
+      },
+      "description": {
+        "original": "It's one of the many ways Omin can get ahold of us.",
+        "display": "这就是欧敏赖以寻找到我们的诸多方法之一。"
+      },
+      "graphicId": "5765",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,2386"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1088",
+      "name": {
+        "original": "Walnut's File Repository",
+        "display": "沃纳特的档案库"
+      },
+      "description": {
+        "original": "Do. Not. Touch.",
+        "display": "不。准。碰。"
+      },
+      "graphicId": "5766",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,2386"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1089",
+      "name": {
+        "original": "Quill & Moldy Paper",
+        "display": "鹅毛笔与发霉的纸张"
+      },
+      "description": {
+        "original": "It still counts.",
+        "display": "依然能用。"
+      },
+      "graphicId": "5767",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,2387"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1090",
+      "name": {
+        "original": "Dusty Book & Quill Pen",
+        "display": "布满灰尘的书籍与鹅毛笔"
+      },
+      "description": {
+        "original": "You use what you have available.",
+        "display": "有什么就凑合着用吧。"
+      },
+      "graphicId": "5767",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,2387"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1091",
+      "name": {
+        "original": "Calligrapher's Supplies",
+        "display": "制图师的补给"
+      },
+      "description": {
+        "original": "For when you need to take all the notes.",
+        "display": "在需要做笔记时用到的。"
+      },
+      "graphicId": "5768",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,2387"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1092",
+      "name": {
+        "original": "Notebook of the Documancer",
+        "display": "记录员的笔记本"
+      },
+      "description": {
+        "original": "It was gifted to me by Omin himself.",
+        "display": "这是欧敏亲自馈赠给我的。"
+      },
+      "graphicId": "5769",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,2387"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1093",
+      "name": {
+        "original": "Painted Scimitar",
+        "display": "着色的弯刀"
+      },
+      "description": {
+        "original": "Psssht. If I can forge a document, I can forge a sword.",
+        "display": "嘘。既然文件能伪造，那么刀剑也一样可以。"
+      },
+      "graphicId": "5774",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,2388"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1094",
+      "name": {
+        "original": "Blade of the Druid",
+        "display": "德鲁伊之刃"
+      },
+      "description": {
+        "original": "Light and well balanced. Smells like a trap.",
+        "display": "轻盈而平衡。感觉像是在形容陷阱。"
+      },
+      "graphicId": "5774",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,2388"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1095",
+      "name": {
+        "original": "Walnut's Scimitar",
+        "display": "沃纳特的弯刀"
+      },
+      "description": {
+        "original": "The tried and true method.",
+        "display": "刀不怕老，管用就好。"
+      },
+      "graphicId": "5775",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,2388"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1096",
+      "name": {
+        "original": "Foremother",
+        "display": "女祖先"
+      },
+      "description": {
+        "original": "Now this is a blade your Grove can be proud of!",
+        "display": "这才是能让家乡树林为之骄傲的刀刃！"
+      },
+      "graphicId": "5773",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,2388"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1097",
+      "name": {
+        "original": "Green Snake",
+        "display": "绿蛇"
+      },
+      "description": {
+        "original": "What? They're lovely!",
+        "display": "怎么了？它们很可爱呀！"
+      },
+      "graphicId": "5776",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,25"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1098",
+      "name": {
+        "original": "Slithering Snake",
+        "display": "滑行之蛇"
+      },
+      "description": {
+        "original": "You'd be surprised how much they know.",
+        "display": "从蛇的身上能学习到很多让你惊讶的经验。"
+      },
+      "graphicId": "5776",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,87.5"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1099",
+      "name": {
+        "original": "Content Snake",
+        "display": "满足的蛇"
+      },
+      "description": {
+        "original": "You wouldn't like a hangry snake.",
+        "display": "最可怕的蛇是饿着肚子的蛇。"
+      },
+      "graphicId": "5777",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,150"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1100",
+      "name": {
+        "original": "Seizes the Tail",
+        "display": "抓住尾巴"
+      },
+      "description": {
+        "original": "Break glass only in case of emergency. Seriously.",
+        "display": "只有在紧要关头才可以打破玻璃罐，不开玩笑。"
+      },
+      "graphicId": "5778",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,275"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1101",
+      "name": {
+        "original": "Worn Note",
+        "display": "陈旧的笔记"
+      },
+      "description": {
+        "original": "I've reread this so many times.",
+        "display": "我翻阅过太多遍了。"
+      },
+      "graphicId": "5770",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,7"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1102",
+      "name": {
+        "original": "Poem",
+        "display": "诗歌"
+      },
+      "description": {
+        "original": "I want to seize you as prey is seized",
+        "display": "我想要抓住猎物那般紧抓住你。"
+      },
+      "graphicId": "5770",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,14"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1103",
+      "name": {
+        "original": "Love Letter",
+        "display": "情书"
+      },
+      "description": {
+        "original": "Two animals. My Teeth are on your neck.",
+        "display": "两只动物。我的利齿咬着你的脖子。"
+      },
+      "graphicId": "5771",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,27"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1104",
+      "name": {
+        "original": "Certificate of Undying Love",
+        "display": "至死不渝之证"
+      },
+      "description": {
+        "original": "Brahma's the only one that can co-sign.",
+        "display": "焚天是唯一可以连署保证的人。"
+      },
+      "graphicId": "5772",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,68"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Female Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "elf"
+            }
+          ],
+          "description": "Increases the damage of all Elf Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "33",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "dex",
+              "score": 15,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a DEX score of 15 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "35",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "con",
+              "score": 13,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a CON score of 13 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "51",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "lawful"
+            }
+          ],
+          "description": "Increases the damage of all Lawful Champions by $(amount)%"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3189,7 +3809,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 74,
+        "popularity": 76,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3394,7 +4014,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 74,
+        "popularity": 76,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -7466,6 +8086,1124 @@
               "type": "gem_shop",
               "cost": 20000
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "1081",
+        "snapshots": {
+          "original": {
+            "id": 1081,
+            "name": "Lost Token",
+            "description": "You know you can't lose these, right? HOW DID THIS GET LOST?!",
+            "graphic_id": 5761,
+            "hero_id": 46,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1081,
+            "name": "丢失的代币",
+            "description": "你知道这是不可能弄丢的吧？怎么就会给弄丢了呢？！",
+            "graphic_id": 5761,
+            "hero_id": 46,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1082",
+        "snapshots": {
+          "original": {
+            "id": 1082,
+            "name": "Franchise Tag",
+            "description": "You want to start a franchise? Pick up the book and get in line.",
+            "graphic_id": 5761,
+            "hero_id": 46,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1082,
+            "name": "连锁标签",
+            "description": "你想要开设连锁店？先去排队慢慢等吧。",
+            "graphic_id": 5761,
+            "hero_id": 46,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1083",
+        "snapshots": {
+          "original": {
+            "id": 1083,
+            "name": "Acquisitions Inc Logo",
+            "description": "A decent mock-up.",
+            "graphic_id": 5762,
+            "hero_id": 46,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1083,
+            "name": "艾奎兹玄有限责任公司商标",
+            "description": "像模像样的模型。",
+            "graphic_id": 5762,
+            "hero_id": 46,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1084",
+        "snapshots": {
+          "original": {
+            "id": 1084,
+            "name": "Badge of Acquisition",
+            "description": "New franchises are rare. Or at least they were till someone wrote the rules down!",
+            "graphic_id": 5763,
+            "hero_id": 46,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1084,
+            "name": "艾奎兹玄徽章",
+            "description": "新的连锁店本来是很罕见的，直到有人开始把流程传播开来！",
+            "graphic_id": 5763,
+            "hero_id": 46,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1085",
+        "snapshots": {
+          "original": {
+            "id": 1085,
+            "name": "Worn Pouch",
+            "description": "It's not magic. It uses a squirrel as a courier.",
+            "graphic_id": 5764,
+            "hero_id": 46,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,2386"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1085,
+            "name": "磨损的袋子",
+            "description": "这不是魔法。而是使用了松鼠为信使。",
+            "graphic_id": 5764,
+            "hero_id": 46,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,2386"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1086",
+        "snapshots": {
+          "original": {
+            "id": 1086,
+            "name": "Bag of Documents",
+            "description": "I've got it here somewhere...",
+            "graphic_id": 5764,
+            "hero_id": 46,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,2386"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1086,
+            "name": "公文袋",
+            "description": "我记得有带来的，就放在这里头......",
+            "graphic_id": 5764,
+            "hero_id": 46,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,2386"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1087",
+        "snapshots": {
+          "original": {
+            "id": 1087,
+            "name": "Documancy Satchel",
+            "description": "It's one of the many ways Omin can get ahold of us.",
+            "graphic_id": 5765,
+            "hero_id": 46,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,2386"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1087,
+            "name": "记录术小袋子",
+            "description": "这就是欧敏赖以寻找到我们的诸多方法之一。",
+            "graphic_id": 5765,
+            "hero_id": 46,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,2386"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1088",
+        "snapshots": {
+          "original": {
+            "id": 1088,
+            "name": "Walnut's File Repository",
+            "description": "Do. Not. Touch.",
+            "graphic_id": 5766,
+            "hero_id": 46,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,2386"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1088,
+            "name": "沃纳特的档案库",
+            "description": "不。准。碰。",
+            "graphic_id": 5766,
+            "hero_id": 46,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,2386"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1089",
+        "snapshots": {
+          "original": {
+            "id": 1089,
+            "name": "Quill & Moldy Paper",
+            "description": "It still counts.",
+            "graphic_id": 5767,
+            "hero_id": 46,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,2387"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1089,
+            "name": "鹅毛笔与发霉的纸张",
+            "description": "依然能用。",
+            "graphic_id": 5767,
+            "hero_id": 46,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,2387"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1090",
+        "snapshots": {
+          "original": {
+            "id": 1090,
+            "name": "Dusty Book & Quill Pen",
+            "description": "You use what you have available.",
+            "graphic_id": 5767,
+            "hero_id": 46,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,2387"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1090,
+            "name": "布满灰尘的书籍与鹅毛笔",
+            "description": "有什么就凑合着用吧。",
+            "graphic_id": 5767,
+            "hero_id": 46,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,2387"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1091",
+        "snapshots": {
+          "original": {
+            "id": 1091,
+            "name": "Calligrapher's Supplies",
+            "description": "For when you need to take all the notes.",
+            "graphic_id": 5768,
+            "hero_id": 46,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,2387"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1091,
+            "name": "制图师的补给",
+            "description": "在需要做笔记时用到的。",
+            "graphic_id": 5768,
+            "hero_id": 46,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,2387"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1092",
+        "snapshots": {
+          "original": {
+            "id": 1092,
+            "name": "Notebook of the Documancer",
+            "description": "It was gifted to me by Omin himself.",
+            "graphic_id": 5769,
+            "hero_id": 46,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,2387"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1092,
+            "name": "记录员的笔记本",
+            "description": "这是欧敏亲自馈赠给我的。",
+            "graphic_id": 5769,
+            "hero_id": 46,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,2387"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1093",
+        "snapshots": {
+          "original": {
+            "id": 1093,
+            "name": "Painted Scimitar",
+            "description": "Psssht. If I can forge a document, I can forge a sword.",
+            "graphic_id": 5774,
+            "hero_id": 46,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,2388"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1093,
+            "name": "着色的弯刀",
+            "description": "嘘。既然文件能伪造，那么刀剑也一样可以。",
+            "graphic_id": 5774,
+            "hero_id": 46,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,2388"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1094",
+        "snapshots": {
+          "original": {
+            "id": 1094,
+            "name": "Blade of the Druid",
+            "description": "Light and well balanced. Smells like a trap.",
+            "graphic_id": 5774,
+            "hero_id": 46,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,2388"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1094,
+            "name": "德鲁伊之刃",
+            "description": "轻盈而平衡。感觉像是在形容陷阱。",
+            "graphic_id": 5774,
+            "hero_id": 46,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,2388"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1095",
+        "snapshots": {
+          "original": {
+            "id": 1095,
+            "name": "Walnut's Scimitar",
+            "description": "The tried and true method.",
+            "graphic_id": 5775,
+            "hero_id": 46,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,2388"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1095,
+            "name": "沃纳特的弯刀",
+            "description": "刀不怕老，管用就好。",
+            "graphic_id": 5775,
+            "hero_id": 46,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,2388"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1096",
+        "snapshots": {
+          "original": {
+            "id": 1096,
+            "name": "Foremother",
+            "description": "Now this is a blade your Grove can be proud of!",
+            "graphic_id": 5773,
+            "hero_id": 46,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,2388"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1096,
+            "name": "女祖先",
+            "description": "这才是能让家乡树林为之骄傲的刀刃！",
+            "graphic_id": 5773,
+            "hero_id": 46,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,2388"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1097",
+        "snapshots": {
+          "original": {
+            "id": 1097,
+            "name": "Green Snake",
+            "description": "What? They're lovely!",
+            "graphic_id": 5776,
+            "hero_id": 46,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1097,
+            "name": "绿蛇",
+            "description": "怎么了？它们很可爱呀！",
+            "graphic_id": 5776,
+            "hero_id": 46,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1098",
+        "snapshots": {
+          "original": {
+            "id": 1098,
+            "name": "Slithering Snake",
+            "description": "You'd be surprised how much they know.",
+            "graphic_id": 5776,
+            "hero_id": 46,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1098,
+            "name": "滑行之蛇",
+            "description": "从蛇的身上能学习到很多让你惊讶的经验。",
+            "graphic_id": 5776,
+            "hero_id": 46,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1099",
+        "snapshots": {
+          "original": {
+            "id": 1099,
+            "name": "Content Snake",
+            "description": "You wouldn't like a hangry snake.",
+            "graphic_id": 5777,
+            "hero_id": 46,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1099,
+            "name": "满足的蛇",
+            "description": "最可怕的蛇是饿着肚子的蛇。",
+            "graphic_id": 5777,
+            "hero_id": 46,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1100",
+        "snapshots": {
+          "original": {
+            "id": 1100,
+            "name": "Seizes the Tail",
+            "description": "Break glass only in case of emergency. Seriously.",
+            "graphic_id": 5778,
+            "hero_id": 46,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1100,
+            "name": "抓住尾巴",
+            "description": "只有在紧要关头才可以打破玻璃罐，不开玩笑。",
+            "graphic_id": 5778,
+            "hero_id": 46,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1101",
+        "snapshots": {
+          "original": {
+            "id": 1101,
+            "name": "Worn Note",
+            "description": "I've reread this so many times.",
+            "graphic_id": 5770,
+            "hero_id": 46,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,7"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1101,
+            "name": "陈旧的笔记",
+            "description": "我翻阅过太多遍了。",
+            "graphic_id": 5770,
+            "hero_id": 46,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,7"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1102",
+        "snapshots": {
+          "original": {
+            "id": 1102,
+            "name": "Poem",
+            "description": "I want to seize you as prey is seized",
+            "graphic_id": 5770,
+            "hero_id": 46,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,14"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1102,
+            "name": "诗歌",
+            "description": "我想要抓住猎物那般紧抓住你。",
+            "graphic_id": 5770,
+            "hero_id": 46,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,14"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1103",
+        "snapshots": {
+          "original": {
+            "id": 1103,
+            "name": "Love Letter",
+            "description": "Two animals. My Teeth are on your neck.",
+            "graphic_id": 5771,
+            "hero_id": 46,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,27"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1103,
+            "name": "情书",
+            "description": "两只动物。我的利齿咬着你的脖子。",
+            "graphic_id": 5771,
+            "hero_id": 46,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,27"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1104",
+        "snapshots": {
+          "original": {
+            "id": 1104,
+            "name": "Certificate of Undying Love",
+            "description": "Brahma's the only one that can co-sign.",
+            "graphic_id": 5772,
+            "hero_id": 46,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,68"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1104,
+            "name": "至死不渝之证",
+            "description": "焚天是唯一可以连署保证的人。",
+            "graphic_id": 5772,
+            "hero_id": 46,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,68"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3",
+        "snapshots": {
+          "original": {
+            "id": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Female Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "使所有女性勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "7",
+        "snapshots": {
+          "original": {
+            "id": 7,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "elf"
+                  }
+                ],
+                "description": "Increases the damage of all Elf Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 7,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "elf"
+                  }
+                ],
+                "description": "使所有精灵勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "33",
+        "snapshots": {
+          "original": {
+            "id": 33,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "dex",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a DEX score of 15 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 33,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "dex",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有敏捷大于等于 15 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "35",
+        "snapshots": {
+          "original": {
+            "id": 35,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a CON score of 13 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 35,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有体质大于等于 13 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "51",
+        "snapshots": {
+          "original": {
+            "id": 51,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "lawful"
+                  }
+                ],
+                "description": "Increases the damage of all Lawful Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 51,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "lawful"
+                  }
+                ],
+                "description": "使所有守序阵营勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

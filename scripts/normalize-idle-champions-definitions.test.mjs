@@ -24,6 +24,7 @@ test('normalizeDefinitionsSnapshot 输出官方原文和中文展示双字段', 
   const champions = await readJson(path.join(outputDir, 'champions.json'))
   const variants = await readJson(path.join(outputDir, 'variants.json'))
   const enums = await readJson(path.join(outputDir, 'enums.json'))
+  const bruenorDetail = await readJson(path.join(outputDir, 'champion-details', '1.json'))
   const version = await readJson(versionFile)
 
   assert.deepEqual(champions.items[0].name, {
@@ -40,6 +41,72 @@ test('normalizeDefinitionsSnapshot 输出官方原文和中文展示双字段', 
       display: '秘银五侠',
     },
   ])
+  assert.deepEqual(bruenorDetail.loot, [
+    {
+      id: '1001',
+      name: {
+        original: 'Simple Shield',
+        display: '简单盾牌',
+      },
+      description: {
+        original: 'A steady shield for testing.',
+        display: '用于测试的稳固盾牌。',
+      },
+      graphicId: '2001',
+      slotId: 1,
+      rarity: '3',
+      effects: [
+        {
+          effect_string: 'hero_dps_multiplier_mult,100',
+        },
+      ],
+      allowGoldenEpic: true,
+      isGoldenEpic: false,
+    },
+    {
+      id: '1002',
+      name: {
+        original: 'Golden Shield',
+        display: '黄金盾牌',
+      },
+      description: {
+        original: 'A golden shield for testing.',
+        display: '用于测试的黄金盾牌。',
+      },
+      graphicId: '2002',
+      slotId: 1,
+      rarity: '4',
+      effects: [
+        {
+          effect_string: 'hero_dps_multiplier_mult,200',
+        },
+      ],
+      allowGoldenEpic: true,
+      isGoldenEpic: true,
+    },
+  ])
+  assert.deepEqual(bruenorDetail.legendaryEffects, [
+    {
+      id: '501',
+      slotId: 1,
+      effects: [
+        {
+          effect_string: 'increase_global_dps_mult,100',
+        },
+      ],
+    },
+    {
+      id: '502',
+      slotId: 2,
+      effects: [
+        {
+          effect_string: 'increase_health_mult,50',
+        },
+      ],
+    },
+  ])
+  assert.equal(bruenorDetail.raw.loot.length, 2)
+  assert.equal(bruenorDetail.raw.legendaryEffects.length, 2)
 
   assert.deepEqual(variants.items[0].name, {
     original: 'A Test Variant',

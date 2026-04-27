@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "104",
     "name": {
@@ -42,7 +42,7 @@
   },
   "dateAvailable": "2022-08-10 00:00:00",
   "lastReworkDate": "2024-10-09 12:00:00",
-  "popularity": 76,
+  "popularity": 80,
   "baseCost": "10",
   "baseDamage": "6",
   "baseHealth": "37",
@@ -3533,6 +3533,632 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "2425",
+      "name": {
+        "original": "Old Friend's Calling Card",
+        "display": "老朋友的名片"
+      },
+      "description": {
+        "original": "Van Richten may be a fearsome hunter, but he's also a kindly soul.",
+        "display": "范·里希顿也许是个可怕的猎人，但他也是个善良的灵魂。"
+      },
+      "graphicId": "15506",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2426",
+      "name": {
+        "original": "Van Richten's Reminder",
+        "display": "范·里希顿的提醒"
+      },
+      "description": {
+        "original": "Ah, for the time to sip tea with an old friend!",
+        "display": "啊，是时候和一位老朋友喝茶了！"
+      },
+      "graphicId": "15506",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2427",
+      "name": {
+        "original": "The Courtesy of a Greater Host",
+        "display": "伟大主人的礼遇"
+      },
+      "description": {
+        "original": "Drink, Strahd. I already know why you're here.",
+        "display": "喝吧，斯特拉德。我已经知道你为什么来这里了。"
+      },
+      "graphicId": "15507",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2428",
+      "name": {
+        "original": "Unassuming Reliquary",
+        "display": "朴素的圣物箱"
+      },
+      "description": {
+        "original": "Dear Azalin, this was never meant to be yours.",
+        "display": "亲爱的亚扎林，这本不该是你的。"
+      },
+      "graphicId": "15508",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "2429",
+      "name": {
+        "original": "Letter of Love",
+        "display": "情书"
+      },
+      "description": {
+        "original": "Desmond and I have known each other since we were children.",
+        "display": "戴斯蒙德和我从小就认识了。"
+      },
+      "graphicId": "15503",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,15630"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2430",
+      "name": {
+        "original": "Secret Promises",
+        "display": "秘密承诺"
+      },
+      "description": {
+        "original": "Marriage is an alliance of goals. But love is a splendid garden.",
+        "display": "婚姻是目标的联合。但爱情是一座美丽的花园。"
+      },
+      "graphicId": "15503",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,15630"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2431",
+      "name": {
+        "original": "Record of a Broken Heart",
+        "display": "心碎记录"
+      },
+      "description": {
+        "original": "When Desmond fled the crown, he fled me as well. Securing Koshmarr is up to me.",
+        "display": "戴斯蒙德逃离王室的时候，他也逃离了我。保护科什马尔的职责落到我的头上。"
+      },
+      "graphicId": "15504",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,15630"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2432",
+      "name": {
+        "original": "Failsafe Cocktail",
+        "display": "失败保险鸡尾酒"
+      },
+      "description": {
+        "original": "I love him too well to let him be a problem. A little wolfsbane keeps the beast at bay.",
+        "display": "我太爱他了，不会让他成为问题。一点点狼毒花就可以阻挡兽类。"
+      },
+      "graphicId": "15505",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,15630"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2433",
+      "name": {
+        "original": "Bridal Circlet",
+        "display": "新娘头环"
+      },
+      "description": {
+        "original": "This wedding cements so many years of planning.",
+        "display": "这场婚礼凝聚了多年的计划。"
+      },
+      "graphicId": "15500",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,15631"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2434",
+      "name": {
+        "original": "Wreath of Spring",
+        "display": "春日花环"
+      },
+      "description": {
+        "original": "After I wed Armand, I will be Queen of Koshmarr.",
+        "display": "嫁给阿曼德之后，我将成为科什马尔的皇后。"
+      },
+      "graphicId": "15500",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,15631"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2435",
+      "name": {
+        "original": "Ghost Tiara",
+        "display": "幽灵头冠"
+      },
+      "description": {
+        "original": "Death is only an obstacle to be defeated when you are as determined as I am.",
+        "display": "当你和我一样坚定不移的时候，死亡只是一个需要克服的障碍。"
+      },
+      "graphicId": "15501",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,15631"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2436",
+      "name": {
+        "original": "Darklord's Crown",
+        "display": "黑暗领主的王冠"
+      },
+      "description": {
+        "original": "Koshmarr will be secure under my rule. Forever.",
+        "display": "在我的统治下，科什马尔将安全无虞。永不改变。"
+      },
+      "graphicId": "15502",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,15631"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2437",
+      "name": {
+        "original": "Chair of Authority",
+        "display": "权威之椅"
+      },
+      "description": {
+        "original": "One day, this will be mine.",
+        "display": "总有一天，它将属于我。"
+      },
+      "graphicId": "15515",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,15634"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2438",
+      "name": {
+        "original": "Seat of Royalty",
+        "display": "皇室座椅"
+      },
+      "description": {
+        "original": "I'll hardly have time to sit down, as much as I do around here.",
+        "display": "需要做的事情太多，我几乎没有时间坐下来。"
+      },
+      "graphicId": "15515",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,15634"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2439",
+      "name": {
+        "original": "Queen's Throne",
+        "display": "女王宝座"
+      },
+      "description": {
+        "original": "I will take Koshmarr in hand and make it what it's truly meant to be.",
+        "display": "我将掌控科什马尔，并让它焕发真正的光彩。"
+      },
+      "graphicId": "15516",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,15634"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2440",
+      "name": {
+        "original": "Throne of the Dread Domain",
+        "display": "恐惧王国宝座"
+      },
+      "description": {
+        "original": "I am Koshmarr.",
+        "display": "我就是科什马尔。"
+      },
+      "graphicId": "15517",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,15634"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2441",
+      "name": {
+        "original": "Poisonous Blossoms",
+        "display": "剧毒花朵"
+      },
+      "description": {
+        "original": "Wolfsbane in large doses causes instantaneous death.",
+        "display": "大剂量的狼毒花可以瞬间致死。"
+      },
+      "graphicId": "15509",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,15633"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2442",
+      "name": {
+        "original": "Wolfsbane Cutting",
+        "display": "狼毒花枝"
+      },
+      "description": {
+        "original": "Do you feel your fingers tingling? These delicate flowers are more than they seem.",
+        "display": "你觉得手指刺痛吗？这些娇嫩的花可比看起来要厉害。"
+      },
+      "graphicId": "15509",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,15633"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2443",
+      "name": {
+        "original": "Belladonna Sprig",
+        "display": "颠茄小枝"
+      },
+      "description": {
+        "original": "Every part of the deadly nightshade brims with poison.",
+        "display": "这种致命的茄属植物每一部分都充满剧毒。"
+      },
+      "graphicId": "15510",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,15633"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2444",
+      "name": {
+        "original": "Deadly Oleander",
+        "display": "致命夹竹桃"
+      },
+      "description": {
+        "original": "Such lovely blooms, such bitter poison.",
+        "display": "花朵如此可爱，毒性如此强烈。"
+      },
+      "graphicId": "15511",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,15633"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2445",
+      "name": {
+        "original": "Delicate Bloom",
+        "display": "娇嫩花朵"
+      },
+      "description": {
+        "original": "This lovely rose is the symbol of our land.",
+        "display": "这朵漂亮的玫瑰是我们领地的象征。"
+      },
+      "graphicId": "15512",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,4"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2446",
+      "name": {
+        "original": "Rose of Koshmarr",
+        "display": "科什马尔玫瑰"
+      },
+      "description": {
+        "original": "The fresh rose is delicate, but also thorny.",
+        "display": "新鲜的玫瑰非常娇艳，但也有刺。"
+      },
+      "graphicId": "15512",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,8"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2447",
+      "name": {
+        "original": "Withered Blossom",
+        "display": "枯萎花朵"
+      },
+      "description": {
+        "original": "Sometimes you must prune away what is weak.",
+        "display": "有时你必须把虚弱的部分修剪掉。"
+      },
+      "graphicId": "15513",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,15"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2448",
+      "name": {
+        "original": "A Rose By Any Other Name",
+        "display": "任意其他名字的玫瑰"
+      },
+      "description": {
+        "original": "Koshmarr rises again and I will crush any who try to take it.",
+        "display": "科什马尔再度崛起，我将粉碎任何试图抢夺它的人。"
+      },
+      "graphicId": "15514",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,38"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "55",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "male"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Male Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "60",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,45",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "elf"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Elf Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "36",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "con",
+              "score": 15,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a CON score of 15 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "43",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "cha",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a CHA score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "101",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,30",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "attack_type",
+              "attack": "magic"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Magic Champion in the formation"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3694,7 +4320,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 76,
+        "popularity": 80,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3895,7 +4521,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 76,
+        "popularity": 80,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -8355,6 +8981,1136 @@
             "availabilities": {
               "in_flash_sales": true
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "2425",
+        "snapshots": {
+          "original": {
+            "id": 2425,
+            "name": "Old Friend's Calling Card",
+            "description": "Van Richten may be a fearsome hunter, but he's also a kindly soul.",
+            "graphic_id": 15506,
+            "hero_id": 104,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2425,
+            "name": "老朋友的名片",
+            "description": "范·里希顿也许是个可怕的猎人，但他也是个善良的灵魂。",
+            "graphic_id": 15506,
+            "hero_id": 104,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2426",
+        "snapshots": {
+          "original": {
+            "id": 2426,
+            "name": "Van Richten's Reminder",
+            "description": "Ah, for the time to sip tea with an old friend!",
+            "graphic_id": 15506,
+            "hero_id": 104,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2426,
+            "name": "范·里希顿的提醒",
+            "description": "啊，是时候和一位老朋友喝茶了！",
+            "graphic_id": 15506,
+            "hero_id": 104,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2427",
+        "snapshots": {
+          "original": {
+            "id": 2427,
+            "name": "The Courtesy of a Greater Host",
+            "description": "Drink, Strahd. I already know why you're here.",
+            "graphic_id": 15507,
+            "hero_id": 104,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2427,
+            "name": "伟大主人的礼遇",
+            "description": "喝吧，斯特拉德。我已经知道你为什么来这里了。",
+            "graphic_id": 15507,
+            "hero_id": 104,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2428",
+        "snapshots": {
+          "original": {
+            "id": 2428,
+            "name": "Unassuming Reliquary",
+            "description": "Dear Azalin, this was never meant to be yours.",
+            "graphic_id": 15508,
+            "hero_id": 104,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2428,
+            "name": "朴素的圣物箱",
+            "description": "亲爱的亚扎林，这本不该是你的。",
+            "graphic_id": 15508,
+            "hero_id": 104,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2429",
+        "snapshots": {
+          "original": {
+            "id": 2429,
+            "name": "Letter of Love",
+            "description": "Desmond and I have known each other since we were children.",
+            "graphic_id": 15503,
+            "hero_id": 104,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15630"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2429,
+            "name": "情书",
+            "description": "戴斯蒙德和我从小就认识了。",
+            "graphic_id": 15503,
+            "hero_id": 104,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15630"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2430",
+        "snapshots": {
+          "original": {
+            "id": 2430,
+            "name": "Secret Promises",
+            "description": "Marriage is an alliance of goals. But love is a splendid garden.",
+            "graphic_id": 15503,
+            "hero_id": 104,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15630"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2430,
+            "name": "秘密承诺",
+            "description": "婚姻是目标的联合。但爱情是一座美丽的花园。",
+            "graphic_id": 15503,
+            "hero_id": 104,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15630"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2431",
+        "snapshots": {
+          "original": {
+            "id": 2431,
+            "name": "Record of a Broken Heart",
+            "description": "When Desmond fled the crown, he fled me as well. Securing Koshmarr is up to me.",
+            "graphic_id": 15504,
+            "hero_id": 104,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15630"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2431,
+            "name": "心碎记录",
+            "description": "戴斯蒙德逃离王室的时候，他也逃离了我。保护科什马尔的职责落到我的头上。",
+            "graphic_id": 15504,
+            "hero_id": 104,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15630"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2432",
+        "snapshots": {
+          "original": {
+            "id": 2432,
+            "name": "Failsafe Cocktail",
+            "description": "I love him too well to let him be a problem. A little wolfsbane keeps the beast at bay.",
+            "graphic_id": 15505,
+            "hero_id": 104,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15630"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2432,
+            "name": "失败保险鸡尾酒",
+            "description": "我太爱他了，不会让他成为问题。一点点狼毒花就可以阻挡兽类。",
+            "graphic_id": 15505,
+            "hero_id": 104,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15630"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2433",
+        "snapshots": {
+          "original": {
+            "id": 2433,
+            "name": "Bridal Circlet",
+            "description": "This wedding cements so many years of planning.",
+            "graphic_id": 15500,
+            "hero_id": 104,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15631"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2433,
+            "name": "新娘头环",
+            "description": "这场婚礼凝聚了多年的计划。",
+            "graphic_id": 15500,
+            "hero_id": 104,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15631"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2434",
+        "snapshots": {
+          "original": {
+            "id": 2434,
+            "name": "Wreath of Spring",
+            "description": "After I wed Armand, I will be Queen of Koshmarr.",
+            "graphic_id": 15500,
+            "hero_id": 104,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15631"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2434,
+            "name": "春日花环",
+            "description": "嫁给阿曼德之后，我将成为科什马尔的皇后。",
+            "graphic_id": 15500,
+            "hero_id": 104,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15631"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2435",
+        "snapshots": {
+          "original": {
+            "id": 2435,
+            "name": "Ghost Tiara",
+            "description": "Death is only an obstacle to be defeated when you are as determined as I am.",
+            "graphic_id": 15501,
+            "hero_id": 104,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15631"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2435,
+            "name": "幽灵头冠",
+            "description": "当你和我一样坚定不移的时候，死亡只是一个需要克服的障碍。",
+            "graphic_id": 15501,
+            "hero_id": 104,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15631"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2436",
+        "snapshots": {
+          "original": {
+            "id": 2436,
+            "name": "Darklord's Crown",
+            "description": "Koshmarr will be secure under my rule. Forever.",
+            "graphic_id": 15502,
+            "hero_id": 104,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15631"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2436,
+            "name": "黑暗领主的王冠",
+            "description": "在我的统治下，科什马尔将安全无虞。永不改变。",
+            "graphic_id": 15502,
+            "hero_id": 104,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15631"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2437",
+        "snapshots": {
+          "original": {
+            "id": 2437,
+            "name": "Chair of Authority",
+            "description": "One day, this will be mine.",
+            "graphic_id": 15515,
+            "hero_id": 104,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15634"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2437,
+            "name": "权威之椅",
+            "description": "总有一天，它将属于我。",
+            "graphic_id": 15515,
+            "hero_id": 104,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15634"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2438",
+        "snapshots": {
+          "original": {
+            "id": 2438,
+            "name": "Seat of Royalty",
+            "description": "I'll hardly have time to sit down, as much as I do around here.",
+            "graphic_id": 15515,
+            "hero_id": 104,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15634"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2438,
+            "name": "皇室座椅",
+            "description": "需要做的事情太多，我几乎没有时间坐下来。",
+            "graphic_id": 15515,
+            "hero_id": 104,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15634"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2439",
+        "snapshots": {
+          "original": {
+            "id": 2439,
+            "name": "Queen's Throne",
+            "description": "I will take Koshmarr in hand and make it what it's truly meant to be.",
+            "graphic_id": 15516,
+            "hero_id": 104,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15634"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2439,
+            "name": "女王宝座",
+            "description": "我将掌控科什马尔，并让它焕发真正的光彩。",
+            "graphic_id": 15516,
+            "hero_id": 104,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15634"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2440",
+        "snapshots": {
+          "original": {
+            "id": 2440,
+            "name": "Throne of the Dread Domain",
+            "description": "I am Koshmarr.",
+            "graphic_id": 15517,
+            "hero_id": 104,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15634"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2440,
+            "name": "恐惧王国宝座",
+            "description": "我就是科什马尔。",
+            "graphic_id": 15517,
+            "hero_id": 104,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15634"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2441",
+        "snapshots": {
+          "original": {
+            "id": 2441,
+            "name": "Poisonous Blossoms",
+            "description": "Wolfsbane in large doses causes instantaneous death.",
+            "graphic_id": 15509,
+            "hero_id": 104,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15633"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2441,
+            "name": "剧毒花朵",
+            "description": "大剂量的狼毒花可以瞬间致死。",
+            "graphic_id": 15509,
+            "hero_id": 104,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15633"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2442",
+        "snapshots": {
+          "original": {
+            "id": 2442,
+            "name": "Wolfsbane Cutting",
+            "description": "Do you feel your fingers tingling? These delicate flowers are more than they seem.",
+            "graphic_id": 15509,
+            "hero_id": 104,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15633"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2442,
+            "name": "狼毒花枝",
+            "description": "你觉得手指刺痛吗？这些娇嫩的花可比看起来要厉害。",
+            "graphic_id": 15509,
+            "hero_id": 104,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15633"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2443",
+        "snapshots": {
+          "original": {
+            "id": 2443,
+            "name": "Belladonna Sprig",
+            "description": "Every part of the deadly nightshade brims with poison.",
+            "graphic_id": 15510,
+            "hero_id": 104,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15633"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2443,
+            "name": "颠茄小枝",
+            "description": "这种致命的茄属植物每一部分都充满剧毒。",
+            "graphic_id": 15510,
+            "hero_id": 104,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15633"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2444",
+        "snapshots": {
+          "original": {
+            "id": 2444,
+            "name": "Deadly Oleander",
+            "description": "Such lovely blooms, such bitter poison.",
+            "graphic_id": 15511,
+            "hero_id": 104,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15633"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2444,
+            "name": "致命夹竹桃",
+            "description": "花朵如此可爱，毒性如此强烈。",
+            "graphic_id": 15511,
+            "hero_id": 104,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15633"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2445",
+        "snapshots": {
+          "original": {
+            "id": 2445,
+            "name": "Delicate Bloom",
+            "description": "This lovely rose is the symbol of our land.",
+            "graphic_id": 15512,
+            "hero_id": 104,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,4"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2445,
+            "name": "娇嫩花朵",
+            "description": "这朵漂亮的玫瑰是我们领地的象征。",
+            "graphic_id": 15512,
+            "hero_id": 104,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,4"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2446",
+        "snapshots": {
+          "original": {
+            "id": 2446,
+            "name": "Rose of Koshmarr",
+            "description": "The fresh rose is delicate, but also thorny.",
+            "graphic_id": 15512,
+            "hero_id": 104,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,8"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2446,
+            "name": "科什马尔玫瑰",
+            "description": "新鲜的玫瑰非常娇艳，但也有刺。",
+            "graphic_id": 15512,
+            "hero_id": 104,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,8"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2447",
+        "snapshots": {
+          "original": {
+            "id": 2447,
+            "name": "Withered Blossom",
+            "description": "Sometimes you must prune away what is weak.",
+            "graphic_id": 15513,
+            "hero_id": 104,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,15"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2447,
+            "name": "枯萎花朵",
+            "description": "有时你必须把虚弱的部分修剪掉。",
+            "graphic_id": 15513,
+            "hero_id": 104,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,15"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2448",
+        "snapshots": {
+          "original": {
+            "id": 2448,
+            "name": "A Rose By Any Other Name",
+            "description": "Koshmarr rises again and I will crush any who try to take it.",
+            "graphic_id": 15514,
+            "hero_id": 104,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,38"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2448,
+            "name": "任意其他名字的玫瑰",
+            "description": "科什马尔再度崛起，我将粉碎任何试图抢夺它的人。",
+            "graphic_id": 15514,
+            "hero_id": 104,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,38"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "55",
+        "snapshots": {
+          "original": {
+            "id": 55,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Male Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 55,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "阵型中每有一位男性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "60",
+        "snapshots": {
+          "original": {
+            "id": 60,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,45",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "elf"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Elf Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 60,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,45",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "elf"
+                  }
+                ],
+                "description": "阵型中每有一位精灵勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "36",
+        "snapshots": {
+          "original": {
+            "id": 36,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a CON score of 15 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 36,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有体质大于等于 15 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "43",
+        "snapshots": {
+          "original": {
+            "id": 43,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "cha",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a CHA score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 43,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "cha",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有魅力大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "101",
+        "snapshots": {
+          "original": {
+            "id": 101,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "attack_type",
+                    "attack": "magic"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Magic Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 101,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "attack_type",
+                    "attack": "magic"
+                  }
+                ],
+                "description": "阵型中每有一位魔法勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

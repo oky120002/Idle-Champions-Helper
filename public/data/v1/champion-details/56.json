@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "56",
     "name": {
@@ -46,7 +46,7 @@
   },
   "dateAvailable": "2020-01-29 00:00:00",
   "lastReworkDate": "2025-11-12 13:00:00",
-  "popularity": 8,
+  "popularity": 9,
   "baseCost": "350000000000000",
   "baseDamage": "2000000000",
   "baseHealth": "197",
@@ -3876,6 +3876,636 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "1321",
+      "name": {
+        "original": "Lost Pup",
+        "display": "走失的小狗"
+      },
+      "description": {
+        "original": "This is a hellhound? She's too cute to be scary!",
+        "display": "这是地狱犬吗？太可爱了一点都不吓人！"
+      },
+      "graphicId": "7149",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,25,18043,18044,18045",
+          "description": "Increases the effect of Havilar's specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1322",
+      "name": {
+        "original": "Loyal Hellhound",
+        "display": "忠诚的地狱犬"
+      },
+      "description": {
+        "original": "Zoonie! Imps are not chew toys! I don't care if it squeaks when you bite it!",
+        "display": "祖尼！小魔鬼不是让你啃咬的玩具！我不管它被你咬的时候是否发出了唧唧声。"
+      },
+      "graphicId": "7149",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,87.5,18043,18044,18045",
+          "description": "Increases the effect of Havilar's specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1323",
+      "name": {
+        "original": "Warhound Mount",
+        "display": "战犬坐骑"
+      },
+      "description": {
+        "original": "All right, I'm on. Let's go for a run--NO! STOP CHASING THAT OWLBEAR!",
+        "display": "好，我坐上来了。准备好--停！别去追那头枭熊。"
+      },
+      "graphicId": "7150",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,150,18043,18044,18045",
+          "description": "Increases the effect of Havilar's specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1324",
+      "name": {
+        "original": "Azounarella the Devourer",
+        "display": "吞噬者阿佐娜瑞拉"
+      },
+      "description": {
+        "original": "...You know what, Zoonie? You can eat as many gnolls as you can catch. Get 'em!",
+        "display": "......祖尼，我告诉你哦？你抓到多少豺狼人都归你吃。去吧！"
+      },
+      "graphicId": "7151",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,275,18043,18044,18045",
+          "description": "Increases the effect of Havilar's specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "1325",
+      "name": {
+        "original": "Justice",
+        "display": "正义"
+      },
+      "description": {
+        "original": "...I don't think this name strikes FEAR into my enemies.",
+        "display": "......这个名字似乎并不太震慑人。"
+      },
+      "graphicId": "7139",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,18038"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1326",
+      "name": {
+        "original": "Kidney Carver",
+        "display": "肾脏雕刻者"
+      },
+      "description": {
+        "original": "Mehen says my glaive doesn't need a name, I need to watch my stance. DISAGREE!",
+        "display": "梅亨说我的阔剑不需要什么名字，反而是我需要多加练习。我不同意！"
+      },
+      "graphicId": "7139",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,18038"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1327",
+      "name": {
+        "original": "Eater of Her Enemies' Livers",
+        "display": "敌人肝脏吞噬者"
+      },
+      "description": {
+        "original": "Bonus points if you can find the liver on a hezrou when I'm finished!",
+        "display": "等我完成后你要是能在狂战魔身上找到肝脏就算你赢！"
+      },
+      "graphicId": "7140",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,18038"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1328",
+      "name": {
+        "original": "Devil Slayer",
+        "display": "魔鬼克星"
+      },
+      "description": {
+        "original": "That's right! Watch out, Nine Hells!",
+        "display": "没错！九层地狱，你给我小心点吧！"
+      },
+      "graphicId": "7141",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,18038"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1329",
+      "name": {
+        "original": "Commoner's Dress",
+        "display": "平民的连衣裙"
+      },
+      "description": {
+        "original": "I look anything but common in this.",
+        "display": "穿着它我一点都不平凡。"
+      },
+      "graphicId": "7136",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "health_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1330",
+      "name": {
+        "original": "Festive Wear",
+        "display": "节庆服饰"
+      },
+      "description": {
+        "original": "I asked the seamstress to add a slit in it, just in case combat breaks out.",
+        "display": "我让女裁缝特别留了一个切口，以防万一面对战斗。"
+      },
+      "graphicId": "7136",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "health_mult,30"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1331",
+      "name": {
+        "original": "Undercover Ball Gown",
+        "display": "奸细舞会礼服"
+      },
+      "description": {
+        "original": "Two long sleeves, two halves of a glaive. It's perfect! As long as I don't move much.",
+        "display": "两个长袖，各寸半段阔剑。完美！只要行走时不要有太大的动作就行。"
+      },
+      "graphicId": "7137",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "health_mult,50"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1332",
+      "name": {
+        "original": "The Fanciest Dress",
+        "display": "最时髦的连衣裙"
+      },
+      "description": {
+        "original": "Hey, I worked for this. And it is WORKING for me!",
+        "display": "哇，这是我努力工作得来的。现在轮到它来效劳我了！"
+      },
+      "graphicId": "7138",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "health_mult,100"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1333",
+      "name": {
+        "original": "Dembo",
+        "display": "登博"
+      },
+      "description": {
+        "original": "'You order, we act. That's the deal.'",
+        "display": "“你指挥，我们动手。交易就是这样简单。”"
+      },
+      "graphicId": "7142",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,18036"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1334",
+      "name": {
+        "original": "Olla",
+        "display": "奥拉"
+      },
+      "description": {
+        "original": "'When your economy becomes this inflated, you have to reset. That's the rule.'",
+        "display": "“当通货膨胀到这种地步时，就要重置。规则就是如此。”"
+      },
+      "graphicId": "7143",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,18036"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1335",
+      "name": {
+        "original": "Bosh",
+        "display": "波什"
+      },
+      "description": {
+        "original": "'Don't turn around! The world doesn't exist behind you!'",
+        "display": "“别转过头！你就是世界的尽头！”"
+      },
+      "graphicId": "7144",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,18036"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1336",
+      "name": {
+        "original": "Mot",
+        "display": "莫特"
+      },
+      "description": {
+        "original": "'Lady, I'm mostly sure you're not supposed to be doing this!'",
+        "display": "“女士，我很确定你不能这样子做的！”"
+      },
+      "graphicId": "7145",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,18036"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1337",
+      "name": {
+        "original": "Leftover Ribbon",
+        "display": "遗留的丝带"
+      },
+      "description": {
+        "original": "Farideh, hold still--I want to see how this would look on me.",
+        "display": "法莉德你别动--我想自己试用下看看效果。"
+      },
+      "graphicId": "7146",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,18037"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1338",
+      "name": {
+        "original": "Glaive Decorations",
+        "display": "阔剑装饰品"
+      },
+      "description": {
+        "original": "The ribbon makes it slash faster--that does so make sense, Farideh!",
+        "display": "丝带能让阔剑劈砍得更迅速--很有道理是不是，法莉德！"
+      },
+      "graphicId": "7146",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,18037"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1339",
+      "name": {
+        "original": "Elegant Ribbon",
+        "display": "优雅的丝带"
+      },
+      "description": {
+        "original": "If someone grabs me by the ribbon, worrywart, I'll chop their hands off.",
+        "display": "有谁敢碰我的丝带的话，我就砍掉对方的双手。"
+      },
+      "graphicId": "7147",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,18037"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1340",
+      "name": {
+        "original": "Embroidered Ribbon",
+        "display": "绣花丝带"
+      },
+      "description": {
+        "original": "For your information, bossyboots, the pattern hides the dried monster brains.",
+        "display": "我跟你说吧，这图案掩盖着干涸的怪物脑袋。"
+      },
+      "graphicId": "7148",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,18037"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1341",
+      "name": {
+        "original": "Worn Chapbook",
+        "display": "陈旧的故事书"
+      },
+      "description": {
+        "original": "Brin and I have read this to each other about a hundred times.",
+        "display": "布兰和我曾经互相朗诵此书上百遍。"
+      },
+      "graphicId": "7133",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,25"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1342",
+      "name": {
+        "original": "The Giantess's Curse",
+        "display": "女巨人的诅咒"
+      },
+      "description": {
+        "original": "Little did she know, the curse was true love. And also beholders.",
+        "display": "但她不知道的是，该诅咒是真爱。也是旁观者。"
+      },
+      "graphicId": "7133",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,87.5"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1343",
+      "name": {
+        "original": "The Secrets of the Obarskyrs",
+        "display": "欧巴斯奇家族的秘密"
+      },
+      "description": {
+        "original": "I love Brin, but his family is crazy. But also crazy entertaining.",
+        "display": "我很爱布兰，但是他的家人都是疯子。都玩得很疯。"
+      },
+      "graphicId": "7134",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,150"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1344",
+      "name": {
+        "original": "The Lonely Widow",
+        "display": "孤独的寡妇"
+      },
+      "description": {
+        "original": "For best experience, get Brin to do the lonely widow's voice! Hilarious!",
+        "display": "要想得到最佳的体验，就让布兰配音孤独寡妇的角色吧！很好笑的！"
+      },
+      "graphicId": "7135",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,275"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "54",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "55",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "male"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Male Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "tiefling"
+            }
+          ],
+          "description": "Increases the damage of all Tiefling Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "34",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "con",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a CON score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "32",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "dex",
+              "score": 13,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a DEX score of 13 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "102",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "good"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a GOOD alignment"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -4085,7 +4715,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 8,
+        "popularity": 9,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -4334,7 +4964,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 8,
+        "popularity": 9,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -9346,6 +9976,1112 @@
                 }
               ]
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "1321",
+        "snapshots": {
+          "original": {
+            "id": 1321,
+            "name": "Lost Pup",
+            "description": "This is a hellhound? She's too cute to be scary!",
+            "graphic_id": 7149,
+            "hero_id": 56,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,18043,18044,18045",
+                "description": "Increases the effect of Havilar's specializations by $amount%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1321,
+            "name": "走失的小狗",
+            "description": "这是地狱犬吗？太可爱了一点都不吓人！",
+            "graphic_id": 7149,
+            "hero_id": 56,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,18043,18044,18045",
+                "description": "使哈维拉的专精效果提高 $amount%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1322",
+        "snapshots": {
+          "original": {
+            "id": 1322,
+            "name": "Loyal Hellhound",
+            "description": "Zoonie! Imps are not chew toys! I don't care if it squeaks when you bite it!",
+            "graphic_id": 7149,
+            "hero_id": 56,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,18043,18044,18045",
+                "description": "Increases the effect of Havilar's specializations by $amount%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1322,
+            "name": "忠诚的地狱犬",
+            "description": "祖尼！小魔鬼不是让你啃咬的玩具！我不管它被你咬的时候是否发出了唧唧声。",
+            "graphic_id": 7149,
+            "hero_id": 56,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,18043,18044,18045",
+                "description": "使哈维拉的专精效果提高 $amount%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1323",
+        "snapshots": {
+          "original": {
+            "id": 1323,
+            "name": "Warhound Mount",
+            "description": "All right, I'm on. Let's go for a run--NO! STOP CHASING THAT OWLBEAR!",
+            "graphic_id": 7150,
+            "hero_id": 56,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,18043,18044,18045",
+                "description": "Increases the effect of Havilar's specializations by $amount%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1323,
+            "name": "战犬坐骑",
+            "description": "好，我坐上来了。准备好--停！别去追那头枭熊。",
+            "graphic_id": 7150,
+            "hero_id": 56,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,18043,18044,18045",
+                "description": "使哈维拉的专精效果提高 $amount%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1324",
+        "snapshots": {
+          "original": {
+            "id": 1324,
+            "name": "Azounarella the Devourer",
+            "description": "...You know what, Zoonie? You can eat as many gnolls as you can catch. Get 'em!",
+            "graphic_id": 7151,
+            "hero_id": 56,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,18043,18044,18045",
+                "description": "Increases the effect of Havilar's specializations by $amount%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1324,
+            "name": "吞噬者阿佐娜瑞拉",
+            "description": "......祖尼，我告诉你哦？你抓到多少豺狼人都归你吃。去吧！",
+            "graphic_id": 7151,
+            "hero_id": 56,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,18043,18044,18045",
+                "description": "使哈维拉的专精效果提高 $amount%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1325",
+        "snapshots": {
+          "original": {
+            "id": 1325,
+            "name": "Justice",
+            "description": "...I don't think this name strikes FEAR into my enemies.",
+            "graphic_id": 7139,
+            "hero_id": 56,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,18038"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1325,
+            "name": "正义",
+            "description": "......这个名字似乎并不太震慑人。",
+            "graphic_id": 7139,
+            "hero_id": 56,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,18038"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1326",
+        "snapshots": {
+          "original": {
+            "id": 1326,
+            "name": "Kidney Carver",
+            "description": "Mehen says my glaive doesn't need a name, I need to watch my stance. DISAGREE!",
+            "graphic_id": 7139,
+            "hero_id": 56,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,18038"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1326,
+            "name": "肾脏雕刻者",
+            "description": "梅亨说我的阔剑不需要什么名字，反而是我需要多加练习。我不同意！",
+            "graphic_id": 7139,
+            "hero_id": 56,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,18038"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1327",
+        "snapshots": {
+          "original": {
+            "id": 1327,
+            "name": "Eater of Her Enemies' Livers",
+            "description": "Bonus points if you can find the liver on a hezrou when I'm finished!",
+            "graphic_id": 7140,
+            "hero_id": 56,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,18038"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1327,
+            "name": "敌人肝脏吞噬者",
+            "description": "等我完成后你要是能在狂战魔身上找到肝脏就算你赢！",
+            "graphic_id": 7140,
+            "hero_id": 56,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,18038"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1328",
+        "snapshots": {
+          "original": {
+            "id": 1328,
+            "name": "Devil Slayer",
+            "description": "That's right! Watch out, Nine Hells!",
+            "graphic_id": 7141,
+            "hero_id": 56,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,18038"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1328,
+            "name": "魔鬼克星",
+            "description": "没错！九层地狱，你给我小心点吧！",
+            "graphic_id": 7141,
+            "hero_id": 56,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,18038"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1329",
+        "snapshots": {
+          "original": {
+            "id": 1329,
+            "name": "Commoner's Dress",
+            "description": "I look anything but common in this.",
+            "graphic_id": 7136,
+            "hero_id": 56,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "health_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1329,
+            "name": "平民的连衣裙",
+            "description": "穿着它我一点都不平凡。",
+            "graphic_id": 7136,
+            "hero_id": 56,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "health_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1330",
+        "snapshots": {
+          "original": {
+            "id": 1330,
+            "name": "Festive Wear",
+            "description": "I asked the seamstress to add a slit in it, just in case combat breaks out.",
+            "graphic_id": 7136,
+            "hero_id": 56,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "health_mult,30"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1330,
+            "name": "节庆服饰",
+            "description": "我让女裁缝特别留了一个切口，以防万一面对战斗。",
+            "graphic_id": 7136,
+            "hero_id": 56,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "health_mult,30"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1331",
+        "snapshots": {
+          "original": {
+            "id": 1331,
+            "name": "Undercover Ball Gown",
+            "description": "Two long sleeves, two halves of a glaive. It's perfect! As long as I don't move much.",
+            "graphic_id": 7137,
+            "hero_id": 56,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "health_mult,50"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1331,
+            "name": "奸细舞会礼服",
+            "description": "两个长袖，各寸半段阔剑。完美！只要行走时不要有太大的动作就行。",
+            "graphic_id": 7137,
+            "hero_id": 56,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "health_mult,50"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1332",
+        "snapshots": {
+          "original": {
+            "id": 1332,
+            "name": "The Fanciest Dress",
+            "description": "Hey, I worked for this. And it is WORKING for me!",
+            "graphic_id": 7138,
+            "hero_id": 56,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "health_mult,100"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1332,
+            "name": "最时髦的连衣裙",
+            "description": "哇，这是我努力工作得来的。现在轮到它来效劳我了！",
+            "graphic_id": 7138,
+            "hero_id": 56,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "health_mult,100"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1333",
+        "snapshots": {
+          "original": {
+            "id": 1333,
+            "name": "Dembo",
+            "description": "'You order, we act. That's the deal.'",
+            "graphic_id": 7142,
+            "hero_id": 56,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,18036"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1333,
+            "name": "登博",
+            "description": "“你指挥，我们动手。交易就是这样简单。”",
+            "graphic_id": 7142,
+            "hero_id": 56,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,18036"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1334",
+        "snapshots": {
+          "original": {
+            "id": 1334,
+            "name": "Olla",
+            "description": "'When your economy becomes this inflated, you have to reset. That's the rule.'",
+            "graphic_id": 7143,
+            "hero_id": 56,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,18036"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1334,
+            "name": "奥拉",
+            "description": "“当通货膨胀到这种地步时，就要重置。规则就是如此。”",
+            "graphic_id": 7143,
+            "hero_id": 56,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,18036"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1335",
+        "snapshots": {
+          "original": {
+            "id": 1335,
+            "name": "Bosh",
+            "description": "'Don't turn around! The world doesn't exist behind you!'",
+            "graphic_id": 7144,
+            "hero_id": 56,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,18036"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1335,
+            "name": "波什",
+            "description": "“别转过头！你就是世界的尽头！”",
+            "graphic_id": 7144,
+            "hero_id": 56,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,18036"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1336",
+        "snapshots": {
+          "original": {
+            "id": 1336,
+            "name": "Mot",
+            "description": "'Lady, I'm mostly sure you're not supposed to be doing this!'",
+            "graphic_id": 7145,
+            "hero_id": 56,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,18036"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1336,
+            "name": "莫特",
+            "description": "“女士，我很确定你不能这样子做的！”",
+            "graphic_id": 7145,
+            "hero_id": 56,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,18036"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1337",
+        "snapshots": {
+          "original": {
+            "id": 1337,
+            "name": "Leftover Ribbon",
+            "description": "Farideh, hold still--I want to see how this would look on me.",
+            "graphic_id": 7146,
+            "hero_id": 56,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,18037"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1337,
+            "name": "遗留的丝带",
+            "description": "法莉德你别动--我想自己试用下看看效果。",
+            "graphic_id": 7146,
+            "hero_id": 56,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,18037"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1338",
+        "snapshots": {
+          "original": {
+            "id": 1338,
+            "name": "Glaive Decorations",
+            "description": "The ribbon makes it slash faster--that does so make sense, Farideh!",
+            "graphic_id": 7146,
+            "hero_id": 56,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,18037"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1338,
+            "name": "阔剑装饰品",
+            "description": "丝带能让阔剑劈砍得更迅速--很有道理是不是，法莉德！",
+            "graphic_id": 7146,
+            "hero_id": 56,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,18037"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1339",
+        "snapshots": {
+          "original": {
+            "id": 1339,
+            "name": "Elegant Ribbon",
+            "description": "If someone grabs me by the ribbon, worrywart, I'll chop their hands off.",
+            "graphic_id": 7147,
+            "hero_id": 56,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,18037"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1339,
+            "name": "优雅的丝带",
+            "description": "有谁敢碰我的丝带的话，我就砍掉对方的双手。",
+            "graphic_id": 7147,
+            "hero_id": 56,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,18037"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1340",
+        "snapshots": {
+          "original": {
+            "id": 1340,
+            "name": "Embroidered Ribbon",
+            "description": "For your information, bossyboots, the pattern hides the dried monster brains.",
+            "graphic_id": 7148,
+            "hero_id": 56,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,18037"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1340,
+            "name": "绣花丝带",
+            "description": "我跟你说吧，这图案掩盖着干涸的怪物脑袋。",
+            "graphic_id": 7148,
+            "hero_id": 56,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,18037"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1341",
+        "snapshots": {
+          "original": {
+            "id": 1341,
+            "name": "Worn Chapbook",
+            "description": "Brin and I have read this to each other about a hundred times.",
+            "graphic_id": 7133,
+            "hero_id": 56,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1341,
+            "name": "陈旧的故事书",
+            "description": "布兰和我曾经互相朗诵此书上百遍。",
+            "graphic_id": 7133,
+            "hero_id": 56,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1342",
+        "snapshots": {
+          "original": {
+            "id": 1342,
+            "name": "The Giantess's Curse",
+            "description": "Little did she know, the curse was true love. And also beholders.",
+            "graphic_id": 7133,
+            "hero_id": 56,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1342,
+            "name": "女巨人的诅咒",
+            "description": "但她不知道的是，该诅咒是真爱。也是旁观者。",
+            "graphic_id": 7133,
+            "hero_id": 56,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1343",
+        "snapshots": {
+          "original": {
+            "id": 1343,
+            "name": "The Secrets of the Obarskyrs",
+            "description": "I love Brin, but his family is crazy. But also crazy entertaining.",
+            "graphic_id": 7134,
+            "hero_id": 56,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1343,
+            "name": "欧巴斯奇家族的秘密",
+            "description": "我很爱布兰，但是他的家人都是疯子。都玩得很疯。",
+            "graphic_id": 7134,
+            "hero_id": 56,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1344",
+        "snapshots": {
+          "original": {
+            "id": 1344,
+            "name": "The Lonely Widow",
+            "description": "For best experience, get Brin to do the lonely widow's voice! Hilarious!",
+            "graphic_id": 7135,
+            "hero_id": 56,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1344,
+            "name": "孤独的寡妇",
+            "description": "要想得到最佳的体验，就让布兰配音孤独寡妇的角色吧！很好笑的！",
+            "graphic_id": 7135,
+            "hero_id": 56,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "54",
+        "snapshots": {
+          "original": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "阵型中每有一位勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "55",
+        "snapshots": {
+          "original": {
+            "id": 55,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Male Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 55,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "阵型中每有一位男性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "10",
+        "snapshots": {
+          "original": {
+            "id": 10,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "tiefling"
+                  }
+                ],
+                "description": "Increases the damage of all Tiefling Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 10,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "tiefling"
+                  }
+                ],
+                "description": "使所有提夫林勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "34",
+        "snapshots": {
+          "original": {
+            "id": 34,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a CON score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 34,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有体质大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "32",
+        "snapshots": {
+          "original": {
+            "id": 32,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "dex",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a DEX score of 13 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 32,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "dex",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有敏捷大于等于 13 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "102",
+        "snapshots": {
+          "original": {
+            "id": 102,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a GOOD alignment"
+              }
+            ]
+          },
+          "display": {
+            "id": 102,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "阵型中每有一位善良阵营勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

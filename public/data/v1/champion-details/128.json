@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "128",
     "name": {
@@ -49,7 +49,7 @@
   },
   "dateAvailable": "2023-08-16 13:00:00",
   "lastReworkDate": "2023-08-16 13:00:00",
-  "popularity": 24,
+  "popularity": 27,
   "baseCost": "125",
   "baseDamage": "65",
   "baseHealth": "45",
@@ -3161,6 +3161,634 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "3050",
+      "name": {
+        "original": "Raiding Daggers",
+        "display": "突袭匕首"
+      },
+      "description": {
+        "original": "A gift from my sa'varsh. I used them to survive my first of many raids.",
+        "display": "我的照料人送我的礼物。借助它们，我才在第一次突袭中存活下来。"
+      },
+      "graphicId": "20261",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3051",
+      "name": {
+        "original": "Balanced Blades",
+        "display": "协调利刃"
+      },
+      "description": {
+        "original": "A fellow initiate called these blades 'insufficient'. The wounds they left on his forehead prove otherwise.",
+        "display": "某个新人说这些剑“不堪大用”。它们在他额头上留下的伤口恰是反面证明。"
+      },
+      "graphicId": "20261",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3052",
+      "name": {
+        "original": "Ghaik Slayer",
+        "display": "夺心魔克星"
+      },
+      "description": {
+        "original": "This will help me bring a ghaik head to my Undying Queen.",
+        "display": "这可以帮我把夺心魔的头颅送给我的不死女王。"
+      },
+      "graphicId": "20262",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3053",
+      "name": {
+        "original": "Mind Seeker",
+        "display": "心灵探索者"
+      },
+      "description": {
+        "original": "Each bolt is enchanted to seek out the brain of a ghaik and destroy it.",
+        "display": "每支弩箭上都施了寻找并摧毁夺心魔脑子的魔法。"
+      },
+      "graphicId": "20263",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3054",
+      "name": {
+        "original": "Training Weapon",
+        "display": "训练武器"
+      },
+      "description": {
+        "original": "The edge may be dull, but it will cleave my foes open all the same.",
+        "display": "虽然剑刃驽钝，但它照样能将我的敌人开膛破肚。"
+      },
+      "graphicId": "20264",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,12113"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3055",
+      "name": {
+        "original": "Battle Damaged Sword",
+        "display": "战损剑"
+      },
+      "description": {
+        "original": "Each mark on this blade is a lesson I learned on Crèche K'liir.",
+        "display": "这把剑上的每一道伤痕都是我在克雷奇·克利尔那里学到的教训。"
+      },
+      "graphicId": "20264",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,12113"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3056",
+      "name": {
+        "original": "Greatsword",
+        "display": "巨剑"
+      },
+      "description": {
+        "original": "One day I will wield a true silver sword in Vlaakith's name.",
+        "display": "有朝一日，我将以弗拉基丝之名，挥舞真正的银剑。"
+      },
+      "graphicId": "20265",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,12113"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3057",
+      "name": {
+        "original": "Githyanki Silver Sword",
+        "display": "吉斯洋基银剑"
+      },
+      "description": {
+        "original": "Within this blade lives the whole of the empire's might!",
+        "display": "这把剑蕴藏着帝国的全部威力！"
+      },
+      "graphicId": "20266",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,12113"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3058",
+      "name": {
+        "original": "Raiding Prize",
+        "display": "掠夺奖品"
+      },
+      "description": {
+        "original": "A mere trinket.",
+        "display": "一件小饰品。"
+      },
+      "graphicId": "20255",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,12114"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3059",
+      "name": {
+        "original": "Memory of the Tears",
+        "display": "眼泪回忆"
+      },
+      "description": {
+        "original": "A simple memento of the crèche I once called home.",
+        "display": "一个简陋的纪念品，纪念曾被我称为家的养育所。"
+      },
+      "graphicId": "20255",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,12114"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3060",
+      "name": {
+        "original": "Aether Shards",
+        "display": "乙太碎片"
+      },
+      "description": {
+        "original": "Said to be found only in Tu'narath, the City of Death.",
+        "display": "据说只会出现在死亡之城图纳拉斯。"
+      },
+      "graphicId": "20256",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,12114"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3061",
+      "name": {
+        "original": "Token of Vlaakith",
+        "display": "弗拉基丝的信物"
+      },
+      "description": {
+        "original": "The engraving on the back reads: 'Vlaakith'ka sivim hrath krash'ht'",
+        "display": "背面刻着：“Vlaakith'ka sivim hrath krash'ht”"
+      },
+      "graphicId": "20257",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,12114"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3062",
+      "name": {
+        "original": "Ornate Garb",
+        "display": "华丽衣装"
+      },
+      "description": {
+        "original": "Discarded attire from Crèche K'liir - a hand-me-down from the varsh.",
+        "display": "克利尔养育所的废弃服装--照料人给我的旧衣。"
+      },
+      "graphicId": "20249",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,12116"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3063",
+      "name": {
+        "original": "Ancient Adornment",
+        "display": "远古装饰品"
+      },
+      "description": {
+        "original": "Ceremonial garments, passed from the undead tl'a'ikith who wore them in life.",
+        "display": "仪式服装，由生前穿着它们的亡灵剑灵传承下来。"
+      },
+      "graphicId": "20249",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,12116"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3064",
+      "name": {
+        "original": "Githyanki Mail",
+        "display": "吉斯洋基锁子甲"
+      },
+      "description": {
+        "original": "The armor of a githyanki warrior is unmatched.",
+        "display": "吉斯洋基战士的盔甲是无可比拟的。"
+      },
+      "graphicId": "20250",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,12116"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3065",
+      "name": {
+        "original": "Dragonrider Armour",
+        "display": "龙骑士盔甲"
+      },
+      "description": {
+        "original": "To wear this armour atop a red dragon steed is my duty and my destiny!",
+        "display": "穿上这套盔甲登上红龙坐骑--这是我的职责，也是我的宿命！"
+      },
+      "graphicId": "20251",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,12116"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3066",
+      "name": {
+        "original": "Leather Sandals",
+        "display": "皮凉鞋"
+      },
+      "description": {
+        "original": "Tsk'va! I hate these things.",
+        "display": "该死！我讨厌这种鞋。"
+      },
+      "graphicId": "20252",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,25"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3067",
+      "name": {
+        "original": "Well Used Sandals",
+        "display": "老旧凉鞋"
+      },
+      "description": {
+        "original": "Training on Crèche K'liir with these was close to torture.",
+        "display": "在克雷奇·克利尔上穿着这种鞋训练简直是折磨。"
+      },
+      "graphicId": "20252",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,87.5"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3068",
+      "name": {
+        "original": "Half Plate Boots",
+        "display": "半板甲靴子"
+      },
+      "description": {
+        "original": "With one sturdy stomp, I could crush a ghaik's abominable skull.",
+        "display": "只要用力一踩，我就能碾碎夺心魔的丑陋头骨。"
+      },
+      "graphicId": "20253",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,150"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3069",
+      "name": {
+        "original": "Astral Striders",
+        "display": "星界跨越者"
+      },
+      "description": {
+        "original": "With these, I can walk amongst the stars and hunt ghaik wherever they hide.",
+        "display": "有了这双鞋，我就能在群星之间走动，猎杀躲在任何地方的夺心魔。"
+      },
+      "graphicId": "20254",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,275"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3070",
+      "name": {
+        "original": "Unidentified Crown",
+        "display": "不明头冠"
+      },
+      "description": {
+        "original": "I snatched this from the ruins of a githyanki temple. It holds but a trace of psionic magic.",
+        "display": "我从一座吉斯洋基神庙遗迹里拿到的。它残存着一丝灵能魔法。"
+      },
+      "graphicId": "20258",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,5"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3071",
+      "name": {
+        "original": "Ancient Crown",
+        "display": "远古头冠"
+      },
+      "description": {
+        "original": "The magic within this crown reeks of shadow. I call upon it at my own peril.",
+        "display": "这顶王冠蕴藏的魔力散发着暗影的气息。使用它的后果，我需自己承担。"
+      },
+      "graphicId": "20258",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,9"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3072",
+      "name": {
+        "original": "Gloves of Missile Snaring",
+        "display": "铲除飞弹手套"
+      },
+      "description": {
+        "original": "The spoils of a victorious raid. They serve their purpose more than adequately.",
+        "display": "某次胜利突袭的战利品。它们早已物尽其用。"
+      },
+      "graphicId": "20259",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,18"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3073",
+      "name": {
+        "original": "Sunwalker's Gift",
+        "display": "日行者的馈赠"
+      },
+      "description": {
+        "original": "With this, the shadows bow to me.",
+        "display": "有了这个，暗影都将臣服于我。"
+      },
+      "graphicId": "20260",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,45"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "54",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Female Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "107",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "githyanki"
+            }
+          ],
+          "description": "Increases the damage of all Githyanki Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "90",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "int",
+              "check": 11,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a INT score of 11 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "85",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,30",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "dex",
+              "check": 13,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a DEX score of 13 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "99",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "attack_type",
+              "attack": "melee"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Melee Champion in the formation"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3315,7 +3943,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 24,
+        "popularity": 27,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3509,7 +4137,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 24,
+        "popularity": 27,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -7698,6 +8326,1132 @@
             "availabilities": {
               "premium_item_id": "679"
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "3050",
+        "snapshots": {
+          "original": {
+            "id": 3050,
+            "name": "Raiding Daggers",
+            "description": "A gift from my sa'varsh. I used them to survive my first of many raids.",
+            "graphic_id": 20261,
+            "hero_id": 128,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3050,
+            "name": "突袭匕首",
+            "description": "我的照料人送我的礼物。借助它们，我才在第一次突袭中存活下来。",
+            "graphic_id": 20261,
+            "hero_id": 128,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3051",
+        "snapshots": {
+          "original": {
+            "id": 3051,
+            "name": "Balanced Blades",
+            "description": "A fellow initiate called these blades 'insufficient'. The wounds they left on his forehead prove otherwise.",
+            "graphic_id": 20261,
+            "hero_id": 128,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3051,
+            "name": "协调利刃",
+            "description": "某个新人说这些剑“不堪大用”。它们在他额头上留下的伤口恰是反面证明。",
+            "graphic_id": 20261,
+            "hero_id": 128,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3052",
+        "snapshots": {
+          "original": {
+            "id": 3052,
+            "name": "Ghaik Slayer",
+            "description": "This will help me bring a ghaik head to my Undying Queen.",
+            "graphic_id": 20262,
+            "hero_id": 128,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3052,
+            "name": "夺心魔克星",
+            "description": "这可以帮我把夺心魔的头颅送给我的不死女王。",
+            "graphic_id": 20262,
+            "hero_id": 128,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3053",
+        "snapshots": {
+          "original": {
+            "id": 3053,
+            "name": "Mind Seeker",
+            "description": "Each bolt is enchanted to seek out the brain of a ghaik and destroy it.",
+            "graphic_id": 20263,
+            "hero_id": 128,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3053,
+            "name": "心灵探索者",
+            "description": "每支弩箭上都施了寻找并摧毁夺心魔脑子的魔法。",
+            "graphic_id": 20263,
+            "hero_id": 128,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3054",
+        "snapshots": {
+          "original": {
+            "id": 3054,
+            "name": "Training Weapon",
+            "description": "The edge may be dull, but it will cleave my foes open all the same.",
+            "graphic_id": 20264,
+            "hero_id": 128,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12113"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3054,
+            "name": "训练武器",
+            "description": "虽然剑刃驽钝，但它照样能将我的敌人开膛破肚。",
+            "graphic_id": 20264,
+            "hero_id": 128,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12113"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3055",
+        "snapshots": {
+          "original": {
+            "id": 3055,
+            "name": "Battle Damaged Sword",
+            "description": "Each mark on this blade is a lesson I learned on Crèche K'liir.",
+            "graphic_id": 20264,
+            "hero_id": 128,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12113"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3055,
+            "name": "战损剑",
+            "description": "这把剑上的每一道伤痕都是我在克雷奇·克利尔那里学到的教训。",
+            "graphic_id": 20264,
+            "hero_id": 128,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12113"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3056",
+        "snapshots": {
+          "original": {
+            "id": 3056,
+            "name": "Greatsword",
+            "description": "One day I will wield a true silver sword in Vlaakith's name.",
+            "graphic_id": 20265,
+            "hero_id": 128,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12113"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3056,
+            "name": "巨剑",
+            "description": "有朝一日，我将以弗拉基丝之名，挥舞真正的银剑。",
+            "graphic_id": 20265,
+            "hero_id": 128,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12113"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3057",
+        "snapshots": {
+          "original": {
+            "id": 3057,
+            "name": "Githyanki Silver Sword",
+            "description": "Within this blade lives the whole of the empire's might!",
+            "graphic_id": 20266,
+            "hero_id": 128,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12113"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3057,
+            "name": "吉斯洋基银剑",
+            "description": "这把剑蕴藏着帝国的全部威力！",
+            "graphic_id": 20266,
+            "hero_id": 128,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12113"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3058",
+        "snapshots": {
+          "original": {
+            "id": 3058,
+            "name": "Raiding Prize",
+            "description": "A mere trinket.",
+            "graphic_id": 20255,
+            "hero_id": 128,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12114"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3058,
+            "name": "掠夺奖品",
+            "description": "一件小饰品。",
+            "graphic_id": 20255,
+            "hero_id": 128,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12114"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3059",
+        "snapshots": {
+          "original": {
+            "id": 3059,
+            "name": "Memory of the Tears",
+            "description": "A simple memento of the crèche I once called home.",
+            "graphic_id": 20255,
+            "hero_id": 128,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12114"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3059,
+            "name": "眼泪回忆",
+            "description": "一个简陋的纪念品，纪念曾被我称为家的养育所。",
+            "graphic_id": 20255,
+            "hero_id": 128,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12114"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3060",
+        "snapshots": {
+          "original": {
+            "id": 3060,
+            "name": "Aether Shards",
+            "description": "Said to be found only in Tu'narath, the City of Death.",
+            "graphic_id": 20256,
+            "hero_id": 128,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12114"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3060,
+            "name": "乙太碎片",
+            "description": "据说只会出现在死亡之城图纳拉斯。",
+            "graphic_id": 20256,
+            "hero_id": 128,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12114"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3061",
+        "snapshots": {
+          "original": {
+            "id": 3061,
+            "name": "Token of Vlaakith",
+            "description": "The engraving on the back reads: 'Vlaakith'ka sivim hrath krash'ht'",
+            "graphic_id": 20257,
+            "hero_id": 128,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12114"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3061,
+            "name": "弗拉基丝的信物",
+            "description": "背面刻着：“Vlaakith'ka sivim hrath krash'ht”",
+            "graphic_id": 20257,
+            "hero_id": 128,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12114"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3062",
+        "snapshots": {
+          "original": {
+            "id": 3062,
+            "name": "Ornate Garb",
+            "description": "Discarded attire from Crèche K'liir - a hand-me-down from the varsh.",
+            "graphic_id": 20249,
+            "hero_id": 128,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12116"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3062,
+            "name": "华丽衣装",
+            "description": "克利尔养育所的废弃服装--照料人给我的旧衣。",
+            "graphic_id": 20249,
+            "hero_id": 128,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12116"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3063",
+        "snapshots": {
+          "original": {
+            "id": 3063,
+            "name": "Ancient Adornment",
+            "description": "Ceremonial garments, passed from the undead tl'a'ikith who wore them in life.",
+            "graphic_id": 20249,
+            "hero_id": 128,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12116"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3063,
+            "name": "远古装饰品",
+            "description": "仪式服装，由生前穿着它们的亡灵剑灵传承下来。",
+            "graphic_id": 20249,
+            "hero_id": 128,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12116"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3064",
+        "snapshots": {
+          "original": {
+            "id": 3064,
+            "name": "Githyanki Mail",
+            "description": "The armor of a githyanki warrior is unmatched.",
+            "graphic_id": 20250,
+            "hero_id": 128,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12116"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3064,
+            "name": "吉斯洋基锁子甲",
+            "description": "吉斯洋基战士的盔甲是无可比拟的。",
+            "graphic_id": 20250,
+            "hero_id": 128,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12116"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3065",
+        "snapshots": {
+          "original": {
+            "id": 3065,
+            "name": "Dragonrider Armour",
+            "description": "To wear this armour atop a red dragon steed is my duty and my destiny!",
+            "graphic_id": 20251,
+            "hero_id": 128,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12116"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3065,
+            "name": "龙骑士盔甲",
+            "description": "穿上这套盔甲登上红龙坐骑--这是我的职责，也是我的宿命！",
+            "graphic_id": 20251,
+            "hero_id": 128,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12116"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3066",
+        "snapshots": {
+          "original": {
+            "id": 3066,
+            "name": "Leather Sandals",
+            "description": "Tsk'va! I hate these things.",
+            "graphic_id": 20252,
+            "hero_id": 128,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ]
+          },
+          "display": {
+            "id": 3066,
+            "name": "皮凉鞋",
+            "description": "该死！我讨厌这种鞋。",
+            "graphic_id": 20252,
+            "hero_id": 128,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3067",
+        "snapshots": {
+          "original": {
+            "id": 3067,
+            "name": "Well Used Sandals",
+            "description": "Training on Crèche K'liir with these was close to torture.",
+            "graphic_id": 20252,
+            "hero_id": 128,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ]
+          },
+          "display": {
+            "id": 3067,
+            "name": "老旧凉鞋",
+            "description": "在克雷奇·克利尔上穿着这种鞋训练简直是折磨。",
+            "graphic_id": 20252,
+            "hero_id": 128,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3068",
+        "snapshots": {
+          "original": {
+            "id": 3068,
+            "name": "Half Plate Boots",
+            "description": "With one sturdy stomp, I could crush a ghaik's abominable skull.",
+            "graphic_id": 20253,
+            "hero_id": 128,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ]
+          },
+          "display": {
+            "id": 3068,
+            "name": "半板甲靴子",
+            "description": "只要用力一踩，我就能碾碎夺心魔的丑陋头骨。",
+            "graphic_id": 20253,
+            "hero_id": 128,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3069",
+        "snapshots": {
+          "original": {
+            "id": 3069,
+            "name": "Astral Striders",
+            "description": "With these, I can walk amongst the stars and hunt ghaik wherever they hide.",
+            "graphic_id": 20254,
+            "hero_id": 128,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ]
+          },
+          "display": {
+            "id": 3069,
+            "name": "星界跨越者",
+            "description": "有了这双鞋，我就能在群星之间走动，猎杀躲在任何地方的夺心魔。",
+            "graphic_id": 20254,
+            "hero_id": 128,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3070",
+        "snapshots": {
+          "original": {
+            "id": 3070,
+            "name": "Unidentified Crown",
+            "description": "I snatched this from the ruins of a githyanki temple. It holds but a trace of psionic magic.",
+            "graphic_id": 20258,
+            "hero_id": 128,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,5"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3070,
+            "name": "不明头冠",
+            "description": "我从一座吉斯洋基神庙遗迹里拿到的。它残存着一丝灵能魔法。",
+            "graphic_id": 20258,
+            "hero_id": 128,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,5"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3071",
+        "snapshots": {
+          "original": {
+            "id": 3071,
+            "name": "Ancient Crown",
+            "description": "The magic within this crown reeks of shadow. I call upon it at my own peril.",
+            "graphic_id": 20258,
+            "hero_id": 128,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,9"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3071,
+            "name": "远古头冠",
+            "description": "这顶王冠蕴藏的魔力散发着暗影的气息。使用它的后果，我需自己承担。",
+            "graphic_id": 20258,
+            "hero_id": 128,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,9"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3072",
+        "snapshots": {
+          "original": {
+            "id": 3072,
+            "name": "Gloves of Missile Snaring",
+            "description": "The spoils of a victorious raid. They serve their purpose more than adequately.",
+            "graphic_id": 20259,
+            "hero_id": 128,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,18"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3072,
+            "name": "铲除飞弹手套",
+            "description": "某次胜利突袭的战利品。它们早已物尽其用。",
+            "graphic_id": 20259,
+            "hero_id": 128,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,18"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3073",
+        "snapshots": {
+          "original": {
+            "id": 3073,
+            "name": "Sunwalker's Gift",
+            "description": "With this, the shadows bow to me.",
+            "graphic_id": 20260,
+            "hero_id": 128,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,45"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3073,
+            "name": "日行者的馈赠",
+            "description": "有了这个，暗影都将臣服于我。",
+            "graphic_id": 20260,
+            "hero_id": 128,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,45"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "54",
+        "snapshots": {
+          "original": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "阵型中每有一位勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3",
+        "snapshots": {
+          "original": {
+            "id": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Female Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "使所有女性勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "107",
+        "snapshots": {
+          "original": {
+            "id": 107,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "githyanki"
+                  }
+                ],
+                "description": "Increases the damage of all Githyanki Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 107,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "githyanki"
+                  }
+                ],
+                "description": "所有吉斯洋基人勇士提升 $(amount)% 伤害"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "90",
+        "snapshots": {
+          "original": {
+            "id": 90,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "int",
+                    "check": 11,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a INT score of 11 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 90,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "int",
+                    "check": 11,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位智力大于等于 11 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "85",
+        "snapshots": {
+          "original": {
+            "id": 85,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "dex",
+                    "check": 13,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a DEX score of 13 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 85,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "dex",
+                    "check": 13,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位敏捷大于等于 13 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "99",
+        "snapshots": {
+          "original": {
+            "id": 99,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "attack_type",
+                    "attack": "melee"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Melee Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 99,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "attack_type",
+                    "attack": "melee"
+                  }
+                ],
+                "description": "阵型中每有一位近战勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

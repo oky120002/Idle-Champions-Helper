@@ -9,11 +9,13 @@ import { championDetailBaseFixture } from './championDetailBaseFixture'
 import { championDetailCatalogFixture } from './championDetailCatalogFixture'
 
 export const defaultSectionTopMap = {
-  overview: 84,
-  'character-sheet': 460,
-  combat: 860,
-  upgrades: 1260,
-  feats: 1660,
+  specializations: 84,
+  abilities: 460,
+  loot: 860,
+  legendary: 1060,
+  feats: 1260,
+  skins: 1460,
+  'story-misc': 1660,
 } as const
 
 export function createDomRect(top: number): DOMRect {

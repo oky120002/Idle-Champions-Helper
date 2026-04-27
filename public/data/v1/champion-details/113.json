@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "113",
     "name": {
@@ -51,7 +51,7 @@
   },
   "dateAvailable": "2022-09-28 13:00:00",
   "lastReworkDate": "2022-09-28 13:00:00",
-  "popularity": 92,
+  "popularity": 94,
   "baseCost": "50000000000",
   "baseDamage": "200000000",
   "baseHealth": "220",
@@ -3477,6 +3477,634 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "2690",
+      "name": {
+        "original": "Homemade Explosion",
+        "display": "自制爆炸"
+      },
+      "description": {
+        "original": "It works! I think...",
+        "display": "成功了！我想想......"
+      },
+      "graphicId": "16124",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2691",
+      "name": {
+        "original": "Throwable Bomb",
+        "display": "可投掷炸弹"
+      },
+      "description": {
+        "original": "Experimenting with explosives is a dangerous art.",
+        "display": "做爆炸物的实验可是危险的艺术。"
+      },
+      "graphicId": "16124",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2692",
+      "name": {
+        "original": "Creative Ordnance",
+        "display": "创意军械"
+      },
+      "description": {
+        "original": "Little fire breath on this end here, and instant fireworks display!",
+        "display": "在这边小小喷上一口火焰，立即就能看到漂亮的焰火展示！"
+      },
+      "graphicId": "16125",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2693",
+      "name": {
+        "original": "Holiest Hand Grenade",
+        "display": "最神圣的手榴弹"
+      },
+      "description": {
+        "original": "I'm saving this for a special occasion.",
+        "display": "我要把这个留下来，拿来应对特别情况。"
+      },
+      "graphicId": "16126",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "2694",
+      "name": {
+        "original": "This Little Piggy...",
+        "display": "这头小猪..."
+      },
+      "description": {
+        "original": "I found this...steed. I don't know if it will carry me.",
+        "display": "我找到了... 这匹马。我不知道它愿不愿意驼我。"
+      },
+      "graphicId": "16127",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "gold_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2695",
+      "name": {
+        "original": "Pig-bert",
+        "display": "猪伯特"
+      },
+      "description": {
+        "original": "Pigs are intelligent and therefore easily scared by explosions.",
+        "display": "猪是聪明的动物，因此很容易会被爆炸吓倒。"
+      },
+      "graphicId": "16127",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "gold_multiplier_mult,30"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2696",
+      "name": {
+        "original": "Dog-bert",
+        "display": "狗伯特"
+      },
+      "description": {
+        "original": "Who's a good boy? Who's a good fiend in the shape of a dog?",
+        "display": "好狗狗是谁呀？是哪个炼狱生物变成了狗狗的形貌？"
+      },
+      "graphicId": "16128",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "gold_multiplier_mult,50"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2697",
+      "name": {
+        "original": "Elk-bert",
+        "display": "鹿伯特"
+      },
+      "description": {
+        "original": "This is a very impressive steed! Antlers are nature's handlebars!",
+        "display": "这还真是够神骏！鹿角就是天然的把手！"
+      },
+      "graphicId": "16129",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "gold_multiplier_mult,100"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2698",
+      "name": {
+        "original": "Steel Defense",
+        "display": "钢铁防御"
+      },
+      "description": {
+        "original": "The best shield is thick enough to stop a mace AND to slide down a mountain on!",
+        "display": "最好的盾牌厚实无比，足以挡住狼牙棒，还能拿来从山上顺坡而下！"
+      },
+      "graphicId": "16139",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "health_mult,10"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2699",
+      "name": {
+        "original": "Shield of Protection",
+        "display": "防护之盾"
+      },
+      "description": {
+        "original": "It's both a shield and a bomb powered ejector seat!",
+        "display": "既是盾牌，也是炸弹动力弹射椅！"
+      },
+      "graphicId": "16139",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "health_mult,30"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2700",
+      "name": {
+        "original": "Mirrored Shield",
+        "display": "镜盾"
+      },
+      "description": {
+        "original": "Good for blocking attacks and checking if any of your lunch is stuck in your teeth!",
+        "display": "能够拿来阻挡攻击，也能拿来看看午餐的菜是不是藏在牙缝里了！"
+      },
+      "graphicId": "16140",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "health_mult,50"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2701",
+      "name": {
+        "original": "Shield of Reflection",
+        "display": "反射之盾"
+      },
+      "description": {
+        "original": "Atonement requires reflection. I think this will work.",
+        "display": "赎罪需要反射。我觉得这能奏效。"
+      },
+      "graphicId": "16141",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "health_mult,100"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2702",
+      "name": {
+        "original": "Spiked Mace",
+        "display": "带刺钉头锤"
+      },
+      "description": {
+        "original": "When you're too close to safely throw a bomb, a mace is the way to go.",
+        "display": "距离太近不好丢炸弹的时候，钉头槌就是解决之道。"
+      },
+      "graphicId": "16133",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,8872"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2703",
+      "name": {
+        "original": "Sharp-edged Bludgeon",
+        "display": "锐缘棒击"
+      },
+      "description": {
+        "original": "Heavy, deadly, and tastes of raspberries!",
+        "display": "沉重致命，还带着树莓的味道！"
+      },
+      "graphicId": "16133",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,8872"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2704",
+      "name": {
+        "original": "Cursed Mace",
+        "display": "被诅咒的钉头锤"
+      },
+      "description": {
+        "original": "When I hit someone, sometimes they turn into an animal friend!",
+        "display": "击中的时候，目标就会变成动物伙伴！"
+      },
+      "graphicId": "16134",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,8872"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2705",
+      "name": {
+        "original": "Fancy Cursed Mace",
+        "display": "精致的被诅咒钉头锤"
+      },
+      "description": {
+        "original": "Gaze at the beautiful glow as I clonk you and possibly turn you into a squirrel.",
+        "display": "看着我砸向你的一击发出的美丽光芒，很有可能你会由此变成一只小松鼠。"
+      },
+      "graphicId": "16135",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,8872"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2706",
+      "name": {
+        "original": "Finger Foods",
+        "display": "小点心"
+      },
+      "description": {
+        "original": "How many of these do you think I can fit in my mouth?",
+        "display": "你觉得我嘴里能塞上多少这玩意？"
+      },
+      "graphicId": "16130",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,25,8879,8880,8881",
+          "description": "Increases the effect of all Egbert's second Specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2707",
+      "name": {
+        "original": "Canapes",
+        "display": "开胃小菜"
+      },
+      "description": {
+        "original": "They're too delicious to just eat sixty.",
+        "display": "太美味了，只吃六十个怎么够。"
+      },
+      "graphicId": "16130",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,87.5,8879,8880,8881",
+          "description": "Increases the effect of all Egbert's second Specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2708",
+      "name": {
+        "original": "Scotch Eggs",
+        "display": "苏格兰煮蛋"
+      },
+      "description": {
+        "original": "My seal friend is particularly fond of these.",
+        "display": "我的海豹朋友尤其喜欢。"
+      },
+      "graphicId": "16131",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,150,8879,8880,8881",
+          "description": "Increases the effect of all Egbert's second Specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2709",
+      "name": {
+        "original": "Pork Spear in a Bread Cradle",
+        "display": "面包摇篮里的猪肉长矛"
+      },
+      "description": {
+        "original": "What else would you call it?",
+        "display": "不然还能怎么叫？"
+      },
+      "graphicId": "16132",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,275,8879,8880,8881",
+          "description": "Increases the effect of all Egbert's second Specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2710",
+      "name": {
+        "original": "La Vache Mauve Pamphlets",
+        "display": "紫色牛宣传册"
+      },
+      "description": {
+        "original": "Can I offer you a pamphlet?",
+        "display": "愿意收下这份宣传册吗？"
+      },
+      "graphicId": "16136",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,8"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2711",
+      "name": {
+        "original": "The Good Word",
+        "display": "真善良言"
+      },
+      "description": {
+        "original": "There will be chips and dip at the first meeting.",
+        "display": "一见如故。"
+      },
+      "graphicId": "16136",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,16"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2712",
+      "name": {
+        "original": "Holy Message",
+        "display": "上圣真言"
+      },
+      "description": {
+        "original": "Would you like to join a new religion? We worship a purple sky cow. Great perks and benefits.",
+        "display": "想要皈依新的信仰吗？我们崇拜一头紫色的天空母牛。提供绝佳的天赋和福利哟。"
+      },
+      "graphicId": "16137",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,32"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2713",
+      "name": {
+        "original": "Divine Handout",
+        "display": "神圣分发"
+      },
+      "description": {
+        "original": "My quest for absolution can be yours too! It's not a pyramid scheme, I promise.",
+        "display": "我的赎罪旅程，你也可以一样拥有！我保证这不是传销。"
+      },
+      "graphicId": "16138",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,80"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "54",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "male"
+            }
+          ],
+          "description": "Increases the damage of all Male Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "dragonborn"
+            }
+          ],
+          "description": "Increases the damage of all Dragonborn Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "83",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,40",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "str",
+              "check": 15,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a STR score of 15 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "35",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "con",
+              "score": 13,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a CON score of 13 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "49",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "good"
+            }
+          ],
+          "description": "Increases the damage of all Good Champions by $(amount)%"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3652,7 +4280,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 92,
+        "popularity": 94,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3867,7 +4495,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 92,
+        "popularity": 94,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -8275,6 +8903,1124 @@
             "availabilities": {
               "in_flash_sales": true
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "2690",
+        "snapshots": {
+          "original": {
+            "id": 2690,
+            "name": "Homemade Explosion",
+            "description": "It works! I think...",
+            "graphic_id": 16124,
+            "hero_id": 113,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2690,
+            "name": "自制爆炸",
+            "description": "成功了！我想想......",
+            "graphic_id": 16124,
+            "hero_id": 113,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2691",
+        "snapshots": {
+          "original": {
+            "id": 2691,
+            "name": "Throwable Bomb",
+            "description": "Experimenting with explosives is a dangerous art.",
+            "graphic_id": 16124,
+            "hero_id": 113,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2691,
+            "name": "可投掷炸弹",
+            "description": "做爆炸物的实验可是危险的艺术。",
+            "graphic_id": 16124,
+            "hero_id": 113,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2692",
+        "snapshots": {
+          "original": {
+            "id": 2692,
+            "name": "Creative Ordnance",
+            "description": "Little fire breath on this end here, and instant fireworks display!",
+            "graphic_id": 16125,
+            "hero_id": 113,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2692,
+            "name": "创意军械",
+            "description": "在这边小小喷上一口火焰，立即就能看到漂亮的焰火展示！",
+            "graphic_id": 16125,
+            "hero_id": 113,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2693",
+        "snapshots": {
+          "original": {
+            "id": 2693,
+            "name": "Holiest Hand Grenade",
+            "description": "I'm saving this for a special occasion.",
+            "graphic_id": 16126,
+            "hero_id": 113,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2693,
+            "name": "最神圣的手榴弹",
+            "description": "我要把这个留下来，拿来应对特别情况。",
+            "graphic_id": 16126,
+            "hero_id": 113,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2694",
+        "snapshots": {
+          "original": {
+            "id": 2694,
+            "name": "This Little Piggy...",
+            "description": "I found this...steed. I don't know if it will carry me.",
+            "graphic_id": 16127,
+            "hero_id": 113,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "gold_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2694,
+            "name": "这头小猪...",
+            "description": "我找到了... 这匹马。我不知道它愿不愿意驼我。",
+            "graphic_id": 16127,
+            "hero_id": 113,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "gold_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2695",
+        "snapshots": {
+          "original": {
+            "id": 2695,
+            "name": "Pig-bert",
+            "description": "Pigs are intelligent and therefore easily scared by explosions.",
+            "graphic_id": 16127,
+            "hero_id": 113,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "gold_multiplier_mult,30"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2695,
+            "name": "猪伯特",
+            "description": "猪是聪明的动物，因此很容易会被爆炸吓倒。",
+            "graphic_id": 16127,
+            "hero_id": 113,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "gold_multiplier_mult,30"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2696",
+        "snapshots": {
+          "original": {
+            "id": 2696,
+            "name": "Dog-bert",
+            "description": "Who's a good boy? Who's a good fiend in the shape of a dog?",
+            "graphic_id": 16128,
+            "hero_id": 113,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "gold_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2696,
+            "name": "狗伯特",
+            "description": "好狗狗是谁呀？是哪个炼狱生物变成了狗狗的形貌？",
+            "graphic_id": 16128,
+            "hero_id": 113,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "gold_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2697",
+        "snapshots": {
+          "original": {
+            "id": 2697,
+            "name": "Elk-bert",
+            "description": "This is a very impressive steed! Antlers are nature's handlebars!",
+            "graphic_id": 16129,
+            "hero_id": 113,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "gold_multiplier_mult,100"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2697,
+            "name": "鹿伯特",
+            "description": "这还真是够神骏！鹿角就是天然的把手！",
+            "graphic_id": 16129,
+            "hero_id": 113,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "gold_multiplier_mult,100"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2698",
+        "snapshots": {
+          "original": {
+            "id": 2698,
+            "name": "Steel Defense",
+            "description": "The best shield is thick enough to stop a mace AND to slide down a mountain on!",
+            "graphic_id": 16139,
+            "hero_id": 113,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "health_mult,10"
+              }
+            ]
+          },
+          "display": {
+            "id": 2698,
+            "name": "钢铁防御",
+            "description": "最好的盾牌厚实无比，足以挡住狼牙棒，还能拿来从山上顺坡而下！",
+            "graphic_id": 16139,
+            "hero_id": 113,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "health_mult,10"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2699",
+        "snapshots": {
+          "original": {
+            "id": 2699,
+            "name": "Shield of Protection",
+            "description": "It's both a shield and a bomb powered ejector seat!",
+            "graphic_id": 16139,
+            "hero_id": 113,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "health_mult,30"
+              }
+            ]
+          },
+          "display": {
+            "id": 2699,
+            "name": "防护之盾",
+            "description": "既是盾牌，也是炸弹动力弹射椅！",
+            "graphic_id": 16139,
+            "hero_id": 113,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "health_mult,30"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2700",
+        "snapshots": {
+          "original": {
+            "id": 2700,
+            "name": "Mirrored Shield",
+            "description": "Good for blocking attacks and checking if any of your lunch is stuck in your teeth!",
+            "graphic_id": 16140,
+            "hero_id": 113,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "health_mult,50"
+              }
+            ]
+          },
+          "display": {
+            "id": 2700,
+            "name": "镜盾",
+            "description": "能够拿来阻挡攻击，也能拿来看看午餐的菜是不是藏在牙缝里了！",
+            "graphic_id": 16140,
+            "hero_id": 113,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "health_mult,50"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2701",
+        "snapshots": {
+          "original": {
+            "id": 2701,
+            "name": "Shield of Reflection",
+            "description": "Atonement requires reflection. I think this will work.",
+            "graphic_id": 16141,
+            "hero_id": 113,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "health_mult,100"
+              }
+            ]
+          },
+          "display": {
+            "id": 2701,
+            "name": "反射之盾",
+            "description": "赎罪需要反射。我觉得这能奏效。",
+            "graphic_id": 16141,
+            "hero_id": 113,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "health_mult,100"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2702",
+        "snapshots": {
+          "original": {
+            "id": 2702,
+            "name": "Spiked Mace",
+            "description": "When you're too close to safely throw a bomb, a mace is the way to go.",
+            "graphic_id": 16133,
+            "hero_id": 113,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,8872"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2702,
+            "name": "带刺钉头锤",
+            "description": "距离太近不好丢炸弹的时候，钉头槌就是解决之道。",
+            "graphic_id": 16133,
+            "hero_id": 113,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,8872"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2703",
+        "snapshots": {
+          "original": {
+            "id": 2703,
+            "name": "Sharp-edged Bludgeon",
+            "description": "Heavy, deadly, and tastes of raspberries!",
+            "graphic_id": 16133,
+            "hero_id": 113,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,8872"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2703,
+            "name": "锐缘棒击",
+            "description": "沉重致命，还带着树莓的味道！",
+            "graphic_id": 16133,
+            "hero_id": 113,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,8872"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2704",
+        "snapshots": {
+          "original": {
+            "id": 2704,
+            "name": "Cursed Mace",
+            "description": "When I hit someone, sometimes they turn into an animal friend!",
+            "graphic_id": 16134,
+            "hero_id": 113,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,8872"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2704,
+            "name": "被诅咒的钉头锤",
+            "description": "击中的时候，目标就会变成动物伙伴！",
+            "graphic_id": 16134,
+            "hero_id": 113,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,8872"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2705",
+        "snapshots": {
+          "original": {
+            "id": 2705,
+            "name": "Fancy Cursed Mace",
+            "description": "Gaze at the beautiful glow as I clonk you and possibly turn you into a squirrel.",
+            "graphic_id": 16135,
+            "hero_id": 113,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,8872"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2705,
+            "name": "精致的被诅咒钉头锤",
+            "description": "看着我砸向你的一击发出的美丽光芒，很有可能你会由此变成一只小松鼠。",
+            "graphic_id": 16135,
+            "hero_id": 113,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,8872"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2706",
+        "snapshots": {
+          "original": {
+            "id": 2706,
+            "name": "Finger Foods",
+            "description": "How many of these do you think I can fit in my mouth?",
+            "graphic_id": 16130,
+            "hero_id": 113,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,8879,8880,8881",
+                "description": "Increases the effect of all Egbert's second Specializations by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 2706,
+            "name": "小点心",
+            "description": "你觉得我嘴里能塞上多少这玩意？",
+            "graphic_id": 16130,
+            "hero_id": 113,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,8879,8880,8881",
+                "description": "使艾伯特所有第二专精的效果提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2707",
+        "snapshots": {
+          "original": {
+            "id": 2707,
+            "name": "Canapes",
+            "description": "They're too delicious to just eat sixty.",
+            "graphic_id": 16130,
+            "hero_id": 113,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,8879,8880,8881",
+                "description": "Increases the effect of all Egbert's second Specializations by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 2707,
+            "name": "开胃小菜",
+            "description": "太美味了，只吃六十个怎么够。",
+            "graphic_id": 16130,
+            "hero_id": 113,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,8879,8880,8881",
+                "description": "使艾伯特所有第二专精的效果提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2708",
+        "snapshots": {
+          "original": {
+            "id": 2708,
+            "name": "Scotch Eggs",
+            "description": "My seal friend is particularly fond of these.",
+            "graphic_id": 16131,
+            "hero_id": 113,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,8879,8880,8881",
+                "description": "Increases the effect of all Egbert's second Specializations by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 2708,
+            "name": "苏格兰煮蛋",
+            "description": "我的海豹朋友尤其喜欢。",
+            "graphic_id": 16131,
+            "hero_id": 113,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,8879,8880,8881",
+                "description": "使艾伯特所有第二专精的效果提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2709",
+        "snapshots": {
+          "original": {
+            "id": 2709,
+            "name": "Pork Spear in a Bread Cradle",
+            "description": "What else would you call it?",
+            "graphic_id": 16132,
+            "hero_id": 113,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,8879,8880,8881",
+                "description": "Increases the effect of all Egbert's second Specializations by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 2709,
+            "name": "面包摇篮里的猪肉长矛",
+            "description": "不然还能怎么叫？",
+            "graphic_id": 16132,
+            "hero_id": 113,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,8879,8880,8881",
+                "description": "使艾伯特所有第二专精的效果提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2710",
+        "snapshots": {
+          "original": {
+            "id": 2710,
+            "name": "La Vache Mauve Pamphlets",
+            "description": "Can I offer you a pamphlet?",
+            "graphic_id": 16136,
+            "hero_id": 113,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,8"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2710,
+            "name": "紫色牛宣传册",
+            "description": "愿意收下这份宣传册吗？",
+            "graphic_id": 16136,
+            "hero_id": 113,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,8"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2711",
+        "snapshots": {
+          "original": {
+            "id": 2711,
+            "name": "The Good Word",
+            "description": "There will be chips and dip at the first meeting.",
+            "graphic_id": 16136,
+            "hero_id": 113,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,16"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2711,
+            "name": "真善良言",
+            "description": "一见如故。",
+            "graphic_id": 16136,
+            "hero_id": 113,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,16"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2712",
+        "snapshots": {
+          "original": {
+            "id": 2712,
+            "name": "Holy Message",
+            "description": "Would you like to join a new religion? We worship a purple sky cow. Great perks and benefits.",
+            "graphic_id": 16137,
+            "hero_id": 113,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,32"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2712,
+            "name": "上圣真言",
+            "description": "想要皈依新的信仰吗？我们崇拜一头紫色的天空母牛。提供绝佳的天赋和福利哟。",
+            "graphic_id": 16137,
+            "hero_id": 113,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,32"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2713",
+        "snapshots": {
+          "original": {
+            "id": 2713,
+            "name": "Divine Handout",
+            "description": "My quest for absolution can be yours too! It's not a pyramid scheme, I promise.",
+            "graphic_id": 16138,
+            "hero_id": 113,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,80"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2713,
+            "name": "神圣分发",
+            "description": "我的赎罪旅程，你也可以一样拥有！我保证这不是传销。",
+            "graphic_id": 16138,
+            "hero_id": 113,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,80"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "54",
+        "snapshots": {
+          "original": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "阵型中每有一位勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2",
+        "snapshots": {
+          "original": {
+            "id": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "Increases the damage of all Male Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "使所有男性勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "12",
+        "snapshots": {
+          "original": {
+            "id": 12,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "dragonborn"
+                  }
+                ],
+                "description": "Increases the damage of all Dragonborn Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 12,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "dragonborn"
+                  }
+                ],
+                "description": "使所有龙裔勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "83",
+        "snapshots": {
+          "original": {
+            "id": 83,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,40",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "str",
+                    "check": 15,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a STR score of 15 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 83,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,40",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "str",
+                    "check": 15,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位力量大于等于 15 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "35",
+        "snapshots": {
+          "original": {
+            "id": 35,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a CON score of 13 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 35,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有体质大于等于 13 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "49",
+        "snapshots": {
+          "original": {
+            "id": 49,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "Increases the damage of all Good Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 49,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "使所有善良阵营勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

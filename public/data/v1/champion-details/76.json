@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "76",
     "name": {
@@ -45,7 +45,7 @@
   },
   "dateAvailable": "2021-02-24 00:00:00",
   "lastReworkDate": "2021-02-24 00:00:00",
-  "popularity": 59,
+  "popularity": 55,
   "baseCost": "425000000000000000",
   "baseDamage": "1250000000000",
   "baseHealth": "41",
@@ -2279,6 +2279,626 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "1801",
+      "name": {
+        "original": "Worn Staff",
+        "display": "用旧的手杖"
+      },
+      "description": {
+        "original": "It gets the job done.",
+        "display": "能用就行。"
+      },
+      "graphicId": "9869",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,50"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1802",
+      "name": {
+        "original": "Icebreaker Staff",
+        "display": "破冰者手杖"
+      },
+      "description": {
+        "original": "Here, hold my staff. Let me juggle for you!",
+        "display": "来，帮我拿着我的手杖。我来给你表演个杂技！"
+      },
+      "graphicId": "9869",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1803",
+      "name": {
+        "original": "Backup Staff",
+        "display": "备用手杖"
+      },
+      "description": {
+        "original": "For when we really need to hit the harmonies!",
+        "display": "为我们实在需要敲和声时准备的！"
+      },
+      "graphicId": "9870",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1804",
+      "name": {
+        "original": "Songstress Staff",
+        "display": "女歌手的手杖"
+      },
+      "description": {
+        "original": "You'll regret the day the Sirens turned their eyes on you.",
+        "display": "有朝一日你会后悔海妖们把目光投向了你。"
+      },
+      "graphicId": "9871",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,350"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "1805",
+      "name": {
+        "original": "Castoff Camouflage",
+        "display": "被丢弃的伪装"
+      },
+      "description": {
+        "original": "The less familiar I am, today, the better.",
+        "display": "今天我看起来越陌生越好。"
+      },
+      "graphicId": "9863",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1806",
+      "name": {
+        "original": "Borrowed Cloak",
+        "display": "借来的斗篷"
+      },
+      "description": {
+        "original": "Come on, we need to fit in here!",
+        "display": "拜托，我们得融入这里啊！"
+      },
+      "graphicId": "9863",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1807",
+      "name": {
+        "original": "Cloak of Many Fashions",
+        "display": "很时尚的斗篷"
+      },
+      "description": {
+        "original": "Looking good is its own revenge.",
+        "display": "好看本身就是一种复仇。"
+      },
+      "graphicId": "9864",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1808",
+      "name": {
+        "original": "Deva's Regalia",
+        "display": "天人的标志"
+      },
+      "description": {
+        "original": "Wait, did it happen again?",
+        "display": "等等，又来了吗？"
+      },
+      "graphicId": "9865",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1809",
+      "name": {
+        "original": "Morning Robe",
+        "display": "晨袍"
+      },
+      "description": {
+        "original": "Oh this? It's my workout gear.",
+        "display": "噢，这件吗？这是我的健身服啦。"
+      },
+      "graphicId": "9872",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,4906"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1810",
+      "name": {
+        "original": "Evening Shawl",
+        "display": "晚装披巾"
+      },
+      "description": {
+        "original": "Come watch the sunset with me.",
+        "display": "过来和我一起看日落吧。"
+      },
+      "graphicId": "9872",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,4906"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1811",
+      "name": {
+        "original": "Robe of Resilience",
+        "display": "坚韧长袍"
+      },
+      "description": {
+        "original": "Vlahnya has another heist for us. Best look my best.",
+        "display": "弗拉希娜有另一起劫案让我们去干。我最好拿出最好的表现来。"
+      },
+      "graphicId": "9873",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,4906"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1812",
+      "name": {
+        "original": "Dazzling Armor of the Diva",
+        "display": "歌姬耀眼的盔甲"
+      },
+      "description": {
+        "original": "Watch me roll.",
+        "display": "看我的！"
+      },
+      "graphicId": "9874",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,4906"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1813",
+      "name": {
+        "original": "Road Gear",
+        "display": "户外用品"
+      },
+      "description": {
+        "original": "I'm with the band.",
+        "display": "我是跟乐队一起的。"
+      },
+      "graphicId": "9875",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,4907"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1814",
+      "name": {
+        "original": "Charming Shield",
+        "display": "吸引人的盾牌"
+      },
+      "description": {
+        "original": "Let me sing you a song...",
+        "display": "让我给你唱首歌吧......"
+      },
+      "graphicId": "9875",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,4907"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1815",
+      "name": {
+        "original": "Ancient Armor",
+        "display": "远古盔甲"
+      },
+      "description": {
+        "original": "We recovered it when we were repairing the Yawning Portal. Don't tell Durnan.",
+        "display": "这是我们在维修裂隙传送门时找回的。可别告诉杜尔南。"
+      },
+      "graphicId": "9876",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,4907"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1816",
+      "name": {
+        "original": "Radiant Shield",
+        "display": "光芒四射的盾牌"
+      },
+      "description": {
+        "original": "You mess with one of our bandmates, you mess with all of us.",
+        "display": "你惹了我们一个乐队成员，就是惹了我们所有人。"
+      },
+      "graphicId": "9877",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,4907"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1817",
+      "name": {
+        "original": "Costume Jewelry",
+        "display": "人造珠宝"
+      },
+      "description": {
+        "original": "I'd rather go without.",
+        "display": "我宁愿不要。"
+      },
+      "graphicId": "9860",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,4908"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1818",
+      "name": {
+        "original": "Child's Creation",
+        "display": "孩子的作品"
+      },
+      "description": {
+        "original": "My dad said that it makes me invincible. Why tempt fate?",
+        "display": "我爸说这会让我无敌。为什么要冒险呢？"
+      },
+      "graphicId": "9860",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,4908"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1819",
+      "name": {
+        "original": "Concert Wear",
+        "display": "音乐会穿的衣服"
+      },
+      "description": {
+        "original": "Gotta look my best for our show!",
+        "display": "为了我们的演出，我要打扮打扮，让自己看起来最美！"
+      },
+      "graphicId": "9861",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,4908"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1820",
+      "name": {
+        "original": "Diva Crown",
+        "display": "歌姬头冠"
+      },
+      "description": {
+        "original": "I'll distract them, you grab the mark!",
+        "display": "我引开他们的注意，你去拿那个标志！"
+      },
+      "graphicId": "9862",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,4908"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1821",
+      "name": {
+        "original": "Weathered Sheet",
+        "display": "风化的薄片"
+      },
+      "description": {
+        "original": "Let's do this, Sirens!",
+        "display": "我们来吧，海妖们！"
+      },
+      "graphicId": "9866",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,5"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1822",
+      "name": {
+        "original": "Missed Show Flier",
+        "display": "错过了的节目传单"
+      },
+      "description": {
+        "original": "Ghost was a cat at the time..?",
+        "display": "那时候的幽魂是猫......？"
+      },
+      "graphicId": "9866",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,9"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1823",
+      "name": {
+        "original": "Performance Review",
+        "display": "演出评价"
+      },
+      "description": {
+        "original": "They loved the show, just not the fight that broke out after.",
+        "display": "他们还挺喜欢那演出的，就是不喜欢之后爆发的那场打斗。"
+      },
+      "graphicId": "9867",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,18"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1824",
+      "name": {
+        "original": "Yawning Portal Presents",
+        "display": "裂隙传送门礼物"
+      },
+      "description": {
+        "original": "All proceeds go to Durnan to pay for portal repair.",
+        "display": "所有收益都给了杜尔南用来支付哈欠大门的维修费用。"
+      },
+      "graphicId": "9868",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,45"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Female Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "21",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "aasimar"
+            }
+          ],
+          "description": "Increases the damage of all Aasimar Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "45",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "cha",
+              "score": 15,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a CHA score of 15 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "31",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "dex",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a DEX score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "53",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "neutral"
+            }
+          ],
+          "description": "Increases the damage of all Neutral Champions by $(amount)%"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -2435,7 +3055,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 59,
+        "popularity": 55,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -2625,7 +3245,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 59,
+        "popularity": 55,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -5791,6 +6411,1092 @@
             "availabilities": {
               "in_flash_sales": true
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "1801",
+        "snapshots": {
+          "original": {
+            "id": 1801,
+            "name": "Worn Staff",
+            "description": "It gets the job done.",
+            "graphic_id": 9869,
+            "hero_id": 76,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1801,
+            "name": "用旧的手杖",
+            "description": "能用就行。",
+            "graphic_id": 9869,
+            "hero_id": 76,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1802",
+        "snapshots": {
+          "original": {
+            "id": 1802,
+            "name": "Icebreaker Staff",
+            "description": "Here, hold my staff. Let me juggle for you!",
+            "graphic_id": 9869,
+            "hero_id": 76,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1802,
+            "name": "破冰者手杖",
+            "description": "来，帮我拿着我的手杖。我来给你表演个杂技！",
+            "graphic_id": 9869,
+            "hero_id": 76,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1803",
+        "snapshots": {
+          "original": {
+            "id": 1803,
+            "name": "Backup Staff",
+            "description": "For when we really need to hit the harmonies!",
+            "graphic_id": 9870,
+            "hero_id": 76,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1803,
+            "name": "备用手杖",
+            "description": "为我们实在需要敲和声时准备的！",
+            "graphic_id": 9870,
+            "hero_id": 76,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1804",
+        "snapshots": {
+          "original": {
+            "id": 1804,
+            "name": "Songstress Staff",
+            "description": "You'll regret the day the Sirens turned their eyes on you.",
+            "graphic_id": 9871,
+            "hero_id": 76,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1804,
+            "name": "女歌手的手杖",
+            "description": "有朝一日你会后悔海妖们把目光投向了你。",
+            "graphic_id": 9871,
+            "hero_id": 76,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1805",
+        "snapshots": {
+          "original": {
+            "id": 1805,
+            "name": "Castoff Camouflage",
+            "description": "The less familiar I am, today, the better.",
+            "graphic_id": 9863,
+            "hero_id": 76,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ]
+          },
+          "display": {
+            "id": 1805,
+            "name": "被丢弃的伪装",
+            "description": "今天我看起来越陌生越好。",
+            "graphic_id": 9863,
+            "hero_id": 76,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1806",
+        "snapshots": {
+          "original": {
+            "id": 1806,
+            "name": "Borrowed Cloak",
+            "description": "Come on, we need to fit in here!",
+            "graphic_id": 9863,
+            "hero_id": 76,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ]
+          },
+          "display": {
+            "id": 1806,
+            "name": "借来的斗篷",
+            "description": "拜托，我们得融入这里啊！",
+            "graphic_id": 9863,
+            "hero_id": 76,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1807",
+        "snapshots": {
+          "original": {
+            "id": 1807,
+            "name": "Cloak of Many Fashions",
+            "description": "Looking good is its own revenge.",
+            "graphic_id": 9864,
+            "hero_id": 76,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ]
+          },
+          "display": {
+            "id": 1807,
+            "name": "很时尚的斗篷",
+            "description": "好看本身就是一种复仇。",
+            "graphic_id": 9864,
+            "hero_id": 76,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1808",
+        "snapshots": {
+          "original": {
+            "id": 1808,
+            "name": "Deva's Regalia",
+            "description": "Wait, did it happen again?",
+            "graphic_id": 9865,
+            "hero_id": 76,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ]
+          },
+          "display": {
+            "id": 1808,
+            "name": "天人的标志",
+            "description": "等等，又来了吗？",
+            "graphic_id": 9865,
+            "hero_id": 76,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1809",
+        "snapshots": {
+          "original": {
+            "id": 1809,
+            "name": "Morning Robe",
+            "description": "Oh this? It's my workout gear.",
+            "graphic_id": 9872,
+            "hero_id": 76,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,4906"
+              }
+            ]
+          },
+          "display": {
+            "id": 1809,
+            "name": "晨袍",
+            "description": "噢，这件吗？这是我的健身服啦。",
+            "graphic_id": 9872,
+            "hero_id": 76,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,4906"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1810",
+        "snapshots": {
+          "original": {
+            "id": 1810,
+            "name": "Evening Shawl",
+            "description": "Come watch the sunset with me.",
+            "graphic_id": 9872,
+            "hero_id": 76,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,4906"
+              }
+            ]
+          },
+          "display": {
+            "id": 1810,
+            "name": "晚装披巾",
+            "description": "过来和我一起看日落吧。",
+            "graphic_id": 9872,
+            "hero_id": 76,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,4906"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1811",
+        "snapshots": {
+          "original": {
+            "id": 1811,
+            "name": "Robe of Resilience",
+            "description": "Vlahnya has another heist for us. Best look my best.",
+            "graphic_id": 9873,
+            "hero_id": 76,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,4906"
+              }
+            ]
+          },
+          "display": {
+            "id": 1811,
+            "name": "坚韧长袍",
+            "description": "弗拉希娜有另一起劫案让我们去干。我最好拿出最好的表现来。",
+            "graphic_id": 9873,
+            "hero_id": 76,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,4906"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1812",
+        "snapshots": {
+          "original": {
+            "id": 1812,
+            "name": "Dazzling Armor of the Diva",
+            "description": "Watch me roll.",
+            "graphic_id": 9874,
+            "hero_id": 76,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,4906"
+              }
+            ]
+          },
+          "display": {
+            "id": 1812,
+            "name": "歌姬耀眼的盔甲",
+            "description": "看我的！",
+            "graphic_id": 9874,
+            "hero_id": 76,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,4906"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1813",
+        "snapshots": {
+          "original": {
+            "id": 1813,
+            "name": "Road Gear",
+            "description": "I'm with the band.",
+            "graphic_id": 9875,
+            "hero_id": 76,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,4907"
+              }
+            ]
+          },
+          "display": {
+            "id": 1813,
+            "name": "户外用品",
+            "description": "我是跟乐队一起的。",
+            "graphic_id": 9875,
+            "hero_id": 76,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,4907"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1814",
+        "snapshots": {
+          "original": {
+            "id": 1814,
+            "name": "Charming Shield",
+            "description": "Let me sing you a song...",
+            "graphic_id": 9875,
+            "hero_id": 76,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,4907"
+              }
+            ]
+          },
+          "display": {
+            "id": 1814,
+            "name": "吸引人的盾牌",
+            "description": "让我给你唱首歌吧......",
+            "graphic_id": 9875,
+            "hero_id": 76,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,4907"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1815",
+        "snapshots": {
+          "original": {
+            "id": 1815,
+            "name": "Ancient Armor",
+            "description": "We recovered it when we were repairing the Yawning Portal. Don't tell Durnan.",
+            "graphic_id": 9876,
+            "hero_id": 76,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,4907"
+              }
+            ]
+          },
+          "display": {
+            "id": 1815,
+            "name": "远古盔甲",
+            "description": "这是我们在维修裂隙传送门时找回的。可别告诉杜尔南。",
+            "graphic_id": 9876,
+            "hero_id": 76,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,4907"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1816",
+        "snapshots": {
+          "original": {
+            "id": 1816,
+            "name": "Radiant Shield",
+            "description": "You mess with one of our bandmates, you mess with all of us.",
+            "graphic_id": 9877,
+            "hero_id": 76,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,4907"
+              }
+            ]
+          },
+          "display": {
+            "id": 1816,
+            "name": "光芒四射的盾牌",
+            "description": "你惹了我们一个乐队成员，就是惹了我们所有人。",
+            "graphic_id": 9877,
+            "hero_id": 76,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,4907"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1817",
+        "snapshots": {
+          "original": {
+            "id": 1817,
+            "name": "Costume Jewelry",
+            "description": "I'd rather go without.",
+            "graphic_id": 9860,
+            "hero_id": 76,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,4908"
+              }
+            ]
+          },
+          "display": {
+            "id": 1817,
+            "name": "人造珠宝",
+            "description": "我宁愿不要。",
+            "graphic_id": 9860,
+            "hero_id": 76,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,4908"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1818",
+        "snapshots": {
+          "original": {
+            "id": 1818,
+            "name": "Child's Creation",
+            "description": "My dad said that it makes me invincible. Why tempt fate?",
+            "graphic_id": 9860,
+            "hero_id": 76,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,4908"
+              }
+            ]
+          },
+          "display": {
+            "id": 1818,
+            "name": "孩子的作品",
+            "description": "我爸说这会让我无敌。为什么要冒险呢？",
+            "graphic_id": 9860,
+            "hero_id": 76,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,4908"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1819",
+        "snapshots": {
+          "original": {
+            "id": 1819,
+            "name": "Concert Wear",
+            "description": "Gotta look my best for our show!",
+            "graphic_id": 9861,
+            "hero_id": 76,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,4908"
+              }
+            ]
+          },
+          "display": {
+            "id": 1819,
+            "name": "音乐会穿的衣服",
+            "description": "为了我们的演出，我要打扮打扮，让自己看起来最美！",
+            "graphic_id": 9861,
+            "hero_id": 76,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,4908"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1820",
+        "snapshots": {
+          "original": {
+            "id": 1820,
+            "name": "Diva Crown",
+            "description": "I'll distract them, you grab the mark!",
+            "graphic_id": 9862,
+            "hero_id": 76,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,4908"
+              }
+            ]
+          },
+          "display": {
+            "id": 1820,
+            "name": "歌姬头冠",
+            "description": "我引开他们的注意，你去拿那个标志！",
+            "graphic_id": 9862,
+            "hero_id": 76,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,4908"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1821",
+        "snapshots": {
+          "original": {
+            "id": 1821,
+            "name": "Weathered Sheet",
+            "description": "Let's do this, Sirens!",
+            "graphic_id": 9866,
+            "hero_id": 76,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,5"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1821,
+            "name": "风化的薄片",
+            "description": "我们来吧，海妖们！",
+            "graphic_id": 9866,
+            "hero_id": 76,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,5"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1822",
+        "snapshots": {
+          "original": {
+            "id": 1822,
+            "name": "Missed Show Flier",
+            "description": "Ghost was a cat at the time..?",
+            "graphic_id": 9866,
+            "hero_id": 76,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,9"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1822,
+            "name": "错过了的节目传单",
+            "description": "那时候的幽魂是猫......？",
+            "graphic_id": 9866,
+            "hero_id": 76,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,9"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1823",
+        "snapshots": {
+          "original": {
+            "id": 1823,
+            "name": "Performance Review",
+            "description": "They loved the show, just not the fight that broke out after.",
+            "graphic_id": 9867,
+            "hero_id": 76,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,18"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1823,
+            "name": "演出评价",
+            "description": "他们还挺喜欢那演出的，就是不喜欢之后爆发的那场打斗。",
+            "graphic_id": 9867,
+            "hero_id": 76,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,18"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1824",
+        "snapshots": {
+          "original": {
+            "id": 1824,
+            "name": "Yawning Portal Presents",
+            "description": "All proceeds go to Durnan to pay for portal repair.",
+            "graphic_id": 9868,
+            "hero_id": 76,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,45"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1824,
+            "name": "裂隙传送门礼物",
+            "description": "所有收益都给了杜尔南用来支付哈欠大门的维修费用。",
+            "graphic_id": 9868,
+            "hero_id": 76,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,45"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3",
+        "snapshots": {
+          "original": {
+            "id": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Female Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "使所有女性勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "21",
+        "snapshots": {
+          "original": {
+            "id": 21,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "aasimar"
+                  }
+                ],
+                "description": "Increases the damage of all Aasimar Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 21,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "aasimar"
+                  }
+                ],
+                "description": "使所有神裔勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "45",
+        "snapshots": {
+          "original": {
+            "id": 45,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "cha",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a CHA score of 15 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 45,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "cha",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有魅力大于等于 15 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "31",
+        "snapshots": {
+          "original": {
+            "id": 31,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "dex",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a DEX score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 31,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "dex",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有敏捷大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "53",
+        "snapshots": {
+          "original": {
+            "id": 53,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "neutral"
+                  }
+                ],
+                "description": "Increases the damage of all Neutral Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 53,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "neutral"
+                  }
+                ],
+                "description": "使所有中立阵营勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "100",
     "name": {
@@ -40,7 +40,7 @@
   },
   "dateAvailable": "2022-05-18 00:00:00",
   "lastReworkDate": "2025-12-10 13:00:00",
-  "popularity": 3,
+  "popularity": 4,
   "baseCost": "25000000000000",
   "baseDamage": "4500000000",
   "baseHealth": "47",
@@ -2995,6 +2995,644 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "2329",
+      "name": {
+        "original": "Rusty Crossbows",
+        "display": "腐蚀的十字弩"
+      },
+      "description": {
+        "original": "These are not crossbows. They are gear spirits formed like crossbows.",
+        "display": "这些不是十字弩。它们是十字弩形状的装备魂灵。"
+      },
+      "graphicId": "14212",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2330",
+      "name": {
+        "original": "Worn Gear Spirits",
+        "display": "破旧的装备魂灵"
+      },
+      "description": {
+        "original": "My crossbows and I wish to go in search of trouble.",
+        "display": "我和我的十字弩想去寻找麻烦。"
+      },
+      "graphicId": "14212",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2331",
+      "name": {
+        "original": "Beloved Crossbows",
+        "display": "挚爱的十字弩"
+      },
+      "description": {
+        "original": "Permission to part with these crossbows is denied.",
+        "display": "不可以放弃这些十字弩。"
+      },
+      "graphicId": "14213",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2332",
+      "name": {
+        "original": "Ready Gear Spirits",
+        "display": "严阵以待的装备魂灵"
+      },
+      "description": {
+        "original": "They do not require reloading. They are always ready to fire.",
+        "display": "它们不需要重新装填弹药。它们随时准备开火。"
+      },
+      "graphicId": "14214",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "2333",
+      "name": {
+        "original": "Functional Bolts",
+        "display": "实用的箭"
+      },
+      "description": {
+        "original": "It is advisable to aim the pointy ends outward.",
+        "display": "最好是将尖头的两端向外瞄准。"
+      },
+      "graphicId": "14209",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,18059,0"
+        },
+        {
+          "effect_string": "buff_upgrade,10,18059,1",
+          "description": ""
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2334",
+      "name": {
+        "original": "Usable Bolts",
+        "display": "备用弩箭"
+      },
+      "description": {
+        "original": "I am prepared for maximum 25 enemies. Fewer enemies = multiple bolts per enemy",
+        "display": "我准备了最多25个敌人份的。敌人较少=每个敌人多支弩箭"
+      },
+      "graphicId": "14209",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,18059,0"
+        },
+        {
+          "effect_string": "buff_upgrade,30,18059,1",
+          "description": ""
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2335",
+      "name": {
+        "original": "Improved Bolts",
+        "display": "改良的箭"
+      },
+      "description": {
+        "original": "These are 27% more effective. Give or take 3%",
+        "display": "它们的效率提升了 27%。误差不超过 3%。"
+      },
+      "graphicId": "14210",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,18059,0"
+        },
+        {
+          "effect_string": "buff_upgrade,50,18059,1",
+          "description": ""
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2336",
+      "name": {
+        "original": "Missiles of Adaptation",
+        "display": "自适应飞弹"
+      },
+      "description": {
+        "original": "Additional forms provide multitudinous functions.",
+        "display": "额外的形态提供了多种功能。"
+      },
+      "graphicId": "14211",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,18059,0"
+        },
+        {
+          "effect_string": "buff_upgrade,100,18059,1",
+          "description": ""
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2337",
+      "name": {
+        "original": "Cracked Viewer",
+        "display": "碎裂的观察器"
+      },
+      "description": {
+        "original": "It functions but should be replaced soon.",
+        "display": "能用，但应该很快就会被换掉。"
+      },
+      "graphicId": "14221",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,18058"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2338",
+      "name": {
+        "original": "Lens 1.0",
+        "display": "镜头 1.0"
+      },
+      "description": {
+        "original": "You must stand closer to this unit so I can assess your weaknesses.",
+        "display": "你必须站在离这个单位近一些的位置，这样我才能评估你的弱点。"
+      },
+      "graphicId": "14221",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,18058"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2339",
+      "name": {
+        "original": "Lens 2.0",
+        "display": "镜头 2.0"
+      },
+      "description": {
+        "original": "Improvements have made this tool significantly more useful.",
+        "display": "改进后，这个工具的实用性大大增加了。"
+      },
+      "graphicId": "14222",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,18058"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2340",
+      "name": {
+        "original": "Multiplanar Visual Adapter",
+        "display": "多位面视觉适配器"
+      },
+      "description": {
+        "original": "I can assess your weaknesses from Mechanus itself now!",
+        "display": "我现在可以从机械境评估你的弱点！"
+      },
+      "graphicId": "14223",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,18058"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2341",
+      "name": {
+        "original": "Battered Tool",
+        "display": "破烂工具"
+      },
+      "description": {
+        "original": "Functionality is at minimum threshold.",
+        "display": "功能处于最低阈值。"
+      },
+      "graphicId": "14224",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,10,18166,18167,18168",
+          "description": "Increases the effect of Nordom's Specializations by $(amount)%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2342",
+      "name": {
+        "original": "Bent Screwdriver",
+        "display": "弯头螺丝刀"
+      },
+      "description": {
+        "original": "To be used, the angle must be adjusted. It may be preferable for me to creak.",
+        "display": "使用时，必须调整角度。我可能更喜欢吱吱呀呀的声音。"
+      },
+      "graphicId": "14224",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,30,18166,18167,18168",
+          "description": "Increases the effect of Nordom's Specializations by $(amount)%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2343",
+      "name": {
+        "original": "Gear Wrench",
+        "display": "零件扳手"
+      },
+      "description": {
+        "original": "Smoothly running gears are a simple pleasure.",
+        "display": "平稳运作的零件是一种简单的享受。"
+      },
+      "graphicId": "14225",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,50,18166,18167,18168",
+          "description": "Increases the effect of Nordom's Specializations by $(amount)%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2344",
+      "name": {
+        "original": "Welding Torch",
+        "display": "焊枪"
+      },
+      "description": {
+        "original": "All seams are optimal and ready for high stress!",
+        "display": "所有的接缝都处于最佳状态，并准备好接受高压力的工作！"
+      },
+      "graphicId": "14226",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,100,18166,18167,18168",
+          "description": "Increases the effect of Nordom's Specializations by $(amount)%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2345",
+      "name": {
+        "original": "Rusted Gear",
+        "display": "锈蚀的零件"
+      },
+      "description": {
+        "original": "This gear can replace a broken one, but it is not an improvement.",
+        "display": "它可以取代破损的零件，但这算不上什么改进。"
+      },
+      "graphicId": "14215",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,18165"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2346",
+      "name": {
+        "original": "Lost Gear",
+        "display": "丢失的零件"
+      },
+      "description": {
+        "original": "Some machine is missing a vital component. Oh well -- more for me!",
+        "display": "有些机器缺少一个重要部件。哦，好吧--对我来说，多了！"
+      },
+      "graphicId": "14215",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,18165"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2347",
+      "name": {
+        "original": "Precision Gears",
+        "display": "精密的零件"
+      },
+      "description": {
+        "original": "Synchronization=superior function",
+        "display": "同步率代表着出色的性能。"
+      },
+      "graphicId": "14216",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,18165"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2348",
+      "name": {
+        "original": "Gears of Power",
+        "display": "强力的零件"
+      },
+      "description": {
+        "original": "Properly placed these will improve capabilities on multiple levels.",
+        "display": "适当放置这些将在多个层面上提高能力。"
+      },
+      "graphicId": "14217",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,18165"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2349",
+      "name": {
+        "original": "Bag of Coins",
+        "display": "金币袋"
+      },
+      "description": {
+        "original": "I have been holding onto this.",
+        "display": "我一直坚守着它。"
+      },
+      "graphicId": "14218",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,8"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2350",
+      "name": {
+        "original": "333 Copper Coins",
+        "display": "333 铜币"
+      },
+      "description": {
+        "original": "The quantity is cumbersome.",
+        "display": "有零有整。"
+      },
+      "graphicId": "14218",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,15"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2351",
+      "name": {
+        "original": "Glass Eye",
+        "display": "玻璃眼"
+      },
+      "description": {
+        "original": "This is inefficient for purposes of seeing. But it is pleasantly shiny!",
+        "display": "对看东西没什么帮助。但它的光泽度真是赏心悦目！"
+      },
+      "graphicId": "14219",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,29"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2352",
+      "name": {
+        "original": "Fanged Mirror of Yehcir-Eya",
+        "display": "耶希尔·埃亚的獠牙镜"
+      },
+      "description": {
+        "original": "This is a dangerous artifact. Why no one has taken it from me is a puzzle.",
+        "display": "这是一件危险的工艺品。为什么没有人从我这里拿走它，这是一个谜。"
+      },
+      "graphicId": "14220",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,73"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "54",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "!male^!female"
+            }
+          ],
+          "description": "Increases the damage of all Nonbinary Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "29",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "str",
+              "score": 13,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a STR score of 13 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "91",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,30",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "int",
+              "check": 13,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a INT score of 13 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "51",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "lawful"
+            }
+          ],
+          "description": "Increases the damage of all Lawful Champions by $(amount)%"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3155,7 +3793,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 3,
+        "popularity": 4,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3343,7 +3981,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 3,
+        "popularity": 4,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -7009,6 +7647,1168 @@
             "availabilities": {
               "premium_item_id": "649"
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "2329",
+        "snapshots": {
+          "original": {
+            "id": 2329,
+            "name": "Rusty Crossbows",
+            "description": "These are not crossbows. They are gear spirits formed like crossbows.",
+            "graphic_id": 14212,
+            "hero_id": 100,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2329,
+            "name": "腐蚀的十字弩",
+            "description": "这些不是十字弩。它们是十字弩形状的装备魂灵。",
+            "graphic_id": 14212,
+            "hero_id": 100,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2330",
+        "snapshots": {
+          "original": {
+            "id": 2330,
+            "name": "Worn Gear Spirits",
+            "description": "My crossbows and I wish to go in search of trouble.",
+            "graphic_id": 14212,
+            "hero_id": 100,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2330,
+            "name": "破旧的装备魂灵",
+            "description": "我和我的十字弩想去寻找麻烦。",
+            "graphic_id": 14212,
+            "hero_id": 100,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2331",
+        "snapshots": {
+          "original": {
+            "id": 2331,
+            "name": "Beloved Crossbows",
+            "description": "Permission to part with these crossbows is denied.",
+            "graphic_id": 14213,
+            "hero_id": 100,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2331,
+            "name": "挚爱的十字弩",
+            "description": "不可以放弃这些十字弩。",
+            "graphic_id": 14213,
+            "hero_id": 100,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2332",
+        "snapshots": {
+          "original": {
+            "id": 2332,
+            "name": "Ready Gear Spirits",
+            "description": "They do not require reloading. They are always ready to fire.",
+            "graphic_id": 14214,
+            "hero_id": 100,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2332,
+            "name": "严阵以待的装备魂灵",
+            "description": "它们不需要重新装填弹药。它们随时准备开火。",
+            "graphic_id": 14214,
+            "hero_id": 100,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2333",
+        "snapshots": {
+          "original": {
+            "id": 2333,
+            "name": "Functional Bolts",
+            "description": "It is advisable to aim the pointy ends outward.",
+            "graphic_id": 14209,
+            "hero_id": 100,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,18059,0"
+              },
+              {
+                "effect_string": "buff_upgrade,10,18059,1",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2333,
+            "name": "实用的箭",
+            "description": "最好是将尖头的两端向外瞄准。",
+            "graphic_id": 14209,
+            "hero_id": 100,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,18059,0"
+              },
+              {
+                "effect_string": "buff_upgrade,10,18059,1",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2334",
+        "snapshots": {
+          "original": {
+            "id": 2334,
+            "name": "Usable Bolts",
+            "description": "I am prepared for maximum 25 enemies. Fewer enemies = multiple bolts per enemy",
+            "graphic_id": 14209,
+            "hero_id": 100,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,18059,0"
+              },
+              {
+                "effect_string": "buff_upgrade,30,18059,1",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2334,
+            "name": "备用弩箭",
+            "description": "我准备了最多25个敌人份的。敌人较少=每个敌人多支弩箭",
+            "graphic_id": 14209,
+            "hero_id": 100,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,18059,0"
+              },
+              {
+                "effect_string": "buff_upgrade,30,18059,1",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2335",
+        "snapshots": {
+          "original": {
+            "id": 2335,
+            "name": "Improved Bolts",
+            "description": "These are 27% more effective. Give or take 3%",
+            "graphic_id": 14210,
+            "hero_id": 100,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,18059,0"
+              },
+              {
+                "effect_string": "buff_upgrade,50,18059,1",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2335,
+            "name": "改良的箭",
+            "description": "它们的效率提升了 27%。误差不超过 3%。",
+            "graphic_id": 14210,
+            "hero_id": 100,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,18059,0"
+              },
+              {
+                "effect_string": "buff_upgrade,50,18059,1",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2336",
+        "snapshots": {
+          "original": {
+            "id": 2336,
+            "name": "Missiles of Adaptation",
+            "description": "Additional forms provide multitudinous functions.",
+            "graphic_id": 14211,
+            "hero_id": 100,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,18059,0"
+              },
+              {
+                "effect_string": "buff_upgrade,100,18059,1",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2336,
+            "name": "自适应飞弹",
+            "description": "额外的形态提供了多种功能。",
+            "graphic_id": 14211,
+            "hero_id": 100,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,18059,0"
+              },
+              {
+                "effect_string": "buff_upgrade,100,18059,1",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2337",
+        "snapshots": {
+          "original": {
+            "id": 2337,
+            "name": "Cracked Viewer",
+            "description": "It functions but should be replaced soon.",
+            "graphic_id": 14221,
+            "hero_id": 100,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,18058"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2337,
+            "name": "碎裂的观察器",
+            "description": "能用，但应该很快就会被换掉。",
+            "graphic_id": 14221,
+            "hero_id": 100,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,18058"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2338",
+        "snapshots": {
+          "original": {
+            "id": 2338,
+            "name": "Lens 1.0",
+            "description": "You must stand closer to this unit so I can assess your weaknesses.",
+            "graphic_id": 14221,
+            "hero_id": 100,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,18058"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2338,
+            "name": "镜头 1.0",
+            "description": "你必须站在离这个单位近一些的位置，这样我才能评估你的弱点。",
+            "graphic_id": 14221,
+            "hero_id": 100,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,18058"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2339",
+        "snapshots": {
+          "original": {
+            "id": 2339,
+            "name": "Lens 2.0",
+            "description": "Improvements have made this tool significantly more useful.",
+            "graphic_id": 14222,
+            "hero_id": 100,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,18058"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2339,
+            "name": "镜头 2.0",
+            "description": "改进后，这个工具的实用性大大增加了。",
+            "graphic_id": 14222,
+            "hero_id": 100,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,18058"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2340",
+        "snapshots": {
+          "original": {
+            "id": 2340,
+            "name": "Multiplanar Visual Adapter",
+            "description": "I can assess your weaknesses from Mechanus itself now!",
+            "graphic_id": 14223,
+            "hero_id": 100,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,18058"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2340,
+            "name": "多位面视觉适配器",
+            "description": "我现在可以从机械境评估你的弱点！",
+            "graphic_id": 14223,
+            "hero_id": 100,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,18058"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2341",
+        "snapshots": {
+          "original": {
+            "id": 2341,
+            "name": "Battered Tool",
+            "description": "Functionality is at minimum threshold.",
+            "graphic_id": 14224,
+            "hero_id": 100,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,10,18166,18167,18168",
+                "description": "Increases the effect of Nordom's Specializations by $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2341,
+            "name": "破烂工具",
+            "description": "功能处于最低阈值。",
+            "graphic_id": 14224,
+            "hero_id": 100,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,10,18166,18167,18168",
+                "description": "使诺顿的专精效果提高 $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2342",
+        "snapshots": {
+          "original": {
+            "id": 2342,
+            "name": "Bent Screwdriver",
+            "description": "To be used, the angle must be adjusted. It may be preferable for me to creak.",
+            "graphic_id": 14224,
+            "hero_id": 100,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,30,18166,18167,18168",
+                "description": "Increases the effect of Nordom's Specializations by $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2342,
+            "name": "弯头螺丝刀",
+            "description": "使用时，必须调整角度。我可能更喜欢吱吱呀呀的声音。",
+            "graphic_id": 14224,
+            "hero_id": 100,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,30,18166,18167,18168",
+                "description": "使诺顿的专精效果提高 $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2343",
+        "snapshots": {
+          "original": {
+            "id": 2343,
+            "name": "Gear Wrench",
+            "description": "Smoothly running gears are a simple pleasure.",
+            "graphic_id": 14225,
+            "hero_id": 100,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,50,18166,18167,18168",
+                "description": "Increases the effect of Nordom's Specializations by $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2343,
+            "name": "零件扳手",
+            "description": "平稳运作的零件是一种简单的享受。",
+            "graphic_id": 14225,
+            "hero_id": 100,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,50,18166,18167,18168",
+                "description": "使诺顿的专精效果提高 $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2344",
+        "snapshots": {
+          "original": {
+            "id": 2344,
+            "name": "Welding Torch",
+            "description": "All seams are optimal and ready for high stress!",
+            "graphic_id": 14226,
+            "hero_id": 100,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,100,18166,18167,18168",
+                "description": "Increases the effect of Nordom's Specializations by $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2344,
+            "name": "焊枪",
+            "description": "所有的接缝都处于最佳状态，并准备好接受高压力的工作！",
+            "graphic_id": 14226,
+            "hero_id": 100,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,100,18166,18167,18168",
+                "description": "使诺顿的专精效果提高 $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2345",
+        "snapshots": {
+          "original": {
+            "id": 2345,
+            "name": "Rusted Gear",
+            "description": "This gear can replace a broken one, but it is not an improvement.",
+            "graphic_id": 14215,
+            "hero_id": 100,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,18165"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2345,
+            "name": "锈蚀的零件",
+            "description": "它可以取代破损的零件，但这算不上什么改进。",
+            "graphic_id": 14215,
+            "hero_id": 100,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,18165"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2346",
+        "snapshots": {
+          "original": {
+            "id": 2346,
+            "name": "Lost Gear",
+            "description": "Some machine is missing a vital component. Oh well -- more for me!",
+            "graphic_id": 14215,
+            "hero_id": 100,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,18165"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2346,
+            "name": "丢失的零件",
+            "description": "有些机器缺少一个重要部件。哦，好吧--对我来说，多了！",
+            "graphic_id": 14215,
+            "hero_id": 100,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,18165"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2347",
+        "snapshots": {
+          "original": {
+            "id": 2347,
+            "name": "Precision Gears",
+            "description": "Synchronization=superior function",
+            "graphic_id": 14216,
+            "hero_id": 100,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,18165"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2347,
+            "name": "精密的零件",
+            "description": "同步率代表着出色的性能。",
+            "graphic_id": 14216,
+            "hero_id": 100,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,18165"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2348",
+        "snapshots": {
+          "original": {
+            "id": 2348,
+            "name": "Gears of Power",
+            "description": "Properly placed these will improve capabilities on multiple levels.",
+            "graphic_id": 14217,
+            "hero_id": 100,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,18165"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2348,
+            "name": "强力的零件",
+            "description": "适当放置这些将在多个层面上提高能力。",
+            "graphic_id": 14217,
+            "hero_id": 100,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,18165"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2349",
+        "snapshots": {
+          "original": {
+            "id": 2349,
+            "name": "Bag of Coins",
+            "description": "I have been holding onto this.",
+            "graphic_id": 14218,
+            "hero_id": 100,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,8"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2349,
+            "name": "金币袋",
+            "description": "我一直坚守着它。",
+            "graphic_id": 14218,
+            "hero_id": 100,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,8"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2350",
+        "snapshots": {
+          "original": {
+            "id": 2350,
+            "name": "333 Copper Coins",
+            "description": "The quantity is cumbersome.",
+            "graphic_id": 14218,
+            "hero_id": 100,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,15"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2350,
+            "name": "333 铜币",
+            "description": "有零有整。",
+            "graphic_id": 14218,
+            "hero_id": 100,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,15"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2351",
+        "snapshots": {
+          "original": {
+            "id": 2351,
+            "name": "Glass Eye",
+            "description": "This is inefficient for purposes of seeing. But it is pleasantly shiny!",
+            "graphic_id": 14219,
+            "hero_id": 100,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,29"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2351,
+            "name": "玻璃眼",
+            "description": "对看东西没什么帮助。但它的光泽度真是赏心悦目！",
+            "graphic_id": 14219,
+            "hero_id": 100,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,29"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2352",
+        "snapshots": {
+          "original": {
+            "id": 2352,
+            "name": "Fanged Mirror of Yehcir-Eya",
+            "description": "This is a dangerous artifact. Why no one has taken it from me is a puzzle.",
+            "graphic_id": 14220,
+            "hero_id": 100,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,73"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2352,
+            "name": "耶希尔·埃亚的獠牙镜",
+            "description": "这是一件危险的工艺品。为什么没有人从我这里拿走它，这是一个谜。",
+            "graphic_id": 14220,
+            "hero_id": 100,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,73"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "54",
+        "snapshots": {
+          "original": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "阵型中每有一位勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "4",
+        "snapshots": {
+          "original": {
+            "id": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "!male^!female"
+                  }
+                ],
+                "description": "Increases the damage of all Nonbinary Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "!male^!female"
+                  }
+                ],
+                "description": "所有非二元性别勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "29",
+        "snapshots": {
+          "original": {
+            "id": 29,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a STR score of 13 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 29,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有力量大于等于 13 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "91",
+        "snapshots": {
+          "original": {
+            "id": 91,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "int",
+                    "check": 13,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a INT score of 13 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 91,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "int",
+                    "check": 13,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位智力大于等于 13 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "51",
+        "snapshots": {
+          "original": {
+            "id": 51,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "lawful"
+                  }
+                ],
+                "description": "Increases the damage of all Lawful Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 51,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "lawful"
+                  }
+                ],
+                "description": "使所有守序阵营勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

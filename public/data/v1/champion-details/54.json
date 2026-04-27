@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "54",
     "name": {
@@ -35,7 +35,7 @@
   },
   "dateAvailable": "2019-12-18 00:00:00",
   "lastReworkDate": "2019-12-18 00:00:00",
-  "popularity": 100,
+  "popularity": 101,
   "baseCost": "2500",
   "baseDamage": "1200",
   "baseHealth": "45",
@@ -2067,6 +2067,638 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "1273",
+      "name": {
+        "original": "Aged Cloak",
+        "display": "老旧的斗篷"
+      },
+      "description": {
+        "original": "If you see him, run. Don't think. Run!",
+        "display": "如果你碰见他，就跑。什么都别想。马上逃命！"
+      },
+      "graphicId": "6970",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,50"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1274",
+      "name": {
+        "original": "Dark Alley Cloak",
+        "display": "黑暗小巷斗篷"
+      },
+      "description": {
+        "original": "Just keep walking and hope he don't follow.",
+        "display": "继续移动，并且祈祷他不会跟上来。"
+      },
+      "graphicId": "6970",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1275",
+      "name": {
+        "original": "Drow Piwafwi",
+        "display": "卓尔精灵的魔斗篷"
+      },
+      "description": {
+        "original": "Is that a shadow, or URGHK!",
+        "display": "那是影子还是--啊！"
+      },
+      "graphicId": "6971",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1276",
+      "name": {
+        "original": "Winged Cloak of the Assassin",
+        "display": "刺客的羽翼斗篷"
+      },
+      "description": {
+        "original": "Lightning flashed and he was gone.",
+        "display": "迅雷不及掩耳他就消失了。"
+      },
+      "graphicId": "6972",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,350"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1277",
+      "name": {
+        "original": "Assassin's Blade",
+        "display": "刺客之刃"
+      },
+      "description": {
+        "original": "It gets the job done.",
+        "display": "能用就行。"
+      },
+      "graphicId": "6976",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,50"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1278",
+      "name": {
+        "original": "Well-Balanced Sword",
+        "display": "极致协调的剑"
+      },
+      "description": {
+        "original": "A masterful item for a dual-wielding devil.",
+        "display": "双持武器者梦寐以求的顶级装备。"
+      },
+      "graphicId": "6976",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1279",
+      "name": {
+        "original": "Distraction Blade",
+        "display": "分心之刃"
+      },
+      "description": {
+        "original": "He'll make ye watch the longsword, and ye'll miss the dagger till it's in yer gut.",
+        "display": "他会让你专心防备着长剑，然后使用你最没留意到的匕首捅进你腹部。"
+      },
+      "graphicId": "6977",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1280",
+      "name": {
+        "original": "Charon's Claw",
+        "display": "卡戎之爪"
+      },
+      "description": {
+        "original": "I saw it burn the flesh right off of someone who picked it up mid-battle!",
+        "display": "我在战场上见过把它捡起来的人被瞬间燃成灰烬！"
+      },
+      "graphicId": "6978",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,350"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "1281",
+      "name": {
+        "original": "Magical Fragments",
+        "display": "魔法碎片"
+      },
+      "description": {
+        "original": "I heard someone in Luskan was looking for these.",
+        "display": "听说路斯坎有人在寻找这种东西。"
+      },
+      "graphicId": "6973",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,3267"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1282",
+      "name": {
+        "original": "Broken Flute",
+        "display": "破损的长笛"
+      },
+      "description": {
+        "original": "A masterful piece of art, until someone smashed it.",
+        "display": "大师级的艺术品，可惜被人砸破了。"
+      },
+      "graphicId": "6973",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,3267"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1283",
+      "name": {
+        "original": "Driftwood Flute",
+        "display": "浮木长笛"
+      },
+      "description": {
+        "original": "Playing it brings a haunted look to the eyes of the musician.",
+        "display": "它发出的乐声能够惊吓死一大片音乐家。"
+      },
+      "graphicId": "6974",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,3267"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1284",
+      "name": {
+        "original": "Idalia's Flute",
+        "display": "伊达里亚的长笛"
+      },
+      "description": {
+        "original": "Music can help to soothe even the most broken souls.",
+        "display": "音乐可以抚平心碎者的心灵。"
+      },
+      "graphicId": "6975",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,3267"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1285",
+      "name": {
+        "original": "Hidden Dagger",
+        "display": "隐蔽的匕首"
+      },
+      "description": {
+        "original": "They never see it coming.",
+        "display": "敌人至死都不会发现。"
+      },
+      "graphicId": "6982",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,3268"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1286",
+      "name": {
+        "original": "Jeweled Dagger",
+        "display": "宝石匕首"
+      },
+      "description": {
+        "original": "The jewelled hilt belied the dangerous magic held within.",
+        "display": "镶着宝石的刀柄蕴含着致命的魔法。"
+      },
+      "graphicId": "6982",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,3268"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1287",
+      "name": {
+        "original": "Vampiric Dagger",
+        "display": "吸血匕首"
+      },
+      "description": {
+        "original": "Life forces are a tricky thing.",
+        "display": "生命力是一种很奇妙的东西。"
+      },
+      "graphicId": "6983",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,3268"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1288",
+      "name": {
+        "original": "Entreri's Shade Killer",
+        "display": "恩崔立的阴魂克星"
+      },
+      "description": {
+        "original": "Some say he is more shade than man now.",
+        "display": "据说现在的他已经是半阴魂半人了。"
+      },
+      "graphicId": "6984",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,3268"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1289",
+      "name": {
+        "original": "Non-Feathered Hat",
+        "display": "无羽帽"
+      },
+      "description": {
+        "original": "Rumor has it that it was a gift from Jarlaxle Baenre.",
+        "display": "传闻这是贾拉索·班瑞送出的礼物。"
+      },
+      "graphicId": "6967",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_artemis_ultimate,25",
+          "description": "Increases the damage of Artemis while his Ultimate is active by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1290",
+      "name": {
+        "original": "Bolero",
+        "display": "波蕾若外套"
+      },
+      "description": {
+        "original": "Not really Calimport fashion, but it works.",
+        "display": "虽说并非卡林港本土时装，但的确很实用。"
+      },
+      "graphicId": "6967",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_artemis_ultimate,87.5",
+          "description": "Increases the damage of Artemis while his Ultimate is active by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1291",
+      "name": {
+        "original": "Hat of Hidden Secrets",
+        "display": "隐秘帽"
+      },
+      "description": {
+        "original": "It just looks like a normal hat, until it's too late.",
+        "display": "看起来像是普通的帽子，直到让你后悔莫及。"
+      },
+      "graphicId": "6968",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_artemis_ultimate,150",
+          "description": "Increases the damage of Artemis while his Ultimate is active by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1292",
+      "name": {
+        "original": "Herald of Assassination",
+        "display": "暗杀使者"
+      },
+      "description": {
+        "original": "If he removes his hat, you best speak quickly.",
+        "display": "当他摘下帽子时，你最好长话短说。"
+      },
+      "graphicId": "6969",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_artemis_ultimate,275",
+          "description": "Increases the damage of Artemis while his Ultimate is active by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1293",
+      "name": {
+        "original": "Horse Statue",
+        "display": "马儿雕像"
+      },
+      "description": {
+        "original": "It feels warm?",
+        "display": "感觉温暖不？"
+      },
+      "graphicId": "6979",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,5"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1294",
+      "name": {
+        "original": "Flowing Horsehair Statue",
+        "display": "流动的马毛雕像"
+      },
+      "description": {
+        "original": "Not to be confused with a panther.",
+        "display": "不要把它误认为黑豹。"
+      },
+      "graphicId": "6979",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,10"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1295",
+      "name": {
+        "original": "Figurine of Wondrous Power",
+        "display": "神奇力量小雕像"
+      },
+      "description": {
+        "original": "The magic of the statue allows you to call an ally to your side.",
+        "display": "此雕像所蕴含的魔力可以让你召唤一位盟友到你身边。"
+      },
+      "graphicId": "6980",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,20"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1296",
+      "name": {
+        "original": "Wondrous Nightmare",
+        "display": "神奇的梦魇"
+      },
+      "description": {
+        "original": "A beast from the lower planes erupted from the figure. A nightmare.",
+        "display": "雕像中闪现出一只来自地底世界的猛兽。竟是一匹梦魇。"
+      },
+      "graphicId": "6981",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,50"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "55",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "male"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Male Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "58",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,30",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "human"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Human Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "97",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,30",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "cha",
+              "check": 13,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a CHA score of 13 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "28",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "str",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a STR score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "104",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,30",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "lawful"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a LAWFUL alignment"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -2226,7 +2858,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 100,
+        "popularity": 101,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -2407,7 +3039,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 100,
+        "popularity": 101,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -5543,6 +6175,1148 @@
             "availabilities": {
               "premium_item_id": "659"
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "1273",
+        "snapshots": {
+          "original": {
+            "id": 1273,
+            "name": "Aged Cloak",
+            "description": "If you see him, run. Don't think. Run!",
+            "graphic_id": 6970,
+            "hero_id": 54,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1273,
+            "name": "老旧的斗篷",
+            "description": "如果你碰见他，就跑。什么都别想。马上逃命！",
+            "graphic_id": 6970,
+            "hero_id": 54,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1274",
+        "snapshots": {
+          "original": {
+            "id": 1274,
+            "name": "Dark Alley Cloak",
+            "description": "Just keep walking and hope he don't follow.",
+            "graphic_id": 6970,
+            "hero_id": 54,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1274,
+            "name": "黑暗小巷斗篷",
+            "description": "继续移动，并且祈祷他不会跟上来。",
+            "graphic_id": 6970,
+            "hero_id": 54,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1275",
+        "snapshots": {
+          "original": {
+            "id": 1275,
+            "name": "Drow Piwafwi",
+            "description": "Is that a shadow, or URGHK!",
+            "graphic_id": 6971,
+            "hero_id": 54,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1275,
+            "name": "卓尔精灵的魔斗篷",
+            "description": "那是影子还是--啊！",
+            "graphic_id": 6971,
+            "hero_id": 54,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1276",
+        "snapshots": {
+          "original": {
+            "id": 1276,
+            "name": "Winged Cloak of the Assassin",
+            "description": "Lightning flashed and he was gone.",
+            "graphic_id": 6972,
+            "hero_id": 54,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1276,
+            "name": "刺客的羽翼斗篷",
+            "description": "迅雷不及掩耳他就消失了。",
+            "graphic_id": 6972,
+            "hero_id": 54,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1277",
+        "snapshots": {
+          "original": {
+            "id": 1277,
+            "name": "Assassin's Blade",
+            "description": "It gets the job done.",
+            "graphic_id": 6976,
+            "hero_id": 54,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1277,
+            "name": "刺客之刃",
+            "description": "能用就行。",
+            "graphic_id": 6976,
+            "hero_id": 54,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1278",
+        "snapshots": {
+          "original": {
+            "id": 1278,
+            "name": "Well-Balanced Sword",
+            "description": "A masterful item for a dual-wielding devil.",
+            "graphic_id": 6976,
+            "hero_id": 54,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1278,
+            "name": "极致协调的剑",
+            "description": "双持武器者梦寐以求的顶级装备。",
+            "graphic_id": 6976,
+            "hero_id": 54,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1279",
+        "snapshots": {
+          "original": {
+            "id": 1279,
+            "name": "Distraction Blade",
+            "description": "He'll make ye watch the longsword, and ye'll miss the dagger till it's in yer gut.",
+            "graphic_id": 6977,
+            "hero_id": 54,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1279,
+            "name": "分心之刃",
+            "description": "他会让你专心防备着长剑，然后使用你最没留意到的匕首捅进你腹部。",
+            "graphic_id": 6977,
+            "hero_id": 54,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1280",
+        "snapshots": {
+          "original": {
+            "id": 1280,
+            "name": "Charon's Claw",
+            "description": "I saw it burn the flesh right off of someone who picked it up mid-battle!",
+            "graphic_id": 6978,
+            "hero_id": 54,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1280,
+            "name": "卡戎之爪",
+            "description": "我在战场上见过把它捡起来的人被瞬间燃成灰烬！",
+            "graphic_id": 6978,
+            "hero_id": 54,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1281",
+        "snapshots": {
+          "original": {
+            "id": 1281,
+            "name": "Magical Fragments",
+            "description": "I heard someone in Luskan was looking for these.",
+            "graphic_id": 6973,
+            "hero_id": 54,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,3267"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1281,
+            "name": "魔法碎片",
+            "description": "听说路斯坎有人在寻找这种东西。",
+            "graphic_id": 6973,
+            "hero_id": 54,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,3267"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1282",
+        "snapshots": {
+          "original": {
+            "id": 1282,
+            "name": "Broken Flute",
+            "description": "A masterful piece of art, until someone smashed it.",
+            "graphic_id": 6973,
+            "hero_id": 54,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,3267"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1282,
+            "name": "破损的长笛",
+            "description": "大师级的艺术品，可惜被人砸破了。",
+            "graphic_id": 6973,
+            "hero_id": 54,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,3267"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1283",
+        "snapshots": {
+          "original": {
+            "id": 1283,
+            "name": "Driftwood Flute",
+            "description": "Playing it brings a haunted look to the eyes of the musician.",
+            "graphic_id": 6974,
+            "hero_id": 54,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,3267"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1283,
+            "name": "浮木长笛",
+            "description": "它发出的乐声能够惊吓死一大片音乐家。",
+            "graphic_id": 6974,
+            "hero_id": 54,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,3267"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1284",
+        "snapshots": {
+          "original": {
+            "id": 1284,
+            "name": "Idalia's Flute",
+            "description": "Music can help to soothe even the most broken souls.",
+            "graphic_id": 6975,
+            "hero_id": 54,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,3267"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1284,
+            "name": "伊达里亚的长笛",
+            "description": "音乐可以抚平心碎者的心灵。",
+            "graphic_id": 6975,
+            "hero_id": 54,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,3267"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1285",
+        "snapshots": {
+          "original": {
+            "id": 1285,
+            "name": "Hidden Dagger",
+            "description": "They never see it coming.",
+            "graphic_id": 6982,
+            "hero_id": 54,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,3268"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1285,
+            "name": "隐蔽的匕首",
+            "description": "敌人至死都不会发现。",
+            "graphic_id": 6982,
+            "hero_id": 54,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,3268"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1286",
+        "snapshots": {
+          "original": {
+            "id": 1286,
+            "name": "Jeweled Dagger",
+            "description": "The jewelled hilt belied the dangerous magic held within.",
+            "graphic_id": 6982,
+            "hero_id": 54,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,3268"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1286,
+            "name": "宝石匕首",
+            "description": "镶着宝石的刀柄蕴含着致命的魔法。",
+            "graphic_id": 6982,
+            "hero_id": 54,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,3268"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1287",
+        "snapshots": {
+          "original": {
+            "id": 1287,
+            "name": "Vampiric Dagger",
+            "description": "Life forces are a tricky thing.",
+            "graphic_id": 6983,
+            "hero_id": 54,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,3268"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1287,
+            "name": "吸血匕首",
+            "description": "生命力是一种很奇妙的东西。",
+            "graphic_id": 6983,
+            "hero_id": 54,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,3268"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1288",
+        "snapshots": {
+          "original": {
+            "id": 1288,
+            "name": "Entreri's Shade Killer",
+            "description": "Some say he is more shade than man now.",
+            "graphic_id": 6984,
+            "hero_id": 54,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,3268"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1288,
+            "name": "恩崔立的阴魂克星",
+            "description": "据说现在的他已经是半阴魂半人了。",
+            "graphic_id": 6984,
+            "hero_id": 54,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,3268"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1289",
+        "snapshots": {
+          "original": {
+            "id": 1289,
+            "name": "Non-Feathered Hat",
+            "description": "Rumor has it that it was a gift from Jarlaxle Baenre.",
+            "graphic_id": 6967,
+            "hero_id": 54,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_artemis_ultimate,25",
+                "description": "Increases the damage of Artemis while his Ultimate is active by $(amount)%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1289,
+            "name": "无羽帽",
+            "description": "传闻这是贾拉索·班瑞送出的礼物。",
+            "graphic_id": 6967,
+            "hero_id": 54,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_artemis_ultimate,25",
+                "description": "当阿尔忒弥斯的杀招激活时，使其伤害提高 $(amount)%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1290",
+        "snapshots": {
+          "original": {
+            "id": 1290,
+            "name": "Bolero",
+            "description": "Not really Calimport fashion, but it works.",
+            "graphic_id": 6967,
+            "hero_id": 54,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_artemis_ultimate,87.5",
+                "description": "Increases the damage of Artemis while his Ultimate is active by $(amount)%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1290,
+            "name": "波蕾若外套",
+            "description": "虽说并非卡林港本土时装，但的确很实用。",
+            "graphic_id": 6967,
+            "hero_id": 54,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_artemis_ultimate,87.5",
+                "description": "当阿尔忒弥斯的杀招激活时，使其伤害提高 $(amount)%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1291",
+        "snapshots": {
+          "original": {
+            "id": 1291,
+            "name": "Hat of Hidden Secrets",
+            "description": "It just looks like a normal hat, until it's too late.",
+            "graphic_id": 6968,
+            "hero_id": 54,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_artemis_ultimate,150",
+                "description": "Increases the damage of Artemis while his Ultimate is active by $(amount)%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1291,
+            "name": "隐秘帽",
+            "description": "看起来像是普通的帽子，直到让你后悔莫及。",
+            "graphic_id": 6968,
+            "hero_id": 54,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_artemis_ultimate,150",
+                "description": "当阿尔忒弥斯的杀招激活时，使其伤害提高 $(amount)%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1292",
+        "snapshots": {
+          "original": {
+            "id": 1292,
+            "name": "Herald of Assassination",
+            "description": "If he removes his hat, you best speak quickly.",
+            "graphic_id": 6969,
+            "hero_id": 54,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_artemis_ultimate,275",
+                "description": "Increases the damage of Artemis while his Ultimate is active by $(amount)%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1292,
+            "name": "暗杀使者",
+            "description": "当他摘下帽子时，你最好长话短说。",
+            "graphic_id": 6969,
+            "hero_id": 54,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_artemis_ultimate,275",
+                "description": "当阿尔忒弥斯的杀招激活时，使其伤害提高 $(amount)%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1293",
+        "snapshots": {
+          "original": {
+            "id": 1293,
+            "name": "Horse Statue",
+            "description": "It feels warm?",
+            "graphic_id": 6979,
+            "hero_id": 54,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,5"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1293,
+            "name": "马儿雕像",
+            "description": "感觉温暖不？",
+            "graphic_id": 6979,
+            "hero_id": 54,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,5"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1294",
+        "snapshots": {
+          "original": {
+            "id": 1294,
+            "name": "Flowing Horsehair Statue",
+            "description": "Not to be confused with a panther.",
+            "graphic_id": 6979,
+            "hero_id": 54,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,10"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1294,
+            "name": "流动的马毛雕像",
+            "description": "不要把它误认为黑豹。",
+            "graphic_id": 6979,
+            "hero_id": 54,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,10"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1295",
+        "snapshots": {
+          "original": {
+            "id": 1295,
+            "name": "Figurine of Wondrous Power",
+            "description": "The magic of the statue allows you to call an ally to your side.",
+            "graphic_id": 6980,
+            "hero_id": 54,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,20"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1295,
+            "name": "神奇力量小雕像",
+            "description": "此雕像所蕴含的魔力可以让你召唤一位盟友到你身边。",
+            "graphic_id": 6980,
+            "hero_id": 54,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,20"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1296",
+        "snapshots": {
+          "original": {
+            "id": 1296,
+            "name": "Wondrous Nightmare",
+            "description": "A beast from the lower planes erupted from the figure. A nightmare.",
+            "graphic_id": 6981,
+            "hero_id": 54,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,50"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1296,
+            "name": "神奇的梦魇",
+            "description": "雕像中闪现出一只来自地底世界的猛兽。竟是一匹梦魇。",
+            "graphic_id": 6981,
+            "hero_id": 54,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,50"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "55",
+        "snapshots": {
+          "original": {
+            "id": 55,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Male Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 55,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "阵型中每有一位男性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "58",
+        "snapshots": {
+          "original": {
+            "id": 58,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Human Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 58,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "阵型中每有一位人类勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "97",
+        "snapshots": {
+          "original": {
+            "id": 97,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "cha",
+                    "check": 13,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a CHA score of 13 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 97,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "cha",
+                    "check": 13,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位魅力大于等于 13 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "28",
+        "snapshots": {
+          "original": {
+            "id": 28,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a STR score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 28,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有力量大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "104",
+        "snapshots": {
+          "original": {
+            "id": 104,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "lawful"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a LAWFUL alignment"
+              }
+            ]
+          },
+          "display": {
+            "id": 104,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "lawful"
+                  }
+                ],
+                "description": "阵型中每有一位守序阵营勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

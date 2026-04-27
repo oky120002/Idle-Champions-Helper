@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "31",
     "name": {
@@ -39,7 +39,7 @@
   },
   "dateAvailable": "2018-08-15 00:00:00",
   "lastReworkDate": "2025-02-12 13:00:00",
-  "popularity": 32,
+  "popularity": 33,
   "baseCost": "75000",
   "baseDamage": "12000",
   "baseHealth": "47",
@@ -3211,6 +3211,638 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "721",
+      "name": {
+        "original": "Flimsy Blade",
+        "display": "薄弱之刃"
+      },
+      "description": {
+        "original": "Blade? Check. Handle? Check. I'm good.",
+        "display": "刀刃？有。刀柄？有。行，没问题。"
+      },
+      "graphicId": "3715",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,50"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "722",
+      "name": {
+        "original": "Old Rapier",
+        "display": "古老西洋剑"
+      },
+      "description": {
+        "original": "I won it at a game of Three-Dragon Ante.",
+        "display": "这是我在某次三龙牌局中赢回来的。"
+      },
+      "graphicId": "3715",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "723",
+      "name": {
+        "original": "Balanced Rapier",
+        "display": "协调的西洋剑"
+      },
+      "description": {
+        "original": "With this rapier, I'll look super awesome and everyone will take me seriously. Right?",
+        "display": "只要举起这把西洋剑，大家就会被我的凌厉气势所慑服。对吧？"
+      },
+      "graphicId": "3716",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "724",
+      "name": {
+        "original": "Rapier of the Bold",
+        "display": "勇者的西洋剑"
+      },
+      "description": {
+        "original": "First in means first to the glory!",
+        "display": "先出手者得先机！"
+      },
+      "graphicId": "3717",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,350"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "725",
+      "name": {
+        "original": "Tattered Cape",
+        "display": "破烂的披肩"
+      },
+      "description": {
+        "original": "See, the air flows right through. It's breezy!",
+        "display": "瞧，冷风能够通过披风直吹后背。多么的清爽！"
+      },
+      "graphicId": "3703",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,16530"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "726",
+      "name": {
+        "original": "Trash Cape",
+        "display": "垃圾披肩"
+      },
+      "description": {
+        "original": "I found it in a bin behind the Yawning Portal.",
+        "display": "这是我在裂隙传送门后面的垃圾桶里找到的。"
+      },
+      "graphicId": "3703",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,16530"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "727",
+      "name": {
+        "original": "Kobold-Sized Cape",
+        "display": "狗头人披肩"
+      },
+      "description": {
+        "original": "It fits me better this way.",
+        "display": "这个好像比较合身。"
+      },
+      "graphicId": "3704",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,16530"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "728",
+      "name": {
+        "original": "Hershel Von Saberburg's Cape",
+        "display": "赫歇尔·冯·萨伯堡的披肩"
+      },
+      "description": {
+        "original": "I got lucky when I won this cape, but they don't need to know that!",
+        "display": "当初我全凭着运气才赢得到这件披肩的，不过这种事没必要告诉大家！"
+      },
+      "graphicId": "3705",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,16530"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "729",
+      "name": {
+        "original": "Moldy Hat",
+        "display": "发霉的帽子"
+      },
+      "description": {
+        "original": "I look like an adventurer already!",
+        "display": "整个人顿时有了一股冒险者的气势！"
+      },
+      "graphicId": "3706",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,16527,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "730",
+      "name": {
+        "original": "Oddly Folded Hat",
+        "display": "别扭的折叠帽"
+      },
+      "description": {
+        "original": "If I hold my head at this angle, it looks totally normal!",
+        "display": "只要我的头维持在这个倾斜的角度，那搭配这顶帽子看起来就不会别扭了！"
+      },
+      "graphicId": "3706",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,16527,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "731",
+      "name": {
+        "original": "Fancy Hat",
+        "display": "华丽的帽子"
+      },
+      "description": {
+        "original": "I want to be flashy, but I don't have enough gold.",
+        "display": "我想要打扮得精致一点，但是身上的金币不够。"
+      },
+      "graphicId": "3707",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,16527,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "732",
+      "name": {
+        "original": "Ishi's Feathered Hat",
+        "display": "伊希的羽毛帽子"
+      },
+      "description": {
+        "original": "They'll see me coming when I wear this regal hat!",
+        "display": "戴上这顶宫廷帽子，肯定会吸引到大家的注意力！"
+      },
+      "graphicId": "3708",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,16527,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "733",
+      "name": {
+        "original": "Stained IOU",
+        "display": "玷污的欠条"
+      },
+      "description": {
+        "original": "It's from an old friend. You may have heard of him.",
+        "display": "这是某位老朋友的，你或许也认识他。"
+      },
+      "graphicId": "3700",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,16528"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "734",
+      "name": {
+        "original": "Ripped IOU",
+        "display": "撕破的欠条"
+      },
+      "description": {
+        "original": "See, you just have to imagine the RTU between the A and the S. It got ripped.",
+        "display": "瞧，“阿”跟“斯”之间的那个字你得自己猜。因为被撕破了所以看不见。"
+      },
+      "graphicId": "3700",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,16528"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "735",
+      "name": {
+        "original": "Official IOU",
+        "display": "合法的欠条"
+      },
+      "description": {
+        "original": "You see, this one time we found a ring. . .",
+        "display": "这是某次我们发现了一枚戒指......"
+      },
+      "graphicId": "3701",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,16528"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "736",
+      "name": {
+        "original": "Fancy IOU",
+        "display": "精致的欠条"
+      },
+      "description": {
+        "original": "I keep this near me, just in case I need to call on Artus Cimber.",
+        "display": "我一直把它带在身上，以防万一须要向阿图斯·西姆贝尔求助。"
+      },
+      "graphicId": "3702",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,16528"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "737",
+      "name": {
+        "original": "Scared Nub-Ub",
+        "display": "受惊的阿布"
+      },
+      "description": {
+        "original": "Come on Nub-Ub. He didn't really mean you were dinner tonight.",
+        "display": "不要怕阿布。他并不是说要把你做成晚餐。"
+      },
+      "graphicId": "3709",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,10,16532,16533,16534",
+          "description": "Increases the effect of all Ishi's Specializations by $amount%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "738",
+      "name": {
+        "original": "Cloaked Nub-Ub",
+        "display": "披着披肩的阿布"
+      },
+      "description": {
+        "original": "Doesn't he look fierce!",
+        "display": "阿布是不是很有气势？"
+      },
+      "graphicId": "3709",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,30,16532,16533,16534",
+          "description": "Increases the effect of all Ishi's Specializations by $amount%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "739",
+      "name": {
+        "original": "Nub-Ub",
+        "display": "阿布"
+      },
+      "description": {
+        "original": "This is Nub-Ub. It means little pig in Kobold.",
+        "display": "这位是阿布，它的名字在狗头人语中意味着小猪。"
+      },
+      "graphicId": "3710",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,50,16532,16533,16534",
+          "description": "Increases the effect of all Ishi's Specializations by $amount%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "740",
+      "name": {
+        "original": "Nub-Ubtao?",
+        "display": "布乌塔欧？"
+      },
+      "description": {
+        "original": "This mouse is a bit too lucky, even for me. Does he have a higher calling?",
+        "display": "这老鼠是开了挂吗？难道它是有什么隐藏的身份？"
+      },
+      "graphicId": "3711",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,100,16532,16533,16534",
+          "description": "Increases the effect of all Ishi's Specializations by $amount%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "741",
+      "name": {
+        "original": "Scraps on a Rag",
+        "display": "破布上的食物碎片"
+      },
+      "description": {
+        "original": "Rations are better when they are moist.",
+        "display": "潮湿的干粮更加美味。"
+      },
+      "graphicId": "3712",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,11"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "742",
+      "name": {
+        "original": "Dry Holey Pocket Soup",
+        "display": "神圣袋中干汤"
+      },
+      "description": {
+        "original": "Oh. Sure it's holy. Yep. Just wait till I leave to test it out.",
+        "display": "噢，很神圣的样子。待会我就尝尝看。"
+      },
+      "graphicId": "3712",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,21"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "743",
+      "name": {
+        "original": "Portable Soup Pouch",
+        "display": "便携式汤包"
+      },
+      "description": {
+        "original": "Don't mind the lint. It adds flavor.",
+        "display": "不必在意那些棉绒，就当作是为汤加料吧。"
+      },
+      "graphicId": "3713",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,42"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "744",
+      "name": {
+        "original": "Pocket Soup",
+        "display": "袋中汤"
+      },
+      "description": {
+        "original": "Littlefox likes it, and that's all that matters to me.",
+        "display": "小狐狸最爱喝了，其他的我都不在乎。"
+      },
+      "graphicId": "3714",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,105"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "56",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "20",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "kobold"
+            }
+          ],
+          "description": "Increases the damage of all Kobold Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "87",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "con",
+              "check": 11,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a CON score of 11 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "90",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "int",
+              "check": 11,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a INT score of 11 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "102",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "good"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a GOOD alignment"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3363,7 +3995,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 32,
+        "popularity": 33,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3555,7 +4187,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 32,
+        "popularity": 33,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -7849,6 +8481,1156 @@
             "availabilities": {
               "premium_item_id": "609"
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "721",
+        "snapshots": {
+          "original": {
+            "id": 721,
+            "name": "Flimsy Blade",
+            "description": "Blade? Check. Handle? Check. I'm good.",
+            "graphic_id": 3715,
+            "hero_id": 31,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 721,
+            "name": "薄弱之刃",
+            "description": "刀刃？有。刀柄？有。行，没问题。",
+            "graphic_id": 3715,
+            "hero_id": 31,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "722",
+        "snapshots": {
+          "original": {
+            "id": 722,
+            "name": "Old Rapier",
+            "description": "I won it at a game of Three-Dragon Ante.",
+            "graphic_id": 3715,
+            "hero_id": 31,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 722,
+            "name": "古老西洋剑",
+            "description": "这是我在某次三龙牌局中赢回来的。",
+            "graphic_id": 3715,
+            "hero_id": 31,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "723",
+        "snapshots": {
+          "original": {
+            "id": 723,
+            "name": "Balanced Rapier",
+            "description": "With this rapier, I'll look super awesome and everyone will take me seriously. Right?",
+            "graphic_id": 3716,
+            "hero_id": 31,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 723,
+            "name": "协调的西洋剑",
+            "description": "只要举起这把西洋剑，大家就会被我的凌厉气势所慑服。对吧？",
+            "graphic_id": 3716,
+            "hero_id": 31,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "724",
+        "snapshots": {
+          "original": {
+            "id": 724,
+            "name": "Rapier of the Bold",
+            "description": "First in means first to the glory!",
+            "graphic_id": 3717,
+            "hero_id": 31,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 724,
+            "name": "勇者的西洋剑",
+            "description": "先出手者得先机！",
+            "graphic_id": 3717,
+            "hero_id": 31,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "725",
+        "snapshots": {
+          "original": {
+            "id": 725,
+            "name": "Tattered Cape",
+            "description": "See, the air flows right through. It's breezy!",
+            "graphic_id": 3703,
+            "hero_id": 31,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,16530"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 725,
+            "name": "破烂的披肩",
+            "description": "瞧，冷风能够通过披风直吹后背。多么的清爽！",
+            "graphic_id": 3703,
+            "hero_id": 31,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,16530"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "726",
+        "snapshots": {
+          "original": {
+            "id": 726,
+            "name": "Trash Cape",
+            "description": "I found it in a bin behind the Yawning Portal.",
+            "graphic_id": 3703,
+            "hero_id": 31,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,16530"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 726,
+            "name": "垃圾披肩",
+            "description": "这是我在裂隙传送门后面的垃圾桶里找到的。",
+            "graphic_id": 3703,
+            "hero_id": 31,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,16530"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "727",
+        "snapshots": {
+          "original": {
+            "id": 727,
+            "name": "Kobold-Sized Cape",
+            "description": "It fits me better this way.",
+            "graphic_id": 3704,
+            "hero_id": 31,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,16530"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 727,
+            "name": "狗头人披肩",
+            "description": "这个好像比较合身。",
+            "graphic_id": 3704,
+            "hero_id": 31,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,16530"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "728",
+        "snapshots": {
+          "original": {
+            "id": 728,
+            "name": "Hershel Von Saberburg's Cape",
+            "description": "I got lucky when I won this cape, but they don't need to know that!",
+            "graphic_id": 3705,
+            "hero_id": 31,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,16530"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 728,
+            "name": "赫歇尔·冯·萨伯堡的披肩",
+            "description": "当初我全凭着运气才赢得到这件披肩的，不过这种事没必要告诉大家！",
+            "graphic_id": 3705,
+            "hero_id": 31,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,16530"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "729",
+        "snapshots": {
+          "original": {
+            "id": 729,
+            "name": "Moldy Hat",
+            "description": "I look like an adventurer already!",
+            "graphic_id": 3706,
+            "hero_id": 31,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,16527,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 729,
+            "name": "发霉的帽子",
+            "description": "整个人顿时有了一股冒险者的气势！",
+            "graphic_id": 3706,
+            "hero_id": 31,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,16527,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "730",
+        "snapshots": {
+          "original": {
+            "id": 730,
+            "name": "Oddly Folded Hat",
+            "description": "If I hold my head at this angle, it looks totally normal!",
+            "graphic_id": 3706,
+            "hero_id": 31,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,16527,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 730,
+            "name": "别扭的折叠帽",
+            "description": "只要我的头维持在这个倾斜的角度，那搭配这顶帽子看起来就不会别扭了！",
+            "graphic_id": 3706,
+            "hero_id": 31,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,16527,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "731",
+        "snapshots": {
+          "original": {
+            "id": 731,
+            "name": "Fancy Hat",
+            "description": "I want to be flashy, but I don't have enough gold.",
+            "graphic_id": 3707,
+            "hero_id": 31,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,16527,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 731,
+            "name": "华丽的帽子",
+            "description": "我想要打扮得精致一点，但是身上的金币不够。",
+            "graphic_id": 3707,
+            "hero_id": 31,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,16527,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "732",
+        "snapshots": {
+          "original": {
+            "id": 732,
+            "name": "Ishi's Feathered Hat",
+            "description": "They'll see me coming when I wear this regal hat!",
+            "graphic_id": 3708,
+            "hero_id": 31,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,16527,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 732,
+            "name": "伊希的羽毛帽子",
+            "description": "戴上这顶宫廷帽子，肯定会吸引到大家的注意力！",
+            "graphic_id": 3708,
+            "hero_id": 31,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,16527,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "733",
+        "snapshots": {
+          "original": {
+            "id": 733,
+            "name": "Stained IOU",
+            "description": "It's from an old friend. You may have heard of him.",
+            "graphic_id": 3700,
+            "hero_id": 31,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,16528"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 733,
+            "name": "玷污的欠条",
+            "description": "这是某位老朋友的，你或许也认识他。",
+            "graphic_id": 3700,
+            "hero_id": 31,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,16528"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "734",
+        "snapshots": {
+          "original": {
+            "id": 734,
+            "name": "Ripped IOU",
+            "description": "See, you just have to imagine the RTU between the A and the S. It got ripped.",
+            "graphic_id": 3700,
+            "hero_id": 31,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,16528"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 734,
+            "name": "撕破的欠条",
+            "description": "瞧，“阿”跟“斯”之间的那个字你得自己猜。因为被撕破了所以看不见。",
+            "graphic_id": 3700,
+            "hero_id": 31,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,16528"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "735",
+        "snapshots": {
+          "original": {
+            "id": 735,
+            "name": "Official IOU",
+            "description": "You see, this one time we found a ring. . .",
+            "graphic_id": 3701,
+            "hero_id": 31,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,16528"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 735,
+            "name": "合法的欠条",
+            "description": "这是某次我们发现了一枚戒指......",
+            "graphic_id": 3701,
+            "hero_id": 31,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,16528"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "736",
+        "snapshots": {
+          "original": {
+            "id": 736,
+            "name": "Fancy IOU",
+            "description": "I keep this near me, just in case I need to call on Artus Cimber.",
+            "graphic_id": 3702,
+            "hero_id": 31,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,16528"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 736,
+            "name": "精致的欠条",
+            "description": "我一直把它带在身上，以防万一须要向阿图斯·西姆贝尔求助。",
+            "graphic_id": 3702,
+            "hero_id": 31,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,16528"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "737",
+        "snapshots": {
+          "original": {
+            "id": 737,
+            "name": "Scared Nub-Ub",
+            "description": "Come on Nub-Ub. He didn't really mean you were dinner tonight.",
+            "graphic_id": 3709,
+            "hero_id": 31,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,10,16532,16533,16534",
+                "description": "Increases the effect of all Ishi's Specializations by $amount%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 737,
+            "name": "受惊的阿布",
+            "description": "不要怕阿布。他并不是说要把你做成晚餐。",
+            "graphic_id": 3709,
+            "hero_id": 31,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,10,16532,16533,16534",
+                "description": "使 Ishi 所有专长的效果提高 $amount%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "738",
+        "snapshots": {
+          "original": {
+            "id": 738,
+            "name": "Cloaked Nub-Ub",
+            "description": "Doesn't he look fierce!",
+            "graphic_id": 3709,
+            "hero_id": 31,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,30,16532,16533,16534",
+                "description": "Increases the effect of all Ishi's Specializations by $amount%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 738,
+            "name": "披着披肩的阿布",
+            "description": "阿布是不是很有气势？",
+            "graphic_id": 3709,
+            "hero_id": 31,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,30,16532,16533,16534",
+                "description": "使 Ishi 所有专长的效果提高 $amount%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "739",
+        "snapshots": {
+          "original": {
+            "id": 739,
+            "name": "Nub-Ub",
+            "description": "This is Nub-Ub. It means little pig in Kobold.",
+            "graphic_id": 3710,
+            "hero_id": 31,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,50,16532,16533,16534",
+                "description": "Increases the effect of all Ishi's Specializations by $amount%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 739,
+            "name": "阿布",
+            "description": "这位是阿布，它的名字在狗头人语中意味着小猪。",
+            "graphic_id": 3710,
+            "hero_id": 31,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,50,16532,16533,16534",
+                "description": "使 Ishi 所有专长的效果提高 $amount%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "740",
+        "snapshots": {
+          "original": {
+            "id": 740,
+            "name": "Nub-Ubtao?",
+            "description": "This mouse is a bit too lucky, even for me. Does he have a higher calling?",
+            "graphic_id": 3711,
+            "hero_id": 31,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,100,16532,16533,16534",
+                "description": "Increases the effect of all Ishi's Specializations by $amount%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 740,
+            "name": "布乌塔欧？",
+            "description": "这老鼠是开了挂吗？难道它是有什么隐藏的身份？",
+            "graphic_id": 3711,
+            "hero_id": 31,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,100,16532,16533,16534",
+                "description": "使 Ishi 所有专长的效果提高 $amount%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "741",
+        "snapshots": {
+          "original": {
+            "id": 741,
+            "name": "Scraps on a Rag",
+            "description": "Rations are better when they are moist.",
+            "graphic_id": 3712,
+            "hero_id": 31,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,11"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 741,
+            "name": "破布上的食物碎片",
+            "description": "潮湿的干粮更加美味。",
+            "graphic_id": 3712,
+            "hero_id": 31,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,11"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "742",
+        "snapshots": {
+          "original": {
+            "id": 742,
+            "name": "Dry Holey Pocket Soup",
+            "description": "Oh. Sure it's holy. Yep. Just wait till I leave to test it out.",
+            "graphic_id": 3712,
+            "hero_id": 31,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,21"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 742,
+            "name": "神圣袋中干汤",
+            "description": "噢，很神圣的样子。待会我就尝尝看。",
+            "graphic_id": 3712,
+            "hero_id": 31,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,21"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "743",
+        "snapshots": {
+          "original": {
+            "id": 743,
+            "name": "Portable Soup Pouch",
+            "description": "Don't mind the lint. It adds flavor.",
+            "graphic_id": 3713,
+            "hero_id": 31,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,42"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 743,
+            "name": "便携式汤包",
+            "description": "不必在意那些棉绒，就当作是为汤加料吧。",
+            "graphic_id": 3713,
+            "hero_id": 31,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,42"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "744",
+        "snapshots": {
+          "original": {
+            "id": 744,
+            "name": "Pocket Soup",
+            "description": "Littlefox likes it, and that's all that matters to me.",
+            "graphic_id": 3714,
+            "hero_id": 31,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,105"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 744,
+            "name": "袋中汤",
+            "description": "小狐狸最爱喝了，其他的我都不在乎。",
+            "graphic_id": 3714,
+            "hero_id": 31,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,105"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "56",
+        "snapshots": {
+          "original": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "阵型中每有一位女性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "20",
+        "snapshots": {
+          "original": {
+            "id": 20,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "kobold"
+                  }
+                ],
+                "description": "Increases the damage of all Kobold Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 20,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "kobold"
+                  }
+                ],
+                "description": "使所有狗头人勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "87",
+        "snapshots": {
+          "original": {
+            "id": 87,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "con",
+                    "check": 11,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a CON score of 11 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 87,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "con",
+                    "check": 11,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位体质大于等于 11 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "90",
+        "snapshots": {
+          "original": {
+            "id": 90,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "int",
+                    "check": 11,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a INT score of 11 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 90,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "int",
+                    "check": 11,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位智力大于等于 11 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "102",
+        "snapshots": {
+          "original": {
+            "id": 102,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a GOOD alignment"
+              }
+            ]
+          },
+          "display": {
+            "id": 102,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "阵型中每有一位善良阵营勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

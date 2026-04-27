@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "152",
     "name": {
@@ -46,7 +46,7 @@
   },
   "dateAvailable": "2024-09-04 12:00:00",
   "lastReworkDate": "2024-09-04 12:00:00",
-  "popularity": 106,
+  "popularity": 105,
   "baseCost": "100000000000000000000",
   "baseDamage": "15000000000000",
   "baseHealth": "41",
@@ -3221,6 +3221,684 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "3602",
+      "name": {
+        "original": "Mom's Picks",
+        "display": "妈妈的提醒"
+      },
+      "description": {
+        "original": "Mom says I get to pick out my clothes next year!",
+        "display": "妈妈说明年我可以自己挑衣服了！"
+      },
+      "graphicId": "24358",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3603",
+      "name": {
+        "original": "Weekend Clothes",
+        "display": "周末服装"
+      },
+      "description": {
+        "original": "Mom said to not get these dirty - oh well!",
+        "display": "妈妈说不要把衣服弄脏——嗨呀，算了！"
+      },
+      "graphicId": "24358",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3604",
+      "name": {
+        "original": "Barbarian Gear",
+        "display": "野蛮人装备"
+      },
+      "description": {
+        "original": "Sheila - look how cool I am in this!",
+        "display": "希拉，看我穿这身多酷！"
+      },
+      "graphicId": "24359",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3605",
+      "name": {
+        "original": "Clothes of the Harvest",
+        "display": "丰收之衣"
+      },
+      "description": {
+        "original": "That golden crow is never gonna suspect this!",
+        "display": "那只金乌鸦绝对不会怀疑这个！"
+      },
+      "graphicId": "24360",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "3606",
+      "name": {
+        "original": "Home Run",
+        "display": "本垒打"
+      },
+      "description": {
+        "original": "Did you see how far I hit that one?!",
+        "display": "你看到我那一下打得多远了吗？！"
+      },
+      "graphicId": "24361",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,15443,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3607",
+      "name": {
+        "original": "Baseball Bat",
+        "display": "棒球棍"
+      },
+      "description": {
+        "original": "I promise not to break this one!",
+        "display": "我保证不把这根弄断！"
+      },
+      "graphicId": "24361",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,15443,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3608",
+      "name": {
+        "original": "Sturdy Club",
+        "display": "结实木棒"
+      },
+      "description": {
+        "original": "I could hit so many home runs with this!",
+        "display": "我可以用它打出好多本垒打！"
+      },
+      "graphicId": "24362",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,15443,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3609",
+      "name": {
+        "original": "Magical Bonking Club",
+        "display": "魔法敲敲棍"
+      },
+      "description": {
+        "original": "Tiamat won't stand a chance against this!",
+        "display": "提亚马特根本挡不住这个！"
+      },
+      "graphicId": "24363",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,15443,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3610",
+      "name": {
+        "original": "A Time of Fear",
+        "display": "恐惧时刻"
+      },
+      "description": {
+        "original": "I was so scared I was going to lose you, Uni!",
+        "display": "我好害怕会失去你，独角！"
+      },
+      "graphicId": "24370",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,15444,1"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3611",
+      "name": {
+        "original": "Shed Horn",
+        "display": "脱落的角"
+      },
+      "description": {
+        "original": "No matter what, I'll always have this to remind me of Uni.",
+        "display": "不管发生什么，我都会用这个来纪念独角。"
+      },
+      "graphicId": "24370",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,15444,1"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3612",
+      "name": {
+        "original": "Uni Hair",
+        "display": "独角的毛发"
+      },
+      "description": {
+        "original": "Uni, you're shedding everywhere!",
+        "display": "独角，你的毛掉得到处都是！"
+      },
+      "graphicId": "24371",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,15444,1"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3613",
+      "name": {
+        "original": "Dragonbane Wreath",
+        "display": "屠龙花环"
+      },
+      "description": {
+        "original": "That old man said it would bring Uni luck - and he was right!",
+        "display": "那个老头说它会给独角带来好运——他说对了！"
+      },
+      "graphicId": "24372",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,15444,1"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3614",
+      "name": {
+        "original": "Go Fasters",
+        "display": "极速鞋"
+      },
+      "description": {
+        "original": "I can round the bases faster than anyone else on the team!",
+        "display": "我可以比队里其他人更快跑完所有垒包！"
+      },
+      "graphicId": "24355",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,15447,0",
+          "description": "Increases the effect of Bobby's Stunning Strength and Group Charge specializations by $amount%."
+        },
+        {
+          "effect_string": "buff_upgrade,25,15448,0",
+          "description": ""
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3615",
+      "name": {
+        "original": "School Shoes",
+        "display": "校鞋"
+      },
+      "description": {
+        "original": "It took me forever to get my mom to let me wear these to school!",
+        "display": "我花了好长时间才说服妈妈让我穿这些去学校！"
+      },
+      "graphicId": "24355",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,15447,0",
+          "description": "Increases the effect of Bobby's Stunning Strength and Group Charge specializations by $amount%."
+        },
+        {
+          "effect_string": "buff_upgrade,87.5,15448,0",
+          "description": ""
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3616",
+      "name": {
+        "original": "Leather Boots",
+        "display": "皮靴"
+      },
+      "description": {
+        "original": "I miss my laces, but the fur is cool!",
+        "display": "我想念我的鞋带，但这毛皮也很酷！"
+      },
+      "graphicId": "24356",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,15447,0",
+          "description": "Increases the effect of Bobby's Stunning Strength and Group Charge specializations by $amount%."
+        },
+        {
+          "effect_string": "buff_upgrade,150,15448,0",
+          "description": ""
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3617",
+      "name": {
+        "original": "Boots of Wheat",
+        "display": "麦靴"
+      },
+      "description": {
+        "original": "I feel like that scarecrow from that old movie!",
+        "display": "我感觉自己像那部老电影里的那个稻草人！"
+      },
+      "graphicId": "24357",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,15447,0",
+          "description": "Increases the effect of Bobby's Stunning Strength and Group Charge specializations by $amount%."
+        },
+        {
+          "effect_string": "buff_upgrade,275,15448,0",
+          "description": ""
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3618",
+      "name": {
+        "original": "Know Your Limits",
+        "display": "自知之明"
+      },
+      "description": {
+        "original": "Dungeon Master said that I need to know when to run away...",
+        "display": "地下城主说我一定要知道什么时候该逃跑……"
+      },
+      "graphicId": "24367",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,15449,0",
+          "description": "Increases the effect of Bobby's Not So Low, Still Growing Up, and Strong Armed specializations by $amount%."
+        },
+        {
+          "effect_string": "buff_upgrade,10,15450,0",
+          "description": ""
+        },
+        {
+          "effect_string": "buff_upgrade,10,15451,0",
+          "description": ""
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3619",
+      "name": {
+        "original": "Amulet of Protection",
+        "display": "护身符"
+      },
+      "description": {
+        "original": "...but this is for when I don't!",
+        "display": "……不过这是为了我不跑的时候用的！"
+      },
+      "graphicId": "24367",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,15449,0",
+          "description": "Increases the effect of Bobby's Not So Low, Still Growing Up, and Strong Armed specializations by $amount%."
+        },
+        {
+          "effect_string": "buff_upgrade,30,15450,0",
+          "description": ""
+        },
+        {
+          "effect_string": "buff_upgrade,30,15451,0",
+          "description": ""
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3620",
+      "name": {
+        "original": "Terri's Heart Necklace",
+        "display": "泰瑞的心形项链"
+      },
+      "description": {
+        "original": "I'll always remember...",
+        "display": "我会永远记得……"
+      },
+      "graphicId": "24368",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,15449,0",
+          "description": "Increases the effect of Bobby's Not So Low, Still Growing Up, and Strong Armed specializations by $amount%."
+        },
+        {
+          "effect_string": "buff_upgrade,50,15450,0",
+          "description": ""
+        },
+        {
+          "effect_string": "buff_upgrade,50,15451,0",
+          "description": ""
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3621",
+      "name": {
+        "original": "Kelek's Amulet",
+        "display": "科列克的护身符"
+      },
+      "description": {
+        "original": "Kelek will NEVER get this back!",
+        "display": "科列克永远都别想把它拿回去！"
+      },
+      "graphicId": "24369",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,15449,0",
+          "description": "Increases the effect of Bobby's Not So Low, Still Growing Up, and Strong Armed specializations by $amount%."
+        },
+        {
+          "effect_string": "buff_upgrade,100,15450,0",
+          "description": ""
+        },
+        {
+          "effect_string": "buff_upgrade,100,15451,0",
+          "description": ""
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3622",
+      "name": {
+        "original": "Rally Time",
+        "display": "集结时刻"
+      },
+      "description": {
+        "original": "We need a little extra help! Everyone flip your caps!",
+        "display": "我们需要一点额外的帮助！大家都把帽子翻过来！"
+      },
+      "graphicId": "24364",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,8"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3623",
+      "name": {
+        "original": "Baseball Cap",
+        "display": "棒球帽"
+      },
+      "description": {
+        "original": "No, we can't clean it! It's lucky!",
+        "display": "不行，我们不能洗它！这是好运！"
+      },
+      "graphicId": "24364",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,16"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3624",
+      "name": {
+        "original": "Helm of the Barbarian",
+        "display": "野蛮人的头盔"
+      },
+      "description": {
+        "original": "Dungeon Master says I need to be careful - I could put someone's eye out!",
+        "display": "地下城主说我得小心——我可能会戳瞎别人的眼睛！"
+      },
+      "graphicId": "24365",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,32"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3625",
+      "name": {
+        "original": "Goddess Touched Helm",
+        "display": "女神祝福头盔"
+      },
+      "description": {
+        "original": "My head isn't just for thinking - it's a weapon!",
+        "display": "我的脑袋不仅用来思考——它还是件武器！"
+      },
+      "graphicId": "24366",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,80"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "male"
+            }
+          ],
+          "description": "Increases the damage of all Male Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "human"
+            }
+          ],
+          "description": "Increases the damage of all Human Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "28",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "str",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a STR score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "85",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,30",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "dex",
+              "check": 13,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a DEX score of 13 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "52",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "chaotic"
+            }
+          ],
+          "description": "Increases the damage of all Chaotic Champions by $(amount)%"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3388,7 +4066,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 106,
+        "popularity": 105,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3589,7 +4267,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 106,
+        "popularity": 105,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -7373,6 +8051,1232 @@
             "availabilities": {
               "premium_item_id": "597"
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "3602",
+        "snapshots": {
+          "original": {
+            "id": 3602,
+            "name": "Mom's Picks",
+            "description": "Mom says I get to pick out my clothes next year!",
+            "graphic_id": 24358,
+            "hero_id": 152,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3602,
+            "name": "妈妈的提醒",
+            "description": "妈妈说明年我可以自己挑衣服了！",
+            "graphic_id": 24358,
+            "hero_id": 152,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3603",
+        "snapshots": {
+          "original": {
+            "id": 3603,
+            "name": "Weekend Clothes",
+            "description": "Mom said to not get these dirty - oh well!",
+            "graphic_id": 24358,
+            "hero_id": 152,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3603,
+            "name": "周末服装",
+            "description": "妈妈说不要把衣服弄脏——嗨呀，算了！",
+            "graphic_id": 24358,
+            "hero_id": 152,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3604",
+        "snapshots": {
+          "original": {
+            "id": 3604,
+            "name": "Barbarian Gear",
+            "description": "Sheila - look how cool I am in this!",
+            "graphic_id": 24359,
+            "hero_id": 152,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3604,
+            "name": "野蛮人装备",
+            "description": "希拉，看我穿这身多酷！",
+            "graphic_id": 24359,
+            "hero_id": 152,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3605",
+        "snapshots": {
+          "original": {
+            "id": 3605,
+            "name": "Clothes of the Harvest",
+            "description": "That golden crow is never gonna suspect this!",
+            "graphic_id": 24360,
+            "hero_id": 152,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3605,
+            "name": "丰收之衣",
+            "description": "那只金乌鸦绝对不会怀疑这个！",
+            "graphic_id": 24360,
+            "hero_id": 152,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3606",
+        "snapshots": {
+          "original": {
+            "id": 3606,
+            "name": "Home Run",
+            "description": "Did you see how far I hit that one?!",
+            "graphic_id": 24361,
+            "hero_id": 152,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,15443,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3606,
+            "name": "本垒打",
+            "description": "你看到我那一下打得多远了吗？！",
+            "graphic_id": 24361,
+            "hero_id": 152,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,15443,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3607",
+        "snapshots": {
+          "original": {
+            "id": 3607,
+            "name": "Baseball Bat",
+            "description": "I promise not to break this one!",
+            "graphic_id": 24361,
+            "hero_id": 152,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,15443,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3607,
+            "name": "棒球棍",
+            "description": "我保证不把这根弄断！",
+            "graphic_id": 24361,
+            "hero_id": 152,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,15443,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3608",
+        "snapshots": {
+          "original": {
+            "id": 3608,
+            "name": "Sturdy Club",
+            "description": "I could hit so many home runs with this!",
+            "graphic_id": 24362,
+            "hero_id": 152,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,15443,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3608,
+            "name": "结实木棒",
+            "description": "我可以用它打出好多本垒打！",
+            "graphic_id": 24362,
+            "hero_id": 152,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,15443,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3609",
+        "snapshots": {
+          "original": {
+            "id": 3609,
+            "name": "Magical Bonking Club",
+            "description": "Tiamat won't stand a chance against this!",
+            "graphic_id": 24363,
+            "hero_id": 152,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,15443,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3609,
+            "name": "魔法敲敲棍",
+            "description": "提亚马特根本挡不住这个！",
+            "graphic_id": 24363,
+            "hero_id": 152,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,15443,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3610",
+        "snapshots": {
+          "original": {
+            "id": 3610,
+            "name": "A Time of Fear",
+            "description": "I was so scared I was going to lose you, Uni!",
+            "graphic_id": 24370,
+            "hero_id": 152,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15444,1"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3610,
+            "name": "恐惧时刻",
+            "description": "我好害怕会失去你，独角！",
+            "graphic_id": 24370,
+            "hero_id": 152,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15444,1"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3611",
+        "snapshots": {
+          "original": {
+            "id": 3611,
+            "name": "Shed Horn",
+            "description": "No matter what, I'll always have this to remind me of Uni.",
+            "graphic_id": 24370,
+            "hero_id": 152,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15444,1"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3611,
+            "name": "脱落的角",
+            "description": "不管发生什么，我都会用这个来纪念独角。",
+            "graphic_id": 24370,
+            "hero_id": 152,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15444,1"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3612",
+        "snapshots": {
+          "original": {
+            "id": 3612,
+            "name": "Uni Hair",
+            "description": "Uni, you're shedding everywhere!",
+            "graphic_id": 24371,
+            "hero_id": 152,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15444,1"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3612,
+            "name": "独角的毛发",
+            "description": "独角，你的毛掉得到处都是！",
+            "graphic_id": 24371,
+            "hero_id": 152,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15444,1"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3613",
+        "snapshots": {
+          "original": {
+            "id": 3613,
+            "name": "Dragonbane Wreath",
+            "description": "That old man said it would bring Uni luck - and he was right!",
+            "graphic_id": 24372,
+            "hero_id": 152,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15444,1"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3613,
+            "name": "屠龙花环",
+            "description": "那个老头说它会给独角带来好运——他说对了！",
+            "graphic_id": 24372,
+            "hero_id": 152,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15444,1"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3614",
+        "snapshots": {
+          "original": {
+            "id": 3614,
+            "name": "Go Fasters",
+            "description": "I can round the bases faster than anyone else on the team!",
+            "graphic_id": 24355,
+            "hero_id": 152,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15447,0",
+                "description": "Increases the effect of Bobby's Stunning Strength and Group Charge specializations by $amount%."
+              },
+              {
+                "effect_string": "buff_upgrade,25,15448,0",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3614,
+            "name": "极速鞋",
+            "description": "我可以比队里其他人更快跑完所有垒包！",
+            "graphic_id": 24355,
+            "hero_id": 152,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,15447,0",
+                "description": "使鲍比的“惊人力量”与“集体冲锋”专精效果提高 $amount%。"
+              },
+              {
+                "effect_string": "buff_upgrade,25,15448,0",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3615",
+        "snapshots": {
+          "original": {
+            "id": 3615,
+            "name": "School Shoes",
+            "description": "It took me forever to get my mom to let me wear these to school!",
+            "graphic_id": 24355,
+            "hero_id": 152,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15447,0",
+                "description": "Increases the effect of Bobby's Stunning Strength and Group Charge specializations by $amount%."
+              },
+              {
+                "effect_string": "buff_upgrade,87.5,15448,0",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3615,
+            "name": "校鞋",
+            "description": "我花了好长时间才说服妈妈让我穿这些去学校！",
+            "graphic_id": 24355,
+            "hero_id": 152,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,15447,0",
+                "description": "使鲍比的“惊人力量”与“集体冲锋”专精效果提高 $amount%。"
+              },
+              {
+                "effect_string": "buff_upgrade,87.5,15448,0",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3616",
+        "snapshots": {
+          "original": {
+            "id": 3616,
+            "name": "Leather Boots",
+            "description": "I miss my laces, but the fur is cool!",
+            "graphic_id": 24356,
+            "hero_id": 152,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15447,0",
+                "description": "Increases the effect of Bobby's Stunning Strength and Group Charge specializations by $amount%."
+              },
+              {
+                "effect_string": "buff_upgrade,150,15448,0",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3616,
+            "name": "皮靴",
+            "description": "我想念我的鞋带，但这毛皮也很酷！",
+            "graphic_id": 24356,
+            "hero_id": 152,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,15447,0",
+                "description": "使鲍比的“惊人力量”与“集体冲锋”专精效果提高 $amount%。"
+              },
+              {
+                "effect_string": "buff_upgrade,150,15448,0",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3617",
+        "snapshots": {
+          "original": {
+            "id": 3617,
+            "name": "Boots of Wheat",
+            "description": "I feel like that scarecrow from that old movie!",
+            "graphic_id": 24357,
+            "hero_id": 152,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15447,0",
+                "description": "Increases the effect of Bobby's Stunning Strength and Group Charge specializations by $amount%."
+              },
+              {
+                "effect_string": "buff_upgrade,275,15448,0",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3617,
+            "name": "麦靴",
+            "description": "我感觉自己像那部老电影里的那个稻草人！",
+            "graphic_id": 24357,
+            "hero_id": 152,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,15447,0",
+                "description": "使鲍比的“惊人力量”与“集体冲锋”专精效果提高 $amount%。"
+              },
+              {
+                "effect_string": "buff_upgrade,275,15448,0",
+                "description": ""
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3618",
+        "snapshots": {
+          "original": {
+            "id": 3618,
+            "name": "Know Your Limits",
+            "description": "Dungeon Master said that I need to know when to run away...",
+            "graphic_id": 24367,
+            "hero_id": 152,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,15449,0",
+                "description": "Increases the effect of Bobby's Not So Low, Still Growing Up, and Strong Armed specializations by $amount%."
+              },
+              {
+                "effect_string": "buff_upgrade,10,15450,0",
+                "description": ""
+              },
+              {
+                "effect_string": "buff_upgrade,10,15451,0",
+                "description": ""
+              }
+            ]
+          },
+          "display": {
+            "id": 3618,
+            "name": "自知之明",
+            "description": "地下城主说我一定要知道什么时候该逃跑……",
+            "graphic_id": 24367,
+            "hero_id": 152,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,15449,0",
+                "description": "使鲍比的“半高不低”、“成长之路”与“强壮臂膀”专精效果提高 $amount%。"
+              },
+              {
+                "effect_string": "buff_upgrade,10,15450,0",
+                "description": ""
+              },
+              {
+                "effect_string": "buff_upgrade,10,15451,0",
+                "description": ""
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3619",
+        "snapshots": {
+          "original": {
+            "id": 3619,
+            "name": "Amulet of Protection",
+            "description": "...but this is for when I don't!",
+            "graphic_id": 24367,
+            "hero_id": 152,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,15449,0",
+                "description": "Increases the effect of Bobby's Not So Low, Still Growing Up, and Strong Armed specializations by $amount%."
+              },
+              {
+                "effect_string": "buff_upgrade,30,15450,0",
+                "description": ""
+              },
+              {
+                "effect_string": "buff_upgrade,30,15451,0",
+                "description": ""
+              }
+            ]
+          },
+          "display": {
+            "id": 3619,
+            "name": "护身符",
+            "description": "……不过这是为了我不跑的时候用的！",
+            "graphic_id": 24367,
+            "hero_id": 152,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,15449,0",
+                "description": "使鲍比的“半高不低”、“成长之路”与“强壮臂膀”专精效果提高 $amount%。"
+              },
+              {
+                "effect_string": "buff_upgrade,30,15450,0",
+                "description": ""
+              },
+              {
+                "effect_string": "buff_upgrade,30,15451,0",
+                "description": ""
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3620",
+        "snapshots": {
+          "original": {
+            "id": 3620,
+            "name": "Terri's Heart Necklace",
+            "description": "I'll always remember...",
+            "graphic_id": 24368,
+            "hero_id": 152,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,15449,0",
+                "description": "Increases the effect of Bobby's Not So Low, Still Growing Up, and Strong Armed specializations by $amount%."
+              },
+              {
+                "effect_string": "buff_upgrade,50,15450,0",
+                "description": ""
+              },
+              {
+                "effect_string": "buff_upgrade,50,15451,0",
+                "description": ""
+              }
+            ]
+          },
+          "display": {
+            "id": 3620,
+            "name": "泰瑞的心形项链",
+            "description": "我会永远记得……",
+            "graphic_id": 24368,
+            "hero_id": 152,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,15449,0",
+                "description": "使鲍比的“半高不低”、“成长之路”与“强壮臂膀”专精效果提高 $amount%。"
+              },
+              {
+                "effect_string": "buff_upgrade,50,15450,0",
+                "description": ""
+              },
+              {
+                "effect_string": "buff_upgrade,50,15451,0",
+                "description": ""
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3621",
+        "snapshots": {
+          "original": {
+            "id": 3621,
+            "name": "Kelek's Amulet",
+            "description": "Kelek will NEVER get this back!",
+            "graphic_id": 24369,
+            "hero_id": 152,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,15449,0",
+                "description": "Increases the effect of Bobby's Not So Low, Still Growing Up, and Strong Armed specializations by $amount%."
+              },
+              {
+                "effect_string": "buff_upgrade,100,15450,0",
+                "description": ""
+              },
+              {
+                "effect_string": "buff_upgrade,100,15451,0",
+                "description": ""
+              }
+            ]
+          },
+          "display": {
+            "id": 3621,
+            "name": "科列克的护身符",
+            "description": "科列克永远都别想把它拿回去！",
+            "graphic_id": 24369,
+            "hero_id": 152,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,15449,0",
+                "description": "使鲍比的“半高不低”、“成长之路”与“强壮臂膀”专精效果提高 $amount%。"
+              },
+              {
+                "effect_string": "buff_upgrade,100,15450,0",
+                "description": ""
+              },
+              {
+                "effect_string": "buff_upgrade,100,15451,0",
+                "description": ""
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3622",
+        "snapshots": {
+          "original": {
+            "id": 3622,
+            "name": "Rally Time",
+            "description": "We need a little extra help! Everyone flip your caps!",
+            "graphic_id": 24364,
+            "hero_id": 152,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,8"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3622,
+            "name": "集结时刻",
+            "description": "我们需要一点额外的帮助！大家都把帽子翻过来！",
+            "graphic_id": 24364,
+            "hero_id": 152,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,8"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3623",
+        "snapshots": {
+          "original": {
+            "id": 3623,
+            "name": "Baseball Cap",
+            "description": "No, we can't clean it! It's lucky!",
+            "graphic_id": 24364,
+            "hero_id": 152,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,16"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3623,
+            "name": "棒球帽",
+            "description": "不行，我们不能洗它！这是好运！",
+            "graphic_id": 24364,
+            "hero_id": 152,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,16"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3624",
+        "snapshots": {
+          "original": {
+            "id": 3624,
+            "name": "Helm of the Barbarian",
+            "description": "Dungeon Master says I need to be careful - I could put someone's eye out!",
+            "graphic_id": 24365,
+            "hero_id": 152,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,32"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3624,
+            "name": "野蛮人的头盔",
+            "description": "地下城主说我得小心——我可能会戳瞎别人的眼睛！",
+            "graphic_id": 24365,
+            "hero_id": 152,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,32"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3625",
+        "snapshots": {
+          "original": {
+            "id": 3625,
+            "name": "Goddess Touched Helm",
+            "description": "My head isn't just for thinking - it's a weapon!",
+            "graphic_id": 24366,
+            "hero_id": 152,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,80"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3625,
+            "name": "女神祝福头盔",
+            "description": "我的脑袋不仅用来思考——它还是件武器！",
+            "graphic_id": 24366,
+            "hero_id": 152,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,80"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2",
+        "snapshots": {
+          "original": {
+            "id": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "Increases the damage of all Male Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "使所有男性勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "5",
+        "snapshots": {
+          "original": {
+            "id": 5,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "Increases the damage of all Human Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 5,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "使所有人类勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "28",
+        "snapshots": {
+          "original": {
+            "id": 28,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a STR score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 28,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有力量大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "85",
+        "snapshots": {
+          "original": {
+            "id": 85,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "dex",
+                    "check": 13,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a DEX score of 13 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 85,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "dex",
+                    "check": 13,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位敏捷大于等于 13 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "52",
+        "snapshots": {
+          "original": {
+            "id": 52,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "chaotic"
+                  }
+                ],
+                "description": "Increases the damage of all Chaotic Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 52,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "chaotic"
+                  }
+                ],
+                "description": "使所有混乱阵营勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

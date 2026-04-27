@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "8",
     "name": {
@@ -1921,6 +1921,634 @@
         "cost": 20000
       },
       "availabilities": null
+    }
+  ],
+  "loot": [
+    {
+      "id": "169",
+      "name": {
+        "original": "Dull Iron Dagger",
+        "display": "迟钝的铁匕首"
+      },
+      "description": {
+        "original": "I prefer to stick to my magic, but in a pinch, I can use this.",
+        "display": "我比较热衷于使用魔法，但是情况危急时也可以凑合使用。"
+      },
+      "graphicId": "310",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,50"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "170",
+      "name": {
+        "original": "Cutpurse's Dagger",
+        "display": "扒手的匕首"
+      },
+      "description": {
+        "original": "I borrowed this from a cutpurse in Baldur's Gate who thought he could steal from me.",
+        "display": "这是我从博德之门的某位扒手身上接回来的，谁叫他把主意打到我身上。"
+      },
+      "graphicId": "310",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "171",
+      "name": {
+        "original": "Sharp Steel Dagger",
+        "display": "锋利的钢质匕首"
+      },
+      "description": {
+        "original": "I don't like to resort to violence, but if I have to, this'll do.",
+        "display": "我不主张暴力，但必要时此物可派上用场。"
+      },
+      "graphicId": "311",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "172",
+      "name": {
+        "original": "Ruby Focused Dagger of Danger",
+        "display": "红宝石器材之危险匕首"
+      },
+      "description": {
+        "original": "In a pinch, I can channel my spells through the ruby on this dagger.",
+        "display": "我能够通过匕首上的红宝石瞬间施法。"
+      },
+      "graphicId": "312",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,350"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "173",
+      "name": {
+        "original": "Pilfered Memento",
+        "display": "剽窃的纪念物"
+      },
+      "description": {
+        "original": "Some trinket? It doesn't interest me, but it has some power within.",
+        "display": "这是小饰品？我对它本身不感兴趣，但是里头还残留着一些魔力。"
+      },
+      "graphicId": "298",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,50"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "174",
+      "name": {
+        "original": "Follower's Necklace",
+        "display": "追随者的项链"
+      },
+      "description": {
+        "original": "This belonged to an acolyte of the Cult of the Dragon.",
+        "display": "曾经属于龙巫教的某位追随者。"
+      },
+      "graphicId": "298",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "175",
+      "name": {
+        "original": "Master's Necklace",
+        "display": "主人的项链"
+      },
+      "description": {
+        "original": "Someone of great power wore this necklace. But they're gone, and I'm still here.",
+        "display": "某位大能力者曾经佩戴过它。但对方已经不存在了，而我还活生生的。"
+      },
+      "graphicId": "299",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "176",
+      "name": {
+        "original": "Dragon Cult Leader's Necklace",
+        "display": "龙巫教首领的项链"
+      },
+      "description": {
+        "original": "My twin brother's necklace. It's a long story, and I'd rather not get into it.",
+        "display": "这是我的双胞胎兄弟的项链。说来话长，我不想重提此事。"
+      },
+      "graphicId": "300",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,350"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "177",
+      "name": {
+        "original": "Basic Orb",
+        "display": "基础的法珠"
+      },
+      "description": {
+        "original": "Very similar to the first focus given to me by my teacher.",
+        "display": "跟老师给我的首个法器很相似。"
+      },
+      "graphicId": "301",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,2194"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "178",
+      "name": {
+        "original": "Hovering Orb",
+        "display": "漂浮的法珠"
+      },
+      "description": {
+        "original": "Getting your focus to hover in your hand is the first task assigned to novice sorcerers.",
+        "display": "让法器漂浮在手心上是每位术士学徒必学的第一堂课。"
+      },
+      "graphicId": "301",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,2194"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "179",
+      "name": {
+        "original": "Charged Orb",
+        "display": "已充能的法珠"
+      },
+      "description": {
+        "original": "Channeling the Weave into your focus allows you to charge your spells.",
+        "display": "引导魔网到器材中即可为法术充能。"
+      },
+      "graphicId": "302",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,2194"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "180",
+      "name": {
+        "original": "Magical Orb of Elvenkind",
+        "display": "精灵族魔法法珠"
+      },
+      "description": {
+        "original": "This magical artifact has been passed down through generations of elves.",
+        "display": "此魔法遗物在精灵族中世代相传。"
+      },
+      "graphicId": "303",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,2194"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "181",
+      "name": {
+        "original": "Loose Belt",
+        "display": "宽松的腰带"
+      },
+      "description": {
+        "original": "More of a style piece than actually functional.",
+        "display": "艺术意义甚于实用价值的腰带。"
+      },
+      "graphicId": "304",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,2195"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "182",
+      "name": {
+        "original": "Simple Leather Belt",
+        "display": "简单的皮革腰带"
+      },
+      "description": {
+        "original": "A simple enough belt. The sheath has a few holes in it.",
+        "display": "简简单单的腰带。皮鞘上有数个孔。"
+      },
+      "graphicId": "304",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,2195"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "183",
+      "name": {
+        "original": "Fine Belt and Sheath",
+        "display": "精良的腰带和皮鞘"
+      },
+      "description": {
+        "original": "A fine gift from a young human who once fancied me.",
+        "display": "这是某位曾经倾慕我的年轻人赠送给我的。"
+      },
+      "graphicId": "305",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,2195"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "184",
+      "name": {
+        "original": "Golden Wayfarer's Belt of Adventure",
+        "display": "黄金旅者的冒险腰带"
+      },
+      "description": {
+        "original": "I'm always up for an adventure! The more dangerous the better!",
+        "display": "我最喜欢去冒险了！越危险越刺激！"
+      },
+      "graphicId": "306",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,2195"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "185",
+      "name": {
+        "original": "Ratty Cape",
+        "display": "破烂的披肩"
+      },
+      "description": {
+        "original": "A simple sorcerer's cape with more than a few holes.",
+        "display": "简单的术士披肩，只是上面破了很多洞。"
+      },
+      "graphicId": "307",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,128"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "186",
+      "name": {
+        "original": "Smooth Cape",
+        "display": "光滑的披肩"
+      },
+      "description": {
+        "original": "Someone has recently cleaned the cape. It wasn't me!",
+        "display": "这件披肩最近有被清洗过。但肯定不是我洗的！"
+      },
+      "graphicId": "307",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,128"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "187",
+      "name": {
+        "original": "High Collared Cape",
+        "display": "高领披肩"
+      },
+      "description": {
+        "original": "I look like quite the mature and knowledgeable elf wearing this. Little do they know.",
+        "display": "穿上它后我顿时仪表堂堂像个学富五车的精灵了。"
+      },
+      "graphicId": "308",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,128"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "188",
+      "name": {
+        "original": "Empowered Cape of Protection",
+        "display": "强效守护披肩"
+      },
+      "description": {
+        "original": "My spells are empowered when I wear this cape. Not that they need to be.",
+        "display": "每当穿着此披肩，我的法术就会获得增强。虽然本来就已经很强了。"
+      },
+      "graphicId": "309",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,128"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "189",
+      "name": {
+        "original": "Scratchy Robes",
+        "display": "粗糙的法袍"
+      },
+      "description": {
+        "original": "I can't believe anyone would wear these! Better than nothing, I guess.",
+        "display": "难以置信竟然有人会穿这样的衣服！或许就只比裸体好一点点。"
+      },
+      "graphicId": "313",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,6"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "190",
+      "name": {
+        "original": "Comfortable Robes",
+        "display": "舒适的法袍"
+      },
+      "description": {
+        "original": "Hey, these are actually pretty comfy! Good find!",
+        "display": "咦，穿着挺舒服的。好东西呀！"
+      },
+      "graphicId": "313",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,12"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "191",
+      "name": {
+        "original": "Masterful Silken Robe",
+        "display": "大师级丝绸法袍"
+      },
+      "description": {
+        "original": "I've been searching for the master who crafted this for years. It's wondrous!",
+        "display": "我多年来一直在打听制造此法袍的匠师。真的是太神奇了！"
+      },
+      "graphicId": "314",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,24"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "192",
+      "name": {
+        "original": "Swirling Patterned Robe of Sorcery",
+        "display": "漩涡图案的术士法袍"
+      },
+      "description": {
+        "original": "It may look flimsy, but I can shrug off most attacks wearing this.",
+        "display": "虽然看起来很单薄，但其实穿在身上就能格挡绝大部分类型的攻击。"
+      },
+      "graphicId": "315",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,60"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "54",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Female Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "60",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,45",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "elf"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Elf Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "40",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "wis",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a WIS score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "87",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "con",
+              "check": 11,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a CON score of 11 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "101",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,30",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "attack_type",
+              "attack": "magic"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Magic Champion in the formation"
+        }
+      ]
     }
   ],
   "raw": {
@@ -4967,6 +5595,1124 @@
               "type": "gem_shop",
               "cost": 20000
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "169",
+        "snapshots": {
+          "original": {
+            "id": 169,
+            "name": "Dull Iron Dagger",
+            "description": "I prefer to stick to my magic, but in a pinch, I can use this.",
+            "graphic_id": 310,
+            "hero_id": 8,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 169,
+            "name": "迟钝的铁匕首",
+            "description": "我比较热衷于使用魔法，但是情况危急时也可以凑合使用。",
+            "graphic_id": 310,
+            "hero_id": 8,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "170",
+        "snapshots": {
+          "original": {
+            "id": 170,
+            "name": "Cutpurse's Dagger",
+            "description": "I borrowed this from a cutpurse in Baldur's Gate who thought he could steal from me.",
+            "graphic_id": 310,
+            "hero_id": 8,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 170,
+            "name": "扒手的匕首",
+            "description": "这是我从博德之门的某位扒手身上接回来的，谁叫他把主意打到我身上。",
+            "graphic_id": 310,
+            "hero_id": 8,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "171",
+        "snapshots": {
+          "original": {
+            "id": 171,
+            "name": "Sharp Steel Dagger",
+            "description": "I don't like to resort to violence, but if I have to, this'll do.",
+            "graphic_id": 311,
+            "hero_id": 8,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 171,
+            "name": "锋利的钢质匕首",
+            "description": "我不主张暴力，但必要时此物可派上用场。",
+            "graphic_id": 311,
+            "hero_id": 8,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "172",
+        "snapshots": {
+          "original": {
+            "id": 172,
+            "name": "Ruby Focused Dagger of Danger",
+            "description": "In a pinch, I can channel my spells through the ruby on this dagger.",
+            "graphic_id": 312,
+            "hero_id": 8,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 172,
+            "name": "红宝石器材之危险匕首",
+            "description": "我能够通过匕首上的红宝石瞬间施法。",
+            "graphic_id": 312,
+            "hero_id": 8,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "173",
+        "snapshots": {
+          "original": {
+            "id": 173,
+            "name": "Pilfered Memento",
+            "description": "Some trinket? It doesn't interest me, but it has some power within.",
+            "graphic_id": 298,
+            "hero_id": 8,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 173,
+            "name": "剽窃的纪念物",
+            "description": "这是小饰品？我对它本身不感兴趣，但是里头还残留着一些魔力。",
+            "graphic_id": 298,
+            "hero_id": 8,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "174",
+        "snapshots": {
+          "original": {
+            "id": 174,
+            "name": "Follower's Necklace",
+            "description": "This belonged to an acolyte of the Cult of the Dragon.",
+            "graphic_id": 298,
+            "hero_id": 8,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 174,
+            "name": "追随者的项链",
+            "description": "曾经属于龙巫教的某位追随者。",
+            "graphic_id": 298,
+            "hero_id": 8,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "175",
+        "snapshots": {
+          "original": {
+            "id": 175,
+            "name": "Master's Necklace",
+            "description": "Someone of great power wore this necklace. But they're gone, and I'm still here.",
+            "graphic_id": 299,
+            "hero_id": 8,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 175,
+            "name": "主人的项链",
+            "description": "某位大能力者曾经佩戴过它。但对方已经不存在了，而我还活生生的。",
+            "graphic_id": 299,
+            "hero_id": 8,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "176",
+        "snapshots": {
+          "original": {
+            "id": 176,
+            "name": "Dragon Cult Leader's Necklace",
+            "description": "My twin brother's necklace. It's a long story, and I'd rather not get into it.",
+            "graphic_id": 300,
+            "hero_id": 8,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 176,
+            "name": "龙巫教首领的项链",
+            "description": "这是我的双胞胎兄弟的项链。说来话长，我不想重提此事。",
+            "graphic_id": 300,
+            "hero_id": 8,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "177",
+        "snapshots": {
+          "original": {
+            "id": 177,
+            "name": "Basic Orb",
+            "description": "Very similar to the first focus given to me by my teacher.",
+            "graphic_id": 301,
+            "hero_id": 8,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,2194"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 177,
+            "name": "基础的法珠",
+            "description": "跟老师给我的首个法器很相似。",
+            "graphic_id": 301,
+            "hero_id": 8,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,2194"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "178",
+        "snapshots": {
+          "original": {
+            "id": 178,
+            "name": "Hovering Orb",
+            "description": "Getting your focus to hover in your hand is the first task assigned to novice sorcerers.",
+            "graphic_id": 301,
+            "hero_id": 8,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,2194"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 178,
+            "name": "漂浮的法珠",
+            "description": "让法器漂浮在手心上是每位术士学徒必学的第一堂课。",
+            "graphic_id": 301,
+            "hero_id": 8,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,2194"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "179",
+        "snapshots": {
+          "original": {
+            "id": 179,
+            "name": "Charged Orb",
+            "description": "Channeling the Weave into your focus allows you to charge your spells.",
+            "graphic_id": 302,
+            "hero_id": 8,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,2194"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 179,
+            "name": "已充能的法珠",
+            "description": "引导魔网到器材中即可为法术充能。",
+            "graphic_id": 302,
+            "hero_id": 8,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,2194"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "180",
+        "snapshots": {
+          "original": {
+            "id": 180,
+            "name": "Magical Orb of Elvenkind",
+            "description": "This magical artifact has been passed down through generations of elves.",
+            "graphic_id": 303,
+            "hero_id": 8,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,2194"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 180,
+            "name": "精灵族魔法法珠",
+            "description": "此魔法遗物在精灵族中世代相传。",
+            "graphic_id": 303,
+            "hero_id": 8,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,2194"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "181",
+        "snapshots": {
+          "original": {
+            "id": 181,
+            "name": "Loose Belt",
+            "description": "More of a style piece than actually functional.",
+            "graphic_id": 304,
+            "hero_id": 8,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,2195"
+              }
+            ]
+          },
+          "display": {
+            "id": 181,
+            "name": "宽松的腰带",
+            "description": "艺术意义甚于实用价值的腰带。",
+            "graphic_id": 304,
+            "hero_id": 8,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,2195"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "182",
+        "snapshots": {
+          "original": {
+            "id": 182,
+            "name": "Simple Leather Belt",
+            "description": "A simple enough belt. The sheath has a few holes in it.",
+            "graphic_id": 304,
+            "hero_id": 8,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,2195"
+              }
+            ]
+          },
+          "display": {
+            "id": 182,
+            "name": "简单的皮革腰带",
+            "description": "简简单单的腰带。皮鞘上有数个孔。",
+            "graphic_id": 304,
+            "hero_id": 8,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,2195"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "183",
+        "snapshots": {
+          "original": {
+            "id": 183,
+            "name": "Fine Belt and Sheath",
+            "description": "A fine gift from a young human who once fancied me.",
+            "graphic_id": 305,
+            "hero_id": 8,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,2195"
+              }
+            ]
+          },
+          "display": {
+            "id": 183,
+            "name": "精良的腰带和皮鞘",
+            "description": "这是某位曾经倾慕我的年轻人赠送给我的。",
+            "graphic_id": 305,
+            "hero_id": 8,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,2195"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "184",
+        "snapshots": {
+          "original": {
+            "id": 184,
+            "name": "Golden Wayfarer's Belt of Adventure",
+            "description": "I'm always up for an adventure! The more dangerous the better!",
+            "graphic_id": 306,
+            "hero_id": 8,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,2195"
+              }
+            ]
+          },
+          "display": {
+            "id": 184,
+            "name": "黄金旅者的冒险腰带",
+            "description": "我最喜欢去冒险了！越危险越刺激！",
+            "graphic_id": 306,
+            "hero_id": 8,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,2195"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "185",
+        "snapshots": {
+          "original": {
+            "id": 185,
+            "name": "Ratty Cape",
+            "description": "A simple sorcerer's cape with more than a few holes.",
+            "graphic_id": 307,
+            "hero_id": 8,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,128"
+              }
+            ]
+          },
+          "display": {
+            "id": 185,
+            "name": "破烂的披肩",
+            "description": "简单的术士披肩，只是上面破了很多洞。",
+            "graphic_id": 307,
+            "hero_id": 8,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,128"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "186",
+        "snapshots": {
+          "original": {
+            "id": 186,
+            "name": "Smooth Cape",
+            "description": "Someone has recently cleaned the cape. It wasn't me!",
+            "graphic_id": 307,
+            "hero_id": 8,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,128"
+              }
+            ]
+          },
+          "display": {
+            "id": 186,
+            "name": "光滑的披肩",
+            "description": "这件披肩最近有被清洗过。但肯定不是我洗的！",
+            "graphic_id": 307,
+            "hero_id": 8,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,128"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "187",
+        "snapshots": {
+          "original": {
+            "id": 187,
+            "name": "High Collared Cape",
+            "description": "I look like quite the mature and knowledgeable elf wearing this. Little do they know.",
+            "graphic_id": 308,
+            "hero_id": 8,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,128"
+              }
+            ]
+          },
+          "display": {
+            "id": 187,
+            "name": "高领披肩",
+            "description": "穿上它后我顿时仪表堂堂像个学富五车的精灵了。",
+            "graphic_id": 308,
+            "hero_id": 8,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,128"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "188",
+        "snapshots": {
+          "original": {
+            "id": 188,
+            "name": "Empowered Cape of Protection",
+            "description": "My spells are empowered when I wear this cape. Not that they need to be.",
+            "graphic_id": 309,
+            "hero_id": 8,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,128"
+              }
+            ]
+          },
+          "display": {
+            "id": 188,
+            "name": "强效守护披肩",
+            "description": "每当穿着此披肩，我的法术就会获得增强。虽然本来就已经很强了。",
+            "graphic_id": 309,
+            "hero_id": 8,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,128"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "189",
+        "snapshots": {
+          "original": {
+            "id": 189,
+            "name": "Scratchy Robes",
+            "description": "I can't believe anyone would wear these! Better than nothing, I guess.",
+            "graphic_id": 313,
+            "hero_id": 8,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,6"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 189,
+            "name": "粗糙的法袍",
+            "description": "难以置信竟然有人会穿这样的衣服！或许就只比裸体好一点点。",
+            "graphic_id": 313,
+            "hero_id": 8,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,6"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "190",
+        "snapshots": {
+          "original": {
+            "id": 190,
+            "name": "Comfortable Robes",
+            "description": "Hey, these are actually pretty comfy! Good find!",
+            "graphic_id": 313,
+            "hero_id": 8,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,12"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 190,
+            "name": "舒适的法袍",
+            "description": "咦，穿着挺舒服的。好东西呀！",
+            "graphic_id": 313,
+            "hero_id": 8,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,12"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "191",
+        "snapshots": {
+          "original": {
+            "id": 191,
+            "name": "Masterful Silken Robe",
+            "description": "I've been searching for the master who crafted this for years. It's wondrous!",
+            "graphic_id": 314,
+            "hero_id": 8,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,24"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 191,
+            "name": "大师级丝绸法袍",
+            "description": "我多年来一直在打听制造此法袍的匠师。真的是太神奇了！",
+            "graphic_id": 314,
+            "hero_id": 8,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,24"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "192",
+        "snapshots": {
+          "original": {
+            "id": 192,
+            "name": "Swirling Patterned Robe of Sorcery",
+            "description": "It may look flimsy, but I can shrug off most attacks wearing this.",
+            "graphic_id": 315,
+            "hero_id": 8,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,60"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 192,
+            "name": "漩涡图案的术士法袍",
+            "description": "虽然看起来很单薄，但其实穿在身上就能格挡绝大部分类型的攻击。",
+            "graphic_id": 315,
+            "hero_id": 8,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,60"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "54",
+        "snapshots": {
+          "original": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "阵型中每有一位勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3",
+        "snapshots": {
+          "original": {
+            "id": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Female Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "使所有女性勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "60",
+        "snapshots": {
+          "original": {
+            "id": 60,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,45",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "elf"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Elf Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 60,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,45",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "elf"
+                  }
+                ],
+                "description": "阵型中每有一位精灵勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "40",
+        "snapshots": {
+          "original": {
+            "id": 40,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "wis",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a WIS score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 40,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "wis",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有感知大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "87",
+        "snapshots": {
+          "original": {
+            "id": 87,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "con",
+                    "check": 11,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a CON score of 11 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 87,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "con",
+                    "check": 11,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位体质大于等于 11 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "101",
+        "snapshots": {
+          "original": {
+            "id": 101,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "attack_type",
+                    "attack": "magic"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Magic Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 101,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "attack_type",
+                    "attack": "magic"
+                  }
+                ],
+                "description": "阵型中每有一位魔法勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }
