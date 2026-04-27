@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "60",
     "name": {
@@ -43,7 +43,7 @@
   },
   "dateAvailable": "2020-04-22 00:00:00",
   "lastReworkDate": "2020-04-22 00:00:00",
-  "popularity": 38,
+  "popularity": 36,
   "baseCost": "100",
   "baseDamage": "50",
   "baseHealth": "45",
@@ -2989,6 +2989,634 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "1417",
+      "name": {
+        "original": "Cracked Dagger",
+        "display": "碎裂的匕首"
+      },
+      "description": {
+        "original": "It's got one good use left.",
+        "display": "还可以使用一次。"
+      },
+      "graphicId": "7550",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "health_mult,10"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1418",
+      "name": {
+        "original": "Hidden Dagger",
+        "display": "隐蔽的匕首"
+      },
+      "description": {
+        "original": "It pays to have a few in handy places.",
+        "display": "多藏几把匕首在身上是很关键的。"
+      },
+      "graphicId": "7550",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "health_mult,30"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1419",
+      "name": {
+        "original": "Thrown Blade",
+        "display": "飞刀"
+      },
+      "description": {
+        "original": "Watch and learn.",
+        "display": "瞧我的演示吧。"
+      },
+      "graphicId": "7551",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "health_mult,50"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1420",
+      "name": {
+        "original": "Coran's Dagger",
+        "display": "克兰的匕首"
+      },
+      "description": {
+        "original": "He's a politician in Baldur's Gate, just a guy I know.",
+        "display": "他是我认识的博德之门的一位政客。"
+      },
+      "graphicId": "7552",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "health_mult,100"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1421",
+      "name": {
+        "original": "Stiff Belt",
+        "display": "僵硬的腰带"
+      },
+      "description": {
+        "original": "Any belt in a storm.",
+        "display": "在要紧时刻有总好过没有。"
+      },
+      "graphicId": "7544",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1422",
+      "name": {
+        "original": "Leather Belt",
+        "display": "皮革腰带"
+      },
+      "description": {
+        "original": "Look, it only has a few slash marks!",
+        "display": "瞧，仅有有缪缪无几的刮痕。"
+      },
+      "graphicId": "7544",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1423",
+      "name": {
+        "original": "Versatile Belt",
+        "display": "万能腰带"
+      },
+      "description": {
+        "original": "I've got what we need... hopefully.",
+        "display": "我已经带齐了所有需要的物品......应该是的。"
+      },
+      "graphicId": "7545",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1424",
+      "name": {
+        "original": "Tools of the Trade",
+        "display": "谋生的工具"
+      },
+      "description": {
+        "original": "Shandie and I are always prepared. For the job, not for Minsc.",
+        "display": "珊蒂和我时刻都准备妥当。我是指应付工作，不是说对付明斯克。"
+      },
+      "graphicId": "7546",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "1425",
+      "name": {
+        "original": "Tattered Cloak",
+        "display": "破烂的斗篷"
+      },
+      "description": {
+        "original": "Yeah. It's seen some action. Still keeps the wind at bay though.",
+        "display": "没错。它是经历过不少战斗。但至少还是可以遮遮风的。"
+      },
+      "graphicId": "7547",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,9629,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1426",
+      "name": {
+        "original": "Dark Alley Cloak",
+        "display": "黑暗小巷斗篷"
+      },
+      "description": {
+        "original": "Shadows are this cloak's best friend.",
+        "display": "阴影和此斗篷是天作之合。"
+      },
+      "graphicId": "7547",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,9629,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1427",
+      "name": {
+        "original": "Baldur's Gate Cloak",
+        "display": "博德之门斗篷"
+      },
+      "description": {
+        "original": "It helps you blend into the fog.",
+        "display": "它能助你融入迷雾中。"
+      },
+      "graphicId": "7548",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,9629,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1428",
+      "name": {
+        "original": "Cloak of The Blades",
+        "display": "刀锋议会斗篷"
+      },
+      "description": {
+        "original": "I ran with them for a while. It... didn't end well.",
+        "display": "我曾经短暂效劳过他们。离开时......闹得不太愉快。"
+      },
+      "graphicId": "7549",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,9629,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1429",
+      "name": {
+        "original": "Crude Badge",
+        "display": "粗糙的徽章"
+      },
+      "description": {
+        "original": "Flash it quickly. Don't let them study it or they'll see the edge of the paste.",
+        "display": "闪一下就迅速收回。别让他们仔细查看否则肯定会发现是伪造的。"
+      },
+      "graphicId": "7541",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,9630"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1430",
+      "name": {
+        "original": "Zhent Badge",
+        "display": "散塔林会徽章"
+      },
+      "description": {
+        "original": "The Black Network relies on these badges to tell friend from foe.",
+        "display": "黑网就是仰赖这些徽章来分辨敌我的。"
+      },
+      "graphicId": "7541",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,9630"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1431",
+      "name": {
+        "original": "Flaming Fist Badge",
+        "display": "烈焰之拳徽章"
+      },
+      "description": {
+        "original": "Guards, mercs, bullies. They're all the same.",
+        "display": "守卫、佣兵、恶棍。都是一丘之貉。"
+      },
+      "graphicId": "7542",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,9630"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1432",
+      "name": {
+        "original": "Harper Badge",
+        "display": "竖琴手徽章"
+      },
+      "description": {
+        "original": "This can actually get us some reliable help when we need it.",
+        "display": "这徽章在关键时刻可以为我们招来援手。"
+      },
+      "graphicId": "7543",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,9630"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1433",
+      "name": {
+        "original": "Ashpowder Escape",
+        "display": "灰烬逃生炸弹"
+      },
+      "description": {
+        "original": "Just make sure you throw it really hard.",
+        "display": "记得要用力地投掷出去。"
+      },
+      "graphicId": "7553",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,25"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1434",
+      "name": {
+        "original": "Improvised Bomb",
+        "display": "自制炸弹"
+      },
+      "description": {
+        "original": "Trust me Minsc, just THROW it.",
+        "display": "相信我，明斯克。掷出去就对了。"
+      },
+      "graphicId": "7553",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,87.5"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1435",
+      "name": {
+        "original": "Smokepowder Spheres",
+        "display": "烟粉球"
+      },
+      "description": {
+        "original": "If we could stay away from our normal scrums that would be great.",
+        "display": "要是这次可以不再混战那该多好呀。"
+      },
+      "graphicId": "7554",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,150"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1436",
+      "name": {
+        "original": "Smokepowder Bombs",
+        "display": "烟粉炸弹"
+      },
+      "description": {
+        "original": "I'll never get over that Flaming Fist guard that thought it was a candy!",
+        "display": "真没想到那位烈焰之拳守卫竟然会把它当作糖果！"
+      },
+      "graphicId": "7555",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,275"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1437",
+      "name": {
+        "original": "Pilfered Key",
+        "display": "偷来的钥匙"
+      },
+      "description": {
+        "original": "Eventually, I'll find the lock it opens...",
+        "display": "终有一天我会找到它相对应的锁头的......"
+      },
+      "graphicId": "7556",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,6"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1438",
+      "name": {
+        "original": "High Hall Key",
+        "display": "高厅钥匙"
+      },
+      "description": {
+        "original": "It's for the High Hall in Baldur's Gate. Or at least it was the last time I broke in.",
+        "display": "这是打开博德之门的高厅的钥匙。至少上一回我潜入时是这个锁头。"
+      },
+      "graphicId": "7556",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,11"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1439",
+      "name": {
+        "original": "Ring of the Elves",
+        "display": "精灵族之戒"
+      },
+      "description": {
+        "original": "They live in the Forest of Tethir.",
+        "display": "他们都住在泰斯尔森林。"
+      },
+      "graphicId": "7557",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,22"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1440",
+      "name": {
+        "original": "The Arcanist",
+        "display": "奥术师"
+      },
+      "description": {
+        "original": "The land of Strahd is not one I'm eager to return to...",
+        "display": "斯特拉德是我不愿意再次踏足的地方......"
+      },
+      "graphicId": "7558",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,55"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "54",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "male"
+            }
+          ],
+          "description": "Increases the damage of all Male Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "61",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,70",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "half-elf"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Half-Elf Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "89",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,40",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "con",
+              "check": 15,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a CON score of 15 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "28",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "str",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a STR score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "102",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "good"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a GOOD alignment"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3146,7 +3774,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 38,
+        "popularity": 36,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3343,7 +3971,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 38,
+        "popularity": 36,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -7302,6 +7930,1116 @@
             "availabilities": {
               "in_flash_sales": true
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "1417",
+        "snapshots": {
+          "original": {
+            "id": 1417,
+            "name": "Cracked Dagger",
+            "description": "It's got one good use left.",
+            "graphic_id": 7550,
+            "hero_id": 60,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "health_mult,10"
+              }
+            ]
+          },
+          "display": {
+            "id": 1417,
+            "name": "碎裂的匕首",
+            "description": "还可以使用一次。",
+            "graphic_id": 7550,
+            "hero_id": 60,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "health_mult,10"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1418",
+        "snapshots": {
+          "original": {
+            "id": 1418,
+            "name": "Hidden Dagger",
+            "description": "It pays to have a few in handy places.",
+            "graphic_id": 7550,
+            "hero_id": 60,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "health_mult,30"
+              }
+            ]
+          },
+          "display": {
+            "id": 1418,
+            "name": "隐蔽的匕首",
+            "description": "多藏几把匕首在身上是很关键的。",
+            "graphic_id": 7550,
+            "hero_id": 60,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "health_mult,30"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1419",
+        "snapshots": {
+          "original": {
+            "id": 1419,
+            "name": "Thrown Blade",
+            "description": "Watch and learn.",
+            "graphic_id": 7551,
+            "hero_id": 60,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "health_mult,50"
+              }
+            ]
+          },
+          "display": {
+            "id": 1419,
+            "name": "飞刀",
+            "description": "瞧我的演示吧。",
+            "graphic_id": 7551,
+            "hero_id": 60,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "health_mult,50"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1420",
+        "snapshots": {
+          "original": {
+            "id": 1420,
+            "name": "Coran's Dagger",
+            "description": "He's a politician in Baldur's Gate, just a guy I know.",
+            "graphic_id": 7552,
+            "hero_id": 60,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "health_mult,100"
+              }
+            ]
+          },
+          "display": {
+            "id": 1420,
+            "name": "克兰的匕首",
+            "description": "他是我认识的博德之门的一位政客。",
+            "graphic_id": 7552,
+            "hero_id": 60,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "health_mult,100"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1421",
+        "snapshots": {
+          "original": {
+            "id": 1421,
+            "name": "Stiff Belt",
+            "description": "Any belt in a storm.",
+            "graphic_id": 7544,
+            "hero_id": 60,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1421,
+            "name": "僵硬的腰带",
+            "description": "在要紧时刻有总好过没有。",
+            "graphic_id": 7544,
+            "hero_id": 60,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1422",
+        "snapshots": {
+          "original": {
+            "id": 1422,
+            "name": "Leather Belt",
+            "description": "Look, it only has a few slash marks!",
+            "graphic_id": 7544,
+            "hero_id": 60,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1422,
+            "name": "皮革腰带",
+            "description": "瞧，仅有有缪缪无几的刮痕。",
+            "graphic_id": 7544,
+            "hero_id": 60,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1423",
+        "snapshots": {
+          "original": {
+            "id": 1423,
+            "name": "Versatile Belt",
+            "description": "I've got what we need... hopefully.",
+            "graphic_id": 7545,
+            "hero_id": 60,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1423,
+            "name": "万能腰带",
+            "description": "我已经带齐了所有需要的物品......应该是的。",
+            "graphic_id": 7545,
+            "hero_id": 60,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1424",
+        "snapshots": {
+          "original": {
+            "id": 1424,
+            "name": "Tools of the Trade",
+            "description": "Shandie and I are always prepared. For the job, not for Minsc.",
+            "graphic_id": 7546,
+            "hero_id": 60,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1424,
+            "name": "谋生的工具",
+            "description": "珊蒂和我时刻都准备妥当。我是指应付工作，不是说对付明斯克。",
+            "graphic_id": 7546,
+            "hero_id": 60,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1425",
+        "snapshots": {
+          "original": {
+            "id": 1425,
+            "name": "Tattered Cloak",
+            "description": "Yeah. It's seen some action. Still keeps the wind at bay though.",
+            "graphic_id": 7547,
+            "hero_id": 60,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,9629,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1425,
+            "name": "破烂的斗篷",
+            "description": "没错。它是经历过不少战斗。但至少还是可以遮遮风的。",
+            "graphic_id": 7547,
+            "hero_id": 60,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,9629,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1426",
+        "snapshots": {
+          "original": {
+            "id": 1426,
+            "name": "Dark Alley Cloak",
+            "description": "Shadows are this cloak's best friend.",
+            "graphic_id": 7547,
+            "hero_id": 60,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,9629,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1426,
+            "name": "黑暗小巷斗篷",
+            "description": "阴影和此斗篷是天作之合。",
+            "graphic_id": 7547,
+            "hero_id": 60,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,9629,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1427",
+        "snapshots": {
+          "original": {
+            "id": 1427,
+            "name": "Baldur's Gate Cloak",
+            "description": "It helps you blend into the fog.",
+            "graphic_id": 7548,
+            "hero_id": 60,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,9629,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1427,
+            "name": "博德之门斗篷",
+            "description": "它能助你融入迷雾中。",
+            "graphic_id": 7548,
+            "hero_id": 60,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,9629,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1428",
+        "snapshots": {
+          "original": {
+            "id": 1428,
+            "name": "Cloak of The Blades",
+            "description": "I ran with them for a while. It... didn't end well.",
+            "graphic_id": 7549,
+            "hero_id": 60,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,9629,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1428,
+            "name": "刀锋议会斗篷",
+            "description": "我曾经短暂效劳过他们。离开时......闹得不太愉快。",
+            "graphic_id": 7549,
+            "hero_id": 60,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,9629,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1429",
+        "snapshots": {
+          "original": {
+            "id": 1429,
+            "name": "Crude Badge",
+            "description": "Flash it quickly. Don't let them study it or they'll see the edge of the paste.",
+            "graphic_id": 7541,
+            "hero_id": 60,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,9630"
+              }
+            ]
+          },
+          "display": {
+            "id": 1429,
+            "name": "粗糙的徽章",
+            "description": "闪一下就迅速收回。别让他们仔细查看否则肯定会发现是伪造的。",
+            "graphic_id": 7541,
+            "hero_id": 60,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,9630"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1430",
+        "snapshots": {
+          "original": {
+            "id": 1430,
+            "name": "Zhent Badge",
+            "description": "The Black Network relies on these badges to tell friend from foe.",
+            "graphic_id": 7541,
+            "hero_id": 60,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,9630"
+              }
+            ]
+          },
+          "display": {
+            "id": 1430,
+            "name": "散塔林会徽章",
+            "description": "黑网就是仰赖这些徽章来分辨敌我的。",
+            "graphic_id": 7541,
+            "hero_id": 60,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,9630"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1431",
+        "snapshots": {
+          "original": {
+            "id": 1431,
+            "name": "Flaming Fist Badge",
+            "description": "Guards, mercs, bullies. They're all the same.",
+            "graphic_id": 7542,
+            "hero_id": 60,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,9630"
+              }
+            ]
+          },
+          "display": {
+            "id": 1431,
+            "name": "烈焰之拳徽章",
+            "description": "守卫、佣兵、恶棍。都是一丘之貉。",
+            "graphic_id": 7542,
+            "hero_id": 60,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,9630"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1432",
+        "snapshots": {
+          "original": {
+            "id": 1432,
+            "name": "Harper Badge",
+            "description": "This can actually get us some reliable help when we need it.",
+            "graphic_id": 7543,
+            "hero_id": 60,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,9630"
+              }
+            ]
+          },
+          "display": {
+            "id": 1432,
+            "name": "竖琴手徽章",
+            "description": "这徽章在关键时刻可以为我们招来援手。",
+            "graphic_id": 7543,
+            "hero_id": 60,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,9630"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1433",
+        "snapshots": {
+          "original": {
+            "id": 1433,
+            "name": "Ashpowder Escape",
+            "description": "Just make sure you throw it really hard.",
+            "graphic_id": 7553,
+            "hero_id": 60,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ]
+          },
+          "display": {
+            "id": 1433,
+            "name": "灰烬逃生炸弹",
+            "description": "记得要用力地投掷出去。",
+            "graphic_id": 7553,
+            "hero_id": 60,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1434",
+        "snapshots": {
+          "original": {
+            "id": 1434,
+            "name": "Improvised Bomb",
+            "description": "Trust me Minsc, just THROW it.",
+            "graphic_id": 7553,
+            "hero_id": 60,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ]
+          },
+          "display": {
+            "id": 1434,
+            "name": "自制炸弹",
+            "description": "相信我，明斯克。掷出去就对了。",
+            "graphic_id": 7553,
+            "hero_id": 60,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1435",
+        "snapshots": {
+          "original": {
+            "id": 1435,
+            "name": "Smokepowder Spheres",
+            "description": "If we could stay away from our normal scrums that would be great.",
+            "graphic_id": 7554,
+            "hero_id": 60,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ]
+          },
+          "display": {
+            "id": 1435,
+            "name": "烟粉球",
+            "description": "要是这次可以不再混战那该多好呀。",
+            "graphic_id": 7554,
+            "hero_id": 60,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1436",
+        "snapshots": {
+          "original": {
+            "id": 1436,
+            "name": "Smokepowder Bombs",
+            "description": "I'll never get over that Flaming Fist guard that thought it was a candy!",
+            "graphic_id": 7555,
+            "hero_id": 60,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ]
+          },
+          "display": {
+            "id": 1436,
+            "name": "烟粉炸弹",
+            "description": "真没想到那位烈焰之拳守卫竟然会把它当作糖果！",
+            "graphic_id": 7555,
+            "hero_id": 60,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1437",
+        "snapshots": {
+          "original": {
+            "id": 1437,
+            "name": "Pilfered Key",
+            "description": "Eventually, I'll find the lock it opens...",
+            "graphic_id": 7556,
+            "hero_id": 60,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,6"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1437,
+            "name": "偷来的钥匙",
+            "description": "终有一天我会找到它相对应的锁头的......",
+            "graphic_id": 7556,
+            "hero_id": 60,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,6"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1438",
+        "snapshots": {
+          "original": {
+            "id": 1438,
+            "name": "High Hall Key",
+            "description": "It's for the High Hall in Baldur's Gate. Or at least it was the last time I broke in.",
+            "graphic_id": 7556,
+            "hero_id": 60,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,11"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1438,
+            "name": "高厅钥匙",
+            "description": "这是打开博德之门的高厅的钥匙。至少上一回我潜入时是这个锁头。",
+            "graphic_id": 7556,
+            "hero_id": 60,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,11"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1439",
+        "snapshots": {
+          "original": {
+            "id": 1439,
+            "name": "Ring of the Elves",
+            "description": "They live in the Forest of Tethir.",
+            "graphic_id": 7557,
+            "hero_id": 60,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,22"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1439,
+            "name": "精灵族之戒",
+            "description": "他们都住在泰斯尔森林。",
+            "graphic_id": 7557,
+            "hero_id": 60,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,22"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1440",
+        "snapshots": {
+          "original": {
+            "id": 1440,
+            "name": "The Arcanist",
+            "description": "The land of Strahd is not one I'm eager to return to...",
+            "graphic_id": 7558,
+            "hero_id": 60,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,55"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1440,
+            "name": "奥术师",
+            "description": "斯特拉德是我不愿意再次踏足的地方......",
+            "graphic_id": 7558,
+            "hero_id": 60,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,55"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "54",
+        "snapshots": {
+          "original": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "阵型中每有一位勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2",
+        "snapshots": {
+          "original": {
+            "id": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "Increases the damage of all Male Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "使所有男性勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "61",
+        "snapshots": {
+          "original": {
+            "id": 61,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,70",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "half-elf"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Half-Elf Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 61,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,70",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "half-elf"
+                  }
+                ],
+                "description": "阵型中每有一位半精灵勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "89",
+        "snapshots": {
+          "original": {
+            "id": 89,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,40",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "con",
+                    "check": 15,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a CON score of 15 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 89,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,40",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "con",
+                    "check": 15,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位体质大于等于 15 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "28",
+        "snapshots": {
+          "original": {
+            "id": 28,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a STR score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 28,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有力量大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "102",
+        "snapshots": {
+          "original": {
+            "id": 102,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a GOOD alignment"
+              }
+            ]
+          },
+          "display": {
+            "id": 102,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "阵型中每有一位善良阵营勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

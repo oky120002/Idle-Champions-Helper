@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "169",
     "name": {
@@ -38,7 +38,7 @@
   },
   "dateAvailable": "2025-11-05 13:00:00",
   "lastReworkDate": "2025-11-05 13:00:00",
-  "popularity": 61,
+  "popularity": 57,
   "baseCost": "75000",
   "baseDamage": "15000",
   "baseHealth": "43",
@@ -2762,6 +2762,636 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "4010",
+      "name": {
+        "original": "Cursed Knife",
+        "display": "诅咒之刃"
+      },
+      "description": {
+        "original": "The first cut is the deepest. I know.",
+        "display": "第一刀是最深的，我知道。"
+      },
+      "graphicId": "27697",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "4011",
+      "name": {
+        "original": "Crow Blade",
+        "display": "乌鸦之刃"
+      },
+      "description": {
+        "original": "I'll have your heart, one way or another.",
+        "display": "无论如何，我都会得到你的心。"
+      },
+      "graphicId": "27697",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "4012",
+      "name": {
+        "original": "Eldritch Staff",
+        "display": "魔能法杖"
+      },
+      "description": {
+        "original": "My patron does not suffer fools.",
+        "display": "我的守护神不会容忍愚者。"
+      },
+      "graphicId": "27698",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "4013",
+      "name": {
+        "original": "Staff of Commanding Charm",
+        "display": "命令魔咒之杖"
+      },
+      "description": {
+        "original": "You'll make a fine servant. Now, say 'yes, mistress.' Good.",
+        "display": "你会是一个好奴才的。来，说句“是，主人”给我听听。很好。"
+      },
+      "graphicId": "27699",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "4014",
+      "name": {
+        "original": "Mercurial Mortar",
+        "display": "水银研钵"
+      },
+      "description": {
+        "original": "It empties itself out if it disagrees with the recipe.",
+        "display": "如果配方不合它的要求，它会自己把里面的东西倒掉。"
+      },
+      "graphicId": "27682",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,17845,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "4015",
+      "name": {
+        "original": "Hag's Bowl",
+        "display": "鬼婆的碗"
+      },
+      "description": {
+        "original": "Maiden's blood, mother's tears, and crone's bones. A fine brew, this will make.",
+        "display": "少女的血、母亲的眼泪和老妪的骨头。这将炼出上好的药剂。"
+      },
+      "graphicId": "27682",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,17845,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "4016",
+      "name": {
+        "original": "Granny's Crystal Ball",
+        "display": "奶奶的水晶球"
+      },
+      "description": {
+        "original": "It spins ever and on until I say the magic words.",
+        "display": "它会不停地旋转，直到我念出咒语为止。"
+      },
+      "graphicId": "27683",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,17845,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "4017",
+      "name": {
+        "original": "Dancing Broom",
+        "display": "舞动的扫帚"
+      },
+      "description": {
+        "original": "A witch's best friend for traversing the night. Where shall I fly today?",
+        "display": "女巫夜间出行最好的伙伴。我今天要飞去哪儿呢？"
+      },
+      "graphicId": "27684",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,17845,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "4018",
+      "name": {
+        "original": "Rotten Components",
+        "display": "腐烂的材料"
+      },
+      "description": {
+        "original": "What spell could I expect to cast with this rubbish?",
+        "display": "我用这垃圾能施放出什么法术？"
+      },
+      "graphicId": "27694",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,17846"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "4019",
+      "name": {
+        "original": "Glowing Components",
+        "display": "发光的材料"
+      },
+      "description": {
+        "original": "A handful of foxfire blooms to reveal the unseen.",
+        "display": "一把狐火绽放，揭示出了看不见的事物。"
+      },
+      "graphicId": "27694",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,17846"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "4020",
+      "name": {
+        "original": "Dazzling Components",
+        "display": "耀眼的材料"
+      },
+      "description": {
+        "original": "Smoke and ash, fire and flash. I will craft for you a beautiful delusion.",
+        "display": "烟与灰，火焰与闪光。我将为你编织一个美丽的幻象。"
+      },
+      "graphicId": "27695",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,17846"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "4021",
+      "name": {
+        "original": "Luxury Components",
+        "display": "奢华的材料"
+      },
+      "description": {
+        "original": "I have everything I need to make your short life as miserable as possible.",
+        "display": "我有足够的东西来让你短暂的一生尽可能痛苦。"
+      },
+      "graphicId": "27696",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,17846"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "4022",
+      "name": {
+        "original": "Indecipherable Notes",
+        "display": "难以辨认的字条"
+      },
+      "description": {
+        "original": "These make no sense! No treats for you, Golmo!",
+        "display": "这根本没人看得懂！罚你不准吃零食，戈尔莫！"
+      },
+      "graphicId": "27691",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,17847"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "4023",
+      "name": {
+        "original": "Brilliant Diagrams",
+        "display": "精妙的图解"
+      },
+      "description": {
+        "original": "Mm, yes. I can make use of this. Well done, Golmo.",
+        "display": "嗯，好，我可以利用这个。好样的，戈尔莫。"
+      },
+      "graphicId": "27691",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,17847"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "4024",
+      "name": {
+        "original": "Enchanted Key",
+        "display": "附过魔的钥匙"
+      },
+      "description": {
+        "original": "It turns for my hands, and mine alone.",
+        "display": "它只有在我的手里才会转动。"
+      },
+      "graphicId": "27692",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,17847"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "4025",
+      "name": {
+        "original": "Gaolantern",
+        "display": "戈奥提灯"
+      },
+      "description": {
+        "original": "Useful for imprisoning tiny creatures to bend to my will.",
+        "display": "适合用来囚禁小型生物，使它们屈从我的意志。"
+      },
+      "graphicId": "27693",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,17847"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "4026",
+      "name": {
+        "original": "Garish Boots",
+        "display": "花哨的靴子"
+      },
+      "description": {
+        "original": "These are suited only for an understudy.",
+        "display": "这靴子只配给替补角色穿。"
+      },
+      "graphicId": "27685",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,25,17848,17849,17850",
+          "description": "Increases the effect of Skylla's first set of Specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "4027",
+      "name": {
+        "original": "Sublime Boots",
+        "display": "华丽的靴子"
+      },
+      "description": {
+        "original": "If I'm stepping onto the stage, I'll be stepping out in style.",
+        "display": "如果我要登上舞台，那我就要风采尽显。"
+      },
+      "graphicId": "27685",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,87.5,17848,17849,17850",
+          "description": "Increases the effect of Skylla's first set of Specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "4028",
+      "name": {
+        "original": "Charmay's Gown",
+        "display": "沙尔梅的礼服"
+      },
+      "description": {
+        "original": "All eyes on me - or else.",
+        "display": "所有人的目光都得在我身上——否则有你们好受的。"
+      },
+      "graphicId": "27686",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,150,17848,17849,17850",
+          "description": "Increases the effect of Skylla's first set of Specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "4029",
+      "name": {
+        "original": "Lament",
+        "display": "哀叹"
+      },
+      "description": {
+        "original": "A fan is a must for a woman with secrets, and I have so many...",
+        "display": "对一个有秘密的女人来说，扇子是必不可少的，而我有这么多秘密……"
+      },
+      "graphicId": "27687",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,275,17848,17849,17850",
+          "description": "Increases the effect of Skylla's first set of Specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "4030",
+      "name": {
+        "original": "Threadbare Rags",
+        "display": "破衣烂衫"
+      },
+      "description": {
+        "original": "I am no seamstress. These are dead to me.",
+        "display": "我不是裁缝，这些东西对我来说就跟死了一样。"
+      },
+      "graphicId": "27688",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,5"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "4031",
+      "name": {
+        "original": "Witch's Robe",
+        "display": "女巫的长袍"
+      },
+      "description": {
+        "original": "The style, colors, and cut are all subject to my whim.",
+        "display": "这件长袍的样式、颜色和剪裁全都符合我的心意。"
+      },
+      "graphicId": "27688",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,10"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "4032",
+      "name": {
+        "original": "Gloaming Amulet",
+        "display": "黄昏护符"
+      },
+      "description": {
+        "original": "I channel the powers of mischief and murk.",
+        "display": "我传导着恶意与幽暗之力。"
+      },
+      "graphicId": "27689",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,20"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "4033",
+      "name": {
+        "original": "Crown of the Bone Mother",
+        "display": "骨母之冠"
+      },
+      "description": {
+        "original": "A gift from granny. It burns away unnecessary things.",
+        "display": "奶奶送我的礼物。它能烧掉多余之物。"
+      },
+      "graphicId": "27690",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,50"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "56",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "58",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,30",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "human"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Human Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "44",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "cha",
+              "score": 13,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a CHA score of 13 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "94",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,30",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "wis",
+              "check": 13,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a WIS score of 13 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "50",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "evil"
+            }
+          ],
+          "description": "Increases the damage of all Evil Champions by $(amount)%"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -2910,7 +3540,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 61,
+        "popularity": 57,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3086,7 +3716,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 61,
+        "popularity": 57,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -6250,6 +6880,1120 @@
             "availabilities": {
               "premium_item_id": "634"
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "4010",
+        "snapshots": {
+          "original": {
+            "id": 4010,
+            "name": "Cursed Knife",
+            "description": "The first cut is the deepest. I know.",
+            "graphic_id": 27697,
+            "hero_id": 169,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ]
+          },
+          "display": {
+            "id": 4010,
+            "name": "诅咒之刃",
+            "description": "第一刀是最深的，我知道。",
+            "graphic_id": 27697,
+            "hero_id": 169,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "4011",
+        "snapshots": {
+          "original": {
+            "id": 4011,
+            "name": "Crow Blade",
+            "description": "I'll have your heart, one way or another.",
+            "graphic_id": 27697,
+            "hero_id": 169,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ]
+          },
+          "display": {
+            "id": 4011,
+            "name": "乌鸦之刃",
+            "description": "无论如何，我都会得到你的心。",
+            "graphic_id": 27697,
+            "hero_id": 169,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "4012",
+        "snapshots": {
+          "original": {
+            "id": 4012,
+            "name": "Eldritch Staff",
+            "description": "My patron does not suffer fools.",
+            "graphic_id": 27698,
+            "hero_id": 169,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ]
+          },
+          "display": {
+            "id": 4012,
+            "name": "魔能法杖",
+            "description": "我的守护神不会容忍愚者。",
+            "graphic_id": 27698,
+            "hero_id": 169,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "4013",
+        "snapshots": {
+          "original": {
+            "id": 4013,
+            "name": "Staff of Commanding Charm",
+            "description": "You'll make a fine servant. Now, say 'yes, mistress.' Good.",
+            "graphic_id": 27699,
+            "hero_id": 169,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ]
+          },
+          "display": {
+            "id": 4013,
+            "name": "命令魔咒之杖",
+            "description": "你会是一个好奴才的。来，说句“是，主人”给我听听。很好。",
+            "graphic_id": 27699,
+            "hero_id": 169,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "4014",
+        "snapshots": {
+          "original": {
+            "id": 4014,
+            "name": "Mercurial Mortar",
+            "description": "It empties itself out if it disagrees with the recipe.",
+            "graphic_id": 27682,
+            "hero_id": 169,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,17845,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 4014,
+            "name": "水银研钵",
+            "description": "如果配方不合它的要求，它会自己把里面的东西倒掉。",
+            "graphic_id": 27682,
+            "hero_id": 169,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,17845,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "4015",
+        "snapshots": {
+          "original": {
+            "id": 4015,
+            "name": "Hag's Bowl",
+            "description": "Maiden's blood, mother's tears, and crone's bones. A fine brew, this will make.",
+            "graphic_id": 27682,
+            "hero_id": 169,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,17845,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 4015,
+            "name": "鬼婆的碗",
+            "description": "少女的血、母亲的眼泪和老妪的骨头。这将炼出上好的药剂。",
+            "graphic_id": 27682,
+            "hero_id": 169,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,17845,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "4016",
+        "snapshots": {
+          "original": {
+            "id": 4016,
+            "name": "Granny's Crystal Ball",
+            "description": "It spins ever and on until I say the magic words.",
+            "graphic_id": 27683,
+            "hero_id": 169,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,17845,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 4016,
+            "name": "奶奶的水晶球",
+            "description": "它会不停地旋转，直到我念出咒语为止。",
+            "graphic_id": 27683,
+            "hero_id": 169,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,17845,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "4017",
+        "snapshots": {
+          "original": {
+            "id": 4017,
+            "name": "Dancing Broom",
+            "description": "A witch's best friend for traversing the night. Where shall I fly today?",
+            "graphic_id": 27684,
+            "hero_id": 169,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,17845,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 4017,
+            "name": "舞动的扫帚",
+            "description": "女巫夜间出行最好的伙伴。我今天要飞去哪儿呢？",
+            "graphic_id": 27684,
+            "hero_id": 169,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,17845,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "4018",
+        "snapshots": {
+          "original": {
+            "id": 4018,
+            "name": "Rotten Components",
+            "description": "What spell could I expect to cast with this rubbish?",
+            "graphic_id": 27694,
+            "hero_id": 169,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,17846"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 4018,
+            "name": "腐烂的材料",
+            "description": "我用这垃圾能施放出什么法术？",
+            "graphic_id": 27694,
+            "hero_id": 169,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,17846"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "4019",
+        "snapshots": {
+          "original": {
+            "id": 4019,
+            "name": "Glowing Components",
+            "description": "A handful of foxfire blooms to reveal the unseen.",
+            "graphic_id": 27694,
+            "hero_id": 169,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,17846"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 4019,
+            "name": "发光的材料",
+            "description": "一把狐火绽放，揭示出了看不见的事物。",
+            "graphic_id": 27694,
+            "hero_id": 169,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,17846"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "4020",
+        "snapshots": {
+          "original": {
+            "id": 4020,
+            "name": "Dazzling Components",
+            "description": "Smoke and ash, fire and flash. I will craft for you a beautiful delusion.",
+            "graphic_id": 27695,
+            "hero_id": 169,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,17846"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 4020,
+            "name": "耀眼的材料",
+            "description": "烟与灰，火焰与闪光。我将为你编织一个美丽的幻象。",
+            "graphic_id": 27695,
+            "hero_id": 169,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,17846"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "4021",
+        "snapshots": {
+          "original": {
+            "id": 4021,
+            "name": "Luxury Components",
+            "description": "I have everything I need to make your short life as miserable as possible.",
+            "graphic_id": 27696,
+            "hero_id": 169,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,17846"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 4021,
+            "name": "奢华的材料",
+            "description": "我有足够的东西来让你短暂的一生尽可能痛苦。",
+            "graphic_id": 27696,
+            "hero_id": 169,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,17846"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "4022",
+        "snapshots": {
+          "original": {
+            "id": 4022,
+            "name": "Indecipherable Notes",
+            "description": "These make no sense! No treats for you, Golmo!",
+            "graphic_id": 27691,
+            "hero_id": 169,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,17847"
+              }
+            ]
+          },
+          "display": {
+            "id": 4022,
+            "name": "难以辨认的字条",
+            "description": "这根本没人看得懂！罚你不准吃零食，戈尔莫！",
+            "graphic_id": 27691,
+            "hero_id": 169,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,17847"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "4023",
+        "snapshots": {
+          "original": {
+            "id": 4023,
+            "name": "Brilliant Diagrams",
+            "description": "Mm, yes. I can make use of this. Well done, Golmo.",
+            "graphic_id": 27691,
+            "hero_id": 169,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,17847"
+              }
+            ]
+          },
+          "display": {
+            "id": 4023,
+            "name": "精妙的图解",
+            "description": "嗯，好，我可以利用这个。好样的，戈尔莫。",
+            "graphic_id": 27691,
+            "hero_id": 169,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,17847"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "4024",
+        "snapshots": {
+          "original": {
+            "id": 4024,
+            "name": "Enchanted Key",
+            "description": "It turns for my hands, and mine alone.",
+            "graphic_id": 27692,
+            "hero_id": 169,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,17847"
+              }
+            ]
+          },
+          "display": {
+            "id": 4024,
+            "name": "附过魔的钥匙",
+            "description": "它只有在我的手里才会转动。",
+            "graphic_id": 27692,
+            "hero_id": 169,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,17847"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "4025",
+        "snapshots": {
+          "original": {
+            "id": 4025,
+            "name": "Gaolantern",
+            "description": "Useful for imprisoning tiny creatures to bend to my will.",
+            "graphic_id": 27693,
+            "hero_id": 169,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,17847"
+              }
+            ]
+          },
+          "display": {
+            "id": 4025,
+            "name": "戈奥提灯",
+            "description": "适合用来囚禁小型生物，使它们屈从我的意志。",
+            "graphic_id": 27693,
+            "hero_id": 169,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,17847"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "4026",
+        "snapshots": {
+          "original": {
+            "id": 4026,
+            "name": "Garish Boots",
+            "description": "These are suited only for an understudy.",
+            "graphic_id": 27685,
+            "hero_id": 169,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,17848,17849,17850",
+                "description": "Increases the effect of Skylla's first set of Specializations by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 4026,
+            "name": "花哨的靴子",
+            "description": "这靴子只配给替补角色穿。",
+            "graphic_id": 27685,
+            "hero_id": 169,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,17848,17849,17850",
+                "description": "使斯凯拉的第一组专精的效果提升 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "4027",
+        "snapshots": {
+          "original": {
+            "id": 4027,
+            "name": "Sublime Boots",
+            "description": "If I'm stepping onto the stage, I'll be stepping out in style.",
+            "graphic_id": 27685,
+            "hero_id": 169,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,17848,17849,17850",
+                "description": "Increases the effect of Skylla's first set of Specializations by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 4027,
+            "name": "华丽的靴子",
+            "description": "如果我要登上舞台，那我就要风采尽显。",
+            "graphic_id": 27685,
+            "hero_id": 169,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,17848,17849,17850",
+                "description": "使斯凯拉的第一组专精的效果提升 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "4028",
+        "snapshots": {
+          "original": {
+            "id": 4028,
+            "name": "Charmay's Gown",
+            "description": "All eyes on me - or else.",
+            "graphic_id": 27686,
+            "hero_id": 169,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,17848,17849,17850",
+                "description": "Increases the effect of Skylla's first set of Specializations by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 4028,
+            "name": "沙尔梅的礼服",
+            "description": "所有人的目光都得在我身上——否则有你们好受的。",
+            "graphic_id": 27686,
+            "hero_id": 169,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,17848,17849,17850",
+                "description": "使斯凯拉的第一组专精的效果提升 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "4029",
+        "snapshots": {
+          "original": {
+            "id": 4029,
+            "name": "Lament",
+            "description": "A fan is a must for a woman with secrets, and I have so many...",
+            "graphic_id": 27687,
+            "hero_id": 169,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,17848,17849,17850",
+                "description": "Increases the effect of Skylla's first set of Specializations by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 4029,
+            "name": "哀叹",
+            "description": "对一个有秘密的女人来说，扇子是必不可少的，而我有这么多秘密……",
+            "graphic_id": 27687,
+            "hero_id": 169,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,17848,17849,17850",
+                "description": "使斯凯拉的第一组专精的效果提升 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "4030",
+        "snapshots": {
+          "original": {
+            "id": 4030,
+            "name": "Threadbare Rags",
+            "description": "I am no seamstress. These are dead to me.",
+            "graphic_id": 27688,
+            "hero_id": 169,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,5"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 4030,
+            "name": "破衣烂衫",
+            "description": "我不是裁缝，这些东西对我来说就跟死了一样。",
+            "graphic_id": 27688,
+            "hero_id": 169,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,5"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "4031",
+        "snapshots": {
+          "original": {
+            "id": 4031,
+            "name": "Witch's Robe",
+            "description": "The style, colors, and cut are all subject to my whim.",
+            "graphic_id": 27688,
+            "hero_id": 169,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,10"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 4031,
+            "name": "女巫的长袍",
+            "description": "这件长袍的样式、颜色和剪裁全都符合我的心意。",
+            "graphic_id": 27688,
+            "hero_id": 169,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,10"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "4032",
+        "snapshots": {
+          "original": {
+            "id": 4032,
+            "name": "Gloaming Amulet",
+            "description": "I channel the powers of mischief and murk.",
+            "graphic_id": 27689,
+            "hero_id": 169,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,20"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 4032,
+            "name": "黄昏护符",
+            "description": "我传导着恶意与幽暗之力。",
+            "graphic_id": 27689,
+            "hero_id": 169,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,20"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "4033",
+        "snapshots": {
+          "original": {
+            "id": 4033,
+            "name": "Crown of the Bone Mother",
+            "description": "A gift from granny. It burns away unnecessary things.",
+            "graphic_id": 27690,
+            "hero_id": 169,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,50"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 4033,
+            "name": "骨母之冠",
+            "description": "奶奶送我的礼物。它能烧掉多余之物。",
+            "graphic_id": 27690,
+            "hero_id": 169,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,50"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "56",
+        "snapshots": {
+          "original": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "阵型中每有一位女性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "58",
+        "snapshots": {
+          "original": {
+            "id": 58,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Human Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 58,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "阵型中每有一位人类勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "44",
+        "snapshots": {
+          "original": {
+            "id": 44,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "cha",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a CHA score of 13 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 44,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "cha",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有魅力大于等于 13 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "94",
+        "snapshots": {
+          "original": {
+            "id": 94,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "wis",
+                    "check": 13,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a WIS score of 13 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 94,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "wis",
+                    "check": 13,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位感知大于等于 13 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "50",
+        "snapshots": {
+          "original": {
+            "id": 50,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "evil"
+                  }
+                ],
+                "description": "Increases the damage of all Evil Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 50,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "evil"
+                  }
+                ],
+                "description": "使所有邪恶阵营勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

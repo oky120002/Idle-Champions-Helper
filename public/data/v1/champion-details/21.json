@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "21",
     "name": {
@@ -39,7 +39,7 @@
   },
   "dateAvailable": "2018-02-14 00:00:00",
   "lastReworkDate": "2018-02-14 00:00:00",
-  "popularity": 28,
+  "popularity": 30,
   "baseCost": "8000000000000",
   "baseDamage": "1500000000",
   "baseHealth": "43",
@@ -3191,6 +3191,628 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "481",
+      "name": {
+        "original": "Iron Shortsword",
+        "display": "铁质短剑"
+      },
+      "description": {
+        "original": "Sturdy but heavy, enough to inflict damage with some moderate effort.",
+        "display": "虽沉重但坚固，只要用点力量就可以发挥出相当的威力。"
+      },
+      "graphicId": "2140",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,50"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "482",
+      "name": {
+        "original": "Steel Shortsword",
+        "display": "钢质短剑"
+      },
+      "description": {
+        "original": "Sharper and lighter than an iron sword.",
+        "display": "比铁剑更轻盈更锋利。"
+      },
+      "graphicId": "2140",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "483",
+      "name": {
+        "original": "Singing Sword",
+        "display": "歌声之剑"
+      },
+      "description": {
+        "original": "This blade sings the songs of battle.",
+        "display": "此剑会发出战斗旋律的声音。"
+      },
+      "graphicId": "2141",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "484",
+      "name": {
+        "original": "Hardy Sword of Sharpness",
+        "display": "锋利的壮实之剑"
+      },
+      "description": {
+        "original": "It never needs to be sharpened, much like my wit!",
+        "display": "此剑永远不需要磨砺，就像我的智慧一样！"
+      },
+      "graphicId": "2142",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,350"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "485",
+      "name": {
+        "original": "Cloth Bracers",
+        "display": "布质护腕"
+      },
+      "description": {
+        "original": "Simple bracers fashioned from discarded cloth.",
+        "display": "采用碎布料缝制而成的简易护腕。"
+      },
+      "graphicId": "2134",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,10776"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "486",
+      "name": {
+        "original": "Wrapped Bracers",
+        "display": "包裹护腕"
+      },
+      "description": {
+        "original": "These wraps provide moderate defense, but primarily help brace my arm in battle.",
+        "display": "这些裹手布只能提供微弱的防御，主要是用在战斗中加固我的双臂。"
+      },
+      "graphicId": "2134",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,10776"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "487",
+      "name": {
+        "original": "Hardened Leather Bracers",
+        "display": "硬化皮革护腕"
+      },
+      "description": {
+        "original": "A stable bracer that aids in both attack and defense.",
+        "display": "对攻守两方面都有所助益的牢固护腕。"
+      },
+      "graphicId": "2135",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,10776"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "488",
+      "name": {
+        "original": "Reinforced Bracers of Song",
+        "display": "歌声之强化护腕"
+      },
+      "description": {
+        "original": "If you look hard enough, you can find music in everything.",
+        "display": "只要心中有歌，从任何事物中都能听出乐声。"
+      },
+      "graphicId": "2136",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,10776"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "489",
+      "name": {
+        "original": "Brass Anklet",
+        "display": "黄铜脚镯"
+      },
+      "description": {
+        "original": "Produces a rusty, clanging sound. Good enough to keep tempo in battle.",
+        "display": "会发出沉闷的叮当声。有助于维持战斗时的节奏。"
+      },
+      "graphicId": "2128",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "490",
+      "name": {
+        "original": "Ringing Anklet",
+        "display": "铃声脚镯"
+      },
+      "description": {
+        "original": "They may not aid in stealth, but my songs are much more potent.",
+        "display": "虽然无助于潜行，但是我的乐声比潜行更加致命。"
+      },
+      "graphicId": "2128",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "491",
+      "name": {
+        "original": "Jingling Anklet",
+        "display": "叮当脚镯"
+      },
+      "description": {
+        "original": "Empowers my allies against the darkness and the dead.",
+        "display": "可以强化队友们对抗黑暗与亡灵。"
+      },
+      "graphicId": "2129",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "492",
+      "name": {
+        "original": "Perfect Anklet of Pure Pitch",
+        "display": "纯音调之完美脚镯"
+      },
+      "description": {
+        "original": "Rings true and proud as I wade though battle.",
+        "display": "每次我战斗时它都会发出纯粹悦耳的铃铛声。"
+      },
+      "graphicId": "2130",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "493",
+      "name": {
+        "original": "Simple Lute",
+        "display": "简单鲁特琴"
+      },
+      "description": {
+        "original": "A bit out of tune, but it's cheap.",
+        "display": "稍微有点跑调，但胜在价格便宜。"
+      },
+      "graphicId": "2137",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,10774"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "494",
+      "name": {
+        "original": "Doss Lute",
+        "display": "休憩鲁特琴"
+      },
+      "description": {
+        "original": "This magical instrument creates a unique and empowering sound.",
+        "display": "此乐器能产生出一种振奋人心的独特声音。"
+      },
+      "graphicId": "2137",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,10774"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "495",
+      "name": {
+        "original": "Gold-inlaid Lute",
+        "display": "镀金鲁特琴"
+      },
+      "description": {
+        "original": "The golden frets create a sound which can be heard over great distances.",
+        "display": "黄金的音品所产生的声音能够传播到很远的地方。"
+      },
+      "graphicId": "2138",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,10774"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "496",
+      "name": {
+        "original": "Masterwork Lute of Rest",
+        "display": "大师级安息鲁特琴"
+      },
+      "description": {
+        "original": "An instrument as finely crafted as one could ever hope to own.",
+        "display": "这种质量的鲁特琴是所有人都梦寐以求的。"
+      },
+      "graphicId": "2139",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,10774"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "497",
+      "name": {
+        "original": "Simple Belt",
+        "display": "简单腰带"
+      },
+      "description": {
+        "original": "It would not help if my pants fell down during battle.",
+        "display": "要是在战斗中裤子突然滑落那就完蛋了。"
+      },
+      "graphicId": "2131",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,25"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "498",
+      "name": {
+        "original": "Alligator Leather Belt",
+        "display": "鳄鱼皮腰带"
+      },
+      "description": {
+        "original": "An alligator thought it could best me in combat. Obviously it did not.",
+        "display": "某只短吻鳄自以为我好欺负。结果很明显。"
+      },
+      "graphicId": "2131",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,87.5"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "499",
+      "name": {
+        "original": "Dinosaur Hide Belt",
+        "display": "恐龙皮腰带"
+      },
+      "description": {
+        "original": "A raptor's hide -- if you can take one down -- is extremely durable.",
+        "display": "这是迅猛龙的毛皮--很难对付--但确实非常耐用。"
+      },
+      "graphicId": "2132",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,150"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "500",
+      "name": {
+        "original": "Gold-inlaid Belt of Tempo",
+        "display": "节奏之镀金腰带"
+      },
+      "description": {
+        "original": "Who says you can't be fashionable in battle?",
+        "display": "谁说战斗时就不能讲究时髦了？"
+      },
+      "graphicId": "2133",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,275"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "501",
+      "name": {
+        "original": "Padded Cloth Pauldron",
+        "display": "软垫布质肩甲"
+      },
+      "description": {
+        "original": "A little worse for wear, but it's better than nothing.",
+        "display": "虽然使用得有点磨损了，但有总好过没有。"
+      },
+      "graphicId": "2143",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,5"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "502",
+      "name": {
+        "original": "Chultan Pauldron",
+        "display": "楚尔特肩甲"
+      },
+      "description": {
+        "original": "Made in native Chultan fashion, with a few extra Chult-specific dangers in mind.",
+        "display": "传统的楚尔特风格，而且针对某些楚尔特本土的危险做了改良。"
+      },
+      "graphicId": "2143",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,9"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "503",
+      "name": {
+        "original": "Silver Scale Tunic",
+        "display": "银麟战袍"
+      },
+      "description": {
+        "original": "With raptor-like scales fashioned from silver, this tunic provides excellent defense and mobility.",
+        "display": "此护甲上布满了采用白银打造而成的仿照龙鳞，既提供优秀的防御又十分的轻便。"
+      },
+      "graphicId": "2144",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,18"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "504",
+      "name": {
+        "original": "Sapphire-inlaid Linked Armor",
+        "display": "内嵌蓝宝石的连体盔甲"
+      },
+      "description": {
+        "original": "Lighter than it appears, this armor both looks good and provides unparalleled defense.",
+        "display": "此护甲比外表看起来更加的轻盈，既不牺牲外观又能提供优秀的防御。"
+      },
+      "graphicId": "2145",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,45"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "56",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "13",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "tabaxi"
+            }
+          ],
+          "description": "Increases the damage of all Tabaxi Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "31",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "dex",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a DEX score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "43",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "cha",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a CHA score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "46",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "attack_type",
+              "attack": "melee"
+            }
+          ],
+          "description": "Increases the damage of all Melee Champions by $(amount)%"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3332,7 +3954,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 28,
+        "popularity": 30,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3513,7 +4135,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 28,
+        "popularity": 30,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -7749,6 +8371,1120 @@
             "availabilities": {
               "premium_item_id": "676"
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "481",
+        "snapshots": {
+          "original": {
+            "id": 481,
+            "name": "Iron Shortsword",
+            "description": "Sturdy but heavy, enough to inflict damage with some moderate effort.",
+            "graphic_id": 2140,
+            "hero_id": 21,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 481,
+            "name": "铁质短剑",
+            "description": "虽沉重但坚固，只要用点力量就可以发挥出相当的威力。",
+            "graphic_id": 2140,
+            "hero_id": 21,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "482",
+        "snapshots": {
+          "original": {
+            "id": 482,
+            "name": "Steel Shortsword",
+            "description": "Sharper and lighter than an iron sword.",
+            "graphic_id": 2140,
+            "hero_id": 21,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 482,
+            "name": "钢质短剑",
+            "description": "比铁剑更轻盈更锋利。",
+            "graphic_id": 2140,
+            "hero_id": 21,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "483",
+        "snapshots": {
+          "original": {
+            "id": 483,
+            "name": "Singing Sword",
+            "description": "This blade sings the songs of battle.",
+            "graphic_id": 2141,
+            "hero_id": 21,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 483,
+            "name": "歌声之剑",
+            "description": "此剑会发出战斗旋律的声音。",
+            "graphic_id": 2141,
+            "hero_id": 21,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "484",
+        "snapshots": {
+          "original": {
+            "id": 484,
+            "name": "Hardy Sword of Sharpness",
+            "description": "It never needs to be sharpened, much like my wit!",
+            "graphic_id": 2142,
+            "hero_id": 21,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 484,
+            "name": "锋利的壮实之剑",
+            "description": "此剑永远不需要磨砺，就像我的智慧一样！",
+            "graphic_id": 2142,
+            "hero_id": 21,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "485",
+        "snapshots": {
+          "original": {
+            "id": 485,
+            "name": "Cloth Bracers",
+            "description": "Simple bracers fashioned from discarded cloth.",
+            "graphic_id": 2134,
+            "hero_id": 21,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,10776"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 485,
+            "name": "布质护腕",
+            "description": "采用碎布料缝制而成的简易护腕。",
+            "graphic_id": 2134,
+            "hero_id": 21,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,10776"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "486",
+        "snapshots": {
+          "original": {
+            "id": 486,
+            "name": "Wrapped Bracers",
+            "description": "These wraps provide moderate defense, but primarily help brace my arm in battle.",
+            "graphic_id": 2134,
+            "hero_id": 21,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,10776"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 486,
+            "name": "包裹护腕",
+            "description": "这些裹手布只能提供微弱的防御，主要是用在战斗中加固我的双臂。",
+            "graphic_id": 2134,
+            "hero_id": 21,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,10776"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "487",
+        "snapshots": {
+          "original": {
+            "id": 487,
+            "name": "Hardened Leather Bracers",
+            "description": "A stable bracer that aids in both attack and defense.",
+            "graphic_id": 2135,
+            "hero_id": 21,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,10776"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 487,
+            "name": "硬化皮革护腕",
+            "description": "对攻守两方面都有所助益的牢固护腕。",
+            "graphic_id": 2135,
+            "hero_id": 21,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,10776"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "488",
+        "snapshots": {
+          "original": {
+            "id": 488,
+            "name": "Reinforced Bracers of Song",
+            "description": "If you look hard enough, you can find music in everything.",
+            "graphic_id": 2136,
+            "hero_id": 21,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,10776"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 488,
+            "name": "歌声之强化护腕",
+            "description": "只要心中有歌，从任何事物中都能听出乐声。",
+            "graphic_id": 2136,
+            "hero_id": 21,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,10776"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "489",
+        "snapshots": {
+          "original": {
+            "id": 489,
+            "name": "Brass Anklet",
+            "description": "Produces a rusty, clanging sound. Good enough to keep tempo in battle.",
+            "graphic_id": 2128,
+            "hero_id": 21,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 489,
+            "name": "黄铜脚镯",
+            "description": "会发出沉闷的叮当声。有助于维持战斗时的节奏。",
+            "graphic_id": 2128,
+            "hero_id": 21,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "490",
+        "snapshots": {
+          "original": {
+            "id": 490,
+            "name": "Ringing Anklet",
+            "description": "They may not aid in stealth, but my songs are much more potent.",
+            "graphic_id": 2128,
+            "hero_id": 21,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 490,
+            "name": "铃声脚镯",
+            "description": "虽然无助于潜行，但是我的乐声比潜行更加致命。",
+            "graphic_id": 2128,
+            "hero_id": 21,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "491",
+        "snapshots": {
+          "original": {
+            "id": 491,
+            "name": "Jingling Anklet",
+            "description": "Empowers my allies against the darkness and the dead.",
+            "graphic_id": 2129,
+            "hero_id": 21,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 491,
+            "name": "叮当脚镯",
+            "description": "可以强化队友们对抗黑暗与亡灵。",
+            "graphic_id": 2129,
+            "hero_id": 21,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "492",
+        "snapshots": {
+          "original": {
+            "id": 492,
+            "name": "Perfect Anklet of Pure Pitch",
+            "description": "Rings true and proud as I wade though battle.",
+            "graphic_id": 2130,
+            "hero_id": 21,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 492,
+            "name": "纯音调之完美脚镯",
+            "description": "每次我战斗时它都会发出纯粹悦耳的铃铛声。",
+            "graphic_id": 2130,
+            "hero_id": 21,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "493",
+        "snapshots": {
+          "original": {
+            "id": 493,
+            "name": "Simple Lute",
+            "description": "A bit out of tune, but it's cheap.",
+            "graphic_id": 2137,
+            "hero_id": 21,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,10774"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 493,
+            "name": "简单鲁特琴",
+            "description": "稍微有点跑调，但胜在价格便宜。",
+            "graphic_id": 2137,
+            "hero_id": 21,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,10774"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "494",
+        "snapshots": {
+          "original": {
+            "id": 494,
+            "name": "Doss Lute",
+            "description": "This magical instrument creates a unique and empowering sound.",
+            "graphic_id": 2137,
+            "hero_id": 21,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,10774"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 494,
+            "name": "休憩鲁特琴",
+            "description": "此乐器能产生出一种振奋人心的独特声音。",
+            "graphic_id": 2137,
+            "hero_id": 21,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,10774"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "495",
+        "snapshots": {
+          "original": {
+            "id": 495,
+            "name": "Gold-inlaid Lute",
+            "description": "The golden frets create a sound which can be heard over great distances.",
+            "graphic_id": 2138,
+            "hero_id": 21,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,10774"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 495,
+            "name": "镀金鲁特琴",
+            "description": "黄金的音品所产生的声音能够传播到很远的地方。",
+            "graphic_id": 2138,
+            "hero_id": 21,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,10774"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "496",
+        "snapshots": {
+          "original": {
+            "id": 496,
+            "name": "Masterwork Lute of Rest",
+            "description": "An instrument as finely crafted as one could ever hope to own.",
+            "graphic_id": 2139,
+            "hero_id": 21,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,10774"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 496,
+            "name": "大师级安息鲁特琴",
+            "description": "这种质量的鲁特琴是所有人都梦寐以求的。",
+            "graphic_id": 2139,
+            "hero_id": 21,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,10774"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "497",
+        "snapshots": {
+          "original": {
+            "id": 497,
+            "name": "Simple Belt",
+            "description": "It would not help if my pants fell down during battle.",
+            "graphic_id": 2131,
+            "hero_id": 21,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ]
+          },
+          "display": {
+            "id": 497,
+            "name": "简单腰带",
+            "description": "要是在战斗中裤子突然滑落那就完蛋了。",
+            "graphic_id": 2131,
+            "hero_id": 21,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "498",
+        "snapshots": {
+          "original": {
+            "id": 498,
+            "name": "Alligator Leather Belt",
+            "description": "An alligator thought it could best me in combat. Obviously it did not.",
+            "graphic_id": 2131,
+            "hero_id": 21,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ]
+          },
+          "display": {
+            "id": 498,
+            "name": "鳄鱼皮腰带",
+            "description": "某只短吻鳄自以为我好欺负。结果很明显。",
+            "graphic_id": 2131,
+            "hero_id": 21,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "499",
+        "snapshots": {
+          "original": {
+            "id": 499,
+            "name": "Dinosaur Hide Belt",
+            "description": "A raptor's hide -- if you can take one down -- is extremely durable.",
+            "graphic_id": 2132,
+            "hero_id": 21,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ]
+          },
+          "display": {
+            "id": 499,
+            "name": "恐龙皮腰带",
+            "description": "这是迅猛龙的毛皮--很难对付--但确实非常耐用。",
+            "graphic_id": 2132,
+            "hero_id": 21,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "500",
+        "snapshots": {
+          "original": {
+            "id": 500,
+            "name": "Gold-inlaid Belt of Tempo",
+            "description": "Who says you can't be fashionable in battle?",
+            "graphic_id": 2133,
+            "hero_id": 21,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ]
+          },
+          "display": {
+            "id": 500,
+            "name": "节奏之镀金腰带",
+            "description": "谁说战斗时就不能讲究时髦了？",
+            "graphic_id": 2133,
+            "hero_id": 21,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "501",
+        "snapshots": {
+          "original": {
+            "id": 501,
+            "name": "Padded Cloth Pauldron",
+            "description": "A little worse for wear, but it's better than nothing.",
+            "graphic_id": 2143,
+            "hero_id": 21,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,5"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 501,
+            "name": "软垫布质肩甲",
+            "description": "虽然使用得有点磨损了，但有总好过没有。",
+            "graphic_id": 2143,
+            "hero_id": 21,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,5"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "502",
+        "snapshots": {
+          "original": {
+            "id": 502,
+            "name": "Chultan Pauldron",
+            "description": "Made in native Chultan fashion, with a few extra Chult-specific dangers in mind.",
+            "graphic_id": 2143,
+            "hero_id": 21,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,9"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 502,
+            "name": "楚尔特肩甲",
+            "description": "传统的楚尔特风格，而且针对某些楚尔特本土的危险做了改良。",
+            "graphic_id": 2143,
+            "hero_id": 21,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,9"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "503",
+        "snapshots": {
+          "original": {
+            "id": 503,
+            "name": "Silver Scale Tunic",
+            "description": "With raptor-like scales fashioned from silver, this tunic provides excellent defense and mobility.",
+            "graphic_id": 2144,
+            "hero_id": 21,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,18"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 503,
+            "name": "银麟战袍",
+            "description": "此护甲上布满了采用白银打造而成的仿照龙鳞，既提供优秀的防御又十分的轻便。",
+            "graphic_id": 2144,
+            "hero_id": 21,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,18"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "504",
+        "snapshots": {
+          "original": {
+            "id": 504,
+            "name": "Sapphire-inlaid Linked Armor",
+            "description": "Lighter than it appears, this armor both looks good and provides unparalleled defense.",
+            "graphic_id": 2145,
+            "hero_id": 21,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,45"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 504,
+            "name": "内嵌蓝宝石的连体盔甲",
+            "description": "此护甲比外表看起来更加的轻盈，既不牺牲外观又能提供优秀的防御。",
+            "graphic_id": 2145,
+            "hero_id": 21,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,45"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "56",
+        "snapshots": {
+          "original": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "阵型中每有一位女性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "13",
+        "snapshots": {
+          "original": {
+            "id": 13,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "tabaxi"
+                  }
+                ],
+                "description": "Increases the damage of all Tabaxi Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 13,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "tabaxi"
+                  }
+                ],
+                "description": "使所有斑猫人勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "31",
+        "snapshots": {
+          "original": {
+            "id": 31,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "dex",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a DEX score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 31,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "dex",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有敏捷大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "43",
+        "snapshots": {
+          "original": {
+            "id": 43,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "cha",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a CHA score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 43,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "cha",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有魅力大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "46",
+        "snapshots": {
+          "original": {
+            "id": 46,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "attack_type",
+                    "attack": "melee"
+                  }
+                ],
+                "description": "Increases the damage of all Melee Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 46,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "attack_type",
+                    "attack": "melee"
+                  }
+                ],
+                "description": "使所有近战勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

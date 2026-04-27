@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "66",
     "name": {
@@ -44,7 +44,7 @@
   },
   "dateAvailable": "2020-09-02 13:00:00",
   "lastReworkDate": "2025-08-13 13:00:00",
-  "popularity": 11,
+  "popularity": 10,
   "baseCost": "20000000000000",
   "baseDamage": "3750000000",
   "baseHealth": "175",
@@ -3062,6 +3062,638 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "1561",
+      "name": {
+        "original": "Improvised Tool Belt",
+        "display": "简易工具腰带"
+      },
+      "description": {
+        "original": "I'll never understand why anyone would throw away a perfectly good rusted screwdriver.",
+        "display": "真搞不明白为何会有人丢弃还能使用的生锈螺丝起子。"
+      },
+      "graphicId": "8680",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1562",
+      "name": {
+        "original": "Lower City Belt",
+        "display": "下城腰带"
+      },
+      "description": {
+        "original": "It took a few years, but I finally have all the essentials.",
+        "display": "虽然花了好几年，但终究集齐了所有的必备装备。"
+      },
+      "graphicId": "8680",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1563",
+      "name": {
+        "original": "Bucket 'o Bits",
+        "display": "杂物桶"
+      },
+      "description": {
+        "original": "Where are those bolts? I should really organize this.",
+        "display": "螺栓都放哪去了？真的该好好整理下了。"
+      },
+      "graphicId": "8681",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1564",
+      "name": {
+        "original": "House Cannith Toolkit",
+        "display": "卡尼斯家族工具包"
+      },
+      "description": {
+        "original": "These dragonmarked people sure have nice tools. HEY! Can I have this?",
+        "display": "这些龙纹后裔的工具很不错嘛。咦！这个可以送我吗？"
+      },
+      "graphicId": "8682",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "1565",
+      "name": {
+        "original": "Rock-Fist v2",
+        "display": "岩拳 v2"
+      },
+      "description": {
+        "original": "Upgraded the manual release bolt. I don't need that breaking off again.",
+        "display": "升级了手动释放螺栓。我可不想再把它弄断了。"
+      },
+      "graphicId": "8668",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,25,17487,17488",
+          "description": "Increases the effect of Lazaapz's second set of Specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1566",
+      "name": {
+        "original": "Rock-Fist v17",
+        "display": "岩石拳 v17"
+      },
+      "description": {
+        "original": "v16's molten core was a step too far. I know that now.",
+        "display": "v16 的熔融核心太过分了。我现在知道了。"
+      },
+      "graphicId": "8668",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,87.5,17487,17488",
+          "description": "Increases the effect of Lazaapz's second set of Specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1567",
+      "name": {
+        "original": "Arcane Propulsion Arm",
+        "display": "奥术推进臂"
+      },
+      "description": {
+        "original": "Those House Cannith blueprints were invaluable; those artificers sure know their stuff.",
+        "display": "坎尼斯家族的蓝图非常宝贵，那些机关术士肯定很懂行。"
+      },
+      "graphicId": "8669",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,150,17487,17488",
+          "description": "Increases the effect of Lazaapz's second set of Specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1568",
+      "name": {
+        "original": "Mark 42 Grappling Buzzsaw",
+        "display": "马克42 抓斗式链锯"
+      },
+      "description": {
+        "original": "Grappling arm? Check. Buzz Saw? CHECK. Now to test this thing out...",
+        "display": "擒拿臂？对蜂鸣锯？没问题现在来测试一下这个东西......"
+      },
+      "graphicId": "8670",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,275,17487,17488",
+          "description": "Increases the effect of Lazaapz's second set of Specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1569",
+      "name": {
+        "original": "Bits and Bob",
+        "display": "杂物与鲍勃"
+      },
+      "description": {
+        "original": "I had an automaton in here. Bob! This isn't funny.",
+        "display": "这里头有我的一个机器人。鲍勃！不要闹。"
+      },
+      "graphicId": "8677",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,17479,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1570",
+      "name": {
+        "original": "Emergency Parts",
+        "display": "备用零件"
+      },
+      "description": {
+        "original": "You never know what you'll need until you need it.",
+        "display": "备用的东西从来都是多多益善的。"
+      },
+      "graphicId": "8677",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,17479,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1571",
+      "name": {
+        "original": "Traveling Gear",
+        "display": "旅行装备"
+      },
+      "description": {
+        "original": "In hindsight, I should have packed more dragonshards.",
+        "display": "后知后觉一说，早知道就多带些龙晶。"
+      },
+      "graphicId": "8678",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,17479,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1572",
+      "name": {
+        "original": "Tradefair Haversack",
+        "display": "交易会背包"
+      },
+      "description": {
+        "original": "Smuggling is much easier with hidden pouches.",
+        "display": "有隐蔽口袋的背包真是走私的良伴。"
+      },
+      "graphicId": "8679",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,17479,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1573",
+      "name": {
+        "original": "Helm v1",
+        "display": "头盔1式"
+      },
+      "description": {
+        "original": "Time to start pushing back.",
+        "display": "是时候往回修改下了。"
+      },
+      "graphicId": "8674",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "health_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1574",
+      "name": {
+        "original": "Helm V4",
+        "display": "头盔改4式"
+      },
+      "description": {
+        "original": "'Borrowed' a better forge to increase the carbon percentage.",
+        "display": "“借用”了更优质的熔炉来提高含碳率。"
+      },
+      "graphicId": "8674",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "health_mult,30"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1575",
+      "name": {
+        "original": "The Face of Lazaapz",
+        "display": "拉扎普的面容"
+      },
+      "description": {
+        "original": "OK. Now watch their faces when I cast light!",
+        "display": "弄好了。待会我施展照明术时仔细留意他们的面容！"
+      },
+      "graphicId": "8675",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "health_mult,50"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1576",
+      "name": {
+        "original": "Spiked Helm v2",
+        "display": "尖刺头盔改2式"
+      },
+      "description": {
+        "original": "I added them to shift my center of gravity. The fact that they look AWESOME is a bonus!",
+        "display": "我添加了尖刺以转移头盔的重心。所产生的炫酷外观纯粹是附带效果！"
+      },
+      "graphicId": "8676",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "health_mult,100"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1577",
+      "name": {
+        "original": "Rudimentary Blast Shield",
+        "display": "低级防爆盾牌"
+      },
+      "description": {
+        "original": "Test 1: let's see if this thing can take a punch from a warforged...",
+        "display": "1次测试：先试试这玩意能否抵挡得住机关人......"
+      },
+      "graphicId": "8683",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,17482"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1578",
+      "name": {
+        "original": "Scavenged Tower Shield",
+        "display": "捡回来的塔盾"
+      },
+      "description": {
+        "original": "Test 14: ...as it turns out, warforged can punch pretty hard. Here's hoping some higher-grade steel helps.",
+        "display": "14次测试：不出所料，机关人的拳击非常强悍。希望使用更高级的钢铁能够增加防御力。"
+      },
+      "graphicId": "8683",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,17482"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1579",
+      "name": {
+        "original": "Bullwark of Sharn",
+        "display": "萨恩之堡垒"
+      },
+      "description": {
+        "original": "Test 91: Materials found in Tradefair District dumpster much higher quality than parts found in Lower City.",
+        "display": "91次测试：从交易会城区的垃圾堆中找到的材料远比在下城所找到的零件更高质量。"
+      },
+      "graphicId": "8684",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,17482"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1580",
+      "name": {
+        "original": "Adamantine Aegis",
+        "display": "精金盾"
+      },
+      "description": {
+        "original": "Test 226: Adding Adamantine well worth the added cost.",
+        "display": "226次测试：添加精金绝对是物有所值的。"
+      },
+      "graphicId": "8685",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,17482"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1581",
+      "name": {
+        "original": "Chestpiece v2",
+        "display": "胸罩 v2"
+      },
+      "description": {
+        "original": "I didn't think that would work anyway.",
+        "display": "反正我也不觉得那会有用。"
+      },
+      "graphicId": "8671",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,25,17484,17485,17486",
+          "description": "Increases the effect of Lazaapz's first set of Specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1582",
+      "name": {
+        "original": "Chestpiece v82",
+        "display": "胸罩 v82"
+      },
+      "description": {
+        "original": "Oh good. We're back to blowing out the crystal again.",
+        "display": "太好了我们又开始吹水晶了。"
+      },
+      "graphicId": "8671",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,87.5,17484,17485,17486",
+          "description": "Increases the effect of Lazaapz's first set of Specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1583",
+      "name": {
+        "original": "Chestpiece v101",
+        "display": "胸罩 v101"
+      },
+      "description": {
+        "original": "I finished it just before I zapped here.",
+        "display": "我在被传送到这里之前刚刚看完。"
+      },
+      "graphicId": "8672",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,150,17484,17485,17486",
+          "description": "Increases the effect of Lazaapz's first set of Specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1584",
+      "name": {
+        "original": "Heart of Sharn Breastplate",
+        "display": "沙恩之心胸甲"
+      },
+      "description": {
+        "original": "Just be sure to replace the crystal every couple months and you won't have to worry about exploding.",
+        "display": "只要每隔几个月更换一次水晶，就不用担心爆炸了。"
+      },
+      "graphicId": "8673",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,275,17484,17485,17486",
+          "description": "Increases the effect of Lazaapz's first set of Specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Female Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "91",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,30",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "int",
+              "check": 13,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a INT score of 13 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "34",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "con",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a CON score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "33",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "dex",
+              "score": 15,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a DEX score of 15 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "53",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "neutral"
+            }
+          ],
+          "description": "Increases the damage of all Neutral Champions by $(amount)%"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3221,7 +3853,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 11,
+        "popularity": 10,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3420,7 +4052,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 11,
+        "popularity": 10,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -7168,6 +7800,1100 @@
             "availabilities": {
               "premium_item_id": "607"
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "1561",
+        "snapshots": {
+          "original": {
+            "id": 1561,
+            "name": "Improvised Tool Belt",
+            "description": "I'll never understand why anyone would throw away a perfectly good rusted screwdriver.",
+            "graphic_id": 8680,
+            "hero_id": 66,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1561,
+            "name": "简易工具腰带",
+            "description": "真搞不明白为何会有人丢弃还能使用的生锈螺丝起子。",
+            "graphic_id": 8680,
+            "hero_id": 66,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1562",
+        "snapshots": {
+          "original": {
+            "id": 1562,
+            "name": "Lower City Belt",
+            "description": "It took a few years, but I finally have all the essentials.",
+            "graphic_id": 8680,
+            "hero_id": 66,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1562,
+            "name": "下城腰带",
+            "description": "虽然花了好几年，但终究集齐了所有的必备装备。",
+            "graphic_id": 8680,
+            "hero_id": 66,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1563",
+        "snapshots": {
+          "original": {
+            "id": 1563,
+            "name": "Bucket 'o Bits",
+            "description": "Where are those bolts? I should really organize this.",
+            "graphic_id": 8681,
+            "hero_id": 66,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1563,
+            "name": "杂物桶",
+            "description": "螺栓都放哪去了？真的该好好整理下了。",
+            "graphic_id": 8681,
+            "hero_id": 66,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1564",
+        "snapshots": {
+          "original": {
+            "id": 1564,
+            "name": "House Cannith Toolkit",
+            "description": "These dragonmarked people sure have nice tools. HEY! Can I have this?",
+            "graphic_id": 8682,
+            "hero_id": 66,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1564,
+            "name": "卡尼斯家族工具包",
+            "description": "这些龙纹后裔的工具很不错嘛。咦！这个可以送我吗？",
+            "graphic_id": 8682,
+            "hero_id": 66,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1565",
+        "snapshots": {
+          "original": {
+            "id": 1565,
+            "name": "Rock-Fist v2",
+            "description": "Upgraded the manual release bolt. I don't need that breaking off again.",
+            "graphic_id": 8668,
+            "hero_id": 66,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,17487,17488",
+                "description": "Increases the effect of Lazaapz's second set of Specializations by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1565,
+            "name": "岩拳 v2",
+            "description": "升级了手动释放螺栓。我可不想再把它弄断了。",
+            "graphic_id": 8668,
+            "hero_id": 66,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,17487,17488",
+                "description": "使拉扎普的第二组专精的效果提升 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1566",
+        "snapshots": {
+          "original": {
+            "id": 1566,
+            "name": "Rock-Fist v17",
+            "description": "v16's molten core was a step too far. I know that now.",
+            "graphic_id": 8668,
+            "hero_id": 66,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,17487,17488",
+                "description": "Increases the effect of Lazaapz's second set of Specializations by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1566,
+            "name": "岩石拳 v17",
+            "description": "v16 的熔融核心太过分了。我现在知道了。",
+            "graphic_id": 8668,
+            "hero_id": 66,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,17487,17488",
+                "description": "使拉扎普的第二组专精的效果提升 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1567",
+        "snapshots": {
+          "original": {
+            "id": 1567,
+            "name": "Arcane Propulsion Arm",
+            "description": "Those House Cannith blueprints were invaluable; those artificers sure know their stuff.",
+            "graphic_id": 8669,
+            "hero_id": 66,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,17487,17488",
+                "description": "Increases the effect of Lazaapz's second set of Specializations by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1567,
+            "name": "奥术推进臂",
+            "description": "坎尼斯家族的蓝图非常宝贵，那些机关术士肯定很懂行。",
+            "graphic_id": 8669,
+            "hero_id": 66,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,17487,17488",
+                "description": "使拉扎普的第二组专精的效果提升 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1568",
+        "snapshots": {
+          "original": {
+            "id": 1568,
+            "name": "Mark 42 Grappling Buzzsaw",
+            "description": "Grappling arm? Check. Buzz Saw? CHECK. Now to test this thing out...",
+            "graphic_id": 8670,
+            "hero_id": 66,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,17487,17488",
+                "description": "Increases the effect of Lazaapz's second set of Specializations by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1568,
+            "name": "马克42 抓斗式链锯",
+            "description": "擒拿臂？对蜂鸣锯？没问题现在来测试一下这个东西......",
+            "graphic_id": 8670,
+            "hero_id": 66,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,17487,17488",
+                "description": "使拉扎普的第二组专精的效果提升 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1569",
+        "snapshots": {
+          "original": {
+            "id": 1569,
+            "name": "Bits and Bob",
+            "description": "I had an automaton in here. Bob! This isn't funny.",
+            "graphic_id": 8677,
+            "hero_id": 66,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,17479,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1569,
+            "name": "杂物与鲍勃",
+            "description": "这里头有我的一个机器人。鲍勃！不要闹。",
+            "graphic_id": 8677,
+            "hero_id": 66,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,17479,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1570",
+        "snapshots": {
+          "original": {
+            "id": 1570,
+            "name": "Emergency Parts",
+            "description": "You never know what you'll need until you need it.",
+            "graphic_id": 8677,
+            "hero_id": 66,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,17479,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1570,
+            "name": "备用零件",
+            "description": "备用的东西从来都是多多益善的。",
+            "graphic_id": 8677,
+            "hero_id": 66,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,17479,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1571",
+        "snapshots": {
+          "original": {
+            "id": 1571,
+            "name": "Traveling Gear",
+            "description": "In hindsight, I should have packed more dragonshards.",
+            "graphic_id": 8678,
+            "hero_id": 66,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,17479,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1571,
+            "name": "旅行装备",
+            "description": "后知后觉一说，早知道就多带些龙晶。",
+            "graphic_id": 8678,
+            "hero_id": 66,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,17479,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1572",
+        "snapshots": {
+          "original": {
+            "id": 1572,
+            "name": "Tradefair Haversack",
+            "description": "Smuggling is much easier with hidden pouches.",
+            "graphic_id": 8679,
+            "hero_id": 66,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,17479,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1572,
+            "name": "交易会背包",
+            "description": "有隐蔽口袋的背包真是走私的良伴。",
+            "graphic_id": 8679,
+            "hero_id": 66,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,17479,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1573",
+        "snapshots": {
+          "original": {
+            "id": 1573,
+            "name": "Helm v1",
+            "description": "Time to start pushing back.",
+            "graphic_id": 8674,
+            "hero_id": 66,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "health_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1573,
+            "name": "头盔1式",
+            "description": "是时候往回修改下了。",
+            "graphic_id": 8674,
+            "hero_id": 66,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "health_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1574",
+        "snapshots": {
+          "original": {
+            "id": 1574,
+            "name": "Helm V4",
+            "description": "'Borrowed' a better forge to increase the carbon percentage.",
+            "graphic_id": 8674,
+            "hero_id": 66,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "health_mult,30"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1574,
+            "name": "头盔改4式",
+            "description": "“借用”了更优质的熔炉来提高含碳率。",
+            "graphic_id": 8674,
+            "hero_id": 66,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "health_mult,30"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1575",
+        "snapshots": {
+          "original": {
+            "id": 1575,
+            "name": "The Face of Lazaapz",
+            "description": "OK. Now watch their faces when I cast light!",
+            "graphic_id": 8675,
+            "hero_id": 66,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "health_mult,50"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1575,
+            "name": "拉扎普的面容",
+            "description": "弄好了。待会我施展照明术时仔细留意他们的面容！",
+            "graphic_id": 8675,
+            "hero_id": 66,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "health_mult,50"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1576",
+        "snapshots": {
+          "original": {
+            "id": 1576,
+            "name": "Spiked Helm v2",
+            "description": "I added them to shift my center of gravity. The fact that they look AWESOME is a bonus!",
+            "graphic_id": 8676,
+            "hero_id": 66,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "health_mult,100"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1576,
+            "name": "尖刺头盔改2式",
+            "description": "我添加了尖刺以转移头盔的重心。所产生的炫酷外观纯粹是附带效果！",
+            "graphic_id": 8676,
+            "hero_id": 66,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "health_mult,100"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1577",
+        "snapshots": {
+          "original": {
+            "id": 1577,
+            "name": "Rudimentary Blast Shield",
+            "description": "Test 1: let's see if this thing can take a punch from a warforged...",
+            "graphic_id": 8683,
+            "hero_id": 66,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,17482"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1577,
+            "name": "低级防爆盾牌",
+            "description": "1次测试：先试试这玩意能否抵挡得住机关人......",
+            "graphic_id": 8683,
+            "hero_id": 66,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,17482"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1578",
+        "snapshots": {
+          "original": {
+            "id": 1578,
+            "name": "Scavenged Tower Shield",
+            "description": "Test 14: ...as it turns out, warforged can punch pretty hard. Here's hoping some higher-grade steel helps.",
+            "graphic_id": 8683,
+            "hero_id": 66,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,17482"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1578,
+            "name": "捡回来的塔盾",
+            "description": "14次测试：不出所料，机关人的拳击非常强悍。希望使用更高级的钢铁能够增加防御力。",
+            "graphic_id": 8683,
+            "hero_id": 66,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,17482"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1579",
+        "snapshots": {
+          "original": {
+            "id": 1579,
+            "name": "Bullwark of Sharn",
+            "description": "Test 91: Materials found in Tradefair District dumpster much higher quality than parts found in Lower City.",
+            "graphic_id": 8684,
+            "hero_id": 66,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,17482"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1579,
+            "name": "萨恩之堡垒",
+            "description": "91次测试：从交易会城区的垃圾堆中找到的材料远比在下城所找到的零件更高质量。",
+            "graphic_id": 8684,
+            "hero_id": 66,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,17482"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1580",
+        "snapshots": {
+          "original": {
+            "id": 1580,
+            "name": "Adamantine Aegis",
+            "description": "Test 226: Adding Adamantine well worth the added cost.",
+            "graphic_id": 8685,
+            "hero_id": 66,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,17482"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1580,
+            "name": "精金盾",
+            "description": "226次测试：添加精金绝对是物有所值的。",
+            "graphic_id": 8685,
+            "hero_id": 66,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,17482"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1581",
+        "snapshots": {
+          "original": {
+            "id": 1581,
+            "name": "Chestpiece v2",
+            "description": "I didn't think that would work anyway.",
+            "graphic_id": 8671,
+            "hero_id": 66,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,17484,17485,17486",
+                "description": "Increases the effect of Lazaapz's first set of Specializations by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1581,
+            "name": "胸罩 v2",
+            "description": "反正我也不觉得那会有用。",
+            "graphic_id": 8671,
+            "hero_id": 66,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,17484,17485,17486",
+                "description": "使拉扎普的第一组专精的效果提升 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1582",
+        "snapshots": {
+          "original": {
+            "id": 1582,
+            "name": "Chestpiece v82",
+            "description": "Oh good. We're back to blowing out the crystal again.",
+            "graphic_id": 8671,
+            "hero_id": 66,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,17484,17485,17486",
+                "description": "Increases the effect of Lazaapz's first set of Specializations by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1582,
+            "name": "胸罩 v82",
+            "description": "太好了我们又开始吹水晶了。",
+            "graphic_id": 8671,
+            "hero_id": 66,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,17484,17485,17486",
+                "description": "使拉扎普的第一组专精的效果提升 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1583",
+        "snapshots": {
+          "original": {
+            "id": 1583,
+            "name": "Chestpiece v101",
+            "description": "I finished it just before I zapped here.",
+            "graphic_id": 8672,
+            "hero_id": 66,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,17484,17485,17486",
+                "description": "Increases the effect of Lazaapz's first set of Specializations by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1583,
+            "name": "胸罩 v101",
+            "description": "我在被传送到这里之前刚刚看完。",
+            "graphic_id": 8672,
+            "hero_id": 66,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,17484,17485,17486",
+                "description": "使拉扎普的第一组专精的效果提升 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1584",
+        "snapshots": {
+          "original": {
+            "id": 1584,
+            "name": "Heart of Sharn Breastplate",
+            "description": "Just be sure to replace the crystal every couple months and you won't have to worry about exploding.",
+            "graphic_id": 8673,
+            "hero_id": 66,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,17484,17485,17486",
+                "description": "Increases the effect of Lazaapz's first set of Specializations by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1584,
+            "name": "沙恩之心胸甲",
+            "description": "只要每隔几个月更换一次水晶，就不用担心爆炸了。",
+            "graphic_id": 8673,
+            "hero_id": 66,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,17484,17485,17486",
+                "description": "使拉扎普的第一组专精的效果提升 $amount%"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3",
+        "snapshots": {
+          "original": {
+            "id": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Female Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "使所有女性勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "91",
+        "snapshots": {
+          "original": {
+            "id": 91,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "int",
+                    "check": 13,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a INT score of 13 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 91,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "int",
+                    "check": 13,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位智力大于等于 13 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "34",
+        "snapshots": {
+          "original": {
+            "id": 34,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a CON score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 34,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有体质大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "33",
+        "snapshots": {
+          "original": {
+            "id": 33,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "dex",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a DEX score of 15 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 33,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "dex",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有敏捷大于等于 15 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "53",
+        "snapshots": {
+          "original": {
+            "id": 53,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "neutral"
+                  }
+                ],
+                "description": "Increases the damage of all Neutral Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 53,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "neutral"
+                  }
+                ],
+                "description": "使所有中立阵营勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

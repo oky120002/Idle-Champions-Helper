@@ -6,7 +6,11 @@
       "name": "Bruenor",
       "seat_id": 1,
       "tags": ["support", "tank", "dwarf", "male"],
-      "affiliation_tags": ["companions_of_the_hall"]
+      "affiliation_tags": ["companions_of_the_hall"],
+      "properties": {
+        "golden_epic_loot_id": 1002,
+        "legendary_effect_id": [501, 502]
+      }
     },
     {
       "id": 58,
@@ -72,6 +76,56 @@
       "attack_id": 21,
       "tags": ["melee", "boss", "undead"],
       "adventures": [100]
+    }
+  ],
+  "loot_defines": [
+    {
+      "id": 1001,
+      "name": "Simple Shield",
+      "description": "A steady shield for testing.",
+      "graphic_id": 2001,
+      "hero_id": 1,
+      "slot_id": 1,
+      "rarity": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100"
+        }
+      ],
+      "allow_ge": true
+    },
+    {
+      "id": 1002,
+      "name": "Golden Shield",
+      "description": "A golden shield for testing.",
+      "graphic_id": 2002,
+      "hero_id": 1,
+      "slot_id": 1,
+      "rarity": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200"
+        }
+      ],
+      "allow_ge": true
+    }
+  ],
+  "legendary_effect_defines": [
+    {
+      "id": 501,
+      "effects": [
+        {
+          "effect_string": "increase_global_dps_mult,100"
+        }
+      ]
+    },
+    {
+      "id": 502,
+      "effects": [
+        {
+          "effect_string": "increase_health_mult,50"
+        }
+      ]
     }
   ],
   "adventure_defines": [

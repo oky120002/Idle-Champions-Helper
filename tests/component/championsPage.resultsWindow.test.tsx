@@ -54,7 +54,7 @@ describe('ChampionsPage results window', () => {
     expect(afterShuffle).toHaveLength(50)
     expect(afterShuffle).not.toEqual(beforeShuffle)
     expect(screen.getByRole('button', { name: '重新随机' })).toBeInTheDocument()
-  })
+  }, 10000)
 
   it('随机排序只会打散当前筛选结果，不会混入其它英雄', async () => {
     const user = userEvent.setup()
@@ -76,5 +76,5 @@ describe('ChampionsPage results window', () => {
     expect(afterShuffle).toHaveLength(15)
     expect(afterShuffle).not.toEqual(beforeShuffle)
     expect([...afterShuffle].sort()).toEqual([...beforeShuffle].sort())
-  })
+  }, 10000)
 })

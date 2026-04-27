@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "162",
     "name": {
@@ -45,7 +45,7 @@
   },
   "dateAvailable": "2025-05-07 12:00:00",
   "lastReworkDate": "2025-05-07 12:00:00",
-  "popularity": 123,
+  "popularity": 122,
   "baseCost": "250000000000000000",
   "baseDamage": "400000000000",
   "baseHealth": "47",
@@ -2673,6 +2673,636 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "3842",
+      "name": {
+        "original": "Minimal Effort Mace",
+        "display": "偷懒钉头锤"
+      },
+      "description": {
+        "original": "I'm not just sitting around. I'm helping. I'm killing people!",
+        "display": "我可不是在闲坐着。我在帮忙呢。我在杀人！"
+      },
+      "graphicId": "26205",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3843",
+      "name": {
+        "original": "Acolyte's Cudgel",
+        "display": "见习教士的短棍"
+      },
+      "description": {
+        "original": "Please grant me the strength to defeat my enemies.",
+        "display": "请赐予我击败敌人的力量。"
+      },
+      "graphicId": "26205",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3844",
+      "name": {
+        "original": "Spiritual Weapon",
+        "display": "灵能武器"
+      },
+      "description": {
+        "original": "I summoned it! It's under my control.",
+        "display": "我召唤出它了！我可以控制它了。"
+      },
+      "graphicId": "26206",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3845",
+      "name": {
+        "original": "Mace of Storms",
+        "display": "风暴钉头锤"
+      },
+      "description": {
+        "original": "My faith in Persana allows me to make a real impact on the surface.",
+        "display": "我对佩塞纳的信仰让我能在地表传播他的福音。"
+      },
+      "graphicId": "26207",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "3846",
+      "name": {
+        "original": "Rotting Seaweed",
+        "display": "腐烂海藻"
+      },
+      "description": {
+        "original": "That is absolutely not going on my head.",
+        "display": "那绝对不能戴在我头上。"
+      },
+      "graphicId": "26199",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,16895"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3847",
+      "name": {
+        "original": "Kelp Band",
+        "display": "海带束带"
+      },
+      "description": {
+        "original": "Ew. I am a priestess of Persana, not some common servant.",
+        "display": "恶心。我可是佩塞纳的女祭司，可不是什么普通的仆人。"
+      },
+      "graphicId": "26199",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,16895"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3848",
+      "name": {
+        "original": "Shell Tiara",
+        "display": "贝壳头饰"
+      },
+      "description": {
+        "original": "It's because of Persana that I can save them from drowning.",
+        "display": "多亏了佩塞纳，我才能把他们从水中救出来。"
+      },
+      "graphicId": "26200",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,16895"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3849",
+      "name": {
+        "original": "Crown of the Deep",
+        "display": "深海王冠"
+      },
+      "description": {
+        "original": "May Persana's current guide me through the storm.",
+        "display": "愿佩塞纳的力量引领我穿越风暴。"
+      },
+      "graphicId": "26201",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,16895"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3850",
+      "name": {
+        "original": "Not Enough",
+        "display": "还不够呢"
+      },
+      "description": {
+        "original": "Ahem. You owe me money.",
+        "display": "咳咳。你还欠我钱呢。"
+      },
+      "graphicId": "26202",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,16896"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3851",
+      "name": {
+        "original": "Tithe of Tides",
+        "display": "潮汐什一税"
+      },
+      "description": {
+        "original": "We appreciate your patronage!",
+        "display": "感谢您的惠顾！"
+      },
+      "graphicId": "26202",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,16896"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3852",
+      "name": {
+        "original": "Medical Bill",
+        "display": "医药费账单"
+      },
+      "description": {
+        "original": "It's hard work being a cleric, but it can be rewarding.",
+        "display": "当牧师很辛苦，但也可能会有回报的。"
+      },
+      "graphicId": "26203",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,16896"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3853",
+      "name": {
+        "original": "Giant Stash",
+        "display": "巨人的宝藏"
+      },
+      "description": {
+        "original": "Turns out that giant had a pretty big stash of gold.",
+        "display": "原来那个巨人藏有这么多金子。"
+      },
+      "graphicId": "26204",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,16896"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3854",
+      "name": {
+        "original": "Stagnant Vial",
+        "display": "污浊药瓶"
+      },
+      "description": {
+        "original": "You shouldn't drink that. Don't say I didn't warn you.",
+        "display": "你不应该喝那个。别说我没警告过你。"
+      },
+      "graphicId": "26208",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,16897"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3855",
+      "name": {
+        "original": "Holy Sea Water",
+        "display": "圣海水"
+      },
+      "description": {
+        "original": "In the name of Persana, Justice of the Depths, I bless this vial.",
+        "display": "以深渊正义佩塞纳之名，我祝福这个药瓶。"
+      },
+      "graphicId": "26208",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,16897"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3856",
+      "name": {
+        "original": "Seabreeze Incense",
+        "display": "海风熏香"
+      },
+      "description": {
+        "original": "Persana, if this is the right path for me, send me a sign.",
+        "display": "佩塞纳，如果这是适合我的道路，请给我降下一个神迹。"
+      },
+      "graphicId": "26209",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,16897"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3857",
+      "name": {
+        "original": "Clinical Crystals",
+        "display": "诊疗水晶"
+      },
+      "description": {
+        "original": "Resurrection spells require a lot of expensive material components.",
+        "display": "复生术需要很多昂贵的材料。"
+      },
+      "graphicId": "26210",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,16897"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3858",
+      "name": {
+        "original": "Battered Plate",
+        "display": "破旧胸甲"
+      },
+      "description": {
+        "original": "Persana, please grant me the strength to make it through another day.",
+        "display": "佩塞纳，请赐予我力量撑过新的一天。"
+      },
+      "graphicId": "26193",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,25,17048,17049,17050",
+          "description": "Increases the effect of Vlithryn's Specializations by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3859",
+      "name": {
+        "original": "Renewed Plate",
+        "display": "翻新胸甲"
+      },
+      "description": {
+        "original": "There we are. All patched up.",
+        "display": "好了，都修补好了。"
+      },
+      "graphicId": "26193",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,87.5,17048,17049,17050",
+          "description": "Increases the effect of Vlithryn's Specializations by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3860",
+      "name": {
+        "original": "Mariner's Plate",
+        "display": "水手胸甲"
+      },
+      "description": {
+        "original": "To help me survive friendly fire, misadventure, and downright stupidity.",
+        "display": "助我在友军误伤、意外灾祸以及彻头彻尾的愚蠢行为中活下来。"
+      },
+      "graphicId": "26194",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,150,17048,17049,17050",
+          "description": "Increases the effect of Vlithryn's Specializations by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3861",
+      "name": {
+        "original": "Persana's Stormplate",
+        "display": "佩塞纳的风暴胸甲"
+      },
+      "description": {
+        "original": "I have an unbreakable connection with my god.",
+        "display": "我与我的神明有着牢不可破的链接。"
+      },
+      "graphicId": "26195",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,275,17048,17049,17050",
+          "description": "Increases the effect of Vlithryn's Specializations by $(amount)%."
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3862",
+      "name": {
+        "original": "Discarded Diary",
+        "display": "被丢弃的日记"
+      },
+      "description": {
+        "original": "Since I was a hatchling, I dreamed of leaving the sea to help the unfortunate.",
+        "display": "从我还是一只幼崽起，我就梦想着离开大海去帮助那些不幸的人。"
+      },
+      "graphicId": "26196",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,5"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3863",
+      "name": {
+        "original": "Vlithryn's Laments",
+        "display": "维列瑟琳的哀叹"
+      },
+      "description": {
+        "original": "I underestimated just how much help the unfortunate need.",
+        "display": "我低估了那些不幸的人到底有多需要帮助。"
+      },
+      "graphicId": "26196",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,9"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3864",
+      "name": {
+        "original": "Fifty Shades of Blue",
+        "display": "五十度蓝"
+      },
+      "description": {
+        "original": "Shh! Spoilers.",
+        "display": "嘘！别剧透。"
+      },
+      "graphicId": "26197",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,18"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3865",
+      "name": {
+        "original": "Necronomicon",
+        "display": "死灵之书"
+      },
+      "description": {
+        "original": "You want to see true suffering? How about I cast Inflict Wounds instead?",
+        "display": "你想见识真正的痛苦吗？不如我改成“施加伤口”法术如何？"
+      },
+      "graphicId": "26198",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,45"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "56",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "tiefling"
+            }
+          ],
+          "description": "Increases the damage of all Tiefling Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "40",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "wis",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a WIS score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "88",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,30",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "con",
+              "check": 13,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a CON score of 13 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "105",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "chaotic"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a CHAOTIC alignment"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -2814,7 +3444,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 123,
+        "popularity": 122,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -2995,7 +3625,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 123,
+        "popularity": 122,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -6077,6 +6707,1128 @@
             "availabilities": {
               "premium_item_id": "565"
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "3842",
+        "snapshots": {
+          "original": {
+            "id": 3842,
+            "name": "Minimal Effort Mace",
+            "description": "I'm not just sitting around. I'm helping. I'm killing people!",
+            "graphic_id": 26205,
+            "hero_id": 162,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3842,
+            "name": "偷懒钉头锤",
+            "description": "我可不是在闲坐着。我在帮忙呢。我在杀人！",
+            "graphic_id": 26205,
+            "hero_id": 162,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3843",
+        "snapshots": {
+          "original": {
+            "id": 3843,
+            "name": "Acolyte's Cudgel",
+            "description": "Please grant me the strength to defeat my enemies.",
+            "graphic_id": 26205,
+            "hero_id": 162,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3843,
+            "name": "见习教士的短棍",
+            "description": "请赐予我击败敌人的力量。",
+            "graphic_id": 26205,
+            "hero_id": 162,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3844",
+        "snapshots": {
+          "original": {
+            "id": 3844,
+            "name": "Spiritual Weapon",
+            "description": "I summoned it! It's under my control.",
+            "graphic_id": 26206,
+            "hero_id": 162,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3844,
+            "name": "灵能武器",
+            "description": "我召唤出它了！我可以控制它了。",
+            "graphic_id": 26206,
+            "hero_id": 162,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3845",
+        "snapshots": {
+          "original": {
+            "id": 3845,
+            "name": "Mace of Storms",
+            "description": "My faith in Persana allows me to make a real impact on the surface.",
+            "graphic_id": 26207,
+            "hero_id": 162,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3845,
+            "name": "风暴钉头锤",
+            "description": "我对佩塞纳的信仰让我能在地表传播他的福音。",
+            "graphic_id": 26207,
+            "hero_id": 162,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3846",
+        "snapshots": {
+          "original": {
+            "id": 3846,
+            "name": "Rotting Seaweed",
+            "description": "That is absolutely not going on my head.",
+            "graphic_id": 26199,
+            "hero_id": 162,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,16895"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3846,
+            "name": "腐烂海藻",
+            "description": "那绝对不能戴在我头上。",
+            "graphic_id": 26199,
+            "hero_id": 162,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,16895"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3847",
+        "snapshots": {
+          "original": {
+            "id": 3847,
+            "name": "Kelp Band",
+            "description": "Ew. I am a priestess of Persana, not some common servant.",
+            "graphic_id": 26199,
+            "hero_id": 162,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,16895"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3847,
+            "name": "海带束带",
+            "description": "恶心。我可是佩塞纳的女祭司，可不是什么普通的仆人。",
+            "graphic_id": 26199,
+            "hero_id": 162,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,16895"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3848",
+        "snapshots": {
+          "original": {
+            "id": 3848,
+            "name": "Shell Tiara",
+            "description": "It's because of Persana that I can save them from drowning.",
+            "graphic_id": 26200,
+            "hero_id": 162,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,16895"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3848,
+            "name": "贝壳头饰",
+            "description": "多亏了佩塞纳，我才能把他们从水中救出来。",
+            "graphic_id": 26200,
+            "hero_id": 162,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,16895"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3849",
+        "snapshots": {
+          "original": {
+            "id": 3849,
+            "name": "Crown of the Deep",
+            "description": "May Persana's current guide me through the storm.",
+            "graphic_id": 26201,
+            "hero_id": 162,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,16895"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3849,
+            "name": "深海王冠",
+            "description": "愿佩塞纳的力量引领我穿越风暴。",
+            "graphic_id": 26201,
+            "hero_id": 162,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,16895"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3850",
+        "snapshots": {
+          "original": {
+            "id": 3850,
+            "name": "Not Enough",
+            "description": "Ahem. You owe me money.",
+            "graphic_id": 26202,
+            "hero_id": 162,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,16896"
+              }
+            ]
+          },
+          "display": {
+            "id": 3850,
+            "name": "还不够呢",
+            "description": "咳咳。你还欠我钱呢。",
+            "graphic_id": 26202,
+            "hero_id": 162,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,16896"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3851",
+        "snapshots": {
+          "original": {
+            "id": 3851,
+            "name": "Tithe of Tides",
+            "description": "We appreciate your patronage!",
+            "graphic_id": 26202,
+            "hero_id": 162,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,16896"
+              }
+            ]
+          },
+          "display": {
+            "id": 3851,
+            "name": "潮汐什一税",
+            "description": "感谢您的惠顾！",
+            "graphic_id": 26202,
+            "hero_id": 162,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,16896"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3852",
+        "snapshots": {
+          "original": {
+            "id": 3852,
+            "name": "Medical Bill",
+            "description": "It's hard work being a cleric, but it can be rewarding.",
+            "graphic_id": 26203,
+            "hero_id": 162,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,16896"
+              }
+            ]
+          },
+          "display": {
+            "id": 3852,
+            "name": "医药费账单",
+            "description": "当牧师很辛苦，但也可能会有回报的。",
+            "graphic_id": 26203,
+            "hero_id": 162,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,16896"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3853",
+        "snapshots": {
+          "original": {
+            "id": 3853,
+            "name": "Giant Stash",
+            "description": "Turns out that giant had a pretty big stash of gold.",
+            "graphic_id": 26204,
+            "hero_id": 162,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,16896"
+              }
+            ]
+          },
+          "display": {
+            "id": 3853,
+            "name": "巨人的宝藏",
+            "description": "原来那个巨人藏有这么多金子。",
+            "graphic_id": 26204,
+            "hero_id": 162,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,16896"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3854",
+        "snapshots": {
+          "original": {
+            "id": 3854,
+            "name": "Stagnant Vial",
+            "description": "You shouldn't drink that. Don't say I didn't warn you.",
+            "graphic_id": 26208,
+            "hero_id": 162,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,16897"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3854,
+            "name": "污浊药瓶",
+            "description": "你不应该喝那个。别说我没警告过你。",
+            "graphic_id": 26208,
+            "hero_id": 162,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,16897"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3855",
+        "snapshots": {
+          "original": {
+            "id": 3855,
+            "name": "Holy Sea Water",
+            "description": "In the name of Persana, Justice of the Depths, I bless this vial.",
+            "graphic_id": 26208,
+            "hero_id": 162,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,16897"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3855,
+            "name": "圣海水",
+            "description": "以深渊正义佩塞纳之名，我祝福这个药瓶。",
+            "graphic_id": 26208,
+            "hero_id": 162,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,16897"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3856",
+        "snapshots": {
+          "original": {
+            "id": 3856,
+            "name": "Seabreeze Incense",
+            "description": "Persana, if this is the right path for me, send me a sign.",
+            "graphic_id": 26209,
+            "hero_id": 162,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,16897"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3856,
+            "name": "海风熏香",
+            "description": "佩塞纳，如果这是适合我的道路，请给我降下一个神迹。",
+            "graphic_id": 26209,
+            "hero_id": 162,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,16897"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3857",
+        "snapshots": {
+          "original": {
+            "id": 3857,
+            "name": "Clinical Crystals",
+            "description": "Resurrection spells require a lot of expensive material components.",
+            "graphic_id": 26210,
+            "hero_id": 162,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,16897"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3857,
+            "name": "诊疗水晶",
+            "description": "复生术需要很多昂贵的材料。",
+            "graphic_id": 26210,
+            "hero_id": 162,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,16897"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3858",
+        "snapshots": {
+          "original": {
+            "id": 3858,
+            "name": "Battered Plate",
+            "description": "Persana, please grant me the strength to make it through another day.",
+            "graphic_id": 26193,
+            "hero_id": 162,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,17048,17049,17050",
+                "description": "Increases the effect of Vlithryn's Specializations by $(amount)%."
+              }
+            ]
+          },
+          "display": {
+            "id": 3858,
+            "name": "破旧胸甲",
+            "description": "佩塞纳，请赐予我力量撑过新的一天。",
+            "graphic_id": 26193,
+            "hero_id": 162,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,17048,17049,17050",
+                "description": "使维列瑟琳所有专精的效果提升 $(amount)%。"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3859",
+        "snapshots": {
+          "original": {
+            "id": 3859,
+            "name": "Renewed Plate",
+            "description": "There we are. All patched up.",
+            "graphic_id": 26193,
+            "hero_id": 162,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,17048,17049,17050",
+                "description": "Increases the effect of Vlithryn's Specializations by $(amount)%."
+              }
+            ]
+          },
+          "display": {
+            "id": 3859,
+            "name": "翻新胸甲",
+            "description": "好了，都修补好了。",
+            "graphic_id": 26193,
+            "hero_id": 162,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,17048,17049,17050",
+                "description": "使维列瑟琳所有专精的效果提升 $(amount)%。"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3860",
+        "snapshots": {
+          "original": {
+            "id": 3860,
+            "name": "Mariner's Plate",
+            "description": "To help me survive friendly fire, misadventure, and downright stupidity.",
+            "graphic_id": 26194,
+            "hero_id": 162,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,17048,17049,17050",
+                "description": "Increases the effect of Vlithryn's Specializations by $(amount)%."
+              }
+            ]
+          },
+          "display": {
+            "id": 3860,
+            "name": "水手胸甲",
+            "description": "助我在友军误伤、意外灾祸以及彻头彻尾的愚蠢行为中活下来。",
+            "graphic_id": 26194,
+            "hero_id": 162,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,17048,17049,17050",
+                "description": "使维列瑟琳所有专精的效果提升 $(amount)%。"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3861",
+        "snapshots": {
+          "original": {
+            "id": 3861,
+            "name": "Persana's Stormplate",
+            "description": "I have an unbreakable connection with my god.",
+            "graphic_id": 26195,
+            "hero_id": 162,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,17048,17049,17050",
+                "description": "Increases the effect of Vlithryn's Specializations by $(amount)%."
+              }
+            ]
+          },
+          "display": {
+            "id": 3861,
+            "name": "佩塞纳的风暴胸甲",
+            "description": "我与我的神明有着牢不可破的链接。",
+            "graphic_id": 26195,
+            "hero_id": 162,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,17048,17049,17050",
+                "description": "使维列瑟琳所有专精的效果提升 $(amount)%。"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3862",
+        "snapshots": {
+          "original": {
+            "id": 3862,
+            "name": "Discarded Diary",
+            "description": "Since I was a hatchling, I dreamed of leaving the sea to help the unfortunate.",
+            "graphic_id": 26196,
+            "hero_id": 162,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,5"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3862,
+            "name": "被丢弃的日记",
+            "description": "从我还是一只幼崽起，我就梦想着离开大海去帮助那些不幸的人。",
+            "graphic_id": 26196,
+            "hero_id": 162,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,5"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3863",
+        "snapshots": {
+          "original": {
+            "id": 3863,
+            "name": "Vlithryn's Laments",
+            "description": "I underestimated just how much help the unfortunate need.",
+            "graphic_id": 26196,
+            "hero_id": 162,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,9"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3863,
+            "name": "维列瑟琳的哀叹",
+            "description": "我低估了那些不幸的人到底有多需要帮助。",
+            "graphic_id": 26196,
+            "hero_id": 162,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,9"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3864",
+        "snapshots": {
+          "original": {
+            "id": 3864,
+            "name": "Fifty Shades of Blue",
+            "description": "Shh! Spoilers.",
+            "graphic_id": 26197,
+            "hero_id": 162,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,18"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3864,
+            "name": "五十度蓝",
+            "description": "嘘！别剧透。",
+            "graphic_id": 26197,
+            "hero_id": 162,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,18"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3865",
+        "snapshots": {
+          "original": {
+            "id": 3865,
+            "name": "Necronomicon",
+            "description": "You want to see true suffering? How about I cast Inflict Wounds instead?",
+            "graphic_id": 26198,
+            "hero_id": 162,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,45"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3865,
+            "name": "死灵之书",
+            "description": "你想见识真正的痛苦吗？不如我改成“施加伤口”法术如何？",
+            "graphic_id": 26198,
+            "hero_id": 162,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,45"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "56",
+        "snapshots": {
+          "original": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "阵型中每有一位女性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "10",
+        "snapshots": {
+          "original": {
+            "id": 10,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "tiefling"
+                  }
+                ],
+                "description": "Increases the damage of all Tiefling Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 10,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "tiefling"
+                  }
+                ],
+                "description": "使所有提夫林勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "40",
+        "snapshots": {
+          "original": {
+            "id": 40,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "wis",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a WIS score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 40,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "wis",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有感知大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "88",
+        "snapshots": {
+          "original": {
+            "id": 88,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "con",
+                    "check": 13,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a CON score of 13 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 88,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "con",
+                    "check": 13,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位体质大于等于 13 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "105",
+        "snapshots": {
+          "original": {
+            "id": 105,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "chaotic"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a CHAOTIC alignment"
+              }
+            ]
+          },
+          "display": {
+            "id": 105,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "chaotic"
+                  }
+                ],
+                "description": "阵型中每有一位混乱阵营勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

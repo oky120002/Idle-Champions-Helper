@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "120",
     "name": {
@@ -39,7 +39,7 @@
   },
   "dateAvailable": "2023-02-22 00:00:00",
   "lastReworkDate": "2023-02-22 00:00:00",
-  "popularity": 17,
+  "popularity": 21,
   "baseCost": "250",
   "baseDamage": "80",
   "baseHealth": "47",
@@ -2882,6 +2882,630 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "2858",
+      "name": {
+        "original": "Practice Blade",
+        "display": "教练剑"
+      },
+      "description": {
+        "original": "I've trained with this so long, my grip's worn the hilt.",
+        "display": "我用这把剑练习了很久，连握把磨坏了。"
+      },
+      "graphicId": "17993",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2859",
+      "name": {
+        "original": "Sturdy Sword",
+        "display": "坚固的剑"
+      },
+      "description": {
+        "original": "Keep the edge keen and well-oiled.",
+        "display": "保持刀缘锋利并充分润滑。"
+      },
+      "graphicId": "17993",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2860",
+      "name": {
+        "original": "Tempest's Talon",
+        "display": "坦皮斯特之爪"
+      },
+      "description": {
+        "original": "This sword was a gift from a dragon.",
+        "display": "这把剑是巨龙的礼物。"
+      },
+      "graphicId": "17994",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2861",
+      "name": {
+        "original": "Blade of the Storm",
+        "display": "风暴之刃"
+      },
+      "description": {
+        "original": "Our power suffuses it.",
+        "display": "其中充满我们的力量。"
+      },
+      "graphicId": "17995",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "2862",
+      "name": {
+        "original": "Standard Boots",
+        "display": "制式靴子"
+      },
+      "description": {
+        "original": "They do the job.",
+        "display": "它们能用。"
+      },
+      "graphicId": "17984",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2863",
+      "name": {
+        "original": "Uniform Shoes",
+        "display": "制式鞋子"
+      },
+      "description": {
+        "original": "Every part of this outfit is standard issue.",
+        "display": "这套服装的每个组件都是制式产品。"
+      },
+      "graphicId": "17984",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2864",
+      "name": {
+        "original": "Stealthy Kicks",
+        "display": "隐藏靴子"
+      },
+      "description": {
+        "original": "Boots are a great place to hide extra blades.",
+        "display": "靴子是隐藏备用武器的好地方。"
+      },
+      "graphicId": "17985",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2865",
+      "name": {
+        "original": "Dragonrider's Sabatons",
+        "display": "龙骑士腿甲"
+      },
+      "description": {
+        "original": "Better protection when you're up in the air.",
+        "display": "在空中时提供更好的保护。"
+      },
+      "graphicId": "17986",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2866",
+      "name": {
+        "original": "Beginner's Longbow",
+        "display": "新手长弓"
+      },
+      "description": {
+        "original": "I'm an excellent shot.",
+        "display": "我是一名出色的射手。"
+      },
+      "graphicId": "17990",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,10611"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2867",
+      "name": {
+        "original": "Hunter's Bow",
+        "display": "猎弓"
+      },
+      "description": {
+        "original": "Hunting with a bow requires patience.",
+        "display": "用弓打猎需要耐心。"
+      },
+      "graphicId": "17990",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,10611"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2868",
+      "name": {
+        "original": "Handmade Hunter",
+        "display": "手工猎人"
+      },
+      "description": {
+        "original": "I made this bow myself, carved every sigil into the wood.",
+        "display": "这把弓是我自己做的，亲手将每个魔符刻在木头上。"
+      },
+      "graphicId": "17991",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,10611"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2869",
+      "name": {
+        "original": "Enchanted Longbow",
+        "display": "魔法长弓"
+      },
+      "description": {
+        "original": "With this, I cannot miss.",
+        "display": "有了它，我不可能失手。"
+      },
+      "graphicId": "17992",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,10611"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2870",
+      "name": {
+        "original": "Training Armor",
+        "display": "训练盔甲"
+      },
+      "description": {
+        "original": "I remember every scar on this armor.",
+        "display": "我记得这套盔甲上的每个划痕。"
+      },
+      "graphicId": "17987",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,10612"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2871",
+      "name": {
+        "original": "Protective Tunic",
+        "display": "防护短袍"
+      },
+      "description": {
+        "original": "You have to learn to take a hit as well as make a strike.",
+        "display": "学习防御和学会进攻同样重要。"
+      },
+      "graphicId": "17987",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,10612"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2872",
+      "name": {
+        "original": "Armored Uniform",
+        "display": "装甲军服"
+      },
+      "description": {
+        "original": "The war rages on, and I must do my part.",
+        "display": "战争还在继续，我必须尽自己的一份力。"
+      },
+      "graphicId": "17988",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,10612"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2873",
+      "name": {
+        "original": "Drakewarden's Armor",
+        "display": "飞龙守望者的盔甲"
+      },
+      "description": {
+        "original": "This armor befits Tempest's rider.",
+        "display": "这套盔甲适合坦皮斯特的骑手。"
+      },
+      "graphicId": "17989",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,10612"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2874",
+      "name": {
+        "original": "Dragon Scales",
+        "display": "龙鳞"
+      },
+      "description": {
+        "original": "These are from Tempest, the dragon I bonded with.",
+        "display": "来自我的契约搭档--坦皮斯特。"
+      },
+      "graphicId": "17996",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,25"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2875",
+      "name": {
+        "original": "Shed Skin",
+        "display": "蜕皮"
+      },
+      "description": {
+        "original": "A kalashtar is bonded to a spirit of the dream. I've expanded that to Tempest.",
+        "display": "卡拉史塔人都有梦灵纽带。我已经将其扩展到坦皮斯特身上。"
+      },
+      "graphicId": "17996",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,87.5"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2876",
+      "name": {
+        "original": "Drake's Tooth",
+        "display": "飞龙之牙"
+      },
+      "description": {
+        "original": "Tempest is a fierce fighter, but a kind friend.",
+        "display": "坦皮斯特既是狂热的战士，也是温和的朋友。"
+      },
+      "graphicId": "17997",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,150"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2877",
+      "name": {
+        "original": "Soul of the Tempest",
+        "display": "坦皮斯特之魂"
+      },
+      "description": {
+        "original": "When I found Tempest trapped in that canyon, I had no idea what I was beginning.",
+        "display": "当我发现坦皮斯特被困在峡谷中时，并不知道未来会发生什么。"
+      },
+      "graphicId": "17998",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,275"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2878",
+      "name": {
+        "original": "Memory of Tristan",
+        "display": "翠斯坦的记忆"
+      },
+      "description": {
+        "original": "Tristan was like my sister. We've been through so much together.",
+        "display": "翠斯坦就像我的姐妹。我们一起经历了许多。"
+      },
+      "graphicId": "17999",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,6"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2879",
+      "name": {
+        "original": "Best Friend's Bracelet",
+        "display": "挚友手镯"
+      },
+      "description": {
+        "original": "We grew up together. We trained in the miltary together.",
+        "display": "我们一起长大。一起在军队接受训练。"
+      },
+      "graphicId": "17999",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,11"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2880",
+      "name": {
+        "original": "Hunting Dagger",
+        "display": "狩猎匕首"
+      },
+      "description": {
+        "original": "Tristan always looked out for me when I couldn't look out for myself.",
+        "display": "在我粗心大意时，翠斯坦总是照顾着我。"
+      },
+      "graphicId": "18000",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,22"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2881",
+      "name": {
+        "original": "Signet Ring",
+        "display": "纹章戒指"
+      },
+      "description": {
+        "original": "The gem looks like a dragon eye. It reminds me of the two dearest people in my life.",
+        "display": "这块宝石看起来像一枚龙眼。让我想起生命中最亲爱的两个人。"
+      },
+      "graphicId": "18001",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,54"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "54",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "male"
+            }
+          ],
+          "description": "Increases the damage of all Male Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "55",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "male"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Male Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "41",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "wis",
+              "score": 13,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a WIS score of 13 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "37",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "int",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a INT score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "53",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "neutral"
+            }
+          ],
+          "description": "Increases the damage of all Neutral Champions by $(amount)%"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3066,7 +3690,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 17,
+        "popularity": 21,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3290,7 +3914,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 17,
+        "popularity": 21,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -6720,6 +7344,1116 @@
             "availabilities": {
               "in_flash_sales": true
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "2858",
+        "snapshots": {
+          "original": {
+            "id": 2858,
+            "name": "Practice Blade",
+            "description": "I've trained with this so long, my grip's worn the hilt.",
+            "graphic_id": 17993,
+            "hero_id": 120,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2858,
+            "name": "教练剑",
+            "description": "我用这把剑练习了很久，连握把磨坏了。",
+            "graphic_id": 17993,
+            "hero_id": 120,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2859",
+        "snapshots": {
+          "original": {
+            "id": 2859,
+            "name": "Sturdy Sword",
+            "description": "Keep the edge keen and well-oiled.",
+            "graphic_id": 17993,
+            "hero_id": 120,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2859,
+            "name": "坚固的剑",
+            "description": "保持刀缘锋利并充分润滑。",
+            "graphic_id": 17993,
+            "hero_id": 120,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2860",
+        "snapshots": {
+          "original": {
+            "id": 2860,
+            "name": "Tempest's Talon",
+            "description": "This sword was a gift from a dragon.",
+            "graphic_id": 17994,
+            "hero_id": 120,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2860,
+            "name": "坦皮斯特之爪",
+            "description": "这把剑是巨龙的礼物。",
+            "graphic_id": 17994,
+            "hero_id": 120,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2861",
+        "snapshots": {
+          "original": {
+            "id": 2861,
+            "name": "Blade of the Storm",
+            "description": "Our power suffuses it.",
+            "graphic_id": 17995,
+            "hero_id": 120,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2861,
+            "name": "风暴之刃",
+            "description": "其中充满我们的力量。",
+            "graphic_id": 17995,
+            "hero_id": 120,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2862",
+        "snapshots": {
+          "original": {
+            "id": 2862,
+            "name": "Standard Boots",
+            "description": "They do the job.",
+            "graphic_id": 17984,
+            "hero_id": 120,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2862,
+            "name": "制式靴子",
+            "description": "它们能用。",
+            "graphic_id": 17984,
+            "hero_id": 120,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2863",
+        "snapshots": {
+          "original": {
+            "id": 2863,
+            "name": "Uniform Shoes",
+            "description": "Every part of this outfit is standard issue.",
+            "graphic_id": 17984,
+            "hero_id": 120,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2863,
+            "name": "制式鞋子",
+            "description": "这套服装的每个组件都是制式产品。",
+            "graphic_id": 17984,
+            "hero_id": 120,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2864",
+        "snapshots": {
+          "original": {
+            "id": 2864,
+            "name": "Stealthy Kicks",
+            "description": "Boots are a great place to hide extra blades.",
+            "graphic_id": 17985,
+            "hero_id": 120,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2864,
+            "name": "隐藏靴子",
+            "description": "靴子是隐藏备用武器的好地方。",
+            "graphic_id": 17985,
+            "hero_id": 120,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2865",
+        "snapshots": {
+          "original": {
+            "id": 2865,
+            "name": "Dragonrider's Sabatons",
+            "description": "Better protection when you're up in the air.",
+            "graphic_id": 17986,
+            "hero_id": 120,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2865,
+            "name": "龙骑士腿甲",
+            "description": "在空中时提供更好的保护。",
+            "graphic_id": 17986,
+            "hero_id": 120,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2866",
+        "snapshots": {
+          "original": {
+            "id": 2866,
+            "name": "Beginner's Longbow",
+            "description": "I'm an excellent shot.",
+            "graphic_id": 17990,
+            "hero_id": 120,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,10611"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2866,
+            "name": "新手长弓",
+            "description": "我是一名出色的射手。",
+            "graphic_id": 17990,
+            "hero_id": 120,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,10611"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2867",
+        "snapshots": {
+          "original": {
+            "id": 2867,
+            "name": "Hunter's Bow",
+            "description": "Hunting with a bow requires patience.",
+            "graphic_id": 17990,
+            "hero_id": 120,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,10611"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2867,
+            "name": "猎弓",
+            "description": "用弓打猎需要耐心。",
+            "graphic_id": 17990,
+            "hero_id": 120,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,10611"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2868",
+        "snapshots": {
+          "original": {
+            "id": 2868,
+            "name": "Handmade Hunter",
+            "description": "I made this bow myself, carved every sigil into the wood.",
+            "graphic_id": 17991,
+            "hero_id": 120,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,10611"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2868,
+            "name": "手工猎人",
+            "description": "这把弓是我自己做的，亲手将每个魔符刻在木头上。",
+            "graphic_id": 17991,
+            "hero_id": 120,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,10611"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2869",
+        "snapshots": {
+          "original": {
+            "id": 2869,
+            "name": "Enchanted Longbow",
+            "description": "With this, I cannot miss.",
+            "graphic_id": 17992,
+            "hero_id": 120,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,10611"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2869,
+            "name": "魔法长弓",
+            "description": "有了它，我不可能失手。",
+            "graphic_id": 17992,
+            "hero_id": 120,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,10611"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2870",
+        "snapshots": {
+          "original": {
+            "id": 2870,
+            "name": "Training Armor",
+            "description": "I remember every scar on this armor.",
+            "graphic_id": 17987,
+            "hero_id": 120,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,10612"
+              }
+            ]
+          },
+          "display": {
+            "id": 2870,
+            "name": "训练盔甲",
+            "description": "我记得这套盔甲上的每个划痕。",
+            "graphic_id": 17987,
+            "hero_id": 120,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,10612"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2871",
+        "snapshots": {
+          "original": {
+            "id": 2871,
+            "name": "Protective Tunic",
+            "description": "You have to learn to take a hit as well as make a strike.",
+            "graphic_id": 17987,
+            "hero_id": 120,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,10612"
+              }
+            ]
+          },
+          "display": {
+            "id": 2871,
+            "name": "防护短袍",
+            "description": "学习防御和学会进攻同样重要。",
+            "graphic_id": 17987,
+            "hero_id": 120,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,10612"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2872",
+        "snapshots": {
+          "original": {
+            "id": 2872,
+            "name": "Armored Uniform",
+            "description": "The war rages on, and I must do my part.",
+            "graphic_id": 17988,
+            "hero_id": 120,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,10612"
+              }
+            ]
+          },
+          "display": {
+            "id": 2872,
+            "name": "装甲军服",
+            "description": "战争还在继续，我必须尽自己的一份力。",
+            "graphic_id": 17988,
+            "hero_id": 120,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,10612"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2873",
+        "snapshots": {
+          "original": {
+            "id": 2873,
+            "name": "Drakewarden's Armor",
+            "description": "This armor befits Tempest's rider.",
+            "graphic_id": 17989,
+            "hero_id": 120,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,10612"
+              }
+            ]
+          },
+          "display": {
+            "id": 2873,
+            "name": "飞龙守望者的盔甲",
+            "description": "这套盔甲适合坦皮斯特的骑手。",
+            "graphic_id": 17989,
+            "hero_id": 120,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,10612"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2874",
+        "snapshots": {
+          "original": {
+            "id": 2874,
+            "name": "Dragon Scales",
+            "description": "These are from Tempest, the dragon I bonded with.",
+            "graphic_id": 17996,
+            "hero_id": 120,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ]
+          },
+          "display": {
+            "id": 2874,
+            "name": "龙鳞",
+            "description": "来自我的契约搭档--坦皮斯特。",
+            "graphic_id": 17996,
+            "hero_id": 120,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2875",
+        "snapshots": {
+          "original": {
+            "id": 2875,
+            "name": "Shed Skin",
+            "description": "A kalashtar is bonded to a spirit of the dream. I've expanded that to Tempest.",
+            "graphic_id": 17996,
+            "hero_id": 120,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ]
+          },
+          "display": {
+            "id": 2875,
+            "name": "蜕皮",
+            "description": "卡拉史塔人都有梦灵纽带。我已经将其扩展到坦皮斯特身上。",
+            "graphic_id": 17996,
+            "hero_id": 120,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2876",
+        "snapshots": {
+          "original": {
+            "id": 2876,
+            "name": "Drake's Tooth",
+            "description": "Tempest is a fierce fighter, but a kind friend.",
+            "graphic_id": 17997,
+            "hero_id": 120,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ]
+          },
+          "display": {
+            "id": 2876,
+            "name": "飞龙之牙",
+            "description": "坦皮斯特既是狂热的战士，也是温和的朋友。",
+            "graphic_id": 17997,
+            "hero_id": 120,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2877",
+        "snapshots": {
+          "original": {
+            "id": 2877,
+            "name": "Soul of the Tempest",
+            "description": "When I found Tempest trapped in that canyon, I had no idea what I was beginning.",
+            "graphic_id": 17998,
+            "hero_id": 120,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ]
+          },
+          "display": {
+            "id": 2877,
+            "name": "坦皮斯特之魂",
+            "description": "当我发现坦皮斯特被困在峡谷中时，并不知道未来会发生什么。",
+            "graphic_id": 17998,
+            "hero_id": 120,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2878",
+        "snapshots": {
+          "original": {
+            "id": 2878,
+            "name": "Memory of Tristan",
+            "description": "Tristan was like my sister. We've been through so much together.",
+            "graphic_id": 17999,
+            "hero_id": 120,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,6"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2878,
+            "name": "翠斯坦的记忆",
+            "description": "翠斯坦就像我的姐妹。我们一起经历了许多。",
+            "graphic_id": 17999,
+            "hero_id": 120,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,6"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2879",
+        "snapshots": {
+          "original": {
+            "id": 2879,
+            "name": "Best Friend's Bracelet",
+            "description": "We grew up together. We trained in the miltary together.",
+            "graphic_id": 17999,
+            "hero_id": 120,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,11"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2879,
+            "name": "挚友手镯",
+            "description": "我们一起长大。一起在军队接受训练。",
+            "graphic_id": 17999,
+            "hero_id": 120,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,11"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2880",
+        "snapshots": {
+          "original": {
+            "id": 2880,
+            "name": "Hunting Dagger",
+            "description": "Tristan always looked out for me when I couldn't look out for myself.",
+            "graphic_id": 18000,
+            "hero_id": 120,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,22"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2880,
+            "name": "狩猎匕首",
+            "description": "在我粗心大意时，翠斯坦总是照顾着我。",
+            "graphic_id": 18000,
+            "hero_id": 120,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,22"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2881",
+        "snapshots": {
+          "original": {
+            "id": 2881,
+            "name": "Signet Ring",
+            "description": "The gem looks like a dragon eye. It reminds me of the two dearest people in my life.",
+            "graphic_id": 18001,
+            "hero_id": 120,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,54"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2881,
+            "name": "纹章戒指",
+            "description": "这块宝石看起来像一枚龙眼。让我想起生命中最亲爱的两个人。",
+            "graphic_id": 18001,
+            "hero_id": 120,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,54"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "54",
+        "snapshots": {
+          "original": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "阵型中每有一位勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2",
+        "snapshots": {
+          "original": {
+            "id": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "Increases the damage of all Male Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "使所有男性勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "55",
+        "snapshots": {
+          "original": {
+            "id": 55,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Male Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 55,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "阵型中每有一位男性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "41",
+        "snapshots": {
+          "original": {
+            "id": 41,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "wis",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a WIS score of 13 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 41,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "wis",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有感知大于等于 13 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "37",
+        "snapshots": {
+          "original": {
+            "id": 37,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "int",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a INT score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 37,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "int",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有智力大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "53",
+        "snapshots": {
+          "original": {
+            "id": 53,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "neutral"
+                  }
+                ],
+                "description": "Increases the damage of all Neutral Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 53,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "neutral"
+                  }
+                ],
+                "description": "使所有中立阵营勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

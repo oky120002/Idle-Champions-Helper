@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "33",
     "name": {
@@ -44,7 +44,7 @@
   },
   "dateAvailable": "2018-10-03 00:00:00",
   "lastReworkDate": "2025-10-08 12:00:00",
-  "popularity": 67,
+  "popularity": 63,
   "baseCost": "5250000000",
   "baseDamage": "20000000",
   "baseHealth": "45",
@@ -2859,6 +2859,634 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "769",
+      "name": {
+        "original": "Small Holy Symbol",
+        "display": "小型圣徽"
+      },
+      "description": {
+        "original": "It's tarnished, but it's a comfort...Maybe I won't tell Mehen though.",
+        "display": "虽然破损了，但依然能够暖人心......不过还是不要告诉梅亨好了。"
+      },
+      "graphicId": "4119",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,50"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "770",
+      "name": {
+        "original": "Symbol of Selûne",
+        "display": "塞伦涅的圣徽"
+      },
+      "description": {
+        "original": "The Moonmaiden Selûne helps me navigate my fate.",
+        "display": "月亮女神塞伦涅会指引我的方向。"
+      },
+      "graphicId": "4119",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "771",
+      "name": {
+        "original": "Selûne and Nanna-Sin Pendant",
+        "display": "塞伦涅与南纳·欣之吊坠"
+      },
+      "description": {
+        "original": "The other side shows the axe of the Untheran god who protects Djerad Kethendi.",
+        "display": "另一侧所展示的则是守护着哲拉德·柯森迪港口的恩瑟神明所使用的战斧。"
+      },
+      "graphicId": "4120",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "772",
+      "name": {
+        "original": "Amulet of Selûne",
+        "display": "塞伦涅护身符"
+      },
+      "description": {
+        "original": "A gift from Tam, when we were in the ruins of Neverwinter.",
+        "display": "这是我和坦在无冬城的废墟时坦送给我的。"
+      },
+      "graphicId": "4121",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,350"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "773",
+      "name": {
+        "original": "Pact Focus",
+        "display": "魔契专注"
+      },
+      "description": {
+        "original": "This makes it much easier to channel my pact.",
+        "display": "这样我就能更方便地施展魔契了。"
+      },
+      "graphicId": "4134",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,17836,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "774",
+      "name": {
+        "original": "Sentimental Rod",
+        "display": "善感的权杖"
+      },
+      "description": {
+        "original": "A gift from Dahl. It's not pretty, but it means a lot.",
+        "display": "这是达尔送给我的礼物。虽然看起来很平凡，但礼轻情意重。"
+      },
+      "graphicId": "4134",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,17836,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "775",
+      "name": {
+        "original": "Rod of the Traitor's Reprisal",
+        "display": "报复叛徒的权杖"
+      },
+      "description": {
+        "original": "Lorcan gave me this to help protect from devils. They definitely don't like it.",
+        "display": "这是洛肯给我用来对付魔鬼的。的确是非常有效。"
+      },
+      "graphicId": "4135",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,17836,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "776",
+      "name": {
+        "original": "Ruby Rod of Asmodeus",
+        "display": "阿斯摩蒂斯的红宝石权杖"
+      },
+      "description": {
+        "original": "...I don't think I'm supposed to have this. Am I supposed to have this? Better not drop it.",
+        "display": "......我不应该收藏这东西的。这真的该由我来保管吗？我得当心别弄丢了。"
+      },
+      "graphicId": "4136",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,17836,0"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "777",
+      "name": {
+        "original": "Used Grimoire",
+        "display": "二手魔法书"
+      },
+      "description": {
+        "original": "Ritual books are expensive! This is all I could afford.",
+        "display": "魔法书可是很昂贵的玩意！我就只用得起这一本了。"
+      },
+      "graphicId": "4122",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,17835"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "778",
+      "name": {
+        "original": "Lorcan's Grimoire",
+        "display": "洛肯的魔法书"
+      },
+      "description": {
+        "original": "It's supposed to help my pact, but I much prefer the rod.",
+        "display": "这魔法书能够增强我的魔契，但我个人还是喜欢使用魔法棒。"
+      },
+      "graphicId": "4122",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,17835"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "779",
+      "name": {
+        "original": "Book of Shadows",
+        "display": "暗影之书"
+      },
+      "description": {
+        "original": "This is eveything I need, except it reminds me of the Shadovar and Adolican Rhand.",
+        "display": "有此书在手，一切足矣。只不过它会让我联想起影之民和阿多利坎·兰德。"
+      },
+      "graphicId": "4123",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,17835"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "780",
+      "name": {
+        "original": "Book of Promises",
+        "display": "承诺之书"
+      },
+      "description": {
+        "original": "Dahl and I burned the old one. New memories, new spells!",
+        "display": "我和达尔把旧的那本给烧掉了。崭新的记忆，全新的法术！"
+      },
+      "graphicId": "4124",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,17835"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "781",
+      "name": {
+        "original": "Flimsy Armor",
+        "display": "薄弱的盔甲"
+      },
+      "description": {
+        "original": "Better than nothing! Maybe next bounty we'll get enough to go shopping.",
+        "display": "总好过没有！或许完成下一个赏金任务后我们就会有足够的钱添购新盔甲了。"
+      },
+      "graphicId": "4131",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,17837"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "782",
+      "name": {
+        "original": "Warlock Armor",
+        "display": "邪术师护甲"
+      },
+      "description": {
+        "original": "Good coverage and flexible. My sister, Havilar, says it's dumpy.",
+        "display": "防护面积大，而且不约束身体的灵活性。也就只有我妹妹哈维拉说这护甲穿上去很显胖。"
+      },
+      "graphicId": "4131",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,17837"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "783",
+      "name": {
+        "original": "Shadow Armor",
+        "display": "暗影护甲"
+      },
+      "description": {
+        "original": "I pretty much vanish between its dark colors and the shadow-smoke.",
+        "display": "如此幽暗的颜色，再搭配上烟雾弹，绝对能够让我随时随地隐匿无踪。"
+      },
+      "graphicId": "4132",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,17837"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "784",
+      "name": {
+        "original": "Armor of Khorsaya",
+        "display": "霍萨亚护甲"
+      },
+      "description": {
+        "original": "A gift from Verthisathurgiesh, my adoptive clan. It's dragonborn armor, cut for me.",
+        "display": "这是收养我的维尔蒂萨瑟吉尔希部落赠送给我的。这可是为我量身定做的龙裔护甲。"
+      },
+      "graphicId": "4133",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,17837"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "785",
+      "name": {
+        "original": "Water-Damaged Deck",
+        "display": "水蚀卡组"
+      },
+      "description": {
+        "original": "This Wroth Deck has seen better days, but it still freaks out shadar-kai!",
+        "display": "此愤怒卡组虽然是破旧了一点，但依然足以吓破影灵的胆子！"
+      },
+      "graphicId": "4125",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,25,17839,17840,17841",
+          "description": "Increases the effect of Farideh's specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "786",
+      "name": {
+        "original": "Deck of Fortune Cards",
+        "display": "塔罗牌卡组"
+      },
+      "description": {
+        "original": "Dahl gave me these for patience games, but they feel eerie.",
+        "display": "这是达尔送给我培养耐性的卡牌，但我总感觉它们有点阴森可怕。"
+      },
+      "graphicId": "4125",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,87.5,17839,17840,17841",
+          "description": "Increases the effect of Farideh's specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "787",
+      "name": {
+        "original": "The Adversary",
+        "display": "魔鬼卡"
+      },
+      "description": {
+        "original": "This one card keeps coming up, even when I try to bury it.",
+        "display": "这卡牌总是会自个儿冒出来，我已经很多次把它丢进墓地去了。"
+      },
+      "graphicId": "4126",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,150,17839,17840,17841",
+          "description": "Increases the effect of Farideh's specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "788",
+      "name": {
+        "original": "Nightmare Wroth Deck",
+        "display": "梦魇愤怒卡组"
+      },
+      "description": {
+        "original": "This...isn't my deck. I dream of this one when Asmodeus wants something.",
+        "display": "这......并非属于我的卡组。而是每次阿斯摩蒂斯提出要求时我就会联想到的一套卡组。"
+      },
+      "graphicId": "4127",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,275,17839,17840,17841",
+          "description": "Increases the effect of Farideh's specializations by $amount%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "789",
+      "name": {
+        "original": "Torn Chapbook",
+        "display": "撕破的故事书"
+      },
+      "description": {
+        "original": "My sister is so rough on her things. I can't even read the title.",
+        "display": "我妹妹总是这样粗心大意的性格，现在连书名都看不清楚了。"
+      },
+      "graphicId": "4128",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,12"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "790",
+      "name": {
+        "original": "The Prince of Al-Qadim",
+        "display": "阿拉丁王子"
+      },
+      "description": {
+        "original": "This one is one of Havi's boyfriend Brin's favorites.",
+        "display": "哈维的男友布林最喜欢看这故事了。"
+      },
+      "graphicId": "4128",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,23"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "791",
+      "name": {
+        "original": "Red Bess and the Kelpie's Regret",
+        "display": "红发贝丝与卡尔比的遗憾"
+      },
+      "description": {
+        "original": "Havi says this story is basically me and Lorcan. I don't want to read it.",
+        "display": "哈维说里头的情节跟我和洛肯几乎是如出一辙。所以我不想去看。"
+      },
+      "graphicId": "4129",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,45"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "792",
+      "name": {
+        "original": "Havi's Chapbook",
+        "display": "哈维的故事书"
+      },
+      "description": {
+        "original": "...Karshoj, those bookmarks better not be for me.",
+        "display": "......我去，这些书签最好不是给我留下的。"
+      },
+      "graphicId": "4130",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,113"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Female Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "63",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,95",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "tiefling"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Tiefling Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "35",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "con",
+              "score": 13,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a CON score of 13 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "90",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "int",
+              "check": 11,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a INT score of 11 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "49",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "good"
+            }
+          ],
+          "description": "Increases the damage of all Good Champions by $(amount)%"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3009,7 +3637,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 67,
+        "popularity": 63,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3193,7 +3821,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 67,
+        "popularity": 63,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -6626,6 +7254,1140 @@
             "availabilities": {
               "premium_item_id": "624"
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "769",
+        "snapshots": {
+          "original": {
+            "id": 769,
+            "name": "Small Holy Symbol",
+            "description": "It's tarnished, but it's a comfort...Maybe I won't tell Mehen though.",
+            "graphic_id": 4119,
+            "hero_id": 33,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 769,
+            "name": "小型圣徽",
+            "description": "虽然破损了，但依然能够暖人心......不过还是不要告诉梅亨好了。",
+            "graphic_id": 4119,
+            "hero_id": 33,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,50"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "770",
+        "snapshots": {
+          "original": {
+            "id": 770,
+            "name": "Symbol of Selûne",
+            "description": "The Moonmaiden Selûne helps me navigate my fate.",
+            "graphic_id": 4119,
+            "hero_id": 33,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 770,
+            "name": "塞伦涅的圣徽",
+            "description": "月亮女神塞伦涅会指引我的方向。",
+            "graphic_id": 4119,
+            "hero_id": 33,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "771",
+        "snapshots": {
+          "original": {
+            "id": 771,
+            "name": "Selûne and Nanna-Sin Pendant",
+            "description": "The other side shows the axe of the Untheran god who protects Djerad Kethendi.",
+            "graphic_id": 4120,
+            "hero_id": 33,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 771,
+            "name": "塞伦涅与南纳·欣之吊坠",
+            "description": "另一侧所展示的则是守护着哲拉德·柯森迪港口的恩瑟神明所使用的战斧。",
+            "graphic_id": 4120,
+            "hero_id": 33,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "772",
+        "snapshots": {
+          "original": {
+            "id": 772,
+            "name": "Amulet of Selûne",
+            "description": "A gift from Tam, when we were in the ruins of Neverwinter.",
+            "graphic_id": 4121,
+            "hero_id": 33,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 772,
+            "name": "塞伦涅护身符",
+            "description": "这是我和坦在无冬城的废墟时坦送给我的。",
+            "graphic_id": 4121,
+            "hero_id": 33,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,350"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "773",
+        "snapshots": {
+          "original": {
+            "id": 773,
+            "name": "Pact Focus",
+            "description": "This makes it much easier to channel my pact.",
+            "graphic_id": 4134,
+            "hero_id": 33,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,17836,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 773,
+            "name": "魔契专注",
+            "description": "这样我就能更方便地施展魔契了。",
+            "graphic_id": 4134,
+            "hero_id": 33,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,17836,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "774",
+        "snapshots": {
+          "original": {
+            "id": 774,
+            "name": "Sentimental Rod",
+            "description": "A gift from Dahl. It's not pretty, but it means a lot.",
+            "graphic_id": 4134,
+            "hero_id": 33,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,17836,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 774,
+            "name": "善感的权杖",
+            "description": "这是达尔送给我的礼物。虽然看起来很平凡，但礼轻情意重。",
+            "graphic_id": 4134,
+            "hero_id": 33,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,17836,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "775",
+        "snapshots": {
+          "original": {
+            "id": 775,
+            "name": "Rod of the Traitor's Reprisal",
+            "description": "Lorcan gave me this to help protect from devils. They definitely don't like it.",
+            "graphic_id": 4135,
+            "hero_id": 33,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,17836,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 775,
+            "name": "报复叛徒的权杖",
+            "description": "这是洛肯给我用来对付魔鬼的。的确是非常有效。",
+            "graphic_id": 4135,
+            "hero_id": 33,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,17836,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "776",
+        "snapshots": {
+          "original": {
+            "id": 776,
+            "name": "Ruby Rod of Asmodeus",
+            "description": "...I don't think I'm supposed to have this. Am I supposed to have this? Better not drop it.",
+            "graphic_id": 4136,
+            "hero_id": 33,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,17836,0"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 776,
+            "name": "阿斯摩蒂斯的红宝石权杖",
+            "description": "......我不应该收藏这东西的。这真的该由我来保管吗？我得当心别弄丢了。",
+            "graphic_id": 4136,
+            "hero_id": 33,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,17836,0"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "777",
+        "snapshots": {
+          "original": {
+            "id": 777,
+            "name": "Used Grimoire",
+            "description": "Ritual books are expensive! This is all I could afford.",
+            "graphic_id": 4122,
+            "hero_id": 33,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,17835"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 777,
+            "name": "二手魔法书",
+            "description": "魔法书可是很昂贵的玩意！我就只用得起这一本了。",
+            "graphic_id": 4122,
+            "hero_id": 33,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,17835"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "778",
+        "snapshots": {
+          "original": {
+            "id": 778,
+            "name": "Lorcan's Grimoire",
+            "description": "It's supposed to help my pact, but I much prefer the rod.",
+            "graphic_id": 4122,
+            "hero_id": 33,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,17835"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 778,
+            "name": "洛肯的魔法书",
+            "description": "这魔法书能够增强我的魔契，但我个人还是喜欢使用魔法棒。",
+            "graphic_id": 4122,
+            "hero_id": 33,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,17835"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "779",
+        "snapshots": {
+          "original": {
+            "id": 779,
+            "name": "Book of Shadows",
+            "description": "This is eveything I need, except it reminds me of the Shadovar and Adolican Rhand.",
+            "graphic_id": 4123,
+            "hero_id": 33,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,17835"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 779,
+            "name": "暗影之书",
+            "description": "有此书在手，一切足矣。只不过它会让我联想起影之民和阿多利坎·兰德。",
+            "graphic_id": 4123,
+            "hero_id": 33,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,17835"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "780",
+        "snapshots": {
+          "original": {
+            "id": 780,
+            "name": "Book of Promises",
+            "description": "Dahl and I burned the old one. New memories, new spells!",
+            "graphic_id": 4124,
+            "hero_id": 33,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,17835"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 780,
+            "name": "承诺之书",
+            "description": "我和达尔把旧的那本给烧掉了。崭新的记忆，全新的法术！",
+            "graphic_id": 4124,
+            "hero_id": 33,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,17835"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "781",
+        "snapshots": {
+          "original": {
+            "id": 781,
+            "name": "Flimsy Armor",
+            "description": "Better than nothing! Maybe next bounty we'll get enough to go shopping.",
+            "graphic_id": 4131,
+            "hero_id": 33,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,17837"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 781,
+            "name": "薄弱的盔甲",
+            "description": "总好过没有！或许完成下一个赏金任务后我们就会有足够的钱添购新盔甲了。",
+            "graphic_id": 4131,
+            "hero_id": 33,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,17837"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "782",
+        "snapshots": {
+          "original": {
+            "id": 782,
+            "name": "Warlock Armor",
+            "description": "Good coverage and flexible. My sister, Havilar, says it's dumpy.",
+            "graphic_id": 4131,
+            "hero_id": 33,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,17837"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 782,
+            "name": "邪术师护甲",
+            "description": "防护面积大，而且不约束身体的灵活性。也就只有我妹妹哈维拉说这护甲穿上去很显胖。",
+            "graphic_id": 4131,
+            "hero_id": 33,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,17837"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "783",
+        "snapshots": {
+          "original": {
+            "id": 783,
+            "name": "Shadow Armor",
+            "description": "I pretty much vanish between its dark colors and the shadow-smoke.",
+            "graphic_id": 4132,
+            "hero_id": 33,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,17837"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 783,
+            "name": "暗影护甲",
+            "description": "如此幽暗的颜色，再搭配上烟雾弹，绝对能够让我随时随地隐匿无踪。",
+            "graphic_id": 4132,
+            "hero_id": 33,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,17837"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "784",
+        "snapshots": {
+          "original": {
+            "id": 784,
+            "name": "Armor of Khorsaya",
+            "description": "A gift from Verthisathurgiesh, my adoptive clan. It's dragonborn armor, cut for me.",
+            "graphic_id": 4133,
+            "hero_id": 33,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,17837"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 784,
+            "name": "霍萨亚护甲",
+            "description": "这是收养我的维尔蒂萨瑟吉尔希部落赠送给我的。这可是为我量身定做的龙裔护甲。",
+            "graphic_id": 4133,
+            "hero_id": 33,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,17837"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "785",
+        "snapshots": {
+          "original": {
+            "id": 785,
+            "name": "Water-Damaged Deck",
+            "description": "This Wroth Deck has seen better days, but it still freaks out shadar-kai!",
+            "graphic_id": 4125,
+            "hero_id": 33,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,17839,17840,17841",
+                "description": "Increases the effect of Farideh's specializations by $amount%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 785,
+            "name": "水蚀卡组",
+            "description": "此愤怒卡组虽然是破旧了一点，但依然足以吓破影灵的胆子！",
+            "graphic_id": 4125,
+            "hero_id": 33,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,17839,17840,17841",
+                "description": "使法莉德的专精效果提高 $amount%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "786",
+        "snapshots": {
+          "original": {
+            "id": 786,
+            "name": "Deck of Fortune Cards",
+            "description": "Dahl gave me these for patience games, but they feel eerie.",
+            "graphic_id": 4125,
+            "hero_id": 33,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,17839,17840,17841",
+                "description": "Increases the effect of Farideh's specializations by $amount%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 786,
+            "name": "塔罗牌卡组",
+            "description": "这是达尔送给我培养耐性的卡牌，但我总感觉它们有点阴森可怕。",
+            "graphic_id": 4125,
+            "hero_id": 33,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,17839,17840,17841",
+                "description": "使法莉德的专精效果提高 $amount%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "787",
+        "snapshots": {
+          "original": {
+            "id": 787,
+            "name": "The Adversary",
+            "description": "This one card keeps coming up, even when I try to bury it.",
+            "graphic_id": 4126,
+            "hero_id": 33,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,17839,17840,17841",
+                "description": "Increases the effect of Farideh's specializations by $amount%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 787,
+            "name": "魔鬼卡",
+            "description": "这卡牌总是会自个儿冒出来，我已经很多次把它丢进墓地去了。",
+            "graphic_id": 4126,
+            "hero_id": 33,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,17839,17840,17841",
+                "description": "使法莉德的专精效果提高 $amount%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "788",
+        "snapshots": {
+          "original": {
+            "id": 788,
+            "name": "Nightmare Wroth Deck",
+            "description": "This...isn't my deck. I dream of this one when Asmodeus wants something.",
+            "graphic_id": 4127,
+            "hero_id": 33,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,17839,17840,17841",
+                "description": "Increases the effect of Farideh's specializations by $amount%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 788,
+            "name": "梦魇愤怒卡组",
+            "description": "这......并非属于我的卡组。而是每次阿斯摩蒂斯提出要求时我就会联想到的一套卡组。",
+            "graphic_id": 4127,
+            "hero_id": 33,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,17839,17840,17841",
+                "description": "使法莉德的专精效果提高 $amount%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "789",
+        "snapshots": {
+          "original": {
+            "id": 789,
+            "name": "Torn Chapbook",
+            "description": "My sister is so rough on her things. I can't even read the title.",
+            "graphic_id": 4128,
+            "hero_id": 33,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,12"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 789,
+            "name": "撕破的故事书",
+            "description": "我妹妹总是这样粗心大意的性格，现在连书名都看不清楚了。",
+            "graphic_id": 4128,
+            "hero_id": 33,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,12"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "790",
+        "snapshots": {
+          "original": {
+            "id": 790,
+            "name": "The Prince of Al-Qadim",
+            "description": "This one is one of Havi's boyfriend Brin's favorites.",
+            "graphic_id": 4128,
+            "hero_id": 33,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,23"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 790,
+            "name": "阿拉丁王子",
+            "description": "哈维的男友布林最喜欢看这故事了。",
+            "graphic_id": 4128,
+            "hero_id": 33,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,23"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "791",
+        "snapshots": {
+          "original": {
+            "id": 791,
+            "name": "Red Bess and the Kelpie's Regret",
+            "description": "Havi says this story is basically me and Lorcan. I don't want to read it.",
+            "graphic_id": 4129,
+            "hero_id": 33,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,45"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 791,
+            "name": "红发贝丝与卡尔比的遗憾",
+            "description": "哈维说里头的情节跟我和洛肯几乎是如出一辙。所以我不想去看。",
+            "graphic_id": 4129,
+            "hero_id": 33,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,45"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "792",
+        "snapshots": {
+          "original": {
+            "id": 792,
+            "name": "Havi's Chapbook",
+            "description": "...Karshoj, those bookmarks better not be for me.",
+            "graphic_id": 4130,
+            "hero_id": 33,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,113"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 792,
+            "name": "哈维的故事书",
+            "description": "......我去，这些书签最好不是给我留下的。",
+            "graphic_id": 4130,
+            "hero_id": 33,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,113"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3",
+        "snapshots": {
+          "original": {
+            "id": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Female Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "使所有女性勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "63",
+        "snapshots": {
+          "original": {
+            "id": 63,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,95",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "tiefling"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Tiefling Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 63,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,95",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "tiefling"
+                  }
+                ],
+                "description": "阵型中每有一位提夫林勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "35",
+        "snapshots": {
+          "original": {
+            "id": 35,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a CON score of 13 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 35,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有体质大于等于 13 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "90",
+        "snapshots": {
+          "original": {
+            "id": 90,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "int",
+                    "check": 11,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a INT score of 11 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 90,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "int",
+                    "check": 11,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位智力大于等于 11 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "49",
+        "snapshots": {
+          "original": {
+            "id": 49,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "Increases the damage of all Good Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 49,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "使所有善良阵营勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "13",
     "name": {
@@ -2074,6 +2074,626 @@
         "cost": 20000
       },
       "availabilities": null
+    }
+  ],
+  "loot": [
+    {
+      "id": "289",
+      "name": {
+        "original": "Basic Pouch",
+        "display": "基础钱袋"
+      },
+      "description": {
+        "original": "Fits a moderate amount of gold pieces.",
+        "display": "可以容纳一定数量的金币。"
+      },
+      "graphicId": "1039",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,3672"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "290",
+      "name": {
+        "original": "Deep Pouch",
+        "display": "深邃的钱袋"
+      },
+      "description": {
+        "original": "It doesn't look like much, but it can store quite a bit of loot.",
+        "display": "虽然看起来不咋地，但其实能存放挺多的战利品。"
+      },
+      "graphicId": "1039",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,3672"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "291",
+      "name": {
+        "original": "Multi-Pouch",
+        "display": "多重小袋子"
+      },
+      "description": {
+        "original": "Why have one pouch when you could have five?",
+        "display": "五个袋子比一个袋子强得多。"
+      },
+      "graphicId": "1040",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,3672"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "292",
+      "name": {
+        "original": "Burglar's Pack of the Sneaky Thief",
+        "display": "小偷的盗具包"
+      },
+      "description": {
+        "original": "It's got everything you need to pillage and pilfer.",
+        "display": "里头有小偷所需用到的一切工具。"
+      },
+      "graphicId": "1041",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,3672"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "301",
+      "name": {
+        "original": "Dull Dagger",
+        "display": "迟钝的匕首"
+      },
+      "description": {
+        "original": "I really ought to sharpen this one.",
+        "display": "得抽空磨一磨这匕首了。"
+      },
+      "graphicId": "1048",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "302",
+      "name": {
+        "original": "Bloody Dagger",
+        "display": "染血的匕首"
+      },
+      "description": {
+        "original": "I really ought to clean this one.",
+        "display": "得抽空清洗下它了。"
+      },
+      "graphicId": "1048",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "303",
+      "name": {
+        "original": "Golden Dagger",
+        "display": "黄金匕首"
+      },
+      "description": {
+        "original": "Everything's better with a little gold added in.",
+        "display": "只要添加点黄金一切都变得更美好了。"
+      },
+      "graphicId": "1049",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "304",
+      "name": {
+        "original": "Ornate Dagger of Princes",
+        "display": "华丽的王子匕首"
+      },
+      "description": {
+        "original": "Stolen from a foolish Prince from the east.",
+        "display": "这是从某位来自东方的鲁莽王子身上偷来的。"
+      },
+      "graphicId": "1050",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "293",
+      "name": {
+        "original": "Ugly Slippers",
+        "display": "丑陋的凉鞋"
+      },
+      "description": {
+        "original": "Hey! My mother knit these for me.",
+        "display": "喂！这可是我妈亲手做给我的。"
+      },
+      "graphicId": "1042",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "294",
+      "name": {
+        "original": "Sticky Slippers",
+        "display": "黏糊的凉鞋"
+      },
+      "description": {
+        "original": "I think a spider crawled inside these and webbed them up.",
+        "display": "似乎是有蜘蛛爬进去织网了。"
+      },
+      "graphicId": "1042",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "295",
+      "name": {
+        "original": "Sticky Boots",
+        "display": "黏糊的靴子"
+      },
+      "description": {
+        "original": "I can scale all but the slipperiest surfaces.",
+        "display": "我穿着它可以攀爬几乎所有类型的墙面。"
+      },
+      "graphicId": "1043",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "296",
+      "name": {
+        "original": "Boots of Spider Climbing",
+        "display": "蜘蛛爬靴子"
+      },
+      "description": {
+        "original": "Useful for climbing giants and other extra tall creatures.",
+        "display": "适合用来攀爬巨人或巨型生物。"
+      },
+      "graphicId": "1044",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "297",
+      "name": {
+        "original": "Pilfered Cape",
+        "display": "偷来的披肩"
+      },
+      "description": {
+        "original": "It was just hanging in the cloakroom of this Inn...",
+        "display": "当时披肩就那样挂在酒馆的衣帽间里......"
+      },
+      "graphicId": "1045",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,390"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "298",
+      "name": {
+        "original": "Borrowed Cape",
+        "display": "借来的披肩"
+      },
+      "description": {
+        "original": "I'll give it back when I'm done with it, I swear.",
+        "display": "等我用完后就会还回去，我发誓。"
+      },
+      "graphicId": "1045",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,390"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "299",
+      "name": {
+        "original": "Impressive Cape",
+        "display": "惊人的披肩"
+      },
+      "description": {
+        "original": "It's impressive, much like myself!",
+        "display": "简直是一披惊人，就像我一样！"
+      },
+      "graphicId": "1046",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,390"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "300",
+      "name": {
+        "original": "Magnificent Cape of Free Flowing",
+        "display": "高贵的流动披肩"
+      },
+      "description": {
+        "original": "It never gets tangled in my legs.",
+        "display": "它从不会缠住我的脚。"
+      },
+      "graphicId": "1047",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,390"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "305",
+      "name": {
+        "original": "Fake Ring",
+        "display": "赝品戒指"
+      },
+      "description": {
+        "original": "The peddler swore it was real!",
+        "display": "那位行商信誓旦旦说这是真品！"
+      },
+      "graphicId": "1051",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,25"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "306",
+      "name": {
+        "original": "Pearl Ring",
+        "display": "珍珠戒指"
+      },
+      "description": {
+        "original": "There's a story behind this ring that I'll tell you some time.",
+        "display": "这枚戒指背后是有段故事的，改日我再告诉你。"
+      },
+      "graphicId": "1051",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,87.5"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "307",
+      "name": {
+        "original": "Crystal Ring",
+        "display": "水晶戒指"
+      },
+      "description": {
+        "original": "That's 100% legitimate Icewind Crystal.",
+        "display": "这是百分百纯净的冰风谷水晶。"
+      },
+      "graphicId": "1052",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,150"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "308",
+      "name": {
+        "original": "Zhentarim Ring of True Sight",
+        "display": "散塔林会的真视戒指"
+      },
+      "description": {
+        "original": "You can't hide your true form from me.",
+        "display": "在我眼前就乖乖露出原型吧。"
+      },
+      "graphicId": "1053",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,275"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "309",
+      "name": {
+        "original": "Copper Rod",
+        "display": "铜质权杖"
+      },
+      "description": {
+        "original": "A simple rod of copper. Useful for jimmying doors and windows.",
+        "display": "简易的铜质权杖。适合用来撬门和窗。"
+      },
+      "graphicId": "1054",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,5"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "310",
+      "name": {
+        "original": "Fancy Rod",
+        "display": "精致权杖"
+      },
+      "description": {
+        "original": "It's the fanciest thing I've ever jimmied a window with.",
+        "display": "这是我所使用过最精致的撬窗口工具。"
+      },
+      "graphicId": "1054",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,10"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "311",
+      "name": {
+        "original": "Static Rod",
+        "display": "静电权杖"
+      },
+      "description": {
+        "original": "It has some small magical properties that makes it quite useful.",
+        "display": "里头还蕴含着少量魔力的实用武器。"
+      },
+      "graphicId": "1055",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,20"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "312",
+      "name": {
+        "original": "Ancient Immovable Rod",
+        "display": "古老的固定权杖"
+      },
+      "description": {
+        "original": "Magically enhanced to ignore the laws of physics.",
+        "display": "通过魔法强化的权杖，能够忽视物理定律。"
+      },
+      "graphicId": "1056",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,49"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Female Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "human"
+            }
+          ],
+          "description": "Increases the damage of all Human Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "38",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "int",
+              "score": 13,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a INT score of 13 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "41",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "wis",
+              "score": 13,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a WIS score of 13 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "49",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "good"
+            }
+          ],
+          "description": "Increases the damage of all Good Champions by $(amount)%"
+        }
+      ]
     }
   ],
   "raw": {
@@ -5439,6 +6059,1124 @@
               "type": "gem_shop",
               "cost": 20000
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "289",
+        "snapshots": {
+          "original": {
+            "id": 289,
+            "name": "Basic Pouch",
+            "description": "Fits a moderate amount of gold pieces.",
+            "graphic_id": 1039,
+            "hero_id": 13,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,3672"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 289,
+            "name": "基础钱袋",
+            "description": "可以容纳一定数量的金币。",
+            "graphic_id": 1039,
+            "hero_id": 13,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,3672"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "290",
+        "snapshots": {
+          "original": {
+            "id": 290,
+            "name": "Deep Pouch",
+            "description": "It doesn't look like much, but it can store quite a bit of loot.",
+            "graphic_id": 1039,
+            "hero_id": 13,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,3672"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 290,
+            "name": "深邃的钱袋",
+            "description": "虽然看起来不咋地，但其实能存放挺多的战利品。",
+            "graphic_id": 1039,
+            "hero_id": 13,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,3672"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "291",
+        "snapshots": {
+          "original": {
+            "id": 291,
+            "name": "Multi-Pouch",
+            "description": "Why have one pouch when you could have five?",
+            "graphic_id": 1040,
+            "hero_id": 13,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,3672"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 291,
+            "name": "多重小袋子",
+            "description": "五个袋子比一个袋子强得多。",
+            "graphic_id": 1040,
+            "hero_id": 13,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,3672"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "292",
+        "snapshots": {
+          "original": {
+            "id": 292,
+            "name": "Burglar's Pack of the Sneaky Thief",
+            "description": "It's got everything you need to pillage and pilfer.",
+            "graphic_id": 1041,
+            "hero_id": 13,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,3672"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 292,
+            "name": "小偷的盗具包",
+            "description": "里头有小偷所需用到的一切工具。",
+            "graphic_id": 1041,
+            "hero_id": 13,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,3672"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "293",
+        "snapshots": {
+          "original": {
+            "id": 293,
+            "name": "Ugly Slippers",
+            "description": "Hey! My mother knit these for me.",
+            "graphic_id": 1042,
+            "hero_id": 13,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 293,
+            "name": "丑陋的凉鞋",
+            "description": "喂！这可是我妈亲手做给我的。",
+            "graphic_id": 1042,
+            "hero_id": 13,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "294",
+        "snapshots": {
+          "original": {
+            "id": 294,
+            "name": "Sticky Slippers",
+            "description": "I think a spider crawled inside these and webbed them up.",
+            "graphic_id": 1042,
+            "hero_id": 13,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 294,
+            "name": "黏糊的凉鞋",
+            "description": "似乎是有蜘蛛爬进去织网了。",
+            "graphic_id": 1042,
+            "hero_id": 13,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "295",
+        "snapshots": {
+          "original": {
+            "id": 295,
+            "name": "Sticky Boots",
+            "description": "I can scale all but the slipperiest surfaces.",
+            "graphic_id": 1043,
+            "hero_id": 13,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 295,
+            "name": "黏糊的靴子",
+            "description": "我穿着它可以攀爬几乎所有类型的墙面。",
+            "graphic_id": 1043,
+            "hero_id": 13,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "296",
+        "snapshots": {
+          "original": {
+            "id": 296,
+            "name": "Boots of Spider Climbing",
+            "description": "Useful for climbing giants and other extra tall creatures.",
+            "graphic_id": 1044,
+            "hero_id": 13,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 296,
+            "name": "蜘蛛爬靴子",
+            "description": "适合用来攀爬巨人或巨型生物。",
+            "graphic_id": 1044,
+            "hero_id": 13,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "297",
+        "snapshots": {
+          "original": {
+            "id": 297,
+            "name": "Pilfered Cape",
+            "description": "It was just hanging in the cloakroom of this Inn...",
+            "graphic_id": 1045,
+            "hero_id": 13,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,390"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 297,
+            "name": "偷来的披肩",
+            "description": "当时披肩就那样挂在酒馆的衣帽间里......",
+            "graphic_id": 1045,
+            "hero_id": 13,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,390"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "298",
+        "snapshots": {
+          "original": {
+            "id": 298,
+            "name": "Borrowed Cape",
+            "description": "I'll give it back when I'm done with it, I swear.",
+            "graphic_id": 1045,
+            "hero_id": 13,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,390"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 298,
+            "name": "借来的披肩",
+            "description": "等我用完后就会还回去，我发誓。",
+            "graphic_id": 1045,
+            "hero_id": 13,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,390"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "299",
+        "snapshots": {
+          "original": {
+            "id": 299,
+            "name": "Impressive Cape",
+            "description": "It's impressive, much like myself!",
+            "graphic_id": 1046,
+            "hero_id": 13,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,390"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 299,
+            "name": "惊人的披肩",
+            "description": "简直是一披惊人，就像我一样！",
+            "graphic_id": 1046,
+            "hero_id": 13,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,390"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "300",
+        "snapshots": {
+          "original": {
+            "id": 300,
+            "name": "Magnificent Cape of Free Flowing",
+            "description": "It never gets tangled in my legs.",
+            "graphic_id": 1047,
+            "hero_id": 13,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,390"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 300,
+            "name": "高贵的流动披肩",
+            "description": "它从不会缠住我的脚。",
+            "graphic_id": 1047,
+            "hero_id": 13,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,390"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "301",
+        "snapshots": {
+          "original": {
+            "id": 301,
+            "name": "Dull Dagger",
+            "description": "I really ought to sharpen this one.",
+            "graphic_id": 1048,
+            "hero_id": 13,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 301,
+            "name": "迟钝的匕首",
+            "description": "得抽空磨一磨这匕首了。",
+            "graphic_id": 1048,
+            "hero_id": 13,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "302",
+        "snapshots": {
+          "original": {
+            "id": 302,
+            "name": "Bloody Dagger",
+            "description": "I really ought to clean this one.",
+            "graphic_id": 1048,
+            "hero_id": 13,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 302,
+            "name": "染血的匕首",
+            "description": "得抽空清洗下它了。",
+            "graphic_id": 1048,
+            "hero_id": 13,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "303",
+        "snapshots": {
+          "original": {
+            "id": 303,
+            "name": "Golden Dagger",
+            "description": "Everything's better with a little gold added in.",
+            "graphic_id": 1049,
+            "hero_id": 13,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 303,
+            "name": "黄金匕首",
+            "description": "只要添加点黄金一切都变得更美好了。",
+            "graphic_id": 1049,
+            "hero_id": 13,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "304",
+        "snapshots": {
+          "original": {
+            "id": 304,
+            "name": "Ornate Dagger of Princes",
+            "description": "Stolen from a foolish Prince from the east.",
+            "graphic_id": 1050,
+            "hero_id": 13,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 304,
+            "name": "华丽的王子匕首",
+            "description": "这是从某位来自东方的鲁莽王子身上偷来的。",
+            "graphic_id": 1050,
+            "hero_id": 13,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "305",
+        "snapshots": {
+          "original": {
+            "id": 305,
+            "name": "Fake Ring",
+            "description": "The peddler swore it was real!",
+            "graphic_id": 1051,
+            "hero_id": 13,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 305,
+            "name": "赝品戒指",
+            "description": "那位行商信誓旦旦说这是真品！",
+            "graphic_id": 1051,
+            "hero_id": 13,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "306",
+        "snapshots": {
+          "original": {
+            "id": 306,
+            "name": "Pearl Ring",
+            "description": "There's a story behind this ring that I'll tell you some time.",
+            "graphic_id": 1051,
+            "hero_id": 13,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 306,
+            "name": "珍珠戒指",
+            "description": "这枚戒指背后是有段故事的，改日我再告诉你。",
+            "graphic_id": 1051,
+            "hero_id": 13,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "307",
+        "snapshots": {
+          "original": {
+            "id": 307,
+            "name": "Crystal Ring",
+            "description": "That's 100% legitimate Icewind Crystal.",
+            "graphic_id": 1052,
+            "hero_id": 13,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 307,
+            "name": "水晶戒指",
+            "description": "这是百分百纯净的冰风谷水晶。",
+            "graphic_id": 1052,
+            "hero_id": 13,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "308",
+        "snapshots": {
+          "original": {
+            "id": 308,
+            "name": "Zhentarim Ring of True Sight",
+            "description": "You can't hide your true form from me.",
+            "graphic_id": 1053,
+            "hero_id": 13,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 308,
+            "name": "散塔林会的真视戒指",
+            "description": "在我眼前就乖乖露出原型吧。",
+            "graphic_id": 1053,
+            "hero_id": 13,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "309",
+        "snapshots": {
+          "original": {
+            "id": 309,
+            "name": "Copper Rod",
+            "description": "A simple rod of copper. Useful for jimmying doors and windows.",
+            "graphic_id": 1054,
+            "hero_id": 13,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,5"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 309,
+            "name": "铜质权杖",
+            "description": "简易的铜质权杖。适合用来撬门和窗。",
+            "graphic_id": 1054,
+            "hero_id": 13,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,5"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "310",
+        "snapshots": {
+          "original": {
+            "id": 310,
+            "name": "Fancy Rod",
+            "description": "It's the fanciest thing I've ever jimmied a window with.",
+            "graphic_id": 1054,
+            "hero_id": 13,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,10"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 310,
+            "name": "精致权杖",
+            "description": "这是我所使用过最精致的撬窗口工具。",
+            "graphic_id": 1054,
+            "hero_id": 13,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,10"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "311",
+        "snapshots": {
+          "original": {
+            "id": 311,
+            "name": "Static Rod",
+            "description": "It has some small magical properties that makes it quite useful.",
+            "graphic_id": 1055,
+            "hero_id": 13,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,20"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 311,
+            "name": "静电权杖",
+            "description": "里头还蕴含着少量魔力的实用武器。",
+            "graphic_id": 1055,
+            "hero_id": 13,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,20"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "312",
+        "snapshots": {
+          "original": {
+            "id": 312,
+            "name": "Ancient Immovable Rod",
+            "description": "Magically enhanced to ignore the laws of physics.",
+            "graphic_id": 1056,
+            "hero_id": 13,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,49"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 312,
+            "name": "古老的固定权杖",
+            "description": "通过魔法强化的权杖，能够忽视物理定律。",
+            "graphic_id": 1056,
+            "hero_id": 13,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,49"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3",
+        "snapshots": {
+          "original": {
+            "id": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Female Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "使所有女性勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "5",
+        "snapshots": {
+          "original": {
+            "id": 5,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "Increases the damage of all Human Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 5,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "使所有人类勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "38",
+        "snapshots": {
+          "original": {
+            "id": 38,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "int",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a INT score of 13 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 38,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "int",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有智力大于等于 13 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "41",
+        "snapshots": {
+          "original": {
+            "id": 41,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "wis",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a WIS score of 13 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 41,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "wis",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有感知大于等于 13 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "49",
+        "snapshots": {
+          "original": {
+            "id": 49,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "Increases the damage of all Good Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 49,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "使所有善良阵营勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

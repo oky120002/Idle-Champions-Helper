@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "34",
     "name": {
@@ -52,7 +52,7 @@
   },
   "dateAvailable": "2018-10-24 00:00:00",
   "lastReworkDate": "2026-02-11 13:00:00",
-  "popularity": 62,
+  "popularity": 64,
   "baseCost": "45",
   "baseDamage": "20",
   "baseHealth": "94",
@@ -3635,6 +3635,636 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "793",
+      "name": {
+        "original": "Realistic Greatsword",
+        "display": "务实的巨剑"
+      },
+      "description": {
+        "original": "It comes with a year's supply of sharpening scales",
+        "display": "这剑都可以当作磨刀石来用一整年了。"
+      },
+      "graphicId": "4259",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "794",
+      "name": {
+        "original": "Serrated Greatsword",
+        "display": "锯齿巨剑"
+      },
+      "description": {
+        "original": "It's a family hair loom. Yeah, I know what I said, it's like a machine that makes rope from hair.",
+        "display": "这是个家传之宝。是的，你没听错，这简直就是个将一丝丝头发卷成绳索的机器。"
+      },
+      "graphicId": "4259",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "795",
+      "name": {
+        "original": "Toothbrush",
+        "display": "牙刷"
+      },
+      "description": {
+        "original": "Oooooooooooh Yeeeeeeaaaaaaaahhhhh!",
+        "display": "欧咿呀耶！"
+      },
+      "graphicId": "4260",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "796",
+      "name": {
+        "original": "Twothbrush",
+        "display": "锯齿刷"
+      },
+      "description": {
+        "original": "Everybody coooooooool out!",
+        "display": "大家冷静一一一点！"
+      },
+      "graphicId": "4261",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "797",
+      "name": {
+        "original": "Royal Toothbrush",
+        "display": "皇家牙刷"
+      },
+      "description": {
+        "original": "Tooth decay is no joke. Gotta respect your gums!",
+        "display": "蛀牙可不是闹着玩的。大家要多珍惜自己的牙床！"
+      },
+      "graphicId": "4256",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,10,18657,18658,18659",
+          "description": "Increases the effect of Donaar's first set of Specializations by $(amount)%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "798",
+      "name": {
+        "original": "Acid-Cleaning Toothbrush",
+        "display": "酸液洗嗽牙刷"
+      },
+      "description": {
+        "original": "When you vomit acid as much as I do, it's important to keep your teeth cleaned!",
+        "display": "你要是跟我一样总是咳酸液的话，那就更要保持口腔卫生了！"
+      },
+      "graphicId": "4256",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,30,18657,18658,18659",
+          "description": "Increases the effect of Donaar's first set of Specializations by $(amount)%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "799",
+      "name": {
+        "original": "Bejeweled Toothbrush",
+        "display": "镶嵌宝石的牙刷"
+      },
+      "description": {
+        "original": "If you brush really fast, the jewels make the room look like a party!",
+        "display": "要是迅速地来回刷牙，牙刷上的宝石就会把房间闪耀得像在开派对一样！"
+      },
+      "graphicId": "4257",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,50,18657,18658,18659",
+          "description": "Increases the effect of Donaar's first set of Specializations by $(amount)%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "800",
+      "name": {
+        "original": "Percival",
+        "display": "珀西瓦尔"
+      },
+      "description": {
+        "original": "When I really want to get my point across, Percival can double as a mic! Ooh Yeaah!",
+        "display": "当我真的想要说服他人时，还可以把珀西瓦尔当作麦克风使用。欧耶！"
+      },
+      "graphicId": "4258",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,100,18657,18658,18659",
+          "description": "Increases the effect of Donaar's first set of Specializations by $(amount)%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "801",
+      "name": {
+        "original": "Stained Menu",
+        "display": "沾污的菜单"
+      },
+      "description": {
+        "original": "Anything is better than these trail rations!",
+        "display": "不管是什么食物都要比远行口粮来得美味！"
+      },
+      "graphicId": "4262",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,18653"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "802",
+      "name": {
+        "original": "Wrinkled Menu",
+        "display": "皱巴巴的菜单"
+      },
+      "description": {
+        "original": "I know I have it here. . . somewhere.",
+        "display": "我记得是把它收藏在......哪里来着。"
+      },
+      "graphicId": "4262",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,18653"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "803",
+      "name": {
+        "original": "Well-Designed Menu",
+        "display": "精美的菜单"
+      },
+      "description": {
+        "original": "If you join us for happy hour, we have Tarrasque Kabobs!",
+        "display": "我们今天的优惠时间所准备的菜肴是泰拉斯奎烤肉串！"
+      },
+      "graphicId": "4263",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,18653"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "804",
+      "name": {
+        "original": "Yum-Yum Hut Menu",
+        "display": "美味店菜单"
+      },
+      "description": {
+        "original": "I'm John, Paul, and George, but you guys are my Ringos. I need my Ringos!",
+        "display": "我是约翰、保罗、乔治，而你们则是我的林戈。我需要你们林戈！"
+      },
+      "graphicId": "4264",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,18653"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "805",
+      "name": {
+        "original": "Worn Coin",
+        "display": "陈旧的硬币"
+      },
+      "description": {
+        "original": "You never forget your first coin flip.",
+        "display": "每个人都会记得自己第一次抛硬币的经历。"
+      },
+      "graphicId": "4250",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,18654"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "806",
+      "name": {
+        "original": "Talisman of the Gold Variety",
+        "display": "金品护符"
+      },
+      "description": {
+        "original": "Chronaar may have chewed on it a bit.",
+        "display": "可能是被科罗娜咬坏了。"
+      },
+      "graphicId": "4250",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,18654"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "807",
+      "name": {
+        "original": "Acquisitions Incorporated Coin",
+        "display": "艾奎兹玄有限责任公司硬币"
+      },
+      "description": {
+        "original": "Boulder beats knife. Knife beats parchment. Parchment beats boulder. Tail beats everything.",
+        "display": "石头胜刀子，刀子胜纸张，纸张胜石头，硬币赢全部。"
+      },
+      "graphicId": "4251",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,18654"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "808",
+      "name": {
+        "original": "Decisionist's Coin",
+        "display": "决策者硬币"
+      },
+      "description": {
+        "original": "Remember? Tail beats everything.",
+        "display": "还记得我说的话不？尾巴强于一切。"
+      },
+      "graphicId": "4252",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,18654"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "809",
+      "name": {
+        "original": "Lost Egg",
+        "display": "丢失的巨蛋"
+      },
+      "description": {
+        "original": "Did you know that I know a ton of dragons? They're very busy right now.",
+        "display": "其实我是认识很多很多巨龙的。只不过他们现在都忙得很。"
+      },
+      "graphicId": "4253",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,18656"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "810",
+      "name": {
+        "original": "Dragonborn Egg",
+        "display": "龙裔巨蛋"
+      },
+      "description": {
+        "original": "Dibs. I found it.",
+        "display": "咦。让我找到了。"
+      },
+      "graphicId": "4253",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,18656"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "811",
+      "name": {
+        "original": "Eggy",
+        "display": "蛋蛋"
+      },
+      "description": {
+        "original": "This egg is more important than the rest of the group.",
+        "display": "此蛋比团里任何人都来得重要。"
+      },
+      "graphicId": "4254",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,18656"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "812",
+      "name": {
+        "original": "Chronaar",
+        "display": "科罗娜"
+      },
+      "description": {
+        "original": "She lives in Skolla now. She's sort of my daughter? It's a long story.",
+        "display": "她现在都定居在斯科拉了。从某种意义上来说她算是我的女儿吧？唉，说来话长呀。"
+      },
+      "graphicId": "4255",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,18656"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "813",
+      "name": {
+        "original": "Barely Torn Cloak",
+        "display": "相当新的斗篷"
+      },
+      "description": {
+        "original": "If you sit in the corner and put the cape over your head, you can take a nap and Rosie won't even know!",
+        "display": "只要坐到角落里将斗篷披到头上，哪怕是打呼噜也不会招罗茜发现。"
+      },
+      "graphicId": "4247",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,7"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "814",
+      "name": {
+        "original": "Adventurous Cloak",
+        "display": "冒险斗篷"
+      },
+      "description": {
+        "original": "It even covers my tail! If I do this cool curl like so. Sorry. Did I hit you?",
+        "display": "这斗篷连我的尾巴都能掩盖得住！我要是这样摇晃尾巴的话。哎呀。不好意思，打到你了是吗？"
+      },
+      "graphicId": "4247",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,13"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "815",
+      "name": {
+        "original": "Regal Cloak",
+        "display": "宫廷斗篷"
+      },
+      "description": {
+        "original": "Did you know that oceans are the forests of the sea? True story.",
+        "display": "我告诉你呀其实海洋就是大海中的森林。真的不骗你。"
+      },
+      "graphicId": "4248",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,26"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "816",
+      "name": {
+        "original": "Nase's Cape",
+        "display": "纳塞的披肩"
+      },
+      "description": {
+        "original": "This was my brother's cape, I brought it with me when I left Jinaar. I don't want to talk about it.",
+        "display": "这是我兄弟的披肩，当初我是戴着它离开吉纳尔的。以前的事我不想多提了。"
+      },
+      "graphicId": "4249",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "56",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "dragonborn"
+            }
+          ],
+          "description": "Increases the damage of all Dragonborn Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "28",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "str",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a STR score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "98",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,40",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "cha",
+              "check": 15,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a CHA score of 15 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "102",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "good"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a GOOD alignment"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3789,7 +4419,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 62,
+        "popularity": 64,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3983,7 +4613,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 62,
+        "popularity": 64,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -8497,6 +9127,1152 @@
             "availabilities": {
               "premium_item_id": "673"
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "793",
+        "snapshots": {
+          "original": {
+            "id": 793,
+            "name": "Realistic Greatsword",
+            "description": "It comes with a year's supply of sharpening scales",
+            "graphic_id": 4259,
+            "hero_id": 34,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 793,
+            "name": "务实的巨剑",
+            "description": "这剑都可以当作磨刀石来用一整年了。",
+            "graphic_id": 4259,
+            "hero_id": 34,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "794",
+        "snapshots": {
+          "original": {
+            "id": 794,
+            "name": "Serrated Greatsword",
+            "description": "It's a family hair loom. Yeah, I know what I said, it's like a machine that makes rope from hair.",
+            "graphic_id": 4259,
+            "hero_id": 34,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 794,
+            "name": "锯齿巨剑",
+            "description": "这是个家传之宝。是的，你没听错，这简直就是个将一丝丝头发卷成绳索的机器。",
+            "graphic_id": 4259,
+            "hero_id": 34,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "795",
+        "snapshots": {
+          "original": {
+            "id": 795,
+            "name": "Toothbrush",
+            "description": "Oooooooooooh Yeeeeeeaaaaaaaahhhhh!",
+            "graphic_id": 4260,
+            "hero_id": 34,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 795,
+            "name": "牙刷",
+            "description": "欧咿呀耶！",
+            "graphic_id": 4260,
+            "hero_id": 34,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "796",
+        "snapshots": {
+          "original": {
+            "id": 796,
+            "name": "Twothbrush",
+            "description": "Everybody coooooooool out!",
+            "graphic_id": 4261,
+            "hero_id": 34,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 796,
+            "name": "锯齿刷",
+            "description": "大家冷静一一一点！",
+            "graphic_id": 4261,
+            "hero_id": 34,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "797",
+        "snapshots": {
+          "original": {
+            "id": 797,
+            "name": "Royal Toothbrush",
+            "description": "Tooth decay is no joke. Gotta respect your gums!",
+            "graphic_id": 4256,
+            "hero_id": 34,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,10,18657,18658,18659",
+                "description": "Increases the effect of Donaar's first set of Specializations by $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 797,
+            "name": "皇家牙刷",
+            "description": "蛀牙可不是闹着玩的。大家要多珍惜自己的牙床！",
+            "graphic_id": 4256,
+            "hero_id": 34,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,10,18657,18658,18659",
+                "description": "使多纳尔的第一组专精的效果提升 $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "798",
+        "snapshots": {
+          "original": {
+            "id": 798,
+            "name": "Acid-Cleaning Toothbrush",
+            "description": "When you vomit acid as much as I do, it's important to keep your teeth cleaned!",
+            "graphic_id": 4256,
+            "hero_id": 34,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,30,18657,18658,18659",
+                "description": "Increases the effect of Donaar's first set of Specializations by $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 798,
+            "name": "酸液洗嗽牙刷",
+            "description": "你要是跟我一样总是咳酸液的话，那就更要保持口腔卫生了！",
+            "graphic_id": 4256,
+            "hero_id": 34,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,30,18657,18658,18659",
+                "description": "使多纳尔的第一组专精的效果提升 $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "799",
+        "snapshots": {
+          "original": {
+            "id": 799,
+            "name": "Bejeweled Toothbrush",
+            "description": "If you brush really fast, the jewels make the room look like a party!",
+            "graphic_id": 4257,
+            "hero_id": 34,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,50,18657,18658,18659",
+                "description": "Increases the effect of Donaar's first set of Specializations by $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 799,
+            "name": "镶嵌宝石的牙刷",
+            "description": "要是迅速地来回刷牙，牙刷上的宝石就会把房间闪耀得像在开派对一样！",
+            "graphic_id": 4257,
+            "hero_id": 34,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,50,18657,18658,18659",
+                "description": "使多纳尔的第一组专精的效果提升 $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "800",
+        "snapshots": {
+          "original": {
+            "id": 800,
+            "name": "Percival",
+            "description": "When I really want to get my point across, Percival can double as a mic! Ooh Yeaah!",
+            "graphic_id": 4258,
+            "hero_id": 34,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,100,18657,18658,18659",
+                "description": "Increases the effect of Donaar's first set of Specializations by $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 800,
+            "name": "珀西瓦尔",
+            "description": "当我真的想要说服他人时，还可以把珀西瓦尔当作麦克风使用。欧耶！",
+            "graphic_id": 4258,
+            "hero_id": 34,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,100,18657,18658,18659",
+                "description": "使多纳尔的第一组专精的效果提升 $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "801",
+        "snapshots": {
+          "original": {
+            "id": 801,
+            "name": "Stained Menu",
+            "description": "Anything is better than these trail rations!",
+            "graphic_id": 4262,
+            "hero_id": 34,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,18653"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 801,
+            "name": "沾污的菜单",
+            "description": "不管是什么食物都要比远行口粮来得美味！",
+            "graphic_id": 4262,
+            "hero_id": 34,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,18653"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "802",
+        "snapshots": {
+          "original": {
+            "id": 802,
+            "name": "Wrinkled Menu",
+            "description": "I know I have it here. . . somewhere.",
+            "graphic_id": 4262,
+            "hero_id": 34,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,18653"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 802,
+            "name": "皱巴巴的菜单",
+            "description": "我记得是把它收藏在......哪里来着。",
+            "graphic_id": 4262,
+            "hero_id": 34,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,18653"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "803",
+        "snapshots": {
+          "original": {
+            "id": 803,
+            "name": "Well-Designed Menu",
+            "description": "If you join us for happy hour, we have Tarrasque Kabobs!",
+            "graphic_id": 4263,
+            "hero_id": 34,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,18653"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 803,
+            "name": "精美的菜单",
+            "description": "我们今天的优惠时间所准备的菜肴是泰拉斯奎烤肉串！",
+            "graphic_id": 4263,
+            "hero_id": 34,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,18653"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "804",
+        "snapshots": {
+          "original": {
+            "id": 804,
+            "name": "Yum-Yum Hut Menu",
+            "description": "I'm John, Paul, and George, but you guys are my Ringos. I need my Ringos!",
+            "graphic_id": 4264,
+            "hero_id": 34,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,18653"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 804,
+            "name": "美味店菜单",
+            "description": "我是约翰、保罗、乔治，而你们则是我的林戈。我需要你们林戈！",
+            "graphic_id": 4264,
+            "hero_id": 34,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,18653"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "805",
+        "snapshots": {
+          "original": {
+            "id": 805,
+            "name": "Worn Coin",
+            "description": "You never forget your first coin flip.",
+            "graphic_id": 4250,
+            "hero_id": 34,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,18654"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 805,
+            "name": "陈旧的硬币",
+            "description": "每个人都会记得自己第一次抛硬币的经历。",
+            "graphic_id": 4250,
+            "hero_id": 34,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,18654"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "806",
+        "snapshots": {
+          "original": {
+            "id": 806,
+            "name": "Talisman of the Gold Variety",
+            "description": "Chronaar may have chewed on it a bit.",
+            "graphic_id": 4250,
+            "hero_id": 34,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,18654"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 806,
+            "name": "金品护符",
+            "description": "可能是被科罗娜咬坏了。",
+            "graphic_id": 4250,
+            "hero_id": 34,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,18654"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "807",
+        "snapshots": {
+          "original": {
+            "id": 807,
+            "name": "Acquisitions Incorporated Coin",
+            "description": "Boulder beats knife. Knife beats parchment. Parchment beats boulder. Tail beats everything.",
+            "graphic_id": 4251,
+            "hero_id": 34,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,18654"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 807,
+            "name": "艾奎兹玄有限责任公司硬币",
+            "description": "石头胜刀子，刀子胜纸张，纸张胜石头，硬币赢全部。",
+            "graphic_id": 4251,
+            "hero_id": 34,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,18654"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "808",
+        "snapshots": {
+          "original": {
+            "id": 808,
+            "name": "Decisionist's Coin",
+            "description": "Remember? Tail beats everything.",
+            "graphic_id": 4252,
+            "hero_id": 34,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,18654"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 808,
+            "name": "决策者硬币",
+            "description": "还记得我说的话不？尾巴强于一切。",
+            "graphic_id": 4252,
+            "hero_id": 34,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,18654"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "809",
+        "snapshots": {
+          "original": {
+            "id": 809,
+            "name": "Lost Egg",
+            "description": "Did you know that I know a ton of dragons? They're very busy right now.",
+            "graphic_id": 4253,
+            "hero_id": 34,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,18656"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 809,
+            "name": "丢失的巨蛋",
+            "description": "其实我是认识很多很多巨龙的。只不过他们现在都忙得很。",
+            "graphic_id": 4253,
+            "hero_id": 34,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,18656"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "810",
+        "snapshots": {
+          "original": {
+            "id": 810,
+            "name": "Dragonborn Egg",
+            "description": "Dibs. I found it.",
+            "graphic_id": 4253,
+            "hero_id": 34,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,18656"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 810,
+            "name": "龙裔巨蛋",
+            "description": "咦。让我找到了。",
+            "graphic_id": 4253,
+            "hero_id": 34,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,18656"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "811",
+        "snapshots": {
+          "original": {
+            "id": 811,
+            "name": "Eggy",
+            "description": "This egg is more important than the rest of the group.",
+            "graphic_id": 4254,
+            "hero_id": 34,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,18656"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 811,
+            "name": "蛋蛋",
+            "description": "此蛋比团里任何人都来得重要。",
+            "graphic_id": 4254,
+            "hero_id": 34,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,18656"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "812",
+        "snapshots": {
+          "original": {
+            "id": 812,
+            "name": "Chronaar",
+            "description": "She lives in Skolla now. She's sort of my daughter? It's a long story.",
+            "graphic_id": 4255,
+            "hero_id": 34,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,18656"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 812,
+            "name": "科罗娜",
+            "description": "她现在都定居在斯科拉了。从某种意义上来说她算是我的女儿吧？唉，说来话长呀。",
+            "graphic_id": 4255,
+            "hero_id": 34,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,18656"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "813",
+        "snapshots": {
+          "original": {
+            "id": 813,
+            "name": "Barely Torn Cloak",
+            "description": "If you sit in the corner and put the cape over your head, you can take a nap and Rosie won't even know!",
+            "graphic_id": 4247,
+            "hero_id": 34,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,7"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 813,
+            "name": "相当新的斗篷",
+            "description": "只要坐到角落里将斗篷披到头上，哪怕是打呼噜也不会招罗茜发现。",
+            "graphic_id": 4247,
+            "hero_id": 34,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,7"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "814",
+        "snapshots": {
+          "original": {
+            "id": 814,
+            "name": "Adventurous Cloak",
+            "description": "It even covers my tail! If I do this cool curl like so. Sorry. Did I hit you?",
+            "graphic_id": 4247,
+            "hero_id": 34,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,13"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 814,
+            "name": "冒险斗篷",
+            "description": "这斗篷连我的尾巴都能掩盖得住！我要是这样摇晃尾巴的话。哎呀。不好意思，打到你了是吗？",
+            "graphic_id": 4247,
+            "hero_id": 34,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,13"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "815",
+        "snapshots": {
+          "original": {
+            "id": 815,
+            "name": "Regal Cloak",
+            "description": "Did you know that oceans are the forests of the sea? True story.",
+            "graphic_id": 4248,
+            "hero_id": 34,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,26"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 815,
+            "name": "宫廷斗篷",
+            "description": "我告诉你呀其实海洋就是大海中的森林。真的不骗你。",
+            "graphic_id": 4248,
+            "hero_id": 34,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,26"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "816",
+        "snapshots": {
+          "original": {
+            "id": 816,
+            "name": "Nase's Cape",
+            "description": "This was my brother's cape, I brought it with me when I left Jinaar. I don't want to talk about it.",
+            "graphic_id": 4249,
+            "hero_id": 34,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,65"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 816,
+            "name": "纳塞的披肩",
+            "description": "这是我兄弟的披肩，当初我是戴着它离开吉纳尔的。以前的事我不想多提了。",
+            "graphic_id": 4249,
+            "hero_id": 34,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,65"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "56",
+        "snapshots": {
+          "original": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "阵型中每有一位女性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "12",
+        "snapshots": {
+          "original": {
+            "id": 12,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "dragonborn"
+                  }
+                ],
+                "description": "Increases the damage of all Dragonborn Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 12,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "dragonborn"
+                  }
+                ],
+                "description": "使所有龙裔勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "28",
+        "snapshots": {
+          "original": {
+            "id": 28,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a STR score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 28,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有力量大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "98",
+        "snapshots": {
+          "original": {
+            "id": 98,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,40",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "cha",
+                    "check": 15,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a CHA score of 15 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 98,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,40",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "cha",
+                    "check": 15,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位魅力大于等于 15 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "102",
+        "snapshots": {
+          "original": {
+            "id": 102,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a GOOD alignment"
+              }
+            ]
+          },
+          "display": {
+            "id": 102,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "阵型中每有一位善良阵营勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

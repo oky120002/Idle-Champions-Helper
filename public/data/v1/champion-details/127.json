@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "127",
     "name": {
@@ -42,7 +42,7 @@
   },
   "dateAvailable": "2023-07-26 00:00:00",
   "lastReworkDate": "2023-07-26 00:00:00",
-  "popularity": 82,
+  "popularity": 77,
   "baseCost": "12500000000",
   "baseDamage": "25000000",
   "baseHealth": "47",
@@ -3068,6 +3068,626 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "3026",
+      "name": {
+        "original": "Traveler's Fedora",
+        "display": "旅行者软呢帽"
+      },
+      "description": {
+        "original": "Someone told me bounty hunters wear hats. This is what I could afford.",
+        "display": "我听人说赏金猎人都要戴帽子。我只买得起这个。"
+      },
+      "graphicId": "20055",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3027",
+      "name": {
+        "original": "Lucky Cap",
+        "display": "幸运帽"
+      },
+      "description": {
+        "original": "There are a few more ray gun marks than I thought on this...",
+        "display": "这上面的射线枪痕迹比我以为的要多......"
+      },
+      "graphicId": "20055",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3028",
+      "name": {
+        "original": "Bounty Hunter Hat",
+        "display": "赏金猎人帽"
+      },
+      "description": {
+        "original": "Someone ran at the sight of my hat. It was awesome! I have a look now!",
+        "display": "有人一看见我的帽子就跑了。太酷啦！我现在有穿搭了！"
+      },
+      "graphicId": "20056",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3029",
+      "name": {
+        "original": "Hat of Disguise",
+        "display": "伪装帽"
+      },
+      "description": {
+        "original": "For when you need a new face. Or a face at all.",
+        "display": "在需要改头换面的时候用。或者就是需要有头有脸的时候。"
+      },
+      "graphicId": "20057",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "3030",
+      "name": {
+        "original": "Security Coat",
+        "display": "安保外套"
+      },
+      "description": {
+        "original": "Nicked this off a guard who wasn't looking. It's got armor inside!",
+        "display": "这是从一个粗心的守卫那里顺来的。里面还有装甲呢！"
+      },
+      "graphicId": "20052",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,12087",
+          "description": "Increases the damage and extra gold from $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3031",
+      "name": {
+        "original": "Well Worn Coat",
+        "display": "陈旧外套"
+      },
+      "description": {
+        "original": "I genuinely cannot believe how many hits this coat has taken.",
+        "display": "我是真的不敢相信这件外套承受了多少伤害。"
+      },
+      "graphicId": "20052",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,12087",
+          "description": "Increases the damage and extra gold from $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3032",
+      "name": {
+        "original": "Plasmoid Jacket",
+        "display": "等离子夹克"
+      },
+      "description": {
+        "original": "I found a plasmoid tailor to make this for me. They knew how to keep me flowing.",
+        "display": "我找了个等离子叛徒帮我做的这个。这人很懂得怎么让我飘浮在空中。"
+      },
+      "graphicId": "20053",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,12087",
+          "description": "Increases the damage and extra gold from $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3033",
+      "name": {
+        "original": "Cloak of Stars and Darkness",
+        "display": "星与暗斗篷"
+      },
+      "description": {
+        "original": "This lets me seep into the shadows and also watches my back for me.",
+        "display": "它让我能融入暗影之中，还能保护我的后背。"
+      },
+      "graphicId": "20054",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,12087",
+          "description": "Increases the damage and extra gold from $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3034",
+      "name": {
+        "original": "Compact Wrist Bow",
+        "display": "紧凑腕弓"
+      },
+      "description": {
+        "original": "I can't afford anything better -- so this will have to do.",
+        "display": "我买不起更好的东西，所以只能将就用这个。"
+      },
+      "graphicId": "20064",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,12088"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3035",
+      "name": {
+        "original": "Dead Eye Crossbow",
+        "display": "死亡之眼十字弩"
+      },
+      "description": {
+        "original": "I'm way better with this thing than I should be.",
+        "display": "它让我超常发挥。"
+      },
+      "graphicId": "20064",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,12088"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3036",
+      "name": {
+        "original": "L.A.S.E.R. Wrist Array",
+        "display": "激光腕带"
+      },
+      "description": {
+        "original": "This thing is so cool! Is it too cool for me? Ah! It's so cool!",
+        "display": "这玩意好酷！会不会对我来说太酷了？啊！它真的好酷！"
+      },
+      "graphicId": "20065",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,12088"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3037",
+      "name": {
+        "original": "Starstrike Array",
+        "display": "星击服饰"
+      },
+      "description": {
+        "original": "This was specially designed for me by my dad. It was the last thing he made.",
+        "display": "这是我爸专门给我设计的。这是他的最后一件作品。"
+      },
+      "graphicId": "20066",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,12088"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3038",
+      "name": {
+        "original": "Heist Score",
+        "display": "抢劫战利品"
+      },
+      "description": {
+        "original": "This was our last score before the team was wiped out...",
+        "display": "这是我们的队伍被团灭之前的最后战利品......"
+      },
+      "graphicId": "20058",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,25,12090,12091"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3039",
+      "name": {
+        "original": "Remaining Stash",
+        "display": "剩余私藏"
+      },
+      "description": {
+        "original": "There's not much of this left. I need more contracts. Fast.",
+        "display": "剩下的也没多少了。我需要更多工作。尽快。"
+      },
+      "graphicId": "20058",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,87.5,12090,12091"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3040",
+      "name": {
+        "original": "Family Gears",
+        "display": "家族装备"
+      },
+      "description": {
+        "original": "Each of these comes from a member of my autognome family.",
+        "display": "每件装备都来自我的一个机器侏儒家族成员。"
+      },
+      "graphicId": "20059",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,150,12090,12091"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3041",
+      "name": {
+        "original": "Arena of Blood Coin",
+        "display": "血之竞技场钱币"
+      },
+      "description": {
+        "original": "Old Vocath looked really annoyed when he had to present this to me.",
+        "display": "老沃卡斯不得不把这个给我的时候，他看起来非常恼火。"
+      },
+      "graphicId": "20060",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,275,12090,12091"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3042",
+      "name": {
+        "original": "Happy Beholder Mug",
+        "display": "欢乐眼魔马克杯"
+      },
+      "description": {
+        "original": "You'd be surprised how many bounties just walk into a tavern you're already in.",
+        "display": "你在一家酒馆的时候，走进来的悬赏对象多得令人惊讶。"
+      },
+      "graphicId": "20061",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,25,12092,12093,12094"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3043",
+      "name": {
+        "original": "Replacement Mug",
+        "display": "替代马克杯"
+      },
+      "description": {
+        "original": "I broke the last one over a giff's head. Got this one for free from Large Luigi.",
+        "display": "我的上一个马克杯在一个吉夫人的脑袋上敲坏了。这个是在大块头路易吉那里免费拿的。"
+      },
+      "graphicId": "20061",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,87.5,12092,12093,12094"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3044",
+      "name": {
+        "original": "Goblinpunk Stein",
+        "display": "地精朋克啤酒杯"
+      },
+      "description": {
+        "original": "Have you been to Eberron? That place is WILD!",
+        "display": "你去过艾伯伦吗？那地方太野了！"
+      },
+      "graphicId": "20062",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,150,12092,12093,12094"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3045",
+      "name": {
+        "original": "Infinity's Souvenir",
+        "display": "不朽旅店的纪念品"
+      },
+      "description": {
+        "original": "I just found this place, and I never wanted to leave. SO MANY TAVERNS!",
+        "display": "我刚发现这个地方，就再也不想离开了。这么多的酒馆！"
+      },
+      "graphicId": "20063",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,275,12092,12093,12094"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3046",
+      "name": {
+        "original": "Active Bounty",
+        "display": "活跃赏金"
+      },
+      "description": {
+        "original": "Until I'm in a guild, these will have to do for contracts.",
+        "display": "在我加入公会之前，这些只能做合同工了。"
+      },
+      "graphicId": "20049",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,6"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3047",
+      "name": {
+        "original": "First Bounty Poster",
+        "display": "第一张悬赏海报"
+      },
+      "description": {
+        "original": "I still hang onto this all these years later.",
+        "display": "这么多年过去了，我还保留着它。"
+      },
+      "graphicId": "20049",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,12"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3048",
+      "name": {
+        "original": "Wildspace Scrying Stone",
+        "display": "蛮荒太空探知石"
+      },
+      "description": {
+        "original": "Wildspace is REALLY big. This helps me find a bounty anywhere.",
+        "display": "蛮荒太空真的非常大。它可以帮我在任何地方找到悬赏对象。"
+      },
+      "graphicId": "20050",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,24"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3049",
+      "name": {
+        "original": "Dimensional Shackles",
+        "display": "位面枷锁"
+      },
+      "description": {
+        "original": "Some bounties require assurance that they stay on this plane.",
+        "display": "需要确保某些悬赏对象留在这个位面。"
+      },
+      "graphicId": "20051",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,60"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "!male^!female"
+            }
+          ],
+          "description": "Increases the damage of all Nonbinary Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "54",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "34",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "con",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a CON score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "38",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "int",
+              "score": 13,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a INT score of 13 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "51",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "lawful"
+            }
+          ],
+          "description": "Increases the damage of all Lawful Champions by $(amount)%"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3223,7 +3843,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 82,
+        "popularity": 77,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3418,7 +4038,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 82,
+        "popularity": 77,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -7561,6 +8181,1100 @@
             "availabilities": {
               "premium_item_id": "654"
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "3026",
+        "snapshots": {
+          "original": {
+            "id": 3026,
+            "name": "Traveler's Fedora",
+            "description": "Someone told me bounty hunters wear hats. This is what I could afford.",
+            "graphic_id": 20055,
+            "hero_id": 127,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3026,
+            "name": "旅行者软呢帽",
+            "description": "我听人说赏金猎人都要戴帽子。我只买得起这个。",
+            "graphic_id": 20055,
+            "hero_id": 127,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3027",
+        "snapshots": {
+          "original": {
+            "id": 3027,
+            "name": "Lucky Cap",
+            "description": "There are a few more ray gun marks than I thought on this...",
+            "graphic_id": 20055,
+            "hero_id": 127,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3027,
+            "name": "幸运帽",
+            "description": "这上面的射线枪痕迹比我以为的要多......",
+            "graphic_id": 20055,
+            "hero_id": 127,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3028",
+        "snapshots": {
+          "original": {
+            "id": 3028,
+            "name": "Bounty Hunter Hat",
+            "description": "Someone ran at the sight of my hat. It was awesome! I have a look now!",
+            "graphic_id": 20056,
+            "hero_id": 127,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3028,
+            "name": "赏金猎人帽",
+            "description": "有人一看见我的帽子就跑了。太酷啦！我现在有穿搭了！",
+            "graphic_id": 20056,
+            "hero_id": 127,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3029",
+        "snapshots": {
+          "original": {
+            "id": 3029,
+            "name": "Hat of Disguise",
+            "description": "For when you need a new face. Or a face at all.",
+            "graphic_id": 20057,
+            "hero_id": 127,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3029,
+            "name": "伪装帽",
+            "description": "在需要改头换面的时候用。或者就是需要有头有脸的时候。",
+            "graphic_id": 20057,
+            "hero_id": 127,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3030",
+        "snapshots": {
+          "original": {
+            "id": 3030,
+            "name": "Security Coat",
+            "description": "Nicked this off a guard who wasn't looking. It's got armor inside!",
+            "graphic_id": 20052,
+            "hero_id": 127,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12087",
+                "description": "Increases the damage and extra gold from $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3030,
+            "name": "安保外套",
+            "description": "这是从一个粗心的守卫那里顺来的。里面还有装甲呢！",
+            "graphic_id": 20052,
+            "hero_id": 127,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12087",
+                "description": "使$(upgrade_hero id)的$(upgrade_name id)技能伤害和额外金币提高 $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3031",
+        "snapshots": {
+          "original": {
+            "id": 3031,
+            "name": "Well Worn Coat",
+            "description": "I genuinely cannot believe how many hits this coat has taken.",
+            "graphic_id": 20052,
+            "hero_id": 127,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12087",
+                "description": "Increases the damage and extra gold from $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3031,
+            "name": "陈旧外套",
+            "description": "我是真的不敢相信这件外套承受了多少伤害。",
+            "graphic_id": 20052,
+            "hero_id": 127,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12087",
+                "description": "使$(upgrade_hero id)的$(upgrade_name id)技能伤害和额外金币提高 $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3032",
+        "snapshots": {
+          "original": {
+            "id": 3032,
+            "name": "Plasmoid Jacket",
+            "description": "I found a plasmoid tailor to make this for me. They knew how to keep me flowing.",
+            "graphic_id": 20053,
+            "hero_id": 127,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12087",
+                "description": "Increases the damage and extra gold from $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3032,
+            "name": "等离子夹克",
+            "description": "我找了个等离子叛徒帮我做的这个。这人很懂得怎么让我飘浮在空中。",
+            "graphic_id": 20053,
+            "hero_id": 127,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12087",
+                "description": "使$(upgrade_hero id)的$(upgrade_name id)技能伤害和额外金币提高 $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3033",
+        "snapshots": {
+          "original": {
+            "id": 3033,
+            "name": "Cloak of Stars and Darkness",
+            "description": "This lets me seep into the shadows and also watches my back for me.",
+            "graphic_id": 20054,
+            "hero_id": 127,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12087",
+                "description": "Increases the damage and extra gold from $(upgrade_hero id)'s $(upgrade_name id) ability by $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3033,
+            "name": "星与暗斗篷",
+            "description": "它让我能融入暗影之中，还能保护我的后背。",
+            "graphic_id": 20054,
+            "hero_id": 127,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12087",
+                "description": "使$(upgrade_hero id)的$(upgrade_name id)技能伤害和额外金币提高 $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3034",
+        "snapshots": {
+          "original": {
+            "id": 3034,
+            "name": "Compact Wrist Bow",
+            "description": "I can't afford anything better -- so this will have to do.",
+            "graphic_id": 20064,
+            "hero_id": 127,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12088"
+              }
+            ]
+          },
+          "display": {
+            "id": 3034,
+            "name": "紧凑腕弓",
+            "description": "我买不起更好的东西，所以只能将就用这个。",
+            "graphic_id": 20064,
+            "hero_id": 127,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12088"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3035",
+        "snapshots": {
+          "original": {
+            "id": 3035,
+            "name": "Dead Eye Crossbow",
+            "description": "I'm way better with this thing than I should be.",
+            "graphic_id": 20064,
+            "hero_id": 127,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12088"
+              }
+            ]
+          },
+          "display": {
+            "id": 3035,
+            "name": "死亡之眼十字弩",
+            "description": "它让我超常发挥。",
+            "graphic_id": 20064,
+            "hero_id": 127,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12088"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3036",
+        "snapshots": {
+          "original": {
+            "id": 3036,
+            "name": "L.A.S.E.R. Wrist Array",
+            "description": "This thing is so cool! Is it too cool for me? Ah! It's so cool!",
+            "graphic_id": 20065,
+            "hero_id": 127,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12088"
+              }
+            ]
+          },
+          "display": {
+            "id": 3036,
+            "name": "激光腕带",
+            "description": "这玩意好酷！会不会对我来说太酷了？啊！它真的好酷！",
+            "graphic_id": 20065,
+            "hero_id": 127,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12088"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3037",
+        "snapshots": {
+          "original": {
+            "id": 3037,
+            "name": "Starstrike Array",
+            "description": "This was specially designed for me by my dad. It was the last thing he made.",
+            "graphic_id": 20066,
+            "hero_id": 127,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12088"
+              }
+            ]
+          },
+          "display": {
+            "id": 3037,
+            "name": "星击服饰",
+            "description": "这是我爸专门给我设计的。这是他的最后一件作品。",
+            "graphic_id": 20066,
+            "hero_id": 127,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12088"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3038",
+        "snapshots": {
+          "original": {
+            "id": 3038,
+            "name": "Heist Score",
+            "description": "This was our last score before the team was wiped out...",
+            "graphic_id": 20058,
+            "hero_id": 127,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,12090,12091"
+              }
+            ]
+          },
+          "display": {
+            "id": 3038,
+            "name": "抢劫战利品",
+            "description": "这是我们的队伍被团灭之前的最后战利品......",
+            "graphic_id": 20058,
+            "hero_id": 127,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,12090,12091"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3039",
+        "snapshots": {
+          "original": {
+            "id": 3039,
+            "name": "Remaining Stash",
+            "description": "There's not much of this left. I need more contracts. Fast.",
+            "graphic_id": 20058,
+            "hero_id": 127,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,12090,12091"
+              }
+            ]
+          },
+          "display": {
+            "id": 3039,
+            "name": "剩余私藏",
+            "description": "剩下的也没多少了。我需要更多工作。尽快。",
+            "graphic_id": 20058,
+            "hero_id": 127,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,12090,12091"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3040",
+        "snapshots": {
+          "original": {
+            "id": 3040,
+            "name": "Family Gears",
+            "description": "Each of these comes from a member of my autognome family.",
+            "graphic_id": 20059,
+            "hero_id": 127,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,12090,12091"
+              }
+            ]
+          },
+          "display": {
+            "id": 3040,
+            "name": "家族装备",
+            "description": "每件装备都来自我的一个机器侏儒家族成员。",
+            "graphic_id": 20059,
+            "hero_id": 127,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,12090,12091"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3041",
+        "snapshots": {
+          "original": {
+            "id": 3041,
+            "name": "Arena of Blood Coin",
+            "description": "Old Vocath looked really annoyed when he had to present this to me.",
+            "graphic_id": 20060,
+            "hero_id": 127,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,12090,12091"
+              }
+            ]
+          },
+          "display": {
+            "id": 3041,
+            "name": "血之竞技场钱币",
+            "description": "老沃卡斯不得不把这个给我的时候，他看起来非常恼火。",
+            "graphic_id": 20060,
+            "hero_id": 127,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,12090,12091"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3042",
+        "snapshots": {
+          "original": {
+            "id": 3042,
+            "name": "Happy Beholder Mug",
+            "description": "You'd be surprised how many bounties just walk into a tavern you're already in.",
+            "graphic_id": 20061,
+            "hero_id": 127,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,12092,12093,12094"
+              }
+            ]
+          },
+          "display": {
+            "id": 3042,
+            "name": "欢乐眼魔马克杯",
+            "description": "你在一家酒馆的时候，走进来的悬赏对象多得令人惊讶。",
+            "graphic_id": 20061,
+            "hero_id": 127,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,25,12092,12093,12094"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3043",
+        "snapshots": {
+          "original": {
+            "id": 3043,
+            "name": "Replacement Mug",
+            "description": "I broke the last one over a giff's head. Got this one for free from Large Luigi.",
+            "graphic_id": 20061,
+            "hero_id": 127,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,12092,12093,12094"
+              }
+            ]
+          },
+          "display": {
+            "id": 3043,
+            "name": "替代马克杯",
+            "description": "我的上一个马克杯在一个吉夫人的脑袋上敲坏了。这个是在大块头路易吉那里免费拿的。",
+            "graphic_id": 20061,
+            "hero_id": 127,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,87.5,12092,12093,12094"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3044",
+        "snapshots": {
+          "original": {
+            "id": 3044,
+            "name": "Goblinpunk Stein",
+            "description": "Have you been to Eberron? That place is WILD!",
+            "graphic_id": 20062,
+            "hero_id": 127,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,12092,12093,12094"
+              }
+            ]
+          },
+          "display": {
+            "id": 3044,
+            "name": "地精朋克啤酒杯",
+            "description": "你去过艾伯伦吗？那地方太野了！",
+            "graphic_id": 20062,
+            "hero_id": 127,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,150,12092,12093,12094"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3045",
+        "snapshots": {
+          "original": {
+            "id": 3045,
+            "name": "Infinity's Souvenir",
+            "description": "I just found this place, and I never wanted to leave. SO MANY TAVERNS!",
+            "graphic_id": 20063,
+            "hero_id": 127,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,12092,12093,12094"
+              }
+            ]
+          },
+          "display": {
+            "id": 3045,
+            "name": "不朽旅店的纪念品",
+            "description": "我刚发现这个地方，就再也不想离开了。这么多的酒馆！",
+            "graphic_id": 20063,
+            "hero_id": 127,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,275,12092,12093,12094"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3046",
+        "snapshots": {
+          "original": {
+            "id": 3046,
+            "name": "Active Bounty",
+            "description": "Until I'm in a guild, these will have to do for contracts.",
+            "graphic_id": 20049,
+            "hero_id": 127,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,6"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3046,
+            "name": "活跃赏金",
+            "description": "在我加入公会之前，这些只能做合同工了。",
+            "graphic_id": 20049,
+            "hero_id": 127,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,6"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3047",
+        "snapshots": {
+          "original": {
+            "id": 3047,
+            "name": "First Bounty Poster",
+            "description": "I still hang onto this all these years later.",
+            "graphic_id": 20049,
+            "hero_id": 127,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,12"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3047,
+            "name": "第一张悬赏海报",
+            "description": "这么多年过去了，我还保留着它。",
+            "graphic_id": 20049,
+            "hero_id": 127,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,12"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3048",
+        "snapshots": {
+          "original": {
+            "id": 3048,
+            "name": "Wildspace Scrying Stone",
+            "description": "Wildspace is REALLY big. This helps me find a bounty anywhere.",
+            "graphic_id": 20050,
+            "hero_id": 127,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,24"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3048,
+            "name": "蛮荒太空探知石",
+            "description": "蛮荒太空真的非常大。它可以帮我在任何地方找到悬赏对象。",
+            "graphic_id": 20050,
+            "hero_id": 127,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,24"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3049",
+        "snapshots": {
+          "original": {
+            "id": 3049,
+            "name": "Dimensional Shackles",
+            "description": "Some bounties require assurance that they stay on this plane.",
+            "graphic_id": 20051,
+            "hero_id": 127,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,60"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3049,
+            "name": "位面枷锁",
+            "description": "需要确保某些悬赏对象留在这个位面。",
+            "graphic_id": 20051,
+            "hero_id": 127,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,60"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "4",
+        "snapshots": {
+          "original": {
+            "id": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "!male^!female"
+                  }
+                ],
+                "description": "Increases the damage of all Nonbinary Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 4,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "!male^!female"
+                  }
+                ],
+                "description": "所有非二元性别勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "54",
+        "snapshots": {
+          "original": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "阵型中每有一位勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "34",
+        "snapshots": {
+          "original": {
+            "id": 34,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a CON score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 34,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有体质大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "38",
+        "snapshots": {
+          "original": {
+            "id": 38,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "int",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a INT score of 13 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 38,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "int",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有智力大于等于 13 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "51",
+        "snapshots": {
+          "original": {
+            "id": 51,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "lawful"
+                  }
+                ],
+                "description": "Increases the damage of all Lawful Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 51,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "lawful"
+                  }
+                ],
+                "description": "使所有守序阵营勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

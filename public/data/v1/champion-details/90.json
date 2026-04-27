@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "90",
     "name": {
@@ -41,7 +41,7 @@
   },
   "dateAvailable": "2021-10-20 13:00:00",
   "lastReworkDate": "2021-10-20 13:00:00",
-  "popularity": 34,
+  "popularity": 37,
   "baseCost": "7500",
   "baseDamage": "4600",
   "baseHealth": "49",
@@ -2285,6 +2285,634 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "2089",
+      "name": {
+        "original": "Battered Lute",
+        "display": "用旧的鲁特琴"
+      },
+      "description": {
+        "original": "This dent is from a guy who rushed the stage with a dagger.",
+        "display": "这个凹痕来自一个拿着匕首冲上台的家伙。"
+      },
+      "graphicId": "11971",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2090",
+      "name": {
+        "original": "Battle Lute",
+        "display": "战斗鲁特琴"
+      },
+      "description": {
+        "original": "It falls out of tune when I bring it to a battle, but it hits hard!",
+        "display": "我用它来进行战斗之后，就开始有点跑掉了，但它打起人来很疼！"
+      },
+      "graphicId": "11971",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2091",
+      "name": {
+        "original": "War Lute",
+        "display": "战争鲁特琴"
+      },
+      "description": {
+        "original": "Metal has a great sound -- and it's much more durable.",
+        "display": "金属的声音更好听--而且更耐用。"
+      },
+      "graphicId": "11972",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2092",
+      "name": {
+        "original": "Axe of Protection",
+        "display": "防护之斧"
+      },
+      "description": {
+        "original": "With these spikes, it shreds AND shreds!",
+        "display": "有了这些刺，它能把一切都砍成碎片！"
+      },
+      "graphicId": "11973",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "2093",
+      "name": {
+        "original": "Floppy Hat",
+        "display": "松垂的帽子"
+      },
+      "description": {
+        "original": "I started as a jester, but I like this life better.",
+        "display": "我以前是个小丑，但我更喜欢现在的生活。"
+      },
+      "graphicId": "11968",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2094",
+      "name": {
+        "original": "Two-Toned Cap",
+        "display": "双筒帽"
+      },
+      "description": {
+        "original": "The bells make a surprising accompaniment.",
+        "display": "铃铛的伴奏效果意外地好。"
+      },
+      "graphicId": "11968",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2095",
+      "name": {
+        "original": "Jester's Cap",
+        "display": "小丑帽"
+      },
+      "description": {
+        "original": "What's funny is that this hat goes with everything I own!",
+        "display": "有意思的是，这顶帽子跟我的一切都很搭！"
+      },
+      "graphicId": "11969",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2096",
+      "name": {
+        "original": "Iconic Hat",
+        "display": "标志性帽子"
+      },
+      "description": {
+        "original": "It's my signature look.",
+        "display": "这是我的标志性着装。"
+      },
+      "graphicId": "11970",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2097",
+      "name": {
+        "original": "Tricky Wand",
+        "display": "难用的短杖"
+      },
+      "description": {
+        "original": "It's gonna do something, and something is better than nothing!",
+        "display": "它能干点什么，干点什么总不不干好！"
+      },
+      "graphicId": "11980",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,6350"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2098",
+      "name": {
+        "original": "Unpredictable Wand",
+        "display": "无法预测的短杖"
+      },
+      "description": {
+        "original": "You try for a fireball, but you work with 'turned opponent blue.'",
+        "display": "你想试试火球术，但却弄成了“让对手变成蓝色”。"
+      },
+      "graphicId": "11980",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,6350"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2099",
+      "name": {
+        "original": "Wand of Surprise",
+        "display": "惊喜短杖"
+      },
+      "description": {
+        "original": "Grass wasn't what I expected, but it's also not what that villain expected!",
+        "display": "我没想到上面会有草，但敌人也没想到！"
+      },
+      "graphicId": "11981",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,6350"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2100",
+      "name": {
+        "original": "Magnificent Wand of Wonder",
+        "display": "惊奇魔杖"
+      },
+      "description": {
+        "original": "Three enemies. One lightning bolt. Followed by one extended scorch mark.",
+        "display": "三个敌人。一发闪电束。紧接着是一个加长烧灼印记。"
+      },
+      "graphicId": "11982",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,6350"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2101",
+      "name": {
+        "original": "Starter Song",
+        "display": "新手之歌"
+      },
+      "description": {
+        "original": "What rhymes with 'Sirens'?",
+        "display": "什么东西跟“海妖”是押韵的？"
+      },
+      "graphicId": "11974",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,6354"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2102",
+      "name": {
+        "original": "Catchy Tune",
+        "display": "朗朗上口的旋律"
+      },
+      "description": {
+        "original": "I can't get it out of my head. Better write it down.",
+        "display": "完全没法让它从我脑海里消失。还是写下来的好。"
+      },
+      "graphicId": "11974",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,6354"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2103",
+      "name": {
+        "original": "Bardic Inspiration",
+        "display": "诗歌灵感"
+      },
+      "description": {
+        "original": "Sometimes the music just writes itself.",
+        "display": "有时候音乐就是自然而然地写出来的。"
+      },
+      "graphicId": "11975",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,6354"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2104",
+      "name": {
+        "original": "Theme Music",
+        "display": "主题音乐"
+      },
+      "description": {
+        "original": "Here's what plays when I enter the field.",
+        "display": "这就是我登场时所奏响的音乐。"
+      },
+      "graphicId": "11976",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,6354"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2105",
+      "name": {
+        "original": "Roadie's Armor",
+        "display": "巡回经纪人盔甲"
+      },
+      "description": {
+        "original": "It's held up through a lot of shows.",
+        "display": "它经历了相当多的演出。"
+      },
+      "graphicId": "11977",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,25"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2106",
+      "name": {
+        "original": "Backup Singer Costume",
+        "display": "后备歌手服"
+      },
+      "description": {
+        "original": "That cloud of daggers left a few nicks in the sleeves.",
+        "display": "那一堆匕首还不是最后的杀招。"
+      },
+      "graphicId": "11977",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,87.5"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2107",
+      "name": {
+        "original": "Lead Singer Threads",
+        "display": "首席歌手服"
+      },
+      "description": {
+        "original": "While I'm invisible, you can't appreciate this look. But once I sneak attack...",
+        "display": "当我躲起来的时候，你就没法欣赏这套衣服了。但一旦我开始偷袭......"
+      },
+      "graphicId": "11978",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,150"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2108",
+      "name": {
+        "original": "Rock Star Ensemble",
+        "display": "摇滚明星装束"
+      },
+      "description": {
+        "original": "Rogue in the shadows, bard in the spotlight.",
+        "display": "在暗影中是游荡者，在聚光灯下是吟游诗人。"
+      },
+      "graphicId": "11979",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,275"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2109",
+      "name": {
+        "original": "Damaged Goggles",
+        "display": "受损的护目镜"
+      },
+      "description": {
+        "original": "These will work when the pyrotechnics blow.",
+        "display": "放焰火的时候还是有点用的。"
+      },
+      "graphicId": "11965",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,7"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2110",
+      "name": {
+        "original": "Worn-out Goggles",
+        "display": "磨损的护目镜"
+      },
+      "description": {
+        "original": "The cracks aren't too bad.",
+        "display": "裂缝还不算太大。"
+      },
+      "graphicId": "11965",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,14"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2111",
+      "name": {
+        "original": "Tinted Goggles",
+        "display": "掉色的护目镜"
+      },
+      "description": {
+        "original": "They just look cooler.",
+        "display": "看起来更酷了。"
+      },
+      "graphicId": "11966",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,28"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2112",
+      "name": {
+        "original": "Goggles of the Champion",
+        "display": "勇士护目镜"
+      },
+      "description": {
+        "original": "Let's hit it.",
+        "display": "我们开始吧。"
+      },
+      "graphicId": "11967",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,70"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "54",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "56",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "58",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,30",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "human"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Human Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "41",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "wis",
+              "score": 13,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a WIS score of 13 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "33",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "dex",
+              "score": 15,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a DEX score of 15 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "105",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "chaotic"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a CHAOTIC alignment"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -2439,7 +3067,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 34,
+        "popularity": 37,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -2633,7 +3261,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 34,
+        "popularity": 37,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -5379,6 +6007,1116 @@
             "availabilities": {
               "in_flash_sales": true
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "2089",
+        "snapshots": {
+          "original": {
+            "id": 2089,
+            "name": "Battered Lute",
+            "description": "This dent is from a guy who rushed the stage with a dagger.",
+            "graphic_id": 11971,
+            "hero_id": 90,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2089,
+            "name": "用旧的鲁特琴",
+            "description": "这个凹痕来自一个拿着匕首冲上台的家伙。",
+            "graphic_id": 11971,
+            "hero_id": 90,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2090",
+        "snapshots": {
+          "original": {
+            "id": 2090,
+            "name": "Battle Lute",
+            "description": "It falls out of tune when I bring it to a battle, but it hits hard!",
+            "graphic_id": 11971,
+            "hero_id": 90,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2090,
+            "name": "战斗鲁特琴",
+            "description": "我用它来进行战斗之后，就开始有点跑掉了，但它打起人来很疼！",
+            "graphic_id": 11971,
+            "hero_id": 90,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2091",
+        "snapshots": {
+          "original": {
+            "id": 2091,
+            "name": "War Lute",
+            "description": "Metal has a great sound -- and it's much more durable.",
+            "graphic_id": 11972,
+            "hero_id": 90,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2091,
+            "name": "战争鲁特琴",
+            "description": "金属的声音更好听--而且更耐用。",
+            "graphic_id": 11972,
+            "hero_id": 90,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2092",
+        "snapshots": {
+          "original": {
+            "id": 2092,
+            "name": "Axe of Protection",
+            "description": "With these spikes, it shreds AND shreds!",
+            "graphic_id": 11973,
+            "hero_id": 90,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2092,
+            "name": "防护之斧",
+            "description": "有了这些刺，它能把一切都砍成碎片！",
+            "graphic_id": 11973,
+            "hero_id": 90,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2093",
+        "snapshots": {
+          "original": {
+            "id": 2093,
+            "name": "Floppy Hat",
+            "description": "I started as a jester, but I like this life better.",
+            "graphic_id": 11968,
+            "hero_id": 90,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ]
+          },
+          "display": {
+            "id": 2093,
+            "name": "松垂的帽子",
+            "description": "我以前是个小丑，但我更喜欢现在的生活。",
+            "graphic_id": 11968,
+            "hero_id": 90,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2094",
+        "snapshots": {
+          "original": {
+            "id": 2094,
+            "name": "Two-Toned Cap",
+            "description": "The bells make a surprising accompaniment.",
+            "graphic_id": 11968,
+            "hero_id": 90,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ]
+          },
+          "display": {
+            "id": 2094,
+            "name": "双筒帽",
+            "description": "铃铛的伴奏效果意外地好。",
+            "graphic_id": 11968,
+            "hero_id": 90,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2095",
+        "snapshots": {
+          "original": {
+            "id": 2095,
+            "name": "Jester's Cap",
+            "description": "What's funny is that this hat goes with everything I own!",
+            "graphic_id": 11969,
+            "hero_id": 90,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ]
+          },
+          "display": {
+            "id": 2095,
+            "name": "小丑帽",
+            "description": "有意思的是，这顶帽子跟我的一切都很搭！",
+            "graphic_id": 11969,
+            "hero_id": 90,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2096",
+        "snapshots": {
+          "original": {
+            "id": 2096,
+            "name": "Iconic Hat",
+            "description": "It's my signature look.",
+            "graphic_id": 11970,
+            "hero_id": 90,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ]
+          },
+          "display": {
+            "id": 2096,
+            "name": "标志性帽子",
+            "description": "这是我的标志性着装。",
+            "graphic_id": 11970,
+            "hero_id": 90,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2097",
+        "snapshots": {
+          "original": {
+            "id": 2097,
+            "name": "Tricky Wand",
+            "description": "It's gonna do something, and something is better than nothing!",
+            "graphic_id": 11980,
+            "hero_id": 90,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,6350"
+              }
+            ]
+          },
+          "display": {
+            "id": 2097,
+            "name": "难用的短杖",
+            "description": "它能干点什么，干点什么总不不干好！",
+            "graphic_id": 11980,
+            "hero_id": 90,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,6350"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2098",
+        "snapshots": {
+          "original": {
+            "id": 2098,
+            "name": "Unpredictable Wand",
+            "description": "You try for a fireball, but you work with 'turned opponent blue.'",
+            "graphic_id": 11980,
+            "hero_id": 90,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,6350"
+              }
+            ]
+          },
+          "display": {
+            "id": 2098,
+            "name": "无法预测的短杖",
+            "description": "你想试试火球术，但却弄成了“让对手变成蓝色”。",
+            "graphic_id": 11980,
+            "hero_id": 90,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,6350"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2099",
+        "snapshots": {
+          "original": {
+            "id": 2099,
+            "name": "Wand of Surprise",
+            "description": "Grass wasn't what I expected, but it's also not what that villain expected!",
+            "graphic_id": 11981,
+            "hero_id": 90,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,6350"
+              }
+            ]
+          },
+          "display": {
+            "id": 2099,
+            "name": "惊喜短杖",
+            "description": "我没想到上面会有草，但敌人也没想到！",
+            "graphic_id": 11981,
+            "hero_id": 90,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,6350"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2100",
+        "snapshots": {
+          "original": {
+            "id": 2100,
+            "name": "Magnificent Wand of Wonder",
+            "description": "Three enemies. One lightning bolt. Followed by one extended scorch mark.",
+            "graphic_id": 11982,
+            "hero_id": 90,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,6350"
+              }
+            ]
+          },
+          "display": {
+            "id": 2100,
+            "name": "惊奇魔杖",
+            "description": "三个敌人。一发闪电束。紧接着是一个加长烧灼印记。",
+            "graphic_id": 11982,
+            "hero_id": 90,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,6350"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2101",
+        "snapshots": {
+          "original": {
+            "id": 2101,
+            "name": "Starter Song",
+            "description": "What rhymes with 'Sirens'?",
+            "graphic_id": 11974,
+            "hero_id": 90,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,6354"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2101,
+            "name": "新手之歌",
+            "description": "什么东西跟“海妖”是押韵的？",
+            "graphic_id": 11974,
+            "hero_id": 90,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,6354"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2102",
+        "snapshots": {
+          "original": {
+            "id": 2102,
+            "name": "Catchy Tune",
+            "description": "I can't get it out of my head. Better write it down.",
+            "graphic_id": 11974,
+            "hero_id": 90,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,6354"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2102,
+            "name": "朗朗上口的旋律",
+            "description": "完全没法让它从我脑海里消失。还是写下来的好。",
+            "graphic_id": 11974,
+            "hero_id": 90,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,6354"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2103",
+        "snapshots": {
+          "original": {
+            "id": 2103,
+            "name": "Bardic Inspiration",
+            "description": "Sometimes the music just writes itself.",
+            "graphic_id": 11975,
+            "hero_id": 90,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,6354"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2103,
+            "name": "诗歌灵感",
+            "description": "有时候音乐就是自然而然地写出来的。",
+            "graphic_id": 11975,
+            "hero_id": 90,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,6354"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2104",
+        "snapshots": {
+          "original": {
+            "id": 2104,
+            "name": "Theme Music",
+            "description": "Here's what plays when I enter the field.",
+            "graphic_id": 11976,
+            "hero_id": 90,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,6354"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2104,
+            "name": "主题音乐",
+            "description": "这就是我登场时所奏响的音乐。",
+            "graphic_id": 11976,
+            "hero_id": 90,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,6354"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2105",
+        "snapshots": {
+          "original": {
+            "id": 2105,
+            "name": "Roadie's Armor",
+            "description": "It's held up through a lot of shows.",
+            "graphic_id": 11977,
+            "hero_id": 90,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ]
+          },
+          "display": {
+            "id": 2105,
+            "name": "巡回经纪人盔甲",
+            "description": "它经历了相当多的演出。",
+            "graphic_id": 11977,
+            "hero_id": 90,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2106",
+        "snapshots": {
+          "original": {
+            "id": 2106,
+            "name": "Backup Singer Costume",
+            "description": "That cloud of daggers left a few nicks in the sleeves.",
+            "graphic_id": 11977,
+            "hero_id": 90,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ]
+          },
+          "display": {
+            "id": 2106,
+            "name": "后备歌手服",
+            "description": "那一堆匕首还不是最后的杀招。",
+            "graphic_id": 11977,
+            "hero_id": 90,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2107",
+        "snapshots": {
+          "original": {
+            "id": 2107,
+            "name": "Lead Singer Threads",
+            "description": "While I'm invisible, you can't appreciate this look. But once I sneak attack...",
+            "graphic_id": 11978,
+            "hero_id": 90,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ]
+          },
+          "display": {
+            "id": 2107,
+            "name": "首席歌手服",
+            "description": "当我躲起来的时候，你就没法欣赏这套衣服了。但一旦我开始偷袭......",
+            "graphic_id": 11978,
+            "hero_id": 90,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2108",
+        "snapshots": {
+          "original": {
+            "id": 2108,
+            "name": "Rock Star Ensemble",
+            "description": "Rogue in the shadows, bard in the spotlight.",
+            "graphic_id": 11979,
+            "hero_id": 90,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ]
+          },
+          "display": {
+            "id": 2108,
+            "name": "摇滚明星装束",
+            "description": "在暗影中是游荡者，在聚光灯下是吟游诗人。",
+            "graphic_id": 11979,
+            "hero_id": 90,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2109",
+        "snapshots": {
+          "original": {
+            "id": 2109,
+            "name": "Damaged Goggles",
+            "description": "These will work when the pyrotechnics blow.",
+            "graphic_id": 11965,
+            "hero_id": 90,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,7"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2109,
+            "name": "受损的护目镜",
+            "description": "放焰火的时候还是有点用的。",
+            "graphic_id": 11965,
+            "hero_id": 90,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,7"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2110",
+        "snapshots": {
+          "original": {
+            "id": 2110,
+            "name": "Worn-out Goggles",
+            "description": "The cracks aren't too bad.",
+            "graphic_id": 11965,
+            "hero_id": 90,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,14"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2110,
+            "name": "磨损的护目镜",
+            "description": "裂缝还不算太大。",
+            "graphic_id": 11965,
+            "hero_id": 90,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,14"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2111",
+        "snapshots": {
+          "original": {
+            "id": 2111,
+            "name": "Tinted Goggles",
+            "description": "They just look cooler.",
+            "graphic_id": 11966,
+            "hero_id": 90,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,28"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2111,
+            "name": "掉色的护目镜",
+            "description": "看起来更酷了。",
+            "graphic_id": 11966,
+            "hero_id": 90,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,28"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2112",
+        "snapshots": {
+          "original": {
+            "id": 2112,
+            "name": "Goggles of the Champion",
+            "description": "Let's hit it.",
+            "graphic_id": 11967,
+            "hero_id": 90,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,70"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2112,
+            "name": "勇士护目镜",
+            "description": "我们开始吧。",
+            "graphic_id": 11967,
+            "hero_id": 90,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,70"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "54",
+        "snapshots": {
+          "original": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "阵型中每有一位勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "56",
+        "snapshots": {
+          "original": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "阵型中每有一位女性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "58",
+        "snapshots": {
+          "original": {
+            "id": 58,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Human Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 58,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "阵型中每有一位人类勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "41",
+        "snapshots": {
+          "original": {
+            "id": 41,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "wis",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a WIS score of 13 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 41,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "wis",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有感知大于等于 13 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "33",
+        "snapshots": {
+          "original": {
+            "id": 33,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "dex",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a DEX score of 15 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 33,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "dex",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有敏捷大于等于 15 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "105",
+        "snapshots": {
+          "original": {
+            "id": 105,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "chaotic"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a CHAOTIC alignment"
+              }
+            ]
+          },
+          "display": {
+            "id": 105,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "chaotic"
+                  }
+                ],
+                "description": "阵型中每有一位混乱阵营勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

@@ -9,7 +9,15 @@ import type {
   JsonValue,
 } from '../../domain/types'
 
-export const DETAIL_SECTION_IDS = ['overview', 'character-sheet', 'combat', 'upgrades', 'feats'] as const
+export const DETAIL_SECTION_IDS = [
+  'specializations',
+  'abilities',
+  'loot',
+  'legendary',
+  'feats',
+  'skins',
+  'story-misc',
+] as const
 export const DETAIL_HASH_PREFIX = 'section-'
 
 export type DetailSectionId = (typeof DETAIL_SECTION_IDS)[number]

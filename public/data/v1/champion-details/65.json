@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "65",
     "name": {
@@ -46,7 +46,7 @@
   },
   "dateAvailable": "2020-08-05 00:00:00",
   "lastReworkDate": "2020-08-05 00:00:00",
-  "popularity": 89,
+  "popularity": 86,
   "baseCost": "5000",
   "baseDamage": "4000",
   "baseHealth": "94",
@@ -3138,6 +3138,630 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "1537",
+      "name": {
+        "original": "Common Mace",
+        "display": "普通的钉头锤"
+      },
+      "description": {
+        "original": "I'd suggest, perhaps, grabbing a sturdier weapon.",
+        "display": "或许我可以建议换一个比较牢固的武器。"
+      },
+      "graphicId": "8299",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1538",
+      "name": {
+        "original": "Used Mace",
+        "display": "二手钉头锤"
+      },
+      "description": {
+        "original": "Has it been used, or has it been wielded? Completely different things.",
+        "display": "这个二手武器是在战斗中使用过的还是只是有过主人而已？那是截然不同的两回事。"
+      },
+      "graphicId": "8299",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1539",
+      "name": {
+        "original": "Stamp of Approval",
+        "display": "认可盖章"
+      },
+      "description": {
+        "original": "All our notaries have these.",
+        "display": "我们的每一位公证人都有此盖章。"
+      },
+      "graphicId": "8300",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1540",
+      "name": {
+        "original": "Tymora's Club of Fortune",
+        "display": "泰摩拉的命运俱乐部"
+      },
+      "description": {
+        "original": "Fortunate for me, anyway. You might like it less.",
+        "display": "对我来说是幸运的地方。对你来说可能就不是了。"
+      },
+      "graphicId": "8301",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "1541",
+      "name": {
+        "original": "Smuggled Coin",
+        "display": "走私硬币"
+      },
+      "description": {
+        "original": "Smuggled HOW, is the question.",
+        "display": "怎么走私的？这才是关键。"
+      },
+      "graphicId": "8287",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,12300"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1542",
+      "name": {
+        "original": "Ferrous Metal Snack",
+        "display": "含铁金属零食"
+      },
+      "description": {
+        "original": "In case of Rust Monster, throw coin.",
+        "display": "要是碰见锈蚀怪，记得掷硬币。"
+      },
+      "graphicId": "8287",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,12300"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1543",
+      "name": {
+        "original": "Commemorative Coin",
+        "display": "纪念性硬币"
+      },
+      "description": {
+        "original": "I mean, let's be honest. We have a lot to commemorate.",
+        "display": "不是我说，我们真的有很多值得纪念的经历。"
+      },
+      "graphicId": "8288",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,12300"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1544",
+      "name": {
+        "original": "Challenge Coin",
+        "display": "挑战硬币"
+      },
+      "description": {
+        "original": "Prove it.",
+        "display": "证明自己吧。"
+      },
+      "graphicId": "8289",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,12300"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1545",
+      "name": {
+        "original": "Shoulder Pads",
+        "display": "护肩"
+      },
+      "description": {
+        "original": "It's the breathable cotton that make these a great midsummer pauldron.",
+        "display": "护肩下的透气软垫才是夏天也适合穿着它们的关键。"
+      },
+      "graphicId": "8302",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,12299"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1546",
+      "name": {
+        "original": "Dress Pauldron",
+        "display": "连衣裙肩甲"
+      },
+      "description": {
+        "original": "I wear these when we open a new franchise. You know? Make it special.",
+        "display": "我们开新分店时我穿过。当时就是为了搞点特殊的气氛。"
+      },
+      "graphicId": "8302",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,12299"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1547",
+      "name": {
+        "original": "Eyes of Tymora Armor",
+        "display": "泰摩拉之目护甲"
+      },
+      "description": {
+        "original": "She's always had her eye on me. And my life is proof.",
+        "display": "她总是那么的关注我。我的一生就是最佳证明。"
+      },
+      "graphicId": "8303",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,12299"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1548",
+      "name": {
+        "original": "Pauldron of the Open Lord",
+        "display": "公开领主的肩甲"
+      },
+      "description": {
+        "original": "I'm not NOT an Open Lord, if you know what I mean.",
+        "display": "我可不是什么公开领主哦。"
+      },
+      "graphicId": "8304",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,12299"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1549",
+      "name": {
+        "original": "Child's Contract",
+        "display": "孩童合约"
+      },
+      "description": {
+        "original": "This was back when I was trying to convince my mom I owned our house! I was four. Good times.",
+        "display": "这份合约是我四岁时试图说服我妈房子是属于我的时候立下的。过去的好时光啊。"
+      },
+      "graphicId": "8290",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,12302"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1550",
+      "name": {
+        "original": "Letter from Walnut",
+        "display": "沃纳特的来信"
+      },
+      "description": {
+        "original": "Ms. Dawngrass never fails to deliver.",
+        "display": "多恩格斯小姐从来没让人失望过。"
+      },
+      "graphicId": "8290",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,12302"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1551",
+      "name": {
+        "original": "Notarized Legal Discourse",
+        "display": "公证法律话语"
+      },
+      "description": {
+        "original": "I have a reputation for violence, but in truth? Most of it happens on paper.",
+        "display": "人们都认为我崇尚暴力，但其实呢？我的暴力主要都是体现在纸面上。"
+      },
+      "graphicId": "8291",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,12302"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1552",
+      "name": {
+        "original": "Dran & Courtier Title",
+        "display": "德朗与追求者头衔"
+      },
+      "description": {
+        "original": "I keep hold of this for my mom.",
+        "display": "这是我为我妈保管的。"
+      },
+      "graphicId": "8292",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,12302"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1553",
+      "name": {
+        "original": "Self Drumroll",
+        "display": "自动击鼓"
+      },
+      "description": {
+        "original": "It's just... sticking right out, huh? That does not match the blueprints I approved.",
+        "display": "这玩意有点......格格不入吧？根本不符合我批准的蓝图。"
+      },
+      "graphicId": "8296",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,25"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1554",
+      "name": {
+        "original": "Mobile Alchemical Dispensary",
+        "display": "便携式炼金台"
+      },
+      "description": {
+        "original": "I thought we talked about this.",
+        "display": "我们之前不是谈好的吗？"
+      },
+      "graphicId": "8296",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,87.5"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1555",
+      "name": {
+        "original": "Ambulatory Fermenter",
+        "display": "流动发酵器"
+      },
+      "description": {
+        "original": "Usually you can't drink BETWEEN pubs.",
+        "display": "现在不用到酒馆也能喝酒了。"
+      },
+      "graphicId": "8297",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,150"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1556",
+      "name": {
+        "original": "Greg The Keg",
+        "display": "酒桶格雷格"
+      },
+      "description": {
+        "original": "Hey, buddy.",
+        "display": "嘿，兄弟。"
+      },
+      "graphicId": "8298",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,275"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1557",
+      "name": {
+        "original": "Idea Notebook",
+        "display": "想法笔记"
+      },
+      "description": {
+        "original": "I've got a LOT of ideas, and I put them right in here.",
+        "display": "我有太多的想法，所以会把它们都记下来。"
+      },
+      "graphicId": "8293",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,9"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1558",
+      "name": {
+        "original": "Manual of the Rules",
+        "display": "规则手册"
+      },
+      "description": {
+        "original": "The first draft of our Employee Manual.",
+        "display": "这是我们的员工手册的草案初稿。"
+      },
+      "graphicId": "8293",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,18"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1559",
+      "name": {
+        "original": "Employee Manual",
+        "display": "员工手册"
+      },
+      "description": {
+        "original": "Welcome to Acquisitions Incorporated.",
+        "display": "欢迎光临艾奎兹玄有限责任公司。"
+      },
+      "graphicId": "8294",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,36"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1560",
+      "name": {
+        "original": "Spellbook of Questions",
+        "display": "问题魔法书"
+      },
+      "description": {
+        "original": "Given to me by a cloaked gith, who immediately disintegrated? Maybe from the future? Haven't cracked this puzzle yet.",
+        "display": "这是某位披着斗篷的吉斯洋基人送我的，随后他就瞬间消失了。或许他是来自未来的人？我至今还没猜透这个谜。"
+      },
+      "graphicId": "8295",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,90"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "56",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "half-elf"
+            }
+          ],
+          "description": "Increases the damage of all Half-Elf Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "28",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "str",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a STR score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "43",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "cha",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a CHA score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "99",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "attack_type",
+              "attack": "melee"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Melee Champion in the formation"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3294,7 +3918,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 89,
+        "popularity": 86,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3490,7 +4114,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 89,
+        "popularity": 86,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -7698,6 +8322,1124 @@
             "availabilities": {
               "in_flash_sales": true
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "1537",
+        "snapshots": {
+          "original": {
+            "id": 1537,
+            "name": "Common Mace",
+            "description": "I'd suggest, perhaps, grabbing a sturdier weapon.",
+            "graphic_id": 8299,
+            "hero_id": 65,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1537,
+            "name": "普通的钉头锤",
+            "description": "或许我可以建议换一个比较牢固的武器。",
+            "graphic_id": 8299,
+            "hero_id": 65,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1538",
+        "snapshots": {
+          "original": {
+            "id": 1538,
+            "name": "Used Mace",
+            "description": "Has it been used, or has it been wielded? Completely different things.",
+            "graphic_id": 8299,
+            "hero_id": 65,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1538,
+            "name": "二手钉头锤",
+            "description": "这个二手武器是在战斗中使用过的还是只是有过主人而已？那是截然不同的两回事。",
+            "graphic_id": 8299,
+            "hero_id": 65,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1539",
+        "snapshots": {
+          "original": {
+            "id": 1539,
+            "name": "Stamp of Approval",
+            "description": "All our notaries have these.",
+            "graphic_id": 8300,
+            "hero_id": 65,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1539,
+            "name": "认可盖章",
+            "description": "我们的每一位公证人都有此盖章。",
+            "graphic_id": 8300,
+            "hero_id": 65,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1540",
+        "snapshots": {
+          "original": {
+            "id": 1540,
+            "name": "Tymora's Club of Fortune",
+            "description": "Fortunate for me, anyway. You might like it less.",
+            "graphic_id": 8301,
+            "hero_id": 65,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1540,
+            "name": "泰摩拉的命运俱乐部",
+            "description": "对我来说是幸运的地方。对你来说可能就不是了。",
+            "graphic_id": 8301,
+            "hero_id": 65,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1541",
+        "snapshots": {
+          "original": {
+            "id": 1541,
+            "name": "Smuggled Coin",
+            "description": "Smuggled HOW, is the question.",
+            "graphic_id": 8287,
+            "hero_id": 65,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12300"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1541,
+            "name": "走私硬币",
+            "description": "怎么走私的？这才是关键。",
+            "graphic_id": 8287,
+            "hero_id": 65,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12300"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1542",
+        "snapshots": {
+          "original": {
+            "id": 1542,
+            "name": "Ferrous Metal Snack",
+            "description": "In case of Rust Monster, throw coin.",
+            "graphic_id": 8287,
+            "hero_id": 65,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12300"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1542,
+            "name": "含铁金属零食",
+            "description": "要是碰见锈蚀怪，记得掷硬币。",
+            "graphic_id": 8287,
+            "hero_id": 65,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12300"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1543",
+        "snapshots": {
+          "original": {
+            "id": 1543,
+            "name": "Commemorative Coin",
+            "description": "I mean, let's be honest. We have a lot to commemorate.",
+            "graphic_id": 8288,
+            "hero_id": 65,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12300"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1543,
+            "name": "纪念性硬币",
+            "description": "不是我说，我们真的有很多值得纪念的经历。",
+            "graphic_id": 8288,
+            "hero_id": 65,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12300"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1544",
+        "snapshots": {
+          "original": {
+            "id": 1544,
+            "name": "Challenge Coin",
+            "description": "Prove it.",
+            "graphic_id": 8289,
+            "hero_id": 65,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12300"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1544,
+            "name": "挑战硬币",
+            "description": "证明自己吧。",
+            "graphic_id": 8289,
+            "hero_id": 65,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12300"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1545",
+        "snapshots": {
+          "original": {
+            "id": 1545,
+            "name": "Shoulder Pads",
+            "description": "It's the breathable cotton that make these a great midsummer pauldron.",
+            "graphic_id": 8302,
+            "hero_id": 65,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12299"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1545,
+            "name": "护肩",
+            "description": "护肩下的透气软垫才是夏天也适合穿着它们的关键。",
+            "graphic_id": 8302,
+            "hero_id": 65,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12299"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1546",
+        "snapshots": {
+          "original": {
+            "id": 1546,
+            "name": "Dress Pauldron",
+            "description": "I wear these when we open a new franchise. You know? Make it special.",
+            "graphic_id": 8302,
+            "hero_id": 65,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12299"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1546,
+            "name": "连衣裙肩甲",
+            "description": "我们开新分店时我穿过。当时就是为了搞点特殊的气氛。",
+            "graphic_id": 8302,
+            "hero_id": 65,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12299"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1547",
+        "snapshots": {
+          "original": {
+            "id": 1547,
+            "name": "Eyes of Tymora Armor",
+            "description": "She's always had her eye on me. And my life is proof.",
+            "graphic_id": 8303,
+            "hero_id": 65,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12299"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1547,
+            "name": "泰摩拉之目护甲",
+            "description": "她总是那么的关注我。我的一生就是最佳证明。",
+            "graphic_id": 8303,
+            "hero_id": 65,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12299"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1548",
+        "snapshots": {
+          "original": {
+            "id": 1548,
+            "name": "Pauldron of the Open Lord",
+            "description": "I'm not NOT an Open Lord, if you know what I mean.",
+            "graphic_id": 8304,
+            "hero_id": 65,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12299"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1548,
+            "name": "公开领主的肩甲",
+            "description": "我可不是什么公开领主哦。",
+            "graphic_id": 8304,
+            "hero_id": 65,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12299"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1549",
+        "snapshots": {
+          "original": {
+            "id": 1549,
+            "name": "Child's Contract",
+            "description": "This was back when I was trying to convince my mom I owned our house! I was four. Good times.",
+            "graphic_id": 8290,
+            "hero_id": 65,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12302"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1549,
+            "name": "孩童合约",
+            "description": "这份合约是我四岁时试图说服我妈房子是属于我的时候立下的。过去的好时光啊。",
+            "graphic_id": 8290,
+            "hero_id": 65,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12302"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1550",
+        "snapshots": {
+          "original": {
+            "id": 1550,
+            "name": "Letter from Walnut",
+            "description": "Ms. Dawngrass never fails to deliver.",
+            "graphic_id": 8290,
+            "hero_id": 65,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12302"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1550,
+            "name": "沃纳特的来信",
+            "description": "多恩格斯小姐从来没让人失望过。",
+            "graphic_id": 8290,
+            "hero_id": 65,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12302"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1551",
+        "snapshots": {
+          "original": {
+            "id": 1551,
+            "name": "Notarized Legal Discourse",
+            "description": "I have a reputation for violence, but in truth? Most of it happens on paper.",
+            "graphic_id": 8291,
+            "hero_id": 65,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12302"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1551,
+            "name": "公证法律话语",
+            "description": "人们都认为我崇尚暴力，但其实呢？我的暴力主要都是体现在纸面上。",
+            "graphic_id": 8291,
+            "hero_id": 65,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12302"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1552",
+        "snapshots": {
+          "original": {
+            "id": 1552,
+            "name": "Dran & Courtier Title",
+            "description": "I keep hold of this for my mom.",
+            "graphic_id": 8292,
+            "hero_id": 65,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12302"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1552,
+            "name": "德朗与追求者头衔",
+            "description": "这是我为我妈保管的。",
+            "graphic_id": 8292,
+            "hero_id": 65,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12302"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1553",
+        "snapshots": {
+          "original": {
+            "id": 1553,
+            "name": "Self Drumroll",
+            "description": "It's just... sticking right out, huh? That does not match the blueprints I approved.",
+            "graphic_id": 8296,
+            "hero_id": 65,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ]
+          },
+          "display": {
+            "id": 1553,
+            "name": "自动击鼓",
+            "description": "这玩意有点......格格不入吧？根本不符合我批准的蓝图。",
+            "graphic_id": 8296,
+            "hero_id": 65,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1554",
+        "snapshots": {
+          "original": {
+            "id": 1554,
+            "name": "Mobile Alchemical Dispensary",
+            "description": "I thought we talked about this.",
+            "graphic_id": 8296,
+            "hero_id": 65,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ]
+          },
+          "display": {
+            "id": 1554,
+            "name": "便携式炼金台",
+            "description": "我们之前不是谈好的吗？",
+            "graphic_id": 8296,
+            "hero_id": 65,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1555",
+        "snapshots": {
+          "original": {
+            "id": 1555,
+            "name": "Ambulatory Fermenter",
+            "description": "Usually you can't drink BETWEEN pubs.",
+            "graphic_id": 8297,
+            "hero_id": 65,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ]
+          },
+          "display": {
+            "id": 1555,
+            "name": "流动发酵器",
+            "description": "现在不用到酒馆也能喝酒了。",
+            "graphic_id": 8297,
+            "hero_id": 65,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1556",
+        "snapshots": {
+          "original": {
+            "id": 1556,
+            "name": "Greg The Keg",
+            "description": "Hey, buddy.",
+            "graphic_id": 8298,
+            "hero_id": 65,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ]
+          },
+          "display": {
+            "id": 1556,
+            "name": "酒桶格雷格",
+            "description": "嘿，兄弟。",
+            "graphic_id": 8298,
+            "hero_id": 65,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1557",
+        "snapshots": {
+          "original": {
+            "id": 1557,
+            "name": "Idea Notebook",
+            "description": "I've got a LOT of ideas, and I put them right in here.",
+            "graphic_id": 8293,
+            "hero_id": 65,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,9"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1557,
+            "name": "想法笔记",
+            "description": "我有太多的想法，所以会把它们都记下来。",
+            "graphic_id": 8293,
+            "hero_id": 65,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,9"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1558",
+        "snapshots": {
+          "original": {
+            "id": 1558,
+            "name": "Manual of the Rules",
+            "description": "The first draft of our Employee Manual.",
+            "graphic_id": 8293,
+            "hero_id": 65,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,18"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1558,
+            "name": "规则手册",
+            "description": "这是我们的员工手册的草案初稿。",
+            "graphic_id": 8293,
+            "hero_id": 65,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,18"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1559",
+        "snapshots": {
+          "original": {
+            "id": 1559,
+            "name": "Employee Manual",
+            "description": "Welcome to Acquisitions Incorporated.",
+            "graphic_id": 8294,
+            "hero_id": 65,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,36"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1559,
+            "name": "员工手册",
+            "description": "欢迎光临艾奎兹玄有限责任公司。",
+            "graphic_id": 8294,
+            "hero_id": 65,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,36"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1560",
+        "snapshots": {
+          "original": {
+            "id": 1560,
+            "name": "Spellbook of Questions",
+            "description": "Given to me by a cloaked gith, who immediately disintegrated? Maybe from the future? Haven't cracked this puzzle yet.",
+            "graphic_id": 8295,
+            "hero_id": 65,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,90"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1560,
+            "name": "问题魔法书",
+            "description": "这是某位披着斗篷的吉斯洋基人送我的，随后他就瞬间消失了。或许他是来自未来的人？我至今还没猜透这个谜。",
+            "graphic_id": 8295,
+            "hero_id": 65,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,90"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "56",
+        "snapshots": {
+          "original": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "阵型中每有一位女性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "8",
+        "snapshots": {
+          "original": {
+            "id": 8,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "half-elf"
+                  }
+                ],
+                "description": "Increases the damage of all Half-Elf Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 8,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "half-elf"
+                  }
+                ],
+                "description": "使所有半精灵勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "28",
+        "snapshots": {
+          "original": {
+            "id": 28,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a STR score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 28,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有力量大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "43",
+        "snapshots": {
+          "original": {
+            "id": 43,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "cha",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a CHA score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 43,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "cha",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有魅力大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "99",
+        "snapshots": {
+          "original": {
+            "id": 99,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "attack_type",
+                    "attack": "melee"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Melee Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 99,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "attack_type",
+                    "attack": "melee"
+                  }
+                ],
+                "description": "阵型中每有一位近战勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

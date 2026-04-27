@@ -1,10 +1,15 @@
 import type { ChampionDetail, ChampionSpecializationGraphic } from '../../domain/types'
-import { DetailCharacterSection } from './DetailCharacterSection'
 import { DetailCombatSection } from './DetailCombatSection'
 import { DetailFeatSection } from './DetailFeatSection'
+import { DetailLegendarySection } from './DetailLegendarySection'
+import { DetailLootSection } from './DetailLootSection'
+import { DetailSkinSection } from './DetailSkinSection'
+import { DetailStoryMiscSection } from './DetailStoryMiscSection'
 import { DetailUpgradeSection } from './DetailUpgradeSection'
 import type {
+  DetailFieldProps,
   DetailSectionBadge,
+  DetailSectionLink,
   EffectContext,
   LedgerUpgradeRow,
   UpgradeCategoryMeta,
@@ -15,9 +20,11 @@ interface DetailSectionPanelsProps {
   detail: ChampionDetail
   locale: 'zh-CN' | 'en-US'
   t: (text: { zh: string; en: string }) => string
+  activeSectionId: DetailSectionLink['id']
   effectContext: EffectContext
   upgradeSectionBadges: DetailSectionBadge[]
   featSectionBadges: DetailSectionBadge[]
+  overviewFields: DetailFieldProps[]
   spotlightUpgrades: ChampionDetail['upgrades']
   upgradePresentations: Map<string, UpgradePresentation>
   specializationGraphicsById: Map<string, ChampionSpecializationGraphic>
@@ -31,13 +38,87 @@ interface DetailSectionPanelsProps {
   toggleLedgerFilter: (key: string) => void
   resetLedgerFilters: () => void
   enableAllLedgerFilters: () => void
+  openArtworkDialog: (skinId?: string) => void
 }
 
 export function DetailSectionPanels(props: DetailSectionPanelsProps) {
+  if (props.activeSectionId === 'abilities') {
+    return (
+      <div className="champion-detail-content">
+        <DetailCombatSection detail={props.detail} locale={props.locale} t={props.t} />
+      </div>
+    )
+  }
+
+  if (props.activeSectionId === 'loot') {
+    return (
+      <div className="champion-detail-content">
+        <DetailLootSection
+          detail={props.detail}
+          locale={props.locale}
+          t={props.t}
+          effectContext={props.effectContext}
+        />
+      </div>
+    )
+  }
+
+  if (props.activeSectionId === 'legendary') {
+    return (
+      <div className="champion-detail-content">
+        <DetailLegendarySection
+          detail={props.detail}
+          locale={props.locale}
+          t={props.t}
+          effectContext={props.effectContext}
+        />
+      </div>
+    )
+  }
+
+  if (props.activeSectionId === 'feats') {
+    return (
+      <div className="champion-detail-content">
+        <DetailFeatSection
+          detail={props.detail}
+          locale={props.locale}
+          t={props.t}
+          featSectionBadges={props.featSectionBadges}
+          effectContext={props.effectContext}
+        />
+      </div>
+    )
+  }
+
+  if (props.activeSectionId === 'skins') {
+    return (
+      <div className="champion-detail-content">
+        <DetailSkinSection
+          detail={props.detail}
+          locale={props.locale}
+          t={props.t}
+          effectContext={props.effectContext}
+          openArtworkDialog={props.openArtworkDialog}
+        />
+      </div>
+    )
+  }
+
+  if (props.activeSectionId === 'story-misc') {
+    return (
+      <div className="champion-detail-content">
+        <DetailStoryMiscSection
+          detail={props.detail}
+          locale={props.locale}
+          t={props.t}
+          overviewFields={props.overviewFields}
+        />
+      </div>
+    )
+  }
+
   return (
     <div className="champion-detail-content">
-      <DetailCharacterSection detail={props.detail} locale={props.locale} t={props.t} />
-      <DetailCombatSection detail={props.detail} locale={props.locale} t={props.t} />
       <DetailUpgradeSection
         locale={props.locale}
         t={props.t}
@@ -56,13 +137,6 @@ export function DetailSectionPanels(props: DetailSectionPanelsProps) {
         toggleLedgerFilter={props.toggleLedgerFilter}
         resetLedgerFilters={props.resetLedgerFilters}
         enableAllLedgerFilters={props.enableAllLedgerFilters}
-      />
-      <DetailFeatSection
-        detail={props.detail}
-        locale={props.locale}
-        t={props.t}
-        featSectionBadges={props.featSectionBadges}
-        effectContext={props.effectContext}
       />
     </div>
   )

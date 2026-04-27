@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "147",
     "name": {
@@ -46,7 +46,7 @@
   },
   "dateAvailable": "2024-04-03 12:00:00",
   "lastReworkDate": "2024-04-03 12:00:00",
-  "popularity": 25,
+  "popularity": 29,
   "baseCost": "35",
   "baseDamage": "20",
   "baseHealth": "43",
@@ -3313,6 +3313,630 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "3482",
+      "name": {
+        "original": "Fond Memories",
+        "display": "美好的回忆"
+      },
+      "description": {
+        "original": "Even at my lowest, playing with Tara lifted my spirits...",
+        "display": "即便在最低谷的时候，和塔拉玩耍都会令我振奋起精神……"
+      },
+      "graphicId": "22803",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3483",
+      "name": {
+        "original": "Ball of Retrieval",
+        "display": "拾回球"
+      },
+      "description": {
+        "original": "...though the ball's purpose eluded her. I was always the one fetching it...",
+        "display": "……但球的路线避开了她。我永远是那个接球的人……"
+      },
+      "graphicId": "22803",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3484",
+      "name": {
+        "original": "Cat Flap of Displacement",
+        "display": "移位猫洞"
+      },
+      "description": {
+        "original": "Tara comes and goes as she pleases. But she's always pleased to help me.",
+        "display": "塔拉随心所欲地来来往往。但她总是愿意来帮我。"
+      },
+      "graphicId": "22804",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3485",
+      "name": {
+        "original": "Ring of Evasion",
+        "display": "躲闪之戒"
+      },
+      "description": {
+        "original": "A ring as evasive as Tara, when I asked how she obtained it...",
+        "display": "和塔拉一样难以捉摸的戒指，我问她是怎么拿到这个的时候……"
+      },
+      "graphicId": "22805",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "3486",
+      "name": {
+        "original": "These Old Things",
+        "display": "这些旧东西"
+      },
+      "description": {
+        "original": "Comfortable, practical, and relatively unsinged.",
+        "display": "舒适、实用，相对干净。"
+      },
+      "graphicId": "22800",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,14571"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3487",
+      "name": {
+        "original": "Wizarding Robes",
+        "display": "魔法长袍"
+      },
+      "description": {
+        "original": "Not as flashy as Elminster's, but at least they've plenty of pockets.",
+        "display": "和艾尔明斯特的相比不那么闪耀，但至少有许多的口袋。"
+      },
+      "graphicId": "22800",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,14571"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3488",
+      "name": {
+        "original": "Robes of Increased Potency",
+        "display": "效力增强长袍"
+      },
+      "description": {
+        "original": "I could get used to these. Elegant, but powerful - just like Tara.",
+        "display": "我会习惯的。优雅，但是强大 - 就和塔拉一样。"
+      },
+      "graphicId": "22801",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,14571"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3489",
+      "name": {
+        "original": "Archmage's Accoutrements",
+        "display": "大法师的装备"
+      },
+      "description": {
+        "original": "Incredible! Every stitch is infused with Weave. Like wearing magic itself...",
+        "display": "不可思议！每一针都注入了魔网。感觉好像穿着魔法本身一样……"
+      },
+      "graphicId": "22802",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,14571"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3490",
+      "name": {
+        "original": "Nothing Much",
+        "display": "小意思"
+      },
+      "description": {
+        "original": "I'd have preferred something with a library...",
+        "display": "我更喜欢有图书馆的地方……"
+      },
+      "graphicId": "22796",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,14572"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3491",
+      "name": {
+        "original": "Camping Tent",
+        "display": "露营帐篷"
+      },
+      "description": {
+        "original": "...but it will do. For now.",
+        "display": "……凑活。至少暂时如此。"
+      },
+      "graphicId": "22796",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,14572"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3492",
+      "name": {
+        "original": "Crystal Ball",
+        "display": "水晶球"
+      },
+      "description": {
+        "original": "Handy for glimpsing the future. And also shaving.",
+        "display": "窥测未来挺不错。也可以当成剃须用的镜子。"
+      },
+      "graphicId": "22794",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,14572"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3493",
+      "name": {
+        "original": "Celestial Spyglass",
+        "display": "天文望远镜"
+      },
+      "description": {
+        "original": "I like gazing at the heavens. To remember. And to forget...",
+        "display": "我喜欢窥视天堂。好铭记在心。也好遗忘过往……"
+      },
+      "graphicId": "22795",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,14572"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3494",
+      "name": {
+        "original": "Crumpled Chapbooks",
+        "display": "皱巴巴的小册子"
+      },
+      "description": {
+        "original": "At least they're written in full sentences.",
+        "display": "至少文句完整。"
+      },
+      "graphicId": "22788",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,14573"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3495",
+      "name": {
+        "original": "Well-thumbed Tomes",
+        "display": "常常翻阅的书卷"
+      },
+      "description": {
+        "original": "I've lost count of how many times I've read these. Still just as magical.",
+        "display": "我已经不记得自己读过多少次了。但还是令人着迷。"
+      },
+      "graphicId": "22788",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,14573"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3496",
+      "name": {
+        "original": "Magical Miscellany",
+        "display": "魔法杂物"
+      },
+      "description": {
+        "original": "A spell for all situations. And my improvements in the margins.",
+        "display": "适合所有情况的法术。我的改进写在空白的地方。"
+      },
+      "graphicId": "22789",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,14573"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3497",
+      "name": {
+        "original": "The Annals of Karsus",
+        "display": "卡尔萨斯的记录"
+      },
+      "description": {
+        "original": "You can trust me with this - you have my word.",
+        "display": "这个你可以相信我 - 我向你保证。"
+      },
+      "graphicId": "22790",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,14573"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3498",
+      "name": {
+        "original": "Boots of Ambiguous Enchantment",
+        "display": "模糊附魔的靴子"
+      },
+      "description": {
+        "original": "A little pick-me-up, for when any Weave will do...",
+        "display": "只是略微提提神，因为任何魔网都能做到……"
+      },
+      "graphicId": "22791",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,25"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3499",
+      "name": {
+        "original": "Lonely Boot of Elvenkind",
+        "display": "精灵族的孤独之靴"
+      },
+      "description": {
+        "original": "A snack-sized shoe for the wizard who travels light.",
+        "display": "轻便旅行的法师使用的小巧鞋子。"
+      },
+      "graphicId": "22791",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,87.5"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3500",
+      "name": {
+        "original": "Boots of Very Fast Blinking",
+        "display": "极快闪现之靴"
+      },
+      "description": {
+        "original": "Blink and you'll miss me. But I'll always hit you.",
+        "display": "一眨眼你就找不到我了。但我却总是能打到你。"
+      },
+      "graphicId": "22792",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,150"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3501",
+      "name": {
+        "original": "Mystra's Grace",
+        "display": "密斯特拉的恩典"
+      },
+      "description": {
+        "original": "These were a gift from... well, never mind.",
+        "display": "这曾是那人给我的馈赠……唉，算了。"
+      },
+      "graphicId": "22793",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,275"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3502",
+      "name": {
+        "original": "Cramped Jotter",
+        "display": "字迹难辨的笔记本"
+      },
+      "description": {
+        "original": "Magical musings and mullings. Not my best handwriting.",
+        "display": "魔法上的创意与思索。字体不是我写的最好那种。"
+      },
+      "graphicId": "22797",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,8.25"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3503",
+      "name": {
+        "original": "Waterdhavian Quill",
+        "display": "深水城羽毛笔"
+      },
+      "description": {
+        "original": "This was... well, it was expensive, let's leave it at that.",
+        "display": "这个......嗯，总之很贵，就说这么多吧。"
+      },
+      "graphicId": "22797",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,16.5"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3504",
+      "name": {
+        "original": "The Chosen's Earring",
+        "display": "天选者耳环"
+      },
+      "description": {
+        "original": "A symbol of Mystra's faith in me. Former faith, I suppose...",
+        "display": "密斯特拉信任于我的圣徽。曾经信任吧……"
+      },
+      "graphicId": "22798",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,33"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3505",
+      "name": {
+        "original": "Wizard's Pouch",
+        "display": "法师的口袋"
+      },
+      "description": {
+        "original": "All manner of wizarding sundries. Pungent but powerful.",
+        "display": "各式各样的法师杂物。辛辣但强力。"
+      },
+      "graphicId": "22799",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,82.5"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "54",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "56",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "human"
+            }
+          ],
+          "description": "Increases the damage of all Human Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "37",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "int",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a INT score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "32",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "dex",
+              "score": 13,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a DEX score of 13 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "53",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "neutral"
+            }
+          ],
+          "description": "Increases the damage of all Neutral Champions by $(amount)%"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3467,7 +4091,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 25,
+        "popularity": 29,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3655,7 +4279,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 25,
+        "popularity": 29,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -7854,6 +8478,1132 @@
             "availabilities": {
               "premium_item_id": "684"
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "3482",
+        "snapshots": {
+          "original": {
+            "id": 3482,
+            "name": "Fond Memories",
+            "description": "Even at my lowest, playing with Tara lifted my spirits...",
+            "graphic_id": 22803,
+            "hero_id": 147,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3482,
+            "name": "美好的回忆",
+            "description": "即便在最低谷的时候，和塔拉玩耍都会令我振奋起精神……",
+            "graphic_id": 22803,
+            "hero_id": 147,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3483",
+        "snapshots": {
+          "original": {
+            "id": 3483,
+            "name": "Ball of Retrieval",
+            "description": "...though the ball's purpose eluded her. I was always the one fetching it...",
+            "graphic_id": 22803,
+            "hero_id": 147,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3483,
+            "name": "拾回球",
+            "description": "……但球的路线避开了她。我永远是那个接球的人……",
+            "graphic_id": 22803,
+            "hero_id": 147,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3484",
+        "snapshots": {
+          "original": {
+            "id": 3484,
+            "name": "Cat Flap of Displacement",
+            "description": "Tara comes and goes as she pleases. But she's always pleased to help me.",
+            "graphic_id": 22804,
+            "hero_id": 147,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3484,
+            "name": "移位猫洞",
+            "description": "塔拉随心所欲地来来往往。但她总是愿意来帮我。",
+            "graphic_id": 22804,
+            "hero_id": 147,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3485",
+        "snapshots": {
+          "original": {
+            "id": 3485,
+            "name": "Ring of Evasion",
+            "description": "A ring as evasive as Tara, when I asked how she obtained it...",
+            "graphic_id": 22805,
+            "hero_id": 147,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3485,
+            "name": "躲闪之戒",
+            "description": "和塔拉一样难以捉摸的戒指，我问她是怎么拿到这个的时候……",
+            "graphic_id": 22805,
+            "hero_id": 147,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3486",
+        "snapshots": {
+          "original": {
+            "id": 3486,
+            "name": "These Old Things",
+            "description": "Comfortable, practical, and relatively unsinged.",
+            "graphic_id": 22800,
+            "hero_id": 147,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,14571"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3486,
+            "name": "这些旧东西",
+            "description": "舒适、实用，相对干净。",
+            "graphic_id": 22800,
+            "hero_id": 147,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,14571"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3487",
+        "snapshots": {
+          "original": {
+            "id": 3487,
+            "name": "Wizarding Robes",
+            "description": "Not as flashy as Elminster's, but at least they've plenty of pockets.",
+            "graphic_id": 22800,
+            "hero_id": 147,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,14571"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3487,
+            "name": "魔法长袍",
+            "description": "和艾尔明斯特的相比不那么闪耀，但至少有许多的口袋。",
+            "graphic_id": 22800,
+            "hero_id": 147,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,14571"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3488",
+        "snapshots": {
+          "original": {
+            "id": 3488,
+            "name": "Robes of Increased Potency",
+            "description": "I could get used to these. Elegant, but powerful - just like Tara.",
+            "graphic_id": 22801,
+            "hero_id": 147,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,14571"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3488,
+            "name": "效力增强长袍",
+            "description": "我会习惯的。优雅，但是强大 - 就和塔拉一样。",
+            "graphic_id": 22801,
+            "hero_id": 147,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,14571"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3489",
+        "snapshots": {
+          "original": {
+            "id": 3489,
+            "name": "Archmage's Accoutrements",
+            "description": "Incredible! Every stitch is infused with Weave. Like wearing magic itself...",
+            "graphic_id": 22802,
+            "hero_id": 147,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,14571"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3489,
+            "name": "大法师的装备",
+            "description": "不可思议！每一针都注入了魔网。感觉好像穿着魔法本身一样……",
+            "graphic_id": 22802,
+            "hero_id": 147,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,14571"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3490",
+        "snapshots": {
+          "original": {
+            "id": 3490,
+            "name": "Nothing Much",
+            "description": "I'd have preferred something with a library...",
+            "graphic_id": 22796,
+            "hero_id": 147,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,14572"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3490,
+            "name": "小意思",
+            "description": "我更喜欢有图书馆的地方……",
+            "graphic_id": 22796,
+            "hero_id": 147,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,14572"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3491",
+        "snapshots": {
+          "original": {
+            "id": 3491,
+            "name": "Camping Tent",
+            "description": "...but it will do. For now.",
+            "graphic_id": 22796,
+            "hero_id": 147,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,14572"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3491,
+            "name": "露营帐篷",
+            "description": "……凑活。至少暂时如此。",
+            "graphic_id": 22796,
+            "hero_id": 147,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,14572"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3492",
+        "snapshots": {
+          "original": {
+            "id": 3492,
+            "name": "Crystal Ball",
+            "description": "Handy for glimpsing the future. And also shaving.",
+            "graphic_id": 22794,
+            "hero_id": 147,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,14572"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3492,
+            "name": "水晶球",
+            "description": "窥测未来挺不错。也可以当成剃须用的镜子。",
+            "graphic_id": 22794,
+            "hero_id": 147,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,14572"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3493",
+        "snapshots": {
+          "original": {
+            "id": 3493,
+            "name": "Celestial Spyglass",
+            "description": "I like gazing at the heavens. To remember. And to forget...",
+            "graphic_id": 22795,
+            "hero_id": 147,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,14572"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3493,
+            "name": "天文望远镜",
+            "description": "我喜欢窥视天堂。好铭记在心。也好遗忘过往……",
+            "graphic_id": 22795,
+            "hero_id": 147,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,14572"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3494",
+        "snapshots": {
+          "original": {
+            "id": 3494,
+            "name": "Crumpled Chapbooks",
+            "description": "At least they're written in full sentences.",
+            "graphic_id": 22788,
+            "hero_id": 147,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,14573"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3494,
+            "name": "皱巴巴的小册子",
+            "description": "至少文句完整。",
+            "graphic_id": 22788,
+            "hero_id": 147,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,14573"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3495",
+        "snapshots": {
+          "original": {
+            "id": 3495,
+            "name": "Well-thumbed Tomes",
+            "description": "I've lost count of how many times I've read these. Still just as magical.",
+            "graphic_id": 22788,
+            "hero_id": 147,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,14573"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3495,
+            "name": "常常翻阅的书卷",
+            "description": "我已经不记得自己读过多少次了。但还是令人着迷。",
+            "graphic_id": 22788,
+            "hero_id": 147,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,14573"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3496",
+        "snapshots": {
+          "original": {
+            "id": 3496,
+            "name": "Magical Miscellany",
+            "description": "A spell for all situations. And my improvements in the margins.",
+            "graphic_id": 22789,
+            "hero_id": 147,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,14573"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3496,
+            "name": "魔法杂物",
+            "description": "适合所有情况的法术。我的改进写在空白的地方。",
+            "graphic_id": 22789,
+            "hero_id": 147,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,14573"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3497",
+        "snapshots": {
+          "original": {
+            "id": 3497,
+            "name": "The Annals of Karsus",
+            "description": "You can trust me with this - you have my word.",
+            "graphic_id": 22790,
+            "hero_id": 147,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,14573"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3497,
+            "name": "卡尔萨斯的记录",
+            "description": "这个你可以相信我 - 我向你保证。",
+            "graphic_id": 22790,
+            "hero_id": 147,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,14573"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3498",
+        "snapshots": {
+          "original": {
+            "id": 3498,
+            "name": "Boots of Ambiguous Enchantment",
+            "description": "A little pick-me-up, for when any Weave will do...",
+            "graphic_id": 22791,
+            "hero_id": 147,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3498,
+            "name": "模糊附魔的靴子",
+            "description": "只是略微提提神，因为任何魔网都能做到……",
+            "graphic_id": 22791,
+            "hero_id": 147,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3499",
+        "snapshots": {
+          "original": {
+            "id": 3499,
+            "name": "Lonely Boot of Elvenkind",
+            "description": "A snack-sized shoe for the wizard who travels light.",
+            "graphic_id": 22791,
+            "hero_id": 147,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3499,
+            "name": "精灵族的孤独之靴",
+            "description": "轻便旅行的法师使用的小巧鞋子。",
+            "graphic_id": 22791,
+            "hero_id": 147,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3500",
+        "snapshots": {
+          "original": {
+            "id": 3500,
+            "name": "Boots of Very Fast Blinking",
+            "description": "Blink and you'll miss me. But I'll always hit you.",
+            "graphic_id": 22792,
+            "hero_id": 147,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3500,
+            "name": "极快闪现之靴",
+            "description": "一眨眼你就找不到我了。但我却总是能打到你。",
+            "graphic_id": 22792,
+            "hero_id": 147,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3501",
+        "snapshots": {
+          "original": {
+            "id": 3501,
+            "name": "Mystra's Grace",
+            "description": "These were a gift from... well, never mind.",
+            "graphic_id": 22793,
+            "hero_id": 147,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3501,
+            "name": "密斯特拉的恩典",
+            "description": "这曾是那人给我的馈赠……唉，算了。",
+            "graphic_id": 22793,
+            "hero_id": 147,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3502",
+        "snapshots": {
+          "original": {
+            "id": 3502,
+            "name": "Cramped Jotter",
+            "description": "Magical musings and mullings. Not my best handwriting.",
+            "graphic_id": 22797,
+            "hero_id": 147,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,8.25"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3502,
+            "name": "字迹难辨的笔记本",
+            "description": "魔法上的创意与思索。字体不是我写的最好那种。",
+            "graphic_id": 22797,
+            "hero_id": 147,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,8.25"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3503",
+        "snapshots": {
+          "original": {
+            "id": 3503,
+            "name": "Waterdhavian Quill",
+            "description": "This was... well, it was expensive, let's leave it at that.",
+            "graphic_id": 22797,
+            "hero_id": 147,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,16.5"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3503,
+            "name": "深水城羽毛笔",
+            "description": "这个......嗯，总之很贵，就说这么多吧。",
+            "graphic_id": 22797,
+            "hero_id": 147,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,16.5"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3504",
+        "snapshots": {
+          "original": {
+            "id": 3504,
+            "name": "The Chosen's Earring",
+            "description": "A symbol of Mystra's faith in me. Former faith, I suppose...",
+            "graphic_id": 22798,
+            "hero_id": 147,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,33"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3504,
+            "name": "天选者耳环",
+            "description": "密斯特拉信任于我的圣徽。曾经信任吧……",
+            "graphic_id": 22798,
+            "hero_id": 147,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,33"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3505",
+        "snapshots": {
+          "original": {
+            "id": 3505,
+            "name": "Wizard's Pouch",
+            "description": "All manner of wizarding sundries. Pungent but powerful.",
+            "graphic_id": 22799,
+            "hero_id": 147,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,82.5"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3505,
+            "name": "法师的口袋",
+            "description": "各式各样的法师杂物。辛辣但强力。",
+            "graphic_id": 22799,
+            "hero_id": 147,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,82.5"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "54",
+        "snapshots": {
+          "original": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "阵型中每有一位勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "56",
+        "snapshots": {
+          "original": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "阵型中每有一位女性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "5",
+        "snapshots": {
+          "original": {
+            "id": 5,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "Increases the damage of all Human Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 5,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "使所有人类勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "37",
+        "snapshots": {
+          "original": {
+            "id": 37,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "int",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a INT score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 37,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "int",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有智力大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "32",
+        "snapshots": {
+          "original": {
+            "id": 32,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "dex",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a DEX score of 13 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 32,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "dex",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有敏捷大于等于 13 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "53",
+        "snapshots": {
+          "original": {
+            "id": 53,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "neutral"
+                  }
+                ],
+                "description": "Increases the damage of all Neutral Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 53,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "neutral"
+                  }
+                ],
+                "description": "使所有中立阵营勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

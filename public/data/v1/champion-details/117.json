@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "117",
     "name": {
@@ -50,7 +50,7 @@
   },
   "dateAvailable": "2022-12-21 00:00:00",
   "lastReworkDate": "2022-12-21 00:00:00",
-  "popularity": 42,
+  "popularity": 43,
   "baseCost": "500000000000000000",
   "baseDamage": "750000000000",
   "baseHealth": "43",
@@ -2703,6 +2703,628 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "2786",
+      "name": {
+        "original": "Orphan's Sword",
+        "display": "孤儿之剑"
+      },
+      "description": {
+        "original": "Ah, fond memories.",
+        "display": "啊，多么美好的回忆。"
+      },
+      "graphicId": "17175",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2787",
+      "name": {
+        "original": "Candlekeep Toy",
+        "display": "烛堡玩具"
+      },
+      "description": {
+        "original": "I grew up among the monks of Candlekeep, but that doesn't mean I didn't train.",
+        "display": "我在烛堡的武僧中长大，但这并不意味着我没有受过训练。"
+      },
+      "graphicId": "17175",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2788",
+      "name": {
+        "original": "Blade of Defense",
+        "display": "防御之刃"
+      },
+      "description": {
+        "original": "Sometimes the best defense is a sword you're ready to use.",
+        "display": "有时候最好的防御是你随时准备使用的剑。"
+      },
+      "graphicId": "17176",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2789",
+      "name": {
+        "original": "Sword of Power",
+        "display": "力量之剑"
+      },
+      "description": {
+        "original": "Everything's better with some magic added in!",
+        "display": "加点魔法，一切都会更好！"
+      },
+      "graphicId": "17177",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "2790",
+      "name": {
+        "original": "Child's Bow",
+        "display": "孩童之弓"
+      },
+      "description": {
+        "original": "I used to practice by aiming at empty inkpots!",
+        "display": "我以前常常瞄准空墨水瓶练习射击！"
+      },
+      "graphicId": "17169",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,9639"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2791",
+      "name": {
+        "original": "Archer-in-Training",
+        "display": "实习弓箭手"
+      },
+      "description": {
+        "original": "I won't say I was a prodigy, but I was no slouch with the bow.",
+        "display": "我不准备自称神童，但我对弓箭并不陌生。"
+      },
+      "graphicId": "17169",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,9639"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2792",
+      "name": {
+        "original": "Trusty Shortbow",
+        "display": "嗜血短弓"
+      },
+      "description": {
+        "original": "Let's start with an arrow before we move on to magic missiles.",
+        "display": "先从射箭开始，以后再讨论魔法飞弹。"
+      },
+      "graphicId": "17170",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,9639"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2793",
+      "name": {
+        "original": "Protector of the Dryads Bow",
+        "display": "树妖之弓的卫士"
+      },
+      "description": {
+        "original": "I don't know of a shortbow more powerful than this one.",
+        "display": "我没见过比它更厉害的短弓。"
+      },
+      "graphicId": "17171",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,9639"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2794",
+      "name": {
+        "original": "Safety Arrow",
+        "display": "安全箭矢"
+      },
+      "description": {
+        "original": "If you aim just right, you can get it to stick on a monk's forehead!",
+        "display": "如果你瞄得够准，就能把它贴在武僧的额头上！"
+      },
+      "graphicId": "17160",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,9640"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2795",
+      "name": {
+        "original": "Practice Bolt",
+        "display": "练习弩箭"
+      },
+      "description": {
+        "original": "They don't let kids in Candlekeep have sharp weapons.",
+        "display": "他们不允许烛堡的孩子拥有锋利的武器。"
+      },
+      "graphicId": "17160",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,9640"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2796",
+      "name": {
+        "original": "Quiver of Arrows",
+        "display": "箭囊"
+      },
+      "description": {
+        "original": "Always keep it full, in case you don't want to waste a spell.",
+        "display": "如果不想浪费法术，那就记得把它装满。"
+      },
+      "graphicId": "17161",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,9640"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2797",
+      "name": {
+        "original": "Arrows of Slaying",
+        "display": "杀戮箭矢"
+      },
+      "description": {
+        "original": "I have one for beasts, one for dragons, one for aberrations, one for monstrosities...",
+        "display": "一支给兽类，一支给龙族，一支给异怪，一支给怪兽......"
+      },
+      "graphicId": "17162",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,9640"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2798",
+      "name": {
+        "original": "Magic Scroll",
+        "display": "魔法卷轴"
+      },
+      "description": {
+        "original": "The first time I found one of these, I thought maybe there was a funny story in it.",
+        "display": "第一次找到这种卷轴时，我以为里面写着有趣的故事。"
+      },
+      "graphicId": "17172",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,9642"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2799",
+      "name": {
+        "original": "Recorded Spell",
+        "display": "记录法术"
+      },
+      "description": {
+        "original": "There's something about magic that calls to me.",
+        "display": "我对魔法有一种感应。"
+      },
+      "graphicId": "17172",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,9642"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2800",
+      "name": {
+        "original": "Necessary Components",
+        "display": "必要元素"
+      },
+      "description": {
+        "original": "The cocoons are cheap, but seasonal. The diamond dust is year-round but PRICY.",
+        "display": "茧很便宜，但有季节性。钻石尘虽然全年有货，但价格昂贵。"
+      },
+      "graphicId": "17173",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,9642"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2801",
+      "name": {
+        "original": "Tome of Magic",
+        "display": "魔力巨著"
+      },
+      "description": {
+        "original": "I've so many good spells in here.",
+        "display": "这里记着很多好用的法术。"
+      },
+      "graphicId": "17174",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,9642"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2802",
+      "name": {
+        "original": "Makeshift Lockpicks",
+        "display": "临时开锁器"
+      },
+      "description": {
+        "original": "When you don't give a child lockpicks, they start experimenting.",
+        "display": "如果不给孩子开锁器，他们就会自己实验。"
+      },
+      "graphicId": "17166",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,25"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2803",
+      "name": {
+        "original": "Thief-in-Training",
+        "display": "实习窃贼"
+      },
+      "description": {
+        "original": "You can pick a lock with a sewing needle if you're patient. And the lock's not great.",
+        "display": "你可以用缝纫针撬开一把锁，只要有耐心。并且锁不复杂。"
+      },
+      "graphicId": "17166",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,87.5"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2804",
+      "name": {
+        "original": "Tools of the Trade",
+        "display": "谋生的工具"
+      },
+      "description": {
+        "original": "I've got everything I need here.",
+        "display": "我需要的一切都在身上。"
+      },
+      "graphicId": "17167",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,150"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2805",
+      "name": {
+        "original": "Master Thief's Set",
+        "display": "盗贼大师的工具"
+      },
+      "description": {
+        "original": "There's not a lock made I can't crack with these.",
+        "display": "借助这些工具，世上没有我打不开的锁。"
+      },
+      "graphicId": "17168",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,275"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2806",
+      "name": {
+        "original": "Precious Necklace",
+        "display": "珍贵的项链"
+      },
+      "description": {
+        "original": "This old thing? I probably stole it.",
+        "display": "这件旧东西？可能是我偷的。"
+      },
+      "graphicId": "17163",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,9"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2807",
+      "name": {
+        "original": "Jeweled Keepsake",
+        "display": "珠宝纪念品"
+      },
+      "description": {
+        "original": "Some memories are private. I'll tell you later.",
+        "display": "有些回忆非常私密。我以后再告诉你。"
+      },
+      "graphicId": "17163",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,18"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2808",
+      "name": {
+        "original": "Hooded Cloak",
+        "display": "兜帽斗篷"
+      },
+      "description": {
+        "original": "I have a cowl and I'm a wizard, but I'm not a Cowled Wizard. Got it?",
+        "display": "我有一件斗篷，并且我是一名法师，但我不是那个斗篷法师。明白吗？"
+      },
+      "graphicId": "17164",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,35"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2809",
+      "name": {
+        "original": "Trickster's Armor",
+        "display": "骗子的护甲"
+      },
+      "description": {
+        "original": "I'm ready for anything. Which is good when you're with Minsc.",
+        "display": "我时刻准备面对一切。当你和明斯克在一起时，这是必须的。"
+      },
+      "graphicId": "17165",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,88"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "55",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "male"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Male Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "human"
+            }
+          ],
+          "description": "Increases the damage of all Human Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "43",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "cha",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a CHA score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "35",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "con",
+              "score": 13,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a CON score of 13 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "49",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "good"
+            }
+          ],
+          "description": "Increases the damage of all Good Champions by $(amount)%"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -2871,7 +3493,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 42,
+        "popularity": 43,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3079,7 +3701,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 42,
+        "popularity": 43,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -6704,6 +7326,1104 @@
             "availabilities": {
               "in_flash_sales": true
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "2786",
+        "snapshots": {
+          "original": {
+            "id": 2786,
+            "name": "Orphan's Sword",
+            "description": "Ah, fond memories.",
+            "graphic_id": 17175,
+            "hero_id": 117,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2786,
+            "name": "孤儿之剑",
+            "description": "啊，多么美好的回忆。",
+            "graphic_id": 17175,
+            "hero_id": 117,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2787",
+        "snapshots": {
+          "original": {
+            "id": 2787,
+            "name": "Candlekeep Toy",
+            "description": "I grew up among the monks of Candlekeep, but that doesn't mean I didn't train.",
+            "graphic_id": 17175,
+            "hero_id": 117,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2787,
+            "name": "烛堡玩具",
+            "description": "我在烛堡的武僧中长大，但这并不意味着我没有受过训练。",
+            "graphic_id": 17175,
+            "hero_id": 117,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2788",
+        "snapshots": {
+          "original": {
+            "id": 2788,
+            "name": "Blade of Defense",
+            "description": "Sometimes the best defense is a sword you're ready to use.",
+            "graphic_id": 17176,
+            "hero_id": 117,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2788,
+            "name": "防御之刃",
+            "description": "有时候最好的防御是你随时准备使用的剑。",
+            "graphic_id": 17176,
+            "hero_id": 117,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2789",
+        "snapshots": {
+          "original": {
+            "id": 2789,
+            "name": "Sword of Power",
+            "description": "Everything's better with some magic added in!",
+            "graphic_id": 17177,
+            "hero_id": 117,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2789,
+            "name": "力量之剑",
+            "description": "加点魔法，一切都会更好！",
+            "graphic_id": 17177,
+            "hero_id": 117,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2790",
+        "snapshots": {
+          "original": {
+            "id": 2790,
+            "name": "Child's Bow",
+            "description": "I used to practice by aiming at empty inkpots!",
+            "graphic_id": 17169,
+            "hero_id": 117,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,9639"
+              }
+            ]
+          },
+          "display": {
+            "id": 2790,
+            "name": "孩童之弓",
+            "description": "我以前常常瞄准空墨水瓶练习射击！",
+            "graphic_id": 17169,
+            "hero_id": 117,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,9639"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2791",
+        "snapshots": {
+          "original": {
+            "id": 2791,
+            "name": "Archer-in-Training",
+            "description": "I won't say I was a prodigy, but I was no slouch with the bow.",
+            "graphic_id": 17169,
+            "hero_id": 117,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,9639"
+              }
+            ]
+          },
+          "display": {
+            "id": 2791,
+            "name": "实习弓箭手",
+            "description": "我不准备自称神童，但我对弓箭并不陌生。",
+            "graphic_id": 17169,
+            "hero_id": 117,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,9639"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2792",
+        "snapshots": {
+          "original": {
+            "id": 2792,
+            "name": "Trusty Shortbow",
+            "description": "Let's start with an arrow before we move on to magic missiles.",
+            "graphic_id": 17170,
+            "hero_id": 117,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,9639"
+              }
+            ]
+          },
+          "display": {
+            "id": 2792,
+            "name": "嗜血短弓",
+            "description": "先从射箭开始，以后再讨论魔法飞弹。",
+            "graphic_id": 17170,
+            "hero_id": 117,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,9639"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2793",
+        "snapshots": {
+          "original": {
+            "id": 2793,
+            "name": "Protector of the Dryads Bow",
+            "description": "I don't know of a shortbow more powerful than this one.",
+            "graphic_id": 17171,
+            "hero_id": 117,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,9639"
+              }
+            ]
+          },
+          "display": {
+            "id": 2793,
+            "name": "树妖之弓的卫士",
+            "description": "我没见过比它更厉害的短弓。",
+            "graphic_id": 17171,
+            "hero_id": 117,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,9639"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2794",
+        "snapshots": {
+          "original": {
+            "id": 2794,
+            "name": "Safety Arrow",
+            "description": "If you aim just right, you can get it to stick on a monk's forehead!",
+            "graphic_id": 17160,
+            "hero_id": 117,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,9640"
+              }
+            ]
+          },
+          "display": {
+            "id": 2794,
+            "name": "安全箭矢",
+            "description": "如果你瞄得够准，就能把它贴在武僧的额头上！",
+            "graphic_id": 17160,
+            "hero_id": 117,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,9640"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2795",
+        "snapshots": {
+          "original": {
+            "id": 2795,
+            "name": "Practice Bolt",
+            "description": "They don't let kids in Candlekeep have sharp weapons.",
+            "graphic_id": 17160,
+            "hero_id": 117,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,9640"
+              }
+            ]
+          },
+          "display": {
+            "id": 2795,
+            "name": "练习弩箭",
+            "description": "他们不允许烛堡的孩子拥有锋利的武器。",
+            "graphic_id": 17160,
+            "hero_id": 117,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,9640"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2796",
+        "snapshots": {
+          "original": {
+            "id": 2796,
+            "name": "Quiver of Arrows",
+            "description": "Always keep it full, in case you don't want to waste a spell.",
+            "graphic_id": 17161,
+            "hero_id": 117,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,9640"
+              }
+            ]
+          },
+          "display": {
+            "id": 2796,
+            "name": "箭囊",
+            "description": "如果不想浪费法术，那就记得把它装满。",
+            "graphic_id": 17161,
+            "hero_id": 117,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,9640"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2797",
+        "snapshots": {
+          "original": {
+            "id": 2797,
+            "name": "Arrows of Slaying",
+            "description": "I have one for beasts, one for dragons, one for aberrations, one for monstrosities...",
+            "graphic_id": 17162,
+            "hero_id": 117,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,9640"
+              }
+            ]
+          },
+          "display": {
+            "id": 2797,
+            "name": "杀戮箭矢",
+            "description": "一支给兽类，一支给龙族，一支给异怪，一支给怪兽......",
+            "graphic_id": 17162,
+            "hero_id": 117,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,9640"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2798",
+        "snapshots": {
+          "original": {
+            "id": 2798,
+            "name": "Magic Scroll",
+            "description": "The first time I found one of these, I thought maybe there was a funny story in it.",
+            "graphic_id": 17172,
+            "hero_id": 117,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,9642"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2798,
+            "name": "魔法卷轴",
+            "description": "第一次找到这种卷轴时，我以为里面写着有趣的故事。",
+            "graphic_id": 17172,
+            "hero_id": 117,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,9642"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2799",
+        "snapshots": {
+          "original": {
+            "id": 2799,
+            "name": "Recorded Spell",
+            "description": "There's something about magic that calls to me.",
+            "graphic_id": 17172,
+            "hero_id": 117,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,9642"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2799,
+            "name": "记录法术",
+            "description": "我对魔法有一种感应。",
+            "graphic_id": 17172,
+            "hero_id": 117,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,9642"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2800",
+        "snapshots": {
+          "original": {
+            "id": 2800,
+            "name": "Necessary Components",
+            "description": "The cocoons are cheap, but seasonal. The diamond dust is year-round but PRICY.",
+            "graphic_id": 17173,
+            "hero_id": 117,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,9642"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2800,
+            "name": "必要元素",
+            "description": "茧很便宜，但有季节性。钻石尘虽然全年有货，但价格昂贵。",
+            "graphic_id": 17173,
+            "hero_id": 117,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,9642"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2801",
+        "snapshots": {
+          "original": {
+            "id": 2801,
+            "name": "Tome of Magic",
+            "description": "I've so many good spells in here.",
+            "graphic_id": 17174,
+            "hero_id": 117,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,9642"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2801,
+            "name": "魔力巨著",
+            "description": "这里记着很多好用的法术。",
+            "graphic_id": 17174,
+            "hero_id": 117,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,9642"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2802",
+        "snapshots": {
+          "original": {
+            "id": 2802,
+            "name": "Makeshift Lockpicks",
+            "description": "When you don't give a child lockpicks, they start experimenting.",
+            "graphic_id": 17166,
+            "hero_id": 117,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ]
+          },
+          "display": {
+            "id": 2802,
+            "name": "临时开锁器",
+            "description": "如果不给孩子开锁器，他们就会自己实验。",
+            "graphic_id": 17166,
+            "hero_id": 117,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2803",
+        "snapshots": {
+          "original": {
+            "id": 2803,
+            "name": "Thief-in-Training",
+            "description": "You can pick a lock with a sewing needle if you're patient. And the lock's not great.",
+            "graphic_id": 17166,
+            "hero_id": 117,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ]
+          },
+          "display": {
+            "id": 2803,
+            "name": "实习窃贼",
+            "description": "你可以用缝纫针撬开一把锁，只要有耐心。并且锁不复杂。",
+            "graphic_id": 17166,
+            "hero_id": 117,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2804",
+        "snapshots": {
+          "original": {
+            "id": 2804,
+            "name": "Tools of the Trade",
+            "description": "I've got everything I need here.",
+            "graphic_id": 17167,
+            "hero_id": 117,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ]
+          },
+          "display": {
+            "id": 2804,
+            "name": "谋生的工具",
+            "description": "我需要的一切都在身上。",
+            "graphic_id": 17167,
+            "hero_id": 117,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2805",
+        "snapshots": {
+          "original": {
+            "id": 2805,
+            "name": "Master Thief's Set",
+            "description": "There's not a lock made I can't crack with these.",
+            "graphic_id": 17168,
+            "hero_id": 117,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ]
+          },
+          "display": {
+            "id": 2805,
+            "name": "盗贼大师的工具",
+            "description": "借助这些工具，世上没有我打不开的锁。",
+            "graphic_id": 17168,
+            "hero_id": 117,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2806",
+        "snapshots": {
+          "original": {
+            "id": 2806,
+            "name": "Precious Necklace",
+            "description": "This old thing? I probably stole it.",
+            "graphic_id": 17163,
+            "hero_id": 117,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,9"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2806,
+            "name": "珍贵的项链",
+            "description": "这件旧东西？可能是我偷的。",
+            "graphic_id": 17163,
+            "hero_id": 117,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,9"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2807",
+        "snapshots": {
+          "original": {
+            "id": 2807,
+            "name": "Jeweled Keepsake",
+            "description": "Some memories are private. I'll tell you later.",
+            "graphic_id": 17163,
+            "hero_id": 117,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,18"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2807,
+            "name": "珠宝纪念品",
+            "description": "有些回忆非常私密。我以后再告诉你。",
+            "graphic_id": 17163,
+            "hero_id": 117,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,18"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2808",
+        "snapshots": {
+          "original": {
+            "id": 2808,
+            "name": "Hooded Cloak",
+            "description": "I have a cowl and I'm a wizard, but I'm not a Cowled Wizard. Got it?",
+            "graphic_id": 17164,
+            "hero_id": 117,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,35"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2808,
+            "name": "兜帽斗篷",
+            "description": "我有一件斗篷，并且我是一名法师，但我不是那个斗篷法师。明白吗？",
+            "graphic_id": 17164,
+            "hero_id": 117,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,35"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2809",
+        "snapshots": {
+          "original": {
+            "id": 2809,
+            "name": "Trickster's Armor",
+            "description": "I'm ready for anything. Which is good when you're with Minsc.",
+            "graphic_id": 17165,
+            "hero_id": 117,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,88"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2809,
+            "name": "骗子的护甲",
+            "description": "我时刻准备面对一切。当你和明斯克在一起时，这是必须的。",
+            "graphic_id": 17165,
+            "hero_id": 117,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,88"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "55",
+        "snapshots": {
+          "original": {
+            "id": 55,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Male Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 55,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "阵型中每有一位男性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "5",
+        "snapshots": {
+          "original": {
+            "id": 5,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "Increases the damage of all Human Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 5,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "使所有人类勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "43",
+        "snapshots": {
+          "original": {
+            "id": 43,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "cha",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a CHA score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 43,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "cha",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有魅力大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "35",
+        "snapshots": {
+          "original": {
+            "id": 35,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a CON score of 13 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 35,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有体质大于等于 13 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "49",
+        "snapshots": {
+          "original": {
+            "id": 49,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "Increases the damage of all Good Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 49,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "使所有善良阵营勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

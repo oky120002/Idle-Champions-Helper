@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "53",
     "name": {
@@ -44,7 +44,7 @@
   },
   "dateAvailable": "2019-11-27 00:00:00",
   "lastReworkDate": "2019-11-27 00:00:00",
-  "popularity": 73,
+  "popularity": 70,
   "baseCost": "90000000",
   "baseDamage": "750000",
   "baseHealth": "232",
@@ -2358,6 +2358,638 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "1249",
+      "name": {
+        "original": "Skulled Maul",
+        "display": "头骨大锤"
+      },
+      "description": {
+        "original": "Their skills were lacking.",
+        "display": "还是缺乏了些技巧。"
+      },
+      "graphicId": "6851",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1250",
+      "name": {
+        "original": "Heavy Maul of the Ancients",
+        "display": "远古重锤"
+      },
+      "description": {
+        "original": "These came from two who were seeking my master. They no longer matter.",
+        "display": "这曾经是属于在寻找我主人的两个家伙的。他们不会再打扰任何人了。"
+      },
+      "graphicId": "6851",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1251",
+      "name": {
+        "original": "Necrotic Maul",
+        "display": "暗蚀大锤"
+      },
+      "description": {
+        "original": "Arkhan bested me, but spared my life for an oath of servitude.",
+        "display": "阿克汉打败了我，但是为了换取我的效忠他饶了我一命。"
+      },
+      "graphicId": "6852",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1252",
+      "name": {
+        "original": "Maul of the Speechless",
+        "display": "不语大锤"
+      },
+      "description": {
+        "original": "Screams replaced by crippling fumes. Excellent.",
+        "display": "利用削弱香气来取代哀嚎声。太棒了。"
+      },
+      "graphicId": "6853",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "1253",
+      "name": {
+        "original": "Experiment Book",
+        "display": "实验之书"
+      },
+      "description": {
+        "original": "Subject #466: Successful bone devil tail attachment. Subject stayed sane for 2 days.",
+        "display": "466号对象：成功移除了骨魔尾巴。对象维持了2天的清醒状态。"
+      },
+      "graphicId": "6845",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,3210,1",
+          "description": "Increases the effect of Plague: Pilfer by $(amount)%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1254",
+      "name": {
+        "original": "Book of Plagues",
+        "display": "疫病之书"
+      },
+      "description": {
+        "original": "Plague 42: Relieving pain by popping boils spiked mortality of the exposed by 400%",
+        "display": "42号疫病：通过泡沸水减轻伤痛的方式会提高病患者的死亡率高达400%"
+      },
+      "graphicId": "6845",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,3210,1",
+          "description": "Increases the effect of Plague: Pilfer by $(amount)%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1255",
+      "name": {
+        "original": "Bhaal's Book of Bloodshed",
+        "display": "巴尔的杀戮之书"
+      },
+      "description": {
+        "original": "Consider vampiric components to increase bloodlust. Remember to lock door.",
+        "display": "考虑采用吸血鬼成分来增加嗜血程度。记得要锁门。"
+      },
+      "graphicId": "6846",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,3210,1",
+          "description": "Increases the effect of Plague: Pilfer by $(amount)%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1256",
+      "name": {
+        "original": "Krull's Book of Secrets",
+        "display": "克鲁尔的秘密之书"
+      },
+      "description": {
+        "original": "Arkhan gained my servitude, but I gained access TO A GOD.",
+        "display": "阿克汉收获了我的效忠，而我则收获了接触到神祇的机会。"
+      },
+      "graphicId": "6847",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,3210,1",
+          "description": "Increases the effect of Plague: Pilfer by $(amount)%"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1257",
+      "name": {
+        "original": "Donations",
+        "display": "捐赠"
+      },
+      "description": {
+        "original": "You have such... interesting eyes.",
+        "display": "你的眼睛好......独特。"
+      },
+      "graphicId": "6848",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,3210,2",
+          "description": "Increases the effect of Plague: Pain by $(amount)%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1258",
+      "name": {
+        "original": "Unnatural Spell Components",
+        "display": "不正常的法术成分"
+      },
+      "description": {
+        "original": "I said a FRESH tongue, this one is hours old!",
+        "display": "我要的是新鲜的舌头，这一个一看就知道割下来好几个小时了！"
+      },
+      "graphicId": "6848",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,3210,2",
+          "description": "Increases the effect of Plague: Pain by $(amount)%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1259",
+      "name": {
+        "original": "Fae Components",
+        "display": "妖精成分"
+      },
+      "description": {
+        "original": "The more magical the source, the more delicious the concoction.",
+        "display": "材料的来源越具有魔力，所泡制出来的调制品就越美味。"
+      },
+      "graphicId": "6849",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,3210,2",
+          "description": "Increases the effect of Plague: Pain by $(amount)%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1260",
+      "name": {
+        "original": "Experimental Components",
+        "display": "实验性成分"
+      },
+      "description": {
+        "original": "Have you ground up a unicorn horn? It rips at your soul in a way that... tickles me.",
+        "display": "你有磨滑过独角兽的兽角吗？不知为何会让我感觉......很欢乐的样子。"
+      },
+      "graphicId": "6850",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,3210,2",
+          "description": "Increases the effect of Plague: Pain by $(amount)%"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1261",
+      "name": {
+        "original": "5-Headed Dragon Symbol",
+        "display": "五头巨龙徽记"
+      },
+      "description": {
+        "original": "She empowers my master; the one known simply as: 'The Cruel'.",
+        "display": "她是我主人的老大，只知道她的称号是“残酷者”。"
+      },
+      "graphicId": "6857",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,3212"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1262",
+      "name": {
+        "original": "Tiamat Amulet",
+        "display": "提亚马特护身符"
+      },
+      "description": {
+        "original": "Show them your god, then make them regret standing in her way.",
+        "display": "让他们见识下你的神明吧，然后再让他们后悔跟祂作对。"
+      },
+      "graphicId": "6857",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,3212"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1263",
+      "name": {
+        "original": "Poisonous Flask of Tiamat's Rage",
+        "display": "提亚马特怒火之毒液瓶"
+      },
+      "description": {
+        "original": "Do not underestimate the dragon queen's rage.",
+        "display": "不要低估龙后的怒火。"
+      },
+      "graphicId": "6858",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,3212"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1264",
+      "name": {
+        "original": "Arkhan's Tribute",
+        "display": "阿克汉的贡品"
+      },
+      "description": {
+        "original": "My master can withstand any torture, so long as he can learn to control the hand.",
+        "display": "我的主人为了学会掌控那只手，愿意承受世间一切的折磨。"
+      },
+      "graphicId": "6859",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,3212"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1265",
+      "name": {
+        "original": "Shell Fragments",
+        "display": "硬壳碎片"
+      },
+      "description": {
+        "original": "They said it couldn't be done, but my mutilation is now complete.",
+        "display": "人人都说这是不可能的，但我终于完成断肢了。"
+      },
+      "graphicId": "6854",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,25"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1266",
+      "name": {
+        "original": "Overwritten Carving",
+        "display": "被覆盖的雕刻"
+      },
+      "description": {
+        "original": "My shell's prayers have evolved as my eyes have been opened by my master.",
+        "display": "在主人的开化下，我硬壳上的祷文已经产生进化了。"
+      },
+      "graphicId": "6854",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,87.5"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1267",
+      "name": {
+        "original": "Torn Fragment of Shell",
+        "display": "硬壳的掉落碎片"
+      },
+      "description": {
+        "original": "I knew I was bested when Arkhan's strikes started shearing off pieces of my shell.",
+        "display": "当我的硬壳逐渐被击碎时，我就知道我被阿克汉打败了。"
+      },
+      "graphicId": "6855",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,150"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1268",
+      "name": {
+        "original": "Arkhan's Trophy",
+        "display": "阿克汉的战利品"
+      },
+      "description": {
+        "original": "I reconstituted it, but it was painful.",
+        "display": "我把它重组起来了，但是过程真的很痛苦。"
+      },
+      "graphicId": "6856",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,275"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1269",
+      "name": {
+        "original": "Honored Symbology",
+        "display": "荣幸的象征学"
+      },
+      "description": {
+        "original": "If you don't know, I can't tell you.",
+        "display": "你要是看不懂，我就无法告诉你。"
+      },
+      "graphicId": "6842",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,8"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1270",
+      "name": {
+        "original": "Symbol of the Dark Order",
+        "display": "黑暗教团的徽记"
+      },
+      "description": {
+        "original": "The first rule of the Dark Order is... well, I have to kill you now.",
+        "display": "黑暗教团的首条规则就是......嗯，现在我得干掉你。"
+      },
+      "graphicId": "6842",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,16"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1271",
+      "name": {
+        "original": "The Weight of Servitude",
+        "display": "奴役的负担"
+      },
+      "description": {
+        "original": "It helps to keep a watchful eye on our subjects.",
+        "display": "必须时刻警惕着我们的属下。"
+      },
+      "graphicId": "6843",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,32"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "1272",
+      "name": {
+        "original": "Hand Painted Symbol",
+        "display": "手绘徽记"
+      },
+      "description": {
+        "original": "With Arkhan, myself, and Torogar, the Dark Order is now complete.",
+        "display": "有了阿克汉、我、以及托罗加，黑暗教团总算是完美了。"
+      },
+      "graphicId": "6844",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,80"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Female Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "tortle"
+            }
+          ],
+          "description": "Increases the damage of all Tortle Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "40",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "wis",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a WIS score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "82",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,30",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "stat",
+              "stat": "str",
+              "check": 13,
+              "comparison": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion with a STR score of 13 or higher in the formation"
+        }
+      ]
+    },
+    {
+      "id": "103",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,40",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "evil"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a EVIL alignment"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -2513,7 +3145,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 73,
+        "popularity": 70,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -2702,7 +3334,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 73,
+        "popularity": 70,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -6066,6 +6698,1148 @@
             "availabilities": {
               "in_flash_sales": true
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "1249",
+        "snapshots": {
+          "original": {
+            "id": 1249,
+            "name": "Skulled Maul",
+            "description": "Their skills were lacking.",
+            "graphic_id": 6851,
+            "hero_id": 53,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1249,
+            "name": "头骨大锤",
+            "description": "还是缺乏了些技巧。",
+            "graphic_id": 6851,
+            "hero_id": 53,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1250",
+        "snapshots": {
+          "original": {
+            "id": 1250,
+            "name": "Heavy Maul of the Ancients",
+            "description": "These came from two who were seeking my master. They no longer matter.",
+            "graphic_id": 6851,
+            "hero_id": 53,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1250,
+            "name": "远古重锤",
+            "description": "这曾经是属于在寻找我主人的两个家伙的。他们不会再打扰任何人了。",
+            "graphic_id": 6851,
+            "hero_id": 53,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1251",
+        "snapshots": {
+          "original": {
+            "id": 1251,
+            "name": "Necrotic Maul",
+            "description": "Arkhan bested me, but spared my life for an oath of servitude.",
+            "graphic_id": 6852,
+            "hero_id": 53,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1251,
+            "name": "暗蚀大锤",
+            "description": "阿克汉打败了我，但是为了换取我的效忠他饶了我一命。",
+            "graphic_id": 6852,
+            "hero_id": 53,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1252",
+        "snapshots": {
+          "original": {
+            "id": 1252,
+            "name": "Maul of the Speechless",
+            "description": "Screams replaced by crippling fumes. Excellent.",
+            "graphic_id": 6853,
+            "hero_id": 53,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1252,
+            "name": "不语大锤",
+            "description": "利用削弱香气来取代哀嚎声。太棒了。",
+            "graphic_id": 6853,
+            "hero_id": 53,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1253",
+        "snapshots": {
+          "original": {
+            "id": 1253,
+            "name": "Experiment Book",
+            "description": "Subject #466: Successful bone devil tail attachment. Subject stayed sane for 2 days.",
+            "graphic_id": 6845,
+            "hero_id": 53,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,3210,1",
+                "description": "Increases the effect of Plague: Pilfer by $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1253,
+            "name": "实验之书",
+            "description": "466号对象：成功移除了骨魔尾巴。对象维持了2天的清醒状态。",
+            "graphic_id": 6845,
+            "hero_id": 53,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,3210,1",
+                "description": "使“瘟疫：窃取”的效果提高 $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1254",
+        "snapshots": {
+          "original": {
+            "id": 1254,
+            "name": "Book of Plagues",
+            "description": "Plague 42: Relieving pain by popping boils spiked mortality of the exposed by 400%",
+            "graphic_id": 6845,
+            "hero_id": 53,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,3210,1",
+                "description": "Increases the effect of Plague: Pilfer by $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1254,
+            "name": "疫病之书",
+            "description": "42号疫病：通过泡沸水减轻伤痛的方式会提高病患者的死亡率高达400%",
+            "graphic_id": 6845,
+            "hero_id": 53,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,3210,1",
+                "description": "使“瘟疫：窃取”的效果提高 $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1255",
+        "snapshots": {
+          "original": {
+            "id": 1255,
+            "name": "Bhaal's Book of Bloodshed",
+            "description": "Consider vampiric components to increase bloodlust. Remember to lock door.",
+            "graphic_id": 6846,
+            "hero_id": 53,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,3210,1",
+                "description": "Increases the effect of Plague: Pilfer by $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1255,
+            "name": "巴尔的杀戮之书",
+            "description": "考虑采用吸血鬼成分来增加嗜血程度。记得要锁门。",
+            "graphic_id": 6846,
+            "hero_id": 53,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,3210,1",
+                "description": "使“瘟疫：窃取”的效果提高 $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1256",
+        "snapshots": {
+          "original": {
+            "id": 1256,
+            "name": "Krull's Book of Secrets",
+            "description": "Arkhan gained my servitude, but I gained access TO A GOD.",
+            "graphic_id": 6847,
+            "hero_id": 53,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,3210,1",
+                "description": "Increases the effect of Plague: Pilfer by $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1256,
+            "name": "克鲁尔的秘密之书",
+            "description": "阿克汉收获了我的效忠，而我则收获了接触到神祇的机会。",
+            "graphic_id": 6847,
+            "hero_id": 53,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,3210,1",
+                "description": "使“瘟疫：窃取”的效果提高 $(amount)%"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1257",
+        "snapshots": {
+          "original": {
+            "id": 1257,
+            "name": "Donations",
+            "description": "You have such... interesting eyes.",
+            "graphic_id": 6848,
+            "hero_id": 53,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,3210,2",
+                "description": "Increases the effect of Plague: Pain by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1257,
+            "name": "捐赠",
+            "description": "你的眼睛好......独特。",
+            "graphic_id": 6848,
+            "hero_id": 53,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,3210,2",
+                "description": "使“瘟疫：痛苦”的效果提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1258",
+        "snapshots": {
+          "original": {
+            "id": 1258,
+            "name": "Unnatural Spell Components",
+            "description": "I said a FRESH tongue, this one is hours old!",
+            "graphic_id": 6848,
+            "hero_id": 53,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,3210,2",
+                "description": "Increases the effect of Plague: Pain by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1258,
+            "name": "不正常的法术成分",
+            "description": "我要的是新鲜的舌头，这一个一看就知道割下来好几个小时了！",
+            "graphic_id": 6848,
+            "hero_id": 53,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,3210,2",
+                "description": "使“瘟疫：痛苦”的效果提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1259",
+        "snapshots": {
+          "original": {
+            "id": 1259,
+            "name": "Fae Components",
+            "description": "The more magical the source, the more delicious the concoction.",
+            "graphic_id": 6849,
+            "hero_id": 53,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,3210,2",
+                "description": "Increases the effect of Plague: Pain by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1259,
+            "name": "妖精成分",
+            "description": "材料的来源越具有魔力，所泡制出来的调制品就越美味。",
+            "graphic_id": 6849,
+            "hero_id": 53,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,3210,2",
+                "description": "使“瘟疫：痛苦”的效果提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1260",
+        "snapshots": {
+          "original": {
+            "id": 1260,
+            "name": "Experimental Components",
+            "description": "Have you ground up a unicorn horn? It rips at your soul in a way that... tickles me.",
+            "graphic_id": 6850,
+            "hero_id": 53,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,3210,2",
+                "description": "Increases the effect of Plague: Pain by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1260,
+            "name": "实验性成分",
+            "description": "你有磨滑过独角兽的兽角吗？不知为何会让我感觉......很欢乐的样子。",
+            "graphic_id": 6850,
+            "hero_id": 53,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,3210,2",
+                "description": "使“瘟疫：痛苦”的效果提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "1261",
+        "snapshots": {
+          "original": {
+            "id": 1261,
+            "name": "5-Headed Dragon Symbol",
+            "description": "She empowers my master; the one known simply as: 'The Cruel'.",
+            "graphic_id": 6857,
+            "hero_id": 53,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,3212"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1261,
+            "name": "五头巨龙徽记",
+            "description": "她是我主人的老大，只知道她的称号是“残酷者”。",
+            "graphic_id": 6857,
+            "hero_id": 53,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,3212"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1262",
+        "snapshots": {
+          "original": {
+            "id": 1262,
+            "name": "Tiamat Amulet",
+            "description": "Show them your god, then make them regret standing in her way.",
+            "graphic_id": 6857,
+            "hero_id": 53,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,3212"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1262,
+            "name": "提亚马特护身符",
+            "description": "让他们见识下你的神明吧，然后再让他们后悔跟祂作对。",
+            "graphic_id": 6857,
+            "hero_id": 53,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,3212"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1263",
+        "snapshots": {
+          "original": {
+            "id": 1263,
+            "name": "Poisonous Flask of Tiamat's Rage",
+            "description": "Do not underestimate the dragon queen's rage.",
+            "graphic_id": 6858,
+            "hero_id": 53,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,3212"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1263,
+            "name": "提亚马特怒火之毒液瓶",
+            "description": "不要低估龙后的怒火。",
+            "graphic_id": 6858,
+            "hero_id": 53,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,3212"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1264",
+        "snapshots": {
+          "original": {
+            "id": 1264,
+            "name": "Arkhan's Tribute",
+            "description": "My master can withstand any torture, so long as he can learn to control the hand.",
+            "graphic_id": 6859,
+            "hero_id": 53,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,3212"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1264,
+            "name": "阿克汉的贡品",
+            "description": "我的主人为了学会掌控那只手，愿意承受世间一切的折磨。",
+            "graphic_id": 6859,
+            "hero_id": 53,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,3212"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1265",
+        "snapshots": {
+          "original": {
+            "id": 1265,
+            "name": "Shell Fragments",
+            "description": "They said it couldn't be done, but my mutilation is now complete.",
+            "graphic_id": 6854,
+            "hero_id": 53,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1265,
+            "name": "硬壳碎片",
+            "description": "人人都说这是不可能的，但我终于完成断肢了。",
+            "graphic_id": 6854,
+            "hero_id": 53,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1266",
+        "snapshots": {
+          "original": {
+            "id": 1266,
+            "name": "Overwritten Carving",
+            "description": "My shell's prayers have evolved as my eyes have been opened by my master.",
+            "graphic_id": 6854,
+            "hero_id": 53,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1266,
+            "name": "被覆盖的雕刻",
+            "description": "在主人的开化下，我硬壳上的祷文已经产生进化了。",
+            "graphic_id": 6854,
+            "hero_id": 53,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1267",
+        "snapshots": {
+          "original": {
+            "id": 1267,
+            "name": "Torn Fragment of Shell",
+            "description": "I knew I was bested when Arkhan's strikes started shearing off pieces of my shell.",
+            "graphic_id": 6855,
+            "hero_id": 53,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1267,
+            "name": "硬壳的掉落碎片",
+            "description": "当我的硬壳逐渐被击碎时，我就知道我被阿克汉打败了。",
+            "graphic_id": 6855,
+            "hero_id": 53,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1268",
+        "snapshots": {
+          "original": {
+            "id": 1268,
+            "name": "Arkhan's Trophy",
+            "description": "I reconstituted it, but it was painful.",
+            "graphic_id": 6856,
+            "hero_id": 53,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 1268,
+            "name": "阿克汉的战利品",
+            "description": "我把它重组起来了，但是过程真的很痛苦。",
+            "graphic_id": 6856,
+            "hero_id": 53,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "1269",
+        "snapshots": {
+          "original": {
+            "id": 1269,
+            "name": "Honored Symbology",
+            "description": "If you don't know, I can't tell you.",
+            "graphic_id": 6842,
+            "hero_id": 53,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,8"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1269,
+            "name": "荣幸的象征学",
+            "description": "你要是看不懂，我就无法告诉你。",
+            "graphic_id": 6842,
+            "hero_id": 53,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,8"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1270",
+        "snapshots": {
+          "original": {
+            "id": 1270,
+            "name": "Symbol of the Dark Order",
+            "description": "The first rule of the Dark Order is... well, I have to kill you now.",
+            "graphic_id": 6842,
+            "hero_id": 53,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,16"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1270,
+            "name": "黑暗教团的徽记",
+            "description": "黑暗教团的首条规则就是......嗯，现在我得干掉你。",
+            "graphic_id": 6842,
+            "hero_id": 53,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,16"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1271",
+        "snapshots": {
+          "original": {
+            "id": 1271,
+            "name": "The Weight of Servitude",
+            "description": "It helps to keep a watchful eye on our subjects.",
+            "graphic_id": 6843,
+            "hero_id": 53,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,32"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1271,
+            "name": "奴役的负担",
+            "description": "必须时刻警惕着我们的属下。",
+            "graphic_id": 6843,
+            "hero_id": 53,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,32"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "1272",
+        "snapshots": {
+          "original": {
+            "id": 1272,
+            "name": "Hand Painted Symbol",
+            "description": "With Arkhan, myself, and Torogar, the Dark Order is now complete.",
+            "graphic_id": 6844,
+            "hero_id": 53,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,80"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 1272,
+            "name": "手绘徽记",
+            "description": "有了阿克汉、我、以及托罗加，黑暗教团总算是完美了。",
+            "graphic_id": 6844,
+            "hero_id": 53,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,80"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3",
+        "snapshots": {
+          "original": {
+            "id": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Female Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 3,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "使所有女性勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "14",
+        "snapshots": {
+          "original": {
+            "id": 14,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "tortle"
+                  }
+                ],
+                "description": "Increases the damage of all Tortle Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 14,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "tortle"
+                  }
+                ],
+                "description": "使所有龟人勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "40",
+        "snapshots": {
+          "original": {
+            "id": 40,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "wis",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a WIS score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 40,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "wis",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有感知大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "82",
+        "snapshots": {
+          "original": {
+            "id": 82,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "str",
+                    "check": 13,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion with a STR score of 13 or higher in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 82,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "stat",
+                    "stat": "str",
+                    "check": 13,
+                    "comparison": ">="
+                  }
+                ],
+                "description": "阵型中每有一位力量大于等于 13 的勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "103",
+        "snapshots": {
+          "original": {
+            "id": 103,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,40",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "evil"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a EVIL alignment"
+              }
+            ]
+          },
+          "display": {
+            "id": 103,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,40",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "evil"
+                  }
+                ],
+                "description": "阵型中每有一位邪恶阵营勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

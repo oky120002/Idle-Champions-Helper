@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "32",
     "name": {
@@ -47,7 +47,7 @@
   },
   "dateAvailable": "2018-09-12 00:00:00",
   "lastReworkDate": "2018-09-12 00:00:00",
-  "popularity": 50,
+  "popularity": 53,
   "baseCost": "750000000000000",
   "baseDamage": "40000000000",
   "baseHealth": "255",
@@ -3083,6 +3083,632 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "745",
+      "name": {
+        "original": "Lopsided Warhammer",
+        "display": "偏重战锤"
+      },
+      "description": {
+        "original": "It curves to the right. Make sure to compensate.",
+        "display": "这武器会偏重向右侧，挥动时记得要平衡一下。"
+      },
+      "graphicId": "3956",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "746",
+      "name": {
+        "original": "Balanced Warhammer",
+        "display": "协调战锤"
+      },
+      "description": {
+        "original": "It returns to my hand every time. It is truly magical.",
+        "display": "每次挥击后它都会自动回到我手中，真是神奇了。"
+      },
+      "graphicId": "3956",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "747",
+      "name": {
+        "original": "Dwarven-made Warhammer",
+        "display": "矮人战锤"
+      },
+      "description": {
+        "original": "It contains the symbols of 3 dwarven gods: Clangeddin, Dumathoin, and Moradin.",
+        "display": "此战锤上刻有矮人三位神祇的名字：克兰贾汀、杜马松、摩拉丁。"
+      },
+      "graphicId": "3957",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "748",
+      "name": {
+        "original": "Aegis-fang",
+        "display": "艾吉斯之牙"
+      },
+      "description": {
+        "original": "Crafted by Bruenor Battlehammer himself.",
+        "display": "由布鲁诺·战锤亲手打造的战锤。"
+      },
+      "graphicId": "3958",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "749",
+      "name": {
+        "original": "Discarded Iron Hair Clip",
+        "display": "被丢弃的铁质发夹"
+      },
+      "description": {
+        "original": "I found it while exploring one day. It keeps my hair out of my face.",
+        "display": "这是我某次探险时发现的，可以有效防止头发遮挡住视野。"
+      },
+      "graphicId": "3962",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "health_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "750",
+      "name": {
+        "original": "Steel Hair Clip",
+        "display": "钢质发夹"
+      },
+      "description": {
+        "original": "I learned much in my time with Bruenor and the dwarves of Mithral Hall.",
+        "display": "我从布鲁诺和秘银厅的矮人们那里学习到了很多宝贵的知识。"
+      },
+      "graphicId": "3962",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "health_mult,30"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "751",
+      "name": {
+        "original": "Dwarven Hair Clip",
+        "display": "矮人发夹"
+      },
+      "description": {
+        "original": "Clangeddin's symbol rests with weight upon my chest.",
+        "display": "克兰贾汀的象征沉沉地躺在我胸膛上。"
+      },
+      "graphicId": "3963",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "health_mult,50"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "752",
+      "name": {
+        "original": "Golden Clangeddin Hair Clip",
+        "display": "克兰贾汀黄金发夹"
+      },
+      "description": {
+        "original": "While no Tempus, the dwarven god of war and valor is an honorable deity to follow.",
+        "display": "虽然并非坦帕斯，但是矮人的战争与荣耀之神依然是一位值得追随的神明。"
+      },
+      "graphicId": "3964",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "health_mult,100"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "753",
+      "name": {
+        "original": "Ancient Dagger",
+        "display": "古老的匕首"
+      },
+      "description": {
+        "original": "On days when my fingers freeze, I wish this could appear as Aegis-fang does.",
+        "display": "每当我的指头冷得发麻时，心里就会期盼着这把匕首会像艾吉斯之牙一样出现在我手心。"
+      },
+      "graphicId": "3959",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,11503"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "754",
+      "name": {
+        "original": "Trusty Dagger",
+        "display": "可靠的匕首"
+      },
+      "description": {
+        "original": "Icewind Dale is a harsh environment. A good dagger can save your life.",
+        "display": "冰风谷是处穷山恶水之地。一把优质的匕首往往是你性命的最大依赖。"
+      },
+      "graphicId": "3959",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,11503"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "755",
+      "name": {
+        "original": "Balanced Dagger",
+        "display": "协调的匕首"
+      },
+      "description": {
+        "original": "Just don't use it to clean off ore unless you want to spend a tenday sharpening it.",
+        "display": "千万别用它来切割矿石，否则就等着花几个星期磨刀吧。"
+      },
+      "graphicId": "3960",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,11503"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "756",
+      "name": {
+        "original": "Dagger of the Elk",
+        "display": "麋鹿匕首"
+      },
+      "description": {
+        "original": "The Tribe of the Elk need sturdy weapons such as this. It is key to their survival.",
+        "display": "麋鹿部落很需要这种坚固的武器。这对他们的生死存亡至关重要。"
+      },
+      "graphicId": "3961",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,11503"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "757",
+      "name": {
+        "original": "Torn Banner",
+        "display": "撕裂的旗帜"
+      },
+      "description": {
+        "original": "A relic of my first life with the Tribe of the Elk. It still gives me chills.",
+        "display": "这是我当初在麋鹿部落生活时留下来的纪念品，一看到它我还是忍不住鸡皮疙瘩。"
+      },
+      "graphicId": "3965",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,11506"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "758",
+      "name": {
+        "original": "Wind-Scarred Banner",
+        "display": "风蚀旗帜"
+      },
+      "description": {
+        "original": "It has marched across Icewind Dale hundreds of times.",
+        "display": "此旗帜征战冰风谷各个角落数以百次。"
+      },
+      "graphicId": "3965",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,11506"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "759",
+      "name": {
+        "original": "Tribal Banner",
+        "display": "部落旗帜"
+      },
+      "description": {
+        "original": "Make your mark. Mark your home. Defend it with your life.",
+        "display": "打造自己的旗帜，标记自己的家园，用生命去守护它。"
+      },
+      "graphicId": "3966",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,11506"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "760",
+      "name": {
+        "original": "Banner of the Tribe of the Elk",
+        "display": "麋鹿部落的旗帜"
+      },
+      "description": {
+        "original": "I am Wulfgar, Son of Beornegar, of the Tribe of the Elk.",
+        "display": "我是沃夫加，贝奥尼加之子，来自麋鹿部落。"
+      },
+      "graphicId": "3967",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,11506"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "761",
+      "name": {
+        "original": "Shards of Dragon Scales",
+        "display": "龙鳞碎片"
+      },
+      "description": {
+        "original": "Ingeloakastimizilian, the white dragon is more commonly referred to as: Icingdeath.",
+        "display": "白龙印格罗卡斯提密齐里安有个更加通俗的名称：冰亡。"
+      },
+      "graphicId": "3968",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,25"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "762",
+      "name": {
+        "original": "Trinkets of Icingdeath",
+        "display": "冰亡的小饰品"
+      },
+      "description": {
+        "original": "I collected these from the corpse of Icingdeath, the white dragon of Icewind Dale.",
+        "display": "这是我从冰风谷白龙冰亡的尸体上找到的战利品。"
+      },
+      "graphicId": "3968",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,87.5"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "763",
+      "name": {
+        "original": "Dragon Scale Bracelet",
+        "display": "龙鳞手镯"
+      },
+      "description": {
+        "original": "A small reminder of the battle between Drizzt, myself, and Icingdeath",
+        "display": "这是纪念我和崔斯特恶战冰亡的纪念品。"
+      },
+      "graphicId": "3969",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,150"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "764",
+      "name": {
+        "original": "Icingdeath Bracer",
+        "display": "冰亡护腕"
+      },
+      "description": {
+        "original": "To truly understand what we went through, you have to understand true fear.",
+        "display": "想要了解我们当初的经历，那你首先得面对真正的恐惧。"
+      },
+      "graphicId": "3970",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,275"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "765",
+      "name": {
+        "original": "Worn Wolf Cloak",
+        "display": "陈旧的狼皮斗篷"
+      },
+      "description": {
+        "original": "Icewind Dale is cold and unforgiving. Stay warm if you want to stay alive.",
+        "display": "冰风谷的气候雪虐风饕，你要想活下来就必须懂得保暖。"
+      },
+      "graphicId": "3971",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,9"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "766",
+      "name": {
+        "original": "New Wolf Cloak",
+        "display": "崭新的狼皮斗篷"
+      },
+      "description": {
+        "original": "It still smells of battle.",
+        "display": "依然存在着战斗的气息。"
+      },
+      "graphicId": "3971",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,17"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "767",
+      "name": {
+        "original": "Ten-Towns Cloak",
+        "display": "十镇斗篷"
+      },
+      "description": {
+        "original": "The battle against Akar Kessel was the first time I felt truly heroic.",
+        "display": "当初跟阿卡尔·凯梭的战斗让我首次体验到了英勇的感觉。"
+      },
+      "graphicId": "3972",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,34"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "768",
+      "name": {
+        "original": "Chieftain's Cloak",
+        "display": "酋长的斗篷"
+      },
+      "description": {
+        "original": "Perhaps someday. . .",
+        "display": "或许有一天......"
+      },
+      "graphicId": "3973",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,85"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "54",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,125",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "male"
+            }
+          ],
+          "description": "Increases the damage of all Male Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "58",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,30",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "human"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Human Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "30",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "str",
+              "score": 15,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a STR score of 15 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "43",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "cha",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a CHA score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "102",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "good"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a GOOD alignment"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3235,7 +3861,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 50,
+        "popularity": 53,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3427,7 +4053,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 50,
+        "popularity": 53,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -7554,6 +8180,1136 @@
             "availabilities": {
               "premium_item_id": "617"
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "745",
+        "snapshots": {
+          "original": {
+            "id": 745,
+            "name": "Lopsided Warhammer",
+            "description": "It curves to the right. Make sure to compensate.",
+            "graphic_id": 3956,
+            "hero_id": 32,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 745,
+            "name": "偏重战锤",
+            "description": "这武器会偏重向右侧，挥动时记得要平衡一下。",
+            "graphic_id": 3956,
+            "hero_id": 32,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "746",
+        "snapshots": {
+          "original": {
+            "id": 746,
+            "name": "Balanced Warhammer",
+            "description": "It returns to my hand every time. It is truly magical.",
+            "graphic_id": 3956,
+            "hero_id": 32,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 746,
+            "name": "协调战锤",
+            "description": "每次挥击后它都会自动回到我手中，真是神奇了。",
+            "graphic_id": 3956,
+            "hero_id": 32,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "747",
+        "snapshots": {
+          "original": {
+            "id": 747,
+            "name": "Dwarven-made Warhammer",
+            "description": "It contains the symbols of 3 dwarven gods: Clangeddin, Dumathoin, and Moradin.",
+            "graphic_id": 3957,
+            "hero_id": 32,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 747,
+            "name": "矮人战锤",
+            "description": "此战锤上刻有矮人三位神祇的名字：克兰贾汀、杜马松、摩拉丁。",
+            "graphic_id": 3957,
+            "hero_id": 32,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "748",
+        "snapshots": {
+          "original": {
+            "id": 748,
+            "name": "Aegis-fang",
+            "description": "Crafted by Bruenor Battlehammer himself.",
+            "graphic_id": 3958,
+            "hero_id": 32,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 748,
+            "name": "艾吉斯之牙",
+            "description": "由布鲁诺·战锤亲手打造的战锤。",
+            "graphic_id": 3958,
+            "hero_id": 32,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "749",
+        "snapshots": {
+          "original": {
+            "id": 749,
+            "name": "Discarded Iron Hair Clip",
+            "description": "I found it while exploring one day. It keeps my hair out of my face.",
+            "graphic_id": 3962,
+            "hero_id": 32,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "health_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 749,
+            "name": "被丢弃的铁质发夹",
+            "description": "这是我某次探险时发现的，可以有效防止头发遮挡住视野。",
+            "graphic_id": 3962,
+            "hero_id": 32,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "health_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "750",
+        "snapshots": {
+          "original": {
+            "id": 750,
+            "name": "Steel Hair Clip",
+            "description": "I learned much in my time with Bruenor and the dwarves of Mithral Hall.",
+            "graphic_id": 3962,
+            "hero_id": 32,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "health_mult,30"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 750,
+            "name": "钢质发夹",
+            "description": "我从布鲁诺和秘银厅的矮人们那里学习到了很多宝贵的知识。",
+            "graphic_id": 3962,
+            "hero_id": 32,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "health_mult,30"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "751",
+        "snapshots": {
+          "original": {
+            "id": 751,
+            "name": "Dwarven Hair Clip",
+            "description": "Clangeddin's symbol rests with weight upon my chest.",
+            "graphic_id": 3963,
+            "hero_id": 32,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "health_mult,50"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 751,
+            "name": "矮人发夹",
+            "description": "克兰贾汀的象征沉沉地躺在我胸膛上。",
+            "graphic_id": 3963,
+            "hero_id": 32,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "health_mult,50"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "752",
+        "snapshots": {
+          "original": {
+            "id": 752,
+            "name": "Golden Clangeddin Hair Clip",
+            "description": "While no Tempus, the dwarven god of war and valor is an honorable deity to follow.",
+            "graphic_id": 3964,
+            "hero_id": 32,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "health_mult,100"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 752,
+            "name": "克兰贾汀黄金发夹",
+            "description": "虽然并非坦帕斯，但是矮人的战争与荣耀之神依然是一位值得追随的神明。",
+            "graphic_id": 3964,
+            "hero_id": 32,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "health_mult,100"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "753",
+        "snapshots": {
+          "original": {
+            "id": 753,
+            "name": "Ancient Dagger",
+            "description": "On days when my fingers freeze, I wish this could appear as Aegis-fang does.",
+            "graphic_id": 3959,
+            "hero_id": 32,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,11503"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 753,
+            "name": "古老的匕首",
+            "description": "每当我的指头冷得发麻时，心里就会期盼着这把匕首会像艾吉斯之牙一样出现在我手心。",
+            "graphic_id": 3959,
+            "hero_id": 32,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,11503"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "754",
+        "snapshots": {
+          "original": {
+            "id": 754,
+            "name": "Trusty Dagger",
+            "description": "Icewind Dale is a harsh environment. A good dagger can save your life.",
+            "graphic_id": 3959,
+            "hero_id": 32,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,11503"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 754,
+            "name": "可靠的匕首",
+            "description": "冰风谷是处穷山恶水之地。一把优质的匕首往往是你性命的最大依赖。",
+            "graphic_id": 3959,
+            "hero_id": 32,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,11503"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "755",
+        "snapshots": {
+          "original": {
+            "id": 755,
+            "name": "Balanced Dagger",
+            "description": "Just don't use it to clean off ore unless you want to spend a tenday sharpening it.",
+            "graphic_id": 3960,
+            "hero_id": 32,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,11503"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 755,
+            "name": "协调的匕首",
+            "description": "千万别用它来切割矿石，否则就等着花几个星期磨刀吧。",
+            "graphic_id": 3960,
+            "hero_id": 32,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,11503"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "756",
+        "snapshots": {
+          "original": {
+            "id": 756,
+            "name": "Dagger of the Elk",
+            "description": "The Tribe of the Elk need sturdy weapons such as this. It is key to their survival.",
+            "graphic_id": 3961,
+            "hero_id": 32,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,11503"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 756,
+            "name": "麋鹿匕首",
+            "description": "麋鹿部落很需要这种坚固的武器。这对他们的生死存亡至关重要。",
+            "graphic_id": 3961,
+            "hero_id": 32,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,11503"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "757",
+        "snapshots": {
+          "original": {
+            "id": 757,
+            "name": "Torn Banner",
+            "description": "A relic of my first life with the Tribe of the Elk. It still gives me chills.",
+            "graphic_id": 3965,
+            "hero_id": 32,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,11506"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 757,
+            "name": "撕裂的旗帜",
+            "description": "这是我当初在麋鹿部落生活时留下来的纪念品，一看到它我还是忍不住鸡皮疙瘩。",
+            "graphic_id": 3965,
+            "hero_id": 32,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,11506"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "758",
+        "snapshots": {
+          "original": {
+            "id": 758,
+            "name": "Wind-Scarred Banner",
+            "description": "It has marched across Icewind Dale hundreds of times.",
+            "graphic_id": 3965,
+            "hero_id": 32,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,11506"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 758,
+            "name": "风蚀旗帜",
+            "description": "此旗帜征战冰风谷各个角落数以百次。",
+            "graphic_id": 3965,
+            "hero_id": 32,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,11506"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "759",
+        "snapshots": {
+          "original": {
+            "id": 759,
+            "name": "Tribal Banner",
+            "description": "Make your mark. Mark your home. Defend it with your life.",
+            "graphic_id": 3966,
+            "hero_id": 32,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,11506"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 759,
+            "name": "部落旗帜",
+            "description": "打造自己的旗帜，标记自己的家园，用生命去守护它。",
+            "graphic_id": 3966,
+            "hero_id": 32,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,11506"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "760",
+        "snapshots": {
+          "original": {
+            "id": 760,
+            "name": "Banner of the Tribe of the Elk",
+            "description": "I am Wulfgar, Son of Beornegar, of the Tribe of the Elk.",
+            "graphic_id": 3967,
+            "hero_id": 32,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,11506"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 760,
+            "name": "麋鹿部落的旗帜",
+            "description": "我是沃夫加，贝奥尼加之子，来自麋鹿部落。",
+            "graphic_id": 3967,
+            "hero_id": 32,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,11506"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "761",
+        "snapshots": {
+          "original": {
+            "id": 761,
+            "name": "Shards of Dragon Scales",
+            "description": "Ingeloakastimizilian, the white dragon is more commonly referred to as: Icingdeath.",
+            "graphic_id": 3968,
+            "hero_id": 32,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 761,
+            "name": "龙鳞碎片",
+            "description": "白龙印格罗卡斯提密齐里安有个更加通俗的名称：冰亡。",
+            "graphic_id": 3968,
+            "hero_id": 32,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "762",
+        "snapshots": {
+          "original": {
+            "id": 762,
+            "name": "Trinkets of Icingdeath",
+            "description": "I collected these from the corpse of Icingdeath, the white dragon of Icewind Dale.",
+            "graphic_id": 3968,
+            "hero_id": 32,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 762,
+            "name": "冰亡的小饰品",
+            "description": "这是我从冰风谷白龙冰亡的尸体上找到的战利品。",
+            "graphic_id": 3968,
+            "hero_id": 32,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "763",
+        "snapshots": {
+          "original": {
+            "id": 763,
+            "name": "Dragon Scale Bracelet",
+            "description": "A small reminder of the battle between Drizzt, myself, and Icingdeath",
+            "graphic_id": 3969,
+            "hero_id": 32,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 763,
+            "name": "龙鳞手镯",
+            "description": "这是纪念我和崔斯特恶战冰亡的纪念品。",
+            "graphic_id": 3969,
+            "hero_id": 32,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "764",
+        "snapshots": {
+          "original": {
+            "id": 764,
+            "name": "Icingdeath Bracer",
+            "description": "To truly understand what we went through, you have to understand true fear.",
+            "graphic_id": 3970,
+            "hero_id": 32,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 764,
+            "name": "冰亡护腕",
+            "description": "想要了解我们当初的经历，那你首先得面对真正的恐惧。",
+            "graphic_id": 3970,
+            "hero_id": 32,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "765",
+        "snapshots": {
+          "original": {
+            "id": 765,
+            "name": "Worn Wolf Cloak",
+            "description": "Icewind Dale is cold and unforgiving. Stay warm if you want to stay alive.",
+            "graphic_id": 3971,
+            "hero_id": 32,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,9"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 765,
+            "name": "陈旧的狼皮斗篷",
+            "description": "冰风谷的气候雪虐风饕，你要想活下来就必须懂得保暖。",
+            "graphic_id": 3971,
+            "hero_id": 32,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,9"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "766",
+        "snapshots": {
+          "original": {
+            "id": 766,
+            "name": "New Wolf Cloak",
+            "description": "It still smells of battle.",
+            "graphic_id": 3971,
+            "hero_id": 32,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,17"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 766,
+            "name": "崭新的狼皮斗篷",
+            "description": "依然存在着战斗的气息。",
+            "graphic_id": 3971,
+            "hero_id": 32,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,17"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "767",
+        "snapshots": {
+          "original": {
+            "id": 767,
+            "name": "Ten-Towns Cloak",
+            "description": "The battle against Akar Kessel was the first time I felt truly heroic.",
+            "graphic_id": 3972,
+            "hero_id": 32,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,34"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 767,
+            "name": "十镇斗篷",
+            "description": "当初跟阿卡尔·凯梭的战斗让我首次体验到了英勇的感觉。",
+            "graphic_id": 3972,
+            "hero_id": 32,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,34"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "768",
+        "snapshots": {
+          "original": {
+            "id": 768,
+            "name": "Chieftain's Cloak",
+            "description": "Perhaps someday. . .",
+            "graphic_id": 3973,
+            "hero_id": 32,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,85"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 768,
+            "name": "酋长的斗篷",
+            "description": "或许有一天......",
+            "graphic_id": 3973,
+            "hero_id": 32,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,85"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "54",
+        "snapshots": {
+          "original": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "阵型中每有一位勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2",
+        "snapshots": {
+          "original": {
+            "id": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "Increases the damage of all Male Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 2,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,125",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "使所有男性勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "58",
+        "snapshots": {
+          "original": {
+            "id": 58,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Human Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 58,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "阵型中每有一位人类勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "30",
+        "snapshots": {
+          "original": {
+            "id": 30,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a STR score of 15 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 30,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "str",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有力量大于等于 15 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "43",
+        "snapshots": {
+          "original": {
+            "id": 43,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "cha",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a CHA score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 43,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "cha",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有魅力大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "102",
+        "snapshots": {
+          "original": {
+            "id": 102,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation with a GOOD alignment"
+              }
+            ]
+          },
+          "display": {
+            "id": 102,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "阵型中每有一位善良阵营勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

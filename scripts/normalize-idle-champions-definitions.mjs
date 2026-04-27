@@ -1180,6 +1180,42 @@ function normalizeChampionSkin(originalDefinition, localizedDefinition) {
   }
 }
 
+function normalizeChampionLoot(originalDefinition, localizedDefinition, goldenEpicLootId) {
+  const id = String(originalDefinition.id)
+
+  return {
+    id,
+    name: normalizeLocalizedText(
+      originalDefinition.name,
+      localizedDefinition?.name,
+      `Loot ${originalDefinition.id}`,
+    ),
+    description: normalizeOptionalLocalizedText(
+      originalDefinition.description,
+      localizedDefinition?.description,
+    ),
+    graphicId: toText(originalDefinition.graphic_id),
+    slotId: normalizeNumber(originalDefinition.slot_id),
+    rarity: toText(originalDefinition.rarity),
+    effects: normalizeJsonValue(originalDefinition.effects ?? []),
+    allowGoldenEpic: Boolean(originalDefinition.allow_ge),
+    isGoldenEpic: Boolean(goldenEpicLootId && id === goldenEpicLootId),
+  }
+}
+
+function normalizeChampionLegendaryEffects(originalDefinition, legendaryEffectDefinitionsById) {
+  return uniqueStrings(toStringList(originalDefinition.properties?.legendary_effect_id))
+    .map((effectId, index) => {
+      const effectDefinition = legendaryEffectDefinitionsById.get(effectId)
+
+      return {
+        id: effectId,
+        slotId: index + 1,
+        effects: normalizeJsonValue(effectDefinition?.effects ?? []),
+      }
+    })
+}
+
 function normalizeChampionVisualSkin(originalDefinition, localizedDefinition, graphicMap, baseUrl) {
   const originalName = originalDefinition.name ?? originalDefinition.skin_name ?? `Skin ${originalDefinition.id}`
   const displayName = localizedDefinition?.name ?? localizedDefinition?.skin_name ?? originalName
@@ -1243,9 +1279,14 @@ function normalizeChampionDetail(
   localizedFeatsById,
   skinsByHeroId,
   localizedSkinsById,
+  lootByHeroId,
+  localizedLootById,
+  legendaryEffectDefinitionsById,
+  localizedLegendaryEffectDefinitionsById,
 ) {
   const baseAttackId = toText(originalDefinition.base_attack_id)
   const ultimateAttackId = toText(originalDefinition.ultimate_attack_id)
+  const goldenEpicLootId = toText(originalDefinition.properties?.golden_epic_loot_id)
   const upgrades = (upgradesByHeroId.get(champion.id) ?? [])
     .map((definition) =>
       normalizeChampionUpgrade(
@@ -1274,6 +1315,17 @@ function normalizeChampionDetail(
       normalizeChampionSkin(definition, localizedSkinsById.get(String(definition.id))),
     )
     .sort((left, right) => Number(left.id) - Number(right.id))
+  const loot = (lootByHeroId.get(champion.id) ?? [])
+    .map((definition) =>
+      normalizeChampionLoot(definition, localizedLootById.get(String(definition.id)), goldenEpicLootId),
+    )
+    .sort(
+      (left, right) =>
+        (left.slotId ?? Number.MAX_SAFE_INTEGER) - (right.slotId ?? Number.MAX_SAFE_INTEGER) ||
+        Number(left.rarity ?? Number.MAX_SAFE_INTEGER) - Number(right.rarity ?? Number.MAX_SAFE_INTEGER) ||
+        Number(left.id) - Number(right.id),
+    )
+  const legendaryEffects = normalizeChampionLegendaryEffects(originalDefinition, legendaryEffectDefinitionsById)
   const baseAttack = baseAttackId
     ? normalizeAttack(
         attackDefinitionsById.get(baseAttackId),
@@ -1330,6 +1382,8 @@ function normalizeChampionDetail(
     upgrades,
     feats,
     skins,
+    loot,
+    legendaryEffects,
     raw: {
       hero: buildRawSnapshotPair(originalDefinition, localizedDefinition ?? null),
       attacks: [baseAttackId, ultimateAttackId]
@@ -1353,6 +1407,16 @@ function normalizeChampionDetail(
       ),
       skins: (skinsByHeroId.get(champion.id) ?? []).map((definition) =>
         buildRawEntry(definition.id, definition, localizedSkinsById.get(String(definition.id)) ?? null),
+      ),
+      loot: (lootByHeroId.get(champion.id) ?? []).map((definition) =>
+        buildRawEntry(definition.id, definition, localizedLootById.get(String(definition.id)) ?? null),
+      ),
+      legendaryEffects: legendaryEffects.map((effect) =>
+        buildRawEntry(
+          effect.id,
+          legendaryEffectDefinitionsById.get(effect.id) ?? null,
+          localizedLegendaryEffectDefinitionsById.get(effect.id) ?? null,
+        ),
       ),
     },
   }
@@ -1616,6 +1680,10 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
   const localizedFeatsById = buildIdMap(localizedDefinitions.hero_feat_defines)
   const skinsByHeroId = groupDefinitionsByHeroId(rawDefinitions.hero_skin_defines)
   const localizedSkinsById = buildIdMap(localizedDefinitions.hero_skin_defines)
+  const lootByHeroId = groupDefinitionsByHeroId(rawDefinitions.loot_defines)
+  const localizedLootById = buildIdMap(localizedDefinitions.loot_defines)
+  const legendaryEffectDefinitionsById = buildIdMap(rawDefinitions.legendary_effect_defines)
+  const localizedLegendaryEffectDefinitionsById = buildIdMap(localizedDefinitions.legendary_effect_defines)
   const monsterCatalog = buildMonsterCatalog(rawDefinitions, attackDefinitionsById)
   const variantMetadataById = buildVariantMetadataMap(
     rawDefinitions.adventure_defines ?? [],
@@ -1667,6 +1735,10 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
       localizedFeatsById,
       skinsByHeroId,
       localizedSkinsById,
+      lootByHeroId,
+      localizedLootById,
+      legendaryEffectDefinitionsById,
+      localizedLegendaryEffectDefinitionsById,
     ),
   )
 

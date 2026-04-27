@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "95",
     "name": {
@@ -51,7 +51,7 @@
   },
   "dateAvailable": "2022-02-02 00:00:00",
   "lastReworkDate": "2022-02-02 00:00:00",
-  "popularity": 35,
+  "popularity": 38,
   "baseCost": "150000000000000000000",
   "baseDamage": "10000000000000",
   "baseHealth": "41",
@@ -2889,6 +2889,630 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "2209",
+      "name": {
+        "original": "Fabricator's Firearms",
+        "display": "自制枪械"
+      },
+      "description": {
+        "original": "Made 'em myself.",
+        "display": "我亲手做的。"
+      },
+      "graphicId": "13176",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2210",
+      "name": {
+        "original": "Supercharged Revolvers, v. 1.0",
+        "display": "超级充能左轮手枪 1.0 版"
+      },
+      "description": {
+        "original": "It's still not giving me what I want. Maybe I reverse the dragonshard...",
+        "display": "我想要的它还是给不了我。也许我应该把龙晶倒过来......"
+      },
+      "graphicId": "13176",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2211",
+      "name": {
+        "original": "Pistols of Blasting",
+        "display": "爆弹手枪"
+      },
+      "description": {
+        "original": "Honey, I don't think you can handle these.",
+        "display": "亲爱的，我不认为你能处理这些。"
+      },
+      "graphicId": "13177",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2212",
+      "name": {
+        "original": "Supercharged Revolvers, v. 3.2",
+        "display": "超级充能左轮手枪 3.2 版"
+      },
+      "description": {
+        "original": "You figure out some exciting stuff when you iterate.",
+        "display": "升级这个的时候，你会发现一些令人兴奋的东西。"
+      },
+      "graphicId": "13178",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "2213",
+      "name": {
+        "original": "Well-worn Scarf",
+        "display": "磨损的围巾"
+      },
+      "description": {
+        "original": "We've been through quite a lot, me and this scarf.",
+        "display": "我们经历了很多，我和这条围巾。"
+      },
+      "graphicId": "13179",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,12312"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2214",
+      "name": {
+        "original": "Sentimental Shawl",
+        "display": "善感的披巾"
+      },
+      "description": {
+        "original": "Aura has a habit of working its claws in the weave when it's nervous.",
+        "display": "阿巫那有一个习惯，当它紧张的时候，它的爪子会下意识编些东西。"
+      },
+      "graphicId": "13179",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,12312"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2215",
+      "name": {
+        "original": "Dapper Stole",
+        "display": "时髦披肩"
+      },
+      "description": {
+        "original": "Oh, this old thing?",
+        "display": "哦，这件旧衣服？"
+      },
+      "graphicId": "13180",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,12312"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2216",
+      "name": {
+        "original": "Glamourous Neckwear",
+        "display": "性感领饰"
+      },
+      "description": {
+        "original": "I get this out for special occasions.",
+        "display": "在特殊场合我会把这个拿出来。"
+      },
+      "graphicId": "13181",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,12312"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2217",
+      "name": {
+        "original": "Experimental Hardware",
+        "display": "实验工具"
+      },
+      "description": {
+        "original": "You've never seen anything like this.",
+        "display": "你从没见过这样的东西。"
+      },
+      "graphicId": "13170",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,12313"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2218",
+      "name": {
+        "original": "Cockatrice Launcher",
+        "display": "鸡蛇发射器"
+      },
+      "description": {
+        "original": "Time to get to work, Crispy!",
+        "display": "该工作了，崔斯皮！"
+      },
+      "graphicId": "13170",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,12313"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2219",
+      "name": {
+        "original": "The Big Gun",
+        "display": "大枪"
+      },
+      "description": {
+        "original": "Sometimes, sweetie, all I've got to see is the whites of their eyes.",
+        "display": "有时候，亲爱的，我所能看到的只是他们的眼白。"
+      },
+      "graphicId": "13171",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,12313"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2220",
+      "name": {
+        "original": "Eldritch Blunderbuss",
+        "display": "魔能喇叭枪"
+      },
+      "description": {
+        "original": "It's souped-up and very roomy. Isn't that right, Crispy?",
+        "display": "它加大了威力，口径很大。不是这样吗，崔斯皮？"
+      },
+      "graphicId": "13172",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,12313"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2221",
+      "name": {
+        "original": "Nip of Something",
+        "display": "浅酌"
+      },
+      "description": {
+        "original": "Helps me think.",
+        "display": "帮助我思考。"
+      },
+      "graphicId": "13167",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,12314"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2222",
+      "name": {
+        "original": "Flask of Sass",
+        "display": "沙士饮料瓶"
+      },
+      "description": {
+        "original": "Sometimes you stop the multiverse unwinding, and you need to make a toast.",
+        "display": "有时你会停止多元宇宙的展开，然后你需要来一杯。"
+      },
+      "graphicId": "13167",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,12314"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2223",
+      "name": {
+        "original": "Back Pocket Bar",
+        "display": "后口袋酒吧"
+      },
+      "description": {
+        "original": "Before you tell me what's gone wrong now, let me mix a drink.",
+        "display": "在你告诉我出了什么问题之前，让我调一杯饮料。"
+      },
+      "graphicId": "13168",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,12314"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2224",
+      "name": {
+        "original": "High Octane Saloon",
+        "display": "高辛烷酒馆"
+      },
+      "description": {
+        "original": "Can I get you a drink? Honey, it's got everything.",
+        "display": "想要喝点什么吗？亲爱的，这里什么都有。"
+      },
+      "graphicId": "13169",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,12314"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2225",
+      "name": {
+        "original": "Work Apron",
+        "display": "工作围裙"
+      },
+      "description": {
+        "original": "And this burn is from when I mixed Khyber shards and sovereign glue.",
+        "display": "这是我把凯博尔碎片和至尊胶混合在一起时的灼伤。"
+      },
+      "graphicId": "13164",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,25"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2226",
+      "name": {
+        "original": "Alchemical Cover",
+        "display": "炼金术封皮"
+      },
+      "description": {
+        "original": "Working with these reagents, you only forget your heavy apron once.",
+        "display": "使用这些试剂时，你只有一次机会忘记穿那条沉重的围裙。"
+      },
+      "graphicId": "13164",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,87.5"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2227",
+      "name": {
+        "original": "Fixer's Smock",
+        "display": "调停人的罩衫"
+      },
+      "description": {
+        "original": "I'm ready for anything.",
+        "display": "我准备好了一切。"
+      },
+      "graphicId": "13165",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,150"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2228",
+      "name": {
+        "original": "Wearable Guardian",
+        "display": "穿戴式守卫"
+      },
+      "description": {
+        "original": "Your basic apron acts as a barrier. This one's proactive.",
+        "display": "你的基本围裙一般都作为屏障使用。而这个是主动出击的那种。"
+      },
+      "graphicId": "13166",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_ultimate,275"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2229",
+      "name": {
+        "original": "Flattering Goggles",
+        "display": "帅气护目镜"
+      },
+      "description": {
+        "original": "They do the job. And I look good doing it.",
+        "display": "它们能用。看来我做得还不错。"
+      },
+      "graphicId": "13173",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,9"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2230",
+      "name": {
+        "original": "Cat's Eye Lenses",
+        "display": "猫眼镜片"
+      },
+      "description": {
+        "original": "I once saw a cocky young artificer lose an eye to a dragonshard. Bless his heart.",
+        "display": "我曾经看到一个自大的年轻机关术士，被一块龙晶弄瞎了一只眼睛。愿神保佑他。"
+      },
+      "graphicId": "13173",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,17"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2231",
+      "name": {
+        "original": "Double Goggles",
+        "display": "双重护目镜"
+      },
+      "description": {
+        "original": "One set to wear for doing detail work; one set for blasting extraplanar horrors.",
+        "display": "一套用于做细致工作，一套用于抵御爆破。"
+      },
+      "graphicId": "13174",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,34"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "2232",
+      "name": {
+        "original": "Artificer's Eyewear",
+        "display": "机关术士的眼镜"
+      },
+      "description": {
+        "original": "These've got special filters. Good for welding AND seeing into the ethereal plane.",
+        "display": "它们带有特殊的滤镜，适合焊接和观察虚幻的位面。"
+      },
+      "graphicId": "13175",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,80"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "1",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,100",
+          "targets": [
+            "active_campaign"
+          ],
+          "description": "Increases the damage of all Champions by $amount%"
+        }
+      ]
+    },
+    {
+      "id": "56",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "female"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "16",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "gnome"
+            }
+          ],
+          "description": "Increases the damage of all Gnome Champions by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "38",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "int",
+              "score": 13,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a INT score of 13 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "43",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "cha",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a CHA score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "100",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,40",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "attack_type",
+              "attack": "ranged"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Ranged Champion in the formation"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -3064,7 +3688,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 35,
+        "popularity": 38,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3279,7 +3903,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 35,
+        "popularity": 38,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -6939,6 +7563,1124 @@
             "availabilities": {
               "in_flash_sales": true
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "2209",
+        "snapshots": {
+          "original": {
+            "id": 2209,
+            "name": "Fabricator's Firearms",
+            "description": "Made 'em myself.",
+            "graphic_id": 13176,
+            "hero_id": 95,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2209,
+            "name": "自制枪械",
+            "description": "我亲手做的。",
+            "graphic_id": 13176,
+            "hero_id": 95,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2210",
+        "snapshots": {
+          "original": {
+            "id": 2210,
+            "name": "Supercharged Revolvers, v. 1.0",
+            "description": "It's still not giving me what I want. Maybe I reverse the dragonshard...",
+            "graphic_id": 13176,
+            "hero_id": 95,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2210,
+            "name": "超级充能左轮手枪 1.0 版",
+            "description": "我想要的它还是给不了我。也许我应该把龙晶倒过来......",
+            "graphic_id": 13176,
+            "hero_id": 95,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2211",
+        "snapshots": {
+          "original": {
+            "id": 2211,
+            "name": "Pistols of Blasting",
+            "description": "Honey, I don't think you can handle these.",
+            "graphic_id": 13177,
+            "hero_id": 95,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2211,
+            "name": "爆弹手枪",
+            "description": "亲爱的，我不认为你能处理这些。",
+            "graphic_id": 13177,
+            "hero_id": 95,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2212",
+        "snapshots": {
+          "original": {
+            "id": 2212,
+            "name": "Supercharged Revolvers, v. 3.2",
+            "description": "You figure out some exciting stuff when you iterate.",
+            "graphic_id": 13178,
+            "hero_id": 95,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2212,
+            "name": "超级充能左轮手枪 3.2 版",
+            "description": "升级这个的时候，你会发现一些令人兴奋的东西。",
+            "graphic_id": 13178,
+            "hero_id": 95,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2213",
+        "snapshots": {
+          "original": {
+            "id": 2213,
+            "name": "Well-worn Scarf",
+            "description": "We've been through quite a lot, me and this scarf.",
+            "graphic_id": 13179,
+            "hero_id": 95,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12312"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2213,
+            "name": "磨损的围巾",
+            "description": "我们经历了很多，我和这条围巾。",
+            "graphic_id": 13179,
+            "hero_id": 95,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,12312"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2214",
+        "snapshots": {
+          "original": {
+            "id": 2214,
+            "name": "Sentimental Shawl",
+            "description": "Aura has a habit of working its claws in the weave when it's nervous.",
+            "graphic_id": 13179,
+            "hero_id": 95,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12312"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2214,
+            "name": "善感的披巾",
+            "description": "阿巫那有一个习惯，当它紧张的时候，它的爪子会下意识编些东西。",
+            "graphic_id": 13179,
+            "hero_id": 95,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,12312"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2215",
+        "snapshots": {
+          "original": {
+            "id": 2215,
+            "name": "Dapper Stole",
+            "description": "Oh, this old thing?",
+            "graphic_id": 13180,
+            "hero_id": 95,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12312"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2215,
+            "name": "时髦披肩",
+            "description": "哦，这件旧衣服？",
+            "graphic_id": 13180,
+            "hero_id": 95,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,12312"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2216",
+        "snapshots": {
+          "original": {
+            "id": 2216,
+            "name": "Glamourous Neckwear",
+            "description": "I get this out for special occasions.",
+            "graphic_id": 13181,
+            "hero_id": 95,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12312"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2216,
+            "name": "性感领饰",
+            "description": "在特殊场合我会把这个拿出来。",
+            "graphic_id": 13181,
+            "hero_id": 95,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,12312"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2217",
+        "snapshots": {
+          "original": {
+            "id": 2217,
+            "name": "Experimental Hardware",
+            "description": "You've never seen anything like this.",
+            "graphic_id": 13170,
+            "hero_id": 95,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,12313"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2217,
+            "name": "实验工具",
+            "description": "你从没见过这样的东西。",
+            "graphic_id": 13170,
+            "hero_id": 95,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,12313"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2218",
+        "snapshots": {
+          "original": {
+            "id": 2218,
+            "name": "Cockatrice Launcher",
+            "description": "Time to get to work, Crispy!",
+            "graphic_id": 13170,
+            "hero_id": 95,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,12313"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2218,
+            "name": "鸡蛇发射器",
+            "description": "该工作了，崔斯皮！",
+            "graphic_id": 13170,
+            "hero_id": 95,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,12313"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2219",
+        "snapshots": {
+          "original": {
+            "id": 2219,
+            "name": "The Big Gun",
+            "description": "Sometimes, sweetie, all I've got to see is the whites of their eyes.",
+            "graphic_id": 13171,
+            "hero_id": 95,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,12313"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2219,
+            "name": "大枪",
+            "description": "有时候，亲爱的，我所能看到的只是他们的眼白。",
+            "graphic_id": 13171,
+            "hero_id": 95,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,12313"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2220",
+        "snapshots": {
+          "original": {
+            "id": 2220,
+            "name": "Eldritch Blunderbuss",
+            "description": "It's souped-up and very roomy. Isn't that right, Crispy?",
+            "graphic_id": 13172,
+            "hero_id": 95,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,12313"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2220,
+            "name": "魔能喇叭枪",
+            "description": "它加大了威力，口径很大。不是这样吗，崔斯皮？",
+            "graphic_id": 13172,
+            "hero_id": 95,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,12313"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2221",
+        "snapshots": {
+          "original": {
+            "id": 2221,
+            "name": "Nip of Something",
+            "description": "Helps me think.",
+            "graphic_id": 13167,
+            "hero_id": 95,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,12314"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2221,
+            "name": "浅酌",
+            "description": "帮助我思考。",
+            "graphic_id": 13167,
+            "hero_id": 95,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,12314"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2222",
+        "snapshots": {
+          "original": {
+            "id": 2222,
+            "name": "Flask of Sass",
+            "description": "Sometimes you stop the multiverse unwinding, and you need to make a toast.",
+            "graphic_id": 13167,
+            "hero_id": 95,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,12314"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2222,
+            "name": "沙士饮料瓶",
+            "description": "有时你会停止多元宇宙的展开，然后你需要来一杯。",
+            "graphic_id": 13167,
+            "hero_id": 95,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,12314"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2223",
+        "snapshots": {
+          "original": {
+            "id": 2223,
+            "name": "Back Pocket Bar",
+            "description": "Before you tell me what's gone wrong now, let me mix a drink.",
+            "graphic_id": 13168,
+            "hero_id": 95,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,12314"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2223,
+            "name": "后口袋酒吧",
+            "description": "在你告诉我出了什么问题之前，让我调一杯饮料。",
+            "graphic_id": 13168,
+            "hero_id": 95,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,12314"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2224",
+        "snapshots": {
+          "original": {
+            "id": 2224,
+            "name": "High Octane Saloon",
+            "description": "Can I get you a drink? Honey, it's got everything.",
+            "graphic_id": 13169,
+            "hero_id": 95,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,12314"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 2224,
+            "name": "高辛烷酒馆",
+            "description": "想要喝点什么吗？亲爱的，这里什么都有。",
+            "graphic_id": 13169,
+            "hero_id": 95,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,12314"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "2225",
+        "snapshots": {
+          "original": {
+            "id": 2225,
+            "name": "Work Apron",
+            "description": "And this burn is from when I mixed Khyber shards and sovereign glue.",
+            "graphic_id": 13164,
+            "hero_id": 95,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ]
+          },
+          "display": {
+            "id": 2225,
+            "name": "工作围裙",
+            "description": "这是我把凯博尔碎片和至尊胶混合在一起时的灼伤。",
+            "graphic_id": 13164,
+            "hero_id": 95,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,25"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2226",
+        "snapshots": {
+          "original": {
+            "id": 2226,
+            "name": "Alchemical Cover",
+            "description": "Working with these reagents, you only forget your heavy apron once.",
+            "graphic_id": 13164,
+            "hero_id": 95,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ]
+          },
+          "display": {
+            "id": 2226,
+            "name": "炼金术封皮",
+            "description": "使用这些试剂时，你只有一次机会忘记穿那条沉重的围裙。",
+            "graphic_id": 13164,
+            "hero_id": 95,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,87.5"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2227",
+        "snapshots": {
+          "original": {
+            "id": 2227,
+            "name": "Fixer's Smock",
+            "description": "I'm ready for anything.",
+            "graphic_id": 13165,
+            "hero_id": 95,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ]
+          },
+          "display": {
+            "id": 2227,
+            "name": "调停人的罩衫",
+            "description": "我准备好了一切。",
+            "graphic_id": 13165,
+            "hero_id": 95,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,150"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2228",
+        "snapshots": {
+          "original": {
+            "id": 2228,
+            "name": "Wearable Guardian",
+            "description": "Your basic apron acts as a barrier. This one's proactive.",
+            "graphic_id": 13166,
+            "hero_id": 95,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ]
+          },
+          "display": {
+            "id": 2228,
+            "name": "穿戴式守卫",
+            "description": "你的基本围裙一般都作为屏障使用。而这个是主动出击的那种。",
+            "graphic_id": 13166,
+            "hero_id": 95,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_ultimate,275"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "2229",
+        "snapshots": {
+          "original": {
+            "id": 2229,
+            "name": "Flattering Goggles",
+            "description": "They do the job. And I look good doing it.",
+            "graphic_id": 13173,
+            "hero_id": 95,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,9"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2229,
+            "name": "帅气护目镜",
+            "description": "它们能用。看来我做得还不错。",
+            "graphic_id": 13173,
+            "hero_id": 95,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,9"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2230",
+        "snapshots": {
+          "original": {
+            "id": 2230,
+            "name": "Cat's Eye Lenses",
+            "description": "I once saw a cocky young artificer lose an eye to a dragonshard. Bless his heart.",
+            "graphic_id": 13173,
+            "hero_id": 95,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,17"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2230,
+            "name": "猫眼镜片",
+            "description": "我曾经看到一个自大的年轻机关术士，被一块龙晶弄瞎了一只眼睛。愿神保佑他。",
+            "graphic_id": 13173,
+            "hero_id": 95,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,17"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2231",
+        "snapshots": {
+          "original": {
+            "id": 2231,
+            "name": "Double Goggles",
+            "description": "One set to wear for doing detail work; one set for blasting extraplanar horrors.",
+            "graphic_id": 13174,
+            "hero_id": 95,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,34"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2231,
+            "name": "双重护目镜",
+            "description": "一套用于做细致工作，一套用于抵御爆破。",
+            "graphic_id": 13174,
+            "hero_id": 95,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,34"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "2232",
+        "snapshots": {
+          "original": {
+            "id": 2232,
+            "name": "Artificer's Eyewear",
+            "description": "These've got special filters. Good for welding AND seeing into the ethereal plane.",
+            "graphic_id": 13175,
+            "hero_id": 95,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,80"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 2232,
+            "name": "机关术士的眼镜",
+            "description": "它们带有特殊的滤镜，适合焊接和观察虚幻的位面。",
+            "graphic_id": 13175,
+            "hero_id": 95,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,80"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "1",
+        "snapshots": {
+          "original": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "Increases the damage of all Champions by $amount%"
+              }
+            ]
+          },
+          "display": {
+            "id": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,100",
+                "targets": [
+                  "active_campaign"
+                ],
+                "description": "使所有勇士的伤害提高 $amount%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "56",
+        "snapshots": {
+          "original": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Female Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 56,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "female"
+                  }
+                ],
+                "description": "阵型中每有一位女性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "16",
+        "snapshots": {
+          "original": {
+            "id": 16,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "gnome"
+                  }
+                ],
+                "description": "Increases the damage of all Gnome Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 16,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "gnome"
+                  }
+                ],
+                "description": "使所有侏儒勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "38",
+        "snapshots": {
+          "original": {
+            "id": 38,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "int",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a INT score of 13 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 38,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "int",
+                    "score": 13,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有智力大于等于 13 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "43",
+        "snapshots": {
+          "original": {
+            "id": 43,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "cha",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a CHA score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 43,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "cha",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有魅力大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "100",
+        "snapshots": {
+          "original": {
+            "id": 100,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,40",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "attack_type",
+                    "attack": "ranged"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Ranged Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 100,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,40",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "attack_type",
+                    "attack": "ranged"
+                  }
+                ],
+                "description": "阵型中每有一位远程勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }

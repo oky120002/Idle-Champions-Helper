@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-17",
+  "updatedAt": "2026-04-18",
   "summary": {
     "id": "145",
     "name": {
@@ -45,7 +45,7 @@
   },
   "dateAvailable": "2024-02-21 13:00:00",
   "lastReworkDate": "2024-02-21 13:00:00",
-  "popularity": 31,
+  "popularity": 28,
   "baseCost": "10000",
   "baseDamage": "4000",
   "baseHealth": "49",
@@ -2799,6 +2799,636 @@
       }
     }
   ],
+  "loot": [
+    {
+      "id": "3434",
+      "name": {
+        "original": "Childhood Training",
+        "display": "儿时训练"
+      },
+      "description": {
+        "original": "I was the scourge of small creatures all across Rashemen.",
+        "display": "整个莱瑟曼，小动物无不畏我。"
+      },
+      "graphicId": "22306",
+      "slotId": 1,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3435",
+      "name": {
+        "original": "Old Slingshot",
+        "display": "旧弹弓"
+      },
+      "description": {
+        "original": "Not much in a real fight.",
+        "display": "真打起来没啥用。"
+      },
+      "graphicId": "22306",
+      "slotId": 1,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,65"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3436",
+      "name": {
+        "original": "Adventurer's Sling",
+        "display": "冒险者的弹弓"
+      },
+      "description": {
+        "original": "Spells aren't always the answer.",
+        "display": "法术并非永远奏效。"
+      },
+      "graphicId": "22307",
+      "slotId": 1,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,120"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3437",
+      "name": {
+        "original": "Enchanted Sling",
+        "display": "魔法弹弓"
+      },
+      "description": {
+        "original": "I've yet to find a creature this cannot harm!",
+        "display": "还没发现这个伤害不了的生物呢！"
+      },
+      "graphicId": "22308",
+      "slotId": 1,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,230"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": true
+    },
+    {
+      "id": "3438",
+      "name": {
+        "original": "First Attempt",
+        "display": "最初的尝试"
+      },
+      "description": {
+        "original": "I carved this as a child. I pretended I was a Wychlaran.",
+        "display": "我小的时候雕了这个，假装自己是个女巫议会女巫。"
+      },
+      "graphicId": "22312",
+      "slotId": 2,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,13874"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3439",
+      "name": {
+        "original": "Witch-Mask",
+        "display": "女巫面具"
+      },
+      "description": {
+        "original": "Masks have power in ways many don't seem to know...",
+        "display": "面具有着许多力量，许多人不见得知道……"
+      },
+      "graphicId": "22312",
+      "slotId": 2,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,13874"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3440",
+      "name": {
+        "original": "Rashemi Face-Veil",
+        "display": "莱瑟曼面纱"
+      },
+      "description": {
+        "original": "I remember the first time I wore this. All of my life had led to that.",
+        "display": "我还记得我第一次戴上这个的感觉。我的一生都是为了这个。"
+      },
+      "graphicId": "22313",
+      "slotId": 2,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,13874"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3441",
+      "name": {
+        "original": "Regal Asatheirr",
+        "display": "宫廷阿斯代伦"
+      },
+      "description": {
+        "original": "All Wychlaran, past and present, are with me now.",
+        "display": "所有女巫议会成员，无论过去还是现在，都伴随着我了。"
+      },
+      "graphicId": "22314",
+      "slotId": 2,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,13874"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3442",
+      "name": {
+        "original": "Important Lead",
+        "display": "重要线索"
+      },
+      "description": {
+        "original": "By the three, I will hunt these monsters to the ends of Toril.",
+        "display": "以三人的名义，我会狩猎这些怪物，直到托瑞尔的尽头。"
+      },
+      "graphicId": "22300",
+      "slotId": 3,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,10,13876"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3443",
+      "name": {
+        "original": "Robe Fragment",
+        "display": "长袍碎片"
+      },
+      "description": {
+        "original": "They were here - and not long ago. We must be quick.",
+        "display": "他们来过这里——而且是不久之前。我们必须赶快行动。"
+      },
+      "graphicId": "22300",
+      "slotId": 3,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,30,13876"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3444",
+      "name": {
+        "original": "Forged Thayan Missive",
+        "display": "假造扥雷公文"
+      },
+      "description": {
+        "original": "Finally, we can strike them where it hurts",
+        "display": "我们总算可以朝着他们的要害打了"
+      },
+      "graphicId": "22301",
+      "slotId": 3,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,50,13876"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3445",
+      "name": {
+        "original": "Red Wizard Trophy",
+        "display": "红袍法师战利品"
+      },
+      "description": {
+        "original": "I carry this in remembrance of all the lives it took.",
+        "display": "我带着这个，好纪念它夺走的所有性命。"
+      },
+      "graphicId": "22302",
+      "slotId": 3,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,100,13876"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3446",
+      "name": {
+        "original": "A Reminder of Home",
+        "display": "家的回忆"
+      },
+      "description": {
+        "original": "Somehow, these still smell of Rashemen.",
+        "display": "莫名地，这些还是带着莱瑟曼的气味。"
+      },
+      "graphicId": "22303",
+      "slotId": 4,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,25,13877"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3447",
+      "name": {
+        "original": "Rashemi Attire",
+        "display": "莱瑟曼服装"
+      },
+      "description": {
+        "original": "Part of me misses wearing this. But I've moved on to greater robes.",
+        "display": "在我内心中还有些怀念穿上这件服装。但，我已经穿上更好的长袍了。"
+      },
+      "graphicId": "22303",
+      "slotId": 4,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,87.5,13877"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3448",
+      "name": {
+        "original": "Wychlaran Garments",
+        "display": "女巫议会衣装"
+      },
+      "description": {
+        "original": "This gives me the commanding presence I demand.",
+        "display": "我需要的居高临下存在感，这衣服给了我。"
+      },
+      "graphicId": "22304",
+      "slotId": 4,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,150,13877"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3449",
+      "name": {
+        "original": "Robes of the Archmage",
+        "display": "大法师的长袍"
+      },
+      "description": {
+        "original": "Can we do something about the red? I don't like red robes.",
+        "display": "关于红色，能改改吗？我不喜欢红色的长袍。"
+      },
+      "graphicId": "22305",
+      "slotId": 4,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrade,275,13877"
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3450",
+      "name": {
+        "original": "It Will Do",
+        "display": "凑活"
+      },
+      "description": {
+        "original": "We have to eat, right?",
+        "display": "我们总得吃东西，对吧？"
+      },
+      "graphicId": "22297",
+      "slotId": 5,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,10,13879,13880,13881",
+          "description": "Increases the effect of Dynaheir's specializations by $amount%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3451",
+      "name": {
+        "original": "Bland Rations",
+        "display": "清淡的口粮"
+      },
+      "description": {
+        "original": "I think I'll be gathering the food from now on.",
+        "display": "从现在开始，我来找吃的吧。"
+      },
+      "graphicId": "22297",
+      "slotId": 5,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,30,13879,13880,13881",
+          "description": "Increases the effect of Dynaheir's specializations by $amount%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3452",
+      "name": {
+        "original": "Aged Sjorl",
+        "display": "陈年斯约尔"
+      },
+      "description": {
+        "original": "Not your taste? Then you have bad taste.",
+        "display": "不喜欢？你的品位真差。"
+      },
+      "graphicId": "22298",
+      "slotId": 5,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,50,13879,13880,13881",
+          "description": "Increases the effect of Dynaheir's specializations by $amount%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3453",
+      "name": {
+        "original": "Old Empires Fire Wine",
+        "display": "旧帝国火酒"
+      },
+      "description": {
+        "original": "The decanter is for Minsc. The glass is all I require.",
+        "display": "这瓶是给明斯克的。我需要的就只是杯子。"
+      },
+      "graphicId": "22299",
+      "slotId": 5,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "buff_upgrades,100,13879,13880,13881",
+          "description": "Increases the effect of Dynaheir's specializations by $amount%."
+        }
+      ],
+      "allowGoldenEpic": true,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3454",
+      "name": {
+        "original": "Handy Components",
+        "display": "有用素材"
+      },
+      "description": {
+        "original": "I cast more than simple spells.",
+        "display": "我用的可不止简单的法术而已。"
+      },
+      "graphicId": "22309",
+      "slotId": 6,
+      "rarity": "1",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,7"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3455",
+      "name": {
+        "original": "Fireball Components",
+        "display": "火球术素材"
+      },
+      "description": {
+        "original": "I love when they group up!",
+        "display": "我喜欢他们分好队的样子！"
+      },
+      "graphicId": "22309",
+      "slotId": 6,
+      "rarity": "2",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,13"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3456",
+      "name": {
+        "original": "Lightning Bolt Components",
+        "display": "闪电束素材"
+      },
+      "description": {
+        "original": "You worry about the frontline. I'll handle the ones in the back!",
+        "display": "前排你去操心。后面那些我来料理！"
+      },
+      "graphicId": "22310",
+      "slotId": 6,
+      "rarity": "3",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,25"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    },
+    {
+      "id": "3457",
+      "name": {
+        "original": "Wychlaran Component Pouch",
+        "display": "女巫议会素材袋"
+      },
+      "description": {
+        "original": "The secrets of this pouch could reshape realities.",
+        "display": "这个袋子里装的秘密能够重塑现实。"
+      },
+      "graphicId": "22311",
+      "slotId": 6,
+      "rarity": "4",
+      "effects": [
+        {
+          "effect_string": "reduce_ultimate_cooldown,63"
+        }
+      ],
+      "allowGoldenEpic": false,
+      "isGoldenEpic": false
+    }
+  ],
+  "legendaryEffects": [
+    {
+      "id": "54",
+      "slotId": 1,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,10",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "55",
+      "slotId": 2,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,20",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "male"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Male Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "58",
+      "slotId": 3,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,30",
+          "targets": [
+            "active_campaign"
+          ],
+          "amount_func": "add",
+          "stack_func": "per_crusader",
+          "target_filters": [
+            {
+              "type": "tags",
+              "tags": "human"
+            }
+          ],
+          "description": "Increases the damage of all Champions by $(amount)% for each Human Champion in the formation"
+        }
+      ]
+    },
+    {
+      "id": "36",
+      "slotId": 4,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,200",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "con",
+              "score": 15,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a CON score of 15 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "37",
+      "slotId": 5,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,100",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "stat_score",
+              "stat": "int",
+              "score": 11,
+              "check": ">="
+            }
+          ],
+          "description": "Increases the damage of all Champions with a INT score of 11 or higher by $(amount)%"
+        }
+      ]
+    },
+    {
+      "id": "49",
+      "slotId": 6,
+      "effects": [
+        {
+          "effect_string": "hero_dps_multiplier_mult,150",
+          "targets": [
+            "all_slots"
+          ],
+          "filter_targets": [
+            {
+              "type": "by_tags",
+              "tags": "good"
+            }
+          ],
+          "description": "Increases the damage of all Good Champions by $(amount)%"
+        }
+      ]
+    }
+  ],
   "raw": {
     "hero": {
       "original": {
@@ -2951,7 +3581,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 31,
+        "popularity": 28,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -3143,7 +3773,7 @@
             "type": "time_gate"
           }
         ],
-        "popularity": 31,
+        "popularity": 28,
         "available_in_time_gate": true,
         "available_in_shop": true,
         "event_upgrades": [
@@ -6650,6 +7280,1184 @@
                 }
               ]
             }
+          }
+        }
+      }
+    ],
+    "loot": [
+      {
+        "id": "3434",
+        "snapshots": {
+          "original": {
+            "id": 3434,
+            "name": "Childhood Training",
+            "description": "I was the scourge of small creatures all across Rashemen.",
+            "graphic_id": 22306,
+            "hero_id": 145,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3434,
+            "name": "儿时训练",
+            "description": "整个莱瑟曼，小动物无不畏我。",
+            "graphic_id": 22306,
+            "hero_id": 145,
+            "slot_id": 1,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3435",
+        "snapshots": {
+          "original": {
+            "id": 3435,
+            "name": "Old Slingshot",
+            "description": "Not much in a real fight.",
+            "graphic_id": 22306,
+            "hero_id": 145,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3435,
+            "name": "旧弹弓",
+            "description": "真打起来没啥用。",
+            "graphic_id": 22306,
+            "hero_id": 145,
+            "slot_id": 1,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,65"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3436",
+        "snapshots": {
+          "original": {
+            "id": 3436,
+            "name": "Adventurer's Sling",
+            "description": "Spells aren't always the answer.",
+            "graphic_id": 22307,
+            "hero_id": 145,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3436,
+            "name": "冒险者的弹弓",
+            "description": "法术并非永远奏效。",
+            "graphic_id": 22307,
+            "hero_id": 145,
+            "slot_id": 1,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,120"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3437",
+        "snapshots": {
+          "original": {
+            "id": 3437,
+            "name": "Enchanted Sling",
+            "description": "I've yet to find a creature this cannot harm!",
+            "graphic_id": 22308,
+            "hero_id": 145,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3437,
+            "name": "魔法弹弓",
+            "description": "还没发现这个伤害不了的生物呢！",
+            "graphic_id": 22308,
+            "hero_id": 145,
+            "slot_id": 1,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,230"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3438",
+        "snapshots": {
+          "original": {
+            "id": 3438,
+            "name": "First Attempt",
+            "description": "I carved this as a child. I pretended I was a Wychlaran.",
+            "graphic_id": 22312,
+            "hero_id": 145,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,13874"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3438,
+            "name": "最初的尝试",
+            "description": "我小的时候雕了这个，假装自己是个女巫议会女巫。",
+            "graphic_id": 22312,
+            "hero_id": 145,
+            "slot_id": 2,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,13874"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3439",
+        "snapshots": {
+          "original": {
+            "id": 3439,
+            "name": "Witch-Mask",
+            "description": "Masks have power in ways many don't seem to know...",
+            "graphic_id": 22312,
+            "hero_id": 145,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,13874"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3439,
+            "name": "女巫面具",
+            "description": "面具有着许多力量，许多人不见得知道……",
+            "graphic_id": 22312,
+            "hero_id": 145,
+            "slot_id": 2,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,13874"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3440",
+        "snapshots": {
+          "original": {
+            "id": 3440,
+            "name": "Rashemi Face-Veil",
+            "description": "I remember the first time I wore this. All of my life had led to that.",
+            "graphic_id": 22313,
+            "hero_id": 145,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,13874"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3440,
+            "name": "莱瑟曼面纱",
+            "description": "我还记得我第一次戴上这个的感觉。我的一生都是为了这个。",
+            "graphic_id": 22313,
+            "hero_id": 145,
+            "slot_id": 2,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,13874"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3441",
+        "snapshots": {
+          "original": {
+            "id": 3441,
+            "name": "Regal Asatheirr",
+            "description": "All Wychlaran, past and present, are with me now.",
+            "graphic_id": 22314,
+            "hero_id": 145,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,13874"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3441,
+            "name": "宫廷阿斯代伦",
+            "description": "所有女巫议会成员，无论过去还是现在，都伴随着我了。",
+            "graphic_id": 22314,
+            "hero_id": 145,
+            "slot_id": 2,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,13874"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3442",
+        "snapshots": {
+          "original": {
+            "id": 3442,
+            "name": "Important Lead",
+            "description": "By the three, I will hunt these monsters to the ends of Toril.",
+            "graphic_id": 22300,
+            "hero_id": 145,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,13876"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              3500,
+              2250,
+              1625
+            ]
+          },
+          "display": {
+            "id": 3442,
+            "name": "重要线索",
+            "description": "以三人的名义，我会狩猎这些怪物，直到托瑞尔的尽头。",
+            "graphic_id": 22300,
+            "hero_id": 145,
+            "slot_id": 3,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,10,13876"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              3500,
+              2250,
+              1625
+            ]
+          }
+        }
+      },
+      {
+        "id": "3443",
+        "snapshots": {
+          "original": {
+            "id": 3443,
+            "name": "Robe Fragment",
+            "description": "They were here - and not long ago. We must be quick.",
+            "graphic_id": 22300,
+            "hero_id": 145,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,13876"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              3500,
+              2250,
+              1625
+            ]
+          },
+          "display": {
+            "id": 3443,
+            "name": "长袍碎片",
+            "description": "他们来过这里——而且是不久之前。我们必须赶快行动。",
+            "graphic_id": 22300,
+            "hero_id": 145,
+            "slot_id": 3,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,30,13876"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              3500,
+              2250,
+              1625
+            ]
+          }
+        }
+      },
+      {
+        "id": "3444",
+        "snapshots": {
+          "original": {
+            "id": 3444,
+            "name": "Forged Thayan Missive",
+            "description": "Finally, we can strike them where it hurts",
+            "graphic_id": 22301,
+            "hero_id": 145,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,13876"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              3500,
+              2250,
+              1625
+            ]
+          },
+          "display": {
+            "id": 3444,
+            "name": "假造扥雷公文",
+            "description": "我们总算可以朝着他们的要害打了",
+            "graphic_id": 22301,
+            "hero_id": 145,
+            "slot_id": 3,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,50,13876"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              3500,
+              2250,
+              1625
+            ]
+          }
+        }
+      },
+      {
+        "id": "3445",
+        "snapshots": {
+          "original": {
+            "id": 3445,
+            "name": "Red Wizard Trophy",
+            "description": "I carry this in remembrance of all the lives it took.",
+            "graphic_id": 22302,
+            "hero_id": 145,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,13876"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              3500,
+              2250,
+              1625
+            ]
+          },
+          "display": {
+            "id": 3445,
+            "name": "红袍法师战利品",
+            "description": "我带着这个，好纪念它夺走的所有性命。",
+            "graphic_id": 22302,
+            "hero_id": 145,
+            "slot_id": 3,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,100,13876"
+              }
+            ],
+            "allow_ge": true,
+            "max_level": [
+              3500,
+              2250,
+              1625
+            ]
+          }
+        }
+      },
+      {
+        "id": "3446",
+        "snapshots": {
+          "original": {
+            "id": 3446,
+            "name": "A Reminder of Home",
+            "description": "Somehow, these still smell of Rashemen.",
+            "graphic_id": 22303,
+            "hero_id": 145,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,13877"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3446,
+            "name": "家的回忆",
+            "description": "莫名地，这些还是带着莱瑟曼的气味。",
+            "graphic_id": 22303,
+            "hero_id": 145,
+            "slot_id": 4,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,25,13877"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3447",
+        "snapshots": {
+          "original": {
+            "id": 3447,
+            "name": "Rashemi Attire",
+            "description": "Part of me misses wearing this. But I've moved on to greater robes.",
+            "graphic_id": 22303,
+            "hero_id": 145,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,13877"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3447,
+            "name": "莱瑟曼服装",
+            "description": "在我内心中还有些怀念穿上这件服装。但，我已经穿上更好的长袍了。",
+            "graphic_id": 22303,
+            "hero_id": 145,
+            "slot_id": 4,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,87.5,13877"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3448",
+        "snapshots": {
+          "original": {
+            "id": 3448,
+            "name": "Wychlaran Garments",
+            "description": "This gives me the commanding presence I demand.",
+            "graphic_id": 22304,
+            "hero_id": 145,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,13877"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3448,
+            "name": "女巫议会衣装",
+            "description": "我需要的居高临下存在感，这衣服给了我。",
+            "graphic_id": 22304,
+            "hero_id": 145,
+            "slot_id": 4,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,150,13877"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3449",
+        "snapshots": {
+          "original": {
+            "id": 3449,
+            "name": "Robes of the Archmage",
+            "description": "Can we do something about the red? I don't like red robes.",
+            "graphic_id": 22305,
+            "hero_id": 145,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,13877"
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3449,
+            "name": "大法师的长袍",
+            "description": "关于红色，能改改吗？我不喜欢红色的长袍。",
+            "graphic_id": 22305,
+            "hero_id": 145,
+            "slot_id": 4,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrade,275,13877"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3450",
+        "snapshots": {
+          "original": {
+            "id": 3450,
+            "name": "It Will Do",
+            "description": "We have to eat, right?",
+            "graphic_id": 22297,
+            "hero_id": 145,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,10,13879,13880,13881",
+                "description": "Increases the effect of Dynaheir's specializations by $amount%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3450,
+            "name": "凑活",
+            "description": "我们总得吃东西，对吧？",
+            "graphic_id": 22297,
+            "hero_id": 145,
+            "slot_id": 5,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,10,13879,13880,13881",
+                "description": "使戴娜黑的专精效果提高 $amount%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3451",
+        "snapshots": {
+          "original": {
+            "id": 3451,
+            "name": "Bland Rations",
+            "description": "I think I'll be gathering the food from now on.",
+            "graphic_id": 22297,
+            "hero_id": 145,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,30,13879,13880,13881",
+                "description": "Increases the effect of Dynaheir's specializations by $amount%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3451,
+            "name": "清淡的口粮",
+            "description": "从现在开始，我来找吃的吧。",
+            "graphic_id": 22297,
+            "hero_id": 145,
+            "slot_id": 5,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,30,13879,13880,13881",
+                "description": "使戴娜黑的专精效果提高 $amount%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3452",
+        "snapshots": {
+          "original": {
+            "id": 3452,
+            "name": "Aged Sjorl",
+            "description": "Not your taste? Then you have bad taste.",
+            "graphic_id": 22298,
+            "hero_id": 145,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,50,13879,13880,13881",
+                "description": "Increases the effect of Dynaheir's specializations by $amount%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3452,
+            "name": "陈年斯约尔",
+            "description": "不喜欢？你的品位真差。",
+            "graphic_id": 22298,
+            "hero_id": 145,
+            "slot_id": 5,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,50,13879,13880,13881",
+                "description": "使戴娜黑的专精效果提高 $amount%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3453",
+        "snapshots": {
+          "original": {
+            "id": 3453,
+            "name": "Old Empires Fire Wine",
+            "description": "The decanter is for Minsc. The glass is all I require.",
+            "graphic_id": 22299,
+            "hero_id": 145,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,100,13879,13880,13881",
+                "description": "Increases the effect of Dynaheir's specializations by $amount%."
+              }
+            ],
+            "allow_ge": true
+          },
+          "display": {
+            "id": 3453,
+            "name": "旧帝国火酒",
+            "description": "这瓶是给明斯克的。我需要的就只是杯子。",
+            "graphic_id": 22299,
+            "hero_id": 145,
+            "slot_id": 5,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "buff_upgrades,100,13879,13880,13881",
+                "description": "使戴娜黑的专精效果提高 $amount%。"
+              }
+            ],
+            "allow_ge": true
+          }
+        }
+      },
+      {
+        "id": "3454",
+        "snapshots": {
+          "original": {
+            "id": 3454,
+            "name": "Handy Components",
+            "description": "I cast more than simple spells.",
+            "graphic_id": 22309,
+            "hero_id": 145,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,7"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3454,
+            "name": "有用素材",
+            "description": "我用的可不止简单的法术而已。",
+            "graphic_id": 22309,
+            "hero_id": 145,
+            "slot_id": 6,
+            "rarity": 1,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,7"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3455",
+        "snapshots": {
+          "original": {
+            "id": 3455,
+            "name": "Fireball Components",
+            "description": "I love when they group up!",
+            "graphic_id": 22309,
+            "hero_id": 145,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,13"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3455,
+            "name": "火球术素材",
+            "description": "我喜欢他们分好队的样子！",
+            "graphic_id": 22309,
+            "hero_id": 145,
+            "slot_id": 6,
+            "rarity": 2,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,13"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3456",
+        "snapshots": {
+          "original": {
+            "id": 3456,
+            "name": "Lightning Bolt Components",
+            "description": "You worry about the frontline. I'll handle the ones in the back!",
+            "graphic_id": 22310,
+            "hero_id": 145,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,25"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3456,
+            "name": "闪电束素材",
+            "description": "前排你去操心。后面那些我来料理！",
+            "graphic_id": 22310,
+            "hero_id": 145,
+            "slot_id": 6,
+            "rarity": 3,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,25"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      },
+      {
+        "id": "3457",
+        "snapshots": {
+          "original": {
+            "id": 3457,
+            "name": "Wychlaran Component Pouch",
+            "description": "The secrets of this pouch could reshape realities.",
+            "graphic_id": 22311,
+            "hero_id": 145,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,63"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          },
+          "display": {
+            "id": 3457,
+            "name": "女巫议会素材袋",
+            "description": "这个袋子里装的秘密能够重塑现实。",
+            "graphic_id": 22311,
+            "hero_id": 145,
+            "slot_id": 6,
+            "rarity": 4,
+            "effects": [
+              {
+                "effect_string": "reduce_ultimate_cooldown,63"
+              }
+            ],
+            "max_level": [
+              500,
+              250,
+              125
+            ]
+          }
+        }
+      }
+    ],
+    "legendaryEffects": [
+      {
+        "id": "54",
+        "snapshots": {
+          "original": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "Increases the damage of all Champions by $(amount)% for each Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 54,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,10",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "description": "阵型中每有一位勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "55",
+        "snapshots": {
+          "original": {
+            "id": 55,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Male Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 55,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,20",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "male"
+                  }
+                ],
+                "description": "阵型中每有一位男性勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "58",
+        "snapshots": {
+          "original": {
+            "id": 58,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "Increases the damage of all Champions by $(amount)% for each Human Champion in the formation"
+              }
+            ]
+          },
+          "display": {
+            "id": 58,
+            "effects": [
+              {
+                "effect_string": "global_dps_multiplier_mult,30",
+                "targets": [
+                  "active_campaign"
+                ],
+                "amount_func": "add",
+                "stack_func": "per_crusader",
+                "target_filters": [
+                  {
+                    "type": "tags",
+                    "tags": "human"
+                  }
+                ],
+                "description": "阵型中每有一位人类勇士，所有勇士的伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "36",
+        "snapshots": {
+          "original": {
+            "id": 36,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a CON score of 15 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 36,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,200",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "con",
+                    "score": 15,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有体质大于等于 15 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "37",
+        "snapshots": {
+          "original": {
+            "id": 37,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "int",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "Increases the damage of all Champions with a INT score of 11 or higher by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 37,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,100",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "stat_score",
+                    "stat": "int",
+                    "score": 11,
+                    "check": ">="
+                  }
+                ],
+                "description": "使所有智力大于等于 11 的勇士伤害提高 $(amount)%"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "49",
+        "snapshots": {
+          "original": {
+            "id": 49,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "Increases the damage of all Good Champions by $(amount)%"
+              }
+            ]
+          },
+          "display": {
+            "id": 49,
+            "effects": [
+              {
+                "effect_string": "hero_dps_multiplier_mult,150",
+                "targets": [
+                  "all_slots"
+                ],
+                "filter_targets": [
+                  {
+                    "type": "by_tags",
+                    "tags": "good"
+                  }
+                ],
+                "description": "使所有善良阵营勇士的伤害提高 $(amount)%"
+              }
+            ]
           }
         }
       }
