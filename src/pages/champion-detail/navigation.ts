@@ -3,7 +3,7 @@ import { DETAIL_HASH_PREFIX, DETAIL_SECTION_IDS } from './types'
 
 const LEGACY_SECTION_ID_MAP: Record<string, DetailSectionId> = {
   overview: 'specializations',
-  upgrades: 'specializations',
+  upgrades: 'abilities',
   combat: 'abilities',
   'character-sheet': 'story-misc',
   feats: 'feats',

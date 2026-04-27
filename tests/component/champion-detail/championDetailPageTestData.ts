@@ -174,5 +174,22 @@ export const animatedSkinFixture: ChampionAnimation = {
 
 export const specializationGraphicFixture: DataCollection<ChampionSpecializationGraphic> = {
   updatedAt: '2026-04-16',
-  items: [],
+  items: [
+    {
+      graphicId: '102',
+      sourceGraphic: 'Icons/Ultimates/Icon_MinscUltimate',
+      sourceVersion: 1,
+      remotePath: 'mobile_assets/Icons/Ultimates/Icon_MinscUltimate',
+      remoteUrl: 'https://master.idlechampions.com/~idledragons/mobile_assets/Icons/Ultimates/Icon_MinscUltimate',
+      delivery: 'wrapped-png',
+      uses: ['icon'],
+      image: {
+        path: 'v1/champion-specialization-graphics/102.png',
+        width: 64,
+        height: 64,
+        bytes: 1024,
+        format: 'png',
+      },
+    },
+  ],
 }

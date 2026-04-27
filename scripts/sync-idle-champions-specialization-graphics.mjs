@@ -148,6 +148,16 @@ function decodeSpecializationGraphicBuffer(asset, rawBuffer) {
   throw new Error(`无法解析 graphic ${asset.graphicId}`)
 }
 
+function collectGraphicId(ids, graphicId) {
+  const normalizedGraphicId = typeof graphicId === 'string' || typeof graphicId === 'number'
+    ? String(graphicId).trim()
+    : null
+
+  if (normalizedGraphicId && normalizedGraphicId !== '0') {
+    ids.add(normalizedGraphicId)
+  }
+}
+
 async function collectSpecializationGraphicIds(detailDir) {
   const entries = await readdir(detailDir, { withFileTypes: true })
   const ids = new Set()
@@ -160,14 +170,10 @@ async function collectSpecializationGraphicIds(detailDir) {
     const detail = await readJson(path.join(detailDir, entry.name))
 
     for (const upgrade of detail.upgrades ?? []) {
-      const graphicId = typeof upgrade.specializationGraphicId === 'string'
-        ? upgrade.specializationGraphicId.trim()
-        : null
-
-      if (graphicId && graphicId !== '0') {
-        ids.add(graphicId)
-      }
+      collectGraphicId(ids, upgrade.specializationGraphicId)
     }
+
+    collectGraphicId(ids, detail.attacks?.ultimate?.graphicId)
   }
 
   return Array.from(ids).sort((left, right) => Number(left) - Number(right) || left.localeCompare(right))

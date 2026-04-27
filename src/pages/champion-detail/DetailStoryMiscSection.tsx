@@ -33,7 +33,7 @@ export function DetailStoryMiscSection({ detail, locale, t, overviewFields }: De
       <DetailCharacterSection detail={detail} locale={locale} t={t} />
 
       <SurfaceCard className="detail-section detail-section--overview detail-section--headerless">
-        <DetailSectionHeader title="Story & Misc" badges={[]} />
+        <DetailSectionHeader title={t({ zh: '故事与杂项', en: 'Story & Misc' })} badges={[]} />
         {overviewFields.length > 0 ? (
           <div className="detail-field-grid detail-field-grid--compact">
             {overviewFields.map((field) => (

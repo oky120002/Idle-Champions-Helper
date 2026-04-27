@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import type { AppLocale } from '../../app/i18n'
 import type {
   ChampionAttackDetail,
@@ -148,7 +148,31 @@ export interface LedgerUpgradeRow {
   category: UpgradeCategoryMeta
 }
 
+export interface SpecializationUpgradeEntry {
+  upgrade: ChampionUpgradeDetail
+  presentation: UpgradePresentation
+  relation: 'primary' | 'related'
+  iconGraphicId: string | null
+}
+
+export interface SpecializationUpgradeColumn {
+  key: string
+  title: string
+  typeLabel: string
+  summary: string | null
+  detailLines: string[]
+  targetLabel: string | null
+  staticMultiplierLabel: string | null
+  prerequisiteLabel: string
+  specializationGraphicId: string | null
+  entries: SpecializationUpgradeEntry[]
+}
+
 export interface DetailSectionLink {
   id: DetailSectionId
   label: string
+}
+
+export type ChampionDetailCssProperties = CSSProperties & {
+  '--specialization-column-count'?: number
 }

@@ -50,46 +50,51 @@ describe('ChampionDetailPage content', () => {
   it('按分区渲染英雄详情，并过滤无意义的详情区块', async () => {
     mockedLoadChampionDetail.mockResolvedValue(detailFixture)
 
-    renderChampionDetailPage()
+    const { container } = renderChampionDetailPage()
 
     expect(await screen.findByRole('heading', { level: 2, name: '明斯克' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { level: 2, name: 'Specializations' })).toBeInTheDocument()
-    expect(screen.getByRole('tab', { name: 'Specializations' })).toHaveAttribute('aria-selected', 'true')
-    expect(screen.getByRole('tab', { name: 'Abilities' })).toBeInTheDocument()
-    expect(screen.getByRole('tab', { name: 'Loot' })).toBeInTheDocument()
-    expect(screen.getByRole('tab', { name: 'Legendary' })).toBeInTheDocument()
-    expect(screen.getByRole('tab', { name: 'Feats' })).toBeInTheDocument()
-    expect(screen.getByRole('tab', { name: 'Skins' })).toBeInTheDocument()
-    expect(screen.getByRole('tab', { name: 'Story & Misc' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 2, name: '专精' })).toBeInTheDocument()
+    expect(screen.getByRole('tab', { name: '专精' })).toHaveAttribute('aria-selected', 'true')
+    expect(screen.getByRole('tab', { name: '能力' })).toBeInTheDocument()
+    expect(screen.getByRole('tab', { name: '装备' })).toBeInTheDocument()
+    expect(screen.getByRole('tab', { name: '传奇' })).toBeInTheDocument()
+    expect(screen.getByRole('tab', { name: '天赋' })).toBeInTheDocument()
+    expect(screen.getByRole('tab', { name: '皮肤' })).toBeInTheDocument()
+    expect(screen.getByRole('tab', { name: '故事与杂项' })).toBeInTheDocument()
     expect(screen.queryByRole('tab', { name: 'Links' })).not.toBeInTheDocument()
-    expect(screen.getByText('布布带路')).toBeInTheDocument()
-    expect(screen.getByText('偏好敌人：类人生物')).toBeInTheDocument()
+    expect(screen.getAllByText('布布带路').length).toBeGreaterThan(0)
+    expect(await screen.findByText('直取双眼！')).toBeInTheDocument()
+    expect(
+      container.querySelector('img[src="/data/v1/champion-specialization-graphics/102.png"]'),
+    ).toBeInTheDocument()
+    expect(screen.getAllByText('偏好敌人：类人生物').length).toBeGreaterThan(0)
     expect(screen.queryByText('Favored Enemy: Humanoids')).not.toBeInTheDocument()
-    expect(screen.getByText('类人生物敌人成为明斯克的偏好对手。')).toBeInTheDocument()
+    expect(screen.getAllByText('类人生物敌人成为明斯克的偏好对手。').length).toBeGreaterThan(0)
     expect(screen.getAllByText('当前可用').length).toBeGreaterThan(0)
     expect(screen.queryByText('未命名 upgrade_ability')).not.toBeInTheDocument()
 
-    fireEvent.click(screen.getByRole('tab', { name: 'Abilities' }))
-    expect(await screen.findByRole('heading', { level: 2, name: '基础数值、普攻、大招与活动升级' })).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('tab', { name: '能力' }))
+    expect(await screen.findByRole('heading', { level: 2, name: '基础数值、普攻、大招与等级升级' })).toBeInTheDocument()
+    expect(screen.getByText('等级列表过滤')).toBeInTheDocument()
 
-    fireEvent.click(screen.getByRole('tab', { name: 'Feats' }))
+    fireEvent.click(screen.getByRole('tab', { name: '天赋' }))
     expect(await screen.findByText('自身伤害提高 30%')).toBeInTheDocument()
     expect(screen.getByText('来源')).toBeInTheDocument()
     expect(screen.getByText('收藏')).toBeInTheDocument()
 
-    fireEvent.click(screen.getByRole('tab', { name: 'Loot' }))
+    fireEvent.click(screen.getByRole('tab', { name: '装备' }))
     expect(await screen.findByText('简单盾牌')).toBeInTheDocument()
     expect(screen.getByText('Golden Epic')).toBeInTheDocument()
 
-    fireEvent.click(screen.getByRole('tab', { name: 'Legendary' }))
-    expect(await screen.findByRole('heading', { level: 2, name: 'Legendary' })).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('tab', { name: '传奇' }))
+    expect(await screen.findByRole('heading', { level: 2, name: '传奇' })).toBeInTheDocument()
 
-    fireEvent.click(screen.getByRole('tab', { name: 'Skins' }))
+    fireEvent.click(screen.getByRole('tab', { name: '皮肤' }))
     expect(await screen.findByText('巨型布布服装')).toBeInTheDocument()
     expect(screen.getAllByText('预览').length).toBeGreaterThan(0)
     expect(screen.queryByText(/下载/)).not.toBeInTheDocument()
 
-    fireEvent.click(screen.getByRole('tab', { name: 'Story & Misc' }))
+    fireEvent.click(screen.getByRole('tab', { name: '故事与杂项' }))
     expect(await screen.findByRole('heading', { level: 2, name: '叙事资料与能力分布' })).toBeInTheDocument()
     expect(screen.getByText(/明斯克是一位有些迟钝但非常勇敢的巡林客/)).toBeInTheDocument()
     expect(screen.queryByText('商店上架时间')).not.toBeInTheDocument()
@@ -137,7 +142,7 @@ describe('ChampionDetailPage content', () => {
     renderChampionDetailPageWithBackRoute('/champions/7?seat=7')
 
     expect(await screen.findByRole('link', { name: '返回英雄筛选' })).toHaveAttribute('href', '/champions?seat=7')
-    fireEvent.click(await screen.findByRole('tab', { name: 'Feats' }))
+    fireEvent.click(await screen.findByRole('tab', { name: '天赋' }))
 
     fireEvent.click(screen.getByRole('link', { name: '返回英雄筛选' }))
 
