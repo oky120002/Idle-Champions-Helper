@@ -10,6 +10,7 @@ export function describeEffectPayload(payload: ParsedEffectPayload, effectContex
   const resolvedDescription = resolveEffectDescription(payload.description, payload, effectContext)
   let categoryLabel = localizeEffectKind(payload.kind, locale)
   let summary: string
+  let isRawEffectKindFallback = false
 
   switch (payload.kind) {
     case 'hero_dps_multiplier_mult':
@@ -140,6 +141,7 @@ export function describeEffectPayload(payload: ParsedEffectPayload, effectContex
           : `Each tagged champion increases "${targets.summary ?? 'linked ability'}" by ${amount}%`
       break
     default:
+      isRawEffectKindFallback = true
       summary =
         locale === 'zh-CN'
           ? `效果类型：${localizeEffectKind(payload.kind, locale)}`
@@ -159,6 +161,7 @@ export function describeEffectPayload(payload: ParsedEffectPayload, effectContex
     detail:
       (!preferDescription && resolvedDescription ? resolvedDescription : null) ??
       (targets.detail && targets.detail !== targets.summary ? targets.detail : null),
+    isRawEffectKindFallback: isRawEffectKindFallback && !preferDescription,
   }
 }
 

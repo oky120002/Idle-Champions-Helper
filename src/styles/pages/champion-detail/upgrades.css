@@ -47,6 +47,12 @@
   align-items: center;
 }
 
+.specialization-column__entry-topline {
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: 0.46rem;
+}
+
 .specialization-column__title {
   margin: 0;
   overflow-wrap: anywhere;
@@ -158,17 +164,19 @@
   box-shadow: none;
 }
 
-.specialization-column__entry-heading {
-  display: block;
-  min-width: 0;
-}
-
 .specialization-column__entry-title {
   margin: 0;
+  min-width: min(100%, 8rem);
   overflow-wrap: anywhere;
-  color: rgba(255, 248, 236, 0.92);
-  font-size: clamp(0.72rem, 0.78vw, 0.92rem);
-  line-height: 1.32;
+  color: rgba(255, 246, 228, 0.96);
+  font-size: clamp(0.86rem, 0.86vw, 1rem);
+  font-weight: 800;
+  line-height: 1.25;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.42);
+}
+
+.specialization-column__entry--primary .specialization-column__entry-title {
+  color: #ffe8af;
 }
 
 .specialization-column__entry-summary {
