@@ -40,11 +40,13 @@ export function useChampionDetailSectionState(
   }, [detail?.summary.id])
 
   const sectionLinks: DetailSectionLink[] = [
-    { id: 'overview', label: t({ zh: '概览', en: 'Overview' }) },
-    { id: 'character-sheet', label: t({ zh: '角色卡', en: 'Character sheet' }) },
-    { id: 'combat', label: t({ zh: '战斗', en: 'Combat' }) },
-    { id: 'upgrades', label: t({ zh: '升级', en: 'Upgrades' }) },
-    { id: 'feats', label: t({ zh: '天赋', en: 'Feats' }) },
+    { id: 'specializations', label: 'Specializations' },
+    { id: 'abilities', label: 'Abilities' },
+    { id: 'loot', label: 'Loot' },
+    { id: 'legendary', label: 'Legendary' },
+    { id: 'feats', label: 'Feats' },
+    { id: 'skins', label: 'Skins' },
+    { id: 'story-misc', label: 'Story & Misc' },
   ]
 
   const activeSectionIndex = Math.max(
@@ -183,7 +185,14 @@ export function useChampionDetailSectionState(
       }
     }
 
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    if (typeof window === 'undefined') {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      return
+    }
+
+    window.requestAnimationFrame(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
   }
 
   const handleBackClick = (event: MouseEvent<HTMLAnchorElement>) => {

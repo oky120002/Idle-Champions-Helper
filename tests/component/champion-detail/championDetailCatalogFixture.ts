@@ -1,7 +1,34 @@
 import type { ChampionDetail } from '../../../src/domain/types'
 
-export const championDetailCatalogFixture: Pick<ChampionDetail, 'upgrades' | 'feats' | 'skins' | 'raw'> = {
+export const championDetailCatalogFixture: Pick<
+  ChampionDetail,
+  'upgrades' | 'feats' | 'skins' | 'loot' | 'legendaryEffects' | 'raw'
+> = {
   upgrades: [
+    {
+      id: '106',
+      requiredLevel: 15,
+      requiredUpgradeId: null,
+      name: {
+        original: 'Boo Leads The Way',
+        display: '布布带路',
+      },
+      upgradeType: null,
+      effectReference: 'global_dps_multiplier_mult,100',
+      effectDefinition: null,
+      staticDpsMult: null,
+      defaultEnabled: true,
+      specializationName: {
+        original: 'Boo Leads The Way',
+        display: '布布带路',
+      },
+      specializationDescription: {
+        original: 'Minsc follows Boo into battle.',
+        display: '明斯克跟随布布加入战斗。',
+      },
+      specializationGraphicId: null,
+      tipText: null,
+    },
     {
       id: '108',
       requiredLevel: 50,
@@ -167,6 +194,54 @@ export const championDetailCatalogFixture: Pick<ChampionDetail, 'upgrades' | 'fe
       availabilities: { in_wild_offers: true },
     },
   ],
+  loot: [
+    {
+      id: '1001',
+      name: {
+        original: 'Simple Shield',
+        display: '简单盾牌',
+      },
+      description: {
+        original: 'A steady shield for testing.',
+        display: '用于测试的稳固盾牌。',
+      },
+      graphicId: '2001',
+      slotId: 1,
+      rarity: '3',
+      effects: [{ effect_string: 'hero_dps_multiplier_mult,100' }],
+      allowGoldenEpic: true,
+      isGoldenEpic: false,
+    },
+    {
+      id: '1002',
+      name: {
+        original: 'Golden Shield',
+        display: '黄金盾牌',
+      },
+      description: {
+        original: 'A golden shield for testing.',
+        display: '用于测试的黄金盾牌。',
+      },
+      graphicId: '2002',
+      slotId: 1,
+      rarity: '4',
+      effects: [{ effect_string: 'hero_dps_multiplier_mult,200' }],
+      allowGoldenEpic: true,
+      isGoldenEpic: true,
+    },
+  ],
+  legendaryEffects: [
+    {
+      id: '501',
+      slotId: 1,
+      effects: [{ effect_string: 'increase_global_dps_mult,100' }],
+    },
+    {
+      id: '502',
+      slotId: 2,
+      effects: [{ effect_string: 'increase_health_mult,50' }],
+    },
+  ],
   raw: {
     hero: {
       original: { id: 7, seat_id: 7 },
@@ -175,44 +250,41 @@ export const championDetailCatalogFixture: Pick<ChampionDetail, 'upgrades' | 'fe
     attacks: [
       {
         id: '13',
-        snapshots: {
-          original: { id: 13 },
-          display: { id: 13 },
-        },
+        snapshots: { original: { id: 13 }, display: { id: 13 } },
       },
     ],
     upgrades: [
       {
         id: '108',
-        snapshots: {
-          original: { id: 108 },
-          display: { id: 108 },
-        },
+        snapshots: { original: { id: 108 }, display: { id: 108 } },
       },
     ],
     feats: [
       {
         id: '35',
-        snapshots: {
-          original: { id: 35 },
-          display: { id: 35 },
-        },
+        snapshots: { original: { id: 35 }, display: { id: 35 } },
       },
     ],
     skins: [
       {
         id: '4',
-        snapshots: {
-          original: { id: 4 },
-          display: { id: 4 },
-        },
+        snapshots: { original: { id: 4 }, display: { id: 4 } },
       },
       {
         id: '5',
-        snapshots: {
-          original: { id: 5 },
-          display: { id: 5 },
-        },
+        snapshots: { original: { id: 5 }, display: { id: 5 } },
+      },
+    ],
+    loot: [
+      {
+        id: '1001',
+        snapshots: { original: { id: 1001 }, display: { id: 1001 } },
+      },
+    ],
+    legendaryEffects: [
+      {
+        id: '501',
+        snapshots: { original: { id: 501 }, display: { id: 501 } },
       },
     ],
   },

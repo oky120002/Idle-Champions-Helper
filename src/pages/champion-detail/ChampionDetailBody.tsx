@@ -58,41 +58,70 @@ interface ChampionDetailBodyProps {
 export function ChampionDetailBody(props: ChampionDetailBodyProps) {
   return (
     <>
-      <DossierSection
-        detail={props.detail}
-        locale={props.locale}
-        t={props.t}
-        summaryAvailabilityBadges={props.summaryAvailabilityBadges}
-        overviewFields={props.overviewFields}
-        sectionLinks={props.sectionLinks}
-        activeSectionId={props.activeSectionId}
-        scrollToSection={props.scrollToSection}
-        openArtworkDialog={props.openArtworkDialog}
-      />
-
       <div className="champion-detail-layout">
-        <DetailSectionPanels
+        <DossierSection
           detail={props.detail}
           locale={props.locale}
           t={props.t}
-          effectContext={props.effectContext}
-          upgradeSectionBadges={props.upgradeSectionBadges}
-          featSectionBadges={props.featSectionBadges}
-          spotlightUpgrades={props.spotlightUpgrades}
-          upgradePresentations={props.upgradePresentations}
-          specializationGraphicsById={props.specializationGraphicsById}
-          ledgerRows={props.ledgerRows}
-          ledgerFilterOptions={props.ledgerFilterOptions}
-          activeLedgerFilterKeySet={props.activeLedgerFilterKeySet}
-          visibleLedgerRows={props.visibleLedgerRows}
-          hiddenLedgerSummary={props.hiddenLedgerSummary}
-          hasCustomLedgerFilterState={props.hasCustomLedgerFilterState}
-          isShowingAllLedgerTypes={props.isShowingAllLedgerTypes}
-          toggleLedgerFilter={props.toggleLedgerFilter}
-          resetLedgerFilters={props.resetLedgerFilters}
-          enableAllLedgerFilters={props.enableAllLedgerFilters}
+          summaryAvailabilityBadges={props.summaryAvailabilityBadges}
+          overviewFields={props.overviewFields}
+          openArtworkDialog={props.openArtworkDialog}
         />
+        <section
+          className="champion-detail-tab-shell"
+          aria-label={props.t({ zh: '英雄详情内容', en: 'Champion detail content' })}
+        >
+          <div
+            className="champion-detail-tab-bar"
+            role="tablist"
+            aria-label={props.t({ zh: '详情页签', en: 'Detail tabs' })}
+          >
+            {props.sectionLinks.map((section) => (
+              <button
+                key={section.id}
+                type="button"
+                role="tab"
+                id={`detail-tab-${section.id}`}
+                aria-controls={section.id}
+                aria-selected={props.activeSectionId === section.id}
+                aria-pressed={props.activeSectionId === section.id}
+                className={
+                  props.activeSectionId === section.id
+                    ? 'champion-detail-tab-bar__button champion-detail-tab-bar__button--active'
+                    : 'champion-detail-tab-bar__button'
+                }
+                onClick={() => props.scrollToSection(section.id)}
+              >
+                {section.label}
+              </button>
+            ))}
+          </div>
 
+          <DetailSectionPanels
+            detail={props.detail}
+            locale={props.locale}
+            t={props.t}
+            activeSectionId={props.activeSectionId}
+            effectContext={props.effectContext}
+            upgradeSectionBadges={props.upgradeSectionBadges}
+            featSectionBadges={props.featSectionBadges}
+            overviewFields={props.overviewFields}
+            spotlightUpgrades={props.spotlightUpgrades}
+            upgradePresentations={props.upgradePresentations}
+            specializationGraphicsById={props.specializationGraphicsById}
+            ledgerRows={props.ledgerRows}
+            ledgerFilterOptions={props.ledgerFilterOptions}
+            activeLedgerFilterKeySet={props.activeLedgerFilterKeySet}
+            visibleLedgerRows={props.visibleLedgerRows}
+            hiddenLedgerSummary={props.hiddenLedgerSummary}
+            hasCustomLedgerFilterState={props.hasCustomLedgerFilterState}
+            isShowingAllLedgerTypes={props.isShowingAllLedgerTypes}
+            toggleLedgerFilter={props.toggleLedgerFilter}
+            resetLedgerFilters={props.resetLedgerFilters}
+            enableAllLedgerFilters={props.enableAllLedgerFilters}
+            openArtworkDialog={props.openArtworkDialog}
+          />
+        </section>
       </div>
 
       <SkinArtworkDialog
