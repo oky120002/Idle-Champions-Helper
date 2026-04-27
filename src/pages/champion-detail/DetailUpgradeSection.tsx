@@ -170,9 +170,9 @@ function SpecializationColumnCard({
         <div className="specialization-column__header-main">
           <div className="specialization-column__eyebrow-row">
             {primaryEntry ? <span className="upgrade-card__level-pill">{formatUpgradeLevel(primaryEntry, locale)}</span> : null}
+            <h3 className="specialization-column__title">{column.title}</h3>
             {columnTypeBadge ? <span className={columnTypeBadge.className}>{columnTypeBadge.label}</span> : null}
           </div>
-          <h3 className="specialization-column__title">{column.title}</h3>
           {column.summary ? <p className="specialization-column__summary">{column.summary}</p> : null}
         </div>
         {specializationGraphic ? (
