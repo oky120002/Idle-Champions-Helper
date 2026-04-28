@@ -1,6 +1,5 @@
 import { SurfaceCard } from '../../components/SurfaceCard'
 import type { ChampionDetail } from '../../domain/types'
-import { DetailSectionHeader } from './detail-primitives'
 import { describeEffectItem } from './summary-model'
 import type { EffectContext } from './types'
 
@@ -17,7 +16,6 @@ export function DetailLegendarySection({ detail, locale, t, effectContext }: Det
   return (
     <SurfaceCard className="detail-section detail-section--legendary detail-section--headerless">
       <div id="legendary" className="detail-section-anchor" />
-      <DetailSectionHeader title={t({ zh: '传奇', en: 'Legendary' })} badges={[]} />
 
       {legendaryEffects.length > 0 ? (
         <div className="legendary-grid">

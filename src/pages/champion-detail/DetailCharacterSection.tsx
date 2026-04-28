@@ -2,7 +2,6 @@ import { SurfaceCard } from '../../components/SurfaceCard'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import type { ChampionDetail } from '../../domain/types'
 import { DetailField, LocalizedTextStack } from './detail-cards'
-import { DetailSectionHeader } from './detail-primitives'
 import { formatNumber } from './detail-value-formatters'
 
 type DetailCharacterSectionProps = {
@@ -15,15 +14,6 @@ export function DetailCharacterSection({ detail, locale, t }: DetailCharacterSec
   return (
     <SurfaceCard className="detail-section detail-section--character detail-section--headerless">
       <div id="character-sheet" className="detail-section-anchor" />
-      <DetailSectionHeader
-        eyebrow={t({ zh: '角色卡', en: 'Character sheet' })}
-        title={t({ zh: '叙事资料与能力分布', en: 'Narrative profile and ability spread' })}
-        description={t({
-          zh: '把角色设定、D&D 属性和背景故事放进与其它大区块一致的标题骨架里，页面层次更统一。',
-          en: 'Keep the lore profile, D&D stats, and backstory inside the same section header structure used across the rest of the page.',
-        })}
-        badges={[]}
-      />
 
       {detail.characterSheet ? (
         <>
