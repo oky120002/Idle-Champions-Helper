@@ -42,3 +42,12 @@ export function SidebarToggleIcon({ isCollapsed }: { isCollapsed: boolean }) {
     </svg>
   )
 }
+
+export function BackNavigationIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+      <path d="M14.5 6.5 9 12l5.5 5.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M9.75 12h9" strokeLinecap="round" />
+    </svg>
+  )
+}

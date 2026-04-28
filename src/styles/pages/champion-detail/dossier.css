@@ -1,198 +1,170 @@
 .champion-dossier {
-  position: sticky;
-  top: 0;
-  display: grid;
-  gap: 0.72rem;
-  padding: 0.9rem;
-  border-radius: 20px;
-  background:
-    radial-gradient(circle at top left, rgba(200, 167, 127, 0.1), transparent 30%),
-    radial-gradient(circle at 90% 12%, rgba(62, 113, 147, 0.12), transparent 26%),
-    linear-gradient(180deg, rgba(17, 26, 37, 0.88), rgba(9, 14, 21, 0.94));
-  box-shadow: 0 14px 34px rgba(1, 4, 9, 0.18);
+  gap: 0.8rem;
 }
 
-.champion-dossier__portrait-card {
-  display: grid;
-  gap: 0.68rem;
-  justify-items: start;
-}
-
-.champion-dossier__portrait-card .champion-avatar--dossier {
-  width: min(100%, 11.4rem);
-}
-
-.champion-dossier__title-block {
-  display: grid;
-  gap: 0.24rem;
+.champion-dossier__sidebar-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem;
   min-width: 0;
 }
 
-.champion-dossier__title {
-  margin: 0;
-  color: #fff8ec;
-  font-size: clamp(1.58rem, 2.6vw, 2.16rem);
-  line-height: 0.98;
+.champion-dossier__sidebar-badge--active {
+  border-color: rgba(200, 167, 127, 0.24);
+  background:
+    radial-gradient(circle at top left, color-mix(in oklch, var(--color-copper) 10%, transparent), transparent 58%),
+    var(--workbench-chip-background-muted);
+  color: rgba(255, 243, 223, 0.9);
 }
 
-.champion-dossier__secondary,
-.champion-dossier__line {
+.champion-dossier__media-panel {
+  overflow: hidden;
+  padding: 0;
+}
+
+.champion-dossier__portrait-action,
+.champion-dossier__media-panel > .champion-avatar--dossier,
+.champion-dossier__media-panel > .champion-dossier__hero-art {
+  width: 100%;
+  max-width: none;
+}
+
+.champion-dossier__portrait-action {
+  position: relative;
+  display: block;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.champion-dossier__portrait-action .champion-avatar--dossier,
+.champion-dossier__portrait-action .champion-dossier__hero-art {
+  width: 100%;
+  max-width: none;
   margin: 0;
-  color: rgba(242, 239, 230, 0.68);
-  font-size: 0.88rem;
-  line-height: 1.42;
+}
+
+.champion-dossier__media-panel .champion-avatar--dossier,
+.champion-dossier__hero-art {
+  display: block;
+  height: auto;
+  aspect-ratio: 11.4 / 6.8;
+  border: 0;
+  border-radius: calc(var(--radius-md) - 1px);
+  box-shadow: none;
+}
+
+.champion-dossier__hero-art {
+  flex-shrink: 0;
+  background:
+    radial-gradient(circle at 50% 100%, rgba(62, 113, 147, 0.18), transparent 36%),
+    #010204;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.champion-dossier__portrait-action-icon {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: grid;
+  place-items: center;
+  width: 1.64rem;
+  height: 1.64rem;
+  border: 1px solid rgba(255, 246, 232, 0.16);
+  border-radius: 999px;
+  background: rgba(7, 12, 18, 0.54);
+  color: rgba(255, 246, 232, 0.9);
+  font-size: 0.86rem;
+  line-height: 1;
+}
+
+.champion-dossier__portrait-action:hover .champion-avatar--dossier,
+.champion-dossier__portrait-action:hover .champion-dossier__hero-art,
+.champion-dossier__portrait-action:focus-visible .champion-avatar--dossier,
+.champion-dossier__portrait-action:focus-visible .champion-dossier__hero-art {
+  filter: brightness(1.06) saturate(1.04);
+}
+
+.champion-dossier__portrait-action:hover .champion-dossier__portrait-action-icon,
+.champion-dossier__portrait-action:focus-visible .champion-dossier__portrait-action-icon {
+  border-color: rgba(200, 167, 127, 0.32);
+  background: rgba(44, 33, 22, 0.68);
+}
+
+.champion-dossier__portrait-action:focus-visible {
+  outline: 2px solid rgba(200, 167, 127, 0.58);
+  outline-offset: -4px;
 }
 
 .champion-dossier__section {
-  display: grid;
-  gap: 0.52rem;
-  min-width: 0;
-  padding-top: 0.72rem;
-  border-top: 1px solid rgba(227, 214, 193, 0.07);
+  gap: 0.65rem;
 }
 
-.champion-dossier__section--scores,
-.champion-dossier__section--facts {
-  padding-top: 0;
-  border-top: 0;
-}
-
-.champion-dossier__role-strip,
-.champion-dossier__badge-grid {
-  gap: 0.36rem;
+.champion-dossier__role-strip {
+  gap: 0.45rem;
 }
 
 .champion-dossier__role-strip .tag-pill {
-  border-color: rgba(200, 167, 127, 0.16);
-  background: rgba(200, 167, 127, 0.07);
-  color: #fff0d7;
+  min-height: 1.74rem;
+  padding: 0.3rem 0.62rem;
+  border-color: rgba(227, 214, 193, 0.12);
+  background: rgba(9, 14, 20, 0.18);
+  color: rgba(242, 239, 230, 0.78);
+  font-size: 0.82rem;
 }
 
 .champion-dossier__score-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.36rem;
+  gap: 0.42rem;
 }
 
 .champion-dossier__score {
   display: grid;
   gap: 0.1rem;
   min-width: 0;
-  padding: 0.5rem 0.42rem;
+  padding: 0.48rem 0.38rem;
   border: 1px solid rgba(227, 214, 193, 0.08);
   border-radius: 12px;
-  background: rgba(7, 12, 18, 0.28);
+  background: rgba(7, 12, 18, 0.2);
   text-align: center;
 }
 
-.champion-dossier__score span,
-.champion-dossier__meta-label {
-  color: rgba(242, 239, 230, 0.58);
-  font-size: 0.68rem;
-  letter-spacing: 0.13em;
+.champion-dossier__score span {
+  color: rgba(242, 239, 230, 0.5);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .champion-dossier__score strong {
-  color: #fff8ec;
-  font-size: 0.96rem;
+  color: rgba(255, 248, 237, 0.94);
+  font-size: 0.94rem;
 }
 
 .champion-dossier__score em {
-  color: rgba(200, 167, 127, 0.86);
-  font-size: 0.76rem;
+  color: rgba(200, 167, 127, 0.82);
+  font-size: 0.74rem;
   font-style: normal;
 }
 
 .champion-dossier__section--facts {
   grid-template-columns: 1fr;
-  gap: 0.46rem;
 }
 
-.champion-dossier__section--facts .detail-field {
+.champion-dossier__section--facts .detail-field,
+.champion-dossier__section .detail-field {
   padding: 0.56rem 0.6rem;
   border-radius: 12px;
-}
-
-.champion-dossier__meta-list {
-  display: grid;
-  gap: 0.34rem;
-  min-width: 0;
-}
-
-.champion-dossier__stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.4rem;
-}
-
-.dossier-stat {
-  display: grid;
-  gap: 0.16rem;
-  padding: 0.58rem 0.52rem;
-  border: 1px solid rgba(227, 214, 193, 0.08);
-  border-radius: 13px;
-  background: rgba(7, 12, 18, 0.26);
-  text-align: center;
-}
-
-.dossier-stat__label {
-  color: rgba(242, 239, 230, 0.56);
-  font-size: 0.7rem;
-}
-
-.dossier-stat__value {
-  color: #fff8ec;
-  font-size: 1rem;
-}
-
-.champion-dossier__artwork-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.48rem;
-  min-height: 2.2rem;
-  padding: 0.45rem 0.7rem;
-  border: 1px solid rgba(200, 167, 127, 0.18);
-  border-radius: 999px;
-  background: rgba(200, 167, 127, 0.08);
-  color: #fff6e8;
-  cursor: pointer;
-}
-
-.champion-dossier__artwork-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.25rem;
-  height: 1.25rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-  font-size: 0.82rem;
-}
-
-@media (max-width: 1040px) {
-  .champion-dossier {
-    position: relative;
-  }
-
-  .champion-dossier__portrait-card {
-    grid-template-columns: auto minmax(0, 1fr);
-    align-items: center;
-  }
-
-  .champion-dossier__portrait-card .champion-avatar--dossier {
-    width: 7.5rem;
-  }
+  background: rgba(7, 12, 18, 0.18);
 }
 
 @media (max-width: 620px) {
-  .champion-dossier__portrait-card {
-    grid-template-columns: 1fr;
-  }
-
-  .champion-dossier__score-grid,
-  .champion-dossier__stats {
+  .champion-dossier__score-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

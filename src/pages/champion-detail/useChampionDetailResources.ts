@@ -11,6 +11,7 @@ import type { ChampionDetailState } from './types'
 export function useChampionDetailResources(championId: string | undefined) {
   const [state, setState] = useState<ChampionDetailState>({ status: 'idle' })
   const [skinAnimationsById, setSkinAnimationsById] = useState<Map<string, ChampionAnimation>>(new Map())
+  const [heroIllustrationsByChampionId, setHeroIllustrationsByChampionId] = useState<Map<string, ChampionIllustration>>(new Map())
   const [skinIllustrationsById, setSkinIllustrationsById] = useState<Map<string, ChampionIllustration>>(new Map())
   const [specializationGraphicsById, setSpecializationGraphicsById] = useState<
     Map<string, ChampionSpecializationGraphic>
@@ -94,6 +95,13 @@ export function useChampionDetailResources(championId: string | undefined) {
           return
         }
 
+        setHeroIllustrationsByChampionId(
+          new Map(
+            collection.items
+              .filter((illustration) => illustration.kind === 'hero-base')
+              .map((illustration) => [illustration.championId, illustration]),
+          ),
+        )
         setSkinIllustrationsById(
           new Map(
             collection.items
@@ -107,6 +115,7 @@ export function useChampionDetailResources(championId: string | undefined) {
           return
         }
 
+        setHeroIllustrationsByChampionId(new Map())
         setSkinIllustrationsById(new Map())
       })
 
@@ -157,6 +166,7 @@ export function useChampionDetailResources(championId: string | undefined) {
       (state.status === 'not-found' && state.championId !== championId) ||
       (state.status === 'error' && state.championId !== championId))
   const selectedSkinArtworkIds = selectedSkin ? getSkinArtworkIds(selectedSkin) : null
+  const heroIllustration = detail ? heroIllustrationsByChampionId.get(detail.summary.id) ?? null : null
   const selectedSkinAnimation = selectedSkin ? skinAnimationsById.get(selectedSkin.id) ?? null : null
   const selectedSkinIllustration = selectedSkin ? skinIllustrationsById.get(selectedSkin.id) ?? null : null
   const selectedSkinPreviewUrl =
@@ -207,6 +217,7 @@ export function useChampionDetailResources(championId: string | undefined) {
     detail,
     isMissingChampionId,
     isLoading,
+    heroIllustration,
     specializationGraphicsById,
     isArtworkDialogOpen,
     selectedSkin,

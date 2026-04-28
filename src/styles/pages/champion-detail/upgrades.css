@@ -503,8 +503,21 @@
     grid-template-columns: 1fr;
   }
 
+  .specialization-column-grid {
+    grid-template-columns: 1fr;
+    gap: 0.86rem;
+  }
+
+  .specialization-column {
+    padding: 0.82rem;
+  }
+
   .specialization-column__header {
     flex-direction: column;
+  }
+
+  .specialization-column__metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .upgrade-card__topline {

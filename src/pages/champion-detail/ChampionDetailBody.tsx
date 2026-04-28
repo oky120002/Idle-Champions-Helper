@@ -6,7 +6,6 @@ import type {
   ChampionSpecializationGraphic,
 } from '../../domain/types'
 import { DetailSectionPanels } from './DetailSectionPanels'
-import { DossierSection } from './DossierSection'
 import { SkinArtworkDialog } from './SkinArtworkDialog'
 import type {
   DetailSectionId,
@@ -23,7 +22,6 @@ interface ChampionDetailBodyProps {
   locale: 'zh-CN' | 'en-US'
   t: (text: { zh: string; en: string }) => string
   activeSectionId: DetailSectionId
-  summaryAvailabilityBadges: Array<{ key: string; label: string; active?: boolean }>
   overviewFields: DetailFieldProps[]
   effectContext: EffectContext
   specializationGraphicsById: Map<string, ChampionSpecializationGraphic>
@@ -52,42 +50,32 @@ interface ChampionDetailBodyProps {
 export function ChampionDetailBody(props: ChampionDetailBodyProps) {
   return (
     <>
-      <div className="champion-detail-layout">
-        <DossierSection
+      <section
+        className="champion-detail-tab-shell"
+        aria-label={props.t({ zh: '英雄详情内容', en: 'Champion detail content' })}
+      >
+        <DetailSectionPanels
           detail={props.detail}
           locale={props.locale}
           t={props.t}
-          summaryAvailabilityBadges={props.summaryAvailabilityBadges}
+          activeSectionId={props.activeSectionId}
+          effectContext={props.effectContext}
           overviewFields={props.overviewFields}
+          specializationColumns={props.specializationColumns}
+          specializationGraphicsById={props.specializationGraphicsById}
+          ledgerRows={props.ledgerRows}
+          ledgerFilterOptions={props.ledgerFilterOptions}
+          activeLedgerFilterKeySet={props.activeLedgerFilterKeySet}
+          visibleLedgerRows={props.visibleLedgerRows}
+          hiddenLedgerSummary={props.hiddenLedgerSummary}
+          hasCustomLedgerFilterState={props.hasCustomLedgerFilterState}
+          isShowingAllLedgerTypes={props.isShowingAllLedgerTypes}
+          toggleLedgerFilter={props.toggleLedgerFilter}
+          resetLedgerFilters={props.resetLedgerFilters}
+          enableAllLedgerFilters={props.enableAllLedgerFilters}
           openArtworkDialog={props.openArtworkDialog}
         />
-        <section
-          className="champion-detail-tab-shell"
-          aria-label={props.t({ zh: '英雄详情内容', en: 'Champion detail content' })}
-        >
-          <DetailSectionPanels
-            detail={props.detail}
-            locale={props.locale}
-            t={props.t}
-            activeSectionId={props.activeSectionId}
-            effectContext={props.effectContext}
-            overviewFields={props.overviewFields}
-            specializationColumns={props.specializationColumns}
-            specializationGraphicsById={props.specializationGraphicsById}
-            ledgerRows={props.ledgerRows}
-            ledgerFilterOptions={props.ledgerFilterOptions}
-            activeLedgerFilterKeySet={props.activeLedgerFilterKeySet}
-            visibleLedgerRows={props.visibleLedgerRows}
-            hiddenLedgerSummary={props.hiddenLedgerSummary}
-            hasCustomLedgerFilterState={props.hasCustomLedgerFilterState}
-            isShowingAllLedgerTypes={props.isShowingAllLedgerTypes}
-            toggleLedgerFilter={props.toggleLedgerFilter}
-            resetLedgerFilters={props.resetLedgerFilters}
-            enableAllLedgerFilters={props.enableAllLedgerFilters}
-            openArtworkDialog={props.openArtworkDialog}
-          />
-        </section>
-      </div>
+      </section>
 
       <SkinArtworkDialog
         detail={props.detail}

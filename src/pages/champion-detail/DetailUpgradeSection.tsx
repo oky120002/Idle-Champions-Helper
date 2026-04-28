@@ -1,7 +1,7 @@
 import { resolveDataUrl } from '../../data/client'
 import { SurfaceCard } from '../../components/SurfaceCard'
 import type { ChampionSpecializationGraphic } from '../../domain/types'
-import { DetailSectionHeader, UpgradeSpecializationArt } from './detail-primitives'
+import { UpgradeSpecializationArt } from './detail-primitives'
 import { buildNotAvailableLabel, formatNumber } from './detail-value-formatters'
 import type {
   ChampionDetailCssProperties,
@@ -11,7 +11,6 @@ import type {
 
 type DetailUpgradeSectionProps = {
   locale: 'zh-CN' | 'en-US'
-  t: (text: { zh: string; en: string }) => string
   specializationColumns: SpecializationUpgradeColumn[]
   specializationGraphicsById: Map<string, ChampionSpecializationGraphic>
 }
@@ -35,19 +34,19 @@ function formatUpgradeLevel(entry: SpecializationUpgradeEntry, locale: 'zh-CN' |
     : `Level ${formatNumber(entry.upgrade.requiredLevel, locale)}`
 }
 
+function formatSpecTitle(title: string, locale: 'zh-CN' | 'en-US'): string {
+  return locale === 'zh-CN' ? `专精：${title}` : `Spec: ${title}`
+}
+
 function buildUpgradeTypeBadge(
   entry: SpecializationUpgradeEntry | undefined,
-  locale: 'zh-CN' | 'en-US',
 ): { label: string; className: string } | null {
   if (!entry) {
     return null
   }
 
   if (entry.relation === 'primary') {
-    return {
-      label: locale === 'zh-CN' ? '专精' : 'Spec',
-      className: 'upgrade-card__type-badge upgrade-card__type-badge--spec',
-    }
+    return null
   }
 
   if (entry.upgrade.upgradeType === 'unlock_ability' || entry.upgrade.upgradeType === 'unlock_ultimate') {
@@ -82,7 +81,8 @@ function SpecializationColumnEntryCard({
       : null,
     !entry.upgrade.defaultEnabled ? (locale === 'zh-CN' ? '默认关闭' : 'Disabled by default') : null,
   ].filter((value): value is string => Boolean(value))
-  const typeBadge = buildUpgradeTypeBadge(entry, locale)
+  const typeBadge = buildUpgradeTypeBadge(entry)
+  const title = entry.relation === 'primary' ? formatSpecTitle(entry.presentation.title, locale) : entry.presentation.title
 
   return (
     <article
@@ -95,7 +95,7 @@ function SpecializationColumnEntryCard({
       <div className="specialization-column__entry-topbar">
         <div className="specialization-column__entry-topline">
           <span className="upgrade-card__level-pill">{formatUpgradeLevel(entry, locale)}</span>
-          <h3 className="specialization-column__entry-title">{entry.presentation.title}</h3>
+          <h3 className="specialization-column__entry-title">{title}</h3>
           {typeBadge ? <span className={typeBadge.className}>{typeBadge.label}</span> : null}
         </div>
         {iconGraphic ? (
@@ -160,7 +160,8 @@ function SpecializationColumnCard({
         ]
       : []),
   ]
-  const columnTypeBadge = buildUpgradeTypeBadge(primaryEntry, locale)
+  const columnTypeBadge = buildUpgradeTypeBadge(primaryEntry)
+  const columnTitle = primaryEntry ? formatSpecTitle(column.title, locale) : column.title
 
   return (
     <article className="specialization-column">
@@ -168,7 +169,7 @@ function SpecializationColumnCard({
         <div className="specialization-column__header-main">
           <div className="specialization-column__eyebrow-row">
             {primaryEntry ? <span className="upgrade-card__level-pill">{formatUpgradeLevel(primaryEntry, locale)}</span> : null}
-            <h3 className="specialization-column__title">{column.title}</h3>
+            <h3 className="specialization-column__title">{columnTitle}</h3>
             {columnTypeBadge ? <span className={columnTypeBadge.className}>{columnTypeBadge.label}</span> : null}
           </div>
           {column.summary ? <p className="specialization-column__summary">{column.summary}</p> : null}
@@ -216,14 +217,12 @@ function SpecializationColumnCard({
 
 export function DetailUpgradeSection({
   locale,
-  t,
   specializationColumns,
   specializationGraphicsById,
 }: DetailUpgradeSectionProps) {
   return (
     <SurfaceCard className="detail-section detail-section--upgrades detail-section--headerless">
       <div id="specializations" className="detail-section-anchor" />
-      <DetailSectionHeader title={t({ zh: '专精', en: 'Specializations' })} badges={[]} />
 
       {specializationColumns.length > 0 ? (
         <div

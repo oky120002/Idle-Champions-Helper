@@ -3,7 +3,6 @@ import { SurfaceCard } from '../../components/SurfaceCard'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import type { ChampionDetail } from '../../domain/types'
 import { AttackPanel, DetailField, LocalizedTextStack, NumericUpgradeRow } from './detail-cards'
-import { DetailSectionHeader } from './detail-primitives'
 import { formatDigitString, formatNumber } from './detail-value-formatters'
 import type { LedgerUpgradeRow, UpgradeCategoryMeta } from './types'
 
@@ -41,15 +40,6 @@ export function DetailCombatSection({
   return (
     <SurfaceCard className="detail-section detail-section--combat detail-section--headerless">
       <div id="abilities" className="detail-section-anchor" />
-      <DetailSectionHeader
-        eyebrow={t({ zh: '战斗', en: 'Combat' })}
-        title={t({ zh: '基础数值、普攻、大招与等级升级', en: 'Base stats, attacks, ultimate, and level upgrades' })}
-        description={t({
-          zh: '把会直接影响英雄机制理解的字段和等级升级列表收拢到同一个能力阅读区。',
-          en: 'Group combat behavior fields and the level-up ledger into the same abilities reading area.',
-        })}
-        badges={[]}
-      />
 
       <div className="detail-field-grid">
         <DetailField label={t({ zh: '基础花费', en: 'Base cost' })} value={formatDigitString(detail.baseCost, locale)} />

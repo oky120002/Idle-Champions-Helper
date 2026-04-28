@@ -92,7 +92,6 @@ export function DetailSectionPanels(props: DetailSectionPanelsProps) {
         <DetailFeatSection
           detail={props.detail}
           locale={props.locale}
-          t={props.t}
           effectContext={props.effectContext}
         />
       </div>
@@ -130,7 +129,6 @@ export function DetailSectionPanels(props: DetailSectionPanelsProps) {
     <div className="champion-detail-content">
       <DetailUpgradeSection
         locale={props.locale}
-        t={props.t}
         specializationColumns={props.specializationColumns}
         specializationGraphicsById={props.specializationGraphicsById}
       />
