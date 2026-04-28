@@ -1,12 +1,5 @@
 import type { ReactNode } from 'react'
-
-function FilterDisclosureChevronIcon() {
-  return (
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
-      <path d="M3.5 6.25 8 10.5l4.5-4.25" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
+import { ChevronDown } from 'lucide-react'
 
 interface FilterDisclosureSectionProps {
   title: string
@@ -31,7 +24,7 @@ export function FilterDisclosureSection(props: FilterDisclosureSectionProps) {
           <span className="filter-disclosure__summary">{summary}</span>
         </div>
         <span className="filter-disclosure__chevron" aria-hidden="true">
-          <FilterDisclosureChevronIcon />
+          <ChevronDown aria-hidden="true" strokeWidth={1.8} />
         </span>
       </button>
       <div className="filter-disclosure__panel" aria-hidden={!isExpanded}>

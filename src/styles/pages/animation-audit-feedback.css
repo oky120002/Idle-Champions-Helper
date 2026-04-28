@@ -73,6 +73,10 @@
 
 .animation-audit-feedback-export__button,
 .animation-audit-feedback-card__clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.42rem;
   min-height: 2.4rem;
   padding: 0.54rem 0.92rem;
   border-radius: 999px;
@@ -80,6 +84,12 @@
   background: rgba(200, 167, 127, 0.08);
   color: #fff0d8;
   cursor: pointer;
+}
+
+.animation-audit-feedback-export__button svg,
+.animation-audit-feedback-card__clear svg {
+  width: 1rem;
+  height: 1rem;
 }
 
 .animation-audit-feedback-export__button:disabled {
@@ -114,8 +124,21 @@
 }
 
 .animation-audit-feedback-export__preview summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
   cursor: pointer;
   color: rgba(242, 239, 230, 0.78);
+}
+
+.animation-audit-feedback-export__preview summary svg {
+  width: 1rem;
+  height: 1rem;
+  transition: transform 160ms ease;
+}
+
+.animation-audit-feedback-export__preview[open] summary svg {
+  transform: rotate(180deg);
 }
 
 .animation-audit-feedback-export__preview pre {

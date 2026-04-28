@@ -20,6 +20,7 @@ interface WorkbenchToolbarButtonAction extends WorkbenchToolbarBaseAction {
   kind?: 'button'
   label: ReactNode
   onClick: () => void | Promise<void>
+  icon?: ReactNode
   isActive?: boolean
   ariaPressed?: boolean
   variant?: 'default' | 'prominent'
@@ -91,6 +92,8 @@ export function WorkbenchToolbarItems({
       <WorkbenchToolbarActionButton
         key={item.id}
         onClick={item.onClick}
+        {...(item.icon !== undefined ? { icon: item.icon } : {})}
+        {...(typeof item.label === 'string' ? { ariaLabel: item.label } : {})}
         {...(item.variant !== undefined ? { variant: item.variant } : {})}
         {...(item.isActive !== undefined ? { isActive: item.isActive } : {})}
         {...(item.ariaPressed !== undefined ? { ariaPressed: item.ariaPressed } : {})}

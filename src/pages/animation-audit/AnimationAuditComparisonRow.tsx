@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Pause, Play } from 'lucide-react'
 import type { AppLocale } from '../../app/i18n'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import type { ChampionAnimation } from '../../domain/types'
@@ -135,6 +136,7 @@ export function AnimationAuditComparisonRow({
           className="animation-audit-row__toggle"
           onClick={() => setIsPlaying((value) => !value)}
         >
+          {isPlaying ? <Pause aria-hidden="true" strokeWidth={1.9} /> : <Play aria-hidden="true" strokeWidth={1.9} />}
           {isPlaying ? t({ zh: '暂停这一行', en: 'Pause row' }) : t({ zh: '播放这一行', en: 'Play row' })}
         </button>
       </header>

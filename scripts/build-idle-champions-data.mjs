@@ -6,6 +6,7 @@ import { auditChampionAnimations } from './audit-idle-champions-animations.mjs'
 import { syncChampionAnimations } from './sync-idle-champions-animations.mjs'
 import { syncChampionIllustrations } from './sync-idle-champions-illustrations.mjs'
 import { syncPetsCatalog } from './sync-idle-champions-pets.mjs'
+import { syncChampionConsolePortraits } from './sync-idle-champions-console-portraits.mjs'
 import { syncChampionPortraits } from './sync-idle-champions-portraits.mjs'
 import { syncChampionSpecializationGraphics } from './sync-idle-champions-specialization-graphics.mjs'
 
@@ -39,10 +40,11 @@ async function main() {
   2. language_id=7 中文 definitions（每次都会重新拉取最新）
   3. champions / variants / formations / enums 归一化数据
   4. 官方英雄头像资源
-  5. 详情页升级区本地专精图资源
-  6. 详情页动态 hero-base / skin 动画原始资源
-  7. 基于动画默认帧生成本地静态立绘（缺动画直接报错）
-  8. 宠物目录、静态图与可播放的本地动图清单
+  5. 详情页正面图资源
+  6. 详情页升级区本地专精图资源
+  7. 详情页动态 hero-base / skin 动画原始资源
+  8. 基于动画默认帧生成本地静态立绘（缺动画直接报错）
+  9. 宠物目录、静态图与可播放的本地动图清单
 
 推荐入口：
   npm run data:official
@@ -75,6 +77,11 @@ async function main() {
     manualOverrides: values.manualOverrides,
   })
   const portraits = await syncChampionPortraits({
+    input: fetched.rawFile,
+    outputDir: values.outputDir,
+    masterApiUrl: values.masterApiUrl,
+  })
+  const consolePortraits = await syncChampionConsolePortraits({
     input: fetched.rawFile,
     outputDir: values.outputDir,
     masterApiUrl: values.masterApiUrl,
@@ -113,11 +120,12 @@ async function main() {
   })
 
   console.log(`官方基座数据流水线完成：`)
-  console.log(`- included: definitions(source + zh) + normalized collections + champion portraits + champion illustrations + champion animations + pet catalog + pet animations`)
+  console.log(`- included: definitions(source + zh) + normalized collections + champion portraits + champion console portraits + champion illustrations + champion animations + pet catalog + pet animations`)
   console.log(`- source raw: ${fetched.rawFile}`)
   console.log(`- display raw: ${localizedFetched.rawFile}`)
   console.log(`- normalized dir: ${normalized.outputDir}`)
   console.log(`- portraits dir: ${portraits.outputDir}`)
+  console.log(`- console portraits dir: ${consolePortraits.outputDir}`)
   console.log(`- specialization graphics dir: ${specializationGraphics.outputDir}`)
   console.log(`- illustrations dir: ${illustrations.outputDir}`)
   console.log(`- animations dir: ${animations.outputDir} (${animations.count} items)`)

@@ -1,7 +1,9 @@
+import { useState } from 'react'
+import { Images } from 'lucide-react'
 import { ChampionAvatar } from '../../components/ChampionAvatar'
 import { resolveDataUrl } from '../../data/client'
 import { getPrimaryLocalizedText, getRoleLabel } from '../../domain/localizedText'
-import type { AbilityScoreKey, ChampionDetail, ChampionIllustration } from '../../domain/types'
+import type { AbilityScoreKey, ChampionDetail, ChampionIllustration, JsonValue } from '../../domain/types'
 import { DetailField, LocalizedTextStack } from './detail-cards'
 import { formatNumber } from './detail-value-formatters'
 
@@ -15,6 +17,35 @@ interface DossierSectionProps {
 }
 
 const ABILITY_SCORE_KEYS: AbilityScoreKey[] = ['str', 'dex', 'con', 'int', 'wis', 'cha']
+const CONSOLE_PORTRAIT_DIR_NAME = 'champion-console-portraits'
+
+function isJsonRecord(value: JsonValue): value is Record<string, JsonValue> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value)
+}
+
+function readConsolePortraitGraphicId(detail: ChampionDetail): string | null {
+  const heroSnapshot = detail.raw.hero.original
+  const heroSnapshotGraphicId = isJsonRecord(heroSnapshot) ? heroSnapshot.console_portrait : null
+  const detailPropertiesGraphicId = isJsonRecord(detail.properties) ? detail.properties.console_portrait : null
+  const graphicId = heroSnapshotGraphicId ?? detailPropertiesGraphicId
+
+  if (typeof graphicId === 'number' && Number.isFinite(graphicId) && graphicId > 0) {
+    return String(graphicId)
+  }
+
+  if (typeof graphicId === 'string' && graphicId.trim() && graphicId !== '0') {
+    return graphicId.trim()
+  }
+
+  return null
+}
+
+function resolveDetailDataVersion(detail: ChampionDetail, heroIllustration: ChampionIllustration | null): string {
+  const candidatePath = detail.summary.portrait?.path ?? heroIllustration?.image.path ?? ''
+  const [version] = candidatePath.split('/')
+
+  return version || 'v1'
+}
 
 function formatAbilityModifier(score: number | null | undefined): string {
   if (typeof score !== 'number' || !Number.isFinite(score)) {
@@ -39,7 +70,20 @@ export function DossierSection({
   const primaryName = getPrimaryLocalizedText(detail.summary.name, locale)
   const seatValue = formatNumber(detail.summary.seat, locale)
   const seatLabel = locale === 'zh-CN' ? `${seatValue} 号位` : `Seat ${seatValue}`
-  const portrait = heroIllustration ? (
+  const consolePortraitGraphicId = readConsolePortraitGraphicId(detail)
+  const consolePortraitPath = consolePortraitGraphicId
+    ? `${resolveDetailDataVersion(detail, heroIllustration)}/${CONSOLE_PORTRAIT_DIR_NAME}/${detail.summary.id}.png`
+    : null
+  const [failedConsolePortraitPath, setFailedConsolePortraitPath] = useState<string | null>(null)
+  const portrait = consolePortraitPath && failedConsolePortraitPath !== consolePortraitPath ? (
+    <img
+      className="champion-dossier__console-portrait"
+      src={resolveDataUrl(consolePortraitPath)}
+      alt={locale === 'zh-CN' ? `${primaryName}正面图` : `${primaryName} front portrait`}
+      loading="eager"
+      onError={() => setFailedConsolePortraitPath(consolePortraitPath)}
+    />
+  ) : heroIllustration ? (
     <img
       className="champion-dossier__hero-art"
       src={resolveDataUrl(heroIllustration.image.path)}
@@ -64,7 +108,7 @@ export function DossierSection({
           >
             {portrait}
             <span aria-hidden="true" className="champion-dossier__portrait-action-icon">
-              ◎
+              <Images strokeWidth={2.1} />
             </span>
           </button>
         ) : (

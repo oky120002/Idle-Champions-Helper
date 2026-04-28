@@ -1,3 +1,4 @@
+import { ChevronDown, Clipboard, Eraser } from 'lucide-react'
 import type { AnimationAuditCopyState } from './types'
 
 interface AnimationAuditFeedbackExportPanelProps {
@@ -77,6 +78,7 @@ export function AnimationAuditFeedbackExportPanel({
           onClick={onCopy}
           disabled={!hasFeedback}
         >
+          <Clipboard aria-hidden="true" strokeWidth={1.9} />
           {t({ zh: '复制已勾选 JSON', en: 'Copy selected JSON' })}
         </button>
         <button
@@ -85,6 +87,7 @@ export function AnimationAuditFeedbackExportPanel({
           onClick={onClearAll}
           disabled={!hasFeedback}
         >
+          <Eraser aria-hidden="true" strokeWidth={1.9} />
           {t({ zh: '清空全部勾选', en: 'Clear all selections' })}
         </button>
       </div>
@@ -103,7 +106,10 @@ export function AnimationAuditFeedbackExportPanel({
 
       {hasFeedback ? (
         <details className="animation-audit-feedback-export__preview">
-          <summary>{t({ zh: '展开 JSON 预览（复制失败时可手动复制）', en: 'Expand JSON preview for manual copy' })}</summary>
+          <summary>
+            <ChevronDown aria-hidden="true" strokeWidth={1.8} />
+            {t({ zh: '展开 JSON 预览（复制失败时可手动复制）', en: 'Expand JSON preview for manual copy' })}
+          </summary>
           <pre>{feedbackPreviewJson}</pre>
         </details>
       ) : null}

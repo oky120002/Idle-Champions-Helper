@@ -23,17 +23,31 @@
 }
 
 .site-header--subpage.site-header--condensed .site-header__brand-group {
+  display: grid;
+  gap: 0.18rem;
+  justify-items: start;
   padding-left: 0;
 }
 
 .site-header--subpage.site-header--condensed .site-header__compact-brand {
+  order: 1;
   display: inline-flex;
   opacity: 1;
   transform: translateY(0);
 }
 
+.site-header--subpage.site-header--condensed .site-header__brand-stack {
+  order: 2;
+}
+
 .site-header--subpage.site-header--condensed .site-kicker {
   display: none;
+}
+
+.site-header--subpage.site-header--condensed .site-data-sync {
+  padding-inline: 0.62rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.07em;
 }
 
 .site-header--subpage.site-header--condensed .site-nav {

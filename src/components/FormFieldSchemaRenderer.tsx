@@ -1,4 +1,5 @@
 import type { HTMLInputTypeAttribute, InputHTMLAttributes, ReactNode } from 'react'
+import { Search } from 'lucide-react'
 import { FieldGroup } from './FieldGroup'
 import { FilterChipSingleSelectField } from './filter-sidebar/FilterChipSingleSelectField'
 
@@ -135,6 +136,19 @@ function renderField(field: FormFieldSchema): ReactNode | null {
     )
   }
 
+  const isSearch = field.type === 'search'
+  const input = (
+    <input
+      id={field.inputId}
+      className={field.inputClassName ?? (isSearch ? 'text-input text-input--with-leading-icon' : 'text-input')}
+      type={field.type ?? 'text'}
+      value={field.value}
+      {...(field.placeholder !== undefined ? { placeholder: field.placeholder } : {})}
+      {...(field.inputMode !== undefined ? { inputMode: field.inputMode } : {})}
+      onChange={(event) => field.onChange(event.target.value)}
+    />
+  )
+
   return (
     <FieldGroup
       key={field.id}
@@ -143,15 +157,12 @@ function renderField(field: FormFieldSchema): ReactNode | null {
       {...(field.hint !== undefined ? { hint: field.hint } : {})}
       {...(field.className !== undefined ? { className: field.className } : {})}
     >
-      <input
-        id={field.inputId}
-        className={field.inputClassName ?? 'text-input'}
-        type={field.type ?? 'text'}
-        value={field.value}
-        {...(field.placeholder !== undefined ? { placeholder: field.placeholder } : {})}
-        {...(field.inputMode !== undefined ? { inputMode: field.inputMode } : {})}
-        onChange={(event) => field.onChange(event.target.value)}
-      />
+      {isSearch ? (
+        <span className="text-input-shell text-input-shell--search">
+          <Search className="text-input-shell__icon" aria-hidden="true" strokeWidth={1.8} />
+          {input}
+        </span>
+      ) : input}
     </FieldGroup>
   )
 }

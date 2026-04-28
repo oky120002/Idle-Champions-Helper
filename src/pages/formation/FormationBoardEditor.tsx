@@ -1,3 +1,4 @@
+import { Eraser } from 'lucide-react'
 import { ActionButtons } from '../../components/ActionButtons'
 import { LabeledValueCardGrid } from '../../components/LabeledValueCardGrid'
 import { StatusBannerStack, type StatusBannerStackItem } from '../../components/StatusBannerStack'
@@ -118,6 +119,7 @@ export function FormationBoardEditor({ model }: FormationBoardEditorProps) {
           {
             id: 'clear-formation',
             label: t({ zh: '清空当前阵型', en: 'Clear this formation' }),
+            icon: <Eraser aria-hidden="true" strokeWidth={1.9} />,
             tone: 'ghost',
             onClick: handleClear,
           },

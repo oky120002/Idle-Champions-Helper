@@ -5,6 +5,7 @@ export interface ActionButtonItem {
   id: string
   label: ReactNode
   onClick: () => void | Promise<void>
+  icon?: ReactNode
   tone?: ActionButtonTone
   disabled?: boolean
   hidden?: boolean
@@ -39,6 +40,7 @@ export function ActionButtons({
       type={item.type}
       tone={item.tone}
       disabled={item.disabled}
+      icon={item.icon}
       compact={item.compact}
       toggled={item.toggled}
       className={item.className}

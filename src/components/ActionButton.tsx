@@ -5,6 +5,7 @@ export type ActionButtonTone = 'primary' | 'secondary' | 'ghost'
 interface ActionButtonProps {
   children: ReactNode
   onClick: () => void | Promise<void>
+  icon?: ReactNode
   tone?: ActionButtonTone | undefined
   compact?: boolean | undefined
   toggled?: boolean | undefined
@@ -19,6 +20,7 @@ interface ActionButtonProps {
 export function ActionButton({
   children,
   onClick,
+  icon,
   tone,
   compact = false,
   toggled = false,
@@ -36,7 +38,7 @@ export function ActionButton({
         tone,
         compact,
         toggled,
-        className,
+        className: [icon !== undefined ? 'action-button--with-icon' : '', className].filter(Boolean).join(' '),
       })}
       {...(disabled ? { disabled: true } : {})}
       {...(ariaPressed !== undefined ? { 'aria-pressed': ariaPressed } : {})}
@@ -46,7 +48,12 @@ export function ActionButton({
         void onClick()
       }}
     >
-      {children}
+      {icon !== undefined ? (
+        <span className="action-button__icon" aria-hidden="true">
+          {icon}
+        </span>
+      ) : null}
+      <span className="action-button__label">{children}</span>
     </button>
   )
 }
