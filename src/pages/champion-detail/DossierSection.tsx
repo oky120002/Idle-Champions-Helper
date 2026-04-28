@@ -12,7 +12,6 @@ interface DossierSectionProps {
   locale: 'zh-CN' | 'en-US'
   t: (text: { zh: string; en: string }) => string
   heroIllustration: ChampionIllustration | null
-  summaryAvailabilityBadges: Array<{ key: string; label: string; active?: boolean }>
   openArtworkDialog: (skinId?: string) => void
 }
 
@@ -62,7 +61,6 @@ export function DossierSection({
   locale,
   t,
   heroIllustration,
-  summaryAvailabilityBadges,
   openArtworkDialog,
 }: DossierSectionProps) {
   const characterSheet = detail.characterSheet
@@ -116,28 +114,17 @@ export function DossierSection({
         )}
       </section>
 
-      <div
-        className="champion-dossier__status-row"
-        role="group"
-        aria-label={t({ zh: '英雄状态', en: 'Champion status' })}
-      >
-        <span
-          className="champion-dossier__status-pill champion-dossier__status-pill--seat"
-          aria-label={seatLabel}
-          title={seatLabel}
-        >
-          {seatValue}
-        </span>
-        {summaryAvailabilityBadges.length > 0
-          ? summaryAvailabilityBadges.map((badge) => (
-            <span
-              key={badge.key}
-              className={badge.active ? 'champion-dossier__status-pill champion-dossier__status-pill--active' : 'champion-dossier__status-pill'}
-            >
-              {badge.label}
-            </span>
-          ))
-          : null}
+      <div className="champion-dossier__identity">
+        <div className="champion-dossier__identity-title">
+          <h2 className="champion-dossier__name">{primaryName}</h2>
+          <span
+            className="champion-dossier__seat-badge"
+            aria-label={seatLabel}
+            title={seatLabel}
+          >
+            {seatValue}
+          </span>
+        </div>
       </div>
 
       <section className="champion-dossier__section">

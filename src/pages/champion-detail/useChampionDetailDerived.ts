@@ -3,14 +3,10 @@ import type { AppLocale } from '../../app/i18n'
 import type { ChampionDetail } from '../../domain/types'
 import { buildEffectContext, buildAttackLabelById, buildUpgradeLabelById, buildUpgradePresentations } from './detail-derived-context'
 import {
-  buildAvailableFeatCount,
-  buildFeatSectionBadges,
   buildLedgerFilterOptions,
   buildLedgerRows,
   buildOverviewFields,
   buildSpotlightUpgrades,
-  buildSummaryAvailabilityBadges,
-  buildUpgradeSectionBadges,
   buildLedgerUpgrades,
 } from './detail-derived-sections'
 import { buildSpecializationUpgradeColumns } from './specialization-column-model'
@@ -60,26 +56,10 @@ export function useChampionDetailDerived(detail: ChampionDetail | null, locale: 
     locale,
     t,
   })
-  const availableFeatCount = useMemo(() => buildAvailableFeatCount(detail), [detail])
-  const upgradeSectionBadges = useMemo(
-    () =>
-      buildUpgradeSectionBadges({
-        detail,
-        specializationColumns,
-        locale,
-        t,
-      }),
-    [detail, locale, specializationColumns, t],
-  )
-  const featSectionBadges = useMemo(
-    () => buildFeatSectionBadges({ detail, availableFeatCount, locale, t }),
-    [availableFeatCount, detail, locale, t],
-  )
   const overviewFields = useMemo(
     () => buildOverviewFields({ detail, locale, t, effectContext }),
     [detail, effectContext, locale, t],
   )
-  const summaryAvailabilityBadges = useMemo(() => buildSummaryAvailabilityBadges(detail, t), [detail, t])
 
   return {
     effectContext,
@@ -93,10 +73,7 @@ export function useChampionDetailDerived(detail: ChampionDetail | null, locale: 
     hiddenLedgerSummary,
     hasCustomLedgerFilterState,
     isShowingAllLedgerTypes,
-    upgradeSectionBadges,
-    featSectionBadges,
     overviewFields,
-    summaryAvailabilityBadges,
     toggleLedgerFilter,
     resetLedgerFilters,
     enableAllLedgerFilters,
