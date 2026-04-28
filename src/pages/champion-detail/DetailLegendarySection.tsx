@@ -17,15 +17,7 @@ export function DetailLegendarySection({ detail, locale, t, effectContext }: Det
   return (
     <SurfaceCard className="detail-section detail-section--legendary detail-section--headerless">
       <div id="legendary" className="detail-section-anchor" />
-      <DetailSectionHeader
-        title={t({ zh: '传奇', en: 'Legendary' })}
-        badges={[
-          {
-            label: t({ zh: '效果', en: 'Effects' }),
-            value: String(legendaryEffects.length),
-          },
-        ]}
-      />
+      <DetailSectionHeader title={t({ zh: '传奇', en: 'Legendary' })} badges={[]} />
 
       {legendaryEffects.length > 0 ? (
         <div className="legendary-grid">

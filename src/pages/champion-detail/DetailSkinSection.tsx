@@ -18,15 +18,7 @@ export function DetailSkinSection({ detail, locale, t, effectContext, openArtwor
   return (
     <SurfaceCard className="detail-section detail-section--skins detail-section--headerless">
       <div id="skins" className="detail-section-anchor" />
-      <DetailSectionHeader
-        title={t({ zh: '皮肤', en: 'Skins' })}
-        badges={[
-          {
-            label: t({ zh: '皮肤', en: 'Skins' }),
-            value: String(detail.skins.length),
-          },
-        ]}
-      />
+      <DetailSectionHeader title={t({ zh: '皮肤', en: 'Skins' })} badges={[]} />
 
       {detail.skins.length > 0 ? (
         <div className="skin-list-grid">

@@ -5,7 +5,6 @@ import { DetailSectionHeader, UpgradeSpecializationArt } from './detail-primitiv
 import { buildNotAvailableLabel, formatNumber } from './detail-value-formatters'
 import type {
   ChampionDetailCssProperties,
-  DetailSectionBadge,
   SpecializationUpgradeColumn,
   SpecializationUpgradeEntry,
 } from './types'
@@ -13,7 +12,6 @@ import type {
 type DetailUpgradeSectionProps = {
   locale: 'zh-CN' | 'en-US'
   t: (text: { zh: string; en: string }) => string
-  upgradeSectionBadges: DetailSectionBadge[]
   specializationColumns: SpecializationUpgradeColumn[]
   specializationGraphicsById: Map<string, ChampionSpecializationGraphic>
 }
@@ -219,14 +217,13 @@ function SpecializationColumnCard({
 export function DetailUpgradeSection({
   locale,
   t,
-  upgradeSectionBadges,
   specializationColumns,
   specializationGraphicsById,
 }: DetailUpgradeSectionProps) {
   return (
     <SurfaceCard className="detail-section detail-section--upgrades detail-section--headerless">
       <div id="specializations" className="detail-section-anchor" />
-      <DetailSectionHeader title={t({ zh: '专精', en: 'Specializations' })} badges={upgradeSectionBadges} />
+      <DetailSectionHeader title={t({ zh: '专精', en: 'Specializations' })} badges={[]} />
 
       {specializationColumns.length > 0 ? (
         <div

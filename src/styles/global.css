@@ -1,4 +1,4 @@
-@layer foundations.tokens, foundations.base, app.shell, app.site-header, app.navigation, shared.surfaces, shared.filters, shared.workbench, shared.results, shared.formation, shared.controls, components.visual-workbench, components.skelanim-player, pages.champion-detail.shell, pages.champion-detail.dossier, pages.champion-detail.sections, pages.champion-detail.upgrades, pages.champion-detail.feats, pages.champion-detail.media, pages.variants, pages.illustrations, pages.animation-audit, pages.pets;
+@layer foundations.tokens, foundations.base, app.shell, app.site-header, app.navigation, shared.surfaces, shared.filters, shared.workbench, shared.results, shared.formation, shared.controls, components.visual-workbench, components.skelanim-player, pages.champion-detail.shell, pages.champion-detail.toolbar, pages.champion-detail.dossier, pages.champion-detail.sections, pages.champion-detail.upgrades, pages.champion-detail.feats, pages.champion-detail.media, pages.variants, pages.illustrations, pages.animation-audit, pages.pets;
 
 @import './foundations/tokens.css' layer(foundations.tokens);
 @import './foundations/base.css' layer(foundations.base);
@@ -31,6 +31,7 @@
 @import './components/visual-workbench.css' layer(components.visual-workbench);
 @import './components/skelanim-player.css' layer(components.skelanim-player);
 @import './pages/champion-detail/shell.css' layer(pages.champion-detail.shell);
+@import './pages/champion-detail/toolbar.css' layer(pages.champion-detail.toolbar);
 @import './pages/champion-detail/dossier.css' layer(pages.champion-detail.dossier);
 @import './pages/champion-detail/sections.css' layer(pages.champion-detail.sections);
 @import './pages/champion-detail/upgrades.css' layer(pages.champion-detail.upgrades);

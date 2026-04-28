@@ -9,9 +9,8 @@ import { DetailSectionPanels } from './DetailSectionPanels'
 import { DossierSection } from './DossierSection'
 import { SkinArtworkDialog } from './SkinArtworkDialog'
 import type {
+  DetailSectionId,
   DetailFieldProps,
-  DetailSectionBadge,
-  DetailSectionLink,
   EffectContext,
   LedgerUpgradeRow,
   SkinArtworkIds,
@@ -23,13 +22,9 @@ interface ChampionDetailBodyProps {
   detail: ChampionDetail
   locale: 'zh-CN' | 'en-US'
   t: (text: { zh: string; en: string }) => string
-  activeSectionId: DetailSectionLink['id']
-  sectionLinks: DetailSectionLink[]
-  scrollToSection: (id: string) => void
+  activeSectionId: DetailSectionId
   summaryAvailabilityBadges: Array<{ key: string; label: string; active?: boolean }>
   overviewFields: DetailFieldProps[]
-  upgradeSectionBadges: DetailSectionBadge[]
-  featSectionBadges: DetailSectionBadge[]
   effectContext: EffectContext
   specializationGraphicsById: Map<string, ChampionSpecializationGraphic>
   specializationColumns: SpecializationUpgradeColumn[]
@@ -70,40 +65,12 @@ export function ChampionDetailBody(props: ChampionDetailBodyProps) {
           className="champion-detail-tab-shell"
           aria-label={props.t({ zh: '英雄详情内容', en: 'Champion detail content' })}
         >
-          <div
-            className="champion-detail-tab-bar"
-            role="tablist"
-            aria-label={props.t({ zh: '详情页签', en: 'Detail tabs' })}
-          >
-            {props.sectionLinks.map((section) => (
-              <button
-                key={section.id}
-                type="button"
-                role="tab"
-                id={`detail-tab-${section.id}`}
-                aria-controls={section.id}
-                aria-selected={props.activeSectionId === section.id}
-                aria-pressed={props.activeSectionId === section.id}
-                className={
-                  props.activeSectionId === section.id
-                    ? 'champion-detail-tab-bar__button champion-detail-tab-bar__button--active'
-                    : 'champion-detail-tab-bar__button'
-                }
-                onClick={() => props.scrollToSection(section.id)}
-              >
-                {section.label}
-              </button>
-            ))}
-          </div>
-
           <DetailSectionPanels
             detail={props.detail}
             locale={props.locale}
             t={props.t}
             activeSectionId={props.activeSectionId}
             effectContext={props.effectContext}
-            upgradeSectionBadges={props.upgradeSectionBadges}
-            featSectionBadges={props.featSectionBadges}
             overviewFields={props.overviewFields}
             specializationColumns={props.specializationColumns}
             specializationGraphicsById={props.specializationGraphicsById}
