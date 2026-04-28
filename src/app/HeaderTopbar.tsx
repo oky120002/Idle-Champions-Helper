@@ -5,6 +5,7 @@ import { ToolbarLocaleSwitcher } from './LocaleSwitcher'
 
 interface HeaderTopbarProps {
   activeNavigationItem: AppNavigationItem
+  dataUpdatedAt: string | null
   isMobileNavOpen: boolean
   locale: AppLocale
   onLocaleSelect: (locale: AppLocale) => void
@@ -12,8 +13,27 @@ interface HeaderTopbarProps {
   t: TranslationFn
 }
 
+function formatDataSyncDate(value: string | null, locale: AppLocale): string {
+  if (!value) {
+    return locale === 'zh-CN' ? '待确认' : 'pending'
+  }
+
+  const date = new Date(`${value}T00:00:00`)
+
+  if (!Number.isNaN(date.getTime())) {
+    return new Intl.DateTimeFormat(locale, {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).format(date)
+  }
+
+  return value
+}
+
 export function HeaderTopbar({
   activeNavigationItem,
+  dataUpdatedAt,
   isMobileNavOpen,
   locale,
   onLocaleSelect,
@@ -23,7 +43,16 @@ export function HeaderTopbar({
   return (
     <div className="site-header__topbar">
       <div className="site-header__brand-group">
-        <p className="site-kicker">{t({ zh: 'Idle Champions 辅助站', en: 'Idle Champions Helper' })}</p>
+        <div className="site-header__brand-stack">
+          <p className="site-kicker">{t({ zh: 'Idle Champions 辅助站', en: 'Idle Champions Helper' })}</p>
+          <p
+            className="site-data-sync"
+            title={t({ zh: '当前站点公共数据的同步日期', en: 'The sync date for the site public data' })}
+          >
+            <span className="site-data-sync__label">{t({ zh: '数据同步', en: 'Data sync' })}</span>
+            <time dateTime={dataUpdatedAt ?? undefined}>{formatDataSyncDate(dataUpdatedAt, locale)}</time>
+          </p>
+        </div>
         <div className="site-header__compact-brand" aria-hidden="true">
           <span className="site-header__compact-mark" />
           <span className="site-header__compact-title">

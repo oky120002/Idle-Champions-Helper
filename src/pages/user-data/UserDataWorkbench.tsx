@@ -1,3 +1,4 @@
+import { ClipboardCheck, Eraser, FlaskConical } from 'lucide-react'
 import { ActionButtons } from '../../components/ActionButtons'
 import { SegmentedButtonGroup } from '../../components/SegmentedButtonGroup'
 import { SurfaceCard } from '../../components/SurfaceCard'
@@ -23,17 +24,20 @@ export function UserDataWorkbench({ model }: UserDataWorkbenchProps) {
             {
               id: 'parse',
               label: t({ zh: '读取并校验', en: 'Parse and validate' }),
+              icon: <ClipboardCheck aria-hidden="true" strokeWidth={1.9} />,
               onClick: handleParse,
             },
             {
               id: 'fill-sample',
               label: t({ zh: '填入脱敏示例', en: 'Fill sample input' }),
+              icon: <FlaskConical aria-hidden="true" strokeWidth={1.9} />,
               tone: 'secondary',
               onClick: handleFillSample,
             },
             {
               id: 'clear',
               label: t({ zh: '清空当前输入', en: 'Clear current input' }),
+              icon: <Eraser aria-hidden="true" strokeWidth={1.9} />,
               tone: 'ghost',
               onClick: handleClear,
             },

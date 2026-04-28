@@ -15,6 +15,7 @@
 
 .champion-dossier__portrait-action,
 .champion-dossier__media-panel > .champion-avatar--dossier,
+.champion-dossier__media-panel > .champion-dossier__console-portrait,
 .champion-dossier__media-panel > .champion-dossier__hero-art {
   width: 100%;
   max-width: none;
@@ -32,6 +33,7 @@
 }
 
 .champion-dossier__portrait-action .champion-avatar--dossier,
+.champion-dossier__portrait-action .champion-dossier__console-portrait,
 .champion-dossier__portrait-action .champion-dossier__hero-art {
   width: 100%;
   max-width: none;
@@ -39,6 +41,7 @@
 }
 
 .champion-dossier__media-panel .champion-avatar--dossier,
+.champion-dossier__console-portrait,
 .champion-dossier__hero-art {
   display: block;
   height: auto;
@@ -48,6 +51,7 @@
   box-shadow: none;
 }
 
+.champion-dossier__console-portrait,
 .champion-dossier__hero-art {
   flex-shrink: 0;
   background:
@@ -55,6 +59,10 @@
     rgba(1, 2, 4, 0.96);
   object-fit: contain;
   object-position: center bottom;
+}
+
+.champion-dossier__console-portrait {
+  image-rendering: auto;
 }
 
 .champion-dossier__portrait-action-icon {
@@ -73,9 +81,16 @@
   line-height: 1;
 }
 
+.champion-dossier__portrait-action-icon svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
 .champion-dossier__portrait-action:hover .champion-avatar--dossier,
+.champion-dossier__portrait-action:hover .champion-dossier__console-portrait,
 .champion-dossier__portrait-action:hover .champion-dossier__hero-art,
 .champion-dossier__portrait-action:focus-visible .champion-avatar--dossier,
+.champion-dossier__portrait-action:focus-visible .champion-dossier__console-portrait,
 .champion-dossier__portrait-action:focus-visible .champion-dossier__hero-art {
   filter: brightness(1.06) saturate(1.04);
 }

@@ -1,4 +1,5 @@
 export const CHAMPION_PORTRAIT_DIR_NAME = 'champion-portraits'
+export const CHAMPION_CONSOLE_PORTRAIT_DIR_NAME = 'champion-console-portraits'
 export const DEFAULT_MASTER_API_URL = 'https://master.idlechampions.com/~idledragons/'
 
 export function ensureTrailingSlash(value) {
@@ -119,6 +120,34 @@ export function collectChampionPortraitSources(rawDefinitions = {}, baseUrl = DE
     .filter(Boolean)
 }
 
+export function collectChampionConsolePortraitSources(rawDefinitions = {}, baseUrl = DEFAULT_MASTER_API_URL) {
+  const graphicMap = buildGraphicMap(rawDefinitions.graphic_defines)
+
+  return (rawDefinitions.hero_defines ?? [])
+    .filter((definition) => isPlayableChampion(definition))
+    .map((definition) => {
+      const consolePortraitGraphicId = definition.console_portrait ?? definition.properties?.console_portrait
+      const remote = resolveGraphicAssetById(graphicMap, consolePortraitGraphicId, baseUrl)
+
+      if (!remote) {
+        return null
+      }
+
+      return {
+        championId: String(definition.id),
+        consolePortraitGraphicId: String(consolePortraitGraphicId),
+        graphic: remote.sourceGraphic,
+        version: remote.sourceVersion,
+        remote,
+      }
+    })
+    .filter(Boolean)
+}
+
 export function buildChampionPortraitPath(currentVersion, championId) {
   return `${currentVersion}/${CHAMPION_PORTRAIT_DIR_NAME}/${championId}.png`
+}
+
+export function buildChampionConsolePortraitPath(currentVersion, championId) {
+  return `${currentVersion}/${CHAMPION_CONSOLE_PORTRAIT_DIR_NAME}/${championId}.png`
 }

@@ -1,3 +1,4 @@
+import { ArchiveRestore, Pencil, Trash2, X } from 'lucide-react'
 import { ActionButtons } from '../../components/ActionButtons'
 import { ChampionPill } from '../../components/ChampionPill'
 import { StatusBannerStack, type StatusBannerStackItem } from '../../components/StatusBannerStack'
@@ -113,6 +114,7 @@ export function PresetCard({ model, view }: PresetCardProps) {
           {
             id: 'restore-preset',
             label: t({ zh: '恢复到阵型页', en: 'Restore to formation' }),
+            icon: <ArchiveRestore aria-hidden="true" strokeWidth={1.9} />,
             tone: 'secondary',
             disabled: view.prompt.kind !== 'restore',
             onClick: () => restorePreset(view),
@@ -120,18 +122,21 @@ export function PresetCard({ model, view }: PresetCardProps) {
           {
             id: 'edit-preset',
             label: t({ zh: '编辑', en: 'Edit' }),
+            icon: <Pencil aria-hidden="true" strokeWidth={1.9} />,
             tone: 'ghost',
             onClick: () => startEditingPreset(view.preset),
           },
           {
             id: 'confirm-delete',
             label: t({ zh: '确认删除', en: 'Confirm delete' }),
+            icon: <Trash2 aria-hidden="true" strokeWidth={1.9} />,
             hidden: !isDeleteConfirming,
             onClick: () => deletePreset(view.preset),
           },
           {
             id: 'cancel-delete',
             label: t({ zh: '取消', en: 'Cancel' }),
+            icon: <X aria-hidden="true" strokeWidth={1.9} />,
             tone: 'ghost',
             hidden: !isDeleteConfirming,
             onClick: clearDeleteConfirm,
@@ -139,6 +144,7 @@ export function PresetCard({ model, view }: PresetCardProps) {
           {
             id: 'open-delete-confirm',
             label: t({ zh: '删除', en: 'Delete' }),
+            icon: <Trash2 aria-hidden="true" strokeWidth={1.9} />,
             tone: 'ghost',
             hidden: isDeleteConfirming,
             onClick: () => openDeleteConfirm(view.preset.id),

@@ -1,4 +1,5 @@
 import { useMemo, useRef } from 'react'
+import { Eye, EyeOff } from 'lucide-react'
 import { useLocation } from 'react-router-dom'
 import { useI18n } from '../app/i18n'
 import { ConfiguredWorkbenchPage } from '../components/workbench/ConfiguredWorkbenchPage'
@@ -226,6 +227,7 @@ export function AnimationAuditPage() {
                   className="animation-audit-results__show-more"
                   onClick={() => model.setShowAll((value) => !value)}
                 >
+                  {model.showAll ? <EyeOff aria-hidden="true" strokeWidth={1.9} /> : <Eye aria-hidden="true" strokeWidth={1.9} />}
                   {model.showAll ? t({ zh: '收回短名单', en: 'Collapse shortlist' }) : t({ zh: '展开全部结果', en: 'Show all results' })}
                 </button>
               ) : null}

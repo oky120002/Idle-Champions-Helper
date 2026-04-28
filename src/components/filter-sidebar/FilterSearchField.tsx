@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { Search } from 'lucide-react'
 import { FieldGroup } from '../FieldGroup'
 
 interface FilterSearchFieldProps {
@@ -22,13 +23,16 @@ export function FilterSearchField({
 }: FilterSearchFieldProps) {
   return (
     <FieldGroup label={label} hint={hint} as="label" className={className}>
-      <input
-        className="text-input"
-        type={type}
-        value={value}
-        placeholder={placeholder}
-        onChange={(event) => onChange(event.target.value)}
-      />
+      <span className="text-input-shell text-input-shell--search">
+        <Search className="text-input-shell__icon" aria-hidden="true" strokeWidth={1.8} />
+        <input
+          className="text-input text-input--with-leading-icon"
+          type={type}
+          value={value}
+          placeholder={placeholder}
+          onChange={(event) => onChange(event.target.value)}
+        />
+      </span>
     </FieldGroup>
   )
 }

@@ -3,6 +3,7 @@ import type { AppNavigationItem } from './appNavigation'
 import { HeaderTopbar } from './HeaderTopbar'
 import { PrimaryNavigation } from './PrimaryNavigation'
 import { useSiteHeaderState } from './useSiteHeaderState'
+import { useDataVersionState } from '../data/useDataVersionState'
 
 interface SiteHeaderProps {
   activeNavigationItem: AppNavigationItem
@@ -14,6 +15,8 @@ interface SiteHeaderProps {
 
 export function SiteHeader({ activeNavigationItem, locale, setLocale, pathname, t }: SiteHeaderProps) {
   const { closeMobileNav, headerClassName, isMobileNavOpen, toggleMobileNav } = useSiteHeaderState(pathname)
+  const dataVersionState = useDataVersionState()
+  const dataUpdatedAt = dataVersionState.status === 'ready' ? dataVersionState.data.updatedAt : null
 
   const handleLocaleSelect = (nextLocale: AppLocale) => setLocale(nextLocale)
 
@@ -21,6 +24,7 @@ export function SiteHeader({ activeNavigationItem, locale, setLocale, pathname, 
     <header className={headerClassName}>
       <HeaderTopbar
         activeNavigationItem={activeNavigationItem}
+        dataUpdatedAt={dataUpdatedAt}
         isMobileNavOpen={isMobileNavOpen}
         locale={locale}
         onLocaleSelect={handleLocaleSelect}

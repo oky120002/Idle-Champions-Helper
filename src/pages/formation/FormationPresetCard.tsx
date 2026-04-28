@@ -1,3 +1,4 @@
+import { Archive, Save } from 'lucide-react'
 import { ActionButtons } from '../../components/ActionButtons'
 import { LabeledValueCardGrid } from '../../components/LabeledValueCardGrid'
 import { ChampionIdentity } from '../../components/ChampionIdentity'
@@ -98,6 +99,7 @@ export function FormationPresetCard({ model }: FormationPresetCardProps) {
               {
                 id: 'save-preset',
                 label: isSavingPreset ? t({ zh: '保存中…', en: 'Saving…' }) : t({ zh: '保存为方案', en: 'Save as preset' }),
+                icon: <Save aria-hidden="true" strokeWidth={1.9} />,
                 tone: 'secondary',
                 disabled: !canSavePreset,
                 onClick: handleSavePreset,
@@ -105,6 +107,7 @@ export function FormationPresetCard({ model }: FormationPresetCardProps) {
               {
                 id: 'open-preset-library',
                 label: t({ zh: '查看方案存档', en: 'Open preset library' }),
+                icon: <Archive aria-hidden="true" strokeWidth={1.9} />,
                 tone: 'ghost',
                 onClick: handleOpenPresetsPage,
               },

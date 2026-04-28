@@ -279,6 +279,20 @@
     font-size: 0.72rem;
   }
 
+  .workbench-page__toolbar-action .action-button__icon + .action-button__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .workbench-page__toolbar-action.action-button--with-icon {
+    width: 2.08rem;
+    padding-inline: 0;
+  }
+
   .workbench-page__toolbar-detail {
     font-size: 0.76rem;
   }

@@ -1,3 +1,5 @@
+import { Eye, EyeOff, Shuffle } from 'lucide-react'
+import { createElement } from 'react'
 import type { LocaleText } from '../../app/i18n'
 import type { WorkbenchToolbarItemConfig } from './WorkbenchToolbarItems'
 import type { WorkbenchShareLinkState } from './useWorkbenchShareLink'
@@ -86,6 +88,7 @@ export function createWorkbenchResultVisibilityItem({
   return {
     id: 'toggle-visibility',
     label,
+    icon: createElement(showAllResults ? EyeOff : Eye, { 'aria-hidden': true, strokeWidth: 1.9 }),
     onClick,
     isActive: showAllResults,
     ariaPressed: showAllResults,
@@ -106,6 +109,7 @@ export function createWorkbenchShuffleItem({
     label: hasRandomOrder
       ? t({ zh: '重新随机', en: 'Reshuffle' })
       : t({ zh: '随机排序', en: 'Shuffle order' }),
+    icon: createElement(Shuffle, { 'aria-hidden': true, strokeWidth: 1.9 }),
     onClick,
     isActive: hasRandomOrder,
     hidden: !isReady || resultCount <= 1,

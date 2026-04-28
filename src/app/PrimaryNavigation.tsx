@@ -45,6 +45,7 @@ export function PrimaryNavigation({
       </div>
       {navigation.map((item) => {
         const isActive = activeNavigationItem.to === item.to
+        const Icon = item.Icon
 
         return (
           <Link
@@ -54,6 +55,7 @@ export function PrimaryNavigation({
             className={getNavClassName(isActive)}
             onClick={onNavigate}
           >
+            <Icon className="nav-link__icon" aria-hidden="true" strokeWidth={1.85} />
             <span className="nav-link__label">{t(item.label)}</span>
           </Link>
         )

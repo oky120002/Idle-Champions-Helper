@@ -1,3 +1,4 @@
+import { Plus } from 'lucide-react'
 import { ChampionAvatar } from '../../components/ChampionAvatar'
 import { getLocalizedTextPair, getPrimaryLocalizedText } from '../../domain/localizedText'
 import type { FormationPageModel } from './types'
@@ -74,7 +75,9 @@ export function FormationBoardGrid({ model }: FormationBoardGridProps) {
                     <span className="formation-slot__summary-seat">{champion.seat}</span>
                   </div>
                 ) : (
-                  <span className="formation-slot__summary-empty">+</span>
+                  <span className="formation-slot__summary-empty">
+                    <Plus aria-hidden="true" strokeWidth={2} />
+                  </span>
                 )}
               </div>
               <div className="formation-slot__controls">

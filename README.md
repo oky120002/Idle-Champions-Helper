@@ -47,6 +47,7 @@ npm run data:official
 npm run data:fetch
 npm run data:normalize -- --input tmp/idle-champions-api/<english>.json --localizedInput tmp/idle-champions-api/<zh>.json
 npm run data:portraits -- --input tmp/idle-champions-api/<english>.json
+npm run data:console-portraits -- --input tmp/idle-champions-api/<english>.json
 npm run data:illustrations
 npm run data:animation-audit
 npm run data:pets -- --input tmp/idle-champions-api/<english>.json --localizedInput tmp/idle-champions-api/<zh>.json

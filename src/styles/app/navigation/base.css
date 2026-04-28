@@ -56,8 +56,11 @@
   position: relative;
   z-index: 1;
   display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
   align-content: center;
+  align-items: center;
   justify-items: center;
+  column-gap: 0.38rem;
   overflow: hidden;
   min-width: clamp(5rem, 6vw, 6.6rem);
   min-height: 2.74rem;
@@ -110,6 +113,14 @@
   opacity: 0;
   transform: scaleX(0.4);
   transform-origin: center;
+}
+
+.nav-link__icon {
+  position: relative;
+  z-index: 1;
+  width: 0.98rem;
+  height: 0.98rem;
+  color: rgba(200, 167, 127, 0.64);
 }
 
 .nav-link__label {
@@ -174,6 +185,10 @@
 .nav-link--active .nav-link__label {
   font-weight: 620;
   letter-spacing: 0.014em;
+}
+
+.nav-link--active .nav-link__icon {
+  color: #d2b389;
 }
 
 html[data-ui-locale='en-US'] .nav-link {

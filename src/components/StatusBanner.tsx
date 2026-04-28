@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { CheckCircle2, CircleAlert, Info } from 'lucide-react'
 
 export type StatusTone = 'info' | 'success' | 'error'
 
@@ -25,9 +26,13 @@ function getStatusBannerClassName(tone: StatusTone): string {
 
 export function StatusBanner({ tone, title, detail, meta, actions, children }: StatusBannerProps) {
   const hasContent = title !== undefined || detail !== undefined || meta !== undefined || children !== undefined
+  const Icon = tone === 'success' ? CheckCircle2 : tone === 'error' ? CircleAlert : Info
 
   return (
     <div className={getStatusBannerClassName(tone)}>
+      <span className="status-banner__icon" aria-hidden="true">
+        <Icon strokeWidth={1.85} />
+      </span>
       {hasContent ? (
         <div className="status-banner__content">
           {title !== undefined ? <strong className="status-banner__title">{title}</strong> : null}

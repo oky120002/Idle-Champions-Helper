@@ -85,6 +85,26 @@
   transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
 }
 
+.text-input-shell {
+  position: relative;
+  display: block;
+}
+
+.text-input-shell__icon {
+  position: absolute;
+  left: 0.9rem;
+  top: 50%;
+  width: 1rem;
+  height: 1rem;
+  color: rgba(242, 239, 230, 0.42);
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.text-input--with-leading-icon {
+  padding-left: 2.28rem;
+}
+
 .text-input:focus,
 .text-area:focus,
 .select-input:focus {
@@ -113,7 +133,28 @@
 }
 
 .action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.42rem;
   padding: 0.66rem 0.92rem;
+}
+
+.action-button svg {
+  width: 1em;
+  height: 1em;
+}
+
+.action-button__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  color: currentColor;
+}
+
+.action-button__label {
+  min-width: 0;
 }
 
 .action-button--compact {
@@ -135,6 +176,9 @@
 .status-banner {
   position: relative;
   overflow: clip;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.72rem;
   margin-top: 0;
   padding: 0.9rem 0.96rem;
   border-radius: var(--radius-lg);
@@ -197,6 +241,23 @@
   gap: 0.45rem;
 }
 
+.status-banner__icon {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.18rem;
+  height: 1.18rem;
+  margin-top: 0.08rem;
+  color: currentColor;
+}
+
+.status-banner__icon svg {
+  width: 1.18rem;
+  height: 1.18rem;
+}
+
 .status-banner__title {
   color: #fff6e9;
 }
@@ -213,6 +274,7 @@
 .status-banner__actions {
   position: relative;
   z-index: 1;
+  grid-column: 2;
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;

@@ -4,8 +4,10 @@ import { ActionButton } from '../ActionButton'
 interface WorkbenchToolbarActionButtonProps {
   children: ReactNode
   onClick: () => void | Promise<void>
+  icon?: ReactNode
   isActive?: boolean
   ariaPressed?: boolean
+  ariaLabel?: string
   variant?: 'default' | 'prominent'
   className?: string
 }
@@ -17,8 +19,10 @@ function joinClasses(...classNames: Array<string | undefined | false>) {
 export function WorkbenchToolbarActionButton({
   children,
   onClick,
+  icon,
   isActive = false,
   ariaPressed,
+  ariaLabel,
   variant = 'default',
   className,
 }: WorkbenchToolbarActionButtonProps) {
@@ -33,6 +37,9 @@ export function WorkbenchToolbarActionButton({
         className,
       )}
       ariaPressed={ariaPressed}
+      {...(ariaLabel !== undefined ? { ariaLabel } : {})}
+      {...(ariaLabel !== undefined ? { title: ariaLabel } : {})}
+      icon={icon}
       onClick={onClick}
     >
       {children}

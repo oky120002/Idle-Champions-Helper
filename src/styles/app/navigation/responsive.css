@@ -230,6 +230,7 @@
 
   .nav-link {
     justify-items: start;
+    grid-template-columns: auto minmax(0, 1fr);
     min-height: 3.4rem;
     padding: 0.66rem 0.82rem;
     border-radius: 18px;
@@ -239,6 +240,11 @@
     text-align: left;
     white-space: normal;
     text-wrap: balance;
+  }
+
+  .nav-link__icon {
+    width: 1.04rem;
+    height: 1.04rem;
   }
 
   .nav-link__label {
