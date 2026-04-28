@@ -1,11 +1,6 @@
-import type { ReactNode } from 'react'
-import { WorkbenchToolbarCopy } from '../../components/workbench/WorkbenchScaffold'
 import type { DetailSectionLink } from './types'
 
 interface ChampionDetailToolbarPrimaryProps {
-  kicker: ReactNode
-  title: ReactNode
-  detail?: ReactNode
   activeSectionId: DetailSectionLink['id']
   sectionLinks: DetailSectionLink[]
   tabAriaLabel: string
@@ -13,9 +8,6 @@ interface ChampionDetailToolbarPrimaryProps {
 }
 
 export function ChampionDetailToolbarPrimary({
-  kicker,
-  title,
-  detail,
   activeSectionId,
   sectionLinks,
   tabAriaLabel,
@@ -23,12 +15,6 @@ export function ChampionDetailToolbarPrimary({
 }: ChampionDetailToolbarPrimaryProps) {
   return (
     <div className="champion-detail-toolbar-primary">
-      <WorkbenchToolbarCopy
-        kicker={kicker}
-        title={title}
-        {...(detail !== undefined ? { detail } : {})}
-        className="champion-detail-toolbar-primary__copy"
-      />
       <div
         className="champion-detail-toolbar-tabs"
         role="tablist"

@@ -3,13 +3,11 @@ import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import type { ChampionDetail, ChampionUpgradeDetail } from '../../domain/types'
 import { buildUpgradeCategoryMeta, buildUpgradePresentation } from './effect-model'
 import { buildOverviewPropertyFields } from './summary-model'
-import { isJsonObject } from './detail-json'
-import { formatDateText, formatNumber, formatTimestamp } from './detail-value-formatters'
+import { formatDateText, formatTimestamp } from './detail-value-formatters'
 import type {
   DetailFieldProps,
   EffectContext,
   LedgerUpgradeRow,
-  SpecializationUpgradeColumn,
   UpgradeCategoryMeta,
 } from './types'
 
@@ -101,63 +99,6 @@ export function buildLedgerFilterOptions(
   })
 }
 
-export function buildUpgradeSectionBadges(options: {
-  detail: ChampionDetail | null
-  specializationColumns: SpecializationUpgradeColumn[]
-  locale: AppLocale
-  t: (text: { zh: string; en: string }) => string
-}) {
-  const { detail, specializationColumns = [], locale, t } = options
-  const linkedEntryCount = specializationColumns.reduce((total, column) => total + column.entries.length, 0)
-
-  return [
-    {
-      label: t({ zh: '专精', en: 'Specs' }),
-      value: formatNumber(specializationColumns.length, locale),
-    },
-    {
-      label: t({ zh: '关联升级', en: 'Linked' }),
-      value: formatNumber(linkedEntryCount, locale),
-    },
-    {
-      label: t({ zh: '全部升级', en: 'All upgrades' }),
-      value: formatNumber(detail?.upgrades.length ?? 0, locale),
-    },
-  ]
-}
-
-export function buildAvailableFeatCount(detail: ChampionDetail | null): number {
-  if (!detail) {
-    return 0
-  }
-
-  return detail.feats.filter((feat) => isJsonObject(feat.properties) && feat.properties.is_available === true).length
-}
-
-export function buildFeatSectionBadges(options: {
-  detail: ChampionDetail | null
-  availableFeatCount: number
-  locale: AppLocale
-  t: (text: { zh: string; en: string }) => string
-}) {
-  const { detail, availableFeatCount, locale, t } = options
-
-  return [
-    {
-      label: t({ zh: '全部天赋', en: 'Total' }),
-      value: formatNumber(detail?.feats.length ?? 0, locale),
-    },
-    {
-      label: t({ zh: '默认槽', en: 'Default slots' }),
-      value: formatNumber(detail?.defaultFeatSlotUnlocks.length ?? 0, locale),
-    },
-    {
-      label: t({ zh: '当前可用', en: 'Available now' }),
-      value: formatNumber(availableFeatCount, locale),
-    },
-  ]
-}
-
 export function buildOverviewFields(options: {
   detail: ChampionDetail | null
   locale: AppLocale
@@ -212,40 +153,4 @@ export function buildOverviewFields(options: {
     },
     ...buildOverviewPropertyFields(detail, locale, effectContext),
   ]
-}
-
-export function buildSummaryAvailabilityBadges(
-  detail: ChampionDetail | null,
-  t: (text: { zh: string; en: string }) => string,
-) {
-  if (!detail) {
-    return []
-  }
-
-  const badges: Array<{ key: string; label: string; active?: boolean }> = []
-
-  if (detail.availability.isAvailable) {
-    badges.push({
-      key: 'available',
-      label: t({ zh: '当前可用', en: 'Currently available' }),
-      active: true,
-    })
-  }
-
-  if (detail.availability.availableInNextEvent) {
-    badges.push({
-      key: 'next-event',
-      label: t({ zh: '下个活动可用', en: 'Available in next event' }),
-      active: true,
-    })
-  }
-
-  if (badges.length === 0) {
-    badges.push({
-      key: 'unavailable',
-      label: t({ zh: '当前未开放', en: 'Currently unavailable' }),
-    })
-  }
-
-  return badges
 }
