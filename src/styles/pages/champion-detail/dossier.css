@@ -1,25 +1,16 @@
 .champion-dossier {
-  gap: 0.8rem;
-}
-
-.champion-dossier__sidebar-status {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.42rem;
+  display: grid;
+  align-content: start;
+  gap: 0;
   min-width: 0;
 }
 
-.champion-dossier__sidebar-badge--active {
-  border-color: rgba(200, 167, 127, 0.24);
-  background:
-    radial-gradient(circle at top left, color-mix(in oklch, var(--color-copper) 10%, transparent), transparent 58%),
-    var(--workbench-chip-background-muted);
-  color: rgba(255, 243, 223, 0.9);
+.champion-detail-workbench .page-workbench__sidebar-body > .champion-dossier {
+  margin: -0.82rem -0.84rem 0;
 }
 
 .champion-dossier__media-panel {
   overflow: hidden;
-  padding: 0;
 }
 
 .champion-dossier__portrait-action,
@@ -53,32 +44,32 @@
   height: auto;
   aspect-ratio: 11.4 / 6.8;
   border: 0;
-  border-radius: calc(var(--radius-md) - 1px);
+  border-radius: 0;
   box-shadow: none;
 }
 
 .champion-dossier__hero-art {
   flex-shrink: 0;
   background:
-    radial-gradient(circle at 50% 100%, rgba(62, 113, 147, 0.18), transparent 36%),
-    #010204;
+    radial-gradient(circle at 50% 100%, rgba(62, 113, 147, 0.18), transparent 38%),
+    rgba(1, 2, 4, 0.96);
   object-fit: contain;
   object-position: center bottom;
 }
 
 .champion-dossier__portrait-action-icon {
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
+  top: 0.48rem;
+  right: 0.48rem;
   display: grid;
   place-items: center;
-  width: 1.64rem;
-  height: 1.64rem;
-  border: 1px solid rgba(255, 246, 232, 0.16);
+  width: 1.58rem;
+  height: 1.58rem;
+  border: 1px solid rgba(255, 246, 232, 0.18);
   border-radius: 999px;
-  background: rgba(7, 12, 18, 0.54);
+  background: rgba(7, 12, 18, 0.62);
   color: rgba(255, 246, 232, 0.9);
-  font-size: 0.86rem;
+  font-size: 0.84rem;
   line-height: 1;
 }
 
@@ -91,8 +82,8 @@
 
 .champion-dossier__portrait-action:hover .champion-dossier__portrait-action-icon,
 .champion-dossier__portrait-action:focus-visible .champion-dossier__portrait-action-icon {
-  border-color: rgba(200, 167, 127, 0.32);
-  background: rgba(44, 33, 22, 0.68);
+  border-color: rgba(200, 167, 127, 0.34);
+  background: rgba(44, 33, 22, 0.72);
 }
 
 .champion-dossier__portrait-action:focus-visible {
@@ -100,21 +91,68 @@
   outline-offset: -4px;
 }
 
-.champion-dossier__section {
-  gap: 0.65rem;
-}
-
-.champion-dossier__role-strip {
+.champion-dossier__status-row {
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.45rem;
+  padding: 0.72rem 0.84rem 0.78rem;
+  border-top: 1px solid rgba(227, 214, 193, 0.08);
 }
 
-.champion-dossier__role-strip .tag-pill {
-  min-height: 1.74rem;
-  padding: 0.3rem 0.62rem;
-  border-color: rgba(227, 214, 193, 0.12);
-  background: rgba(9, 14, 20, 0.18);
-  color: rgba(242, 239, 230, 0.78);
-  font-size: 0.82rem;
+.champion-dossier__status-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.82rem;
+  padding: 0.32rem 0.68rem;
+  border: 1px solid rgba(227, 214, 193, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.035);
+  color: rgba(242, 239, 230, 0.7);
+  font-size: 0.78rem;
+  line-height: 1.2;
+}
+
+.champion-dossier__status-pill--active {
+  border-color: rgba(200, 167, 127, 0.22);
+  background: rgba(200, 167, 127, 0.08);
+  color: rgba(255, 243, 223, 0.9);
+}
+
+.champion-dossier__section {
+  display: grid;
+  gap: 0.62rem;
+  padding: 0.82rem 0.84rem;
+  border-top: 1px solid rgba(227, 214, 193, 0.08);
+}
+
+.champion-dossier__section-label {
+  margin: 0;
+  color: rgba(242, 239, 230, 0.5);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.champion-dossier__line {
+  display: grid;
+  gap: 0.24rem;
+  min-width: 0;
+}
+
+.champion-dossier__line-label,
+.champion-dossier__section .detail-field__label {
+  color: rgba(242, 239, 230, 0.5);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.champion-dossier__line-value,
+.champion-dossier__section .detail-field__value {
+  min-width: 0;
+  color: rgba(255, 248, 237, 0.92);
+  font-size: 0.92rem;
+  line-height: 1.38;
 }
 
 .champion-dossier__score-grid {
@@ -127,10 +165,7 @@
   display: grid;
   gap: 0.1rem;
   min-width: 0;
-  padding: 0.48rem 0.38rem;
-  border: 1px solid rgba(227, 214, 193, 0.08);
-  border-radius: 12px;
-  background: rgba(7, 12, 18, 0.2);
+  padding: 0.36rem 0.18rem;
   text-align: center;
 }
 
@@ -152,15 +187,16 @@
   font-style: normal;
 }
 
-.champion-dossier__section--facts {
-  grid-template-columns: 1fr;
+.champion-dossier__section .detail-field {
+  gap: 0.24rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
 }
 
-.champion-dossier__section--facts .detail-field,
-.champion-dossier__section .detail-field {
-  padding: 0.56rem 0.6rem;
-  border-radius: 12px;
-  background: rgba(7, 12, 18, 0.18);
+.champion-dossier__section--facts {
+  gap: 0.66rem;
 }
 
 @media (max-width: 620px) {
