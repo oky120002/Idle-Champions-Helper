@@ -6,34 +6,21 @@
   contain: layout paint style;
   content-visibility: auto;
   contain-intrinsic-size: 20.5rem 27rem;
-  padding: 0.96rem;
-  border-radius: 18px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.008)),
-    rgba(10, 15, 21, 0.22);
-  border: 1px solid rgba(227, 214, 193, 0.08);
-  box-shadow:
-    0 10px 22px rgba(1, 4, 9, 0.14),
-    inset 0 1px 0 rgba(255, 243, 223, 0.025);
+  padding: 0.9rem;
+  border-radius: 14px;
+  background: rgba(10, 15, 21, 0.16);
+  border: 1px solid rgba(227, 214, 193, 0.065);
+  box-shadow: none;
 }
 
 .result-card::after {
-  content: "";
-  position: absolute;
-  inset: 0.66rem 0.78rem auto;
-  height: 1px;
-  background: linear-gradient(90deg, rgba(255, 243, 223, 0), rgba(255, 243, 223, 0.08), rgba(124, 167, 196, 0.06), rgba(255, 243, 223, 0));
-  pointer-events: none;
+  content: none;
 }
 
 .result-card--champion {
   height: 100%;
   padding: 0.9rem;
-  background:
-    radial-gradient(circle at 86% 12%, rgba(200, 167, 127, 0.08), transparent 24%),
-    radial-gradient(circle at 10% 100%, rgba(62, 113, 147, 0.08), transparent 26%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.024), rgba(255, 255, 255, 0.008)),
-    rgba(8, 12, 17, 0.18);
+  background: rgba(8, 12, 17, 0.14);
 }
 
 .result-card--champion::before {
@@ -54,9 +41,7 @@
 .result-card--interactive:hover {
   transform: translateY(-0.5px);
   border-color: rgba(200, 167, 127, 0.22);
-  box-shadow:
-    0 12px 24px rgba(1, 4, 9, 0.16),
-    inset 0 1px 0 rgba(255, 243, 223, 0.03);
+  box-shadow: none;
 }
 
 .result-card--interactive:focus-within {
@@ -222,10 +207,8 @@
   position: absolute;
   inset: 0;
   border-radius: 18px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0.006)),
-    rgba(10, 15, 22, 0.58);
-  border: 1px solid rgba(227, 214, 193, 0.09);
+  background: rgba(10, 15, 22, 0.36);
+  border: 1px solid rgba(227, 214, 193, 0.06);
 }
 
 .result-card__portrait-stage::after {
@@ -238,10 +221,8 @@
   display: inline-flex;
   padding: 0.22rem;
   border-radius: 16px;
-  background:
-    linear-gradient(180deg, rgba(255, 245, 227, 0.1), rgba(200, 167, 127, 0.02)),
-    rgba(10, 15, 22, 0.62);
-  border: 1px solid rgba(227, 214, 193, 0.08);
+  background: rgba(10, 15, 22, 0.42);
+  border: 1px solid rgba(227, 214, 193, 0.06);
   transform: rotate(-3deg);
   transform-origin: 50% 55%;
 }
@@ -284,9 +265,7 @@
   min-height: calc(1.64rem * var(--champion-card-role-scale));
   padding: calc(0.2rem * var(--champion-card-role-scale)) calc(0.52rem * var(--champion-card-role-scale));
   border-color: rgba(227, 214, 193, 0.08);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.008)),
-    rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.018);
   font-size: calc(0.72rem * var(--champion-card-role-scale));
   white-space: nowrap;
   line-height: 1;
@@ -294,9 +273,7 @@
 
 .result-card__role-row .tag-pill--seat {
   border-color: rgba(200, 167, 127, 0.16);
-  background:
-    radial-gradient(circle at top left, rgba(200, 167, 127, 0.1), transparent 62%),
-    rgba(200, 167, 127, 0.08);
+  background: rgba(200, 167, 127, 0.08);
   color: rgba(255, 242, 219, 0.92);
 }
 
@@ -346,11 +323,9 @@
   white-space: normal;
   line-height: 1.12;
   border-color: var(--result-card-attribute-border, rgba(227, 214, 193, 0.08));
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.006)),
-    var(--result-card-attribute-fill, rgba(255, 255, 255, 0.028));
+  background: var(--result-card-attribute-fill, rgba(255, 255, 255, 0.026));
   color: var(--result-card-attribute-text, rgba(242, 239, 230, 0.82));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.016);
+  box-shadow: none;
 }
 
 .result-card__attribute-pill--race {

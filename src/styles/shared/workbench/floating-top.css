@@ -1,0 +1,92 @@
+.page-workbench__content-overlay {
+  position: absolute;
+  right: 0.88rem;
+  bottom: 0.88rem;
+  z-index: 4;
+  display: flex;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+
+.page-workbench__content-overlay > * {
+  pointer-events: auto;
+}
+
+.page-workbench__floating-top-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.62rem;
+  min-height: 2.84rem;
+  padding: 0.42rem 0.64rem 0.42rem 0.44rem;
+  border: 1px solid rgba(227, 214, 193, 0.12);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at top right, rgba(200, 167, 127, 0.1), transparent 36%),
+    linear-gradient(180deg, rgba(17, 26, 37, 0.88), rgba(9, 14, 20, 0.9)),
+    rgba(8, 13, 19, 0.3);
+  color: rgba(255, 245, 229, 0.96);
+  cursor: pointer;
+  box-shadow:
+    0 12px 24px rgba(1, 4, 9, 0.18),
+    inset 0 1px 0 rgba(255, 243, 223, 0.03);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease,
+    opacity 180ms ease;
+}
+
+.page-workbench__floating-top-button:hover {
+  transform: translateY(-0.5px);
+  border-color: rgba(200, 167, 127, 0.28);
+  box-shadow:
+    0 14px 26px rgba(1, 4, 9, 0.2),
+    inset 0 1px 0 rgba(255, 243, 223, 0.04);
+}
+
+.page-workbench__floating-top-button:focus-visible {
+  outline: none;
+  box-shadow:
+    var(--focus-ring),
+    0 14px 26px rgba(1, 4, 9, 0.2);
+}
+
+.page-workbench__floating-top-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.94rem;
+  height: 1.94rem;
+  border-radius: 999px;
+  border: 1px solid rgba(227, 214, 193, 0.08);
+  background:
+    linear-gradient(180deg, rgba(62, 113, 147, 0.22), rgba(17, 30, 44, 0.46)),
+    rgba(255, 255, 255, 0.04);
+  color: rgba(255, 243, 223, 0.92);
+  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.03);
+}
+
+.page-workbench__floating-top-icon svg {
+  width: 0.98rem;
+  height: 0.98rem;
+}
+
+.page-workbench__floating-top-copy {
+  display: grid;
+  gap: 0.08rem;
+  min-width: 0;
+  text-align: left;
+}
+
+.page-workbench__floating-top-copy strong {
+  font-size: 0.8rem;
+  line-height: 1.05;
+}
+
+.page-workbench__floating-top-copy span {
+  color: rgba(242, 239, 230, 0.62);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}

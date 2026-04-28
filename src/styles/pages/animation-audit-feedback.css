@@ -1,12 +1,11 @@
 .animation-audit-feedback-export {
   display: grid;
   gap: 0.9rem;
-  padding: 1rem;
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(200, 167, 127, 0.14);
-  background:
-    radial-gradient(circle at top right, rgba(200, 167, 127, 0.12), transparent 34%),
-    rgba(9, 14, 20, 0.34);
+  padding: 0.92rem 0;
+  border-radius: 0;
+  border: 0;
+  border-top: 1px solid rgba(200, 167, 127, 0.14);
+  background: transparent;
 }
 
 .animation-audit-feedback-export__copy,
@@ -46,10 +45,11 @@
 .animation-audit-feedback-export__stat {
   display: grid;
   gap: 0.24rem;
-  padding: 0.76rem 0.82rem;
-  border-radius: var(--radius-md);
-  border: 1px solid rgba(227, 214, 193, 0.08);
-  background: rgba(5, 10, 15, 0.34);
+  padding: 0.72rem 0;
+  border-radius: 0;
+  border: 0;
+  border-top: 1px solid rgba(227, 214, 193, 0.08);
+  background: transparent;
 }
 
 .animation-audit-feedback-export__stat span,
@@ -134,12 +134,11 @@
 .animation-audit-feedback-card {
   display: grid;
   gap: 0.82rem;
-  padding: 0.88rem;
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(227, 214, 193, 0.08);
-  background:
-    radial-gradient(circle at top left, rgba(62, 113, 147, 0.1), transparent 30%),
-    rgba(5, 10, 15, 0.34);
+  padding: 0.82rem 0 0;
+  border-radius: 0;
+  border: 0;
+  border-top: 1px solid rgba(227, 214, 193, 0.08);
+  background: transparent;
 }
 
 .animation-audit-feedback-card__header {
@@ -168,16 +167,14 @@
   padding: 0.38rem 0.72rem;
   border-radius: 999px;
   border: 1px solid rgba(227, 214, 193, 0.12);
-  background: rgba(9, 14, 20, 0.28);
+  background: rgba(255, 255, 255, 0.018);
   color: rgba(242, 239, 230, 0.78);
   cursor: pointer;
 }
 
 .animation-audit-feedback-chip--active {
   border-color: rgba(200, 167, 127, 0.24);
-  background:
-    radial-gradient(circle at top right, rgba(200, 167, 127, 0.18), transparent 58%),
-    rgba(200, 167, 127, 0.1);
+  background: rgba(200, 167, 127, 0.09);
   color: #fff2db;
 }
 

@@ -14,8 +14,6 @@ export function ChampionVisualWorkbenchStage({ model }: ChampionVisualWorkbenchS
     <div className="visual-workbench__stage-shell">
       <div className={getPreviewStageClassName(selectedAssetOption)}>
         <div className="visual-workbench__stage-grid" aria-hidden="true" />
-        <div className="visual-workbench__stage-orb visual-workbench__stage-orb--warm" aria-hidden="true" />
-        <div className="visual-workbench__stage-orb visual-workbench__stage-orb--cool" aria-hidden="true" />
         <div className="visual-workbench__stage-empty">
           <strong className="visual-workbench__stage-empty-title">
             {selectedAssetOption

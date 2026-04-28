@@ -12,13 +12,11 @@
 .animation-audit-summary-card {
   display: grid;
   gap: 0.3rem;
-  padding: 0.86rem 0.92rem;
-  border-radius: var(--radius-md);
-  border: 1px solid rgba(227, 214, 193, 0.08);
-  background:
-    radial-gradient(circle at top right, rgba(62, 113, 147, 0.1), transparent 58%),
-    var(--surface-gloss),
-    rgba(8, 12, 18, 0.24);
+  padding: 0.76rem 0;
+  border-radius: 0;
+  border: 0;
+  border-top: 1px solid rgba(227, 214, 193, 0.08);
+  background: transparent;
 }
 
 .animation-audit-summary-card span {
@@ -81,18 +79,14 @@
   padding: 0.34rem 0.72rem;
   border-radius: 999px;
   border: 1px solid rgba(227, 214, 193, 0.12);
-  background:
-    var(--surface-gloss),
-    rgba(9, 14, 20, 0.28);
+  background: rgba(255, 255, 255, 0.018);
   color: rgba(242, 239, 230, 0.72);
   cursor: pointer;
 }
 
 .animation-audit-pill--active {
   border-color: rgba(200, 167, 127, 0.24);
-  background:
-    radial-gradient(circle at top right, rgba(200, 167, 127, 0.16), transparent 58%),
-    rgba(200, 167, 127, 0.08);
+  background: rgba(200, 167, 127, 0.08);
   color: #fff2db;
 }
 
@@ -153,14 +147,11 @@
   overflow: clip;
   display: grid;
   gap: 0.92rem;
-  padding: 1rem;
-  border-radius: var(--radius-xl);
-  border: 1px solid rgba(227, 214, 193, 0.08);
-  background:
-    radial-gradient(circle at top right, rgba(62, 113, 147, 0.12), transparent 24%),
-    radial-gradient(circle at bottom left, rgba(200, 167, 127, 0.08), transparent 26%),
-    var(--surface-gloss-strong),
-    rgba(6, 10, 15, 0.28);
+  padding: 0.92rem 0;
+  border-radius: 0;
+  border: 0;
+  border-top: 1px solid rgba(227, 214, 193, 0.08);
+  background: transparent;
 }
 
 .animation-audit-row--high {
@@ -247,13 +238,11 @@
 .animation-audit-variant {
   display: grid;
   gap: 0.7rem;
-  padding: 0.82rem;
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(227, 214, 193, 0.08);
-  background:
-    radial-gradient(circle at top right, rgba(200, 167, 127, 0.08), transparent 28%),
-    var(--surface-gloss),
-    rgba(6, 10, 15, 0.26);
+  padding: 0.76rem 0 0;
+  border-radius: 0;
+  border: 0;
+  border-top: 1px solid rgba(227, 214, 193, 0.08);
+  background: transparent;
 }
 
 .animation-audit-variant__header {
@@ -282,8 +271,8 @@
 .animation-audit-variant__stage {
   min-height: 15rem;
   padding: 0.7rem;
-  border-radius: var(--radius-md);
-  border: 1px solid rgba(227, 214, 193, 0.08);
+  border-radius: 12px;
+  border: 0;
   background:
     radial-gradient(circle at top, rgba(207, 168, 112, 0.14), transparent 48%),
     linear-gradient(180deg, rgba(17, 24, 38, 0.88), rgba(8, 12, 20, 0.92));
