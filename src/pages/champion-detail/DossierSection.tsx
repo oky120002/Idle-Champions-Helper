@@ -37,6 +37,8 @@ export function DossierSection({
   const characterSheet = detail.characterSheet
   const hasSkinPreview = detail.skins.length > 0
   const primaryName = getPrimaryLocalizedText(detail.summary.name, locale)
+  const seatValue = formatNumber(detail.summary.seat, locale)
+  const seatLabel = locale === 'zh-CN' ? `${seatValue} 号位` : `Seat ${seatValue}`
   const portrait = heroIllustration ? (
     <img
       className="champion-dossier__hero-art"
@@ -70,22 +72,29 @@ export function DossierSection({
         )}
       </section>
 
-      {summaryAvailabilityBadges.length > 0 ? (
-        <div
-          className="champion-dossier__status-row"
-          role="group"
-          aria-label={t({ zh: '英雄状态', en: 'Champion status' })}
+      <div
+        className="champion-dossier__status-row"
+        role="group"
+        aria-label={t({ zh: '英雄状态', en: 'Champion status' })}
+      >
+        <span
+          className="champion-dossier__status-pill champion-dossier__status-pill--seat"
+          aria-label={seatLabel}
+          title={seatLabel}
         >
-          {summaryAvailabilityBadges.map((badge) => (
+          {seatValue}
+        </span>
+        {summaryAvailabilityBadges.length > 0
+          ? summaryAvailabilityBadges.map((badge) => (
             <span
               key={badge.key}
               className={badge.active ? 'champion-dossier__status-pill champion-dossier__status-pill--active' : 'champion-dossier__status-pill'}
             >
               {badge.label}
             </span>
-          ))}
-        </div>
-      ) : null}
+          ))
+          : null}
+      </div>
 
       <section className="champion-dossier__section">
         <div className="champion-dossier__line">
