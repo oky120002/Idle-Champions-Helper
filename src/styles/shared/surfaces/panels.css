@@ -5,47 +5,49 @@
   gap: 1.2rem;
 }
 
-.hero-panel,
-.surface-card {
+.hero-panel {
   position: relative;
   overflow: clip;
   isolation: isolate;
-  border: 1px solid var(--color-border-soft);
-  border-radius: var(--radius-2xl);
+  border: 1px solid rgba(227, 214, 193, 0.075);
+  border-radius: var(--radius-xl);
   background:
-    radial-gradient(circle at top right, color-mix(in oklch, var(--color-copper) 11%, transparent), transparent 34%),
-    radial-gradient(circle at left bottom, color-mix(in oklch, var(--color-steel) 10%, transparent), transparent 36%),
-    var(--surface-gloss),
-    linear-gradient(180deg, var(--color-surface-top), var(--color-surface-mid) 52%, var(--color-surface-bottom));
-  box-shadow:
-    var(--shadow-surface-soft),
-    inset 0 1px 0 rgba(255, 243, 223, 0.03);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.004)),
+    rgba(8, 12, 17, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.018);
+}
+
+.surface-card {
+  position: relative;
+  overflow: visible;
+  isolation: auto;
+  border: 0;
+  border-top: 1px solid rgba(227, 214, 193, 0.08);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .hero-panel::before,
-.surface-card::before,
-.hero-panel::after,
-.surface-card::after {
+.hero-panel::after {
   content: "";
   position: absolute;
   pointer-events: none;
 }
 
-.hero-panel::before,
-.surface-card::before {
-  inset: 1px;
-  border-radius: calc(var(--radius-2xl) - 1px);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 16%),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.012), transparent 20%, transparent 80%, rgba(255, 255, 255, 0.012));
-  opacity: 0.84;
+.hero-panel::before {
+  content: none;
 }
 
-.hero-panel::after,
-.surface-card::after {
+.hero-panel::after {
   inset: auto 1rem 0.82rem;
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(255, 243, 223, 0.12), transparent);
+}
+
+.surface-card::before,
+.surface-card::after {
+  content: none;
 }
 
 .hero-panel {
@@ -105,26 +107,15 @@
 
 .metric-card {
   position: relative;
-  padding: 0.92rem 0.96rem 0.98rem;
-  border: 1px solid var(--color-border-soft);
-  border-radius: var(--radius-lg);
-  background:
-    radial-gradient(circle at top right, color-mix(in oklch, var(--color-copper) 8%, transparent), transparent 42%),
-    var(--surface-gloss),
-    rgba(8, 12, 17, 0.24);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 243, 223, 0.03),
-    0 8px 18px rgba(1, 4, 9, 0.12);
+  padding: 0.78rem 0.82rem;
+  border: 0;
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.018);
+  box-shadow: none;
 }
 
 .metric-card::before {
-  content: "";
-  position: absolute;
-  left: 1rem;
-  right: 1rem;
-  top: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 243, 223, 0.12), transparent);
+  content: none;
 }
 
 .metric-card__label {
@@ -152,7 +143,7 @@
 }
 
 .surface-card {
-  padding: 1.28rem;
+  padding: 1.2rem 0 0;
 }
 
 .surface-card__header {

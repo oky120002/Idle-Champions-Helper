@@ -54,28 +54,18 @@
 .formation-layout-library__selected-card {
   position: relative;
   overflow: clip;
-  padding: 0.88rem 0.92rem;
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(227, 214, 193, 0.08);
-  background:
-    radial-gradient(circle at top right, rgba(200, 167, 127, 0.08), transparent 40%),
-    var(--surface-gloss),
-    rgba(8, 13, 19, 0.22);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 243, 223, 0.03),
-    0 10px 20px rgba(1, 4, 9, 0.1);
+  padding: 0.78rem 0;
+  border-radius: 0;
+  border: 0;
+  border-top: 1px solid rgba(227, 214, 193, 0.08);
+  background: transparent;
+  box-shadow: none;
 }
 
 .formation-layout-library__stat-card::before,
 .formation-layout-library__selected-card::before,
 .formation-layout-card::before {
-  content: "";
-  position: absolute;
-  left: 0.92rem;
-  right: 0.92rem;
-  top: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 243, 223, 0.12), transparent);
+  content: none;
 }
 
 .formation-layout-library__stat-label {
@@ -142,9 +132,7 @@
   padding: 0.22rem 0.56rem;
   border-radius: 999px;
   border: 1px solid rgba(227, 214, 193, 0.1);
-  background:
-    var(--surface-gloss),
-    rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.018);
   color: rgba(242, 239, 230, 0.76);
   font-size: 0.74rem;
   line-height: 1;
@@ -152,9 +140,7 @@
 
 .formation-layout-library__selected-pill--muted,
 .formation-layout-card__meta-pill {
-  background:
-    linear-gradient(180deg, rgba(62, 113, 147, 0.14), rgba(10, 18, 28, 0.88)),
-    rgba(62, 113, 147, 0.1);
+  background: rgba(62, 113, 147, 0.08);
   border-color: rgba(62, 113, 147, 0.16);
   color: #e7f3ff;
 }
@@ -200,19 +186,15 @@
   display: grid;
   gap: 0.54rem;
   justify-items: start;
-  padding: 0.82rem 0.9rem;
-  border: 1px solid rgba(227, 214, 193, 0.08);
-  border-radius: var(--radius-lg);
-  background:
-    radial-gradient(circle at top right, rgba(200, 167, 127, 0.08), transparent 42%),
-    var(--surface-gloss),
-    rgba(7, 12, 18, 0.22);
+  padding: 0.78rem 0;
+  border: 0;
+  border-top: 1px solid rgba(227, 214, 193, 0.08);
+  border-radius: 0;
+  background: transparent;
   color: inherit;
   text-align: left;
   cursor: pointer;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 243, 223, 0.025),
-    0 10px 20px rgba(1, 4, 9, 0.1);
+  box-shadow: none;
   transition:
     transform 160ms ease,
     border-color 160ms ease,
@@ -223,28 +205,18 @@
 .formation-layout-card:hover {
   transform: translateY(-0.5px);
   border-color: rgba(200, 167, 127, 0.28);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 243, 223, 0.03),
-    0 12px 22px rgba(1, 4, 9, 0.12);
+  box-shadow: none;
 }
 
 .formation-layout-card:focus-visible {
   outline: none;
-  box-shadow:
-    var(--focus-ring),
-    inset 0 1px 0 rgba(255, 243, 223, 0.04),
-    0 12px 22px rgba(1, 4, 9, 0.14);
+  box-shadow: var(--focus-ring);
 }
 
 .formation-layout-card--active {
   border-color: rgba(200, 167, 127, 0.4);
-  background:
-    radial-gradient(circle at top right, rgba(200, 167, 127, 0.14), transparent 40%),
-    linear-gradient(180deg, rgba(200, 167, 127, 0.08), rgba(62, 113, 147, 0.04)),
-    rgba(7, 12, 18, 0.26);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 243, 223, 0.04),
-    0 14px 26px rgba(1, 4, 9, 0.16);
+  background: rgba(200, 167, 127, 0.055);
+  box-shadow: none;
 }
 
 .formation-layout-card__topline {
@@ -263,9 +235,7 @@
 
 .formation-layout-card__count {
   border-color: rgba(200, 167, 127, 0.16);
-  background:
-    linear-gradient(180deg, color-mix(in oklch, var(--color-copper) 12%, transparent), transparent),
-    rgba(200, 167, 127, 0.08);
+  background: rgba(200, 167, 127, 0.075);
   color: #fff0d5;
   white-space: nowrap;
 }

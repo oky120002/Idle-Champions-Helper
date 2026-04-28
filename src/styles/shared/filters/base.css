@@ -32,24 +32,16 @@
   position: relative;
   display: grid;
   gap: 0.65rem;
-  padding: 0.8rem 0.88rem;
-  border: 1px solid rgba(227, 214, 193, 0.08);
-  border-radius: var(--radius-md);
-  background:
-    radial-gradient(circle at top right, color-mix(in oklch, var(--color-steel) 10%, transparent), transparent 42%),
-    var(--surface-gloss),
-    rgba(7, 12, 18, 0.24);
-  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.03);
+  padding: 0.78rem 0;
+  border: 0;
+  border-top: 1px solid rgba(227, 214, 193, 0.08);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .filter-subgroup::before {
-  content: "";
-  position: absolute;
-  left: 0.88rem;
-  right: 0.88rem;
-  top: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 243, 223, 0.12), transparent);
+  content: none;
 }
 
 .filter-subgroup__header {
@@ -87,36 +79,28 @@
 
 .filter-chip {
   padding: 0.42rem 0.76rem;
-  background:
-    var(--surface-gloss),
-    rgba(7, 12, 18, 0.22);
+  background: rgba(255, 255, 255, 0.018);
   color: rgba(242, 239, 230, 0.82);
   cursor: pointer;
-  box-shadow:
-    0 8px 16px rgba(1, 4, 9, 0.1),
-    inset 0 1px 0 rgba(255, 243, 223, 0.025);
+  box-shadow: none;
   transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
 }
 
 .tag-pill {
   padding: 0.38rem 0.66rem;
-  background:
-    var(--surface-gloss),
-    rgba(9, 14, 20, 0.2);
+  background: rgba(255, 255, 255, 0.018);
   color: rgba(242, 239, 230, 0.8);
-  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.025);
+  box-shadow: none;
 }
 
 .filter-chip:hover {
   transform: translateY(-0.5px);
   border-color: rgba(200, 167, 127, 0.34);
-  box-shadow: 0 10px 20px rgba(1, 4, 9, 0.12);
+  box-shadow: none;
 }
 
 .filter-chip--active {
-  background:
-    radial-gradient(circle at top left, color-mix(in oklch, var(--color-copper) 12%, transparent), transparent 58%),
-    rgba(200, 167, 127, 0.1);
+  background: rgba(200, 167, 127, 0.095);
   border-color: rgba(200, 167, 127, 0.48);
   color: #fff3df;
 }

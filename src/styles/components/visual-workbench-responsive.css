@@ -1,0 +1,70 @@
+@media (max-width: 1040px) {
+  .visual-workbench__header,
+  .visual-workbench__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .visual-workbench__summary-strip {
+    grid-auto-flow: row;
+  }
+}
+
+@media (max-width: 720px) {
+  .visual-workbench {
+    padding: 1rem;
+    border-radius: 24px;
+  }
+
+  .visual-workbench__stage {
+    min-height: 20rem;
+    padding: 1rem;
+    border-radius: 28px;
+  }
+
+  .visual-workbench__stage-empty {
+    inset: auto 0.9rem 0.95rem 0.9rem;
+    max-width: none;
+  }
+
+  .visual-workbench__reference-chip {
+    max-width: 10.5rem;
+    padding-right: 0.65rem;
+  }
+
+  .visual-workbench__resource-tabs,
+  .visual-workbench__meta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .visual-workbench__skin-strip {
+    grid-auto-columns: minmax(13rem, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .visual-workbench__title-row {
+    align-items: flex-start;
+  }
+
+  .visual-workbench__summary-pill {
+    min-width: 0;
+  }
+
+  .visual-workbench__stage {
+    min-height: 17.5rem;
+  }
+
+  .visual-workbench__reference-chip {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin-top: 1rem;
+    max-width: none;
+  }
+
+  .visual-workbench__stage-empty {
+    position: relative;
+    inset: auto;
+    margin-top: auto;
+  }
+}

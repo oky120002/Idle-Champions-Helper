@@ -1,0 +1,127 @@
+.workbench-filter-header,
+.workbench-filter-header__summary,
+.workbench-filter-header__copy {
+  display: grid;
+}
+
+.workbench-filter-header {
+  gap: 0.76rem;
+  margin: -0.74rem calc(-1 * var(--page-workbench-content-inline-inset)) 0;
+  padding: 1.44rem var(--page-workbench-content-inline-inset) 0.8rem;
+  border: 0;
+  border-top: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.workbench-filter-header__summary,
+.workbench-filter-header__copy {
+  gap: 0.16rem;
+  min-width: 0;
+}
+
+.workbench-filter-header--metrics-only {
+  gap: 0.18rem;
+  padding-top: 0.54rem;
+  padding-bottom: 0.42rem;
+}
+
+.workbench-filter-header__titlebar,
+.workbench-filter-header__metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.62rem;
+  align-items: flex-start;
+}
+
+.workbench-filter-header__titlebar {
+  justify-content: space-between;
+}
+
+.workbench-filter-header__metrics {
+  flex: 1 1 0;
+  min-width: 0;
+  justify-content: flex-end;
+}
+
+.workbench-filter-header__metrics-fit {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.workbench-filter-header--metrics-only .workbench-filter-header__metrics-fit {
+  justify-content: flex-start;
+}
+
+.workbench-filter-header__kicker {
+  margin: 0;
+}
+
+.workbench-filter-header__title {
+  margin: 0;
+  color: rgba(255, 248, 237, 0.98);
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2vw, 1.72rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.workbench-filter-header__description,
+.workbench-filter-header__filter-summary {
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+.workbench-filter-header__filter-summary {
+  min-height: 1.3rem;
+}
+
+.workbench-filter-header__filter-summary[data-empty="true"] {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.workbench-filter-header__metrics .page-header-metrics {
+  justify-content: flex-end;
+}
+
+.workbench-filter-header--metrics-only .workbench-filter-header__titlebar,
+.workbench-filter-header--metrics-only .workbench-filter-header__metrics,
+.workbench-filter-header--metrics-only .workbench-filter-header__metrics .page-header-metrics {
+  justify-content: flex-start;
+}
+
+@media (max-width: 1079.98px) {
+  .workbench-filter-header {
+    margin-top: -0.74rem;
+    margin-inline: -0.88rem;
+    padding: 1.44rem 0.88rem 0.76rem;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+  }
+
+  .workbench-filter-header--metrics-only {
+    gap: 0.16rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.4rem;
+  }
+
+  .workbench-filter-header__titlebar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .workbench-filter-header__metrics,
+  .workbench-filter-header__metrics .page-header-metrics {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 720px) {
+  .workbench-filter-header__title {
+    font-size: 1.2rem;
+  }
+}

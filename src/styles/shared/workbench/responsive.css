@@ -1,0 +1,106 @@
+@media (min-width: 1080px) {
+  .page-workbench {
+    height: max(34rem, calc(100vh - var(--site-workbench-top-clearance, 7.8rem)));
+  }
+
+  .site-main--workbench .page-workbench {
+    height: calc(100dvh - var(--site-workbench-top-clearance, 7.8rem));
+  }
+
+  .page-workbench__chrome-actions {
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 1079.98px) {
+  .page-workbench {
+    border-radius: 20px;
+  }
+
+  .page-workbench__body {
+    grid-template-columns: minmax(0, 1fr);
+    height: auto;
+  }
+
+  .page-workbench__body::before,
+  .page-workbench__body::after {
+    display: none;
+  }
+
+  .page-workbench__anchor-toggle {
+    top: 0.78rem;
+    left: 0.78rem;
+  }
+
+  .page-workbench__sidebar {
+    border-right: 0;
+    border-bottom: 1px solid rgba(227, 214, 193, 0.08);
+  }
+
+  .page-workbench__sidebar::after {
+    display: none;
+  }
+
+  .page-workbench__chrome {
+    min-height: auto;
+    height: auto;
+  }
+
+  .page-workbench__chrome-sidebar,
+  .page-workbench__chrome-main {
+    padding: 0.72rem;
+  }
+
+  .page-workbench__chrome-sidebar {
+    padding-inline-start: calc(0.78rem + var(--page-workbench-collapsed-toggle-size) + 0.72rem);
+  }
+
+  .page-workbench__chrome-main {
+    padding-top: 0;
+  }
+
+  .page-workbench__sidebar-shell,
+  .page-workbench__content-shell {
+    height: auto;
+  }
+
+  .page-workbench__sidebar-scroll,
+  .page-workbench__content-scroll {
+    height: auto;
+    overflow: visible;
+    scrollbar-gutter: auto;
+  }
+
+  .page-workbench__content-scroll {
+    padding-left: 0.84rem;
+  }
+
+  .page-workbench__content-overlay {
+    right: 0.72rem;
+    bottom: 0.72rem;
+  }
+
+  .page-workbench__floating-top-button {
+    min-height: 2.64rem;
+    padding-right: 0.6rem;
+  }
+
+  .page-workbench__floating-top-copy span {
+    letter-spacing: 0.06em;
+  }
+
+  .page-workbench--collapsed .page-workbench__sidebar {
+    display: none;
+  }
+
+  .page-workbench--collapsed .page-workbench__chrome-main {
+    padding-inline-start: calc(var(--page-workbench-collapsed-toggle-size) + 1.15rem);
+  }
+}
+
+@media (max-width: 720px) {
+  .page-workbench__floating-top-copy span {
+    display: none;
+  }
+}
