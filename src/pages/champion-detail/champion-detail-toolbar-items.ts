@@ -37,7 +37,6 @@ function toBadgeItems(prefix: string, badges: DetailSectionBadge[]): WorkbenchTo
 function buildActiveSectionBadgeItems({
   detail,
   activeSectionId,
-  upgradeSectionBadges,
   featSectionBadges,
   ledgerRowsCount,
   visibleLedgerRowsCount,
@@ -45,14 +44,14 @@ function buildActiveSectionBadgeItems({
   t,
 }: Omit<
   ChampionDetailToolbarItemOptions,
-  'activeSectionIndex' | 'sectionCount' | 'shareLinkState' | 'copyCurrentLink'
+  'activeSectionIndex' | 'sectionCount' | 'upgradeSectionBadges' | 'shareLinkState' | 'copyCurrentLink'
 >): WorkbenchToolbarItemConfig[] {
   if (detail == null) {
     return []
   }
 
   if (activeSectionId === 'specializations') {
-    return toBadgeItems('active-specializations', upgradeSectionBadges)
+    return []
   }
 
   if (activeSectionId === 'abilities') {
@@ -120,7 +119,6 @@ export function buildChampionDetailToolbarItems({
   activeSectionId,
   activeSectionIndex,
   sectionCount,
-  upgradeSectionBadges,
   featSectionBadges,
   ledgerRowsCount,
   visibleLedgerRowsCount,
@@ -133,7 +131,6 @@ export function buildChampionDetailToolbarItems({
     ...buildActiveSectionBadgeItems({
       detail,
       activeSectionId,
-      upgradeSectionBadges,
       featSectionBadges,
       ledgerRowsCount,
       visibleLedgerRowsCount,

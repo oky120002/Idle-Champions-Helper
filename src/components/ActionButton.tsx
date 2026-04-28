@@ -13,6 +13,7 @@ interface ActionButtonProps {
   type?: 'button' | 'submit' | 'reset' | undefined
   ariaPressed?: boolean | undefined
   ariaLabel?: string | undefined
+  title?: string | undefined
 }
 
 export function ActionButton({
@@ -26,6 +27,7 @@ export function ActionButton({
   type = 'button',
   ariaPressed,
   ariaLabel,
+  title,
 }: ActionButtonProps) {
   return (
     <button
@@ -39,6 +41,7 @@ export function ActionButton({
       {...(disabled ? { disabled: true } : {})}
       {...(ariaPressed !== undefined ? { 'aria-pressed': ariaPressed } : {})}
       {...(ariaLabel !== undefined ? { 'aria-label': ariaLabel } : {})}
+      {...(title !== undefined ? { title } : {})}
       onClick={() => {
         void onClick()
       }}
