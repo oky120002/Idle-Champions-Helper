@@ -10,6 +10,7 @@ interface DossierSectionProps {
   locale: 'zh-CN' | 'en-US'
   t: (text: { zh: string; en: string }) => string
   heroIllustration: ChampionIllustration | null
+  summaryAvailabilityBadges: Array<{ key: string; label: string; active?: boolean }>
   openArtworkDialog: (skinId?: string) => void
 }
 
@@ -30,6 +31,7 @@ export function DossierSection({
   locale,
   t,
   heroIllustration,
+  summaryAvailabilityBadges,
   openArtworkDialog,
 }: DossierSectionProps) {
   const characterSheet = detail.characterSheet
@@ -49,8 +51,8 @@ export function DossierSection({
   )
 
   return (
-    <div className="workbench-page__sidebar-stack champion-dossier" role="group" aria-label={t({ zh: '英雄资料栏', en: 'Champion dossier' })}>
-      <section className="filter-subgroup champion-dossier__media-panel" aria-label={t({ zh: '英雄立绘', en: 'Champion artwork' })}>
+    <div className="champion-dossier" role="group" aria-label={t({ zh: '英雄资料栏', en: 'Champion dossier' })}>
+      <section className="champion-dossier__media-panel" aria-label={t({ zh: '英雄立绘', en: 'Champion artwork' })}>
         {hasSkinPreview ? (
           <button
             type="button"
@@ -68,14 +70,31 @@ export function DossierSection({
         )}
       </section>
 
-      <section className="filter-subgroup champion-dossier__section">
-        <p className="filter-sidebar-panel__section-label">{t({ zh: '定位与来源', en: 'Role and source' })}</p>
-        <div className="tag-row champion-dossier__role-strip">
-          {detail.summary.roles.map((role) => (
-            <span key={role} className="tag-pill">
-              {getRoleLabel(role, locale)}
+      {summaryAvailabilityBadges.length > 0 ? (
+        <div
+          className="champion-dossier__status-row"
+          role="group"
+          aria-label={t({ zh: '英雄状态', en: 'Champion status' })}
+        >
+          {summaryAvailabilityBadges.map((badge) => (
+            <span
+              key={badge.key}
+              className={badge.active ? 'champion-dossier__status-pill champion-dossier__status-pill--active' : 'champion-dossier__status-pill'}
+            >
+              {badge.label}
             </span>
           ))}
+        </div>
+      ) : null}
+
+      <section className="champion-dossier__section">
+        <div className="champion-dossier__line">
+          <span className="champion-dossier__line-label">{t({ zh: '定位', en: 'Roles' })}</span>
+          <span className="champion-dossier__line-value">
+            {detail.summary.roles.length > 0
+              ? detail.summary.roles.map((role) => getRoleLabel(role, locale)).join(' / ')
+              : t({ zh: '暂无', en: 'None' })}
+          </span>
         </div>
         {detail.eventName ? (
           <DetailField
@@ -87,8 +106,8 @@ export function DossierSection({
       </section>
 
       {characterSheet ? (
-        <section className="filter-subgroup champion-dossier__section champion-dossier__section--scores">
-          <p className="filter-sidebar-panel__section-label">{t({ zh: '属性', en: 'Abilities' })}</p>
+        <section className="champion-dossier__section champion-dossier__section--scores">
+          <p className="champion-dossier__section-label">{t({ zh: '属性', en: 'Abilities' })}</p>
           <div className="champion-dossier__score-grid">
             {ABILITY_SCORE_KEYS.map((key) => {
               const score = characterSheet.abilityScores[key] ?? null
@@ -105,8 +124,8 @@ export function DossierSection({
         </section>
       ) : null}
 
-      <section className="filter-subgroup champion-dossier__section champion-dossier__section--facts">
-        <p className="filter-sidebar-panel__section-label">{t({ zh: '身份', en: 'Identity' })}</p>
+      <section className="champion-dossier__section champion-dossier__section--facts">
+        <p className="champion-dossier__section-label">{t({ zh: '身份', en: 'Identity' })}</p>
         <DetailField
           label={t({ zh: '种族', en: 'Race' })}
           value={characterSheet?.race ? <LocalizedTextStack value={characterSheet.race} /> : t({ zh: '暂无', en: 'None' })}

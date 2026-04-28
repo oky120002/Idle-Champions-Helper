@@ -4,14 +4,11 @@ import { BackNavigationIcon } from '../app/AppIcons'
 import { useI18n } from '../app/i18n'
 import { SurfaceCardStatusStack, type SurfaceCardStatusStackItem } from '../components/SurfaceCardStatusStack'
 import { ConfiguredWorkbenchPage } from '../components/workbench/ConfiguredWorkbenchPage'
-import {
-  WorkbenchSidebarHeader,
-  WorkbenchToolbarLeadStatus,
-} from '../components/workbench/WorkbenchScaffold'
+import { WorkbenchToolbarLeadStatus } from '../components/workbench/WorkbenchScaffold'
 import { WorkbenchToolbarItems } from '../components/workbench/WorkbenchToolbarItems'
 import { useWorkbenchScrollNavigation } from '../components/workbench/useWorkbenchScrollNavigation'
 import { useWorkbenchShareLink } from '../components/workbench/useWorkbenchShareLink'
-import { getPrimaryLocalizedText, getRoleLabel } from '../domain/localizedText'
+import { getPrimaryLocalizedText } from '../domain/localizedText'
 import { ChampionDetailBody } from './champion-detail/ChampionDetailBody'
 import { ChampionDetailToolbarPrimary } from './champion-detail/ChampionDetailToolbar'
 import { buildChampionDetailToolbarItems } from './champion-detail/champion-detail-toolbar-items'
@@ -89,13 +86,6 @@ export function ChampionDetailPage() {
   const shareHash = detail ? `#${DETAIL_HASH_PREFIX}${activeSectionId}` : location.hash
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, shareHash)
   const toolbarTitle = detail ? getPrimaryLocalizedText(detail.summary.name, locale) : t({ zh: '英雄详情', en: 'Champion detail' })
-  const sidebarTitle = toolbarTitle
-  const sidebarDetail = detail
-    ? t({
-        zh: `${detail.summary.seat} 号位 · ${detail.summary.roles.map((role) => getRoleLabel(role, locale)).join(' / ') || '未标注定位'}`,
-        en: `Seat ${detail.summary.seat} · ${detail.summary.roles.map((role) => getRoleLabel(role, locale)).join(' / ') || 'No roles'}`,
-      })
-    : t({ zh: '正在读取英雄资料', en: 'Loading champion dossier' })
   const toolbarDetail = detail
     ? t({ zh: `${detail.summary.seat} 号位 · ${activeSectionLabel}`, en: `Seat ${detail.summary.seat} · ${activeSectionLabel}` })
     : t({ zh: '战术卷宗与章节索引', en: 'Tactical dossier and section index' })
@@ -191,7 +181,7 @@ export function ChampionDetailPage() {
         <WorkbenchToolbarLeadStatus
           label="CHAMPION"
           status={detail ? t({ zh: `${detail.summary.seat} 号位`, en: `Seat ${detail.summary.seat}` }) : t({ zh: '读取中', en: 'Loading' })}
-          statusTitle={sidebarDetail}
+          statusTitle={toolbarDetail}
         />
       )}
       toolbarPrimary={(
@@ -227,24 +217,8 @@ export function ChampionDetailPage() {
           locale={locale}
           t={t}
           heroIllustration={heroIllustration}
+          summaryAvailabilityBadges={summaryAvailabilityBadges}
           openArtworkDialog={openArtworkDialog}
-        />
-      ) : undefined}
-      sidebarHeader={detail ? (
-        <WorkbenchSidebarHeader
-          kicker={t({ zh: '英雄卷宗', en: 'Champion dossier' })}
-          title={sidebarTitle}
-          description={sidebarDetail}
-          statusLabel={t({ zh: '英雄状态', en: 'Champion status' })}
-          status={summaryAvailabilityBadges.length > 0 ? (
-            <div className="champion-dossier__sidebar-status">
-              {summaryAvailabilityBadges.map((badge) => (
-                <span key={badge.key} className={badge.active ? 'filter-sidebar-panel__badge champion-dossier__sidebar-badge--active' : 'filter-sidebar-panel__badge'}>
-                  {badge.label}
-                </span>
-              ))}
-            </div>
-          ) : null}
         />
       ) : undefined}
     >

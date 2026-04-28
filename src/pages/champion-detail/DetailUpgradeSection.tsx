@@ -38,6 +38,10 @@ function formatSpecTitle(title: string, locale: 'zh-CN' | 'en-US'): string {
   return locale === 'zh-CN' ? `专精：${title}` : `Spec: ${title}`
 }
 
+function formatSpecSummaryLabel(locale: 'zh-CN' | 'en-US'): string {
+  return locale === 'zh-CN' ? '专精方案' : 'Specialization plan'
+}
+
 function buildUpgradeTypeBadge(
   entry: SpecializationUpgradeEntry | undefined,
 ): { label: string; className: string } | null {
@@ -137,10 +141,10 @@ function SpecializationColumnCard({
   specializationGraphic: ChampionSpecializationGraphic | null
   specializationGraphicsById: Map<string, ChampionSpecializationGraphic>
 }) {
-  const primaryEntry = column.entries[0]
+  const primaryEntry = column.entries.find((entry) => entry.relation === 'primary')
   const metricItems = [
     {
-      label: locale === 'zh-CN' ? '起始等级' : 'Starts',
+      label: locale === 'zh-CN' ? '解锁等级' : 'Unlocks',
       value: primaryEntry ? formatUpgradeLevel(primaryEntry, locale) : buildNotAvailableLabel(locale),
     },
     {
@@ -161,14 +165,14 @@ function SpecializationColumnCard({
       : []),
   ]
   const columnTypeBadge = buildUpgradeTypeBadge(primaryEntry)
-  const columnTitle = primaryEntry ? formatSpecTitle(column.title, locale) : column.title
+  const columnTitle = formatSpecTitle(column.title, locale)
 
   return (
     <article className="specialization-column">
       <header className="specialization-column__header">
         <div className="specialization-column__header-main">
           <div className="specialization-column__eyebrow-row">
-            {primaryEntry ? <span className="upgrade-card__level-pill">{formatUpgradeLevel(primaryEntry, locale)}</span> : null}
+            <span className="specialization-column__summary-pill">{formatSpecSummaryLabel(locale)}</span>
             <h3 className="specialization-column__title">{columnTitle}</h3>
             {columnTypeBadge ? <span className={columnTypeBadge.className}>{columnTypeBadge.label}</span> : null}
           </div>

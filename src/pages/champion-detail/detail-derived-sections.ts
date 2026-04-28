@@ -235,7 +235,7 @@ export function buildSummaryAvailabilityBadges(
   if (detail.availability.availableInNextEvent) {
     badges.push({
       key: 'next-event',
-      label: t({ zh: '下个活动可得', en: 'Available in next event' }),
+      label: t({ zh: '下个活动可用', en: 'Available in next event' }),
       active: true,
     })
   }
