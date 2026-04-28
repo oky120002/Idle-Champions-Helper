@@ -4,7 +4,7 @@ import { BackNavigationIcon } from '../app/AppIcons'
 import { useI18n } from '../app/i18n'
 import { SurfaceCardStatusStack, type SurfaceCardStatusStackItem } from '../components/SurfaceCardStatusStack'
 import { ConfiguredWorkbenchPage } from '../components/workbench/ConfiguredWorkbenchPage'
-import { WorkbenchToolbarLeadStatus } from '../components/workbench/WorkbenchScaffold'
+import { WorkbenchToolbarMark } from '../components/workbench/WorkbenchScaffold'
 import { WorkbenchToolbarItems } from '../components/workbench/WorkbenchToolbarItems'
 import { useWorkbenchScrollNavigation } from '../components/workbench/useWorkbenchScrollNavigation'
 import { useWorkbenchShareLink } from '../components/workbench/useWorkbenchShareLink'
@@ -177,13 +177,7 @@ export function ChampionDetailPage() {
             }
           : undefined
       }
-      toolbarLead={(
-        <WorkbenchToolbarLeadStatus
-          label="CHAMPION"
-          status={detail ? t({ zh: `${detail.summary.seat} 号位`, en: `Seat ${detail.summary.seat}` }) : t({ zh: '读取中', en: 'Loading' })}
-          statusTitle={toolbarDetail}
-        />
-      )}
+      toolbarLead={<WorkbenchToolbarMark label="CHAMPION" />}
       toolbarPrimary={(
         <div className="champion-detail-workbench__toolbar-main">
           <Link
