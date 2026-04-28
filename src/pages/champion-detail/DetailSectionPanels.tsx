@@ -8,7 +8,6 @@ import { DetailStoryMiscSection } from './DetailStoryMiscSection'
 import { DetailUpgradeSection } from './DetailUpgradeSection'
 import type {
   DetailFieldProps,
-  DetailSectionBadge,
   DetailSectionLink,
   EffectContext,
   LedgerUpgradeRow,
@@ -22,8 +21,6 @@ interface DetailSectionPanelsProps {
   t: (text: { zh: string; en: string }) => string
   activeSectionId: DetailSectionLink['id']
   effectContext: EffectContext
-  upgradeSectionBadges: DetailSectionBadge[]
-  featSectionBadges: DetailSectionBadge[]
   overviewFields: DetailFieldProps[]
   specializationColumns: SpecializationUpgradeColumn[]
   specializationGraphicsById: Map<string, ChampionSpecializationGraphic>
@@ -96,7 +93,6 @@ export function DetailSectionPanels(props: DetailSectionPanelsProps) {
           detail={props.detail}
           locale={props.locale}
           t={props.t}
-          featSectionBadges={props.featSectionBadges}
           effectContext={props.effectContext}
         />
       </div>
@@ -135,7 +131,6 @@ export function DetailSectionPanels(props: DetailSectionPanelsProps) {
       <DetailUpgradeSection
         locale={props.locale}
         t={props.t}
-        upgradeSectionBadges={props.upgradeSectionBadges}
         specializationColumns={props.specializationColumns}
         specializationGraphicsById={props.specializationGraphicsById}
       />

@@ -19,15 +19,7 @@ export function DetailLootSection({ detail, locale, t, effectContext }: DetailLo
   return (
     <SurfaceCard className="detail-section detail-section--loot detail-section--headerless">
       <div id="loot" className="detail-section-anchor" />
-      <DetailSectionHeader
-        title={t({ zh: '装备', en: 'Loot' })}
-        badges={[
-          {
-            label: t({ zh: '装备', en: 'Items' }),
-            value: String(loot.length),
-          },
-        ]}
-      />
+      <DetailSectionHeader title={t({ zh: '装备', en: 'Loot' })} badges={[]} />
 
       {loot.length > 0 ? (
         <div className="loot-grid">

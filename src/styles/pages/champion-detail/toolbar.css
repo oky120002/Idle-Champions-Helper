@@ -1,0 +1,104 @@
+.champion-detail-toolbar-primary {
+  display: flex;
+  align-items: center;
+  gap: 0.72rem;
+  min-width: 0;
+}
+
+.champion-detail-toolbar-primary__copy {
+  flex: 0 0 auto;
+  max-width: clamp(13rem, 18vw, 20rem);
+}
+
+.champion-detail-toolbar-tabs {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 0.12rem;
+  min-width: 0;
+  padding: 0.12rem;
+  border: 1px solid rgba(227, 214, 193, 0.07);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.024), rgba(255, 255, 255, 0)),
+    rgba(9, 14, 20, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.018);
+}
+
+.champion-detail-toolbar-tabs__button {
+  flex: 0 1 auto;
+  min-width: 0;
+  min-height: 1.62rem;
+  padding: 0.16rem 0.48rem 0.18rem;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(242, 239, 230, 0.62);
+  font-size: 0.74rem;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.champion-detail-toolbar-tabs__button:hover {
+  border-color: rgba(200, 167, 127, 0.12);
+  background: rgba(255, 255, 255, 0.022);
+  color: rgba(255, 246, 232, 0.82);
+}
+
+.champion-detail-toolbar-tabs__button:focus-visible {
+  outline: none;
+  border-color: rgba(231, 209, 171, 0.42);
+  box-shadow: 0 0 0 3px rgba(200, 167, 127, 0.09);
+}
+
+.champion-detail-toolbar-tabs__button--active {
+  border-color: rgba(200, 167, 127, 0.18);
+  background:
+    radial-gradient(circle at top left, rgba(200, 167, 127, 0.09), transparent 54%),
+    rgba(255, 255, 255, 0.032);
+  color: #fff3df;
+}
+
+@media (max-width: 720px) {
+  .champion-detail-workbench .page-workbench__chrome-main {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .champion-detail-workbench .page-workbench__chrome-inline-lead {
+    align-self: flex-start;
+  }
+
+  .champion-detail-workbench .page-workbench__chrome-actions {
+    justify-content: flex-start;
+  }
+
+  .champion-detail-toolbar-primary {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0.44rem;
+  }
+
+  .champion-detail-toolbar-primary__copy {
+    max-width: none;
+  }
+
+  .champion-detail-toolbar-tabs {
+    flex-wrap: wrap;
+    border-radius: 14px;
+  }
+
+  .champion-detail-toolbar-tabs__button {
+    flex: 1 1 auto;
+    min-height: 1.78rem;
+    padding-inline: 0.48rem;
+    font-size: 0.78rem;
+  }
+}

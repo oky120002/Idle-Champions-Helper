@@ -70,60 +70,7 @@
 .champion-detail-tab-shell {
   min-width: 0;
   display: grid;
-  gap: 0.8rem;
-}
-
-.champion-detail-tab-bar {
-  position: sticky;
-  top: 0;
-  z-index: 4;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.42rem;
-  padding: 0.52rem;
-  border: 1px solid rgba(227, 214, 193, 0.1);
-  border-radius: 18px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0)),
-    rgba(8, 13, 20, 0.86);
-  box-shadow: 0 10px 24px rgba(1, 4, 9, 0.14);
-  backdrop-filter: blur(12px);
-}
-
-.champion-detail-tab-bar__button {
-  min-height: 2.24rem;
-  padding: 0.42rem 0.68rem;
-  border: 1px solid transparent;
-  border-radius: 12px;
-  background: transparent;
-  color: rgba(242, 239, 230, 0.72);
-  font-size: 0.84rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition:
-    border-color 160ms ease,
-    background-color 160ms ease,
-    color 160ms ease;
-}
-
-.champion-detail-tab-bar__button:hover {
-  border-color: rgba(200, 167, 127, 0.18);
-  background: rgba(255, 255, 255, 0.035);
-  color: rgba(255, 246, 232, 0.92);
-}
-
-.champion-detail-tab-bar__button:focus-visible {
-  outline: none;
-  border-color: rgba(231, 209, 171, 0.5);
-  box-shadow: 0 0 0 3px rgba(200, 167, 127, 0.1);
-}
-
-.champion-detail-tab-bar__button--active {
-  border-color: rgba(200, 167, 127, 0.28);
-  background:
-    linear-gradient(180deg, rgba(200, 167, 127, 0.14), rgba(62, 113, 147, 0.04)),
-    rgba(255, 255, 255, 0.04);
-  color: #fff8ec;
+  gap: 0.72rem;
 }
 
 .champion-detail-content {
@@ -235,25 +182,9 @@
   .champion-detail-layout {
     grid-template-columns: 1fr;
   }
-
-  .champion-detail-tab-bar {
-    top: 0;
-  }
 }
 
 @media (max-width: 720px) {
-  .champion-detail-tab-bar {
-    gap: 0.34rem;
-    padding: 0.42rem;
-  }
-
-  .champion-detail-tab-bar__button {
-    flex: 1 1 auto;
-    min-height: 2.14rem;
-    padding: 0.38rem 0.5rem;
-    font-size: 0.78rem;
-  }
-
   .detail-subcard__header,
   .attack-card__header,
   .loot-card__topline,
