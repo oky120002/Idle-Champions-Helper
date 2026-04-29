@@ -1,5 +1,5 @@
 import { WorkbenchResultsScaffold } from '../../components/workbench/WorkbenchResultsScaffold'
-import { VariantCampaignSection } from './VariantCampaignSection'
+import { VariantAdventureDetail } from './VariantAdventureDetail'
 import type { VariantsPageModel } from './types'
 
 type VariantsResultsSectionProps = {
@@ -7,8 +7,8 @@ type VariantsResultsSectionProps = {
 }
 
 export function VariantsResultsSection({ model }: VariantsResultsSectionProps) {
-  const { t, filteredVariants, visibleCampaignGroups } = model
-  const hasMatches = filteredVariants.length > 0
+  const { t, selectedAdventureGroup } = model
+  const hasMatches = selectedAdventureGroup !== null
 
   return (
     <WorkbenchResultsScaffold
@@ -24,11 +24,7 @@ export function VariantsResultsSection({ model }: VariantsResultsSectionProps) {
         }),
       }}
     >
-      <div className="variant-campaign-stack">
-        {visibleCampaignGroups.map((group) => (
-          <VariantCampaignSection key={group.id} model={model} group={group} />
-        ))}
-      </div>
+      <VariantAdventureDetail model={model} />
     </WorkbenchResultsScaffold>
   )
 }

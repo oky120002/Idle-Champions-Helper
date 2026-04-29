@@ -138,6 +138,11 @@ test('normalizeDefinitionsSnapshot 输出官方原文和中文展示双字段', 
   ])
   assert.equal(variants.items[0].enemyCount, 3)
   assert.deepEqual(variants.items[0].enemyTypes, ['humanoid', 'bandit', 'undead'])
+  assert.deepEqual(variants.items[0].enemyTypeCounts, {
+    humanoid: 2,
+    bandit: 1,
+    undead: 1,
+  })
   assert.deepEqual(variants.items[0].attackMix, {
     melee: 2,
     ranged: 1,

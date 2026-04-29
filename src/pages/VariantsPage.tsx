@@ -1,12 +1,11 @@
 import { FilterWorkbenchPage } from '../components/workbench/FilterWorkbenchPage'
 import {
-  createWorkbenchFilterToolbarItems,
+  createWorkbenchBadgeItem,
+  createWorkbenchShareItem,
 } from '../components/workbench/WorkbenchToolbarItemBuilders'
 import { createAsyncStatusBannerItems } from '../components/statusBannerStackItemBuilders'
-import { MAX_VISIBLE_VARIANTS } from './variants/constants'
-import { VariantsFilterBar } from './variants/VariantsFilterBar'
+import { VariantsNavigationSidebar } from './variants/VariantsNavigationSidebar'
 import { VariantsResultsSection } from './variants/VariantsResultsSection'
-import { VariantsWorkbenchContentHeader } from './variants/VariantsWorkbenchContentHeader'
 import { useVariantsPageModel } from './variants/useVariantsPageModel'
 
 export function VariantsPage() {
@@ -24,17 +23,36 @@ export function VariantsPage() {
         : {}),
     },
   })
-  const toolbarItems = createWorkbenchFilterToolbarItems({
-    t,
-    defaultVisibleCount: MAX_VISIBLE_VARIANTS,
-    filteredCount: model.filteredVariants.length,
-    showAllResults: model.filters.showAllResults,
-    canToggle: model.canToggleResultVisibility,
-    isReady: state.status === 'ready',
-    onToggleVisibility: model.toggleResultVisibility,
-    shareState: model.shareLinkState,
-    onCopy: model.copyCurrentLink,
-  })
+  const toolbarItems = [
+    createWorkbenchBadgeItem({
+      id: 'campaign-count',
+      label:
+        state.status === 'ready'
+          ? t({ zh: `${model.allCampaignGroups.length} 地图`, en: `${model.allCampaignGroups.length} campaigns` })
+          : t({ zh: '读取中', en: 'Loading' }),
+      tone: 'muted',
+    }),
+    createWorkbenchBadgeItem({
+      id: 'adventure-count',
+      label: t({
+        zh: `${model.selectedCampaignGroup?.adventures.length ?? 0} 关卡`,
+        en: `${model.selectedCampaignGroup?.adventures.length ?? 0} adventures`,
+      }),
+      hidden: state.status !== 'ready',
+    }),
+    createWorkbenchBadgeItem({
+      id: 'variant-count',
+      label: t({
+        zh: `${model.selectedAdventureGroup?.variants.length ?? 0} 变体`,
+        en: `${model.selectedAdventureGroup?.variants.length ?? 0} variants`,
+      }),
+      hidden: state.status !== 'ready',
+    }),
+    createWorkbenchShareItem({
+      state: model.shareLinkState,
+      onCopy: model.copyCurrentLink,
+    }),
+  ]
 
   return (
     <FilterWorkbenchPage
@@ -49,15 +67,15 @@ export function VariantsPage() {
         activeCount: activeFilters.length,
         accentTone: 'steel',
         title: t({ zh: '变体筛选', en: 'Variant filters' }),
-        detail: t({ zh: '战役压力、敌人与阵型阅读台', en: 'Campaign pressure, enemy, and formation reading desk' }),
+        detail: t({ zh: '左侧选地图和关卡，右侧读敌人、区域、阵型与变体', en: 'Choose a campaign and adventure on the left; read enemies, areas, formation, and variants on the right' }),
       }}
       toolbarItems={toolbarItems}
       sidebarHeader={{
-        kicker: t({ zh: '筛选抽屉', en: 'Filter drawer' }),
-        title: t({ zh: '左侧缩小压力范围', en: 'Narrow variant pressure on the left' }),
+        kicker: t({ zh: '导航抽屉', en: 'Navigation drawer' }),
+        title: t({ zh: '选择地图与关卡', en: 'Choose campaign and adventure' }),
         description: t({
-          zh: '先用战役、区域和场景缩小范围，再让敌人类型、攻击构成和特别敌人数辅助阵型判断。',
-          en: 'Narrow by campaign, area, and scene first, then use enemy tags, attack mix, and special-enemy density to support formation decisions.',
+          zh: '上方搜索下拉可本地匹配地图和关卡；选定地图后，下方只保留该地图的关卡列表。',
+          en: 'Use the local searchable dropdown for campaigns and adventures; after choosing a campaign, the list below stays scoped to it.',
         }),
         statusLabel: t({ zh: '变体筛选状态操作', en: 'Variant filter status actions' }),
         activeCount: activeFilters.length,
@@ -65,8 +83,7 @@ export function VariantsPage() {
         ...(activeFilters.length > 0 ? { onClear: clearAllFilters } : {}),
       }}
       isReady={state.status === 'ready'}
-      sidebar={<VariantsFilterBar model={model} />}
-      contentHeader={<VariantsWorkbenchContentHeader model={model} />}
+      sidebar={<VariantsNavigationSidebar model={model} />}
       statusItems={contentStatusItems}
     >
       <VariantsResultsSection model={model} />

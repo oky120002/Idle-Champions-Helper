@@ -858,6 +858,11 @@ function buildVariantEnemySummary(originalDefinition, baseAdventureId, monsterCa
     enemyTypes: Array.from(enemyTypeCounts.entries())
       .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))
       .map(([tag]) => tag),
+    enemyTypeCounts: Object.fromEntries(
+      Array.from(enemyTypeCounts.entries()).sort(
+        (left, right) => right[1] - left[1] || left[0].localeCompare(right[0]),
+      ),
+    ),
     attackMix,
     specialEnemyCount: specialEnemyCount + escortCount,
     escortCount,
@@ -1472,6 +1477,7 @@ function normalizeVariant(originalDefinition, localizedDefinition, campaignMap, 
     rewards: normalizeLocalizedTextList(originalRewards, displayRewards),
     enemyCount: metadata.enemyCount ?? 0,
     enemyTypes: metadata.enemyTypes ?? [],
+    enemyTypeCounts: metadata.enemyTypeCounts ?? {},
     attackMix: metadata.attackMix ?? {
       melee: 0,
       ranged: 0,
