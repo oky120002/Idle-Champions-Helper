@@ -12,6 +12,7 @@ export type VariantsPageTranslator = (text: LocaleText) => string
 
 export type AttackProfileFilterId = '__all__' | 'meleeHeavy' | 'rangedThreat' | 'mixed'
 export type SpecialEnemyFilterId = '__all__' | 'light' | 'standard' | 'dense'
+export type VariantDetailTabId = 'variants' | 'areas' | 'story'
 
 export type VariantFilterOption = {
   id: string
@@ -22,12 +23,14 @@ export type VariantFilterOption = {
 export type VariantsFilterState = {
   search: string
   selectedCampaign: string
+  selectedAdventureId: string
   selectedSceneIds: string[]
   selectedEnemyTypeIds: string[]
   selectedAttackProfile: AttackProfileFilterId
   selectedSpecialEnemyRange: SpecialEnemyFilterId
   areaSearch: string
   showAllResults: boolean
+  detailTab: VariantDetailTabId
 }
 
 export type CampaignEnumGroup = {
@@ -80,7 +83,10 @@ export type VariantsPageModel = {
   showResultsQuickNavTop: boolean
   filteredVariants: Variant[]
   visibleVariants: Variant[]
+  allCampaignGroups: VariantCampaignGroup[]
   visibleCampaignGroups: VariantCampaignGroup[]
+  selectedCampaignGroup: VariantCampaignGroup | null
+  selectedAdventureGroup: VariantAdventureGroup | null
   campaignsWithResults: number
   adventuresWithResults: number
   scenesWithResults: number
@@ -91,6 +97,10 @@ export type VariantsPageModel = {
   commonObjectiveAreas: number[]
   canToggleResultVisibility: boolean
   resultsPaneRef: RefObject<HTMLDivElement | null>
+  selectCampaign: (value: string) => void
+  selectAdventure: (value: string) => void
+  selectAdventureTarget: (target: { campaignId: string; adventureId: string }) => void
+  selectDetailTab: (value: VariantDetailTabId) => void
   updateSearch: (value: string) => void
   updateSelectedCampaign: (value: string) => void
   updateAreaSearch: (value: string) => void

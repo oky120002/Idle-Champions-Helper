@@ -30,6 +30,7 @@ export interface Variant {
   rewards: LocalizedText[]
   enemyCount: number
   enemyTypes: string[]
+  enemyTypeCounts?: Record<string, number>
   attackMix: VariantAttackMix
   specialEnemyCount: number
   escortCount: number

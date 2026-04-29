@@ -6,13 +6,23 @@ import { useWorkbenchShareLink } from '../../components/workbench/useWorkbenchSh
 import { ALL_CAMPAIGNS, MAX_VISIBLE_VARIANTS } from './constants'
 import { buildVariantsFilterSearchParams, readInitialVariantsFilterState } from './query-state'
 import {
-  buildActiveVariantFilters,
   buildVariantOptions,
-  filterVariants,
   toggleVariantSelection,
 } from './variant-model'
 import { groupVariantsByCampaign } from './variant-grouping'
-import type { AttackProfileFilterId, SpecialEnemyFilterId, VariantsFilterState, VariantsPageModel } from './types'
+import {
+  buildVariantNavigationFilters,
+  buildVisibleVariantCampaignGroups,
+  getSelectedAdventureGroup,
+  getSelectedCampaignGroup,
+} from './variant-selection-model'
+import type {
+  AttackProfileFilterId,
+  SpecialEnemyFilterId,
+  VariantDetailTabId,
+  VariantsFilterState,
+  VariantsPageModel,
+} from './types'
 import { useVariantCollectionState } from './useVariantCollectionState'
 
 export function useVariantsPageModel(): VariantsPageModel {
@@ -30,6 +40,7 @@ export function useVariantsPageModel(): VariantsPageModel {
 
   const [search, setSearch] = useState(initialFilters.search)
   const [selectedCampaign, setSelectedCampaign] = useState(initialFilters.selectedCampaign)
+  const [selectedAdventureId, setSelectedAdventureId] = useState(initialFilters.selectedAdventureId)
   const [selectedSceneIds, setSelectedSceneIds] = useState(initialFilters.selectedSceneIds)
   const [selectedEnemyTypeIds, setSelectedEnemyTypeIds] = useState(initialFilters.selectedEnemyTypeIds)
   const [selectedAttackProfile, setSelectedAttackProfile] = useState<AttackProfileFilterId>(initialFilters.selectedAttackProfile)
@@ -38,22 +49,27 @@ export function useVariantsPageModel(): VariantsPageModel {
   )
   const [areaSearch, setAreaSearch] = useState(initialFilters.areaSearch)
   const [showAllResults, setShowAllResults] = useState(initialFilters.showAllResults)
+  const [detailTab, setDetailTab] = useState<VariantDetailTabId>(initialFilters.detailTab)
 
   const filters = useMemo<VariantsFilterState>(
     () => ({
       search,
       selectedCampaign,
+      selectedAdventureId,
       selectedSceneIds,
       selectedEnemyTypeIds,
       selectedAttackProfile,
       selectedSpecialEnemyRange,
       areaSearch,
       showAllResults,
+      detailTab,
     }),
     [
       areaSearch,
+      detailTab,
       search,
       selectedAttackProfile,
+      selectedAdventureId,
       selectedCampaign,
       selectedEnemyTypeIds,
       selectedSceneIds,
@@ -87,12 +103,14 @@ export function useVariantsPageModel(): VariantsPageModel {
 
       setSearch(nextFilters.search)
       setSelectedCampaign(nextFilters.selectedCampaign)
+      setSelectedAdventureId(nextFilters.selectedAdventureId)
       setSelectedSceneIds(nextFilters.selectedSceneIds)
       setSelectedEnemyTypeIds(nextFilters.selectedEnemyTypeIds)
       setSelectedAttackProfile(nextFilters.selectedAttackProfile)
       setSelectedSpecialEnemyRange(nextFilters.selectedSpecialEnemyRange)
       setAreaSearch(nextFilters.areaSearch)
       setShowAllResults(nextFilters.showAllResults)
+      setDetailTab(nextFilters.detailTab)
     })
 
     return () => {
@@ -108,32 +126,25 @@ export function useVariantsPageModel(): VariantsPageModel {
     [locale, state],
   )
 
-  const filteredVariants = useMemo(
+  const allCampaignGroups = useMemo(
     () =>
       state.status === 'ready'
-        ? filterVariants({
-            variants: state.variants,
-            locale,
-            search,
-            selectedCampaign,
-            selectedEnemyTypeIds,
-            selectedSceneIds,
-            selectedAttackProfile,
-            selectedSpecialEnemyRange,
-            areaSearch,
-          })
+        ? groupVariantsByCampaign({ variants: state.variants, formations: state.formations })
         : [],
-    [
-      areaSearch,
-      locale,
-      search,
-      selectedAttackProfile,
-      selectedCampaign,
-      selectedEnemyTypeIds,
-      selectedSceneIds,
-      selectedSpecialEnemyRange,
-      state,
-    ],
+    [state],
+  )
+  const selectedCampaignGroup = useMemo(
+    () => getSelectedCampaignGroup(allCampaignGroups, selectedCampaign),
+    [allCampaignGroups, selectedCampaign],
+  )
+  const selectedAdventureGroup = useMemo(
+    () => getSelectedAdventureGroup(selectedCampaignGroup, selectedAdventureId),
+    [selectedAdventureId, selectedCampaignGroup],
+  )
+
+  const filteredVariants = useMemo(
+    () => selectedAdventureGroup?.variants ?? [],
+    [selectedAdventureGroup],
   )
 
   const visibleVariants = useMemo(
@@ -143,32 +154,35 @@ export function useVariantsPageModel(): VariantsPageModel {
 
   const visibleCampaignGroups = useMemo(
     () =>
-      state.status === 'ready'
-        ? groupVariantsByCampaign({ variants: visibleVariants, formations: state.formations })
-        : [],
-    [state, visibleVariants],
+      buildVisibleVariantCampaignGroups({
+        campaignGroup: selectedCampaignGroup,
+        adventureGroup: selectedAdventureGroup,
+      }),
+    [selectedAdventureGroup, selectedCampaignGroup],
   )
 
   const campaignsWithResults = useMemo(
-    () => new Set(filteredVariants.map((variant) => variant.campaign.id)).size,
-    [filteredVariants],
+    () => allCampaignGroups.length,
+    [allCampaignGroups],
   )
   const adventuresWithResults = useMemo(
-    () => new Set(filteredVariants.map((variant) => variant.adventureId ?? variant.id)).size,
-    [filteredVariants],
+    () => selectedCampaignGroup?.adventures.length ?? 0,
+    [selectedCampaignGroup],
   )
   const scenesWithResults = useMemo(
     () => new Set(filteredVariants.map((variant) => variant.scene?.id).filter(Boolean)).size,
     [filteredVariants],
   )
   const selectedCampaignLabel =
-    state.status === 'ready' && selectedCampaign !== ALL_CAMPAIGNS
-      ? state.campaigns.find((campaign) => campaign.id === selectedCampaign) ?? null
+    state.status === 'ready' && selectedCampaignGroup
+      ? selectedCampaignGroup.campaign
       : null
-  const activeFilters = buildActiveVariantFilters({
+  const activeFilters = buildVariantNavigationFilters({
     locale,
+    t,
     search,
     selectedCampaignLabel,
+    selectedAdventureGroup,
     selectedEnemyTypeIds,
     selectedSceneIds,
     sceneOptions: optionState.sceneOptions,
@@ -222,7 +236,10 @@ export function useVariantsPageModel(): VariantsPageModel {
     showResultsQuickNavTop: motion.showResultsQuickNavTop,
     filteredVariants,
     visibleVariants,
+    allCampaignGroups,
     visibleCampaignGroups,
+    selectedCampaignGroup,
+    selectedAdventureGroup,
     campaignsWithResults,
     adventuresWithResults,
     scenesWithResults,
@@ -233,8 +250,29 @@ export function useVariantsPageModel(): VariantsPageModel {
     commonObjectiveAreas: optionState.commonObjectiveAreas,
     canToggleResultVisibility,
     resultsPaneRef: motion.resultsPaneRef,
+    selectCampaign: (value) =>
+      runFilterMutation(() => {
+        const nextCampaign = allCampaignGroups.find((group) => group.id === value)
+        setSelectedCampaign(value)
+        setSelectedAdventureId(nextCampaign?.adventures[0]?.adventureId ?? '')
+      }),
+    selectAdventure: (value) => runFilterMutation(() => setSelectedAdventureId(value)),
+    selectAdventureTarget: (target) =>
+      runFilterMutation(() => {
+        setSelectedCampaign(target.campaignId)
+        setSelectedAdventureId(target.adventureId)
+      }),
+    selectDetailTab: (value) => {
+      motion.prepareResultsViewportTransition('filters')
+      setDetailTab(value)
+    },
     updateSearch: (value) => runFilterMutation(() => setSearch(value)),
-    updateSelectedCampaign: (value) => runFilterMutation(() => setSelectedCampaign(value)),
+    updateSelectedCampaign: (value) =>
+      runFilterMutation(() => {
+        const nextCampaign = allCampaignGroups.find((group) => group.id === value)
+        setSelectedCampaign(value)
+        setSelectedAdventureId(nextCampaign?.adventures[0]?.adventureId ?? '')
+      }),
     updateAreaSearch: (value) => runFilterMutation(() => setAreaSearch(value)),
     updateAttackProfile: (value) => runFilterMutation(() => setSelectedAttackProfile(value)),
     updateSpecialEnemyRange: (value) => runFilterMutation(() => setSelectedSpecialEnemyRange(value)),
@@ -249,11 +287,13 @@ export function useVariantsPageModel(): VariantsPageModel {
       setShowAllResults(false)
       setSearch('')
       setSelectedCampaign(ALL_CAMPAIGNS)
+      setSelectedAdventureId('')
       setSelectedSceneIds([])
       setSelectedEnemyTypeIds([])
       setSelectedAttackProfile('__all__')
       setSelectedSpecialEnemyRange('__all__')
       setAreaSearch('')
+      setDetailTab('variants')
     },
     toggleResultVisibility: () => {
       motion.prepareResultsViewportTransition('visibility')
