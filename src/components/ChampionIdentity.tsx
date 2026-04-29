@@ -27,16 +27,27 @@ export function ChampionIdentity({
   if (variant === 'spotlight') {
     return (
       <div className="result-card__identity result-card__identity--spotlight">
-        <div className="result-card__header result-card__header--spotlight">
-          <h3 className="result-card__title">{primaryName}</h3>
-          {secondaryName ? <p className="result-card__secondary">{secondaryName}</p> : null}
-          {supporting ? <div className="result-card__supporting-slot">{supporting}</div> : null}
-        </div>
-
         <div className="result-card__portrait-stage">
           <span className="result-card__portrait-frame">
             <ChampionAvatar champion={champion} locale={locale} className={avatarClassName} />
           </span>
+        </div>
+
+        <div className="result-card__header result-card__header--spotlight">
+          <h3 className="result-card__title result-card__title--paired">
+            <span className="result-card__title-primary">{primaryName}</span>
+            {secondaryName ? <span className="result-card__secondary">{secondaryName}</span> : null}
+          </h3>
+          <div
+            className={
+              supporting
+                ? 'result-card__supporting-slot'
+                : 'result-card__supporting-slot result-card__supporting-slot--empty'
+            }
+            aria-hidden={supporting ? undefined : true}
+          >
+            {supporting ?? <p className="result-card__affiliation">placeholder</p>}
+          </div>
         </div>
       </div>
     )
