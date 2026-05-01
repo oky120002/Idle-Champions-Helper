@@ -26,8 +26,8 @@ interface FilterWorkbenchPageFloatingTopButtonConfig {
 
 interface FilterWorkbenchPageSidebarHeaderConfig {
   kicker: ReactNode
-  title?: ReactNode
-  description?: ReactNode
+  title: ReactNode
+  description: ReactNode
   statusLabel: string
   activeCount: number
   clearLabel: string
@@ -113,8 +113,8 @@ export function FilterWorkbenchPage({
         sidebarHeader={(
           <WorkbenchSidebarHeader
             kicker={sidebarHeader.kicker}
-            {...(sidebarHeader.title !== undefined ? { title: sidebarHeader.title } : {})}
-            {...(sidebarHeader.description !== undefined ? { description: sidebarHeader.description } : {})}
+            title={sidebarHeader.title}
+            description={sidebarHeader.description}
             statusLabel={sidebarHeader.statusLabel}
             status={(
               <WorkbenchSidebarFilterActions

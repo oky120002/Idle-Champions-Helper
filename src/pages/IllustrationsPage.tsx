@@ -72,6 +72,11 @@ export function IllustrationsPage() {
       toolbarItems={toolbarItems}
       sidebarHeader={{
         kicker: t({ zh: '筛选抽屉', en: 'Filter drawer' }),
+        title: t({ zh: '左侧缩小画库范围', en: 'Narrow the art library on the left' }),
+        description: t({
+          zh: '先锁范围、座位、定位和联动队伍，再按需展开身份和机制标签；右侧保留更大的画布给预览卡片与动图资源。',
+          en: 'Lock scope, seat, role, and affiliations first, then expand identity and mechanic tags only when you need them.',
+        }),
         statusLabel: t({ zh: '立绘筛选状态操作', en: 'Illustration filter status actions' }),
         activeCount: activeFilterChips.length,
         clearLabel: t({ zh: '清空全部', en: 'Clear all' }),
