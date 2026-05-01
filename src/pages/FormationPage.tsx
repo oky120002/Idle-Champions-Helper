@@ -87,8 +87,6 @@ export function FormationPage() {
         model.state.status === 'ready' ? (
           <WorkbenchSidebarHeader
             kicker={model.t({ zh: '布局抽屉', en: 'Layout drawer' })}
-            title={model.t({ zh: '先锁场景，再挑当前画板', en: 'Choose the scenario before the board' })}
-            description={model.t({ zh: '左侧持续保留布局搜索、场景类型与当前布局摘要，右侧只专注当前阵型编辑。', en: 'Keep layout search, scenario type, and the selected board summary on the left so the right side stays focused on editing.' })}
             statusLabel={model.t({ zh: '布局筛选状态', en: 'Layout filter status' })}
             status={(
               <WorkbenchToolbarBadge>
