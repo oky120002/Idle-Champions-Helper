@@ -11,10 +11,6 @@ type DetailStoryMiscSectionProps = {
   overviewFields: DetailFieldProps[]
 }
 
-function formatRawSnapshot(value: unknown): string {
-  return JSON.stringify(value, null, 2)
-}
-
 function dedupeFields(fields: DetailFieldProps[]): DetailFieldProps[] {
   const seen = new Set<string>()
 
@@ -44,15 +40,6 @@ export function DetailStoryMiscSection({ detail, locale, t, overviewFields }: De
     variant: 'compact',
   }
   const miscFields = dedupeFields([affiliationField, ...overviewFields])
-  const rawEntries = [
-    { id: 'hero', label: 'Hero', value: detail.raw.hero },
-    { id: 'attacks', label: 'Attacks', value: detail.raw.attacks },
-    { id: 'upgrades', label: 'Upgrades', value: detail.raw.upgrades },
-    { id: 'feats', label: 'Feats', value: detail.raw.feats },
-    { id: 'skins', label: 'Skins', value: detail.raw.skins },
-    { id: 'loot', label: 'Loot', value: detail.raw.loot },
-    { id: 'legendary', label: 'Legendary', value: detail.raw.legendaryEffects },
-  ]
 
   return (
     <div className="story-misc-stack">
@@ -73,14 +60,6 @@ export function DetailStoryMiscSection({ detail, locale, t, overviewFields }: De
             ))}
           </div>
         ) : null}
-        <div className="raw-snapshot-list">
-          {rawEntries.map((entry) => (
-            <details key={entry.id} className="raw-snapshot">
-              <summary>{entry.label}</summary>
-              <pre>{formatRawSnapshot(entry.value)}</pre>
-            </details>
-          ))}
-        </div>
       </SurfaceCard>
     </div>
   )
