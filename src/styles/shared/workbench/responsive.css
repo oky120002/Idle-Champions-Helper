@@ -28,11 +28,6 @@
     display: none;
   }
 
-  .page-workbench__anchor-toggle {
-    top: 0.78rem;
-    left: 0.78rem;
-  }
-
   .page-workbench__sidebar {
     border-right: 0;
     border-bottom: 1px solid rgba(227, 214, 193, 0.08);
@@ -50,10 +45,6 @@
   .page-workbench__chrome-sidebar,
   .page-workbench__chrome-main {
     padding: 0.72rem;
-  }
-
-  .page-workbench__chrome-sidebar {
-    padding-inline-start: calc(0.78rem + var(--page-workbench-collapsed-toggle-size) + 0.72rem);
   }
 
   .page-workbench__chrome-main {
@@ -94,9 +85,6 @@
     display: none;
   }
 
-  .page-workbench--collapsed .page-workbench__chrome-main {
-    padding-inline-start: calc(var(--page-workbench-collapsed-toggle-size) + 1.15rem);
-  }
 }
 
 @media (max-width: 720px) {

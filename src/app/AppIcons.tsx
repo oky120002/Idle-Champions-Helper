@@ -1,5 +1,5 @@
 import {
-  ArrowLeft,
+  CornerUpLeft,
   Menu,
   PanelLeftClose,
   PanelLeftOpen,
@@ -17,5 +17,5 @@ export function SidebarToggleIcon({ isCollapsed }: { isCollapsed: boolean }) {
 }
 
 export function BackNavigationIcon() {
-  return <ArrowLeft aria-hidden="true" strokeWidth={1.9} />
+  return <CornerUpLeft aria-hidden="true" strokeWidth={1.9} />
 }

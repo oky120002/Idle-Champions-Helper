@@ -233,7 +233,7 @@ describe('PetsPage state', () => {
       expect(searchParams.get('source')).toBe('premium')
     })
 
-    await user.click(screen.getByRole('button', { name: '复制当前链接' }))
+    await user.click(screen.getByRole('button', { name: '复制当前页面链接' }))
 
     await waitFor(() => {
       expect(writeTextSpy).toHaveBeenCalledTimes(1)

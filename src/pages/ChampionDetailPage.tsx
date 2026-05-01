@@ -9,7 +9,6 @@ import { useWorkbenchShareLink } from '../components/workbench/useWorkbenchShare
 import { ChampionDetailBody } from './champion-detail/ChampionDetailBody'
 import {
   buildChampionDetailActionToolbarItems,
-  buildChampionDetailLeadToolbarItems,
 } from './champion-detail/champion-detail-toolbar-items'
 import { DossierSection } from './champion-detail/DossierSection'
 import { DETAIL_HASH_PREFIX } from './champion-detail/types'
@@ -78,16 +77,11 @@ export function ChampionDetailPage() {
   } = useChampionDetailSectionState(detail, location, navigate, backTarget, contentScrollRef, t)
   const shareHash = detail ? `#${DETAIL_HASH_PREFIX}${activeSectionId}` : location.hash
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, shareHash)
-  const leadToolbarItems = buildChampionDetailLeadToolbarItems({
+  const actionToolbarItems = buildChampionDetailActionToolbarItems({
     t,
     backLabel: t(backLabel),
     backIcon: <BackNavigationIcon />,
     onBack: navigateBackToChampions,
-    shareLinkState,
-    copyCurrentLink,
-  })
-  const actionToolbarItems = buildChampionDetailActionToolbarItems({
-    t,
     shareLinkState,
     copyCurrentLink,
   })
@@ -167,13 +161,6 @@ export function ChampionDetailPage() {
       }
       toolbar={{
         sections: [
-          {
-            region: 'lead',
-            section: {
-              kind: 'items',
-              items: leadToolbarItems,
-            },
-          },
           {
             region: 'lead',
             section: { kind: 'mark', label: 'CHAMPION' },
