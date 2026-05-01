@@ -39,8 +39,8 @@ export function WorkbenchToolbarActionButton({
       ariaPressed={ariaPressed}
       {...(ariaLabel !== undefined ? { ariaLabel } : {})}
       {...(ariaLabel !== undefined ? { title: ariaLabel } : {})}
-      icon={icon}
       onClick={onClick}
+      icon={icon}
     >
       {children}
     </ActionButton>
