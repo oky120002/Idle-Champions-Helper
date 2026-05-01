@@ -15,21 +15,21 @@ test('英雄筛选卡片进入详情后，详情 hash 与返回链路保持闭�
   await expect(minscCard).toBeVisible()
   await minscCard.click()
 
-  await expect(page).toHaveURL(/#\/champions\/7\?seat=7#section-overview$/)
+  await expect(page).toHaveURL(/#\/champions\/7\?seat=7#section-specializations$/)
   await expect(page.getByRole('heading', { level: 2, name: '明斯克' })).toBeVisible()
   await expect(page.getByRole('link', { name: '返回英雄筛选' })).toHaveAttribute('href', /#\/champions\?seat=7$/)
   await expect(page.getByText('快速索引')).toHaveCount(0)
 
-  await page.getByRole('button', { name: '升级' }).click()
+  await page.getByRole('tab', { name: '能力' }).click()
 
-  await expect(page).toHaveURL(/#\/champions\/7\?seat=7#section-upgrades$/)
-  await expect(page.getByRole('button', { name: '概览' })).toHaveAttribute('aria-pressed', 'false')
-  await expect(page.getByRole('button', { name: '升级' })).toHaveAttribute('aria-pressed', 'true')
+  await expect(page).toHaveURL(/#\/champions\/7\?seat=7#section-abilities$/)
+  await expect(page.getByRole('tab', { name: '专精' })).toHaveAttribute('aria-pressed', 'false')
+  await expect(page.getByRole('tab', { name: '能力' })).toHaveAttribute('aria-pressed', 'true')
 
   await page.reload()
 
-  await expect(page).toHaveURL(/#\/champions\/7\?seat=7#section-upgrades$/)
-  await expect(page.getByRole('button', { name: '升级' })).toHaveAttribute('aria-pressed', 'true')
+  await expect(page).toHaveURL(/#\/champions\/7\?seat=7#section-abilities$/)
+  await expect(page.getByRole('tab', { name: '能力' })).toHaveAttribute('aria-pressed', 'true')
 
   await page.getByRole('link', { name: '返回英雄筛选' }).click()
 
