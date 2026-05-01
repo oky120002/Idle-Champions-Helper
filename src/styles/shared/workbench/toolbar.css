@@ -65,6 +65,101 @@
   min-width: 0;
 }
 
+.workbench-page__toolbar-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.72rem;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.workbench-page__toolbar-group > * {
+  min-width: 0;
+}
+
+.workbench-page__toolbar-group--primary {
+  display: flex;
+  width: 100%;
+}
+
+.workbench-page__toolbar-tablist {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 0.18rem;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.workbench-page__toolbar-tab {
+  position: relative;
+  flex: 0 1 auto;
+  min-width: 0;
+  min-height: 2.5rem;
+  padding: 0.55rem 0.88rem 0.6rem;
+  overflow: hidden;
+  border: 1px solid rgba(227, 214, 193, 0.08);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.032), rgba(255, 255, 255, 0)),
+    rgba(7, 12, 18, 0.16);
+  color: rgba(242, 239, 230, 0.76);
+  font-size: 0.84rem;
+  font-weight: 750;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.workbench-page__toolbar-tab::after {
+  content: '';
+  position: absolute;
+  inset: auto 0.58rem 0.28rem;
+  height: 2px;
+  border-radius: 999px;
+  background: transparent;
+}
+
+.workbench-page__toolbar-tab:hover {
+  transform: translateY(-1px);
+  border-color: rgba(200, 167, 127, 0.22);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0)),
+    rgba(200, 167, 127, 0.07);
+  color: rgba(255, 246, 232, 0.94);
+}
+
+.workbench-page__toolbar-tab:focus-visible {
+  outline: none;
+  border-color: rgba(231, 209, 171, 0.5);
+  box-shadow: 0 0 0 3px rgba(200, 167, 127, 0.12);
+}
+
+.workbench-page__toolbar-tab--active {
+  border-color: rgba(200, 167, 127, 0.36);
+  background:
+    radial-gradient(circle at top left, rgba(233, 190, 105, 0.18), transparent 56%),
+    linear-gradient(180deg, rgba(200, 167, 127, 0.16), rgba(200, 167, 127, 0.06)),
+    rgba(25, 18, 12, 0.48);
+  color: #fff6e8;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 246, 232, 0.08),
+    0 8px 18px rgba(1, 4, 9, 0.12);
+}
+
+.workbench-page__toolbar-tab--active::after {
+  background: #c8a77f;
+}
+
 .workbench-page__toolbar-title {
   color: rgba(255, 248, 237, 0.98);
   font-family: var(--font-display);
@@ -242,6 +337,23 @@
 @media (max-width: 720px) {
   .workbench-page__toolbar-title {
     font-size: 0.92rem;
+  }
+
+  .workbench-page__toolbar-tablist {
+    flex-wrap: wrap;
+    gap: 0.34rem;
+  }
+
+  .workbench-page__toolbar-group {
+    flex-wrap: wrap;
+    gap: 0.42rem;
+  }
+
+  .workbench-page__toolbar-tab {
+    flex: 1 1 auto;
+    min-height: 2.34rem;
+    padding-inline: 0.62rem;
+    font-size: 0.82rem;
   }
 
   .workbench-page__toolbar-lead-status-group {

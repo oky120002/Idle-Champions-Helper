@@ -26,6 +26,7 @@ interface WorkbenchToolbarButtonAction extends WorkbenchToolbarBaseAction {
   title?: string
   tone?: 'default' | 'share'
   state?: WorkbenchShareState
+  className?: string
 }
 
 interface WorkbenchToolbarBadgeAction extends WorkbenchToolbarBaseAction {
@@ -93,6 +94,7 @@ export function WorkbenchToolbarItems({
         {...(item.title !== undefined ? { title: item.title } : {})}
         {...(item.tone !== undefined ? { tone: item.tone } : {})}
         {...(item.state !== undefined ? { state: item.state } : {})}
+        {...(item.className !== undefined ? { className: item.className } : {})}
       >
         {item.label}
       </WorkbenchToolbarActionButton>

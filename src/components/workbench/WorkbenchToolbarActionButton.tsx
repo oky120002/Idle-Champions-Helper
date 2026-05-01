@@ -9,6 +9,8 @@ interface WorkbenchToolbarActionButtonProps {
   iconOnly?: boolean
   isActive?: boolean
   ariaPressed?: boolean
+  ariaExpanded?: boolean
+  ariaControls?: string
   ariaLabel?: string
   variant?: 'default' | 'prominent'
   tone?: 'default' | 'share'
@@ -28,6 +30,8 @@ export function WorkbenchToolbarActionButton({
   iconOnly = false,
   isActive = false,
   ariaPressed,
+  ariaExpanded,
+  ariaControls,
   ariaLabel,
   variant = 'default',
   tone = 'default',
@@ -50,6 +54,8 @@ export function WorkbenchToolbarActionButton({
         className,
       )}
       ariaPressed={ariaPressed}
+      ariaExpanded={ariaExpanded}
+      ariaControls={ariaControls}
       {...(ariaLabel !== undefined ? { ariaLabel } : {})}
       {...(title !== undefined ? { title } : ariaLabel !== undefined ? { title: ariaLabel } : {})}
       icon={icon}

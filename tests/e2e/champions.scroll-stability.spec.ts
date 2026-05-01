@@ -129,7 +129,7 @@ test('英雄详情返回后应恢复右侧面板滚动位置与筛选参数', as
   await clickVisibleResultLink(page)
   await expect(page).toHaveURL(/#\/champions\/[^?]+\?seat=1/)
 
-  await page.getByRole('link', { name: '返回英雄筛选' }).click()
+  await page.getByRole('button', { name: '返回英雄筛选' }).click()
   await expect(page).toHaveURL(/#\/champions\?seat=1$/)
   await expect(page.getByText(/^当前筛选：座位：1 号位/)).toBeVisible()
 

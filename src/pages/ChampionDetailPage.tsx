@@ -1,15 +1,16 @@
 import { useRef } from 'react'
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { BackNavigationIcon } from '../app/AppIcons'
 import { useI18n } from '../app/i18n'
 import { SurfaceCardStatusStack, type SurfaceCardStatusStackItem } from '../components/SurfaceCardStatusStack'
 import { ConfiguredWorkbenchPage } from '../components/workbench/ConfiguredWorkbenchPage'
-import { WorkbenchToolbarItems } from '../components/workbench/WorkbenchToolbarItems'
 import { useWorkbenchScrollNavigation } from '../components/workbench/useWorkbenchScrollNavigation'
 import { useWorkbenchShareLink } from '../components/workbench/useWorkbenchShareLink'
 import { ChampionDetailBody } from './champion-detail/ChampionDetailBody'
-import { ChampionDetailToolbarPrimary } from './champion-detail/ChampionDetailToolbar'
-import { buildChampionDetailToolbarItems } from './champion-detail/champion-detail-toolbar-items'
+import {
+  buildChampionDetailActionToolbarItems,
+  buildChampionDetailLeadToolbarItems,
+} from './champion-detail/champion-detail-toolbar-items'
 import { DossierSection } from './champion-detail/DossierSection'
 import { DETAIL_HASH_PREFIX } from './champion-detail/types'
 import { useChampionDetailDerived } from './champion-detail/useChampionDetailDerived'
@@ -73,12 +74,19 @@ export function ChampionDetailPage() {
     activeSectionId,
     sectionLinks,
     scrollToSection,
-    backToChampions,
-    handleBackClick,
+    navigateBackToChampions,
   } = useChampionDetailSectionState(detail, location, navigate, backTarget, contentScrollRef, t)
   const shareHash = detail ? `#${DETAIL_HASH_PREFIX}${activeSectionId}` : location.hash
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, shareHash)
-  const toolbarItems = buildChampionDetailToolbarItems({
+  const leadToolbarItems = buildChampionDetailLeadToolbarItems({
+    t,
+    backLabel: t(backLabel),
+    backIcon: <BackNavigationIcon />,
+    onBack: navigateBackToChampions,
+    shareLinkState,
+    copyCurrentLink,
+  })
+  const actionToolbarItems = buildChampionDetailActionToolbarItems({
     t,
     shareLinkState,
     copyCurrentLink,
@@ -158,37 +166,40 @@ export function ChampionDetailPage() {
           : undefined
       }
       toolbar={{
-        lead: { kind: 'mark', label: 'CHAMPION' },
-        primary: {
-          kind: 'node',
-          node: (
-            <div className="champion-detail-workbench__toolbar-main">
-              <Link
-                className="action-button action-button--compact action-button--ghost workbench-page__toolbar-action champion-detail-workbench__toolbar-back"
-                to={backToChampions}
-                onClick={handleBackClick}
-                aria-label={t(backLabel)}
-                title={t(backLabel)}
-              >
-                <BackNavigationIcon />
-              </Link>
-              <ChampionDetailToolbarPrimary
-                activeSectionId={activeSectionId}
-                sectionLinks={sectionLinks}
-                tabAriaLabel={t({ zh: '详情页签', en: 'Detail tabs' })}
-                scrollToSection={scrollToSection}
-              />
-            </div>
-          ),
-        },
-        actions: {
-          kind: 'node',
-          node: (
-            <div className="champion-detail-workbench__toolbar-actions">
-              <WorkbenchToolbarItems items={toolbarItems} />
-            </div>
-          ),
-        },
+        sections: [
+          {
+            region: 'lead',
+            section: {
+              kind: 'items',
+              items: leadToolbarItems,
+            },
+          },
+          {
+            region: 'lead',
+            section: { kind: 'mark', label: 'CHAMPION' },
+          },
+          {
+            region: 'primary',
+            section: {
+              kind: 'tablist',
+              value: activeSectionId,
+              items: sectionLinks.map((section) => ({
+                id: section.id,
+                label: section.label,
+                controlsId: section.id,
+              })),
+              ariaLabel: t({ zh: '详情页签', en: 'Detail tabs' }),
+              onChange: scrollToSection,
+            },
+          },
+          {
+            region: 'actions',
+            section: {
+              kind: 'items',
+              items: actionToolbarItems,
+            },
+          },
+        ],
       }}
       sidebar={detail ? (
         <DossierSection

@@ -63,21 +63,32 @@ export function ChampionsPage() {
       contentScrollRef={model.resultsPaneRef}
       floatingTopButton={model.showResultsQuickNavTop ? { onClick: model.scrollResultsToTop } : undefined}
       toolbar={{
-        lead: {
-          kind: 'filter-status',
-          label: 'CHAMPIONS',
-          activeCount: activeFilterCount,
-        },
-        primary: {
-          kind: 'copy',
-          title: t({ zh: '英雄筛选', en: 'Champion filters' }),
-          detail: t({ zh: '候选池收缩与资料对比', en: 'Narrow the roster and compare dossiers' }),
-        },
-        actions: {
-          kind: 'items',
-          items: toolbarItems,
-          layout: 'cluster',
-        },
+        sections: [
+          {
+            region: 'lead',
+            section: {
+              kind: 'filter-status',
+              label: 'CHAMPIONS',
+              activeCount: activeFilterCount,
+            },
+          },
+          {
+            region: 'primary',
+            section: {
+              kind: 'copy',
+              title: t({ zh: '英雄筛选', en: 'Champion filters' }),
+              detail: t({ zh: '候选池收缩与资料对比', en: 'Narrow the roster and compare dossiers' }),
+            },
+          },
+          {
+            region: 'actions',
+            section: {
+              kind: 'items',
+              items: toolbarItems,
+              layout: 'cluster',
+            },
+          },
+        ],
       }}
       sidebarHeader={{
         kicker: t({ zh: '筛选抽屉', en: 'Filter drawer' }),

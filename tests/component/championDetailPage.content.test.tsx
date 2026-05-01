@@ -122,21 +122,20 @@ describe('ChampionDetailPage content', () => {
 
     renderChampionDetailPageWithSearch()
 
-    expect(await screen.findByRole('link', { name: '返回英雄筛选' })).toHaveAttribute(
-      'href',
-      '/champions?q=alpha&seat=1&role=support',
-    )
+    await screen.findByRole('heading', { level: 2, name: '明斯克' })
+    expect(screen.getByRole('button', { name: '返回英雄筛选' })).toBeInTheDocument()
   })
 
-  it('点击返回链接后不会被分区 hash 同步拉回详情页', async () => {
+  it('点击返回按钮后不会被分区 hash 同步拉回详情页', async () => {
     mockedLoadChampionDetail.mockResolvedValue(detailFixture)
 
     renderChampionDetailPageWithBackRoute('/champions/7?seat=7')
 
-    expect(await screen.findByRole('link', { name: '返回英雄筛选' })).toHaveAttribute('href', '/champions?seat=7')
+    await screen.findByRole('heading', { level: 2, name: '明斯克' })
+    expect(screen.getByRole('button', { name: '返回英雄筛选' })).toBeInTheDocument()
     fireEvent.click(await screen.findByRole('tab', { name: '天赋' }))
 
-    fireEvent.click(screen.getByRole('link', { name: '返回英雄筛选' }))
+    fireEvent.click(screen.getByRole('button', { name: '返回英雄筛选' }))
 
     expect(await screen.findByText('筛选页占位')).toBeInTheDocument()
   })
@@ -158,6 +157,7 @@ describe('ChampionDetailPage content', () => {
       },
     })
 
-    expect(await screen.findByRole('link', { name: '返回立绘图鉴' })).toHaveAttribute('href', '/illustrations?scope=skin')
+    await screen.findByRole('heading', { level: 2, name: '明斯克' })
+    expect(screen.getByRole('button', { name: '返回立绘图鉴' })).toBeInTheDocument()
   })
 })

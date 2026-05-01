@@ -74,20 +74,31 @@ export function FormationPage() {
           : undefined
       }
       toolbar={{
-        lead: {
-          kind: 'mark',
-          label: 'FORMATION',
-        },
-        primary: {
-          kind: 'copy',
-          kicker: model.t({ zh: '战术工作台', en: 'Tactical workbench' }),
-          title: model.t({ zh: '阵型编辑', en: 'Formation editor' }),
-          detail: model.t({ zh: '左侧筛选布局，右侧编辑当前阵型与方案摘要', en: 'Filter layouts on the left, edit the board and preset summary on the right' }),
-        },
-        actions: {
-          kind: 'items',
-          items: toolbarItems,
-        },
+        sections: [
+          {
+            region: 'lead',
+            section: {
+              kind: 'mark',
+              label: 'FORMATION',
+            },
+          },
+          {
+            region: 'primary',
+            section: {
+              kind: 'copy',
+              kicker: model.t({ zh: '战术工作台', en: 'Tactical workbench' }),
+              title: model.t({ zh: '阵型编辑', en: 'Formation editor' }),
+              detail: model.t({ zh: '左侧筛选布局，右侧编辑当前阵型与方案摘要', en: 'Filter layouts on the left, edit the board and preset summary on the right' }),
+            },
+          },
+          {
+            region: 'actions',
+            section: {
+              kind: 'items',
+              items: toolbarItems,
+            },
+          },
+        ],
       }}
       sidebarHeader={
         model.state.status === 'ready' ? (

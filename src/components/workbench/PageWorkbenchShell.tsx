@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useId, useRef, useState, type ReactNode, type RefObject } from 'react'
 import { SidebarToggleIcon } from '../../app/AppIcons'
 import { useI18n } from '../../app/i18n'
+import { WorkbenchToolbarActionButton } from './WorkbenchToolbarActionButton'
 import { useWorkbenchSidebarCollapse } from './useWorkbenchSidebarCollapse'
 
 const DESKTOP_SIDEBAR_ANIMATION_MS = 340
@@ -150,11 +151,33 @@ export function PageWorkbenchShell({
   const toggleLabel = isSidebarCollapsed
     ? t({ zh: '展开左侧面板', en: 'Open left pane' })
     : t({ zh: '收起左侧面板', en: 'Collapse left pane' })
-  const toggleClassName = [
-    'page-workbench__toggle',
-    'page-workbench__anchor-toggle',
-    isSidebarCollapsed ? 'page-workbench__anchor-toggle--collapsed' : 'page-workbench__anchor-toggle--expanded',
-  ].join(' ')
+
+  const renderToolbarLeadGroup = () => (
+    <div className="page-workbench__chrome-lead-group">
+      {hasSidebar ? (
+        <WorkbenchToolbarActionButton
+          onClick={toggleCollapsed}
+          icon={<SidebarToggleIcon isCollapsed={isSidebarCollapsed} />}
+          iconOnly
+          tone="share"
+          ariaExpanded={!isSidebarCollapsed}
+          ariaControls={sidebarId}
+          ariaLabel={toggleLabel}
+          title={toggleLabel}
+          className={[
+            'page-workbench__toolbar-toggle',
+            isSidebarCollapsed ? 'page-workbench__toolbar-toggle--collapsed' : 'page-workbench__toolbar-toggle--expanded',
+          ].join(' ')}
+        >
+          {''}
+        </WorkbenchToolbarActionButton>
+      ) : null}
+
+      {toolbarLead !== undefined ? (
+        <div className="page-workbench__chrome-lead-copy">{toolbarLead}</div>
+      ) : null}
+    </div>
+  )
 
   return (
     <section
@@ -163,28 +186,13 @@ export function PageWorkbenchShell({
       data-workbench-sidebar-collapsed={isSidebarCollapsed ? 'true' : 'false'}
       aria-label={ariaLabel ?? t({ zh: '页面工作台', en: 'Page workbench' })}
     >
-      {hasSidebar ? (
-        <button
-          type="button"
-          className={toggleClassName}
-          onClick={toggleCollapsed}
-          aria-expanded={!isSidebarCollapsed}
-          aria-controls={sidebarId}
-          aria-label={toggleLabel}
-          title={toggleLabel}
-          data-state={isSidebarCollapsed ? 'collapsed' : 'expanded'}
-        >
-          <span className="page-workbench__toggle-icon" aria-hidden="true">
-            <SidebarToggleIcon isCollapsed={isSidebarCollapsed} />
-          </span>
-        </button>
-      ) : null}
-
       <div className="page-workbench__body">
         {hasSidebar ? (
           <aside className="page-workbench__pane page-workbench__pane--sidebar page-workbench__sidebar">
             <div className="page-workbench__chrome page-workbench__chrome-sidebar">
-              {toolbarLead !== undefined ? <div className="page-workbench__chrome-lead">{toolbarLead}</div> : null}
+              {!isSidebarCollapsed && (hasSidebar || toolbarLead !== undefined) ? (
+                <div className="page-workbench__chrome-lead">{renderToolbarLeadGroup()}</div>
+              ) : null}
             </div>
 
             <div className="page-workbench__sidebar-shell">
@@ -202,8 +210,10 @@ export function PageWorkbenchShell({
 
         <div className="page-workbench__pane page-workbench__pane--content page-workbench__content">
           <div className="page-workbench__chrome page-workbench__chrome-main">
-            {!hasSidebar && toolbarLead !== undefined ? (
-              <div className="page-workbench__chrome-inline-lead">{toolbarLead}</div>
+            {(!hasSidebar && toolbarLead !== undefined) || isSidebarCollapsed ? (
+              <div className="page-workbench__chrome-inline-lead">
+                {hasSidebar ? renderToolbarLeadGroup() : toolbarLead}
+              </div>
             ) : null}
             <div className="page-workbench__chrome-primary">{toolbarPrimary}</div>
             {toolbarActions !== undefined ? <div className="page-workbench__chrome-actions">{toolbarActions}</div> : null}

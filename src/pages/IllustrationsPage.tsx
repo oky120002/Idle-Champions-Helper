@@ -64,21 +64,32 @@ export function IllustrationsPage() {
       contentScrollRef={model.resultsPaneRef}
       floatingTopButton={ui.showResultsQuickNavTop ? { onClick: actions.scrollResultsToTop } : undefined}
       toolbar={{
-        lead: {
-          kind: 'filter-status',
-          label: 'ART CODEX',
-          activeCount: activeFilterChips.length,
-        },
-        primary: {
-          kind: 'copy',
-          title: t({ zh: '立绘图鉴', en: 'Illustration catalog' }),
-          detail: t({ zh: '立绘筛选与动态资源对照', en: 'Filter artwork and compare motion resources' }),
-        },
-        actions: {
-          kind: 'items',
-          items: toolbarItems,
-          layout: 'cluster',
-        },
+        sections: [
+          {
+            region: 'lead',
+            section: {
+              kind: 'filter-status',
+              label: 'ART CODEX',
+              activeCount: activeFilterChips.length,
+            },
+          },
+          {
+            region: 'primary',
+            section: {
+              kind: 'copy',
+              title: t({ zh: '立绘图鉴', en: 'Illustration catalog' }),
+              detail: t({ zh: '立绘筛选与动态资源对照', en: 'Filter artwork and compare motion resources' }),
+            },
+          },
+          {
+            region: 'actions',
+            section: {
+              kind: 'items',
+              items: toolbarItems,
+              layout: 'cluster',
+            },
+          },
+        ],
       }}
       sidebarHeader={{
         kicker: t({ zh: '筛选抽屉', en: 'Filter drawer' }),

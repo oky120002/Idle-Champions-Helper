@@ -3,24 +3,15 @@ import { StatusBannerStack, type StatusBannerStackItem } from '../StatusBannerSt
 import { PageWorkbenchShell } from './PageWorkbenchShell'
 import { WorkbenchFloatingTopButton } from './WorkbenchFloatingTopButton'
 import {
-  type WorkbenchAccentTone,
   WorkbenchSidebarHeader,
   WorkbenchSidebarLoading,
 } from './WorkbenchScaffold'
 import { WorkbenchSidebarFilterActions } from './WorkbenchSidebarFilterActions'
-import { type WorkbenchToolbarItemConfig } from './WorkbenchToolbarItems'
 import {
   renderWorkbenchToolbarSection,
+  resolveWorkbenchToolbarSlotConfig,
   type WorkbenchToolbarConfig,
 } from './workbenchToolbarConfig'
-
-interface FilterWorkbenchPageToolbarIntroConfig {
-  label: string
-  activeCount: number
-  accentTone?: WorkbenchAccentTone
-  title: ReactNode
-  detail?: ReactNode
-}
 
 interface FilterWorkbenchPageFloatingTopButtonConfig {
   onClick: () => void
@@ -44,12 +35,7 @@ interface FilterWorkbenchPageProps {
   contentScrollRef?: RefObject<HTMLDivElement | null> | undefined
   contentOverlay?: ReactNode | undefined
   floatingTopButton?: FilterWorkbenchPageFloatingTopButtonConfig | undefined
-  toolbar?: WorkbenchToolbarConfig | undefined
-  toolbarIntro?: FilterWorkbenchPageToolbarIntroConfig | undefined
-  toolbarLead?: ReactNode | undefined
-  toolbarPrimary?: ReactNode | undefined
-  toolbarItems?: WorkbenchToolbarItemConfig[] | undefined
-  toolbarActions?: ReactNode | undefined
+  toolbar: WorkbenchToolbarConfig
   sidebarHeader: FilterWorkbenchPageSidebarHeaderConfig
   isReady: boolean
   sidebar: ReactNode
@@ -67,11 +53,6 @@ export function FilterWorkbenchPage({
   contentOverlay,
   floatingTopButton,
   toolbar,
-  toolbarIntro,
-  toolbarLead,
-  toolbarPrimary,
-  toolbarItems,
-  toolbarActions,
   sidebarHeader,
   isReady,
   sidebar,
@@ -79,37 +60,9 @@ export function FilterWorkbenchPage({
   statusItems,
   children,
 }: FilterWorkbenchPageProps) {
-  const resolvedToolbarLead = toolbarLead ?? renderWorkbenchToolbarSection(
-    toolbar?.lead
-    ?? (toolbarIntro !== undefined
-      ? {
-          kind: 'filter-status',
-          label: toolbarIntro.label,
-          activeCount: toolbarIntro.activeCount,
-          ...(toolbarIntro.accentTone !== undefined ? { accentTone: toolbarIntro.accentTone } : {}),
-        }
-      : undefined),
-  )
-  const resolvedToolbarPrimary = toolbarPrimary ?? renderWorkbenchToolbarSection(
-    toolbar?.primary
-    ?? (toolbarIntro !== undefined
-      ? {
-          kind: 'copy',
-          title: toolbarIntro.title,
-          ...(toolbarIntro.detail !== undefined ? { detail: toolbarIntro.detail } : {}),
-        }
-      : undefined),
-  )
-  const resolvedToolbarActions = toolbarActions ?? renderWorkbenchToolbarSection(
-    toolbar?.actions
-    ?? (toolbarItems !== undefined
-      ? {
-          kind: 'items',
-          items: toolbarItems,
-          layout: 'cluster',
-        }
-      : undefined),
-  )
+  const resolvedToolbarLead = renderWorkbenchToolbarSection(resolveWorkbenchToolbarSlotConfig(toolbar, 'lead'), 'lead')
+  const resolvedToolbarPrimary = renderWorkbenchToolbarSection(resolveWorkbenchToolbarSlotConfig(toolbar, 'primary'), 'primary')
+  const resolvedToolbarActions = renderWorkbenchToolbarSection(resolveWorkbenchToolbarSlotConfig(toolbar, 'actions'), 'actions')
   const resolvedContentOverlay = contentOverlay ?? (
     floatingTopButton !== undefined ? <WorkbenchFloatingTopButton onClick={floatingTopButton.onClick} /> : null
   )

@@ -63,21 +63,32 @@ export function PetsPage() {
       contentScrollRef={model.resultsPaneRef}
       floatingTopButton={ui.showResultsQuickNavTop ? { onClick: actions.scrollResultsToTop } : undefined}
       toolbar={{
-        lead: {
-          kind: 'filter-status',
-          label: 'PETS',
-          activeCount: activeFilterCount,
-        },
-        primary: {
-          kind: 'copy',
-          title: t({ zh: '宠物图鉴', en: 'Pet catalog' }),
-          detail: t({ zh: '宠物筛选与资源完整度排查', en: 'Filter pets and audit asset completeness' }),
-        },
-        actions: {
-          kind: 'items',
-          items: toolbarItems,
-          layout: 'cluster',
-        },
+        sections: [
+          {
+            region: 'lead',
+            section: {
+              kind: 'filter-status',
+              label: 'PETS',
+              activeCount: activeFilterCount,
+            },
+          },
+          {
+            region: 'primary',
+            section: {
+              kind: 'copy',
+              title: t({ zh: '宠物图鉴', en: 'Pet catalog' }),
+              detail: t({ zh: '宠物筛选与资源完整度排查', en: 'Filter pets and audit asset completeness' }),
+            },
+          },
+          {
+            region: 'actions',
+            section: {
+              kind: 'items',
+              items: toolbarItems,
+              layout: 'cluster',
+            },
+          },
+        ],
       }}
       sidebarHeader={{
         kicker: t({ zh: '筛选抽屉', en: 'Filter drawer' }),
