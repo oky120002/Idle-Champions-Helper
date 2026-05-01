@@ -33,6 +33,38 @@ interface PageWorkbenchShellProps {
   contentScrollRef?: RefObject<HTMLDivElement | null>
 }
 
+type ToolbarRegion = 'lead' | 'primary' | 'actions'
+
+interface ToolbarRegionSlotProps {
+  region: ToolbarRegion
+  children?: ReactNode
+  className?: string
+}
+
+function renderToolbarRegionSlot({
+  region,
+  children,
+  className,
+}: ToolbarRegionSlotProps) {
+  if (children === undefined || children === null) {
+    return null
+  }
+
+  return (
+    <div
+      className={[
+        'page-workbench__toolbar-region',
+        `page-workbench__toolbar-region--${region}`,
+        className,
+      ]
+        .filter(Boolean)
+        .join(' ')}
+    >
+      {children}
+    </div>
+  )
+}
+
 export function PageWorkbenchShell({
   storageKey,
   ariaLabel,
@@ -153,7 +185,7 @@ export function PageWorkbenchShell({
     : t({ zh: '收起左侧面板', en: 'Collapse left pane' })
 
   const renderToolbarLeadGroup = () => (
-    <div className="page-workbench__chrome-lead-group">
+    <div className="page-workbench__toolbar-region-group">
       {hasSidebar ? (
         <WorkbenchToolbarActionButton
           onClick={toggleCollapsed}
@@ -174,7 +206,7 @@ export function PageWorkbenchShell({
       ) : null}
 
       {toolbarLead !== undefined ? (
-        <div className="page-workbench__chrome-lead-copy">{toolbarLead}</div>
+        <div className="page-workbench__toolbar-region-copy">{toolbarLead}</div>
       ) : null}
     </div>
   )
@@ -191,7 +223,11 @@ export function PageWorkbenchShell({
           <aside className="page-workbench__pane page-workbench__pane--sidebar page-workbench__sidebar">
             <div className="page-workbench__chrome page-workbench__chrome-sidebar">
               {!isSidebarCollapsed && (hasSidebar || toolbarLead !== undefined) ? (
-                <div className="page-workbench__chrome-lead">{renderToolbarLeadGroup()}</div>
+                renderToolbarRegionSlot({
+                  region: 'lead',
+                  className: 'page-workbench__toolbar-region--sidebar',
+                  children: renderToolbarLeadGroup(),
+                })
               ) : null}
             </div>
 
@@ -211,12 +247,14 @@ export function PageWorkbenchShell({
         <div className="page-workbench__pane page-workbench__pane--content page-workbench__content">
           <div className="page-workbench__chrome page-workbench__chrome-main">
             {(!hasSidebar && toolbarLead !== undefined) || isSidebarCollapsed ? (
-              <div className="page-workbench__chrome-inline-lead">
-                {hasSidebar ? renderToolbarLeadGroup() : toolbarLead}
-              </div>
+              renderToolbarRegionSlot({
+                region: 'lead',
+                className: 'page-workbench__toolbar-region--inline',
+                children: hasSidebar ? renderToolbarLeadGroup() : toolbarLead,
+              })
             ) : null}
-            <div className="page-workbench__chrome-primary">{toolbarPrimary}</div>
-            {toolbarActions !== undefined ? <div className="page-workbench__chrome-actions">{toolbarActions}</div> : null}
+            {renderToolbarRegionSlot({ region: 'primary', children: toolbarPrimary })}
+            {renderToolbarRegionSlot({ region: 'actions', children: toolbarActions })}
           </div>
 
           <div className="page-workbench__content-shell">
