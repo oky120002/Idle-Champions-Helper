@@ -159,7 +159,7 @@ describe('IllustrationsPage filters', () => {
       expect(screen.getByTestId('location-search')).toHaveTextContent('?scope=skin&role=support')
     })
 
-    await user.click(screen.getByRole('button', { name: '复制当前链接' }))
+    await user.click(screen.getByRole('button', { name: '复制当前页面链接' }))
 
     await waitFor(() => {
       expect(writeTextSpy).toHaveBeenCalledTimes(1)

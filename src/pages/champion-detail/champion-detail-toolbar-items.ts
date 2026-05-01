@@ -13,11 +13,13 @@ interface ChampionDetailToolbarItemOptions {
   copyCurrentLink: () => Promise<void>
 }
 
-export function buildChampionDetailLeadToolbarItems({
+export function buildChampionDetailActionToolbarItems({
   t,
   backLabel,
   backIcon,
   onBack,
+  shareLinkState,
+  copyCurrentLink,
 }: ChampionDetailToolbarItemOptions): WorkbenchToolbarItemConfig[] {
   return [
     ...(onBack !== undefined
@@ -34,15 +36,6 @@ export function buildChampionDetailLeadToolbarItems({
           },
         ]
       : []),
-  ]
-}
-
-export function buildChampionDetailActionToolbarItems({
-  t,
-  shareLinkState,
-  copyCurrentLink,
-}: ChampionDetailToolbarItemOptions): WorkbenchToolbarItemConfig[] {
-  return [
     createWorkbenchShareItem({
       t,
       state: shareLinkState,

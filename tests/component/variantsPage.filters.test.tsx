@@ -290,7 +290,7 @@ describe('VariantsPage filters', () => {
 
     await screen.findByLabelText('变体筛选结果')
 
-    await user.click(screen.getByRole('button', { name: '复制当前链接' }))
+    await user.click(screen.getByRole('button', { name: '复制当前页面链接' }))
 
     await waitFor(() => {
       expect(writeTextSpy).toHaveBeenCalledTimes(1)
