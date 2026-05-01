@@ -9,7 +9,7 @@
 2. `src/components/workbench/ConfiguredWorkbenchPage.tsx`
    - 标准工作台包装层；优先消费统一 `toolbar` schema，把左侧标记、主文案、右侧按钮/气泡和浮动返回顶部收成配置，供详情页、工具页和归档页复用。
 3. `src/components/workbench/workbenchToolbarConfig.tsx`
-   - 工具条配置骨架；定义 `lead / primary / actions` 三段可配置区域，以及 `mark / filter-status / copy / items / node` 五类 section，让页面只描述内容和事件，不再手写 chrome 结构。
+   - 工具条配置骨架；定义 `lead / primary / actions` 三段可配置区域，并支持用 `sections` 按元素逐个声明放到左/中/右哪个区域；section 类型包含 `mark / filter-status / copy / items / tablist / group / node`，让页面只描述内容、区域归属和事件，不再手写 chrome 结构。
 4. `src/components/workbench/WorkbenchScaffold.tsx`
    - 工作台内部稳定的展示骨架；统一 `toolbar mark / toolbar filter status / toolbar copy / toolbar badge / sidebar header / content stack / filter results header`。
 5. `src/components/workbench/ConfiguredWorkbenchMetricsHeader.tsx`
@@ -42,7 +42,7 @@
 ## 关键不变量
 
 - 桌面端所有主页面都必须使用 `PageWorkbenchShell`；不再恢复旧 `filter-*` 外壳路线。
-- 页面工具条优先走统一 `toolbar` schema，把左侧标记/筛选状态、主文案、右侧按钮与统计气泡都收进配置；只有确实特殊的结构才用 `kind: 'node'` 注入自定义节点。
+- 页面工具条优先走统一 `toolbar` schema，把左侧按钮/标记/筛选状态、中间主文案或 tab、右侧按钮与统计气泡都收进配置；优先用 `sections` 按元素声明区域与顺序，需要组合时再用 `kind: 'group'`，只有确实特殊的结构才用 `kind: 'node'` 注入自定义节点。
 - 工具条文案区、复制链接按钮、工具条按钮组、回顶按钮、左侧状态头、筛选动作按钮和筛选结果头优先复用 `src/components/workbench/ConfiguredWorkbenchPage.tsx`、`src/components/workbench/FilterWorkbenchPage.tsx`、`src/components/workbench/workbenchToolbarConfig.tsx`、`src/components/workbench/ConfiguredWorkbenchMetricsHeader.tsx`、`src/components/workbench/WorkbenchScaffold.tsx`、`src/components/workbench/WorkbenchSidebarFilterActions.tsx`、`src/components/workbench/WorkbenchToolbarItemBuilders.ts` 与 `src/components/workbench/WorkbenchFilterMetricsHeader.tsx`；不要在页面里重复拼同一套 chrome。
 - 左右结构是统一壳层语义；当前没有左栏的页面也不单独造一套单栏壳层。
 - 收起态只保留紧凑展开入口；左抽屉主体、边框和残余 gutter 必须一起退场。

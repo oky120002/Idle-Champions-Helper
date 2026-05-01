@@ -64,22 +64,33 @@ export function VariantsPage() {
       contentScrollRef={model.resultsPaneRef}
       floatingTopButton={showResultsQuickNavTop ? { onClick: scrollResultsToTop } : undefined}
       toolbar={{
-        lead: {
-          kind: 'filter-status',
-          label: 'VARIANTS',
-          activeCount: activeFilters.length,
-          accentTone: 'steel',
-        },
-        primary: {
-          kind: 'copy',
-          title: t({ zh: '变体筛选', en: 'Variant filters' }),
-          detail: t({ zh: '左侧选地图和关卡，右侧读敌人、区域、阵型与变体', en: 'Choose a campaign and adventure on the left; read enemies, areas, formation, and variants on the right' }),
-        },
-        actions: {
-          kind: 'items',
-          items: toolbarItems,
-          layout: 'cluster',
-        },
+        sections: [
+          {
+            region: 'lead',
+            section: {
+              kind: 'filter-status',
+              label: 'VARIANTS',
+              activeCount: activeFilters.length,
+              accentTone: 'steel',
+            },
+          },
+          {
+            region: 'primary',
+            section: {
+              kind: 'copy',
+              title: t({ zh: '变体筛选', en: 'Variant filters' }),
+              detail: t({ zh: '左侧选地图和关卡，右侧读敌人、区域、阵型与变体', en: 'Choose a campaign and adventure on the left; read enemies, areas, formation, and variants on the right' }),
+            },
+          },
+          {
+            region: 'actions',
+            section: {
+              kind: 'items',
+              items: toolbarItems,
+              layout: 'cluster',
+            },
+          },
+        ],
       }}
       sidebarHeader={{
         kicker: t({ zh: '导航抽屉', en: 'Navigation drawer' }),

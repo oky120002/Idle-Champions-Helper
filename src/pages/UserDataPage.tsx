@@ -130,20 +130,31 @@ export function UserDataPage() {
           : undefined
       }
       toolbar={{
-        lead: {
-          kind: 'mark',
-          label: 'USER DATA',
-        },
-        primary: {
-          kind: 'copy',
-          kicker: model.t({ zh: '本地优先', en: 'Local first' }),
-          title: model.t({ zh: '个人数据', en: 'User data' }),
-          detail: model.t({ zh: '统一管理支持 URL、手填凭证和日志片段导入', en: 'Manage Support URL, manual credentials, and log snippet imports in one place' }),
-        },
-        actions: {
-          kind: 'items',
-          items: toolbarItems,
-        },
+        sections: [
+          {
+            region: 'lead',
+            section: {
+              kind: 'mark',
+              label: 'USER DATA',
+            },
+          },
+          {
+            region: 'primary',
+            section: {
+              kind: 'copy',
+              kicker: model.t({ zh: '本地优先', en: 'Local first' }),
+              title: model.t({ zh: '个人数据', en: 'User data' }),
+              detail: model.t({ zh: '统一管理支持 URL、手填凭证和日志片段导入', en: 'Manage Support URL, manual credentials, and log snippet imports in one place' }),
+            },
+          },
+          {
+            region: 'actions',
+            section: {
+              kind: 'items',
+              items: toolbarItems,
+            },
+          },
+        ],
       }}
     >
       <WorkbenchContentStack>

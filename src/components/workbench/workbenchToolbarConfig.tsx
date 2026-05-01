@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { Fragment, type ReactNode } from 'react'
 import {
   WorkbenchToolbarCopy,
   WorkbenchToolbarFilterStatus,
@@ -6,6 +6,7 @@ import {
   type WorkbenchAccentTone,
 } from './WorkbenchScaffold'
 import { WorkbenchToolbarItems, type WorkbenchToolbarItemConfig } from './WorkbenchToolbarItems'
+import { WorkbenchToolbarTabList } from './WorkbenchToolbarTabList'
 
 export interface WorkbenchToolbarMarkConfig {
   kind: 'mark'
@@ -33,22 +34,73 @@ export interface WorkbenchToolbarItemsConfig {
   layout?: 'inline' | 'cluster'
 }
 
+export interface WorkbenchToolbarGroupConfig {
+  kind: 'group'
+  items: WorkbenchToolbarSectionConfig[]
+  className?: string
+}
+
+export interface WorkbenchToolbarTabListItemConfig {
+  id: string
+  label: ReactNode
+  controlsId?: string
+}
+
+export interface WorkbenchToolbarTabListConfig {
+  kind: 'tablist'
+  value: string
+  items: WorkbenchToolbarTabListItemConfig[]
+  ariaLabel: string
+  onChange: (value: string) => void
+}
+
 export interface WorkbenchToolbarNodeConfig {
   kind: 'node'
   node: ReactNode
 }
 
+export type WorkbenchToolbarSectionConfig =
+  | WorkbenchToolbarMarkConfig
+  | WorkbenchToolbarFilterStatusConfig
+  | WorkbenchToolbarCopyConfig
+  | WorkbenchToolbarItemsConfig
+  | WorkbenchToolbarTabListConfig
+  | WorkbenchToolbarNodeConfig
+  | WorkbenchToolbarGroupConfig
+
+export type WorkbenchToolbarRegion = 'lead' | 'primary' | 'actions'
+
+export interface WorkbenchToolbarPlacementConfig {
+  region: WorkbenchToolbarRegion
+  section: WorkbenchToolbarSectionConfig
+}
+
 export interface WorkbenchToolbarConfig {
-  lead?: WorkbenchToolbarMarkConfig | WorkbenchToolbarFilterStatusConfig | WorkbenchToolbarNodeConfig
-  primary?: WorkbenchToolbarCopyConfig | WorkbenchToolbarItemsConfig | WorkbenchToolbarNodeConfig
-  actions?: WorkbenchToolbarItemsConfig | WorkbenchToolbarNodeConfig
+  sections: WorkbenchToolbarPlacementConfig[]
+}
+
+function joinClasses(...classNames: Array<string | undefined>) {
+  return classNames.filter(Boolean).join(' ')
 }
 
 export function renderWorkbenchToolbarSection(
-  config: WorkbenchToolbarConfig['lead'] | WorkbenchToolbarConfig['primary'] | WorkbenchToolbarConfig['actions'] | undefined,
+  config: WorkbenchToolbarSectionConfig | undefined,
+  slot: WorkbenchToolbarRegion = 'primary',
 ): ReactNode {
   if (config === undefined) {
     return null
+  }
+
+  if (config.kind === 'group') {
+    return (
+      <div className={joinClasses('workbench-page__toolbar-group', `workbench-page__toolbar-group--${slot}`, config.className)}>
+        {config.items.map((item, index) => (
+          <Fragment key={`${slot}-${index}`}>
+            {renderWorkbenchToolbarSection(item, slot)}
+          </Fragment>
+        ))}
+      </div>
+    )
   }
 
   if (config.kind === 'node') {
@@ -84,10 +136,40 @@ export function renderWorkbenchToolbarSection(
     )
   }
 
+  if (config.kind === 'tablist') {
+    return (
+      <WorkbenchToolbarTabList
+        value={config.value}
+        items={config.items}
+        ariaLabel={config.ariaLabel}
+        onChange={config.onChange}
+      />
+    )
+  }
+
   return (
     <WorkbenchToolbarItems
       items={config.items}
       layout={config.layout ?? 'inline'}
     />
   )
+}
+
+export function resolveWorkbenchToolbarSlotConfig(
+  toolbar: WorkbenchToolbarConfig,
+  region: WorkbenchToolbarRegion,
+): WorkbenchToolbarSectionConfig | undefined {
+  const placements = toolbar.sections.filter((item) => item.region === region).map((item) => item.section)
+
+  if (placements.length === 1) {
+    return placements[0]
+  }
+
+  if (placements.length > 1) {
+    return {
+      kind: 'group',
+      items: placements,
+    }
+  }
+  return undefined
 }

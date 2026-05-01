@@ -90,17 +90,28 @@ export function AnimationAuditPage() {
       contentScrollRef={contentScrollRef}
       floatingTopButton={showScrollTop ? { onClick: scrollToTop, detailLabel: t({ zh: '动图审片内容', en: 'Audit content' }) } : undefined}
       toolbar={{
-        lead: { kind: 'mark', label: 'IDLE AUDIT' },
-        primary: {
-          kind: 'copy',
-          kicker: t({ zh: '人工审片', en: 'Human review' }),
-          title: t({ zh: '英雄动图审片台', en: 'Hero animation audit' }),
-          detail: t({ zh: '把当前默认 sequence 与更像 idle 的候选并排放在一起，只看短名单。', en: 'Compare the current default sequence against idle-like candidates side by side on a short list.' }),
-        },
-        actions: {
-          kind: 'items',
-          items: toolbarItems,
-        },
+        sections: [
+          {
+            region: 'lead',
+            section: { kind: 'mark', label: 'IDLE AUDIT' },
+          },
+          {
+            region: 'primary',
+            section: {
+              kind: 'copy',
+              kicker: t({ zh: '人工审片', en: 'Human review' }),
+              title: t({ zh: '英雄动图审片台', en: 'Hero animation audit' }),
+              detail: t({ zh: '把当前默认 sequence 与更像 idle 的候选并排放在一起，只看短名单。', en: 'Compare the current default sequence against idle-like candidates side by side on a short list.' }),
+            },
+          },
+          {
+            region: 'actions',
+            section: {
+              kind: 'items',
+              items: toolbarItems,
+            },
+          },
+        ],
       }}
     >
       <WorkbenchContentStack>

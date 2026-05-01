@@ -17,7 +17,7 @@ test('英雄筛选卡片进入详情后，详情 hash 与返回链路保持闭�
 
   await expect(page).toHaveURL(/#\/champions\/7\?seat=7#section-specializations$/)
   await expect(page.getByRole('heading', { level: 2, name: '明斯克' })).toBeVisible()
-  await expect(page.getByRole('link', { name: '返回英雄筛选' })).toHaveAttribute('href', /#\/champions\?seat=7$/)
+  await expect(page.getByRole('button', { name: '返回英雄筛选' })).toBeVisible()
   await expect(page.getByText('快速索引')).toHaveCount(0)
 
   await page.getByRole('tab', { name: '能力' }).click()
@@ -31,7 +31,7 @@ test('英雄筛选卡片进入详情后，详情 hash 与返回链路保持闭�
   await expect(page).toHaveURL(/#\/champions\/7\?seat=7#section-abilities$/)
   await expect(page.getByRole('tab', { name: '能力' })).toHaveAttribute('aria-pressed', 'true')
 
-  await page.getByRole('link', { name: '返回英雄筛选' }).click()
+  await page.getByRole('button', { name: '返回英雄筛选' }).click()
 
   await expect(page).toHaveURL(/#\/champions\?seat=7$/)
   await expect(page.getByRole('button', { name: '7 号位', exact: true })).toHaveAttribute('aria-pressed', 'true')
@@ -50,12 +50,9 @@ test('立绘图鉴进入详情后，返回链接应回到立绘图鉴当前筛�
   await expect(illustrationCard).toBeVisible()
   await illustrationCard.click()
 
-  await expect(page.getByRole('link', { name: '返回立绘图鉴' })).toHaveAttribute(
-    'href',
-    /#\/illustrations\?scope=skin$/,
-  )
+  await expect(page.getByRole('button', { name: '返回立绘图鉴' })).toBeVisible()
 
-  await page.getByRole('link', { name: '返回立绘图鉴' }).click()
+  await page.getByRole('button', { name: '返回立绘图鉴' }).click()
 
   await expect(page).toHaveURL(/#\/illustrations\?scope=skin$/)
   await expect(page.locator('.workbench-page__toolbar-title')).toHaveText('立绘图鉴')

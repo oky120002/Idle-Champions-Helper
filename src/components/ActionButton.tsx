@@ -13,6 +13,8 @@ interface ActionButtonProps {
   className?: string | undefined
   type?: 'button' | 'submit' | 'reset' | undefined
   ariaPressed?: boolean | undefined
+  ariaExpanded?: boolean | undefined
+  ariaControls?: string | undefined
   ariaLabel?: string | undefined
   title?: string | undefined
 }
@@ -28,6 +30,8 @@ export function ActionButton({
   className,
   type = 'button',
   ariaPressed,
+  ariaExpanded,
+  ariaControls,
   ariaLabel,
   title,
 }: ActionButtonProps) {
@@ -42,6 +46,8 @@ export function ActionButton({
       })}
       {...(disabled ? { disabled: true } : {})}
       {...(ariaPressed !== undefined ? { 'aria-pressed': ariaPressed } : {})}
+      {...(ariaExpanded !== undefined ? { 'aria-expanded': ariaExpanded } : {})}
+      {...(ariaControls !== undefined ? { 'aria-controls': ariaControls } : {})}
       {...(ariaLabel !== undefined ? { 'aria-label': ariaLabel } : {})}
       {...(title !== undefined ? { title } : {})}
       onClick={() => {

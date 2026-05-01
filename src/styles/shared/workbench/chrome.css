@@ -14,11 +14,6 @@
 
 .page-workbench__chrome-sidebar {
   overflow: clip;
-  padding-inline-start: calc(
-    var(--page-workbench-collapsed-toggle-inline-offset) +
-    var(--page-workbench-collapsed-toggle-size) +
-    0.72rem
-  );
 }
 
 .page-workbench__chrome-main {
@@ -39,6 +34,18 @@
 .page-workbench__chrome-lead,
 .page-workbench__chrome-inline-lead {
   min-width: 0;
+}
+
+.page-workbench__chrome-lead-group {
+  display: flex;
+  align-items: center;
+  gap: 0.72rem;
+  min-width: 0;
+}
+
+.page-workbench__chrome-lead-copy {
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .page-workbench__chrome-primary {
@@ -72,6 +79,7 @@
   flex: 0 0 auto;
   display: flex;
   align-items: center;
+  min-width: 0;
 }
 
 .page-workbench--sidebarless .page-workbench__chrome-main {

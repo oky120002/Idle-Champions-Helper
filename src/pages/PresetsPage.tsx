@@ -111,21 +111,32 @@ export function PresetsPage() {
           : undefined
       }
       toolbar={{
-        lead: {
-          kind: 'mark',
-          label: 'PRESETS',
-          accentTone: 'steel',
-        },
-        primary: {
-          kind: 'copy',
-          kicker: t({ zh: '归档工作台', en: 'Archive workbench' }),
-          title: t({ zh: '方案存档', en: 'Preset library' }),
-          detail: t({ zh: '统一查看、恢复和整理本地命名阵型方案', en: 'Review, restore, and curate named local formation presets' }),
-        },
-        actions: {
-          kind: 'items',
-          items: toolbarItems,
-        },
+        sections: [
+          {
+            region: 'lead',
+            section: {
+              kind: 'mark',
+              label: 'PRESETS',
+              accentTone: 'steel',
+            },
+          },
+          {
+            region: 'primary',
+            section: {
+              kind: 'copy',
+              kicker: t({ zh: '归档工作台', en: 'Archive workbench' }),
+              title: t({ zh: '方案存档', en: 'Preset library' }),
+              detail: t({ zh: '统一查看、恢复和整理本地命名阵型方案', en: 'Review, restore, and curate named local formation presets' }),
+            },
+          },
+          {
+            region: 'actions',
+            section: {
+              kind: 'items',
+              items: toolbarItems,
+            },
+          },
+        ],
       }}
       contentHeader={<StatusMessageBanner message={pageStatus} />}
     >

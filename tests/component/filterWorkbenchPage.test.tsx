@@ -24,32 +24,43 @@ describe('FilterWorkbenchPage', () => {
           shellClassName="component-filter-workbench__shell"
           floatingTopButton={{ onClick: onScrollToTop }}
           toolbar={{
-            lead: {
-              kind: 'filter-status',
-              label: 'PETS',
-              activeCount: 2,
-            },
-            primary: {
-              kind: 'copy',
-              title: '宠物图鉴',
-              detail: '筛选宠物并检查资源完整度',
-            },
-            actions: {
-              kind: 'items',
-              layout: 'cluster',
-              items: [
-                {
-                  id: 'badge',
-                  kind: 'badge',
-                  label: '24 项结果',
+            sections: [
+              {
+                region: 'lead',
+                section: {
+                  kind: 'filter-status',
+                  label: 'PETS',
+                  activeCount: 2,
                 },
-                {
-                  id: 'action',
-                  label: '显示全部',
-                  onClick: onAction,
+              },
+              {
+                region: 'primary',
+                section: {
+                  kind: 'copy',
+                  title: '宠物图鉴',
+                  detail: '筛选宠物并检查资源完整度',
                 },
-              ],
-            },
+              },
+              {
+                region: 'actions',
+                section: {
+                  kind: 'items',
+                  layout: 'cluster',
+                  items: [
+                    {
+                      id: 'badge',
+                      kind: 'badge',
+                      label: '24 项结果',
+                    },
+                    {
+                      id: 'action',
+                      label: '显示全部',
+                      onClick: onAction,
+                    },
+                  ],
+                },
+              },
+            ],
           }}
           sidebarHeader={{
             kicker: '筛选抽屉',

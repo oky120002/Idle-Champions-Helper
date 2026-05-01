@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type MouseEvent, type RefObject } from 'react'
+import { useEffect, useRef, useState, type RefObject } from 'react'
 import { DETAIL_SECTION_IDS, type DetailSectionId, type DetailSectionLink, type DetailSectionProgressState } from './types'
 import { buildSectionHash, resolveActiveSectionId, resolveSectionIdFromBrowserHash, resolveSectionIdFromHashValue } from './navigation'
 import type { ChampionDetail } from '../../domain/types'
@@ -202,8 +202,7 @@ export function useChampionDetailSectionState(
     })
   }
 
-  const handleBackClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault()
+  const navigateBackToChampions = () => {
     isLeavingPageRef.current = true
     void navigate(backTarget)
   }
@@ -218,6 +217,6 @@ export function useChampionDetailSectionState(
     getSectionProgressText,
     scrollToSection,
     backToChampions: backTarget,
-    handleBackClick,
+    navigateBackToChampions,
   }
 }
