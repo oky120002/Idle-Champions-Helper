@@ -151,6 +151,7 @@
 }
 
 .workbench-page__toolbar-action {
+  border-radius: 0.72rem;
   min-height: calc(var(--workbench-chip-min-height) + 0.02rem);
   padding: 0.26rem 0.72rem 0.28rem;
   border-color: var(--workbench-chip-border-color);
@@ -165,12 +166,12 @@
 }
 
 .workbench-page__toolbar-action-cluster .workbench-page__toolbar-action {
-  min-height: 1.62rem;
+  min-height: 1.86rem;
   padding: 0.12rem 0.52rem 0.14rem;
-  border: 1px solid transparent;
-  border-radius: 0.62rem;
+  border: 1px solid rgba(227, 214, 193, 0.14);
+  border-radius: 0.72rem;
   background: transparent;
-  color: rgba(242, 239, 230, 0.64);
+  color: rgba(224, 233, 241, 0.72);
   font-size: 0.76rem;
   letter-spacing: 0.01em;
   box-shadow: none;
@@ -183,8 +184,11 @@
   box-shadow: none;
 }
 
-.workbench-page__toolbar-action-cluster .workbench-page__toolbar-action--share {
-  color: rgba(224, 233, 241, 0.72);
+.workbench-page__toolbar-action-cluster .workbench-page__toolbar-action--icon-only {
+  width: 1.86rem;
+  min-width: 1.86rem;
+  min-height: 1.86rem;
+  padding: 0;
 }
 
 .workbench-page__toolbar-action:hover {

@@ -88,11 +88,11 @@ export function createWorkbenchResultVisibilityItem({
   return {
     id: 'toggle-visibility',
     label,
+    displayLabel: filteredCount,
     icon: createElement(showAllResults ? EyeOff : Eye, { 'aria-hidden': true, strokeWidth: 1.9 }),
     onClick,
     isActive: showAllResults,
     ariaPressed: showAllResults,
-    variant: 'prominent',
     hidden: !isReady || !canToggle,
   }
 }
@@ -109,6 +109,7 @@ export function createWorkbenchShuffleItem({
     label: hasRandomOrder
       ? t({ zh: '重新随机', en: 'Reshuffle' })
       : t({ zh: '随机排序', en: 'Shuffle order' }),
+    displayLabel: null,
     icon: createElement(Shuffle, { 'aria-hidden': true, strokeWidth: 1.9 }),
     onClick,
     isActive: hasRandomOrder,
