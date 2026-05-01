@@ -71,6 +71,11 @@ export function PetsPage() {
       toolbarItems={toolbarItems}
       sidebarHeader={{
         kicker: t({ zh: '筛选抽屉', en: 'Filter drawer' }),
+        title: t({ zh: '左侧缩小宠物目录', en: 'Narrow the pet catalog on the left' }),
+        description: t({
+          zh: '搜索负责关键词，来源和图像状态负责快速切分完整资源与待补条目；右侧保留更大的图鉴卡片比较区。',
+          en: 'Search handles keywords, while source and asset state separate complete entries from missing-art rows.',
+        }),
         statusLabel: t({ zh: '宠物筛选状态操作', en: 'Pet filter status actions' }),
         activeCount: activeFilterCount,
         clearLabel: t({ zh: '清空全部', en: 'Clear all' }),

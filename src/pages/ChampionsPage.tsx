@@ -71,6 +71,11 @@ export function ChampionsPage() {
       toolbarItems={toolbarItems}
       sidebarHeader={{
         kicker: t({ zh: '筛选抽屉', en: 'Filter drawer' }),
+        title: t({ zh: '左侧缩小候选池', en: 'Narrow the roster on the left' }),
+        description: t({
+          zh: '先锁关键词、座位、定位和联动队伍，再按需展开身份画像与特殊机制，不要一开始就把所有低频条件摊开。',
+          en: 'Lock keyword, seat, role, and affiliation first, then expand identity and mechanics only when you need the lower-frequency filters.',
+        }),
         statusLabel: t({ zh: '筛选状态操作', en: 'Filter status actions' }),
         activeCount: activeFilterCount,
         clearLabel: t({ zh: '清空全部', en: 'Clear all' }),

@@ -41,7 +41,8 @@ export function WorkbenchShareButton({
       title={title}
       className={joinClasses(
         'workbench-page__toolbar-action',
-        'workbench-page__toolbar-action--icon-only',
+        'workbench-page__toolbar-action--share',
+        'champion-detail-workbench__toolbar-back',
         state === 'success' && 'workbench-page__toolbar-action--success',
         state === 'error' && 'workbench-page__toolbar-action--error',
         className,
