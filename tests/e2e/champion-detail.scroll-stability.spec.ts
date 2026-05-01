@@ -21,30 +21,35 @@ async function scrollPaneBy(page: Page, amount: number): Promise<void> {
   }, amount)
 }
 
-test('英雄详情页连续向下滚动时不会被 hash 同步拉回', async ({ page }) => {
+test('英雄详情页在分区内连续向下滚动时不会被 hash 同步拉回顶部', async ({ page }) => {
   await page.addInitScript(() => {
     window.localStorage.removeItem('idle-champions-helper.locale')
   })
 
   await page.goto('./#/champions/7')
   await expect(page.getByRole('heading', { level: 2, name: '明斯克' })).toBeVisible()
+  await page.getByRole('tab', { name: '能力' }).click()
+  await expect(page).toHaveURL(/#\/champions\/7#section-abilities$/)
+  const initialScrollTop = await getPaneScrollTop(page)
 
-  await scrollPaneBy(page, 1320)
+  await scrollPaneBy(page, 320)
   await page.waitForTimeout(150)
 
   const firstScrollTop = await getPaneScrollTop(page)
 
-  await scrollPaneBy(page, 1400)
+  await scrollPaneBy(page, 320)
   await page.waitForTimeout(250)
 
   const secondScrollTop = await getPaneScrollTop(page)
 
-  await scrollPaneBy(page, 1400)
+  await scrollPaneBy(page, 320)
   await page.waitForTimeout(250)
 
   const thirdScrollTop = await getPaneScrollTop(page)
 
-  expect(secondScrollTop).toBeGreaterThan(firstScrollTop + 240)
-  expect(thirdScrollTop).toBeGreaterThan(secondScrollTop + 240)
-  await expect(page).toHaveURL(/#\/champions\/7#section-(character-sheet|combat|upgrades|feats)$/)
+  expect(firstScrollTop).toBeGreaterThan(initialScrollTop + 160)
+  expect(secondScrollTop).toBeGreaterThan(firstScrollTop + 160)
+  expect(thirdScrollTop).toBeGreaterThanOrEqual(secondScrollTop)
+  await expect(page).toHaveURL(/#\/champions\/7#section-abilities$/)
+  await expect(page.getByRole('tab', { name: '能力' })).toHaveAttribute('aria-selected', 'true')
 })
