@@ -79,6 +79,7 @@ export function ChampionDetailPage() {
   const shareHash = detail ? `#${DETAIL_HASH_PREFIX}${activeSectionId}` : location.hash
   const { shareLinkState, copyCurrentLink } = useWorkbenchShareLink(location.pathname, location.search, shareHash)
   const toolbarItems = buildChampionDetailToolbarItems({
+    t,
     shareLinkState,
     copyCurrentLink,
   })
@@ -156,33 +157,39 @@ export function ChampionDetailPage() {
             }
           : undefined
       }
-      toolbarIntro={{
-        mark: { label: 'CHAMPION' },
+      toolbar={{
+        lead: { kind: 'mark', label: 'CHAMPION' },
+        primary: {
+          kind: 'node',
+          node: (
+            <div className="champion-detail-workbench__toolbar-main">
+              <Link
+                className="action-button action-button--compact action-button--ghost workbench-page__toolbar-action champion-detail-workbench__toolbar-back"
+                to={backToChampions}
+                onClick={handleBackClick}
+                aria-label={t(backLabel)}
+                title={t(backLabel)}
+              >
+                <BackNavigationIcon />
+              </Link>
+              <ChampionDetailToolbarPrimary
+                activeSectionId={activeSectionId}
+                sectionLinks={sectionLinks}
+                tabAriaLabel={t({ zh: '详情页签', en: 'Detail tabs' })}
+                scrollToSection={scrollToSection}
+              />
+            </div>
+          ),
+        },
+        actions: {
+          kind: 'node',
+          node: (
+            <div className="champion-detail-workbench__toolbar-actions">
+              <WorkbenchToolbarItems items={toolbarItems} />
+            </div>
+          ),
+        },
       }}
-      toolbarPrimary={(
-        <div className="champion-detail-workbench__toolbar-main">
-          <Link
-            className="action-button action-button--compact action-button--ghost workbench-page__toolbar-action champion-detail-workbench__toolbar-back"
-            to={backToChampions}
-            onClick={handleBackClick}
-            aria-label={t(backLabel)}
-            title={t(backLabel)}
-          >
-            <BackNavigationIcon />
-          </Link>
-          <ChampionDetailToolbarPrimary
-            activeSectionId={activeSectionId}
-            sectionLinks={sectionLinks}
-            tabAriaLabel={t({ zh: '详情页签', en: 'Detail tabs' })}
-            scrollToSection={scrollToSection}
-          />
-        </div>
-      )}
-      toolbarActions={(
-        <div className="champion-detail-workbench__toolbar-actions">
-          <WorkbenchToolbarItems items={toolbarItems} />
-        </div>
-      )}
       sidebar={detail ? (
         <DossierSection
           detail={detail}

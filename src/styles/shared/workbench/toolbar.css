@@ -127,27 +127,16 @@
 .workbench-page__toolbar-action-cluster {
   display: inline-flex;
   align-items: center;
-  gap: 0.08rem;
+  flex-wrap: wrap;
+  gap: 0.42rem;
   min-width: 0;
   max-width: 100%;
   padding: 0;
 }
 
 .workbench-page__toolbar-action-cluster > * {
-  position: relative;
   flex: 0 1 auto;
   min-width: 0;
-}
-
-.workbench-page__toolbar-action-cluster > * + *::before {
-  content: "";
-  position: absolute;
-  left: -0.04rem;
-  top: 0.34rem;
-  bottom: 0.34rem;
-  width: 1px;
-  background: linear-gradient(180deg, transparent, rgba(227, 214, 193, 0.14), transparent);
-  pointer-events: none;
 }
 
 .workbench-page__toolbar-action {
@@ -164,27 +153,46 @@
   box-shadow: var(--workbench-chip-shadow);
 }
 
-.workbench-page__toolbar-action-cluster .workbench-page__toolbar-action {
-  min-height: 1.62rem;
-  padding: 0.12rem 0.52rem 0.14rem;
-  border: 1px solid transparent;
-  border-radius: 0.62rem;
-  background: transparent;
-  color: rgba(242, 239, 230, 0.64);
-  font-size: 0.76rem;
-  letter-spacing: 0.01em;
-  box-shadow: none;
+.workbench-page__toolbar-action .action-button__icon svg {
+  width: 1.08rem;
+  height: 1.08rem;
 }
 
-.workbench-page__toolbar-action-cluster .workbench-page__toolbar-action--prominent {
+.workbench-page .workbench-page__toolbar-action.workbench-page__toolbar-action--icon-only {
+  gap: 0;
+  justify-content: center;
+  width: 1.86rem;
+  min-width: 1.86rem;
+  padding-inline: 0;
+}
+
+.workbench-page .workbench-page__toolbar-action.workbench-page__toolbar-action--icon-only .action-button__label {
+  display: none;
+}
+
+.workbench-page .workbench-page__toolbar-action.workbench-page__toolbar-action--share {
+  border-radius: 0.72rem;
+  color: rgba(255, 245, 229, 0.88);
+}
+
+.workbench-page .workbench-page__toolbar-action.workbench-page__toolbar-action--share.workbench-page__toolbar-action--icon-only {
+  flex: 0 0 auto;
+  width: 1.86rem;
+  min-width: 1.86rem;
+  min-height: 1.86rem;
+  padding: 0;
+  border-radius: 0.72rem;
+}
+
+.workbench-page .workbench-page__toolbar-action.workbench-page__toolbar-action--icon-only .action-button__icon svg {
+  width: 1.12rem;
+  height: 1.12rem;
+}
+
+.workbench-page__toolbar-action--prominent {
   background: rgba(200, 167, 127, 0.055);
   border-color: rgba(200, 167, 127, 0.14);
   color: rgba(255, 239, 214, 0.9);
-  box-shadow: none;
-}
-
-.workbench-page__toolbar-action-cluster .workbench-page__toolbar-action--share {
-  color: rgba(224, 233, 241, 0.72);
 }
 
 .workbench-page__toolbar-action:hover {
@@ -192,15 +200,7 @@
   box-shadow: var(--workbench-chip-shadow);
 }
 
-.workbench-page__toolbar-action-cluster .workbench-page__toolbar-action:hover {
-  transform: none;
-  border-color: rgba(227, 214, 193, 0.08);
-  background: rgba(255, 255, 255, 0.02);
-  color: rgba(255, 248, 237, 0.8);
-  box-shadow: none;
-}
-
-.workbench-page__toolbar-action-cluster .workbench-page__toolbar-action--prominent:hover {
+.workbench-page__toolbar-action--prominent:hover {
   background: rgba(200, 167, 127, 0.075);
   border-color: rgba(200, 167, 127, 0.18);
   color: rgba(255, 243, 223, 0.94);
@@ -213,25 +213,10 @@
   color: var(--workbench-chip-text-strong);
 }
 
-.workbench-page__toolbar-action-cluster .workbench-page__toolbar-action.action-button--toggled,
-.workbench-page__toolbar-action-cluster .workbench-page__toolbar-action--success {
-  background: rgba(62, 113, 147, 0.08);
-  border-color: rgba(121, 156, 182, 0.16);
-  color: rgba(233, 242, 248, 0.92);
-  box-shadow: none;
-}
-
 .workbench-page__toolbar-action--error {
   border-color: rgba(170, 83, 83, 0.22);
   background: rgba(170, 83, 83, 0.08);
   color: rgba(250, 224, 224, 0.92);
-}
-
-.workbench-page__toolbar-action-cluster .workbench-page__toolbar-action--error {
-  background: rgba(170, 83, 83, 0.075);
-  border-color: rgba(170, 83, 83, 0.16);
-  color: rgba(250, 224, 224, 0.92);
-  box-shadow: none;
 }
 
 @media (min-width: 1080px) {
@@ -271,27 +256,36 @@
   }
 
   .workbench-page__toolbar-action-cluster {
-    gap: 0.04rem;
+    gap: 0.28rem;
   }
 
-  .workbench-page__toolbar-action-cluster .workbench-page__toolbar-action {
+  .workbench-page__toolbar-action {
     min-height: 1.54rem;
-    padding-inline: 0.44rem;
+    padding-inline: 0.58rem;
     font-size: 0.72rem;
   }
 
-  .workbench-page__toolbar-action .action-button__icon + .action-button__label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
+  .workbench-page .workbench-page__toolbar-action.workbench-page__toolbar-action--icon-only {
+    width: 2.08rem;
+    min-width: 2.08rem;
+    padding-inline: 0;
   }
 
-  .workbench-page__toolbar-action.action-button--with-icon {
+  .workbench-page__toolbar-action .action-button__icon svg {
+    width: 1.04rem;
+    height: 1.04rem;
+  }
+
+  .workbench-page .workbench-page__toolbar-action.workbench-page__toolbar-action--share.workbench-page__toolbar-action--icon-only {
     width: 2.08rem;
-    padding-inline: 0;
+    min-width: 2.08rem;
+    min-height: 2.08rem;
+    padding: 0;
+  }
+
+  .workbench-page .workbench-page__toolbar-action.workbench-page__toolbar-action--icon-only .action-button__icon svg {
+    width: 1.08rem;
+    height: 1.08rem;
   }
 
   .workbench-page__toolbar-detail {

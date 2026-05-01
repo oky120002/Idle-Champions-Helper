@@ -62,13 +62,23 @@ export function ChampionsPage() {
       shellClassName="workbench-page__shell champions-workbench"
       contentScrollRef={model.resultsPaneRef}
       floatingTopButton={model.showResultsQuickNavTop ? { onClick: model.scrollResultsToTop } : undefined}
-      toolbarIntro={{
-        label: 'CHAMPIONS',
-        activeCount: activeFilterCount,
-        title: t({ zh: '英雄筛选', en: 'Champion filters' }),
-        detail: t({ zh: '候选池收缩与资料对比', en: 'Narrow the roster and compare dossiers' }),
+      toolbar={{
+        lead: {
+          kind: 'filter-status',
+          label: 'CHAMPIONS',
+          activeCount: activeFilterCount,
+        },
+        primary: {
+          kind: 'copy',
+          title: t({ zh: '英雄筛选', en: 'Champion filters' }),
+          detail: t({ zh: '候选池收缩与资料对比', en: 'Narrow the roster and compare dossiers' }),
+        },
+        actions: {
+          kind: 'items',
+          items: toolbarItems,
+          layout: 'cluster',
+        },
       }}
-      toolbarItems={toolbarItems}
       sidebarHeader={{
         kicker: t({ zh: '筛选抽屉', en: 'Filter drawer' }),
         statusLabel: t({ zh: '筛选状态操作', en: 'Filter status actions' }),

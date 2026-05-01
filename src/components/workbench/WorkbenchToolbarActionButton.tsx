@@ -1,14 +1,19 @@
 import type { ReactNode } from 'react'
 import { ActionButton } from '../ActionButton'
+import type { WorkbenchShareState } from './WorkbenchScaffold'
 
 interface WorkbenchToolbarActionButtonProps {
   children: ReactNode
   onClick: () => void | Promise<void>
   icon?: ReactNode
+  iconOnly?: boolean
   isActive?: boolean
   ariaPressed?: boolean
   ariaLabel?: string
   variant?: 'default' | 'prominent'
+  tone?: 'default' | 'share'
+  state?: WorkbenchShareState
+  title?: string
   className?: string
 }
 
@@ -20,10 +25,14 @@ export function WorkbenchToolbarActionButton({
   children,
   onClick,
   icon,
+  iconOnly = false,
   isActive = false,
   ariaPressed,
   ariaLabel,
   variant = 'default',
+  tone = 'default',
+  state,
+  title,
   className,
 }: WorkbenchToolbarActionButtonProps) {
   return (
@@ -33,12 +42,16 @@ export function WorkbenchToolbarActionButton({
       toggled={isActive}
       className={joinClasses(
         'workbench-page__toolbar-action',
+        iconOnly && 'workbench-page__toolbar-action--icon-only',
         variant === 'prominent' && 'workbench-page__toolbar-action--prominent',
+        tone === 'share' && 'workbench-page__toolbar-action--share',
+        state === 'success' && 'workbench-page__toolbar-action--success',
+        state === 'error' && 'workbench-page__toolbar-action--error',
         className,
       )}
       ariaPressed={ariaPressed}
       {...(ariaLabel !== undefined ? { ariaLabel } : {})}
-      {...(ariaLabel !== undefined ? { title: ariaLabel } : {})}
+      {...(title !== undefined ? { title } : ariaLabel !== undefined ? { title: ariaLabel } : {})}
       icon={icon}
       onClick={onClick}
     >

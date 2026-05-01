@@ -62,13 +62,23 @@ export function PetsPage() {
       shellClassName="workbench-page__shell pets-workbench"
       contentScrollRef={model.resultsPaneRef}
       floatingTopButton={ui.showResultsQuickNavTop ? { onClick: actions.scrollResultsToTop } : undefined}
-      toolbarIntro={{
-        label: 'PETS',
-        activeCount: activeFilterCount,
-        title: t({ zh: '宠物图鉴', en: 'Pet catalog' }),
-        detail: t({ zh: '宠物筛选与资源完整度排查', en: 'Filter pets and audit asset completeness' }),
+      toolbar={{
+        lead: {
+          kind: 'filter-status',
+          label: 'PETS',
+          activeCount: activeFilterCount,
+        },
+        primary: {
+          kind: 'copy',
+          title: t({ zh: '宠物图鉴', en: 'Pet catalog' }),
+          detail: t({ zh: '宠物筛选与资源完整度排查', en: 'Filter pets and audit asset completeness' }),
+        },
+        actions: {
+          kind: 'items',
+          items: toolbarItems,
+          layout: 'cluster',
+        },
       }}
-      toolbarItems={toolbarItems}
       sidebarHeader={{
         kicker: t({ zh: '筛选抽屉', en: 'Filter drawer' }),
         statusLabel: t({ zh: '宠物筛选状态操作', en: 'Pet filter status actions' }),

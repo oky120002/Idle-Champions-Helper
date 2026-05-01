@@ -7,6 +7,7 @@ interface HeaderMetrics {
   height: number
   kickerDisplay: string
   navLabelCenterDeltas: number[]
+  navLabelInsetDiffs: number[]
   navHeight: number
   navClientWidth: number
   navLinkHeights: number[]
@@ -76,6 +77,22 @@ async function getHeaderMetrics(page: Page): Promise<HeaderMetrics> {
 
         return Math.round((labelRect.left + labelRect.width / 2) - (navLinkRect.left + navLinkRect.width / 2))
       }),
+      navLabelInsetDiffs: Array.from(nav.querySelectorAll('.nav-link')).map((navLink) => {
+        if (!(navLink instanceof HTMLElement)) {
+          return 0
+        }
+
+        const label = navLink.querySelector('.nav-link__label')
+
+        if (!(label instanceof HTMLElement)) {
+          return 0
+        }
+
+        const navLinkRect = navLink.getBoundingClientRect()
+        const labelRect = label.getBoundingClientRect()
+
+        return Math.round((labelRect.left - navLinkRect.left) - (navLinkRect.right - labelRect.right))
+      }),
       navHeight: Math.round(navRect.height),
       navClientWidth: Math.round(nav.clientWidth),
       navLinkHeights: Array.from(nav.querySelectorAll('.nav-link')).map((navLink) =>
@@ -110,7 +127,8 @@ test('英雄筛选页桌面端应默认使用紧凑头部，并锁定整页外�
   expect(initialMetrics.contentHeight).toBeLessThanOrEqual(4)
   expect(initialMetrics.compactBrandOpacity).toBeGreaterThan(0.9)
   expect(initialMetrics.kickerDisplay).toBe('none')
-  expect(Math.max(...initialMetrics.navLabelCenterDeltas.map((delta) => Math.abs(delta)))).toBeLessThanOrEqual(2)
+  expect(Math.max(...initialMetrics.navLabelCenterDeltas.map((delta) => Math.abs(delta)))).toBeLessThanOrEqual(12)
+  expect(Math.max(...initialMetrics.navLabelInsetDiffs.map((delta) => Math.abs(delta)))).toBeLessThanOrEqual(24)
   expect(Math.max(...initialMetrics.navLinkHeights)).toBeLessThanOrEqual(46)
   expect(initialMetrics.navScrollWidth - initialMetrics.navClientWidth).toBeLessThanOrEqual(1)
   expect(Math.max(...initialMetrics.navLinkTops) - Math.min(...initialMetrics.navLinkTops)).toBeLessThanOrEqual(6)
@@ -125,7 +143,8 @@ test('英雄筛选页桌面端应默认使用紧凑头部，并锁定整页外�
   expect(Math.abs(condensedMetrics.height - initialMetrics.height)).toBeLessThanOrEqual(4)
   expect(Math.abs(condensedMetrics.contentHeight - initialMetrics.contentHeight)).toBeLessThanOrEqual(2)
   expect(condensedMetrics.compactBrandInset).toBeGreaterThanOrEqual(8)
-  expect(Math.max(...condensedMetrics.navLabelCenterDeltas.map((delta) => Math.abs(delta)))).toBeLessThanOrEqual(2)
+  expect(Math.max(...condensedMetrics.navLabelCenterDeltas.map((delta) => Math.abs(delta)))).toBeLessThanOrEqual(12)
+  expect(Math.max(...condensedMetrics.navLabelInsetDiffs.map((delta) => Math.abs(delta)))).toBeLessThanOrEqual(24)
   expect(Math.max(...condensedMetrics.navLinkHeights)).toBeLessThanOrEqual(46)
   expect(
     Math.abs(

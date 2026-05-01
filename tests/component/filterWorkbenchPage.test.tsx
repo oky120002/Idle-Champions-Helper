@@ -23,24 +23,34 @@ describe('FilterWorkbenchPage', () => {
           ariaLabel="筛选工作台"
           shellClassName="component-filter-workbench__shell"
           floatingTopButton={{ onClick: onScrollToTop }}
-          toolbarIntro={{
-            label: 'PETS',
-            activeCount: 2,
-            title: '宠物图鉴',
-            detail: '筛选宠物并检查资源完整度',
+          toolbar={{
+            lead: {
+              kind: 'filter-status',
+              label: 'PETS',
+              activeCount: 2,
+            },
+            primary: {
+              kind: 'copy',
+              title: '宠物图鉴',
+              detail: '筛选宠物并检查资源完整度',
+            },
+            actions: {
+              kind: 'items',
+              layout: 'cluster',
+              items: [
+                {
+                  id: 'badge',
+                  kind: 'badge',
+                  label: '24 项结果',
+                },
+                {
+                  id: 'action',
+                  label: '显示全部',
+                  onClick: onAction,
+                },
+              ],
+            },
           }}
-          toolbarItems={[
-            {
-              id: 'badge',
-              kind: 'badge',
-              label: '24 项结果',
-            },
-            {
-              id: 'action',
-              label: '显示全部',
-              onClick: onAction,
-            },
-          ]}
           sidebarHeader={{
             kicker: '筛选抽屉',
             title: '左侧缩小宠物目录',

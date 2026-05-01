@@ -49,6 +49,7 @@ export function VariantsPage() {
       hidden: state.status !== 'ready',
     }),
     createWorkbenchShareItem({
+      t,
       state: model.shareLinkState,
       onCopy: model.copyCurrentLink,
     }),
@@ -62,14 +63,24 @@ export function VariantsPage() {
       shellClassName="workbench-page__shell variants-workbench"
       contentScrollRef={model.resultsPaneRef}
       floatingTopButton={showResultsQuickNavTop ? { onClick: scrollResultsToTop } : undefined}
-      toolbarIntro={{
-        label: 'VARIANTS',
-        activeCount: activeFilters.length,
-        accentTone: 'steel',
-        title: t({ zh: '变体筛选', en: 'Variant filters' }),
-        detail: t({ zh: '左侧选地图和关卡，右侧读敌人、区域、阵型与变体', en: 'Choose a campaign and adventure on the left; read enemies, areas, formation, and variants on the right' }),
+      toolbar={{
+        lead: {
+          kind: 'filter-status',
+          label: 'VARIANTS',
+          activeCount: activeFilters.length,
+          accentTone: 'steel',
+        },
+        primary: {
+          kind: 'copy',
+          title: t({ zh: '变体筛选', en: 'Variant filters' }),
+          detail: t({ zh: '左侧选地图和关卡，右侧读敌人、区域、阵型与变体', en: 'Choose a campaign and adventure on the left; read enemies, areas, formation, and variants on the right' }),
+        },
+        actions: {
+          kind: 'items',
+          items: toolbarItems,
+          layout: 'cluster',
+        },
       }}
-      toolbarItems={toolbarItems}
       sidebarHeader={{
         kicker: t({ zh: '导航抽屉', en: 'Navigation drawer' }),
         statusLabel: t({ zh: '变体筛选状态操作', en: 'Variant filter status actions' }),

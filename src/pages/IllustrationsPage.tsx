@@ -63,13 +63,23 @@ export function IllustrationsPage() {
       shellClassName="workbench-page__shell illustrations-workbench"
       contentScrollRef={model.resultsPaneRef}
       floatingTopButton={ui.showResultsQuickNavTop ? { onClick: actions.scrollResultsToTop } : undefined}
-      toolbarIntro={{
-        label: 'ART CODEX',
-        activeCount: activeFilterChips.length,
-        title: t({ zh: '立绘图鉴', en: 'Illustration catalog' }),
-        detail: t({ zh: '立绘筛选与动态资源对照', en: 'Filter artwork and compare motion resources' }),
+      toolbar={{
+        lead: {
+          kind: 'filter-status',
+          label: 'ART CODEX',
+          activeCount: activeFilterChips.length,
+        },
+        primary: {
+          kind: 'copy',
+          title: t({ zh: '立绘图鉴', en: 'Illustration catalog' }),
+          detail: t({ zh: '立绘筛选与动态资源对照', en: 'Filter artwork and compare motion resources' }),
+        },
+        actions: {
+          kind: 'items',
+          items: toolbarItems,
+          layout: 'cluster',
+        },
       }}
-      toolbarItems={toolbarItems}
       sidebarHeader={{
         kicker: t({ zh: '筛选抽屉', en: 'Filter drawer' }),
         statusLabel: t({ zh: '立绘筛选状态操作', en: 'Illustration filter status actions' }),

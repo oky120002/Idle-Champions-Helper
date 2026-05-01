@@ -89,6 +89,7 @@ export function PresetsPage() {
       label: t({ zh: `${metrics.recoverable} 条可恢复`, en: `${metrics.recoverable} recoverable` }),
     }),
     createWorkbenchShareItem({
+      t,
       state: shareLinkState,
       onCopy: copyCurrentLink,
     }),
@@ -109,18 +110,23 @@ export function PresetsPage() {
             }
           : undefined
       }
-      toolbarIntro={{
-        mark: {
+      toolbar={{
+        lead: {
+          kind: 'mark',
           label: 'PRESETS',
           accentTone: 'steel',
         },
-        copy: {
+        primary: {
+          kind: 'copy',
           kicker: t({ zh: '归档工作台', en: 'Archive workbench' }),
           title: t({ zh: '方案存档', en: 'Preset library' }),
           detail: t({ zh: '统一查看、恢复和整理本地命名阵型方案', en: 'Review, restore, and curate named local formation presets' }),
         },
+        actions: {
+          kind: 'items',
+          items: toolbarItems,
+        },
       }}
-      toolbarItems={toolbarItems}
       contentHeader={<StatusMessageBanner message={pageStatus} />}
     >
       <StatusBannerStack items={contentStatusItems} />
