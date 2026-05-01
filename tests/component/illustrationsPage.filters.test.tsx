@@ -51,7 +51,7 @@ describe('IllustrationsPage filters', () => {
 
     renderIllustrationsPage()
 
-    expect(await screen.findByRole('heading', { level: 3, name: '左侧缩小画库范围' })).toBeInTheDocument()
+    expect(await screen.findByText('筛选抽屉')).toBeInTheDocument()
     const results = await screen.findByLabelText('立绘结果')
     expect(within(results).getByRole('img', { name: '布鲁诺本体立绘' })).toHaveAttribute(
       'src',

@@ -159,7 +159,7 @@ describe('PetsPage filters', () => {
 
     renderPetsPage()
 
-    expect(await screen.findByRole('heading', { level: 3, name: '左侧缩小宠物目录' })).toBeInTheDocument()
+    expect(await screen.findByText('筛选抽屉')).toBeInTheDocument()
     expect(screen.getByRole('searchbox', { name: /^搜索/ })).toBeInTheDocument()
     expect(screen.getByRole('group', { name: /^宠物来源/ })).toBeInTheDocument()
 
