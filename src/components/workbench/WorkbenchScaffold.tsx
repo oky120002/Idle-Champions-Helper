@@ -46,8 +46,8 @@ interface WorkbenchToolbarBadgeProps {
 
 interface WorkbenchSidebarHeaderProps {
   kicker: ReactNode
-  title: ReactNode
-  description: ReactNode
+  title?: ReactNode
+  description?: ReactNode
   status?: ReactNode
   statusLabel?: string
   className?: string
@@ -189,8 +189,8 @@ export function WorkbenchSidebarHeader({
     <div className={joinClasses('workbench-page__sidebar-header', className)}>
       <div className="workbench-page__sidebar-copy">
         <p className="workbench-page__sidebar-kicker">{kicker}</p>
-        <h3 className="workbench-page__sidebar-title">{title}</h3>
-        <p className="workbench-page__sidebar-description">{description}</p>
+        {title != null ? <h3 className="workbench-page__sidebar-title">{title}</h3> : null}
+        {description != null ? <p className="workbench-page__sidebar-description">{description}</p> : null}
       </div>
       {status != null ? (
         <div

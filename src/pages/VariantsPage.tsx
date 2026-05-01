@@ -72,11 +72,6 @@ export function VariantsPage() {
       toolbarItems={toolbarItems}
       sidebarHeader={{
         kicker: t({ zh: '导航抽屉', en: 'Navigation drawer' }),
-        title: t({ zh: '选择地图与关卡', en: 'Choose campaign and adventure' }),
-        description: t({
-          zh: '上方搜索下拉可本地匹配地图和关卡；选定地图后，下方只保留该地图的关卡列表。',
-          en: 'Use the local searchable dropdown for campaigns and adventures; after choosing a campaign, the list below stays scoped to it.',
-        }),
         statusLabel: t({ zh: '变体筛选状态操作', en: 'Variant filter status actions' }),
         activeCount: activeFilters.length,
         clearLabel: t({ zh: '清空全部', en: 'Clear all' }),
