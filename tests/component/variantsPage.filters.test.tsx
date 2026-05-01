@@ -18,7 +18,6 @@ import { I18nProvider } from '../../src/app/i18n'
 import { loadCollection } from '../../src/data/client'
 import type { DataCollection, FormationLayout, LocalizedOption, LocalizedText, Variant } from '../../src/domain/types'
 import { VariantsPage } from '../../src/pages/VariantsPage'
-import { MAX_VISIBLE_VARIANTS } from '../../src/pages/variants/constants'
 
 const mockedLoadCollection = vi.mocked(loadCollection)
 const writeClipboardText = vi.fn<(_: string) => Promise<void>>()
