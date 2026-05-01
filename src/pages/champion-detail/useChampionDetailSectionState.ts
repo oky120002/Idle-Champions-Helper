@@ -32,11 +32,18 @@ export function useChampionDetailSectionState(
   const pendingHashSectionIdRef = useRef<DetailSectionId | null>(null)
   const handledSectionHashRef = useRef<string | null>(null)
   const isLeavingPageRef = useRef(false)
+  const prevDetailIdRef = useRef<string | undefined>(undefined)
 
   useEffect(() => {
-    pendingHashSectionIdRef.current = null
-    handledSectionHashRef.current = null
-    isLeavingPageRef.current = false
+    const prevId = prevDetailIdRef.current
+    const nextId = detail?.summary.id
+    prevDetailIdRef.current = nextId
+
+    if (prevId !== undefined && prevId !== nextId) {
+      pendingHashSectionIdRef.current = null
+      handledSectionHashRef.current = null
+      isLeavingPageRef.current = false
+    }
   }, [detail?.summary.id])
 
   const sectionLinks: DetailSectionLink[] = [

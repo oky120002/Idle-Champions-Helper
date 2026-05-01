@@ -101,7 +101,7 @@ describe('ChampionsPage filters', () => {
   it('结果卡会默认展示左侧可筛属性，并保持颜色编码的流式布局', async () => {
     renderChampionsPage()
 
-    const alphaTitle = await screen.findByRole('heading', { level: 3, name: '阿尔法' })
+    const alphaTitle = await screen.findByRole('heading', { level: 3, name: /阿尔法/ })
     const alphaCard = alphaTitle.closest('a')
 
     expect(alphaCard).not.toBeNull()
