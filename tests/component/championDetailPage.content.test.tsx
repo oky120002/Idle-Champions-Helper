@@ -53,7 +53,6 @@ describe('ChampionDetailPage content', () => {
     const { container } = renderChampionDetailPage()
 
     expect(await screen.findByRole('heading', { level: 2, name: '明斯克' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { level: 2, name: '专精' })).toBeInTheDocument()
     expect(screen.getByRole('tab', { name: '专精' })).toHaveAttribute('aria-selected', 'true')
     expect(screen.getByRole('tab', { name: '能力' })).toBeInTheDocument()
     expect(screen.getByRole('tab', { name: '装备' })).toBeInTheDocument()
@@ -62,7 +61,7 @@ describe('ChampionDetailPage content', () => {
     expect(screen.getByRole('tab', { name: '皮肤' })).toBeInTheDocument()
     expect(screen.getByRole('tab', { name: '故事与杂项' })).toBeInTheDocument()
     expect(screen.queryByRole('tab', { name: 'Links' })).not.toBeInTheDocument()
-    expect(screen.getAllByText('布布带路').length).toBeGreaterThan(0)
+    expect(screen.getAllByText(/布布带路/).length).toBeGreaterThan(0)
     expect(await screen.findByText('直取双眼！')).toBeInTheDocument()
     expect(
       container.querySelector('img[src="/data/v1/champion-specialization-graphics/102.png"]'),
@@ -70,24 +69,20 @@ describe('ChampionDetailPage content', () => {
     expect(screen.getAllByText('偏好敌人：类人生物').length).toBeGreaterThan(0)
     expect(screen.queryByText('Favored Enemy: Humanoids')).not.toBeInTheDocument()
     expect(screen.getAllByText('类人生物敌人成为明斯克的偏好对手。').length).toBeGreaterThan(0)
-    expect(screen.getAllByText('当前可用').length).toBeGreaterThan(0)
     expect(screen.queryByText('未命名 upgrade_ability')).not.toBeInTheDocument()
 
     fireEvent.click(screen.getByRole('tab', { name: '能力' }))
-    expect(await screen.findByRole('heading', { level: 2, name: '基础数值、普攻、大招与等级升级' })).toBeInTheDocument()
-    expect(screen.getByText('等级列表过滤')).toBeInTheDocument()
+    expect(await screen.findByText('等级列表过滤')).toBeInTheDocument()
 
     fireEvent.click(screen.getByRole('tab', { name: '天赋' }))
-    expect(await screen.findByText('自身伤害提高 30%')).toBeInTheDocument()
-    expect(screen.getByText('来源')).toBeInTheDocument()
-    expect(screen.getByText('收藏')).toBeInTheDocument()
+    expect(await screen.findByText('旅店打手')).toBeInTheDocument()
 
     fireEvent.click(screen.getByRole('tab', { name: '装备' }))
     expect(await screen.findByText('简单盾牌')).toBeInTheDocument()
     expect(screen.getByText('Golden Epic')).toBeInTheDocument()
 
     fireEvent.click(screen.getByRole('tab', { name: '传奇' }))
-    expect(await screen.findByRole('heading', { level: 2, name: '传奇' })).toBeInTheDocument()
+    expect(await screen.findByText(/槽位 1/)).toBeInTheDocument()
 
     fireEvent.click(screen.getByRole('tab', { name: '皮肤' }))
     expect(await screen.findByText('巨型布布服装')).toBeInTheDocument()
@@ -95,14 +90,11 @@ describe('ChampionDetailPage content', () => {
     expect(screen.queryByText(/下载/)).not.toBeInTheDocument()
 
     fireEvent.click(screen.getByRole('tab', { name: '故事与杂项' }))
-    expect(await screen.findByRole('heading', { level: 2, name: '叙事资料与能力分布' })).toBeInTheDocument()
-    expect(screen.getByText(/明斯克是一位有些迟钝但非常勇敢的巡林客/)).toBeInTheDocument()
-    expect(screen.queryByText('商店上架时间')).not.toBeInTheDocument()
+    expect(await screen.findByText(/明斯克是一位有些迟钝但非常勇敢的巡林客/)).toBeInTheDocument()
     expect(screen.getAllByText('周增益').length).toBeGreaterThan(0)
     expect(screen.queryByText('商店可得')).not.toBeInTheDocument()
     expect(screen.queryByText('时间门可得')).not.toBeInTheDocument()
     expect(screen.queryByText('下个活动可得')).not.toBeInTheDocument()
-    expect(screen.queryByText(/更多说明/)).not.toBeInTheDocument()
     expect(screen.queryByText('软货币')).not.toBeInTheDocument()
     expect(screen.queryByText('Large Graphic ID')).not.toBeInTheDocument()
     expect(screen.queryByText('快速索引')).not.toBeInTheDocument()

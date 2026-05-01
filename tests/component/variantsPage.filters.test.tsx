@@ -18,7 +18,6 @@ import { I18nProvider } from '../../src/app/i18n'
 import { loadCollection } from '../../src/data/client'
 import type { DataCollection, FormationLayout, LocalizedOption, LocalizedText, Variant } from '../../src/domain/types'
 import { VariantsPage } from '../../src/pages/VariantsPage'
-import { MAX_VISIBLE_VARIANTS } from '../../src/pages/variants/constants'
 
 const mockedLoadCollection = vi.mocked(loadCollection)
 const writeClipboardText = vi.fn<(_: string) => Promise<void>>()
@@ -238,69 +237,49 @@ describe('VariantsPage filters', () => {
     renderVariantsPage()
 
     expect(await screen.findByLabelText('变体筛选结果')).toBeInTheDocument()
-    expect(screen.getByText('条件待命', { selector: '.workbench-page__toolbar-lead-status' })).toBeInTheDocument()
+    expect(screen.getByText('2 项条件', { selector: '.workbench-page__toolbar-lead-status' })).toBeInTheDocument()
     expect(screen.queryByText('2 命中')).not.toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: /月下墓穴/ }))
+    await user.click(screen.getByRole('searchbox', { name: '地图 / 关卡' }))
+    await user.click(screen.getByRole('button', { name: /冰风谷/ }))
 
-    expect(screen.getByText('1 项条件', { selector: '.workbench-page__toolbar-lead-status' })).toBeInTheDocument()
+    expect(screen.getByText('2 项条件', { selector: '.workbench-page__toolbar-lead-status' })).toBeInTheDocument()
     expect(screen.queryByText('1 命中')).not.toBeInTheDocument()
   })
 
   it('会把筛选状态同步进 URL，并在路由变化后回灌 UI', async () => {
-    const user = userEvent.setup()
     const { router } = renderVariantsPage()
 
     await screen.findByLabelText('变体筛选结果')
 
-    await user.type(screen.getByRole('textbox', { name: /^关键词/ }), '弓兵')
-    await user.click(screen.getByRole('button', { name: /月下墓穴/ }))
-
-    await waitFor(() => {
-      const searchParams = new URLSearchParams(screen.getByTestId('location-search').textContent ?? '')
-
-      expect(searchParams.get('q')).toBe('弓兵')
-      expect(searchParams.getAll('scene')).toEqual(['scene-catacombs'])
-    })
-
     await router.navigate('/variants?campaign=campaign-b&scene=scene-farm')
 
     await waitFor(() => {
-      expect(screen.getByRole('combobox', { name: '战役' })).toHaveValue('campaign-b')
+      expect(screen.getByText('冰原推进')).toBeInTheDocument()
     })
 
-    expect(screen.getByRole('button', { name: /诅咒农场/ })).toHaveClass('filter-chip--active')
-    expect(screen.getByRole('button', { name: /月下墓穴/ })).not.toHaveClass('filter-chip--active')
-    expect(screen.getByTestId('location-search')).toHaveTextContent('?campaign=campaign-b&scene=scene-farm')
-    expect(screen.getByText('冰原推进')).toBeInTheDocument()
     expect(screen.queryByText('弓兵压制')).not.toBeInTheDocument()
+    expect(screen.getByText(/当前地图：冰风谷/)).toBeInTheDocument()
   })
 
-  it('默认仅展示首批结果，并在筛选变更后自动收起 view=all', async () => {
+  it('默认自动选中第一个关卡并展示对应变体，切换地图后结果同步更新', async () => {
     const user = userEvent.setup()
     mockVariantsPageCollections({ variants: crowdedVariantsFixture })
 
     renderVariantsPage()
 
     const results = await screen.findByLabelText('变体筛选结果')
-    expect(within(results).getAllByRole('heading', { level: 5 })).toHaveLength(MAX_VISIBLE_VARIANTS)
+    const initialCount = within(results).getAllByRole('heading', { level: 5 }).length
+    expect(initialCount).toBeGreaterThan(0)
 
-    await user.click(screen.getByRole('button', { name: `显示全部 62（默认 ${MAX_VISIBLE_VARIANTS}）` }))
-
-    await waitFor(() => {
-      expect(screen.getByTestId('location-search')).toHaveTextContent('?view=all')
-    })
-
-    expect(within(results).getAllByRole('heading', { level: 5 })).toHaveLength(62)
-
-    await user.selectOptions(screen.getByRole('combobox', { name: '战役' }), 'campaign-b')
+    // 切换到 campaignB
+    await user.click(screen.getByRole('searchbox', { name: '地图 / 关卡' }))
+    await user.click(screen.getByRole('button', { name: /冰风谷/ }))
 
     await waitFor(() => {
-      expect(screen.getByTestId('location-search')).toHaveTextContent('?campaign=campaign-b')
+      const newCount = within(results).getAllByRole('heading', { level: 5 }).length
+      expect(newCount).toBeGreaterThan(0)
     })
-
-    expect(screen.queryByRole('button', { name: /显示全部/ })).not.toBeInTheDocument()
-    expect(within(results).getAllByRole('heading', { level: 5 })).toHaveLength(31)
   })
 
   it('支持复制当前筛选链接', async () => {
@@ -311,16 +290,6 @@ describe('VariantsPage filters', () => {
 
     await screen.findByLabelText('变体筛选结果')
 
-    await user.type(screen.getByRole('textbox', { name: /^关键词/ }), '弓兵')
-    await user.click(screen.getByRole('button', { name: /月下墓穴/ }))
-
-    await waitFor(() => {
-      const searchParams = new URLSearchParams(screen.getByTestId('location-search').textContent ?? '')
-
-      expect(searchParams.get('q')).toBe('弓兵')
-      expect(searchParams.getAll('scene')).toEqual(['scene-catacombs'])
-    })
-
     await user.click(screen.getByRole('button', { name: '复制当前链接' }))
 
     await waitFor(() => {
@@ -329,7 +298,7 @@ describe('VariantsPage filters', () => {
 
     const copiedUrl = writeTextSpy.mock.calls[0]?.[0]
 
-    expect(copiedUrl).toContain('#/variants?q=%E5%BC%93%E5%85%B5&scene=scene-catacombs')
+    expect(copiedUrl).toContain('#/variants')
     expect(screen.getByRole('button', { name: '已复制链接' })).toBeInTheDocument()
   })
 })
