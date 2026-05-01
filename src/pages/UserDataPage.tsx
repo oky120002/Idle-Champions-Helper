@@ -38,6 +38,7 @@ export function UserDataPage() {
           : model.t({ zh: '等待输入', en: 'Waiting for input' }),
     }),
     createWorkbenchShareItem({
+      t: model.t,
       state: shareLinkState,
       onCopy: copyCurrentLink,
     }),
@@ -128,17 +129,22 @@ export function UserDataPage() {
             }
           : undefined
       }
-      toolbarIntro={{
-        mark: {
+      toolbar={{
+        lead: {
+          kind: 'mark',
           label: 'USER DATA',
         },
-        copy: {
+        primary: {
+          kind: 'copy',
           kicker: model.t({ zh: '本地优先', en: 'Local first' }),
           title: model.t({ zh: '个人数据', en: 'User data' }),
           detail: model.t({ zh: '统一管理支持 URL、手填凭证和日志片段导入', en: 'Manage Support URL, manual credentials, and log snippet imports in one place' }),
         },
+        actions: {
+          kind: 'items',
+          items: toolbarItems,
+        },
       }}
-      toolbarItems={toolbarItems}
     >
       <WorkbenchContentStack>
         <SurfaceCardContentSections

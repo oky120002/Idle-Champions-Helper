@@ -1,12 +1,12 @@
 import type { ReactNode, RefObject } from 'react'
 import { PageWorkbenchShell } from './PageWorkbenchShell'
 import { WorkbenchFloatingTopButton } from './WorkbenchFloatingTopButton'
+import { type WorkbenchAccentTone } from './WorkbenchScaffold'
+import { type WorkbenchToolbarItemConfig } from './WorkbenchToolbarItems'
 import {
-  WorkbenchToolbarCopy,
-  WorkbenchToolbarMark,
-  type WorkbenchAccentTone,
-} from './WorkbenchScaffold'
-import { WorkbenchToolbarItems, type WorkbenchToolbarItemConfig } from './WorkbenchToolbarItems'
+  renderWorkbenchToolbarSection,
+  type WorkbenchToolbarConfig,
+} from './workbenchToolbarConfig'
 
 interface ConfiguredWorkbenchPageToolbarMarkConfig {
   label: string
@@ -37,6 +37,7 @@ interface ConfiguredWorkbenchPageProps {
   contentScrollRef?: RefObject<HTMLDivElement | null> | undefined
   contentOverlay?: ReactNode | undefined
   floatingTopButton?: ConfiguredWorkbenchPageFloatingTopButtonConfig | undefined
+  toolbar?: WorkbenchToolbarConfig | undefined
   toolbarIntro?: ConfiguredWorkbenchPageToolbarIntroConfig | undefined
   toolbarLead?: ReactNode | undefined
   toolbarPrimary?: ReactNode | undefined
@@ -57,6 +58,7 @@ export function ConfiguredWorkbenchPage({
   contentScrollRef,
   contentOverlay,
   floatingTopButton,
+  toolbar,
   toolbarIntro,
   toolbarLead,
   toolbarPrimary,
@@ -68,25 +70,36 @@ export function ConfiguredWorkbenchPage({
   contentHeader,
   children,
 }: ConfiguredWorkbenchPageProps) {
-  const resolvedToolbarLead = toolbarLead ?? (
-    toolbarIntro?.mark !== undefined ? (
-      <WorkbenchToolbarMark
-        label={toolbarIntro.mark.label}
-        {...(toolbarIntro.mark.accentTone !== undefined ? { accentTone: toolbarIntro.mark.accentTone } : {})}
-      />
-    ) : null
+  const resolvedToolbarLead = toolbarLead ?? renderWorkbenchToolbarSection(
+    toolbar?.lead
+    ?? (toolbarIntro?.mark !== undefined
+      ? {
+          kind: 'mark',
+          label: toolbarIntro.mark.label,
+          ...(toolbarIntro.mark.accentTone !== undefined ? { accentTone: toolbarIntro.mark.accentTone } : {}),
+        }
+      : undefined),
   )
-  const resolvedToolbarPrimary = toolbarPrimary ?? (
-    toolbarIntro?.copy !== undefined ? (
-      <WorkbenchToolbarCopy
-        kicker={toolbarIntro.copy.kicker}
-        title={toolbarIntro.copy.title}
-        {...(toolbarIntro.copy.detail !== undefined ? { detail: toolbarIntro.copy.detail } : {})}
-      />
-    ) : null
+  const resolvedToolbarPrimary = toolbarPrimary ?? renderWorkbenchToolbarSection(
+    toolbar?.primary
+    ?? (toolbarIntro?.copy !== undefined
+      ? {
+          kind: 'copy',
+          kicker: toolbarIntro.copy.kicker,
+          title: toolbarIntro.copy.title,
+          ...(toolbarIntro.copy.detail !== undefined ? { detail: toolbarIntro.copy.detail } : {}),
+        }
+      : undefined),
   )
-  const resolvedToolbarActions = toolbarActions ?? (
-    toolbarItems !== undefined ? <WorkbenchToolbarItems items={toolbarItems} layout={toolbarItemsLayout} /> : null
+  const resolvedToolbarActions = toolbarActions ?? renderWorkbenchToolbarSection(
+    toolbar?.actions
+    ?? (toolbarItems !== undefined
+      ? {
+          kind: 'items',
+          items: toolbarItems,
+          layout: toolbarItemsLayout,
+        }
+      : undefined),
   )
   const resolvedContentOverlay = contentOverlay ?? (
     floatingTopButton !== undefined ? (

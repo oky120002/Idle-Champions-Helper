@@ -55,7 +55,7 @@ export function AnimationAuditPage() {
     createWorkbenchBadgeItem({ id: 'flagged', label: t({ zh: `待复核 ${model.summary.flagged}`, en: `Flagged ${model.summary.flagged}` }) }),
     createWorkbenchBadgeItem({ id: 'high', tone: 'muted', label: t({ zh: `高疑似 ${model.summary.high}`, en: `High ${model.summary.high}` }) }),
     createWorkbenchBadgeItem({ id: 'medium', tone: 'muted', label: t({ zh: `中疑似 ${model.summary.medium}`, en: `Medium ${model.summary.medium}` }) }),
-    createWorkbenchShareItem({ state: shareLinkState, onCopy: copyCurrentLink }),
+    createWorkbenchShareItem({ t, state: shareLinkState, onCopy: copyCurrentLink }),
   ]
   const readyState = model.state.status === 'ready' ? model.state : null
   const visibleRows = useMemo(() => {
@@ -89,15 +89,19 @@ export function AnimationAuditPage() {
       shellClassName="workbench-page__shell animation-audit-workbench"
       contentScrollRef={contentScrollRef}
       floatingTopButton={showScrollTop ? { onClick: scrollToTop, detailLabel: t({ zh: '动图审片内容', en: 'Audit content' }) } : undefined}
-      toolbarIntro={{
-        mark: { label: 'IDLE AUDIT' },
-        copy: {
+      toolbar={{
+        lead: { kind: 'mark', label: 'IDLE AUDIT' },
+        primary: {
+          kind: 'copy',
           kicker: t({ zh: '人工审片', en: 'Human review' }),
           title: t({ zh: '英雄动图审片台', en: 'Hero animation audit' }),
           detail: t({ zh: '把当前默认 sequence 与更像 idle 的候选并排放在一起，只看短名单。', en: 'Compare the current default sequence against idle-like candidates side by side on a short list.' }),
         },
+        actions: {
+          kind: 'items',
+          items: toolbarItems,
+        },
       }}
-      toolbarItems={toolbarItems}
     >
       <WorkbenchContentStack>
         <section className="surface-card animation-audit-controls">

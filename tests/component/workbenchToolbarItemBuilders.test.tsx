@@ -74,8 +74,9 @@ describe('WorkbenchToolbarItemBuilders', () => {
       },
       {
         id: 'share-link',
-        kind: 'share',
+        kind: 'button',
         state: 'idle',
+        tone: 'share',
       },
     ])
   })

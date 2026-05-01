@@ -112,9 +112,9 @@ test('移动端英雄详情分区导航不应退化为横向滑动条', async ({
   await page.goto('./#/champions/7')
   await expect(page.getByRole('heading', { level: 2, name: '明斯克' })).toBeVisible()
 
-  const sectionBarMetrics = await page.locator('.section-jump-bar').evaluate((element) => {
+  const sectionBarMetrics = await page.getByRole('tablist', { name: '详情页签' }).evaluate((element) => {
     if (!(element instanceof HTMLElement)) {
-      throw new Error('分区跳转条不存在。')
+      throw new Error('详情页签容器不存在。')
     }
 
     const style = window.getComputedStyle(element)
@@ -126,40 +126,45 @@ test('移动端英雄详情分区导航不应退化为横向滑动条', async ({
     }
   })
 
-  const dossierMetrics = await page.locator('.champion-dossier__grid').evaluate((element) => {
+  const dossierMetrics = await page.locator('.champion-dossier').evaluate((element) => {
     if (!(element instanceof HTMLElement)) {
-      throw new Error('英雄卷宗首屏网格不存在。')
+      throw new Error('英雄卷宗容器不存在。')
     }
 
     const identity = element.querySelector('.champion-dossier__identity')
-    const stats = element.querySelector('.champion-dossier__stats-panel')
+    const scoreGrid = element.querySelector('.champion-dossier__score-grid')
+    const facts = element.querySelector('.champion-dossier__section--facts')
 
-    if (!(identity instanceof HTMLElement) || !(stats instanceof HTMLElement)) {
-      throw new Error('英雄卷宗首屏区块不存在。')
+    if (!(identity instanceof HTMLElement) || !(scoreGrid instanceof HTMLElement) || !(facts instanceof HTMLElement)) {
+      throw new Error('英雄卷宗关键区块不存在。')
     }
 
     return {
-      gridTemplateColumns: window.getComputedStyle(element).gridTemplateColumns,
+      display: window.getComputedStyle(element).display,
       identityWidth: Math.round(identity.getBoundingClientRect().width),
-      statsWidth: Math.round(stats.getBoundingClientRect().width),
+      scoreGridColumns: window.getComputedStyle(scoreGrid).gridTemplateColumns,
+      scoreGridWidth: Math.round(scoreGrid.getBoundingClientRect().width),
+      factsWidth: Math.round(facts.getBoundingClientRect().width),
     }
   })
 
-  const buttonTops = await page.locator('.section-jump-bar .section-jump-bar__button').evaluateAll((elements) =>
+  const buttonTops = await page.getByRole('tablist', { name: '详情页签' }).locator('[role="tab"]').evaluateAll((elements) =>
     elements.map((element) => {
       if (!(element instanceof HTMLElement)) {
-        throw new Error('分区按钮不存在。')
+        throw new Error('分区页签不存在。')
       }
 
       return Math.round(element.getBoundingClientRect().top)
     }),
   )
 
-  expect(sectionBarMetrics.display).toBe('grid')
+  expect(sectionBarMetrics.display).toBe('flex')
   expect(sectionBarMetrics.scrollWidth - sectionBarMetrics.clientWidth).toBeLessThanOrEqual(1)
   expect(Math.max(...buttonTops) - Math.min(...buttonTops)).toBeGreaterThan(20)
-  expect(dossierMetrics.gridTemplateColumns).not.toContain('280px')
+  expect(dossierMetrics.display).toBe('grid')
   expect(dossierMetrics.identityWidth).toBeGreaterThanOrEqual(280)
-  expect(dossierMetrics.statsWidth).toBeGreaterThanOrEqual(280)
+  expect(dossierMetrics.scoreGridColumns.split(' ').length).toBeGreaterThanOrEqual(2)
+  expect(dossierMetrics.scoreGridWidth).toBeGreaterThanOrEqual(280)
+  expect(dossierMetrics.factsWidth).toBeGreaterThanOrEqual(280)
   expect(await getDocumentHorizontalOverflow(page)).toBeLessThanOrEqual(1)
 })

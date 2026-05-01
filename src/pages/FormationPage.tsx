@@ -52,6 +52,7 @@ export function FormationPage() {
       label: model.t({ zh: `${model.selectedChampions.length} 名已放置`, en: `${model.selectedChampions.length} placed` }),
     }),
     createWorkbenchShareItem({
+      t: model.t,
       state: shareLinkState,
       onCopy: copyCurrentLink,
     }),
@@ -72,17 +73,22 @@ export function FormationPage() {
             }
           : undefined
       }
-      toolbarIntro={{
-        mark: {
+      toolbar={{
+        lead: {
+          kind: 'mark',
           label: 'FORMATION',
         },
-        copy: {
+        primary: {
+          kind: 'copy',
           kicker: model.t({ zh: '战术工作台', en: 'Tactical workbench' }),
           title: model.t({ zh: '阵型编辑', en: 'Formation editor' }),
           detail: model.t({ zh: '左侧筛选布局，右侧编辑当前阵型与方案摘要', en: 'Filter layouts on the left, edit the board and preset summary on the right' }),
         },
+        actions: {
+          kind: 'items',
+          items: toolbarItems,
+        },
       }}
-      toolbarItems={toolbarItems}
       sidebarHeader={
         model.state.status === 'ready' ? (
           <WorkbenchSidebarHeader

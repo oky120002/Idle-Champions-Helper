@@ -8,7 +8,6 @@ import {
   WorkbenchToolbarActionCluster,
   WorkbenchToolbarBadge,
 } from './WorkbenchScaffold'
-import { WorkbenchShareButton } from './WorkbenchShareButton'
 import { WorkbenchToolbarActionButton } from './WorkbenchToolbarActionButton'
 
 interface WorkbenchToolbarBaseAction {
@@ -24,12 +23,9 @@ interface WorkbenchToolbarButtonAction extends WorkbenchToolbarBaseAction {
   isActive?: boolean
   ariaPressed?: boolean
   variant?: 'default' | 'prominent'
-}
-
-interface WorkbenchToolbarShareAction extends WorkbenchToolbarBaseAction {
-  kind: 'share'
-  state: WorkbenchShareState
-  onCopy: () => void | Promise<void>
+  title?: string
+  tone?: 'default' | 'share'
+  state?: WorkbenchShareState
 }
 
 interface WorkbenchToolbarBadgeAction extends WorkbenchToolbarBaseAction {
@@ -42,7 +38,6 @@ interface WorkbenchToolbarBadgeAction extends WorkbenchToolbarBaseAction {
 export type WorkbenchToolbarItemConfig =
   | WorkbenchToolbarButtonAction
   | WorkbenchToolbarBadgeAction
-  | WorkbenchToolbarShareAction
 
 interface WorkbenchToolbarItemsProps {
   items: WorkbenchToolbarItemConfig[]
@@ -66,16 +61,6 @@ export function WorkbenchToolbarItems({
   }
 
   const renderedItems = visibleItems.map((item) => {
-    if (item.kind === 'share') {
-      return (
-        <WorkbenchShareButton
-          key={item.id}
-          state={item.state}
-          onCopy={item.onCopy}
-        />
-      )
-    }
-
     if (item.kind === 'badge') {
       return (
         <WorkbenchToolbarBadge
@@ -88,15 +73,26 @@ export function WorkbenchToolbarItems({
       )
     }
 
+    const hasVisibleLabel = typeof item.label === 'string'
+      ? item.label.length > 0
+      : item.label != null
+    const ariaLabel = typeof item.label === 'string' && item.label.length > 0
+      ? item.label
+      : item.title
+
     return (
       <WorkbenchToolbarActionButton
         key={item.id}
         onClick={item.onClick}
         {...(item.icon !== undefined ? { icon: item.icon } : {})}
-        {...(typeof item.label === 'string' ? { ariaLabel: item.label } : {})}
+        iconOnly={!hasVisibleLabel}
+        {...(ariaLabel !== undefined ? { ariaLabel } : {})}
         {...(item.variant !== undefined ? { variant: item.variant } : {})}
         {...(item.isActive !== undefined ? { isActive: item.isActive } : {})}
         {...(item.ariaPressed !== undefined ? { ariaPressed: item.ariaPressed } : {})}
+        {...(item.title !== undefined ? { title: item.title } : {})}
+        {...(item.tone !== undefined ? { tone: item.tone } : {})}
+        {...(item.state !== undefined ? { state: item.state } : {})}
       >
         {item.label}
       </WorkbenchToolbarActionButton>
