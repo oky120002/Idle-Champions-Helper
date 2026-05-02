@@ -210,7 +210,10 @@
         "专用提交：planner: US-011A add game number parse format"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:01:30+08:00",
+      "completionNote": "Game number parse/format wrapper around break_eternity.js. 15 tests pass.",
       "dependsOn": [
         "US-002"
       ]
@@ -419,7 +422,10 @@
         "专用提交：planner: US-020 add hypothetical fairness baseline"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:18:33+08:00",
+      "completionNote": "Hypothetical fairness baseline with same-seat median, account median, and empty account fallback.",
       "dependsOn": [
         "US-019"
       ]
@@ -533,7 +539,10 @@
         "专用提交：planner: US-026 add planner profile state"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:26:30+08:00",
+      "completionNote": "Profile state panel with no-snapshot, loaded, and error states. Component tests with fake-indexeddb.",
       "dependsOn": [
         "US-025",
         "US-007"
@@ -550,7 +559,10 @@
         "专用提交：planner: US-027 add planner scenario selection"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:27:30+08:00",
+      "completionNote": "Scenario selection with text filtering, variant list, and restriction summary.",
       "dependsOn": [
         "US-025",
         "US-018"
@@ -567,7 +579,10 @@
         "专用提交：planner: US-028 add planner result card"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:28:00+08:00",
+      "completionNote": "Result card with game notation score, slot assignments, explanations, and warnings.",
       "dependsOn": [
         "US-024",
         "US-025"
@@ -644,7 +659,10 @@
         "专用提交：planner: US-032 final regression"
       ],
       "priority": 4,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:31:30+08:00",
+      "completionNote": "All regression gates pass: lint (0 errors), typecheck, 332 tests, build, privacy:scan.",
       "dependsOn": [
         "US-029",
         "US-031"
