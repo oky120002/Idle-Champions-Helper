@@ -31,7 +31,7 @@ done
 mkdir -p "${OUTPUT_DIR}" "$(dirname "${PROGRESS_FILE}")"
 
 RALPH_AGENT="${RALPH_AGENT:-claude}"
-RALPH_MODEL="${RALPH_MODEL:-glm-5.1}"
+RALPH_MODEL="${RALPH_MODEL:-}"
 RALPH_MAX_ITERATIONS="${RALPH_MAX_ITERATIONS:-200}"
 RALPH_DELAY_MS="${RALPH_DELAY_MS:-3000}"
 RALPH_TASK_RANGE="${RALPH_TASK_RANGE:-}"
@@ -49,7 +49,6 @@ CMD=(
   run
   --prd "${PRD_FILE}"
   --agent "${RALPH_AGENT}"
-  --model "${RALPH_MODEL}"
   --serial
   --headless
   --no-setup
@@ -59,6 +58,10 @@ CMD=(
   --output-dir "${OUTPUT_DIR}"
   --progress-file "${PROGRESS_FILE}"
 )
+
+if [[ -n "${RALPH_MODEL}" ]]; then
+  CMD+=(--model "${RALPH_MODEL}")
+fi
 
 if [[ -n "${RALPH_TASK_RANGE}" ]]; then
   CMD+=(--task-range "${RALPH_TASK_RANGE}")
