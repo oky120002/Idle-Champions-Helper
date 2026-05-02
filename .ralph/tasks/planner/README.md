@@ -14,7 +14,7 @@
 
 两个命令都会读取本目录中的 `prd.json`、`ralph-prompt.md` 和 `decision-log.md`。
 
-规划基座已经完成：`US-001` 和 `US-002` 由当前分支交付，不交给 Ralph/`glm-5.1` 重做。后续无人值守实现建议从 `US-003` 开始：
+规划基座已经完成：`US-001` 和 `US-002` 由当前分支交付，不交给 Ralph 重做。后续无人值守实现建议从 `US-003` 开始：
 
 ```bash
 RALPH_TASK_RANGE=3-34 RALPH_MAX_ITERATIONS=200 ./.ralph/scripts/run-task.sh planner
@@ -25,10 +25,12 @@ RALPH_TASK_RANGE=3-34 RALPH_MAX_ITERATIONS=200 ./.ralph/scripts/run-task.sh plan
 本机已在 `~/.bun/bin/ralph-tui` 安装 `ralph-tui 0.11.0`。planner 任务包默认使用它作为主运行器：
 
 ```bash
-ralph-tui run --prd .ralph/tasks/planner/prd.json --agent claude --model glm-5.1 --serial --headless
+ralph-tui run --prd .ralph/tasks/planner/prd.json --agent claude --serial --headless
 ```
 
 通用 wrapper 会额外传入任务包 prompt、输出目录、progress 文件和默认迭代限制。旧版 `ralph` 只在 `ralph-tui` 缺失时作为 fallback 使用。
+
+注意：`ralph-tui 0.11.0` 的内置 `claude` agent 只接受 `sonnet`、`opus`、`haiku` 三个显式模型别名。默认保持 `RALPH_MODEL` 为空，让 `claude` CLI 使用本机默认模型；不要用 `RALPH_AGENT=claude RALPH_MODEL=glm-5.1`。
 
 ## 规则
 

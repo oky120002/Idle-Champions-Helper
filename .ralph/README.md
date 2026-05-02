@@ -75,10 +75,10 @@ planner 任务包也提供了便捷入口：
 - `ralph-prompt.md`
 - `decision-log.md`
 
-默认以 headless、串行模式运行 `ralph-tui`，默认模型是 `glm-5.1`，默认 agent 是 Claude Code：
+默认以 headless、串行模式运行 `ralph-tui`，默认 agent 是 Claude Code。默认不传 `--model`，让 `claude` CLI 使用它自己的默认模型：
 
 ```bash
-RALPH_MODEL=glm-5.1 RALPH_AGENT=claude ./.ralph/scripts/run-task.sh planner
+RALPH_AGENT=claude ./.ralph/scripts/run-task.sh planner
 ```
 
 常用覆盖参数：
@@ -88,3 +88,5 @@ RALPH_TASK_RANGE=1-3 ./.ralph/scripts/run-task.sh planner
 RALPH_MAX_ITERATIONS=20 ./.ralph/scripts/run-task.sh planner
 RALPH_MODEL=sonnet ./.ralph/scripts/run-task.sh planner
 ```
+
+注意：`ralph-tui 0.11.0` 的内置 `claude` agent 只接受 `sonnet`、`opus`、`haiku` 这三个显式模型别名。不要给 `RALPH_AGENT=claude` 传 `glm-5.1`；如果 Claude Code 本机默认模型已经配置为 GLM，则保持 `RALPH_MODEL` 为空。
