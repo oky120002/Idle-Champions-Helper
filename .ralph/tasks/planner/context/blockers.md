@@ -1,3 +1,3 @@
-# Planner Blockers
+# Planner 阻塞记录
 
-No blockers recorded yet.
+目前没有记录 blocker。

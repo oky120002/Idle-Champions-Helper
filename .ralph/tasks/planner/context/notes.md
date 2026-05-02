@@ -1,8 +1,8 @@
-# Planner Context Notes
+# Planner 上下文备注
 
-- Production is a GitHub Pages static site. There is no backend credential store.
-- Production credential use happens only in the browser when the user manually syncs private data.
-- Local development private credentials must stay in environment variables or `.local` files and output only to `tmp/private-user-data/`.
-- The planner implementation must be done by Ralph tasks, not by the planning branch.
-- `ralph-tui 0.11.0` is installed at `~/.bun/bin/ralph-tui`; use it before legacy `ralph`.
-- `ralph-tui doctor --json` currently reports Claude Code healthy at `/opt/homebrew/bin/claude`.
+- 生产环境是 GitHub Pages 静态站，没有后端凭证存储。
+- 生产环境中的凭证只在用户手动同步私人数据时，于浏览器内使用。
+- 本地开发私人凭证必须保留在环境变量或 `.local` 文件中，输出只能进入 `tmp/private-user-data/`。
+- planner 实现必须交给 Ralph 任务完成，不在规划分支里直接开发。
+- `ralph-tui 0.11.0` 已安装在 `~/.bun/bin/ralph-tui`；优先使用它，不优先使用旧版 `ralph`。
+- `ralph-tui doctor --json` 当前显示 `/opt/homebrew/bin/claude` 里的 Claude Code 健康。

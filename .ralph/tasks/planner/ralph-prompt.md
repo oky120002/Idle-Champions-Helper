@@ -1,54 +1,54 @@
 # Planner Ralph Prompt
 
-## Goal
+## 目标
 
-Implement the automatic formation planner and simulator by following `.ralph/tasks/planner/prd.json` and `.ralph/tasks/planner/acceptance-cases.md`.
+按照 `.ralph/tasks/planner/prd.json` 和 `.ralph/tasks/planner/acceptance-cases.md` 实现自动阵型计划器和模拟器。
 
-Only output `<promise>COMPLETE</promise>` when all selected tasks are implemented, validated, committed, and marked passed by the tracker.
+只有当所有被选中的任务都已经实现、验证、提交，并在 tracker 中标记通过后，才输出 `<promise>COMPLETE</promise>`。
 
-## Unattended Execution
+## 无人值守执行
 
-- Never ask the user questions.
-- Never wait for user approval.
-- If a decision is required, choose the safest option that satisfies `AGENTS.md`, `.impeccable.md`, and the docs in `docs/modules/planner/`.
-- Record every non-trivial decision in `.ralph/tasks/planner/decision-log.md`.
-- Do not loop on the same failing command more than three repair cycles.
-- If blocked after three targeted repairs, restore or isolate this task's changes, record the blocker, and do not mark the task passed.
+- 不要向用户提问。
+- 不要等待用户批准。
+- 如果必须做选择，选择同时满足 `AGENTS.md`、`.impeccable.md` 和 `docs/modules/planner/` 文档的最安全方案。
+- 每个非平凡决策都记录到 `.ralph/tasks/planner/decision-log.md`。
+- 同一个失败命令不要循环修复超过三轮。
+- 如果三轮定向修复后仍然阻塞，恢复或隔离本任务改动，记录 blocker，并且不要把任务标记为通过。
 
-## TDD Contract
+## TDD 契约
 
-- Work on exactly one user story at a time.
-- Read that story in `prd.json` and its matching section in `acceptance-cases.md`.
-- Add or update the specified tests first.
-- Implement only the minimum code required for the task.
-- Do not weaken, skip, or rewrite the acceptance tests to fit broken behavior.
-- Run the story-specific validation before committing.
+- 一次只处理一个 user story。
+- 阅读 `prd.json` 中的 story，以及 `acceptance-cases.md` 中对应章节。
+- 先新增或更新指定测试。
+- 只实现该任务需要的最小代码。
+- 不要削弱、跳过或重写验收测试来适配错误行为。
+- 提交前运行该 story 指定的验证命令。
 
-## Commit Rules
+## 提交规则
 
-- Commit every completed story separately.
-- Do not mark a story passed until its dedicated commit exists.
-- Commit message format: `planner: US-XXX short summary`.
-- Before staging, run `git status --short` and ensure only task-related files are staged.
-- Never commit credentials, `.env*.local`, `tmp/private-user-data/**`, `dist/`, `node_modules/`, private snapshots, or generated large logs.
+- 每个完成的 story 都必须单独提交。
+- 没有对应专用 commit 之前，不要把 story 标记为通过。
+- 提交信息格式：`planner: US-XXX short summary`。
+- 暂存前运行 `git status --short`，确保只暂存和当前任务相关的文件。
+- 不要提交凭证、`.env*.local`、`tmp/private-user-data/**`、`dist/`、`node_modules/`、私人快照或生成的大日志。
 
-## Failure Handling
+## 失败处理
 
-- Attempt up to three targeted repair cycles per story.
-- If validation fails after a committed change, prefer a fix commit; if unsafe, create a revert commit and log why.
-- If validation fails before any commit, repair or manually restore only files touched by this story.
-- Do not use destructive reset commands.
+- 每个 story 最多尝试三轮定向修复。
+- 如果已提交后的验证失败，优先做 fix commit；如果不安全，创建 revert commit 并记录原因。
+- 如果提交前验证失败，修复或手动恢复本 story 触碰过的文件。
+- 不要使用破坏性 reset 命令。
 
-## Repository Constraints
+## 仓库约束
 
-- Keep GitHub Pages compatibility: preserve `HashRouter` behavior and `import.meta.env.BASE_URL` assumptions.
-- UI tasks use DOM, text, and state assertions only; do not rely on screenshot or image recognition.
-- Privacy tasks must prove that real credentials and private snapshots cannot enter committed or built files.
-- Unknown or unsupported simulation variables must be exposed as warnings or TODOs, never silently treated as calculated.
+- 保持 GitHub Pages 兼容：保留 `HashRouter` 行为和 `import.meta.env.BASE_URL` 假设。
+- UI 任务只使用 DOM、文本和状态断言；不要依赖截图或图片识别。
+- 隐私任务必须证明真实凭证和私人快照不能进入已提交文件或构建产物。
+- 未知或暂不支持的模拟变量必须暴露为 warning 或 TODO，不能静默当作已计算。
 
-## Validation Baseline
+## 验证基线
 
-Each story has its own validation command. Shared or final tasks may require:
+每个 story 都有自己的验证命令。共享或最终任务可能需要：
 
 - `npm run lint`
 - `npm run typecheck`
