@@ -3,7 +3,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/../../.." && pwd)"
 
 if ! command -v ralph >/dev/null 2>&1; then
   echo "Error: ralph 未安装或不在 PATH 中。" >&2
@@ -17,8 +17,8 @@ fi
 
 cd "${REPO_ROOT}"
 
-PROMPT_FILE=".ralph/ralph-prompt.md"
-TASK_FILE=".ralph/ralph-tasks.md"
+PROMPT_FILE=".ralph/tasks/legacy-ui-polish/ralph-prompt.md"
+TASK_FILE=".ralph/tasks/legacy-ui-polish/ralph-tasks.md"
 
 if [[ ! -f "${PROMPT_FILE}" ]]; then
   echo "Error: 缺少提示词文件 ${PROMPT_FILE}" >&2
