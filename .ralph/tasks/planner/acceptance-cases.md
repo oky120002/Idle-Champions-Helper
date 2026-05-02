@@ -1,719 +1,721 @@
-# Planner Acceptance Cases
+# Planner 验收用例
 
-Every story below is intentionally small for weaker unattended models. Ralph must write the listed tests first, implement only the scoped behavior, run the validation command, and commit the story separately.
+下面每个 story 都刻意拆得很小，方便较弱的无人值守模型执行。Ralph 必须先编写列出的测试，只实现限定范围内的行为，运行验证命令，并为该 story 单独提交。
 
-## Global Reject Conditions
+## 全局拒收条件
 
-- A story is marked passed without a dedicated commit.
-- Tests are skipped, weakened, or rewritten to hide broken behavior.
-- Real credentials, private snapshots, `.env*.local`, `tmp/private-user-data/**`, `dist/`, or generated dependency folders are staged.
-- A story modifies files outside its allowed scope without recording a decision.
+- story 没有专用 commit 却被标记为通过。
+- 跳过、削弱或重写测试来隐藏错误行为。
+- 真实凭证、私人快照、`.env*.local`、`tmp/private-user-data/**`、`dist/` 或生成的依赖目录被暂存。
+- story 修改了允许范围外的文件，且没有记录决策。
 
-## Phase 0 - Documentation And Ralph Structure
+## 阶段 0 - 文档和 Ralph 结构
 
-### US-001: Persist planner docs
+`US-001` 和 `US-002` 是规划分支交付项，已经由 Codex 完成；Ralph 后续开发不应重做这两个 story。它们的验收用例保留为审计依据。
 
-Scope:
-- Allowed files: `docs/modules/planner/**`, `docs/modules/README.md`, `docs/README.md`.
-- Forbidden files: `src/**`, `public/**`, credential or private snapshot files.
+### US-001: 落库 planner 文档
 
-Test First:
-- Use `rg`/shell validation rather than app tests.
+范围：
+- 允许文件： `docs/modules/planner/**`, `docs/modules/README.md`, `docs/README.md`.
+- 禁止文件： `src/**`, `public/**`, 凭证或私人快照文件.
 
-Acceptance Cases:
-1. Given a fresh checkout, when `rg -n "auto-formation-planner-plan|development-design|acceptance-cases|final-todo" docs/modules/planner docs/modules/README.md docs/README.md` runs, then planner docs and navigation are discoverable.
-2. Given the docs, when scanning for real credential-like values, then no real user id/hash is present.
+先写测试：
+- 使用 `rg`/shell 验证，而不是 app 测试。
 
-Validation:
+验收用例：
+1. 给定一个干净 checkout，当运行 `rg -n "auto-formation-planner-plan|development-design|acceptance-cases|final-todo" docs/modules/planner docs/modules/README.md docs/README.md` 时，planner 文档和导航必须可发现。
+2. 给定这些文档，当扫描类似真实凭证的值时，不应出现真实 user id/hash。
+
+验证：
 - `test -f docs/modules/planner/auto-formation-planner-plan.md`
 - `test -f docs/modules/planner/prd.md`
 - `test -f docs/modules/planner/development-design.md`
 - `test -f docs/modules/planner/final-todo.md`
 
-Commit:
+提交：
 - `planner: US-001 persist planner docs`
 
-### US-002: Ralph planner package is runnable
+### US-002: Ralph planner 任务包可运行
 
-Scope:
-- Allowed files: `.ralph/**`.
-- Forbidden files: `src/**`, `public/**`.
+范围：
+- 允许文件： `.ralph/**`.
+- 禁止文件： `src/**`, `public/**`.
 
-Test First:
-- Structural shell checks.
+先写测试：
+- 结构性 shell 检查。
 
-Acceptance Cases:
-1. Given `.ralph/tasks/planner`, when `.ralph/scripts/validate-task.sh planner` runs, then required files and JSON shape pass.
-2. Given `ralph-tui` is absent, when `.ralph/scripts/run-task.sh planner --help` would run, then the script falls back to legacy Ralph rather than failing silently.
+验收用例：
+1. 给定 `.ralph/tasks/planner`，当运行 `.ralph/scripts/validate-task.sh planner` 时，必需文件和 JSON 结构必须通过。
+2. 给定 `ralph-tui` 缺失，当 `.ralph/scripts/run-task.sh planner --help` 运行时，脚本应 fallback 到旧版 Ralph，而不是静默失败。
 
-Validation:
+验证：
 - `bash -n .ralph/scripts/run-task.sh`
 - `bash -n .ralph/tasks/planner/run.sh`
 - `./.ralph/scripts/validate-task.sh planner`
 
-Commit:
+提交：
 - `planner: US-002 add ralph planner package`
 
-## Phase 1 - Privacy And Private Development Data
+## 阶段 1 - 隐私和私人开发数据
 
-### US-003: Sensitive output scanner
+### US-003: 敏感输出扫描器
 
-Scope:
-- Allowed files: `scripts/private-user-data/**`, `tests/unit/scripts/**`, `package.json`.
-- Forbidden files: `src/**`.
+范围：
+- 允许文件： `scripts/private-user-data/**`, `tests/unit/scripts/**`, `package.json`.
+- 禁止文件： `src/**`.
 
-Test First:
+先写测试：
 - `tests/unit/scripts/privateUserDataScanner.test.ts`.
 
-Acceptance Cases:
-1. Given a fixture containing a fake numeric user id and fake 32-character hash, when scanner runs against it, then it reports a finding.
-2. Given ordinary docs mentioning `user_id` and `hash` placeholders, when scanner runs, then it does not fail on placeholders alone.
-3. Given a path under `tmp/private-user-data`, when scanner sees committed-source references to that path, then it reports a finding.
+验收用例：
+1. 给定包含假数字 user id 和假 32 位 hash 的 fixture，当 scanner 扫描它时，必须报告发现项。
+2. 给定只提到 `user_id` 和 `hash` 占位符的普通文档，当 scanner 运行时，不应仅因占位符失败。
+3. 给定 `tmp/private-user-data` 下的路径，当 scanner 在已提交源码引用中看到该路径时，必须报告发现项。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-003 add sensitive output scanner`
 
-### US-004: Private env loader
+### US-004: 私人环境变量加载器
 
-Scope:
-- Allowed files: `scripts/private-user-data/**`, `tests/unit/scripts/**`.
-- Forbidden files: `src/**`, `.env*.local`.
+范围：
+- 允许文件： `scripts/private-user-data/**`, `tests/unit/scripts/**`.
+- 禁止文件： `src/**`, `.env*.local`.
 
-Test First:
+先写测试：
 - `tests/unit/scripts/privateEnvLoader.test.ts`.
 
-Acceptance Cases:
-1. Given process env contains `IC_PRIVATE_USER_ID` and `IC_PRIVATE_HASH`, loader returns both values.
-2. Given an explicit `.local` env fixture, loader reads values without requiring `VITE_` variables.
-3. Given credentials are missing, loader returns a safe error without printing secret values.
-4. Given a key starts with `VITE_`, loader rejects it for private credentials.
+验收用例：
+1. 给定 process env 包含 `IC_PRIVATE_USER_ID` 和 `IC_PRIVATE_HASH`，loader 返回这两个值。
+2. 给定显式 `.local` env fixture，loader 能读取值，且不要求 `VITE_` 变量。
+3. 给定凭证缺失，loader 返回安全错误，且不打印 secret 值。
+4. 给定 key 以 `VITE_` 开头，loader 拒绝把它作为私人凭证。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-004 add private env loader`
 
-### US-005: Private snapshot manifest
+### US-005: 私人快照 manifest
 
-Scope:
-- Allowed files: `scripts/private-user-data/**`, `tests/unit/scripts/**`.
-- Forbidden files: `src/**`, `public/**`.
+范围：
+- 允许文件： `scripts/private-user-data/**`, `tests/unit/scripts/**`.
+- 禁止文件： `src/**`, `public/**`.
 
-Test First:
+先写测试：
 - `tests/unit/scripts/privateSnapshotManifest.test.ts`.
 
-Acceptance Cases:
-1. Given mock payload names, when manifest is written, then the output path is under `tmp/private-user-data/<timestamp>/`.
-2. Given credentials are used, when manifest is serialized, then user id/hash are masked.
-3. Given a target outside `tmp/private-user-data`, writer rejects it.
+验收用例：
+1. 给定 mock payload 名称，当写入 manifest 时，输出路径必须位于 `tmp/private-user-data/<timestamp>/`。
+2. 给定使用了凭证，当 manifest 序列化时，user id/hash 必须被遮蔽。
+3. 给定 `tmp/private-user-data` 外的目标路径，writer 必须拒绝。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-005 add private snapshot manifest`
 
-## Phase 2 - User Profile Foundation
+## 阶段 2 - 用户档案基础
 
-### US-006: User profile domain types
+### US-006: 用户档案领域类型
 
-Scope:
-- Allowed files: `src/domain/user-profile/**`, `src/domain/types.ts`, `tests/unit/domain/user-profile/**`.
+范围：
+- 允许文件： `src/domain/user-profile/**`, `src/domain/types.ts`, `tests/unit/domain/user-profile/**`.
 
-Test First:
+先写测试：
 - `tests/unit/domain/user-profile/userProfileFixtures.test.ts`.
 
-Acceptance Cases:
-1. Given a minimal owned champion fixture, TypeScript accepts `UserProfileSnapshot`.
-2. Given an imported formation save fixture, TypeScript accepts specialization, feat, familiar, and scenario references.
-3. Given missing optional sections, builder helpers still create a snapshot with warnings.
+验收用例：
+1. 给定最小已拥有英雄 fixture，TypeScript 接受 `UserProfileSnapshot`。
+2. 给定导入阵型保存 fixture，TypeScript 接受 specialization、feat、familiar 和 scenario 引用。
+3. 给定可选区块缺失，builder helper 仍能创建带 warning 的 snapshot。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-006 add user profile domain types`
 
-### US-007: User profile IndexedDB store
+### US-007: 用户档案 IndexedDB 存储
 
-Scope:
-- Allowed files: `src/data/user-profile-store/**`, `src/data/localDatabase.ts`, `tests/unit/data/**`.
+范围：
+- 允许文件： `src/data/user-profile-store/**`, `src/data/localDatabase.ts`, `tests/unit/data/**`.
 
-Test First:
+先写测试：
 - `tests/unit/data/userProfileStore.test.ts`.
 
-Acceptance Cases:
-1. Given a profile snapshot, save/read returns the same id and updatedAt.
-2. Given credential opt-in is false, credential vault remains empty.
-3. Given delete is called, snapshot and credential records are removed.
+验收用例：
+1. 给定 profile snapshot，保存/读取返回相同 id 和 updatedAt。
+2. 给定 credential opt-in 为 false，credential vault 保持为空。
+3. 给定调用 delete，snapshot 和 credential records 被删除。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-007 add user profile store`
 
-### US-008: Official read-only client allowlist
+### US-008: 官方只读客户端 allowlist
 
-Scope:
-- Allowed files: `src/data/user-sync/**`, `tests/unit/data/user-sync/**`.
+范围：
+- 允许文件： `src/data/user-sync/**`, `tests/unit/data/user-sync/**`.
 
-Test First:
+先写测试：
 - `tests/unit/data/user-sync/officialClient.test.ts`.
 
-Acceptance Cases:
-1. Given `getuserdetails`, `getcampaigndetails`, or `getallformationsaves`, URL builder allows the call.
-2. Given write-like calls such as claim, purchase, save, redeem, URL builder rejects them.
-3. Given fetch options are created, they include `credentials: "omit"`, `cache: "no-store"`, and `referrerPolicy: "no-referrer"`.
+验收用例：
+1. 给定 `getuserdetails`、`getcampaigndetails` 或 `getallformationsaves`，URL builder 允许调用。
+2. 给定 claim、purchase、save、redeem 等写入式调用，URL builder 必须拒绝。
+3. 给定创建 fetch options，必须包含 `credentials: "omit"`、`cache: "no-store"` 和 `referrerPolicy: "no-referrer"`。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-008 add official read-only client`
 
-### US-009: User payload normalizer
+### US-009: 用户 payload 归一化器
 
-Scope:
-- Allowed files: `src/data/user-sync/**`, `src/domain/user-profile/**`, `tests/unit/data/user-sync/**`.
+范围：
+- 允许文件： `src/data/user-sync/**`, `src/domain/user-profile/**`, `tests/unit/data/user-sync/**`.
 
-Test First:
+先写测试：
 - `tests/unit/data/user-sync/userProfileNormalizer.test.ts`.
 
-Acceptance Cases:
-1. Given mock `getuserdetails`, normalizer extracts owned heroes, equipment, feats, legendary info, and warnings.
-2. Given mock `getcampaigndetails`, normalizer extracts favor/blessing/campaign progress where present.
-3. Given mock `getallformationsaves`, normalizer extracts imported formation saves.
-4. Given missing unknown fields, normalizer records warnings and does not throw.
+验收用例：
+1. 给定 mock `getuserdetails`，normalizer 提取已拥有英雄、装备、feats、传奇信息和 warnings。
+2. 给定 mock `getcampaigndetails`，normalizer 在存在时提取 favor/blessing/campaign progress。
+3. 给定 mock `getallformationsaves`，normalizer 提取导入阵型保存。
+4. 给定未知字段缺失，normalizer 记录 warning，且不抛错。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-009 add user payload normalizer`
 
-### US-010: User data page manual sync model
+### US-010: 用户数据页手动同步模型
 
-Scope:
-- Allowed files: `src/pages/user-data/**`, `tests/component/userDataPage.*.test.tsx`.
+范围：
+- 允许文件： `src/pages/user-data/**`, `tests/component/userDataPage.*.test.tsx`.
 
-Test First:
+先写测试：
 - `tests/component/userDataPage.syncFlow.test.tsx`.
 
-Acceptance Cases:
-1. Given no snapshot, page offers credential parse and manual sync flow.
-2. Given a stored snapshot updated 3 days ago, page shows private data age.
-3. Given sync fails, page displays a safe error without credentials.
-4. Given delete is clicked, snapshot and optional credential vault are cleared.
+验收用例：
+1. 给定没有 snapshot，页面提供凭证解析和手动同步流程。
+2. 给定一个 3 天前更新的已存 snapshot，页面显示私人数据年龄。
+3. 给定同步失败，页面显示不含凭证的安全错误。
+4. 给定点击删除，snapshot 和可选 credential vault 被清除。
 
-Validation:
-- Targeted component test.
+验证：
+- 定向组件测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-010 add user data manual sync model`
 
-## Phase 3 - Number Layer And Baseline
+## 阶段 3 - 数字层和基线
 
-### US-011A: GameNumber parse and format
+### US-011A: GameNumber 解析和格式化
 
-Scope:
-- Allowed files: `src/domain/simulator/**`, `tests/unit/domain/simulator/**`, `package.json`, lockfile.
+范围：
+- 允许文件： `src/domain/simulator/**`, `tests/unit/domain/simulator/**`, `package.json`, lockfile.
 
-Test First:
+先写测试：
 - `tests/unit/domain/simulator/gameNumber.parseFormat.test.ts`.
 
-Acceptance Cases:
-1. Given `0`, `1.50e92`, `4.08e167`, and `1e1000`, parser returns valid values.
-2. Given invalid input, parser returns an error or throws a documented error.
-3. Given values above JavaScript `Number.MAX_VALUE`, formatter still returns game-style notation.
+验收用例：
+1. 给定 `0`、`1.50e92`、`4.08e167` 和 `1e1000`，parser 返回有效值。
+2. 给定非法输入，parser 返回错误或抛出有文档说明的错误。
+3. 给定超过 JavaScript `Number.MAX_VALUE` 的值，formatter 仍返回游戏风格记数法。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-011A add game number parse format`
 
-### US-011B: GameNumber arithmetic and compare
+### US-011B: GameNumber 运算和比较
 
-Scope:
-- Allowed files: `src/domain/simulator/**`, `tests/unit/domain/simulator/**`.
+范围：
+- 允许文件： `src/domain/simulator/**`, `tests/unit/domain/simulator/**`.
 
-Test First:
+先写测试：
 - `tests/unit/domain/simulator/gameNumber.arithmetic.test.ts`.
 
-Acceptance Cases:
-1. `1.5e92 * 2.72e75` compares equal in order of magnitude to `4.08e167`.
-2. Division and power operations keep expected ordering.
-3. Sorting a list of huge values is stable and deterministic.
+验收用例：
+1. `1.5e92 * 2.72e75` 在数量级比较上接近 `4.08e167`。
+2. 除法和幂运算保持预期排序。
+3. 超大值列表排序稳定且确定。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-011B add game number arithmetic`
 
-### US-011C: GameNumber additive threshold
+### US-011C: GameNumber 加法阈值
 
-Scope:
-- Allowed files: `src/domain/simulator/**`, `tests/unit/domain/simulator/**`.
+范围：
+- 允许文件： `src/domain/simulator/**`, `tests/unit/domain/simulator/**`.
 
-Test First:
+先写测试：
 - `tests/unit/domain/simulator/gameNumber.addition.test.ts`.
 
-Acceptance Cases:
-1. `1e100 + 1e99` changes the displayed mantissa.
-2. `1e100 + 1e80` returns the larger term for display and ordering.
-3. The threshold is documented and centralized.
+验收用例：
+1. `1e100 + 1e99` 会改变显示尾数。
+2. `1e100 + 1e80` 在显示和排序上返回较大项。
+3. 阈值有文档说明，并集中定义。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-011C add game number addition threshold`
 
-### US-012: Last specialization baseline extraction
+### US-012: 最后专精基线提取
 
-Scope:
-- Allowed files: `src/domain/simulator/**`, `tests/unit/domain/simulator/**`.
+范围：
+- 允许文件： `src/domain/simulator/**`, `tests/unit/domain/simulator/**`.
 
-Test First:
+先写测试：
 - `tests/unit/domain/simulator/specializationBaseline.test.ts`.
 
-Acceptance Cases:
-1. Given upgrades with three specialization levels, extractor returns the highest required level.
-2. Given no specialization upgrades, extractor returns a documented fallback unlock level.
-3. Given malformed levels, extractor ignores invalid entries and records warnings.
+验收用例：
+1. 给定包含三个专精等级的 upgrades，extractor 返回最高所需等级。
+2. 给定没有 specialization upgrades，extractor 返回有文档说明的 fallback unlock level。
+3. 给定异常 levels，extractor 忽略非法项并记录 warnings。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-012 add specialization baseline`
 
-### US-013: Gold budget baseline interface
+### US-013: 金币预算基线接口
 
-Scope:
-- Allowed files: `src/domain/simulator/**`, `tests/unit/domain/simulator/**`.
+范围：
+- 允许文件： `src/domain/simulator/**`, `tests/unit/domain/simulator/**`.
 
-Test First:
+先写测试：
 - `tests/unit/domain/simulator/goldBudgetBaseline.test.ts`.
 
-Acceptance Cases:
-1. Given cost curve and gold budget, baseline returns an affordable level.
-2. Given last specialization level is higher than affordable level, result is marked below-baseline and not silently accepted.
-3. UI defaults do not expose a 100-level mode.
+验收用例：
+1. 给定 cost curve 和 gold budget，baseline 返回可负担等级。
+2. 给定最后专精等级高于可负担等级，结果标记为 below-baseline，不能静默接受。
+3. UI 默认值不暴露 100 级模式。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-013 add gold budget baseline`
 
-## Phase 4 - Simulation Data
+## 阶段 4 - 模拟数据
 
-### US-014: Simulator data coverage report
+### US-014: 模拟器数据覆盖报告
 
-Scope:
-- Allowed files: `docs/research/data/**`, `scripts/data/**`, `tests/unit/scripts/**`.
+范围：
+- 允许文件： `docs/research/data/**`, `scripts/data/**`, `tests/unit/scripts/**`.
 
-Test First:
+先写测试：
 - `tests/unit/scripts/simulatorDataCoverage.test.ts`.
 
-Acceptance Cases:
-1. Given mock definition keys, report marks known useful keys as covered/uncovered.
-2. Given unknown keys, report preserves them for review.
-3. Report includes usefulness, current output, and next action columns.
+验收用例：
+1. 给定 mock definition keys，report 把已知有用 key 标记为 covered/uncovered。
+2. 给定未知 keys，report 保留它们以供复查。
+3. 报告包含 usefulness、current output 和 next action 列。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-014 add simulator data coverage report`
 
-### US-015: Champion simulation profile projection
+### US-015: 英雄模拟 profile 投影
 
-Scope:
-- Allowed files: `src/domain/simulator/**`, `tests/unit/domain/simulator/**`.
+范围：
+- 允许文件： `src/domain/simulator/**`, `tests/unit/domain/simulator/**`.
 
-Test First:
+先写测试：
 - `tests/unit/domain/simulator/championSimulationProfile.test.ts`.
 
-Acceptance Cases:
-1. Given a champion detail fixture, projection extracts upgrades, feats, loot, legendary effects, and raw effect strings.
-2. Given unknown effect strings, projection preserves them in `unsupportedEffects`.
-3. Projection includes localized names for explanation.
+验收用例：
+1. 给定 champion detail fixture，projection 提取 upgrades、feats、loot、legendary effects 和 raw effect strings。
+2. 给定未知 effect strings，projection 将它们保存在 `unsupportedEffects`。
+3. projection 包含本地化名称用于解释。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-015 add champion simulation profile`
 
-### US-016: Effect parser core DPS group
+### US-016: Effect parser 核心 DPS 组
 
-Scope:
-- Allowed files: `src/domain/simulator/**`, `tests/unit/domain/simulator/**`.
+范围：
+- 允许文件： `src/domain/simulator/**`, `tests/unit/domain/simulator/**`.
 
-Test First:
+先写测试：
 - `tests/unit/domain/simulator/effectParser.coreDps.test.ts`.
 
-Acceptance Cases:
-1. Parse `global_dps_multiplier_mult`.
-2. Parse `hero_dps_multiplier_mult`.
-3. Parse unknown prefix into unsupported result without throwing.
+验收用例：
+1. 解析 `global_dps_multiplier_mult`。
+2. 解析 `hero_dps_multiplier_mult`。
+3. 把未知 prefix 解析为 unsupported result，且不抛错。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-016 add core dps effect parser`
 
-### US-017: Effect parser positional and tag group
+### US-017: Effect parser 位置和标签组
 
-Scope:
-- Allowed files: `src/domain/simulator/**`, `tests/unit/domain/simulator/**`.
+范围：
+- 允许文件： `src/domain/simulator/**`, `tests/unit/domain/simulator/**`.
 
-Test First:
+先写测试：
 - `tests/unit/domain/simulator/effectParser.positionTags.test.ts`.
 
-Acceptance Cases:
-1. Parse adjacent target hints.
-2. Parse tagged champion multiplier hints.
-3. Preserve unsupported positional formats with explanation.
+验收用例：
+1. 解析 adjacent target hints。
+2. 解析 tagged champion multiplier hints。
+3. 保留不支持的 positional formats，并带解释。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-017 add positional tag effect parser`
 
-### US-018: Variant rule projection
+### US-018: 变体规则投影
 
-Scope:
-- Allowed files: `src/domain/planner/**`, `tests/unit/domain/planner/**`.
+范围：
+- 允许文件： `src/domain/planner/**`, `tests/unit/domain/planner/**`.
 
-Test First:
+先写测试：
 - `tests/unit/domain/planner/variantRuleProjection.test.ts`.
 
-Acceptance Cases:
-1. Project `only_allow_crusaders`.
-2. Project `disallow_crusaders`.
-3. Project `force_use_heroes`.
-4. Preserve unknown mechanics as warnings.
+验收用例：
+1. 投影 `only_allow_crusaders`。
+2. 投影 `disallow_crusaders`。
+3. 投影 `force_use_heroes`。
+4. 把未知 mechanics 保留为 warnings。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-018 add variant rule projection`
 
-## Phase 5 - Candidate Pools
+## 阶段 5 - 候选池
 
-### US-019: Candidate pool modes
+### US-019: 候选池模式
 
-Scope:
-- Allowed files: `src/domain/planner/**`, `tests/unit/domain/planner/**`.
+范围：
+- 允许文件： `src/domain/planner/**`, `tests/unit/domain/planner/**`.
 
-Test First:
+先写测试：
 - `tests/unit/domain/planner/candidatePool.test.ts`.
 
-Acceptance Cases:
-1. Owned-only mode returns only owned champions.
-2. All-hypothetical mode includes unowned champions with assumptions.
-3. Manual override mode applies explicit champion assumptions without changing profile data.
+验收用例：
+1. owned-only 模式只返回已拥有 champions。
+2. all-hypothetical 模式包含带 assumptions 的未拥有 champions。
+3. manual override 模式应用显式 champion assumptions，但不改变 profile data。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-019 add candidate pool modes`
 
-### US-020: Hypothetical fairness baseline
+### US-020: 假设英雄公平基线
 
-Scope:
-- Allowed files: `src/domain/planner/**`, `tests/unit/domain/planner/**`.
+范围：
+- 允许文件： `src/domain/planner/**`, `tests/unit/domain/planner/**`.
 
-Test First:
+先写测试：
 - `tests/unit/domain/planner/hypotheticalBaseline.test.ts`.
 
-Acceptance Cases:
-1. Same-seat median equipment is used when available.
-2. Account-wide median is used when same-seat data is unavailable.
-3. Empty-account fallback is clearly marked as no-equipment/no-feat.
+验收用例：
+1. 同 seat median equipment 可用时使用它。
+2. 同 seat 数据不可用时使用 account-wide median。
+3. 空账号 fallback 明确标记为 no-equipment/no-feat。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-020 add hypothetical fairness baseline`
 
-## Phase 6 - Formation Scoring
+## 阶段 6 - 阵型评分
 
-### US-021: Imported formation save normalizer
+### US-021: 导入阵型保存归一化器
 
-Scope:
-- Allowed files: `src/data/user-sync/**`, `src/domain/user-profile/**`, `tests/unit/data/user-sync/**`.
+范围：
+- 允许文件： `src/data/user-sync/**`, `src/domain/user-profile/**`, `tests/unit/data/user-sync/**`.
 
-Test First:
+先写测试：
 - `tests/unit/data/user-sync/formationSaveNormalizer.test.ts`.
 
-Acceptance Cases:
-1. Convert mock `getallformationsaves` payload into `ImportedFormationSave`.
-2. Preserve specializations, feats, familiars, favorite flag, and scenario relation.
-3. Unknown formation layout ids are warned rather than dropped silently.
+验收用例：
+1. 将 mock `getallformationsaves` payload 转换为 `ImportedFormationSave`。
+2. 保留 specializations、feats、familiars、favorite flag 和 scenario relation。
+3. 未知 formation layout id 产生 warning，而不是静默丢弃。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-021 add imported formation save normalizer`
 
-### US-022: Planner formation legality
+### US-022: Planner 阵型合法性
 
-Scope:
-- Allowed files: `src/domain/planner/**`, `tests/unit/domain/planner/**`.
+范围：
+- 允许文件： `src/domain/planner/**`, `tests/unit/domain/planner/**`.
 
-Test First:
+先写测试：
 - `tests/unit/domain/planner/formationLegality.test.ts`.
 
-Acceptance Cases:
-1. Detect seat conflicts.
-2. Detect banned champions.
-3. Detect missing forced champions.
-4. Detect locked or occupied slots.
+验收用例：
+1. 检测 seat conflicts。
+2. 检测 banned champions。
+3. 检测缺失的 forced champions。
+4. 检测 locked 或 occupied slots。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-022 add formation legality checks`
 
-### US-023: Steady-state scoring fixture
+### US-023: 稳态评分 fixture
 
-Scope:
-- Allowed files: `src/domain/planner/**`, `src/domain/simulator/**`, `tests/unit/domain/planner/**`.
+范围：
+- 允许文件： `src/domain/planner/**`, `src/domain/simulator/**`, `tests/unit/domain/planner/**`.
 
-Test First:
+先写测试：
 - `tests/unit/domain/planner/steadyStateScoring.test.ts`.
 
-Acceptance Cases:
-1. Bruenor-like adjacent support increases score when placed adjacent.
-2. Global DPS support applies regardless of adjacency.
-3. Unsupported effects appear in result warnings.
+验收用例：
+1. 类似 Bruenor 的 adjacent support 放在相邻位置时提高 score。
+2. Global DPS support 不受 adjacency 影响。
+3. Unsupported effects 出现在 result warnings 中。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-023 add steady state scoring`
 
-### US-024: Beam search candidate ranking
+### US-024: Beam search 候选排序
 
-Scope:
-- Allowed files: `src/domain/planner/**`, `tests/unit/domain/planner/**`.
+范围：
+- 允许文件： `src/domain/planner/**`, `tests/unit/domain/planner/**`.
 
-Test First:
+先写测试：
 - `tests/unit/domain/planner/beamSearchRanking.test.ts`.
 
-Acceptance Cases:
-1. A 4-slot deterministic fixture returns expected top result.
-2. Beam width limits candidate expansion.
-3. Top results include score, placements, explanations, and warnings.
+验收用例：
+1. 4-slot 确定性 fixture 返回预期 top result。
+2. beam width 限制 candidate expansion。
+3. top results 包含 score、placements、explanations 和 warnings。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-024 add beam search ranking`
 
-## Phase 7 - Planner UI
+## 阶段 7 - Planner UI
 
-### US-025: Planner route and navigation
+### US-025: Planner 路由和导航
 
-Scope:
-- Allowed files: `src/app/**`, `src/pages/PlannerPage.tsx`, `src/pages/planner/**`, `tests/component/app.test.tsx`, `tests/component/primaryNavigation.test.tsx`.
+范围：
+- 允许文件： `src/app/**`, `src/pages/PlannerPage.tsx`, `src/pages/planner/**`, `tests/component/app.test.tsx`, `tests/component/primaryNavigation.test.tsx`.
 
-Test First:
-- Component tests for route and nav label.
+先写测试：
+- 路由和导航标签组件测试。
 
-Acceptance Cases:
-1. `/planner` renders the planner page.
-2. Navigation includes Automatic Planner.
-3. HashRouter compatibility is preserved.
+验收用例：
+1. `/planner` 渲染 planner 页面。
+2. 导航包含 Automatic Planner。
+3. 保持 HashRouter 兼容性。
 
-Validation:
-- Targeted component tests.
+验证：
+- 定向组件测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-025 add planner route`
 
-### US-026: Planner profile state panel
+### US-026: Planner profile 状态面板
 
-Scope:
-- Allowed files: `src/pages/planner/**`, `tests/component/plannerPage.profileState.test.tsx`.
+范围：
+- 允许文件： `src/pages/planner/**`, `tests/component/plannerPage.profileState.test.tsx`.
 
-Test First:
-- Profile state component test.
+先写测试：
+- Profile state 组件测试。
 
-Acceptance Cases:
-1. No profile shows link/action to user data page.
-2. Existing profile shows age in days.
-3. Sync warning is visible but does not auto-refresh.
+验收用例：
+1. 无 profile 状态显示到用户数据页的 link/action。
+2. 已有 profile 显示存在天数。
+3. Sync warning 可见，但不会 auto-refresh。
 
-Validation:
-- Targeted component test.
+验证：
+- 定向组件测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-026 add planner profile state`
 
-### US-027: Planner scenario selection
+### US-027: Planner 场景选择
 
-Scope:
-- Allowed files: `src/pages/planner/**`, `tests/component/plannerPage.scenarioSelection.test.tsx`.
+范围：
+- 允许文件： `src/pages/planner/**`, `tests/component/plannerPage.scenarioSelection.test.tsx`.
 
-Test First:
-- Scenario selection component test.
+先写测试：
+- Scenario selection 组件测试。
 
-Acceptance Cases:
-1. Variant list can be filtered by text.
-2. Selecting a variant shows formation and restriction summary.
-3. Long restriction text remains accessible as text, not hidden in image-only UI.
+验收用例：
+1. variant 列表可按文本筛选。
+2. 选择 variant 后显示 formation 和 restriction summary。
+3. 长 restriction text 仍以文本形式可访问，不隐藏在纯图片 UI 中。
 
-Validation:
-- Targeted component test.
+验证：
+- 定向组件测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-027 add planner scenario selection`
 
-### US-028: Planner result card
+### US-028: Planner 结果卡片
 
-Scope:
-- Allowed files: `src/pages/planner/**`, `tests/component/plannerPage.resultCard.test.tsx`.
+范围：
+- 允许文件： `src/pages/planner/**`, `tests/component/plannerPage.resultCard.test.tsx`.
 
-Test First:
-- Result card component test.
+先写测试：
+- Result card 组件测试。
 
-Acceptance Cases:
-1. Result card shows score in game notation.
-2. Result card shows slot assignments as text.
-3. Result card shows explanation and unsupported warning sections.
+验收用例：
+1. result card 以游戏记数法显示 score。
+2. result card 以文本显示 slot assignments。
+3. result card 显示 explanation 和 unsupported warning 区块。
 
-Validation:
-- Targeted component test.
+验证：
+- 定向组件测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-028 add planner result card`
 
-### US-029: Save planner result as preset
+### US-029: 将 planner 结果保存为 preset
 
-Scope:
-- Allowed files: `src/pages/planner/**`, `src/data/formationPresetStore.ts`, `tests/component/plannerPage.savePreset.test.tsx`.
+范围：
+- 允许文件： `src/pages/planner/**`, `src/data/formationPresetStore.ts`, `tests/component/plannerPage.savePreset.test.tsx`.
 
-Test First:
-- Save preset component/integration test.
+先写测试：
+- 保存 preset 组件/集成测试。
 
-Acceptance Cases:
-1. Clicking save writes a formation preset.
-2. Saved preset preserves `layoutId`, `placements`, and `scenarioRef`.
-3. Save disabled state is visible when result is invalid.
+验收用例：
+1. 点击 save 会写入 formation preset。
+2. 保存的 preset 保留 `layoutId`、`placements` 和 `scenarioRef`。
+3. 结果无效时保存禁用状态可见。
 
-Validation:
-- Targeted component test.
+验证：
+- 定向组件测试。
 - `npm run typecheck`
 
-Commit:
+提交：
 - `planner: US-029 save planner result as preset`
 
-## Phase 8 - Final Gates
+## 阶段 8 - 最终关卡
 
-### US-030: Privacy scan npm script
+### US-030: Privacy scan npm 脚本
 
-Scope:
-- Allowed files: `package.json`, `scripts/private-user-data/**`, `tests/unit/scripts/**`.
+范围：
+- 允许文件： `package.json`, `scripts/private-user-data/**`, `tests/unit/scripts/**`.
 
-Test First:
-- Scanner script test.
+先写测试：
+- Scanner 脚本测试。
 
-Acceptance Cases:
-1. `npm run privacy:scan` exists.
-2. Scanner checks `src`, `public`, `docs`, `tests`, and `dist` when present.
-3. Scanner fails on fixture secrets and passes normal placeholders.
+验收用例：
+1. `npm run privacy:scan` 存在。
+2. scanner 检查 `src`、`public`、`docs`、`tests`，以及存在时的 `dist`。
+3. scanner 对 fixture secrets 失败，对普通 placeholders 通过。
 
-Validation:
-- Targeted unit test.
+验证：
+- 定向单元测试。
 - `npm run privacy:scan`
 
-Commit:
+提交：
 - `planner: US-030 add privacy scan script`
 
-### US-031: Planner documentation sync
+### US-031: Planner 文档同步
 
-Scope:
-- Allowed files: `README.md`, `docs/**`, `.ralph/tasks/planner/**`.
+范围：
+- 允许文件： `README.md`, `docs/**`, `.ralph/tasks/planner/**`.
 
-Test First:
-- Shell/rg checks.
+先写测试：
+- Shell/rg 检查。
 
-Acceptance Cases:
-1. Root README mentions automatic planner once route exists.
-2. Docs index points to planner module docs.
-3. Final TODO lists speed/gem, survival, balanced scoring, step simulation, manual parameter panel.
+验收用例：
+1. route 存在后，根 README 提到 automatic planner。
+2. docs 索引指向 planner 模块文档。
+3. final-todo 列出 speed/gem、survival、balanced scoring、step simulation 和 manual parameter panel。
 
-Validation:
+验证：
 - `rg -n "自动计划|planner|final-todo" README.md docs .ralph/tasks/planner`
 
-Commit:
+提交：
 - `planner: US-031 sync planner docs`
 
-### US-032: Final regression
+### US-032: 最终回归
 
-Scope:
-- Allowed files: only files needed to fix regressions.
+范围：
+- 允许文件： 只允许修改修复回归所需的文件。
 
-Test First:
-- Use failing command output as the test signal.
+先写测试：
+- 使用失败命令输出作为测试信号。
 
-Acceptance Cases:
-1. `npm run lint` passes.
-2. `npm run typecheck` passes.
-3. `npm run test:run` passes.
-4. `npm run build` passes.
-5. `npm run privacy:scan` passes.
+验收用例：
+1. `npm run lint` 通过。
+2. `npm run typecheck` 通过。
+3. `npm run test:run` 通过。
+4. `npm run build` 通过。
+5. `npm run privacy:scan` 通过。
 
-Validation:
+验证：
 - `npm run lint && npm run typecheck && npm run test:run && npm run build && npm run privacy:scan`
 
-Commit:
+提交：
 - `planner: US-032 final regression`
