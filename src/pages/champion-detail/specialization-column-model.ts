@@ -21,6 +21,7 @@ function extractTargetIdsFromEffectString(effectString: string): string[] {
     kind === 'buff_upgrade' ||
     kind === 'buff_upgrade_add_flat_amount' ||
     kind === 'buff_upgrade_effect_stacks_max_mult' ||
+    kind === 'buff_upgrade_per_any_tagged_crusader_mult' ||
     kind === 'change_upgrade_data' ||
     kind === 'change_upgrade_targets'
   ) {

@@ -1,7 +1,7 @@
 import type { AppLocale } from '../../app/i18n'
 import type { ChampionDetail, ChampionFeatDetail, JsonValue } from '../../domain/types'
 import type { DetailFieldProps, EffectContext, FeatEffectEntry, SummaryTagGroupProps } from './types'
-import { describeEffectPayload, parseEffectPayload } from './effect-model'
+import { buildEffectKeyPayload, describeEffectPayload, parseEffectPayload } from './effect-model'
 import { isJsonObject, isJsonPrimitive, parseInlineJsonValue } from './detail-json'
 import { localizeSourceType, localizeStructuredKey } from './detail-localization'
 import { buildNotAvailableLabel, formatBoolean, formatNumber, formatTimestamp } from './detail-value-formatters'
@@ -215,17 +215,17 @@ export function describeEffectItem(
   effectContext: EffectContext,
 ): { summary: string; detail: string | null; meta: JsonValue | null } {
   if (isJsonObject(value) && typeof value.effect_string === 'string') {
-    const descriptor = describeEffectPayload(
-      {
-        raw: value.effect_string,
-        effectString: value.effect_string,
-        description: typeof value.description === 'string' ? value.description : null,
-        data: value.data ?? null,
-        kind: value.effect_string.split(',')[0] ?? value.effect_string,
-        args: value.effect_string.split(',').slice(1),
-      },
-      effectContext,
-    )
+    const payload = buildEffectKeyPayload(value)
+
+    if (!payload) {
+      return {
+        summary: effectContext.locale === 'zh-CN' ? '复杂效果字段' : 'Structured effect data',
+        detail: null,
+        meta: value,
+      }
+    }
+
+    const descriptor = describeEffectPayload(payload, effectContext)
     const metaEntries = Object.entries(value).filter(([key]) => key !== 'effect_string' && key !== 'description')
 
     return {

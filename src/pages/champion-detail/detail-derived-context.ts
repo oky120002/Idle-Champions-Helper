@@ -11,13 +11,19 @@ export function buildAttackLabelById(detail: ChampionDetail | null, locale: AppL
 
   const nextMap = new Map<string, string>()
 
-  if (detail.attacks.base) {
-    nextMap.set(detail.attacks.base.id, getPrimaryLocalizedText(detail.attacks.base.name, locale))
-  }
+  detail.raw.attacks.forEach((attackEntry) => {
+    const snapshot = locale === 'zh-CN' ? attackEntry.snapshots.display : attackEntry.snapshots.original
 
-  if (detail.attacks.ultimate) {
-    nextMap.set(detail.attacks.ultimate.id, getPrimaryLocalizedText(detail.attacks.ultimate.name, locale))
-  }
+    if (
+      snapshot &&
+      typeof snapshot === 'object' &&
+      !Array.isArray(snapshot) &&
+      typeof snapshot.id === 'number' &&
+      typeof snapshot.name === 'string'
+    ) {
+      nextMap.set(String(snapshot.id), snapshot.name)
+    }
+  })
 
   return nextMap
 }

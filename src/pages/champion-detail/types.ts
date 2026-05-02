@@ -107,6 +107,7 @@ export interface ParsedEffectPayload {
   effectString: string
   description: string | null
   data: JsonValue | null
+  meta: Record<string, JsonValue> | null
   kind: string
   args: string[]
 }

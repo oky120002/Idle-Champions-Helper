@@ -1,12 +1,20 @@
 import type { AppLocale } from '../../app/i18n'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
-import type { ChampionRawEntry, ChampionUpgradeDetail } from '../../domain/types'
+import type { ChampionRawEntry, ChampionUpgradeDetail, LocalizedText } from '../../domain/types'
 import type { EffectContext, EffectDefinitionPresentation, EffectDescriptor, UpgradePresentation } from './types'
 import { describeEffectPayload, buildUnavailableUpgradeLabel } from './effect-descriptor'
-import { parseEffectPayload, resolveEffectDescription } from './effect-payload'
+import { buildEffectKeyPayload, parseEffectPayload, resolveEffectDescription, sanitizeEffectText } from './effect-payload'
 import { isJsonObject } from './detail-json'
 import { localizeUpgradeType } from './detail-localization'
 import { formatMultiplierValue } from './detail-value-formatters'
+
+function getSanitizedLocalizedText(value: LocalizedText | null, locale: AppLocale, effectContext: EffectContext): string | null {
+  if (!value) {
+    return null
+  }
+
+  return sanitizeEffectText(getPrimaryLocalizedText(value, locale), effectContext)
+}
 
 export function buildEffectDefinitionPresentation(
   entry: ChampionRawEntry | null,
@@ -38,22 +46,14 @@ export function buildEffectDefinitionPresentation(
         ? descriptionValue
         : null
   const effectKeys = Array.isArray(snapshot.effect_keys) ? snapshot.effect_keys.filter(isJsonObject) : []
-  const descriptors = effectKeys
-    .map((effectKey) => {
-      if (typeof effectKey.effect_string !== 'string') {
-        return null
-      }
-
-      const payload = parseEffectPayload(effectKey.effect_string)
-      return payload ? describeEffectPayload(payload, effectContext) : null
-    })
+  const payloads = effectKeys.map((effectKey) => buildEffectKeyPayload(effectKey)).filter((value): value is NonNullable<typeof value> => Boolean(value))
+  const descriptors = payloads
+    .map((payload) => describeEffectPayload(payload, effectContext, payloads))
     .filter((value): value is EffectDescriptor => Boolean(value))
   const readableDescriptors = descriptors.filter((descriptor) => !descriptor.isRawEffectKindFallback)
-  const primaryPayload =
-    effectKeys.length > 0 && typeof effectKeys[0]?.effect_string === 'string'
-      ? parseEffectPayload(effectKeys[0].effect_string)
-      : null
-  const primaryDescription = primaryPayload && description ? resolveEffectDescription(description, primaryPayload, effectContext) : description
+  const primaryPayload = payloads[0] ?? null
+  const primaryDescription =
+    primaryPayload && description ? resolveEffectDescription(description, primaryPayload, effectContext, payloads) : description
   const summary = primaryDescription || readableDescriptors[0]?.summary || null
   const detail = readableDescriptors[0]?.detail ?? null
   const bullets = readableDescriptors
@@ -73,11 +73,21 @@ export function buildUpgradeReferenceLabel(
   attackLabelById: Map<string, string>,
 ): string {
   if (upgrade.name) {
-    return getPrimaryLocalizedText(upgrade.name, locale)
+    return sanitizeEffectText(getPrimaryLocalizedText(upgrade.name, locale), {
+      locale,
+      championName: '',
+      attackLabelById,
+      upgradeLabelById: new Map<string, string>(),
+    })
   }
 
   if (upgrade.specializationName) {
-    return getPrimaryLocalizedText(upgrade.specializationName, locale)
+    return sanitizeEffectText(getPrimaryLocalizedText(upgrade.specializationName, locale), {
+      locale,
+      championName: '',
+      attackLabelById,
+      upgradeLabelById: new Map<string, string>(),
+    })
   }
 
   if (upgrade.upgradeType === 'unlock_ultimate') {
@@ -116,11 +126,11 @@ export function buildUpgradePresentation(
       : validEffectDescriptor?.categoryLabel ?? localizeUpgradeType(null, effectContext.locale)
   const title = (() => {
     if (upgrade.name) {
-      return getPrimaryLocalizedText(upgrade.name, effectContext.locale)
+      return getSanitizedLocalizedText(upgrade.name, effectContext.locale, effectContext) ?? buildUnavailableUpgradeLabel(effectContext.locale)
     }
 
     if (upgrade.specializationName) {
-      return getPrimaryLocalizedText(upgrade.specializationName, effectContext.locale)
+      return getSanitizedLocalizedText(upgrade.specializationName, effectContext.locale, effectContext) ?? buildUnavailableUpgradeLabel(effectContext.locale)
     }
 
     if (upgrade.upgradeType === 'unlock_ultimate') {
@@ -142,8 +152,8 @@ export function buildUpgradePresentation(
   const summary =
     effectDefinition.summary ??
     readableEffectDescriptor?.summary ??
-    (upgrade.specializationDescription ? getPrimaryLocalizedText(upgrade.specializationDescription, effectContext.locale) : null) ??
-    (upgrade.tipText ? getPrimaryLocalizedText(upgrade.tipText, effectContext.locale) : null)
+    getSanitizedLocalizedText(upgrade.specializationDescription, effectContext.locale, effectContext) ??
+    getSanitizedLocalizedText(upgrade.tipText, effectContext.locale, effectContext)
   const prerequisiteLabel = upgrade.requiredUpgradeId
     ? effectContext.upgradeLabelById.get(upgrade.requiredUpgradeId) ??
       (effectContext.locale === 'zh-CN' ? `升级 #${upgrade.requiredUpgradeId}` : `Upgrade #${upgrade.requiredUpgradeId}`)
@@ -151,10 +161,8 @@ export function buildUpgradePresentation(
       ? '无前置'
       : 'No prerequisite'
   const detailLines = [
-    upgrade.specializationDescription
-      ? getPrimaryLocalizedText(upgrade.specializationDescription, effectContext.locale)
-      : null,
-    upgrade.tipText ? getPrimaryLocalizedText(upgrade.tipText, effectContext.locale) : null,
+    getSanitizedLocalizedText(upgrade.specializationDescription, effectContext.locale, effectContext),
+    getSanitizedLocalizedText(upgrade.tipText, effectContext.locale, effectContext),
     effectDefinition.detail,
     ...effectDefinition.bullets,
     readableEffectDescriptor?.detail ?? null,
