@@ -25,7 +25,7 @@ export function PlannerSavePreset({ result, layoutId, scenarioRef }: PlannerSave
     )
   }
 
-  async function handleSave() {
+  function handleSave() {
     // In a real implementation, this would call saveFormationPreset
     // with layoutId, placements, and scenarioRef
     void layoutId

@@ -18,6 +18,12 @@ const CREDENTIAL_VALUE_RE = /(?:user[_\s-]?id|hash|user_id|ic_private)\s*[:=]\s*
 // Path reference to tmp/private-user-data
 const PRIVATE_PATH_RE = /tmp[/\\]private-user-data/gu
 
+// Known desensitized sample values used in UI components
+const KNOWN_SAMPLE_VALUES = new Set([
+  '123456789',
+  'abcdef1234567890abcdef1234567890',
+])
+
 /**
  * Scan file content for sensitive data patterns.
  *
@@ -37,6 +43,7 @@ export function scanContent(content, filePath) {
 
     // Check for credential-like numeric values
     for (const match of line.matchAll(CREDENTIAL_VALUE_RE)) {
+      if (KNOWN_SAMPLE_VALUES.has(match[1])) continue
       findings.push({
         kind: 'numeric-user-id',
         filePath,
@@ -48,6 +55,7 @@ export function scanContent(content, filePath) {
 
     // Check for 32-char hex hashes
     for (const match of line.matchAll(HEX_HASH_RE)) {
+      if (KNOWN_SAMPLE_VALUES.has(match[0])) continue
       findings.push({
         kind: 'hex-hash',
         filePath,

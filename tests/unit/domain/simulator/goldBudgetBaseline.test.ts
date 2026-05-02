@@ -4,7 +4,7 @@ import { computeGoldBudgetBaseline } from '../../../../src/domain/simulator/gold
 describe('gold budget baseline', () => {
   it('cost curve 和预算能返回可负担等级', () => {
     const result = computeGoldBudgetBaseline({
-      costCurve: (level: number) => Math.pow(1.5, level) as number,
+      costCurve: (level: number) => Math.pow(1.5, level),
       goldBudget: 1e10,
       specializationBaseline: 50,
     })
@@ -15,7 +15,7 @@ describe('gold budget baseline', () => {
 
   it('低于专精要求的预算会标记 below-baseline', () => {
     const result = computeGoldBudgetBaseline({
-      costCurve: (level: number) => Math.pow(2, level) as number,
+      costCurve: (level: number) => Math.pow(2, level),
       goldBudget: 100,
       specializationBaseline: 50,
     })
@@ -26,7 +26,7 @@ describe('gold budget baseline', () => {
 
   it('UI 默认值不暴露 100 级模式', () => {
     const result = computeGoldBudgetBaseline({
-      costCurve: (level: number) => Math.pow(1.5, level) as number,
+      costCurve: (level: number) => Math.pow(1.5, level),
       goldBudget: 1e10,
       specializationBaseline: 50,
     })
@@ -38,7 +38,7 @@ describe('gold budget baseline', () => {
 
   it('零预算返回 0 级', () => {
     const result = computeGoldBudgetBaseline({
-      costCurve: (level: number) => Math.pow(1.5, level) as number,
+      costCurve: (level: number) => Math.pow(1.5, level),
       goldBudget: 0,
       specializationBaseline: 50,
     })
@@ -49,7 +49,7 @@ describe('gold budget baseline', () => {
 
   it('超大预算不崩溃', () => {
     const result = computeGoldBudgetBaseline({
-      costCurve: (level: number) => Math.pow(1.5, level) as number,
+      costCurve: (level: number) => Math.pow(1.5, level),
       goldBudget: 1e300,
       specializationBaseline: 50,
     })

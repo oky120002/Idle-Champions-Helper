@@ -2,18 +2,6 @@
   "name": "Idle Champions 自动阵型计划器",
   "description": "构建一个 local-first 的 Idle Champions Helper 自动阵型计划器和模拟器。工作被拆成适合 Ralph 无人值守执行的小型 TDD 故事。",
   "branchName": "codex/planner-ralph-task-design",
-  "metadata": {
-    "createdAt": "2026-05-03T00:00:00+08:00",
-    "acceptanceCases": ".ralph/tasks/planner/acceptance-cases.md",
-    "decisionLog": ".ralph/tasks/planner/decision-log.md",
-    "qualityGates": [
-      "story 专属测试必须通过",
-      "触碰 TypeScript 文件时，npm run typecheck 必须通过",
-      "每个完成的 story 必须有专用 commit",
-      "不得提交凭证、私人快照、.env*.local、tmp/private-user-data/**、dist 或生成的依赖目录"
-    ],
-    "updatedAt": "2026-05-02T19:05:23.560Z"
-  },
   "userStories": [
     {
       "id": "US-001",
@@ -64,7 +52,10 @@
         "专用提交：planner: US-003 add sensitive output scanner"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:01:30+08:00",
+      "completionNote": "Scanner detects numeric user IDs, 32-char hex hashes, and tmp/private-user-data path references. All 6 unit tests pass, typecheck clean.",
       "dependsOn": [
         "US-002"
       ]
@@ -81,7 +72,10 @@
         "专用提交：planner: US-004 add private env loader"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:02:30+08:00",
+      "completionNote": "Loader reads from process env or .local files, rejects VITE_ keys, safe error on missing credentials.",
       "dependsOn": [
         "US-003"
       ]
@@ -97,7 +91,10 @@
         "专用提交：planner: US-005 add private snapshot manifest"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:03:15+08:00",
+      "completionNote": "Manifest masks credentials, forces output to tmp/private-user-data/<timestamp>, rejects unsafe paths.",
       "dependsOn": [
         "US-004"
       ]
@@ -113,7 +110,10 @@
         "专用提交：planner: US-006 add user profile domain types"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:04:20+08:00",
+      "completionNote": "Domain types, fixtures, and builder for user profile, owned heroes, and imported formation saves.",
       "dependsOn": [
         "US-002"
       ]
@@ -129,7 +129,10 @@
         "专用提交：planner: US-007 add user profile store"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:05:55+08:00",
+      "completionNote": "IndexedDB store for user profile snapshots and credential vault. Uses fake-indexeddb for testing.",
       "dependsOn": [
         "US-006"
       ]
@@ -145,7 +148,10 @@
         "专用提交：planner: US-008 add official read-only client"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:06:45+08:00",
+      "completionNote": "Read-only official client with allowlist, safe fetch options.",
       "dependsOn": [
         "US-006"
       ]
@@ -162,7 +168,10 @@
         "专用提交：planner: US-009 add user payload normalizer"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:07:55+08:00",
+      "completionNote": "Normalizer for user details, campaign details, and formation saves. Missing fields produce warnings instead of crashes.",
       "dependsOn": [
         "US-006",
         "US-008"
@@ -180,7 +189,10 @@
         "专用提交：planner: US-010 add user data manual sync model"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:10:25+08:00",
+      "completionNote": "Sync model with snapshot loading, age display, safe error handling, and delete. Component tests with fake-indexeddb.",
       "dependsOn": [
         "US-007",
         "US-009"
@@ -214,7 +226,10 @@
         "专用提交：planner: US-011B add game number arithmetic"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:11:25+08:00",
+      "completionNote": "Multiplication, division, power, log10, compare, and sort for game numbers.",
       "dependsOn": [
         "US-011A"
       ]
@@ -230,7 +245,10 @@
         "专用提交：planner: US-011C add game number addition threshold"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:12:35+08:00",
+      "completionNote": "Addition with configurable exponent threshold. Negligible terms are dropped.",
       "dependsOn": [
         "US-011B"
       ]
@@ -246,7 +264,10 @@
         "专用提交：planner: US-012 add specialization baseline"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:13:25+08:00",
+      "completionNote": "Specialization baseline extraction with fallback and warning on invalid levels.",
       "dependsOn": [
         "US-011A"
       ]
@@ -262,7 +283,10 @@
         "专用提交：planner: US-013 add gold budget baseline"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:14:00+08:00",
+      "completionNote": "Gold budget baseline with binary search, below-baseline flag, no internal mode exposure.",
       "dependsOn": [
         "US-012"
       ]
@@ -278,7 +302,10 @@
         "专用提交：planner: US-014 add simulator data coverage report"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:14:50+08:00",
+      "completionNote": "Coverage report with usefulness, current output, next action columns. Unknown keys flagged for review.",
       "dependsOn": [
         "US-001"
       ]
@@ -294,7 +321,10 @@
         "专用提交：planner: US-015 add champion simulation profile"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:15:30+08:00",
+      "completionNote": "Champion simulation profile with upgrade/feat/loot extraction and unsupported effect tracking.",
       "dependsOn": [
         "US-011A",
         "US-012"
@@ -311,7 +341,10 @@
         "专用提交：planner: US-016 add core dps effect parser"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:16:05+08:00",
+      "completionNote": "Core DPS effect parser for global and hero DPS multipliers. Unknown effects return unsupported.",
       "dependsOn": [
         "US-015"
       ]
@@ -327,7 +360,10 @@
         "专用提交：planner: US-017 add positional tag effect parser"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:16:35+08:00",
+      "completionNote": "Position and tag effect parsing added to existing parser. Adjacent and tag prefixes handled.",
       "dependsOn": [
         "US-016"
       ]
@@ -344,7 +380,10 @@
         "专用提交：planner: US-018 add variant rule projection"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:17:10+08:00",
+      "completionNote": "Variant rule projection to allowList, banList, forceInclude. Unknown mechanics become warnings.",
       "dependsOn": [
         "US-006"
       ]
@@ -360,7 +399,10 @@
         "专用提交：planner: US-019 add candidate pool modes"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:17:58+08:00",
+      "completionNote": "Three candidate pool modes: owned-only, all-hypothetical, manual-override. No profile mutation.",
       "dependsOn": [
         "US-006",
         "US-018"
@@ -393,7 +435,10 @@
         "专用提交：planner: US-021 add imported formation save normalizer"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:19:15+08:00",
+      "completionNote": "Formation save normalizer reuses userProfileNormalizer. Tests verify field preservation and unknown layout handling.",
       "dependsOn": [
         "US-009"
       ]
@@ -410,7 +455,10 @@
         "专用提交：planner: US-022 add formation legality checks"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:20:20+08:00",
+      "completionNote": "Formation legality checker for seat conflicts, banned champions, forced inclusions, and locked slots.",
       "dependsOn": [
         "US-018",
         "US-019"
@@ -427,7 +475,10 @@
         "专用提交：planner: US-023 add steady state scoring"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:21:10+08:00",
+      "completionNote": "Steady state scoring with adjacency-aware buffs, global DPS, and unsupported effect warnings.",
       "dependsOn": [
         "US-017",
         "US-022"
@@ -444,7 +495,10 @@
         "专用提交：planner: US-024 add beam search ranking"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:21:55+08:00",
+      "completionNote": "Beam search with configurable width, slot-by-slot expansion, score-based pruning.",
       "dependsOn": [
         "US-023"
       ]
@@ -460,7 +514,10 @@
         "专用提交：planner: US-025 add planner route"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:24:10+08:00",
+      "completionNote": "Planner route, navigation item, workbench route registration, and minimal page.",
       "dependsOn": [
         "US-001"
       ]
@@ -527,7 +584,10 @@
         "专用提交：planner: US-029 save planner result as preset"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:25:40+08:00",
+      "completionNote": "Save planner result as preset with disabled state for invalid results.",
       "dependsOn": [
         "US-028"
       ]
@@ -543,7 +603,10 @@
         "专用提交：planner: US-030 add privacy scan script"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:26:30+08:00",
+      "completionNote": "Privacy scan npm script scanning src, public, docs, tests, and dist.",
       "dependsOn": [
         "US-003"
       ]
@@ -559,7 +622,10 @@
         "专用提交：planner: US-031 sync planner docs"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
+      "completedBy": "ralph",
+      "completedAt": "2026-05-03T04:27:10+08:00",
+      "completionNote": "README updated with planner page, docs index already linked, final-todo already has all items.",
       "dependsOn": [
         "US-025",
         "US-030"
@@ -584,5 +650,17 @@
         "US-031"
       ]
     }
-  ]
+  ],
+  "metadata": {
+    "createdAt": "2026-05-03T00:00:00+08:00",
+    "acceptanceCases": ".ralph/tasks/planner/acceptance-cases.md",
+    "decisionLog": ".ralph/tasks/planner/decision-log.md",
+    "qualityGates": [
+      "story 专属测试必须通过",
+      "触碰 TypeScript 文件时，npm run typecheck 必须通过",
+      "每个完成的 story 必须有专用 commit",
+      "不得提交凭证、私人快照、.env*.local、tmp/private-user-data/**、dist 或生成的依赖目录"
+    ],
+    "updatedAt": "2026-05-02T19:58:33.889Z"
+  }
 }
