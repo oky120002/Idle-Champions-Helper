@@ -29,6 +29,7 @@ const VariantsPage = lazyNamedPage(() => import('../pages/VariantsPage'), 'Varia
 const FormationPage = lazyNamedPage(() => import('../pages/FormationPage'), 'FormationPage')
 const PresetsPage = lazyNamedPage(() => import('../pages/PresetsPage'), 'PresetsPage')
 const UserDataPage = lazyNamedPage(() => import('../pages/UserDataPage'), 'UserDataPage')
+const PlannerPage = lazyNamedPage(() => import('../pages/PlannerPage'), 'PlannerPage')
 
 export function App() {
   const { locale, setLocale, t } = useI18n()
@@ -130,6 +131,7 @@ export function App() {
             <Route path="/variants" element={<VariantsPage />} />
             <Route path="/formation" element={<FormationPage />} />
             <Route path="/presets" element={<PresetsPage />} />
+            <Route path="/planner" element={<PlannerPage />} />
             <Route path="/user-data" element={<UserDataPage />} />
             <Route path="*" element={<Navigate to="/champions" replace />} />
           </Routes>
