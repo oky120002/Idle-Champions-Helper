@@ -1,0 +1,588 @@
+{
+  "name": "Idle Champions 自动阵型计划器",
+  "description": "构建一个 local-first 的 Idle Champions Helper 自动阵型计划器和模拟器。工作被拆成适合 Ralph 无人值守执行的小型 TDD 故事。",
+  "branchName": "codex/planner-ralph-task-design",
+  "metadata": {
+    "createdAt": "2026-05-03T00:00:00+08:00",
+    "acceptanceCases": ".ralph/tasks/planner/acceptance-cases.md",
+    "decisionLog": ".ralph/tasks/planner/decision-log.md",
+    "qualityGates": [
+      "story 专属测试必须通过",
+      "触碰 TypeScript 文件时，npm run typecheck 必须通过",
+      "每个完成的 story 必须有专用 commit",
+      "不得提交凭证、私人快照、.env*.local、tmp/private-user-data/**、dist 或生成的依赖目录"
+    ],
+    "updatedAt": "2026-05-02T19:05:23.560Z"
+  },
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "落库 planner 文档",
+      "description": "创建 planner 文档集，让后续 agent 在上下文压缩后仍能恢复完整计划。",
+      "acceptanceCriteria": [
+        "创建 docs/modules/planner/auto-formation-planner-plan.md",
+        "创建 docs/modules/planner/prd.md",
+        "创建 docs/modules/planner/development-design.md",
+        "创建 docs/modules/planner/final-todo.md",
+        "docs 索引指向 planner 模块",
+        "文档中不出现真实凭证或私人快照",
+        "专用提交：planner: US-001 persist planner docs"
+      ],
+      "priority": 1,
+      "passes": true,
+      "completedBy": "codex/planner-ralph-task-design planning pass",
+      "completedAt": "2026-05-03T02:41:59+08:00",
+      "completionNote": "Codex completed the durable planner docs, PRD, development design, final todo, docs navigation, and acceptance-case references before handing implementation to Ralph."
+    },
+    {
+      "id": "US-002",
+      "title": "Ralph planner 任务包可运行",
+      "description": "确保 planner Ralph 任务包具备脚本、prompt、JSON 任务跟踪器、决策日志和结构验证。",
+      "acceptanceCriteria": [
+        ".ralph/scripts/validate-task.sh planner 通过",
+        "run-task.sh 使用 .ralph/tasks/planner/prd.json、ralph-prompt.md 和 decision-log.md",
+        "planner run.sh 委托给通用 run-task.sh 脚本",
+        "专用提交：planner: US-002 add ralph planner package"
+      ],
+      "priority": 1,
+      "passes": true,
+      "dependsOn": [
+        "US-001"
+      ],
+      "completedBy": "codex/planner-ralph-task-design preflight setup",
+      "completedAt": "2026-05-03T02:27:18+08:00",
+      "completionNote": "Ralph planner package, scripts, prompt, decision log, prd.json, run wrapper, ralph-tui install verification, and validate-task.sh planner were completed before starting unattended Ralph execution. US-001 is also completed by the planning pass, so Ralph should start implementation at US-003."
+    },
+    {
+      "id": "US-003",
+      "title": "敏感输出扫描器",
+      "description": "新增扫描器，防止凭证、私人快照和私人路径进入已提交文件或构建产物。",
+      "acceptanceCriteria": [
+        "能检测到假的凭证 fixture",
+        "只包含占位符的文档不会被当成 secret",
+        "能检测到提交源码中的 tmp/private-user-data 引用",
+        "专用提交：planner: US-003 add sensitive output scanner"
+      ],
+      "priority": 1,
+      "passes": false,
+      "dependsOn": [
+        "US-002"
+      ]
+    },
+    {
+      "id": "US-004",
+      "title": "私人环境变量加载器",
+      "description": "只从 process environment 或显式 .local 文件读取本地开发凭证。",
+      "acceptanceCriteria": [
+        "从环境变量读取 IC_PRIVATE_USER_ID 和 IC_PRIVATE_HASH",
+        "可以解析显式的 .local fixture",
+        "凭证缺失时安全失败且不打印 secret",
+        "拒绝 VITE_ 开头的凭证 key",
+        "专用提交：planner: US-004 add private env loader"
+      ],
+      "priority": 1,
+      "passes": false,
+      "dependsOn": [
+        "US-003"
+      ]
+    },
+    {
+      "id": "US-005",
+      "title": "私人快照 manifest",
+      "description": "为 tmp/private-user-data 下的本地私人用户数据快照创建安全 manifest 写入器。",
+      "acceptanceCriteria": [
+        "输出路径强制位于 tmp/private-user-data/<timestamp>",
+        "manifest 会遮蔽 user id 和 hash",
+        "拒绝不安全的输出目录",
+        "专用提交：planner: US-005 add private snapshot manifest"
+      ],
+      "priority": 1,
+      "passes": false,
+      "dependsOn": [
+        "US-004"
+      ]
+    },
+    {
+      "id": "US-006",
+      "title": "用户档案领域类型",
+      "description": "定义本地用户档案、已拥有英雄、装备、feat、传奇和导入阵型保存类型。",
+      "acceptanceCriteria": [
+        "最小已拥有英雄 fixture 可通过类型检查",
+        "导入阵型保存 fixture 包含专精、feat、familiar 和场景引用",
+        "snapshot builder 在可选字段缺失时仍能生成并带 warning",
+        "专用提交：planner: US-006 add user profile domain types"
+      ],
+      "priority": 1,
+      "passes": false,
+      "dependsOn": [
+        "US-002"
+      ]
+    },
+    {
+      "id": "US-007",
+      "title": "用户档案 IndexedDB 存储",
+      "description": "在 IndexedDB 中持久化归一化后的私人用户快照和可选凭证 vault 记录。",
+      "acceptanceCriteria": [
+        "使用 fake-indexeddb 验证 snapshot 保存、读取和删除",
+        "默认流程不保存凭证",
+        "删除会清除 snapshot 和可选凭证 vault",
+        "专用提交：planner: US-007 add user profile store"
+      ],
+      "priority": 1,
+      "passes": false,
+      "dependsOn": [
+        "US-006"
+      ]
+    },
+    {
+      "id": "US-008",
+      "title": "官方只读客户端 allowlist",
+      "description": "构建前端官方数据客户端，只允许只读用户数据调用。",
+      "acceptanceCriteria": [
+        "允许 getuserdetails、getcampaigndetails 和 getallformationsaves",
+        "拒绝 claim、purchase、save、redeem 等写入式调用",
+        "Fetch options 会省略 credentials、referrer 和 cache",
+        "专用提交：planner: US-008 add official read-only client"
+      ],
+      "priority": 1,
+      "passes": false,
+      "dependsOn": [
+        "US-006"
+      ]
+    },
+    {
+      "id": "US-009",
+      "title": "用户 payload 归一化器",
+      "description": "把 mock 官方用户数据 payload 归一化为 UserProfileSnapshot。",
+      "acceptanceCriteria": [
+        "mock getuserdetails 能提取已拥有英雄、装备、feat、传奇信息和 warning",
+        "mock getcampaigndetails 在存在时提取 campaign/favor 数据",
+        "mock getallformationsaves 能提取导入阵型保存",
+        "字段缺失时产生 warning 而不是崩溃",
+        "专用提交：planner: US-009 add user payload normalizer"
+      ],
+      "priority": 1,
+      "passes": false,
+      "dependsOn": [
+        "US-006",
+        "US-008"
+      ]
+    },
+    {
+      "id": "US-010",
+      "title": "用户数据页手动同步模型",
+      "description": "扩展用户数据页模型，表示已解析凭证、手动同步、快照年龄、错误和删除。",
+      "acceptanceCriteria": [
+        "无 snapshot 状态提供凭证解析和手动同步",
+        "已存 snapshot 状态显示私人数据存在天数",
+        "同步错误展示时不包含凭证",
+        "删除会清除 snapshot 和可选 vault",
+        "专用提交：planner: US-010 add user data manual sync model"
+      ],
+      "priority": 1,
+      "passes": false,
+      "dependsOn": [
+        "US-007",
+        "US-009"
+      ]
+    },
+    {
+      "id": "US-011A",
+      "title": "GameNumber 解析和格式化",
+      "description": "围绕高范围 incremental-game 数字库引入模拟器本地 GameNumber wrapper。",
+      "acceptanceCriteria": [
+        "新增 break_eternity.js 依赖",
+        "能解析 0、1.50e92、4.08e167 和 1e1000",
+        "超过 Number.MAX_VALUE 的值仍能格式化为游戏记数法",
+        "非法输入以可预测方式失败",
+        "专用提交：planner: US-011A add game number parse format"
+      ],
+      "priority": 1,
+      "passes": false,
+      "dependsOn": [
+        "US-002"
+      ]
+    },
+    {
+      "id": "US-011B",
+      "title": "GameNumber 运算和比较",
+      "description": "为超大游戏数字新增乘法、除法、幂、log10 和确定性比较。",
+      "acceptanceCriteria": [
+        "1.5e92 乘以 2.72e75 后排序上接近 4.08e167",
+        "除法和幂运算保持预期排序",
+        "超大值排序稳定且确定",
+        "专用提交：planner: US-011B add game number arithmetic"
+      ],
+      "priority": 1,
+      "passes": false,
+      "dependsOn": [
+        "US-011A"
+      ]
+    },
+    {
+      "id": "US-011C",
+      "title": "GameNumber 加法阈值",
+      "description": "新增大数加法行为，忽略小到不会影响游戏显示精度的项。",
+      "acceptanceCriteria": [
+        "1e100 + 1e99 会改变显示尾数",
+        "1e100 + 1e80 在显示和排序上返回较大项",
+        "阈值集中定义并记录文档",
+        "专用提交：planner: US-011C add game number addition threshold"
+      ],
+      "priority": 1,
+      "passes": false,
+      "dependsOn": [
+        "US-011B"
+      ]
+    },
+    {
+      "id": "US-012",
+      "title": "最后专精基线提取",
+      "description": "从英雄专精升级中提取最低有意义等级基线。",
+      "acceptanceCriteria": [
+        "返回最高专精所需等级",
+        "没有专精的英雄使用有文档说明的 fallback",
+        "异常等级会被 warning 并忽略",
+        "专用提交：planner: US-012 add specialization baseline"
+      ],
+      "priority": 1,
+      "passes": false,
+      "dependsOn": [
+        "US-011A"
+      ]
+    },
+    {
+      "id": "US-013",
+      "title": "金币预算基线接口",
+      "description": "新增金币预算等级基线接口，结合目标预算和最后专精要求。",
+      "acceptanceCriteria": [
+        "cost curve 和预算能返回可负担等级",
+        "低于专精要求的预算会标记 below-baseline",
+        "默认不暴露 100 级模式",
+        "专用提交：planner: US-013 add gold budget baseline"
+      ],
+      "priority": 1,
+      "passes": false,
+      "dependsOn": [
+        "US-012"
+      ]
+    },
+    {
+      "id": "US-014",
+      "title": "模拟器数据覆盖报告",
+      "description": "审计 definitions 覆盖情况，标记对模拟器有用的字段和后续归一化工作。",
+      "acceptanceCriteria": [
+        "已知有用 definition key 可标记 covered 或 uncovered",
+        "未知 key 保留以供复查",
+        "报告包含 usefulness、current output 和 next action",
+        "专用提交：planner: US-014 add simulator data coverage report"
+      ],
+      "priority": 2,
+      "passes": false,
+      "dependsOn": [
+        "US-001"
+      ]
+    },
+    {
+      "id": "US-015",
+      "title": "英雄模拟 profile 投影",
+      "description": "把英雄详情数据投影成模拟器友好的 profile，同时保留原始 effect 字符串。",
+      "acceptanceCriteria": [
+        "投影能提取 upgrades、feats、loot、legendary effects 和 raw effect strings",
+        "未知 effects 保存在 unsupportedEffects",
+        "包含本地化名称用于解释",
+        "专用提交：planner: US-015 add champion simulation profile"
+      ],
+      "priority": 2,
+      "passes": false,
+      "dependsOn": [
+        "US-011A",
+        "US-012"
+      ]
+    },
+    {
+      "id": "US-016",
+      "title": "Effect parser 核心 DPS 组",
+      "description": "把第一组核心 DPS effect prefix 解析成类型化模拟器 effect。",
+      "acceptanceCriteria": [
+        "解析 global_dps_multiplier_mult",
+        "解析 hero_dps_multiplier_mult",
+        "未知 prefix 返回 unsupported result",
+        "专用提交：planner: US-016 add core dps effect parser"
+      ],
+      "priority": 2,
+      "passes": false,
+      "dependsOn": [
+        "US-015"
+      ]
+    },
+    {
+      "id": "US-017",
+      "title": "Effect parser 位置和标签组",
+      "description": "尽可能解析相邻和 tagged champion multiplier hints。",
+      "acceptanceCriteria": [
+        "能解析 adjacent target hints",
+        "能解析 tagged champion multiplier hints",
+        "不支持的位置格式保留解释",
+        "专用提交：planner: US-017 add positional tag effect parser"
+      ],
+      "priority": 2,
+      "passes": false,
+      "dependsOn": [
+        "US-016"
+      ]
+    },
+    {
+      "id": "US-018",
+      "title": "变体规则投影",
+      "description": "把 variant mechanics 投影为 planner 约束和 warning。",
+      "acceptanceCriteria": [
+        "投影 only_allow_crusaders",
+        "投影 disallow_crusaders",
+        "投影 force_use_heroes",
+        "未知 mechanics 保留为 warning",
+        "专用提交：planner: US-018 add variant rule projection"
+      ],
+      "priority": 2,
+      "passes": false,
+      "dependsOn": [
+        "US-006"
+      ]
+    },
+    {
+      "id": "US-019",
+      "title": "候选池模式",
+      "description": "构建 owned-only、all-hypothetical 和 manual override 三种候选池。",
+      "acceptanceCriteria": [
+        "owned-only 模式只返回已拥有英雄",
+        "all-hypothetical 模式包含带假设的未拥有英雄",
+        "manual override 模式不会修改 profile snapshot",
+        "专用提交：planner: US-019 add candidate pool modes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "dependsOn": [
+        "US-006",
+        "US-018"
+      ]
+    },
+    {
+      "id": "US-020",
+      "title": "假设英雄公平基线",
+      "description": "尽可能使用账号推导出的中位数作为未拥有英雄假设。",
+      "acceptanceCriteria": [
+        "同 seat 中位装备可用时优先使用",
+        "同 seat 数据不可用时使用账号全局中位数",
+        "空账号 fallback 明确标记 no-equipment/no-feat",
+        "专用提交：planner: US-020 add hypothetical fairness baseline"
+      ],
+      "priority": 2,
+      "passes": false,
+      "dependsOn": [
+        "US-019"
+      ]
+    },
+    {
+      "id": "US-021",
+      "title": "导入阵型保存归一化器",
+      "description": "把用户数据中的游戏内已保存阵型归一化为 planner 可用记录。",
+      "acceptanceCriteria": [
+        "mock getallformationsaves payload 可转换为 ImportedFormationSave",
+        "保留 specializations、feats、familiars、favorite flag 和 scenario relation",
+        "未知 formation layout id 产生 warning 而不是静默丢弃",
+        "专用提交：planner: US-021 add imported formation save normalizer"
+      ],
+      "priority": 2,
+      "passes": false,
+      "dependsOn": [
+        "US-009"
+      ]
+    },
+    {
+      "id": "US-022",
+      "title": "Planner 阵型合法性",
+      "description": "校验 planner 阵型中的 seat 冲突、被禁英雄、强制英雄和锁定 slot。",
+      "acceptanceCriteria": [
+        "检测 seat 冲突",
+        "检测被禁英雄",
+        "检测缺失的强制英雄",
+        "检测锁定或被占用 slot",
+        "专用提交：planner: US-022 add formation legality checks"
+      ],
+      "priority": 2,
+      "passes": false,
+      "dependsOn": [
+        "US-018",
+        "US-019"
+      ]
+    },
+    {
+      "id": "US-023",
+      "title": "稳态评分 fixture",
+      "description": "用相邻 support、global DPS 和 unsupported warning 评估一个小型稳态阵型 fixture。",
+      "acceptanceCriteria": [
+        "类似 Bruenor 的相邻 support 放在相邻位置时评分更高",
+        "global DPS support 不受相邻关系影响",
+        "unsupported effects 出现在结果 warning 中",
+        "专用提交：planner: US-023 add steady state scoring"
+      ],
+      "priority": 2,
+      "passes": false,
+      "dependsOn": [
+        "US-017",
+        "US-022"
+      ]
+    },
+    {
+      "id": "US-024",
+      "title": "Beam search 候选排序",
+      "description": "搜索一个小型阵型空间，并对顶部候选阵型排序。",
+      "acceptanceCriteria": [
+        "4-slot 确定性 fixture 返回预期 top result",
+        "beam width 限制候选扩展",
+        "top results 包含 score、placements、explanations 和 warnings",
+        "专用提交：planner: US-024 add beam search ranking"
+      ],
+      "priority": 2,
+      "passes": false,
+      "dependsOn": [
+        "US-023"
+      ]
+    },
+    {
+      "id": "US-025",
+      "title": "Planner 路由和导航",
+      "description": "为 planner workbench 新增路由和导航入口。",
+      "acceptanceCriteria": [
+        "/planner 渲染 planner 页面",
+        "导航包含 Automatic Planner",
+        "保持 HashRouter 兼容性",
+        "专用提交：planner: US-025 add planner route"
+      ],
+      "priority": 3,
+      "passes": false,
+      "dependsOn": [
+        "US-001"
+      ]
+    },
+    {
+      "id": "US-026",
+      "title": "Planner profile 状态面板",
+      "description": "展示 planner profile 可用性、私人数据年龄、过期状态和手动刷新引导。",
+      "acceptanceCriteria": [
+        "无 profile 状态链接到用户数据页",
+        "已有 profile 显示存在天数",
+        "同步 warning 可见且不会自动刷新",
+        "专用提交：planner: US-026 add planner profile state"
+      ],
+      "priority": 3,
+      "passes": false,
+      "dependsOn": [
+        "US-025",
+        "US-007"
+      ]
+    },
+    {
+      "id": "US-027",
+      "title": "Planner 场景选择",
+      "description": "允许按文本筛选并选择 variant 作为 planner 输入。",
+      "acceptanceCriteria": [
+        "variant 列表可按文本筛选",
+        "选择 variant 后显示阵型和限制摘要",
+        "长限制文本仍以文本形式可访问",
+        "专用提交：planner: US-027 add planner scenario selection"
+      ],
+      "priority": 3,
+      "passes": false,
+      "dependsOn": [
+        "US-025",
+        "US-018"
+      ]
+    },
+    {
+      "id": "US-028",
+      "title": "Planner 结果卡片",
+      "description": "渲染包含游戏记数法、slot、解释和 warning 的 planner 结果卡片。",
+      "acceptanceCriteria": [
+        "score 以游戏记数法显示",
+        "slot assignments 以文本可见",
+        "explanation 和 unsupported warning 区块可见",
+        "专用提交：planner: US-028 add planner result card"
+      ],
+      "priority": 3,
+      "passes": false,
+      "dependsOn": [
+        "US-024",
+        "US-025"
+      ]
+    },
+    {
+      "id": "US-029",
+      "title": "将 planner 结果保存为 preset",
+      "description": "把选中的 planner 结果保存到现有阵型 preset 系统。",
+      "acceptanceCriteria": [
+        "点击保存会写入 formation preset",
+        "保存的 preset 保留 layoutId、placements 和 scenarioRef",
+        "无效结果会禁用保存",
+        "专用提交：planner: US-029 save planner result as preset"
+      ],
+      "priority": 3,
+      "passes": false,
+      "dependsOn": [
+        "US-028"
+      ]
+    },
+    {
+      "id": "US-030",
+      "title": "Privacy scan npm 脚本",
+      "description": "把敏感输出扫描器暴露为 npm 隐私关卡。",
+      "acceptanceCriteria": [
+        "存在 npm run privacy:scan",
+        "scanner 检查 src、public、docs、tests，以及存在时的 dist",
+        "scanner 对 fixture secrets 失败，对普通占位符通过",
+        "专用提交：planner: US-030 add privacy scan script"
+      ],
+      "priority": 3,
+      "passes": false,
+      "dependsOn": [
+        "US-003"
+      ]
+    },
+    {
+      "id": "US-031",
+      "title": "Planner 文档同步",
+      "description": "在 planner 路由和核心行为存在后同步 README 和 docs。",
+      "acceptanceCriteria": [
+        "路由存在后，根 README 提到 planner",
+        "docs index 指向 planner 模块文档",
+        "final-todo 列出 speed/gem、survival、balanced scoring、step simulation 和 manual parameter panel",
+        "专用提交：planner: US-031 sync planner docs"
+      ],
+      "priority": 3,
+      "passes": false,
+      "dependsOn": [
+        "US-025",
+        "US-030"
+      ]
+    },
+    {
+      "id": "US-032",
+      "title": "最终回归",
+      "description": "运行并修复最终 planner 回归关卡。",
+      "acceptanceCriteria": [
+        "npm run lint 通过",
+        "npm run typecheck 通过",
+        "npm run test:run 通过",
+        "npm run build 通过",
+        "npm run privacy:scan 通过",
+        "专用提交：planner: US-032 final regression"
+      ],
+      "priority": 4,
+      "passes": false,
+      "dependsOn": [
+        "US-029",
+        "US-031"
+      ]
+    }
+  ]
+}
