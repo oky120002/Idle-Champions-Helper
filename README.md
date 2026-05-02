@@ -10,7 +10,7 @@
 
 ## 当前范围
 
-- 当前已路由页面：英雄筛选、英雄详情、立绘页、立绘页下的动图审片台、宠物图鉴、变体筛选、阵型编辑、方案存档、个人数据
+- 当前已路由页面：英雄筛选、英雄详情、立绘页、立绘页下的动图审片台、宠物图鉴、变体筛选、阵型编辑、方案存档、自动计划、个人数据
 - 根路由 `/` 当前直接重定向到英雄筛选页；仓库里仍保留未挂路由的 `HomePage` 草稿，但它不是当前线上入口
 - 公共数据：`public/data/version.json` 与 `public/data/v1/*.json`，其中包含英雄 / 宠物静态图索引、`champion-animations.json`、`pet-animations.json` 动图清单，以及 `champion-animation-audit.json` 本地审片清单
 - 动图审片台 `#/illustrations/audit` 支持勾选人工结论、问题标签与备注，并可一键复制 JSON 反馈
