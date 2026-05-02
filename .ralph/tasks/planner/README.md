@@ -32,6 +32,12 @@ ralph-tui run --prd .ralph/tasks/planner/prd.json --agent claude --serial --head
 
 注意：`ralph-tui 0.11.0` 的内置 `claude` agent 只接受 `sonnet`、`opus`、`haiku` 三个显式模型别名。默认保持 `RALPH_MODEL` 为空，让 `claude` CLI 使用本机默认模型；不要用 `RALPH_AGENT=claude RALPH_MODEL=glm-5.1`。
 
+无人值守模式下，`ralph-tui 0.11.0` 的 Claude 插件默认会用 `claude --print --dangerously-skip-permissions`，通用 wrapper 也默认传 `--no-sandbox`。如果要临时恢复 Ralph 自身 sandbox，可以设置：
+
+```bash
+RALPH_SANDBOX=auto ./.ralph/scripts/run-task.sh planner
+```
+
 ## 规则
 
 - 串行、无人值守运行。

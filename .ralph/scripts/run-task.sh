@@ -35,6 +35,7 @@ RALPH_MODEL="${RALPH_MODEL:-}"
 RALPH_MAX_ITERATIONS="${RALPH_MAX_ITERATIONS:-200}"
 RALPH_DELAY_MS="${RALPH_DELAY_MS:-3000}"
 RALPH_TASK_RANGE="${RALPH_TASK_RANGE:-}"
+RALPH_SANDBOX="${RALPH_SANDBOX:-no}"
 
 if ! command -v ralph-tui >/dev/null 2>&1; then
   echo "Warning: ralph-tui is not installed; falling back to legacy ralph." >&2
@@ -58,6 +59,23 @@ CMD=(
   --output-dir "${OUTPUT_DIR}"
   --progress-file "${PROGRESS_FILE}"
 )
+
+case "${RALPH_SANDBOX}" in
+  no|none|false|0)
+    CMD+=(--no-sandbox)
+    ;;
+  auto|true|1)
+    CMD+=(--sandbox)
+    ;;
+  bwrap|sandbox-exec)
+    CMD+=("--sandbox=${RALPH_SANDBOX}")
+    ;;
+  *)
+    echo "Error: unsupported RALPH_SANDBOX value: ${RALPH_SANDBOX}" >&2
+    echo "Use no, auto, bwrap, or sandbox-exec." >&2
+    exit 1
+    ;;
+esac
 
 if [[ -n "${RALPH_MODEL}" ]]; then
   CMD+=(--model "${RALPH_MODEL}")
