@@ -222,7 +222,7 @@ function resolveAmountExpr(expr: string, payloads: ParsedEffectPayload[], locale
   const upgradeAmountMatch = trimmed.match(/^upgrade_amount\((\d+),\s*(\d+)\)$/)
 
   if (upgradeAmountMatch) {
-    const [, _upgradeId, indexToken] = upgradeAmountMatch
+    const [, , indexToken] = upgradeAmountMatch
     const effectIndex = Number(indexToken)
     const sourcePayload = payloads[effectIndex] ?? null
 
