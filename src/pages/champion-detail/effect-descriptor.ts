@@ -1,13 +1,27 @@
 import type { ParsedEffectPayload, EffectContext, EffectDescriptor } from './types'
 import { containsCjkCharacters, localizeAbilityScore, localizeEffectKind } from './detail-localization'
 import { buildNotAvailableLabel, formatNumberishToken } from './detail-value-formatters'
-import { resolveEffectDescription, resolveEffectTargets } from './effect-payload'
+import { resolveEffectDescription, resolveEffectTargets, resolveEffectToken } from './effect-payload'
+import { TAG_LABELS } from '../../domain/champion-tags/labels'
 
-export function describeEffectPayload(payload: ParsedEffectPayload, effectContext: EffectContext): EffectDescriptor {
+function localizeEffectTag(value: string | null | undefined, locale: 'zh-CN' | 'en-US'): string | null {
+  if (!value) {
+    return null
+  }
+
+  return TAG_LABELS[value.trim().toLowerCase()]?.[locale] ?? value
+}
+
+export function describeEffectPayload(
+  payload: ParsedEffectPayload,
+  effectContext: EffectContext,
+  payloads: ParsedEffectPayload[] = [payload],
+): EffectDescriptor {
   const { locale } = effectContext
-  const amount = formatNumberishToken(payload.args[0] ?? null, locale)
+  const amount =
+    resolveEffectToken('amount', payload, effectContext, payloads) ?? formatNumberishToken(payload.args[0] ?? null, locale)
   const targets = resolveEffectTargets(payload, effectContext)
-  const resolvedDescription = resolveEffectDescription(payload.description, payload, effectContext)
+  const resolvedDescription = resolveEffectDescription(payload.description, payload, effectContext, payloads)
   let categoryLabel = localizeEffectKind(payload.kind, locale)
   let summary: string
   let isRawEffectKindFallback = false
@@ -119,13 +133,15 @@ export function describeEffectPayload(payload: ParsedEffectPayload, effectContex
       categoryLabel = locale === 'zh-CN' ? '压制阈值' : 'Overwhelm'
       summary = locale === 'zh-CN' ? `压制起始值提高 ${amount}` : `Starting overwhelm increases by ${amount}`
       break
-    case 'add_hero_tags':
+    case 'add_hero_tags': {
       categoryLabel = locale === 'zh-CN' ? '新增标签' : 'Add tag'
+      const tagLabel = localizeEffectTag(payload.args[2] ?? payload.args[1], locale) ?? payload.args[2] ?? payload.args[1] ?? 'unknown'
       summary =
         locale === 'zh-CN'
-          ? `新增标签「${payload.args[2] ?? payload.args[1] ?? 'unknown'}」`
-          : `Add the "${payload.args[2] ?? payload.args[1] ?? 'unknown'}" tag`
+          ? `新增标签「${tagLabel}」`
+          : `Add the "${tagLabel}" tag`
       break
+    }
     case 'buff_upgrade_effect_stacks_max_mult':
       categoryLabel = locale === 'zh-CN' ? '层数上限' : 'Stack cap'
       summary =
@@ -134,12 +150,15 @@ export function describeEffectPayload(payload: ParsedEffectPayload, effectContex
           : `Increase the max stacks of "${targets.summary ?? 'linked ability'}" by ${amount}%`
       break
     case 'buff_upgrade_per_any_tagged_crusader':
+    case 'buff_upgrade_per_any_tagged_crusader_mult': {
+      const tagLabel = localizeEffectTag(payload.args[2], locale) ?? (locale === 'zh-CN' ? '符合标签的英雄' : 'tagged champion')
       categoryLabel = locale === 'zh-CN' ? '按标签增幅' : 'Tag-based boost'
       summary =
         locale === 'zh-CN'
-          ? `每名符合标签的英雄使「${targets.summary ?? '关联能力'}」提高 ${amount}%`
-          : `Each tagged champion increases "${targets.summary ?? 'linked ability'}" by ${amount}%`
+          ? `每名${tagLabel}使「${targets.summary ?? '关联能力'}」提高 ${amount}%`
+          : `Each ${tagLabel} champion increases "${targets.summary ?? 'linked ability'}" by ${amount}%`
       break
+    }
     default:
       isRawEffectKindFallback = true
       summary =
