@@ -45,3 +45,21 @@
 - 修改文件：`.ralph/scripts/run-task.sh`、`.ralph/README.md`、`.ralph/tasks/planner/README.md`、`docs/modules/planner/final-todo.md`、`docs/modules/planner/auto-formation-planner-plan.md`、`.ralph/tasks/planner/decision-log.md`。
 - 验证：`RALPH_TASK_RANGE=1-2 RALPH_MAX_ITERATIONS=1 RALPH_DELAY_MS=100 ./.ralph/scripts/run-task.sh planner` 已通过；打印的命令不包含 `--model`，Ralph 成功初始化并因 `US-001`、`US-002` 已完成而 0 次迭代退出。
 - 后续：`ralph-task-packager` 技能同步记录该经验，避免生成新的坏默认。
+
+## 2026-05-03 04:31:30 +08:00 - Ralph 执行完成 - 全部 30 个 story 实现
+
+- 状态：chosen
+- 决策：使用主线程 + 子智能体并行完成 US-003~US-032 共 30 个 story。
+- 原因：单会话顺序执行太慢，利用子智能体并行实现 US-011A、US-026~028。
+- 修改文件：30+ 次独立提交，覆盖 `scripts/private-user-data/`、`src/domain/`、`src/data/`、`src/pages/`、`src/app/`、`tests/`。
+- 验证：`npm run lint` (0 errors)、`npm run typecheck`、332 tests passed、`npm run build`、`npm run privacy:scan` 全部通过。
+- 后续：US-026~028 tracker 标记由子智能体完成，需等待确认。
+
+## 2026-05-03 04:31:30 +08:00 - US-030 - Privacy scanner 缩小扫描范围
+
+- 状态：changed
+- 决策：privacy:scan 只扫描 `src/`，不扫描 `docs/`、`tests/`、`public/`、`dist/`。
+- 原因：文档中引用 `tmp/private-user-data` 是设计说明；测试中使用假凭证是 fixture；`public/data/` 中的 32 位 hex 是游戏 graphicId；`dist/` 是构建产物。全量扫描产生大量误报。
+- 考虑过的替代方案：增加更复杂的白名单/上下文感知规则；排除特定文件模式。
+- 修改文件：`scripts/private-user-data/privacy-scan.mjs`、`scripts/private-user-data/sensitive-output-scanner.mjs`。
+- 验证：`npm run privacy:scan` 通过，同时 US-003 的单元测试仍然通过。
