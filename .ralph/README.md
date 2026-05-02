@@ -57,6 +57,42 @@ planner 任务包也提供了便捷入口：
 ./.ralph/scripts/install-ralph-tui.sh
 ```
 
+## 服务器安装与执行
+
+如果服务器还没有 Bun 和 `ralph-tui`，可以用这一行安装 Bun、把 Bun 路径写入 `~/.zshrc`，并安装 `ralph-tui`：
+
+```bash
+curl -fsSL https://bun.sh/install | bash && LINE='export BUN_INSTALL="$HOME/.bun"; export PATH="$BUN_INSTALL/bin:$PATH"' && touch ~/.zshrc && { grep -qxF "$LINE" ~/.zshrc || echo "$LINE" >> ~/.zshrc; } && export BUN_INSTALL="$HOME/.bun" PATH="$BUN_INSTALL/bin:$PATH" && bun install -g ralph-tui && ralph-tui --version
+```
+
+服务器仓库路径为 `/Users/rain/Workspaces/Idle-Champions-Helper` 时，直接运行 planner：
+
+```bash
+cd /Users/rain/Workspaces/Idle-Champions-Helper && export BUN_INSTALL="$HOME/.bun" PATH="$BUN_INSTALL/bin:$PATH" && ./.ralph/scripts/run-task.sh planner
+```
+
+只验证 1-2 号任务时：
+
+```bash
+cd /Users/rain/Workspaces/Idle-Champions-Helper && export BUN_INSTALL="$HOME/.bun" PATH="$BUN_INSTALL/bin:$PATH" && RALPH_TASK_RANGE=1-2 RALPH_MAX_ITERATIONS=2 ./.ralph/scripts/run-task.sh planner
+```
+
+脚本本身没有写死服务器路径：`run-task.sh` 和任务本地的 `run.sh` 都会根据脚本所在目录反推仓库根目录。上面的绝对路径只是服务器 checkout 位置示例。
+
+服务器无人值守运行前，建议先确认 Claude Code 可用：
+
+```bash
+cd /Users/rain/Workspaces/Idle-Champions-Helper && export BUN_INSTALL="$HOME/.bun" PATH="$BUN_INSTALL/bin:$PATH" && claude --version && ralph-tui doctor --json
+```
+
+`ralph-tui 0.11.0` 的内置 `claude` agent 默认 `skipPermissions = true`，会用 `claude --print --dangerously-skip-permissions` 启动 Claude Code，避免夜间任务卡在权限确认。通用 `run-task.sh` 也默认传 `--no-sandbox`，让 Ralph 自身不额外收窄文件或网络权限；如果要临时开启 Ralph sandbox，可以显式设置：
+
+```bash
+RALPH_SANDBOX=auto ./.ralph/scripts/run-task.sh planner
+```
+
+即便开启了 Claude 全权限，Claude Code / 服务器系统 / Git 凭据 / 网络环境仍可能限制部分操作；遇到不能自动处理的问题时，planner prompt 会要求记录失败原因和下一步建议。
+
 ## 目录规则
 
 - `.ralph/scripts/**`：只放通用脚本，不写具体功能业务逻辑。
@@ -87,6 +123,7 @@ RALPH_AGENT=claude ./.ralph/scripts/run-task.sh planner
 RALPH_TASK_RANGE=1-3 ./.ralph/scripts/run-task.sh planner
 RALPH_MAX_ITERATIONS=20 ./.ralph/scripts/run-task.sh planner
 RALPH_MODEL=sonnet ./.ralph/scripts/run-task.sh planner
+RALPH_SANDBOX=auto ./.ralph/scripts/run-task.sh planner
 ```
 
 注意：`ralph-tui 0.11.0` 的内置 `claude` agent 只接受 `sonnet`、`opus`、`haiku` 这三个显式模型别名。不要给 `RALPH_AGENT=claude` 传 `glm-5.1`；如果 Claude Code 本机默认模型已经配置为 GLM，则保持 `RALPH_MODEL` 为空。
