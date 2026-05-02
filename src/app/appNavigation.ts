@@ -1,6 +1,7 @@
 import type { LucideIcon } from 'lucide-react'
 import {
   Archive,
+  BrainCircuit,
   Database,
   GitBranch,
   Image,
@@ -25,6 +26,7 @@ export const navigation: AppNavigationItem[] = [
   { to: '/variants', label: { zh: '变体筛选', en: 'Variant filters' }, Icon: GitBranch },
   { to: '/formation', label: { zh: '阵型编辑', en: 'Formation' }, Icon: LayoutGrid },
   { to: '/presets', label: { zh: '方案存档', en: 'Presets' }, Icon: Archive },
+  { to: '/planner', label: { zh: '自动计划', en: 'Automatic Planner' }, Icon: BrainCircuit },
   { to: '/user-data', label: { zh: '个人数据', en: 'User Data' }, Icon: Database },
 ]
 

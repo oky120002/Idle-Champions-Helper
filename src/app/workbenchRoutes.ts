@@ -5,6 +5,7 @@ const WORKBENCH_ROUTE_PATHS = new Set([
   '/variants',
   '/formation',
   '/presets',
+  '/planner',
   '/user-data',
 ])
 
