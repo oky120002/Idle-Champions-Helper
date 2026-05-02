@@ -1,165 +1,92 @@
-# Ralph 循环使用说明
+# Ralph 任务编排
 
-## 作用
+本目录是仓库内通用的 Ralph 任务编排层。顶层只保留通用脚本、模板和说明；具体功能任务统一放在 `.ralph/tasks/<task-name>/`。
 
-本目录用于驱动 Idle Champions Helper 的 Ralph 循环开发流程。
+## 当前工具
 
-- `run-ralph.sh`：启动脚本
-- `ralph-prompt.md`：循环提示词与执行规则
-- `ralph-tasks.md`：任务清单与进度文件
+本机已经安装 `ralph-tui`，默认使用它作为 Ralph 运行器。
 
-Ralph 的 Tasks Mode 会自动读取当前仓库根目录下的 `.ralph/ralph-tasks.md`，所以不需要单独传任务文件路径，但必须在仓库根目录运行。
+- 版本：`ralph-tui 0.11.0`
+- 路径：`~/.bun/bin/ralph-tui`
+- 默认 agent 插件：`claude`
+- 当前预检：`ralph-tui doctor --json` 显示 Claude Code 健康
 
-## 速查
+旧版 `ralph` 仍位于 `/opt/homebrew/bin/ralph`，只在 `ralph-tui` 不可用时作为 fallback 使用。
 
-最常用的命令只有下面这几个：
+## 目录结构
 
-```bash
-./.ralph/run-ralph.sh
+```text
+.ralph/
+  README.md
+  scripts/
+  templates/
+  tasks/
+    planner/
+    legacy-ui-polish/
 ```
-
-```bash
-ralph --status --tasks
-```
-
-```bash
-ralph --list-tasks
-```
-
-```bash
-RALPH_MAX_ITERATIONS=80 ./.ralph/run-ralph.sh
-```
-
-```bash
-RALPH_MODEL=gpt-5.4 ./.ralph/run-ralph.sh
-```
-
-## 快速开始
-
-在仓库根目录执行：
-
-```bash
-./.ralph/run-ralph.sh
-```
-
-等价的完整步骤：
-
-```bash
-cd /Users/rain/Workspaces/Idle-Champions-Helper
-./.ralph/run-ralph.sh
-```
-
-脚本会自动：
-
-- 切到仓库根目录
-- 检查本机是否安装了 `ralph` 和 `codex`
-- 读取 `.ralph/ralph-prompt.md`
-- 读取 `.ralph/ralph-tasks.md`
-- 以 Ralph `--tasks` 模式逐个推进顶级任务
 
 ## 常用命令
 
-启动循环：
+运行 planner 任务包：
 
 ```bash
-./.ralph/run-ralph.sh
+./.ralph/scripts/run-task.sh planner
 ```
 
-查看当前状态：
+planner 任务包也提供了便捷入口：
 
 ```bash
-ralph --status --tasks
+./.ralph/tasks/planner/run.sh
 ```
 
-列出任务：
+查看任务进度：
 
 ```bash
-ralph --list-tasks
+./.ralph/scripts/status.sh planner
 ```
 
-中断后继续跑：
+验证任务包结构：
 
 ```bash
-./.ralph/run-ralph.sh
+./.ralph/scripts/validate-task.sh planner
 ```
 
-停止循环：
+确认或重新安装 `ralph-tui`：
 
 ```bash
-Ctrl+C
+./.ralph/scripts/install-ralph-tui.sh
 ```
 
-## 常用可选参数
+## 目录规则
 
-提高最大迭代次数：
+- `.ralph/scripts/**`：只放通用脚本，不写具体功能业务逻辑。
+- `.ralph/templates/**`：放可复用的 prompt、决策日志和验收用例模板。
+- `.ralph/tasks/<task-name>/**`：放某个任务专属的 PRD、prompt、决策、上下文和精选产物。
+- `.ralph/tasks/planner/**`：自动计划模块的 Ralph 任务包。
+- `.ralph/tasks/legacy-ui-polish/**`：从旧 Ralph 循环迁移过来的历史任务文件。
+
+大型原始日志、临时上下文、私人游戏数据和模型草稿应放在任务本地的忽略目录或 `tmp/`，不要散落到仓库根目录。
+
+## 默认运行行为
+
+`run-task.sh` 会从 `.ralph/tasks/<task-name>/` 读取这些文件：
+
+- `prd.json`
+- `ralph-prompt.md`
+- `decision-log.md`
+
+默认以 headless、串行模式运行 `ralph-tui`，默认 agent 是 Claude Code。默认不传 `--model`，让 `claude` CLI 使用它自己的默认模型：
 
 ```bash
-RALPH_MAX_ITERATIONS=80 ./.ralph/run-ralph.sh
+RALPH_AGENT=claude ./.ralph/scripts/run-task.sh planner
 ```
 
-指定模型：
+常用覆盖参数：
 
 ```bash
-RALPH_MODEL=gpt-5.4 ./.ralph/run-ralph.sh
+RALPH_TASK_RANGE=1-3 ./.ralph/scripts/run-task.sh planner
+RALPH_MAX_ITERATIONS=20 ./.ralph/scripts/run-task.sh planner
+RALPH_MODEL=sonnet ./.ralph/scripts/run-task.sh planner
 ```
 
-指定 agent：
-
-```bash
-RALPH_AGENT=codex ./.ralph/run-ralph.sh
-```
-
-查看更详细日志：
-
-```bash
-./.ralph/run-ralph.sh --verbose-tools
-```
-
-## 文件职责
-
-### `.ralph/run-ralph.sh`
-
-启动脚本。默认会带上这些参数：
-
-- `--tasks`
-- `--completion-promise COMPLETE`
-- `--task-promise READY_FOR_NEXT_TASK`
-- `--max-iterations 40`
-- `--no-questions`
-- `--no-commit`
-
-### `.ralph/ralph-prompt.md`
-
-Ralph 每轮执行时使用的规则说明，主要控制：
-
-- 一次只处理一个顶级任务
-- 不向用户提问
-- 单任务完成输出 `<promise>READY_FOR_NEXT_TASK</promise>`
-- 全部完成输出 `<promise>COMPLETE</promise>`
-- 完成后应做的验证与提交要求
-
-### `.ralph/ralph-tasks.md`
-
-真实任务进度文件。Ralph 会直接读取并更新这份任务列表。
-
-任务状态含义：
-
-- `[ ]`：未开始
-- `[/]`：进行中
-- `[x]`：已完成
-
-如果要调整任务内容或手动修正进度，直接编辑这份文件。
-
-## 使用建议
-
-- 最好先切到一个 `codex/*` 分支，再启动循环，不要长期直接在 `main` 上跑开发任务。
-- 如果 Ralph 中途退出，只要 `.ralph/ralph-tasks.md` 还在，下次重新执行脚本就会从当前进度继续。
-- 如果发现任务规则需要调整，优先修改 `.ralph/ralph-prompt.md`。
-- 如果发现只是任务内容需要调整，优先修改 `.ralph/ralph-tasks.md`。
-
-## 当前推荐流程
-
-```bash
-git checkout -b codex/ralph-loop-run
-./.ralph/run-ralph.sh
-```
+注意：`ralph-tui 0.11.0` 的内置 `claude` agent 只接受 `sonnet`、`opus`、`haiku` 这三个显式模型别名。不要给 `RALPH_AGENT=claude` 传 `glm-5.1`；如果 Claude Code 本机默认模型已经配置为 GLM，则保持 `RALPH_MODEL` 为空。
