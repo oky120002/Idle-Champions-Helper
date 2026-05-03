@@ -4,8 +4,8 @@
 
 - 站点是 `Vite + React + TypeScript` 静态站，生产部署在 GitHub Pages，必须继续兼容 `HashRouter` 与 `import.meta.env.BASE_URL`。
 - 公共数据入口是 `npm run data:official`，会抓取中英文 definitions，归一化 `champions.json`、`champion-details/<id>.json`、`variants.json`、`formations.json`、`enums.json`、立绘、动画、专精图和宠物数据。
-- 当前私人数据页只做 Support URL、手填凭证和日志文本的本地解析预览，不联网、不持久化凭证。
-- IndexedDB 当前只有 `formationDrafts` 和 `formationPresets` 两个 store；planner 需要新增私人快照和可选 credential vault。
+- 当前私人数据页支持 Support URL、手填凭证和日志文本的本地解析预览；用户点击手动同步后，浏览器请求官方只读接口并把归一化快照写入 IndexedDB。
+- IndexedDB 已包含 `formationDrafts`、`formationPresets`、`userProfileSnapshots` 和可选 `credentialVault` store；默认同步流程不保存凭证。
 - 本规划分支只写文档与 Ralph 任务契约；`src/` 实现必须交给 `.ralph/tasks/planner/prd.json` 后续 story。
 
 ## 目标架构

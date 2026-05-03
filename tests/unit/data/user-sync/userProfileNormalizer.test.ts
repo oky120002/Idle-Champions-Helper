@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { normalizeUserDetails, normalizeCampaignDetails, normalizeFormationSaves } from '../../../../src/data/user-sync/userProfileNormalizer'
+import {
+  buildUserProfileSnapshot,
+  normalizeCampaignDetails,
+  normalizeFormationSaves,
+  normalizeUserDetails,
+} from '../../../../src/data/user-sync/userProfileNormalizer'
 
 describe('user payload normalizer', () => {
   describe('normalizeUserDetails', () => {
@@ -42,6 +47,33 @@ describe('user payload normalizer', () => {
 
       expect(result.ownedHeroes).toEqual([])
       expect(result.warnings.length).toBeGreaterThan(0)
+    })
+
+    it('兼容官方 getuserdetails 的 details.heroes 形态', () => {
+      const result = normalizeUserDetails({
+        details: {
+          instance_id: '7',
+          heroes: [
+            {
+              hero_id: 12,
+              level: '900',
+              equipment: { 1: '4' },
+              feats: [{ id: 101 }],
+              legendary_effects: [{ id: 'leg-12' }],
+            },
+          ],
+        },
+      })
+
+      expect(result.ownedHeroes).toEqual([
+        {
+          heroId: '12',
+          level: 900,
+          equipment: { 1: 4 },
+          feats: ['101'],
+          legendaryEffects: ['leg-12'],
+        },
+      ])
     })
   })
 
@@ -105,6 +137,63 @@ describe('user payload normalizer', () => {
       const result = normalizeFormationSaves({})
 
       expect(result.formations).toEqual([])
+    })
+
+    it('兼容官方 all_saves 阵型保存对象', () => {
+      const result = normalizeFormationSaves({
+        all_saves: {
+          save_a: {
+            formation_id: 99,
+            layout_id: 3,
+            campaign_id: 1,
+            adventure_id: 10,
+            formation: { slot_1: 12 },
+            specializations: { 12: 55 },
+            feats: { 12: [101, 102] },
+            familiars: { slot_1: 'fam-1' },
+            is_favorite: 1,
+          },
+        },
+      })
+
+      expect(result.formations).toHaveLength(1)
+      expect(result.formations[0]).toMatchObject({
+        formationId: '99',
+        layoutId: '3',
+        scenarioRef: { kind: 'adventure', id: '10' },
+        placements: { slot_1: '12' },
+        specializations: { 12: '55' },
+        feats: { 12: ['101', '102'] },
+        familiars: { slot_1: 'fam-1' },
+        isFavorite: true,
+      })
+    })
+  })
+
+  describe('buildUserProfileSnapshot', () => {
+    it('把用户详情、campaign 和阵型 payload 合并为本地快照', () => {
+      const snapshot = buildUserProfileSnapshot({
+        userDetails: {
+          details: {
+            heroes: [{ hero_id: '1', level: 500 }],
+          },
+        },
+        campaignDetails: {
+          campaigns: [{ campaign_id: '1', favor: '1.50e92' }],
+        },
+        formationSaves: {
+          formations: [{ formation_id: 'fm-1', layout_id: 'layout-1' }],
+        },
+        updatedAt: '2026-05-03T00:00:00.000Z',
+      })
+
+      expect(snapshot.schemaVersion).toBe(1)
+      expect(snapshot.updatedAt).toBe('2026-05-03T00:00:00.000Z')
+      expect(snapshot.ownedHeroes).toHaveLength(1)
+      expect(snapshot.importedFormationSaves).toHaveLength(1)
+      expect(snapshot.warnings).toEqual(expect.arrayContaining([
+        'campaign details imported: 1',
+      ]))
     })
   })
 })

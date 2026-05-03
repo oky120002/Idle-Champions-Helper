@@ -2,7 +2,11 @@ import { useCallback, useEffect, useState } from 'react'
 import {
   deleteUserProfileData,
   readUserProfileSnapshot,
+  saveUserProfileSnapshot,
 } from '../../data/user-profile-store'
+import { fetchUserProfilePayloads } from '../../data/user-sync/officialClient'
+import { buildUserProfileSnapshot } from '../../data/user-sync/userProfileNormalizer'
+import type { UserCredentials } from '../../domain/types'
 import type { UserProfileSnapshot } from '../../domain/user-profile/types'
 
 export type SyncState =
@@ -10,7 +14,7 @@ export type SyncState =
   | { status: 'loaded'; snapshot: UserProfileSnapshot; ageDays: number }
   | { status: 'error'; message: string }
 
-export function useUserSyncModel() {
+export function useUserSyncModel(credentials: UserCredentials | null = null) {
   const [syncState, setSyncState] = useState<SyncState>({ status: 'no-snapshot' })
   const [busy, setBusy] = useState(false)
 
@@ -35,18 +39,28 @@ export function useUserSyncModel() {
   }, [loadSnapshot])
 
   const handleSync = useCallback(async () => {
+    if (!credentials) {
+      setSyncState({ status: 'error', message: '请先读取并校验凭证，再手动同步。' })
+      return
+    }
+
     setBusy(true)
     try {
+      const payloads = await fetchUserProfilePayloads(credentials)
+      const snapshot = buildUserProfileSnapshot(payloads)
+      await saveUserProfileSnapshot(snapshot)
       await loadSnapshot()
+    } catch (error) {
+      setSyncState({
+        status: 'error',
+        message: error instanceof Error
+          ? error.message
+          : '官方数据同步失败：请检查凭证、网络或官方接口可用性。',
+      })
     } finally {
       setBusy(false)
     }
-  }, [loadSnapshot])
-
-  const handleSimulateError = useCallback(() => {
-    setSyncState({ status: 'error', message: '同步失败：无法连接到本地数据存储' })
-
-  }, [])
+  }, [credentials, loadSnapshot])
 
   const handleDelete = useCallback(async () => {
     setBusy(true)
@@ -63,8 +77,8 @@ export function useUserSyncModel() {
   return {
     syncState,
     busy,
+    canSync: Boolean(credentials) && !busy,
     handleSync,
-    handleSimulateError,
     handleDelete,
     reload: loadSnapshot,
   }
