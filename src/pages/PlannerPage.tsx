@@ -1,10 +1,24 @@
 import { useRef } from 'react'
 import { ConfiguredWorkbenchPage } from '../components/workbench/ConfiguredWorkbenchPage'
+import { WorkbenchContentStack } from '../components/workbench/WorkbenchScaffold'
 import { useI18n } from '../app/i18n'
+import { PlannerProfileState } from './planner/PlannerProfileState'
+import { PlannerResultCard } from './planner/PlannerResultCard'
+import { PlannerSavePreset } from './planner/PlannerSavePreset'
+import { PlannerScenarioSelection } from './planner/PlannerScenarioSelection'
+import { usePlannerPageModel } from './planner/usePlannerPageModel'
 
 export function PlannerPage() {
   const { t } = useI18n()
   const contentScrollRef = useRef<HTMLDivElement | null>(null)
+  const {
+    collections,
+    loadError,
+    loadState,
+    plannerRecommendation,
+    selectedVariantId,
+    selectVariantId,
+  } = usePlannerPageModel()
 
   return (
     <ConfiguredWorkbenchPage
@@ -37,18 +51,57 @@ export function PlannerPage() {
         ],
       }}
     >
-      <section className="surface-card page-shell">
-        <div className="surface-card__header">
-          <div className="surface-card__header-copy">
-            <p className="surface-card__description">
-              {t({
-                zh: '自动计划功能正在开发中。请先完成用户数据导入。',
-                en: 'Automatic planner is under development. Please import user data first.',
-              })}
-            </p>
-          </div>
-        </div>
-      </section>
+      <WorkbenchContentStack>
+        <PlannerProfileState />
+
+        {loadState === 'error' ? (
+          <section className="surface-card page-shell" role="alert">
+            <div className="surface-card__header">
+              <div className="surface-card__header-copy">
+                <p className="surface-card__description">
+                  {t({
+                    zh: `加载自动计划数据失败：${loadError ?? '未知错误'}`,
+                    en: `Failed to load planner data: ${loadError ?? 'unknown error'}`,
+                  })}
+                </p>
+              </div>
+            </div>
+          </section>
+        ) : (
+          <>
+            <section className="surface-card page-shell" aria-busy={loadState === 'loading'}>
+              <div className="surface-card__header">
+                <div className="surface-card__header-copy">
+                  <p className="surface-card__eyebrow">
+                    {t({ zh: '场景', en: 'Scenario' })}
+                  </p>
+                  <h2 className="surface-card__title">
+                    {t({ zh: '选择目标关卡', en: 'Choose a target scenario' })}
+                  </h2>
+                </div>
+              </div>
+              <div className="surface-card__body">
+                <PlannerScenarioSelection
+                  variants={collections.variants}
+                  selectedId={selectedVariantId}
+                  onSelectedIdChange={selectVariantId}
+                />
+              </div>
+            </section>
+
+            {plannerRecommendation.result ? (
+              <>
+                <PlannerResultCard {...plannerRecommendation.result} />
+                <PlannerSavePreset
+                  result={plannerRecommendation.result}
+                  layoutId={plannerRecommendation.layoutId}
+                  scenarioRef={plannerRecommendation.scenarioRef}
+                />
+              </>
+            ) : null}
+          </>
+        )}
+      </WorkbenchContentStack>
     </ConfiguredWorkbenchPage>
   )
 }

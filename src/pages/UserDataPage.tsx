@@ -15,6 +15,7 @@ import { useWorkbenchScrollNavigation } from '../components/workbench/useWorkben
 import { useWorkbenchShareLink } from '../components/workbench/useWorkbenchShareLink'
 import { SurfaceCardContentSections, type SurfaceCardContentSection } from '../components/SurfaceCardContentSections'
 import { UserDataWorkbench } from './user-data/UserDataWorkbench'
+import { UserSyncPanel } from './user-data/UserSyncPanel'
 import { useUserDataPageModel } from './user-data/useUserDataPageModel'
 
 export function UserDataPage() {
@@ -72,7 +73,7 @@ export function UserDataPage() {
       items: [
         {
           id: 'no-live-api',
-          content: model.t({ zh: '不调用真实账号接口', en: 'No live account API calls' }),
+          content: model.t({ zh: '只在点击手动同步时调用官方只读接口', en: 'Only call official read-only endpoints after manual sync' }),
         },
         {
           id: 'no-auto-persist',
@@ -100,7 +101,7 @@ export function UserDataPage() {
         },
         {
           id: 'expand-inputs',
-          content: model.t({ zh: '继续扩展用户主动提供的本地导入源，例如脱敏日志片段、离线导出文本或手动补充字段', en: 'Expand only user-provided local inputs such as redacted log snippets, offline exports, or manual field entry' }),
+          content: model.t({ zh: '用户点击手动同步后，浏览器请求官方只读接口，不经过本项目后端', en: 'After manual sync, the browser requests official read-only endpoints without passing through this project backend' }),
         },
         {
           id: 'persist-indexeddb',
@@ -113,6 +114,7 @@ export function UserDataPage() {
       ],
     },
   ]
+  const parsedCredentials = model.parseState.status === 'success' ? model.parseState.credentials : null
 
   return (
     <ConfiguredWorkbenchPage
@@ -161,20 +163,21 @@ export function UserDataPage() {
         <SurfaceCardContentSections
           eyebrow={model.t({ zh: '导入边界', en: 'Import boundary' })}
           title={model.t({ zh: '先把本地优先的数据导入骨架搭稳', en: 'Stabilize the local-first import skeleton first' })}
-          description={model.t({ zh: '这一页先验证浏览器内可完成的解析与脱敏预览，不把敏感凭证带到站外。', en: 'This page validates browser-side parsing and masked previews first so sensitive credentials never need to leave the local app.' })}
+          description={model.t({ zh: '这一页在浏览器内解析凭证，只在你点击手动同步时请求官方只读接口，并把归一化快照保存到本地 IndexedDB。', en: 'This page parses credentials in the browser, calls official read-only endpoints only after manual sync, and stores the normalized snapshot in local IndexedDB.' })}
           sections={importBoundarySections}
           layout="split"
         />
         <UserDataWorkbench model={model} />
+        <UserSyncPanel credentials={parsedCredentials} />
         <SurfaceCardContentSections
-          eyebrow={model.t({ zh: '下一阶段', en: 'Next stage' })}
+          eyebrow={model.t({ zh: '本地画像', en: 'Local profile' })}
           title={model.t({
-            zh: '接真实本地同步时，也不要让静态站直连官方接口',
-            en: 'Keep official endpoints out of the static site even when local sync grows up',
+            zh: '同步后的数据只留在当前浏览器',
+            en: 'Synced data stays in this browser',
           })}
           description={model.t({
-            zh: '后续真正接个人数据，也应该继续沿用 local-first + 用户主动导入，不把官方请求链路放进静态站。',
-            en: 'When personal data gets wired in for real, it should still stay local-first and user-imported instead of embedding official request flows in the static site.',
+            zh: '自动计划器后续只读取本地快照和公开游戏基座数据。页面不会自动刷新，也不会把凭证保存到后端。',
+            en: 'The planner will read only the local snapshot and public game data. The page will not auto-refresh or save credentials to a backend.',
           })}
           sections={nextStageSections}
         />

@@ -5,12 +5,26 @@ import type { Variant } from '../../domain/types'
 
 interface PlannerScenarioSelectionProps {
   variants: Variant[]
+  selectedId?: string | null
+  onSelectedIdChange?: (variantId: string | null) => void
 }
 
-export function PlannerScenarioSelection({ variants }: PlannerScenarioSelectionProps) {
+export function PlannerScenarioSelection({
+  variants,
+  selectedId: controlledSelectedId,
+  onSelectedIdChange,
+}: PlannerScenarioSelectionProps) {
   const { locale, t } = useI18n()
   const [search, setSearch] = useState('')
-  const [selectedId, setSelectedId] = useState<string | null>(null)
+  const [uncontrolledSelectedId, setUncontrolledSelectedId] = useState<string | null>(null)
+  const selectedId = controlledSelectedId === undefined ? uncontrolledSelectedId : controlledSelectedId
+
+  function updateSelectedId(nextSelectedId: string | null) {
+    if (controlledSelectedId === undefined) {
+      setUncontrolledSelectedId(nextSelectedId)
+    }
+    onSelectedIdChange?.(nextSelectedId)
+  }
 
   const query = search.trim().toLowerCase()
 
@@ -64,7 +78,7 @@ export function PlannerScenarioSelection({ variants }: PlannerScenarioSelectionP
               <button
                 type="button"
                 className={`planner-scenario-selection__item${isSelected ? ' planner-scenario-selection__item--selected' : ''}`}
-                onClick={() => setSelectedId(isSelected ? null : variant.id)}
+                onClick={() => updateSelectedId(isSelected ? null : variant.id)}
               >
                 <span className="planner-scenario-selection__item-name">{label}</span>
                 <span className="planner-scenario-selection__item-campaign">{campaign}</span>

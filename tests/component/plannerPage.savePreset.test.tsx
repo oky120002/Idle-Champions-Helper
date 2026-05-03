@@ -6,6 +6,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 import { I18nProvider } from '../../src/app/i18n'
+import { listFormationPresets } from '../../src/data/formationPresetStore'
 import { APP_DATABASE_NAME } from '../../src/data/localDatabase'
 import { deleteUserProfileData } from '../../src/data/user-profile-store'
 import { PlannerSavePreset } from '../../src/pages/planner/PlannerSavePreset'
@@ -58,6 +59,7 @@ describe('save planner result as preset', () => {
     await waitFor(() => {
       expect(screen.getByText(/已保存/i)).toBeInTheDocument()
     })
+    await expect(listFormationPresets()).resolves.toHaveLength(1)
   })
 
   it('保存的 preset 保留 layoutId、placements 和 scenarioRef', async () => {
@@ -68,8 +70,14 @@ describe('save planner result as preset', () => {
     await user.click(screen.getByRole('button', { name: /保存/i }))
 
     await waitFor(() => {
-      // The saved confirmation should show the preset data was captured
       expect(screen.getByText(/已保存/i)).toBeInTheDocument()
+    })
+
+    const presets = await listFormationPresets()
+    expect(presets[0]).toMatchObject({
+      layoutId: 'layout-grand-hero',
+      placements: { s1: '1', s2: '5' },
+      scenarioRef: { kind: 'adventure', id: '10' },
     })
   })
 

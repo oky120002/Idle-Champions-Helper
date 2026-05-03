@@ -11,10 +11,22 @@ export function PlannerResultCard({ score, placements, explanations, warnings }:
   const { t } = useI18n()
 
   return (
-    <article className="surface-card planner-result-card">
+    <article
+      className="surface-card planner-result-card"
+      aria-label={t({ zh: '推荐结果', en: 'Recommended result' })}
+    >
       <div className="surface-card__header">
         <div className="surface-card__header-copy">
-          <p className="planner-result-card__score">{score}</p>
+          <p className="surface-card__eyebrow">
+            {t({ zh: '推荐结果', en: 'Recommended result' })}
+          </p>
+          <h3 className="surface-card__title">
+            {t({ zh: '当前推荐阵型', en: 'Current recommended formation' })}
+          </h3>
+          <p className="planner-result-card__score">
+            <span>{t({ zh: '评分：', en: 'Score: ' })}</span>
+            <span>{score}</span>
+          </p>
         </div>
       </div>
 
