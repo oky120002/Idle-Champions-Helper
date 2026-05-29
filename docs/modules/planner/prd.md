@@ -38,7 +38,7 @@
 
 ### 开发者
 
-开发者可用环境变量或 `.local` 文件提供私有凭证，运行 scripts 一次性抓取开发快照到 `tmp/private-user-data/`。这些数据不得提交，也不得进入前端构建。
+开发者可用环境变量、被忽略的 `.local` 文件，或仓库内仅供本地使用的私有 mock/token 输入，运行 scripts 一次性抓取开发快照到 `tmp/private-user-data/`。这些数据可用于本地预览和本地 planner 验证，但不得提交，也不得进入生产构建。
 
 ## 用户流程
 
@@ -84,6 +84,7 @@
 
 - 使用工作台布局，不做营销页。
 - 顶部显示 profile 状态和私人数据年龄。
+- 无快照时只显示导入引导，不显示推荐结果或保存入口。
 - 左侧或工具区提供 scenario、formation、candidate mode、baseline 输入。
 - 主区显示 result cards：score、slot assignments、解释和 warnings。
 - 结果可保存到 formation preset。

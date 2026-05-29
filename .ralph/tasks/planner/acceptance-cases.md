@@ -567,9 +567,9 @@
 - 路由和导航标签组件测试。
 
 验收用例：
-1. `/planner` 渲染 planner 页面。
-2. 导航包含 Automatic Planner。
-3. 保持 HashRouter 兼容性。
+1. `/planner` 渲染 planner 页面，并能看到场景选择入口。
+2. 当本地没有 `UserProfileSnapshot` 时，页面只显示个人数据引导，不显示推荐结果或保存入口。
+3. 导航包含 Automatic Planner，且保持 HashRouter 兼容性。
 
 验证：
 - 定向组件测试。
@@ -647,9 +647,9 @@
 - 保存 preset 组件/集成测试。
 
 验收用例：
-1. 点击 save 会写入 formation preset。
-2. 保存的 preset 保留 `layoutId`、`placements` 和 `scenarioRef`。
-3. 结果无效时保存禁用状态可见。
+1. 只有存在有效 planner 结果时才显示或启用保存入口。
+2. 点击 save 会写入 formation preset。
+3. 保存的 preset 保留 `layoutId`、`placements` 和 `scenarioRef`。
 
 验证：
 - 定向组件测试。

@@ -170,6 +170,58 @@ describe('user data sync flow', () => {
     }
   })
 
+  it('开发模式可从本地私有 payload 导入快照并写入 IndexedDB', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        userDetails: {
+          details: {
+            heroes: [
+              {
+                hero_id: '1',
+                level: 500,
+                equipment: { 0: 3 },
+                feats: [{ id: 'feat-1' }],
+                legendary_effects: [{ id: 'leg-1' }],
+              },
+            ],
+          },
+        },
+        campaignDetails: {
+          campaigns: [{ campaign_id: '1', favor: '1.50e92' }],
+        },
+        formationSaves: {
+          all_saves: [
+            {
+              formation_id: 'fm-1',
+              layout_id: 'layout-grand-tour',
+              adventure_id: '10',
+              formation: { slot_1: '1' },
+            },
+          ],
+        },
+      }),
+    }))
+
+    renderSyncPanel()
+
+    const user = userEvent.setup()
+    await user.click(screen.getByRole('button', { name: '导入本地开发快照' }))
+
+    await waitFor(() => {
+      expect(screen.getByText(/拥有英雄 1 个/)).toBeInTheDocument()
+      expect(screen.getByText(/已导入阵型 1 个/)).toBeInTheDocument()
+    })
+
+    const snapshot = await readUserProfileSnapshot()
+    expect(snapshot?.ownedHeroes[0]).toMatchObject({
+      heroId: '1',
+      level: 500,
+      feats: ['feat-1'],
+      legendaryEffects: ['leg-1'],
+    })
+  })
+
   it('同步错误展示时不包含凭证', async () => {
     vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error(`network ${TEST_USER_ID} ${TEST_HASH}`)))
     renderSyncPanel({ userId: TEST_USER_ID, hash: TEST_HASH })

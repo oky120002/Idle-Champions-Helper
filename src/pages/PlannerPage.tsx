@@ -7,6 +7,44 @@ import { PlannerResultCard } from './planner/PlannerResultCard'
 import { PlannerSavePreset } from './planner/PlannerSavePreset'
 import { PlannerScenarioSelection } from './planner/PlannerScenarioSelection'
 import { usePlannerPageModel } from './planner/usePlannerPageModel'
+import type { PlannerRecommendationBlocker } from './planner/plannerRecommendation'
+
+function getPlannerBlockerCopy(blocker: PlannerRecommendationBlocker, t: ReturnType<typeof useI18n>['t']) {
+  switch (blocker) {
+    case 'missing-profile':
+      return {
+        title: t({ zh: '导入个人数据后才会生成推荐。', en: 'Import local profile data before generating recommendations.' }),
+        description: t({
+          zh: '当前 planner 只会基于本地已拥有英雄计算阵型，并阻止无快照时的假推荐。',
+          en: 'The planner now only computes formations from locally imported owned heroes and blocks mock recommendations without a profile snapshot.',
+        }),
+      }
+    case 'missing-formation':
+      return {
+        title: t({ zh: '当前场景没有匹配的阵型布局。', en: 'No matching formation layout exists for this scenario.' }),
+        description: t({
+          zh: '请先补齐官方阵型布局映射，再继续评估该场景。',
+          en: 'Add the official formation layout mapping before evaluating this scenario.',
+        }),
+      }
+    case 'insufficient-owned-heroes':
+      return {
+        title: t({ zh: '当前已拥有英雄不足以填满该阵型。', en: 'Owned heroes are insufficient to fill this formation.' }),
+        description: t({
+          zh: '第一条真实纵切当前只允许使用已拥有英雄，不会再拿公共英雄数据补空位。',
+          en: 'The first real vertical slice only uses owned heroes and will not backfill empty slots with public roster data.',
+        }),
+      }
+    case 'no-legal-recommendation':
+      return {
+        title: t({ zh: '当前没有满足 seat 规则的推荐结果。', en: 'No legal recommendation satisfies the current seat rules.' }),
+        description: t({
+          zh: '请调整场景或导入更多本地英雄数据后重试。',
+          en: 'Try another scenario or import more local hero data, then retry.',
+        }),
+      }
+  }
+}
 
 export function PlannerPage() {
   const { t } = useI18n()
@@ -88,6 +126,21 @@ export function PlannerPage() {
                 />
               </div>
             </section>
+
+            {plannerRecommendation.blocker ? (
+              <section className="surface-card page-shell" role="status">
+                <div className="surface-card__header">
+                  <div className="surface-card__header-copy">
+                    <h3 className="surface-card__title">
+                      {getPlannerBlockerCopy(plannerRecommendation.blocker, t).title}
+                    </h3>
+                    <p className="surface-card__description">
+                      {getPlannerBlockerCopy(plannerRecommendation.blocker, t).description}
+                    </p>
+                  </div>
+                </div>
+              </section>
+            ) : null}
 
             {plannerRecommendation.result ? (
               <>

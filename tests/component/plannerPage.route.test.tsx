@@ -17,9 +17,10 @@ import { App } from '../../src/app/App'
 import { I18nProvider } from '../../src/app/i18n'
 import { loadCollection } from '../../src/data/client'
 import { APP_DATABASE_NAME } from '../../src/data/localDatabase'
-import { deleteUserProfileData } from '../../src/data/user-profile-store'
+import { deleteUserProfileData, saveUserProfileSnapshot } from '../../src/data/user-profile-store'
 import { resolveActiveNavigationItem } from '../../src/app/appNavigation'
 import type { Champion, DataCollection, FormationLayout, LocalizedOption, LocalizedText, Variant } from '../../src/domain/types'
+import { createOwnedHero, createUserProfileSnapshot } from '../../src/domain/user-profile/fixtures'
 
 const mockedLoadCollection = vi.mocked(loadCollection)
 
@@ -75,6 +76,7 @@ const championsFixture: DataCollection<Champion> = {
   updatedAt: '2026-05-03T00:00:00.000Z',
   items: [
     { id: 'bruenor', name: text('Bruenor', '布鲁诺'), seat: 1, roles: ['support'], affiliations: [], tags: [] },
+    { id: 'asharra', name: text('Asharra', '阿莎拉'), seat: 1, roles: ['dps', 'support'], affiliations: [], tags: [] },
     { id: 'celeste', name: text('Celeste', '塞莱斯特'), seat: 2, roles: ['healing', 'support'], affiliations: [], tags: [] },
     { id: 'nayeli', name: text('Nayeli', '纳耶里'), seat: 3, roles: ['tanking'], affiliations: [], tags: [] },
     { id: 'jarlaxle', name: text('Jarlaxle', '贾拉索'), seat: 4, roles: ['dps', 'gold'], affiliations: [], tags: [] },
@@ -134,7 +136,7 @@ afterEach(async () => {
 })
 
 describe('planner route and navigation', () => {
-  it('/planner 渲染可操作的 planner 纵向集成页面', async () => {
+  it('/planner 在无本地快照时只显示引导，不显示推荐结果', async () => {
     render(
       <I18nProvider>
         <MemoryRouter initialEntries={['/planner']}>
@@ -146,12 +148,71 @@ describe('planner route and navigation', () => {
     expect(await screen.findByRole('region', { name: '个人数据状态' })).toBeInTheDocument()
     expect(screen.getByRole('searchbox', { name: '搜索场景' })).toBeInTheDocument()
     expect(await screen.findByRole('button', { name: /弓兵压制/ })).toBeInTheDocument()
+    expect(screen.getByText('导入个人数据后才会生成推荐。')).toBeInTheDocument()
+    expect(screen.queryByRole('article', { name: /推荐结果/ })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /保存/ })).not.toBeInTheDocument()
+  })
+
+  it('/planner 只使用已拥有英雄生成推荐，并允许保存结果', async () => {
+    await saveUserProfileSnapshot(
+      createUserProfileSnapshot({
+        ownedHeroes: [
+          createOwnedHero({ heroId: 'bruenor', level: 500 }),
+          createOwnedHero({ heroId: 'celeste', level: 500 }),
+          createOwnedHero({ heroId: 'nayeli', level: 500 }),
+          createOwnedHero({ heroId: 'jarlaxle', level: 500 }),
+        ],
+      }),
+    )
+
+    render(
+      <I18nProvider>
+        <MemoryRouter initialEntries={['/planner']}>
+          <App />
+        </MemoryRouter>
+      </I18nProvider>,
+    )
 
     const result = await screen.findByRole('article', { name: /推荐结果/ })
     expect(within(result).getByText(/评分/)).toBeInTheDocument()
-    expect(within(result).getByText(/槽位 s1:/)).toBeInTheDocument()
+
+    const placementTexts = Array.from(result.querySelectorAll('.planner-result-card__placements li'))
+      .map((item) => item.textContent ?? '')
+    expect(placementTexts).toHaveLength(4)
+    expect(placementTexts.some((text) => text.includes('bruenor'))).toBe(true)
+    expect(placementTexts.some((text) => text.includes('celeste'))).toBe(true)
+    expect(placementTexts.some((text) => text.includes('nayeli'))).toBe(true)
+    expect(placementTexts.some((text) => text.includes('jarlaxle'))).toBe(true)
+    expect(placementTexts.some((text) => text.includes('asharra'))).toBe(false)
     expect(screen.getByRole('button', { name: /保存/ })).toBeEnabled()
-    expect(screen.queryByText(/自动计划功能正在开发中/)).not.toBeInTheDocument()
+  })
+
+  it('/planner 在已拥有英雄含重复 seat 时仍避免 seat conflict', async () => {
+    await saveUserProfileSnapshot(
+      createUserProfileSnapshot({
+        ownedHeroes: [
+          createOwnedHero({ heroId: 'bruenor', level: 500 }),
+          createOwnedHero({ heroId: 'asharra', level: 500 }),
+          createOwnedHero({ heroId: 'celeste', level: 500 }),
+          createOwnedHero({ heroId: 'nayeli', level: 500 }),
+          createOwnedHero({ heroId: 'jarlaxle', level: 500 }),
+        ],
+      }),
+    )
+
+    render(
+      <I18nProvider>
+        <MemoryRouter initialEntries={['/planner']}>
+          <App />
+        </MemoryRouter>
+      </I18nProvider>,
+    )
+
+    const result = await screen.findByRole('article', { name: /推荐结果/ })
+    const placementTexts = Array.from(result.querySelectorAll('.planner-result-card__placements li'))
+      .map((item) => item.textContent ?? '')
+    const seatOneHeroes = placementTexts.filter((text) => text.includes('bruenor') || text.includes('asharra'))
+    expect(seatOneHeroes).toHaveLength(1)
   })
 
   it('导航包含自动计划', () => {

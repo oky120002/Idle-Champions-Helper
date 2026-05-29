@@ -59,6 +59,20 @@ describe('private env loader', () => {
     expect(result.error).toContain('VITE_')
   })
 
+  it('不会因为无关的 VITE_ 变量误伤私有凭证加载', () => {
+    const env = {
+      IC_PRIVATE_USER_ID: '12345678',
+      IC_PRIVATE_HASH: 'abc123def456789abc123def456789ab',
+      VITE_PUBLIC_BASE_URL: '/Idle-Champions-Helper/',
+    }
+
+    const result = loadPrivateCredentials({ env })
+
+    expect(result.userId).toBe('12345678')
+    expect(result.hash).toBe('abc123def456789abc123def456789ab')
+    expect(result.error).toBeUndefined()
+  })
+
   it('支持 .local 文件中的引号值', () => {
     const content = 'IC_PRIVATE_USER_ID="12345678"\nIC_PRIVATE_HASH=\'abc123\''
 

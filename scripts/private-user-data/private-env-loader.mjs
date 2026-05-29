@@ -5,6 +5,10 @@
 
 const USER_ID_KEY = 'IC_PRIVATE_USER_ID'
 const HASH_KEY = 'IC_PRIVATE_HASH'
+const FORBIDDEN_VITE_KEYS = new Set([
+  `VITE_${USER_ID_KEY}`,
+  `VITE_${HASH_KEY}`,
+])
 
 /**
  * Load private credentials from a provided env object.
@@ -13,7 +17,7 @@ const HASH_KEY = 'IC_PRIVATE_HASH'
  * @returns {{userId?: string, hash?: string, error?: string}}
  */
 export function loadPrivateCredentials({ env }) {
-  const viteKeys = Object.keys(env).filter((k) => k.startsWith('VITE_'))
+  const viteKeys = Object.keys(env).filter((key) => FORBIDDEN_VITE_KEYS.has(key))
   if (viteKeys.length > 0) {
     return {
       error: `Credential keys must not use VITE_ prefix (found: ${viteKeys.join(', ')}). VITE_ keys are exposed to browser builds.`,

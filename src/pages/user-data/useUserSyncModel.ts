@@ -14,9 +14,22 @@ export type SyncState =
   | { status: 'loaded'; snapshot: UserProfileSnapshot; ageDays: number }
   | { status: 'error'; message: string }
 
+const LOCAL_DEV_SNAPSHOT_UNAVAILABLE_MESSAGE = '本地开发快照导入只允许在 Vite 开发模式中使用。'
+const LOCAL_DEV_SNAPSHOT_ERROR_MESSAGE = '读取本地开发快照失败：请检查本地私有快照是否已准备好，并确认当前处于 Vite 开发环境。'
+
+async function fetchLocalDevPrivateSnapshotPayloadsForDevOnly() {
+  if (!import.meta.env.DEV) {
+    throw new Error(LOCAL_DEV_SNAPSHOT_UNAVAILABLE_MESSAGE)
+  }
+
+  const module = await import('../../data/user-sync/localDevPrivateSnapshot')
+  return module.fetchLocalDevPrivateSnapshotPayloads()
+}
+
 export function useUserSyncModel(credentials: UserCredentials | null = null) {
   const [syncState, setSyncState] = useState<SyncState>({ status: 'no-snapshot' })
   const [busy, setBusy] = useState(false)
+  const showLocalDevSnapshotAction = import.meta.env.DEV
 
   const loadSnapshot = useCallback(async () => {
     try {
@@ -62,6 +75,30 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
     }
   }, [credentials, loadSnapshot])
 
+  const handleLoadLocalDevSnapshot = useCallback(async () => {
+    if (!showLocalDevSnapshotAction) {
+      setSyncState({ status: 'error', message: LOCAL_DEV_SNAPSHOT_UNAVAILABLE_MESSAGE })
+      return
+    }
+
+    setBusy(true)
+    try {
+      const payloads = await fetchLocalDevPrivateSnapshotPayloadsForDevOnly()
+      const snapshot = buildUserProfileSnapshot(payloads)
+      await saveUserProfileSnapshot(snapshot)
+      await loadSnapshot()
+    } catch (error) {
+      setSyncState({
+        status: 'error',
+        message: error instanceof Error
+          ? error.message
+          : LOCAL_DEV_SNAPSHOT_ERROR_MESSAGE,
+      })
+    } finally {
+      setBusy(false)
+    }
+  }, [loadSnapshot, showLocalDevSnapshotAction])
+
   const handleDelete = useCallback(async () => {
     setBusy(true)
     try {
@@ -78,7 +115,10 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
     syncState,
     busy,
     canSync: Boolean(credentials) && !busy,
+    canLoadLocalDevSnapshot: showLocalDevSnapshotAction && !busy,
+    showLocalDevSnapshotAction,
     handleSync,
+    handleLoadLocalDevSnapshot,
     handleDelete,
     reload: loadSnapshot,
   }

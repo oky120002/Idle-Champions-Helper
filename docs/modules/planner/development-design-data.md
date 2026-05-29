@@ -17,15 +17,17 @@
 开发私有数据流：
 
 ```text
-IC_PRIVATE_USER_ID + IC_PRIVATE_HASH 或显式 .local 文件
+IC_PRIVATE_USER_ID + IC_PRIVATE_HASH、显式 .local 文件，或仓库内仅供本地使用的私有 mock/token 输入
   -> scripts/private-user-data env loader
   -> 一次性抓取只读用户数据
   -> tmp/private-user-data/<timestamp>/
   -> 脱敏 manifest
+  -> Vite serve 专用 dev endpoint（仅本地开发）
+  -> 浏览器复用正常 normalizer 写入 IndexedDB
   -> privacy scanner 防止提交或构建泄漏
 ```
 
-生产和开发两条流不能复用存储位置。开发凭证变量不得以 `VITE_` 开头，防止进入前端构建环境。
+生产和开发两条流不能复用存储位置。开发凭证变量不得以 `VITE_` 开头，防止进入前端构建环境。本地私有 mock/token 允许驱动本地 preview 或本地 planner 验证，但不得被生产构建读取或打包。
 
 ## 核心数据契约
 

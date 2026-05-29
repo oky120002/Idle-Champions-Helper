@@ -44,6 +44,7 @@ npm run test:regression
 
 ```bash
 npm run data:official
+npm run private-user-data:fetch
 npm run data:fetch
 npm run data:normalize -- --input tmp/idle-champions-api/<english>.json --localizedInput tmp/idle-champions-api/<zh>.json
 npm run data:portraits -- --input tmp/idle-champions-api/<english>.json
@@ -54,6 +55,7 @@ npm run data:pets -- --input tmp/idle-champions-api/<english>.json --localizedIn
 ```
 
 - `data:official` 是当前公共数据构建入口。
+- `private-user-data:fetch` 只在本地开发使用：用私有凭证抓官方只读用户 payload，写入 `tmp/private-user-data/`，供本地 Vite 调试导入；不会进入生产构建。
 - `data:animation-audit` 会基于站内 `.bin` 和 `champion-animations.json` 重新生成本地 idle 候选审片清单。
 - `sync-idle-champions-animations.mjs` / `audit-idle-champions-animations.mjs` 默认会读取 `scripts/data/champion-animation-idle-overrides.json`。
 - 原始快照默认写入 `tmp/idle-champions-api/`。

@@ -1,7 +1,12 @@
+import fs from 'node:fs/promises'
+import path from 'node:path'
 import { defineConfig } from 'vite'
+import type { Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 
 const repoName = 'Idle-Champions-Helper'
+const localDevPrivateSnapshotEndpoint = '/__dev/private-user-data/user-profile-payloads'
+const defaultLocalDevPrivateSnapshotPath = 'tmp/private-user-data/latest/user-profile-payloads.json'
 
 function normalizeChunkId(id: string) {
   return id.replaceAll('\\', '/')
@@ -70,8 +75,50 @@ function resolveManualChunk(id: string) {
   return undefined
 }
 
+function createLocalDevPrivateSnapshotPlugin(): Plugin {
+  const snapshotPath = path.resolve(
+    process.cwd(),
+    process.env.IC_PRIVATE_SNAPSHOT_PATH ?? defaultLocalDevPrivateSnapshotPath,
+  )
+
+  return {
+    name: 'local-dev-private-snapshot',
+    apply: 'serve',
+    configureServer(server) {
+      server.middlewares.use(async (request, response, next) => {
+        if (request.url !== localDevPrivateSnapshotEndpoint) {
+          next()
+          return
+        }
+
+        try {
+          const payload = await fs.readFile(snapshotPath, 'utf8')
+          response.statusCode = 200
+          response.setHeader('Content-Type', 'application/json; charset=utf-8')
+          response.end(payload)
+        } catch (error) {
+          response.setHeader('Content-Type', 'application/json; charset=utf-8')
+
+          if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
+            response.statusCode = 404
+            response.end(JSON.stringify({
+              error: 'Local private snapshot not found. Run `npm run private-user-data:fetch` first.',
+            }))
+            return
+          }
+
+          response.statusCode = 500
+          response.end(JSON.stringify({
+            error: 'Failed to read local private snapshot for Vite dev mode.',
+          }))
+        }
+      })
+    },
+  }
+}
+
 export default defineConfig(({ command }) => ({
-  plugins: [react()],
+  plugins: [react(), createLocalDevPrivateSnapshotPlugin()],
   base: command === 'serve' ? '/' : `/${repoName}/`,
   build: {
     rollupOptions: {

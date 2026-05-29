@@ -6,7 +6,17 @@ type UserSyncPanelProps = {
 }
 
 export function UserSyncPanel({ credentials = null }: UserSyncPanelProps) {
-  const { syncState, busy, canSync, handleSync, handleDelete } = useUserSyncModel(credentials)
+  const {
+    syncState,
+    busy,
+    canSync,
+    canLoadLocalDevSnapshot,
+    showLocalDevSnapshotAction,
+    handleSync,
+    handleLoadLocalDevSnapshot,
+    handleDelete,
+  } = useUserSyncModel(credentials)
+  const showLocalDevSnapshotSection = import.meta.env.DEV && showLocalDevSnapshotAction
 
   return (
     <section aria-label="同步状态" role="region">
@@ -48,6 +58,19 @@ export function UserSyncPanel({ credentials = null }: UserSyncPanelProps) {
           </button>
         )}
       </div>
+
+      {showLocalDevSnapshotSection && (
+        <div>
+          <p>仅本地开发：可将本机准备好的私有快照导入当前浏览器。</p>
+          <button
+            type="button"
+            onClick={() => void handleLoadLocalDevSnapshot()}
+            disabled={!canLoadLocalDevSnapshot}
+          >
+            导入本地开发快照
+          </button>
+        </div>
+      )}
     </section>
   )
 }
