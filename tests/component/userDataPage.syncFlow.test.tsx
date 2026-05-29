@@ -8,6 +8,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { I18nProvider } from '../../src/app/i18n'
 import { APP_DATABASE_NAME } from '../../src/data/localDatabase'
 import {
+  USER_PROFILE_SOURCE_PREFERENCE_STORAGE_KEY,
   deleteUserProfileData,
   readCredentialVault,
   readUserProfileSnapshot,
@@ -22,6 +23,7 @@ const TEST_USER_ID = '12345678'
 const TEST_HASH = 'abcdef1234567890abcdef1234567890'
 
 async function resetDatabase(): Promise<void> {
+  localStorage.removeItem(USER_PROFILE_SOURCE_PREFERENCE_STORAGE_KEY)
   await deleteUserProfileData().catch(() => {})
   await new Promise<void>((resolve, reject) => {
     const request = indexedDB.deleteDatabase(APP_DATABASE_NAME)
@@ -143,8 +145,8 @@ describe('user data sync flow', () => {
     await user.click(await screen.findByRole('button', { name: /^手动同步$/ }))
 
     await waitFor(() => {
-      expect(screen.getByText(/拥有英雄 1 个/)).toBeInTheDocument()
-      expect(screen.getByText(/已导入阵型 1 个/)).toBeInTheDocument()
+      expect(screen.getByText(/浏览器同步快照已于/)).toBeInTheDocument()
+      expect(screen.getByText(/同步警告 1 条/)).toBeInTheDocument()
     })
 
     expect(fetchMock).toHaveBeenCalledTimes(3)
@@ -170,7 +172,7 @@ describe('user data sync flow', () => {
     }
   })
 
-  it('开发模式可从本地私有 payload 导入快照并写入 IndexedDB', async () => {
+  it('开发模式切换到本地开发快照时不会覆盖浏览器同步快照', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
       ok: true,
       json: async () => ({
@@ -206,20 +208,14 @@ describe('user data sync flow', () => {
     renderSyncPanel()
 
     const user = userEvent.setup()
-    await user.click(screen.getByRole('button', { name: '导入本地开发快照' }))
+    await user.click(screen.getByRole('button', { name: '使用本地开发快照' }))
 
     await waitFor(() => {
-      expect(screen.getByText(/拥有英雄 1 个/)).toBeInTheDocument()
-      expect(screen.getByText(/已导入阵型 1 个/)).toBeInTheDocument()
+      expect(screen.getByText(/当前开发数据源：本地开发快照/)).toBeInTheDocument()
+      expect(screen.getByText(/当前选中源拥有英雄 1 个/)).toBeInTheDocument()
     })
 
-    const snapshot = await readUserProfileSnapshot()
-    expect(snapshot?.ownedHeroes[0]).toMatchObject({
-      heroId: '1',
-      level: 500,
-      feats: ['feat-1'],
-      legendaryEffects: ['leg-1'],
-    })
+    await expect(readUserProfileSnapshot()).resolves.toBeNull()
   })
 
   it('同步错误展示时不包含凭证', async () => {

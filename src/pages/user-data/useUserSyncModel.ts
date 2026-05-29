@@ -1,13 +1,20 @@
 import { useCallback, useEffect, useState } from 'react'
 import {
   deleteUserProfileData,
+  readPreferredUserProfileSource,
   readUserProfileSnapshot,
+  resolveUserProfileSnapshot,
+  savePreferredUserProfileSource,
   saveUserProfileSnapshot,
 } from '../../data/user-profile-store'
 import { fetchUserProfilePayloads } from '../../data/user-sync/officialClient'
 import { buildUserProfileSnapshot } from '../../data/user-sync/userProfileNormalizer'
 import type { UserCredentials } from '../../domain/types'
 import type { UserProfileSnapshot } from '../../domain/user-profile/types'
+import type {
+  UserProfileResolution,
+  UserProfileSourceKind,
+} from '../../data/user-profile-store'
 
 export type SyncState =
   | { status: 'no-snapshot' }
@@ -15,21 +22,24 @@ export type SyncState =
   | { status: 'error'; message: string }
 
 const LOCAL_DEV_SNAPSHOT_UNAVAILABLE_MESSAGE = '本地开发快照导入只允许在 Vite 开发模式中使用。'
-const LOCAL_DEV_SNAPSHOT_ERROR_MESSAGE = '读取本地开发快照失败：请检查本地私有快照是否已准备好，并确认当前处于 Vite 开发环境。'
-
-async function fetchLocalDevPrivateSnapshotPayloadsForDevOnly() {
-  if (!import.meta.env.DEV) {
-    throw new Error(LOCAL_DEV_SNAPSHOT_UNAVAILABLE_MESSAGE)
-  }
-
-  const module = await import('../../data/user-sync/localDevPrivateSnapshot')
-  return module.fetchLocalDevPrivateSnapshotPayloads()
-}
 
 export function useUserSyncModel(credentials: UserCredentials | null = null) {
   const [syncState, setSyncState] = useState<SyncState>({ status: 'no-snapshot' })
   const [busy, setBusy] = useState(false)
   const showLocalDevSnapshotAction = import.meta.env.DEV
+  const [selectedProfileSource, setSelectedProfileSource] = useState<UserProfileSourceKind>(
+    () => readPreferredUserProfileSource(),
+  )
+  const [profileResolution, setProfileResolution] = useState<UserProfileResolution>(() => {
+    const initialSource = readPreferredUserProfileSource()
+    return {
+      selectedSource: initialSource,
+      resolvedSource: null,
+      snapshot: null,
+      errorMessage: null,
+      persisted: initialSource === 'browser-sync',
+    }
+  })
 
   const loadSnapshot = useCallback(async () => {
     try {
@@ -47,9 +57,18 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
     }
   }, [])
 
+  const loadProfileResolution = useCallback(async (preferredSource: UserProfileSourceKind) => {
+    const resolution = await resolveUserProfileSnapshot(preferredSource)
+    setProfileResolution(resolution)
+  }, [])
+
   useEffect(() => {
     void loadSnapshot()
   }, [loadSnapshot])
+
+  useEffect(() => {
+    void loadProfileResolution(selectedProfileSource)
+  }, [loadProfileResolution, selectedProfileSource])
 
   const handleSync = useCallback(async () => {
     if (!credentials) {
@@ -63,6 +82,7 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
       const snapshot = buildUserProfileSnapshot(payloads)
       await saveUserProfileSnapshot(snapshot)
       await loadSnapshot()
+      await loadProfileResolution(selectedProfileSource)
     } catch (error) {
       setSyncState({
         status: 'error',
@@ -73,52 +93,46 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
     } finally {
       setBusy(false)
     }
-  }, [credentials, loadSnapshot])
+  }, [credentials, loadProfileResolution, loadSnapshot, selectedProfileSource])
 
-  const handleLoadLocalDevSnapshot = useCallback(async () => {
+  const handleSelectProfileSource = useCallback((nextSource: UserProfileSourceKind) => {
+    savePreferredUserProfileSource(nextSource)
+    setSelectedProfileSource(nextSource)
+  }, [])
+
+  const handleSelectLocalDevSnapshot = useCallback(() => {
     if (!showLocalDevSnapshotAction) {
       setSyncState({ status: 'error', message: LOCAL_DEV_SNAPSHOT_UNAVAILABLE_MESSAGE })
       return
     }
 
-    setBusy(true)
-    try {
-      const payloads = await fetchLocalDevPrivateSnapshotPayloadsForDevOnly()
-      const snapshot = buildUserProfileSnapshot(payloads)
-      await saveUserProfileSnapshot(snapshot)
-      await loadSnapshot()
-    } catch (error) {
-      setSyncState({
-        status: 'error',
-        message: error instanceof Error
-          ? error.message
-          : LOCAL_DEV_SNAPSHOT_ERROR_MESSAGE,
-      })
-    } finally {
-      setBusy(false)
-    }
-  }, [loadSnapshot, showLocalDevSnapshotAction])
+    handleSelectProfileSource('local-dev-snapshot')
+  }, [handleSelectProfileSource, showLocalDevSnapshotAction])
 
   const handleDelete = useCallback(async () => {
     setBusy(true)
     try {
       await deleteUserProfileData()
       setSyncState({ status: 'no-snapshot' })
+      await loadProfileResolution(selectedProfileSource)
     } catch {
       setSyncState({ status: 'error', message: '删除失败' })
     } finally {
       setBusy(false)
     }
-  }, [])
+  }, [loadProfileResolution, selectedProfileSource])
 
   return {
     syncState,
     busy,
     canSync: Boolean(credentials) && !busy,
-    canLoadLocalDevSnapshot: showLocalDevSnapshotAction && !busy,
+    canLoadLocalDevSnapshot: showLocalDevSnapshotAction,
     showLocalDevSnapshotAction,
+    profileResolution,
+    selectedProfileSource,
     handleSync,
-    handleLoadLocalDevSnapshot,
+    handleSelectProfileSource,
+    handleSelectLocalDevSnapshot,
     handleDelete,
     reload: loadSnapshot,
   }

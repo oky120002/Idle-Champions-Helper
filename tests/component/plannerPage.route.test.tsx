@@ -17,7 +17,11 @@ import { App } from '../../src/app/App'
 import { I18nProvider } from '../../src/app/i18n'
 import { loadCollection } from '../../src/data/client'
 import { APP_DATABASE_NAME } from '../../src/data/localDatabase'
-import { deleteUserProfileData, saveUserProfileSnapshot } from '../../src/data/user-profile-store'
+import {
+  USER_PROFILE_SOURCE_PREFERENCE_STORAGE_KEY,
+  deleteUserProfileData,
+  saveUserProfileSnapshot,
+} from '../../src/data/user-profile-store'
 import { resolveActiveNavigationItem } from '../../src/app/appNavigation'
 import type { Champion, DataCollection, FormationLayout, LocalizedOption, LocalizedText, Variant } from '../../src/domain/types'
 import { createOwnedHero, createUserProfileSnapshot } from '../../src/domain/user-profile/fixtures'
@@ -116,6 +120,7 @@ function mockPlannerCollections() {
 }
 
 async function resetDatabase(): Promise<void> {
+  localStorage.removeItem(USER_PROFILE_SOURCE_PREFERENCE_STORAGE_KEY)
   await deleteUserProfileData().catch(() => {})
   await new Promise<void>((resolve, reject) => {
     const request = indexedDB.deleteDatabase(APP_DATABASE_NAME)
@@ -213,6 +218,43 @@ describe('planner route and navigation', () => {
       .map((item) => item.textContent ?? '')
     const seatOneHeroes = placementTexts.filter((text) => text.includes('bruenor') || text.includes('asharra'))
     expect(seatOneHeroes).toHaveLength(1)
+  })
+
+  it('/planner 在开发态切换到本地开发快照后可直接消费本地开发数据', async () => {
+    localStorage.setItem(USER_PROFILE_SOURCE_PREFERENCE_STORAGE_KEY, 'local-dev-snapshot')
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        userDetails: {
+          details: {
+            heroes: [
+              { hero_id: 'bruenor', level: 500, equipment: {}, feats: [], legendary_effects: [] },
+              { hero_id: 'celeste', level: 500, equipment: {}, feats: [], legendary_effects: [] },
+              { hero_id: 'nayeli', level: 500, equipment: {}, feats: [], legendary_effects: [] },
+              { hero_id: 'jarlaxle', level: 500, equipment: {}, feats: [], legendary_effects: [] },
+            ],
+          },
+        },
+        campaignDetails: {
+          campaigns: [{ campaign_id: '1', favor: '1.50e92' }],
+        },
+        formationSaves: {
+          all_saves: [],
+        },
+      }),
+    }))
+
+    render(
+      <I18nProvider>
+        <MemoryRouter initialEntries={['/planner']}>
+          <App />
+        </MemoryRouter>
+      </I18nProvider>,
+    )
+
+    expect(await screen.findByText(/本地开发快照已于/)).toBeInTheDocument()
+    expect(await screen.findByRole('article', { name: /推荐结果/ })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /保存/ })).toBeEnabled()
   })
 
   it('导航包含自动计划', () => {

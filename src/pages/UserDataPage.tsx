@@ -163,7 +163,7 @@ export function UserDataPage() {
         <SurfaceCardContentSections
           eyebrow={model.t({ zh: '导入边界', en: 'Import boundary' })}
           title={model.t({ zh: '先把本地优先的数据导入骨架搭稳', en: 'Stabilize the local-first import skeleton first' })}
-          description={model.t({ zh: '这一页在浏览器内解析凭证，只在你点击手动同步时请求官方只读接口，并把归一化快照保存到本地 IndexedDB。', en: 'This page parses credentials in the browser, calls official read-only endpoints only after manual sync, and stores the normalized snapshot in local IndexedDB.' })}
+          description={model.t({ zh: '这一页在浏览器内解析凭证，只在你点击手动同步时请求官方只读接口，并把浏览器同步快照保存到本地 IndexedDB；开发私有快照则通过单独来源显式切换。', en: 'This page parses credentials in the browser, calls official read-only endpoints only after manual sync, stores browser-synced snapshots in IndexedDB, and switches dev private snapshots through a separate source selector.' })}
           sections={importBoundarySections}
           layout="split"
         />
@@ -176,8 +176,8 @@ export function UserDataPage() {
             en: 'Synced data stays in this browser',
           })}
           description={model.t({
-            zh: '自动计划器后续只读取本地快照和公开游戏基座数据。页面不会自动刷新，也不会把凭证保存到后端。',
-            en: 'The planner will read only the local snapshot and public game data. The page will not auto-refresh or save credentials to a backend.',
+            zh: '自动计划器后续只读取当前选中的本地画像来源和公开游戏基座数据。页面不会自动刷新，也不会把凭证保存到后端。',
+            en: 'The planner will read only the currently selected local profile source plus public game data. The page will not auto-refresh or save credentials to a backend.',
           })}
           sections={nextStageSections}
         />

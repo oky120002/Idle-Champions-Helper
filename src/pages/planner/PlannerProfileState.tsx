@@ -3,54 +3,68 @@ import { Link } from 'react-router-dom'
 import { useI18n } from '../../app/i18n'
 import { useUserSyncModel } from '../user-data/useUserSyncModel'
 
+function formatProfileSourceLabel(source: 'browser-sync' | 'local-dev-snapshot') {
+  return source === 'browser-sync' ? '浏览器同步快照' : '本地开发快照'
+}
+
 export function PlannerProfileState() {
   const { t } = useI18n()
-  const { syncState } = useUserSyncModel()
+  const { profileResolution } = useUserSyncModel()
+
+  if (profileResolution.errorMessage) {
+    return (
+      <section aria-label="个人数据状态" role="region">
+        <p role="alert">
+          {t({
+            zh: `读取数据失败：${profileResolution.errorMessage}`,
+            en: `Failed to read data: ${profileResolution.errorMessage}`,
+          })}
+        </p>
+      </section>
+    )
+  }
+
+  if (profileResolution.snapshot) {
+    const ageMs = Date.now() - new Date(profileResolution.snapshot.updatedAt).getTime()
+    const ageDays = Math.floor(ageMs / (1000 * 60 * 60 * 24))
+    const sourceLabel = formatProfileSourceLabel(
+      profileResolution.resolvedSource ?? profileResolution.selectedSource,
+    )
+
+    return (
+      <section aria-label="个人数据状态" role="region">
+        <p>
+          {t({
+            zh: `${sourceLabel}已于 ${ageDays} 天前更新。`,
+            en: `${sourceLabel} was updated ${ageDays} days ago.`,
+          })}
+        </p>
+        {ageDays > 7 && (
+          <p>
+            {t({
+              zh: '数据可能过期，建议重新同步或切换数据源。',
+              en: 'Data may be outdated. Consider re-syncing or switching the source.',
+            })}
+          </p>
+        )}
+      </section>
+    )
+  }
 
   return (
     <section aria-label="个人数据状态" role="region">
-      {syncState.status === 'no-snapshot' && (
-        <p>
+      <p>
+        {t({
+          zh: '尚未导入个人数据。',
+          en: 'No user data imported.',
+        })}
+        <Link to="/user-data">
           {t({
-            zh: '尚未导入个人数据。',
-            en: 'No user data imported.',
+            zh: '前往个人数据页面',
+            en: 'Go to User Data page',
           })}
-          <Link to="/user-data">
-            {t({
-              zh: '前往个人数据页面',
-              en: 'Go to User Data page',
-            })}
-          </Link>
-        </p>
-      )}
-
-      {syncState.status === 'loaded' && (
-        <>
-          <p>
-            {t({
-              zh: `本地数据已于 ${syncState.ageDays} 天前更新。`,
-              en: `Local data was updated ${syncState.ageDays} days ago.`,
-            })}
-          </p>
-          {syncState.ageDays > 7 && (
-            <p>
-              {t({
-                zh: '数据可能过期，建议重新同步。',
-                en: 'Data may be outdated. Consider re-syncing.',
-              })}
-            </p>
-          )}
-        </>
-      )}
-
-      {syncState.status === 'error' && (
-        <p role="alert">
-          {t({
-            zh: `读取数据失败：${syncState.message}`,
-            en: `Failed to read data: ${syncState.message}`,
-          })}
-        </p>
-      )}
+        </Link>
+      </p>
     </section>
   )
 }

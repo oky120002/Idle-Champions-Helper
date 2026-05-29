@@ -7,6 +7,10 @@ import react from '@vitejs/plugin-react'
 const repoName = 'Idle-Champions-Helper'
 const localDevPrivateSnapshotEndpoint = '/__dev/private-user-data/user-profile-payloads'
 const defaultLocalDevPrivateSnapshotPath = 'tmp/private-user-data/latest/user-profile-payloads.json'
+const browserOnlyUserProfileSourceResolverPath = path.resolve(
+  process.cwd(),
+  'src/data/user-profile-store/userProfileSourceResolver.prod.ts',
+)
 
 function normalizeChunkId(id: string) {
   return id.replaceAll('\\', '/')
@@ -119,6 +123,16 @@ function createLocalDevPrivateSnapshotPlugin(): Plugin {
 
 export default defineConfig(({ command }) => ({
   plugins: [react(), createLocalDevPrivateSnapshotPlugin()],
+  resolve: {
+    alias: command === 'build'
+      ? [
+          {
+            find: './userProfileSourceResolver',
+            replacement: browserOnlyUserProfileSourceResolverPath,
+          },
+        ]
+      : [],
+  },
   base: command === 'serve' ? '/' : `/${repoName}/`,
   build: {
     rollupOptions: {

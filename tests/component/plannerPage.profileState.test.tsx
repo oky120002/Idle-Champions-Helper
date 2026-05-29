@@ -7,6 +7,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { I18nProvider } from '../../src/app/i18n'
 import { APP_DATABASE_NAME } from '../../src/data/localDatabase'
 import {
+  USER_PROFILE_SOURCE_PREFERENCE_STORAGE_KEY,
   deleteUserProfileData,
   readUserProfileSnapshot,
   saveUserProfileSnapshot,
@@ -15,6 +16,7 @@ import { createUserProfileSnapshot } from '../../src/domain/user-profile/fixture
 import { PlannerProfileState } from '../../src/pages/planner/PlannerProfileState'
 
 async function resetDatabase(): Promise<void> {
+  localStorage.removeItem(USER_PROFILE_SOURCE_PREFERENCE_STORAGE_KEY)
   await deleteUserProfileData().catch(() => {})
   await new Promise<void>((resolve, reject) => {
     const request = indexedDB.deleteDatabase(APP_DATABASE_NAME)

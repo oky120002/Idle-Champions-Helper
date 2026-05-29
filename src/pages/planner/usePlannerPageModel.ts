@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { loadCollection } from '../../data/client'
-import { readUserProfileSnapshot } from '../../data/user-profile-store'
+import { resolveUserProfileSnapshot } from '../../data/user-profile-store'
 import type { Champion, FormationLayout, Variant } from '../../domain/types'
 import type { UserProfileSnapshot } from '../../domain/user-profile/types'
 import {
@@ -30,11 +30,11 @@ export function usePlannerPageModel() {
       setLoadError(null)
 
       try {
-        const [variants, champions, formations, snapshot] = await Promise.all([
+        const [variants, champions, formations, resolution] = await Promise.all([
           loadCollection<Variant>('variants'),
           loadCollection<Champion>('champions'),
           loadCollection<FormationLayout>('formations'),
-          readUserProfileSnapshot(),
+          resolveUserProfileSnapshot(),
         ])
 
         if (!active) return
@@ -44,7 +44,7 @@ export function usePlannerPageModel() {
           champions: champions.items,
           formations: formations.items,
         })
-        setProfileSnapshot(snapshot)
+        setProfileSnapshot(resolution.snapshot)
         setSelectedVariantId((current) => current ?? variants.items[0]?.id ?? null)
         setLoadState('ready')
       } catch (caught) {
