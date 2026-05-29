@@ -11,6 +11,18 @@ const browserOnlyUserProfileSourceResolverPath = path.resolve(
   process.cwd(),
   'src/data/user-profile-store/userProfileSourceResolver.prod.ts',
 )
+const browserOnlyLocalDevSnapshotSectionPath = path.resolve(
+  process.cwd(),
+  'src/pages/user-data/LocalDevSnapshotSection.prod.tsx',
+)
+const browserOnlyPlannerProfileSourceLabelPath = path.resolve(
+  process.cwd(),
+  'src/pages/planner/plannerProfileSourceLabel.prod.ts',
+)
+const browserOnlyUserSyncLocalDevActionPath = path.resolve(
+  process.cwd(),
+  'src/pages/user-data/userSyncLocalDevAction.prod.ts',
+)
 
 function normalizeChunkId(id: string) {
   return id.replaceAll('\\', '/')
@@ -129,6 +141,18 @@ export default defineConfig(({ command }) => ({
           {
             find: './userProfileSourceResolver',
             replacement: browserOnlyUserProfileSourceResolverPath,
+          },
+          {
+            find: './LocalDevSnapshotSection',
+            replacement: browserOnlyLocalDevSnapshotSectionPath,
+          },
+          {
+            find: './plannerProfileSourceLabel',
+            replacement: browserOnlyPlannerProfileSourceLabelPath,
+          },
+          {
+            find: './userSyncLocalDevAction',
+            replacement: browserOnlyUserSyncLocalDevActionPath,
           },
         ]
       : [],

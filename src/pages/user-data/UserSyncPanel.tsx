@@ -1,12 +1,9 @@
 import type { UserCredentials } from '../../domain/types'
+import { LocalDevSnapshotSection } from './LocalDevSnapshotSection'
 import { useUserSyncModel } from './useUserSyncModel'
 
 type UserSyncPanelProps = {
   credentials?: UserCredentials | null
-}
-
-function formatProfileSourceLabel(source: 'browser-sync' | 'local-dev-snapshot') {
-  return source === 'browser-sync' ? '浏览器同步快照' : '本地开发快照'
 }
 
 export function UserSyncPanel({ credentials = null }: UserSyncPanelProps) {
@@ -23,7 +20,6 @@ export function UserSyncPanel({ credentials = null }: UserSyncPanelProps) {
     handleSelectProfileSource,
     handleDelete,
   } = useUserSyncModel(credentials)
-  const showLocalDevSnapshotSection = import.meta.env.DEV && showLocalDevSnapshotAction
 
   return (
     <section aria-label="同步状态" role="region">
@@ -66,48 +62,14 @@ export function UserSyncPanel({ credentials = null }: UserSyncPanelProps) {
         )}
       </div>
 
-      {showLocalDevSnapshotSection && (
-        <div>
-          <p>仅本地开发：浏览器同步快照与本地开发快照必须分离。本地开发快照只读使用，不会覆盖浏览器 IndexedDB。</p>
-          <p>当前开发数据源：{formatProfileSourceLabel(selectedProfileSource)}</p>
-
-          {profileResolution.snapshot && (
-            <p>
-              当前选中源拥有英雄 {profileResolution.snapshot.ownedHeroes.length} 个；已导入阵型 {profileResolution.snapshot.importedFormationSaves.length} 个。
-            </p>
-          )}
-
-          {profileResolution.errorMessage && (
-            <p role="alert">{profileResolution.errorMessage}</p>
-          )}
-
-          <div aria-label="开发数据源" role="group">
-            <button
-              type="button"
-              onClick={() => handleSelectProfileSource('browser-sync')}
-              aria-pressed={selectedProfileSource === 'browser-sync'}
-            >
-              使用浏览器快照
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleSelectLocalDevSnapshot()}
-              disabled={!canLoadLocalDevSnapshot}
-              aria-pressed={selectedProfileSource === 'local-dev-snapshot'}
-            >
-              使用本地开发快照
-            </button>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => handleSelectLocalDevSnapshot()}
-            disabled={!canLoadLocalDevSnapshot}
-          >
-            刷新本地开发快照
-          </button>
-        </div>
+      {showLocalDevSnapshotAction && (
+        <LocalDevSnapshotSection
+          canLoadLocalDevSnapshot={canLoadLocalDevSnapshot}
+          profileResolution={profileResolution}
+          selectedProfileSource={selectedProfileSource}
+          onSelectBrowserSnapshot={() => handleSelectProfileSource('browser-sync')}
+          onSelectLocalDevSnapshot={handleSelectLocalDevSnapshot}
+        />
       )}
     </section>
   )

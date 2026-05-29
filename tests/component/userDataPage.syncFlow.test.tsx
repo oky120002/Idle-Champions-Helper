@@ -218,6 +218,45 @@ describe('user data sync flow', () => {
     await expect(readUserProfileSnapshot()).resolves.toBeNull()
   })
 
+  it('开发模式切换来源会显式持久化当前来源偏好', async () => {
+    renderSyncPanel()
+
+    const user = userEvent.setup()
+    await user.click(screen.getByRole('button', { name: '使用本地开发快照' }))
+
+    expect(localStorage.getItem(USER_PROFILE_SOURCE_PREFERENCE_STORAGE_KEY)).toBe('local-dev-snapshot')
+    expect(screen.getByText(/当前开发数据源：本地开发快照/)).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: '使用浏览器快照' }))
+
+    expect(localStorage.getItem(USER_PROFILE_SOURCE_PREFERENCE_STORAGE_KEY)).toBe('browser-sync')
+    expect(screen.getByText(/当前开发数据源：浏览器同步快照/)).toBeInTheDocument()
+  })
+
+  it('本地开发快照读取失败时不会清空既有浏览器同步快照', async () => {
+    const twoDaysAgo = new Date()
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2)
+    await saveUserProfileSnapshot(
+      createUserProfileSnapshot({ updatedAt: twoDaysAgo.toISOString() }),
+    )
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+      ok: false,
+      json: async () => ({ error: 'missing snapshot' }),
+    }))
+
+    renderSyncPanel()
+
+    const user = userEvent.setup()
+    await user.click(screen.getByRole('button', { name: '使用本地开发快照' }))
+
+    const alert = await screen.findByRole('alert')
+    expect(alert.textContent).toMatch(/本地开发快照不可用|读取本地开发快照失败/)
+    expect(screen.getByText(/浏览器同步快照已于 2 天前更新/)).toBeInTheDocument()
+
+    const snapshot = await readUserProfileSnapshot()
+    expect(snapshot?.updatedAt).toBe(twoDaysAgo.toISOString())
+  })
+
   it('同步错误展示时不包含凭证', async () => {
     vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error(`network ${TEST_USER_ID} ${TEST_HASH}`)))
     renderSyncPanel({ userId: TEST_USER_ID, hash: TEST_HASH })

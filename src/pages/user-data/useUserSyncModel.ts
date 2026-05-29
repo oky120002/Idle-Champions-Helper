@@ -15,18 +15,20 @@ import type {
   UserProfileResolution,
   UserProfileSourceKind,
 } from '../../data/user-profile-store'
+import {
+  canUseLocalDevSnapshotAction,
+  trySelectLocalDevSnapshot,
+} from './userSyncLocalDevAction'
 
 export type SyncState =
   | { status: 'no-snapshot' }
   | { status: 'loaded'; snapshot: UserProfileSnapshot; ageDays: number }
   | { status: 'error'; message: string }
 
-const LOCAL_DEV_SNAPSHOT_UNAVAILABLE_MESSAGE = '本地开发快照导入只允许在 Vite 开发模式中使用。'
-
 export function useUserSyncModel(credentials: UserCredentials | null = null) {
   const [syncState, setSyncState] = useState<SyncState>({ status: 'no-snapshot' })
   const [busy, setBusy] = useState(false)
-  const showLocalDevSnapshotAction = import.meta.env.DEV
+  const showLocalDevSnapshotAction = canUseLocalDevSnapshotAction()
   const [selectedProfileSource, setSelectedProfileSource] = useState<UserProfileSourceKind>(
     () => readPreferredUserProfileSource(),
   )
@@ -101,13 +103,8 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
   }, [])
 
   const handleSelectLocalDevSnapshot = useCallback(() => {
-    if (!showLocalDevSnapshotAction) {
-      setSyncState({ status: 'error', message: LOCAL_DEV_SNAPSHOT_UNAVAILABLE_MESSAGE })
-      return
-    }
-
-    handleSelectProfileSource('local-dev-snapshot')
-  }, [handleSelectProfileSource, showLocalDevSnapshotAction])
+    trySelectLocalDevSnapshot(handleSelectProfileSource)
+  }, [handleSelectProfileSource])
 
   const handleDelete = useCallback(async () => {
     setBusy(true)

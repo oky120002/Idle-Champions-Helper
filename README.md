@@ -36,9 +36,15 @@ npm run preview:pages
 npm run lint
 npm run typecheck
 npm run test:run
+npm run privacy:scan
+npm run build
+npm run privacy:scan-build
 npm run test:e2e
 npm run test:regression
 ```
+
+- `privacy:scan` 扫源码中的敏感凭证、私有路径和误提交风险。
+- `privacy:scan-build` 扫 `dist/`，阻止 dev-only 私有快照端点、来源标识和本地私有路径进入生产产物。
 
 ## 数据相关命令
 

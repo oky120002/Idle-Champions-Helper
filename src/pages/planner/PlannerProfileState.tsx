@@ -2,10 +2,7 @@ import { Link } from 'react-router-dom'
 
 import { useI18n } from '../../app/i18n'
 import { useUserSyncModel } from '../user-data/useUserSyncModel'
-
-function formatProfileSourceLabel(source: 'browser-sync' | 'local-dev-snapshot') {
-  return source === 'browser-sync' ? '浏览器同步快照' : '本地开发快照'
-}
+import { formatPlannerProfileSourceLabel } from './plannerProfileSourceLabel'
 
 export function PlannerProfileState() {
   const { t } = useI18n()
@@ -27,7 +24,7 @@ export function PlannerProfileState() {
   if (profileResolution.snapshot) {
     const ageMs = Date.now() - new Date(profileResolution.snapshot.updatedAt).getTime()
     const ageDays = Math.floor(ageMs / (1000 * 60 * 60 * 24))
-    const sourceLabel = formatProfileSourceLabel(
+    const sourceLabel = formatPlannerProfileSourceLabel(
       profileResolution.resolvedSource ?? profileResolution.selectedSource,
     )
 
