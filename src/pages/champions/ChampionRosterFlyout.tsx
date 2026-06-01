@@ -235,9 +235,11 @@ export function ChampionRosterFlyout({
                 </div>
                 <div className="champion-roster-slot__stats">
                   <span>装备等级 {slot.enchant}</span>
-                  <span>
-                    {slot.gild === 2 ? '金装' : slot.gild === 1 ? '闪耀' : '普通边框'}
-                  </span>
+                  {slot.gild > 0 ? (
+                    <span className={`champion-roster-slot__gild champion-roster-slot__gild--${slot.gild}`}>
+                      {slot.gild === 2 ? '金装' : '闪耀'}
+                    </span>
+                  ) : null}
                 </div>
                 <div className="champion-roster-slot__meter" aria-hidden="true">
                   <span className="champion-roster-slot__meter-fill" style={{ width: `${rarityPercent}%` }} />

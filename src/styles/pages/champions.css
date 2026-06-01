@@ -310,12 +310,71 @@
   background: rgba(9, 14, 21, 0.82);
 }
 
+.champion-roster-slot::before,
+.champion-roster-slot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 140ms ease;
+}
+
+.champion-roster-slot::before {
+  inset: -1px;
+  border: 1px solid transparent;
+}
+
+.champion-roster-slot::after {
+  inset: 1px;
+}
+
 .champion-roster-slot--gild-1 {
-  border-color: rgba(213, 231, 255, 0.28);
+  border-color: rgba(187, 221, 255, 0.52);
+  box-shadow:
+    inset 0 0 0 1px rgba(196, 230, 255, 0.16),
+    0 0 0 1px rgba(125, 184, 255, 0.12);
 }
 
 .champion-roster-slot--gild-2 {
-  border-color: rgba(232, 189, 92, 0.38);
+  border-color: rgba(235, 192, 92, 0.62);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 225, 145, 0.2),
+    0 0 0 1px rgba(235, 192, 92, 0.14);
+}
+
+.champion-roster-slot--gild-1::before {
+  opacity: 1;
+  border-color: rgba(188, 225, 255, 0.74);
+  box-shadow:
+    inset 0 0 0 1px rgba(230, 245, 255, 0.2),
+    inset 0 0 26px rgba(92, 161, 255, 0.12),
+    0 0 20px rgba(88, 154, 255, 0.14);
+}
+
+.champion-roster-slot--gild-1::after {
+  opacity: 1;
+  background:
+    radial-gradient(circle at top left, rgba(229, 245, 255, 0.18), transparent 28%),
+    linear-gradient(135deg, rgba(119, 183, 255, 0.24), transparent 38%);
+}
+
+.champion-roster-slot--gild-2::before {
+  opacity: 1;
+  border-color: rgba(246, 210, 118, 0.88);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 236, 176, 0.26),
+    inset 0 0 30px rgba(228, 171, 54, 0.18),
+    0 0 24px rgba(223, 162, 46, 0.18);
+}
+
+.champion-roster-slot--gild-2::after {
+  opacity: 1;
+  background:
+    radial-gradient(circle at top left, rgba(255, 232, 164, 0.24), transparent 26%),
+    linear-gradient(135deg, rgba(255, 196, 76, 0.28), transparent 40%),
+    radial-gradient(circle at bottom right, rgba(255, 214, 126, 0.14), transparent 22%);
 }
 
 .champion-roster-slot__backdrop {
@@ -383,9 +442,31 @@
 .champion-roster-slot__stats {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 0.6rem;
   font-size: 0.72rem;
   color: rgba(242, 239, 230, 0.72);
+}
+
+.champion-roster-slot__gild {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.12rem 0.42rem 0.16rem;
+  border-radius: 999px;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+}
+
+.champion-roster-slot__gild--1 {
+  color: rgba(219, 239, 255, 0.94);
+  background: rgba(110, 165, 230, 0.14);
+  box-shadow: inset 0 0 0 1px rgba(178, 217, 255, 0.18);
+}
+
+.champion-roster-slot__gild--2 {
+  color: rgba(255, 231, 169, 0.96);
+  background: rgba(173, 119, 23, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(246, 208, 116, 0.22);
 }
 
 .champion-roster-slot__stats--legendary {

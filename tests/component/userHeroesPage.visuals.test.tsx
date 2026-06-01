@@ -72,6 +72,7 @@ describe('UserHeroesPage flyout', () => {
     expect(within(flyout).getByText('金斧')).toBeInTheDocument()
     expect(within(flyout).getByText('稀有度 4/4')).toBeInTheDocument()
     expect(within(flyout).getByText('金装')).toBeInTheDocument()
+    expect(within(flyout).queryByText('普通边框')).not.toBeInTheDocument()
     expect(within(flyout).getByText('装备等级 321')).toBeInTheDocument()
     expect(within(flyout).getByText('5/20')).toBeInTheDocument()
   })
