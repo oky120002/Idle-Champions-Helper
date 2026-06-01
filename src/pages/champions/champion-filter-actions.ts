@@ -1,4 +1,5 @@
 import type { Dispatch, SetStateAction } from 'react'
+import type { ActiveFilterChip } from '../../features/champion-filters/types'
 import { buildSharedFilterActions } from '../../features/champion-filters/filter-action-builder'
 
 interface ChampionFilterActionOptions {
@@ -13,6 +14,8 @@ interface ChampionFilterActionOptions {
   setSelectedProfessions: Dispatch<SetStateAction<string[]>>
   setSelectedAcquisitions: Dispatch<SetStateAction<string[]>>
   setSelectedMechanics: Dispatch<SetStateAction<string[]>>
+  resetExtraFilters?: () => void
+  extraChipMutations?: Record<ActiveFilterChip['id'], () => void>
 }
 
 export function buildChampionFilterActions({
@@ -27,6 +30,8 @@ export function buildChampionFilterActions({
   setSelectedProfessions,
   setSelectedAcquisitions,
   setSelectedMechanics,
+  resetExtraFilters,
+  extraChipMutations,
 }: ChampionFilterActionOptions) {
   return buildSharedFilterActions({
     runFilterMutation,
@@ -40,5 +45,7 @@ export function buildChampionFilterActions({
     setSelectedProfessions,
     setSelectedAcquisitions,
     setSelectedMechanics,
+    ...(resetExtraFilters ? { resetExtraFilters } : {}),
+    ...(extraChipMutations ? { extraChipMutations } : {}),
   })
 }

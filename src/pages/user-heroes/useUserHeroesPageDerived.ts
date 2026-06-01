@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import type { AppLocale } from '../../app/i18n'
 import type { OwnedHero } from '../../domain/user-profile/types'
+import type { ActiveFilterChip } from '../../features/champion-filters/types'
 import { collectAttributeFilterOptions, groupMechanicOptions, seatOptions } from '../../features/champion-filters/options'
 import { filterChampions } from '../../rules/championFilter'
 import { buildActiveFilterChips } from '../champions/champion-filter-model'
@@ -10,6 +11,7 @@ import {
   buildOwnedHeroById,
 } from '../champions/championRoster'
 import type { ChampionState, ChampionsFilterState, ChampionsPageTranslator } from '../champions/types'
+import type { UserHeroesRosterMetricFilterId } from './types'
 
 type UseUserHeroesPageDerivedOptions = {
   locale: AppLocale
@@ -17,6 +19,58 @@ type UseUserHeroesPageDerivedOptions = {
   state: ChampionState
   filters: ChampionsFilterState
   ownedHeroes: OwnedHero[]
+  activeRosterMetricFilterId: UserHeroesRosterMetricFilterId | null
+}
+
+function matchesRosterMetric(ownedHero: OwnedHero | null, filterId: UserHeroesRosterMetricFilterId): boolean {
+  if (!ownedHero) {
+    return false
+  }
+
+  switch (filterId) {
+    case 'owned':
+      return true
+    case 'epic-slots':
+      return Object.values(ownedHero.lootBySlot).some((slot) => slot.rarity >= 4)
+    case 'shiny-slots':
+      return Object.values(ownedHero.lootBySlot).some((slot) => slot.gild === 1)
+    case 'golden-slots':
+      return Object.values(ownedHero.lootBySlot).some((slot) => slot.gild === 2)
+    case 'legendary-slots':
+      return Object.keys(ownedHero.legendaryBySlot).length > 0
+  }
+}
+
+function buildRosterMetricMatchedChampionIds(
+  championIds: string[],
+  ownedHeroById: ReadonlyMap<string, OwnedHero>,
+  activeRosterMetricFilterId: UserHeroesRosterMetricFilterId | null,
+): Set<string> {
+  if (activeRosterMetricFilterId === null) {
+    return new Set(championIds)
+  }
+
+  return new Set(
+    championIds.filter((championId) => matchesRosterMetric(ownedHeroById.get(championId) ?? null, activeRosterMetricFilterId)),
+  )
+}
+
+function getRosterMetricChipLabel(
+  filterId: UserHeroesRosterMetricFilterId,
+  t: ChampionsPageTranslator,
+): string {
+  switch (filterId) {
+    case 'owned':
+      return t({ zh: '顶部指标：已拥有英雄', en: 'Top metric: Owned champions' })
+    case 'epic-slots':
+      return t({ zh: '顶部指标：史诗装备槽位', en: 'Top metric: Epic equipment slots' })
+    case 'shiny-slots':
+      return t({ zh: '顶部指标：闪耀槽位', en: 'Top metric: Shiny slots' })
+    case 'golden-slots':
+      return t({ zh: '顶部指标：金装槽位', en: 'Top metric: Golden slots' })
+    case 'legendary-slots':
+      return t({ zh: '顶部指标：传奇装备位', en: 'Top metric: Legendary equipment slots' })
+  }
 }
 
 export function useUserHeroesPageDerived({
@@ -25,8 +79,9 @@ export function useUserHeroesPageDerived({
   state,
   filters,
   ownedHeroes,
+  activeRosterMetricFilterId,
 }: UseUserHeroesPageDerivedOptions) {
-  const filteredChampions = useMemo(() => {
+  const baseFilteredChampions = useMemo(() => {
     if (state.status !== 'ready') {
       return []
     }
@@ -44,11 +99,19 @@ export function useUserHeroesPageDerived({
       mechanics: filters.selectedMechanics,
     })
   }, [filters, state])
-  const matchedChampionIds = useMemo(
-    () => new Set(filteredChampions.map((champion) => champion.id)),
-    [filteredChampions],
-  )
   const ownedHeroById = useMemo(() => buildOwnedHeroById(ownedHeroes), [ownedHeroes])
+  const filteredChampionIds = useMemo(
+    () => baseFilteredChampions.map((champion) => champion.id),
+    [baseFilteredChampions],
+  )
+  const matchedChampionIds = useMemo(
+    () => buildRosterMetricMatchedChampionIds(filteredChampionIds, ownedHeroById, activeRosterMetricFilterId),
+    [activeRosterMetricFilterId, filteredChampionIds, ownedHeroById],
+  )
+  const filteredChampions = useMemo(
+    () => baseFilteredChampions.filter((champion) => matchedChampionIds.has(champion.id)),
+    [baseFilteredChampions, matchedChampionIds],
+  )
   const rosterSeatColumns = useMemo(
     () => (
       state.status === 'ready'
@@ -106,7 +169,7 @@ export function useUserHeroesPageDerived({
   )
   const orderedSelectedMechanics = mechanicOptions.filter((mechanic) => filters.selectedMechanics.includes(mechanic))
 
-  const activeFilterChips = buildActiveFilterChips({
+  const baseActiveFilterChips = buildActiveFilterChips({
     locale,
     t,
     filters,
@@ -120,6 +183,17 @@ export function useUserHeroesPageDerived({
     orderedSelectedAcquisitions,
     orderedSelectedMechanics,
   })
+  const rosterMetricChip: ActiveFilterChip | null = activeRosterMetricFilterId
+    ? {
+        id: 'roster-metric',
+        label: getRosterMetricChipLabel(activeRosterMetricFilterId, t),
+        clearLabel: t({ zh: '清空顶部指标筛选', en: 'Clear top metric filter' }),
+      }
+    : null
+  const activeFilterChips = [
+    ...baseActiveFilterChips,
+    ...(rosterMetricChip ? [rosterMetricChip] : []),
+  ]
   const activeFilters = activeFilterChips.map((chip) => chip.label)
   const hasActiveFilters =
     filters.search.trim().length > 0 ||
@@ -131,7 +205,8 @@ export function useUserHeroesPageDerived({
     filters.selectedAlignments.length > 0 ||
     filters.selectedProfessions.length > 0 ||
     filters.selectedAcquisitions.length > 0 ||
-    filters.selectedMechanics.length > 0
+    filters.selectedMechanics.length > 0 ||
+    activeRosterMetricFilterId !== null
   const mechanicOptionGroups = groupMechanicOptions(mechanicOptions)
   const identityFiltersSelectedCount =
     filters.selectedRaces.length + filters.selectedGenders.length + filters.selectedAlignments.length

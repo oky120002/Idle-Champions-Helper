@@ -169,12 +169,37 @@
 }
 
 .champion-roster-summary__metric {
+  appearance: none;
   display: grid;
   gap: 0.42rem;
+  width: 100%;
   padding: 0.74rem 0.8rem;
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(227, 214, 193, 0.08);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 140ms ease, border-color 140ms ease, background 140ms ease, box-shadow 140ms ease;
+}
+
+.champion-roster-summary__metric:hover {
+  transform: translateY(-1px);
+  border-color: rgba(200, 167, 127, 0.24);
+}
+
+.champion-roster-summary__metric:focus-visible {
+  outline: 2px solid rgba(245, 214, 152, 0.78);
+  outline-offset: 2px;
+}
+
+.champion-roster-summary__metric--active {
+  border-color: rgba(200, 167, 127, 0.5);
+  background:
+    radial-gradient(circle at top right, rgba(200, 167, 127, 0.16), transparent 38%),
+    rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(200, 167, 127, 0.18);
 }
 
 .champion-roster-summary__metric-topline {

@@ -4,7 +4,7 @@ import { ChampionAvatar } from '../../components/ChampionAvatar'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import { ChampionRosterFlyout } from '../champions/ChampionRosterFlyout'
 import { ChampionRosterSummary } from '../champions/ChampionRosterSummary'
-import type { UserHeroesPageModel } from './types'
+import type { UserHeroesPageModel, UserHeroesRosterMetricFilterId } from './types'
 import { getUserHeroProfileSourceLabel } from './userHeroProfileSourceLabel'
 
 interface UserHeroesResultsSectionProps {
@@ -71,6 +71,8 @@ export function UserHeroesResultsSection({ model }: UserHeroesResultsSectionProp
         eyebrow="账号概览"
         title="用户英雄矩阵"
         highlightLabel="高亮已拥有"
+        activeMetricId={model.activeRosterMetricFilterId}
+        onMetricToggle={(metricId) => model.toggleRosterMetricFilter(metricId as UserHeroesRosterMetricFilterId)}
       />
 
       {!hasMatches ? (

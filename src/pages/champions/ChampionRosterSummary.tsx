@@ -6,6 +6,8 @@ interface ChampionRosterSummaryProps {
   eyebrow?: string
   title?: string
   highlightLabel?: string
+  activeMetricId?: string | null
+  onMetricToggle?: (metricId: string) => void
 }
 
 export function ChampionRosterSummary({
@@ -14,6 +16,8 @@ export function ChampionRosterSummary({
   eyebrow = '账号概览',
   title = '全英雄矩阵',
   highlightLabel = '高亮',
+  activeMetricId = null,
+  onMetricToggle,
 }: ChampionRosterSummaryProps) {
   if (!summary) {
     return null
@@ -37,9 +41,16 @@ export function ChampionRosterSummary({
       <div className="champion-roster-summary__metrics">
         {summary.metrics.map((metric) => {
           const percent = metric.total > 0 ? Math.min(100, (metric.value / metric.total) * 100) : 0
+          const isActive = activeMetricId === metric.id
 
           return (
-            <article key={metric.id} className="champion-roster-summary__metric">
+            <button
+              key={metric.id}
+              type="button"
+              className={`champion-roster-summary__metric ${isActive ? 'champion-roster-summary__metric--active' : ''}`}
+              aria-pressed={isActive}
+              onClick={() => onMetricToggle?.(metric.id)}
+            >
               <div className="champion-roster-summary__metric-topline">
                 <span className="champion-roster-summary__metric-label">{metric.label}</span>
                 <span className="champion-roster-summary__metric-value">
@@ -50,7 +61,7 @@ export function ChampionRosterSummary({
                 <span className="champion-roster-summary__meter-fill" style={{ width: `${percent}%` }} />
               </div>
               <p className="champion-roster-summary__metric-detail">{metric.description}</p>
-            </article>
+            </button>
           )
         })}
       </div>

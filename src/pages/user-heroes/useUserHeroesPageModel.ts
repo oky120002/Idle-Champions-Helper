@@ -8,7 +8,7 @@ import { getMechanicCategoryHint } from '../../features/champion-filters/mechani
 import { buildChampionFilterActions } from '../champions/champion-filter-actions'
 import { useChampionCollectionState } from '../champions/useChampionCollectionState'
 import { useChampionsFilterState } from '../champions/useChampionsFilterState'
-import type { UserHeroesPageModel } from './types'
+import type { UserHeroesPageModel, UserHeroesRosterMetricFilterId } from './types'
 import { useUserHeroesPageDerived } from './useUserHeroesPageDerived'
 
 export function useUserHeroesPageModel(): UserHeroesPageModel {
@@ -17,6 +17,7 @@ export function useUserHeroesPageModel(): UserHeroesPageModel {
   const state = useChampionCollectionState()
   const filterState = useChampionsFilterState()
   const [profileResolution, setProfileResolution] = useState<UserProfileResolution | null>(null)
+  const [activeRosterMetricFilterId, setActiveRosterMetricFilterId] = useState<UserHeroesRosterMetricFilterId | null>(null)
 
   useEffect(() => {
     let active = true
@@ -44,6 +45,7 @@ export function useUserHeroesPageModel(): UserHeroesPageModel {
     state,
     filters: filterState.filters,
     ownedHeroes: profileResolution?.snapshot?.ownedHeroes ?? [],
+    activeRosterMetricFilterId,
   })
   const motion = useWorkbenchResultsMotion({
     storageKey: 'user-heroes',
@@ -73,7 +75,17 @@ export function useUserHeroesPageModel(): UserHeroesPageModel {
     setSelectedProfessions: filterState.setSelectedProfessions,
     setSelectedAcquisitions: filterState.setSelectedAcquisitions,
     setSelectedMechanics: filterState.setSelectedMechanics,
+    resetExtraFilters: () => setActiveRosterMetricFilterId(null),
+    extraChipMutations: {
+      'roster-metric': () => setActiveRosterMetricFilterId(null),
+    },
   })
+
+  function toggleRosterMetricFilter(id: UserHeroesRosterMetricFilterId) {
+    runFilterMutation(() => {
+      setActiveRosterMetricFilterId((current) => (current === id ? null : id))
+    })
+  }
 
   return {
     locale,
@@ -104,6 +116,7 @@ export function useUserHeroesPageModel(): UserHeroesPageModel {
     hasRandomOrder: false,
     rosterSeatColumns: derived.rosterSeatColumns,
     rosterSummary: derived.rosterSummary,
+    activeRosterMetricFilterId,
     shareLinkState,
     showResultsQuickNavTop: motion.showResultsQuickNavTop,
     resultsPaneRef: motion.resultsPaneRef,
@@ -121,6 +134,7 @@ export function useUserHeroesPageModel(): UserHeroesPageModel {
     setIdentityFiltersExpanded: filterState.setIdentityFiltersExpanded,
     setMetaFiltersExpanded: filterState.setMetaFiltersExpanded,
     ...filterActions,
+    toggleRosterMetricFilter,
     toggleResultVisibility: () => undefined,
     randomizeResultOrder: () => undefined,
     scrollResultsToTop: motion.scrollResultsToTop,
