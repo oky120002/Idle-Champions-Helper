@@ -1,14 +1,41 @@
 import { useI18n } from '../../app/i18n'
 
+export interface PlannerNarrativeLine {
+  zh: string
+  en: string
+}
+
+export interface PlannerPlacementEntry {
+  slotId: string
+  slotLabel: string
+  heroId: string
+  heroName: string
+  seat: number | null
+}
+
 export interface PlannerResultCardProps {
   score: string
   placements: Record<string, string>
-  explanations: string[]
+  placementEntries?: PlannerPlacementEntry[]
+  explanations: PlannerNarrativeLine[]
   warnings: string[]
 }
 
-export function PlannerResultCard({ score, placements, explanations, warnings }: PlannerResultCardProps) {
+export function PlannerResultCard({
+  score,
+  placements,
+  placementEntries,
+  explanations,
+  warnings,
+}: PlannerResultCardProps) {
   const { t } = useI18n()
+  const resolvedPlacementEntries = placementEntries ?? Object.entries(placements).map(([slotId, heroId]) => ({
+    slotId,
+    slotLabel: slotId,
+    heroId,
+    heroName: heroId,
+    seat: null,
+  }))
 
   return (
     <article
@@ -23,49 +50,79 @@ export function PlannerResultCard({ score, placements, explanations, warnings }:
           <h3 className="surface-card__title">
             {t({ zh: '当前推荐阵型', en: 'Current recommended formation' })}
           </h3>
-          <p className="planner-result-card__score">
-            <span>{t({ zh: '评分：', en: 'Score: ' })}</span>
-            <span>{score}</span>
-          </p>
+          <div className="planner-result-card__header-meta">
+            <p className="planner-result-card__score">
+              <span>{t({ zh: '评分', en: 'Score' })}</span>
+              <strong>{score}</strong>
+            </p>
+            <p className="planner-result-card__slot-count">
+              {t({
+                zh: `已填充 ${resolvedPlacementEntries.length} 个槽位`,
+                en: `${resolvedPlacementEntries.length} slots filled`,
+              })}
+            </p>
+          </div>
         </div>
       </div>
 
       <div className="surface-card__body">
-        <ul className="planner-result-card__placements">
-          {Object.entries(placements)
-            .sort(([a], [b]) => Number(a) - Number(b))
-            .map(([slot, heroId]) => (
-              <li key={slot}>
-                {t({ zh: `槽位 ${slot}: ${heroId}`, en: `Slot ${slot}: ${heroId}` })}
-              </li>
-            ))}
-        </ul>
-
-        {explanations.length > 0 && (
-          <section data-section="explanations" className="planner-result-card__explanations">
+        <div className="planner-result-card__body-grid">
+          <section className="planner-result-card__placements-panel">
             <h4 className="planner-result-card__section-title">
-              {t({ zh: '说明', en: 'Explanations' })}
+              {t({ zh: '阵位分配', en: 'Slot assignments' })}
             </h4>
-            <ul>
-              {explanations.map((text, index) => (
-                <li key={index}>{text}</li>
+            <ol className="planner-result-card__placements">
+              {resolvedPlacementEntries.map((entry) => (
+                <li
+                  key={entry.slotId}
+                  data-slot-id={entry.slotId}
+                  data-hero-id={entry.heroId}
+                  className="planner-result-card__placement"
+                >
+                  <span className="planner-result-card__placement-slot">
+                    {t({ zh: `槽位 ${entry.slotLabel}`, en: `Slot ${entry.slotLabel}` })}
+                  </span>
+                  <span className="planner-result-card__placement-copy">
+                    <strong>{entry.heroName}</strong>
+                    <span>
+                      {entry.seat !== null
+                        ? t({ zh: `Seat ${entry.seat} · ${entry.heroId}`, en: `Seat ${entry.seat} · ${entry.heroId}` })
+                        : entry.heroId}
+                    </span>
+                  </span>
+                </li>
               ))}
-            </ul>
+            </ol>
           </section>
-        )}
 
-        {warnings.length > 0 && (
-          <section data-section="warnings" className="planner-result-card__warnings">
-            <h4 className="planner-result-card__section-title">
-              {t({ zh: '不支持警告', en: 'Unsupported warnings' })}
-            </h4>
-            <ul>
-              {warnings.map((text, index) => (
-                <li key={index}>{text}</li>
-              ))}
-            </ul>
-          </section>
-        )}
+          <div className="planner-result-card__notes">
+            {explanations.length > 0 && (
+              <section data-section="explanations" className="planner-result-card__explanations">
+                <h4 className="planner-result-card__section-title">
+                  {t({ zh: '评分依据', en: 'Why this result' })}
+                </h4>
+                <ul>
+                  {explanations.map((line, index) => (
+                    <li key={index}>{t(line)}</li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {warnings.length > 0 && (
+              <section data-section="warnings" className="planner-result-card__warnings">
+                <h4 className="planner-result-card__section-title">
+                  {t({ zh: '当前警告', en: 'Warnings' })}
+                </h4>
+                <ul>
+                  {warnings.map((text, index) => (
+                    <li key={index}>{text}</li>
+                  ))}
+                </ul>
+              </section>
+            )}
+          </div>
+        </div>
       </div>
     </article>
   )

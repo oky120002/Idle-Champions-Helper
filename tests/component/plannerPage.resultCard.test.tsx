@@ -8,7 +8,10 @@ describe('PlannerResultCard', () => {
   const baseProps = {
     score: '4.08e167',
     placements: { '1': 'bruenor', '3': 'nayeli', '7': 'jim' } as Record<string, string>,
-    explanations: ['Bruenor 提供团队增益', 'Nayeli 提供前排坦度'],
+    explanations: [
+      { zh: '布鲁诺负责团队增益。', en: 'Bruenor anchors the team buffs.' },
+      { zh: '纳耶里补足前排。', en: 'Nayeli rounds out the frontline.' },
+    ],
     warnings: [],
   }
 
@@ -29,9 +32,12 @@ describe('PlannerResultCard', () => {
       </I18nProvider>,
     )
 
-    expect(screen.getByText(/槽位 1: bruenor/)).toBeInTheDocument()
-    expect(screen.getByText(/槽位 3: nayeli/)).toBeInTheDocument()
-    expect(screen.getByText(/槽位 7: jim/)).toBeInTheDocument()
+    expect(screen.getByText('槽位 1')).toBeInTheDocument()
+    expect(screen.getAllByText('bruenor').length).toBeGreaterThan(0)
+    expect(screen.getByText('槽位 3')).toBeInTheDocument()
+    expect(screen.getAllByText('nayeli').length).toBeGreaterThan(0)
+    expect(screen.getByText('槽位 7')).toBeInTheDocument()
+    expect(screen.getAllByText('jim').length).toBeGreaterThan(0)
   })
 
   it('显示说明部分', () => {
@@ -41,8 +47,8 @@ describe('PlannerResultCard', () => {
       </I18nProvider>,
     )
 
-    expect(screen.getByText('Bruenor 提供团队增益')).toBeInTheDocument()
-    expect(screen.getByText('Nayeli 提供前排坦度')).toBeInTheDocument()
+    expect(screen.getByText('布鲁诺负责团队增益。')).toBeInTheDocument()
+    expect(screen.getByText('纳耶里补足前排。')).toBeInTheDocument()
   })
 
   it('在不支持时显示警告部分', () => {

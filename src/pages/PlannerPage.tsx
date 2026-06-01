@@ -107,51 +107,48 @@ export function PlannerPage() {
           </section>
         ) : (
           <>
-            <section className="surface-card page-shell" aria-busy={loadState === 'loading'}>
-              <div className="surface-card__header">
-                <div className="surface-card__header-copy">
-                  <p className="surface-card__eyebrow">
-                    {t({ zh: '场景', en: 'Scenario' })}
-                  </p>
-                  <h2 className="surface-card__title">
-                    {t({ zh: '选择目标关卡', en: 'Choose a target scenario' })}
-                  </h2>
-                </div>
-              </div>
-              <div className="surface-card__body">
-                <PlannerScenarioSelection
-                  variants={collections.variants}
-                  selectedId={selectedVariantId}
-                  onSelectedIdChange={selectVariantId}
-                />
-              </div>
-            </section>
-
-            {plannerRecommendation.blocker ? (
-              <section className="surface-card page-shell" role="status">
-                <div className="surface-card__header">
-                  <div className="surface-card__header-copy">
-                    <h3 className="surface-card__title">
-                      {getPlannerBlockerCopy(plannerRecommendation.blocker, t).title}
-                    </h3>
-                    <p className="surface-card__description">
-                      {getPlannerBlockerCopy(plannerRecommendation.blocker, t).description}
-                    </p>
-                  </div>
+            <section className="planner-page__workspace" aria-busy={loadState === 'loading'}>
+              <section className="surface-card page-shell planner-page__scenario-panel">
+                <div className="surface-card__body">
+                  <PlannerScenarioSelection
+                    variants={collections.variants}
+                    selectedId={selectedVariantId}
+                    onSelectedIdChange={selectVariantId}
+                  />
                 </div>
               </section>
-            ) : null}
 
-            {plannerRecommendation.result ? (
-              <>
-                <PlannerResultCard {...plannerRecommendation.result} />
-                <PlannerSavePreset
-                  result={plannerRecommendation.result}
-                  layoutId={plannerRecommendation.layoutId}
-                  scenarioRef={plannerRecommendation.scenarioRef}
-                />
-              </>
-            ) : null}
+              <div className="planner-page__result-column">
+                {plannerRecommendation.blocker ? (
+                  <section className="surface-card page-shell planner-page__status-panel" role="status">
+                    <div className="surface-card__header">
+                      <div className="surface-card__header-copy">
+                        <p className="surface-card__eyebrow">
+                          {t({ zh: '推荐状态', en: 'Recommendation status' })}
+                        </p>
+                        <h3 className="surface-card__title">
+                          {getPlannerBlockerCopy(plannerRecommendation.blocker, t).title}
+                        </h3>
+                        <p className="surface-card__description">
+                          {getPlannerBlockerCopy(plannerRecommendation.blocker, t).description}
+                        </p>
+                      </div>
+                    </div>
+                  </section>
+                ) : null}
+
+                {plannerRecommendation.result ? (
+                  <>
+                    <PlannerResultCard {...plannerRecommendation.result} />
+                    <PlannerSavePreset
+                      result={plannerRecommendation.result}
+                      layoutId={plannerRecommendation.layoutId}
+                      scenarioRef={plannerRecommendation.scenarioRef}
+                    />
+                  </>
+                ) : null}
+              </div>
+            </section>
           </>
         )}
       </WorkbenchContentStack>

@@ -136,17 +136,13 @@ test('planner 在有本地快照时只使用已拥有英雄生成推荐', async 
   await expect(page.locator('[aria-label="推荐结果"]')).toBeVisible()
   await expect(page.getByRole('button', { name: '保存' })).toBeEnabled()
 
-  const placements = await page.locator('.planner-result-card__placements li').allInnerTexts()
-  const placementHeroIds = placements.map((entry) => {
-    const heroId = entry.split(':').at(-1)?.trim()
-    if (!heroId) {
-      throw new Error(`无法从推荐结果中解析英雄 id: ${entry}`)
-    }
-    return heroId
-  })
+  const placementHeroIds = await page.locator('.planner-result-card__placements li').evaluateAll((items) => (
+    items.map((item) => item.getAttribute('data-hero-id') ?? '')
+  ))
 
   expect(placementHeroIds.length).toBeGreaterThan(0)
   for (const heroId of placementHeroIds) {
+    expect(heroId).not.toBe('')
     expect(ownedHeroIds).toContain(heroId)
   }
 })

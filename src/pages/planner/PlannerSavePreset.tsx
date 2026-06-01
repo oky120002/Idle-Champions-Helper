@@ -2,11 +2,12 @@ import { useState } from 'react'
 import { useI18n } from '../../app/i18n'
 import { saveFormationPreset } from '../../data/formationPresetStore'
 import type { FormationPreset, ScenarioRef } from '../../domain/types/formation'
+import type { PlannerNarrativeLine } from './PlannerResultCard'
 
 interface PlannerResult {
   score: string
   placements: Record<string, string>
-  explanations: string[]
+  explanations: PlannerNarrativeLine[]
   warnings: string[]
 }
 
@@ -24,9 +25,15 @@ export function PlannerSavePreset({ result, layoutId, scenarioRef }: PlannerSave
 
   if (!result || !layoutId) {
     return (
-      <div>
-        <button type="button" disabled>{t({ zh: '保存', en: 'Save' })}</button>
-      </div>
+      <section className="surface-card planner-save-preset" aria-label={t({ zh: '结果保存', en: 'Result save' })}>
+        <div className="surface-card__body planner-save-preset__body">
+          <div className="planner-save-preset__copy">
+            <strong>{t({ zh: '尚无可保存方案', en: 'No savable preset yet' })}</strong>
+            <p>{t({ zh: '先让 planner 生成一条合法推荐，再把结果存进方案存档。', en: 'Generate a legal recommendation before saving it as a preset.' })}</p>
+          </div>
+          <button type="button" className="action-button" disabled>{t({ zh: '保存', en: 'Save' })}</button>
+        </div>
+      </section>
     )
   }
 
@@ -67,12 +74,23 @@ export function PlannerSavePreset({ result, layoutId, scenarioRef }: PlannerSave
   }
 
   return (
-    <div>
-      <button type="button" onClick={() => void handleSave()} disabled={saving || saved}>
-        {saving ? t({ zh: '保存中', en: 'Saving' }) : t({ zh: '保存', en: 'Save' })}
-      </button>
-      {saved && <span>{t({ zh: '已保存', en: 'Saved' })}</span>}
-      {error && <span role="alert">{error}</span>}
-    </div>
+    <section className="surface-card planner-save-preset" aria-label={t({ zh: '结果保存', en: 'Result save' })}>
+      <div className="surface-card__body planner-save-preset__body">
+        <div className="planner-save-preset__copy">
+          <strong>{t({ zh: '把当前推荐写入方案存档', en: 'Store the current recommendation as a preset' })}</strong>
+          <p>{t({ zh: '保存后可回到“方案存档”继续编辑或覆盖命名方案。', en: 'After saving, continue editing or rename it from the Presets page.' })}</p>
+          {saved ? <span className="planner-save-preset__status">{t({ zh: '已保存', en: 'Saved' })}</span> : null}
+          {error ? <span className="planner-save-preset__status" role="alert">{error}</span> : null}
+        </div>
+        <button
+          type="button"
+          className="action-button action-button--secondary"
+          onClick={() => void handleSave()}
+          disabled={saving || saved}
+        >
+          {saving ? t({ zh: '保存中', en: 'Saving' }) : t({ zh: '保存', en: 'Save' })}
+        </button>
+      </div>
+    </section>
   )
 }

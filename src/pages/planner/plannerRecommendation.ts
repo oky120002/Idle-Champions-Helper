@@ -6,7 +6,11 @@ import type { VariantRuleResult } from '../../domain/planner/variantRuleProjecti
 import { formatGameNumber, parseGameNumber } from '../../domain/simulator/gameNumber'
 import type { Champion, FormationLayout, ScenarioRef, Variant } from '../../domain/types'
 import type { UserProfileSnapshot } from '../../domain/user-profile/types'
-import type { PlannerResultCardProps } from './PlannerResultCard'
+import type {
+  PlannerNarrativeLine,
+  PlannerPlacementEntry,
+  PlannerResultCardProps,
+} from './PlannerResultCard'
 
 export interface PlannerCollections {
   variants: Variant[]
@@ -28,6 +32,14 @@ export interface PlannerRecommendation {
 }
 
 const EMPTY_VARIANT_RULES: VariantRuleResult = { constraints: [], warnings: [] }
+const ROLE_PRIORITY = ['dps', 'support', 'tanking', 'healing', 'gold'] as const
+const ROLE_LABELS: Record<string, PlannerNarrativeLine> = {
+  dps: { zh: '输出', en: 'damage' },
+  support: { zh: '辅助', en: 'support' },
+  tanking: { zh: '前排', en: 'frontline' },
+  healing: { zh: '治疗', en: 'healing' },
+  gold: { zh: '金币增益', en: 'gold gain' },
+}
 
 function sortSlots(layout: FormationLayout): string[] {
   return [...layout.slots]
@@ -89,6 +101,33 @@ function createRoleEffects(champions: Champion[]): ScoringEffect[] {
   })
 }
 
+function getRolePriorityScore(champion: Champion): number {
+  const roles = new Set(champion.roles.map((role) => role.toLowerCase()))
+
+  if (roles.has('dps')) return 5
+  if (roles.has('support')) return 4
+  if (roles.has('tanking')) return 3
+  if (roles.has('healing')) return 2
+  if (roles.has('gold')) return 1
+  return 0
+}
+
+function getChampionRoleSummary(champion: Champion): PlannerNarrativeLine {
+  const normalizedRoles = [...new Set(champion.roles.map((role) => role.toLowerCase()))]
+    .sort((left, right) => ROLE_PRIORITY.indexOf(left as typeof ROLE_PRIORITY[number]) - ROLE_PRIORITY.indexOf(right as typeof ROLE_PRIORITY[number]))
+    .slice(0, 2)
+  const labels = normalizedRoles.map((role) => ROLE_LABELS[role] ?? { zh: role, en: role })
+
+  if (labels.length === 0) {
+    return { zh: '通用位', en: 'general role' }
+  }
+
+  return {
+    zh: labels.map((label) => label.zh).join(' / '),
+    en: labels.map((label) => label.en).join(' / '),
+  }
+}
+
 function formatScore(score: number): string {
   const parsed = parseGameNumber(score)
   return parsed.ok ? formatGameNumber(parsed.value) : score.toString()
@@ -115,6 +154,83 @@ function buildPlannerWarnings(variant: Variant, snapshot: UserProfileSnapshot): 
   }
 
   return [...new Set(warnings)]
+}
+
+function buildPlacementEntries(
+  slots: string[],
+  placements: Record<string, string>,
+  championById: Map<string, Champion>,
+): PlannerPlacementEntry[] {
+  return slots
+    .filter((slotId) => placements[slotId] !== undefined)
+    .map((slotId, index) => {
+      const heroId = placements[slotId]!
+      const champion = championById.get(heroId)
+
+      return {
+        slotId,
+        slotLabel: String(index + 1),
+        heroId,
+        heroName: champion?.name.display ?? heroId,
+        seat: champion?.seat ?? null,
+      }
+    })
+}
+
+function buildPlannerExplanations(
+  variant: Variant,
+  placementEntries: PlannerPlacementEntry[],
+  championById: Map<string, Champion>,
+  rawExplanations: string[],
+): PlannerNarrativeLine[] {
+  const sortedChampions = placementEntries
+    .map((entry) => championById.get(entry.heroId))
+    .filter((champion): champion is Champion => Boolean(champion))
+    .sort((left, right) => (
+      getRolePriorityScore(right) - getRolePriorityScore(left)
+      || left.seat - right.seat
+      || left.id.localeCompare(right.id)
+    ))
+
+  const leadChampion = sortedChampions[0] ?? null
+  const supportChampions = sortedChampions
+    .slice(1, 4)
+    .map((champion) => champion.name.display)
+
+  const hasAdjacentSignal = rawExplanations.some((line) => line.includes('adjacent buff'))
+  const hasHeroSignal = rawExplanations.some((line) => line.includes('hero DPS'))
+
+  const explanations: PlannerNarrativeLine[] = [
+    {
+      zh: `当前结果先填满 ${placementEntries.length} 个槽位，并确保每个 seat 只使用一名已拥有英雄。`,
+      en: `This result fills ${placementEntries.length} slots first and keeps each seat assigned to only one owned champion.`,
+    },
+  ]
+
+  if (leadChampion) {
+    const roleSummary = getChampionRoleSummary(leadChampion)
+    const supportSummaryZh = supportChampions.length > 0 ? supportChampions.join('、') : '其余已拥有英雄'
+    const supportSummaryEn = supportChampions.length > 0 ? supportChampions.join(', ') : 'the remaining owned champions'
+
+    explanations.push({
+      zh: `核心位优先保留 ${leadChampion.name.display}（Seat ${leadChampion.seat}，${roleSummary.zh}），再用 ${supportSummaryZh} 维持基线增益。`,
+      en: `The lineup anchors on ${leadChampion.name.display} (Seat ${leadChampion.seat}, ${roleSummary.en}), then uses ${supportSummaryEn} to keep the baseline buffs stable.`,
+    })
+  }
+
+  if (hasAdjacentSignal || hasHeroSignal) {
+    explanations.push({
+      zh: '这条推荐已经开始计入相邻增益或英雄自带倍率，不再只是简单按职业标签排队。',
+      en: 'This recommendation already accounts for adjacency buffs or hero-specific multipliers instead of only sorting by broad role tags.',
+    })
+  } else {
+    explanations.push({
+      zh: `当前版本更偏向稳定的职业权重组合；${variant.restrictions.length > 0 ? '场景限制仍需你手动复核。' : '后续再逐步补进技能联动和场景机制。'}`,
+      en: `This version still prefers stable role-weight combinations; ${variant.restrictions.length > 0 ? 'scenario restrictions still need manual review.' : 'skill synergies and scenario mechanics will be layered in later.'}`,
+    })
+  }
+
+  return explanations
 }
 
 export function buildPlannerRecommendation(
@@ -219,13 +335,19 @@ export function buildPlannerRecommendation(
     }
   }
 
+  const placementEntries = buildPlacementEntries(slots, top.placements, championById)
+
   return {
     result: {
       score: formatScore(top.score),
       placements: top.placements,
-      explanations: top.explanations.length > 0
-        ? top.explanations
-        : Object.values(top.placements).map((heroId) => `${championById.get(heroId)?.name.display ?? heroId} 参与基线评分`),
+      placementEntries,
+      explanations: buildPlannerExplanations(
+        selectedVariant,
+        placementEntries,
+        championById,
+        top.explanations,
+      ),
       warnings: [...new Set([...top.warnings, ...buildPlannerWarnings(selectedVariant, profileSnapshot)])],
     },
     layoutId: formation.id,

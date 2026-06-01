@@ -179,7 +179,7 @@ describe('planner route and navigation', () => {
     )
 
     const result = await screen.findByRole('article', { name: /推荐结果/ })
-    expect(within(result).getByText(/评分/)).toBeInTheDocument()
+    expect(within(result).getByText(/^评分$/)).toBeInTheDocument()
 
     const placementTexts = Array.from(result.querySelectorAll('.planner-result-card__placements li'))
       .map((item) => item.textContent ?? '')

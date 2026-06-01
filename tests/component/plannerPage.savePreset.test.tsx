@@ -29,7 +29,7 @@ function renderSavePreset() {
           result={{
             score: '4.08e167',
             placements: { s1: '1', s2: '5' },
-            explanations: ['global DPS x3'],
+            explanations: [{ zh: '当前结果优先保证基线输出。', en: 'This result prioritizes the baseline output.' }],
             warnings: [],
           }}
           layoutId="layout-grand-hero"
