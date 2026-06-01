@@ -1,4 +1,11 @@
-import type { Champion, ChampionIllustration, ChampionVisual, DataCollection, LocalizedText } from '../../../src/domain/types'
+import type {
+  Champion,
+  ChampionEquipmentIcon,
+  ChampionIllustration,
+  ChampionVisual,
+  DataCollection,
+  LocalizedText,
+} from '../../../src/domain/types'
 
 export interface StringEnumGroup {
   id: string
@@ -90,4 +97,5 @@ export type ChampionsPageCollectionOverrides = {
   enums?: DataCollection<StringEnumGroup | LocalizedEnumGroup>
   championVisuals?: DataCollection<ChampionVisual>
   championIllustrations?: DataCollection<ChampionIllustration>
+  championEquipmentIcons?: DataCollection<ChampionEquipmentIcon>
 }

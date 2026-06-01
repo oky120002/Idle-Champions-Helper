@@ -387,6 +387,22 @@
   pointer-events: none;
 }
 
+.champion-roster-slot__icon {
+  position: absolute;
+  inset: 0.58rem;
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  background-size: min(5rem, 48%);
+  opacity: 0.16;
+  filter: saturate(1.06) contrast(1.04);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.champion-roster-slot--has-icon .champion-roster-slot__icon {
+  mask-image: radial-gradient(circle at 72% 70%, rgba(0, 0, 0, 0.94), transparent 74%);
+}
+
 .champion-roster-slot__header,
 .champion-roster-slot__stats {
   position: relative;

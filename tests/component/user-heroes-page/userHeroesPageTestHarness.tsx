@@ -49,6 +49,7 @@ export function mockUserHeroesPageCollections(overrides: ChampionsPageCollection
     enums = enumsFixture,
     championVisuals = { updatedAt: '', items: [] },
     championIllustrations = { updatedAt: '', items: [] },
+    championEquipmentIcons = { updatedAt: '', items: [] },
   } = overrides
 
   mockedLoadVersion.mockResolvedValue(defaultVersion)
@@ -67,6 +68,10 @@ export function mockUserHeroesPageCollections(overrides: ChampionsPageCollection
 
     if (name === 'champion-illustrations') {
       return championIllustrations
+    }
+
+    if (name === 'champion-equipment-icons') {
+      return championEquipmentIcons
     }
 
     throw new Error(`unexpected collection: ${name}`)

@@ -33,7 +33,29 @@ const alphaDetail = {
 describe('UserHeroesPage flyout', () => {
   beforeEach(() => {
     window.sessionStorage.clear()
-    mockUserHeroesPageCollections()
+    mockUserHeroesPageCollections({
+      championEquipmentIcons: {
+        updatedAt: '2026-06-01',
+        items: [
+          {
+            graphicId: '1002',
+            sourceGraphic: 'Items/HeroLoot/SwordEpic',
+            sourceVersion: null,
+            remotePath: 'mobile_assets/Items/HeroLoot/SwordEpic',
+            remoteUrl: 'https://example.test/mobile_assets/Items/HeroLoot/SwordEpic',
+            delivery: 'zlib-png',
+            uses: ['hero_loot'],
+            image: {
+              path: 'v1/champion-equipment-icons/1002.png',
+              width: 64,
+              height: 64,
+              bytes: 1024,
+              format: 'png',
+            },
+          },
+        ],
+      },
+    })
     mockUserHeroesProfile({
       ownedHeroes: [
         createOwnedHero({
@@ -73,6 +95,10 @@ describe('UserHeroesPage flyout', () => {
     expect(within(flyout).getByText('稀有度 4/4')).toBeInTheDocument()
     expect(within(flyout).getByText('金装')).toBeInTheDocument()
     expect(within(flyout).queryByText('普通边框')).not.toBeInTheDocument()
+    expect(flyout.querySelector('.champion-roster-slot__icon')).toHaveAttribute(
+      'style',
+      expect.stringContaining('v1/champion-equipment-icons/1002.png'),
+    )
     expect(within(flyout).getByText('装备等级 321')).toBeInTheDocument()
     expect(within(flyout).getByText('5/20')).toBeInTheDocument()
   })

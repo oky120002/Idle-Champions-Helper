@@ -1,9 +1,9 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
-import { loadChampionDetail } from '../../data/client'
+import { loadChampionDetail, loadCollection, resolveDataUrl } from '../../data/client'
 import { getPrimaryLocalizedText, getRoleLabel } from '../../domain/localizedText'
-import type { Champion, ChampionDetail } from '../../domain/types'
+import type { Champion, ChampionDetail, ChampionEquipmentIcon } from '../../domain/types'
 import type { OwnedHero } from '../../domain/user-profile/types'
 import { ChampionAvatar } from '../../components/ChampionAvatar'
 import { buildChampionEquipmentSlots } from './championRoster'
@@ -52,6 +52,7 @@ export function ChampionRosterFlyout({
 }: ChampionRosterFlyoutProps) {
   const [detail, setDetail] = useState<ChampionDetail | null>(null)
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
+  const [equipmentIconsById, setEquipmentIconsById] = useState<Map<string, ChampionEquipmentIcon>>(new Map())
   const flyoutRef = useRef<HTMLDivElement | null>(null)
   const [position, setPosition] = useState<FlyoutPosition>({
     top: Math.max(FLYOUT_VIEWPORT_GUTTER, anchorRect.top),
@@ -86,6 +87,30 @@ export function ChampionRosterFlyout({
       active = false
     }
   }, [champion.id])
+
+  useEffect(() => {
+    let disposed = false
+
+    loadCollection<ChampionEquipmentIcon>('champion-equipment-icons')
+      .then((collection) => {
+        if (disposed) {
+          return
+        }
+
+        setEquipmentIconsById(new Map(collection.items.map((item) => [item.graphicId, item])))
+      })
+      .catch(() => {
+        if (disposed) {
+          return
+        }
+
+        setEquipmentIconsById(new Map())
+      })
+
+    return () => {
+      disposed = true
+    }
+  }, [])
 
   useEffect(() => {
     const handlePointerDown = (event: PointerEvent) => {
@@ -215,12 +240,20 @@ export function ChampionRosterFlyout({
           {slots.map((slot) => {
             const rarityPercent = slot.rarity > 0 ? (slot.rarity / 4) * 100 : 0
             const legendaryPercent = slot.legendaryCap > 0 ? (slot.legendaryLevel / slot.legendaryCap) * 100 : 0
+            const equipmentIcon = slot.graphicId ? equipmentIconsById.get(slot.graphicId) ?? null : null
 
             return (
               <article
                 key={slot.slotId}
-                className={`champion-roster-slot champion-roster-slot--gild-${slot.gild}`}
+                className={`champion-roster-slot champion-roster-slot--gild-${slot.gild} ${equipmentIcon ? 'champion-roster-slot--has-icon' : ''}`}
               >
+                {equipmentIcon ? (
+                  <div
+                    className="champion-roster-slot__icon"
+                    aria-hidden="true"
+                    style={{ backgroundImage: `url("${resolveDataUrl(equipmentIcon.image.path)}")` }}
+                  />
+                ) : null}
                 <div className="champion-roster-slot__backdrop" aria-hidden="true">
                   <span>{slot.slotId}</span>
                 </div>

@@ -35,6 +35,23 @@ export interface ChampionSpecializationGraphic {
   }
 }
 
+export interface ChampionEquipmentIcon {
+  graphicId: string
+  sourceGraphic: string
+  sourceVersion: number | null
+  remotePath: string
+  remoteUrl: string
+  delivery: RemoteGraphicDelivery
+  uses: string[]
+  image: {
+    path: string
+    width: number
+    height: number
+    bytes: number
+    format: 'png'
+  }
+}
+
 export interface ChampionVisualPortrait {
   localPath: string
   remote: RemoteGraphicAsset
