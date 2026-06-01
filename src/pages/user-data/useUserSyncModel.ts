@@ -17,6 +17,7 @@ import type {
 } from '../../data/user-profile-store'
 import {
   canUseLocalDevSnapshotAction,
+  refreshLocalDevSnapshot,
   trySelectLocalDevSnapshot,
 } from './userSyncLocalDevAction'
 
@@ -25,9 +26,16 @@ export type SyncState =
   | { status: 'loaded'; snapshot: UserProfileSnapshot; ageDays: number }
   | { status: 'error'; message: string }
 
+export type LocalDevRefreshState =
+  | { status: 'idle' }
+  | { status: 'loading' }
+  | { status: 'success'; message: string }
+  | { status: 'error'; message: string }
+
 export function useUserSyncModel(credentials: UserCredentials | null = null) {
   const [syncState, setSyncState] = useState<SyncState>({ status: 'no-snapshot' })
   const [busy, setBusy] = useState(false)
+  const [localDevRefreshState, setLocalDevRefreshState] = useState<LocalDevRefreshState>({ status: 'idle' })
   const showLocalDevSnapshotAction = canUseLocalDevSnapshotAction()
   const [selectedProfileSource, setSelectedProfileSource] = useState<UserProfileSourceKind>(
     () => readPreferredUserProfileSource(),
@@ -98,6 +106,7 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
   }, [credentials, loadProfileResolution, loadSnapshot, selectedProfileSource])
 
   const handleSelectProfileSource = useCallback((nextSource: UserProfileSourceKind) => {
+    setLocalDevRefreshState((current) => (current.status === 'error' ? { status: 'idle' } : current))
     savePreferredUserProfileSource(nextSource)
     setSelectedProfileSource(nextSource)
   }, [])
@@ -119,6 +128,25 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
     }
   }, [loadProfileResolution, selectedProfileSource])
 
+  const handleRefreshLocalDevSnapshot = useCallback(async () => {
+    setLocalDevRefreshState({ status: 'loading' })
+
+    try {
+      const message = await refreshLocalDevSnapshot()
+      if (selectedProfileSource === 'local-dev-snapshot') {
+        await loadProfileResolution('local-dev-snapshot')
+      }
+      setLocalDevRefreshState({ status: 'success', message })
+    } catch (error) {
+      setLocalDevRefreshState({
+        status: 'error',
+        message: error instanceof Error
+          ? error.message
+          : '刷新本地开发快照失败：请检查本机私有凭证、网络或官方接口。',
+      })
+    }
+  }, [loadProfileResolution, selectedProfileSource])
+
   return {
     syncState,
     busy,
@@ -127,9 +155,11 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
     showLocalDevSnapshotAction,
     profileResolution,
     selectedProfileSource,
+    localDevRefreshState,
     handleSync,
     handleSelectProfileSource,
     handleSelectLocalDevSnapshot,
+    handleRefreshLocalDevSnapshot,
     handleDelete,
     reload: loadSnapshot,
   }

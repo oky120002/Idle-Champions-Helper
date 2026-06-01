@@ -17,8 +17,10 @@ describe('production local dev snapshot section', () => {
           persisted: true,
         }}
         selectedProfileSource="browser-sync"
+        localDevRefreshState={{ status: 'idle' }}
         onSelectBrowserSnapshot={vi.fn()}
         onSelectLocalDevSnapshot={vi.fn()}
+        onRefreshLocalDevSnapshot={vi.fn()}
       />,
     )
 

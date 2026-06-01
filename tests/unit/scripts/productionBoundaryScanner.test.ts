@@ -15,6 +15,16 @@ describe('production boundary scanner', () => {
     expect(result.findings.some((finding) => finding.kind === 'dev-endpoint-reference')).toBe(true)
   })
 
+  it('检测 dev-only refresh endpoint 泄露到生产产物', () => {
+    const result = scanBuildContent(
+      'const endpoint = "/__dev/private-user-data/refresh"',
+      'dist/assets/app.js',
+    )
+
+    expect(result.hasFindings).toBe(true)
+    expect(result.findings.some((finding) => finding.kind === 'dev-endpoint-reference')).toBe(true)
+  })
+
   it('检测 dev-only source 和 UI 文案泄露到生产产物', () => {
     const result = scanBuildContent(
       'const source = "local-dev-snapshot"; const copy = "当前开发数据源";',

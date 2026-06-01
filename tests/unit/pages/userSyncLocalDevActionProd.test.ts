@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 import {
   canUseLocalDevSnapshotAction,
+  refreshLocalDevSnapshot,
   trySelectLocalDevSnapshot,
 } from '../../../src/pages/user-data/userSyncLocalDevAction.prod'
 
@@ -15,5 +16,9 @@ describe('production user sync local dev action', () => {
 
     expect(trySelectLocalDevSnapshot(selectProfileSource)).toBe(false)
     expect(selectProfileSource).not.toHaveBeenCalled()
+  })
+
+  it('生产构建不会允许刷新本地开发快照', async () => {
+    await expect(refreshLocalDevSnapshot()).rejects.toThrow('生产构建不允许刷新本地开发快照。')
   })
 })

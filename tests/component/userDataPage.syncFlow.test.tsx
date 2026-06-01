@@ -15,7 +15,7 @@ import {
   saveCredentialVault,
   saveUserProfileSnapshot,
 } from '../../src/data/user-profile-store'
-import { createUserProfileSnapshot } from '../../src/domain/user-profile/fixtures'
+import { createOwnedHero, createUserProfileSnapshot } from '../../src/domain/user-profile/fixtures'
 import { UserDataPage } from '../../src/pages/UserDataPage'
 import { UserSyncPanel } from '../../src/pages/user-data/UserSyncPanel'
 
@@ -304,13 +304,10 @@ describe('user data sync flow', () => {
     const browserSnapshot = createUserProfileSnapshot({
       updatedAt: '2026-06-01T00:00:00.000Z',
       ownedHeroes: [
-        {
+        createOwnedHero({
           heroId: 'browser-hero',
           level: 1234,
-          equipment: {},
-          feats: [],
-          legendaryEffects: [],
-        },
+        }),
       ],
     })
     await saveUserProfileSnapshot(browserSnapshot)
@@ -401,11 +398,12 @@ describe('user data sync flow', () => {
     const user = userEvent.setup()
     await user.click(screen.getByRole('button', { name: /^手动同步$/ }))
 
-    const alert = await screen.findByRole('alert')
-    expect(alert).toBeInTheDocument()
-    expect(alert.textContent).toMatch(/官方数据同步失败/)
-    expect(alert.textContent).not.toContain(TEST_USER_ID)
-    expect(alert.textContent).not.toContain(TEST_HASH)
+    await waitFor(() => {
+      const alert = screen.getByRole('alert')
+      expect(alert).toHaveTextContent(/官方数据同步失败/)
+      expect(alert.textContent).not.toContain(TEST_USER_ID)
+      expect(alert.textContent).not.toContain(TEST_HASH)
+    })
   })
 
   it('点击删除会清除 snapshot 和可选 vault', async () => {

@@ -12,7 +12,7 @@
 const FORBIDDEN_BUILD_MARKERS = [
   {
     kind: 'dev-endpoint-reference',
-    pattern: /__dev\/private-user-data\/user-profile-payloads/gu,
+    pattern: /__dev\/private-user-data\/[a-z-]+/gu,
     description: 'Dev-only private snapshot endpoint leaked into production output',
   },
   {

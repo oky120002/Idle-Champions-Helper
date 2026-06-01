@@ -15,9 +15,11 @@ export function UserSyncPanel({ credentials = null }: UserSyncPanelProps) {
     showLocalDevSnapshotAction,
     profileResolution,
     selectedProfileSource,
+    localDevRefreshState,
     handleSync,
     handleSelectLocalDevSnapshot,
     handleSelectProfileSource,
+    handleRefreshLocalDevSnapshot,
     handleDelete,
   } = useUserSyncModel(credentials)
 
@@ -67,8 +69,10 @@ export function UserSyncPanel({ credentials = null }: UserSyncPanelProps) {
           canLoadLocalDevSnapshot={canLoadLocalDevSnapshot}
           profileResolution={profileResolution}
           selectedProfileSource={selectedProfileSource}
+          localDevRefreshState={localDevRefreshState}
           onSelectBrowserSnapshot={() => handleSelectProfileSource('browser-sync')}
           onSelectLocalDevSnapshot={handleSelectLocalDevSnapshot}
+          onRefreshLocalDevSnapshot={() => void handleRefreshLocalDevSnapshot()}
         />
       )}
     </section>
