@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import { loadChampionDetail } from '../../data/client'
 import { getPrimaryLocalizedText, getRoleLabel } from '../../domain/localizedText'
@@ -6,6 +7,7 @@ import type { Champion, ChampionDetail } from '../../domain/types'
 import type { OwnedHero } from '../../domain/user-profile/types'
 import { ChampionAvatar } from '../../components/ChampionAvatar'
 import { buildChampionEquipmentSlots } from './championRoster'
+import { calculateChampionRosterFlyoutPosition } from './championRosterFlyoutPosition'
 
 interface ChampionRosterFlyoutProps {
   champion: Champion
@@ -24,8 +26,15 @@ interface ChampionRosterFlyoutProps {
   onNavigate: () => void
 }
 
-function clamp(value: number, min: number, max: number): number {
-  return Math.min(max, Math.max(min, value))
+const FLYOUT_VIEWPORT_GUTTER = 14
+const FLYOUT_MAX_WIDTH = 420
+const FLYOUT_FALLBACK_HEIGHT = 520
+
+interface FlyoutPosition {
+  top: number
+  left: number
+  width: number
+  ready: boolean
 }
 
 export function ChampionRosterFlyout({
@@ -44,6 +53,12 @@ export function ChampionRosterFlyout({
   const [detail, setDetail] = useState<ChampionDetail | null>(null)
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
   const flyoutRef = useRef<HTMLDivElement | null>(null)
+  const [position, setPosition] = useState<FlyoutPosition>({
+    top: Math.max(FLYOUT_VIEWPORT_GUTTER, anchorRect.top),
+    left: Math.max(FLYOUT_VIEWPORT_GUTTER, anchorRect.left),
+    width: FLYOUT_MAX_WIDTH,
+    ready: false,
+  })
 
   useEffect(() => {
     let active = true
@@ -97,18 +112,58 @@ export function ChampionRosterFlyout({
     () => buildChampionEquipmentSlots(detail, ownedHero, legendaryLevelCap),
     [detail, legendaryLevelCap, ownedHero],
   )
-  const panelWidth = 420
-  const left = anchorRect.right + 18 + panelWidth <= window.innerWidth - 20
-    ? anchorRect.right + 18
-    : anchorRect.left - panelWidth - 18
-  const style = {
-    top: clamp(anchorRect.top - 6, 18, Math.max(18, window.innerHeight - 520)),
-    left: clamp(left, 18, Math.max(18, window.innerWidth - panelWidth - 18)),
-    width: panelWidth,
-  }
   const primaryName = getPrimaryLocalizedText(champion.name, locale)
 
-  return (
+  useLayoutEffect(() => {
+    if (typeof window === 'undefined') {
+      return undefined
+    }
+
+    const updatePosition = () => {
+      const element = flyoutRef.current
+
+      if (!element) {
+        return
+      }
+
+      const viewportWidth = window.innerWidth
+      const viewportHeight = window.innerHeight
+      const maxWidth = Math.max(280, viewportWidth - FLYOUT_VIEWPORT_GUTTER * 2)
+      const width = Math.min(FLYOUT_MAX_WIDTH, maxWidth)
+      const measuredHeight = element.getBoundingClientRect().height || FLYOUT_FALLBACK_HEIGHT
+      const nextPosition = calculateChampionRosterFlyoutPosition({
+        anchorRect,
+        viewportWidth,
+        viewportHeight,
+        flyoutWidth: width,
+        flyoutHeight: measuredHeight,
+        viewportGutter: FLYOUT_VIEWPORT_GUTTER,
+      })
+
+      setPosition({
+        top: nextPosition.top,
+        left: nextPosition.left,
+        width,
+        ready: true,
+      })
+    }
+
+    updatePosition()
+    window.addEventListener('resize', updatePosition)
+
+    return () => {
+      window.removeEventListener('resize', updatePosition)
+    }
+  }, [anchorRect, slots.length, status])
+
+  const style = {
+    top: position.top,
+    left: position.left,
+    width: position.width,
+    opacity: position.ready ? 1 : 0,
+  }
+
+  const flyoutContent = (
     <div
       ref={flyoutRef}
       className="champion-roster-flyout"
@@ -207,4 +262,10 @@ export function ChampionRosterFlyout({
       )}
     </div>
   )
+
+  if (typeof document === 'undefined') {
+    return flyoutContent
+  }
+
+  return createPortal(flyoutContent, document.body)
 }
