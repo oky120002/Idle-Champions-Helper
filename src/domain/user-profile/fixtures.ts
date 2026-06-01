@@ -9,6 +9,13 @@ export function createOwnedHero(
     equipment: {},
     feats: [],
     legendaryEffects: [],
+    unlockedFeats: [],
+    activeFeats: [],
+    featSlots: 0,
+    isOwned: true,
+    gildableSlotId: null,
+    lootBySlot: {},
+    legendaryBySlot: {},
     ...overrides,
   }
 }
@@ -39,6 +46,7 @@ export function createUserProfileSnapshot(
     importedFormationSaves: [],
     updatedAt: new Date().toISOString(),
     warnings,
+    legendaryLevelCap: 20,
     ...overrides,
   }
 }

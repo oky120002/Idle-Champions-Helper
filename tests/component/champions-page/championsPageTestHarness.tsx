@@ -13,7 +13,8 @@ export function mockChampionsPageCollections(overrides: ChampionsPageCollectionO
   const {
     champions = championsFixture,
     enums = enumsFixture,
-    championVisuals = null,
+    championVisuals = { updatedAt: '', items: [] },
+    championIllustrations = { updatedAt: '', items: [] },
   } = overrides
 
   mockedLoadCollection.mockImplementation(async (name) => {
@@ -25,8 +26,12 @@ export function mockChampionsPageCollections(overrides: ChampionsPageCollectionO
       return enums
     }
 
-    if (name === 'champion-visuals' && championVisuals) {
+    if (name === 'champion-visuals') {
       return championVisuals
+    }
+
+    if (name === 'champion-illustrations') {
+      return championIllustrations
     }
 
     throw new Error(`unexpected collection: ${name}`)

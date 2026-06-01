@@ -1,0 +1,424 @@
+.champion-roster {
+  position: relative;
+}
+
+.champion-roster__panel {
+  gap: 1rem;
+}
+
+.champion-roster__status-note {
+  margin: 0;
+  padding: 0.76rem 0.88rem;
+  border-radius: 14px;
+  border: 1px solid rgba(227, 214, 193, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 0.74rem;
+  line-height: 1.55;
+  color: rgba(242, 239, 230, 0.72);
+}
+
+.champion-roster__columns {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(5.6rem, 1fr));
+  gap: 0.72rem;
+  align-items: start;
+  overflow-x: auto;
+  padding-bottom: 0.35rem;
+}
+
+.champion-roster__column {
+  display: grid;
+  gap: 0.62rem;
+  min-width: 5.6rem;
+}
+
+.champion-roster__column-header {
+  display: grid;
+  gap: 0.22rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid rgba(227, 214, 193, 0.12);
+}
+
+.champion-roster__column-eyebrow {
+  margin: 0;
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(198, 181, 157, 0.72);
+}
+
+.champion-roster__column-title {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.05;
+  color: #f7efe3;
+}
+
+.champion-roster__column-count {
+  font-size: 0.74rem;
+  color: rgba(242, 239, 230, 0.56);
+}
+
+.champion-roster__tile-list {
+  display: grid;
+  gap: 0.42rem;
+}
+
+.champion-roster-tile {
+  position: relative;
+  display: grid;
+  gap: 0.26rem;
+  justify-items: center;
+  padding: 0.44rem 0.36rem 0.46rem;
+  border: 1px solid rgba(227, 214, 193, 0.12);
+  border-radius: 14px;
+  background: rgba(13, 18, 26, 0.68);
+  color: #f7efe3;
+  cursor: pointer;
+  transition: border-color 140ms ease, transform 140ms ease, opacity 140ms ease, filter 140ms ease;
+}
+
+.champion-roster-tile:hover {
+  transform: translateY(-1px);
+  border-color: rgba(200, 167, 127, 0.34);
+}
+
+.champion-roster-tile--match {
+  background:
+    radial-gradient(circle at top, rgba(200, 167, 127, 0.18), transparent 56%),
+    linear-gradient(180deg, rgba(27, 20, 13, 0.92), rgba(12, 17, 24, 0.9));
+}
+
+.champion-roster-tile--dim-owned {
+  opacity: 0.6;
+  filter: saturate(0.48);
+}
+
+.champion-roster-tile--dim-unowned {
+  opacity: 0.52;
+  filter: grayscale(1) saturate(0);
+}
+
+.champion-roster-tile--open {
+  border-color: rgba(200, 167, 127, 0.48);
+  box-shadow: 0 0 0 1px rgba(200, 167, 127, 0.18);
+}
+
+.champion-roster-tile__name {
+  display: block;
+  width: 100%;
+  font-size: 0.76rem;
+  line-height: 1.08;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.champion-roster-tile__meta {
+  font-size: 0.65rem;
+  color: rgba(242, 239, 230, 0.6);
+}
+
+.champion-roster-summary {
+  display: grid;
+  gap: 0.92rem;
+  padding: 0.92rem 1rem 1rem;
+  border: 1px solid rgba(227, 214, 193, 0.1);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(18, 25, 34, 0.92), rgba(10, 14, 21, 0.92)),
+    rgba(10, 14, 21, 0.7);
+}
+
+.champion-roster-summary__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: end;
+}
+
+.champion-roster-summary__eyebrow {
+  margin: 0 0 0.18rem;
+  font-size: 0.67rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(198, 181, 157, 0.74);
+}
+
+.champion-roster-summary__title {
+  margin: 0;
+  font-size: 1.18rem;
+  color: #faf3e5;
+}
+
+.champion-roster-summary__context {
+  display: grid;
+  justify-items: end;
+  gap: 0.22rem;
+}
+
+.champion-roster-summary__source,
+.champion-roster-summary__highlight {
+  font-size: 0.73rem;
+  color: rgba(242, 239, 230, 0.68);
+}
+
+.champion-roster-summary__metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.72rem;
+}
+
+.champion-roster-summary__metric {
+  display: grid;
+  gap: 0.42rem;
+  padding: 0.74rem 0.8rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(227, 214, 193, 0.08);
+}
+
+.champion-roster-summary__metric-topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  align-items: baseline;
+}
+
+.champion-roster-summary__metric-label {
+  font-size: 0.76rem;
+  color: rgba(242, 239, 230, 0.7);
+}
+
+.champion-roster-summary__metric-value {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: #f7d994;
+}
+
+.champion-roster-summary__meter,
+.champion-roster-slot__meter {
+  position: relative;
+  height: 0.56rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.42);
+  border: 1px solid rgba(227, 214, 193, 0.12);
+}
+
+.champion-roster-summary__meter-fill,
+.champion-roster-slot__meter-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(92, 177, 58, 0.88), rgba(188, 223, 109, 0.96));
+}
+
+.champion-roster-summary__metric-detail {
+  margin: 0;
+  font-size: 0.7rem;
+  line-height: 1.4;
+  color: rgba(242, 239, 230, 0.58);
+}
+
+.champion-roster-flyout {
+  position: fixed;
+  z-index: 40;
+  display: grid;
+  gap: 0.92rem;
+  padding: 0.96rem;
+  border-radius: 18px;
+  border: 1px solid rgba(227, 214, 193, 0.16);
+  background:
+    radial-gradient(circle at top right, rgba(200, 167, 127, 0.16), transparent 28%),
+    linear-gradient(180deg, rgba(18, 25, 34, 0.98), rgba(10, 14, 21, 0.98));
+  box-shadow: 0 18px 48px rgba(1, 4, 9, 0.42);
+}
+
+.champion-roster-flyout__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: start;
+}
+
+.champion-roster-flyout__identity {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.72rem;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+}
+
+.champion-roster-flyout__identity-copy {
+  display: grid;
+  gap: 0.12rem;
+}
+
+.champion-roster-flyout__identity-copy strong {
+  font-size: 1.08rem;
+  color: #fff8ec;
+}
+
+.champion-roster-flyout__identity-copy span {
+  font-size: 0.76rem;
+  color: rgba(242, 239, 230, 0.66);
+}
+
+.champion-roster-flyout__eyebrow {
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.champion-roster-flyout__close {
+  border: 1px solid rgba(227, 214, 193, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(242, 239, 230, 0.76);
+  padding: 0.36rem 0.7rem;
+  cursor: pointer;
+}
+
+.champion-roster-flyout__empty {
+  padding: 0.8rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(242, 239, 230, 0.68);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.champion-roster-flyout__slot-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.72rem;
+}
+
+.champion-roster-slot {
+  position: relative;
+  display: grid;
+  gap: 0.42rem;
+  min-height: 8.4rem;
+  overflow: hidden;
+  padding: 0.76rem;
+  border: 1px solid rgba(227, 214, 193, 0.16);
+  border-radius: 14px;
+  background: rgba(9, 14, 21, 0.82);
+}
+
+.champion-roster-slot--gild-1 {
+  border-color: rgba(213, 231, 255, 0.28);
+}
+
+.champion-roster-slot--gild-2 {
+  border-color: rgba(232, 189, 92, 0.38);
+}
+
+.champion-roster-slot__backdrop {
+  position: absolute;
+  inset: auto -0.35rem -0.7rem auto;
+  font-family: var(--font-heading);
+  font-size: 3.2rem;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+}
+
+.champion-roster-slot__header,
+.champion-roster-slot__stats {
+  position: relative;
+  z-index: 1;
+}
+
+.champion-roster-slot__header {
+  display: grid;
+  gap: 0.18rem;
+}
+
+.champion-roster-slot__eyebrow {
+  margin: 0;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(242, 239, 230, 0.56);
+}
+
+.champion-roster-slot__title {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.18;
+  color: #fff8ec;
+}
+
+.champion-roster-slot__rarity {
+  display: inline-flex;
+  align-self: start;
+  width: fit-content;
+  padding: 0.2rem 0.48rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 0.68rem;
+}
+
+.champion-roster-slot__rarity--4 {
+  color: #cf9fff;
+}
+
+.champion-roster-slot__rarity--3 {
+  color: #6ea4ff;
+}
+
+.champion-roster-slot__rarity--2 {
+  color: #74d191;
+}
+
+.champion-roster-slot__rarity--1 {
+  color: #d8d2c7;
+}
+
+.champion-roster-slot__stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+  font-size: 0.72rem;
+  color: rgba(242, 239, 230, 0.72);
+}
+
+.champion-roster-slot__stats--legendary {
+  margin-top: 0.12rem;
+}
+
+.champion-roster-slot__meter--legendary .champion-roster-slot__meter-fill {
+  background: linear-gradient(90deg, rgba(126, 89, 222, 0.88), rgba(228, 189, 92, 0.92));
+}
+
+@media (max-width: 980px) {
+  .champion-roster__columns {
+    grid-template-columns: repeat(6, minmax(5.6rem, 1fr));
+  }
+
+  .champion-roster-flyout {
+    width: min(92vw, 420px) !important;
+    left: 4vw !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .champion-roster-summary__header {
+    display: grid;
+    align-items: start;
+  }
+
+  .champion-roster-summary__context {
+    justify-items: start;
+  }
+
+  .champion-roster__columns {
+    grid-template-columns: repeat(4, minmax(5.3rem, 1fr));
+  }
+
+  .champion-roster-flyout__slot-grid {
+    grid-template-columns: 1fr;
+  }
+}

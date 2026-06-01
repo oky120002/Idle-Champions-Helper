@@ -4,7 +4,7 @@
 
 ## 模块入口
 
-- `docs/modules/champions/README.md`：英雄筛选、详情、立绘页
+- `docs/modules/champions/README.md`：英雄筛选、用户英雄、详情、立绘页
 - `docs/modules/formation/README.md`：阵型编辑与最近草稿
 - `docs/modules/presets/README.md`：方案存档与恢复
 - `docs/modules/pets/pets-page-design.md`：宠物图鉴页

@@ -7,6 +7,7 @@ import {
   Image,
   LayoutGrid,
   PawPrint,
+  User,
   Users,
 } from 'lucide-react'
 import type { LocaleText } from './i18n'
@@ -21,6 +22,7 @@ export type TranslationFn = (text: LocaleText) => string
 
 export const navigation: AppNavigationItem[] = [
   { to: '/champions', label: { zh: '英雄筛选', en: 'Champions' }, Icon: Users },
+  { to: '/user-heroes', label: { zh: '用户英雄', en: 'User Heroes' }, Icon: User },
   { to: '/illustrations', label: { zh: '立绘图鉴', en: 'Illustrations' }, Icon: Image },
   { to: '/pets', label: { zh: '宠物图鉴', en: 'Pets' }, Icon: PawPrint },
   { to: '/variants', label: { zh: '变体筛选', en: 'Variant filters' }, Icon: GitBranch },

@@ -58,6 +58,13 @@ describe('ChampionsPage avatars', () => {
         }
       }
 
+      if (name === 'champion-visuals' || name === 'champion-illustrations') {
+        return {
+          updatedAt: '2026-04-13',
+          items: [],
+        }
+      }
+
       throw new Error(`unexpected collection: ${name}`)
     })
 

@@ -3,9 +3,14 @@ import path from 'node:path'
 import { defineConfig } from 'vite'
 import type { Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
+import {
+  DEFAULT_PRIVATE_PAYLOAD_FILENAME,
+  fetchAndStorePrivateUserProfilePayloads,
+} from './scripts/private-user-data/privateUserProfilePayloadHelpers'
 
 const repoName = 'Idle-Champions-Helper'
 const localDevPrivateSnapshotEndpoint = '/__dev/private-user-data/user-profile-payloads'
+const localDevPrivateSnapshotRefreshEndpoint = '/__dev/private-user-data/refresh'
 const defaultLocalDevPrivateSnapshotPath = 'tmp/private-user-data/latest/user-profile-payloads.json'
 const browserOnlyUserProfileSourceResolverPath = path.resolve(
   process.cwd(),
@@ -19,9 +24,17 @@ const browserOnlyPlannerProfileSourceLabelPath = path.resolve(
   process.cwd(),
   'src/pages/planner/plannerProfileSourceLabel.prod.ts',
 )
+const browserOnlyUserHeroProfileSourceLabelPath = path.resolve(
+  process.cwd(),
+  'src/pages/user-heroes/userHeroProfileSourceLabel.prod.ts',
+)
 const browserOnlyUserSyncLocalDevActionPath = path.resolve(
   process.cwd(),
   'src/pages/user-data/userSyncLocalDevAction.prod.ts',
+)
+const browserOnlyUserSyncModelPath = path.resolve(
+  process.cwd(),
+  'src/pages/user-data/useUserSyncModel.prod.ts',
 )
 
 function normalizeChunkId(id: string) {
@@ -96,13 +109,39 @@ function createLocalDevPrivateSnapshotPlugin(): Plugin {
     process.cwd(),
     process.env.IC_PRIVATE_SNAPSHOT_PATH ?? defaultLocalDevPrivateSnapshotPath,
   )
+  const snapshotDir = path.dirname(snapshotPath)
+  const snapshotFilename = path.basename(snapshotPath)
+  const relativeSnapshotDir = path.relative(process.cwd(), snapshotDir)
 
   return {
     name: 'local-dev-private-snapshot',
     apply: 'serve',
     configureServer(server) {
       server.middlewares.use(async (request, response, next) => {
-        if (request.url !== localDevPrivateSnapshotEndpoint) {
+        if (request.url === localDevPrivateSnapshotRefreshEndpoint && request.method === 'POST') {
+          response.setHeader('Content-Type', 'application/json; charset=utf-8')
+
+          try {
+            const result = await fetchAndStorePrivateUserProfilePayloads({
+              latestDir: relativeSnapshotDir,
+              payloadFilename: snapshotFilename || DEFAULT_PRIVATE_PAYLOAD_FILENAME,
+            })
+            response.statusCode = 200
+            response.end(JSON.stringify({
+              manifest: result.manifest,
+            }))
+          } catch (error) {
+            response.statusCode = 500
+            response.end(JSON.stringify({
+              error: error instanceof Error
+                ? `Failed to refresh local private snapshot: ${error.message}`
+                : 'Failed to refresh local private snapshot.',
+            }))
+          }
+          return
+        }
+
+        if (request.url !== localDevPrivateSnapshotEndpoint || request.method !== 'GET') {
           next()
           return
         }
@@ -151,8 +190,20 @@ export default defineConfig(({ command }) => ({
             replacement: browserOnlyPlannerProfileSourceLabelPath,
           },
           {
+            find: './userHeroProfileSourceLabel',
+            replacement: browserOnlyUserHeroProfileSourceLabelPath,
+          },
+          {
             find: './userSyncLocalDevAction',
             replacement: browserOnlyUserSyncLocalDevActionPath,
+          },
+          {
+            find: './useUserSyncModel',
+            replacement: browserOnlyUserSyncModelPath,
+          },
+          {
+            find: '../user-data/useUserSyncModel',
+            replacement: browserOnlyUserSyncModelPath,
           },
         ]
       : [],

@@ -1,11 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import { buildCandidatePool } from '../../../../src/domain/planner/candidatePool'
+import { createOwnedHero } from '../../../../src/domain/user-profile/fixtures'
 import type { OwnedHero } from '../../../../src/domain/user-profile/types'
 
 describe('candidate pool modes', () => {
   const ownedHeroes: OwnedHero[] = [
-    { heroId: '1', level: 500, equipment: { '0': 3 }, feats: ['feat-1'], legendaryEffects: [] },
-    { heroId: '5', level: 300, equipment: { '0': 2 }, feats: [], legendaryEffects: [] },
+    createOwnedHero({ heroId: '1', level: 500, equipment: { '0': 3 }, feats: ['feat-1'] }),
+    createOwnedHero({ heroId: '5', level: 300, equipment: { '0': 2 } }),
   ]
 
   it('owned-only 模式只返回已拥有 heroes', () => {

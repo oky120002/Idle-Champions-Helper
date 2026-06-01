@@ -15,13 +15,18 @@ describe('user payload normalizer', () => {
           {
             hero_id: '1',
             level: 500,
+            owned: '1',
             equipment: { 0: 3, 1: 2, 2: 1 },
             feats: [{ id: 'feat-1', name: 'Shield' }],
             legendary_effects: [{ id: 'leg-1', slot: 0 }],
+            active_feats: [{ id: 'feat-1' }],
+            unlocked_feats: [{ id: 'feat-1' }, { id: 'feat-2' }],
+            feat_slots: 4,
           },
           {
             hero_id: '5',
             level: 300,
+            owned: '0',
             equipment: {},
             feats: [],
             legendary_effects: [],
@@ -32,12 +37,15 @@ describe('user payload normalizer', () => {
 
       const result = normalizeUserDetails(payload)
 
-      expect(result.ownedHeroes).toHaveLength(2)
+      expect(result.ownedHeroes).toHaveLength(1)
       expect(result.ownedHeroes[0]?.heroId).toBe('1')
       expect(result.ownedHeroes[0]?.level).toBe(500)
       expect(result.ownedHeroes[0]?.equipment['0']).toBe(3)
       expect(result.ownedHeroes[0]?.feats).toEqual(['feat-1'])
       expect(result.ownedHeroes[0]?.legendaryEffects).toEqual(['leg-1'])
+      expect(result.ownedHeroes[0]?.activeFeats).toEqual(['feat-1'])
+      expect(result.ownedHeroes[0]?.unlockedFeats).toEqual(['feat-1', 'feat-2'])
+      expect(result.ownedHeroes[0]?.featSlots).toBe(4)
     })
 
     it('字段缺失时产生 warning 而不是崩溃', () => {
@@ -53,13 +61,43 @@ describe('user payload normalizer', () => {
       const result = normalizeUserDetails({
         details: {
           instance_id: '7',
+          legendary_level_cap: 20,
+          loot: [
+            {
+              hero_id: 12,
+              slot_id: 1,
+              rarity: 4,
+              gild: 2,
+              enchant: 42,
+              pigment: 0,
+              found: { 1: 2, 4: 1 },
+            },
+          ],
+          legendary_details: {
+            legendary_items: {
+              12: {
+                1: {
+                  level: 3,
+                  effect_id: 501,
+                  effects_unlocked: [501, 502],
+                  reset_currency_id: 3,
+                  upgrade_cost: 499,
+                },
+              },
+            },
+          },
           heroes: [
             {
               hero_id: 12,
+              owned: '1',
               level: '900',
               equipment: { 1: '4' },
               feats: [{ id: 101 }],
               legendary_effects: [{ id: 'leg-12' }],
+              active_feats: [101],
+              unlocked_feats: [101, 102],
+              feat_slots: 3,
+              gildable_slot_id: 4,
             },
           ],
         },
@@ -69,9 +107,34 @@ describe('user payload normalizer', () => {
         {
           heroId: '12',
           level: 900,
-          equipment: { 1: 4 },
+          equipment: { 1: 42 },
           feats: ['101'],
           legendaryEffects: ['leg-12'],
+          unlockedFeats: ['101', '102'],
+          activeFeats: ['101'],
+          featSlots: 3,
+          isOwned: true,
+          gildableSlotId: '4',
+          lootBySlot: {
+            1: {
+              slotId: '1',
+              rarity: 4,
+              gild: 2,
+              enchant: 42,
+              pigment: 0,
+              found: { 1: 2, 4: 1 },
+            },
+          },
+          legendaryBySlot: {
+            1: {
+              slotId: '1',
+              level: 3,
+              effectId: '501',
+              effectIds: ['501', '502'],
+              resetCurrencyId: '3',
+              upgradeCost: 499,
+            },
+          },
         },
       ])
     })
@@ -191,6 +254,7 @@ describe('user payload normalizer', () => {
       expect(snapshot.updatedAt).toBe('2026-05-03T00:00:00.000Z')
       expect(snapshot.ownedHeroes).toHaveLength(1)
       expect(snapshot.importedFormationSaves).toHaveLength(1)
+      expect(snapshot.legendaryLevelCap).toBe(20)
       expect(snapshot.warnings).toEqual(expect.arrayContaining([
         'campaign details imported: 1',
       ]))

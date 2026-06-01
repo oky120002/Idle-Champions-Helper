@@ -162,6 +162,13 @@ beforeEach(() => {
       return visualsFixture
     }
 
+    if (name === 'champion-illustrations') {
+      return {
+        updatedAt: '2026-04-14',
+        items: [],
+      }
+    }
+
     throw new Error(`unexpected collection: ${name}`)
   })
 })

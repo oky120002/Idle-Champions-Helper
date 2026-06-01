@@ -1,5 +1,6 @@
 const WORKBENCH_ROUTE_PATHS = new Set([
   '/champions',
+  '/user-heroes',
   '/illustrations',
   '/pets',
   '/variants',

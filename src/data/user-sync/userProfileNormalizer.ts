@@ -1,4 +1,10 @@
-import type { ImportedFormationSave, OwnedHero, UserProfileSnapshot } from '../../domain/user-profile/types'
+import type {
+  ImportedFormationSave,
+  OwnedHero,
+  OwnedHeroLegendarySlot,
+  OwnedHeroLootSlot,
+  UserProfileSnapshot,
+} from '../../domain/user-profile/types'
 import type { ScenarioRef } from '../../domain/types/formation'
 
 type JsonRecord = Record<string, unknown>
@@ -9,6 +15,11 @@ interface UserDetailsPayload {
   details?: {
     instance_id?: string | number
     heroes?: unknown
+    loot?: unknown
+    legendary_details?: {
+      legendary_items?: unknown
+    }
+    legendary_level_cap?: unknown
   }
 }
 
@@ -164,6 +175,92 @@ function normalizeIdArray(value: unknown): string[] {
     .map((item) => String(item))
 }
 
+function isTruthyFlag(value: unknown, fallback = true): boolean {
+  if (value === null || value === undefined || value === '') {
+    return fallback
+  }
+
+  if (typeof value === 'boolean') {
+    return value
+  }
+
+  if (typeof value === 'number') {
+    return value !== 0
+  }
+
+  if (typeof value === 'string') {
+    return value !== '0' && value.toLowerCase() !== 'false'
+  }
+
+  return fallback
+}
+
+function normalizeLootByHeroId(value: unknown): Map<string, Record<string, OwnedHeroLootSlot>> {
+  const lootEntries = normalizeObjectArray(value)
+  const lootByHeroId = new Map<string, Record<string, OwnedHeroLootSlot>>()
+
+  for (const item of lootEntries) {
+    const heroId = toStringValue(item.hero_id)
+    const slotId = toStringValue(item.slot_id)
+    const slots = lootByHeroId.get(heroId) ?? {}
+
+    slots[slotId] = {
+      slotId,
+      rarity: toNumberValue(item.rarity),
+      gild: toNumberValue(item.gild),
+      enchant: toNumberValue(item.enchant),
+      pigment: toNumberValue(item.pigment),
+      found: normalizeNumberRecord(item.found),
+    }
+
+    lootByHeroId.set(heroId, slots)
+  }
+
+  return lootByHeroId
+}
+
+function normalizeLegendaryByHeroId(value: unknown): Map<string, Record<string, OwnedHeroLegendarySlot>> {
+  const legendaryByHeroId = new Map<string, Record<string, OwnedHeroLegendarySlot>>()
+
+  if (!isRecord(value)) {
+    return legendaryByHeroId
+  }
+
+  for (const [heroId, slotsValue] of Object.entries(value)) {
+    if (!isRecord(slotsValue)) {
+      continue
+    }
+
+    const slots: Record<string, OwnedHeroLegendarySlot> = {}
+
+    for (const [slotId, slotValue] of Object.entries(slotsValue)) {
+      if (!isRecord(slotValue)) {
+        continue
+      }
+
+      slots[slotId] = {
+        slotId,
+        level: toNumberValue(slotValue.level),
+        effectId: slotValue.effect_id === null || slotValue.effect_id === undefined || slotValue.effect_id === ''
+          ? null
+          : String(slotValue.effect_id),
+        effectIds: normalizeIdArray(slotValue.effects_unlocked),
+        resetCurrencyId:
+          slotValue.reset_currency_id === null
+          || slotValue.reset_currency_id === undefined
+          || slotValue.reset_currency_id === ''
+            ? null
+            : String(slotValue.reset_currency_id),
+        upgradeCost: toNumberValue(slotValue.upgrade_cost),
+      }
+    }
+
+    legendaryByHeroId.set(heroId, slots)
+  }
+
+  return legendaryByHeroId
+}
+
 function isScenarioKind(value: unknown): value is ScenarioKind {
   return (
     value === 'campaign' ||
@@ -202,18 +299,42 @@ export function normalizeUserDetails(payload: UserDetailsPayload): NormalizedUse
   const warnings: string[] = []
   const heroesValue = payload.details?.heroes ?? payload.heroes
   const heroes = normalizeObjectArray(heroesValue)
+  const lootByHeroId = normalizeLootByHeroId(payload.details?.loot)
+  const legendaryByHeroId = normalizeLegendaryByHeroId(payload.details?.legendary_details?.legendary_items)
 
   if (!Array.isArray(heroesValue) && !isRecord(heroesValue)) {
     warnings.push('getuserdetails payload missing heroes array')
   }
 
-  const ownedHeroes: OwnedHero[] = heroes.map((hero) => ({
-    heroId: toStringValue(hero.hero_id ?? hero.id),
-    level: toNumberValue(hero.level),
-    equipment: normalizeNumberRecord(hero.equipment),
-    feats: normalizeIdArray(hero.feats),
-    legendaryEffects: normalizeIdArray(hero.legendary_effects),
-  }))
+  const ownedHeroes: OwnedHero[] = heroes
+    .map((hero) => {
+      const heroId = toStringValue(hero.hero_id ?? hero.id)
+      const lootBySlot = lootByHeroId.get(heroId) ?? {}
+      const equipmentFromLoot = Object.fromEntries(
+        Object.values(lootBySlot).map((slot) => [slot.slotId, slot.enchant]),
+      )
+
+      return {
+        heroId,
+        level: toNumberValue(hero.level),
+        equipment: Object.keys(equipmentFromLoot).length > 0
+          ? equipmentFromLoot
+          : normalizeNumberRecord(hero.equipment),
+        feats: normalizeIdArray(hero.feats),
+        legendaryEffects: normalizeIdArray(hero.legendary_effects),
+        unlockedFeats: normalizeIdArray(hero.unlocked_feats),
+        activeFeats: normalizeIdArray(hero.active_feats),
+        featSlots: toNumberValue(hero.feat_slots),
+        isOwned: isTruthyFlag(hero.owned, true),
+        gildableSlotId:
+          hero.gildable_slot_id === null || hero.gildable_slot_id === undefined || hero.gildable_slot_id === ''
+            ? null
+            : String(hero.gildable_slot_id),
+        lootBySlot,
+        legendaryBySlot: legendaryByHeroId.get(heroId) ?? {},
+      }
+    })
+    .filter((hero) => hero.isOwned)
 
   return { ownedHeroes, warnings }
 }
@@ -270,7 +391,8 @@ export function normalizeFormationSaves(
 }
 
 export function buildUserProfileSnapshot(input: BuildUserProfileSnapshotInput): UserProfileSnapshot {
-  const userDetails = normalizeUserDetails(asRecord(input.userDetails) as UserDetailsPayload)
+  const userDetailsPayload = asRecord(input.userDetails) as UserDetailsPayload
+  const userDetails = normalizeUserDetails(userDetailsPayload)
   const campaignDetails = normalizeCampaignDetails(asRecord(input.campaignDetails) as CampaignDetailsPayload)
   const formationSaves = normalizeFormationSaves(asRecord(input.formationSaves) as FormationSavesPayload)
   const campaignWarnings = campaignDetails.campaigns.length > 0
@@ -282,6 +404,7 @@ export function buildUserProfileSnapshot(input: BuildUserProfileSnapshotInput): 
     ownedHeroes: userDetails.ownedHeroes,
     importedFormationSaves: formationSaves.formations,
     updatedAt: input.updatedAt ?? new Date().toISOString(),
+    legendaryLevelCap: toNumberValue(userDetailsPayload.details?.legendary_level_cap, 20),
     warnings: [
       ...userDetails.warnings,
       ...campaignDetails.warnings,

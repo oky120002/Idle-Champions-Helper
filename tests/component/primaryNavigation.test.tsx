@@ -45,6 +45,19 @@ describe('PrimaryNavigation', () => {
     expect(screen.getByRole('link', { name: '英雄筛选' })).not.toHaveAttribute('aria-current')
   })
 
+  it('从用户英雄进入英雄详情时保持用户英雄导航高亮', () => {
+    renderPrimaryNavigation('/champions/7', {
+      returnTo: {
+        pathname: '/user-heroes',
+        search: '?seat=1',
+      },
+    })
+
+    expect(screen.getByRole('link', { name: '用户英雄' })).toHaveClass('nav-link--active')
+    expect(screen.getByRole('link', { name: '用户英雄' })).toHaveAttribute('aria-current', 'page')
+    expect(screen.getByRole('link', { name: '英雄筛选' })).not.toHaveClass('nav-link--active')
+  })
+
   it('导航菜单不再渲染数字编号', () => {
     renderPrimaryNavigation('/champions')
 
