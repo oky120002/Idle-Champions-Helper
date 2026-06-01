@@ -414,12 +414,12 @@
 
 .champion-roster-slot__icon {
   position: absolute;
-  inset: 0.58rem;
-  background-repeat: no-repeat;
-  background-position: right bottom;
-  background-size: min(5rem, 48%);
-  opacity: 0.16;
-  filter: saturate(1.06) contrast(1.04);
+  inset: 0.46rem;
+  background-repeat: no-repeat, no-repeat;
+  background-position: right bottom, right bottom;
+  background-size: min(5.9rem, 60%), min(5rem, 48%);
+  opacity: 0.48;
+  filter: saturate(1.52) contrast(1.2) brightness(1.12) drop-shadow(0 10px 18px rgba(0, 0, 0, 0.24));
   pointer-events: none;
   z-index: 0;
 }

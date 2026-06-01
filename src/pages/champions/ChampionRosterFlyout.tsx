@@ -251,7 +251,9 @@ export function ChampionRosterFlyout({
                   <div
                     className="champion-roster-slot__icon"
                     aria-hidden="true"
-                    style={{ backgroundImage: `url("${resolveDataUrl(equipmentIcon.image.path)}")` }}
+                    style={{
+                      backgroundImage: `radial-gradient(circle at 72% 70%, rgba(214, 179, 102, 0.18), rgba(88, 128, 196, 0.08) 36%, rgba(9, 14, 21, 0.04) 58%, transparent 78%), url("${resolveDataUrl(equipmentIcon.image.path)}")`,
+                    }}
                   />
                 ) : null}
                 <div className="champion-roster-slot__backdrop" aria-hidden="true">
