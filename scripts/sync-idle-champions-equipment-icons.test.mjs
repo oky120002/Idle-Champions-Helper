@@ -116,3 +116,122 @@ test('syncChampionEquipmentIcons 会从 champion-details 收集装备 graphicId 
   assert.equal(writtenPng.width, 4)
   assert.equal(writtenPng.height, 4)
 })
+
+test('syncChampionEquipmentIcons 在集合 updatedAt 未变新时整批跳过，不清目录也不发下载', async (t) => {
+  const tempDir = await createTempDir(t)
+  const inputFile = path.join(tempDir, 'definitions.json')
+  const outputDir = path.join(tempDir, 'data')
+  const assetDir = path.join(outputDir, 'champion-equipment-icons')
+
+  await mkdir(assetDir, { recursive: true })
+  await writeFile(path.join(assetDir, '1002.png'), Buffer.from('existing-icon'))
+  await writeJson(path.join(outputDir, 'champion-equipment-icons.json'), {
+    updatedAt: '2026-02-02',
+    items: [
+      {
+        graphicId: '1002',
+        sourceGraphic: 'Items/HeroLoot/SwordEpic',
+        sourceVersion: 3,
+        image: {
+          path: 'v1/champion-equipment-icons/1002.png',
+          width: 4,
+          height: 4,
+          bytes: 13,
+          format: 'png',
+        },
+      },
+    ],
+  })
+  await writeJson(inputFile, {
+    current_time: Date.parse('2026-02-02T00:00:00Z') / 1000,
+    graphic_defines: [],
+  })
+
+  const originalFetch = globalThis.fetch
+  globalThis.fetch = async () => {
+    throw new Error('不应触发下载')
+  }
+  t.after(() => {
+    globalThis.fetch = originalFetch
+  })
+
+  const result = await syncChampionEquipmentIcons({
+    input: inputFile,
+    outputDir,
+    detailDir: path.join(outputDir, 'missing-details'),
+  })
+
+  assert.equal(result.skipped, true)
+  assert.equal(result.count, 1)
+  assert.deepEqual(await readFile(path.join(assetDir, '1002.png')), Buffer.from('existing-icon'))
+})
+
+test('syncChampionEquipmentIcons 在 definitions 更新时间变新但单资源 source 未变化时复用本地文件', async (t) => {
+  const tempDir = await createTempDir(t)
+  const inputFile = path.join(tempDir, 'definitions.json')
+  const outputDir = path.join(tempDir, 'data')
+  const detailDir = path.join(outputDir, 'champion-details')
+  const assetDir = path.join(outputDir, 'champion-equipment-icons')
+  const existingPng = createPng(4, 4, () => [235, 189, 92, 255])
+
+  await mkdir(assetDir, { recursive: true })
+  await writeFile(path.join(assetDir, '1002.png'), existingPng)
+  await writeJson(path.join(outputDir, 'champion-equipment-icons.json'), {
+    updatedAt: '2026-02-02',
+    items: [
+      {
+        graphicId: '1002',
+        sourceGraphic: 'Items/HeroLoot/SwordEpic',
+        sourceVersion: 3,
+        remotePath: 'mobile_assets/Items/HeroLoot/SwordEpic',
+        remoteUrl: 'https://example.test/mobile_assets/Items/HeroLoot/SwordEpic',
+        delivery: 'wrapped-png',
+        uses: ['hero_loot'],
+        image: {
+          path: 'v1/champion-equipment-icons/1002.png',
+          width: 4,
+          height: 4,
+          bytes: existingPng.length,
+          format: 'png',
+        },
+      },
+    ],
+  })
+  await writeJson(path.join(detailDir, '1.json'), {
+    loot: [{ slotId: 1, graphicId: '1002' }],
+  })
+  await writeJson(inputFile, {
+    current_time: Date.parse('2026-02-03T00:00:00Z') / 1000,
+    graphic_defines: [
+      {
+        id: 1002,
+        graphic: 'Items/HeroLoot/SwordEpic',
+        v: 3,
+        export_params: { uses: ['hero_loot'] },
+      },
+    ],
+  })
+
+  const originalFetch = globalThis.fetch
+  globalThis.fetch = async () => {
+    throw new Error('命中单资源复用时不应重新下载')
+  }
+  t.after(() => {
+    globalThis.fetch = originalFetch
+  })
+
+  const result = await syncChampionEquipmentIcons({
+    input: inputFile,
+    outputDir,
+    detailDir,
+    currentVersion: 'v1',
+    masterApiUrl: 'https://example.test/',
+  })
+
+  assert.equal(result.skipped, undefined)
+  assert.equal(result.count, 1)
+  assert.deepEqual(await readFile(path.join(assetDir, '1002.png')), existingPng)
+  const collection = await readJson(path.join(outputDir, 'champion-equipment-icons.json'))
+  assert.equal(collection.updatedAt, '2026-02-03')
+  assert.equal(collection.items[0].image.path, 'v1/champion-equipment-icons/1002.png')
+})

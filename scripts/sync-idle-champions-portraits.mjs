@@ -6,13 +6,23 @@ import { PNG } from 'pngjs'
 import {
   CHAMPION_PORTRAIT_DIR_NAME,
   DEFAULT_MASTER_API_URL,
+  buildChampionPortraitPath,
   collectChampionPortraitSources,
   encodeGraphicPath,
   ensureTrailingSlash,
 } from './data/champion-portrait-helpers.mjs'
+import {
+  canReuseGeneratedImage,
+  fileExists,
+  getUpdatedAtFromDefinitions,
+  readExistingCollection,
+  removeUnexpectedFiles,
+  shouldSkipResourceSync,
+} from './data/resource-sync-policy.mjs'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CONCURRENCY = 8
+const PORTRAIT_MANIFEST_FILE_NAME = 'champion-portraits.manifest.json'
 
 function findPngSignatureOffset(buffer) {
   for (let index = 0; index <= buffer.length - 8; index += 1) {
@@ -149,7 +159,31 @@ async function readJson(filePath) {
   return JSON.parse(await readFile(filePath, 'utf8'))
 }
 
+async function writeJson(filePath, value) {
+  await mkdir(path.dirname(filePath), { recursive: true })
+  await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
+}
+
 async function downloadChampionPortrait(task, options) {
+  const existingItem = options.existingItemsByChampionId?.get(String(task.championId)) ?? null
+  const nextImagePath = buildChampionPortraitPath(options.currentVersion, task.championId)
+
+  if (
+    existingItem &&
+    canReuseGeneratedImage({
+      existingItem,
+      nextSourceGraphic: task.graphic,
+      nextSourceVersion: task.version,
+      nextImagePath,
+    })
+  ) {
+    const outputFile = path.join(options.outputDir, CHAMPION_PORTRAIT_DIR_NAME, `${task.championId}.png`)
+
+    if (await fileExists(outputFile)) {
+      return existingItem
+    }
+  }
+
   const baseUrl = ensureTrailingSlash(options.masterApiUrl ?? DEFAULT_MASTER_API_URL)
   const url = `${baseUrl}mobile_assets/${encodeGraphicPath(task.graphic)}`
   const response = await fetch(url, { cache: 'no-store' })
@@ -174,9 +208,8 @@ async function downloadChampionPortrait(task, options) {
 
   return {
     championId: task.championId,
-    graphic: task.graphic,
-    version: task.version,
-    outputFile,
+    sourceGraphic: task.graphic,
+    sourceVersion: task.version,
     width: processedPng.width,
     height: processedPng.height,
     contentWidth: processedPng.contentWidth,
@@ -187,6 +220,13 @@ async function downloadChampionPortrait(task, options) {
     wrappedBytes: pngOffset,
     bytes: processedPng.pngBuffer.length,
     sourceUrl: url,
+    image: {
+      path: nextImagePath,
+      width: processedPng.width,
+      height: processedPng.height,
+      bytes: processedPng.pngBuffer.length,
+      format: 'png',
+    },
   }
 }
 
@@ -218,16 +258,54 @@ export async function syncChampionPortraits(options = {}) {
   const outputDir = path.resolve(options.outputDir ?? DEFAULT_OUTPUT_DIR)
   const concurrency = Math.max(1, Number(options.concurrency ?? DEFAULT_CONCURRENCY))
   const rawDefinitions = await readJson(input)
+  const updatedAt = getUpdatedAtFromDefinitions(rawDefinitions)
+  const manifestFile = path.join(outputDir, PORTRAIT_MANIFEST_FILE_NAME)
+  const existingManifest = await readExistingCollection(manifestFile)
+
+  if (
+    shouldSkipResourceSync({
+      existingUpdatedAt: existingManifest?.updatedAt,
+      nextUpdatedAt: updatedAt,
+    })
+  ) {
+    return {
+      outputDir: path.join(outputDir, CHAMPION_PORTRAIT_DIR_NAME),
+      count: existingManifest?.items?.length ?? 0,
+      portraits: existingManifest?.items ?? [],
+      trimmedCount: 0,
+      sourceDimensions: [],
+      contentDimensions: [],
+      dimensions: [],
+      wrappedBytes: [],
+      skipped: true,
+    }
+  }
+
   const tasks = collectChampionPortraitSources(rawDefinitions)
+  const existingItemsByChampionId = new Map(
+    (existingManifest?.items ?? []).map((item) => [String(item.championId), item]),
+  )
 
   await mkdir(path.join(outputDir, CHAMPION_PORTRAIT_DIR_NAME), { recursive: true })
 
   const portraits = await runWithConcurrency(tasks, concurrency, (task) =>
     downloadChampionPortrait(task, {
       outputDir,
+      currentVersion: options.currentVersion ?? 'v1',
       masterApiUrl: options.masterApiUrl,
+      existingItemsByChampionId,
     }),
   )
+
+  await removeUnexpectedFiles(
+    path.join(outputDir, CHAMPION_PORTRAIT_DIR_NAME),
+    new Set(portraits.map((portrait) => path.basename(portrait.image.path))),
+  )
+
+  await writeJson(manifestFile, {
+    items: portraits,
+    updatedAt,
+  })
 
   const dimensionSummary = new Map()
   const sourceDimensionSummary = new Map()

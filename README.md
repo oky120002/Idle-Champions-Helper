@@ -61,6 +61,7 @@ npm run data:pets -- --input tmp/idle-champions-api/<english>.json --localizedIn
 ```
 
 - `data:official` 是当前公共数据构建入口。
+- 资源同步默认做两层跳过：先比对 `public/data/resource-sync-state.json` 的全局 `updatedAt`，未变新时整批跳过；进入具体资源脚本后，再按单资源的 source/version/manifest 复用已有文件，减少无效下载和仓库二进制改写。
 - `private-user-data:fetch` 只在本地开发使用：用私有凭证抓官方只读用户 payload，写入 `tmp/private-user-data/`，供本地 Vite 调试导入；不会进入生产构建。
 - `data:animation-audit` 会基于站内 `.bin` 和 `champion-animations.json` 重新生成本地 idle 候选审片清单。
 - `sync-idle-champions-animations.mjs` / `audit-idle-champions-animations.mjs` 默认会读取 `scripts/data/champion-animation-idle-overrides.json`。

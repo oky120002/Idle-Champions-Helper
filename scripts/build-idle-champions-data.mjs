@@ -10,6 +10,14 @@ import { syncChampionConsolePortraits } from './sync-idle-champions-console-port
 import { syncChampionPortraits } from './sync-idle-champions-portraits.mjs'
 import { syncChampionEquipmentIcons } from './sync-idle-champions-equipment-icons.mjs'
 import { syncChampionSpecializationGraphics } from './sync-idle-champions-specialization-graphics.mjs'
+import {
+  readUpdatedAtFromJsonFile,
+  shouldSkipResourceSync,
+  writeUpdatedAtJsonFile,
+} from './data/resource-sync-policy.mjs'
+
+const DEFAULT_VERSION_FILE = 'public/data/version.json'
+const DEFAULT_RESOURCE_SYNC_STATE_FILE = 'public/data/resource-sync-state.json'
 
 async function main() {
   const { values } = parseArgs({
@@ -17,6 +25,7 @@ async function main() {
       outDir: { type: 'string' },
       outputDir: { type: 'string' },
       versionFile: { type: 'string' },
+      resourceSyncStateFile: { type: 'string' },
       currentVersion: { type: 'string' },
       manualOverrides: { type: 'string' },
       idleOverridesFile: { type: 'string' },
@@ -54,12 +63,16 @@ async function main() {
 可选参数：
   --animationChampionIds <ids>       仅重建这些 championId 的 hero-base / skin 动画与关联静态图（默认全量）
   --animationSkinIds <ids>           仅重建这些 skinId 的 skin 动画与关联静态图（默认全量）
-  --idleOverridesFile <file>         idle 动画人工覆写 JSON，默认 scripts/data/champion-animation-idle-overrides.json`)
+  --idleOverridesFile <file>         idle 动画人工覆写 JSON，默认 scripts/data/champion-animation-idle-overrides.json
+  --resourceSyncStateFile <file>     全局资源同步状态文件，默认 ${DEFAULT_RESOURCE_SYNC_STATE_FILE}`)
     return
   }
 
   const sourceLanguageId = values.sourceLanguageId ?? '1'
   const displayLanguageId = values.displayLanguageId ?? '7'
+  const versionFile = values.versionFile ?? DEFAULT_VERSION_FILE
+  const resourceSyncStateFile = values.resourceSyncStateFile ?? DEFAULT_RESOURCE_SYNC_STATE_FILE
+  const previousResourceUpdatedAt = await readUpdatedAtFromJsonFile(resourceSyncStateFile)
   const fetched = await fetchDefinitionsSnapshot({
     ...values,
     languageId: sourceLanguageId,
@@ -74,18 +87,38 @@ async function main() {
     input: fetched.rawFile,
     localizedInput: localizedFetched.rawFile,
     outputDir: values.outputDir,
-    versionFile: values.versionFile,
+    versionFile,
     currentVersion: values.currentVersion,
     manualOverrides: values.manualOverrides,
   })
+  const shouldSkipAllResourceDownloads = shouldSkipResourceSync({
+    existingUpdatedAt: previousResourceUpdatedAt,
+    nextUpdatedAt: normalized.updatedAt,
+  })
+
+  if (shouldSkipAllResourceDownloads) {
+    console.log('官方基座数据流水线完成：')
+    console.log(
+      `- resources skipped: resource-sync-state.updatedAt=${previousResourceUpdatedAt}, next=${normalized.updatedAt}`,
+    )
+    console.log(`- source raw: ${fetched.rawFile}`)
+    console.log(`- display raw: ${localizedFetched.rawFile}`)
+    console.log(`- normalized dir: ${normalized.outputDir}`)
+    console.log(`- version file: ${normalized.versionFile}`)
+    console.log(`- resource sync state: ${resourceSyncStateFile}`)
+    return
+  }
+
   const portraits = await syncChampionPortraits({
     input: fetched.rawFile,
     outputDir: values.outputDir,
+    currentVersion: values.currentVersion,
     masterApiUrl: values.masterApiUrl,
   })
   const consolePortraits = await syncChampionConsolePortraits({
     input: fetched.rawFile,
     outputDir: values.outputDir,
+    currentVersion: values.currentVersion,
     masterApiUrl: values.masterApiUrl,
   })
   const specializationGraphics = await syncChampionSpecializationGraphics({
@@ -126,6 +159,19 @@ async function main() {
     currentVersion: values.currentVersion,
     masterApiUrl: values.masterApiUrl,
   })
+  await writeUpdatedAtJsonFile(resourceSyncStateFile, {
+    updatedAt: normalized.updatedAt,
+    resources: [
+      'champion-portraits',
+      'champion-console-portraits',
+      'champion-specialization-graphics',
+      'champion-equipment-icons',
+      'champion-animations',
+      'champion-animation-audit',
+      'champion-illustrations',
+      'pets',
+    ],
+  })
 
   console.log(`官方基座数据流水线完成：`)
   console.log(`- included: definitions(source + zh) + normalized collections + champion portraits + champion console portraits + champion specialization graphics + champion equipment icons + champion illustrations + champion animations + pet catalog + pet animations`)
@@ -141,6 +187,7 @@ async function main() {
   console.log(`- animation audit: ${animationAudit.auditFile} (${animationAudit.reviewedCount} flagged)`)
   console.log(`- pets: ${pets.count} (assets ${pets.assetCount}, animations ${pets.counts.animations})`)
   console.log(`- version file: ${normalized.versionFile}`)
+  console.log(`- resource sync state: ${resourceSyncStateFile}`)
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {

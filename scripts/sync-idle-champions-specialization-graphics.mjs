@@ -1,4 +1,4 @@
-import { mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
@@ -9,6 +9,14 @@ import {
   resolveGraphicAssetById,
 } from './data/champion-portrait-helpers.mjs'
 import { decodeRemoteGraphicBuffer, readPngDimensions } from './data/mobile-asset-codec.mjs'
+import {
+  canReuseGeneratedImage,
+  fileExists,
+  getUpdatedAtFromDefinitions,
+  readExistingCollection,
+  removeUnexpectedFiles,
+  shouldSkipResourceSync,
+} from './data/resource-sync-policy.mjs'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'
@@ -190,6 +198,28 @@ async function downloadSpecializationGraphic(graphicId, graphicMap, options) {
     }
   }
 
+  const existingItem = options.existingItemsByGraphicId?.get(String(graphicId)) ?? null
+  const nextImagePath = buildSpecializationGraphicPath(options.currentVersion, graphicId)
+
+  if (
+    existingItem &&
+    canReuseGeneratedImage({
+      existingItem,
+      nextSourceGraphic: asset.sourceGraphic,
+      nextSourceVersion: asset.sourceVersion,
+      nextImagePath,
+    })
+  ) {
+    const outputFile = path.join(options.outputDir, SPECIALIZATION_GRAPHICS_DIR_NAME, `${graphicId}.png`)
+
+    if (await fileExists(outputFile)) {
+      return {
+        status: 'ready',
+        item: existingItem,
+      }
+    }
+  }
+
   const response = await fetch(asset.remoteUrl, { cache: 'no-store' })
 
   if (!response.ok) {
@@ -248,12 +278,31 @@ export async function syncChampionSpecializationGraphics(options = {}) {
   const detailDir = path.resolve(options.detailDir ?? path.join(outputDir, 'champion-details'))
   const concurrency = Math.max(1, Number(options.concurrency ?? DEFAULT_CONCURRENCY))
   const rawDefinitions = await readJson(input)
-  const graphicMap = buildGraphicMap(rawDefinitions.graphic_defines)
-  const specializationGraphicIds = await collectSpecializationGraphicIds(detailDir)
+  const updatedAt = getUpdatedAtFromDefinitions(rawDefinitions)
+  const collectionFile = path.join(outputDir, `${SPECIALIZATION_GRAPHICS_DIR_NAME}.json`)
+  const existingCollection = await readExistingCollection(collectionFile)
   const assetDir = path.join(outputDir, SPECIALIZATION_GRAPHICS_DIR_NAME)
 
-  await rm(assetDir, { recursive: true, force: true })
+  if (
+    shouldSkipResourceSync({
+      existingUpdatedAt: existingCollection?.updatedAt,
+      nextUpdatedAt: updatedAt,
+    })
+  ) {
+    return {
+      outputDir: assetDir,
+      count: existingCollection?.items?.length ?? 0,
+      missingCount: 0,
+      skipped: true,
+    }
+  }
+
+  const graphicMap = buildGraphicMap(rawDefinitions.graphic_defines)
+  const specializationGraphicIds = await collectSpecializationGraphicIds(detailDir)
   await mkdir(assetDir, { recursive: true })
+  const existingItemsByGraphicId = new Map(
+    (existingCollection?.items ?? []).map((item) => [String(item.graphicId), item]),
+  )
 
   const results = await runWithConcurrency(
     specializationGraphicIds,
@@ -263,6 +312,7 @@ export async function syncChampionSpecializationGraphics(options = {}) {
         outputDir,
         currentVersion,
         masterApiUrl: options.masterApiUrl,
+        existingItemsByGraphicId,
       }),
   )
 
@@ -271,12 +321,9 @@ export async function syncChampionSpecializationGraphics(options = {}) {
     .map((result) => result.item)
     .sort(sortByGraphicId)
   const missing = results.filter((result) => result.status === 'missing')
-  const updatedAt =
-    typeof rawDefinitions.current_time === 'number'
-      ? new Date(rawDefinitions.current_time * 1000).toISOString().slice(0, 10)
-      : new Date().toISOString().slice(0, 10)
+  await removeUnexpectedFiles(assetDir, new Set(items.map((item) => path.basename(item.image.path))))
 
-  await writeJson(path.join(outputDir, `${SPECIALIZATION_GRAPHICS_DIR_NAME}.json`), {
+  await writeJson(collectionFile, {
     items,
     updatedAt,
   })
