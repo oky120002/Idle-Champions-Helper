@@ -420,3 +420,60 @@ test('syncChampionAnimations 命中同版本已发布 bin 时直接复用本地 
   assert.equal(result.heroCount, 1)
   assert.equal(result.skinCount, 1)
 })
+
+test('syncChampionAnimations 在集合 updatedAt 未变新时整批跳过，不重下也不重写 bin', async (t) => {
+  const tempDir = await createTempDir(t)
+  const visualsFile = path.join(tempDir, 'champion-visuals.json')
+  const collectionFile = path.join(tempDir, 'champion-animations.json')
+
+  await writeJson(visualsFile, {
+    updatedAt: '2026-04-17',
+    items: [],
+  })
+  await writeJson(collectionFile, {
+    updatedAt: '2026-04-17',
+    items: [
+      {
+        id: 'hero:23',
+        championId: '23',
+        skinId: null,
+        kind: 'hero-base',
+        seat: 11,
+        championName: { original: 'Strix', display: '斯崔克丝' },
+        illustrationName: { original: 'Strix', display: '斯崔克丝' },
+        sourceSlot: 'base',
+        sourceGraphicId: '20524',
+        sourceGraphic: 'Characters/Event/Hero_Strix',
+        sourceVersion: 3,
+        fps: 24,
+        defaultSequenceIndex: 0,
+        defaultFrameIndex: 0,
+        asset: {
+          path: 'v1/champion-animations/heroes/23.bin',
+          bytes: 123,
+          format: 'skelanim-zlib',
+        },
+        sequences: [],
+      },
+    ],
+  })
+
+  const originalFetch = globalThis.fetch
+  globalThis.fetch = async () => {
+    throw new Error('updatedAt 未变新时不应触发下载')
+  }
+  t.after(() => {
+    globalThis.fetch = originalFetch
+  })
+
+  const result = await syncChampionAnimations({
+    visualsFile,
+    outputDir: tempDir,
+    currentVersion: 'v1',
+  })
+
+  assert.equal(result.skipped, true)
+  assert.equal(result.downloadedCount, 0)
+  assert.equal(result.reusedCount, 1)
+  assert.equal(result.count, 1)
+})

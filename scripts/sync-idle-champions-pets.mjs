@@ -1,5 +1,5 @@
 import { execFile } from 'node:child_process'
-import { mkdir, readFile, rm, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs, promisify } from 'node:util'
 import { pathToFileURL } from 'node:url'
@@ -16,6 +16,12 @@ import {
   computeSkelAnimFrameBounds,
   renderSkelAnimPoseToPngBuffer,
 } from './data/skelanim-renderer.mjs'
+import {
+  fileExists,
+  readExistingCollection,
+  removeUnexpectedFiles,
+  shouldSkipResourceSync,
+} from './data/resource-sync-policy.mjs'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'
@@ -119,21 +125,28 @@ async function writeJson(filePath, value) {
   await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
 }
 
-async function readExistingImage(filePath, outputPath) {
-  try {
-    const buffer = await readFile(filePath)
-    const png = PNG.sync.read(buffer)
+function canReusePetImage(existingImage, expectedPath) {
+  return (
+    existingImage?.path === expectedPath &&
+    existingImage?.format === 'png'
+  )
+}
 
-    return {
-      path: outputPath,
-      width: png.width,
-      height: png.height,
-      bytes: buffer.length,
-      format: 'png',
-    }
-  } catch {
-    return null
+function canReusePetAnimation(existingAnimation, task) {
+  if (!existingAnimation) {
+    return false
   }
+
+  return (
+    existingAnimation.id === task.petId &&
+    existingAnimation.petId === task.petId &&
+    existingAnimation.sourceSlot === 'illustration' &&
+    existingAnimation.sourceGraphicId === task.asset.graphicId &&
+    existingAnimation.sourceGraphic === task.asset.sourceGraphic &&
+    (existingAnimation.sourceVersion ?? null) === (task.asset.sourceVersion ?? null) &&
+    existingAnimation.asset?.path === task.outputPath &&
+    existingAnimation.asset?.format === 'skelanim-zlib'
+  )
 }
 
 function buildPremiumRefsByFamiliarId(rawDefinitions, localizedDefinitions) {
@@ -657,6 +670,7 @@ async function downloadPetAsset(task) {
     await writeFile(task.outputFile, processed.pngBuffer)
 
     return {
+      mode: 'downloaded',
       petId: task.petId,
       variant: task.variant,
       image: {
@@ -694,6 +708,7 @@ async function downloadPetAnimation(task) {
     await writeFile(task.outputFile, rawBuffer)
 
     return {
+      mode: 'downloaded',
       id: task.petId,
       petId: task.petId,
       name: task.name,
@@ -732,6 +747,40 @@ export async function syncPetsCatalog(options = {}) {
     ? await readJson(path.resolve(options.localizedInput))
     : rawDefinitions
   const updatedAt = getUpdatedAt(rawDefinitions)
+  const petsCollectionFile = path.join(outputDir, 'pets.json')
+  const animationsCollectionFile = path.join(outputDir, 'pet-animations.json')
+  const existingPetsCollection = await readExistingCollection(petsCollectionFile)
+  const existingAnimationsCollection = await readExistingCollection(animationsCollectionFile)
+  if (
+    shouldSkipResourceSync({
+      existingUpdatedAt: existingPetsCollection?.updatedAt,
+      nextUpdatedAt: updatedAt,
+    }) &&
+    shouldSkipResourceSync({
+      existingUpdatedAt: existingAnimationsCollection?.updatedAt,
+      nextUpdatedAt: updatedAt,
+    })
+  ) {
+    const existingPets = existingPetsCollection?.items ?? []
+    const existingAnimations = existingAnimationsCollection?.items ?? []
+    return {
+      outputDir,
+      updatedAt,
+      count: existingPets.length,
+      assetCount: 0,
+      skipped: true,
+      counts: {
+        icons: existingPets.filter((pet) => Boolean(pet.icon)).length,
+        illustrations: existingPets.filter((pet) => Boolean(pet.illustration)).length,
+        animations: existingAnimations.length,
+        gems: existingPets.filter((pet) => pet.acquisition.kind === 'gems').length,
+        premium: existingPets.filter((pet) => pet.acquisition.kind === 'premium').length,
+        patron: existingPets.filter((pet) => pet.acquisition.kind === 'patron').length,
+        unavailable: existingPets.filter((pet) => pet.acquisition.kind === 'not-yet-available').length,
+        unknown: existingPets.filter((pet) => pet.acquisition.kind === 'unknown').length,
+      },
+    }
+  }
   const graphicMap = buildGraphicMap(rawDefinitions.graphic_defines)
   const assetBaseUrl = options.masterApiUrl ?? DEFAULT_MASTER_API_URL
   const localizedFamiliarsById = buildIdMap(localizedDefinitions.familiar_defines)
@@ -746,14 +795,21 @@ export async function syncPetsCatalog(options = {}) {
     localizedDefinitions.patron_shop_item_defines,
   )
 
-  await mkdir(path.join(outputDir, 'pets', 'icons'), { recursive: true })
-  await mkdir(path.join(outputDir, 'pets', 'illustrations'), { recursive: true })
-  await rm(path.join(outputDir, PET_ANIMATION_DIR_NAME), { recursive: true, force: true })
-  await mkdir(path.join(outputDir, PET_ANIMATION_DIR_NAME, 'illustrations'), { recursive: true })
+  const iconDir = path.join(outputDir, 'pets', 'icons')
+  const illustrationDir = path.join(outputDir, 'pets', 'illustrations')
+  const animationDir = path.join(outputDir, PET_ANIMATION_DIR_NAME, 'illustrations')
+  await mkdir(iconDir, { recursive: true })
+  await mkdir(illustrationDir, { recursive: true })
+  await mkdir(animationDir, { recursive: true })
 
   const pets = []
   const tasks = []
   const animationTasks = []
+  const existingPetById = new Map((existingPetsCollection?.items ?? []).map((item) => [item.id, item]))
+  const existingAnimationByPetId = new Map(
+    (existingAnimationsCollection?.items ?? []).map((item) => [item.petId, item]),
+  )
+  const reusedAnimations = []
 
   for (const definition of rawDefinitions.familiar_defines ?? []) {
     const petId = String(definition.id)
@@ -795,7 +851,12 @@ export async function syncPetsCatalog(options = {}) {
       ),
       icon: null,
       illustration: null,
+      iconSourceGraphic: iconAsset?.sourceGraphic ?? null,
+      iconSourceVersion: iconAsset?.sourceVersion ?? null,
+      illustrationSourceGraphic: illustrationAsset?.sourceGraphic ?? null,
+      illustrationSourceVersion: illustrationAsset?.sourceVersion ?? null,
     }
+    const existingPet = existingPetById.get(petId) ?? null
 
     const iconOutputFile = path.join(outputDir, 'pets', 'icons', `${petId}.png`)
     const iconOutputPath = `${currentVersion}/${PET_ICON_DIR_NAME}/${petId}.png`
@@ -804,8 +865,16 @@ export async function syncPetsCatalog(options = {}) {
     const animationOutputFile = path.join(outputDir, PET_ANIMATION_DIR_NAME, 'illustrations', `${petId}.bin`)
     const animationOutputPath = buildPetAnimationAssetPath(currentVersion, petId)
 
-    pet.icon = await readExistingImage(iconOutputFile, iconOutputPath)
-    pet.illustration = await readExistingImage(illustrationOutputFile, illustrationOutputPath)
+    if (
+      iconAsset?.sourceGraphic &&
+      existingPet &&
+      existingPet.iconSourceGraphic === iconAsset.sourceGraphic &&
+      (existingPet.iconSourceVersion ?? null) === (iconAsset.sourceVersion ?? null) &&
+      canReusePetImage(existingPet.icon, iconOutputPath) &&
+      (await fileExists(iconOutputFile))
+    ) {
+      pet.icon = existingPet.icon
+    }
 
     if (!pet.icon && iconAsset?.sourceGraphic) {
       tasks.push({
@@ -822,7 +891,18 @@ export async function syncPetsCatalog(options = {}) {
 
     if (
       illustrationAsset?.sourceGraphic &&
-      (!pet.illustration || isSkelAnimGraphicDefinition(illustrationGraphic))
+      existingPet &&
+      existingPet.illustrationSourceGraphic === illustrationAsset.sourceGraphic &&
+      (existingPet.illustrationSourceVersion ?? null) === (illustrationAsset.sourceVersion ?? null) &&
+      canReusePetImage(existingPet.illustration, illustrationOutputPath) &&
+      (await fileExists(illustrationOutputFile))
+    ) {
+      pet.illustration = existingPet.illustration
+    }
+
+    if (
+      illustrationAsset?.sourceGraphic &&
+      !pet.illustration
     ) {
       tasks.push({
         petId,
@@ -837,21 +917,29 @@ export async function syncPetsCatalog(options = {}) {
     }
 
     if (illustrationAsset?.sourceGraphic && isSkelAnimGraphicDefinition(illustrationGraphic)) {
-      animationTasks.push({
+      const animationTask = {
         petId,
         name: pet.name,
         asset: illustrationAsset,
         preferredSequenceIndexes: resolvePreferredSequenceIndexes(illustrationGraphic),
         outputFile: animationOutputFile,
         outputPath: animationOutputPath,
-      })
+      }
+      const existingAnimation = existingAnimationByPetId.get(petId) ?? null
+
+      if (canReusePetAnimation(existingAnimation, animationTask) && (await fileExists(animationOutputFile))) {
+        reusedAnimations.push(existingAnimation)
+      } else {
+        animationTasks.push(animationTask)
+      }
     }
 
     pets.push(pet)
   }
 
   const downloadedAssets = await runWithConcurrency(tasks, concurrency, downloadPetAsset)
-  const animations = await runWithConcurrency(animationTasks, concurrency, downloadPetAnimation)
+  const downloadedAnimations = await runWithConcurrency(animationTasks, concurrency, downloadPetAnimation)
+  const animations = [...reusedAnimations, ...downloadedAnimations.map((item) => item)]
   const petById = new Map(pets.map((pet) => [pet.id, pet]))
 
   for (const asset of downloadedAssets) {
@@ -874,12 +962,18 @@ export async function syncPetsCatalog(options = {}) {
   const sortedAnimations = [...animations].sort(
     (left, right) => compareLocalizedText(left.name, right.name) || Number(left.petId) - Number(right.petId),
   )
+  await removeUnexpectedFiles(iconDir, new Set(sortedPets.filter((pet) => pet.icon).map((pet) => `${pet.id}.png`)))
+  await removeUnexpectedFiles(
+    illustrationDir,
+    new Set(sortedPets.filter((pet) => pet.illustration).map((pet) => `${pet.id}.png`)),
+  )
+  await removeUnexpectedFiles(animationDir, new Set(sortedAnimations.map((item) => `${item.petId}.bin`)))
 
-  await writeJson(path.join(outputDir, 'pets.json'), {
+  await writeJson(petsCollectionFile, {
     items: sortedPets,
     updatedAt,
   })
-  await writeJson(path.join(outputDir, 'pet-animations.json'), {
+  await writeJson(animationsCollectionFile, {
     items: sortedAnimations,
     updatedAt,
   })

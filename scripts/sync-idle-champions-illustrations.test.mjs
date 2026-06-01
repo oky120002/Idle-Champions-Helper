@@ -624,6 +624,152 @@ test('syncChampionIllustrations 在 hero-base 没有动画包时直接报错，�
   )
 })
 
+test('syncChampionIllustrations 在集合 updatedAt 未变新时整批跳过，不重渲染 PNG', async (t) => {
+  const tempDir = await createTempDir(t)
+  const visualsFile = path.join(tempDir, 'champion-visuals.json')
+
+  await writeJson(visualsFile, {
+    updatedAt: '2026-04-16',
+    items: [],
+  })
+  await writeJson(path.join(tempDir, 'champion-animations.json'), {
+    updatedAt: '2026-04-16',
+    items: [],
+  })
+  await writeJson(path.join(tempDir, 'champion-illustrations.json'), {
+    updatedAt: '2026-04-16',
+    items: [
+      {
+        id: 'hero:101',
+        championId: '101',
+        skinId: null,
+        kind: 'hero-base',
+        seat: 1,
+        championName: { original: 'Animation Hero', display: '动画像英雄' },
+        illustrationName: { original: 'Animation Hero', display: '动画像英雄' },
+        portraitPath: null,
+        sourceSlot: 'base',
+        sourceGraphicId: 'hero-101-anim',
+        sourceGraphic: 'Hero_101_Anim',
+        sourceVersion: 1,
+        render: { pipeline: 'skelanim', sequenceIndex: 1, sequenceLength: 2, isStaticPose: false, frameIndex: 1, visiblePieceCount: 2, bounds: { minX: 0, minY: 0, maxX: 1, maxY: 1 } },
+        image: {
+          path: 'v1/champion-illustrations/heroes/101.png',
+          width: 2,
+          height: 2,
+          bytes: 10,
+          format: 'png',
+        },
+      },
+    ],
+  })
+
+  const result = await syncChampionIllustrations({
+    visualsFile,
+    outputDir: tempDir,
+    currentVersion: 'v1',
+  })
+
+  assert.equal(result.skipped, true)
+  assert.equal(result.renderedCount, 0)
+  assert.equal(result.reusedCount, 1)
+  assert.equal(result.counts.totalIllustrations, 1)
+})
+
+test('syncChampionIllustrations 在源动画未变化且输出 PNG 相同时复用已有文件', async (t) => {
+  const tempDir = await createTempDir(t)
+  const visualsFile = path.join(tempDir, 'champion-visuals.json')
+  const championName = { original: 'Reuse Hero', display: '复用英雄' }
+  const heroItem = createHeroAnimationManifestItem({
+    championId: '101',
+    seat: 1,
+    championName,
+    sourceGraphicId: 'hero-101-anim',
+    sourceGraphic: 'Hero_101_Anim',
+    defaultSequenceIndex: 1,
+    defaultFrameIndex: 1,
+    assetBytes: 0,
+  })
+
+  await writeJson(visualsFile, {
+    updatedAt: '2026-04-17',
+    items: [
+      {
+        championId: '101',
+        seat: 1,
+        name: championName,
+        portrait: null,
+        base: createDecodedPngAsset({
+          graphicId: 'hero-static',
+          sourceGraphic: 'Hero_Static',
+          color: [12, 34, 56],
+          remotePath: '/Portraits/Hero_Static',
+        }),
+        skins: [],
+      },
+    ],
+  })
+  await writeAnimationCollection(tempDir, [heroItem])
+  await writeJson(path.join(tempDir, 'champion-illustrations.json'), {
+    updatedAt: '2026-04-15',
+    items: [],
+  })
+
+  await syncChampionIllustrations({
+    visualsFile,
+    outputDir: tempDir,
+    currentVersion: 'v1',
+  })
+
+  const firstBytes = await readFile(path.join(tempDir, 'champion-illustrations', 'heroes', '101.png'))
+  await writeJson(path.join(tempDir, 'champion-illustrations.json'), {
+    updatedAt: '2026-04-16',
+    items: [
+      {
+        id: 'hero:101',
+        championId: '101',
+        skinId: null,
+        kind: 'hero-base',
+        seat: 1,
+        championName,
+        illustrationName: championName,
+        portraitPath: null,
+        sourceSlot: 'base',
+        sourceGraphicId: 'hero-101-anim',
+        sourceGraphic: 'Hero_101_Anim',
+        sourceVersion: 1,
+        render: {
+          pipeline: 'skelanim',
+          sequenceIndex: 1,
+          sequenceLength: 2,
+          isStaticPose: false,
+          frameIndex: 1,
+          visiblePieceCount: 2,
+          bounds: { minX: 0, minY: 0, maxX: 1, maxY: 1 },
+        },
+        image: {
+          path: 'v1/champion-illustrations/heroes/101.png',
+          width: 2,
+          height: 2,
+          bytes: firstBytes.length,
+          format: 'png',
+        },
+      },
+    ],
+  })
+
+  const result = await syncChampionIllustrations({
+    visualsFile,
+    outputDir: tempDir,
+    currentVersion: 'v1',
+  })
+
+  const secondBytes = await readFile(path.join(tempDir, 'champion-illustrations', 'heroes', '101.png'))
+  assert.deepEqual(secondBytes, firstBytes)
+  assert.equal(result.renderedCount, 0)
+  assert.equal(result.reusedCount, 1)
+})
+
 test('syncChampionIllustrations 在 skinIds 局部重渲染时保留既有清单与图片', async (t) => {
   const tempDir = await createTempDir(t)
   const visualsFile = path.join(tempDir, 'champion-visuals.json')

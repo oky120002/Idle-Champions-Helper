@@ -1,10 +1,16 @@
-import { mkdir, readFile, rm, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.mjs'
 import { renderSkelAnimPoseToPngBuffer } from './data/skelanim-renderer.mjs'
 import { resolveWalkPosterPose } from './data/skelanim-walk-selection.mjs'
+import {
+  fileExists,
+  readExistingCollection,
+  removeUnexpectedFiles,
+  shouldSkipResourceSync,
+} from './data/resource-sync-policy.mjs'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'
@@ -262,6 +268,29 @@ async function renderAnimationIllustrationTask(task, outputDir, currentVersion) 
   }
 }
 
+function canReuseIllustrationMetadata(task, existingIllustration, currentVersion) {
+  if (!existingIllustration) {
+    return false
+  }
+
+  return (
+    existingIllustration.id === task.id &&
+    existingIllustration.kind === task.kind &&
+    existingIllustration.championId === task.championId &&
+    (existingIllustration.skinId ?? null) === (task.skinId ?? null) &&
+    existingIllustration.sourceSlot === task.animation.sourceSlot &&
+    existingIllustration.sourceGraphicId === task.animation.sourceGraphicId &&
+    existingIllustration.sourceGraphic === task.animation.sourceGraphic &&
+    (existingIllustration.sourceVersion ?? null) === (task.animation.sourceVersion ?? null) &&
+    existingIllustration.image?.path ===
+      buildIllustrationImagePath(
+        currentVersion,
+        task.outputGroup,
+        task.outputFileName.replace(/\.png$/u, ''),
+      )
+  )
+}
+
 export async function syncChampionIllustrations(options = {}) {
   const outputDir = path.resolve(options.outputDir ?? DEFAULT_OUTPUT_DIR)
   const currentVersion = options.currentVersion ?? DEFAULT_CURRENT_VERSION
@@ -287,21 +316,41 @@ export async function syncChampionIllustrations(options = {}) {
     ...buildSkinIllustrationTasks(filteredVisuals, animations),
   ]
   const collectionFile = path.join(outputDir, 'champion-illustrations.json')
+  const baseCollection = await readExistingCollection(collectionFile)
 
-  if (!hasSelectionFilters) {
-    await rm(illustrationRoot, { recursive: true, force: true })
+  if (
+    !hasSelectionFilters &&
+    shouldSkipResourceSync({
+      existingUpdatedAt: baseCollection?.updatedAt,
+      nextUpdatedAt: animations?.updatedAt ?? visuals.updatedAt,
+    })
+  ) {
+    const existingItems = baseCollection?.items ?? []
+    return {
+      outputDir,
+      visualsFile,
+      animationsFile,
+      currentVersion,
+      totalBytes: existingItems.reduce((sum, item) => sum + (item.image?.bytes ?? 0), 0),
+      counts: {
+        heroIllustrations: existingItems.filter((item) => item.kind === 'hero-base').length,
+        skinIllustrations: existingItems.filter((item) => item.kind === 'skin').length,
+        totalIllustrations: existingItems.length,
+      },
+      reusedCount: existingItems.length,
+      renderedCount: 0,
+      skipped: true,
+    }
   }
 
   await mkdir(path.join(illustrationRoot, 'heroes'), { recursive: true })
   await mkdir(path.join(illustrationRoot, 'skins'), { recursive: true })
+  const existingIllustrationMap = new Map((baseCollection?.items ?? []).map((item) => [item.id, item]))
 
   const writtenIllustrations = await runWithConcurrency(tasks, concurrency, async (task) => {
     const rendered = await renderAnimationIllustrationTask(task, outputDir, currentVersion)
     const outputFile = path.join(illustrationRoot, task.outputGroup, task.outputFileName)
-
-    await writeFile(outputFile, rendered.bytes)
-
-    return {
+    const nextIllustration = {
       id: task.id,
       championId: task.championId,
       skinId: task.skinId,
@@ -323,24 +372,63 @@ export async function syncChampionIllustrations(options = {}) {
         format: 'png',
       },
     }
+    const existingIllustration = existingIllustrationMap.get(task.id)
+    const shouldAttemptReuse =
+      canReuseIllustrationMetadata(task, existingIllustration, currentVersion) &&
+      (await fileExists(outputFile))
+
+    if (shouldAttemptReuse) {
+      const existingBytes = await readFile(outputFile)
+
+      if (Buffer.compare(existingBytes, rendered.bytes) === 0) {
+        return {
+          mode: 'reused',
+          item: existingIllustration,
+        }
+      }
+    }
+
+    await writeFile(outputFile, rendered.bytes)
+
+    return {
+      mode: 'rendered',
+      item: nextIllustration,
+    }
   })
+  const illustrationMap = new Map((hasSelectionFilters ? baseCollection?.items ?? [] : []).map((item) => [item.id, item]))
 
-  const baseCollection = hasSelectionFilters ? await readJsonIfExists(collectionFile) : null
-  const illustrationMap = new Map((baseCollection?.items ?? []).map((item) => [item.id, item]))
-
-  for (const illustration of writtenIllustrations) {
+  for (const entry of writtenIllustrations) {
+    const illustration = entry.item
     illustrationMap.set(illustration.id, illustration)
   }
 
   const sortedIllustrations = Array.from(illustrationMap.values()).sort(sortIllustrations)
+  await removeUnexpectedFiles(
+    path.join(illustrationRoot, 'heroes'),
+    new Set(
+      sortedIllustrations
+        .filter((item) => item.kind === 'hero-base')
+        .map((item) => path.basename(item.image.path)),
+    ),
+  )
+  await removeUnexpectedFiles(
+    path.join(illustrationRoot, 'skins'),
+    new Set(
+      sortedIllustrations
+        .filter((item) => item.kind === 'skin')
+        .map((item) => path.basename(item.image.path)),
+    ),
+  )
   await writeFile(
     collectionFile,
-    `${JSON.stringify({ items: sortedIllustrations, updatedAt: visuals.updatedAt }, null, 2)}\n`,
+    `${JSON.stringify({ items: sortedIllustrations, updatedAt: animations?.updatedAt ?? visuals.updatedAt }, null, 2)}\n`,
   )
 
   const totalBytes = sortedIllustrations.reduce((sum, item) => sum + item.image.bytes, 0)
   const heroCount = sortedIllustrations.filter((item) => item.kind === 'hero-base').length
   const skinCount = sortedIllustrations.filter((item) => item.kind === 'skin').length
+  const renderedCount = writtenIllustrations.filter((entry) => entry.mode === 'rendered').length
+  const reusedCount = writtenIllustrations.length - renderedCount
 
   return {
     outputDir,
@@ -353,6 +441,8 @@ export async function syncChampionIllustrations(options = {}) {
       skinIllustrations: skinCount,
       totalIllustrations: sortedIllustrations.length,
     },
+    renderedCount,
+    reusedCount,
   }
 }
 

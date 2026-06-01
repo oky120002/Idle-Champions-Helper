@@ -15,6 +15,10 @@ import {
   DEFAULT_CHAMPION_ANIMATION_IDLE_OVERRIDES_FILE,
   readChampionAnimationIdleOverrides,
 } from './data/champion-animation-idle-overrides.mjs'
+import {
+  readExistingCollection,
+  shouldSkipResourceSync,
+} from './data/resource-sync-policy.mjs'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'
@@ -299,9 +303,31 @@ export async function syncChampionAnimations(options = {}) {
     ...buildHeroAnimationTasks(filteredVisuals, graphicDefById),
     ...buildSkinAnimationTasks(filteredVisuals, graphicDefById),
   ]
-  const baseCollection = await readJsonIfExists(collectionFile)
+  const baseCollection = await readExistingCollection(collectionFile)
   const existingAnimationMap = new Map((baseCollection?.items ?? []).map((item) => [item.id, item]))
   const idleOverrides = await readChampionAnimationIdleOverrides(idleOverridesFile)
+
+  if (
+    !hasSelectionFilters &&
+    shouldSkipResourceSync({
+      existingUpdatedAt: baseCollection?.updatedAt,
+      nextUpdatedAt: visuals.updatedAt,
+    })
+  ) {
+    const existingItems = baseCollection?.items ?? []
+    return {
+      outputDir,
+      visualsFile,
+      currentVersion,
+      totalBytes: existingItems.reduce((sum, item) => sum + (item.asset?.bytes ?? 0), 0),
+      count: existingItems.length,
+      heroCount: existingItems.filter((item) => item.kind === 'hero-base').length,
+      skinCount: existingItems.filter((item) => item.kind === 'skin').length,
+      downloadedCount: 0,
+      reusedCount: existingItems.length,
+      skipped: true,
+    }
+  }
 
   await mkdir(path.join(animationRoot, 'heroes'), { recursive: true })
   await mkdir(path.join(animationRoot, 'skins'), { recursive: true })

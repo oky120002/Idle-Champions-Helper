@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import os from 'node:os'
 import path from 'node:path'
 import zlib from 'node:zlib'
-import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { PNG } from 'pngjs'
 import { syncPetsCatalog } from './sync-idle-champions-pets.mjs'
 
@@ -107,6 +107,7 @@ function buildSkelAnimAssetBuffer({ sheetWidth, sheetHeight, textures, character
 }
 
 async function writeJson(filePath, value) {
+  await mkdir(path.dirname(filePath), { recursive: true })
   await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
 }
 
@@ -500,4 +501,184 @@ test('syncPetsCatalog 会把 type=3 的宠物分件资源离线合成为单张 P
   assert.equal(illustrationPng.width, 16)
   assert.equal(illustrationPng.height, 8)
   assert.ok(animationBin.length > 0)
+})
+
+test('syncPetsCatalog 在集合 updatedAt 未变新时整批跳过，不删除现有动画 bin', async (t) => {
+  const tempDir = await createTempDir(t)
+  const inputFile = path.join(tempDir, 'definitions.json')
+  const outputDir = path.join(tempDir, 'data')
+  const animationFile = path.join(outputDir, 'pet-animations', 'illustrations', '7.bin')
+  await mkdir(path.dirname(animationFile), { recursive: true })
+
+  await writeJson(inputFile, {
+    current_time: 1770000000,
+    familiar_defines: [],
+    premium_item_defines: [],
+    patron_defines: [],
+    patron_shop_item_defines: [],
+    graphic_defines: [],
+  })
+  await writeJson(path.join(outputDir, 'pets.json'), {
+    updatedAt: '2026-02-02',
+    items: [
+      {
+        id: '7',
+        name: { original: 'Skel Pet', display: 'Skel Pet' },
+        description: { original: 'Rendered from separated pieces.', display: 'Rendered from separated pieces.' },
+        isAvailable: true,
+        iconGraphicId: '701',
+        illustrationGraphicId: '702',
+        acquisition: { kind: 'gems', sourceType: 'gems', gemCost: 50, premiumPackName: null, premiumPackDescription: null, patronName: null, patronCurrency: null, patronCost: null, patronInfluence: null },
+        icon: null,
+        illustration: { path: 'v1/pets/illustrations/7.png', width: 16, height: 8, bytes: 128, format: 'png' },
+        iconSourceGraphic: null,
+        iconSourceVersion: null,
+        illustrationSourceGraphic: 'Familiars/SkelIllustration_4xup',
+        illustrationSourceVersion: null,
+      },
+    ],
+  })
+  await writeJson(path.join(outputDir, 'pet-animations.json'), {
+    updatedAt: '2026-02-02',
+    items: [
+      {
+        id: '7',
+        petId: '7',
+        name: { original: 'Skel Pet', display: 'Skel Pet' },
+        sourceSlot: 'illustration',
+        sourceGraphicId: '702',
+        sourceGraphic: 'Familiars/SkelIllustration_4xup',
+        sourceVersion: null,
+        fps: 24,
+        defaultSequenceIndex: 0,
+        defaultFrameIndex: 0,
+        asset: { path: 'v1/pet-animations/illustrations/7.bin', bytes: 64, format: 'skelanim-zlib' },
+        sequences: [],
+      },
+    ],
+  })
+  await writeFile(animationFile, Buffer.from('existing-pet-animation'))
+
+  const originalFetch = globalThis.fetch
+  globalThis.fetch = async () => {
+    throw new Error('updatedAt 未变新时不应下载宠物资源')
+  }
+  t.after(() => {
+    globalThis.fetch = originalFetch
+  })
+
+  const result = await syncPetsCatalog({
+    input: inputFile,
+    outputDir,
+    currentVersion: 'v1',
+  })
+
+  assert.equal(result.skipped, true)
+  assert.equal(result.count, 1)
+  assert.deepEqual(await readFile(animationFile), Buffer.from('existing-pet-animation'))
+})
+
+test('syncPetsCatalog 在源资源未变化时复用已有宠物静态图与动画 bin', async (t) => {
+  const tempDir = await createTempDir(t)
+  const inputFile = path.join(tempDir, 'definitions.json')
+  const outputDir = path.join(tempDir, 'data')
+  const iconFile = path.join(outputDir, 'pets', 'icons', '7.png')
+  const illustrationFile = path.join(outputDir, 'pets', 'illustrations', '7.png')
+  const animationFile = path.join(outputDir, 'pet-animations', 'illustrations', '7.bin')
+  await mkdir(path.dirname(iconFile), { recursive: true })
+  await mkdir(path.dirname(illustrationFile), { recursive: true })
+  await mkdir(path.dirname(animationFile), { recursive: true })
+  const iconPng = createPng(4, 4, () => [255, 0, 0, 255])
+  const illustrationPng = createPng(16, 8, () => [0, 120, 255, 255])
+  const animationBytes = Buffer.from('existing-pet-animation')
+
+  await writeJson(inputFile, {
+    current_time: 1770086400,
+    familiar_defines: [
+      {
+        id: 7,
+        name: 'Skel Pet',
+        description: 'Rendered from separated pieces.',
+        graphic_id: 701,
+        properties: { xl_graphic_id: 702, is_available: true },
+        is_available: true,
+        collections_source: { type: 'gems', cost: 50 },
+      },
+    ],
+    premium_item_defines: [],
+    patron_defines: [],
+    patron_shop_item_defines: [],
+    graphic_defines: [
+      { id: 701, type: 3, graphic: 'Familiars/SkelIcon', export_params: { sequence_override: [1] } },
+      { id: 702, type: 3, graphic: 'Familiars/SkelIllustration_4xup', export_params: { sequence_override: [1] } },
+    ],
+  })
+  await writeJson(path.join(outputDir, 'pets.json'), {
+    updatedAt: '2026-02-02',
+    items: [
+      {
+        id: '7',
+        name: { original: 'Skel Pet', display: 'Skel Pet' },
+        description: { original: 'Rendered from separated pieces.', display: 'Rendered from separated pieces.' },
+        isAvailable: true,
+        iconGraphicId: '701',
+        illustrationGraphicId: '702',
+        acquisition: { kind: 'gems', sourceType: 'gems', gemCost: 50, premiumPackName: null, premiumPackDescription: null, patronName: null, patronCurrency: null, patronCost: null, patronInfluence: null },
+        icon: { path: 'v1/pets/icons/7.png', width: 4, height: 4, bytes: iconPng.length, format: 'png' },
+        illustration: { path: 'v1/pets/illustrations/7.png', width: 16, height: 8, bytes: illustrationPng.length, format: 'png' },
+        iconSourceGraphic: 'Familiars/SkelIcon',
+        iconSourceVersion: null,
+        illustrationSourceGraphic: 'Familiars/SkelIllustration_4xup',
+        illustrationSourceVersion: null,
+      },
+    ],
+  })
+  await writeJson(path.join(outputDir, 'pet-animations.json'), {
+    updatedAt: '2026-02-02',
+    items: [
+      {
+        id: '7',
+        petId: '7',
+        name: { original: 'Skel Pet', display: 'Skel Pet' },
+        sourceSlot: 'illustration',
+        sourceGraphicId: '702',
+        sourceGraphic: 'Familiars/SkelIllustration_4xup',
+        sourceVersion: null,
+        fps: 24,
+        defaultSequenceIndex: 0,
+        defaultFrameIndex: 0,
+        asset: { path: 'v1/pet-animations/illustrations/7.bin', bytes: animationBytes.length, format: 'skelanim-zlib' },
+        sequences: [],
+      },
+    ],
+  })
+  await writeFile(iconFile, iconPng)
+  await writeFile(illustrationFile, illustrationPng)
+  await writeFile(animationFile, animationBytes)
+
+  const originalFetch = globalThis.fetch
+  globalThis.fetch = async () => {
+    throw new Error('命中复用时不应重新下载宠物资源')
+  }
+  t.after(() => {
+    globalThis.fetch = originalFetch
+  })
+
+  const result = await syncPetsCatalog({
+    input: inputFile,
+    outputDir,
+    currentVersion: 'v1',
+    masterApiUrl: 'https://example.test/',
+    concurrency: 1,
+  })
+
+  assert.equal(result.assetCount, 0)
+  assert.equal(result.counts.animations, 1)
+  assert.deepEqual(await readFile(iconFile), iconPng)
+  assert.deepEqual(await readFile(illustrationFile), illustrationPng)
+  assert.deepEqual(await readFile(animationFile), animationBytes)
+  const pets = await readJson(path.join(outputDir, 'pets.json'))
+  const animations = await readJson(path.join(outputDir, 'pet-animations.json'))
+  assert.equal(pets.updatedAt, '2026-02-03')
+  assert.equal(animations.updatedAt, '2026-02-03')
 })
