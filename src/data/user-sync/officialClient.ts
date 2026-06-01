@@ -1,7 +1,17 @@
 import type { UserCredentials } from '../../domain/types'
-
-export const OFFICIAL_PLAY_SERVER_BASE_URL = 'https://ps21.idlechampions.com/~idledragons/'
-export const OFFICIAL_MOBILE_CLIENT_VERSION = '999'
+import {
+  createReadonlyFetchOptions,
+  OFFICIAL_MOBILE_CLIENT_VERSION,
+  OFFICIAL_PLAY_SERVER_BASE_URL,
+  OFFICIAL_PLAY_SERVER_SWITCH_LIMIT,
+  normalizeOfficialPlayServerBaseUrl,
+  readSwitchPlayServer,
+  resolveOfficialPlayServerBaseUrls,
+} from './officialPlayServer'
+export {
+  createReadonlyFetchOptions,
+  OFFICIAL_PLAY_SERVER_FALLBACK_BASE_URLS,
+} from './officialPlayServer'
 
 export type ReadonlyOfficialEndpoint =
   | 'getuserdetails'
@@ -58,7 +68,7 @@ export function buildOfficialUrl({
     )
   }
 
-  const url = new URL('post.php', baseUrl)
+  const url = new URL('post.php', normalizeOfficialPlayServerBaseUrl(baseUrl))
   url.searchParams.set('call', endpoint)
   url.searchParams.set('user_id', credentials.userId)
   url.searchParams.set('hash', credentials.hash)
@@ -77,12 +87,9 @@ export function buildOfficialUrl({
   return url.toString()
 }
 
-export function createReadonlyFetchOptions(): RequestInit {
-  return {
-    credentials: 'omit',
-    cache: 'no-store',
-    referrerPolicy: 'no-referrer',
-  }
+interface FetchReadonlyJsonResult {
+  payload: unknown
+  baseUrl: string
 }
 
 async function fetchReadonlyJson(
@@ -115,6 +122,66 @@ async function fetchReadonlyJson(
   return response.json()
 }
 
+function hasPayloadValue(payload: unknown, key: string): boolean {
+  return Boolean(payload && typeof payload === 'object' && key in payload)
+}
+
+function isPayloadReady(
+  endpoint: ReadonlyOfficialEndpoint,
+  payload: unknown,
+): boolean {
+  switch (endpoint) {
+    case 'getuserdetails':
+      return hasPayloadValue(payload, 'details')
+    case 'getcampaigndetails':
+      return hasPayloadValue(payload, 'campaigns')
+    case 'getallformationsaves':
+      return hasPayloadValue(payload, 'all_saves')
+    default:
+      return false
+  }
+}
+
+async function fetchReadonlyJsonFollowingPlayServerSwitch(
+  endpoint: ReadonlyOfficialEndpoint,
+  credentials: UserCredentials,
+  options: FetchUserProfilePayloadsOptions,
+  initialBaseUrl: string,
+  params?: Record<string, string | number | boolean | null | undefined>,
+): Promise<FetchReadonlyJsonResult> {
+  let baseUrl = initialBaseUrl
+  let switchCount = 0
+
+  while (true) {
+    const payload = await fetchReadonlyJson(
+      endpoint,
+      credentials,
+      { ...options, baseUrl },
+      params,
+    )
+    const switchPlayServer = readSwitchPlayServer(payload)
+
+    if (switchPlayServer && !isPayloadReady(endpoint, payload)) {
+      if (switchCount >= OFFICIAL_PLAY_SERVER_SWITCH_LIMIT) {
+        throw new Error('Official endpoint requested too many play server switches.')
+      }
+
+      baseUrl = normalizeOfficialPlayServerBaseUrl(switchPlayServer)
+      switchCount += 1
+      continue
+    }
+
+    if (!isPayloadReady(endpoint, payload)) {
+      throw new Error(`Official endpoint "${endpoint}" returned an unexpected payload.`)
+    }
+
+    return {
+      payload,
+      baseUrl,
+    }
+  }
+}
+
 function readInstanceId(userDetails: unknown): string | null {
   if (!userDetails || typeof userDetails !== 'object') {
     return null
@@ -128,26 +195,57 @@ function readInstanceId(userDetails: unknown): string | null {
   return value === null || value === undefined || value === '' ? null : String(value)
 }
 
+async function fetchUserProfilePayloadsFromBaseUrl(
+  credentials: UserCredentials,
+  options: FetchUserProfilePayloadsOptions,
+  baseUrl: string,
+): Promise<UserProfilePayloads> {
+  const userDetailsResult = await fetchReadonlyJsonFollowingPlayServerSwitch(
+    'getuserdetails',
+    credentials,
+    options,
+    baseUrl,
+    { instance_key: '1' },
+  )
+  const instanceId = readInstanceId(userDetailsResult.payload)
+  const campaignDetailsResult = await fetchReadonlyJsonFollowingPlayServerSwitch(
+    'getcampaigndetails',
+    credentials,
+    options,
+    userDetailsResult.baseUrl,
+    { game_instance_id: '1', instance_id: '1' },
+  )
+  const formationSavesResult = await fetchReadonlyJsonFollowingPlayServerSwitch(
+    'getallformationsaves',
+    credentials,
+    options,
+    campaignDetailsResult.baseUrl,
+    { instance_id: instanceId },
+  )
+
+  return {
+    userDetails: userDetailsResult.payload,
+    campaignDetails: campaignDetailsResult.payload,
+    formationSaves: formationSavesResult.payload,
+  }
+}
+
 export async function fetchUserProfilePayloads(
   credentials: UserCredentials,
   options: FetchUserProfilePayloadsOptions = {},
 ): Promise<UserProfilePayloads> {
-  try {
-    const userDetails = await fetchReadonlyJson('getuserdetails', credentials, options)
-    const instanceId = readInstanceId(userDetails)
-    const campaignDetails = await fetchReadonlyJson('getcampaigndetails', credentials, options)
-    const formationSaves = await fetchReadonlyJson(
-      'getallformationsaves',
-      credentials,
-      options,
-      { instance_id: instanceId },
-    )
+  const baseUrls = await resolveOfficialPlayServerBaseUrls(options)
 
-    return {
-      userDetails,
-      campaignDetails,
-      formationSaves,
+  try {
+    for (const baseUrl of baseUrls) {
+      try {
+        return await fetchUserProfilePayloadsFromBaseUrl(credentials, options, baseUrl)
+      } catch {
+        // Try the next official play server mirror.
+      }
     }
+
+    throw new Error('All official play server mirrors failed.')
   } catch {
     throw new Error('官方数据同步失败：请检查凭证、网络或官方接口可用性。')
   }

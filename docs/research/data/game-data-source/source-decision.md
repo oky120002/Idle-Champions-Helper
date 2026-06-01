@@ -18,6 +18,8 @@
 | Kleho 个人数据同步 | `Support URL` -> 提取 `user_id` 与 `device_hash` -> 调官方 play server / `getuserdetails` | 不是手工录入；也不是“只靠一个游戏 ID” |
 | Byteglow 导入方式 | 支持 `Support URL`、`User ID + Hash`、`webRequestLog.txt`，数据只保存在浏览器 | local-first 形态可借鉴 |
 | Byteglow 官方接口 | bundle 中可见 `getDefinitions`、`getuserdetails`、`getcampaigndetails`、`getallformationsaves` 等调用 | 社区工具站核心能力来自官方客户端接口 + 自己的归一化 / 缓存 / 规则层 |
+| Byteglow 2026-06-01 复核 | `Support URL` 输入会直接解析并触发抓取；`Manual values` 通过 `Save and fetch` 触发；`MuiIconButton-edgeEnd` 只是敏感字段显隐按钮 | 可以借鉴“抓取与来源管理分离”的 UX，但不能误把右侧图标当成取数入口 |
+| 官方 play server 发现 | `master.idlechampions.com/~idledragons/post.php?call=getPlayServerForDefinitions&mobile_client_version=999&network_id=11` 会返回当前 play server；错服响应还会给 `switch_play_server` | 不能把 `ps21` 之类单个 host 当成长期真值；同步链路必须“先发现，再按返回跳转”，且只允许官方域名 |
 | 凭证风险 | bundle 中还能看到 `claimdailyloginreward`、`redeemcoupon`、`purchasepatronshopitem`、`savemodron` 等写接口 | `user_id + hash (+ instance_id)` 不是普通公开 ID，而是敏感凭证 |
 
 ## 产品文案与导入口径

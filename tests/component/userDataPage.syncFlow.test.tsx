@@ -22,6 +22,32 @@ import { UserSyncPanel } from '../../src/pages/user-data/UserSyncPanel'
 const TEST_USER_ID = '12345678'
 const TEST_HASH = 'abcdef1234567890abcdef1234567890'
 
+function createLocalDevPayload(heroIds: string[]) {
+  return {
+    userDetails: {
+      success: true,
+      details: {
+        instance_id: '7',
+        heroes: heroIds.map((heroId) => ({
+          hero_id: heroId,
+          level: 500,
+          equipment: { 0: 3 },
+          feats: [{ id: `feat-${heroId}` }],
+          legendary_effects: [{ id: `leg-${heroId}` }],
+        })),
+      },
+    },
+    campaignDetails: {
+      success: true,
+      campaigns: [],
+    },
+    formationSaves: {
+      success: true,
+      all_saves: [],
+    },
+  }
+}
+
 async function resetDatabase(): Promise<void> {
   localStorage.removeItem(USER_PROFILE_SOURCE_PREFERENCE_STORAGE_KEY)
   await deleteUserProfileData().catch(() => {})
@@ -97,6 +123,20 @@ describe('user data sync flow', () => {
         ok: true,
         json: async () => ({
           success: true,
+          play_server: 'https://ps28.idlechampions.com/~idledragons/',
+        }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          success: true,
+          switch_play_server: 'https://ps27.idlechampions.com/~idledragons/',
+        }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          success: true,
           details: {
             instance_id: '7',
             heroes: [
@@ -149,7 +189,10 @@ describe('user data sync flow', () => {
       expect(screen.getByText(/同步警告 1 条/)).toBeInTheDocument()
     })
 
-    expect(fetchMock).toHaveBeenCalledTimes(3)
+    expect(fetchMock).toHaveBeenCalledTimes(5)
+    expect(String(fetchMock.mock.calls[0]?.[0])).toContain('call=getPlayServerForDefinitions')
+    expect(String(fetchMock.mock.calls[1]?.[0])).toContain('https://ps28.idlechampions.com/~idledragons/')
+    expect(String(fetchMock.mock.calls[2]?.[0])).toContain('https://ps27.idlechampions.com/~idledragons/')
     const snapshot = await readUserProfileSnapshot()
     expect(snapshot?.ownedHeroes[0]).toMatchObject({
       heroId: '1',
@@ -255,6 +298,100 @@ describe('user data sync flow', () => {
 
     const snapshot = await readUserProfileSnapshot()
     expect(snapshot?.updatedAt).toBe(twoDaysAgo.toISOString())
+  })
+
+  it('开发模式刷新本地开发快照时不会覆盖浏览器同步快照', async () => {
+    const browserSnapshot = createUserProfileSnapshot({
+      updatedAt: '2026-06-01T00:00:00.000Z',
+      ownedHeroes: [
+        {
+          heroId: 'browser-hero',
+          level: 1234,
+          equipment: {},
+          feats: [],
+          legendaryEffects: [],
+        },
+      ],
+    })
+    await saveUserProfileSnapshot(browserSnapshot)
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        manifest: {
+          timestamp: '2026-06-01T08:00:00.000Z',
+          outputDir: 'tmp/private-user-data/2026-06-01T08-00-00-000Z',
+          maskedUserId: '****5678',
+          maskedHash: '****7890',
+        },
+      }),
+    })
+    vi.stubGlobal('fetch', fetchMock)
+
+    renderSyncPanel()
+
+    const user = userEvent.setup()
+    await user.click(screen.getByRole('button', { name: '刷新本地开发快照' }))
+
+    expect(await screen.findByRole('status')).toHaveTextContent('已刷新本地开发快照')
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+    expect(fetchMock).toHaveBeenCalledWith('/__dev/private-user-data/refresh', {
+      method: 'POST',
+      cache: 'no-store',
+    })
+    await expect(readUserProfileSnapshot()).resolves.toEqual(browserSnapshot)
+    expect(screen.getByText(/当前开发数据源：浏览器同步快照/)).toBeInTheDocument()
+  })
+
+  it('选中本地开发快照后刷新会重新读取最新 payload，且不写入 IndexedDB', async () => {
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => createLocalDevPayload(['1']),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          manifest: {
+            timestamp: '2026-06-01T09:00:00.000Z',
+            outputDir: 'tmp/private-user-data/2026-06-01T09-00-00-000Z',
+            maskedUserId: '****5678',
+            maskedHash: '****7890',
+          },
+        }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => createLocalDevPayload(['1', '2']),
+      })
+    vi.stubGlobal('fetch', fetchMock)
+
+    renderSyncPanel()
+
+    const user = userEvent.setup()
+    await user.click(screen.getByRole('button', { name: '使用本地开发快照' }))
+
+    await waitFor(() => {
+      expect(screen.getByText(/当前选中源拥有英雄 1 个/)).toBeInTheDocument()
+    })
+
+    await user.click(screen.getByRole('button', { name: '刷新本地开发快照' }))
+
+    expect(await screen.findByRole('status')).toHaveTextContent('已刷新本地开发快照')
+    await waitFor(() => {
+      expect(screen.getByText(/当前选中源拥有英雄 2 个/)).toBeInTheDocument()
+    })
+
+    expect(fetchMock).toHaveBeenNthCalledWith(1, '/__dev/private-user-data/user-profile-payloads', {
+      cache: 'no-store',
+    })
+    expect(fetchMock).toHaveBeenNthCalledWith(2, '/__dev/private-user-data/refresh', {
+      method: 'POST',
+      cache: 'no-store',
+    })
+    expect(fetchMock).toHaveBeenNthCalledWith(3, '/__dev/private-user-data/user-profile-payloads', {
+      cache: 'no-store',
+    })
+    await expect(readUserProfileSnapshot()).resolves.toBeNull()
   })
 
   it('同步错误展示时不包含凭证', async () => {

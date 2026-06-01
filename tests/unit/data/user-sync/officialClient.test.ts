@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import {
   buildOfficialUrl,
+  OFFICIAL_PLAY_SERVER_FALLBACK_BASE_URLS,
   createReadonlyFetchOptions,
   fetchUserProfilePayloads,
   isAllowedEndpoint,
@@ -69,6 +70,10 @@ describe('official read-only client', () => {
     const fetchImpl = vi.fn()
       .mockResolvedValueOnce({
         ok: true,
+        json: async () => ({ success: true, play_server: 'https://ps28.idlechampions.com/~idledragons/' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
         json: async () => ({ success: true, details: { instance_id: '7', heroes: [] } }),
       })
       .mockResolvedValueOnce({
@@ -86,18 +91,106 @@ describe('official read-only client', () => {
     )
 
     expect(payloads.userDetails).toEqual({ success: true, details: { instance_id: '7', heroes: [] } })
-    expect(fetchImpl).toHaveBeenCalledTimes(3)
+    expect(fetchImpl).toHaveBeenCalledTimes(4)
     const calls = fetchImpl.mock.calls
-    expect(String(calls[0]?.[0])).toContain('call=getuserdetails')
-    expect(String(calls[0]?.[0])).toContain('instance_key=1')
-    expect(String(calls[1]?.[0])).toContain('call=getcampaigndetails')
-    expect(String(calls[1]?.[0])).toContain('game_instance_id=1')
-    expect(String(calls[1]?.[0])).toContain('instance_id=1')
-    expect(String(calls[2]?.[0])).toContain('call=getallformationsaves')
-    expect(String(calls[2]?.[0])).toContain('instance_id=7')
+    expect(String(calls[0]?.[0])).toContain('call=getPlayServerForDefinitions')
+    expect(String(calls[1]?.[0])).toContain('call=getuserdetails')
+    expect(String(calls[1]?.[0])).toContain('instance_key=1')
+    expect(String(calls[2]?.[0])).toContain('call=getcampaigndetails')
+    expect(String(calls[2]?.[0])).toContain('game_instance_id=1')
+    expect(String(calls[2]?.[0])).toContain('instance_id=1')
+    expect(String(calls[3]?.[0])).toContain('call=getallformationsaves')
+    expect(String(calls[3]?.[0])).toContain('instance_id=7')
     for (const call of calls) {
       expect(call[1]).toMatchObject(createReadonlyFetchOptions())
     }
+  })
+
+  it('默认会在官方 play server 镜像之间回退', async () => {
+    const fetchImpl = vi.fn()
+      .mockRejectedValueOnce(new Error('master down'))
+      .mockRejectedValueOnce(new Error('ps28 down'))
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ success: true, details: { instance_id: '9', heroes: [] } }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ success: true, campaigns: [] }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ success: true, all_saves: [] }),
+      })
+
+    const payloads = await fetchUserProfilePayloads(
+      { userId: '12345678', hash: 'abcdef1234567890abcdef1234567890' },
+      { fetchImpl },
+    )
+
+    expect(payloads.userDetails).toEqual({ success: true, details: { instance_id: '9', heroes: [] } })
+    expect(String(fetchImpl.mock.calls[1]?.[0])).toContain(OFFICIAL_PLAY_SERVER_FALLBACK_BASE_URLS[0])
+    expect(String(fetchImpl.mock.calls[2]?.[0])).toContain(OFFICIAL_PLAY_SERVER_FALLBACK_BASE_URLS[1])
+  })
+
+  it('收到 switch_play_server 时会跟随官方返回的 play server 重试', async () => {
+    const fetchImpl = vi.fn()
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ success: true, switch_play_server: 'https://ps27.idlechampions.com/~idledragons/' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ success: true, details: { instance_id: '11', heroes: [] } }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ success: true, switch_play_server: 'https://ps29.idlechampions.com/~idledragons/' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ success: true, campaigns: [{ campaign_id: '1' }] }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ success: true, switch_play_server: 'https://ps27.idlechampions.com/~idledragons/' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ success: true, all_saves: [] }),
+      })
+
+    const payloads = await fetchUserProfilePayloads(
+      { userId: '12345678', hash: 'abcdef1234567890abcdef1234567890' },
+      { fetchImpl, baseUrl: 'https://ps28.idlechampions.com/~idledragons/' },
+    )
+
+    expect(payloads).toMatchObject({
+      userDetails: { success: true, details: { instance_id: '11' } },
+      campaignDetails: { success: true, campaigns: [{ campaign_id: '1' }] },
+      formationSaves: { success: true, all_saves: [] },
+    })
+    expect(String(fetchImpl.mock.calls[0]?.[0])).toContain('https://ps28.idlechampions.com/~idledragons/')
+    expect(String(fetchImpl.mock.calls[1]?.[0])).toContain('https://ps27.idlechampions.com/~idledragons/')
+    expect(String(fetchImpl.mock.calls[2]?.[0])).toContain('https://ps27.idlechampions.com/~idledragons/')
+    expect(String(fetchImpl.mock.calls[3]?.[0])).toContain('https://ps29.idlechampions.com/~idledragons/')
+    expect(String(fetchImpl.mock.calls[4]?.[0])).toContain('https://ps29.idlechampions.com/~idledragons/')
+    expect(String(fetchImpl.mock.calls[5]?.[0])).toContain('https://ps27.idlechampions.com/~idledragons/')
+  })
+
+  it('拒绝跟随非官方 switch_play_server 地址', async () => {
+    const fetchImpl = vi.fn()
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ success: true, switch_play_server: 'https://evil.example.com/~idledragons/' }),
+      })
+
+    await expect(fetchUserProfilePayloads(
+      { userId: '12345678', hash: 'abcdef1234567890abcdef1234567890' },
+      { fetchImpl, baseUrl: 'https://ps28.idlechampions.com/~idledragons/' },
+    )).rejects.toThrow('官方数据同步失败')
+
+    expect(fetchImpl).toHaveBeenCalledTimes(1)
   })
 
   it('同步失败时抛出安全错误，不包含完整 user id 或 hash', async () => {
