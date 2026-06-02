@@ -12,8 +12,10 @@
 
 ```text
 public/data/v1/*              公共游戏基座数据
+public/data/v1/planner-*.json 推荐专用归一化 planner model
 browser credential input       用户手动输入的凭证，只在前端内存中使用
 IndexedDB user snapshot        归一化私人账号快照
+IndexedDB planner overrides    浏览器本地 planner 语义覆盖
 src/domain/simulator/*         数字层、基线、effect、评分
 src/domain/planner/*           场景、候选池、合法性、搜索和排序
 src/pages/planner/*            自动计划工作台 UI
@@ -25,12 +27,15 @@ scripts/private-user-data/*    本机开发私有抓取和泄漏扫描
 ## 分篇阅读
 
 - 数据、隐私、目录与存储：`docs/modules/planner/development-design-data.md`
+- 推荐英雄、站位、planner model 与 merge 策略：`docs/modules/planner/recommendation-and-placement-design.md`
 - 数字层、基线、模拟器、搜索、UI 与测试：`docs/modules/planner/development-design-simulator.md`
 
 ## 目录设计
 
 - `src/data/user-sync/`：官方只读 client、allowlist、同步状态、payload normalizer。
 - `src/data/user-profile-store/`：IndexedDB snapshot store 与可选 credential vault。
+- `public/data/v1/planner-*.json`：供推荐引擎直接消费的归一化 planner model。
+- `scripts/data/planner-semantic-overrides.json`：仓库跟踪的推荐语义补丁。
 - `src/domain/user-profile/`：`UserProfileSnapshot`、`OwnedChampionState`、`ImportedFormationSave`、装备、feat、传奇和 warning 类型。
 - `src/domain/simulator/`：`GameNumber`、最后专精基线、金币预算基线、英雄模拟 profile、effect parser、稳态评分。
 - `src/domain/planner/`：variant rule projection、候选池、假设英雄公平基线、阵型合法性、beam search 和结果模型。
