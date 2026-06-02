@@ -143,6 +143,7 @@ export interface ChampionLootDetail {
   graphicId: string | null
   slotId: number | null
   rarity: string | null
+  maxLevel: number[] | null
   effects: JsonValue
   allowGoldenEpic: boolean
   isGoldenEpic: boolean

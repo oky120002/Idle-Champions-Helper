@@ -164,6 +164,24 @@ function uniqueNumbers(values) {
   ).sort((left, right) => left - right)
 }
 
+function normalizeNumberList(value) {
+  if (!Array.isArray(value)) {
+    return []
+  }
+
+  const normalized = []
+
+  for (const item of value) {
+    const next = normalizeNumber(item)
+
+    if (next !== null && next >= 0) {
+      normalized.push(next)
+    }
+  }
+
+  return normalized
+}
+
 function toStringList(value) {
   if (Array.isArray(value)) {
     return value.flatMap((item) => toStringList(item))
@@ -1202,6 +1220,7 @@ function normalizeChampionLoot(originalDefinition, localizedDefinition, goldenEp
     graphicId: toText(originalDefinition.graphic_id),
     slotId: normalizeNumber(originalDefinition.slot_id),
     rarity: toText(originalDefinition.rarity),
+    maxLevel: normalizeNumberList(originalDefinition.max_level),
     effects: normalizeJsonValue(originalDefinition.effects ?? []),
     allowGoldenEpic: Boolean(originalDefinition.allow_ge),
     isGoldenEpic: Boolean(goldenEpicLootId && id === goldenEpicLootId),

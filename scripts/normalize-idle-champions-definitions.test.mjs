@@ -55,6 +55,7 @@ test('normalizeDefinitionsSnapshot 输出官方原文和中文展示双字段', 
       graphicId: '2001',
       slotId: 1,
       rarity: '3',
+      maxLevel: [500, 250, 125],
       effects: [
         {
           effect_string: 'hero_dps_multiplier_mult,100',
@@ -76,6 +77,7 @@ test('normalizeDefinitionsSnapshot 输出官方原文和中文展示双字段', 
       graphicId: '2002',
       slotId: 1,
       rarity: '4',
+      maxLevel: [500, 250, 125],
       effects: [
         {
           effect_string: 'hero_dps_multiplier_mult,200',

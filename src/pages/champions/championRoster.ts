@@ -35,6 +35,7 @@ export interface ChampionEquipmentSlotDefinition {
   name: string
   description: string | null
   rarity: number
+  maxLevel: number[] | null
   graphicId: string | null
   allowGoldenEpic: boolean
   isGoldenEpic: boolean
@@ -51,6 +52,7 @@ export interface ChampionEquipmentSlotViewModel {
   found: Record<string, number>
   hasIconBackground: boolean
   graphicId: string | null
+  levelCap: number | null
   legendaryLevel: number
   legendaryCap: number
 }
@@ -68,6 +70,85 @@ function toNumber(value: string | number | null | undefined): number {
   }
 
   return 0
+}
+
+function toRecord(value: unknown): Record<string, unknown> | null {
+  return typeof value === 'object' && value !== null ? (value as Record<string, unknown>) : null
+}
+
+function normalizeEquipmentLevelCaps(value: unknown): number[] | null {
+  if (!Array.isArray(value)) {
+    return null
+  }
+
+  const caps = value
+    .map((entry) => toNumber(typeof entry === 'number' || typeof entry === 'string' ? entry : null))
+    .filter((entry) => entry > 0)
+
+  return caps.length > 0 ? caps : null
+}
+
+function extractSlotIdFromRawLootEntry(value: unknown): string | null {
+  const record = toRecord(value)
+  const snapshots = toRecord(record?.snapshots)
+  const original = toRecord(snapshots?.original)
+  const display = toRecord(snapshots?.display)
+  const rawSlotId = original?.slot_id ?? display?.slot_id
+  const slotId = toNumber(typeof rawSlotId === 'number' || typeof rawSlotId === 'string' ? rawSlotId : null)
+
+  return slotId > 0 ? String(slotId) : null
+}
+
+function extractMaxLevelFromRawLootEntry(value: unknown): number[] | null {
+  const record = toRecord(value)
+  const snapshots = toRecord(record?.snapshots)
+  const original = toRecord(snapshots?.original)
+  const display = toRecord(snapshots?.display)
+
+  return normalizeEquipmentLevelCaps(original?.max_level ?? display?.max_level ?? null)
+}
+
+function buildEquipmentLevelCapsBySlot(detail: ChampionDetail | null): Map<string, number[]> {
+  const capsBySlot = new Map<string, number[]>()
+
+  for (const item of detail?.loot ?? []) {
+    if (item.slotId === null) {
+      continue
+    }
+
+    const caps = normalizeEquipmentLevelCaps(item.maxLevel)
+
+    if (caps) {
+      capsBySlot.set(String(item.slotId), caps)
+    }
+  }
+
+  for (const item of detail?.raw?.loot ?? []) {
+    const slotId = extractSlotIdFromRawLootEntry(item)
+
+    if (!slotId || capsBySlot.has(slotId)) {
+      continue
+    }
+
+    const caps = extractMaxLevelFromRawLootEntry(item)
+
+    if (caps) {
+      capsBySlot.set(slotId, caps)
+    }
+  }
+
+  return capsBySlot
+}
+
+function resolveEquipmentLevelCap(maxLevel: number[] | null, gild: number): number | null {
+  if (!maxLevel || maxLevel.length === 0) {
+    return null
+  }
+
+  const index = Math.min(Math.max(gild, 0), maxLevel.length - 1)
+  const cap = maxLevel[index]
+
+  return typeof cap === 'number' && Number.isFinite(cap) && cap > 0 ? cap : null
 }
 
 export function buildOwnedHeroById(ownedHeroes: OwnedHero[]): Map<string, OwnedHero> {
@@ -186,7 +267,10 @@ export function buildChampionRosterSummary(
   }
 }
 
-function choosePreferredLootDetailBySlot(loot: ChampionLootDetail[]): Map<string, ChampionEquipmentSlotDefinition> {
+function choosePreferredLootDetailBySlot(
+  loot: ChampionLootDetail[],
+  levelCapsBySlot: ReadonlyMap<string, number[]>,
+): Map<string, ChampionEquipmentSlotDefinition> {
   const definitions = new Map<string, ChampionEquipmentSlotDefinition>()
 
   for (const item of loot) {
@@ -209,6 +293,7 @@ function choosePreferredLootDetailBySlot(loot: ChampionLootDetail[]): Map<string
       name: item.name.display || item.name.original,
       description: item.description?.display || item.description?.original || null,
       rarity: nextRarity,
+      maxLevel: normalizeEquipmentLevelCaps(item.maxLevel) ?? levelCapsBySlot.get(slotId) ?? null,
       graphicId: item.graphicId,
       allowGoldenEpic: item.allowGoldenEpic,
       isGoldenEpic: item.isGoldenEpic,
@@ -223,7 +308,8 @@ export function buildChampionEquipmentSlots(
   ownedHero: OwnedHero | null,
   legendaryLevelCap: number,
 ): ChampionEquipmentSlotViewModel[] {
-  const detailDefinitions = detail ? choosePreferredLootDetailBySlot(detail.loot ?? []) : new Map()
+  const levelCapsBySlot = buildEquipmentLevelCapsBySlot(detail)
+  const detailDefinitions = detail ? choosePreferredLootDetailBySlot(detail.loot ?? [], levelCapsBySlot) : new Map()
   const slotIds = new Set<string>([
     ...Object.keys(ownedHero?.lootBySlot ?? {}),
     ...Array.from(detailDefinitions.keys()),
@@ -235,6 +321,10 @@ export function buildChampionEquipmentSlots(
       const slot = ownedHero?.lootBySlot[slotId] ?? null
       const definition = detailDefinitions.get(slotId) ?? null
       const legendary = ownedHero?.legendaryBySlot[slotId] ?? null
+      const levelCap = resolveEquipmentLevelCap(
+        definition?.maxLevel ?? levelCapsBySlot.get(slotId) ?? null,
+        slot?.gild ?? 0,
+      )
 
       return {
         slotId,
@@ -247,6 +337,7 @@ export function buildChampionEquipmentSlots(
         found: slot?.found ?? {},
         hasIconBackground: Boolean(definition?.graphicId),
         graphicId: definition?.graphicId ?? null,
+        levelCap,
         legendaryLevel: legendary?.level ?? 0,
         legendaryCap: legendary ? legendaryLevelCap : 0,
       }

@@ -23,6 +23,19 @@ const alphaDetail = {
       graphicId: '1002',
       slotId: 1,
       rarity: '4',
+      maxLevel: [500, 250, 125],
+      effects: [],
+      allowGoldenEpic: true,
+      isGoldenEpic: false,
+    },
+    {
+      id: 'alpha-slot-2-rare',
+      name: { original: 'Traveler Boots', display: '旅者长靴' },
+      description: { original: 'Rare boots', display: '稀有位移加成' },
+      graphicId: '1003',
+      slotId: 2,
+      rarity: '3',
+      maxLevel: null,
       effects: [],
       allowGoldenEpic: true,
       isGoldenEpic: false,
@@ -63,6 +76,7 @@ describe('UserHeroesPage flyout', () => {
           level: 987,
           lootBySlot: {
             1: { slotId: '1', rarity: 4, gild: 2, enchant: 321, pigment: 0, found: { 4: 1 } },
+            2: { slotId: '2', rarity: 3, gild: 0, enchant: 77, pigment: 0, found: { 3: 1 } },
           },
           legendaryBySlot: {
             1: { slotId: '1', level: 5, effectId: '9', effectIds: ['9'], resetCurrencyId: '3', upgradeCost: 499 },
@@ -99,7 +113,8 @@ describe('UserHeroesPage flyout', () => {
       'style',
       expect.stringContaining('v1/champion-equipment-icons/1002.png'),
     )
-    expect(within(flyout).getByText('装备等级 321')).toBeInTheDocument()
+    expect(within(flyout).getByText('装备等级 321/125')).toBeInTheDocument()
+    expect(within(flyout).getByText('装备等级 77')).toBeInTheDocument()
     expect(within(flyout).getByText('5/20')).toBeInTheDocument()
   })
 

@@ -86,6 +86,7 @@ describe('champion roster helpers', () => {
           graphicId: '1001',
           slotId: 1,
           rarity: '3',
+          maxLevel: null,
           effects: [],
           allowGoldenEpic: true,
           isGoldenEpic: false,
@@ -97,6 +98,7 @@ describe('champion roster helpers', () => {
           graphicId: '1002',
           slotId: 1,
           rarity: '4',
+          maxLevel: [500, 250, 125],
           effects: [],
           allowGoldenEpic: true,
           isGoldenEpic: false,
@@ -116,8 +118,114 @@ describe('champion roster helpers', () => {
         found: { 4: 1 },
         hasIconBackground: true,
         graphicId: '1002',
+        levelCap: 125,
         legendaryLevel: 5,
         legendaryCap: 20,
+      },
+    ])
+  })
+
+  it('旧版详情缺少归一化 maxLevel 时，回退读取 raw loot 的 max_level', () => {
+    const ownedHero = createOwnedHero({
+      heroId: 'alpha',
+      lootBySlot: {
+        6: { slotId: '6', rarity: 4, gild: 1, enchant: 88, pigment: 0, found: { 4: 1 } },
+      },
+    })
+    const detail = {
+      loot: [
+        {
+          id: 'slot-6-epic',
+          name: { original: 'Finest Cloak', display: '精致的斗篷' },
+          description: { original: 'Epic', display: '史诗' },
+          graphicId: '14567',
+          slotId: 6,
+          rarity: '4',
+          maxLevel: null,
+          effects: [],
+          allowGoldenEpic: true,
+          isGoldenEpic: false,
+        },
+      ],
+      raw: {
+        loot: [
+          {
+            snapshots: {
+              original: {
+                slot_id: 6,
+                max_level: [500, 250, 125],
+              },
+              display: {
+                slot_id: 6,
+                max_level: [500, 250, 125],
+              },
+            },
+          },
+        ],
+      },
+    } as unknown as ChampionDetail
+
+    expect(buildChampionEquipmentSlots(detail, ownedHero, 20)).toEqual([
+      {
+        slotId: '6',
+        name: '精致的斗篷',
+        description: '史诗',
+        rarity: 4,
+        gild: 1,
+        enchant: 88,
+        pigment: 0,
+        found: { 4: 1 },
+        hasIconBackground: true,
+        graphicId: '14567',
+        levelCap: 250,
+        legendaryLevel: 0,
+        legendaryCap: 0,
+      },
+    ])
+  })
+
+  it('装备槽没有等级上限时，仅返回当前等级不计算 cap', () => {
+    const ownedHero = createOwnedHero({
+      heroId: 'alpha',
+      lootBySlot: {
+        2: { slotId: '2', rarity: 3, gild: 0, enchant: 77, pigment: 0, found: { 3: 1 } },
+      },
+    })
+    const detail = {
+      loot: [
+        {
+          id: 'slot-2-rare',
+          name: { original: 'Traveler Boots', display: '旅者长靴' },
+          description: { original: 'Rare', display: '稀有' },
+          graphicId: '24567',
+          slotId: 2,
+          rarity: '3',
+          maxLevel: null,
+          effects: [],
+          allowGoldenEpic: true,
+          isGoldenEpic: false,
+        },
+      ],
+      raw: {
+        loot: [],
+      },
+    } as unknown as ChampionDetail
+
+    expect(buildChampionEquipmentSlots(detail, ownedHero, 20)).toEqual([
+      {
+        slotId: '2',
+        name: '旅者长靴',
+        description: '稀有',
+        rarity: 3,
+        gild: 0,
+        enchant: 77,
+        pigment: 0,
+        found: { 3: 1 },
+        hasIconBackground: true,
+        graphicId: '24567',
+        levelCap: null,
+        legendaryLevel: 0,
+        legendaryCap: 0,
       },
     ])
   })

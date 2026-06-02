@@ -34,6 +34,7 @@ interface FlyoutPosition {
   top: number
   left: number
   width: number
+  maxHeight: number
   ready: boolean
 }
 
@@ -58,6 +59,7 @@ export function ChampionRosterFlyout({
     top: Math.max(FLYOUT_VIEWPORT_GUTTER, anchorRect.top),
     left: Math.max(FLYOUT_VIEWPORT_GUTTER, anchorRect.left),
     width: FLYOUT_MAX_WIDTH,
+    maxHeight: FLYOUT_FALLBACK_HEIGHT,
     ready: false,
   })
 
@@ -153,8 +155,11 @@ export function ChampionRosterFlyout({
 
       const viewportWidth = window.innerWidth
       const viewportHeight = window.innerHeight
+      const isCompactViewport = viewportWidth <= 980
       const maxWidth = Math.max(280, viewportWidth - FLYOUT_VIEWPORT_GUTTER * 2)
-      const width = Math.min(FLYOUT_MAX_WIDTH, maxWidth)
+      const width = isCompactViewport
+        ? maxWidth
+        : Math.min(FLYOUT_MAX_WIDTH, maxWidth)
       const measuredHeight = element.getBoundingClientRect().height || FLYOUT_FALLBACK_HEIGHT
       const nextPosition = calculateChampionRosterFlyoutPosition({
         anchorRect,
@@ -169,6 +174,7 @@ export function ChampionRosterFlyout({
         top: nextPosition.top,
         left: nextPosition.left,
         width,
+        maxHeight: nextPosition.maxHeight,
         ready: true,
       })
     }
@@ -185,6 +191,7 @@ export function ChampionRosterFlyout({
     top: position.top,
     left: position.left,
     width: position.width,
+    maxHeight: position.maxHeight,
     opacity: position.ready ? 1 : 0,
   }
 
@@ -238,7 +245,7 @@ export function ChampionRosterFlyout({
       ) : (
         <div className="champion-roster-flyout__slot-grid">
           {slots.map((slot) => {
-            const rarityPercent = slot.rarity > 0 ? (slot.rarity / 4) * 100 : 0
+            const levelPercent = slot.levelCap && slot.levelCap > 0 ? Math.min((slot.enchant / slot.levelCap) * 100, 100) : 0
             const legendaryPercent = slot.legendaryCap > 0 ? (slot.legendaryLevel / slot.legendaryCap) * 100 : 0
             const equipmentIcon = slot.graphicId ? equipmentIconsById.get(slot.graphicId) ?? null : null
 
@@ -269,16 +276,18 @@ export function ChampionRosterFlyout({
                   </span>
                 </div>
                 <div className="champion-roster-slot__stats">
-                  <span>装备等级 {slot.enchant}</span>
+                  <span>{slot.levelCap ? `装备等级 ${slot.enchant}/${slot.levelCap}` : `装备等级 ${slot.enchant}`}</span>
                   {slot.gild > 0 ? (
                     <span className={`champion-roster-slot__gild champion-roster-slot__gild--${slot.gild}`}>
                       {slot.gild === 2 ? '金装' : '闪耀'}
                     </span>
                   ) : null}
                 </div>
-                <div className="champion-roster-slot__meter" aria-hidden="true">
-                  <span className="champion-roster-slot__meter-fill" style={{ width: `${rarityPercent}%` }} />
-                </div>
+                {slot.levelCap ? (
+                  <div className="champion-roster-slot__meter" aria-hidden="true">
+                    <span className="champion-roster-slot__meter-fill" style={{ width: `${levelPercent}%` }} />
+                  </div>
+                ) : null}
                 {slot.legendaryCap > 0 ? (
                   <>
                     <div className="champion-roster-slot__stats champion-roster-slot__stats--legendary">
