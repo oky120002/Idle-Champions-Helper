@@ -12,12 +12,26 @@ export type PlannerSignalSource =
   | 'browser-local-override'
   | 'heuristic-fallback'
 
+export type PlannerTargetMatchMode = 'any' | 'all'
+export type PlannerPositionRelation = 'any' | 'self' | 'adjacent'
+
+export interface PlannerTargetQualifier {
+  requiredTags?: string[]
+  matchMode?: PlannerTargetMatchMode
+}
+
+export interface PlannerPositionQualifier {
+  relation: PlannerPositionRelation
+}
+
 export interface PlannerEffectSignal {
   kind: PlannerSignalKind
   value: number
   rawEffect: string
   note?: string
   source: PlannerSignalSource
+  targetQualifier?: PlannerTargetQualifier | null
+  positionQualifier?: PlannerPositionQualifier | null
 }
 
 export interface PlannerUnsupportedSignal {

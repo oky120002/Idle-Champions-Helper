@@ -31,6 +31,31 @@
 - 首期不把 `objectiveArea` 用于敌方血量计算，只作为场景身份和布局上下文。
 - `PlacementFit` 表示“某英雄站在某槽位时，对当前 C 位的贡献”，至少包含：`heroId`、`slotId`、`carryHeroId`、`fitScore`、`scoreBreakdown`、`reasonCodes`、`warnings`、`fallbackSource`。
 
+### 3.1 PlacementFit 最小合同
+- 推荐问题先拆成最小确定性单元：`evaluatePlacementFit(carryHero, carrySlot, supportHero, supportSlot, scenario)`。
+- 这个函数只回答一件事：当前 support 站在当前槽位时，是否真正提高了当前 C 位；若提高，具体提高多少；若没提高，原因是什么。
+- `fitScore` 只表示这一个 support 对这一个 carry 的乘区贡献，不负责整队搜索，不负责 UI 文案。
+- 当前首期固定把 effect 数值按百分比解释：`100 => +100% => x2.0`，`50 => +50% => x1.5`。
+- `scoreBreakdown` 的每一条都必须带 `signalKind`、`rawEffect`、`multiplier`、`active`、`reasonCode`、`source`。
+
+### 3.2 PlacementFit 判定顺序
+1. 先确定当前 signal 是否属于这名英雄当前站位下可评估的信号。
+2. 再判断位置条件是否满足，例如 `adjacent / self / any`。
+3. 再判断目标条件是否满足，例如 `female / male / role / tag / alignment`。
+4. 命中则把百分比转换成 multiplier 计入 `fitScore`；未命中则只记录原因，不计分。
+5. 语义缺失但不能确定为 false 的规则，只进入 `warnings`，不偷偷加分。
+
+### 3.3 当前代码首期已支持的条件
+- `globalDpsMultiplier`：默认对 carry 生效。
+- `heroDpsMultiplier`：默认只对 carry 自身生效。
+- `adjacentBuff`：默认要求 support 与 carry 相邻。
+- `taggedChampionBuff`：只有在 planner model 明确提供 `targetQualifier.requiredTags` 时才计分；否则只给 warning。
+
+### 3.4 当前明确还没进代码的条件
+- `front / behind / top / bottom / same column` 这类布局语义，先写进 planner model 设计，但不在缺少稳定布局方向定义时硬算。
+- `male / female / race / alignment / role` 的自动解析，可以通过结构化 parser 或语义补丁进入 `targetQualifier`，但不能靠页面或评分代码现场猜。
+- formation 计数类条件，例如“每个 female champion 叠一层”，需要单独的 formation-level qualifier，不混进当前最小版 `PlacementFit`。
+
 ## 4. 推荐流水线
 ```text
 scenario + layout

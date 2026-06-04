@@ -29,7 +29,7 @@ describe('beam search ranking', () => {
           if (heroId === 'bruenor') score *= 2.0
           if (heroId === 'jarlaxle') score *= 3.0
         }
-        return { score, warnings: [], explanations: [] }
+        return { score, warnings: [], explanations: [], carryHeroId: null }
       },
     })
 
@@ -44,7 +44,7 @@ describe('beam search ranking', () => {
       adjacency,
       beamWidth: 1,
       scoreFormation: (placements: Record<string, string>) => {
-        return { score: Object.keys(placements).length, warnings: [], explanations: [] }
+        return { score: Object.keys(placements).length, warnings: [], explanations: [], carryHeroId: null }
       },
     })
 
@@ -62,6 +62,7 @@ describe('beam search ranking', () => {
         score: 5.0,
         warnings: ['test warning'],
         explanations: ['test explanation'],
+        carryHeroId: 'jarlaxle',
       }),
     })
 
@@ -70,5 +71,6 @@ describe('beam search ranking', () => {
     expect(top).toHaveProperty('placements')
     expect(top).toHaveProperty('explanations')
     expect(top).toHaveProperty('warnings')
+    expect(top).toHaveProperty('carryHeroId')
   })
 })

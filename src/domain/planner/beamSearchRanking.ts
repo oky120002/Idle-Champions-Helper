@@ -13,6 +13,7 @@ export interface BeamSearchResult {
   placements: Record<string, string>
   explanations: string[]
   warnings: string[]
+  carryHeroId: string | null
 }
 
 interface BeamCandidate {
@@ -64,6 +65,7 @@ export function beamSearch(input: BeamSearchInput): BeamSearchResult[] {
         placements: c.placements,
         explanations: result.explanations,
         warnings: result.warnings,
+        carryHeroId: result.carryHeroId,
       }
     })
     .sort((a, b) => b.score - a.score)

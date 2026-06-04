@@ -79,8 +79,24 @@ const plannerHeroes: OfficialPlannerHeroModel[] = champions.map((champion) => ({
             : champion.roles.includes('gold')
               ? 1.2
               : 1.05,
-  carrySignals: [],
-  supportSignals: [],
+  carrySignals: champion.id === 'asharra'
+    ? [
+        { kind: 'heroDpsMultiplier', value: 100, rawEffect: 'hero_dps_multiplier_mult,100', source: 'official-parsed' },
+      ]
+    : champion.id === 'jarlaxle'
+      ? [
+          { kind: 'heroDpsMultiplier', value: 25, rawEffect: 'hero_dps_multiplier_mult,25', source: 'official-parsed' },
+        ]
+      : [],
+  supportSignals: champion.id === 'bruenor'
+    ? [
+        { kind: 'adjacentBuff', value: 100, rawEffect: 'adjacent_buff,100', source: 'official-parsed' },
+      ]
+    : champion.id === 'celeste'
+      ? [
+          { kind: 'globalDpsMultiplier', value: 50, rawEffect: 'global_dps_multiplier_mult,50', source: 'official-parsed' },
+        ]
+      : [],
   unsupportedSignals: [],
   sourceBreakdown: {
     isCarryViable: 'official-parsed',
@@ -148,5 +164,7 @@ describe('planner recommendation engine', () => {
 
     const seatOneEntries = recommendation.result?.placementEntries?.filter((entry) => entry.seat === 1) ?? []
     expect(seatOneEntries).toHaveLength(1)
+    expect(seatOneEntries[0]?.heroId).toBe('bruenor')
+    expect(recommendation.result?.explanations[1]?.zh).toContain('贾拉索')
   })
 })

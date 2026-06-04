@@ -15,7 +15,7 @@ import {
   type PlannerPlacementEntry,
   type PlannerRecommendation,
 } from './recommendationTypes'
-import { scoreFormation, type ScoringEffect } from './steadyStateScoring'
+import { scoreFormation } from './steadyStateScoring'
 import type { VariantRuleResult } from './variantRuleProjection'
 
 const ROLE_PRIORITY = ['dps', 'support', 'tanking', 'healing', 'gold'] as const
@@ -31,19 +31,6 @@ function sortSlots(scenario: ResolvedPlannerScenarioModel): string[] {
   return [...scenario.slotTopology]
     .sort((left, right) => left.row - right.row || left.column - right.column || left.slotId.localeCompare(right.slotId))
     .map((slot) => slot.slotId)
-}
-
-function buildAdjacency(scenario: ResolvedPlannerScenarioModel): Record<string, string[]> {
-  return Object.fromEntries(scenario.slotTopology.map((slot) => [slot.slotId, slot.adjacentSlotIds]))
-}
-
-function createRoleEffects(heroes: ResolvedPlannerHeroModel[]): ScoringEffect[] {
-  return heroes.map((hero) => ({
-    heroId: hero.heroId,
-    kind: 'globalDpsMultiplier',
-    value: hero.heuristicRoleMultiplier,
-    note: `planner-model:${hero.sourceBreakdown.heuristicRoleMultiplier}`,
-  }))
 }
 
 function getRolePriorityScore(hero: ResolvedPlannerHeroModel): number {
@@ -120,9 +107,10 @@ function buildPlannerExplanations(
   scenario: ResolvedPlannerScenarioModel,
   placementEntries: PlannerPlacementEntry[],
   heroById: Map<string, ResolvedPlannerHeroModel>,
+  carryHeroId: string | null,
   rawExplanations: string[],
 ): PlannerNarrativeLine[] {
-  const sortedChampions = placementEntries
+  const orderedChampions = placementEntries
     .map((entry) => heroById.get(entry.heroId))
     .filter((hero): hero is ResolvedPlannerHeroModel => Boolean(hero))
     .sort((left, right) => (
@@ -131,13 +119,17 @@ function buildPlannerExplanations(
       || left.heroId.localeCompare(right.heroId)
     ))
 
-  const leadChampion = sortedChampions[0] ?? null
-  const supportChampions = sortedChampions
-    .slice(1, 4)
+  const leadChampion = carryHeroId
+    ? heroById.get(carryHeroId) ?? orderedChampions[0] ?? null
+    : orderedChampions[0] ?? null
+  const supportChampions = orderedChampions
+    .filter((hero) => hero.heroId !== leadChampion?.heroId)
+    .slice(0, 4)
     .map((hero) => hero.name.display)
 
-  const hasAdjacentSignal = rawExplanations.some((line) => line.includes('adjacent buff'))
-  const hasHeroSignal = rawExplanations.some((line) => line.includes('hero DPS'))
+  const hasAdjacentSignal = rawExplanations.some((line) => line.includes('adjacentBuff'))
+  const hasHeroSignal = rawExplanations.some((line) => line.includes('heroDpsMultiplier'))
+  const hasTagSignal = rawExplanations.some((line) => line.includes('taggedChampionBuff'))
 
   const explanations: PlannerNarrativeLine[] = [
     {
@@ -161,6 +153,11 @@ function buildPlannerExplanations(
     explanations.push({
       zh: '这条推荐已经开始计入相邻增益或英雄自带倍率，不再只是简单按职业标签排队。',
       en: 'This recommendation already accounts for adjacency buffs or hero-specific multipliers instead of only sorting by broad role tags.',
+    })
+  } else if (hasTagSignal) {
+    explanations.push({
+      zh: '这条推荐已经开始区分部分 carry 目标标签，但标签语义仍依赖补丁或后续解析补全。',
+      en: 'This recommendation now distinguishes some carry target tags, though that tag semantics still depend on overrides or later parsing work.',
     })
   } else {
     explanations.push({
@@ -220,10 +217,8 @@ export function buildPlannerRecommendation(
     }
   }
 
-  const adjacency = buildAdjacency(scenario)
   const heroById = new Map(heroes.map((hero) => [hero.heroId, hero]))
   const heroSeats = Object.fromEntries(heroes.map((hero) => [hero.heroId, hero.seat]))
-  const effectsByHeroId = new Map(createRoleEffects(heroes).map((effect) => [effect.heroId, [effect]]))
   const scenarioVariantRules: VariantRuleResult = {
     constraints: [
       ...(scenario.bannedHeroes.length > 0 ? [{ kind: 'banList' as const, heroIds: scenario.bannedHeroes }] : []),
@@ -235,7 +230,7 @@ export function buildPlannerRecommendation(
   const results = beamSearch({
     heroes: heroes.map((hero) => ({ heroId: hero.heroId, seat: hero.seat })),
     slots,
-    adjacency,
+    adjacency: {},
     beamWidth: 8,
     scoreFormation: (placements) => {
       const legality = checkFormationLegality({
@@ -250,13 +245,11 @@ export function buildPlannerRecommendation(
           score: 0,
           warnings: legality.violations.map(formatLegalityViolation),
           explanations: ['非法阵型已被过滤。'],
+          carryHeroId: null,
         }
       }
 
-      const activeEffects = Object.values(placements)
-        .flatMap((heroId) => effectsByHeroId.get(heroId) ?? [])
-
-      return scoreFormation({ placements, effects: activeEffects, adjacency })
+      return scoreFormation({ placements, heroesById: heroById, scenario })
     },
   })
 
@@ -293,6 +286,7 @@ export function buildPlannerRecommendation(
         scenario,
         placementEntries,
         heroById,
+        top.carryHeroId,
         top.explanations,
       ),
       warnings: [...new Set([...top.warnings, ...buildPlannerWarnings(scenario, profileSnapshot)])],

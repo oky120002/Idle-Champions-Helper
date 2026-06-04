@@ -1,70 +1,86 @@
-export interface ScoringEffect {
-  heroId: string
-  kind: 'globalDpsMultiplier' | 'adjacentBuff' | 'heroDpsMultiplier' | 'taggedChampionBuff' | 'unsupported'
-  value?: number
-  targetSlots?: string[]
-  rawEffect?: string
-  note?: string
-}
+import type { ResolvedPlannerHeroModel, ResolvedPlannerScenarioModel } from './plannerModel'
+import { evaluatePlacementFit } from './placementFit'
 
 export interface ScoringInput {
   placements: Record<string, string>
-  effects: ScoringEffect[]
-  adjacency: Record<string, string[]>
+  heroesById: Map<string, ResolvedPlannerHeroModel>
+  scenario: ResolvedPlannerScenarioModel
 }
 
 export interface ScoringResult {
   score: number
   warnings: string[]
   explanations: string[]
+  carryHeroId: string | null
 }
 
 export function scoreFormation(input: ScoringInput): ScoringResult {
-  const { placements, effects, adjacency } = input
-  let score = 1.0
-  const warnings: string[] = []
-  const explanations: string[] = []
+  const placedEntries = Object.entries(input.placements)
+    .map(([slotId, heroId]) => {
+      const hero = input.heroesById.get(heroId)
+      return hero ? { slotId, hero } : null
+    })
+    .filter((entry): entry is { slotId: string; hero: ResolvedPlannerHeroModel } => Boolean(entry))
 
-  // Reverse lookup: heroId -> slotId
-  const heroToSlot = new Map<string, string>()
-  for (const [slotId, heroId] of Object.entries(placements)) {
-    heroToSlot.set(heroId, slotId)
+  if (placedEntries.length === 0) {
+    return {
+      score: 0,
+      warnings: [],
+      explanations: [],
+      carryHeroId: null,
+    }
   }
 
-  for (const effect of effects) {
-    if (effect.kind === 'unsupported') {
-      warnings.push(`Unsupported effect: ${effect.rawEffect ?? 'unknown'} — ${effect.note ?? ''}`)
-      continue
-    }
+  const carryCandidates = placedEntries.filter((entry) => entry.hero.isCarryViable)
+  const effectiveCarryCandidates = carryCandidates.length > 0 ? carryCandidates : placedEntries
 
-    const multiplier = effect.value ?? 1.0
+  let bestScore = 0
+  let bestWarnings: string[] = []
+  let bestExplanations: string[] = []
+  let bestCarryHeroId: string | null = null
 
-    if (effect.kind === 'globalDpsMultiplier') {
-      score *= multiplier
-      explanations.push(`${effect.heroId}: global DPS x${multiplier}`)
-      continue
-    }
+  for (const carryEntry of effectiveCarryCandidates) {
+    let score = carryEntry.hero.heuristicRoleMultiplier
+    const warnings = [...carryEntry.hero.unsupportedSignals.map((signal) => `${signal.rawEffect}: ${signal.note}`)]
+    const explanations = [
+      `${carryEntry.hero.heroId}: carry baseline x${carryEntry.hero.heuristicRoleMultiplier} (${carryEntry.hero.sourceBreakdown.heuristicRoleMultiplier})`,
+    ]
 
-    if (effect.kind === 'adjacentBuff') {
-      const sourceSlot = heroToSlot.get(effect.heroId)
-      const adjacentSlots = sourceSlot ? (adjacency[sourceSlot] ?? []) : []
-      const targets = effect.targetSlots ?? []
+    for (const supportEntry of placedEntries) {
+      const fit = evaluatePlacementFit({
+        carryHero: carryEntry.hero,
+        carrySlotId: carryEntry.slotId,
+        supportHero: supportEntry.hero,
+        supportSlotId: supportEntry.slotId,
+        scenario: input.scenario,
+      })
 
-      const hasAdjacentTarget = targets.some((t) => adjacentSlots.includes(t))
-      if (hasAdjacentTarget) {
-        score *= multiplier
-        explanations.push(`${effect.heroId}: adjacent buff x${multiplier} (active)`)
-      } else {
-        explanations.push(`${effect.heroId}: adjacent buff x${multiplier} (not adjacent — inactive)`)
+      score *= fit.fitScore
+      warnings.push(...fit.warnings)
+
+      for (const part of fit.scoreBreakdown) {
+        if (!part.active) {
+          continue
+        }
+
+        explanations.push(
+          `${supportEntry.hero.heroId}: ${part.signalKind} x${part.multiplier.toFixed(2)} -> ${carryEntry.hero.heroId}`,
+        )
       }
-      continue
     }
 
-    if (effect.kind === 'heroDpsMultiplier') {
-      score *= multiplier
-      explanations.push(`${effect.heroId}: hero DPS x${multiplier}`)
+    if (score > bestScore) {
+      bestScore = score
+      bestWarnings = [...new Set(warnings)]
+      bestExplanations = explanations
+      bestCarryHeroId = carryEntry.hero.heroId
     }
   }
 
-  return { score, warnings, explanations }
+  return {
+    score: bestScore,
+    warnings: bestWarnings,
+    explanations: bestExplanations,
+    carryHeroId: bestCarryHeroId,
+  }
 }
