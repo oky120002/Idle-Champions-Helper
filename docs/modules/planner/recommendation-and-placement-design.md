@@ -55,11 +55,13 @@
 - carry 目标限定已支持：`requiredTags`、`excludedTags`、`requiredStats`。
 - formation 计数限定已支持最小子集：`per_crusader`、`per_tagged_crusader_mult`、`per_hero_attribute`。
 - formation 计数限定当前可消费的 qualifier 子集：正向/排除标签、能力值阈值、基础攻击伤害类型、基础攻击冷却阈值、年龄上下界、排除指定英雄。
+- 其中能力值限定当前不仅支持六维单项，也支持 `total_ability_score` 这种可由六维静态求和得到的派生值。
 - 简单别名谓词当前只支持能稳定映射到静态事实源的子集，例如 `is_undead -> requiredTags: ['undead']`。
 - 简单布尔组合当前支持受控子集：单纯由静态 tag / stat / age 子句组成的 `&&` 组合可以合并成同一个 qualifier。
 - 简单布尔包装当前支持受控子集：`as_int(<已支持静态谓词>)` 会退化回内部谓词本身；只要内部仍依赖动态变量、公式或运行时状态，就继续保持 unsupported。
 - 年龄比较当前保留原始比较方向，`<` / `<=` / `>` / `>=` 不再被粗暴折叠成同一个上下界。
 - 英雄画像当前已额外保留 `baseAttackCooldown` 静态事实，可供 `base_attack_cooldown<=N` 这类比较表达式消费；裸 cooldown 数值表达式仍不进首期计分。
+- `EligibleForPatron(...)` 当前仍不进首期计分：它需要公共 `patronEligibility` 事实源和当前 patron 目标上下文，而这两者还没进入 planner 的稳定数据合同。
 - 组合语义已支持：`amountFunc=add` 走线性累加，`amountFunc=mult` 走乘方法；拿不准的组合直接降级 warning。
 - `applyManually=true` 的效果当前不计分，只保留 warning。
 

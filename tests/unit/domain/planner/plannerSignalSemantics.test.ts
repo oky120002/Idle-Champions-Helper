@@ -49,6 +49,10 @@ describe('planner signal semantics', () => {
       requiredStats: [{ stat: 'cha', operator: '>=', value: 11 }],
     })
 
+    expect(parsePlannerPerHeroExpr('GetStat(`total_ability_score`) <= 78')).toEqual({
+      requiredStats: [{ stat: 'total_ability_score', operator: '<=', value: 78 }],
+    })
+
     expect(parsePlannerPerHeroExpr('age <= 20 && hero_id!=58')).toEqual({
       maxAge: 20,
       maxAgeOperator: '<=',
@@ -113,6 +117,14 @@ describe('planner signal semantics', () => {
       requiredStats: [{ stat: 'cha', operator: '>=', value: 11 }],
       maxAge: 20,
     })).toBe(true)
+
+    expect(matchesPlannerHeroQualifier(hero, {
+      requiredStats: [{ stat: 'total_ability_score', operator: '<=', value: 90 }],
+    })).toBe(true)
+
+    expect(matchesPlannerHeroQualifier(hero, {
+      requiredStats: [{ stat: 'total_ability_score', operator: '>=', value: 100 }],
+    })).toBe(false)
 
     expect(matchesPlannerHeroQualifier(hero, {
       requiredTags: ['undead'],

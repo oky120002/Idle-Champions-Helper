@@ -27,6 +27,17 @@ function comparePlannerNumber(left, operator, right) {
   }
 }
 
+function getPlannerHeroStatValue(hero, stat) {
+  if (stat === 'total_ability_score') {
+    return Object.values(hero.abilityScores ?? {}).reduce(
+      (sum, value) => sum + (typeof value === 'number' ? value : 0),
+      0,
+    )
+  }
+
+  return hero.abilityScores[stat]
+}
+
 function getPlannerRawFilters(effect) {
   return [
     ...(Array.isArray(effect?.filter_targets) ? effect.filter_targets : []),
@@ -256,7 +267,7 @@ export function matchesPlannerHeroQualifier(hero, qualifier) {
   }
 
   for (const statQualifier of qualifier.requiredStats ?? []) {
-    const heroValue = hero.abilityScores[statQualifier.stat]
+    const heroValue = getPlannerHeroStatValue(hero, statQualifier.stat)
     if (!comparePlannerNumber(heroValue, statQualifier.operator, statQualifier.value)) {
       return false
     }

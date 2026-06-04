@@ -16,9 +16,10 @@ export type PlannerTargetMatchMode = 'any' | 'all'
 export type PlannerPositionRelation = 'any' | 'self' | 'adjacent'
 export type PlannerSignalAmountFunc = 'add' | 'mult' | 'unknown'
 export type PlannerComparisonOperator = '>=' | '<=' | '>' | '<' | '=='
+export type PlannerStatKey = AbilityScoreKey | 'total_ability_score'
 
 export interface PlannerStatQualifier {
-  stat: AbilityScoreKey
+  stat: PlannerStatKey
   operator: PlannerComparisonOperator
   value: number
 }

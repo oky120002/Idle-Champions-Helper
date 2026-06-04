@@ -4,6 +4,7 @@ import type {
   PlannerHeroQualifier,
   PlannerSignalAmountFunc,
   PlannerSignalSource,
+  PlannerStatKey,
   ResolvedPlannerHeroModel,
 } from './plannerModel'
 
@@ -23,7 +24,7 @@ export function normalizePlannerSignalAmountFunc(value: unknown): PlannerSignalA
 export function normalizePlannerTargetQualifier(effect: unknown): PlannerHeroQualifier | null
 
 export function normalizePlannerStatQualifiers(effect: unknown): Array<{
-  stat: string
+  stat: PlannerStatKey
   operator: PlannerComparisonOperator
   value: number
 }> | null
