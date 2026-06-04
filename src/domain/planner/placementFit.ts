@@ -1,5 +1,6 @@
 import type {
   PlannerEffectSignal,
+  PlannerHeroQualifier,
   PlannerPositionRelation,
   PlannerSignalSource,
   ResolvedPlannerHeroModel,
@@ -16,9 +17,12 @@ export interface PlacementFitScorePart {
     | 'carry-self-match'
     | 'adjacent-match'
     | 'tag-match'
+    | 'stat-match'
     | 'tag-mismatch'
+    | 'stat-mismatch'
     | 'position-mismatch'
     | 'missing-target-qualifier'
+    | 'unsupported-composition'
   source: PlannerSignalSource
 }
 
@@ -40,10 +44,159 @@ export interface EvaluatePlacementFitInput {
   supportHero: ResolvedPlannerHeroModel
   supportSlotId: string
   scenario: ResolvedPlannerScenarioModel
+  placements?: Record<string, string>
+  heroesById?: Map<string, ResolvedPlannerHeroModel>
 }
 
 function effectValueToMultiplier(value: number): number {
   return 1 + (value / 100)
+}
+
+function compareNumber(left: number | null | undefined, operator: string, right: number): boolean {
+  if (typeof left !== 'number') {
+    return false
+  }
+
+  switch (operator) {
+    case '>=':
+      return left >= right
+    case '<=':
+      return left <= right
+    case '>':
+      return left > right
+    case '<':
+      return left < right
+    case '==':
+      return left === right
+    default:
+      return false
+  }
+}
+
+function matchesHeroQualifier(hero: ResolvedPlannerHeroModel, qualifier: PlannerHeroQualifier | null | undefined): boolean {
+  if (!qualifier) {
+    return true
+  }
+
+  const requiredTags = qualifier.requiredTags ?? []
+  if (requiredTags.length > 0) {
+    const heroTags = new Set(hero.tags.map((tag) => tag.toLowerCase()))
+    const normalizedTags = requiredTags.map((tag) => tag.toLowerCase())
+    const matchMode = qualifier.matchMode ?? 'any'
+    const tagMatches = matchMode === 'all'
+      ? normalizedTags.every((tag) => heroTags.has(tag))
+      : normalizedTags.some((tag) => heroTags.has(tag))
+
+    if (!tagMatches) {
+      return false
+    }
+  }
+
+  for (const statQualifier of qualifier.requiredStats ?? []) {
+    const heroValue = hero.abilityScores[statQualifier.stat]
+    if (!compareNumber(heroValue, statQualifier.operator, statQualifier.value)) {
+      return false
+    }
+  }
+
+  if (qualifier.minAge !== null && qualifier.minAge !== undefined) {
+    if (!compareNumber(hero.age, '>=', qualifier.minAge)) {
+      return false
+    }
+  }
+
+  if (qualifier.maxAge !== null && qualifier.maxAge !== undefined) {
+    if (!compareNumber(hero.age, '<=', qualifier.maxAge)) {
+      return false
+    }
+  }
+
+  if ((qualifier.excludedHeroIds ?? []).includes(hero.heroId)) {
+    return false
+  }
+
+  return true
+}
+
+function countQualifiedHeroes(input: EvaluatePlacementFitInput, signal: PlannerEffectSignal): number | null {
+  if (!input.placements || !input.heroesById) {
+    return null
+  }
+
+  return Object.values(input.placements).reduce((count, heroId) => {
+    if (signal.excludeSelf && heroId === input.supportHero.heroId) {
+      return count
+    }
+
+    const hero = input.heroesById?.get(heroId)
+    if (!hero) {
+      return count
+    }
+
+    return matchesHeroQualifier(hero, signal.formationCountQualifier) ? count + 1 : count
+  }, 0)
+}
+
+function resolveSignalMultiplier(
+  input: EvaluatePlacementFitInput,
+  signal: PlannerEffectSignal,
+): { ok: true; multiplier: number } | { ok: false; warning: string } {
+  if (signal.applyManually) {
+    return {
+      ok: false,
+      warning: `${signal.rawEffect} 依赖手动触发或专精选择，当前不计分。`,
+    }
+  }
+
+  const amountFunc = signal.amountFunc ?? null
+  const stackFunc = signal.stackFunc ?? null
+
+  if (!stackFunc) {
+    return { ok: true, multiplier: effectValueToMultiplier(signal.value) }
+  }
+
+  if (stackFunc === 'per_crusader' || stackFunc === 'per_tagged_crusader_mult') {
+    const qualifiedCount = countQualifiedHeroes(input, signal)
+
+    if (qualifiedCount === null) {
+      return {
+        ok: false,
+        warning: `${signal.rawEffect} 需要整队计数上下文，当前不计分。`,
+      }
+    }
+
+    if (amountFunc === 'add') {
+      return { ok: true, multiplier: 1 + ((signal.value * qualifiedCount) / 100) }
+    }
+
+    if (amountFunc === 'mult') {
+      return { ok: true, multiplier: effectValueToMultiplier(signal.value) ** qualifiedCount }
+    }
+  }
+
+  if (stackFunc === 'per_hero_attribute') {
+    const qualifiedCount = countQualifiedHeroes(input, signal)
+
+    if (qualifiedCount === null) {
+      return {
+        ok: false,
+        warning: `${signal.rawEffect} 需要整队属性计数上下文，当前不计分。`,
+      }
+    }
+
+    if (amountFunc === 'mult') {
+      return { ok: true, multiplier: effectValueToMultiplier(signal.value) ** qualifiedCount }
+    }
+
+    if (amountFunc === 'add') {
+      return { ok: true, multiplier: 1 + ((signal.value * qualifiedCount) / 100) }
+    }
+  }
+
+  return {
+    ok: false,
+    warning: `${signal.rawEffect} 的叠层方式(${amountFunc ?? 'null'} / ${stackFunc}) 尚未稳定解析，当前不计分。`,
+  }
 }
 
 function resolvePositionRelation(signal: PlannerEffectSignal): PlannerPositionRelation {
@@ -77,22 +230,12 @@ function matchesPositionQualifier(input: EvaluatePlacementFitInput, signal: Plan
   return supportSlot?.adjacentSlotIds.includes(input.carrySlotId) ?? false
 }
 
-function matchesTargetQualifier(carryHero: ResolvedPlannerHeroModel, signal: PlannerEffectSignal): boolean {
-  const requiredTags = signal.targetQualifier?.requiredTags ?? []
-
-  if (requiredTags.length === 0) {
-    return true
+function inferMismatchReason(signal: PlannerEffectSignal): 'tag-mismatch' | 'stat-mismatch' {
+  if ((signal.targetQualifier?.requiredStats?.length ?? 0) > 0) {
+    return 'stat-mismatch'
   }
 
-  const carryTags = new Set(carryHero.tags.map((tag) => tag.toLowerCase()))
-  const normalizedTags = requiredTags.map((tag) => tag.toLowerCase())
-  const matchMode = signal.targetQualifier?.matchMode ?? 'any'
-
-  if (matchMode === 'all') {
-    return normalizedTags.every((tag) => carryTags.has(tag))
-  }
-
-  return normalizedTags.some((tag) => carryTags.has(tag))
+  return 'tag-mismatch'
 }
 
 function collectSignals(input: EvaluatePlacementFitInput): PlannerEffectSignal[] {
@@ -124,7 +267,11 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): Placemen
       continue
     }
 
-    if (signal.kind === 'taggedChampionBuff' && (signal.targetQualifier?.requiredTags?.length ?? 0) === 0) {
+    if (
+      signal.kind === 'taggedChampionBuff'
+      && (signal.targetQualifier?.requiredTags?.length ?? 0) === 0
+      && (signal.targetQualifier?.requiredStats?.length ?? 0) === 0
+    ) {
       warnings.push(`${signal.rawEffect} 缺少 carry 目标标签，当前不计分。`)
       scoreBreakdown.push({
         signalKind: signal.kind,
@@ -138,20 +285,36 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): Placemen
       continue
     }
 
-    if (!matchesTargetQualifier(input.carryHero, signal)) {
+    if (!matchesHeroQualifier(input.carryHero, signal.targetQualifier)) {
+      const reasonCode = inferMismatchReason(signal)
       scoreBreakdown.push({
         signalKind: signal.kind,
         rawEffect: signal.rawEffect,
         multiplier: 1,
         active: false,
-        reasonCode: 'tag-mismatch',
+        reasonCode,
         source: signal.source,
       })
-      reasonCodes.push('tag-mismatch')
+      reasonCodes.push(reasonCode)
       continue
     }
 
-    const multiplier = effectValueToMultiplier(signal.value)
+    const multiplierResult = resolveSignalMultiplier(input, signal)
+    if (!multiplierResult.ok) {
+      warnings.push(multiplierResult.warning)
+      scoreBreakdown.push({
+        signalKind: signal.kind,
+        rawEffect: signal.rawEffect,
+        multiplier: 1,
+        active: false,
+        reasonCode: 'unsupported-composition',
+        source: signal.source,
+      })
+      reasonCodes.push('unsupported-composition')
+      continue
+    }
+
+    const multiplier = multiplierResult.multiplier
     const reasonCode =
       signal.kind === 'globalDpsMultiplier'
         ? 'global-match'
@@ -159,7 +322,9 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): Placemen
           ? 'carry-self-match'
           : signal.kind === 'adjacentBuff'
             ? 'adjacent-match'
-            : 'tag-match'
+            : (signal.targetQualifier?.requiredStats?.length ?? 0) > 0
+              ? 'stat-match'
+              : 'tag-match'
 
     fitScore *= multiplier
     scoreBreakdown.push({

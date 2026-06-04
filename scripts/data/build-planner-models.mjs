@@ -60,6 +60,159 @@ function normalizeEffectSignal(effectName, effectValue, source) {
   }
 }
 
+function normalizeAmountFunc(value) {
+  if (value === 'add' || value === 'mult') {
+    return value
+  }
+
+  return value ? 'unknown' : null
+}
+
+function normalizeTargetQualifier(effect) {
+  const rawFilters = [
+    ...(Array.isArray(effect?.filter_targets) ? effect.filter_targets : []),
+    ...(Array.isArray(effect?.target_filters) ? effect.target_filters : []),
+  ]
+  const tagFilters = rawFilters
+    .filter((filter) => filter && typeof filter === 'object')
+    .filter((filter) => filter.type === 'by_tags' || filter.type === 'tags')
+    .map((filter) => filter.tags)
+    .filter((tags) => typeof tags === 'string' && tags.length > 0)
+    .flatMap((tags) => tags.split(',').map((tag) => tag.trim()).filter(Boolean))
+
+  if (tagFilters.length === 0) {
+    return null
+  }
+
+  return {
+    requiredTags: [...new Set(tagFilters)],
+    matchMode: 'any',
+  }
+}
+
+function normalizeStatQualifiers(effect) {
+  const rawFilters = [
+    ...(Array.isArray(effect?.filter_targets) ? effect.filter_targets : []),
+    ...(Array.isArray(effect?.target_filters) ? effect.target_filters : []),
+  ]
+
+  const qualifiers = rawFilters
+    .filter((filter) => filter && typeof filter === 'object')
+    .filter((filter) => filter.type === 'stat' || filter.type === 'stat_score')
+    .map((filter) => {
+      const stat = typeof filter.stat === 'string' ? filter.stat.toLowerCase() : null
+      const operator = typeof filter.check === 'string'
+        ? filter.check
+        : typeof filter.comparison === 'string'
+          ? filter.comparison
+          : '>='
+      const rawValue = typeof filter.score === 'number'
+        ? filter.score
+        : typeof filter.check === 'number'
+          ? filter.check
+          : null
+
+      if (!stat || rawValue === null) {
+        return null
+      }
+
+      return {
+        stat,
+        operator,
+        value: rawValue,
+      }
+    })
+    .filter(Boolean)
+
+  return qualifiers.length > 0 ? qualifiers : null
+}
+
+function parsePerHeroExpr(expr) {
+  if (typeof expr !== 'string') {
+    return null
+  }
+
+  const trimmed = expr.trim()
+  if (!trimmed || trimmed === 'true') {
+    return {}
+  }
+
+  if (trimmed === '0') {
+    return null
+  }
+
+  const tagMatches = [...trimmed.matchAll(/HasTag\(`([^`]+)`\)/g)].map((match) => match[1])
+  const statMatch = trimmed.match(/^GetStat\(`([A-Za-z_]+)`\)\s*(>=|<=|>|<|==)\s*(\d+)$/)
+  const ageMatch = trimmed.match(/^age\s*(>=|<=|>|<|==)\s*(\d+)$/)
+  const ageWithExcludeMatch = trimmed.match(/^age\s*(>=|<=|>|<|==)\s*(\d+)\s*&&\s*hero_id!=([0-9]+)$/)
+
+  if (tagMatches.length > 0 && !trimmed.includes('GetStat') && !trimmed.includes('age')) {
+    return {
+      requiredTags: [...new Set(tagMatches)],
+      matchMode: 'any',
+    }
+  }
+
+  if (statMatch) {
+    return {
+      requiredStats: [
+        {
+          stat: statMatch[1].toLowerCase(),
+          operator: statMatch[2],
+          value: Number(statMatch[3]),
+        },
+      ],
+    }
+  }
+
+  if (ageWithExcludeMatch) {
+    const operator = ageWithExcludeMatch[1]
+    const value = Number(ageWithExcludeMatch[2])
+    return {
+      ...(operator === '>=' || operator === '>'
+        ? { minAge: value }
+        : { maxAge: value }),
+      excludedHeroIds: [ageWithExcludeMatch[3]],
+    }
+  }
+
+  if (ageMatch) {
+    const operator = ageMatch[1]
+    const value = Number(ageMatch[2])
+    return {
+      ...(operator === '>=' || operator === '>'
+        ? { minAge: value }
+        : { maxAge: value }),
+    }
+  }
+
+  return null
+}
+
+function attachSignalSemantics(signal, effect) {
+  const tagQualifier = normalizeTargetQualifier(effect)
+  const statQualifiers = normalizeStatQualifiers(effect)
+  const perHeroQualifier = parsePerHeroExpr(effect?.per_hero_expr)
+  const heroQualifierFromFilters = (tagQualifier || statQualifiers)
+    ? {
+        ...(tagQualifier ?? {}),
+        ...(statQualifiers ? { requiredStats: statQualifiers } : {}),
+      }
+    : null
+  const useFormationCountQualifier = typeof effect?.stack_func === 'string'
+
+  return {
+    ...signal,
+    targetQualifier: useFormationCountQualifier ? null : heroQualifierFromFilters,
+    formationCountQualifier: perHeroQualifier ?? (useFormationCountQualifier ? heroQualifierFromFilters : null),
+    amountFunc: normalizeAmountFunc(effect?.amount_func),
+    stackFunc: typeof effect?.stack_func === 'string' ? effect.stack_func : null,
+    applyManually: effect?.apply_manually === true,
+    stacksMultiply: typeof effect?.stacks_multiply === 'boolean' ? effect.stacks_multiply : null,
+    excludeSelf: effect?.exclude_self === true,
+  }
+}
+
 function splitEffectString(effectString) {
   if (typeof effectString !== 'string' || effectString.trim().length === 0) {
     return null
@@ -80,19 +233,19 @@ function getRolePriorityMultiplier(roles) {
   return 1.05
 }
 
-function collectHeroEffectStrings(detail) {
-  const effectStrings = []
+function collectHeroEffectEntries(detail) {
+  const effectEntries = []
 
   for (const upgrade of detail.upgrades ?? []) {
     if (typeof upgrade.effectReference === 'string') {
-      effectStrings.push(upgrade.effectReference)
+      effectEntries.push({ effectString: upgrade.effectReference, effect: upgrade })
     }
 
     const effectKeys = upgrade.effectDefinition?.snapshots?.original?.effect_keys
     if (Array.isArray(effectKeys)) {
       for (const effectKey of effectKeys) {
         if (typeof effectKey?.effect_string === 'string') {
-          effectStrings.push(effectKey.effect_string)
+          effectEntries.push({ effectString: effectKey.effect_string, effect: effectKey })
         }
       }
     }
@@ -101,7 +254,7 @@ function collectHeroEffectStrings(detail) {
   for (const lootItem of detail.loot ?? []) {
     for (const effect of lootItem.effects ?? []) {
       if (typeof effect?.effect_string === 'string') {
-        effectStrings.push(effect.effect_string)
+        effectEntries.push({ effectString: effect.effect_string, effect })
       }
     }
   }
@@ -109,12 +262,12 @@ function collectHeroEffectStrings(detail) {
   for (const legendaryEffect of detail.legendaryEffects ?? []) {
     for (const effect of legendaryEffect.effects ?? []) {
       if (typeof effect?.effect_string === 'string') {
-        effectStrings.push(effect.effect_string)
+        effectEntries.push({ effectString: effect.effect_string, effect })
       }
     }
   }
 
-  return effectStrings
+  return effectEntries
 }
 
 function buildOfficialPlannerHeroModel(champion, detail) {
@@ -122,8 +275,8 @@ function buildOfficialPlannerHeroModel(champion, detail) {
   const supportSignals = []
   const unsupportedSignals = []
 
-  for (const effectString of collectHeroEffectStrings(detail)) {
-    const split = splitEffectString(effectString)
+  for (const entry of collectHeroEffectEntries(detail)) {
+    const split = splitEffectString(entry.effectString)
 
     if (!split) {
       continue
@@ -132,10 +285,11 @@ function buildOfficialPlannerHeroModel(champion, detail) {
     const parsed = normalizeEffectSignal(split.effectName, split.effectValue, 'official-parsed')
 
     if (parsed.ok) {
+      const signal = attachSignalSemantics(parsed.signal, entry.effect)
       if (parsed.bucket === 'carrySignals') {
-        carrySignals.push(parsed.signal)
+        carrySignals.push(signal)
       } else {
-        supportSignals.push(parsed.signal)
+        supportSignals.push(signal)
       }
     } else {
       unsupportedSignals.push(parsed.unsupported)
@@ -150,6 +304,8 @@ function buildOfficialPlannerHeroModel(champion, detail) {
     seat: champion.seat,
     roles: champion.roles,
     tags: champion.tags,
+    age: typeof detail.characterSheet?.age === 'number' ? detail.characterSheet.age : null,
+    abilityScores: detail.characterSheet?.abilityScores ?? {},
     isCarryViable: champion.roles.some((role) => String(role).toLowerCase() === 'dps'),
     heuristicRoleMultiplier,
     carrySignals,

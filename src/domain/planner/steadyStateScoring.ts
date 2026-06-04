@@ -53,6 +53,8 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
         supportHero: supportEntry.hero,
         supportSlotId: supportEntry.slotId,
         scenario: input.scenario,
+        placements: input.placements,
+        heroesById: input.heroesById,
       })
 
       score *= fit.fitScore

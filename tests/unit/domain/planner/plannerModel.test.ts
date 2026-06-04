@@ -47,6 +47,8 @@ function createHero(heroId: string): OfficialPlannerHeroModel {
     seat: 1,
     roles: ['support'],
     tags: [],
+    age: null,
+    abilityScores: {},
     isCarryViable: false,
     heuristicRoleMultiplier: 2.5,
     carrySignals: [],

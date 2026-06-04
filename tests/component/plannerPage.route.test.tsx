@@ -99,6 +99,8 @@ const plannerHeroesFixture: DataCollection<OfficialPlannerHeroModel> = {
     seat: champion.seat,
     roles: champion.roles,
     tags: champion.tags,
+    age: null,
+    abilityScores: {},
     isCarryViable: champion.roles.some((role) => role.toLowerCase() === 'dps'),
     heuristicRoleMultiplier:
       champion.roles.includes('dps')

@@ -10,6 +10,8 @@ function createHero(heroId: string, overrides: Partial<OfficialPlannerHeroModel>
     seat: overrides.seat ?? 1,
     roles: overrides.roles ?? [],
     tags: overrides.tags ?? [],
+    age: overrides.age ?? null,
+    abilityScores: overrides.abilityScores ?? {},
     isCarryViable: overrides.isCarryViable ?? false,
     heuristicRoleMultiplier: overrides.heuristicRoleMultiplier ?? 1,
     carrySignals: overrides.carrySignals ?? [],
@@ -145,5 +147,196 @@ describe('placement fit', () => {
     expect(fit.fitScore).toBe(1)
     expect(fit.warnings[0]).toContain('缺少 carry 目标标签')
     expect(fit.scoreBreakdown[0]?.reasonCode).toBe('missing-target-qualifier')
+  })
+
+  it('additive 计数效果按 count 线性累加', () => {
+    const carryHero = createHero('carry', { tags: ['female'] })
+    const supportHero = createHero('support', {
+      tags: ['female'],
+      supportSignals: [
+        {
+          kind: 'globalDpsMultiplier',
+          value: 20,
+          rawEffect: 'global_dps_multiplier_mult,20',
+          source: 'official-parsed',
+          amountFunc: 'add',
+          stackFunc: 'per_crusader',
+          targetQualifier: { requiredTags: ['female'], matchMode: 'any' },
+        },
+      ],
+    })
+    const heroesById = new Map([
+      ['carry', carryHero],
+      ['support', supportHero],
+      ['other', createHero('other', { tags: ['female'] })],
+    ])
+
+    const fit = evaluatePlacementFit({
+      carryHero,
+      carrySlotId: 's2',
+      supportHero,
+      supportSlotId: 's1',
+      scenario,
+      placements: { s1: 'support', s2: 'carry', s3: 'other' },
+      heroesById,
+    })
+
+    expect(fit.fitScore).toBeCloseTo(1.6)
+  })
+
+  it('multiplicative 计数效果按 count 乘方累乘', () => {
+    const carryHero = createHero('carry', { tags: ['female'] })
+    const supportHero = createHero('support', {
+      tags: ['female'],
+      supportSignals: [
+        {
+          kind: 'globalDpsMultiplier',
+          value: 20,
+          rawEffect: 'global_dps_multiplier_mult,20',
+          source: 'official-parsed',
+          amountFunc: 'mult',
+          stackFunc: 'per_crusader',
+          targetQualifier: { requiredTags: ['female'], matchMode: 'any' },
+        },
+      ],
+    })
+    const heroesById = new Map([
+      ['carry', carryHero],
+      ['support', supportHero],
+      ['other', createHero('other', { tags: ['female'] })],
+    ])
+
+    const fit = evaluatePlacementFit({
+      carryHero,
+      carrySlotId: 's2',
+      supportHero,
+      supportSlotId: 's1',
+      scenario,
+      placements: { s1: 'support', s2: 'carry', s3: 'other' },
+      heroesById,
+    })
+
+    expect(fit.fitScore).toBeCloseTo(1.728)
+  })
+
+  it('manual stacking 先降级为 warning，不计分', () => {
+    const fit = evaluatePlacementFit({
+      carryHero: createHero('carry'),
+      carrySlotId: 's2',
+      supportHero: createHero('support', {
+        supportSignals: [
+          {
+            kind: 'globalDpsMultiplier',
+            value: 100,
+            rawEffect: 'global_dps_multiplier_mult,100',
+            source: 'official-parsed',
+            applyManually: true,
+          },
+        ],
+      }),
+      supportSlotId: 's1',
+      scenario,
+    })
+
+    expect(fit.fitScore).toBe(1)
+    expect(fit.warnings[0]).toContain('手动触发')
+  })
+
+  it('stat qualifier 命中时可以作为 carry 目标条件计分', () => {
+    const fit = evaluatePlacementFit({
+      carryHero: createHero('carry', {
+        abilityScores: { cha: 13 },
+      }),
+      carrySlotId: 's2',
+      supportHero: createHero('support', {
+        supportSignals: [
+          {
+            kind: 'taggedChampionBuff',
+            value: 40,
+            rawEffect: 'tag_dps,40',
+            source: 'official-parsed',
+            targetQualifier: {
+              requiredStats: [{ stat: 'cha', operator: '>=', value: 11 }],
+            },
+          },
+        ],
+      }),
+      supportSlotId: 's1',
+      scenario,
+    })
+
+    expect(fit.fitScore).toBe(1.4)
+    expect(fit.scoreBreakdown[0]?.reasonCode).toBe('stat-match')
+  })
+
+  it('per_hero_attribute 支持简单 tag 表达式计数', () => {
+    const carryHero = createHero('carry', { tags: ['evil'] })
+    const supportHero = createHero('support', {
+      tags: ['evil'],
+      supportSignals: [
+        {
+          kind: 'globalDpsMultiplier',
+          value: 10,
+          rawEffect: 'global_dps_multiplier_mult,10',
+          source: 'official-parsed',
+          amountFunc: 'mult',
+          stackFunc: 'per_hero_attribute',
+          formationCountQualifier: { requiredTags: ['evil'], matchMode: 'any' },
+        },
+      ],
+    })
+    const heroesById = new Map([
+      ['carry', carryHero],
+      ['support', supportHero],
+      ['other', createHero('other', { tags: ['evil'] })],
+    ])
+
+    const fit = evaluatePlacementFit({
+      carryHero,
+      carrySlotId: 's2',
+      supportHero,
+      supportSlotId: 's1',
+      scenario,
+      placements: { s1: 'support', s2: 'carry', s3: 'other' },
+      heroesById,
+    })
+
+    expect(fit.fitScore).toBeCloseTo(1.331)
+  })
+
+  it('per_hero_attribute 支持简单 stat 表达式计数', () => {
+    const carryHero = createHero('carry', { abilityScores: { dex: 16 } })
+    const supportHero = createHero('support', {
+      supportSignals: [
+        {
+          kind: 'globalDpsMultiplier',
+          value: 15,
+          rawEffect: 'global_dps_multiplier_mult,15',
+          source: 'official-parsed',
+          amountFunc: 'add',
+          stackFunc: 'per_hero_attribute',
+          formationCountQualifier: {
+            requiredStats: [{ stat: 'dex', operator: '>=', value: 16 }],
+          },
+        },
+      ],
+    })
+    const heroesById = new Map([
+      ['carry', carryHero],
+      ['support', supportHero],
+      ['other', createHero('other', { abilityScores: { dex: 17 } })],
+    ])
+
+    const fit = evaluatePlacementFit({
+      carryHero,
+      carrySlotId: 's2',
+      supportHero,
+      supportSlotId: 's1',
+      scenario,
+      placements: { s1: 'support', s2: 'carry', s3: 'other' },
+      heroesById,
+    })
+
+    expect(fit.fitScore).toBeCloseTo(1.3)
   })
 })

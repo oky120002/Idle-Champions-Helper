@@ -22,7 +22,7 @@
 - 推荐引擎、模拟器和后续审查只读 merge 后的 resolved model，不再到处拼源数据。
 
 ## 3. 核心模型
-- `ResolvedPlannerHeroModel` 至少包含：`heroId`、`seat`、`roles`、`tags`、`isCarryViable`、`carrySignals`、`supportSignals`、`targetQualifiers`、`positionQualifiers`、`effectMultipliers`、`unsupportedSignals`、`sourceBreakdown`。
+- `ResolvedPlannerHeroModel` 至少包含：`heroId`、`seat`、`roles`、`tags`、`age`、`abilityScores`、`isCarryViable`、`carrySignals`、`supportSignals`、`targetQualifiers`、`formationCountQualifiers`、`positionQualifiers`、`effectMultipliers`、`unsupportedSignals`、`sourceBreakdown`。
 - `isCarryViable`：是否允许进入 C 位枚举；默认优先 `输出` 标签英雄，但允许例外英雄被语义层显式标记为可当 C 位。
 - `carrySignals`：英雄自身提高自己输出的规则。
 - `supportSignals`：该英雄如何提高别人输出，尤其是如何提高当前 C 位输出。
@@ -36,25 +36,33 @@
 - 这个函数只回答一件事：当前 support 站在当前槽位时，是否真正提高了当前 C 位；若提高，具体提高多少；若没提高，原因是什么。
 - `fitScore` 只表示这一个 support 对这一个 carry 的乘区贡献，不负责整队搜索，不负责 UI 文案。
 - 当前首期固定把 effect 数值按百分比解释：`100 => +100% => x2.0`，`50 => +50% => x1.5`。
+- 但 effect 的**组合方式**不能一刀切：同一类 signal 可能是加法叠层，也可能是乘法叠层；必须显式保留 `amountFunc + stackFunc`，不能只看 `value`。
 - `scoreBreakdown` 的每一条都必须带 `signalKind`、`rawEffect`、`multiplier`、`active`、`reasonCode`、`source`。
 
 ### 3.2 PlacementFit 判定顺序
 1. 先确定当前 signal 是否属于这名英雄当前站位下可评估的信号。
 2. 再判断位置条件是否满足，例如 `adjacent / self / any`。
 3. 再判断目标条件是否满足，例如 `female / male / role / tag / alignment`。
-4. 命中则把百分比转换成 multiplier 计入 `fitScore`；未命中则只记录原因，不计分。
-5. 语义缺失但不能确定为 false 的规则，只进入 `warnings`，不偷偷加分。
+4. 命中后按 signal 的组合语义计算 multiplier：普通百分比直接换算；formation 计数类再结合 `amountFunc + stackFunc` 求值。
+5. 未命中只记录原因，不计分。
+6. 语义缺失、需要手动触发、或组合方式还不稳定的规则，只进入 `warnings`，不偷偷加分。
 
 ### 3.3 当前代码首期已支持的条件
 - `globalDpsMultiplier`：默认对 carry 生效。
 - `heroDpsMultiplier`：默认只对 carry 自身生效。
 - `adjacentBuff`：默认要求 support 与 carry 相邻。
-- `taggedChampionBuff`：只有在 planner model 明确提供 `targetQualifier.requiredTags` 时才计分；否则只给 warning。
+- `taggedChampionBuff`：只有在 planner model 明确提供 `targetQualifier.requiredTags` 或 `requiredStats` 时才计分；否则只给 warning。
+- carry 目标限定已支持：`requiredTags`、`requiredStats`。
+- formation 计数限定已支持最小子集：`per_crusader`、`per_tagged_crusader_mult`、`per_hero_attribute`。
+- formation 计数限定当前可消费的 qualifier 子集：标签、能力值阈值、年龄上下界、排除指定英雄。
+- 组合语义已支持：`amountFunc=add` 走线性累加，`amountFunc=mult` 走乘方法；拿不准的组合直接降级 warning。
+- `applyManually=true` 的效果当前不计分，只保留 warning。
 
 ### 3.4 当前明确还没进代码的条件
 - `front / behind / top / bottom / same column` 这类布局语义，先写进 planner model 设计，但不在缺少稳定布局方向定义时硬算。
-- `male / female / race / alignment / role` 的自动解析，可以通过结构化 parser 或语义补丁进入 `targetQualifier`，但不能靠页面或评分代码现场猜。
-- formation 计数类条件，例如“每个 female champion 叠一层”，需要单独的 formation-level qualifier，不混进当前最小版 `PlacementFit`。
+- `male / female / race / alignment / role` 之外更复杂的布尔表达式，仍应通过结构化 parser 或语义补丁进入 qualifier，不能靠页面或评分代码现场猜。
+- hero 私有 stack 体系，例如 `per_mithral_hall_stacks`、`per_aerois_synergy` 这类阵营/专属协同，当前不做猜测。
+- 未稳定覆盖的 `stack_func` / `amount_func` 组合继续降级为 warning，暂不计分。
 
 ## 4. 推荐流水线
 ```text
@@ -94,6 +102,7 @@ scenario + layout
 - 不能只凭 `row`/`column` 武断写死“前排/后排”。
 - 不能只因英雄有 `tank`/`support` 标签，就默认适合当前 C 位。
 - unsupported 规则不能偷偷计入分数。
+- 不能把“需要手动触发 / 专精选择 / 私有叠层语义”的效果硬算进主分。
 - 启发式命中必须标记 `heuristic-fallback`。
 
 ## 7. 输出合同
@@ -103,6 +112,8 @@ scenario + layout
 
 ## 8. 验收场景
 - 相邻增益英雄与 C 位相邻时，完整阵型分数高于不相邻摆法。
+- 同一类叠层效果在 `add` 与 `mult` 下，最终 multiplier 必须不同。
+- `stat_score` / `stat` / `age` 这类限定会真正影响 carry 命中和 formation 计数结果。
 - 顶部 / 身后 / 同列 / 前后范围规则会真正改变站位选择。
 - 同 seat 双英雄竞争时，Top 1 只能保留一人，但另一人必须出现在 `seatCompetition` 或槽位替补里。
 - 非 `输出` 标签但被标记为 `isCarryViable` 的英雄可以进入 C 位枚举。

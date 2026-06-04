@@ -1,4 +1,4 @@
-import type { DataCollection, LocalizedText, ScenarioRef, Variant } from '../types'
+import type { AbilityScoreKey, DataCollection, LocalizedText, ScenarioRef, Variant } from '../types'
 
 export type PlannerSignalKind =
   | 'globalDpsMultiplier'
@@ -14,10 +14,22 @@ export type PlannerSignalSource =
 
 export type PlannerTargetMatchMode = 'any' | 'all'
 export type PlannerPositionRelation = 'any' | 'self' | 'adjacent'
+export type PlannerSignalAmountFunc = 'add' | 'mult' | 'unknown'
+export type PlannerComparisonOperator = '>=' | '<=' | '>' | '<' | '=='
 
-export interface PlannerTargetQualifier {
+export interface PlannerStatQualifier {
+  stat: AbilityScoreKey
+  operator: PlannerComparisonOperator
+  value: number
+}
+
+export interface PlannerHeroQualifier {
   requiredTags?: string[]
   matchMode?: PlannerTargetMatchMode
+  requiredStats?: PlannerStatQualifier[]
+  minAge?: number | null
+  maxAge?: number | null
+  excludedHeroIds?: string[]
 }
 
 export interface PlannerPositionQualifier {
@@ -30,8 +42,14 @@ export interface PlannerEffectSignal {
   rawEffect: string
   note?: string
   source: PlannerSignalSource
-  targetQualifier?: PlannerTargetQualifier | null
+  targetQualifier?: PlannerHeroQualifier | null
+  formationCountQualifier?: PlannerHeroQualifier | null
   positionQualifier?: PlannerPositionQualifier | null
+  amountFunc?: PlannerSignalAmountFunc | null
+  stackFunc?: string | null
+  applyManually?: boolean
+  stacksMultiply?: boolean | null
+  excludeSelf?: boolean
 }
 
 export interface PlannerUnsupportedSignal {
@@ -55,6 +73,8 @@ export interface OfficialPlannerHeroModel {
   seat: number
   roles: string[]
   tags: string[]
+  age: number | null
+  abilityScores: Partial<Record<AbilityScoreKey, number>>
   isCarryViable: boolean
   heuristicRoleMultiplier: number
   carrySignals: PlannerEffectSignal[]
