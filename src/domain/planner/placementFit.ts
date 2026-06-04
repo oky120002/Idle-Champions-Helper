@@ -1,11 +1,11 @@
 import type {
   PlannerEffectSignal,
-  PlannerHeroQualifier,
   PlannerPositionRelation,
   PlannerSignalSource,
   ResolvedPlannerHeroModel,
   ResolvedPlannerScenarioModel,
 } from './plannerModel'
+import { matchesPlannerHeroQualifier } from './plannerSignalSemantics.js'
 
 export interface PlacementFitScorePart {
   signalKind: PlannerEffectSignal['kind']
@@ -52,72 +52,6 @@ function effectValueToMultiplier(value: number): number {
   return 1 + (value / 100)
 }
 
-function compareNumber(left: number | null | undefined, operator: string, right: number): boolean {
-  if (typeof left !== 'number') {
-    return false
-  }
-
-  switch (operator) {
-    case '>=':
-      return left >= right
-    case '<=':
-      return left <= right
-    case '>':
-      return left > right
-    case '<':
-      return left < right
-    case '==':
-      return left === right
-    default:
-      return false
-  }
-}
-
-function matchesHeroQualifier(hero: ResolvedPlannerHeroModel, qualifier: PlannerHeroQualifier | null | undefined): boolean {
-  if (!qualifier) {
-    return true
-  }
-
-  const requiredTags = qualifier.requiredTags ?? []
-  if (requiredTags.length > 0) {
-    const heroTags = new Set(hero.tags.map((tag) => tag.toLowerCase()))
-    const normalizedTags = requiredTags.map((tag) => tag.toLowerCase())
-    const matchMode = qualifier.matchMode ?? 'any'
-    const tagMatches = matchMode === 'all'
-      ? normalizedTags.every((tag) => heroTags.has(tag))
-      : normalizedTags.some((tag) => heroTags.has(tag))
-
-    if (!tagMatches) {
-      return false
-    }
-  }
-
-  for (const statQualifier of qualifier.requiredStats ?? []) {
-    const heroValue = hero.abilityScores[statQualifier.stat]
-    if (!compareNumber(heroValue, statQualifier.operator, statQualifier.value)) {
-      return false
-    }
-  }
-
-  if (qualifier.minAge !== null && qualifier.minAge !== undefined) {
-    if (!compareNumber(hero.age, '>=', qualifier.minAge)) {
-      return false
-    }
-  }
-
-  if (qualifier.maxAge !== null && qualifier.maxAge !== undefined) {
-    if (!compareNumber(hero.age, '<=', qualifier.maxAge)) {
-      return false
-    }
-  }
-
-  if ((qualifier.excludedHeroIds ?? []).includes(hero.heroId)) {
-    return false
-  }
-
-  return true
-}
-
 function countQualifiedHeroes(input: EvaluatePlacementFitInput, signal: PlannerEffectSignal): number | null {
   if (!input.placements || !input.heroesById) {
     return null
@@ -133,7 +67,7 @@ function countQualifiedHeroes(input: EvaluatePlacementFitInput, signal: PlannerE
       return count
     }
 
-    return matchesHeroQualifier(hero, signal.formationCountQualifier) ? count + 1 : count
+    return matchesPlannerHeroQualifier(hero, signal.formationCountQualifier) ? count + 1 : count
   }, 0)
 }
 
@@ -285,7 +219,7 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): Placemen
       continue
     }
 
-    if (!matchesHeroQualifier(input.carryHero, signal.targetQualifier)) {
+    if (!matchesPlannerHeroQualifier(input.carryHero, signal.targetQualifier)) {
       const reasonCode = inferMismatchReason(signal)
       scoreBreakdown.push({
         signalKind: signal.kind,
