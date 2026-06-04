@@ -55,12 +55,14 @@
 - carry 目标限定已支持：`requiredTags`、`requiredStats`。
 - formation 计数限定已支持最小子集：`per_crusader`、`per_tagged_crusader_mult`、`per_hero_attribute`。
 - formation 计数限定当前可消费的 qualifier 子集：标签、能力值阈值、基础攻击伤害类型、年龄上下界、排除指定英雄。
+- 简单别名谓词当前只支持能稳定映射到静态事实源的子集，例如 `is_undead -> requiredTags: ['undead']`。
 - 组合语义已支持：`amountFunc=add` 走线性累加，`amountFunc=mult` 走乘方法；拿不准的组合直接降级 warning。
 - `applyManually=true` 的效果当前不计分，只保留 warning。
 
 ### 3.4 当前明确还没进代码的条件
 - `front / behind / top / bottom / same column` 这类布局语义，先写进 planner model 设计，但不在缺少稳定布局方向定义时硬算。
 - `male / female / race / alignment / role` 之外更复杂的布尔表达式，仍应通过结构化 parser 或语义补丁进入 qualifier，不能靠页面或评分代码现场猜。
+- `HasEffect(...)` 这类运行时状态表达式当前不进入静态 planner model；缺少稳定事实源时只记 warning，不硬算。
 - hero 私有 stack 体系，例如 `per_mithral_hall_stacks`、`per_aerois_synergy` 这类阵营/专属协同，当前不做猜测。
 - 未稳定覆盖的 `stack_func` / `amount_func` 组合继续降级为 warning，暂不计分。
 

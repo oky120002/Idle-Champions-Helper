@@ -98,6 +98,13 @@ export function parsePlannerPerHeroExpr(expr) {
     return null
   }
 
+  if (trimmed === 'is_undead') {
+    return {
+      requiredTags: ['undead'],
+      matchMode: 'any',
+    }
+  }
+
   const tagMatches = [...trimmed.matchAll(/HasTag\(`([^`]+)`\)/g)].map((match) => match[1])
   const attackDamageTypeMatch = trimmed.match(/^HasAttackDamageType\(`([^`]+)`\)$/)
   const excludedAttackDamageTypeMatch = trimmed.match(/^!HasAttackDamageType\(`([^`]+)`\)$/)

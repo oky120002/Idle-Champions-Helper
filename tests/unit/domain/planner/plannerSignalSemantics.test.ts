@@ -39,6 +39,11 @@ describe('planner signal semantics', () => {
       matchMode: 'any',
     })
 
+    expect(parsePlannerPerHeroExpr('is_undead')).toEqual({
+      requiredTags: ['undead'],
+      matchMode: 'any',
+    })
+
     expect(parsePlannerPerHeroExpr('GetStat(`CHA`) >= 11')).toEqual({
       requiredStats: [{ stat: 'cha', operator: '>=', value: 11 }],
     })
@@ -59,7 +64,7 @@ describe('planner signal semantics', () => {
 
   it('matchesPlannerHeroQualifier 用统一规则判断标签、属性、年龄和排除英雄', () => {
     const hero = createHero('carry', {
-      tags: ['female', 'evil'],
+      tags: ['female', 'evil', 'undead'],
       baseAttackDamageTypes: ['magic'],
       age: 19,
       abilityScores: { cha: 13 },
@@ -69,6 +74,10 @@ describe('planner signal semantics', () => {
       requiredTags: ['female'],
       requiredStats: [{ stat: 'cha', operator: '>=', value: 11 }],
       maxAge: 20,
+    })).toBe(true)
+
+    expect(matchesPlannerHeroQualifier(hero, {
+      requiredTags: ['undead'],
     })).toBe(true)
 
     expect(matchesPlannerHeroQualifier(hero, {

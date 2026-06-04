@@ -54,26 +54,26 @@
 ## per_hero_expr 现状
 
 - 总量：`183`
-- 当前可解析：`121` (`66.12%`)
-- 当前未解析：`62`
+- 当前可解析：`123` (`67.21%`)
+- 当前未解析：`60`
 
 高频未解析表达式：
 
 - `0`: `6`
 - `!HasEffect(\`vampire_spawn\`)`: `2`
-- `is_undead`: `2`
 - `AverageILevels()`: `2`
 - `(HasTag(\`female\`) || HasTag(\`non_binary\`)) && age<110`: `1`
 - `1 + as_int(hero_id==75)*2`: `1`
 
 结论：
 
-- `HasAttackDamageType(...)` 与最小否定 `!HasAttackDamageType(...)` 已落地，真实覆盖率从 `59.02%` 提升到 `66.12%`。
-- 如果继续补 parser，下一优先级才是否定效果 / 简单别名谓词 / 简单 `&&` 组合。
+- `HasAttackDamageType(...)`、最小否定 `!HasAttackDamageType(...)` 与 `is_undead -> undead tag` 已落地，真实覆盖率从 `59.02%` 提升到 `67.21%`。
+- `!HasEffect(\`vampire_spawn\`)` 继续保持未解析：它描述的是运行时是否已被特殊效果标记，不是稳定静态英雄事实，当前不应硬塞进 planner model。
+- 如果继续补 parser，下一优先级才是可落到稳定事实源的简单 `&&` 组合；涉及运行时状态、公式和动态变量的表达式继续降级 warning。
 - 含公式、等级、装备平均值、动态变量的表达式，仍应继续降级 warning，不值得现在硬算。
 
 ## 下一刀建议
 
-1. 先评估 `!HasEffect(...)`、`is_undead` 这类简单谓词是否存在稳定事实源。
-2. 再评估简单二元 `&&` 组合是否值得做成受控子集。
+1. 继续审计简单二元 `&&` 组合里哪些子句都能落到稳定事实源，再决定是否做成受控子集。
+2. 保持 `!HasEffect(...)` 这类运行时状态表达式为 warning，不做静态猜测。
 3. 继续保持私有 stack、动态公式和复杂运行时表达式为 warning，不做猜测。

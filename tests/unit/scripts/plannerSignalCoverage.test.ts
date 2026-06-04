@@ -87,4 +87,36 @@ describe('planner signal coverage report', () => {
       count: 1,
     })
   })
+
+  it('把 is_undead 计入已解析表达式，但继续保留 HasEffect 否定表达式为未解析', () => {
+    const report = generatePlannerSignalCoverageReport([
+      {
+        upgrades: [
+          {
+            effectReference: 'global_dps_multiplier_mult,20',
+            amount_func: 'mult',
+            stack_func: 'per_hero_attribute',
+            per_hero_expr: 'is_undead',
+          },
+          {
+            effectReference: 'global_dps_multiplier_mult,20',
+            amount_func: 'mult',
+            stack_func: 'per_hero_attribute',
+            per_hero_expr: '!HasEffect(`vampire_spawn`)',
+          },
+        ],
+        loot: [],
+        legendaryEffects: [],
+      },
+    ])
+
+    expect(report.totals.perHeroExprTotal).toBe(2)
+    expect(report.totals.parsedPerHeroExprTotal).toBe(1)
+    expect(report.totals.unparsedPerHeroExprTotal).toBe(1)
+    expect(report.totals.signalsWithTagCountQualifier).toBe(1)
+    expect(report.topUnparsedPerHeroExpr[0]).toEqual({
+      key: '!HasEffect(`vampire_spawn`)',
+      count: 1,
+    })
+  })
 })
