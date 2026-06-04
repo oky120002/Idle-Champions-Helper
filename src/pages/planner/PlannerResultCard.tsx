@@ -1,25 +1,7 @@
+import type { PlannerResult } from '../../domain/planner/recommendationTypes'
 import { useI18n } from '../../app/i18n'
 
-export interface PlannerNarrativeLine {
-  zh: string
-  en: string
-}
-
-export interface PlannerPlacementEntry {
-  slotId: string
-  slotLabel: string
-  heroId: string
-  heroName: string
-  seat: number | null
-}
-
-export interface PlannerResultCardProps {
-  score: string
-  placements: Record<string, string>
-  placementEntries?: PlannerPlacementEntry[]
-  explanations: PlannerNarrativeLine[]
-  warnings: string[]
-}
+export type PlannerResultCardProps = PlannerResult
 
 export function PlannerResultCard({
   score,
@@ -29,13 +11,16 @@ export function PlannerResultCard({
   warnings,
 }: PlannerResultCardProps) {
   const { t } = useI18n()
-  const resolvedPlacementEntries = placementEntries ?? Object.entries(placements).map(([slotId, heroId]) => ({
+  const fallbackPlacementEntries = Object.entries(placements).map(([slotId, heroId]) => ({
     slotId,
     slotLabel: slotId,
     heroId,
     heroName: heroId,
     seat: null,
   }))
+  const displayPlacementEntries = placementEntries && placementEntries.length > 0
+    ? placementEntries
+    : fallbackPlacementEntries
 
   return (
     <article
@@ -57,8 +42,8 @@ export function PlannerResultCard({
             </p>
             <p className="planner-result-card__slot-count">
               {t({
-                zh: `已填充 ${resolvedPlacementEntries.length} 个槽位`,
-                en: `${resolvedPlacementEntries.length} slots filled`,
+                zh: `已填充 ${displayPlacementEntries.length} 个槽位`,
+                en: `${displayPlacementEntries.length} slots filled`,
               })}
             </p>
           </div>
@@ -72,7 +57,7 @@ export function PlannerResultCard({
               {t({ zh: '阵位分配', en: 'Slot assignments' })}
             </h4>
             <ol className="planner-result-card__placements">
-              {resolvedPlacementEntries.map((entry) => (
+              {displayPlacementEntries.map((entry) => (
                 <li
                   key={entry.slotId}
                   data-slot-id={entry.slotId}

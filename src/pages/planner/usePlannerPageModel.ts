@@ -1,21 +1,20 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { loadCollection } from '../../data/client'
+import { loadResolvedPlannerModel } from '../../data/plannerModel'
+import { buildPlannerRecommendation } from '../../domain/planner/recommendationEngine'
+import type { PlannerCollections } from '../../domain/planner/recommendationTypes'
 import { resolveUserProfileSnapshot } from '../../data/user-profile-store'
-import type { Champion, FormationLayout, Variant } from '../../domain/types'
+import type { Variant } from '../../domain/types'
 import type { UserProfileSnapshot } from '../../domain/user-profile/types'
-import {
-  buildPlannerRecommendation,
-  type PlannerCollections,
-} from './plannerRecommendation'
 
 type PlannerLoadState = 'loading' | 'ready' | 'error'
 
 export function usePlannerPageModel() {
   const [collections, setCollections] = useState<PlannerCollections>({
     variants: [],
-    champions: [],
-    formations: [],
+    plannerHeroes: [],
+    plannerScenarios: [],
   })
   const [profileSnapshot, setProfileSnapshot] = useState<UserProfileSnapshot | null>(null)
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null)
@@ -30,10 +29,9 @@ export function usePlannerPageModel() {
       setLoadError(null)
 
       try {
-        const [variants, champions, formations, resolution] = await Promise.all([
+        const [variants, plannerModel, resolution] = await Promise.all([
           loadCollection<Variant>('variants'),
-          loadCollection<Champion>('champions'),
-          loadCollection<FormationLayout>('formations'),
+          loadResolvedPlannerModel(),
           resolveUserProfileSnapshot(),
         ])
 
@@ -41,8 +39,8 @@ export function usePlannerPageModel() {
 
         setCollections({
           variants: variants.items,
-          champions: champions.items,
-          formations: formations.items,
+          plannerHeroes: plannerModel.heroes,
+          plannerScenarios: plannerModel.scenarios,
         })
         setProfileSnapshot(resolution.snapshot)
         setSelectedVariantId((current) => current ?? variants.items[0]?.id ?? null)

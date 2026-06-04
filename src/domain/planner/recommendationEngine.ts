@@ -1,37 +1,23 @@
-import { beamSearch } from '../../domain/planner/beamSearchRanking'
-import { buildCandidatePool } from '../../domain/planner/candidatePool'
-import { checkFormationLegality, type LegalityViolation } from '../../domain/planner/formationLegality'
-import { scoreFormation, type ScoringEffect } from '../../domain/planner/steadyStateScoring'
-import type { VariantRuleResult } from '../../domain/planner/variantRuleProjection'
-import { formatGameNumber, parseGameNumber } from '../../domain/simulator/gameNumber'
-import type { Champion, FormationLayout, ScenarioRef, Variant } from '../../domain/types'
-import type { UserProfileSnapshot } from '../../domain/user-profile/types'
-import type {
-  PlannerNarrativeLine,
-  PlannerPlacementEntry,
-  PlannerResultCardProps,
-} from './PlannerResultCard'
+import { formatGameNumber, parseGameNumber } from '../simulator/gameNumber'
+import type { Variant } from '../types'
+import type { UserProfileSnapshot } from '../user-profile/types'
+import { beamSearch } from './beamSearchRanking'
+import { buildCandidatePool } from './candidatePool'
+import { checkFormationLegality, type LegalityViolation } from './formationLegality'
+import {
+  findPlannerScenarioForVariant,
+  type ResolvedPlannerHeroModel,
+  type ResolvedPlannerScenarioModel,
+} from './plannerModel'
+import {
+  type PlannerCollections,
+  type PlannerNarrativeLine,
+  type PlannerPlacementEntry,
+  type PlannerRecommendation,
+} from './recommendationTypes'
+import { scoreFormation, type ScoringEffect } from './steadyStateScoring'
+import type { VariantRuleResult } from './variantRuleProjection'
 
-export interface PlannerCollections {
-  variants: Variant[]
-  champions: Champion[]
-  formations: FormationLayout[]
-}
-
-export type PlannerRecommendationBlocker =
-  | 'missing-profile'
-  | 'missing-formation'
-  | 'insufficient-owned-heroes'
-  | 'no-legal-recommendation'
-
-export interface PlannerRecommendation {
-  result: PlannerResultCardProps | null
-  layoutId: string | null
-  scenarioRef: ScenarioRef | null
-  blocker: PlannerRecommendationBlocker | null
-}
-
-const EMPTY_VARIANT_RULES: VariantRuleResult = { constraints: [], warnings: [] }
 const ROLE_PRIORITY = ['dps', 'support', 'tanking', 'healing', 'gold'] as const
 const ROLE_LABELS: Record<string, PlannerNarrativeLine> = {
   dps: { zh: '输出', en: 'damage' },
@@ -41,68 +27,27 @@ const ROLE_LABELS: Record<string, PlannerNarrativeLine> = {
   gold: { zh: '金币增益', en: 'gold gain' },
 }
 
-function sortSlots(layout: FormationLayout): string[] {
-  return [...layout.slots]
-    .sort((left, right) => left.row - right.row || left.column - right.column || left.id.localeCompare(right.id))
-    .map((slot) => slot.id)
+function sortSlots(scenario: ResolvedPlannerScenarioModel): string[] {
+  return [...scenario.slotTopology]
+    .sort((left, right) => left.row - right.row || left.column - right.column || left.slotId.localeCompare(right.slotId))
+    .map((slot) => slot.slotId)
 }
 
-function buildAdjacency(layout: FormationLayout): Record<string, string[]> {
-  return Object.fromEntries(layout.slots.map((slot) => [slot.id, slot.adjacentSlotIds ?? []]))
+function buildAdjacency(scenario: ResolvedPlannerScenarioModel): Record<string, string[]> {
+  return Object.fromEntries(scenario.slotTopology.map((slot) => [slot.slotId, slot.adjacentSlotIds]))
 }
 
-function contextMatchesVariant(context: ScenarioRef, variant: Variant): boolean {
-  if (context.kind === 'variant') {
-    return context.id === variant.id
-  }
-
-  if (context.kind === 'adventure') {
-    return context.id === variant.adventureId
-  }
-
-  if (context.kind === 'campaign') {
-    return context.id === variant.campaign.id
-  }
-
-  return false
+function createRoleEffects(heroes: ResolvedPlannerHeroModel[]): ScoringEffect[] {
+  return heroes.map((hero) => ({
+    heroId: hero.heroId,
+    kind: 'globalDpsMultiplier',
+    value: hero.heuristicRoleMultiplier,
+    note: `planner-model:${hero.sourceBreakdown.heuristicRoleMultiplier}`,
+  }))
 }
 
-export function findFormationForVariant(formations: FormationLayout[], variant: Variant): FormationLayout | null {
-  return formations.find((formation) => {
-    const contexts = [
-      ...(formation.applicableContexts ?? []),
-      ...(formation.sourceContexts ?? []),
-    ]
-
-    return contexts.some((context) => contextMatchesVariant(context, variant))
-  }) ?? formations[0] ?? null
-}
-
-function createRoleEffects(champions: Champion[]): ScoringEffect[] {
-  return champions.map((champion) => {
-    const roles = new Set(champion.roles.map((role) => role.toLowerCase()))
-    const multiplier = roles.has('dps')
-      ? 4
-      : roles.has('support')
-        ? 2.5
-        : roles.has('tanking')
-          ? 1.5
-          : roles.has('healing')
-            ? 1.3
-            : roles.has('gold')
-              ? 1.2
-              : 1.05
-
-    return {
-      heroId: champion.id,
-      kind: 'globalDpsMultiplier',
-      value: multiplier,
-    }
-  })
-}
-
-function getRolePriorityScore(champion: Champion): number {
-  const roles = new Set(champion.roles.map((role) => role.toLowerCase()))
+function getRolePriorityScore(hero: ResolvedPlannerHeroModel): number {
+  const roles = new Set(hero.roles.map((role) => role.toLowerCase()))
 
   if (roles.has('dps')) return 5
   if (roles.has('support')) return 4
@@ -112,8 +57,8 @@ function getRolePriorityScore(champion: Champion): number {
   return 0
 }
 
-function getChampionRoleSummary(champion: Champion): PlannerNarrativeLine {
-  const normalizedRoles = [...new Set(champion.roles.map((role) => role.toLowerCase()))]
+function getChampionRoleSummary(hero: ResolvedPlannerHeroModel): PlannerNarrativeLine {
+  const normalizedRoles = [...new Set(hero.roles.map((role) => role.toLowerCase()))]
     .sort((left, right) => ROLE_PRIORITY.indexOf(left as typeof ROLE_PRIORITY[number]) - ROLE_PRIORITY.indexOf(right as typeof ROLE_PRIORITY[number]))
     .slice(0, 2)
   const labels = normalizedRoles.map((role) => ROLE_LABELS[role] ?? { zh: role, en: role })
@@ -146,56 +91,50 @@ function formatLegalityViolation(violation: LegalityViolation): string {
   }
 }
 
-function buildPlannerWarnings(variant: Variant, snapshot: UserProfileSnapshot): string[] {
-  const warnings = [...snapshot.warnings]
-
-  if (variant.restrictions.length > 0 || variant.mechanics.length > 0) {
-    warnings.push('当前推荐尚未解析场景限制与机制，只按已拥有英雄、seat 合法性和阵型槽位计算。')
-  }
-
-  return [...new Set(warnings)]
+function buildPlannerWarnings(scenario: ResolvedPlannerScenarioModel, snapshot: UserProfileSnapshot): string[] {
+  return [...new Set([...snapshot.warnings, ...scenario.scenarioWarnings])]
 }
 
 function buildPlacementEntries(
   slots: string[],
   placements: Record<string, string>,
-  championById: Map<string, Champion>,
+  heroById: Map<string, ResolvedPlannerHeroModel>,
 ): PlannerPlacementEntry[] {
   return slots
     .filter((slotId) => placements[slotId] !== undefined)
     .map((slotId, index) => {
       const heroId = placements[slotId]!
-      const champion = championById.get(heroId)
+      const hero = heroById.get(heroId)
 
       return {
         slotId,
         slotLabel: String(index + 1),
         heroId,
-        heroName: champion?.name.display ?? heroId,
-        seat: champion?.seat ?? null,
+        heroName: hero?.name.display ?? heroId,
+        seat: hero?.seat ?? null,
       }
     })
 }
 
 function buildPlannerExplanations(
-  variant: Variant,
+  scenario: ResolvedPlannerScenarioModel,
   placementEntries: PlannerPlacementEntry[],
-  championById: Map<string, Champion>,
+  heroById: Map<string, ResolvedPlannerHeroModel>,
   rawExplanations: string[],
 ): PlannerNarrativeLine[] {
   const sortedChampions = placementEntries
-    .map((entry) => championById.get(entry.heroId))
-    .filter((champion): champion is Champion => Boolean(champion))
+    .map((entry) => heroById.get(entry.heroId))
+    .filter((hero): hero is ResolvedPlannerHeroModel => Boolean(hero))
     .sort((left, right) => (
       getRolePriorityScore(right) - getRolePriorityScore(left)
       || left.seat - right.seat
-      || left.id.localeCompare(right.id)
+      || left.heroId.localeCompare(right.heroId)
     ))
 
   const leadChampion = sortedChampions[0] ?? null
   const supportChampions = sortedChampions
     .slice(1, 4)
-    .map((champion) => champion.name.display)
+    .map((hero) => hero.name.display)
 
   const hasAdjacentSignal = rawExplanations.some((line) => line.includes('adjacent buff'))
   const hasHeroSignal = rawExplanations.some((line) => line.includes('hero DPS'))
@@ -225,8 +164,8 @@ function buildPlannerExplanations(
     })
   } else {
     explanations.push({
-      zh: `当前版本更偏向稳定的职业权重组合；${variant.restrictions.length > 0 ? '场景限制仍需你手动复核。' : '后续再逐步补进技能联动和场景机制。'}`,
-      en: `This version still prefers stable role-weight combinations; ${variant.restrictions.length > 0 ? 'scenario restrictions still need manual review.' : 'skill synergies and scenario mechanics will be layered in later.'}`,
+      zh: `当前版本更偏向稳定的职业权重组合；${scenario.scenarioWarnings.length > 0 ? '场景限制仍需你手动复核。' : '后续再逐步补进技能联动和场景机制。'}`,
+      en: `This version still prefers stable role-weight combinations; ${scenario.scenarioWarnings.length > 0 ? 'scenario restrictions still need manual review.' : 'skill synergies and scenario mechanics will be layered in later.'}`,
     })
   }
 
@@ -238,7 +177,7 @@ export function buildPlannerRecommendation(
   collections: PlannerCollections,
   profileSnapshot: UserProfileSnapshot | null,
 ): PlannerRecommendation {
-  if (!selectedVariant || collections.champions.length === 0) {
+  if (!selectedVariant || collections.plannerHeroes.length === 0) {
     return { result: null, layoutId: null, scenarioRef: null, blocker: null }
   }
 
@@ -251,8 +190,8 @@ export function buildPlannerRecommendation(
     }
   }
 
-  const formation = findFormationForVariant(collections.formations, selectedVariant)
-  if (!formation) {
+  const scenario = findPlannerScenarioForVariant(collections.plannerScenarios, selectedVariant)
+  if (!scenario || !scenario.formationLayoutId || scenario.slotTopology.length === 0) {
     return {
       result: null,
       layoutId: null,
@@ -264,30 +203,37 @@ export function buildPlannerRecommendation(
   const candidatePool = buildCandidatePool({
     mode: 'owned-only',
     ownedHeroes: profileSnapshot.ownedHeroes,
-    allChampionIds: collections.champions.map((champion) => champion.id),
+    allChampionIds: collections.plannerHeroes.map((hero) => hero.heroId),
   })
   const candidateIds = new Set(candidatePool.candidates.map((candidate) => candidate.heroId))
-  const champions = collections.champions
-    .filter((champion) => candidateIds.has(champion.id))
-    .sort((left, right) => left.seat - right.seat || left.id.localeCompare(right.id))
+  const heroes = collections.plannerHeroes
+    .filter((hero) => candidateIds.has(hero.heroId))
+    .sort((left, right) => left.seat - right.seat || left.heroId.localeCompare(right.heroId))
 
-  const slots = sortSlots(formation)
-  if (champions.length < slots.length) {
+  const slots = sortSlots(scenario)
+  if (heroes.length < slots.length) {
     return {
       result: null,
-      layoutId: formation.id,
+      layoutId: scenario.formationLayoutId,
       scenarioRef: { kind: 'variant', id: selectedVariant.id },
       blocker: 'insufficient-owned-heroes',
     }
   }
 
-  const adjacency = buildAdjacency(formation)
-  const championById = new Map(champions.map((champion) => [champion.id, champion]))
-  const heroSeats = Object.fromEntries(champions.map((champion) => [champion.id, champion.seat]))
-  const effectsByHeroId = new Map(createRoleEffects(champions).map((effect) => [effect.heroId, effect]))
+  const adjacency = buildAdjacency(scenario)
+  const heroById = new Map(heroes.map((hero) => [hero.heroId, hero]))
+  const heroSeats = Object.fromEntries(heroes.map((hero) => [hero.heroId, hero.seat]))
+  const effectsByHeroId = new Map(createRoleEffects(heroes).map((effect) => [effect.heroId, [effect]]))
+  const scenarioVariantRules: VariantRuleResult = {
+    constraints: [
+      ...(scenario.bannedHeroes.length > 0 ? [{ kind: 'banList' as const, heroIds: scenario.bannedHeroes }] : []),
+      ...(scenario.forcedHeroes.length > 0 ? [{ kind: 'forceInclude' as const, heroIds: scenario.forcedHeroes }] : []),
+    ],
+    warnings: scenario.scenarioWarnings,
+  }
 
   const results = beamSearch({
-    heroes: champions.map((champion) => ({ heroId: champion.id, seat: champion.seat })),
+    heroes: heroes.map((hero) => ({ heroId: hero.heroId, seat: hero.seat })),
     slots,
     adjacency,
     beamWidth: 8,
@@ -295,7 +241,8 @@ export function buildPlannerRecommendation(
       const legality = checkFormationLegality({
         placements,
         heroSeats,
-        variantRules: EMPTY_VARIANT_RULES,
+        variantRules: scenarioVariantRules,
+        lockedSlots: scenario.lockedSlots,
       })
 
       if (!legality.legal) {
@@ -307,8 +254,7 @@ export function buildPlannerRecommendation(
       }
 
       const activeEffects = Object.values(placements)
-        .map((heroId) => effectsByHeroId.get(heroId))
-        .filter((effect): effect is ScoringEffect => Boolean(effect))
+        .flatMap((heroId) => effectsByHeroId.get(heroId) ?? [])
 
       return scoreFormation({ placements, effects: activeEffects, adjacency })
     },
@@ -322,20 +268,21 @@ export function buildPlannerRecommendation(
     return checkFormationLegality({
       placements: result.placements,
       heroSeats,
-      variantRules: EMPTY_VARIANT_RULES,
+      variantRules: scenarioVariantRules,
+      lockedSlots: scenario.lockedSlots,
     }).legal
   })
 
   if (!top) {
     return {
       result: null,
-      layoutId: formation.id,
+      layoutId: scenario.formationLayoutId,
       scenarioRef: { kind: 'variant', id: selectedVariant.id },
       blocker: 'no-legal-recommendation',
     }
   }
 
-  const placementEntries = buildPlacementEntries(slots, top.placements, championById)
+  const placementEntries = buildPlacementEntries(slots, top.placements, heroById)
 
   return {
     result: {
@@ -343,14 +290,14 @@ export function buildPlannerRecommendation(
       placements: top.placements,
       placementEntries,
       explanations: buildPlannerExplanations(
-        selectedVariant,
+        scenario,
         placementEntries,
-        championById,
+        heroById,
         top.explanations,
       ),
-      warnings: [...new Set([...top.warnings, ...buildPlannerWarnings(selectedVariant, profileSnapshot)])],
+      warnings: [...new Set([...top.warnings, ...buildPlannerWarnings(scenario, profileSnapshot)])],
     },
-    layoutId: formation.id,
+    layoutId: scenario.formationLayoutId,
     scenarioRef: { kind: 'variant', id: selectedVariant.id },
     blocker: null,
   }
