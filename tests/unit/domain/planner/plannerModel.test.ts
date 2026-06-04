@@ -47,6 +47,7 @@ function createHero(heroId: string): OfficialPlannerHeroModel {
     seat: 1,
     roles: ['support'],
     tags: [],
+    baseAttackDamageTypes: [],
     age: null,
     abilityScores: {},
     isCarryViable: false,

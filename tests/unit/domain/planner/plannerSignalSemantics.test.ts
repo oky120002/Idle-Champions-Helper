@@ -14,6 +14,7 @@ function createHero(heroId: string, overrides: Partial<OfficialPlannerHeroModel>
     seat: overrides.seat ?? 1,
     roles: overrides.roles ?? [],
     tags: overrides.tags ?? [],
+    baseAttackDamageTypes: overrides.baseAttackDamageTypes ?? [],
     age: overrides.age ?? null,
     abilityScores: overrides.abilityScores ?? {},
     isCarryViable: overrides.isCarryViable ?? false,
@@ -46,11 +47,20 @@ describe('planner signal semantics', () => {
       maxAge: 20,
       excludedHeroIds: ['58'],
     })
+
+    expect(parsePlannerPerHeroExpr('HasAttackDamageType(`magic`)')).toEqual({
+      requiredAttackDamageTypes: ['magic'],
+    })
+
+    expect(parsePlannerPerHeroExpr('!HasAttackDamageType(`melee`)')).toEqual({
+      excludedAttackDamageTypes: ['melee'],
+    })
   })
 
   it('matchesPlannerHeroQualifier 用统一规则判断标签、属性、年龄和排除英雄', () => {
     const hero = createHero('carry', {
       tags: ['female', 'evil'],
+      baseAttackDamageTypes: ['magic'],
       age: 19,
       abilityScores: { cha: 13 },
     })
@@ -63,6 +73,14 @@ describe('planner signal semantics', () => {
 
     expect(matchesPlannerHeroQualifier(hero, {
       excludedHeroIds: ['carry'],
+    })).toBe(false)
+
+    expect(matchesPlannerHeroQualifier(hero, {
+      requiredAttackDamageTypes: ['magic'],
+    })).toBe(true)
+
+    expect(matchesPlannerHeroQualifier(hero, {
+      excludedAttackDamageTypes: ['magic'],
     })).toBe(false)
   })
 
@@ -107,5 +125,25 @@ describe('planner signal semantics', () => {
     })
     expect(stackedSignal.stackFunc).toBe('per_hero_attribute')
     expect(stackedSignal.amountFunc).toBe('mult')
+  })
+
+  it('attachPlannerSignalSemantics 支持攻击伤害类型表达式', () => {
+    const stackedSignal = attachPlannerSignalSemantics(
+      {
+        kind: 'globalDpsMultiplier',
+        value: 15,
+        rawEffect: 'global_dps_multiplier_mult,15',
+        source: 'official-parsed',
+      },
+      {
+        stack_func: 'per_hero_attribute',
+        amount_func: 'mult',
+        per_hero_expr: 'HasAttackDamageType(`ranged`)',
+      },
+    )
+
+    expect(stackedSignal.formationCountQualifier).toEqual({
+      requiredAttackDamageTypes: ['ranged'],
+    })
   })
 })

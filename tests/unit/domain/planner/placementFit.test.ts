@@ -10,6 +10,7 @@ function createHero(heroId: string, overrides: Partial<OfficialPlannerHeroModel>
     seat: overrides.seat ?? 1,
     roles: overrides.roles ?? [],
     tags: overrides.tags ?? [],
+    baseAttackDamageTypes: overrides.baseAttackDamageTypes ?? [],
     age: overrides.age ?? null,
     abilityScores: overrides.abilityScores ?? {},
     isCarryViable: overrides.isCarryViable ?? false,
@@ -338,5 +339,41 @@ describe('placement fit', () => {
     })
 
     expect(fit.fitScore).toBeCloseTo(1.3)
+  })
+
+  it('per_hero_attribute 支持基础攻击伤害类型计数', () => {
+    const carryHero = createHero('carry', { baseAttackDamageTypes: ['magic'] })
+    const supportHero = createHero('support', {
+      supportSignals: [
+        {
+          kind: 'globalDpsMultiplier',
+          value: 10,
+          rawEffect: 'global_dps_multiplier_mult,10',
+          source: 'official-parsed',
+          amountFunc: 'mult',
+          stackFunc: 'per_hero_attribute',
+          formationCountQualifier: {
+            requiredAttackDamageTypes: ['magic'],
+          },
+        },
+      ],
+    })
+    const heroesById = new Map([
+      ['carry', carryHero],
+      ['support', supportHero],
+      ['other', createHero('other', { baseAttackDamageTypes: ['magic'] })],
+    ])
+
+    const fit = evaluatePlacementFit({
+      carryHero,
+      carrySlotId: 's2',
+      supportHero,
+      supportSlotId: 's1',
+      scenario,
+      placements: { s1: 'support', s2: 'carry', s3: 'other' },
+      heroesById,
+    })
+
+    expect(fit.fitScore).toBeCloseTo(1.21)
   })
 })

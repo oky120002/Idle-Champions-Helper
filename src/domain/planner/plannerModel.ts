@@ -27,6 +27,8 @@ export interface PlannerHeroQualifier {
   requiredTags?: string[]
   matchMode?: PlannerTargetMatchMode
   requiredStats?: PlannerStatQualifier[]
+  requiredAttackDamageTypes?: string[]
+  excludedAttackDamageTypes?: string[]
   minAge?: number | null
   maxAge?: number | null
   excludedHeroIds?: string[]
@@ -73,6 +75,7 @@ export interface OfficialPlannerHeroModel {
   seat: number
   roles: string[]
   tags: string[]
+  baseAttackDamageTypes: string[]
   age: number | null
   abilityScores: Partial<Record<AbilityScoreKey, number>>
   isCarryViable: boolean

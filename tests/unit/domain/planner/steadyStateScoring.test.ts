@@ -9,6 +9,7 @@ function createHero(heroId: string, overrides: Partial<OfficialPlannerHeroModel>
     seat: overrides.seat ?? 1,
     roles: overrides.roles ?? [],
     tags: overrides.tags ?? [],
+    baseAttackDamageTypes: overrides.baseAttackDamageTypes ?? [],
     age: overrides.age ?? null,
     abilityScores: overrides.abilityScores ?? {},
     isCarryViable: overrides.isCarryViable ?? false,

@@ -99,6 +99,8 @@ export function parsePlannerPerHeroExpr(expr) {
   }
 
   const tagMatches = [...trimmed.matchAll(/HasTag\(`([^`]+)`\)/g)].map((match) => match[1])
+  const attackDamageTypeMatch = trimmed.match(/^HasAttackDamageType\(`([^`]+)`\)$/)
+  const excludedAttackDamageTypeMatch = trimmed.match(/^!HasAttackDamageType\(`([^`]+)`\)$/)
   const statMatch = trimmed.match(/^GetStat\(`([A-Za-z_]+)`\)\s*(>=|<=|>|<|==)\s*(\d+)$/)
   const ageMatch = trimmed.match(/^age\s*(>=|<=|>|<|==)\s*(\d+)$/)
   const ageWithExcludeMatch = trimmed.match(/^age\s*(>=|<=|>|<|==)\s*(\d+)\s*&&\s*hero_id!=([0-9]+)$/)
@@ -107,6 +109,18 @@ export function parsePlannerPerHeroExpr(expr) {
     return {
       requiredTags: [...new Set(tagMatches)],
       matchMode: 'any',
+    }
+  }
+
+  if (attackDamageTypeMatch) {
+    return {
+      requiredAttackDamageTypes: [attackDamageTypeMatch[1].toLowerCase()],
+    }
+  }
+
+  if (excludedAttackDamageTypeMatch) {
+    return {
+      excludedAttackDamageTypes: [excludedAttackDamageTypeMatch[1].toLowerCase()],
     }
   }
 
@@ -192,6 +206,29 @@ export function matchesPlannerHeroQualifier(hero, qualifier) {
   for (const statQualifier of qualifier.requiredStats ?? []) {
     const heroValue = hero.abilityScores[statQualifier.stat]
     if (!comparePlannerNumber(heroValue, statQualifier.operator, statQualifier.value)) {
+      return false
+    }
+  }
+
+  const heroAttackDamageTypes = new Set((hero.baseAttackDamageTypes ?? []).map((value) => value.toLowerCase()))
+  const requiredAttackDamageTypes = qualifier.requiredAttackDamageTypes ?? []
+  if (requiredAttackDamageTypes.length > 0) {
+    const matchesRequiredAttackDamageType = requiredAttackDamageTypes
+      .map((value) => value.toLowerCase())
+      .some((value) => heroAttackDamageTypes.has(value))
+
+    if (!matchesRequiredAttackDamageType) {
+      return false
+    }
+  }
+
+  const excludedAttackDamageTypes = qualifier.excludedAttackDamageTypes ?? []
+  if (excludedAttackDamageTypes.length > 0) {
+    const matchesExcludedAttackDamageType = excludedAttackDamageTypes
+      .map((value) => value.toLowerCase())
+      .some((value) => heroAttackDamageTypes.has(value))
+
+    if (matchesExcludedAttackDamageType) {
       return false
     }
   }

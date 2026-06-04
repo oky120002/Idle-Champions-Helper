@@ -70,6 +70,12 @@ test('buildPlannerModels 产出 planner heroes / scenarios / semantic overrides'
   await writeFile(
     path.join(detailDir, '1.json'),
     JSON.stringify({
+      attacks: {
+        base: {
+          id: 'base-1',
+          damageTypes: ['magic'],
+        },
+      },
       characterSheet: {
         age: 40,
         abilityScores: { str: 15, dex: 12, con: 16, int: 10, wis: 11, cha: 13 },
@@ -141,6 +147,7 @@ test('buildPlannerModels 产出 planner heroes / scenarios / semantic overrides'
   assert.equal(result.scenarioCount, 1)
   assert.equal(plannerHeroes.updatedAt, '2026-06-04')
   assert.equal(plannerHeroes.items[0].heroId, '1')
+  assert.deepEqual(plannerHeroes.items[0].baseAttackDamageTypes, ['magic'])
   assert.equal(plannerHeroes.items[0].age, 40)
   assert.equal(plannerHeroes.items[0].abilityScores.str, 15)
   assert.equal(plannerHeroes.items[0].carrySignals[0].kind, 'heroDpsMultiplier')

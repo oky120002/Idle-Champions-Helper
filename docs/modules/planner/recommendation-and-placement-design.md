@@ -54,7 +54,7 @@
 - `taggedChampionBuff`：只有在 planner model 明确提供 `targetQualifier.requiredTags` 或 `requiredStats` 时才计分；否则只给 warning。
 - carry 目标限定已支持：`requiredTags`、`requiredStats`。
 - formation 计数限定已支持最小子集：`per_crusader`、`per_tagged_crusader_mult`、`per_hero_attribute`。
-- formation 计数限定当前可消费的 qualifier 子集：标签、能力值阈值、年龄上下界、排除指定英雄。
+- formation 计数限定当前可消费的 qualifier 子集：标签、能力值阈值、基础攻击伤害类型、年龄上下界、排除指定英雄。
 - 组合语义已支持：`amountFunc=add` 走线性累加，`amountFunc=mult` 走乘方法；拿不准的组合直接降级 warning。
 - `applyManually=true` 的效果当前不计分，只保留 warning。
 

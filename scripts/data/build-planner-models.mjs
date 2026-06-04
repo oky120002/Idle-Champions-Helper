@@ -2,6 +2,11 @@ import path from 'node:path'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { pathToFileURL } from 'node:url'
 import { attachPlannerSignalSemantics } from '../../src/domain/planner/plannerSignalSemantics.js'
+import {
+  collectPlannerEffectEntries,
+  normalizePlannerEffectSignal,
+  splitPlannerEffectString,
+} from './planner-effect-helpers.mjs'
 
 const DEFAULT_VERSION_DIR = 'public/data/v1'
 const DEFAULT_SEMANTIC_OVERRIDES = 'scripts/data/planner-semantic-overrides.json'
@@ -15,61 +20,6 @@ async function writeJson(filePath, value) {
   await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
 }
 
-function normalizeEffectSignal(effectName, effectValue, source) {
-  const numericValue = parseFloat(effectValue)
-
-  if (effectName === 'global_dps_multiplier_mult') {
-    return {
-      ok: true,
-      signal: { kind: 'globalDpsMultiplier', value: numericValue, rawEffect: `${effectName},${effectValue}`, source },
-      bucket: 'supportSignals',
-    }
-  }
-
-  if (effectName === 'hero_dps_multiplier_mult') {
-    return {
-      ok: true,
-      signal: { kind: 'heroDpsMultiplier', value: numericValue, rawEffect: `${effectName},${effectValue}`, source },
-      bucket: 'carrySignals',
-    }
-  }
-
-  if (effectName.startsWith('adjacent_')) {
-    return {
-      ok: true,
-      signal: { kind: 'adjacentBuff', value: numericValue, rawEffect: `${effectName},${effectValue}`, source },
-      bucket: 'supportSignals',
-    }
-  }
-
-  if (effectName.startsWith('tag_')) {
-    return {
-      ok: true,
-      signal: { kind: 'taggedChampionBuff', value: numericValue, rawEffect: `${effectName},${effectValue}`, source },
-      bucket: 'supportSignals',
-    }
-  }
-
-  return {
-    ok: false,
-    unsupported: {
-      rawEffect: effectName,
-      rawValue: effectValue,
-      note: `No parser for effect: ${effectName}`,
-      source,
-    },
-  }
-}
-
-function splitEffectString(effectString) {
-  if (typeof effectString !== 'string' || effectString.trim().length === 0) {
-    return null
-  }
-
-  const [effectName, effectValue = '1'] = effectString.split(',', 2)
-  return { effectName, effectValue }
-}
-
 function getRolePriorityMultiplier(roles) {
   const normalizedRoles = new Set((roles ?? []).map((role) => String(role).toLowerCase()))
 
@@ -81,56 +31,19 @@ function getRolePriorityMultiplier(roles) {
   return 1.05
 }
 
-function collectHeroEffectEntries(detail) {
-  const effectEntries = []
-
-  for (const upgrade of detail.upgrades ?? []) {
-    if (typeof upgrade.effectReference === 'string') {
-      effectEntries.push({ effectString: upgrade.effectReference, effect: upgrade })
-    }
-
-    const effectKeys = upgrade.effectDefinition?.snapshots?.original?.effect_keys
-    if (Array.isArray(effectKeys)) {
-      for (const effectKey of effectKeys) {
-        if (typeof effectKey?.effect_string === 'string') {
-          effectEntries.push({ effectString: effectKey.effect_string, effect: effectKey })
-        }
-      }
-    }
-  }
-
-  for (const lootItem of detail.loot ?? []) {
-    for (const effect of lootItem.effects ?? []) {
-      if (typeof effect?.effect_string === 'string') {
-        effectEntries.push({ effectString: effect.effect_string, effect })
-      }
-    }
-  }
-
-  for (const legendaryEffect of detail.legendaryEffects ?? []) {
-    for (const effect of legendaryEffect.effects ?? []) {
-      if (typeof effect?.effect_string === 'string') {
-        effectEntries.push({ effectString: effect.effect_string, effect })
-      }
-    }
-  }
-
-  return effectEntries
-}
-
 function buildOfficialPlannerHeroModel(champion, detail) {
   const carrySignals = []
   const supportSignals = []
   const unsupportedSignals = []
 
-  for (const entry of collectHeroEffectEntries(detail)) {
-    const split = splitEffectString(entry.effectString)
+  for (const entry of collectPlannerEffectEntries(detail)) {
+    const split = splitPlannerEffectString(entry.effectString)
 
     if (!split) {
       continue
     }
 
-    const parsed = normalizeEffectSignal(split.effectName, split.effectValue, 'official-parsed')
+    const parsed = normalizePlannerEffectSignal(split.effectName, split.effectValue, 'official-parsed')
 
     if (parsed.ok) {
       const signal = attachPlannerSignalSemantics(parsed.signal, entry.effect)
@@ -152,6 +65,7 @@ function buildOfficialPlannerHeroModel(champion, detail) {
     seat: champion.seat,
     roles: champion.roles,
     tags: champion.tags,
+    baseAttackDamageTypes: detail.attacks?.base?.damageTypes ?? [],
     age: typeof detail.characterSheet?.age === 'number' ? detail.characterSheet.age : null,
     abilityScores: detail.characterSheet?.abilityScores ?? {},
     isCarryViable: champion.roles.some((role) => String(role).toLowerCase() === 'dps'),
