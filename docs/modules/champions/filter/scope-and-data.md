@@ -13,16 +13,16 @@
 
 ### 当前输入
 
-- `public/data/v1/champions.json`：`id`、`name`、`seat`、`roles`、`affiliations`、`tags`
-- `public/data/v1/enums.json`：`roles`、`affiliations` 等筛选枚举
+- `public/data/v1/champions.json`：`id`、`name`、`seat`、`roles`、`affiliations`、`tags`、`patronEligibility`
+- `public/data/v1/enums.json`：`roles`、`affiliations`、`campaigns`、`patrons`、`modes`
+- `public/data/v1/adventures.json` / `public/data/v1/variants.json`：场景身份、`ruleContextId`、`modeTags`、Patron 目标层级
 - `public/data/version.json`：当前数据版本
 
 ### MVP 必补字段
 
-- 英雄公共字段：`patronEligibility`、`modeEligibilityTags`
-- 枚举：`patrons`、`modes`
-- 场景上下文：稳定 `scenarioId` 或 `ruleContextId`
-- 规则来源：结构化规则集合，例如 `public/data/<version>/rules.json`
+- 已补第一批：`patronEligibility`、`patrons`、`modes`、基础 `ruleContextId`
+- 仍待补的英雄公共字段：`modeEligibilityTags`
+- 仍待补的规则来源：跨场景复用的结构化规则集合，例如 `public/data/<version>/rules.json`
 
 ### 明确不接受的做法
 

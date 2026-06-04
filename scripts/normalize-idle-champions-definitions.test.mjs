@@ -22,6 +22,8 @@ test('normalizeDefinitionsSnapshot 输出官方原文和中文展示双字段', 
   })
 
   const champions = await readJson(path.join(outputDir, 'champions.json'))
+  const adventures = await readJson(path.join(outputDir, 'adventures.json'))
+  const patrons = await readJson(path.join(outputDir, 'patrons.json'))
   const variants = await readJson(path.join(outputDir, 'variants.json'))
   const enums = await readJson(path.join(outputDir, 'enums.json'))
   const bruenorDetail = await readJson(path.join(outputDir, 'champion-details', '1.json'))
@@ -41,6 +43,18 @@ test('normalizeDefinitionsSnapshot 输出官方原文和中文展示双字段', 
       display: '秘银五侠',
     },
   ])
+  assert.deepEqual(champions.items[0].patronEligibility, {
+    eligiblePatronIds: ['1', '2', '5'],
+    ruleQualifiedPatronIds: ['1', '2', '5'],
+    forcedEligiblePatronIds: [],
+    unsupportedPatronIds: [],
+  })
+  assert.deepEqual(champions.items[1].patronEligibility, {
+    eligiblePatronIds: ['5'],
+    ruleQualifiedPatronIds: [],
+    forcedEligiblePatronIds: ['5'],
+    unsupportedPatronIds: [],
+  })
   assert.deepEqual(bruenorDetail.loot, [
     {
       id: '1001',
@@ -110,10 +124,114 @@ test('normalizeDefinitionsSnapshot 输出官方原文和中文展示双字段', 
   assert.equal(bruenorDetail.raw.loot.length, 2)
   assert.equal(bruenorDetail.raw.legendaryEffects.length, 2)
 
+  assert.deepEqual(adventures.items[0], {
+    id: '100',
+    ruleContextId: 'adventure:100',
+    scenarioKind: 'adventure',
+    name: {
+      original: 'The Test Adventure',
+      display: '测试冒险',
+    },
+    campaign: {
+      id: '1',
+      original: 'A Grand Tour of the Sword Coast',
+      display: '剑湾之旅',
+    },
+    description: {
+      original: 'Test the base adventure contract.',
+      display: '测试基础冒险合同。',
+    },
+    objectiveArea: 50,
+    locationId: '8',
+    areaSetId: '55',
+    scene: {
+      id: '1:8',
+      original: 'The Test Adventure',
+      display: '测试冒险',
+    },
+    requirements: [
+      {
+        original: 'Complete tutorial',
+        display: '完成教学',
+      },
+    ],
+    restrictions: [],
+    rewards: [
+      {
+        original: 'Unlock free play',
+        display: '解锁自由刷图',
+      },
+    ],
+    repeatable: true,
+    patronObjectiveTiers: [
+      {
+        patronId: '1',
+        tierId: '1',
+        objectiveArea: 250,
+        objectives: [
+          {
+            condition: 'complete_area',
+            area: '250',
+          },
+        ],
+      },
+    ],
+    modeTags: ['adventure', 'free_play', 'patron'],
+    mechanics: [],
+  })
+  assert.deepEqual(patrons.items.map((item) => item.id), ['1', '2', '5'])
+  assert.deepEqual(patrons.items.find((item) => item.id === '1'), {
+    id: '1',
+    name: {
+      original: 'Mirt the Moneylender',
+      display: '米尔特',
+    },
+    description: {
+      original: 'Only Good or Evil Champions can be used.',
+      display: '只能使用善良或邪恶阵营的勇士。',
+    },
+    shortName: 'Mirt',
+    restrictionsText: [
+      {
+        original: 'Only Good or Evil Champions can be used',
+        display: '只能使用善良或邪恶阵营的勇士',
+      },
+    ],
+    minObjectiveLevel: 250,
+    defaultObjectiveBump: 100,
+    weeklyFreePlayCap: 5000,
+    forceAllowedHeroIds: [],
+    eligibilityRules: [
+      {
+        type: 'tags',
+        rawExpression: '!(good|evil)',
+        requiredAnyTags: ['good', 'evil'],
+        supported: true,
+      },
+    ],
+    evaluationStatus: 'complete',
+  })
+
   assert.deepEqual(variants.items[0].name, {
     original: 'A Test Variant',
     display: '测试变体',
   })
+  assert.equal(variants.items[0].ruleContextId, 'variant:101')
+  assert.equal(variants.items[0].scenarioKind, 'variant')
+  assert.deepEqual(variants.items[0].modeTags, ['variant', 'patron'])
+  assert.deepEqual(variants.items[0].patronObjectiveTiers, [
+    {
+      patronId: '2',
+      tierId: '1',
+      objectiveArea: 275,
+      objectives: [
+        {
+          condition: 'complete_area',
+          area: '275',
+        },
+      ],
+    },
+  ])
   assert.deepEqual(variants.items[0].campaign, {
     id: '1',
     original: 'A Grand Tour of the Sword Coast',
@@ -201,6 +319,30 @@ test('normalizeDefinitionsSnapshot 输出官方原文和中文展示双字段', 
         display: '湮灭之墓',
       },
     ],
+  })
+  assert.deepEqual(enums.items[3], {
+    id: 'patrons',
+    values: [
+      {
+        id: '1',
+        original: 'Mirt the Moneylender',
+        display: '米尔特',
+      },
+      {
+        id: '2',
+        original: 'Vajra Safahr',
+        display: '瓦吉拉',
+      },
+      {
+        id: '5',
+        original: 'Elminster',
+        display: '艾尔明斯特',
+      },
+    ],
+  })
+  assert.deepEqual(enums.items[4], {
+    id: 'modes',
+    values: ['adventure', 'free_play', 'patron', 'variant'],
   })
 
   assert.match(version.notes[1], /language_id=7/)

@@ -24,6 +24,12 @@ function createChampion(id: string, seat: number, name = id): Champion {
     roles: [],
     affiliations: [],
     tags: [],
+    patronEligibility: {
+      eligiblePatronIds: [],
+      ruleQualifiedPatronIds: [],
+      forcedEligiblePatronIds: [],
+      unsupportedPatronIds: [],
+    },
   }
 }
 

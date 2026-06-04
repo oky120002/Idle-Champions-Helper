@@ -11,6 +11,13 @@ import {
   resolveGraphicAssetById,
 } from './data/champion-portrait-helpers.mjs'
 import { extractOfficialFormations, looksLikeVariant } from './data/formation-layout-helpers.mjs'
+import {
+  buildChampionPatronEligibility,
+  buildScenarioModeTags,
+  buildScenarioRuleContextId,
+  normalizePatronDefinition,
+  normalizePatronObjectiveTiers,
+} from './data/official-rule-helpers.mjs'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_VERSION_FILE = 'public/data/version.json'
@@ -987,6 +994,7 @@ function normalizeChampion(
   affiliationMap,
   currentVersion,
   portraitSource,
+  patronEligibility,
   override = {},
 ) {
   const originalName =
@@ -1024,6 +1032,7 @@ function normalizeChampion(
     roles,
     affiliations,
     tags,
+    patronEligibility,
     portrait: portraitSource
       ? {
           path: buildChampionPortraitPath(currentVersion, String(originalDefinition.id)),
@@ -1445,6 +1454,96 @@ function normalizeChampionDetail(
     },
   }
 }
+
+function normalizePatrons(originalDefinitions = [], localizedDefinitions = []) {
+  const localizedById = buildIdMap(localizedDefinitions)
+
+  return originalDefinitions
+    .map((definition) =>
+      normalizePatronDefinition(
+        definition,
+        localizedById.get(String(definition.id)) ?? definition,
+      ),
+    )
+    .filter(Boolean)
+    .sort((left, right) => Number(left.id) - Number(right.id))
+}
+
+function collectScenarioMechanics(gameChanges = []) {
+  return uniqueStrings(
+    (gameChanges ?? [])
+      .map((gameChange) => toText(gameChange.type))
+      .filter(Boolean),
+  )
+    .filter((gameChangeType) => !STRUCTURAL_VARIANT_GAME_CHANGES.has(gameChangeType))
+    .sort((left, right) => left.localeCompare(right))
+}
+
+function normalizeAdventure(
+  originalDefinition,
+  localizedDefinition,
+  adventureMetadata,
+  scene,
+) {
+  const originalRequirements = uniqueStrings([
+    ...toTextList(originalDefinition.requirements_text),
+    ...toTextList(originalDefinition.requirements_description),
+  ])
+  const displayRequirements = uniqueStrings([
+    ...toTextList(localizedDefinition?.requirements_text),
+    ...toTextList(localizedDefinition?.requirements_description),
+  ])
+  const originalRestrictions = uniqueStrings([
+    ...toTextList(originalDefinition.restrictions_text),
+    ...toTextList(originalDefinition.restrictions),
+  ])
+  const displayRestrictions = uniqueStrings([
+    ...toTextList(localizedDefinition?.restrictions_text),
+    ...toTextList(localizedDefinition?.restrictions),
+  ])
+  const originalRewards = uniqueStrings([
+    ...toTextList(originalDefinition.reward_description),
+    ...toTextList(originalDefinition.reward_descriptions),
+    ...toTextList(originalDefinition.rewards_text),
+    ...toTextList(originalDefinition.rewards),
+  ])
+  const displayRewards = uniqueStrings([
+    ...toTextList(localizedDefinition?.reward_description),
+    ...toTextList(localizedDefinition?.reward_descriptions),
+    ...toTextList(localizedDefinition?.rewards_text),
+    ...toTextList(localizedDefinition?.rewards),
+  ])
+  const patronObjectiveTiers = normalizePatronObjectiveTiers(originalDefinition.patron_objectives)
+  const repeatable = Boolean(originalDefinition.repeatable)
+
+  return {
+    id: String(originalDefinition.id),
+    ruleContextId: buildScenarioRuleContextId('adventure', String(originalDefinition.id)),
+    scenarioKind: 'adventure',
+    name: normalizeLocalizedText(
+      originalDefinition.name,
+      localizedDefinition?.name,
+      `Adventure ${originalDefinition.id}`,
+    ),
+    campaign: adventureMetadata.campaign,
+    description: normalizeOptionalLocalizedText(
+      originalDefinition.description,
+      localizedDefinition?.description,
+    ),
+    objectiveArea: adventureMetadata.objectiveArea ?? null,
+    locationId: adventureMetadata.locationId ?? null,
+    areaSetId: adventureMetadata.areaSetId ?? null,
+    scene,
+    requirements: normalizeLocalizedTextList(originalRequirements, displayRequirements),
+    restrictions: normalizeLocalizedTextList(originalRestrictions, displayRestrictions),
+    rewards: normalizeLocalizedTextList(originalRewards, displayRewards),
+    repeatable,
+    patronObjectiveTiers,
+    modeTags: buildScenarioModeTags('adventure', repeatable, patronObjectiveTiers),
+    mechanics: collectScenarioMechanics(originalDefinition.game_changes ?? []),
+  }
+}
+
 function normalizeVariant(originalDefinition, localizedDefinition, campaignMap, variantMetadataById) {
   const originalRestrictions = uniqueStrings([
     ...toTextList(originalDefinition.requirements_text),
@@ -1477,9 +1576,13 @@ function normalizeVariant(originalDefinition, localizedDefinition, campaignMap, 
       display: String(originalDefinition.campaign_id ?? ''),
     }
   const metadata = variantMetadataById.get(String(originalDefinition.id)) ?? {}
+  const patronObjectiveTiers = normalizePatronObjectiveTiers(originalDefinition.patron_objectives)
+  const repeatable = Boolean(originalDefinition.repeatable)
 
   return {
     id: String(originalDefinition.id),
+    ruleContextId: buildScenarioRuleContextId('variant', String(originalDefinition.id)),
+    scenarioKind: 'variant',
     name: normalizeLocalizedText(
       originalDefinition.name,
       localizedDefinition?.name,
@@ -1494,6 +1597,9 @@ function normalizeVariant(originalDefinition, localizedDefinition, campaignMap, 
     scene: metadata.scene ?? null,
     restrictions: normalizeLocalizedTextList(originalRestrictions, displayRestrictions),
     rewards: normalizeLocalizedTextList(originalRewards, displayRewards),
+    repeatable,
+    patronObjectiveTiers,
+    modeTags: buildScenarioModeTags('variant', repeatable, patronObjectiveTiers),
     enemyCount: metadata.enemyCount ?? 0,
     enemyTypes: metadata.enemyTypes ?? [],
     enemyTypeCounts: metadata.enemyTypeCounts ?? {},
@@ -1626,10 +1732,14 @@ function mergeFormations(autoFormations, manualFormations) {
   return Array.from(merged.values())
 }
 
-function normalizeEnums(champions, affiliationMap, campaignMap) {
+function normalizeEnums(champions, affiliationMap, campaignMap, patrons, adventures, variants) {
   const campaigns = Array.from(campaignMap.entries())
     .map(([, value]) => value)
     .sort((left, right) => Number(left.id) - Number(right.id))
+  const modes = uniqueStrings([
+    ...adventures.flatMap((adventure) => adventure.modeTags ?? []),
+    ...variants.flatMap((variant) => variant.modeTags ?? []),
+  ]).sort((left, right) => left.localeCompare(right))
 
   return [
     {
@@ -1645,6 +1755,18 @@ function normalizeEnums(champions, affiliationMap, campaignMap) {
     {
       id: 'campaigns',
       values: campaigns,
+    },
+    {
+      id: 'patrons',
+      values: patrons.map((patron) => ({
+        id: patron.id,
+        original: patron.name.original,
+        display: patron.name.display,
+      })),
+    },
+    {
+      id: 'modes',
+      values: modes,
     },
   ]
 }
@@ -1689,11 +1811,21 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
     rawDefinitions.campaign_defines,
     localizedDefinitions.campaign_defines,
   )
+  const adventureMap = buildAdventureMap(
+    rawDefinitions.adventure_defines ?? [],
+    localizedDefinitions.adventure_defines ?? [],
+    campaignMap,
+  )
+  const sceneMap = buildSceneMap(adventureMap)
   const localizedChampionsById = new Map(
     (localizedDefinitions.hero_defines ?? []).map((definition) => [String(definition.id), definition]),
   )
   const localizedVariantsById = new Map(
     (localizedDefinitions.adventure_defines ?? []).map((definition) => [String(definition.id), definition]),
+  )
+  const patrons = normalizePatrons(
+    rawDefinitions.patron_defines ?? [],
+    localizedDefinitions.patron_defines ?? [],
   )
   const attackDefinitionsById = buildIdMap(rawDefinitions.attack_defines)
   const localizedAttackDefinitionsById = buildIdMap(localizedDefinitions.attack_defines)
@@ -1723,6 +1855,12 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
   const playableChampionDefinitions = (rawDefinitions.hero_defines ?? []).filter((definition) =>
     isPlayableChampion(definition),
   )
+  const patronEligibilityByChampionId = new Map(
+    playableChampionDefinitions.map((definition) => [
+      String(definition.id),
+      buildChampionPatronEligibility(definition, patrons, updatedAt),
+    ]),
+  )
 
   const champions = playableChampionDefinitions
     .map((definition) =>
@@ -1732,6 +1870,7 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
         affiliationMap,
         currentVersion,
         portraitSourcesByChampionId.get(String(definition.id)) ?? null,
+        patronEligibilityByChampionId.get(String(definition.id)),
         manualOverrides.championOverrides?.[String(definition.id)] ?? {},
       ),
     )
@@ -1764,8 +1903,26 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
       localizedLootById,
       legendaryEffectDefinitionsById,
       localizedLegendaryEffectDefinitionsById,
-    ),
-  )
+      ),
+    )
+
+  const adventures = (rawDefinitions.adventure_defines ?? [])
+    .filter((definition) => !looksLikeVariant(definition))
+    .map((definition) => {
+      const normalizedAdventure = adventureMap.get(String(definition.id))
+      const sceneKey =
+        normalizedAdventure?.locationId
+          ? `${normalizedAdventure.campaign.id}:${normalizedAdventure.locationId}`
+          : null
+
+      return normalizeAdventure(
+        definition,
+        localizedVariantsById.get(String(definition.id)),
+        normalizedAdventure,
+        sceneKey ? sceneMap.get(sceneKey) ?? null : null,
+      )
+    })
+    .sort((left, right) => Number(left.id) - Number(right.id))
 
   const autoVariants = (rawDefinitions.adventure_defines ?? [])
     .filter((definition) => looksLikeVariant(definition))
@@ -1784,7 +1941,7 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
     officialFormations,
     normalizeManualFormations(manualOverrides.formations ?? []),
   )
-  const enums = normalizeEnums(champions, affiliationMap, campaignMap)
+  const enums = normalizeEnums(champions, affiliationMap, campaignMap, patrons, adventures, variants)
   const championVisuals = playableChampionDefinitions
     .map((definition) => {
       const championId = String(definition.id)
@@ -1838,6 +1995,14 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
     items: variants,
     updatedAt,
   })
+  await writeJson(path.join(outputDir, 'adventures.json'), {
+    items: adventures,
+    updatedAt,
+  })
+  await writeJson(path.join(outputDir, 'patrons.json'), {
+    items: patrons,
+    updatedAt,
+  })
   await writeJson(path.join(outputDir, 'formations.json'), {
     items: formations,
     updatedAt,
@@ -1853,6 +2018,7 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
       '公共数据来源：Idle Champions 官方客户端 definitions 接口。',
       '名称展示层同时保留官方原文与 language_id=7 返回的中文展示名。',
       '英雄头像资源来自官方 mobile_assets，并按数据版本写入 public/data/<version>/champion-portraits/。',
+      '共享英雄数据现已补充 patron 基线资格，场景数据现已补充 adventures / patrons / rule context / mode tags。',
       '英雄详情页数据按 public/data/<version>/champion-details/<hero-id>.json 输出，包含结构化字段与原始快照片段。',
       '英雄本体立绘与皮肤资源的官方定位元数据见 public/data/<version>/champion-visuals.json；立绘页直接消费的本地静态资源见 public/data/<version>/champion-illustrations.json。',
       '宠物页签数据来自 familiar_defines / premium_item_defines / patron_shop_item_defines，并输出到 public/data/<version>/pets.json 与 public/data/<version>/pets/。',
@@ -1868,6 +2034,8 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
       champions: champions.length,
       championVisuals: championVisuals.length,
       championDetails: championDetails.length,
+      adventures: adventures.length,
+      patrons: patrons.length,
       variants: variants.length,
       formations: formations.length,
       enums: enums.length,
@@ -1917,7 +2085,7 @@ async function main() {
   console.log(`- version.json: ${result.versionFile}`)
   console.log(`- updatedAt: ${result.updatedAt}`)
   console.log(
-    `- counts: champions=${result.counts.champions}, championVisuals=${result.counts.championVisuals}, championDetails=${result.counts.championDetails}, variants=${result.counts.variants}, formations=${result.counts.formations}, enums=${result.counts.enums}`,
+    `- counts: champions=${result.counts.champions}, championVisuals=${result.counts.championVisuals}, championDetails=${result.counts.championDetails}, adventures=${result.counts.adventures}, patrons=${result.counts.patrons}, variants=${result.counts.variants}, formations=${result.counts.formations}, enums=${result.counts.enums}`,
   )
 }
 

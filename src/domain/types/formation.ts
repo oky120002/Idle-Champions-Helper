@@ -16,8 +16,65 @@ export interface VariantAttackMix {
   other: number
 }
 
+export interface PatronObjectiveTier {
+  patronId: string
+  tierId: string
+  objectiveArea: number | null
+  objectives: unknown[]
+}
+
+export interface PatronEligibilityRule {
+  type: 'tags' | 'stats' | 'time_available_days'
+  rawExpression?: string
+  requiredAnyTags?: string[] | null
+  blockedWhen?: 'all' | 'any'
+  stats?: Array<{
+    stat: string
+    operator: string
+    value: number
+  }>
+  maxAgeDays?: number | null
+  supported: boolean
+}
+
+export interface Patron {
+  id: string
+  name: LocalizedText
+  description: LocalizedText | null
+  shortName: string | null
+  restrictionsText: LocalizedText[]
+  minObjectiveLevel: number | null
+  defaultObjectiveBump: number | null
+  weeklyFreePlayCap: number | null
+  forceAllowedHeroIds: string[]
+  eligibilityRules: PatronEligibilityRule[]
+  evaluationStatus: 'complete' | 'partial'
+}
+
+export interface Adventure {
+  id: string
+  ruleContextId: string
+  scenarioKind: 'adventure'
+  name: LocalizedText
+  campaign: LocalizedOption
+  description: LocalizedText | null
+  objectiveArea: number | null
+  locationId: string | null
+  areaSetId: string | null
+  scene: LocalizedOption | null
+  requirements: LocalizedText[]
+  restrictions: LocalizedText[]
+  rewards: LocalizedText[]
+  repeatable: boolean
+  patronObjectiveTiers: PatronObjectiveTier[]
+  modeTags: string[]
+  mechanics: string[]
+}
+
 export interface Variant {
   id: string
+  ruleContextId?: string
+  scenarioKind?: 'variant'
   name: LocalizedText
   campaign: LocalizedOption
   adventureId: string | null
@@ -28,6 +85,9 @@ export interface Variant {
   scene: LocalizedOption | null
   restrictions: LocalizedText[]
   rewards: LocalizedText[]
+  repeatable?: boolean
+  patronObjectiveTiers?: PatronObjectiveTier[]
+  modeTags?: string[]
   enemyCount: number
   enemyTypes: string[]
   enemyTypeCounts?: Record<string, number>

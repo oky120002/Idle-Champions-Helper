@@ -16,6 +16,19 @@
    - 对“官方原始明细是否完全丢了”这个问题，不成立。很多英雄相关原始数据已经保存在 `champion-details/<id>.json`。
    - 对“是否所有官方稳定事实都被提升成公共可复用契约”这个问题，成立。当前共享层明显偏薄。
 
+## 2026-06-04 第一批补齐
+
+本次审计后的第一批提升已经落地到共享层：
+
+- `champions.json` 新增 `patronEligibility`
+- 新增 `adventures.json`
+- 新增 `patrons.json`
+- `variants.json` 新增 `ruleContextId`、`scenarioKind`、`repeatable`、`patronObjectiveTiers`、`modeTags`
+- `enums.json` 新增 `patrons`、`modes`
+
+这意味着“基础 Patron 资格”和“基础场景身份 / 模式标签”已经不再只停留在 detail / raw 层。
+但这仍然只是第一批，尚未覆盖全部可复用规则事实。
+
 ## 本次核对方式
 
 本次没有只看仓库静态代码，而是重新拉了实时官方数据并现场过了一次 normalize：
@@ -71,9 +84,11 @@ node scripts/normalize-idle-champions-definitions.mjs \
 - `public/data/v1/champions.json`
 - `public/data/v1/champion-details/<id>.json`
 - `public/data/v1/champion-visuals.json`
+- `public/data/v1/adventures.json`
 - `public/data/v1/variants.json`
 - `public/data/v1/formations.json`
 - `public/data/v1/enums.json`
+- `public/data/v1/patrons.json`
 - `public/data/v1/pets.json`
 - `public/data/v1/planner-heroes.json`
 - `public/data/v1/planner-scenarios.json`
@@ -81,7 +96,7 @@ node scripts/normalize-idle-champions-definitions.mjs \
 
 ### 2. 顶层共享英雄合同目前很薄
 
-`champions.json` 的单个英雄目前只有：
+`champions.json` 的单个英雄目前至少有：
 
 - `id`
 - `name`
@@ -89,9 +104,10 @@ node scripts/normalize-idle-champions-definitions.mjs \
 - `roles`
 - `affiliations`
 - `tags`
+- `patronEligibility`
 - `portrait`
 
-这足够做基础 roster / seat / role / tag 查询，但对更高阶筛选、规则复用和阵型模拟来说偏薄。
+这已经足够支持基础 roster / seat / role / tag 查询，以及基线 Patron 资格过滤；但对更高阶的模式例外、英雄特许规则和跨场景规则复用来说仍然偏薄。
 
 ### 3. 英雄详情层保存得更厚
 

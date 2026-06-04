@@ -49,7 +49,7 @@ async function main() {
   一次拉取当前所有可公开获取的官方基座数据：
   1. 官方原文 definitions（每次都会重新拉取最新）
   2. language_id=7 中文 definitions（每次都会重新拉取最新）
-  3. champions / variants / formations / enums 归一化数据
+  3. champions / adventures / variants / patrons / formations / enums 归一化数据
   4. 官方英雄头像资源
   5. 详情页正面图资源
   6. 详情页升级区本地专精图资源
