@@ -40,6 +40,6 @@ export function attachPlannerSignalSemantics<
 >(signal: T, effect: unknown): T & PlannerSignalSemanticFields
 
 export function matchesPlannerHeroQualifier(
-  hero: Pick<ResolvedPlannerHeroModel, 'heroId' | 'tags' | 'baseAttackDamageTypes' | 'age' | 'abilityScores'>,
+  hero: Pick<ResolvedPlannerHeroModel, 'heroId' | 'tags' | 'baseAttackDamageTypes' | 'baseAttackCooldown' | 'age' | 'abilityScores'>,
   qualifier: PlannerHeroQualifier | null | undefined,
 ): boolean

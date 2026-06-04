@@ -73,6 +73,7 @@ test('buildPlannerModels 产出 planner heroes / scenarios / semantic overrides'
       attacks: {
         base: {
           id: 'base-1',
+          cooldown: 4.5,
           damageTypes: ['magic'],
         },
       },
@@ -148,6 +149,7 @@ test('buildPlannerModels 产出 planner heroes / scenarios / semantic overrides'
   assert.equal(plannerHeroes.updatedAt, '2026-06-04')
   assert.equal(plannerHeroes.items[0].heroId, '1')
   assert.deepEqual(plannerHeroes.items[0].baseAttackDamageTypes, ['magic'])
+  assert.equal(plannerHeroes.items[0].baseAttackCooldown, 4.5)
   assert.equal(plannerHeroes.items[0].age, 40)
   assert.equal(plannerHeroes.items[0].abilityScores.str, 15)
   assert.equal(plannerHeroes.items[0].carrySignals[0].kind, 'heroDpsMultiplier')

@@ -11,6 +11,7 @@ function createHero(heroId: string, overrides: Partial<OfficialPlannerHeroModel>
     roles: overrides.roles ?? [],
     tags: overrides.tags ?? [],
     baseAttackDamageTypes: overrides.baseAttackDamageTypes ?? [],
+    baseAttackCooldown: overrides.baseAttackCooldown ?? null,
     age: overrides.age ?? null,
     abilityScores: overrides.abilityScores ?? {},
     isCarryViable: overrides.isCarryViable ?? false,

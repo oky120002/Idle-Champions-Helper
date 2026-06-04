@@ -64,7 +64,7 @@ describe('planner signal coverage report', () => {
     expect(report.totals.signalsWithStatCountQualifier).toBe(1)
   })
 
-  it('保留未解析 per_hero_expr 以便后续排优先级', () => {
+  it('简单 tag && stat 组合进入已解析子集', () => {
     const report = generatePlannerSignalCoverageReport([
       {
         upgrades: [
@@ -81,9 +81,32 @@ describe('planner signal coverage report', () => {
     ])
 
     expect(report.totals.perHeroExprTotal).toBe(1)
+    expect(report.totals.parsedPerHeroExprTotal).toBe(1)
+    expect(report.totals.signalsWithTagCountQualifier).toBe(1)
+    expect(report.totals.signalsWithStatCountQualifier).toBe(1)
+    expect(report.topUnparsedPerHeroExpr).toEqual([])
+  })
+
+  it('复杂包装公式仍保留未解析以便后续排优先级', () => {
+    const report = generatePlannerSignalCoverageReport([
+      {
+        upgrades: [
+          {
+            effectReference: 'global_dps_multiplier_mult,20',
+            amount_func: 'mult',
+            stack_func: 'per_hero_attribute',
+            per_hero_expr: 'floor(max(has_tag_acqinc,has_tag_cteam)*min(hero_level,hero_softcap+max_levels_past_soft_cap))',
+          },
+        ],
+        loot: [],
+        legendaryEffects: [],
+      },
+    ])
+
+    expect(report.totals.perHeroExprTotal).toBe(1)
     expect(report.totals.unparsedPerHeroExprTotal).toBe(1)
     expect(report.topUnparsedPerHeroExpr[0]).toEqual({
-      key: 'HasTag(`female`) && GetStat(`STR`) >= 15',
+      key: 'floor(max(has_tag_acqinc,has_tag_cteam)*min(hero_level,hero_softcap+max_levels_past_soft_cap))',
       count: 1,
     })
   })
@@ -116,6 +139,80 @@ describe('planner signal coverage report', () => {
     expect(report.totals.signalsWithTagCountQualifier).toBe(1)
     expect(report.topUnparsedPerHeroExpr[0]).toEqual({
       key: '!HasEffect(`vampire_spawn`)',
+      count: 1,
+    })
+  })
+
+  it('把简单 as_int 标签包装计入已解析，但动态阈值公式仍保持未解析', () => {
+    const report = generatePlannerSignalCoverageReport([
+      {
+        upgrades: [
+          {
+            effectReference: 'global_dps_multiplier_mult,20',
+            amount_func: 'mult',
+            stack_func: 'per_hero_attribute',
+            per_hero_expr: '!HasTag(`human`)',
+          },
+          {
+            effectReference: 'global_dps_multiplier_mult,20',
+            amount_func: 'mult',
+            stack_func: 'per_hero_attribute',
+            per_hero_expr: 'as_int(!HasTag(`dps`))',
+          },
+          {
+            effectReference: 'global_dps_multiplier_mult,20',
+            amount_func: 'mult',
+            stack_func: 'per_hero_attribute',
+            per_hero_expr: 'as_int(HasTag(`dragonborn`))',
+          },
+          {
+            effectReference: 'global_dps_multiplier_mult,20',
+            amount_func: 'mult',
+            stack_func: 'per_hero_attribute',
+            per_hero_expr: 'as_int(GetStat(`int`) >= min_stat_value)',
+          },
+        ],
+        loot: [],
+        legendaryEffects: [],
+      },
+    ])
+
+    expect(report.totals.perHeroExprTotal).toBe(4)
+    expect(report.totals.parsedPerHeroExprTotal).toBe(3)
+    expect(report.totals.unparsedPerHeroExprTotal).toBe(1)
+    expect(report.topUnparsedPerHeroExpr[0]).toEqual({
+      key: 'as_int(GetStat(`int`) >= min_stat_value)',
+      count: 1,
+    })
+  })
+
+  it('把 base_attack_cooldown 比较表达式计入已解析，但裸 cooldown 表达式仍保持未解析', () => {
+    const report = generatePlannerSignalCoverageReport([
+      {
+        upgrades: [
+          {
+            effectReference: 'global_dps_multiplier_mult,20',
+            amount_func: 'mult',
+            stack_func: 'per_hero_attribute',
+            per_hero_expr: 'base_attack_cooldown<=4',
+          },
+          {
+            effectReference: 'global_dps_multiplier_mult,20',
+            amount_func: 'mult',
+            stack_func: 'per_hero_attribute',
+            per_hero_expr: 'base_attack_cooldown',
+          },
+        ],
+        loot: [],
+        legendaryEffects: [],
+      },
+    ])
+
+    expect(report.totals.perHeroExprTotal).toBe(2)
+    expect(report.totals.parsedPerHeroExprTotal).toBe(1)
+    expect(report.totals.unparsedPerHeroExprTotal).toBe(1)
+    expect(report.topUnparsedPerHeroExpr[0]).toEqual({
+      key: 'base_attack_cooldown',
       count: 1,
     })
   })

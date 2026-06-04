@@ -67,6 +67,7 @@ const plannerHeroes: OfficialPlannerHeroModel[] = champions.map((champion) => ({
   roles: champion.roles,
   tags: champion.tags,
   baseAttackDamageTypes: [],
+  baseAttackCooldown: null,
   age: null,
   abilityScores: {},
   isCarryViable: champion.roles.some((role) => role.toLowerCase() === 'dps'),

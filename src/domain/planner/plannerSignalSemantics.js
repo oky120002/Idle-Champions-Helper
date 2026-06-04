@@ -1,3 +1,11 @@
+import {
+  buildPlannerAgeQualifier,
+  mergePlannerHeroQualifiers,
+  parsePlannerTagDisjunction,
+  splitPlannerExprAtTopLevel,
+  stripPlannerExprOuterParentheses,
+} from './plannerQualifierParsing.js'
+
 function comparePlannerNumber(left, operator, right) {
   if (typeof left !== 'number') {
     return false
@@ -89,7 +97,7 @@ export function parsePlannerPerHeroExpr(expr) {
     return null
   }
 
-  const trimmed = expr.trim()
+  const trimmed = stripPlannerExprOuterParentheses(expr.trim())
   if (!trimmed || trimmed === 'true') {
     return {}
   }
@@ -105,19 +113,14 @@ export function parsePlannerPerHeroExpr(expr) {
     }
   }
 
-  const tagMatches = [...trimmed.matchAll(/HasTag\(`([^`]+)`\)/g)].map((match) => match[1])
   const attackDamageTypeMatch = trimmed.match(/^HasAttackDamageType\(`([^`]+)`\)$/)
   const excludedAttackDamageTypeMatch = trimmed.match(/^!HasAttackDamageType\(`([^`]+)`\)$/)
+  const negatedTagMatch = trimmed.match(/^!HasTag\(`([^`]+)`\)$/)
+  const asIntMatch = trimmed.match(/^as_int\((.+)\)$/)
   const statMatch = trimmed.match(/^GetStat\(`([A-Za-z_]+)`\)\s*(>=|<=|>|<|==)\s*(\d+)$/)
+  const baseAttackCooldownMatch = trimmed.match(/^base_attack_cooldown\s*(>=|<=|>|<|==)\s*(\d+(?:\.\d+)?)$/)
   const ageMatch = trimmed.match(/^age\s*(>=|<=|>|<|==)\s*(\d+)$/)
-  const ageWithExcludeMatch = trimmed.match(/^age\s*(>=|<=|>|<|==)\s*(\d+)\s*&&\s*hero_id!=([0-9]+)$/)
-
-  if (tagMatches.length > 0 && !trimmed.includes('GetStat') && !trimmed.includes('age')) {
-    return {
-      requiredTags: [...new Set(tagMatches)],
-      matchMode: 'any',
-    }
-  }
+  const ageWithExcludeMatch = trimmed.match(/^age\s*(>=|<=|>|<|==)\s*(\d+)\s*&&\s*hero_id\s*!=\s*([0-9]+)$/)
 
   if (attackDamageTypeMatch) {
     return {
@@ -129,6 +132,21 @@ export function parsePlannerPerHeroExpr(expr) {
     return {
       excludedAttackDamageTypes: [excludedAttackDamageTypeMatch[1].toLowerCase()],
     }
+  }
+
+  if (negatedTagMatch) {
+    return {
+      excludedTags: [negatedTagMatch[1]],
+    }
+  }
+
+  const tagQualifier = parsePlannerTagDisjunction(trimmed)
+  if (tagQualifier) {
+    return tagQualifier
+  }
+
+  if (asIntMatch) {
+    return parsePlannerPerHeroExpr(asIntMatch[1])
   }
 
   if (statMatch) {
@@ -143,25 +161,41 @@ export function parsePlannerPerHeroExpr(expr) {
     }
   }
 
-  if (ageWithExcludeMatch) {
-    const operator = ageWithExcludeMatch[1]
-    const value = Number(ageWithExcludeMatch[2])
+  if (baseAttackCooldownMatch) {
     return {
-      ...(operator === '>=' || operator === '>'
-        ? { minAge: value }
-        : { maxAge: value }),
-      excludedHeroIds: [ageWithExcludeMatch[3]],
+      requiredBaseAttackCooldown: {
+        operator: baseAttackCooldownMatch[1],
+        value: Number(baseAttackCooldownMatch[2]),
+      },
     }
   }
 
+  if (ageWithExcludeMatch) {
+    return buildPlannerAgeQualifier(
+      ageWithExcludeMatch[1],
+      Number(ageWithExcludeMatch[2]),
+      ageWithExcludeMatch[3],
+    )
+  }
+
   if (ageMatch) {
-    const operator = ageMatch[1]
-    const value = Number(ageMatch[2])
-    return {
-      ...(operator === '>=' || operator === '>'
-        ? { minAge: value }
-        : { maxAge: value }),
-    }
+    return buildPlannerAgeQualifier(ageMatch[1], Number(ageMatch[2]))
+  }
+
+  const andClauses = splitPlannerExprAtTopLevel(trimmed, '&&')
+  if (andClauses.length > 1) {
+    return andClauses.reduce((mergedQualifier, clause) => {
+      if (mergedQualifier === null) {
+        return null
+      }
+
+      const clauseQualifier = parsePlannerPerHeroExpr(clause)
+      if (!clauseQualifier) {
+        return null
+      }
+
+      return mergePlannerHeroQualifiers(mergedQualifier, clauseQualifier)
+    }, {})
   }
 
   return null
@@ -197,8 +231,8 @@ export function matchesPlannerHeroQualifier(hero, qualifier) {
   }
 
   const requiredTags = qualifier.requiredTags ?? []
+  const heroTags = new Set(hero.tags.map((tag) => tag.toLowerCase()))
   if (requiredTags.length > 0) {
-    const heroTags = new Set(hero.tags.map((tag) => tag.toLowerCase()))
     const normalizedTags = requiredTags.map((tag) => tag.toLowerCase())
     const matchMode = qualifier.matchMode ?? 'any'
     const tagMatches = matchMode === 'all'
@@ -210,9 +244,30 @@ export function matchesPlannerHeroQualifier(hero, qualifier) {
     }
   }
 
+  const excludedTags = qualifier.excludedTags ?? []
+  if (excludedTags.length > 0) {
+    const hasExcludedTag = excludedTags
+      .map((tag) => tag.toLowerCase())
+      .some((tag) => heroTags.has(tag))
+
+    if (hasExcludedTag) {
+      return false
+    }
+  }
+
   for (const statQualifier of qualifier.requiredStats ?? []) {
     const heroValue = hero.abilityScores[statQualifier.stat]
     if (!comparePlannerNumber(heroValue, statQualifier.operator, statQualifier.value)) {
+      return false
+    }
+  }
+
+  if (qualifier.requiredBaseAttackCooldown) {
+    if (!comparePlannerNumber(
+      hero.baseAttackCooldown,
+      qualifier.requiredBaseAttackCooldown.operator,
+      qualifier.requiredBaseAttackCooldown.value,
+    )) {
       return false
     }
   }
@@ -241,13 +296,13 @@ export function matchesPlannerHeroQualifier(hero, qualifier) {
   }
 
   if (qualifier.minAge !== null && qualifier.minAge !== undefined) {
-    if (!comparePlannerNumber(hero.age, '>=', qualifier.minAge)) {
+    if (!comparePlannerNumber(hero.age, qualifier.minAgeOperator ?? '>=', qualifier.minAge)) {
       return false
     }
   }
 
   if (qualifier.maxAge !== null && qualifier.maxAge !== undefined) {
-    if (!comparePlannerNumber(hero.age, '<=', qualifier.maxAge)) {
+    if (!comparePlannerNumber(hero.age, qualifier.maxAgeOperator ?? '<=', qualifier.maxAge)) {
       return false
     }
   }

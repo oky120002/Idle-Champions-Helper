@@ -25,12 +25,19 @@ export interface PlannerStatQualifier {
 
 export interface PlannerHeroQualifier {
   requiredTags?: string[]
+  excludedTags?: string[]
   matchMode?: PlannerTargetMatchMode
   requiredStats?: PlannerStatQualifier[]
+  requiredBaseAttackCooldown?: {
+    operator: PlannerComparisonOperator
+    value: number
+  }
   requiredAttackDamageTypes?: string[]
   excludedAttackDamageTypes?: string[]
   minAge?: number | null
+  minAgeOperator?: '>=' | '>'
   maxAge?: number | null
+  maxAgeOperator?: '<=' | '<'
   excludedHeroIds?: string[]
 }
 
@@ -76,6 +83,7 @@ export interface OfficialPlannerHeroModel {
   roles: string[]
   tags: string[]
   baseAttackDamageTypes: string[]
+  baseAttackCooldown: number | null
   age: number | null
   abilityScores: Partial<Record<AbilityScoreKey, number>>
   isCarryViable: boolean

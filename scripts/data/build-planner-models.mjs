@@ -66,6 +66,7 @@ function buildOfficialPlannerHeroModel(champion, detail) {
     roles: champion.roles,
     tags: champion.tags,
     baseAttackDamageTypes: detail.attacks?.base?.damageTypes ?? [],
+    baseAttackCooldown: typeof detail.attacks?.base?.cooldown === 'number' ? detail.attacks.base.cooldown : null,
     age: typeof detail.characterSheet?.age === 'number' ? detail.characterSheet.age : null,
     abilityScores: detail.characterSheet?.abilityScores ?? {},
     isCarryViable: champion.roles.some((role) => String(role).toLowerCase() === 'dps'),

@@ -15,6 +15,7 @@ function createHero(heroId: string, overrides: Partial<OfficialPlannerHeroModel>
     roles: overrides.roles ?? [],
     tags: overrides.tags ?? [],
     baseAttackDamageTypes: overrides.baseAttackDamageTypes ?? [],
+    baseAttackCooldown: overrides.baseAttackCooldown ?? null,
     age: overrides.age ?? null,
     abilityScores: overrides.abilityScores ?? {},
     isCarryViable: overrides.isCarryViable ?? false,
@@ -50,6 +51,7 @@ describe('planner signal semantics', () => {
 
     expect(parsePlannerPerHeroExpr('age <= 20 && hero_id!=58')).toEqual({
       maxAge: 20,
+      maxAgeOperator: '<=',
       excludedHeroIds: ['58'],
     })
 
@@ -60,12 +62,48 @@ describe('planner signal semantics', () => {
     expect(parsePlannerPerHeroExpr('!HasAttackDamageType(`melee`)')).toEqual({
       excludedAttackDamageTypes: ['melee'],
     })
+
+    expect(parsePlannerPerHeroExpr('!HasTag(`human`)')).toEqual({
+      excludedTags: ['human'],
+    })
+
+    expect(parsePlannerPerHeroExpr('(HasTag(`female`) || HasTag(`non_binary`)) && age<110')).toEqual({
+      requiredTags: ['female', 'non_binary'],
+      matchMode: 'any',
+      maxAge: 110,
+      maxAgeOperator: '<',
+    })
+
+    expect(parsePlannerPerHeroExpr('age <= 20 && hero_id != 146')).toEqual({
+      maxAge: 20,
+      maxAgeOperator: '<=',
+      excludedHeroIds: ['146'],
+    })
+
+    expect(parsePlannerPerHeroExpr('as_int(!HasTag(`dps`))')).toEqual({
+      excludedTags: ['dps'],
+    })
+
+    expect(parsePlannerPerHeroExpr('as_int(HasTag(`dragonborn`))')).toEqual({
+      requiredTags: ['dragonborn'],
+      matchMode: 'any',
+    })
+
+    expect(parsePlannerPerHeroExpr('base_attack_cooldown<=4')).toEqual({
+      requiredBaseAttackCooldown: {
+        operator: '<=',
+        value: 4,
+      },
+    })
+
+    expect(parsePlannerPerHeroExpr('as_int(GetStat(`int`) >= min_stat_value)')).toBeNull()
   })
 
   it('matchesPlannerHeroQualifier 用统一规则判断标签、属性、年龄和排除英雄', () => {
     const hero = createHero('carry', {
       tags: ['female', 'evil', 'undead'],
       baseAttackDamageTypes: ['magic'],
+      baseAttackCooldown: 4.5,
       age: 19,
       abilityScores: { cha: 13 },
     })
@@ -81,6 +119,19 @@ describe('planner signal semantics', () => {
     })).toBe(true)
 
     expect(matchesPlannerHeroQualifier(hero, {
+      excludedTags: ['human'],
+    })).toBe(true)
+
+    expect(matchesPlannerHeroQualifier(hero, {
+      excludedTags: ['evil'],
+    })).toBe(false)
+
+    expect(matchesPlannerHeroQualifier(hero, {
+      maxAge: 19,
+      maxAgeOperator: '<',
+    })).toBe(false)
+
+    expect(matchesPlannerHeroQualifier(hero, {
       excludedHeroIds: ['carry'],
     })).toBe(false)
 
@@ -90,6 +141,14 @@ describe('planner signal semantics', () => {
 
     expect(matchesPlannerHeroQualifier(hero, {
       excludedAttackDamageTypes: ['magic'],
+    })).toBe(false)
+
+    expect(matchesPlannerHeroQualifier(hero, {
+      requiredBaseAttackCooldown: { operator: '<=', value: 4.5 },
+    })).toBe(true)
+
+    expect(matchesPlannerHeroQualifier(hero, {
+      requiredBaseAttackCooldown: { operator: '<', value: 4.5 },
     })).toBe(false)
   })
 
