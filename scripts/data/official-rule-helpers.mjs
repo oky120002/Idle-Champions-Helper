@@ -41,6 +41,130 @@ function compareLocalizedText(left, right) {
   return left.display.localeCompare(right.display) || left.original.localeCompare(right.original)
 }
 
+function normalizeJsonValue(value) {
+  if (
+    value === null ||
+    typeof value === 'string' ||
+    typeof value === 'number' ||
+    typeof value === 'boolean'
+  ) {
+    return value
+  }
+
+  if (value === undefined) {
+    return null
+  }
+
+  if (Array.isArray(value)) {
+    return value.map((item) => normalizeJsonValue(item))
+  }
+
+  if (typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, item]) => [key, normalizeJsonValue(item)]),
+    )
+  }
+
+  return toText(value)
+}
+
+function normalizeBooleanFlag(value) {
+  if (typeof value === 'boolean') {
+    return value
+  }
+
+  if (typeof value === 'number') {
+    return value !== 0
+  }
+
+  const text = toText(value)
+  if (!text) {
+    return false
+  }
+
+  return text !== '0' && text.toLowerCase() !== 'false'
+}
+
+function normalizeRemainingProperties(value, consumedKeys = []) {
+  if (Array.isArray(value)) {
+    return value.length > 0 ? normalizeJsonValue(value) : null
+  }
+
+  if (!value || typeof value !== 'object') {
+    return null
+  }
+
+  const consumed = new Set(consumedKeys)
+  const entries = Object.entries(value).filter(([key]) => !consumed.has(key))
+
+  if (entries.length === 0) {
+    return null
+  }
+
+  return normalizeJsonValue(Object.fromEntries(entries))
+}
+
+function normalizeLocalizedTextRecord(originalValue, displayValue) {
+  const originalEntries = originalValue && typeof originalValue === 'object' ? Object.entries(originalValue) : []
+  const displayEntries = displayValue && typeof displayValue === 'object' ? Object.entries(displayValue) : []
+  const keys = [...new Set([...originalEntries.map(([key]) => key), ...displayEntries.map(([key]) => key)])].sort(
+    (left, right) => left.localeCompare(right),
+  )
+
+  if (keys.length === 0) {
+    return null
+  }
+
+  const record = {}
+
+  for (const key of keys) {
+    const localized = normalizeLocalizedText(
+      originalValue?.[key],
+      displayValue?.[key],
+      key,
+    )
+
+    if (localized) {
+      record[key] = localized
+    }
+  }
+
+  return Object.keys(record).length > 0 ? record : null
+}
+
+function normalizeStringArray(values) {
+  if (!Array.isArray(values)) {
+    return []
+  }
+
+  return Array.from(
+    new Set(
+      values
+        .map((value) => toText(value))
+        .filter(Boolean),
+    ),
+  ).sort((left, right) => left.localeCompare(right))
+}
+
+export function normalizeEffectStringReference(effectStringValue) {
+  const effectString = toText(effectStringValue)
+
+  if (!effectString) {
+    return null
+  }
+
+  const [key, ...args] = effectString.split(',').map((item) => item.trim())
+  const effectDefinitionId =
+    key === 'effect_def' && typeof args[0] === 'string' && args[0].trim() ? args[0].trim() : null
+
+  return {
+    effectString,
+    key,
+    args,
+    effectDefinitionId,
+  }
+}
+
 function normalizeTextMapEntries(originalValue, displayValue) {
   const originalEntries = originalValue && typeof originalValue === 'object' ? Object.entries(originalValue) : []
   const displayEntries = displayValue && typeof displayValue === 'object' ? Object.entries(displayValue) : []
@@ -359,4 +483,355 @@ export function buildScenarioModeTags(kind, repeatable, patronObjectiveTiers) {
   }
 
   return tags
+}
+
+export function normalizeOfficialGameRuleDefinition(definition = {}) {
+  const ruleName = toText(definition.rule_name)
+
+  if (!ruleName) {
+    return null
+  }
+
+  const rule =
+    definition.rule && typeof definition.rule === 'object'
+      ? normalizeJsonValue(definition.rule)
+      : normalizeJsonValue(definition.rule ?? null)
+
+  return {
+    id: String(definition.id),
+    ruleName,
+    topLevelKeys:
+      rule && typeof rule === 'object' && !Array.isArray(rule)
+        ? Object.keys(rule).sort((left, right) => left.localeCompare(right))
+        : [],
+    rule,
+  }
+}
+
+export function normalizeOfficialStatDefinition(definition = {}) {
+  const name = toText(definition.name)
+
+  if (!name) {
+    return null
+  }
+
+  return {
+    id: String(definition.id),
+    name,
+    multiKey: normalizeBooleanFlag(definition.multi_key),
+    clearOnReset: normalizeBooleanFlag(definition.clear_on_reset),
+    serverOnly: normalizeBooleanFlag(definition.server_only),
+    readOnly: normalizeBooleanFlag(definition.read_only),
+    properties: normalizeRemainingProperties(definition.properties),
+  }
+}
+
+export function normalizeOfficialBuffDefinition(originalDefinition = {}, localizedDefinition = {}) {
+  const name = normalizeLocalizedText(
+    originalDefinition.name,
+    localizedDefinition.name,
+    `Buff ${originalDefinition.id ?? 'unknown'}`,
+  )
+
+  if (!name) {
+    return null
+  }
+
+  return {
+    id: String(originalDefinition.id),
+    name,
+    description: normalizeLocalizedText(
+      originalDefinition.description,
+      localizedDefinition.description,
+    ),
+    pluralName: normalizeLocalizedText(
+      originalDefinition.properties?.name_plural,
+      localizedDefinition.properties?.name_plural,
+    ),
+    effect: normalizeEffectStringReference(originalDefinition.effect),
+    rarity: normalizeNumber(originalDefinition.rarity),
+    duration: normalizeNumber(originalDefinition.duration),
+    graphicId:
+      originalDefinition.graphic_id === undefined || originalDefinition.graphic_id === null
+        ? null
+        : String(originalDefinition.graphic_id),
+    inventoryGraphicId:
+      originalDefinition.properties?.inventory_graphic_id === undefined ||
+      originalDefinition.properties?.inventory_graphic_id === null
+        ? null
+        : String(originalDefinition.properties.inventory_graphic_id),
+    odds: normalizeNumber(originalDefinition.odds),
+    inventoryOrder: normalizeNumber(originalDefinition.inventory_order),
+    tags: normalizeStringArray(originalDefinition.tags),
+    properties: normalizeRemainingProperties(originalDefinition.properties, [
+      'inventory_graphic_id',
+      'name_plural',
+    ]),
+  }
+}
+
+function normalizeEffectKeyParamNames(value) {
+  const text = toText(value)
+
+  if (!text) {
+    return []
+  }
+
+  return text
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .map((item) => {
+      const parts = item.split(/\s+/).filter(Boolean)
+
+      if (parts.length === 1) {
+        return {
+          name: parts[0],
+          type: null,
+        }
+      }
+
+      return {
+        name: parts.at(-1),
+        type: parts.slice(0, -1).join(' '),
+      }
+    })
+}
+
+export function normalizeOfficialEffectKeyDefinition(originalDefinition = {}, localizedDefinition = {}) {
+  const key = toText(originalDefinition.key)
+
+  if (!key) {
+    return null
+  }
+
+  return {
+    id: String(originalDefinition.id),
+    key,
+    owner: toText(originalDefinition.owner),
+    paramNames: normalizeEffectKeyParamNames(originalDefinition.param_names),
+    descriptions: normalizeLocalizedTextRecord(
+      originalDefinition.descriptions,
+      localizedDefinition.descriptions,
+    ),
+    negative: normalizeBooleanFlag(originalDefinition.properties?.negative),
+    properties: normalizeRemainingProperties(originalDefinition.properties, ['negative']),
+  }
+}
+
+function extractPurchasedPerkRequirementCount(requirements = []) {
+  const matches = requirements
+    .filter((requirement) => requirement?.condition === 'patron_perks_purchased')
+    .map((requirement) => normalizeNumber(requirement.amount))
+    .filter((value) => value !== null)
+
+  return matches.length === 1 ? matches[0] : null
+}
+
+export function normalizePatronPerkTierDefinition(definition = {}) {
+  const patronId =
+    definition.patron_id === undefined || definition.patron_id === null
+      ? null
+      : String(definition.patron_id)
+  const tierId =
+    definition.tier_id === undefined || definition.tier_id === null ? null : String(definition.tier_id)
+
+  if (!patronId || !tierId) {
+    return null
+  }
+
+  const requirements = Array.isArray(definition.requirements)
+    ? definition.requirements.map((requirement) => normalizeJsonValue(requirement))
+    : []
+
+  return {
+    id: String(definition.id),
+    patronId,
+    tierId,
+    requiredPurchasedPerkCount: extractPurchasedPerkRequirementCount(requirements),
+    requirements,
+  }
+}
+
+function normalizePatronPerkCost(cost) {
+  if (!cost || typeof cost !== 'object') {
+    return null
+  }
+
+  const baseCost = normalizeNumber(cost.base_cost)
+  const scaling = normalizeNumber(cost.scaling)
+
+  if (baseCost === null && scaling === null) {
+    return null
+  }
+
+  return {
+    baseCost,
+    scaling,
+  }
+}
+
+function normalizePatronPerkEffect(effect = {}) {
+  const effectReference = normalizeEffectStringReference(effect.effect_string)
+
+  if (!effectReference) {
+    return null
+  }
+
+  return {
+    effectString: effectReference.effectString,
+    key: effectReference.key,
+    args: effectReference.args,
+    perLevel: normalizeNumber(effect.per_level),
+    targetName: toText(effect.target_name),
+    effectDefinitionId: effectReference.effectDefinitionId,
+  }
+}
+
+export function normalizePatronPerkDefinition(originalDefinition = {}, localizedDefinition = {}) {
+  const patronId =
+    originalDefinition.patron_id === undefined || originalDefinition.patron_id === null
+      ? null
+      : String(originalDefinition.patron_id)
+  const tierId =
+    originalDefinition.tier_id === undefined || originalDefinition.tier_id === null
+      ? null
+      : String(originalDefinition.tier_id)
+  const name = normalizeLocalizedText(
+    originalDefinition.name,
+    localizedDefinition.name,
+    `Patron Perk ${originalDefinition.id ?? 'unknown'}`,
+  )
+
+  if (!patronId || !tierId || !name) {
+    return null
+  }
+
+  const effects = (Array.isArray(originalDefinition.effects) ? originalDefinition.effects : [])
+    .map((effect) => normalizePatronPerkEffect(effect))
+    .filter(Boolean)
+
+  return {
+    id: String(originalDefinition.id),
+    patronId,
+    tierId,
+    name,
+    graphicId:
+      originalDefinition.graphic_id === undefined || originalDefinition.graphic_id === null
+        ? null
+        : String(originalDefinition.graphic_id),
+    typeId: normalizeNumber(originalDefinition.type),
+    levels: normalizeNumber(originalDefinition.levels),
+    cost: normalizePatronPerkCost(originalDefinition.cost),
+    effects,
+    effectDefinitionIds: Array.from(
+      new Set(
+        effects
+          .map((effect) => effect.effectDefinitionId)
+          .filter((effectDefinitionId) => typeof effectDefinitionId === 'string' && effectDefinitionId),
+      ),
+    ).sort((left, right) => Number(left) - Number(right)),
+    properties: normalizeJsonValue(originalDefinition.properties ?? []),
+  }
+}
+
+export function normalizeTrialsRoleDefinition(
+  originalDefinition = {},
+  localizedDefinition = {},
+  adventureMetadata = null,
+) {
+  const name = normalizeLocalizedText(
+    originalDefinition.name,
+    localizedDefinition.name,
+    `Trials Role ${originalDefinition.id ?? 'unknown'}`,
+  )
+
+  if (!name) {
+    return null
+  }
+
+  const adventureId =
+    originalDefinition.adventure_id === undefined || originalDefinition.adventure_id === null
+      ? null
+      : String(originalDefinition.adventure_id)
+  const scenarioKind = adventureMetadata ? (adventureMetadata.isVariant ? 'variant' : 'adventure') : null
+
+  return {
+    id: String(originalDefinition.id),
+    name,
+    description: normalizeLocalizedText(
+      originalDefinition.description,
+      localizedDefinition.description,
+    ),
+    graphicId:
+      originalDefinition.graphic_id === undefined || originalDefinition.graphic_id === null
+        ? null
+        : String(originalDefinition.graphic_id),
+    adventureId,
+    scenarioKind,
+    ruleContextId:
+      scenarioKind && adventureMetadata?.id
+        ? buildScenarioRuleContextId(scenarioKind, adventureMetadata.id)
+        : null,
+    adventure: adventureMetadata
+      ? {
+          id: adventureMetadata.id,
+          name: adventureMetadata.name,
+          campaign: adventureMetadata.campaign,
+          objectiveArea: adventureMetadata.objectiveArea ?? null,
+          locationId: adventureMetadata.locationId ?? null,
+          areaSetId: adventureMetadata.areaSetId ?? null,
+        }
+      : null,
+    position: {
+      x: normalizeNumber(originalDefinition.location_position_x),
+      y: normalizeNumber(originalDefinition.location_position_y),
+    },
+  }
+}
+
+function normalizeTrialsDifficultyCost(cost = {}) {
+  const costType = toText(cost.cost)
+
+  if (!costType) {
+    return null
+  }
+
+  return {
+    costType,
+    difficultyTokenId: toText(cost.difficulty_token_id),
+    amount: normalizeNumber(cost.amount),
+  }
+}
+
+export function normalizeTrialsDifficultyDefinition(originalDefinition = {}, localizedDefinition = {}) {
+  const name = normalizeLocalizedText(
+    originalDefinition.name,
+    localizedDefinition.name,
+    `Trials Difficulty ${originalDefinition.id ?? 'unknown'}`,
+  )
+
+  if (!name) {
+    return null
+  }
+
+  return {
+    id: String(originalDefinition.id),
+    name,
+    shortName: toText(localizedDefinition.short_name) ?? toText(originalDefinition.short_name),
+    description: normalizeLocalizedText(
+      originalDefinition.description,
+      localizedDefinition.description,
+    ),
+    graphicId:
+      originalDefinition.graphic_id === undefined || originalDefinition.graphic_id === null
+        ? null
+        : String(originalDefinition.graphic_id),
+    points: normalizeNumber(originalDefinition.points),
+    tiamatHealth: normalizeNumber(originalDefinition.tiamat_health),
+    costs: (Array.isArray(originalDefinition.cost) ? originalDefinition.cost : [])
+      .map((cost) => normalizeTrialsDifficultyCost(cost))
+      .filter(Boolean),
+    rewardData: normalizeJsonValue(originalDefinition.reward_data ?? []),
+  }
 }

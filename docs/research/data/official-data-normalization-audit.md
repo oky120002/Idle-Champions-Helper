@@ -1,6 +1,6 @@
 # 官方基座数据归一化审计
 
-- 日期：2026-06-04
+- 日期：2026-06-09
 - 目标：回答当前 `data:official` 流水线是否已经把官方基座数据完整归一化保存，以及是否存在“未涉及就不归一化”的问题。
 
 ## 结论
@@ -29,6 +29,36 @@
 这意味着“基础 Patron 资格”和“基础场景身份 / 模式标签”已经不再只停留在 detail / raw 层。
 但这仍然只是第一批，尚未覆盖全部可复用规则事实。
 
+## 2026-06-09 第二批补齐
+
+继续沿着“共享规则事实提升”这条线，本次又新增了第二批公共集合：
+
+- 新增 `game-rules.json`
+- 新增 `patron-perks.json`
+- 新增 `trials.json`
+
+其中：
+
+- `game-rules.json` 归一化保存官方 `game_rule_defines`
+- `patron-perks.json` 归一化保存 `patron_perk_tier_defines` 与 `patron_perk_defines`
+- `trials.json` 归一化保存 `trials_role_defines` 与 `trials_difficulty_defines`
+
+这意味着后续阵型模拟、Patron Perk 语义解释、Trials 规则接入，已经不需要再回到原始 definitions 整包里找这些稳定事实。
+
+## 2026-06-09 第三批补齐
+
+同一天继续沿着“共享规则 / 效果参考字典提升”这条线，又新增了一层公共参考集合：
+
+- 新增 `effect-reference.json`
+
+其中：
+
+- `effect-reference.json` 归一化保存 `stat_defines`
+- `effect-reference.json` 归一化保存 `buff_defines`
+- `effect-reference.json` 归一化保存 `effect_key_defines`
+
+这意味着和数值条件、buff 字典、effect key 描述直接相关的稳定官方事实，已经不再散落在 definitions 原包里，也不需要后续流程各自重复抽取。
+
 ## 本次核对方式
 
 本次没有只看仓库静态代码，而是重新拉了实时官方数据并现场过了一次 normalize：
@@ -53,27 +83,24 @@ node scripts/normalize-idle-champions-definitions.mjs \
 
 实时拉取结果：
 
-- source play server：`https://ps30.idlechampions.com/~idledragons/`
-- zh play server：`https://ps29.idlechampions.com/~idledragons/`
+- source play server：`https://ps29.idlechampions.com/~idledragons/`
+- zh play server：`https://ps27.idlechampions.com/~idledragons/`
 - 顶层返回包含 `51` 组 `_defines` 表，以及 `current_time`、`checksum`、`apc_stats`、`db_stats` 等元信息。
 - 现场 normalize 成功，生成：
   - `champions=163`
   - `championVisuals=163`
   - `championDetails=163`
+  - `adventures=516`
+  - `patrons=5`
   - `variants=1393`
   - `formations=159`
-  - `enums=3`
+  - `enums=5`
 
 这说明当前脚本与官方接口的顶层格式仍然匹配。
 
-另一个独立事实是：仓库当前已提交的 `public/data/version.json` 还是 `2026-06-01`，当前产物计数为：
+另一个独立事实是：这次归一化已经直接把仓库内 `public/data/version.json` 刷到了 `2026-06-09`，并新增了第二、三批共享集合。
 
-- `champions=162`
-- `championVisuals=162`
-- `variants=1389`
-- `formations=158`
-
-所以眼下更明显的问题是“仓库快照滞后”与“归一化覆盖面有限”，不是“实时官方接口已经换格式导致脚本失效”。
+所以眼下更明显的问题不再是“仓库快照滞后”，而是“归一化覆盖面仍然有限”，不是“实时官方接口已经换格式导致脚本失效”。
 
 ## 当前已经归一化保存到哪里
 
@@ -86,6 +113,10 @@ node scripts/normalize-idle-champions-definitions.mjs \
 - `public/data/v1/champion-visuals.json`
 - `public/data/v1/adventures.json`
 - `public/data/v1/variants.json`
+- `public/data/v1/game-rules.json`
+- `public/data/v1/effect-reference.json`
+- `public/data/v1/patron-perks.json`
+- `public/data/v1/trials.json`
 - `public/data/v1/formations.json`
 - `public/data/v1/enums.json`
 - `public/data/v1/patrons.json`
@@ -142,7 +173,7 @@ node scripts/normalize-idle-champions-definitions.mjs \
 
 ## 当前官方 definitions 的消费覆盖面
 
-本次基于实时拉取的 definitions 顶层键做了脚本扫描。当前 `data:official` 整体链路里，真正直接引用到的官方表只有 `18` 项（含 `current_time`）：
+本次基于实时拉取的 definitions 顶层键做了脚本扫描。当前 `data:official` 整体链路里，真正直接引用到的官方表已有 `26` 项（含 `current_time`）：
 
 - `adventure_defines`
 - `affiliation_defines`
@@ -150,6 +181,7 @@ node scripts/normalize-idle-champions-definitions.mjs \
 - `campaign_defines`
 - `current_time`
 - `effect_defines`
+- `effect_key_defines`
 - `familiar_defines`
 - `graphic_defines`
 - `hero_defines`
@@ -159,8 +191,15 @@ node scripts/normalize-idle-champions-definitions.mjs \
 - `loot_defines`
 - `monster_defines`
 - `patron_defines`
+- `patron_perk_defines`
+- `patron_perk_tier_defines`
 - `patron_shop_item_defines`
 - `premium_item_defines`
+- `stat_defines`
+- `buff_defines`
+- `game_rule_defines`
+- `trials_difficulty_defines`
+- `trials_role_defines`
 - `upgrade_defines`
 
 其中可以再分成两类：
@@ -169,14 +208,17 @@ node scripts/normalize-idle-champions-definitions.mjs \
   `hero_defines`、`attack_defines`、`upgrade_defines`、`effect_defines`、`hero_feat_defines`、`hero_skin_defines`、`loot_defines`、`legendary_effect_defines`、`adventure_defines`、`campaign_defines`、`affiliation_defines`、`monster_defines`
 - 主要给资源和宠物链路使用的表：
   `graphic_defines`、`familiar_defines`、`premium_item_defines`、`patron_defines`、`patron_shop_item_defines`
+- 已提升为共享规则层的新表：
+  `game_rule_defines`、`patron_perk_defines`、`patron_perk_tier_defines`、`trials_role_defines`、`trials_difficulty_defines`
+- 已提升为共享效果参考层的新表：
+  `stat_defines`、`buff_defines`、`effect_key_defines`
 
 ## 还没有被归一化保存的官方基座数据
 
-实时 definitions 顶层共有 `51` 组 `_defines`。按当前脚本扫描，仍有 `34` 组完全没有进入现行 `data:official` 产物链路：
+实时 definitions 顶层共有 `51` 组 `_defines`。按当前脚本扫描，仍有 `26` 组完全没有进入现行 `data:official` 产物链路：
 
 - `ability_defines`
 - `achievement_defines`
-- `buff_defines`
 - `card_sleeve_defines`
 - `changelog_defines`
 - `chest_type_defines`
@@ -184,10 +226,8 @@ node scripts/normalize-idle-champions-definitions.mjs \
 - `collection_quest_defines`
 - `collection_quest_set_defines`
 - `corrupted_gem_shop_item_defines`
-- `effect_key_defines`
 - `external_achievement_defines`
 - `familiar_skin_defines`
-- `game_rule_defines`
 - `language_defines`
 - `mastery_shop_item_defines`
 - `modron_core_defines`
@@ -195,47 +235,42 @@ node scripts/normalize-idle-champions-definitions.mjs \
 - `music_album_defines`
 - `music_track_defines`
 - `news_defines`
-- `patron_perk_defines`
-- `patron_perk_tier_defines`
 - `pigment_effect_defines`
 - `shop_category_defines`
 - `shop_display_defines`
 - `social_link_defines`
 - `sound_defines`
-- `stat_defines`
 - `text_defines`
-- `trials_difficulty_defines`
-- `trials_role_defines`
 - `tutorial_state_defines`
 - `twitch_benefit_defines`
 
-这里面有一部分现在确实不该优先做，比如 `music_*`、`sound_defines`、`social_link_defines`。但也有一部分明显属于后续阵型计算、规则建模或高级筛选可能会用到的稳定事实源，例如：
+这里面有一部分现在确实不该优先做，比如 `music_*`、`sound_defines`、`social_link_defines`。而和阵型计算最直接相关的那批顶层稳定字典，这次已经基本补上了。
 
-- `game_rule_defines`
-- `stat_defines`
-- `buff_defines`
-- `effect_key_defines`
-- `patron_perk_defines`
-- `patron_perk_tier_defines`
-- `trials_role_defines`
-- `trials_difficulty_defines`
-
-所以现在不能说“官方基座数据已经完整收敛到统一归一化层”。
+所以现在更准确的说法是：`未消费顶层表` 仍然不少，但下一步的主战场，已经不再是这三张顶层效果字典，而是“已消费但尚未共享提升”的 effect / detail 事实。
 
 ## “未涉及就不归一化”具体体现在哪里
 
-### 1. 共享英雄合同没有提升稳定限制事实
+### 1. 共享事实层仍然没有完整承接稳定事实
 
 当前文档和代码里已经明确暴露出几类缺口：
 
-- `patronEligibility`
 - `modeEligibilityTags`
+- 更细的英雄限制 / 规则键映射
+- 可复用的 effect definition / effect formula 合同
+- planner 可直接消费的稳定限制投影
+
+其中一部分第一到第三批已经补上，例如：
+
+- `patronEligibility`
 - `patrons`
 - `modes`
 - 稳定 `ruleContextId`
-- 结构化规则集合
+- `game-rules.json`
+- `effect-reference.json`
+- `patron-perks.json`
+- `trials.json`
 
-这些不是“完全拿不到”，而是还没有被提升成公共事实层。
+但这仍不等于“共享事实层已经够厚”。真正靠近阵型计算核心的 effect definitions、本体升级效果投影、以及 planner 直接消费的稳定条件投影，今天还没有被统一提升出来。
 
 ### 2. 详情层存在“保存了，但没抽象成共享事实”的情况
 
@@ -266,13 +301,12 @@ node scripts/normalize-idle-champions-definitions.mjs \
 
 优先级建议如下：
 
-1. 先定义一层共享规则事实合同，覆盖英雄可参与限制与场景限制，不直接绑定某个页面。
-2. 第一批优先提升：
-   - `patronEligibility`
-   - `modeEligibilityTags`
-   - 场景 `ruleContextId`
-   - adventure / variant 的结构化限制来源
-3. 明确区分两类信息：
+1. 继续提升“稳定、可复用、非运行时”的规则事实，但下一刀不再是补顶层 stat / buff / effect-key 字典，而是补更贴近 effect 实体与 planner 输入层的共享合同。
+2. 当前更值得继续审计和提升的方向：
+   - 从已消费的 `effect_defines` 提升一层薄共享 effect 合同
+   - 从 `champion-details/<id>.json` / `raw.upgrades` 提升 planner 会反复用到的稳定条件投影
+   - 继续补 `modeEligibilityTags` 这类静态限制事实
+3. 继续把信息分成两类：
    - 静态稳定事实：归一化进共享数据
    - 运行时上下文事实：放进 planner scenario / evaluation context
-4. 在这层事实合同补起来前，新的 planner 表达式支持要谨慎评估收益，避免继续把复杂度堆到解析器里。
+4. 如果某条信息已经稳定存在于 `champion-details/<id>.json` 或原始 definitions 中，就优先考虑“提升成薄共享合同”，而不是继续把解析复杂度压进 planner parser。

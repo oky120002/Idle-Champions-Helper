@@ -73,12 +73,12 @@
 - 当前解析率回到 `67.21%`，但这次口径比之前更可信：parser 已经不再把复杂包装公式误判成“已解析”，新增覆盖来自明确可落到静态事实源的受控子集。
 - `GetStat(\`total_ability_score\`)` 这类表达式当前也能正确参与计分，但这次没有带来解析率变化：它此前已经在 parser 层被算作“可解析”，问题在于评分阶段没有把六维求和当作一个真实 stat 值来消费。
 - `!HasEffect(\`vampire_spawn\`)` 继续保持未解析：它描述的是运行时是否已被特殊效果标记，不是稳定静态英雄事实，当前不应硬塞进 planner model。
-- `EligibleForPatron(aeon_current_patron_id)` 当前继续保持未解析：仓库文档虽然计划过 `patronEligibility` 公共字段，但现有 `champions.json` 并未真正落地这份事实源，且表达式还依赖“伊恩本周 patron 目标”这一额外上下文，当前 planner model 也没有承载它。
+- `EligibleForPatron(aeon_current_patron_id)` 当前继续保持未解析：`champions.json` 现在已经落地 `patronEligibility` 这份静态事实源，但这个表达式仍然依赖“当前 patron 目标是谁”的运行时上下文；现有 planner model 还没有承载该上下文，也没有把这个动态判断投影成稳定输入。
 - 如果继续补 parser，下一优先级不再是简单 `as_int(tag)` 或 cooldown 比较，而是继续审计裸 `base_attack_cooldown` 与其余简单运行时变量到底能否稳定落到静态事实源。
 - 含公式、等级、装备平均值、动态变量的表达式，仍应继续降级 warning，不值得现在硬算。
 
 ## 下一刀建议
 
-1. 保持 `EligibleForPatron(...)` 为 warning，直到公共 `patronEligibility` 和当前 patron 上下文真正进 planner 数据合同。
+1. 保持 `EligibleForPatron(...)` 为 warning，直到当前 patron 上下文真正进入 planner 数据合同，并明确和已有 `patronEligibility` 静态事实如何合流。
 2. 保持 `!HasEffect(...)` 这类运行时状态表达式为 warning，不做静态猜测。
 3. 继续保持裸 `base_attack_cooldown`、私有 stack、动态公式和复杂运行时表达式为 warning，不做猜测。

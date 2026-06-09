@@ -15,8 +15,16 @@ import {
   buildChampionPatronEligibility,
   buildScenarioModeTags,
   buildScenarioRuleContextId,
+  normalizeOfficialBuffDefinition,
+  normalizeOfficialEffectKeyDefinition,
+  normalizeOfficialGameRuleDefinition,
+  normalizeOfficialStatDefinition,
+  normalizePatronPerkDefinition,
   normalizePatronDefinition,
+  normalizePatronPerkTierDefinition,
   normalizePatronObjectiveTiers,
+  normalizeTrialsDifficultyDefinition,
+  normalizeTrialsRoleDefinition,
 } from './data/official-rule-helpers.mjs'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
@@ -1827,6 +1835,11 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
     rawDefinitions.patron_defines ?? [],
     localizedDefinitions.patron_defines ?? [],
   )
+  const localizedPatronPerksById = buildIdMap(localizedDefinitions.patron_perk_defines)
+  const localizedTrialsRolesById = buildIdMap(localizedDefinitions.trials_role_defines)
+  const localizedTrialsDifficultiesById = buildIdMap(localizedDefinitions.trials_difficulty_defines)
+  const localizedBuffsById = buildIdMap(localizedDefinitions.buff_defines)
+  const localizedEffectKeysById = buildIdMap(localizedDefinitions.effect_key_defines)
   const attackDefinitionsById = buildIdMap(rawDefinitions.attack_defines)
   const localizedAttackDefinitionsById = buildIdMap(localizedDefinitions.attack_defines)
   const upgradesByHeroId = groupDefinitionsByHeroId(rawDefinitions.upgrade_defines)
@@ -1861,6 +1874,76 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
       buildChampionPatronEligibility(definition, patrons, updatedAt),
     ]),
   )
+  const gameRules = (rawDefinitions.game_rule_defines ?? [])
+    .map((definition) => normalizeOfficialGameRuleDefinition(definition))
+    .filter(Boolean)
+    .sort((left, right) => Number(left.id) - Number(right.id))
+  const effectReference = {
+    stats: (rawDefinitions.stat_defines ?? [])
+      .map((definition) => normalizeOfficialStatDefinition(definition))
+      .filter(Boolean)
+      .sort((left, right) => Number(left.id) - Number(right.id)),
+    buffs: (rawDefinitions.buff_defines ?? [])
+      .map((definition) =>
+        normalizeOfficialBuffDefinition(
+          definition,
+          localizedBuffsById.get(String(definition.id)) ?? definition,
+        ),
+      )
+      .filter(Boolean)
+      .sort((left, right) => Number(left.id) - Number(right.id)),
+    effectKeys: (rawDefinitions.effect_key_defines ?? [])
+      .map((definition) =>
+        normalizeOfficialEffectKeyDefinition(
+          definition,
+          localizedEffectKeysById.get(String(definition.id)) ?? definition,
+        ),
+      )
+      .filter(Boolean)
+      .sort((left, right) => Number(left.id) - Number(right.id)),
+  }
+  const patronPerkTiers = (rawDefinitions.patron_perk_tier_defines ?? [])
+    .map((definition) => normalizePatronPerkTierDefinition(definition))
+    .filter(Boolean)
+    .sort(
+      (left, right) =>
+        Number(left.patronId) - Number(right.patronId) ||
+        Number(left.tierId) - Number(right.tierId) ||
+        Number(left.id) - Number(right.id),
+    )
+  const patronPerks = (rawDefinitions.patron_perk_defines ?? [])
+    .map((definition) =>
+      normalizePatronPerkDefinition(
+        definition,
+        localizedPatronPerksById.get(String(definition.id)) ?? definition,
+      ),
+    )
+    .filter(Boolean)
+    .sort(
+      (left, right) =>
+        Number(left.patronId) - Number(right.patronId) ||
+        Number(left.tierId) - Number(right.tierId) ||
+        Number(left.id) - Number(right.id),
+    )
+  const trialsRoles = (rawDefinitions.trials_role_defines ?? [])
+    .map((definition) =>
+      normalizeTrialsRoleDefinition(
+        definition,
+        localizedTrialsRolesById.get(String(definition.id)) ?? definition,
+        adventureMap.get(String(definition.adventure_id ?? '')) ?? null,
+      ),
+    )
+    .filter(Boolean)
+    .sort((left, right) => Number(left.id) - Number(right.id))
+  const trialsDifficulties = (rawDefinitions.trials_difficulty_defines ?? [])
+    .map((definition) =>
+      normalizeTrialsDifficultyDefinition(
+        definition,
+        localizedTrialsDifficultiesById.get(String(definition.id)) ?? definition,
+      ),
+    )
+    .filter(Boolean)
+    .sort((left, right) => Number(left.id) - Number(right.id))
 
   const champions = playableChampionDefinitions
     .map((definition) =>
@@ -2003,6 +2086,26 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
     items: patrons,
     updatedAt,
   })
+  await writeJson(path.join(outputDir, 'game-rules.json'), {
+    items: gameRules,
+    updatedAt,
+  })
+  await writeJson(path.join(outputDir, 'effect-reference.json'), {
+    stats: effectReference.stats,
+    buffs: effectReference.buffs,
+    effectKeys: effectReference.effectKeys,
+    updatedAt,
+  })
+  await writeJson(path.join(outputDir, 'patron-perks.json'), {
+    tiers: patronPerkTiers,
+    perks: patronPerks,
+    updatedAt,
+  })
+  await writeJson(path.join(outputDir, 'trials.json'), {
+    roles: trialsRoles,
+    difficulties: trialsDifficulties,
+    updatedAt,
+  })
   await writeJson(path.join(outputDir, 'formations.json'), {
     items: formations,
     updatedAt,
@@ -2019,6 +2122,8 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
       '名称展示层同时保留官方原文与 language_id=7 返回的中文展示名。',
       '英雄头像资源来自官方 mobile_assets，并按数据版本写入 public/data/<version>/champion-portraits/。',
       '共享英雄数据现已补充 patron 基线资格，场景数据现已补充 adventures / patrons / rule context / mode tags。',
+      '共享效果参考层现已补充 effect-reference.json，统一承接官方 stat / buff / effect-key 字典。',
+      '共享规则层现已补充 game-rules.json、patron-perks.json、trials.json，承接官方稳定规则、Patron Perk 与 Trials 基座事实。',
       '英雄详情页数据按 public/data/<version>/champion-details/<hero-id>.json 输出，包含结构化字段与原始快照片段。',
       '英雄本体立绘与皮肤资源的官方定位元数据见 public/data/<version>/champion-visuals.json；立绘页直接消费的本地静态资源见 public/data/<version>/champion-illustrations.json。',
       '宠物页签数据来自 familiar_defines / premium_item_defines / patron_shop_item_defines，并输出到 public/data/<version>/pets.json 与 public/data/<version>/pets/。',

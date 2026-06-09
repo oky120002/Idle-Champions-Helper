@@ -24,6 +24,10 @@ test('normalizeDefinitionsSnapshot 输出官方原文和中文展示双字段', 
   const champions = await readJson(path.join(outputDir, 'champions.json'))
   const adventures = await readJson(path.join(outputDir, 'adventures.json'))
   const patrons = await readJson(path.join(outputDir, 'patrons.json'))
+  const gameRules = await readJson(path.join(outputDir, 'game-rules.json'))
+  const effectReference = await readJson(path.join(outputDir, 'effect-reference.json'))
+  const patronPerks = await readJson(path.join(outputDir, 'patron-perks.json'))
+  const trials = await readJson(path.join(outputDir, 'trials.json'))
   const variants = await readJson(path.join(outputDir, 'variants.json'))
   const enums = await readJson(path.join(outputDir, 'enums.json'))
   const bruenorDetail = await readJson(path.join(outputDir, 'champion-details', '1.json'))
@@ -211,6 +215,195 @@ test('normalizeDefinitionsSnapshot 输出官方原文和中文展示双字段', 
     ],
     evaluationStatus: 'complete',
   })
+  assert.deepEqual(gameRules.items[0], {
+    id: '1',
+    ruleName: 'role_tags_v2',
+    topLevelKeys: ['enabled', 'tags'],
+    rule: {
+      tags: ['support', 'tank', 'speed'],
+      enabled: true,
+    },
+  })
+  assert.deepEqual(effectReference.stats[0], {
+    id: '7',
+    name: 'hero_level',
+    multiKey: false,
+    clearOnReset: true,
+    serverOnly: false,
+    readOnly: true,
+    properties: null,
+  })
+  assert.deepEqual(effectReference.buffs[0], {
+    id: '11',
+    name: {
+      original: "Small Potion of Giant's Strength",
+      display: '小瓶巨人之力药剂',
+    },
+    description: {
+      original: 'A testing potion.',
+      display: '测试用药剂。',
+    },
+    pluralName: {
+      original: "Small Potions of Giant's Strength",
+      display: '小瓶巨人之力药剂',
+    },
+    effect: {
+      effectString: 'global_dps_multiplier_mult,100',
+      key: 'global_dps_multiplier_mult',
+      args: ['100'],
+      effectDefinitionId: null,
+    },
+    rarity: 1,
+    duration: 300,
+    graphicId: '730',
+    inventoryGraphicId: '731',
+    odds: 100,
+    inventoryOrder: 10,
+    tags: ['dps', 'duration', 'potion'],
+    properties: null,
+  })
+  assert.deepEqual(effectReference.effectKeys[1], {
+    id: '199',
+    key: 'hero_dps_multiplier_if_attack_cooldown',
+    owner: null,
+    paramNames: [
+      {
+        name: 'amount',
+        type: null,
+      },
+      {
+        name: 'comparison',
+        type: 'str',
+      },
+      {
+        name: 'check',
+        type: null,
+      },
+    ],
+    descriptions: {
+      desc: {
+        original: 'Increases the DPS of $target by $amount% if their Base Attack cooldown matches $check.',
+        display: '如果 $target 的基础攻击冷却满足 $check，则其伤害提高 $amount%。',
+      },
+    },
+    negative: true,
+    properties: {
+      scope: 'base_attack',
+    },
+  })
+  assert.deepEqual(patronPerks.tiers, [
+    {
+      id: '1',
+      patronId: '1',
+      tierId: '1',
+      requiredPurchasedPerkCount: null,
+      requirements: [],
+    },
+    {
+      id: '2',
+      patronId: '1',
+      tierId: '2',
+      requiredPurchasedPerkCount: 15,
+      requirements: [
+        {
+          condition: 'patron_perks_purchased',
+          patron_id: 1,
+          amount: 15,
+        },
+      ],
+    },
+  ])
+  assert.deepEqual(patronPerks.perks[1], {
+    id: '4',
+    patronId: '1',
+    tierId: '2',
+    name: {
+      original: 'Perk Up!',
+      display: '活跃起来！',
+    },
+    graphicId: '4421',
+    typeId: 2,
+    levels: 20,
+    cost: {
+      baseCost: 12500,
+      scaling: 1.05,
+    },
+    effects: [
+      {
+        effectString: 'effect_def,453',
+        key: 'effect_def',
+        args: ['453'],
+        perLevel: 2.5,
+        targetName: 'all Champions',
+        effectDefinitionId: '453',
+      },
+    ],
+    effectDefinitionIds: ['453'],
+    properties: [],
+  })
+  assert.deepEqual(trials.roles[0], {
+    id: '1',
+    name: {
+      original: 'Forest - Balance the Forest',
+      display: '森林--森林重归平衡',
+    },
+    description: {
+      original: 'Liberate the forest near the Sunset Mountains.',
+      display: '解救落日山脉附近的森林。',
+    },
+    graphicId: '11042',
+    adventureId: '100',
+    scenarioKind: 'adventure',
+    ruleContextId: 'adventure:100',
+    adventure: {
+      id: '100',
+      name: {
+        original: 'The Test Adventure',
+        display: '测试冒险',
+      },
+      campaign: {
+        id: '1',
+        original: 'A Grand Tour of the Sword Coast',
+        display: '剑湾之旅',
+      },
+      objectiveArea: 50,
+      locationId: '8',
+      areaSetId: '55',
+    },
+    position: {
+      x: 356,
+      y: 518,
+    },
+  })
+  assert.deepEqual(trials.difficulties[1], {
+    id: '2',
+    name: {
+      original: 'Heroic',
+      display: '英勇',
+    },
+    shortName: 'H',
+    description: null,
+    graphicId: '11015',
+    points: 1867,
+    tiamatHealth: 750000000,
+    costs: [
+      {
+        costType: 'trials_difficulty_token',
+        difficultyTokenId: 'normal',
+        amount: 1,
+      },
+      {
+        costType: 'trials_difficulty_token',
+        difficultyTokenId: 'any',
+        amount: 1,
+      },
+    ],
+    rewardData: [
+      {
+        deprecated: 'do not use',
+      },
+    ],
+  })
 
   assert.deepEqual(variants.items[0].name, {
     original: 'A Test Variant',
@@ -345,5 +538,6 @@ test('normalizeDefinitionsSnapshot 输出官方原文和中文展示双字段', 
     values: ['adventure', 'free_play', 'patron', 'variant'],
   })
 
-  assert.match(version.notes[1], /language_id=7/)
+  assert.ok(version.notes.some((note) => /language_id=7/.test(note)))
+  assert.ok(version.notes.some((note) => /effect-reference\.json/.test(note)))
 })
