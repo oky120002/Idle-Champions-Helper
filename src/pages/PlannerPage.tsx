@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { ConfiguredWorkbenchPage } from '../components/workbench/ConfiguredWorkbenchPage'
+import type { PlannerRecommendationBlocker } from '../domain/planner/recommendationTypes'
 import { WorkbenchContentStack } from '../components/workbench/WorkbenchScaffold'
 import { useI18n } from '../app/i18n'
 import { PlannerProfileState } from './planner/PlannerProfileState'
@@ -7,7 +8,6 @@ import { PlannerResultCard } from './planner/PlannerResultCard'
 import { PlannerSavePreset } from './planner/PlannerSavePreset'
 import { PlannerScenarioSelection } from './planner/PlannerScenarioSelection'
 import { usePlannerPageModel } from './planner/usePlannerPageModel'
-import type { PlannerRecommendationBlocker } from './planner/plannerRecommendation'
 
 function getPlannerBlockerCopy(blocker: PlannerRecommendationBlocker, t: ReturnType<typeof useI18n>['t']) {
   switch (blocker) {

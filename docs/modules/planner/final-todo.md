@@ -94,15 +94,5 @@ RALPH_TASK_RANGE=3-5 RALPH_MAX_ITERATIONS=30 ./.ralph/scripts/run-task.sh planne
 | Story | 目标 | 验收重点 |
 | --- | --- | --- |
 | US-030 | `privacy:scan` 脚本 | npm 脚本存在，扫描源码、docs、tests、dist |
-| US-031 | 文档同步 | route 存在后同步 README、docs、final TODO |
+| US-031 | 文档同步 | route 存在后同步 README、docs、planner 文档 |
 | US-032 | 最终回归 | lint、typecheck、test、build、privacy scan 全部通过 |
-
-## 明确后续 TODO
-
-- speed/gem 队伍评分。
-- survival/稳过关评分。
-- balanced scoring：伤害、存活、速度、可获得性和解释复杂度混合。
-- step simulation：逐区、击杀、时间窗口和动态堆叠。
-- manual parameter panel：允许用户手动覆盖金币预算、装备、feat、传奇、专精和暂不支持变量。
-- 更完整的 modron、patron、event、season、temporary buff 投影。
-- 多队伍、Trials、Time Gate 和长期成长路线。

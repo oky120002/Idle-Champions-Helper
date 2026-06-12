@@ -33,6 +33,13 @@ export interface Pet {
   illustration: PetImage | null
 }
 
+export interface ChampionPatronEligibility {
+  eligiblePatronIds: string[]
+  ruleQualifiedPatronIds: string[]
+  forcedEligiblePatronIds: string[]
+  unsupportedPatronIds: string[]
+}
+
 export interface Champion {
   id: string
   name: LocalizedText
@@ -40,6 +47,7 @@ export interface Champion {
   roles: string[]
   affiliations: LocalizedText[]
   tags: string[]
+  patronEligibility?: ChampionPatronEligibility
   portrait?: ChampionPortrait | null
 }
 

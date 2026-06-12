@@ -1,12 +1,87 @@
 {
   "current_time": 1775952000,
+  "stat_defines": [
+    {
+      "id": 7,
+      "name": "hero_level",
+      "multi_key": 0,
+      "clear_on_reset": 1,
+      "server_only": 0,
+      "read_only": 1
+    },
+    {
+      "id": 8,
+      "name": "total_ability_score",
+      "multi_key": 0,
+      "clear_on_reset": 0,
+      "server_only": 0,
+      "read_only": 0
+    }
+  ],
+  "buff_defines": [
+    {
+      "id": 11,
+      "name": "Small Potion of Giant's Strength",
+      "description": "A testing potion.",
+      "effect": "global_dps_multiplier_mult,100",
+      "rarity": 1,
+      "duration": 300,
+      "graphic_id": 730,
+      "odds": 100,
+      "tags": ["duration", "potion", "dps"],
+      "inventory_order": "10",
+      "properties": {
+        "inventory_graphic_id": 731,
+        "name_plural": "Small Potions of Giant's Strength"
+      }
+    }
+  ],
+  "effect_key_defines": [
+    {
+      "id": 1,
+      "key": "global_dps_multiplier_mult",
+      "param_names": "",
+      "owner": "global",
+      "properties": [],
+      "descriptions": {
+        "desc": "Increases the damage of all Champions by $amount%",
+        "short": "All Champions damage +$(amount)%"
+      }
+    },
+    {
+      "id": 199,
+      "key": "hero_dps_multiplier_if_attack_cooldown",
+      "param_names": "amount,str comparison,check",
+      "owner": "",
+      "properties": {
+        "negative": true,
+        "scope": "base_attack"
+      },
+      "descriptions": {
+        "desc": "Increases the DPS of $target by $amount% if their Base Attack cooldown matches $check."
+      }
+    }
+  ],
   "hero_defines": [
     {
       "id": 1,
       "name": "Bruenor",
       "seat_id": 1,
-      "tags": ["support", "tank", "dwarf", "male"],
+      "tags": ["support", "tank", "dwarf", "male", "good"],
       "affiliation_tags": ["companions_of_the_hall"],
+      "date_available": "2020-01-01 00:00:00",
+      "last_rework_date": "2025-01-01 00:00:00",
+      "character_sheet_details": {
+        "alignment": "Lawful Good",
+        "ability_scores": {
+          "str": 16,
+          "dex": 12,
+          "con": 15,
+          "int": 10,
+          "wis": 13,
+          "cha": 11
+        }
+      },
       "properties": {
         "golden_epic_loot_id": 1002,
         "legendary_effect_id": [501, 502]
@@ -18,8 +93,17 @@
       "seat_id": 8,
       "tags": ["speed", "support", "kobold", "nonbinary"],
       "affiliation_tags": ["rivals_of_waterdeep"],
+      "date_available": "2020-01-01 00:00:00",
       "character_sheet_details": {
-        "full_name": "Hew Maan"
+        "full_name": "Hew Maan",
+        "ability_scores": {
+          "str": 8,
+          "dex": 16,
+          "con": 13,
+          "int": 12,
+          "wis": 10,
+          "cha": 9
+        }
       }
     }
   ],
@@ -43,6 +127,224 @@
     {
       "id": 2,
       "name": "Tomb of Annihilation"
+    }
+  ],
+  "patron_defines": [
+    {
+      "id": 1,
+      "name": "Mirt the Moneylender",
+      "description": "Only Good or Evil Champions can be used.",
+      "restrictions_text": {
+        "1": "Only Good or Evil Champions can be used"
+      },
+      "game_changes": {
+        "1": [
+          {
+            "type": "disallow_crusaders",
+            "by_tags": {
+              "tags": "!(good|evil)"
+            }
+          }
+        ]
+      },
+      "properties": {
+        "short_name": "Mirt",
+        "min_objective_level": 250,
+        "default_objective_bump": 100
+      },
+      "weekly_free_play_cap": 5000
+    },
+    {
+      "id": 2,
+      "name": "Vajra Safahr",
+      "description": "Only Champions with a CON score of 14 or higher can be used.",
+      "restrictions_text": {
+        "1": "Only Champions with a CON score of 14 or higher can be used"
+      },
+      "game_changes": {
+        "1": [
+          {
+            "type": "disallow_crusaders",
+            "by_stat": {
+              "stats": [
+                {
+                  "stat": "con",
+                  "comp": "<",
+                  "value": 14
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "properties": {
+        "short_name": "Vajra",
+        "min_objective_level": 275,
+        "default_objective_bump": 125
+      },
+      "weekly_free_play_cap": 5000
+    },
+    {
+      "id": 5,
+      "name": "Elminster",
+      "description": "Only Champions released or reworked in an event in the past 3 years can be used.",
+      "restrictions_text": {
+        "1": "Only Champions released or reworked in an event in the past 3 years can be used."
+      },
+      "game_changes": {
+        "1": [
+          {
+            "type": "disallow_crusaders",
+            "by_expr": {
+              "expr": "TimeAvailable(`days`) > (365 * 3)"
+            }
+          },
+          {
+            "type": "force_allow_hero",
+            "hero_ids": [58]
+          }
+        ]
+      },
+      "properties": {
+        "short_name": "Elminster",
+        "min_objective_level": 825,
+        "default_objective_bump": 300
+      },
+      "weekly_free_play_cap": 5000
+    }
+  ],
+  "game_rule_defines": [
+    {
+      "id": 1,
+      "rule_name": "role_tags_v2",
+      "rule": {
+        "tags": ["support", "tank", "speed"],
+        "enabled": true
+      }
+    },
+    {
+      "id": 2,
+      "rule_name": "time_scale_cap",
+      "rule": {
+        "cap": 10
+      }
+    }
+  ],
+  "patron_perk_tier_defines": [
+    {
+      "id": 1,
+      "patron_id": 1,
+      "tier_id": 1,
+      "requirements": []
+    },
+    {
+      "id": 2,
+      "patron_id": 1,
+      "tier_id": 2,
+      "requirements": [
+        {
+          "condition": "patron_perks_purchased",
+          "patron_id": 1,
+          "amount": 15
+        }
+      ]
+    }
+  ],
+  "patron_perk_defines": [
+    {
+      "id": 1,
+      "patron_id": 1,
+      "name": "Mirt's Mirth",
+      "graphic_id": 4417,
+      "type": 1,
+      "tier_id": 1,
+      "cost": {
+        "base_cost": 5000,
+        "scaling": 1.05
+      },
+      "levels": 10,
+      "effects": [
+        {
+          "effect_string": "global_dps_multiplier_mult,$replace",
+          "per_level": 100
+        }
+      ],
+      "properties": []
+    },
+    {
+      "id": 4,
+      "patron_id": 1,
+      "name": "Perk Up!",
+      "graphic_id": 4421,
+      "type": 2,
+      "tier_id": 2,
+      "cost": {
+        "base_cost": 12500,
+        "scaling": 1.05
+      },
+      "levels": 20,
+      "effects": [
+        {
+          "effect_string": "effect_def,453",
+          "per_level": 2.5,
+          "target_name": "all Champions"
+        }
+      ],
+      "properties": []
+    }
+  ],
+  "trials_role_defines": [
+    {
+      "id": 1,
+      "name": "Forest - Balance the Forest",
+      "description": "Liberate the forest near the Sunset Mountains.",
+      "graphic_id": 11042,
+      "adventure_id": 100,
+      "location_position_x": 356,
+      "location_position_y": 518
+    }
+  ],
+  "trials_difficulty_defines": [
+    {
+      "id": 1,
+      "graphic_id": 11013,
+      "name": "Normal",
+      "short_name": "N",
+      "description": "",
+      "points": 1333,
+      "tiamat_health": "400000000",
+      "cost": [],
+      "reward_data": [
+        {
+          "deprecated": "do not use"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "graphic_id": 11015,
+      "name": "Heroic",
+      "short_name": "H",
+      "description": "",
+      "points": 1867,
+      "tiamat_health": "750000000",
+      "cost": [
+        {
+          "cost": "trials_difficulty_token",
+          "difficulty_token_id": "normal",
+          "amount": 1
+        },
+        {
+          "cost": "trials_difficulty_token",
+          "difficulty_token_id": "any",
+          "amount": 1
+        }
+      ],
+      "reward_data": [
+        {
+          "deprecated": "do not use"
+        }
+      ]
     }
   ],
   "attack_defines": [
@@ -137,13 +439,26 @@
       "campaign_id": 1,
       "location_id": 8,
       "area_set_id": 55,
+      "description": "Test the base adventure contract.",
+      "repeatable": true,
       "requirements_text": ["Complete tutorial"],
+      "reward_description": "Unlock free play",
       "objectives": [
         {
           "condition": "complete_area",
           "area": 50
         }
-      ]
+      ],
+      "patron_objectives": {
+        "1": {
+          "1": [
+            {
+              "condition": "complete_area",
+              "area": "250"
+            }
+          ]
+        }
+      }
     },
     {
       "id": 101,
@@ -160,6 +475,16 @@
           "area": 75
         }
       ],
+      "patron_objectives": {
+        "2": {
+          "1": [
+            {
+              "condition": "complete_area",
+              "area": "275"
+            }
+          ]
+        }
+      },
       "game_changes": [
         {
           "type": "slot_escort_by_area",

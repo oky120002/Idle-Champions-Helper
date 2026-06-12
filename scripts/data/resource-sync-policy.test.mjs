@@ -1,9 +1,13 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
+import os from 'node:os'
+import path from 'node:path'
+import { mkdtemp, readFile } from 'node:fs/promises'
 import {
   compareUpdatedAt,
   getUpdatedAtFromDefinitions,
   shouldSkipResourceSync,
+  writeUpdatedAtJsonFile,
 } from './resource-sync-policy.mjs'
 
 test('compareUpdatedAt 按 YYYY-MM-DD 先后比较', () => {
@@ -43,4 +47,20 @@ test('getUpdatedAtFromDefinitions 从官方 current_time 提取日期', () => {
     }),
     '2026-02-03',
   )
+})
+
+test('writeUpdatedAtJsonFile 会创建父目录并写出 JSON', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'resource-sync-policy-'))
+  const targetFile = path.join(tempDir, 'nested', 'updated-at.json')
+
+  await writeUpdatedAtJsonFile(targetFile, {
+    updatedAt: '2026-02-03',
+    resources: ['portraits'],
+  })
+
+  const payload = JSON.parse(await readFile(targetFile, 'utf8'))
+  assert.deepEqual(payload, {
+    updatedAt: '2026-02-03',
+    resources: ['portraits'],
+  })
 })

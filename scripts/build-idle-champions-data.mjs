@@ -10,6 +10,7 @@ import { syncChampionConsolePortraits } from './sync-idle-champions-console-port
 import { syncChampionPortraits } from './sync-idle-champions-portraits.mjs'
 import { syncChampionEquipmentIcons } from './sync-idle-champions-equipment-icons.mjs'
 import { syncChampionSpecializationGraphics } from './sync-idle-champions-specialization-graphics.mjs'
+import { buildPlannerModels } from './data/build-planner-models.mjs'
 import {
   readUpdatedAtFromJsonFile,
   shouldSkipResourceSync,
@@ -48,7 +49,7 @@ async function main() {
   一次拉取当前所有可公开获取的官方基座数据：
   1. 官方原文 definitions（每次都会重新拉取最新）
   2. language_id=7 中文 definitions（每次都会重新拉取最新）
-  3. champions / variants / formations / enums 归一化数据
+  3. champions / adventures / variants / patrons / game-rules / effect-reference / patron-perks / trials / formations / enums 归一化数据
   4. 官方英雄头像资源
   5. 详情页正面图资源
   6. 详情页升级区本地专精图资源
@@ -91,6 +92,9 @@ async function main() {
     currentVersion: values.currentVersion,
     manualOverrides: values.manualOverrides,
   })
+  const plannerModels = await buildPlannerModels({
+    versionDir: normalized.outputDir,
+  })
   const shouldSkipAllResourceDownloads = shouldSkipResourceSync({
     existingUpdatedAt: previousResourceUpdatedAt,
     nextUpdatedAt: normalized.updatedAt,
@@ -104,6 +108,7 @@ async function main() {
     console.log(`- source raw: ${fetched.rawFile}`)
     console.log(`- display raw: ${localizedFetched.rawFile}`)
     console.log(`- normalized dir: ${normalized.outputDir}`)
+    console.log(`- planner models: heroes ${plannerModels.heroCount}, scenarios ${plannerModels.scenarioCount}`)
     console.log(`- version file: ${normalized.versionFile}`)
     console.log(`- resource sync state: ${resourceSyncStateFile}`)
     return
@@ -178,6 +183,7 @@ async function main() {
   console.log(`- source raw: ${fetched.rawFile}`)
   console.log(`- display raw: ${localizedFetched.rawFile}`)
   console.log(`- normalized dir: ${normalized.outputDir}`)
+  console.log(`- planner models: heroes ${plannerModels.heroCount}, scenarios ${plannerModels.scenarioCount}`)
   console.log(`- portraits dir: ${portraits.outputDir}`)
   console.log(`- console portraits dir: ${consolePortraits.outputDir}`)
   console.log(`- specialization graphics dir: ${specializationGraphics.outputDir}`)

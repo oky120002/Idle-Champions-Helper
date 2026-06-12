@@ -9,9 +9,11 @@
 - 产品目标、用户流程、隐私与基线要求：`docs/modules/planner/prd.md`
 - 架构总览和实现入口：`docs/modules/planner/development-design.md`
 - 推荐英雄、站位、planner model 与 merge 规则：`docs/modules/planner/recommendation-and-placement-design.md`
+- planner signal 真实覆盖率盘点：`docs/modules/planner/signal-coverage-research.md`
 - 数据、隐私、存储和官方只读 client：`docs/modules/planner/development-design-data.md`
 - 数字层、基线、模拟器、搜索和 UI：`docs/modules/planner/development-design-simulator.md`
 - Ralph 执行任务、验收命令、提交约定：`docs/modules/planner/final-todo.md`
+- 主线外顺手发现项统一落库：`docs/todo.md`
 - 单例验收设计：`.ralph/tasks/planner/acceptance-cases.md`
 
 ## 关联入口

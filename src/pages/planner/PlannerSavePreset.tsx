@@ -1,15 +1,8 @@
 import { useState } from 'react'
 import { useI18n } from '../../app/i18n'
 import { saveFormationPreset } from '../../data/formationPresetStore'
+import type { PlannerResult } from '../../domain/planner/recommendationTypes'
 import type { FormationPreset, ScenarioRef } from '../../domain/types/formation'
-import type { PlannerNarrativeLine } from './PlannerResultCard'
-
-interface PlannerResult {
-  score: string
-  placements: Record<string, string>
-  explanations: PlannerNarrativeLine[]
-  warnings: string[]
-}
 
 interface PlannerSavePresetProps {
   result: PlannerResult | null

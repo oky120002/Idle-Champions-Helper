@@ -1,77 +1,16 @@
 import type { AppLocale } from '../../app/i18n'
 import { TAG_LABELS } from '../../domain/champion-tags/labels'
+import {
+  buildEffectKeyPayload,
+  parseEffectPayload,
+  resolveEffectPayloadAmountToken,
+} from '../../domain/effects/effect-string.js'
 import type { JsonValue } from '../../domain/types'
 import type { ParsedEffectPayload, EffectContext } from './types'
-import { isJsonObject, parseInlineJsonValue } from './detail-json'
 import { formatNumberishToken, formatNullableText, isNumberishToken } from './detail-value-formatters'
 import { humanizeIdentifier, toTitleCase } from './detail-localization'
 
-export function parseEffectPayload(value: string): ParsedEffectPayload | null {
-  const trimmed = value.trim()
-
-  if (!trimmed) {
-    return null
-  }
-
-  if (trimmed.startsWith('{')) {
-    const parsed = parseInlineJsonValue(trimmed)
-
-    if (parsed && isJsonObject(parsed) && typeof parsed.effect_string === 'string') {
-      const [kind, ...args] = parsed.effect_string.split(',')
-
-      if (!kind || !/^[a-z_][a-z0-9_]*$/i.test(kind)) {
-        return null
-      }
-
-      return {
-        raw: trimmed,
-        effectString: parsed.effect_string,
-        description: typeof parsed.description === 'string' ? parsed.description : null,
-        data: parsed.data ?? null,
-        meta: parsed,
-        kind,
-        args,
-      }
-    }
-
-    return null
-  }
-
-  const [kind, ...args] = trimmed.split(',')
-
-  if (!kind || !/^[a-z_][a-z0-9_]*$/i.test(kind)) {
-    return null
-  }
-
-  return {
-    raw: trimmed,
-    effectString: trimmed,
-    description: null,
-    data: null,
-    meta: null,
-    kind,
-    args,
-  }
-}
-
-export function buildEffectKeyPayload(effectKey: Record<string, JsonValue>): ParsedEffectPayload | null {
-  if (typeof effectKey.effect_string !== 'string') {
-    return null
-  }
-
-  const parsed = parseEffectPayload(effectKey.effect_string)
-
-  if (!parsed) {
-    return null
-  }
-
-  return {
-    ...parsed,
-    description: typeof effectKey.description === 'string' ? effectKey.description : parsed.description,
-    data: effectKey.data ?? parsed.data,
-    meta: effectKey,
-  }
-}
+export { buildEffectKeyPayload, parseEffectPayload }
 
 export function summarizeTargetLabels(labels: string[], locale: AppLocale): {
   summary: string | null
@@ -222,15 +161,20 @@ function resolveAmountExpr(expr: string, payloads: ParsedEffectPayload[], locale
   const upgradeAmountMatch = trimmed.match(/^upgrade_amount\((\d+),\s*(\d+)\)$/)
 
   if (upgradeAmountMatch) {
-    const [, , indexToken] = upgradeAmountMatch
-    const effectIndex = Number(indexToken)
-    const sourcePayload = payloads[effectIndex] ?? null
+    const resolved = resolveEffectPayloadAmountToken(
+      {
+        raw: trimmed,
+        effectString: trimmed,
+        description: null,
+        data: null,
+        meta: { amount_expr: trimmed },
+        kind: 'expr',
+        args: [],
+      },
+      payloads,
+    )
 
-    if (!sourcePayload) {
-      return null
-    }
-
-    return formatNumberishToken(sourcePayload.args[effectIndex] ?? null, locale)
+    return formatNumberishToken(resolved, locale)
   }
 
   return null

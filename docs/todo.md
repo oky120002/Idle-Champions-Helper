@@ -1,0 +1,27 @@
+# 项目 TODO
+
+本文件只记录推进主目标时顺手发现、但与当前主目标不一致的后续事项，作为整个项目统一的延后处理清单。
+
+## 使用规则
+
+- 只记录主目标外的发现项，例如问题、优化点、性能点、命名问题、结构问题或后续机会。
+- 当前任务已经决定要做、且正在执行中的内容，不写进这里。
+- Ralph 执行清单、模块验收清单和阶段计划，不写进这里。
+- 每条只写当前事实、影响和建议方向，不写迁移叙事。
+
+## 当前待办
+
+- planner scoring: 继续审查 `per_tagged_crusader_mult`、`per_crusader_mult`、`per_target_crusader` 是否还存在更多来源字段分支未统一，例如 `target_filters_or`、`targets` 内嵌过滤对象之外的变体。
+- planner qualifier audit: 审查官方过滤条件里除 `>= <= == > <` 外的比较符与别名写法，统一归一化，避免 stat / age / cooldown 条件静默失效。
+- planner unsupported audit: 针对仍然高频的 `buff_upgrade` / `buff_upgrades` 做自动化阵型价值审计，但范围收敛到“基础升级已可见、且直接影响 carry 输出”的剩余子族；优先看 `buff_upgrade_per_target_crusader_mult`、距离相关 wrapper 和少量 still-high-value base effect 缺口，不做泛化全铺。
+- planner unsupported audit: 重新审查 `effect_def` / `pre_stack_amount` 在 planner 里的价值边界，能复用共享 effect payload 解析的就下沉到公共层，避免 planner 单独维护第二套解释。
+- planner base-effect gap: 评估 `paid_up_front_increase_dps` 是否值得进入 planner。它能解锁 Môrgæn 的 `buff_upgrade_per_target_crusader` 链路，但真实增量依赖金币数量级；在没有稳定静态基线前，不应为了打通 wrapper 而硬塞进主评分。
+- planner distance wrapper: 继续审查 `buff_upgrade_per_column_behind_source_mult` 与 `buff_upgrade_mult_by_distance_from_source`。当前归一化快照里前者尚未命中真实样本，后者也未命中样本；若后续官方数据出现，优先复用现有 `per_slot_distance_from_source` 合同，不要再起新评分分支。
+- planner unsupported ranking: `buff_upgrade` 仍是 unsupported 榜单首位，但里面已混合大量“基础升级本身不可见”的 wrapper。后续若继续审计，先做“wrapper 命中但 base signal 仍缺失”的分桶统计，再决定是否补 base effect，而不是继续按 raw effect 名称粗看频次。
+- planner future scoring: speed/gem 队伍评分。
+- planner future scoring: survival/稳过关评分。
+- planner future scoring: balanced scoring，混合伤害、存活、速度、可获得性和解释复杂度。
+- planner future simulation: step simulation，覆盖逐区、击杀、时间窗口和动态堆叠。
+- planner future controls: manual parameter panel，允许用户手动覆盖金币预算、装备、feat、传奇、专精和暂不支持变量。
+- planner future data: 更完整的 modron、patron、event、season、temporary buff 投影。
+- planner future planning: 多队伍、Trials、Time Gate 和长期成长路线。

@@ -23,7 +23,11 @@ import {
   saveUserProfileSnapshot,
 } from '../../src/data/user-profile-store'
 import { resolveActiveNavigationItem } from '../../src/app/appNavigation'
-import type { Champion, DataCollection, FormationLayout, LocalizedOption, LocalizedText, Variant } from '../../src/domain/types'
+import type {
+  OfficialPlannerHeroModel,
+  OfficialPlannerScenarioModel,
+} from '../../src/domain/planner/plannerModel'
+import type { Champion, DataCollection, LocalizedOption, LocalizedText, Variant } from '../../src/domain/types'
 import { createOwnedHero, createUserProfileSnapshot } from '../../src/domain/user-profile/fixtures'
 
 const mockedLoadCollection = vi.mocked(loadCollection)
@@ -87,34 +91,78 @@ const championsFixture: DataCollection<Champion> = {
   ],
 }
 
-const formationsFixture: DataCollection<FormationLayout> = {
+const plannerHeroesFixture: DataCollection<OfficialPlannerHeroModel> = {
+  updatedAt: '2026-05-03T00:00:00.000Z',
+  items: championsFixture.items.map((champion) => ({
+    heroId: champion.id,
+    name: champion.name,
+    seat: champion.seat,
+    roles: champion.roles,
+    tags: champion.tags,
+    baseAttackDamageTypes: [],
+    baseAttackCooldown: null,
+    age: null,
+    abilityScores: {},
+    isCarryViable: champion.roles.some((role) => role.toLowerCase() === 'dps'),
+    heuristicRoleMultiplier:
+      champion.roles.includes('dps')
+        ? 4
+        : champion.roles.includes('support')
+          ? 2.5
+          : champion.roles.includes('tanking')
+            ? 1.5
+            : champion.roles.includes('healing')
+              ? 1.3
+              : champion.roles.includes('gold')
+                ? 1.2
+                : 1.05,
+    carrySignals: [],
+    supportSignals: [],
+    unsupportedSignals: [],
+    sourceBreakdown: {
+      isCarryViable: 'official-parsed',
+      heuristicRoleMultiplier: 'heuristic-fallback',
+      carrySignals: [],
+      supportSignals: [],
+      unsupportedSignals: [],
+    },
+  })),
+}
+
+const plannerScenariosFixture: DataCollection<OfficialPlannerScenarioModel> = {
   updatedAt: '2026-05-03T00:00:00.000Z',
   items: [
     {
-      id: 'layout-catacombs',
-      name: text('Catacombs formation', '墓穴阵型'),
-      slots: [
-        { id: 's1', row: 1, column: 1, adjacentSlotIds: ['s2'] },
-        { id: 's2', row: 1, column: 2, adjacentSlotIds: ['s1', 's3'] },
-        { id: 's3', row: 1, column: 3, adjacentSlotIds: ['s2', 's4'] },
-        { id: 's4', row: 1, column: 4, adjacentSlotIds: ['s3'] },
+      variantId: 'variant-1',
+      scenarioRef: { kind: 'variant', id: 'variant-1' },
+      name: text('Archer Barrage', '弓兵压制'),
+      formationLayoutId: 'layout-catacombs',
+      objectiveArea: 125,
+      slotTopology: [
+        { slotId: 's1', row: 1, column: 1, adjacentSlotIds: ['s2'] },
+        { slotId: 's2', row: 1, column: 2, adjacentSlotIds: ['s1', 's3'] },
+        { slotId: 's3', row: 1, column: 3, adjacentSlotIds: ['s2', 's4'] },
+        { slotId: 's4', row: 1, column: 4, adjacentSlotIds: ['s3'] },
       ],
-      sourceContexts: [
-        {
-          kind: 'adventure',
-          id: 'adventure-1',
-          name: text('Catacombs', '墓穴深处'),
-        },
-      ],
+      forcedHeroes: [],
+      bannedHeroes: [],
+      lockedSlots: [],
+      scenarioWarnings: ['当前推荐尚未解析场景限制与机制，只按已拥有英雄、seat 合法性和阵型槽位计算。'],
     },
   ],
+}
+
+const plannerSemanticOverridesFixture: DataCollection<{ heroId: string }> = {
+  updatedAt: '2026-05-03T00:00:00.000Z',
+  items: [],
 }
 
 function mockPlannerCollections() {
   mockedLoadCollection.mockImplementation(async (name) => {
     if (name === 'variants') return variantsFixture
-    if (name === 'champions') return championsFixture
-    if (name === 'formations') return formationsFixture
+    if (name === 'planner-heroes') return plannerHeroesFixture
+    if (name === 'planner-scenarios') return plannerScenariosFixture
+    if (name === 'planner-semantic-overrides') return plannerSemanticOverridesFixture
     throw new Error(`unexpected collection: ${name}`)
   })
 }
