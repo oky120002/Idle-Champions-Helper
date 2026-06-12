@@ -13,7 +13,36 @@ export type PlannerSignalSource =
   | 'heuristic-fallback'
 
 export type PlannerTargetMatchMode = 'any' | 'all'
-export type PlannerPositionRelation = 'any' | 'self' | 'adjacent'
+export type PlannerPositionRelation =
+  | 'any'
+  | 'self'
+  | 'adjacent'
+  | 'adjacentOrSelf'
+  | 'nonAdjacent'
+  | 'withinTwoSlots'
+  | 'withinTwoSlotsOrSelf'
+  | 'withinThreeSlots'
+  | 'withinThreeSlotsOrSelf'
+  | 'sameColumn'
+  | 'sameOrAheadColumns'
+  | 'adjacentColumns'
+  | 'aheadColumn'
+  | 'allAheadColumns'
+  | 'behindColumn'
+  | 'aheadTwoColumns'
+  | 'behindTwoColumns'
+  | 'allBehindColumns'
+  | 'sameOrBehindColumn'
+  | 'sameOrBehindColumns'
+  | 'selfAndBehindTwoColumns'
+  | 'exactlyBehindOneColumn'
+  | 'exactlyBehindTwoColumns'
+  | 'exactlyBehindThreeColumns'
+  | 'frontTwoColumns'
+  | 'backTwoColumns'
+  | 'rearMostColumn'
+  | 'secondRearMostColumn'
+  | 'thirdRearMostColumn'
 export type PlannerSignalAmountFunc = 'add' | 'mult' | 'unknown'
 export type PlannerComparisonOperator = '>=' | '<=' | '>' | '<' | '=='
 export type PlannerStatKey = AbilityScoreKey | 'total_ability_score'
@@ -52,9 +81,11 @@ export interface PlannerEffectSignal {
   rawEffect: string
   note?: string
   source: PlannerSignalSource
+  bonusScaleOfSignal?: PlannerEffectSignal | null
   targetQualifier?: PlannerHeroQualifier | null
   formationCountQualifier?: PlannerHeroQualifier | null
   positionQualifier?: PlannerPositionQualifier | null
+  formationCountPositionQualifier?: PlannerPositionQualifier | null
   amountFunc?: PlannerSignalAmountFunc | null
   stackFunc?: string | null
   applyManually?: boolean
@@ -99,6 +130,8 @@ export interface PlannerScenarioSlot {
   slotId: string
   row: number
   column: number
+  x?: number
+  y?: number
   adjacentSlotIds: string[]
 }
 

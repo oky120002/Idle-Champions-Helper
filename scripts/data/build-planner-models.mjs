@@ -5,6 +5,7 @@ import { attachPlannerSignalSemantics } from '../../src/domain/planner/plannerSi
 import {
   collectPlannerEffectEntries,
   normalizePlannerEffectSignal,
+  shouldIgnorePlannerUnsupportedEffectEntry,
   splitPlannerEffectString,
 } from './planner-effect-helpers.mjs'
 
@@ -31,6 +32,10 @@ function getRolePriorityMultiplier(roles) {
   return 1.05
 }
 
+function shouldIgnoreUnsupportedPlannerEffect(entry, unsupported) {
+  return shouldIgnorePlannerUnsupportedEffectEntry(entry, unsupported?.rawEffect ?? '')
+}
+
 function buildOfficialPlannerHeroModel(champion, detail) {
   const carrySignals = []
   const supportSignals = []
@@ -43,7 +48,7 @@ function buildOfficialPlannerHeroModel(champion, detail) {
       continue
     }
 
-    const parsed = normalizePlannerEffectSignal(split.effectName, split.effectValue, 'official-parsed')
+    const parsed = normalizePlannerEffectSignal(split.effectName, split.effectValue, 'official-parsed', entry)
 
     if (parsed.ok) {
       const signal = attachPlannerSignalSemantics(parsed.signal, entry.effect)
@@ -53,7 +58,9 @@ function buildOfficialPlannerHeroModel(champion, detail) {
         supportSignals.push(signal)
       }
     } else {
-      unsupportedSignals.push(parsed.unsupported)
+      if (!shouldIgnoreUnsupportedPlannerEffect(entry, parsed.unsupported)) {
+        unsupportedSignals.push(parsed.unsupported)
+      }
     }
   }
 
@@ -125,6 +132,8 @@ function buildOfficialPlannerScenarioModel(variant, formations) {
           slotId: slot.id,
           row: slot.row,
           column: slot.column,
+          x: slot.x,
+          y: slot.y,
           adjacentSlotIds: slot.adjacentSlotIds ?? [],
         }))
       : [],

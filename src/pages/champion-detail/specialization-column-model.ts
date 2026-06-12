@@ -1,4 +1,5 @@
 import type { ChampionDetail, ChampionUpgradeDetail } from '../../domain/types'
+import { extractTargetIdsFromEffectString } from '../../domain/effects/effect-string.js'
 import { isJsonObject } from './detail-json'
 import { buildUpgradePresentation, parseEffectPayload } from './effect-model'
 import type {
@@ -7,37 +8,6 @@ import type {
   SpecializationUpgradeEntry,
   UpgradePresentation,
 } from './types'
-
-function extractTargetIdsFromEffectString(effectString: string): string[] {
-  const payload = parseEffectPayload(effectString)
-
-  if (!payload) {
-    return []
-  }
-
-  const { kind, args } = payload
-
-  if (
-    kind === 'buff_upgrade' ||
-    kind === 'buff_upgrade_add_flat_amount' ||
-    kind === 'buff_upgrade_effect_stacks_max_mult' ||
-    kind === 'buff_upgrade_per_any_tagged_crusader_mult' ||
-    kind === 'change_upgrade_data' ||
-    kind === 'change_upgrade_targets'
-  ) {
-    return [args[1] ?? args[0]].filter((value): value is string => Boolean(value))
-  }
-
-  if (kind === 'buff_upgrades' || kind === 'damage_buff_on_upgrade_tag_targets') {
-    return args.slice(1)
-  }
-
-  if (kind === 'buff_upgrade_per_any_tagged_crusader') {
-    return [args[1]].filter((value): value is string => Boolean(value))
-  }
-
-  return []
-}
 
 function collectEffectStrings(value: unknown, effectStrings: string[], depth = 0): void {
   if (depth > 5 || value == null) {

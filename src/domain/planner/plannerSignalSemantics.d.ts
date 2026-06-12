@@ -1,46 +1,50 @@
 import type {
-  PlannerComparisonOperator,
   PlannerEffectSignal,
   PlannerHeroQualifier,
-  PlannerSignalAmountFunc,
-  PlannerSignalSource,
-  PlannerStatKey,
+  PlannerPositionRelation,
   ResolvedPlannerHeroModel,
 } from './plannerModel'
 
-type PlannerSignalSemanticFields = Pick<
-  PlannerEffectSignal,
-  | 'targetQualifier'
-  | 'formationCountQualifier'
-  | 'amountFunc'
-  | 'stackFunc'
-  | 'applyManually'
-  | 'stacksMultiply'
-  | 'excludeSelf'
->
+export interface PlannerExplicitTargetingNone {
+  status: 'none'
+  relation: 'any'
+}
 
-export function normalizePlannerSignalAmountFunc(value: unknown): PlannerSignalAmountFunc | null
+export interface PlannerExplicitTargetingSupported {
+  status: 'supported'
+  relation: PlannerPositionRelation
+}
 
-export function normalizePlannerTargetQualifier(effect: unknown): PlannerHeroQualifier | null
+export interface PlannerExplicitTargetingUnsupported {
+  status: 'unsupported'
+  note: string
+}
 
-export function normalizePlannerStatQualifiers(effect: unknown): Array<{
-  stat: PlannerStatKey
-  operator: PlannerComparisonOperator
-  value: number
-}> | null
+export type PlannerExplicitTargeting =
+  | PlannerExplicitTargetingNone
+  | PlannerExplicitTargetingSupported
+  | PlannerExplicitTargetingUnsupported
 
-export function parsePlannerPerHeroExpr(expr: unknown): PlannerHeroQualifier | null
+export declare function normalizePlannerSignalAmountFunc(
+  value: unknown,
+): 'add' | 'mult' | 'unknown' | null
 
-export function attachPlannerSignalSemantics<
-  T extends {
-    kind: PlannerEffectSignal['kind']
-    value: number
-    rawEffect: string
-    source: PlannerSignalSource
-  },
->(signal: T, effect: unknown): T & PlannerSignalSemanticFields
+export declare function normalizePlannerExplicitTargeting(effect: unknown): PlannerExplicitTargeting
 
-export function matchesPlannerHeroQualifier(
-  hero: Pick<ResolvedPlannerHeroModel, 'heroId' | 'tags' | 'baseAttackDamageTypes' | 'baseAttackCooldown' | 'age' | 'abilityScores'>,
+export declare function normalizePlannerTargetQualifier(effect: unknown): PlannerHeroQualifier | null
+
+export declare function normalizePlannerStatQualifiers(
+  effect: unknown,
+): NonNullable<PlannerHeroQualifier['requiredStats']> | null
+
+export declare function parsePlannerPerHeroExpr(expr: unknown): PlannerHeroQualifier | null
+
+export declare function attachPlannerSignalSemantics(
+  signal: PlannerEffectSignal,
+  effect: unknown,
+): PlannerEffectSignal
+
+export declare function matchesPlannerHeroQualifier(
+  hero: ResolvedPlannerHeroModel,
   qualifier: PlannerHeroQualifier | null | undefined,
 ): boolean

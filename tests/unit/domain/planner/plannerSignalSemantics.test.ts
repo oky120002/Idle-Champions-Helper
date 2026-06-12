@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest'
 import {
   attachPlannerSignalSemantics,
   matchesPlannerHeroQualifier,
+  normalizePlannerExplicitTargeting,
   parsePlannerPerHeroExpr,
 } from '../../../../src/domain/planner/plannerSignalSemantics.js'
 import type { OfficialPlannerHeroModel } from '../../../../src/domain/planner/plannerModel'
@@ -225,5 +226,272 @@ describe('planner signal semantics', () => {
     expect(stackedSignal.formationCountQualifier).toEqual({
       requiredAttackDamageTypes: ['ranged'],
     })
+  })
+
+  it('attachPlannerSignalSemantics 把 attack_type 过滤统一挂到 carry qualifier', () => {
+    const signal = attachPlannerSignalSemantics(
+      {
+        kind: 'heroDpsMultiplier',
+        value: 150,
+        rawEffect: 'hero_dps_multiplier_mult,150',
+        source: 'official-parsed',
+      },
+      {
+        targets: ['all_slots'],
+        filter_targets: [{ type: 'attack_type', attack: 'magic' }],
+      },
+    )
+
+    expect(signal.targetQualifier).toEqual({
+      requiredAttackDamageTypes: ['magic'],
+    })
+    expect(signal.formationCountQualifier).toBeNull()
+  })
+
+  it('normalizePlannerStatQualifiers 归一化 gte/lte/eq 这类官方比较符别名', async () => {
+    const { normalizePlannerStatQualifiers } = await import('../../../../src/domain/planner/plannerSignalSemantics.js')
+
+    expect(normalizePlannerStatQualifiers({
+      target_filters: [{ type: 'stat', stat: 'dex', comparison: 'gte', check: 15 }],
+    })).toEqual([
+      { stat: 'dex', operator: '>=', value: 15 },
+    ])
+
+    expect(normalizePlannerStatQualifiers({
+      target_filters: [{ type: 'stat', stat: 'wis', comparison: 'lte', check: 13 }],
+    })).toEqual([
+      { stat: 'wis', operator: '<=', value: 13 },
+    ])
+
+    expect(normalizePlannerStatQualifiers({
+      target_filters: [{ type: 'stat', stat: 'int', comparison: 'eq', check: 12 }],
+    })).toEqual([
+      { stat: 'int', operator: '==', value: 12 },
+    ])
+  })
+
+  it('attachPlannerSignalSemantics 保留 parser 预设的计数与位置语义', () => {
+    const signal = attachPlannerSignalSemantics(
+      {
+        kind: 'heroDpsMultiplier',
+        value: 100,
+        rawEffect: 'hero_dps_mult_per_target_crusader,100,adj',
+        source: 'official-parsed',
+        amountFunc: 'add',
+        stackFunc: 'per_target_crusader',
+        formationCountPositionQualifier: { relation: 'adjacent' },
+        formationCountQualifier: { requiredTags: ['companion'], matchMode: 'any' },
+      },
+      {
+        targets: ['self'],
+      },
+    )
+
+    expect(signal.positionQualifier).toEqual({
+      relation: 'self',
+    })
+    expect(signal.formationCountPositionQualifier).toEqual({
+      relation: 'adjacent',
+    })
+    expect(signal.formationCountQualifier).toEqual({
+      requiredTags: ['companion'],
+      matchMode: 'any',
+    })
+    expect(signal.amountFunc).toBe('add')
+    expect(signal.stackFunc).toBe('per_target_crusader')
+  })
+
+  it('normalizePlannerExplicitTargeting 只接受当前可稳定计分的目标关系', () => {
+    expect(normalizePlannerExplicitTargeting({ targets: ['adj'] })).toEqual({
+      status: 'supported',
+      relation: 'adjacent',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: ['non_adj'] })).toEqual({
+      status: 'supported',
+      relation: 'nonAdjacent',
+    })
+
+    expect(normalizePlannerExplicitTargeting({
+      targets: [{ type: 'attack_type', attack: 'magic' }],
+    })).toEqual({
+      status: 'supported',
+      relation: 'any',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: ['all'] })).toEqual({
+      status: 'supported',
+      relation: 'any',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: ['all_slots'] })).toEqual({
+      status: 'supported',
+      relation: 'any',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: [{ type: 'distance', distance: 1 }] })).toEqual({
+      status: 'supported',
+      relation: 'adjacent',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: [{ type: 'distance', distance: 1, self: true }] })).toEqual({
+      status: 'supported',
+      relation: 'adjacentOrSelf',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: [{ type: 'distance', distance: 2 }] })).toEqual({
+      status: 'supported',
+      relation: 'withinTwoSlots',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: [{ type: 'distance', distance: 2, self: true }] })).toEqual({
+      status: 'supported',
+      relation: 'withinTwoSlotsOrSelf',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: [{ type: 'distance', distance: 3 }] })).toEqual({
+      status: 'supported',
+      relation: 'withinThreeSlots',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: ['col'] })).toEqual({
+      status: 'supported',
+      relation: 'sameColumn',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: ['next_col'] })).toEqual({
+      status: 'supported',
+      relation: 'aheadColumn',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: ['prev_col'] })).toEqual({
+      status: 'supported',
+      relation: 'behindColumn',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: ['next_two_col'] })).toEqual({
+      status: 'supported',
+      relation: 'aheadTwoColumns',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: ['prev_two_col'] })).toEqual({
+      status: 'supported',
+      relation: 'behindTwoColumns',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: ['behind'] })).toEqual({
+      status: 'supported',
+      relation: 'allBehindColumns',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: ['col_and_prev_col'] })).toEqual({
+      status: 'supported',
+      relation: 'sameOrBehindColumn',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: ['col_and_behind'] })).toEqual({
+      status: 'supported',
+      relation: 'sameOrBehindColumns',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: ['ahead'] })).toEqual({
+      status: 'supported',
+      relation: 'allAheadColumns',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: ['col_and_ahead'] })).toEqual({
+      status: 'supported',
+      relation: 'sameOrAheadColumns',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: ['prev_and_next_col'] })).toEqual({
+      status: 'supported',
+      relation: 'adjacentColumns',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: ['self_and_prev_two_col'] })).toEqual({
+      status: 'supported',
+      relation: 'selfAndBehindTwoColumns',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: ['self_and_adj'] })).toEqual({
+      status: 'supported',
+      relation: 'adjacentOrSelf',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: ['front_2_columns'] })).toEqual({
+      status: 'supported',
+      relation: 'frontTwoColumns',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: ['back_2_columns'] })).toEqual({
+      status: 'supported',
+      relation: 'backTwoColumns',
+    })
+
+    expect(normalizePlannerExplicitTargeting({
+      targets: [{ type: 'exactly_x_behind', num_columns: 2 }],
+    })).toEqual({
+      status: 'supported',
+      relation: 'exactlyBehindTwoColumns',
+    })
+
+    expect(normalizePlannerExplicitTargeting({
+      targets: [{ type: 'col_num', start_from_back: true, column: 0 }],
+    })).toEqual({
+      status: 'supported',
+      relation: 'rearMostColumn',
+    })
+
+    expect(normalizePlannerExplicitTargeting({ targets: ['front'] }).status).toBe('unsupported')
+  })
+
+  it('per_upgrade_targets 保留 carry 目标限定，同时挂接位置关系', () => {
+    const signal = attachPlannerSignalSemantics(
+      {
+        kind: 'heroDpsMultiplier',
+        value: 100,
+        rawEffect: 'hero_dps_multiplier_mult,0',
+        source: 'official-parsed',
+      },
+      {
+        stack_func: 'per_upgrade_targets',
+        amount_func: 'mult',
+        targets: ['non_adj'],
+        filter_targets: [{ type: 'by_tags', tags: 'female' }],
+      },
+    )
+
+    expect(signal.positionQualifier).toEqual({ relation: 'nonAdjacent' })
+    expect(signal.targetQualifier).toEqual({
+      requiredTags: ['female'],
+      matchMode: 'any',
+    })
+    expect(signal.formationCountQualifier).toEqual({
+      requiredTags: ['female'],
+      matchMode: 'any',
+    })
+  })
+
+  it('all_slots + 过滤限定会保留为全阵型目标 buff', () => {
+    const signal = attachPlannerSignalSemantics(
+      {
+        kind: 'heroDpsMultiplier',
+        value: 125,
+        rawEffect: 'hero_dps_multiplier_mult,125',
+        source: 'official-parsed',
+      },
+      {
+        targets: ['all_slots'],
+        filter_targets: [{ type: 'by_tags', tags: 'female' }],
+      },
+    )
+
+    expect(signal.positionQualifier).toBeNull()
+    expect(signal.targetQualifier).toEqual({
+      requiredTags: ['female'],
+      matchMode: 'any',
+    })
+    expect(signal.formationCountQualifier).toBeNull()
   })
 })

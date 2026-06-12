@@ -9,8 +9,10 @@ import {
   parsePlannerPerHeroExpr,
 } from '../../src/domain/planner/plannerSignalSemantics.js'
 import {
+  analyzePlannerBuffUpgradeWrappers,
   collectPlannerEffectEntries,
   normalizePlannerEffectSignal,
+  shouldIgnorePlannerUnsupportedEffectEntry,
   splitPlannerEffectString,
 } from './planner-effect-helpers.mjs'
 
@@ -75,6 +77,8 @@ function classifyScoringSupport(signal) {
     signal.stackFunc === 'per_crusader'
     || signal.stackFunc === 'per_tagged_crusader_mult'
     || signal.stackFunc === 'per_hero_attribute'
+    || signal.stackFunc === 'per_upgrade_targets'
+    || signal.stackFunc === 'per_slot_distance_from_source'
   )
 
   return supportedStackFunc && supportsAddOrMult ? 'supported' : 'unsupported-composition'
@@ -91,6 +95,10 @@ export function generatePlannerSignalCoverageReport(details) {
   const unparsedPerHeroExprCounts = new Map()
   const scoreSupportCounts = new Map()
   const sourceBucketCounts = new Map()
+  const buffUpgradeWrapperStatusCounts = new Map()
+  const buffUpgradeWrapperKindCounts = new Map()
+  const buffUpgradeWrapperUnresolvedReasonCounts = new Map()
+  const buffUpgradeMissingBaseEffectCounts = new Map()
 
   let totalHeroes = 0
   let totalEffectEntries = 0
@@ -106,9 +114,35 @@ export function generatePlannerSignalCoverageReport(details) {
   let manualSignals = 0
   let perHeroExprTotal = 0
   let parsedPerHeroExprTotal = 0
+  let buffUpgradeWrapperTotal = 0
+  let buffUpgradeWrapperSupportedBaseResolved = 0
+  let buffUpgradeWrapperSupportedBaseUnresolved = 0
+  let buffUpgradeWrapperFamilyUnsupported = 0
 
   for (const detail of details) {
     totalHeroes += 1
+
+    for (const wrapperAuditEntry of analyzePlannerBuffUpgradeWrappers(detail)) {
+      buffUpgradeWrapperTotal += 1
+      incrementCounter(buffUpgradeWrapperStatusCounts, wrapperAuditEntry.status)
+      incrementCounter(buffUpgradeWrapperKindCounts, wrapperAuditEntry.wrapperKind)
+
+      if (wrapperAuditEntry.status === 'wrapper-supported-base-resolved') {
+        buffUpgradeWrapperSupportedBaseResolved += 1
+      } else if (wrapperAuditEntry.status === 'wrapper-supported-base-unresolved') {
+        buffUpgradeWrapperSupportedBaseUnresolved += 1
+      } else if (wrapperAuditEntry.status === 'wrapper-family-unsupported') {
+        buffUpgradeWrapperFamilyUnsupported += 1
+      }
+
+      if (wrapperAuditEntry.unresolvedReason) {
+        incrementCounter(buffUpgradeWrapperUnresolvedReasonCounts, wrapperAuditEntry.unresolvedReason)
+      }
+
+      for (const baseEffectName of wrapperAuditEntry.unresolvedBaseEffectNames) {
+        incrementCounter(buffUpgradeMissingBaseEffectCounts, baseEffectName)
+      }
+    }
 
     for (const entry of collectPlannerEffectEntries(detail)) {
       totalEffectEntries += 1
@@ -138,8 +172,11 @@ export function generatePlannerSignalCoverageReport(details) {
         }
       }
 
-      const parsed = normalizePlannerEffectSignal(split.effectName, split.effectValue, 'official-parsed')
+      const parsed = normalizePlannerEffectSignal(split.effectName, split.effectValue, 'official-parsed', entry)
       if (!parsed.ok) {
+        if (shouldIgnorePlannerUnsupportedEffectEntry(entry, split.effectName)) {
+          continue
+        }
         unsupportedSignals += 1
         incrementCounter(unsupportedEffectNameCounts, split.effectName)
         continue
@@ -206,6 +243,10 @@ export function generatePlannerSignalCoverageReport(details) {
       signalsWithTagCountQualifier,
       signalsWithStatCountQualifier,
       signalsWithAgeCountQualifier,
+      buffUpgradeWrapperTotal,
+      buffUpgradeWrapperSupportedBaseResolved,
+      buffUpgradeWrapperSupportedBaseUnresolved,
+      buffUpgradeWrapperFamilyUnsupported,
     },
     topEffectNames: sortCounter(effectNameCounts, 20),
     topUnsupportedEffectNames: sortCounter(unsupportedEffectNameCounts, 20),
@@ -217,6 +258,10 @@ export function generatePlannerSignalCoverageReport(details) {
     topRawFilters: sortCounter(rawFilterCounts, 30),
     topPerHeroExpr: sortCounter(perHeroExprCounts, 20),
     topUnparsedPerHeroExpr: sortCounter(unparsedPerHeroExprCounts, 20),
+    buffUpgradeWrapperStatus: sortCounter(buffUpgradeWrapperStatusCounts, 10),
+    topBuffUpgradeWrapperKinds: sortCounter(buffUpgradeWrapperKindCounts, 20),
+    buffUpgradeWrapperUnresolvedReasons: sortCounter(buffUpgradeWrapperUnresolvedReasonCounts, 10),
+    topBuffUpgradeMissingBaseEffects: sortCounter(buffUpgradeMissingBaseEffectCounts, 20),
   }
 }
 

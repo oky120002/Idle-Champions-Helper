@@ -38,11 +38,48 @@ function getPlannerHeroStatValue(hero, stat) {
   return hero.abilityScores[stat]
 }
 
+function isPlannerFilterLikeTarget(target) {
+  if (!target || typeof target !== 'object') {
+    return false
+  }
+
+  return target.type === 'by_tags'
+    || target.type === 'tags'
+    || target.type === 'attack_type'
+    || target.type === 'stat'
+    || target.type === 'stat_score'
+}
+
 function getPlannerRawFilters(effect) {
   return [
     ...(Array.isArray(effect?.filter_targets) ? effect.filter_targets : []),
     ...(Array.isArray(effect?.target_filters) ? effect.target_filters : []),
+    ...(Array.isArray(effect?.target_filters_or) ? effect.target_filters_or : []),
+    ...(Array.isArray(effect?.targets) ? effect.targets.filter(isPlannerFilterLikeTarget) : []),
   ]
+}
+
+function normalizePlannerComparisonOperator(value) {
+  switch (String(value ?? '').toLowerCase()) {
+    case '>=':
+    case 'gte':
+      return '>='
+    case '<=':
+    case 'lte':
+      return '<='
+    case '>':
+    case 'gt':
+      return '>'
+    case '<':
+    case 'lt':
+      return '<'
+    case '=':
+    case '==':
+    case 'eq':
+      return '=='
+    default:
+      return null
+  }
 }
 
 export function normalizePlannerSignalAmountFunc(value) {
@@ -53,21 +90,201 @@ export function normalizePlannerSignalAmountFunc(value) {
   return value ? 'unknown' : null
 }
 
+function normalizePlannerTargetRelation(target) {
+  if (target === 'all') {
+    return 'any'
+  }
+
+  if (target === 'all_slots') {
+    return 'any'
+  }
+
+  if (isPlannerFilterLikeTarget(target)) {
+    return 'any'
+  }
+
+  if (target && typeof target === 'object' && target.type === 'exactly_x_behind') {
+    const columnsBehind = Number(target.num_columns)
+    if (columnsBehind === 1) {
+      return 'exactlyBehindOneColumn'
+    }
+    if (columnsBehind === 2) {
+      return 'exactlyBehindTwoColumns'
+    }
+    if (columnsBehind === 3) {
+      return 'exactlyBehindThreeColumns'
+    }
+  }
+
+  if (target && typeof target === 'object' && target.type === 'col_num' && target.start_from_back === true) {
+    const backIndex = Number(target.column)
+    if (backIndex === 0) {
+      return 'rearMostColumn'
+    }
+    if (backIndex === 1) {
+      return 'secondRearMostColumn'
+    }
+    if (backIndex === 2) {
+      return 'thirdRearMostColumn'
+    }
+  }
+
+  if (target && typeof target === 'object' && target.type === 'distance') {
+    const distance = Number(target.distance)
+    const includeSelf = target.self === true
+    const comparison = typeof target.comparison === 'string' ? target.comparison : '<='
+
+    if ((comparison === '=' || comparison === '==') && distance === 1) {
+      return includeSelf ? 'adjacentOrSelf' : 'adjacent'
+    }
+
+    if (comparison === '<=' && distance === 1) {
+      return includeSelf ? 'adjacentOrSelf' : 'adjacent'
+    }
+
+    if (comparison === '<=' && distance === 2) {
+      return includeSelf ? 'withinTwoSlotsOrSelf' : 'withinTwoSlots'
+    }
+
+    if (comparison === '<=' && distance === 3) {
+      return includeSelf ? 'withinThreeSlotsOrSelf' : 'withinThreeSlots'
+    }
+
+    if ((comparison === '=' || comparison === '==') && distance === 2) {
+      return null
+    }
+
+    if ((comparison === '=' || comparison === '==') && distance === 3) {
+      return null
+    }
+  }
+
+  if (target === 'self') {
+    return 'self'
+  }
+
+  if (target === 'adj') {
+    return 'adjacent'
+  }
+
+  if (target === 'non_adj') {
+    return 'nonAdjacent'
+  }
+
+  if (target === 'col') {
+    return 'sameColumn'
+  }
+
+  if (target === 'ahead') {
+    return 'allAheadColumns'
+  }
+
+  if (target === 'next_col') {
+    return 'aheadColumn'
+  }
+
+  if (target === 'prev_col') {
+    return 'behindColumn'
+  }
+
+  if (target === 'next_two_col') {
+    return 'aheadTwoColumns'
+  }
+
+  if (target === 'prev_two_col') {
+    return 'behindTwoColumns'
+  }
+
+  if (target === 'behind') {
+    return 'allBehindColumns'
+  }
+
+  if (target === 'col_and_prev_col') {
+    return 'sameOrBehindColumn'
+  }
+
+  if (target === 'col_and_behind') {
+    return 'sameOrBehindColumns'
+  }
+
+  if (target === 'col_and_ahead') {
+    return 'sameOrAheadColumns'
+  }
+
+  if (target === 'prev_and_next_col') {
+    return 'adjacentColumns'
+  }
+
+  if (target === 'self_and_prev_two_col') {
+    return 'selfAndBehindTwoColumns'
+  }
+
+  if (target === 'self_and_adj') {
+    return 'adjacentOrSelf'
+  }
+
+  if (target === 'front_2_columns') {
+    return 'frontTwoColumns'
+  }
+
+  if (target === 'back_2_columns') {
+    return 'backTwoColumns'
+  }
+
+  return null
+}
+
+export function normalizePlannerExplicitTargeting(effect) {
+  const rawTargets = Array.isArray(effect?.targets) ? effect.targets : []
+
+  if (rawTargets.length === 0) {
+    return { status: 'none', relation: 'any' }
+  }
+
+  const relations = rawTargets.map(normalizePlannerTargetRelation)
+  if (relations.some((relation) => relation === null)) {
+    return { status: 'unsupported', note: `unsupported targets: ${JSON.stringify(rawTargets)}` }
+  }
+
+  const uniqueRelations = [...new Set(relations)]
+  if (uniqueRelations.length !== 1) {
+    return { status: 'unsupported', note: `mixed targets: ${JSON.stringify(rawTargets)}` }
+  }
+
+  return {
+    status: 'supported',
+    relation: uniqueRelations[0],
+  }
+}
+
 export function normalizePlannerTargetQualifier(effect) {
-  const tagFilters = getPlannerRawFilters(effect)
-    .filter((filter) => filter && typeof filter === 'object')
+  const rawFilters = getPlannerRawFilters(effect).filter((filter) => filter && typeof filter === 'object')
+  const tagFilters = rawFilters
     .filter((filter) => filter.type === 'by_tags' || filter.type === 'tags')
     .map((filter) => filter.tags)
     .filter((tags) => typeof tags === 'string' && tags.length > 0)
     .flatMap((tags) => tags.split(',').map((tag) => tag.trim()).filter(Boolean))
+  const attackTypeFilters = rawFilters
+    .filter((filter) => filter.type === 'attack_type')
+    .map((filter) => (typeof filter.attack === 'string' ? filter.attack.toLowerCase().trim() : null))
+    .filter(Boolean)
 
-  if (tagFilters.length === 0) {
+  if (tagFilters.length === 0 && attackTypeFilters.length === 0) {
     return null
   }
 
   return {
-    requiredTags: [...new Set(tagFilters)],
-    matchMode: 'any',
+    ...(tagFilters.length > 0
+      ? {
+          requiredTags: [...new Set(tagFilters)],
+          matchMode: 'any',
+        }
+      : {}),
+    ...(attackTypeFilters.length > 0
+      ? {
+          requiredAttackDamageTypes: [...new Set(attackTypeFilters)],
+        }
+      : {}),
   }
 }
 
@@ -77,18 +294,22 @@ export function normalizePlannerStatQualifiers(effect) {
     .filter((filter) => filter.type === 'stat' || filter.type === 'stat_score')
     .map((filter) => {
       const stat = typeof filter.stat === 'string' ? filter.stat.toLowerCase() : null
-      const operator = typeof filter.check === 'string'
-        ? filter.check
-        : typeof filter.comparison === 'string'
-          ? filter.comparison
-          : '>='
+      const operator = normalizePlannerComparisonOperator(
+        typeof filter.check === 'string'
+          ? filter.check
+          : typeof filter.comparison === 'string'
+            ? filter.comparison
+            : '>=',
+      )
       const rawValue = typeof filter.score === 'number'
         ? filter.score
         : typeof filter.check === 'number'
           ? filter.check
+          : typeof filter.value === 'number'
+            ? filter.value
           : null
 
-      if (!stat || rawValue === null) {
+      if (!stat || rawValue === null || !operator) {
         return null
       }
 
@@ -216,20 +437,37 @@ export function attachPlannerSignalSemantics(signal, effect) {
   const tagQualifier = normalizePlannerTargetQualifier(effect)
   const statQualifiers = normalizePlannerStatQualifiers(effect)
   const perHeroQualifier = parsePlannerPerHeroExpr(effect?.per_hero_expr)
+  const explicitTargeting = normalizePlannerExplicitTargeting(effect)
   const heroQualifierFromFilters = (tagQualifier || statQualifiers)
     ? {
         ...(tagQualifier ?? {}),
         ...(statQualifiers ? { requiredStats: statQualifiers } : {}),
       }
     : null
-  const useFormationCountQualifier = typeof effect?.stack_func === 'string'
+  const useFormationCountQualifier = typeof effect?.stack_func === 'string' && effect.stack_func !== 'per_upgrade_targets'
+  const keepTargetQualifier = effect?.stack_func === 'per_upgrade_targets'
 
   return {
     ...signal,
-    targetQualifier: useFormationCountQualifier ? null : heroQualifierFromFilters,
-    formationCountQualifier: perHeroQualifier ?? (useFormationCountQualifier ? heroQualifierFromFilters : null),
-    amountFunc: normalizePlannerSignalAmountFunc(effect?.amount_func),
-    stackFunc: typeof effect?.stack_func === 'string' ? effect.stack_func : null,
+    targetQualifier:
+      signal.targetQualifier
+      ?? (keepTargetQualifier
+        ? heroQualifierFromFilters
+        : useFormationCountQualifier
+          ? null
+          : heroQualifierFromFilters),
+    formationCountQualifier:
+      signal.formationCountQualifier
+      ?? perHeroQualifier
+      ?? (useFormationCountQualifier || keepTargetQualifier ? heroQualifierFromFilters : null),
+    positionQualifier:
+      signal.positionQualifier
+      ?? (explicitTargeting.status === 'supported' && explicitTargeting.relation !== 'any'
+        ? { relation: explicitTargeting.relation }
+        : null),
+    formationCountPositionQualifier: signal.formationCountPositionQualifier ?? null,
+    amountFunc: signal.amountFunc ?? normalizePlannerSignalAmountFunc(effect?.amount_func),
+    stackFunc: signal.stackFunc ?? (typeof effect?.stack_func === 'string' ? effect.stack_func : null),
     applyManually: effect?.apply_manually === true,
     stacksMultiply: typeof effect?.stacks_multiply === 'boolean' ? effect.stacks_multiply : null,
     excludeSelf: effect?.exclude_self === true,

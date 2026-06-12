@@ -16,6 +16,75 @@ describe('planner signal coverage report', () => {
           {
             effectReference: 'mystery_effect,5',
           },
+          {
+            effectReference: 'effect_def,wrapper',
+            effectDefinition: {
+              snapshots: {
+                original: {
+                  effect_keys: [
+                    { effect_string: 'pre_stack_amount,25' },
+                    {
+                      effect_string: 'buff_upgrade_per_any_crusader_where_mult,0,1001,int,>=,15',
+                      amount_expr: 'upgrade_amount(1002,0)',
+                    },
+                  ],
+                },
+              },
+            },
+          },
+          {
+            id: '1001',
+            effectReference: 'effect_def,base-where',
+            effectDefinition: {
+              snapshots: {
+                original: {
+                  effect_keys: [
+                    {
+                      effect_string: 'hero_dps_multiplier_mult,60',
+                      targets: ['all'],
+                      filter_targets: [{ type: 'attack_type', attack: 'magic' }],
+                    },
+                  ],
+                },
+              },
+            },
+          },
+          {
+            id: '1003',
+            effectReference: 'effect_def,base-distance',
+            effectDefinition: {
+              snapshots: {
+                original: {
+                  effect_keys: [
+                    { effect_string: 'pre_stack_amount,100' },
+                    {
+                      effect_string: 'hero_dps_multiplier_mult,0',
+                      amount_expr: 'upgrade_amount(1003,0)',
+                      targets: ['non_adj'],
+                      amount_func: 'mult',
+                      stack_func: 'per_upgrade_targets',
+                    },
+                  ],
+                },
+              },
+            },
+          },
+          {
+            id: '1004',
+            effectReference: 'effect_def,buff-distance',
+            effectDefinition: {
+              snapshots: {
+                original: {
+                  effect_keys: [
+                    {
+                      effect_string: 'buff_upgrade_mult_by_distance_from_source_mult,400,1003',
+                      targets: ['non_adj'],
+                    },
+                  ],
+                },
+              },
+            },
+          },
         ],
         loot: [],
         legendaryEffects: [],
@@ -23,12 +92,16 @@ describe('planner signal coverage report', () => {
     ])
 
     expect(report.totals.totalHeroes).toBe(1)
-    expect(report.totals.totalEffectEntries).toBe(2)
-    expect(report.totals.recognizedSignals).toBe(1)
-    expect(report.totals.unsupportedSignals).toBe(1)
-    expect(report.stackFunctions.find((entry) => entry.key === 'per_crusader')?.count).toBe(1)
+    expect(report.totals.totalEffectEntries).toBe(14)
+    expect(report.totals.recognizedSignals).toBe(5)
+    expect(report.totals.unsupportedSignals).toBe(3)
+    expect(report.stackFunctions.find((entry) => entry.key === 'per_crusader')?.count).toBe(2)
     expect(report.amountStackCombos.find((entry) => entry.key === 'per_crusader__add')?.count).toBe(1)
-    expect(report.topUnsupportedEffectNames[0]).toEqual({ key: 'mystery_effect', count: 1 })
+    expect(report.amountStackCombos.find((entry) => entry.key === 'per_crusader__mult')?.count).toBe(1)
+    expect(report.stackFunctions.find((entry) => entry.key === 'per_slot_distance_from_source')?.count).toBe(1)
+    expect(report.amountStackCombos.find((entry) => entry.key === 'per_slot_distance_from_source__mult')?.count).toBe(1)
+    expect(report.topUnsupportedEffectNames[0]).toEqual({ key: 'pre_stack_amount', count: 2 })
+    expect(report.topUnsupportedEffectNames[1]).toEqual({ key: 'mystery_effect', count: 1 })
   })
 
   it('区分可计分、手动触发和未覆盖组合', () => {
@@ -247,5 +320,102 @@ describe('planner signal coverage report', () => {
       key: 'HasTag(`heroeslance`) || (GetFeatEquipped(2579) && GetStat(`total_ability_score`) >= 85)',
       count: 1,
     })
+  })
+
+  it('对 buff_upgrade wrapper 区分 family unsupported、base resolved 和 base unresolved', () => {
+    const report = generatePlannerSignalCoverageReport([
+      {
+        upgrades: [
+          {
+            id: '2001',
+            effectReference: 'effect_def,base-supported',
+            effectDefinition: {
+              snapshots: {
+                original: {
+                  effect_keys: [
+                    { effect_string: 'hero_dps_multiplier_mult,75', targets: ['adj'] },
+                  ],
+                },
+              },
+            },
+          },
+          {
+            id: '2002',
+            effectReference: 'effect_def,buff-supported',
+            effectDefinition: {
+              snapshots: {
+                original: {
+                  effect_keys: [
+                    { effect_string: 'buff_upgrade,50,2001' },
+                  ],
+                },
+              },
+            },
+          },
+          {
+            id: '2003',
+            effectReference: 'effect_def,base-unsupported',
+            effectDefinition: {
+              snapshots: {
+                original: {
+                  effect_keys: [
+                    { effect_string: 'paid_up_front_increase_dps,25' },
+                  ],
+                },
+              },
+            },
+          },
+          {
+            id: '2004',
+            effectReference: 'effect_def,buff-unresolved',
+            effectDefinition: {
+              snapshots: {
+                original: {
+                  effect_keys: [
+                    { effect_string: 'buff_upgrade,40,2003' },
+                  ],
+                },
+              },
+            },
+          },
+          {
+            id: '2005',
+            effectReference: 'effect_def,buff-unsupported-family',
+            effectDefinition: {
+              snapshots: {
+                original: {
+                  effect_keys: [
+                    { effect_string: 'buff_upgrade_per_target_crusader_mult,40,2001,adj' },
+                  ],
+                },
+              },
+            },
+          },
+        ],
+        loot: [],
+        legendaryEffects: [],
+      },
+    ])
+
+    expect(report.totals.buffUpgradeWrapperTotal).toBe(3)
+    expect(report.totals.buffUpgradeWrapperSupportedBaseResolved).toBe(1)
+    expect(report.totals.buffUpgradeWrapperSupportedBaseUnresolved).toBe(1)
+    expect(report.totals.buffUpgradeWrapperFamilyUnsupported).toBe(1)
+    expect(report.buffUpgradeWrapperStatus).toEqual([
+      { key: 'wrapper-family-unsupported', count: 1 },
+      { key: 'wrapper-supported-base-resolved', count: 1 },
+      { key: 'wrapper-supported-base-unresolved', count: 1 },
+    ])
+    expect(report.buffUpgradeWrapperUnresolvedReasons).toEqual([
+      { key: 'base-effect-unrecognized', count: 1 },
+      { key: 'wrapper-kind-unsupported', count: 1 },
+    ])
+    expect(report.topBuffUpgradeMissingBaseEffects).toEqual([
+      { key: 'paid_up_front_increase_dps', count: 1 },
+    ])
+    expect(report.topBuffUpgradeWrapperKinds).toEqual([
+      { key: 'buff_upgrade', count: 2 },
+      { key: 'buff_upgrade_per_target_crusader_mult', count: 1 },
+    ])
   })
 })

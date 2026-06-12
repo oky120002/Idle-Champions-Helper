@@ -6,7 +6,11 @@
 - 公共数据入口是 `npm run data:official`，会抓取中英文 definitions，归一化 `champions.json`、`champion-details/<id>.json`、`adventures.json`、`patrons.json`、`variants.json`、`game-rules.json`、`effect-reference.json`、`patron-perks.json`、`trials.json`、`formations.json`、`enums.json`，并同步立绘、动画、专精图和宠物数据。
 - 当前私人数据页支持 Support URL、手填凭证和日志文本的本地解析预览；用户点击手动同步后，浏览器请求官方只读接口并把归一化快照写入 IndexedDB。
 - IndexedDB 已包含 `formationDrafts`、`formationPresets`、`userProfileSnapshots` 和可选 `credentialVault` store；默认同步流程不保存凭证。
-- 本规划分支只写文档与 Ralph 任务契约；`src/` 实现必须交给 `.ralph/tasks/planner/prd.json` 后续 story。
+- 当前仓库已经落下 planner 的首批领域实现与测试；后续继续扩能力时，应优先沿 `src/domain/planner/*` 与 `public/data/v1/planner-*.json` 的确定性合同推进，而不是把规则继续堆回页面或一次性脚本。
+- 当前 planner 已能稳定消费一批直接影响自动化阵型质量的官方目标语义：全阵型过滤、列方向关系、绝对前后两列、倒数列、邻接图距离，以及 `attack_type` 这类可静态落地的 carry 过滤条件。
+- 当前 planner 还新增了一层确定性合同：`formationCountPositionQualifier`。它把“这个效果按谁来计数”的站位语义从受益目标语义里拆出来，供 parser、评分和测试复用。
+- 当前 planner 还新增了一层确定性合同：`bonusScaleOfSignal`。当官方效果属于 `buff_upgrade*` 家族时，构建阶段会先解析被加成的基础升级信号，再生成一条派生 planner signal，把“增强已有 buff”的语义稳定保留下来，供评分与测试复用。
+- 当前 `buff_upgrade*` 已优先打通高价值静态子集：`buff_upgrade`、`buff_upgrades`、`buff_upgrade_per_any_tagged_crusader_mult`、`buff_upgrade_per_any_crusader_where_mult`、`buff_upgrade_per_target_crusader`，以及按槽位距离增强基础 buff 的 `buff_upgrade_mult_by_distance_from_source_mult`。这些子集都走同一条 derived-signal 链路，不再各自维护第二套黑盒解析。
 
 ## 目标架构
 

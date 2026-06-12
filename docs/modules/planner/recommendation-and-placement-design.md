@@ -23,6 +23,7 @@
 
 ## 3. 核心模型
 - `ResolvedPlannerHeroModel` 至少包含：`heroId`、`seat`、`roles`、`tags`、`age`、`abilityScores`、`isCarryViable`、`carrySignals`、`supportSignals`、`targetQualifiers`、`formationCountQualifiers`、`positionQualifiers`、`effectMultipliers`、`unsupportedSignals`、`sourceBreakdown`。
+- `PlannerEffectSignal` 当前允许带 `bonusScaleOfSignal`：它表示“当前 signal 是对另一条基础 planner signal 的效果增幅”。这主要服务 `buff_upgrade*` 家族，避免把“增强某个升级效果”误算成一条独立的新 buff。
 - `isCarryViable`：是否允许进入 C 位枚举；默认优先 `输出` 标签英雄，但允许例外英雄被语义层显式标记为可当 C 位。
 - `carrySignals`：英雄自身提高自己输出的规则。
 - `supportSignals`：该英雄如何提高别人输出，尤其是如何提高当前 C 位输出。
@@ -44,8 +45,9 @@
 2. 再判断位置条件是否满足，例如 `adjacent / self / any`。
 3. 再判断目标条件是否满足，例如 `female / male / role / tag / alignment`。
 4. 命中后按 signal 的组合语义计算 multiplier：普通百分比直接换算；formation 计数类再结合 `amountFunc + stackFunc` 求值。
-5. 未命中只记录原因，不计分。
-6. 语义缺失、需要手动触发、或组合方式还不稳定的规则，只进入 `warnings`，不偷偷加分。
+5. 若 signal 带 `bonusScaleOfSignal`，则先求出基础 signal 的有效百分比，再把当前 signal 视为“对该百分比的增量”；不能把基础 signal 再完整重复计一遍。
+6. 未命中只记录原因，不计分。
+7. 语义缺失、需要手动触发、或组合方式还不稳定的规则，只进入 `warnings`，不偷偷加分。
 
 ### 3.3 当前代码首期已支持的条件
 - `globalDpsMultiplier`：默认对 carry 生效。
@@ -53,7 +55,8 @@
 - `adjacentBuff`：默认要求 support 与 carry 相邻。
 - `taggedChampionBuff`：只有在 planner model 明确提供 `targetQualifier.requiredTags` 或 `requiredStats` 时才计分；否则只给 warning。
 - carry 目标限定已支持：`requiredTags`、`excludedTags`、`requiredStats`。
-- formation 计数限定已支持最小子集：`per_crusader`、`per_tagged_crusader_mult`、`per_hero_attribute`。
+- formation 计数限定已支持最小子集：`per_crusader`、`per_tagged_crusader_mult`、`per_hero_attribute`、`per_slot_distance_from_source`。
+- 计数限定现在不再只支持“按整队英雄事实计数”；也支持“按某个相对站位子集计数”，例如“每个相邻英雄”“每个非相邻英雄”。
 - formation 计数限定当前可消费的 qualifier 子集：正向/排除标签、能力值阈值、基础攻击伤害类型、基础攻击冷却阈值、年龄上下界、排除指定英雄。
 - 其中能力值限定当前不仅支持六维单项，也支持 `total_ability_score` 这种可由六维静态求和得到的派生值。
 - 简单别名谓词当前只支持能稳定映射到静态事实源的子集，例如 `is_undead -> requiredTags: ['undead']`。
@@ -66,11 +69,39 @@
 - `applyManually=true` 的效果当前不计分，只保留 warning。
 
 ### 3.4 当前明确还没进代码的条件
-- `front / behind / top / bottom / same column` 这类布局语义，先写进 planner model 设计，但不在缺少稳定布局方向定义时硬算。
+- `top / bottom`、跨行扇区、动态连锁、运行时状态驱动这类仍缺稳定事实源或稳定确定性语义的布局规则，当前不硬算。
 - `male / female / race / alignment / role` 之外更复杂的布尔表达式，仍应通过结构化 parser 或语义补丁进入 qualifier，不能靠页面或评分代码现场猜。
 - `HasEffect(...)` 这类运行时状态表达式当前不进入静态 planner model；缺少稳定事实源时只记 warning，不硬算。
 - hero 私有 stack 体系，例如 `per_mithral_hall_stacks`、`per_aerois_synergy` 这类阵营/专属协同，当前不做猜测。
 - 未稳定覆盖的 `stack_func` / `amount_func` 组合继续降级为 warning，暂不计分。
+
+### 3.5 当前已稳定支持的列方向关系
+- 当前已基于官方 `formations.json` 的稳定槽位拓扑支持这些目标关系：`col`、`next_col`、`prev_col`、`next_two_col`、`prev_two_col`、`behind`、`ahead`、`col_and_prev_col`、`col_and_behind`、`col_and_ahead`、`prev_and_next_col`、`self_and_prev_two_col`、`front_2_columns`、`back_2_columns`、`exactly_x_behind`。
+- 这里不是靠页面启发式猜“前后排”，而是依赖官方槽位的 `column + x + adjacentSlotIds` 事实。
+- 当前全量官方阵型里，同一 `column` 的槽位共享同一个 `x`，且 `column` 增大时 `x` 严格减小，因此可稳定解释为“更靠前”。
+- 因此 `next_col / next_two_col / ahead / col_and_ahead` 当前表示更靠前的列，`prev_col / prev_two_col / behind / self_and_prev_two_col / exactly_x_behind` 表示更靠后的列。
+- `prev_and_next_col` 当前按“前后相邻列”解释；`self_and_prev_two_col` 当前按“自己所在列 + 身后两列”解释。
+- `front_2_columns` 与 `back_2_columns` 当前按阵型绝对最前两列 / 最后两列解释，不依赖 support 自己站在哪一列。
+- `col_num(start_from_back=true)` 当前已稳定支持倒数第 1 / 2 / 3 列这类绝对后排列目标，适合像 Tasslehoff 这类明确写“rear-most / second to rear-most / third to rear-most column”的效果。
+
+### 3.6 当前已稳定支持的全阵型目标关系
+- `all` 与 `all_slots` 当前都视为稳定的全阵型目标关系，统一归一化为 `relation = any`。
+- 若同时带 `filter_targets` / `target_filters`，则这些过滤条件继续作为 carry 命中限定保留；不会因为目标是全阵型就丢失标签、属性、伤害类型等约束。
+- 这类规则当前最常见于传奇效果里的“所有女性 / 所有矮人 / 所有满足某属性阈值的英雄造成更多伤害”，对自动化阵型有直接价值。
+- `attack_type` 过滤当前也已统一进入 `targetQualifier.requiredAttackDamageTypes`，因此像“所有 Magic Champions 增伤”这类规则不会再被 planner 静默丢弃。
+- `hero_dps_mult_per_target_crusader` 当前已按“两层语义”稳定落地：`targets` 决定受益 carry 的站位关系，effect string 里的第三参数决定 formation 计数的站位子集。
+- `hero_dps_mult_per_tagged_crusader_mult` 当前已稳定落地为“按 tag 计数、对 carry 乘算增伤”。
+- `hero_dps_mult_per_crusader_mult` 当前已稳定落地为“按 carry 限定条件计数，并只对同限定 carry 生效”；首期已覆盖 `attack_type` 这种高价值静态限定。
+- `hero_dps_mult_per_col_behind` 当前已稳定落地为“按 carry 相对 source hero 落后多少列来乘算叠层”。
+- `buff_upgrade*` 当前已稳定落地为“派生 signal over base signal”：若被增强的基础升级本身已可见于 planner，则 wrapper 会产出和基础 signal 同受益目标、同站位语义的派生 signal，并通过 `bonusScaleOfSignal` 把加法/乘法增量继续带入评分。
+- `buff_upgrade_per_any_crusader_where_mult` 当前已并入这条链路；只要 `compare / comparison / check` 能归一化成静态 qualifier，例如属性阈值、年龄阈值、基础攻击冷却阈值，就会按 `per_crusader + mult` 进入自动化阵型评分。
+- `buff_upgrade_mult_by_distance_from_source_mult` 当前也已并入这条链路；只要基础升级已可见，planner 会按 support 到 carry 的邻接图槽位距离做乘算堆叠，再把结果作为基础 buff 的增量计入评分。
+
+### 3.7 当前已稳定支持的图距离目标关系
+- 当前已支持基于 `adjacentSlotIds` 邻接图的距离目标：`distance <= 1`、`distance <= 2`、`distance <= 3`，以及 `self: true` 的自包含版本。
+- 这类规则不走几何猜测，也不走 `row / column` 粗暴近似，而是直接按官方阵型邻接图求最短路径距离。
+- 目前已能稳定覆盖的典型语义包括：`adjacent champions`、`within 2 slots`、`within 3 slots`、`herself and champions within 2 slots`。
+- `self_and_adj` 当前也归到同一组邻接图语义，按“自己 + 相邻槽位”处理，而不是误解成“自己列及相邻列”。
 
 ## 4. 推荐流水线
 ```text
