@@ -79,7 +79,7 @@ export function GlobalSearchBox() {
   }
 
   const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
-    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
       setIsFocused(false)
     }
   }
