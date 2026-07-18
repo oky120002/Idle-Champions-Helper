@@ -31,7 +31,7 @@
 | `layoutId` | 对应阵型布局 |
 | `placements` | 槽位到英雄的映射 |
 | `scenarioRef.kind` | `campaign` / `adventure` / `variant` / `trial` / `timeGate` |
-| `scenarioRef.id` | 正式场景身份；手工联调方案可为 `null` |
+| `scenarioRef` | 正式场景身份；手工联调方案可为 `null` |
 | `scenarioTags` | 用户可读标签，不作为恢复主键 |
 | `priority` | `low / medium / high`，仅作为个人排序辅助 |
 | `createdAt / updatedAt` | 创建与最近编辑时间 |

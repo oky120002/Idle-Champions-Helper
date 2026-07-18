@@ -10,7 +10,7 @@
 
 ## 当前范围
 
-- 当前已路由页面：英雄筛选、用户英雄、英雄详情、立绘页、立绘页下的动图审片台、宠物图鉴、变体筛选、阵型编辑、方案存档、自动计划、个人数据
+- 当前已路由页面：全文搜索、英雄筛选、用户英雄、英雄详情、立绘页、立绘页下的动图审片台、宠物图鉴、变体筛选、阵型编辑、方案存档、自动计划、个人数据
 - 根路由 `/` 当前直接重定向到英雄筛选页；仓库里仍保留未挂路由的 `HomePage` 草稿，但它不是当前线上入口
 - 公共数据：`public/data/version.json` 与 `public/data/v1/*.json`，其中包含英雄 / 宠物静态图索引、`champion-animations.json`、`pet-animations.json` 动图清单，以及 `champion-animation-audit.json` 本地审片清单
 - 动图审片台 `#/illustrations/audit` 支持勾选人工结论、问题标签与备注，并可一键复制 JSON 反馈
@@ -50,6 +50,7 @@ npm run test:regression
 
 ```bash
 npm run data:official
+npm run data:search
 npm run data:planner-coverage
 npm run private-user-data:fetch
 npm run data:fetch
@@ -62,6 +63,7 @@ npm run data:pets -- --input tmp/idle-champions-api/<english>.json --localizedIn
 ```
 
 - `data:official` 是当前公共数据构建入口。
+- `data:search` 基于 `public/data/v1/champions.json` 与 `champion-details/*.json` 抽取英雄文本，输出 `public/data/v1/search/search-documents.json`，随 `data:official` 主流程一起产出。
 - `data:planner-coverage` 基于当前 `public/data/v1/champion-details/*.json` 统计 planner signal 覆盖率，用来判断下一刀该补哪类规则。
 - 资源同步默认做两层跳过：先比对 `public/data/resource-sync-state.json` 的全局 `updatedAt`，未变新时整批跳过；进入具体资源脚本后，再按单资源的 source/version/manifest 复用已有文件，减少无效下载和仓库二进制改写。
 - `private-user-data:fetch` 只在本地开发使用：用私有凭证抓官方只读用户 payload，写入 `tmp/private-user-data/`，供本地 Vite 调试导入；不会进入生产构建。

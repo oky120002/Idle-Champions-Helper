@@ -11,7 +11,7 @@
 
 ## 加载校验与回退
 
-方案恢复时必须先校验：`dataVersion`、`layoutId`、`scenarioRef`、`slotId`、`championId` 是否仍可识别。
+方案恢复时必须先校验：`dataVersion`、`layoutId`、`slotId`、`championId` 是否仍可识别。
 
 | 场景 | 建议行为 |
 | --- | --- |

@@ -11,6 +11,7 @@
 - `docs/modules/planner/README.md`：自动阵型计划器 PRD、开发设计和 Ralph 任务契约
 - `docs/modules/shared-components/README.md`：共享组件治理与可复用资产
 - `docs/modules/user-data/user-data-import-design.md`：本地优先的个人数据导入
+- `docs/modules/search/README.md`：全站全文检索（构建期抽取 + 运行期引擎 + 顶栏 / 页面 UI）
 
 ## 读取建议
 

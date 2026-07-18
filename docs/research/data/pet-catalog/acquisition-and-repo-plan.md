@@ -5,21 +5,20 @@
 
 ## 获取方式字段
 
-`familiar_defines[*].collections_source.type` 当前出现的类型分布：`flash_sale` 180、`dlc` 60、`none / 空对象` 42、`not_yet_available` 25、`gems` 11、`patron` 5。
+`familiar_defines[*].collections_source.type` 截至 2026-04-16 的快照分布：`flash_sale` 180、`dlc` 60、`none / 空对象` 42、`not_yet_available` 25、`gems` 11、`patron` 5。当前数据已变化为合计 331 条，分布为：`flash_sale` 229、`dlc` 70、`not_yet_available` 12、`gems` 11、`patron` 5、`sourceType=null` 3、`giveaway` 1（新增 `giveaway` 类型）。
 
 补充核对后，不能只依赖 `collections_source`：`premium_item_defines` 中有 `290` 条 `effect.type = familiar`，其中 `279` 只宠物能命中至少一个 premium item；`patron_shop_item_defines` 中有 `5` 条 `effect.type = familiar`。
 
 ## 当前可解释归类
 
-适合作为页面层展示的稳定归类：
+适合作为页面层展示的稳定归类（与 `pets.json` 的 `acquisition.kind` 对齐，共 4 类）：
 
-1. 宝石商店
-2. 赞助商商店
-3. 购买（DLC / 主题包 / Familiar Pack / 限时闪促）
-4. 暂未开放
-5. 来源待确认
+1. `premium`（含 DLC / 主题包 / Familiar Pack / 限时闪促；3 条 `sourceType=null` 也归此类）
+2. `gems`（宝石商店）
+3. `patron`（赞助商商店）
+4. `not-yet-available`（暂未开放）
 
-补充说明：`flash_sale` 更接近“限时付费来源”，不应直接解释成抽奖；`patron` 还可以从 `patron_shop_item_defines` 里补出成本和影响力门槛；一部分 `collections_source` 为空，但仍可通过 `cost.premium_item` 和 `premium_item_defines.effect` 命中实际礼包。
+补充说明：`flash_sale` 更接近”限时付费来源”，不应直接解释成抽奖；`patron` 还可以从 `patron_shop_item_defines` 里补出成本和影响力门槛；`sourceType=null` 的条目仍可通过 `cost.premium_item` 和 `premium_item_defines.effect` 命中实际礼包，因此归入 `premium` 而非”来源待确认”。
 
 ## 对本仓库的直接落地建议
 

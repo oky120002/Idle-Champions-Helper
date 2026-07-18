@@ -156,6 +156,10 @@ Vite serve 仅开发态暴露本地 dev endpoint
 ## 9. 当前仓库对应文件
 
 - `src/pages/UserDataPage.tsx`
+- `src/pages/user-data/` 下 9 个组件（UserSyncPanel、LocalDevSnapshotSection、useUserSyncModel(.prod)、userSyncLocalDevAction(.prod)、UserDataWorkbench、UserImportFields、UserImportResultPanel、useUserDataPageModel、user-import-model 等）
 - `src/data/userImport.ts`
+- `src/data/user-sync/`（officialClient.ts、officialPlayServer.ts、userProfileNormalizer.ts、localDevPrivateSnapshot.ts）
+- `src/data/user-profile-store/`（userProfileSourceResolver.ts(+.prod.ts)、userProfileStore.ts）
+- `scripts/private-user-data/`（fetch-user-profile-payloads.mjs、private-user-profile-payloads.mjs、production-boundary-scanner.mjs 等）
 - `docs/research/data/game-data-source-investigation.md`
 - 当前设计稿路径：`docs/modules/user-data/user-data-import-design.md`

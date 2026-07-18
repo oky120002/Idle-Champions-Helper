@@ -9,7 +9,7 @@
 - 列表默认只渲染首批 50 张静态立绘；只有继续展开时，剩余卡片才进入 DOM。
 - 卡片 hover 时才按需加载对应 `champion-animations.json` 命中的 `skelanim` 动态预览；没有命中时继续停留在静态立绘。
 - 所有静态图继续启用 `loading="lazy"`，动态预览不应阻塞首屏结果出现。
-- `src/components/ChampionVisualWorkbench.tsx` 可继续保留，但应定位为调试 / 研究工作台，不再承担正式立绘页主展示职责。
+- `src/components/ChampionVisualWorkbench.tsx` 可继续保留，但应定位为调试 / 研究工作台，不再承担正式立绘页主展示职责；当前 `src/pages/` 与 `src/app/App.tsx` 均无引用，无活动入口。
 
 ## 明确不选的方案
 

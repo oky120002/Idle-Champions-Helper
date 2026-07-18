@@ -33,7 +33,7 @@
 
 - `src/components/SurfaceCard.tsx` 提供 `headerAside`，用于承载复用统计条。
 - 复用统计条组件放在 `src/components/PageHeaderMetrics.tsx`。
-- 当前已落地页面：`src/pages/ChampionsPage.tsx`、`src/pages/IllustrationsPage.tsx`、`src/pages/PetsPage.tsx`、`src/pages/VariantsPage.tsx`、`src/pages/PresetsPage.tsx`。
+- 经工作台 metrics header 间接落地于以下页面：`src/pages/ChampionsPage.tsx`、`src/pages/IllustrationsPage.tsx`、`src/pages/PetsPage.tsx`、`src/pages/VariantsPage.tsx`、`src/pages/PresetsPage.tsx`。直接使用方为 `src/components/workbench/` 下的 `ConfiguredWorkbenchMetricsHeader.tsx`、`WorkbenchFilterMetricsHeader.tsx`、`workbenchMetricItemBuilders.ts`；`rg "PageHeaderMetrics" src/pages/` 无命中。
 
 ## 修改顺序
 

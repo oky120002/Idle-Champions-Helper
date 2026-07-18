@@ -25,3 +25,6 @@
 - planner future controls: manual parameter panel，允许用户手动覆盖金币预算、装备、feat、传奇、专精和暂不支持变量。
 - planner future data: 更完整的 modron、patron、event、season、temporary buff 投影。
 - planner future planning: 多队伍、Trials、Time Gate 和长期成长路线。
+- css/tsx 体量预算超限：`src/styles/pages/champions.css` 647 行（>520，必须拆）、`planner.css` / `shared/results/card.css` / `shared/workbench/toolbar.css` 约 407 行（应拆）；`src/components/workbench/PageWorkbenchShell.tsx` 271、`WorkbenchScaffold.tsx` 266（应拆）。下次触碰对应文件时按业务边界拆。
+- planner 候选池 / 模拟器实现缺口：`computeHypotheticalBaseline` 已实现但 `candidatePool` 的 all-hypothetical 分支未调用（未拥有英雄拿到空装备而非同 seat 中位数）；`SimulationChampionProfile` 字段不全（缺 seat/tags/roles/ability scores/localized name/specialization unlock）且 `projectChampionSimulationProfile` 无生产消费；`candidatePool` overrides 只有 level+equipment，缺 feat/specialization/legendary；`deleteUserProfileData` 未清 `plannerHeroOverrides`；`simulator-data-coverage.mjs` 的 `generateCoverageReport` 孤儿无调用。需连线或显式标注暂缓。
+- formation scenarioRef 失效校验缺口：`draft-persistence.md` / `storage-and-recovery.md` 原称恢复时校验 scenarioRef，实际 `src/data/formation-persistence/validation.ts` 不校验（文档已按代码事实修正）。若产品需识别失效场景身份，再补 `scenarioRef.kind/id` 校验。

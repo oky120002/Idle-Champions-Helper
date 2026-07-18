@@ -11,13 +11,13 @@
 | `dataVersion` | 保存时对应的公共数据版本 |
 | `layoutId` | 当前布局 |
 | `scenarioRef.kind` | `campaign` / `adventure` / `variant` / `trial` / `timeGate` |
-| `scenarioRef.id` | 正式场景身份；没有场景筛选时可为空 |
+| `scenarioRef` | 正式场景身份；没有场景筛选或手工联调方案可为 `null` |
 | `placements` | `slotId -> championId` |
 | `updatedAt` | 最近编辑时间 |
 
 ## 恢复校验与回退
 
-恢复前必须校验：`dataVersion`、`layoutId`、`scenarioRef`、`slotId`、`championId` 是否仍可识别。
+恢复前必须校验：`dataVersion`、`layoutId`、`slotId`、`championId` 是否仍可识别。
 
 1. 保存版本仍可读：优先按保存时 `dataVersion` 原样恢复。
 2. 保存版本可读但部分失效：保留有效放置，列出失效布局 / 槽位 / 英雄，并提示用户重新保存或丢弃失效引用。

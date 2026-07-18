@@ -30,7 +30,7 @@ public/
 
 - `version.json`：声明当前启用版本、更新时间、必要说明；建议始终 `cache: 'no-store'` 读取。
 - `v1/`：当前版本的数据目录；未来结构有破坏性变化时再新增 `v2/`、`v3/`。
-- 集合文件建议统一成“包裹对象”，至少包含 `items` 与 `updatedAt`，避免直接暴露裸数组。
+- 集合文件建议统一成"包裹对象"，至少包含 `items` 与 `updatedAt`，避免直接暴露裸数组。例外：`effect-reference.json`（`{stats, buffs, effectKeys, updatedAt}`）、`patron-perks.json`（`{tiers, perks, updatedAt}`）、`trials.json`（`{roles, difficulties, updatedAt}`）是 multi-category 字典，有意按各自分类键组织，不强制套用 `items`。
 
 ## 前端加载合同
 
