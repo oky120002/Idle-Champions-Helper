@@ -1,4 +1,5 @@
 import type { ChampionDetail, DataCollection, DataVersion } from '../domain/types'
+import type { SearchDocumentCollection } from '../features/search/searchTypes'
 
 const memoryCache = new Map<string, unknown>()
 
@@ -93,6 +94,19 @@ export async function loadChampionDetailAtVersion(
 export async function loadChampionDetail(championId: string): Promise<ChampionDetail> {
   const version = await loadVersion()
   return loadChampionDetailAtVersion(version.current, championId)
+}
+
+export async function loadSearchDocuments(): Promise<SearchDocumentCollection> {
+  const cacheKey = 'search-documents'
+  const cached = memoryCache.get(cacheKey)
+
+  if (cached) {
+    return cached as SearchDocumentCollection
+  }
+
+  const collection = await fetchJson<SearchDocumentCollection>('v1/search/search-documents.json')
+  memoryCache.set(cacheKey, collection)
+  return collection
 }
 
 export function clearDataCache(): void {
