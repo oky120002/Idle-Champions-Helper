@@ -10,6 +10,6 @@ export function trySelectLocalDevSnapshot(
   return false
 }
 
-export async function refreshLocalDevSnapshot(): Promise<string> {
-  throw new Error('生产构建不允许刷新本地开发快照。')
+export function refreshLocalDevSnapshot(): Promise<string> {
+  return Promise.reject(new Error('生产构建不允许刷新本地开发快照。'))
 }

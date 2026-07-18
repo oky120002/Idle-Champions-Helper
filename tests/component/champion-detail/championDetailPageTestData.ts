@@ -29,7 +29,7 @@ export function createDomRect(top: number): DOMRect {
     bottom: top,
     left: 0,
     toJSON: () => ({}),
-  } as DOMRect
+  }
 }
 
 export const detailFixture: ChampionDetail = {

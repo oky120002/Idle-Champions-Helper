@@ -59,13 +59,13 @@ describe('private user profile payload fetcher', () => {
     expect(String(fetchImpl.mock.calls[3]?.[0])).toContain('call=getallformationsaves')
     expect(String(fetchImpl.mock.calls[3]?.[0])).toContain('instance_id=7')
 
-    const latestPayload = JSON.parse(
+    const latestPayload: unknown = JSON.parse(
       await readFile(path.join(cwd, 'tmp/private-user-data/latest/user-profile-payloads.json'), 'utf8'),
     )
     const latestManifest = JSON.parse(
       await readFile(path.join(cwd, 'tmp/private-user-data/latest/manifest.json'), 'utf8'),
-    )
-    const timestampPayload = JSON.parse(
+    ) as { maskedUserId: string; maskedHash: string }
+    const timestampPayload: unknown = JSON.parse(
       await readFile(path.join(cwd, result.manifest.outputDir, 'user-profile-payloads.json'), 'utf8'),
     )
 

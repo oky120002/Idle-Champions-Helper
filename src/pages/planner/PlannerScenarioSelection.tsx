@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useI18n } from '../../app/i18n'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import type { Variant } from '../../domain/types'
@@ -52,16 +52,16 @@ export function PlannerScenarioSelection({
   const { locale, t } = useI18n()
   const [search, setSearch] = useState('')
   const [showAllResults, setShowAllResults] = useState(false)
-  const [activeCampaignId, setActiveCampaignId] = useState<'all' | string>('all')
+  const [activeCampaignId, setActiveCampaignId] = useState<string>('all')
   const [uncontrolledSelectedId, setUncontrolledSelectedId] = useState<string | null>(null)
   const selectedId = controlledSelectedId === undefined ? uncontrolledSelectedId : controlledSelectedId
 
-  function updateSelectedId(nextSelectedId: string | null) {
+  const updateSelectedId = useCallback((nextSelectedId: string | null) => {
     if (controlledSelectedId === undefined) {
       setUncontrolledSelectedId(nextSelectedId)
     }
     onSelectedIdChange?.(nextSelectedId)
-  }
+  }, [controlledSelectedId, onSelectedIdChange])
 
   const records = useMemo<PlannerScenarioRecord[]>(
     () =>
@@ -152,9 +152,10 @@ export function PlannerScenarioSelection({
 
     const selectedStillVisible = selectedId !== null && filteredRecords.some((record) => record.id === selectedId)
     if (!selectedStillVisible) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- 受控选择在列表变化后需同步回退，行为被测试覆盖
       updateSelectedId(filteredRecords[0]?.id ?? null)
     }
-  }, [filteredRecords, onSelectedIdChange, selectedId])
+  }, [filteredRecords, onSelectedIdChange, selectedId, updateSelectedId])
 
   return (
     <div className="planner-scenario-selection">

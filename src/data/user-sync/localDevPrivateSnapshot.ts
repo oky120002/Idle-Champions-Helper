@@ -26,7 +26,7 @@ export async function fetchLocalDevPrivateSnapshotPayloads(
     throw new Error('本地开发快照不可用：请先运行 private-user-data:fetch，并在 vite dev 下重试。')
   }
 
-  const payload = await response.json()
+  const payload: unknown = await response.json()
   if (!isRecord(payload)) {
     throw new Error('本地开发快照格式无效：根对象缺失。')
   }
@@ -58,7 +58,7 @@ export async function refreshLocalDevPrivateSnapshot(
     throw new Error('刷新本地开发快照失败：请检查本机私有凭证、网络或官方接口。')
   }
 
-  const payload = await response.json()
+  const payload: unknown = await response.json()
   if (!isRecord(payload)) {
     throw new Error('刷新本地开发快照失败：响应格式无效。')
   }

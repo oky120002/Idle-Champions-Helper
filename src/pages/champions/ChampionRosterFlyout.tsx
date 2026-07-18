@@ -53,6 +53,7 @@ export function ChampionRosterFlyout({
 }: ChampionRosterFlyoutProps) {
   const [detail, setDetail] = useState<ChampionDetail | null>(null)
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
+  const [prevChampionId, setPrevChampionId] = useState(champion.id)
   const [equipmentIconsById, setEquipmentIconsById] = useState<Map<string, ChampionEquipmentIcon>>(new Map())
   const flyoutRef = useRef<HTMLDivElement | null>(null)
   const [position, setPosition] = useState<FlyoutPosition>({
@@ -63,10 +64,15 @@ export function ChampionRosterFlyout({
     ready: false,
   })
 
-  useEffect(() => {
-    let active = true
+  // champion.id 变化时在渲染期重置为 loading，避免 effect 内同步 setState。
+  if (prevChampionId !== champion.id) {
+    setPrevChampionId(champion.id)
     setStatus('loading')
     setDetail(null)
+  }
+
+  useEffect(() => {
+    let active = true
 
     loadChampionDetail(champion.id)
       .then((nextDetail) => {

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useI18n } from '../../app/i18n'
@@ -7,6 +8,7 @@ import { formatPlannerProfileSourceLabel } from './plannerProfileSourceLabel'
 export function PlannerProfileState() {
   const { t } = useI18n()
   const { profileResolution } = useUserSyncModel()
+  const [snapshotNow] = useState(() => Date.now())
 
   if (profileResolution.errorMessage) {
     return (
@@ -22,7 +24,7 @@ export function PlannerProfileState() {
   }
 
   if (profileResolution.snapshot) {
-    const ageMs = Date.now() - new Date(profileResolution.snapshot.updatedAt).getTime()
+    const ageMs = snapshotNow - new Date(profileResolution.snapshot.updatedAt).getTime()
     const ageDays = Math.floor(ageMs / (1000 * 60 * 60 * 24))
     const sourceLabel = formatPlannerProfileSourceLabel(
       profileResolution.resolvedSource ?? profileResolution.selectedSource,

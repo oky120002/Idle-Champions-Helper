@@ -54,10 +54,12 @@ export function useUserSyncModel(credentials: UserCredentials | null = null) {
   }, [])
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- fetch-on-mount，所有 setState 均在 await 之后，非同步
     void loadSnapshot()
   }, [loadSnapshot])
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- fetch-on-mount，所有 setState 均在 await 之后，非同步
     void loadProfileResolution()
   }, [loadProfileResolution])
 

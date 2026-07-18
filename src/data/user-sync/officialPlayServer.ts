@@ -72,7 +72,7 @@ export async function discoverOfficialPlayServer(
     throw new Error(`Official play server discovery returned HTTP ${response.status}`)
   }
 
-  const payload = await response.json()
+  const payload: unknown = await response.json()
   const playServer = payload && typeof payload === 'object'
     ? (payload as Record<string, unknown>).play_server
     : null

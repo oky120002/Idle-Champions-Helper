@@ -94,7 +94,13 @@ function toStringValue(value: unknown, fallback = 'unknown'): string {
   if (value === null || value === undefined || value === '') {
     return fallback
   }
-  return String(value)
+  if (typeof value === 'string') {
+    return value
+  }
+  if (typeof value === 'number' || typeof value === 'boolean' || typeof value === 'bigint') {
+    return String(value)
+  }
+  return fallback
 }
 
 function toNumberValue(value: unknown, fallback = 0): number {
@@ -139,10 +145,10 @@ function normalizeStringArrayRecord(value: unknown): Record<string, string[]> {
     Object.entries(value).map(([key, item]) => [
       key,
       Array.isArray(item)
-        ? item.map((entry) => String(entry))
+        ? item.map((entry) => toStringValue(entry))
         : item === null || item === undefined || item === ''
           ? []
-          : [String(item)],
+          : [toStringValue(item)],
     ]),
   )
 }
@@ -164,7 +170,7 @@ function normalizeIdArray(value: unknown): string[] {
     return []
   }
 
-  return value
+  return (value as unknown[])
     .map((item) => {
       if (isRecord(item)) {
         return item.id
@@ -172,7 +178,7 @@ function normalizeIdArray(value: unknown): string[] {
       return item
     })
     .filter((item) => item !== null && item !== undefined && item !== '')
-    .map((item) => String(item))
+    .map((item) => toStringValue(item))
 }
 
 function isTruthyFlag(value: unknown, fallback = true): boolean {
@@ -243,14 +249,14 @@ function normalizeLegendaryByHeroId(value: unknown): Map<string, Record<string, 
         level: toNumberValue(slotValue.level),
         effectId: slotValue.effect_id === null || slotValue.effect_id === undefined || slotValue.effect_id === ''
           ? null
-          : String(slotValue.effect_id),
+          : toStringValue(slotValue.effect_id),
         effectIds: normalizeIdArray(slotValue.effects_unlocked),
         resetCurrencyId:
           slotValue.reset_currency_id === null
           || slotValue.reset_currency_id === undefined
           || slotValue.reset_currency_id === ''
             ? null
-            : String(slotValue.reset_currency_id),
+            : toStringValue(slotValue.reset_currency_id),
         upgradeCost: toNumberValue(slotValue.upgrade_cost),
       }
     }
@@ -329,7 +335,7 @@ export function normalizeUserDetails(payload: UserDetailsPayload): NormalizedUse
         gildableSlotId:
           hero.gildable_slot_id === null || hero.gildable_slot_id === undefined || hero.gildable_slot_id === ''
             ? null
-            : String(hero.gildable_slot_id),
+            : toStringValue(hero.gildable_slot_id),
         lootBySlot,
         legendaryBySlot: legendaryByHeroId.get(heroId) ?? {},
       }
@@ -393,8 +399,8 @@ export function normalizeFormationSaves(
 export function buildUserProfileSnapshot(input: BuildUserProfileSnapshotInput): UserProfileSnapshot {
   const userDetailsPayload = asRecord(input.userDetails) as UserDetailsPayload
   const userDetails = normalizeUserDetails(userDetailsPayload)
-  const campaignDetails = normalizeCampaignDetails(asRecord(input.campaignDetails) as CampaignDetailsPayload)
-  const formationSaves = normalizeFormationSaves(asRecord(input.formationSaves) as FormationSavesPayload)
+  const campaignDetails = normalizeCampaignDetails(asRecord(input.campaignDetails))
+  const formationSaves = normalizeFormationSaves(asRecord(input.formationSaves))
   const campaignWarnings = campaignDetails.campaigns.length > 0
     ? [`campaign details imported: ${campaignDetails.campaigns.length}`]
     : []

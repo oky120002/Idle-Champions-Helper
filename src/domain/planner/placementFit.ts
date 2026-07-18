@@ -618,6 +618,8 @@ function resolveActiveReasonCode(signal: PlannerEffectSignal, relation: PlannerP
       return 'second-rear-most-column-match'
     case 'thirdRearMostColumn':
       return 'third-rear-most-column-match'
+    case 'any':
+      return (signal.targetQualifier?.requiredStats?.length ?? 0) > 0 ? 'stat-match' : 'tag-match'
     default:
       return (signal.targetQualifier?.requiredStats?.length ?? 0) > 0 ? 'stat-match' : 'tag-match'
   }

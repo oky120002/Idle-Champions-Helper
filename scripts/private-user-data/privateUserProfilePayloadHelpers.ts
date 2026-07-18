@@ -1,5 +1,5 @@
 // Keep Vite config on typed TS imports while reusing the plain ESM helper shared by node scripts.
-// @ts-ignore local node-only helper intentionally stays in .mjs so CLI scripts can run it directly
+// @ts-expect-error local node-only helper intentionally stays in .mjs so CLI scripts can run it directly
 import * as helper from './private-user-profile-payloads.mjs'
 
 export const DEFAULT_PRIVATE_PAYLOAD_FILENAME = (

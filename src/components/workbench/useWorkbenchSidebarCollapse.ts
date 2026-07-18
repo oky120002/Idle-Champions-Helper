@@ -32,10 +32,13 @@ function readCollapsed(storageKey: string): boolean {
 
 export function useWorkbenchSidebarCollapse(storageKey: string) {
   const [isCollapsed, setIsCollapsed] = useState(() => readCollapsed(storageKey))
+  const [prevStorageKey, setPrevStorageKey] = useState(storageKey)
 
-  useEffect(() => {
+  // storageKey 变化时在渲染期重置（React 推荐的"prop 变更调整 state"模式），避免 effect 内同步 setState。
+  if (prevStorageKey !== storageKey) {
+    setPrevStorageKey(storageKey)
     setIsCollapsed(readCollapsed(storageKey))
-  }, [storageKey])
+  }
 
   useEffect(() => {
     const storage = getStorage()

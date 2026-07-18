@@ -309,7 +309,9 @@ export function buildChampionEquipmentSlots(
   legendaryLevelCap: number,
 ): ChampionEquipmentSlotViewModel[] {
   const levelCapsBySlot = buildEquipmentLevelCapsBySlot(detail)
-  const detailDefinitions = detail ? choosePreferredLootDetailBySlot(detail.loot ?? [], levelCapsBySlot) : new Map()
+  const detailDefinitions = detail
+    ? choosePreferredLootDetailBySlot(detail.loot ?? [], levelCapsBySlot)
+    : new Map<string, ChampionEquipmentSlotDefinition>()
   const slotIds = new Set<string>([
     ...Object.keys(ownedHero?.lootBySlot ?? {}),
     ...Array.from(detailDefinitions.keys()),

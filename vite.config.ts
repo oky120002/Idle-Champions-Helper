@@ -121,27 +121,29 @@ function createLocalDevPrivateSnapshotPlugin(): Plugin {
     name: 'local-dev-private-snapshot',
     apply: 'serve',
     configureServer(server) {
-      server.middlewares.use(async (request, response, next) => {
+      server.middlewares.use((request, response, next) => {
         if (request.url === localDevPrivateSnapshotRefreshEndpoint && request.method === 'POST') {
           response.setHeader('Content-Type', 'application/json; charset=utf-8')
 
-          try {
-            const result = await fetchAndStorePrivateUserProfilePayloads({
-              latestDir: relativeSnapshotDir,
-              payloadFilename: snapshotFilename || DEFAULT_PRIVATE_PAYLOAD_FILENAME,
-            })
-            response.statusCode = 200
-            response.end(JSON.stringify({
-              manifest: result.manifest,
-            }))
-          } catch (error) {
-            response.statusCode = 500
-            response.end(JSON.stringify({
-              error: error instanceof Error
-                ? `Failed to refresh local private snapshot: ${error.message}`
-                : 'Failed to refresh local private snapshot.',
-            }))
-          }
+          void (async () => {
+            try {
+              const result = await fetchAndStorePrivateUserProfilePayloads({
+                latestDir: relativeSnapshotDir,
+                payloadFilename: snapshotFilename || DEFAULT_PRIVATE_PAYLOAD_FILENAME,
+              })
+              response.statusCode = 200
+              response.end(JSON.stringify({
+                manifest: result.manifest,
+              }))
+            } catch (error) {
+              response.statusCode = 500
+              response.end(JSON.stringify({
+                error: error instanceof Error
+                  ? `Failed to refresh local private snapshot: ${error.message}`
+                  : 'Failed to refresh local private snapshot.',
+              }))
+            }
+          })()
           return
         }
 
@@ -150,27 +152,29 @@ function createLocalDevPrivateSnapshotPlugin(): Plugin {
           return
         }
 
-        try {
-          const payload = await fs.readFile(snapshotPath, 'utf8')
-          response.statusCode = 200
-          response.setHeader('Content-Type', 'application/json; charset=utf-8')
-          response.end(payload)
-        } catch (error) {
-          response.setHeader('Content-Type', 'application/json; charset=utf-8')
+        void (async () => {
+          try {
+            const payload = await fs.readFile(snapshotPath, 'utf8')
+            response.statusCode = 200
+            response.setHeader('Content-Type', 'application/json; charset=utf-8')
+            response.end(payload)
+          } catch (error) {
+            response.setHeader('Content-Type', 'application/json; charset=utf-8')
 
-          if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
-            response.statusCode = 404
+            if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
+              response.statusCode = 404
+              response.end(JSON.stringify({
+                error: 'Local private snapshot not found. Run `npm run private-user-data:fetch` first.',
+              }))
+              return
+            }
+
+            response.statusCode = 500
             response.end(JSON.stringify({
-              error: 'Local private snapshot not found. Run `npm run private-user-data:fetch` first.',
+              error: 'Failed to read local private snapshot for Vite dev mode.',
             }))
-            return
           }
-
-          response.statusCode = 500
-          response.end(JSON.stringify({
-            error: 'Failed to read local private snapshot for Vite dev mode.',
-          }))
-        }
+        })()
       })
     },
   }

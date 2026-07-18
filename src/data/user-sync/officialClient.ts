@@ -192,7 +192,12 @@ function readInstanceId(userDetails: unknown): string | null {
     ? root.details as Record<string, unknown>
     : null
   const value = details?.instance_id ?? root.instance_id
-  return value === null || value === undefined || value === '' ? null : String(value)
+  if (value === null || value === undefined || value === '') {
+    return null
+  }
+  return typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean'
+    ? String(value)
+    : null
 }
 
 async function fetchUserProfilePayloadsFromBaseUrl(

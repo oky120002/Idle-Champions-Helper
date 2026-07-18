@@ -10,7 +10,7 @@ import { defineConfig, globalIgnores } from 'eslint/config'
 const rootDir = dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig([
-  globalIgnores(['dist', 'playwright-report', 'test-results']),
+  globalIgnores(['dist', 'playwright-report', 'test-results', '**/*.d.ts']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -37,6 +37,10 @@ export default defineConfig([
         },
       ],
       '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' },
+      ],
       '@typescript-eslint/no-floating-promises': 'error',
       '@typescript-eslint/no-misused-promises': [
         'error',

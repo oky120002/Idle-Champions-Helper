@@ -75,7 +75,7 @@ async function readLocalDevUserProfileSnapshot(): Promise<UserProfileSnapshot> {
       throw error
     }
 
-    throw new Error(LOCAL_DEV_SOURCE_ERROR_MESSAGE)
+    throw new Error(LOCAL_DEV_SOURCE_ERROR_MESSAGE, { cause: error })
   }
 }
 
