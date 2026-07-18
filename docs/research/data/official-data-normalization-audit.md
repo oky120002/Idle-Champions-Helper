@@ -142,7 +142,7 @@ node scripts/normalize-idle-champions-definitions.mjs \
 
 ### 3. 英雄详情层保存得更厚
 
-`champion-details/<id>.json` 目前已经结构化保存：
+`champion-details/<id>.json` 目前至少已经结构化保存以下字段（非完整列表）：
 
 - `summary`
 - `availability`
@@ -158,6 +158,17 @@ node scripts/normalize-idle-champions-definitions.mjs \
 - `defaultFeatSlotUnlocks`
 - `costCurves`
 - `healthCurves`
+- `englishName`
+- `eventName`
+- `dateAvailable`
+- `lastReworkDate`
+- `popularity`
+- `baseCost`
+- `baseDamage`
+- `baseHealth`
+- `graphicId`
+- `portraitGraphicId`
+- `updatedAt`
 
 同时还保留原始快照片段：
 

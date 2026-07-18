@@ -2,21 +2,22 @@
 
 ## GameNumber
 
-引入 `break_eternity.js`，但只在 `src/domain/simulator/game-number.ts` 中直接 import。业务代码只用 wrapper：
+引入 `break_eternity.js`，但只在 `src/domain/simulator/gameNumber.ts` 中直接 import。业务代码只用 wrapper：
 
 - `parseGameNumber`
 - `formatGameNumber`
 - `multiplyGameNumbers`
 - `divideGameNumbers`
-- `powGameNumber`
+- `powerGameNumber`
 - `addGameNumbers`
 - `compareGameNumbers`
-- `toLog10`
+- `log10GameNumber`
+- `sortGameNumbers`
 
 性能策略：
 
 - 排序和 beam search 优先比较 `log10` 或 wrapper compare，不构造巨型十进制字符串。
-- 加法使用集中阈值，初始阈值为 12 个数量级；小项不会影响 3 位游戏显示时直接忽略。
+- 加法使用集中阈值，初始阈值为 15 个数量级；小项不会影响 3 位游戏显示时直接忽略。
 - 显示层默认 `1.50e92` 风格；不要用 JS `number` 承载最终伤害。
 - 需要现在就支持超过 `Number.MAX_VALUE` 的普通科学计数和更后期数值，避免后续再换核心数值类型。
 

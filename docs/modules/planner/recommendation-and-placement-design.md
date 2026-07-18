@@ -22,7 +22,7 @@
 - 推荐引擎、模拟器和后续审查只读 merge 后的 resolved model，不再到处拼源数据。
 
 ## 3. 核心模型
-- `ResolvedPlannerHeroModel` 至少包含：`heroId`、`seat`、`roles`、`tags`、`age`、`abilityScores`、`isCarryViable`、`carrySignals`、`supportSignals`、`targetQualifiers`、`formationCountQualifiers`、`positionQualifiers`、`effectMultipliers`、`unsupportedSignals`、`sourceBreakdown`。
+- `ResolvedPlannerHeroModel` 至少包含：`heroId`、`seat`、`roles`、`tags`、`age`、`abilityScores`、`isCarryViable`、`carrySignals`、`supportSignals`、`unsupportedSignals`、`sourceBreakdown`。其中 `targetQualifier`、`formationCountQualifier`、`positionQualifier`、`formationCountPositionQualifier` 位于每条 signal 上（单数），而非 hero 顶层。
 - `PlannerEffectSignal` 当前允许带 `bonusScaleOfSignal`：它表示“当前 signal 是对另一条基础 planner signal 的效果增幅”。这主要服务 `buff_upgrade*` 家族，避免把“增强某个升级效果”误算成一条独立的新 buff。
 - `isCarryViable`：是否允许进入 C 位枚举；默认优先 `输出` 标签英雄，但允许例外英雄被语义层显式标记为可当 C 位。
 - `carrySignals`：英雄自身提高自己输出的规则。
@@ -30,7 +30,7 @@
 - `sourceBreakdown`：记录每条语义来自官方解析、仓库补丁还是本地 override。
 - `ResolvedPlannerScenarioModel` 至少包含：`scenarioRef`、`formationLayoutId`、`objectiveArea`、`slotTopology`、`forcedHeroes`、`bannedHeroes`、`lockedSlots`、`scenarioWarnings`。
 - 首期不把 `objectiveArea` 用于敌方血量计算，只作为场景身份和布局上下文。
-- `PlacementFit` 表示“某英雄站在某槽位时，对当前 C 位的贡献”，至少包含：`heroId`、`slotId`、`carryHeroId`、`fitScore`、`scoreBreakdown`、`reasonCodes`、`warnings`、`fallbackSource`。
+- `PlacementFit` 表示“某英雄站在某槽位时，对当前 C 位的贡献”，至少包含：`heroId`、`slotId`、`carryHeroId`、`fitScore`、`scoreBreakdown`、`reasonCodes`、`warnings`、`fallbackSources`。
 
 ### 3.1 PlacementFit 最小合同
 - 推荐问题先拆成最小确定性单元：`evaluatePlacementFit(carryHero, carrySlot, supportHero, supportSlot, scenario)`。
@@ -145,6 +145,7 @@ scenario + layout
 - 启发式命中必须标记 `heuristic-fallback`。
 
 ## 7. 输出合同
+> 本节为目标合同；当前实现仍是第一条纵切，输出结构与上述目标态有差距，见 `src/domain/planner/README.md`。
 - 主结果为 `PlannerRecommendationSet`：`carryRanking`、`topLineups`、`slotAlternatives`、`seatCompetition`、`globalWarnings`。
 - `topLineups` 的每项 `PlannerLineupCandidate` 至少包含：`carryHeroId`、`placements`、`carryScore`、`scoreBreakdown`、`reasonCodes`、`warnings`、`assumptions`、`fallbackSources`。
 - `slotAlternatives` 与 `seatCompetition` 都必须来自完整阵型结果派生，不能单独再排一套榜。

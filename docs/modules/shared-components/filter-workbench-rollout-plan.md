@@ -8,7 +8,7 @@
 ## 已锁产品决策
 
 - 全站桌面端统一进入工作台模式：上方全站导航 + 下方工作台壳层。
-- 覆盖页面：`Champions / Illustrations / Pets / Variants / Formation / Presets / User Data / Champion Detail`。
+- 覆盖页面：`Champions / User Heroes / Illustrations / Illustrations Audit / Pets / Variants / Formation / Presets / Planner / User Data / Champion Detail`。其中 `Illustrations Audit`（`/illustrations/audit`）作为 `/illustrations` 前缀下的子路由条目，与 `Champion Detail`（`/champions/:championId`）作为 `/champions` 下的详情子路由条目同构，均为独立页级 Route。
 - 左右结构是统一壳层语义；当前没有左栏的页面直接隐藏左栏，不再维护额外单栏页面体系。
 - 英雄详情页返回入口从导航迁到页面工具条；导航 leading slot 路线直接退役。
 - 复制当前链接作为全站工作台工具条稳定动作保留；不复制滚动位置和抽屉开合状态。

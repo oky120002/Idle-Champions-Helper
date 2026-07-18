@@ -9,14 +9,14 @@
 在静态站、local-first、GitHub Pages 兼容前提下，补一个可稳定浏览全部宠物的页签，让用户能：
 
 1. 查看系统里的全部宠物
-2. 同时看到图标与立绘
+2. 看到每只宠物的立绘外观
 3. 直接知道宠物怎么入手，而不是只看原始字段
 
 ## 页面范围
 
 当前只覆盖宠物本体 `familiar_defines`，不把 `familiar_skin_defines` 换皮皮肤混进主列表。
 
-首版卡片必须展示：宠物名（中英双字段）、主要描述、图标、立绘、获取方式摘要、来源细节、当前 definitions 是否已启用。
+首版卡片必须展示：宠物名（中英双字段）、主要描述、立绘、获取方式摘要、来源细节、当前 definitions 是否已启用。
 
 当前不做：宠物皮肤图鉴、宠物效果机制说明、最佳用法推荐、来源历史时间线。
 
@@ -46,7 +46,7 @@
 
 ## 视觉与交互
 
-- 卡片顶部用立绘做主舞台，左下角叠放图标，不拆成两张并列小图
+- 卡片顶部用立绘做主舞台，不拆成两张并列小图
 - 筛选区保留搜索、来源过滤、图像完整度过滤三类操作
 - 移动端不允许横向滑动导航或横向筛选条；空间不足时改为纵向堆叠
 - 缺图宠物仍必须可见，并明确说明“当前 definitions 没有可用图像槽位”
@@ -55,7 +55,7 @@
 
 - 页面：`src/pages/PetsPage.tsx`
 - 路由与导航：`src/app/App.tsx`
-- 类型：`src/domain/types.ts`
+- 类型：`src/domain/types/champions.ts`（Pet/PetAcquisition/PetAcquisitionKind）、`src/domain/types/assets.ts`（PetImage/PetAnimation）
 - 样式：`src/styles/global.css`
 - 数据脚本：`scripts/sync-idle-champions-pets.mjs`
 - 构建入口：`scripts/build-idle-champions-data.mjs`

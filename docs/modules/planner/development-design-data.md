@@ -83,7 +83,7 @@ fetch 参数必须固定：
 数据库版本升级时新增：
 
 - `userProfileSnapshots`：key 使用 snapshot id 或固定 current key，保留最近一份当前快照。
-- `userCredentialVault`：仅在显式 opt-in 时保存；默认为空。
+- `credentialVault`：仅在显式 opt-in 时保存；默认为空。
 
 删除私人数据必须同时清理 snapshot、vault、sync status cache 和 planner 派生状态。页面应显示“当前私人数据存在 X 天”，不自动刷新。
 
