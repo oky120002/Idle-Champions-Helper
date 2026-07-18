@@ -49,7 +49,12 @@ export function buildEngine(collection: SearchDocumentCollection): SearchEngine 
         return []
       }
 
-      const results = mini.search(trimmed)
+      const results = mini.search(trimmed) as ReadonlyArray<{
+        id: string
+        score: number
+        match: Record<string, string[]>
+        terms: string[]
+      }>
       const hits: SearchHit[] = []
       for (const result of results) {
         const doc = byId.get(result.id)
@@ -57,17 +62,16 @@ export function buildEngine(collection: SearchDocumentCollection): SearchEngine 
           continue
         }
         // MiniSearch 的 match 形如 { term: [field, ...] }（词项 → 命中字段），反转得到命中字段集。
-        const match = (result.match ?? {}) as Record<string, string[]>
         const matchedBuckets = new Set<SearchBucket>()
-        for (const fields of Object.values(match)) {
-          for (const field of fields ?? []) {
+        for (const fields of Object.values(result.match)) {
+          for (const field of fields) {
             if (field === 'title' || field === 'body' || field === 'meta') {
               matchedBuckets.add(field)
             }
           }
         }
         const bucket = BUCKET_PRIORITY.find((candidate) => matchedBuckets.has(candidate)) ?? 'body'
-        hits.push({ doc, score: result.score, bucket, terms: result.terms ?? [] })
+        hits.push({ doc, score: result.score, bucket, terms: result.terms })
       }
 
       return hits.slice(0, limit)

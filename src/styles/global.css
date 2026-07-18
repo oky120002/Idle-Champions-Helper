@@ -1,4 +1,4 @@
-@layer foundations.tokens, foundations.base, app.shell, app.site-header, app.navigation, shared.surfaces, shared.filters, shared.results, shared.formation, shared.controls, shared.workbench, components.visual-workbench, components.skelanim-player, pages.champions, pages.champion-detail.shell, pages.champion-detail.toolbar, pages.champion-detail.dossier, pages.champion-detail.sections, pages.champion-detail.specializations, pages.champion-detail.upgrades, pages.champion-detail.feats, pages.champion-detail.media, pages.variants, pages.illustrations, pages.animation-audit, pages.pets, pages.planner;
+@layer foundations.tokens, foundations.base, app.shell, app.site-header, app.navigation, shared.surfaces, shared.filters, shared.results, shared.formation, shared.controls, shared.workbench, components.visual-workbench, components.skelanim-player, pages.champions, pages.champion-detail.shell, pages.champion-detail.toolbar, pages.champion-detail.dossier, pages.champion-detail.sections, pages.champion-detail.specializations, pages.champion-detail.upgrades, pages.champion-detail.feats, pages.champion-detail.media, pages.variants, pages.illustrations, pages.animation-audit, pages.pets, pages.planner, pages.search;
 
 @import './foundations/tokens.css' layer(foundations.tokens);
 @import './foundations/base.css' layer(foundations.base);
@@ -6,6 +6,7 @@
 @import './app/site-header/shell.css' layer(app.site-header);
 @import './app/site-header/condensed.css' layer(app.site-header);
 @import './app/site-header/responsive.css' layer(app.site-header);
+@import './app/site-header/search.css' layer(app.site-header);
 @import './app/navigation/base.css' layer(app.navigation);
 @import './app/navigation/motion.css' layer(app.navigation);
 @import './app/navigation/responsive.css' layer(app.navigation);
@@ -57,3 +58,4 @@
 @import './pages/animation-audit-feedback.css' layer(pages.animation-audit);
 @import './pages/pets.css' layer(pages.pets);
 @import './pages/planner.css' layer(pages.planner);
+@import './pages/search.css' layer(pages.search);

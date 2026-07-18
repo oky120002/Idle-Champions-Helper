@@ -31,6 +31,7 @@ const FormationPage = lazyNamedPage(() => import('../pages/FormationPage'), 'For
 const PresetsPage = lazyNamedPage(() => import('../pages/PresetsPage'), 'PresetsPage')
 const UserDataPage = lazyNamedPage(() => import('../pages/UserDataPage'), 'UserDataPage')
 const PlannerPage = lazyNamedPage(() => import('../pages/PlannerPage'), 'PlannerPage')
+const SearchPage = lazyNamedPage(() => import('../pages/SearchPage'), 'SearchPage')
 
 export function App() {
   const { locale, setLocale, t } = useI18n()
@@ -135,6 +136,7 @@ export function App() {
             <Route path="/presets" element={<PresetsPage />} />
             <Route path="/planner" element={<PlannerPage />} />
             <Route path="/user-data" element={<UserDataPage />} />
+            <Route path="/search" element={<SearchPage />} />
             <Route path="*" element={<Navigate to="/champions" replace />} />
           </Routes>
         </Suspense>

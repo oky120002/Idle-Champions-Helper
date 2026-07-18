@@ -84,6 +84,10 @@ function resolveManualChunk(id: string) {
     return 'shared-filters'
   }
 
+  if (normalizedId.includes('/src/features/search/')) {
+    return 'shared-search'
+  }
+
   if (
     normalizedId.endsWith('/src/components/ChampionAvatar.tsx')
     || normalizedId.endsWith('/src/components/ChampionIdentity.tsx')

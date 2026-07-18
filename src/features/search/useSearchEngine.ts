@@ -8,32 +8,33 @@ export interface UseSearchEngineResult {
   engine: SearchEngine | null
 }
 
-const IDLE: UseSearchEngineResult = { status: 'idle', engine: null }
-
-// enabled 控制是否加载：顶栏框仅在聚焦/有输入时置 true，/search 页（懒加载路由）置 true。
+// enabled 控制是否加载：顶栏框仅在聚焦时置 true，/search 页（懒加载路由）置 true。
 // 真正的网络与建索引由 getSearchEngine 单例惰性触发，App 启动不付代价。
+// status 由 engine/failed 派生，setState 只在异步回调里调用，避免 effect 体内同步 setState。
 export function useSearchEngine(enabled: boolean): UseSearchEngineResult {
-  const [state, setState] = useState<UseSearchEngineResult>(IDLE)
+  const [engine, setEngine] = useState<SearchEngine | null>(null)
+  const [failed, setFailed] = useState(false)
 
   useEffect(() => {
-    if (!enabled) {
+    if (!enabled || engine || failed) {
       return
     }
-
     let active = true
-    setState((previous) =>
-      previous.status === 'ready' || previous.status === 'error' ? previous : { status: 'loading', engine: null },
-    )
-    getSearchEngine().then((engine) => {
-      if (active) {
-        setState(engine ? { status: 'ready', engine } : { status: 'error', engine: null })
+    void getSearchEngine().then((next) => {
+      if (!active) {
+        return
+      }
+      if (next) {
+        setEngine(next)
+      } else {
+        setFailed(true)
       }
     })
-
     return () => {
       active = false
     }
-  }, [enabled])
+  }, [enabled, engine, failed])
 
-  return state
+  const status: SearchEngineStatus = engine ? 'ready' : failed ? 'error' : enabled ? 'loading' : 'idle'
+  return { status, engine }
 }
