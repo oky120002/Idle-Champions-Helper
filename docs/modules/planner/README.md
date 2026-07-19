@@ -3,6 +3,10 @@
 - 作用：收纳自动阵型计划器的产品需求、技术设计、Ralph 任务拆分和验收契约。
 - 边界：本目录是设计和任务契约来源；实际开发由 `.ralph/tasks/planner/` 中的 story 驱动。
 
+## 当前演进规划（v5·执行入口）
+
+- **[`evolution-plan.md`](./evolution-plan.md)**：阵型模拟器三层架构演进规划（16 阶段全缺口 + TDD 硬约束 + 里程碑分组 + 命名修正 A1）。**这是当前执行的总规划**，自包含、可脱离上下文执行；新 session 读此文件 + 仓库代码即可按阶段执行（每阶段一个 session 避免上下文超标）。下方其他文档为历史/补充参考；命名以 v5 为准（通用符号去 Planner）。
+
 ## 先读哪篇
 
 - 总体路线、阶段边界、关键决策：`docs/modules/planner/auto-formation-planner-plan.md`
