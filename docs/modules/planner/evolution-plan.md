@@ -71,6 +71,23 @@ BUD = 阵型近期最高单次伤害。- **阵型推荐（相对比较）**：�
 
 每个里程碑可独立验证、独立交付价值。里程碑之间可插入新阶段（如发现遗漏），不把 16 阶段限制死。
 
+## 文档同步硬约束（每个里程碑收口必须执行）
+
+每个里程碑的改动必须**全链路同步到所有引用了受影响概念的架构文档与说明文档**，不允许只勾选 evolution-plan 的 `[x]` 就收口。M1 审计已发现：d22853d6 的 JSON/IndexedDB 改名、已删除的字段（`isCarryViable`/`heuristicRoleMultiplier` 等）在多个架构文档中长期残留旧名/旧概念，会直接误导后续 session 与智能体生成错误代码。
+
+每个里程碑收口前必须完成：
+
+1. **步骤级勾选**：在该里程碑每个已完成步骤标题补 `[x]`（不只是阶段级 `[ ]`/`[x]`，见上方进度追踪说明）。
+2. **受影响符号清单**：列出本里程碑改动涉及的字段 / 类型 / 函数 / 文件名 / JSON 产物 / IndexedDB key / scoring 概念。
+3. **全文档 grep 修正**：对清单中每个符号，在下列文档全量搜索，修正所有**当前态描述**与**未来步骤**中的陈旧引用：
+   - `docs/modules/planner/`：README、development-design、development-design-data、development-design-simulator、recommendation-and-placement-design、goal-prompts、prd、auto-formation-planner-plan、signal-coverage-research、carry-dps-formula-spike、final-todo。
+   - `docs/todo.md`、根/目录 `README.md`、`AGENTS.md`/`CLAUDE.md`（如触及仓库级约束）。
+4. **保留历史记录**：改名决策记录（"A→B 改名"）、dated research 快照、显式改名说明注记可保留旧名作为历史；其余当前态描述与未来步骤必须用最新名。
+5. **测试覆盖**：本里程碑新增/改动的核心行为必须有测试覆盖（先写测试再实现），不得裸奔。
+6. **收口验证**：`npm run typecheck`、`npm run test:run`、相关 build 脚本测试退出码 0；commit 信息用中文 Conventional Commits。
+
+> AI-first 硬约束：架构文档是后续 session 与智能体理解系统的入口，旧名/旧字段/旧概念残留即视为本次改动未完成。
+
 ## 顺序评估（v4 审查结论）
 
 当前顺序按依赖拓扑 + 用户优先级（金币是第二刀）排。评估结论：**顺序基本合理**，可选小调整：
