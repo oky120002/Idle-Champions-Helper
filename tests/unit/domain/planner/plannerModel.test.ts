@@ -51,8 +51,6 @@ function createHero(heroId: string): OfficialPlannerHeroModel {
     baseAttackCooldown: null,
     age: null,
     abilityScores: {},
-    isCarryViable: false,
-    heuristicRoleMultiplier: 2.5,
     baseDamage: 1,
     carrySignals: [],
     supportSignals: [
@@ -65,8 +63,6 @@ function createHero(heroId: string): OfficialPlannerHeroModel {
     ],
     unsupportedSignals: [],
     sourceBreakdown: {
-      isCarryViable: 'official-parsed',
-      heuristicRoleMultiplier: 'heuristic-fallback',
       carrySignals: [],
       supportSignals: ['official-parsed'],
       unsupportedSignals: [],
@@ -82,7 +78,9 @@ describe('planner model merge', () => {
       [
         {
           heroId: 'bruenor',
-          isCarryViable: true,
+          carrySignals: [
+            { kind: 'heroDpsMultiplier', value: 50, rawEffect: 'hero_dps_mult,50' },
+          ],
           supportSignals: [
             { kind: 'adjacentBuff', value: 120, rawEffect: 'adjacent_buff,120' },
           ],
@@ -103,8 +101,15 @@ describe('planner model merge', () => {
 
     expect(resolved.scenarios).toEqual([])
     expect(resolved.heroes).toHaveLength(1)
-    expect(resolved.heroes[0]?.isCarryViable).toBe(true)
-    expect(resolved.heroes[0]?.sourceBreakdown.isCarryViable).toBe('repo-semantic-patch')
+    expect(resolved.heroes[0]?.carrySignals).toEqual([
+      {
+        kind: 'heroDpsMultiplier',
+        value: 50,
+        rawEffect: 'hero_dps_mult,50',
+        source: 'repo-semantic-patch',
+      },
+    ])
+    expect(resolved.heroes[0]?.sourceBreakdown.carrySignals).toEqual(['repo-semantic-patch'])
     expect(resolved.heroes[0]?.supportSignals).toEqual([
       {
         kind: 'taggedChampionBuff',

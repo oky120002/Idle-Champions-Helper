@@ -103,26 +103,11 @@ const plannerHeroesFixture: DataCollection<OfficialPlannerHeroModel> = {
     baseAttackCooldown: null,
     age: null,
     abilityScores: {},
-    isCarryViable: champion.roles.some((role) => role.toLowerCase() === 'dps'),
-    heuristicRoleMultiplier:
-      champion.roles.includes('dps')
-        ? 4
-        : champion.roles.includes('support')
-          ? 2.5
-          : champion.roles.includes('tanking')
-            ? 1.5
-            : champion.roles.includes('healing')
-              ? 1.3
-              : champion.roles.includes('gold')
-                ? 1.2
-                : 1.05,
     baseDamage: 1,
     carrySignals: [],
     supportSignals: [],
     unsupportedSignals: [],
     sourceBreakdown: {
-      isCarryViable: 'official-parsed',
-      heuristicRoleMultiplier: 'heuristic-fallback',
       carrySignals: [],
       supportSignals: [],
       unsupportedSignals: [],

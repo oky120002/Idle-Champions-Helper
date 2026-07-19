@@ -21,17 +21,6 @@ async function writeJson(filePath, value) {
   await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
 }
 
-function getRolePriorityMultiplier(roles) {
-  const normalizedRoles = new Set((roles ?? []).map((role) => String(role).toLowerCase()))
-
-  if (normalizedRoles.has('dps')) return 4
-  if (normalizedRoles.has('support')) return 2.5
-  if (normalizedRoles.has('tanking')) return 1.5
-  if (normalizedRoles.has('healing')) return 1.3
-  if (normalizedRoles.has('gold')) return 1.2
-  return 1.05
-}
-
 function shouldIgnoreUnsupportedEffect(entry, unsupported) {
   return shouldIgnoreUnsupportedEffectEntry(entry, unsupported?.rawEffect ?? '')
 }
@@ -64,7 +53,6 @@ function buildOfficialHeroModel(champion, detail) {
     }
   }
 
-  const heuristicRoleMultiplier = getRolePriorityMultiplier(champion.roles)
   const rawBaseDamage = Number(detail.baseDamage)
   const baseDamage = Number.isFinite(rawBaseDamage) ? rawBaseDamage : 0
   const costCurves = detail.costCurves && typeof detail.costCurves === 'object' ? detail.costCurves : null
@@ -79,16 +67,12 @@ function buildOfficialHeroModel(champion, detail) {
     baseAttackCooldown: typeof detail.attacks?.base?.cooldown === 'number' ? detail.attacks.base.cooldown : null,
     age: typeof detail.characterSheet?.age === 'number' ? detail.characterSheet.age : null,
     abilityScores: detail.characterSheet?.abilityScores ?? {},
-    isCarryViable: champion.roles.some((role) => String(role).toLowerCase() === 'dps'),
-    heuristicRoleMultiplier,
     baseDamage,
     costCurves,
     carrySignals,
     supportSignals,
     unsupportedSignals,
     sourceBreakdown: {
-      isCarryViable: 'official-parsed',
-      heuristicRoleMultiplier: 'heuristic-fallback',
       carrySignals: carrySignals.map(() => 'official-parsed'),
       supportSignals: supportSignals.map(() => 'official-parsed'),
       unsupportedSignals: unsupportedSignals.map(() => 'official-parsed'),
@@ -186,7 +170,6 @@ function buildOfficialScenarioModel(variant, formations) {
 function normalizeSemanticOverrides(rawOverrides, updatedAt) {
   const items = Object.entries(rawOverrides.heroOverrides ?? {}).map(([heroId, patch]) => ({
     heroId,
-    isCarryViable: patch?.isCarryViable,
     carrySignals: Array.isArray(patch?.carrySignals) ? patch.carrySignals : undefined,
     supportSignals: Array.isArray(patch?.supportSignals) ? patch.supportSignals : undefined,
     unsupportedSignals: Array.isArray(patch?.unsupportedSignals) ? patch.unsupportedSignals : undefined,

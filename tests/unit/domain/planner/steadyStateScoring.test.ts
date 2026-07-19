@@ -14,15 +14,11 @@ function createHero(heroId: string, overrides: Partial<OfficialPlannerHeroModel>
     baseAttackCooldown: overrides.baseAttackCooldown ?? null,
     age: overrides.age ?? null,
     abilityScores: overrides.abilityScores ?? {},
-    isCarryViable: overrides.isCarryViable ?? false,
-    heuristicRoleMultiplier: overrides.heuristicRoleMultiplier ?? 1,
     baseDamage: overrides.baseDamage ?? 1,
     carrySignals: overrides.carrySignals ?? [],
     supportSignals: overrides.supportSignals ?? [],
     unsupportedSignals: overrides.unsupportedSignals ?? [],
     sourceBreakdown: overrides.sourceBreakdown ?? {
-      isCarryViable: 'official-parsed',
-      heuristicRoleMultiplier: 'heuristic-fallback',
       carrySignals: [],
       supportSignals: [],
       unsupportedSignals: [],
@@ -52,8 +48,6 @@ describe('steady state scoring', () => {
     const carry = createHero('carry', {
       seat: 1,
       roles: ['dps'],
-      isCarryViable: true,
-      heuristicRoleMultiplier: 2,
       carrySignals: [
         { kind: 'heroDpsMultiplier', value: 100, rawEffect: 'hero_dps_multiplier_mult,100', source: 'official-parsed' },
       ],
@@ -88,8 +82,6 @@ describe('steady state scoring', () => {
     const carry = createHero('carry', {
       seat: 1,
       roles: ['dps'],
-      isCarryViable: true,
-      heuristicRoleMultiplier: 2,
       baseDamage: 100,
     })
     const support = createHero('global-buffer', {
@@ -124,8 +116,6 @@ describe('steady state scoring', () => {
       seat: 1,
       roles: ['dps'],
       tags: ['female'],
-      isCarryViable: true,
-      heuristicRoleMultiplier: 2,
     })
     const support = createHero('tag-buffer', {
       seat: 2,

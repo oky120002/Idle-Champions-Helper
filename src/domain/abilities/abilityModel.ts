@@ -111,8 +111,6 @@ export interface HeroUnsupportedSignal {
 }
 
 export interface HeroAbilitySourceBreakdown {
-  isCarryViable: HeroAbilitySource
-  heuristicRoleMultiplier: HeroAbilitySource
   carrySignals: HeroAbilitySource[]
   supportSignals: HeroAbilitySource[]
   unsupportedSignals: HeroAbilitySource[]
@@ -128,8 +126,6 @@ export interface HeroAbilityProfile {
   baseAttackCooldown: number | null
   age: number | null
   abilityScores: Partial<Record<AbilityScoreKey, number>>
-  isCarryViable: boolean
-  heuristicRoleMultiplier: number
   baseDamage: number
   /**
    * 升级 cost 曲线（来自 champion-details.costCurves，key 统一为 "1"）。
@@ -144,7 +140,6 @@ export interface HeroAbilityProfile {
 
 export interface HeroAbilityOverridePatch {
   heroId: string
-  isCarryViable?: boolean
   carrySignals?: Omit<HeroAbilitySignal, 'source'>[]
   supportSignals?: Omit<HeroAbilitySignal, 'source'>[]
   unsupportedSignals?: Omit<HeroUnsupportedSignal, 'source'>[]
@@ -198,7 +193,6 @@ export function applyHeroAbilityPatch(
 
   return {
     ...hero,
-    isCarryViable: patch.isCarryViable ?? hero.isCarryViable,
     carrySignals: patch.carrySignals
       ? patch.carrySignals.map((signal) => ({ ...signal, source }))
       : hero.carrySignals,
@@ -209,8 +203,6 @@ export function applyHeroAbilityPatch(
       ? patch.unsupportedSignals.map((signal) => ({ ...signal, source }))
       : hero.unsupportedSignals,
     sourceBreakdown: {
-      isCarryViable: patch.isCarryViable === undefined ? hero.sourceBreakdown.isCarryViable : source,
-      heuristicRoleMultiplier: hero.sourceBreakdown.heuristicRoleMultiplier,
       carrySignals: patch.carrySignals
         ? patch.carrySignals.map(() => source)
         : hero.sourceBreakdown.carrySignals,

@@ -44,15 +44,12 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     }
   }
 
-  // v2.1③: 去除 isCarryViable 的 dps 角色判定——所有已放置英雄作为 carry 候选，让 carryDps 决定。
-  const effectiveCarryCandidates = placedEntries
-
   let bestScore: GameNumberValue = ZERO
   let bestWarnings: string[] = []
   let bestExplanations: string[] = []
   let bestCarryHeroId: string | null = null
 
-  for (const carryEntry of effectiveCarryCandidates) {
+  for (const carryEntry of placedEntries) {
     const carryLevel = input.heroLevels?.get(carryEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL
     const warnings = [...carryEntry.hero.unsupportedSignals.map((signal) => `${signal.rawEffect}: ${signal.note}`)]
     const explanations: string[] = []

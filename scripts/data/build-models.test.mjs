@@ -363,7 +363,6 @@ test('buildModels 产出 hero abilities / scenarios / semantic overrides', async
     JSON.stringify({
       heroOverrides: {
         '1': {
-          isCarryViable: true,
           supportSignals: [
             { kind: 'adjacentBuff', value: 150, rawEffect: 'adjacent_buff,150' },
           ],
@@ -519,7 +518,6 @@ test('buildModels 产出 hero abilities / scenarios / semantic overrides', async
   assert.deepEqual(semanticOverrides.items, [
     {
       heroId: '1',
-      isCarryViable: true,
       supportSignals: [
         { kind: 'adjacentBuff', value: 150, rawEffect: 'adjacent_buff,150' },
       ],

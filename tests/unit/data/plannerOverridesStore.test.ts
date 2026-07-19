@@ -51,7 +51,6 @@ describe('planner hero overrides store', () => {
   it('支持保存、读取、列出、删除和清空 override', async () => {
     const bruenorOverride = {
       heroId: 'bruenor',
-      isCarryViable: true,
       supportSignals: [
         { kind: 'globalDpsMultiplier' as const, value: 150, rawEffect: 'global_dps_multiplier_mult,150' },
       ],
