@@ -3,6 +3,8 @@
 - 当前状态：仓库已有 `planner` 页面、候选池、合法性、beam search 与基础评分雏形，但当前推荐仍偏向角色权重拼队，不等于真正的 C 位驱动站位推荐。
 - 边界：本文只定义纯算法与数据模型，不展开视觉稿、交互稿或逐帧战斗模拟。
 
+> 本文为 v4 演进规划之前的推荐/站位设计。**评分与模型字段已演进**：原 `carryScore`/`fitScore`/`isCarryViable`/`PlacementFit` 在 [`evolution-plan.md`](./evolution-plan.md) v4 中改为 pool 聚合 + carryDps（淘汰 score/heuristicRoleMultiplier/isCarryViable）。当前模型字段以 `src/domain/abilities/abilityModel.ts` 与 `src/domain/planner/placementFit.ts` 代码为准；本文 §2 数据 merge、§3.2-3.7 条件匹配语义仍适用。
+
 ## 1. 核心结论
 - 推荐目标不是整队总 DPS，而是**单一 C 位英雄的最终输出代理值**。
 - 一个阵型必须先确定 C 位，再围绕这个 C 位选择 support、站位和激活条件。
@@ -22,15 +24,14 @@
 - 推荐引擎、模拟器和后续审查只读 merge 后的 resolved model，不再到处拼源数据。
 
 ## 3. 核心模型
-- `ResolvedPlannerHeroModel` 至少包含：`heroId`、`seat`、`roles`、`tags`、`age`、`abilityScores`、`isCarryViable`、`carrySignals`、`supportSignals`、`unsupportedSignals`、`sourceBreakdown`。其中 `targetQualifier`、`formationCountQualifier`、`positionQualifier`、`formationCountPositionQualifier` 位于每条 signal 上（单数），而非 hero 顶层。
+- `ResolvedPlannerHeroModel` 至少包含：`heroId`、`seat`、`roles`、`tags`、`age`、`abilityScores`、`baseDamage`、`costCurves`、`carrySignals`、`supportSignals`、`unsupportedSignals`、`sourceBreakdown`。其中 `targetQualifier`、`formationCountQualifier`、`positionQualifier`、`formationCountPositionQualifier` 位于每条 signal 上（单数），而非 hero 顶层。
 - `PlannerEffectSignal` 当前允许带 `bonusScaleOfSignal`：它表示“当前 signal 是对另一条基础 planner signal 的效果增幅”。这主要服务 `buff_upgrade*` 家族，避免把“增强某个升级效果”误算成一条独立的新 buff。
-- `isCarryViable`：是否允许进入 C 位枚举；默认优先 `输出` 标签英雄，但允许例外英雄被语义层显式标记为可当 C 位。
 - `carrySignals`：英雄自身提高自己输出的规则。
 - `supportSignals`：该英雄如何提高别人输出，尤其是如何提高当前 C 位输出。
 - `sourceBreakdown`：记录每条语义来自官方解析、仓库补丁还是本地 override。
 - `ResolvedPlannerScenarioModel` 至少包含：`scenarioRef`、`formationLayoutId`、`objectiveArea`、`slotTopology`、`forcedHeroes`、`bannedHeroes`、`lockedSlots`、`scenarioWarnings`。
 - 首期不把 `objectiveArea` 用于敌方血量计算，只作为场景身份和布局上下文。
-- `PlacementFit` 表示“某英雄站在某槽位时，对当前 C 位的贡献”，至少包含：`heroId`、`slotId`、`carryHeroId`、`fitScore`、`scoreBreakdown`、`reasonCodes`、`warnings`、`fallbackSources`。
+- `PoolAggregateResult`（原 `PlacementFit`）表示“某 support 站在某槽位时，对当前 C 位的加成贡献”，至少包含：`heroId`、`slotId`、`carryHeroId`、`carrySlotId`、`pools`（按 `dimension:scope` 分池）、`totalMultiplier`、`scoreBreakdown`、`warnings`。
 
 ### 3.1 PlacementFit 最小合同
 - 推荐问题先拆成最小确定性单元：`evaluatePlacementFit(carryHero, carrySlot, supportHero, supportSlot, scenario)`。
@@ -116,7 +117,7 @@ scenario + layout
   -> 从 Top K 派生槽位替补和 seat 竞争
 ```
 - 手动模式：用户先锁定一个 C 位，系统只围绕它推荐。
-- 自动模式：系统枚举所有 `isCarryViable` 的英雄并产出 `carryRanking`。
+- 自动模式：系统枚举所有已放置英雄作为 C 位候选，由实际 `carryDps` 决定最优 C 位并产出 `carryRanking`（v4 已去除 `isCarryViable` 角色门控）。
 - 无论手动还是自动，完整阵型搜索时都必须有且仅有一个主 C 位。
 - 引擎结构兼容 `owned-only / all-hypothetical / manual-override`，首期默认落地 `owned-only`。
 - 同 seat 冲突属于硬约束，在搜索前就生效。
@@ -156,7 +157,7 @@ scenario + layout
 - `stat_score` / `stat` / `age` 这类限定会真正影响 carry 命中和 formation 计数结果。
 - 顶部 / 身后 / 同列 / 前后范围规则会真正改变站位选择。
 - 同 seat 双英雄竞争时，Top 1 只能保留一人，但另一人必须出现在 `seatCompetition` 或槽位替补里。
-- 非 `输出` 标签但被标记为 `isCarryViable` 的英雄可以进入 C 位枚举。
+- 非 `输出` 标签英雄也能进入 C 位枚举；C 位由实际 `carryDps` 排序决定，不再受角色标签门控。
 - 仓库语义补丁和浏览器本地 override 都能改变推荐解释来源。
 - unsupported 规则只进入 warning，不进入主评分。
 

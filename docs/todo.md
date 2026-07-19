@@ -28,3 +28,9 @@
 - css/tsx 体量预算超限：`src/styles/pages/champions.css` 647 行（>520，必须拆）、`planner.css` / `shared/results/card.css` / `shared/workbench/toolbar.css` 约 407 行（应拆）；`src/components/workbench/PageWorkbenchShell.tsx` 271、`WorkbenchScaffold.tsx` 266（应拆）。下次触碰对应文件时按业务边界拆。
 - planner 候选池 / 模拟器实现缺口：`computeHypotheticalBaseline` 已实现但 `candidatePool` 的 all-hypothetical 分支未调用（未拥有英雄拿到空装备而非同 seat 中位数）；`SimulationChampionProfile` 字段不全（缺 seat/tags/roles/ability scores/localized name/specialization unlock）且 `projectChampionSimulationProfile` 无生产消费；`candidatePool` overrides 只有 level+equipment，缺 feat/specialization/legendary；`deleteUserProfileData` 未清 `plannerHeroOverrides`；`simulator-data-coverage.mjs` 的 `generateCoverageReport` 孤儿无调用。需连线或显式标注暂缓。
 - formation scenarioRef 失效校验缺口：`draft-persistence.md` / `storage-and-recovery.md` 原称恢复时校验 scenarioRef，实际 `src/data/formation-persistence/validation.ts` 不校验（文档已按代码事实修正）。若产品需识别失效场景身份，再补 `scenarioRef.kind/id` 校验。
+- planner beamSearch seat 冲突未在生成阶段过滤：`beamSearchRanking.ts` 只按 `usedHeroes` 去重，不按 seat 去重；同 seat 候选会被生成、`scoreFormation` 评分为零后仍占 beam 槽位，在 owned 集中同 seat 英雄较多时可能挤掉合法候选导致漏推。建议候选生成处加 `usedSeats` 跟踪跳过同 seat 英雄，`checkFormationLegality` 的 seat 分支退化为兜底。
+- planner beamSearch 死参数与弱测试：`BeamSearchInput.adjacency` 与 `BeamCandidate.slotIndex` 从不被读取（adjacency 语义已由 slotTopology 在 placementFit 处理）；`beamSearchRanking.test.ts` 三条用例只断言 `length>0 / score>0`，未验证排序正确性与 beam 剪枝。下次触碰时删死参数并补排序/剪枝断言。
+- planner recommendationEngine 冗余：`top.find` 内对 `checkFormationLegality` 的二次复验与 `scoreFormation` 回调把非法阵型置零重复；`formatScore` 是 `formatGameNumber` 的单点包装。可去重并内联。
+- planner 9.1 锁槽启发式：`build-models.mjs projectMechanicsToScenario` 对 `slot_escort*` mechanic 按 column 降序锁前排首槽（启发式，官方未标注护送具体槽位）。精确槽位需官方 formation 元数据或人工校准后替换。
+- planner 设计文档残留：`recommendation-and-placement-design.md` §5 评分规则、§7 输出合同仍描述 pre-v4 的 `carryScore`/`PlannerRecommendationSet` 目标合同（文档自承未实现）；顶部已加指针指向 evolution-plan v4，正文字段级全量同步暂缓，待 §7 目标合同落地时一并修正。
+

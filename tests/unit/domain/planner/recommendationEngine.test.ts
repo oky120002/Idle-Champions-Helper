@@ -52,6 +52,14 @@ const selectedVariant = createVariant('variant-1', {
   restrictions: [text('Keep archers contained', '压住弓兵波次')],
 })
 
+const lockedSlotVariant = createVariant('variant-locked', {
+  campaign,
+  name: text('Escort Run', '护送任务'),
+  adventureId: 'adventure-2',
+  adventure: text('Escort', '护送'),
+  objectiveArea: 100,
+})
+
 const champions: Champion[] = [
   { id: 'bruenor', name: text('Bruenor', '布鲁诺'), seat: 1, roles: ['support'], affiliations: [], tags: [] },
   { id: 'asharra', name: text('Asharra', '阿莎拉'), seat: 1, roles: ['dps', 'support'], affiliations: [], tags: [] },
@@ -115,10 +123,27 @@ const plannerScenarios: OfficialPlannerScenarioModel[] = [
     lockedSlots: [],
     scenarioWarnings: ['当前推荐尚未解析场景限制与机制，只按已拥有英雄、seat 合法性和阵型槽位计算。'],
   },
+  {
+    variantId: lockedSlotVariant.id,
+    scenarioRef: { kind: 'variant', id: lockedSlotVariant.id },
+    name: lockedSlotVariant.name,
+    formationLayoutId: 'layout-escort',
+    objectiveArea: lockedSlotVariant.objectiveArea,
+    slotTopology: [
+      { slotId: 's1', row: 1, column: 1, adjacentSlotIds: ['s2'] },
+      { slotId: 's2', row: 1, column: 2, adjacentSlotIds: ['s1', 's3'] },
+      { slotId: 's3', row: 1, column: 3, adjacentSlotIds: ['s2', 's4'] },
+      { slotId: 's4', row: 1, column: 4, adjacentSlotIds: ['s3'] },
+    ],
+    forcedHeroes: [],
+    bannedHeroes: [],
+    lockedSlots: ['s4'],
+    scenarioWarnings: ['当前场景含护送任务，前排一个槽位预留给护送目标，不参与英雄占位。'],
+  },
 ]
 
 const collections: PlannerCollections = {
-  variants: [selectedVariant],
+  variants: [selectedVariant, lockedSlotVariant],
   plannerHeroes,
   plannerScenarios,
 }
@@ -156,5 +181,23 @@ describe('planner recommendation engine', () => {
     expect(seatOneEntries).toHaveLength(1)
     expect(seatOneEntries[0]?.heroId).toBe('bruenor')
     expect(recommendation.result?.explanations[1]?.zh).toContain('贾拉索')
+  })
+
+  it('lockedSlots 被过滤，推荐不占用锁槽且减少可用槽位（9.1 escort）', () => {
+    const snapshot = createUserProfileSnapshot({
+      ownedHeroes: [
+        createOwnedHero({ heroId: 'bruenor', level: 500 }),
+        createOwnedHero({ heroId: 'asharra', level: 500 }),
+        createOwnedHero({ heroId: 'celeste', level: 500 }),
+        createOwnedHero({ heroId: 'nayeli', level: 500 }),
+        createOwnedHero({ heroId: 'jarlaxle', level: 500 }),
+      ],
+    })
+
+    const recommendation = buildPlannerRecommendation(lockedSlotVariant, collections, snapshot)
+
+    expect(recommendation.blocker).toBeNull()
+    expect(recommendation.result?.placementEntries).toHaveLength(3)
+    expect(recommendation.result?.placements.s4).toBeUndefined()
   })
 })
