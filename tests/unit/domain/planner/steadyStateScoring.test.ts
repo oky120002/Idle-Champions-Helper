@@ -111,6 +111,39 @@ describe('steady state scoring', () => {
     expect(nearScore.carryHeroId).toBe('carry')
   })
 
+  it('多个支持位向同一 global pool 贡献 additive 加成时跨位相加（非累乘）', () => {
+    // 回归：scoreFormation 必须把不同支持位向同一 dimension:scope pool 的 additive
+    // 贡献合并相加，而不是把每位独立 pool 的乘积再相乘。
+    // 两位辅助各给 carry +100% global dps：正确 = 1+(100+100)/100 = 3（非 (1+1)*(1+1)=4）。
+    const carry = createHero('carry', { seat: 1, baseDamage: 1 })
+    const supportA = createHero('buf-a', {
+      seat: 2,
+      supportSignals: [
+        { kind: 'globalDpsMultiplier', value: 100, rawEffect: 'g_a,100', source: 'official-parsed' },
+      ],
+    })
+    const supportB = createHero('buf-b', {
+      seat: 3,
+      supportSignals: [
+        { kind: 'globalDpsMultiplier', value: 100, rawEffect: 'g_b,100', source: 'official-parsed' },
+      ],
+    })
+    const heroesById = new Map([
+      ['carry', carry],
+      ['buf-a', supportA],
+      ['buf-b', supportB],
+    ])
+
+    const result = scoreFormation({
+      placements: { s1: 'buf-a', s2: 'carry', s3: 'buf-b' },
+      heroesById,
+      scenario,
+    })
+
+    // global pool addPercent = 200 → poolMultiplier = 3；carryDps = baseDamage(1) × levelCurve(1, 1.06) × 3 = 3.18
+    expect(result.score.toNumber()).toBeCloseTo(1.06 * 3, 5)
+  })
+
   it('缺少 tagged target qualifier 时只进入 warning，不计分', () => {
     const carry = createHero('carry', {
       seat: 1,

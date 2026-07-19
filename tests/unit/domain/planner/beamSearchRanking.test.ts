@@ -23,18 +23,11 @@ describe('beam search ranking', () => {
   ]
 
   const slots = ['s1', 's2', 's3', 's4']
-  const adjacency: Record<string, string[]> = {
-    s1: ['s2'],
-    s2: ['s1', 's3'],
-    s3: ['s2', 's4'],
-    s4: ['s3'],
-  }
 
   it('4-slot 确定性 fixture 返回预期 top result', () => {
     const results = beamSearch({
       heroes,
       slots,
-      adjacency,
       beamWidth: 3,
       scoreFormation: (placements: Record<string, string>) => {
         let score = 1.0
@@ -54,7 +47,6 @@ describe('beam search ranking', () => {
     const results = beamSearch({
       heroes,
       slots,
-      adjacency,
       beamWidth: 1,
       scoreFormation: (placements: Record<string, string>) => makeResult(Object.keys(placements).length),
     })
@@ -67,7 +59,6 @@ describe('beam search ranking', () => {
     const results = beamSearch({
       heroes,
       slots,
-      adjacency,
       beamWidth: 2,
       scoreFormation: () => ({
         score: value,

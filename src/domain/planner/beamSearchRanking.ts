@@ -5,7 +5,6 @@ import { compareGameNumbers } from '../simulator/gameNumberArithmetic'
 export interface BeamSearchInput {
   heroes: Array<{ heroId: string; seat: number }>
   slots: string[]
-  adjacency: Record<string, string[]>
   beamWidth: number
   scoreFormation: (placements: Record<string, string>) => ScoringResult
 }
@@ -21,14 +20,13 @@ export interface BeamSearchResult {
 interface BeamCandidate {
   placements: Record<string, string>
   usedHeroes: Set<string>
-  slotIndex: number
 }
 
 export function beamSearch(input: BeamSearchInput): BeamSearchResult[] {
   const { heroes, slots, beamWidth, scoreFormation } = input
 
   let candidates: BeamCandidate[] = [
-    { placements: {}, usedHeroes: new Set(), slotIndex: 0 },
+    { placements: {}, usedHeroes: new Set() },
   ]
 
   for (const slot of slots) {
@@ -42,7 +40,6 @@ export function beamSearch(input: BeamSearchInput): BeamSearchResult[] {
         nextCandidates.push({
           placements: nextPlacements,
           usedHeroes: new Set([...candidate.usedHeroes, hero.heroId]),
-          slotIndex: candidate.slotIndex + 1,
         })
       }
     }

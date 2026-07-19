@@ -1,7 +1,7 @@
 import Decimal from 'break_eternity.js'
 
 import type { ResolvedPlannerHeroModel, ResolvedPlannerScenarioModel } from './plannerModel'
-import { evaluatePlacementFit } from './placementFit'
+import { evaluatePlacementFit, type AggregatedPool } from './placementFit'
 import type { ObjectiveResult } from './objectiveModel'
 import { computeCarryDps } from '../simulator/baseDps'
 import type { GameNumberValue } from '../simulator/gameNumber'
@@ -53,7 +53,10 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     const carryLevel = input.heroLevels?.get(carryEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL
     const warnings = [...carryEntry.hero.unsupportedSignals.map((signal) => `${signal.rawEffect}: ${signal.note}`)]
     const explanations: string[] = []
-    let aggregate = 1
+    // pool 在整队层面聚合：同一 dimension:scope 的 pool 跨所有支持位合并
+    // （addPercent 相加、multFactor 相乘），pool 间再相乘。
+    // 不能按支持位独立 pool 乘积再相乘——那会把不同位向同一 pool 的 additive 贡献变成累乘。
+    const sharedPools = new Map<string, AggregatedPool>()
 
     for (const supportEntry of placedEntries) {
       const fit = evaluatePlacementFit({
@@ -66,7 +69,6 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
         heroesById: input.heroesById,
       })
 
-      aggregate *= fit.totalMultiplier
       warnings.push(...fit.warnings)
 
       for (const part of fit.scoreBreakdown) {
@@ -78,6 +80,26 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
           `${supportEntry.hero.heroId}: ${part.signalKind} x${part.multiplier.toFixed(2)} -> ${carryEntry.hero.heroId}`,
         )
       }
+
+      for (const pool of fit.pools) {
+        const key = `${pool.dimension}:${pool.scope}`
+        const merged = sharedPools.get(key) ?? {
+          dimension: pool.dimension,
+          scope: pool.scope,
+          addPercent: 0,
+          multFactor: 1,
+          poolMultiplier: 1,
+        }
+        merged.addPercent += pool.addPercent
+        merged.multFactor *= pool.multFactor
+        merged.poolMultiplier = (1 + merged.addPercent / 100) * merged.multFactor
+        sharedPools.set(key, merged)
+      }
+    }
+
+    let aggregate = 1
+    for (const pool of sharedPools.values()) {
+      aggregate *= pool.poolMultiplier
     }
 
     const carryDps = computeCarryDps(carryEntry.hero, carryLevel, aggregate)

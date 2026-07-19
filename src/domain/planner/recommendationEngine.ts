@@ -198,7 +198,6 @@ export function buildPlannerRecommendation(
   const results = beamSearch({
     heroes: heroes.map((hero) => ({ heroId: hero.heroId, seat: hero.seat })),
     slots,
-    adjacency: {},
     beamWidth: 8,
     scoreFormation: (placements) => {
       const legality = checkFormationLegality({
