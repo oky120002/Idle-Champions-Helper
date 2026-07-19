@@ -169,7 +169,8 @@ export function buildPlannerRecommendation(
     .filter((hero) => candidateIds.has(hero.heroId))
     .sort((left, right) => left.seat - right.seat || left.heroId.localeCompare(right.heroId))
 
-  const slots = sortSlots(scenario)
+  const lockedSlotSet = new Set(scenario.lockedSlots)
+  const slots = sortSlots(scenario).filter((slotId) => !lockedSlotSet.has(slotId))
   if (heroes.length < slots.length) {
     return {
       result: null,
