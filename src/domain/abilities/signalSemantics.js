@@ -1,12 +1,12 @@
 import {
-  buildPlannerAgeQualifier,
-  mergePlannerHeroQualifiers,
-  parsePlannerTagDisjunction,
-  splitPlannerExprAtTopLevel,
-  stripPlannerExprOuterParentheses,
-} from './plannerQualifierParsing.js'
+  buildAgeQualifier,
+  mergeHeroQualifiers,
+  parseTagDisjunction,
+  splitExprAtTopLevel,
+  stripExprOuterParentheses,
+} from './qualifierParsing.js'
 
-function comparePlannerNumber(left, operator, right) {
+function compareNumber(left, operator, right) {
   if (typeof left !== 'number') {
     return false
   }
@@ -27,7 +27,7 @@ function comparePlannerNumber(left, operator, right) {
   }
 }
 
-function getPlannerHeroStatValue(hero, stat) {
+function getHeroStatValue(hero, stat) {
   if (stat === 'total_ability_score') {
     return Object.values(hero.abilityScores ?? {}).reduce(
       (sum, value) => sum + (typeof value === 'number' ? value : 0),
@@ -38,7 +38,7 @@ function getPlannerHeroStatValue(hero, stat) {
   return hero.abilityScores[stat]
 }
 
-function isPlannerFilterLikeTarget(target) {
+function isFilterLikeTarget(target) {
   if (!target || typeof target !== 'object') {
     return false
   }
@@ -50,16 +50,16 @@ function isPlannerFilterLikeTarget(target) {
     || target.type === 'stat_score'
 }
 
-function getPlannerRawFilters(effect) {
+function getRawFilters(effect) {
   return [
     ...(Array.isArray(effect?.filter_targets) ? effect.filter_targets : []),
     ...(Array.isArray(effect?.target_filters) ? effect.target_filters : []),
     ...(Array.isArray(effect?.target_filters_or) ? effect.target_filters_or : []),
-    ...(Array.isArray(effect?.targets) ? effect.targets.filter(isPlannerFilterLikeTarget) : []),
+    ...(Array.isArray(effect?.targets) ? effect.targets.filter(isFilterLikeTarget) : []),
   ]
 }
 
-function normalizePlannerComparisonOperator(value) {
+function normalizeComparisonOperator(value) {
   switch (String(value ?? '').toLowerCase()) {
     case '>=':
     case 'gte':
@@ -82,7 +82,7 @@ function normalizePlannerComparisonOperator(value) {
   }
 }
 
-export function normalizePlannerSignalAmountFunc(value) {
+export function normalizeSignalAmountFunc(value) {
   if (value === 'add' || value === 'mult') {
     return value
   }
@@ -90,7 +90,7 @@ export function normalizePlannerSignalAmountFunc(value) {
   return value ? 'unknown' : null
 }
 
-function normalizePlannerTargetRelation(target) {
+function normalizeTargetRelation(target) {
   if (target === 'all') {
     return 'any'
   }
@@ -99,7 +99,7 @@ function normalizePlannerTargetRelation(target) {
     return 'any'
   }
 
-  if (isPlannerFilterLikeTarget(target)) {
+  if (isFilterLikeTarget(target)) {
     return 'any'
   }
 
@@ -234,14 +234,14 @@ function normalizePlannerTargetRelation(target) {
   return null
 }
 
-export function normalizePlannerExplicitTargeting(effect) {
+export function normalizeExplicitTargeting(effect) {
   const rawTargets = Array.isArray(effect?.targets) ? effect.targets : []
 
   if (rawTargets.length === 0) {
     return { status: 'none', relation: 'any' }
   }
 
-  const relations = rawTargets.map(normalizePlannerTargetRelation)
+  const relations = rawTargets.map(normalizeTargetRelation)
   if (relations.some((relation) => relation === null)) {
     return { status: 'unsupported', note: `unsupported targets: ${JSON.stringify(rawTargets)}` }
   }
@@ -257,8 +257,8 @@ export function normalizePlannerExplicitTargeting(effect) {
   }
 }
 
-export function normalizePlannerTargetQualifier(effect) {
-  const rawFilters = getPlannerRawFilters(effect).filter((filter) => filter && typeof filter === 'object')
+export function normalizeTargetQualifier(effect) {
+  const rawFilters = getRawFilters(effect).filter((filter) => filter && typeof filter === 'object')
   const tagFilters = rawFilters
     .filter((filter) => filter.type === 'by_tags' || filter.type === 'tags')
     .map((filter) => filter.tags)
@@ -288,13 +288,13 @@ export function normalizePlannerTargetQualifier(effect) {
   }
 }
 
-export function normalizePlannerStatQualifiers(effect) {
-  const qualifiers = getPlannerRawFilters(effect)
+export function normalizeStatQualifiers(effect) {
+  const qualifiers = getRawFilters(effect)
     .filter((filter) => filter && typeof filter === 'object')
     .filter((filter) => filter.type === 'stat' || filter.type === 'stat_score')
     .map((filter) => {
       const stat = typeof filter.stat === 'string' ? filter.stat.toLowerCase() : null
-      const operator = normalizePlannerComparisonOperator(
+      const operator = normalizeComparisonOperator(
         typeof filter.check === 'string'
           ? filter.check
           : typeof filter.comparison === 'string'
@@ -324,12 +324,12 @@ export function normalizePlannerStatQualifiers(effect) {
   return qualifiers.length > 0 ? qualifiers : null
 }
 
-export function parsePlannerPerHeroExpr(expr) {
+export function parsePerHeroExpr(expr) {
   if (typeof expr !== 'string') {
     return null
   }
 
-  const trimmed = stripPlannerExprOuterParentheses(expr.trim())
+  const trimmed = stripExprOuterParentheses(expr.trim())
   if (!trimmed || trimmed === 'true') {
     return {}
   }
@@ -372,13 +372,13 @@ export function parsePlannerPerHeroExpr(expr) {
     }
   }
 
-  const tagQualifier = parsePlannerTagDisjunction(trimmed)
+  const tagQualifier = parseTagDisjunction(trimmed)
   if (tagQualifier) {
     return tagQualifier
   }
 
   if (asIntMatch) {
-    return parsePlannerPerHeroExpr(asIntMatch[1])
+    return parsePerHeroExpr(asIntMatch[1])
   }
 
   if (statMatch) {
@@ -403,7 +403,7 @@ export function parsePlannerPerHeroExpr(expr) {
   }
 
   if (ageWithExcludeMatch) {
-    return buildPlannerAgeQualifier(
+    return buildAgeQualifier(
       ageWithExcludeMatch[1],
       Number(ageWithExcludeMatch[2]),
       ageWithExcludeMatch[3],
@@ -411,33 +411,33 @@ export function parsePlannerPerHeroExpr(expr) {
   }
 
   if (ageMatch) {
-    return buildPlannerAgeQualifier(ageMatch[1], Number(ageMatch[2]))
+    return buildAgeQualifier(ageMatch[1], Number(ageMatch[2]))
   }
 
-  const andClauses = splitPlannerExprAtTopLevel(trimmed, '&&')
+  const andClauses = splitExprAtTopLevel(trimmed, '&&')
   if (andClauses.length > 1) {
     return andClauses.reduce((mergedQualifier, clause) => {
       if (mergedQualifier === null) {
         return null
       }
 
-      const clauseQualifier = parsePlannerPerHeroExpr(clause)
+      const clauseQualifier = parsePerHeroExpr(clause)
       if (!clauseQualifier) {
         return null
       }
 
-      return mergePlannerHeroQualifiers(mergedQualifier, clauseQualifier)
+      return mergeHeroQualifiers(mergedQualifier, clauseQualifier)
     }, {})
   }
 
   return null
 }
 
-export function attachPlannerSignalSemantics(signal, effect) {
-  const tagQualifier = normalizePlannerTargetQualifier(effect)
-  const statQualifiers = normalizePlannerStatQualifiers(effect)
-  const perHeroQualifier = parsePlannerPerHeroExpr(effect?.per_hero_expr)
-  const explicitTargeting = normalizePlannerExplicitTargeting(effect)
+export function attachSignalSemantics(signal, effect) {
+  const tagQualifier = normalizeTargetQualifier(effect)
+  const statQualifiers = normalizeStatQualifiers(effect)
+  const perHeroQualifier = parsePerHeroExpr(effect?.per_hero_expr)
+  const explicitTargeting = normalizeExplicitTargeting(effect)
   const heroQualifierFromFilters = (tagQualifier || statQualifiers)
     ? {
         ...(tagQualifier ?? {}),
@@ -466,7 +466,7 @@ export function attachPlannerSignalSemantics(signal, effect) {
         ? { relation: explicitTargeting.relation }
         : null),
     formationCountPositionQualifier: signal.formationCountPositionQualifier ?? null,
-    amountFunc: signal.amountFunc ?? normalizePlannerSignalAmountFunc(effect?.amount_func),
+    amountFunc: signal.amountFunc ?? normalizeSignalAmountFunc(effect?.amount_func),
     stackFunc: signal.stackFunc ?? (typeof effect?.stack_func === 'string' ? effect.stack_func : null),
     applyManually: effect?.apply_manually === true,
     stacksMultiply: typeof effect?.stacks_multiply === 'boolean' ? effect.stacks_multiply : null,
@@ -474,7 +474,7 @@ export function attachPlannerSignalSemantics(signal, effect) {
   }
 }
 
-export function matchesPlannerHeroQualifier(hero, qualifier) {
+export function matchesHeroQualifier(hero, qualifier) {
   if (!qualifier) {
     return true
   }
@@ -505,14 +505,14 @@ export function matchesPlannerHeroQualifier(hero, qualifier) {
   }
 
   for (const statQualifier of qualifier.requiredStats ?? []) {
-    const heroValue = getPlannerHeroStatValue(hero, statQualifier.stat)
-    if (!comparePlannerNumber(heroValue, statQualifier.operator, statQualifier.value)) {
+    const heroValue = getHeroStatValue(hero, statQualifier.stat)
+    if (!compareNumber(heroValue, statQualifier.operator, statQualifier.value)) {
       return false
     }
   }
 
   if (qualifier.requiredBaseAttackCooldown) {
-    if (!comparePlannerNumber(
+    if (!compareNumber(
       hero.baseAttackCooldown,
       qualifier.requiredBaseAttackCooldown.operator,
       qualifier.requiredBaseAttackCooldown.value,
@@ -545,13 +545,13 @@ export function matchesPlannerHeroQualifier(hero, qualifier) {
   }
 
   if (qualifier.minAge !== null && qualifier.minAge !== undefined) {
-    if (!comparePlannerNumber(hero.age, qualifier.minAgeOperator ?? '>=', qualifier.minAge)) {
+    if (!compareNumber(hero.age, qualifier.minAgeOperator ?? '>=', qualifier.minAge)) {
       return false
     }
   }
 
   if (qualifier.maxAge !== null && qualifier.maxAge !== undefined) {
-    if (!comparePlannerNumber(hero.age, qualifier.maxAgeOperator ?? '<=', qualifier.maxAge)) {
+    if (!compareNumber(hero.age, qualifier.maxAgeOperator ?? '<=', qualifier.maxAge)) {
       return false
     }
   }

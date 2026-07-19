@@ -3,11 +3,11 @@ import { readdir, readFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 
 import {
-  attachPlannerSignalSemantics,
-  normalizePlannerStatQualifiers,
-  normalizePlannerTargetQualifier,
-  parsePlannerPerHeroExpr,
-} from '../../src/domain/planner/plannerSignalSemantics.js'
+  attachSignalSemantics,
+  normalizeStatQualifiers,
+  normalizeTargetQualifier,
+  parsePerHeroExpr,
+} from '../../src/domain/abilities/signalSemantics.js'
 import {
   analyzePlannerBuffUpgradeWrappers,
   collectPlannerEffectEntries,
@@ -165,7 +165,7 @@ export function generatePlannerSignalCoverageReport(details) {
       if (perHeroExpr) {
         perHeroExprTotal += 1
         incrementCounter(perHeroExprCounts, perHeroExpr)
-        if (parsePlannerPerHeroExpr(perHeroExpr) === null) {
+        if (parsePerHeroExpr(perHeroExpr) === null) {
           incrementCounter(unparsedPerHeroExprCounts, perHeroExpr)
         } else {
           parsedPerHeroExprTotal += 1
@@ -183,7 +183,7 @@ export function generatePlannerSignalCoverageReport(details) {
       }
 
       recognizedSignals += 1
-      const signal = attachPlannerSignalSemantics(parsed.signal, entry.effect)
+      const signal = attachSignalSemantics(parsed.signal, entry.effect)
       const stackFunc = signal.stackFunc ?? 'none'
       const amountFunc = signal.amountFunc ?? 'none'
       const scoreSupport = classifyScoringSupport(signal)

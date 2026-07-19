@@ -5,12 +5,12 @@ import {
   resolveEffectPayloadAmountToken,
 } from '../../src/domain/effects/effect-string.js'
 import {
-  attachPlannerSignalSemantics,
-  normalizePlannerExplicitTargeting,
-  normalizePlannerStatQualifiers,
-  normalizePlannerTargetQualifier,
-  parsePlannerPerHeroExpr,
-} from '../../src/domain/planner/plannerSignalSemantics.js'
+  attachSignalSemantics,
+  normalizeExplicitTargeting,
+  normalizeStatQualifiers,
+  normalizeTargetQualifier,
+  parsePerHeroExpr,
+} from '../../src/domain/abilities/signalSemantics.js'
 
 function resolvePlannerNumericValue(effectValue, effectPayload, effectPayloads) {
   if (typeof effectPayload?.meta?.amount_expr === 'string') {
@@ -30,7 +30,7 @@ function buildPlannerRawEffect(effectName, effectValue, effectPayload) {
 }
 
 function resolvePlannerBucket(effect) {
-  const explicitTargeting = normalizePlannerExplicitTargeting(effect)
+  const explicitTargeting = normalizeExplicitTargeting(effect)
 
   if (explicitTargeting.status === 'unsupported') {
     return {
@@ -49,7 +49,7 @@ function resolvePlannerBucket(effect) {
 }
 
 function resolvePlannerCountRelation(rawTarget) {
-  const targeting = normalizePlannerExplicitTargeting({ targets: [rawTarget] })
+  const targeting = normalizeExplicitTargeting({ targets: [rawTarget] })
 
   if (targeting.status !== 'supported' || targeting.relation === 'any') {
     return null
@@ -159,14 +159,14 @@ function parsePlannerWhereQualifierFromArgs(compare, comparison, check) {
   const numericCheck = Number(check)
 
   if (normalizedCompare === 'age' || normalizedCompare === 'base_attack_cooldown') {
-    return parsePlannerPerHeroExpr(`${normalizedCompare}${normalizedComparison}${check}`)
+    return parsePerHeroExpr(`${normalizedCompare}${normalizedComparison}${check}`)
   }
 
   if (!Number.isFinite(numericCheck)) {
     return null
   }
 
-  const requiredStats = normalizePlannerStatQualifiers({
+  const requiredStats = normalizeStatQualifiers({
     target_filters: [
       {
         type: 'stat',
@@ -281,7 +281,7 @@ function resolvePlannerEntrySignal(entry) {
 
   return {
     ok: true,
-    signal: attachPlannerSignalSemantics(parsed.signal, entry.effect),
+    signal: attachSignalSemantics(parsed.signal, entry.effect),
     bucket: parsed.bucket,
   }
 }
@@ -497,7 +497,7 @@ export function normalizePlannerEffectSignal(effectName, effectValue, source, ef
   }
 
   if (effectName === 'hero_dps_multiplier_mult') {
-    const explicitTargeting = normalizePlannerExplicitTargeting(effectMetadata.effect)
+    const explicitTargeting = normalizeExplicitTargeting(effectMetadata.effect)
 
     if (explicitTargeting.status === 'unsupported') {
       return {
@@ -706,7 +706,7 @@ export function normalizePlannerEffectSignal(effectName, effectValue, source, ef
       }
     }
 
-    const targetQualifier = normalizePlannerTargetQualifier(effectMetadata.effect)
+    const targetQualifier = normalizeTargetQualifier(effectMetadata.effect)
 
     return {
       ok: true,

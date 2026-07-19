@@ -116,6 +116,7 @@ const plannerHeroesFixture: DataCollection<OfficialPlannerHeroModel> = {
               : champion.roles.includes('gold')
                 ? 1.2
                 : 1.05,
+    baseDamage: 1,
     carrySignals: [],
     supportSignals: [],
     unsupportedSignals: [],

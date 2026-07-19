@@ -53,6 +53,7 @@ function createHero(heroId: string): OfficialPlannerHeroModel {
     abilityScores: {},
     isCarryViable: false,
     heuristicRoleMultiplier: 2.5,
+    baseDamage: 1,
     carrySignals: [],
     supportSignals: [
       {

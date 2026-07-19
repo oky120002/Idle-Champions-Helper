@@ -15,6 +15,7 @@ function createHero(heroId: string, overrides: Partial<OfficialPlannerHeroModel>
     abilityScores: overrides.abilityScores ?? {},
     isCarryViable: overrides.isCarryViable ?? false,
     heuristicRoleMultiplier: overrides.heuristicRoleMultiplier ?? 1,
+    baseDamage: overrides.baseDamage ?? 1,
     carrySignals: overrides.carrySignals ?? [],
     supportSignals: overrides.supportSignals ?? [],
     unsupportedSignals: overrides.unsupportedSignals ?? [],

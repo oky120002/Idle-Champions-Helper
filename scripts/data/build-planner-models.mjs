@@ -1,7 +1,7 @@
 import path from 'node:path'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { pathToFileURL } from 'node:url'
-import { attachPlannerSignalSemantics } from '../../src/domain/planner/plannerSignalSemantics.js'
+import { attachSignalSemantics } from '../../src/domain/abilities/signalSemantics.js'
 import {
   collectPlannerEffectEntries,
   normalizePlannerEffectSignal,
@@ -51,7 +51,7 @@ function buildOfficialPlannerHeroModel(champion, detail) {
     const parsed = normalizePlannerEffectSignal(split.effectName, split.effectValue, 'official-parsed', entry)
 
     if (parsed.ok) {
-      const signal = attachPlannerSignalSemantics(parsed.signal, entry.effect)
+      const signal = attachSignalSemantics(parsed.signal, entry.effect)
       if (parsed.bucket === 'carrySignals') {
         carrySignals.push(signal)
       } else {

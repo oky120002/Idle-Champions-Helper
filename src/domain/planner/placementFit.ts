@@ -5,7 +5,7 @@ import type {
   ResolvedPlannerHeroModel,
   ResolvedPlannerScenarioModel,
 } from './plannerModel'
-import { matchesPlannerHeroQualifier } from './plannerSignalSemantics.js'
+import { matchesPlannerHeroQualifier } from './plannerModel'
 
 export interface PlacementFitScorePart {
   signalKind: PlannerEffectSignal['kind']

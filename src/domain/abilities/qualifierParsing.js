@@ -61,7 +61,7 @@ function splitTopLevel(expr, delimiter) {
   return parts.filter(Boolean)
 }
 
-export function buildPlannerAgeQualifier(operator, value, excludedHeroId = null) {
+export function buildAgeQualifier(operator, value, excludedHeroId = null) {
   if (operator === '==') {
     return {
       minAge: value,
@@ -80,7 +80,7 @@ export function buildPlannerAgeQualifier(operator, value, excludedHeroId = null)
   }
 }
 
-export function parsePlannerTagDisjunction(expr) {
+export function parseTagDisjunction(expr) {
   const clauses = splitTopLevel(stripOuterParentheses(expr), '||')
   if (clauses.length === 0) {
     return null
@@ -101,7 +101,7 @@ export function parsePlannerTagDisjunction(expr) {
   }
 }
 
-function mergePlannerTagRequirements(leftQualifier, rightQualifier) {
+function mergeTagRequirements(leftQualifier, rightQualifier) {
   const leftTags = leftQualifier.requiredTags ?? []
   const rightTags = rightQualifier.requiredTags ?? []
   if (leftTags.length === 0) {
@@ -214,8 +214,8 @@ function chooseStricterUpperAgeBound(leftValue, leftOperator, rightValue, rightO
   }
 }
 
-export function mergePlannerHeroQualifiers(leftQualifier, rightQualifier) {
-  const mergedTagRequirements = mergePlannerTagRequirements(leftQualifier, rightQualifier)
+export function mergeHeroQualifiers(leftQualifier, rightQualifier) {
+  const mergedTagRequirements = mergeTagRequirements(leftQualifier, rightQualifier)
   if (mergedTagRequirements === null) {
     return null
   }
@@ -291,10 +291,10 @@ export function mergePlannerHeroQualifiers(leftQualifier, rightQualifier) {
   }
 }
 
-export function splitPlannerExprAtTopLevel(expr, delimiter) {
+export function splitExprAtTopLevel(expr, delimiter) {
   return splitTopLevel(expr, delimiter)
 }
 
-export function stripPlannerExprOuterParentheses(expr) {
+export function stripExprOuterParentheses(expr) {
   return stripOuterParentheses(expr)
 }
