@@ -15,9 +15,9 @@ const EMPTY_OVERRIDE_COLLECTION: PlannerHeroOverrideCollection = {
 
 export async function loadResolvedPlannerModel(): Promise<ResolvedPlannerModel> {
   const [officialHeroes, officialScenarios, repoOverrides, localOverrides] = await Promise.all([
-    loadCollection<OfficialPlannerHeroModel>('planner-heroes'),
-    loadCollection<OfficialPlannerScenarioModel>('planner-scenarios'),
-    loadCollection<PlannerHeroOverrideCollection['items'][number]>('planner-semantic-overrides')
+    loadCollection<OfficialPlannerHeroModel>('hero-abilities'),
+    loadCollection<OfficialPlannerScenarioModel>('scenarios'),
+    loadCollection<PlannerHeroOverrideCollection['items'][number]>('semantic-overrides')
       .catch(() => EMPTY_OVERRIDE_COLLECTION),
     listPlannerHeroOverrides(),
   ])

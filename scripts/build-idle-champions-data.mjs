@@ -10,7 +10,7 @@ import { syncChampionConsolePortraits } from './sync-idle-champions-console-port
 import { syncChampionPortraits } from './sync-idle-champions-portraits.mjs'
 import { syncChampionEquipmentIcons } from './sync-idle-champions-equipment-icons.mjs'
 import { syncChampionSpecializationGraphics } from './sync-idle-champions-specialization-graphics.mjs'
-import { buildPlannerModels } from './data/build-planner-models.mjs'
+import { buildModels } from './data/build-models.mjs'
 import { buildSearchIndex } from './data/build-search-index.mjs'
 import {
   readUpdatedAtFromJsonFile,
@@ -93,7 +93,7 @@ async function main() {
     currentVersion: values.currentVersion,
     manualOverrides: values.manualOverrides,
   })
-  const plannerModels = await buildPlannerModels({
+  const plannerModels = await buildModels({
     versionDir: normalized.outputDir,
   })
   const searchIndex = await buildSearchIndex({

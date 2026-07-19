@@ -3,14 +3,14 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { pathToFileURL } from 'node:url'
 import { attachSignalSemantics } from '../../src/domain/abilities/signalSemantics.js'
 import {
-  collectPlannerEffectEntries,
-  normalizePlannerEffectSignal,
-  shouldIgnorePlannerUnsupportedEffectEntry,
-  splitPlannerEffectString,
-} from './planner-effect-helpers.mjs'
+  collectEffectEntries,
+  normalizeEffectSignal,
+  shouldIgnoreUnsupportedEffectEntry,
+  splitEffectString,
+} from './effect-helpers.mjs'
 
 const DEFAULT_VERSION_DIR = 'public/data/v1'
-const DEFAULT_SEMANTIC_OVERRIDES = 'scripts/data/planner-semantic-overrides.json'
+const DEFAULT_SEMANTIC_OVERRIDES = 'scripts/data/semantic-overrides.json'
 
 async function readJson(filePath) {
   return JSON.parse(await readFile(filePath, 'utf8'))
@@ -32,23 +32,23 @@ function getRolePriorityMultiplier(roles) {
   return 1.05
 }
 
-function shouldIgnoreUnsupportedPlannerEffect(entry, unsupported) {
-  return shouldIgnorePlannerUnsupportedEffectEntry(entry, unsupported?.rawEffect ?? '')
+function shouldIgnoreUnsupportedEffect(entry, unsupported) {
+  return shouldIgnoreUnsupportedEffectEntry(entry, unsupported?.rawEffect ?? '')
 }
 
-function buildOfficialPlannerHeroModel(champion, detail) {
+function buildOfficialHeroModel(champion, detail) {
   const carrySignals = []
   const supportSignals = []
   const unsupportedSignals = []
 
-  for (const entry of collectPlannerEffectEntries(detail)) {
-    const split = splitPlannerEffectString(entry.effectString)
+  for (const entry of collectEffectEntries(detail)) {
+    const split = splitEffectString(entry.effectString)
 
     if (!split) {
       continue
     }
 
-    const parsed = normalizePlannerEffectSignal(split.effectName, split.effectValue, 'official-parsed', entry)
+    const parsed = normalizeEffectSignal(split.effectName, split.effectValue, 'official-parsed', entry)
 
     if (parsed.ok) {
       const signal = attachSignalSemantics(parsed.signal, entry.effect)
@@ -58,13 +58,15 @@ function buildOfficialPlannerHeroModel(champion, detail) {
         supportSignals.push(signal)
       }
     } else {
-      if (!shouldIgnoreUnsupportedPlannerEffect(entry, parsed.unsupported)) {
+      if (!shouldIgnoreUnsupportedEffect(entry, parsed.unsupported)) {
         unsupportedSignals.push(parsed.unsupported)
       }
     }
   }
 
   const heuristicRoleMultiplier = getRolePriorityMultiplier(champion.roles)
+  const rawBaseDamage = Number(detail.baseDamage)
+  const baseDamage = Number.isFinite(rawBaseDamage) ? rawBaseDamage : 0
 
   return {
     heroId: champion.id,
@@ -78,6 +80,7 @@ function buildOfficialPlannerHeroModel(champion, detail) {
     abilityScores: detail.characterSheet?.abilityScores ?? {},
     isCarryViable: champion.roles.some((role) => String(role).toLowerCase() === 'dps'),
     heuristicRoleMultiplier,
+    baseDamage,
     carrySignals,
     supportSignals,
     unsupportedSignals,
@@ -118,7 +121,7 @@ function findFormationForVariant(formations, variant) {
   }) ?? null
 }
 
-function buildOfficialPlannerScenarioModel(variant, formations) {
+function buildOfficialScenarioModel(variant, formations) {
   const formation = findFormationForVariant(formations, variant)
 
   return {
@@ -149,7 +152,7 @@ function buildOfficialPlannerScenarioModel(variant, formations) {
   }
 }
 
-function normalizePlannerSemanticOverrides(rawOverrides, updatedAt) {
+function normalizeSemanticOverrides(rawOverrides, updatedAt) {
   const items = Object.entries(rawOverrides.heroOverrides ?? {}).map(([heroId, patch]) => ({
     heroId,
     isCarryViable: patch?.isCarryViable,
@@ -164,7 +167,7 @@ function normalizePlannerSemanticOverrides(rawOverrides, updatedAt) {
   }
 }
 
-export async function buildPlannerModels(options = {}) {
+export async function buildModels(options = {}) {
   const versionDir = path.resolve(options.versionDir ?? DEFAULT_VERSION_DIR)
   const semanticOverridesFile = path.resolve(
     options.semanticOverridesFile ?? DEFAULT_SEMANTIC_OVERRIDES,
@@ -175,41 +178,41 @@ export async function buildPlannerModels(options = {}) {
   const semanticOverrides = await readJson(semanticOverridesFile).catch(() => ({ heroOverrides: {} }))
   const updatedAt = champions.updatedAt ?? variants.updatedAt ?? formations.updatedAt ?? ''
 
-  const plannerHeroes = []
+  const heroAbilities = []
   for (const champion of champions.items ?? []) {
     const detail = await readJson(path.join(versionDir, 'champion-details', `${champion.id}.json`))
-    plannerHeroes.push(buildOfficialPlannerHeroModel(champion, detail))
+    heroAbilities.push(buildOfficialHeroModel(champion, detail))
   }
 
-  const plannerScenarios = (variants.items ?? []).map((variant) =>
-    buildOfficialPlannerScenarioModel(variant, formations.items ?? []),
+  const scenarioModels = (variants.items ?? []).map((variant) =>
+    buildOfficialScenarioModel(variant, formations.items ?? []),
   )
 
-  await writeJson(path.join(versionDir, 'planner-heroes.json'), {
-    items: plannerHeroes,
+  await writeJson(path.join(versionDir, 'hero-abilities.json'), {
+    items: heroAbilities,
     updatedAt,
   })
-  await writeJson(path.join(versionDir, 'planner-scenarios.json'), {
-    items: plannerScenarios,
+  await writeJson(path.join(versionDir, 'scenarios.json'), {
+    items: scenarioModels,
     updatedAt,
   })
   await writeJson(
-    path.join(versionDir, 'planner-semantic-overrides.json'),
-    normalizePlannerSemanticOverrides(semanticOverrides, updatedAt),
+    path.join(versionDir, 'semantic-overrides.json'),
+    normalizeSemanticOverrides(semanticOverrides, updatedAt),
   )
 
   return {
     versionDir,
     updatedAt,
-    heroCount: plannerHeroes.length,
-    scenarioCount: plannerScenarios.length,
+    heroCount: heroAbilities.length,
+    scenarioCount: scenarioModels.length,
   }
 }
 
 async function main() {
-  const result = await buildPlannerModels()
+  const result = await buildModels()
 
-  console.log('planner model 构建完成：')
+  console.log('hero ability model 构建完成：')
   console.log(`- version dir: ${result.versionDir}`)
   console.log(`- updatedAt: ${result.updatedAt}`)
   console.log(`- heroes: ${result.heroCount}`)
@@ -218,7 +221,7 @@ async function main() {
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   main().catch((error) => {
-    console.error(`构建 planner model 失败：${error.message}`)
+    console.error(`构建 hero ability model 失败：${error.message}`)
     process.exitCode = 1
   })
 }

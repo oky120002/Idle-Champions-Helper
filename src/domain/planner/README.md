@@ -18,7 +18,7 @@
   - 串起候选池、布局槽位、合法性、评分和 beam search。
   - 输出页面可直接消费的 `PlannerRecommendation`，但不依赖任何页面组件类型。
 - `plannerModel.ts`
-  - 定义 merge 后推荐输入模型；统一承接 `planner-heroes.json`、`planner-scenarios.json`、仓库语义补丁和浏览器本地 override。
+  - 定义 merge 后推荐输入模型；统一承接 `hero-abilities.json`、`scenarios.json`、仓库语义补丁和浏览器本地 override。
 - `plannerSignalSemantics.js`
   - 统一承接 signal qualifier、`per_hero_expr` 受控解析和共享语义挂接，供数据构建脚本与评分链路共同消费。
 - `recommendationTypes.ts`

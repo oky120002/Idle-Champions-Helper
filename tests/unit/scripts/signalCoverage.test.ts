@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
 
-import { generatePlannerSignalCoverageReport } from '../../../scripts/data/planner-signal-coverage.mjs'
+import { generateSignalCoverageReport } from '../../../scripts/data/signal-coverage.mjs'
 
-describe('planner signal coverage report', () => {
+describe('signal coverage report', () => {
   it('统计已识别 signal、叠层组合和 unsupported effect', () => {
-    const report = generatePlannerSignalCoverageReport([
+    const report = generateSignalCoverageReport([
       {
         upgrades: [
           {
@@ -105,7 +105,7 @@ describe('planner signal coverage report', () => {
   })
 
   it('区分可计分、手动触发和未覆盖组合', () => {
-    const report = generatePlannerSignalCoverageReport([
+    const report = generateSignalCoverageReport([
       {
         upgrades: [
           {
@@ -138,7 +138,7 @@ describe('planner signal coverage report', () => {
   })
 
   it('简单 tag && stat 组合进入已解析子集', () => {
-    const report = generatePlannerSignalCoverageReport([
+    const report = generateSignalCoverageReport([
       {
         upgrades: [
           {
@@ -161,7 +161,7 @@ describe('planner signal coverage report', () => {
   })
 
   it('复杂包装公式仍保留未解析以便后续排优先级', () => {
-    const report = generatePlannerSignalCoverageReport([
+    const report = generateSignalCoverageReport([
       {
         upgrades: [
           {
@@ -185,7 +185,7 @@ describe('planner signal coverage report', () => {
   })
 
   it('把 is_undead 计入已解析表达式，但继续保留 HasEffect 否定表达式为未解析', () => {
-    const report = generatePlannerSignalCoverageReport([
+    const report = generateSignalCoverageReport([
       {
         upgrades: [
           {
@@ -217,7 +217,7 @@ describe('planner signal coverage report', () => {
   })
 
   it('把简单 as_int 标签包装计入已解析，但动态阈值公式仍保持未解析', () => {
-    const report = generatePlannerSignalCoverageReport([
+    const report = generateSignalCoverageReport([
       {
         upgrades: [
           {
@@ -260,7 +260,7 @@ describe('planner signal coverage report', () => {
   })
 
   it('把 base_attack_cooldown 比较表达式计入已解析，但裸 cooldown 表达式仍保持未解析', () => {
-    const report = generatePlannerSignalCoverageReport([
+    const report = generateSignalCoverageReport([
       {
         upgrades: [
           {
@@ -291,7 +291,7 @@ describe('planner signal coverage report', () => {
   })
 
   it('把 total_ability_score 比较表达式计入已解析，但复杂 feat/upgrade 组合仍保持未解析', () => {
-    const report = generatePlannerSignalCoverageReport([
+    const report = generateSignalCoverageReport([
       {
         upgrades: [
           {
@@ -323,7 +323,7 @@ describe('planner signal coverage report', () => {
   })
 
   it('对 buff_upgrade wrapper 区分 family unsupported、base resolved 和 base unresolved', () => {
-    const report = generatePlannerSignalCoverageReport([
+    const report = generateSignalCoverageReport([
       {
         upgrades: [
           {

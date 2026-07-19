@@ -4,17 +4,17 @@ import os from 'node:os'
 import path from 'node:path'
 import { mkdtemp, mkdir, readFile, writeFile } from 'node:fs/promises'
 
-import { buildPlannerModels } from './build-planner-models.mjs'
+import { buildModels } from './build-models.mjs'
 
 async function readJson(filePath) {
   return JSON.parse(await readFile(filePath, 'utf8'))
 }
 
-test('buildPlannerModels 产出 planner heroes / scenarios / semantic overrides', async () => {
-  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'idle-champions-planner-models-'))
+test('buildModels 产出 hero abilities / scenarios / semantic overrides', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'idle-champions-hero-ability-models-'))
   const versionDir = path.join(tempDir, 'data')
   const detailDir = path.join(versionDir, 'champion-details')
-  const semanticOverridesFile = path.join(tempDir, 'planner-semantic-overrides.json')
+  const semanticOverridesFile = path.join(tempDir, 'semantic-overrides.json')
 
   await mkdir(detailDir, { recursive: true })
 
@@ -372,34 +372,34 @@ test('buildPlannerModels 产出 planner heroes / scenarios / semantic overrides'
     }),
   )
 
-  const result = await buildPlannerModels({ versionDir, semanticOverridesFile })
-  const plannerHeroes = await readJson(path.join(versionDir, 'planner-heroes.json'))
-  const plannerScenarios = await readJson(path.join(versionDir, 'planner-scenarios.json'))
-  const plannerOverrides = await readJson(path.join(versionDir, 'planner-semantic-overrides.json'))
+  const result = await buildModels({ versionDir, semanticOverridesFile })
+  const heroAbilities = await readJson(path.join(versionDir, 'hero-abilities.json'))
+  const scenarioModels = await readJson(path.join(versionDir, 'scenarios.json'))
+  const semanticOverrides = await readJson(path.join(versionDir, 'semantic-overrides.json'))
 
   assert.equal(result.heroCount, 1)
   assert.equal(result.scenarioCount, 1)
-  assert.equal(plannerHeroes.updatedAt, '2026-06-04')
-  assert.equal(plannerHeroes.items[0].heroId, '1')
-  assert.deepEqual(plannerHeroes.items[0].baseAttackDamageTypes, ['magic'])
-  assert.equal(plannerHeroes.items[0].baseAttackCooldown, 4.5)
-  assert.equal(plannerHeroes.items[0].age, 40)
-  assert.equal(plannerHeroes.items[0].abilityScores.str, 15)
-  assert.equal(plannerHeroes.items[0].carrySignals[0].kind, 'heroDpsMultiplier')
-  const perTargetCarry = plannerHeroes.items[0].carrySignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_target_crusader,100,adj')
-  const perTaggedCarry = plannerHeroes.items[0].carrySignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_tagged_crusader_mult,200,companion')
-  const perTaggedBeforeCarry = plannerHeroes.items[0].supportSignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_tagged_crusader_mult_amount_before,150,wafflecrew')
-  const perTargetPrebonusSupport = plannerHeroes.items[0].supportSignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_target_crusader_prebonus_mult,100,adj')
-  const globalSupport = plannerHeroes.items[0].supportSignals.find((signal) => signal.rawEffect === 'global_dps_multiplier_mult,65')
-  const taggedSupport = plannerHeroes.items[0].supportSignals.find((signal) => signal.rawEffect === 'tag_dps,40')
-  const statCountSupport = plannerHeroes.items[0].supportSignals.find((signal) => signal.rawEffect === 'global_dps_multiplier_mult,20')
-  const targetedHeroSupport = plannerHeroes.items[0].supportSignals.find((signal) => signal.rawEffect === 'hero_dps_multiplier_mult,0')
-  const attackTypeSupport = plannerHeroes.items[0].supportSignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_crusader_mult,100')
-  const behindColumnSupport = plannerHeroes.items[0].supportSignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_col_behind,100')
-  const plainBuffSupport = plannerHeroes.items[0].supportSignals.find((signal) => signal.rawEffect === 'buff_upgrade,50,upgrade-base-plain')
-  const taggedBuffSupport = plannerHeroes.items[0].supportSignals.find((signal) => signal.rawEffect === 'buff_upgrade_per_any_tagged_crusader_mult,200,upgrade-base-tagged,evil')
-  const whereBuffSupport = plannerHeroes.items[0].supportSignals.find((signal) => signal.rawEffect === 'buff_upgrade_per_any_crusader_where_mult,0,1001,int,>=,15')
-  const distanceBuffSupport = plannerHeroes.items[0].supportSignals.find((signal) => signal.rawEffect === 'buff_upgrade_mult_by_distance_from_source_mult,400,1003')
+  assert.equal(heroAbilities.updatedAt, '2026-06-04')
+  assert.equal(heroAbilities.items[0].heroId, '1')
+  assert.deepEqual(heroAbilities.items[0].baseAttackDamageTypes, ['magic'])
+  assert.equal(heroAbilities.items[0].baseAttackCooldown, 4.5)
+  assert.equal(heroAbilities.items[0].age, 40)
+  assert.equal(heroAbilities.items[0].abilityScores.str, 15)
+  assert.equal(heroAbilities.items[0].carrySignals[0].kind, 'heroDpsMultiplier')
+  const perTargetCarry = heroAbilities.items[0].carrySignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_target_crusader,100,adj')
+  const perTaggedCarry = heroAbilities.items[0].carrySignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_tagged_crusader_mult,200,companion')
+  const perTaggedBeforeCarry = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_tagged_crusader_mult_amount_before,150,wafflecrew')
+  const perTargetPrebonusSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_target_crusader_prebonus_mult,100,adj')
+  const globalSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'global_dps_multiplier_mult,65')
+  const taggedSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'tag_dps,40')
+  const statCountSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'global_dps_multiplier_mult,20')
+  const targetedHeroSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'hero_dps_multiplier_mult,0')
+  const attackTypeSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_crusader_mult,100')
+  const behindColumnSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_col_behind,100')
+  const plainBuffSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'buff_upgrade,50,upgrade-base-plain')
+  const taggedBuffSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'buff_upgrade_per_any_tagged_crusader_mult,200,upgrade-base-tagged,evil')
+  const whereBuffSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'buff_upgrade_per_any_crusader_where_mult,0,1001,int,>=,15')
+  const distanceBuffSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'buff_upgrade_mult_by_distance_from_source_mult,400,1003')
 
   assert.equal(perTargetCarry?.kind, 'heroDpsMultiplier')
   assert.equal(perTargetCarry?.amountFunc, 'add')
@@ -500,18 +500,18 @@ test('buildPlannerModels 产出 planner heroes / scenarios / semantic overrides'
   })
   assert.equal(distanceBuffSupport?.targetQualifier ?? null, null)
   assert.deepEqual(
-    plannerHeroes.items[0].unsupportedSignals
+    heroAbilities.items[0].unsupportedSignals
       .map((signal) => signal.rawEffect)
       .filter((rawEffect) => rawEffect !== 'effect_def'),
     ['pre_stack_amount', 'pre_stack_amount', 'pre_stack_amount'],
   )
-  assert.equal(plannerScenarios.items[0].formationLayoutId, 'layout-a')
-  assert.deepEqual(plannerScenarios.items[0].slotTopology, [
+  assert.equal(scenarioModels.items[0].formationLayoutId, 'layout-a')
+  assert.deepEqual(scenarioModels.items[0].slotTopology, [
     { slotId: 's1', row: 1, column: 1, x: 40, y: 10, adjacentSlotIds: ['s2'] },
     { slotId: 's2', row: 1, column: 2, x: 20, y: 10, adjacentSlotIds: ['s1'] },
   ])
-  assert.equal(plannerScenarios.items[0].scenarioWarnings.length, 1)
-  assert.deepEqual(plannerOverrides.items, [
+  assert.equal(scenarioModels.items[0].scenarioWarnings.length, 1)
+  assert.deepEqual(semanticOverrides.items, [
     {
       heroId: '1',
       isCarryViable: true,

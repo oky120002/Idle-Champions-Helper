@@ -38,11 +38,11 @@ afterEach(async () => {
 })
 
 describe('planner hero overrides store', () => {
-  it('打开数据库时会创建 plannerHeroOverrides 对象仓库', async () => {
+  it('打开数据库时会创建 heroAbilityOverrides 对象仓库', async () => {
     const database = await openAppDatabase()
 
     try {
-      expect(database.objectStoreNames.contains(APP_STORE_NAMES.plannerHeroOverrides)).toBe(true)
+      expect(database.objectStoreNames.contains(APP_STORE_NAMES.heroAbilityOverrides)).toBe(true)
     } finally {
       database.close()
     }

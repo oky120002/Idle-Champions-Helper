@@ -12,7 +12,7 @@ import {
   parsePerHeroExpr,
 } from '../../src/domain/abilities/signalSemantics.js'
 
-function resolvePlannerNumericValue(effectValue, effectPayload, effectPayloads) {
+function resolveNumericValue(effectValue, effectPayload, effectPayloads) {
   if (typeof effectPayload?.meta?.amount_expr === 'string') {
     const resolved = resolveEffectPayloadAmountToken(effectPayload, effectPayloads ?? [effectPayload])
     const resolvedValue = resolved === null ? Number.NaN : parseFloat(String(resolved))
@@ -25,11 +25,11 @@ function resolvePlannerNumericValue(effectValue, effectPayload, effectPayloads) 
   return parseFloat(effectValue)
 }
 
-function buildPlannerRawEffect(effectName, effectValue, effectPayload) {
+function buildRawEffect(effectName, effectValue, effectPayload) {
   return effectPayload?.effectString ?? `${effectName},${effectValue}`
 }
 
-function resolvePlannerBucket(effect) {
+function resolveBucket(effect) {
   const explicitTargeting = normalizeExplicitTargeting(effect)
 
   if (explicitTargeting.status === 'unsupported') {
@@ -48,7 +48,7 @@ function resolvePlannerBucket(effect) {
   }
 }
 
-function resolvePlannerCountRelation(rawTarget) {
+function resolveCountRelation(rawTarget) {
   const targeting = normalizeExplicitTargeting({ targets: [rawTarget] })
 
   if (targeting.status !== 'supported' || targeting.relation === 'any') {
@@ -58,7 +58,7 @@ function resolvePlannerCountRelation(rawTarget) {
   return targeting.relation
 }
 
-function parsePlannerTagQualifierFromArg(rawValue) {
+function parseTagQualifierFromArg(rawValue) {
   if (typeof rawValue !== 'string') {
     return null
   }
@@ -78,7 +78,7 @@ function parsePlannerTagQualifierFromArg(rawValue) {
   }
 }
 
-function buildPlannerEffectEntry({
+function buildEffectEntry({
   effectString,
   effect,
   effectPayload,
@@ -100,12 +100,12 @@ function buildPlannerEffectEntry({
   }
 }
 
-function isAnyPlannerBuffUpgradeWrapperKind(kind) {
+function isAnyBuffUpgradeWrapperKind(kind) {
   return kind === 'buff_upgrades'
     || (typeof kind === 'string' && kind.startsWith('buff_upgrade'))
 }
 
-function isPlannerBuffUpgradeKind(kind) {
+function isBuffUpgradeKind(kind) {
   return kind === 'buff_upgrade'
     || kind === 'buff_upgrades'
     || kind === 'buff_upgrade_per_any_tagged_crusader_mult'
@@ -115,7 +115,7 @@ function isPlannerBuffUpgradeKind(kind) {
     || kind === 'buff_upgrade_mult_by_distance_from_source_mult'
 }
 
-export function shouldIgnorePlannerUnsupportedEffectEntry(entry, rawEffect) {
+export function shouldIgnoreUnsupportedEffectEntry(entry, rawEffect) {
   if (rawEffect === 'effect_def') {
     return true
   }
@@ -133,7 +133,7 @@ export function shouldIgnorePlannerUnsupportedEffectEntry(entry, rawEffect) {
     || rawEffect === 'buff_upgrade_mult_by_distance_from_source_mult'
 }
 
-function resolvePlannerTargetUpgradeIds(payload) {
+function resolveTargetUpgradeIds(payload) {
   if (!payload) {
     return []
   }
@@ -145,7 +145,7 @@ function resolvePlannerTargetUpgradeIds(payload) {
   return extractTargetIdsFromParsedEffectPayload(payload)
 }
 
-function parsePlannerWhereQualifierFromArgs(compare, comparison, check) {
+function parseWhereQualifierFromArgs(compare, comparison, check) {
   if (
     typeof compare !== 'string'
     || typeof comparison !== 'string'
@@ -184,7 +184,7 @@ function parsePlannerWhereQualifierFromArgs(compare, comparison, check) {
   return { requiredStats }
 }
 
-function resolvePlannerBuffUpgradeSeed(entry) {
+function resolveBuffUpgradeSeed(entry) {
   const payload = entry.effectPayload
   if (!payload) {
     return null
@@ -195,7 +195,7 @@ function resolvePlannerBuffUpgradeSeed(entry) {
   }
 
   if (payload.kind === 'buff_upgrade_per_any_tagged_crusader_mult') {
-    const formationCountQualifier = parsePlannerTagQualifierFromArg(payload.args[2] ?? null)
+    const formationCountQualifier = parseTagQualifierFromArg(payload.args[2] ?? null)
     if (!formationCountQualifier) {
       return null
     }
@@ -208,7 +208,7 @@ function resolvePlannerBuffUpgradeSeed(entry) {
   }
 
   if (payload.kind === 'buff_upgrade_per_any_crusader_where_mult') {
-    const formationCountQualifier = parsePlannerWhereQualifierFromArgs(
+    const formationCountQualifier = parseWhereQualifierFromArgs(
       payload.args[2] ?? null,
       payload.args[3] ?? null,
       payload.args[4] ?? null,
@@ -225,7 +225,7 @@ function resolvePlannerBuffUpgradeSeed(entry) {
   }
 
   if (payload.kind === 'buff_upgrade_per_target_crusader') {
-    const countRelation = resolvePlannerCountRelation(payload.args[2] ?? null)
+    const countRelation = resolveCountRelation(payload.args[2] ?? null)
     if (!countRelation) {
       return null
     }
@@ -254,7 +254,7 @@ function resolvePlannerBuffUpgradeSeed(entry) {
   return null
 }
 
-function resolvePlannerEntrySignal(entry) {
+function resolveEntrySignal(entry) {
   if (entry.signalPreset) {
     return {
       ok: true,
@@ -263,12 +263,12 @@ function resolvePlannerEntrySignal(entry) {
     }
   }
 
-  const split = splitPlannerEffectString(entry.effectString)
+  const split = splitEffectString(entry.effectString)
   if (!split) {
     return null
   }
 
-  const parsed = normalizePlannerEffectSignal(
+  const parsed = normalizeEffectSignal(
     split.effectName,
     split.effectValue,
     'official-parsed',
@@ -286,7 +286,7 @@ function resolvePlannerEntrySignal(entry) {
   }
 }
 
-function collectPlannerRawEffectEntries(detail) {
+function collectRawEffectEntries(detail) {
   const effectEntries = []
   const upgradeEffectEntriesById = new Map()
 
@@ -294,7 +294,7 @@ function collectPlannerRawEffectEntries(detail) {
     const upgradeEntries = []
 
     if (typeof upgrade.effectReference === 'string') {
-      const entry = buildPlannerEffectEntry({
+      const entry = buildEffectEntry({
         effectString: upgrade.effectReference,
         effect: upgrade,
         effectPayload: parseEffectPayload(upgrade.effectReference),
@@ -311,7 +311,7 @@ function collectPlannerRawEffectEntries(detail) {
       const effectPayloads = effectKeys.map((effectKey) => buildEffectKeyPayload(effectKey))
       for (const [index, effectKey] of effectKeys.entries()) {
         if (typeof effectKey?.effect_string === 'string') {
-          const entry = buildPlannerEffectEntry({
+          const entry = buildEffectEntry({
             effectString: effectKey.effect_string,
             effect: effectKey,
             effectPayload: effectPayloads[index] ?? null,
@@ -333,7 +333,7 @@ function collectPlannerRawEffectEntries(detail) {
   for (const lootItem of detail.loot ?? []) {
     for (const effect of lootItem.effects ?? []) {
       if (typeof effect?.effect_string === 'string') {
-        effectEntries.push(buildPlannerEffectEntry({
+        effectEntries.push(buildEffectEntry({
           effectString: effect.effect_string,
           effect,
           effectPayload: parseEffectPayload(effect.effect_string),
@@ -347,7 +347,7 @@ function collectPlannerRawEffectEntries(detail) {
   for (const legendaryEffect of detail.legendaryEffects ?? []) {
     for (const effect of legendaryEffect.effects ?? []) {
       if (typeof effect?.effect_string === 'string') {
-        effectEntries.push(buildPlannerEffectEntry({
+        effectEntries.push(buildEffectEntry({
           effectString: effect.effect_string,
           effect,
           effectPayload: parseEffectPayload(effect.effect_string),
@@ -361,24 +361,24 @@ function collectPlannerRawEffectEntries(detail) {
   return { effectEntries, upgradeEffectEntriesById }
 }
 
-function summarizePlannerBuffUpgradeBase(entry, targetEntries) {
+function summarizeBuffUpgradeBase(entry, targetEntries) {
   const unresolvedBaseEffectNames = []
   const ignoredBaseEffectNames = []
   const resolvedSignals = []
 
   for (const targetEntry of targetEntries) {
-    const targetSignalResult = resolvePlannerEntrySignal(targetEntry)
+    const targetSignalResult = resolveEntrySignal(targetEntry)
     if (targetSignalResult?.ok) {
       resolvedSignals.push(targetSignalResult)
       continue
     }
 
-    const split = splitPlannerEffectString(targetEntry.effectString)
+    const split = splitEffectString(targetEntry.effectString)
     if (!split) {
       continue
     }
 
-    if (shouldIgnorePlannerUnsupportedEffectEntry(targetEntry, split.effectName)) {
+    if (shouldIgnoreUnsupportedEffectEntry(targetEntry, split.effectName)) {
       ignoredBaseEffectNames.push(split.effectName)
       continue
     }
@@ -414,19 +414,19 @@ function summarizePlannerBuffUpgradeBase(entry, targetEntries) {
   }
 }
 
-export function analyzePlannerBuffUpgradeWrappers(detail) {
-  const { effectEntries, upgradeEffectEntriesById } = collectPlannerRawEffectEntries(detail)
+export function analyzeBuffUpgradeWrappers(detail) {
+  const { effectEntries, upgradeEffectEntriesById } = collectRawEffectEntries(detail)
   const auditEntries = []
 
   for (const entry of effectEntries) {
     const kind = entry.effectPayload?.kind
-    if (!isAnyPlannerBuffUpgradeWrapperKind(kind) || entry.sourceBucket !== 'upgrade-effect-key') {
+    if (!isAnyBuffUpgradeWrapperKind(kind) || entry.sourceBucket !== 'upgrade-effect-key') {
       continue
     }
 
-    const targetUpgradeIds = resolvePlannerTargetUpgradeIds(entry.effectPayload)
-    const wrapperSupported = isPlannerBuffUpgradeKind(kind)
-    const buffSeed = wrapperSupported ? resolvePlannerBuffUpgradeSeed(entry) : null
+    const targetUpgradeIds = resolveTargetUpgradeIds(entry.effectPayload)
+    const wrapperSupported = isBuffUpgradeKind(kind)
+    const buffSeed = wrapperSupported ? resolveBuffUpgradeSeed(entry) : null
 
     if (!wrapperSupported || !buffSeed) {
       auditEntries.push({
@@ -444,7 +444,7 @@ export function analyzePlannerBuffUpgradeWrappers(detail) {
     const allTargetEntries = targetUpgradeIds.flatMap((targetUpgradeId) =>
       upgradeEffectEntriesById.get(String(targetUpgradeId)) ?? [],
     )
-    const summary = summarizePlannerBuffUpgradeBase(entry, allTargetEntries)
+    const summary = summarizeBuffUpgradeBase(entry, allTargetEntries)
 
     auditEntries.push({
       wrapperKind: kind,
@@ -460,7 +460,7 @@ export function analyzePlannerBuffUpgradeWrappers(detail) {
   return auditEntries
 }
 
-export function normalizePlannerEffectSignal(effectName, effectValue, source, effectMetadata = {}) {
+export function normalizeEffectSignal(effectName, effectValue, source, effectMetadata = {}) {
   if (effectMetadata.signalPreset) {
     return {
       ok: true,
@@ -469,8 +469,8 @@ export function normalizePlannerEffectSignal(effectName, effectValue, source, ef
     }
   }
 
-  const rawEffect = buildPlannerRawEffect(effectName, effectValue, effectMetadata.effectPayload)
-  const numericValue = resolvePlannerNumericValue(
+  const rawEffect = buildRawEffect(effectName, effectValue, effectMetadata.effectPayload)
+  const numericValue = resolveNumericValue(
     effectValue,
     effectMetadata.effectPayload,
     effectMetadata.effectPayloads,
@@ -522,7 +522,7 @@ export function normalizePlannerEffectSignal(effectName, effectValue, source, ef
   }
 
   if (effectName === 'hero_dps_mult_per_target_crusader') {
-    const bucketResult = resolvePlannerBucket(effectMetadata.effect)
+    const bucketResult = resolveBucket(effectMetadata.effect)
     if (!bucketResult.ok) {
       return {
         ok: false,
@@ -535,7 +535,7 @@ export function normalizePlannerEffectSignal(effectName, effectValue, source, ef
       }
     }
 
-    const countRelation = resolvePlannerCountRelation(effectMetadata.effectPayload?.args?.[1] ?? null)
+    const countRelation = resolveCountRelation(effectMetadata.effectPayload?.args?.[1] ?? null)
     if (!countRelation) {
       return {
         ok: false,
@@ -567,7 +567,7 @@ export function normalizePlannerEffectSignal(effectName, effectValue, source, ef
     effectName === 'hero_dps_mult_per_target_crusader_mult'
     || effectName === 'hero_dps_mult_per_target_crusader_prebonus_mult'
   ) {
-    const bucketResult = resolvePlannerBucket(effectMetadata.effect)
+    const bucketResult = resolveBucket(effectMetadata.effect)
     if (!bucketResult.ok) {
       return {
         ok: false,
@@ -580,7 +580,7 @@ export function normalizePlannerEffectSignal(effectName, effectValue, source, ef
       }
     }
 
-    const countRelation = resolvePlannerCountRelation(effectMetadata.effectPayload?.args?.[1] ?? null)
+    const countRelation = resolveCountRelation(effectMetadata.effectPayload?.args?.[1] ?? null)
     if (!countRelation) {
       return {
         ok: false,
@@ -609,7 +609,7 @@ export function normalizePlannerEffectSignal(effectName, effectValue, source, ef
   }
 
   if (effectName === 'hero_dps_mult_per_tagged_crusader_mult') {
-    const bucketResult = resolvePlannerBucket(effectMetadata.effect)
+    const bucketResult = resolveBucket(effectMetadata.effect)
     if (!bucketResult.ok) {
       return {
         ok: false,
@@ -622,7 +622,7 @@ export function normalizePlannerEffectSignal(effectName, effectValue, source, ef
       }
     }
 
-    const formationCountQualifier = parsePlannerTagQualifierFromArg(effectMetadata.effectPayload?.args?.[1] ?? null)
+    const formationCountQualifier = parseTagQualifierFromArg(effectMetadata.effectPayload?.args?.[1] ?? null)
     if (!formationCountQualifier) {
       return {
         ok: false,
@@ -651,7 +651,7 @@ export function normalizePlannerEffectSignal(effectName, effectValue, source, ef
   }
 
   if (effectName === 'hero_dps_mult_per_tagged_crusader_mult_amount_before') {
-    const bucketResult = resolvePlannerBucket(effectMetadata.effect)
+    const bucketResult = resolveBucket(effectMetadata.effect)
     if (!bucketResult.ok) {
       return {
         ok: false,
@@ -664,7 +664,7 @@ export function normalizePlannerEffectSignal(effectName, effectValue, source, ef
       }
     }
 
-    const formationCountQualifier = parsePlannerTagQualifierFromArg(effectMetadata.effectPayload?.args?.[1] ?? null)
+    const formationCountQualifier = parseTagQualifierFromArg(effectMetadata.effectPayload?.args?.[1] ?? null)
     if (!formationCountQualifier) {
       return {
         ok: false,
@@ -693,7 +693,7 @@ export function normalizePlannerEffectSignal(effectName, effectValue, source, ef
   }
 
   if (effectName === 'hero_dps_mult_per_crusader_mult') {
-    const bucketResult = resolvePlannerBucket(effectMetadata.effect)
+    const bucketResult = resolveBucket(effectMetadata.effect)
     if (!bucketResult.ok) {
       return {
         ok: false,
@@ -725,7 +725,7 @@ export function normalizePlannerEffectSignal(effectName, effectValue, source, ef
   }
 
   if (effectName === 'hero_dps_mult_per_col_behind') {
-    const bucketResult = resolvePlannerBucket(effectMetadata.effect)
+    const bucketResult = resolveBucket(effectMetadata.effect)
     if (!bucketResult.ok) {
       return {
         ok: false,
@@ -779,7 +779,7 @@ export function normalizePlannerEffectSignal(effectName, effectValue, source, ef
   }
 }
 
-export function splitPlannerEffectString(effectString) {
+export function splitEffectString(effectString) {
   if (typeof effectString !== 'string' || effectString.trim().length === 0) {
     return null
   }
@@ -788,32 +788,32 @@ export function splitPlannerEffectString(effectString) {
   return { effectName, effectValue }
 }
 
-export function collectPlannerEffectEntries(detail) {
-  const { effectEntries, upgradeEffectEntriesById } = collectPlannerRawEffectEntries(detail)
+export function collectEffectEntries(detail) {
+  const { effectEntries, upgradeEffectEntriesById } = collectRawEffectEntries(detail)
 
   const derivedEntries = []
 
   for (const entry of effectEntries) {
-    if (!isPlannerBuffUpgradeKind(entry.effectPayload?.kind)) {
+    if (!isBuffUpgradeKind(entry.effectPayload?.kind)) {
       continue
     }
 
-    const buffSeed = resolvePlannerBuffUpgradeSeed(entry)
+    const buffSeed = resolveBuffUpgradeSeed(entry)
     if (!buffSeed) {
       continue
     }
 
-    const targetUpgradeIds = resolvePlannerTargetUpgradeIds(entry.effectPayload)
+    const targetUpgradeIds = resolveTargetUpgradeIds(entry.effectPayload)
     for (const targetUpgradeId of targetUpgradeIds) {
       const targetEntries = upgradeEffectEntriesById.get(String(targetUpgradeId)) ?? []
       for (const targetEntry of targetEntries) {
-        const targetSignalResult = resolvePlannerEntrySignal(targetEntry)
+        const targetSignalResult = resolveEntrySignal(targetEntry)
         if (!targetSignalResult?.ok) {
           continue
         }
 
         const targetSignal = targetSignalResult.signal
-        derivedEntries.push(buildPlannerEffectEntry({
+        derivedEntries.push(buildEffectEntry({
           effectString: entry.effectString,
           effect: entry.effect,
           effectPayload: entry.effectPayload,
@@ -824,7 +824,7 @@ export function collectPlannerEffectEntries(detail) {
           signalPreset: {
             ...targetSignal,
             rawEffect: entry.effectString,
-            value: resolvePlannerNumericValue(
+            value: resolveNumericValue(
               entry.effectPayload?.args?.[0] ?? '',
               entry.effectPayload,
               entry.effectPayloads,

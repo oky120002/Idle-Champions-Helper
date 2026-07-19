@@ -9,12 +9,12 @@ import {
   parsePerHeroExpr,
 } from '../../src/domain/abilities/signalSemantics.js'
 import {
-  analyzePlannerBuffUpgradeWrappers,
-  collectPlannerEffectEntries,
-  normalizePlannerEffectSignal,
-  shouldIgnorePlannerUnsupportedEffectEntry,
-  splitPlannerEffectString,
-} from './planner-effect-helpers.mjs'
+  analyzeBuffUpgradeWrappers,
+  collectEffectEntries,
+  normalizeEffectSignal,
+  shouldIgnoreUnsupportedEffectEntry,
+  splitEffectString,
+} from './effect-helpers.mjs'
 
 const DEFAULT_VERSION_DIR = 'public/data/v1'
 
@@ -84,7 +84,7 @@ function classifyScoringSupport(signal) {
   return supportedStackFunc && supportsAddOrMult ? 'supported' : 'unsupported-composition'
 }
 
-export function generatePlannerSignalCoverageReport(details) {
+export function generateSignalCoverageReport(details) {
   const effectNameCounts = new Map()
   const unsupportedEffectNameCounts = new Map()
   const stackFuncCounts = new Map()
@@ -122,7 +122,7 @@ export function generatePlannerSignalCoverageReport(details) {
   for (const detail of details) {
     totalHeroes += 1
 
-    for (const wrapperAuditEntry of analyzePlannerBuffUpgradeWrappers(detail)) {
+    for (const wrapperAuditEntry of analyzeBuffUpgradeWrappers(detail)) {
       buffUpgradeWrapperTotal += 1
       incrementCounter(buffUpgradeWrapperStatusCounts, wrapperAuditEntry.status)
       incrementCounter(buffUpgradeWrapperKindCounts, wrapperAuditEntry.wrapperKind)
@@ -144,11 +144,11 @@ export function generatePlannerSignalCoverageReport(details) {
       }
     }
 
-    for (const entry of collectPlannerEffectEntries(detail)) {
+    for (const entry of collectEffectEntries(detail)) {
       totalEffectEntries += 1
       incrementCounter(sourceBucketCounts, entry.sourceBucket)
 
-      const split = splitPlannerEffectString(entry.effectString)
+      const split = splitEffectString(entry.effectString)
       if (!split) {
         continue
       }
@@ -172,9 +172,9 @@ export function generatePlannerSignalCoverageReport(details) {
         }
       }
 
-      const parsed = normalizePlannerEffectSignal(split.effectName, split.effectValue, 'official-parsed', entry)
+      const parsed = normalizeEffectSignal(split.effectName, split.effectValue, 'official-parsed', entry)
       if (!parsed.ok) {
-        if (shouldIgnorePlannerUnsupportedEffectEntry(entry, split.effectName)) {
+        if (shouldIgnoreUnsupportedEffectEntry(entry, split.effectName)) {
           continue
         }
         unsupportedSignals += 1
@@ -265,7 +265,7 @@ export function generatePlannerSignalCoverageReport(details) {
   }
 }
 
-export async function loadPlannerChampionDetails(versionDir = DEFAULT_VERSION_DIR) {
+export async function loadChampionDetails(versionDir = DEFAULT_VERSION_DIR) {
   const detailDir = path.resolve(versionDir, 'champion-details')
   const filenames = (await readdir(detailDir))
     .filter((name) => name.endsWith('.json'))
@@ -279,14 +279,14 @@ export async function loadPlannerChampionDetails(versionDir = DEFAULT_VERSION_DI
   )
 }
 
-export async function generatePlannerSignalCoverageFromVersionDir(versionDir = DEFAULT_VERSION_DIR) {
-  const details = await loadPlannerChampionDetails(versionDir)
-  return generatePlannerSignalCoverageReport(details)
+export async function generateSignalCoverageFromVersionDir(versionDir = DEFAULT_VERSION_DIR) {
+  const details = await loadChampionDetails(versionDir)
+  return generateSignalCoverageReport(details)
 }
 
 async function main() {
   const versionDir = process.argv[2] ?? DEFAULT_VERSION_DIR
-  const report = await generatePlannerSignalCoverageFromVersionDir(versionDir)
+  const report = await generateSignalCoverageFromVersionDir(versionDir)
   process.stdout.write(`${JSON.stringify(report, null, 2)}\n`)
 }
 
