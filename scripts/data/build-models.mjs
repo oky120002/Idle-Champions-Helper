@@ -67,6 +67,7 @@ function buildOfficialHeroModel(champion, detail) {
   const heuristicRoleMultiplier = getRolePriorityMultiplier(champion.roles)
   const rawBaseDamage = Number(detail.baseDamage)
   const baseDamage = Number.isFinite(rawBaseDamage) ? rawBaseDamage : 0
+  const costCurves = detail.costCurves && typeof detail.costCurves === 'object' ? detail.costCurves : null
 
   return {
     heroId: champion.id,
@@ -81,6 +82,7 @@ function buildOfficialHeroModel(champion, detail) {
     isCarryViable: champion.roles.some((role) => String(role).toLowerCase() === 'dps'),
     heuristicRoleMultiplier,
     baseDamage,
+    costCurves,
     carrySignals,
     supportSignals,
     unsupportedSignals,

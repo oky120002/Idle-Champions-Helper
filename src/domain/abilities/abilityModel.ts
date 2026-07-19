@@ -131,6 +131,11 @@ export interface HeroAbilityProfile {
   isCarryViable: boolean
   heuristicRoleMultiplier: number
   baseDamage: number
+  /**
+   * 升级 cost 曲线（来自 champion-details.costCurves，key 统一为 "1"）。
+   * levelCurve(level) = rate^level 近似 DPS 增长上界（ponytail，阶段 7 BUD 精确化）。
+   */
+  costCurves?: Record<string, number> | null
   carrySignals: HeroAbilitySignal[]
   supportSignals: HeroAbilitySignal[]
   unsupportedSignals: HeroUnsupportedSignal[]
