@@ -1,4 +1,8 @@
-import { formatGameNumber, parseGameNumber } from '../simulator/gameNumber'
+import Decimal from 'break_eternity.js'
+
+import { formatGameNumber } from '../simulator/gameNumber'
+import type { GameNumberValue } from '../simulator/gameNumber'
+import { compareGameNumbers } from '../simulator/gameNumberArithmetic'
 import type { Variant } from '../types'
 import type { UserProfileSnapshot } from '../user-profile/types'
 import { beamSearch } from './beamSearchRanking'
@@ -18,14 +22,8 @@ import {
 import { scoreFormation } from './steadyStateScoring'
 import type { VariantRuleResult } from './variantRuleProjection'
 
-const ROLE_PRIORITY = ['dps', 'support', 'tanking', 'healing', 'gold'] as const
-const ROLE_LABELS: Record<string, PlannerNarrativeLine> = {
-  dps: { zh: '输出', en: 'damage' },
-  support: { zh: '辅助', en: 'support' },
-  tanking: { zh: '前排', en: 'frontline' },
-  healing: { zh: '治疗', en: 'healing' },
-  gold: { zh: '金币增益', en: 'gold gain' },
-}
+const PLANNER_TOP_K = 3
+const SCORE_ZERO: GameNumberValue = new Decimal(0)
 
 function sortSlots(scenario: ResolvedPlannerScenarioModel): string[] {
   return [...scenario.slotTopology]
@@ -33,36 +31,8 @@ function sortSlots(scenario: ResolvedPlannerScenarioModel): string[] {
     .map((slot) => slot.slotId)
 }
 
-function getRolePriorityScore(hero: ResolvedPlannerHeroModel): number {
-  const roles = new Set(hero.roles.map((role) => role.toLowerCase()))
-
-  if (roles.has('dps')) return 5
-  if (roles.has('support')) return 4
-  if (roles.has('tanking')) return 3
-  if (roles.has('healing')) return 2
-  if (roles.has('gold')) return 1
-  return 0
-}
-
-function getChampionRoleSummary(hero: ResolvedPlannerHeroModel): PlannerNarrativeLine {
-  const normalizedRoles = [...new Set(hero.roles.map((role) => role.toLowerCase()))]
-    .sort((left, right) => ROLE_PRIORITY.indexOf(left as typeof ROLE_PRIORITY[number]) - ROLE_PRIORITY.indexOf(right as typeof ROLE_PRIORITY[number]))
-    .slice(0, 2)
-  const labels = normalizedRoles.map((role) => ROLE_LABELS[role] ?? { zh: role, en: role })
-
-  if (labels.length === 0) {
-    return { zh: '通用位', en: 'general role' }
-  }
-
-  return {
-    zh: labels.map((label) => label.zh).join(' / '),
-    en: labels.map((label) => label.en).join(' / '),
-  }
-}
-
-function formatScore(score: number): string {
-  const parsed = parseGameNumber(score)
-  return parsed.ok ? formatGameNumber(parsed.value) : score.toString()
+function formatScore(score: GameNumberValue): string {
+  return formatGameNumber(score)
 }
 
 function formatLegalityViolation(violation: LegalityViolation): string {
@@ -108,22 +78,15 @@ function buildPlannerExplanations(
   placementEntries: PlannerPlacementEntry[],
   heroById: Map<string, ResolvedPlannerHeroModel>,
   carryHeroId: string | null,
+  carryDps: GameNumberValue,
   rawExplanations: string[],
 ): PlannerNarrativeLine[] {
-  const orderedChampions = placementEntries
-    .map((entry) => heroById.get(entry.heroId))
-    .filter((hero): hero is ResolvedPlannerHeroModel => Boolean(hero))
-    .sort((left, right) => (
-      getRolePriorityScore(right) - getRolePriorityScore(left)
-      || left.seat - right.seat
-      || left.heroId.localeCompare(right.heroId)
-    ))
-
   const leadChampion = carryHeroId
-    ? heroById.get(carryHeroId) ?? orderedChampions[0] ?? null
-    : orderedChampions[0] ?? null
-  const supportChampions = orderedChampions
-    .filter((hero) => hero.heroId !== leadChampion?.heroId)
+    ? heroById.get(carryHeroId) ?? null
+    : null
+  const supportChampions = placementEntries
+    .map((entry) => heroById.get(entry.heroId))
+    .filter((hero): hero is ResolvedPlannerHeroModel => Boolean(hero) && hero!.heroId !== carryHeroId)
     .slice(0, 4)
     .map((hero) => hero.name.display)
 
@@ -139,20 +102,19 @@ function buildPlannerExplanations(
   ]
 
   if (leadChampion) {
-    const roleSummary = getChampionRoleSummary(leadChampion)
     const supportSummaryZh = supportChampions.length > 0 ? supportChampions.join('、') : '其余已拥有英雄'
     const supportSummaryEn = supportChampions.length > 0 ? supportChampions.join(', ') : 'the remaining owned champions'
 
     explanations.push({
-      zh: `核心位优先保留 ${leadChampion.name.display}（Seat ${leadChampion.seat}，${roleSummary.zh}），再用 ${supportSummaryZh} 维持基线增益。`,
-      en: `The lineup anchors on ${leadChampion.name.display} (Seat ${leadChampion.seat}, ${roleSummary.en}), then uses ${supportSummaryEn} to keep the baseline buffs stable.`,
+      zh: `核心输出位 ${leadChampion.name.display}（Seat ${leadChampion.seat}）的 carryDps 约 ${formatGameNumber(carryDps)}，再用 ${supportSummaryZh} 提供加成。`,
+      en: `Carry ${leadChampion.name.display} (Seat ${leadChampion.seat}) reaches ~${formatGameNumber(carryDps)} carryDps, with ${supportSummaryEn} providing buffs.`,
     })
   }
 
   if (hasAdjacentSignal || hasHeroSignal) {
     explanations.push({
-      zh: '这条推荐已经开始计入相邻增益或英雄自带倍率，不再只是简单按职业标签排队。',
-      en: 'This recommendation already accounts for adjacency buffs or hero-specific multipliers instead of only sorting by broad role tags.',
+      zh: '这条推荐已经计入相邻增益与英雄自带倍率，carryDps 由 baseDamage × levelCurve × 加成聚合得出。',
+      en: 'This recommendation accounts for adjacency buffs and hero-specific multipliers; carryDps = baseDamage × levelCurve × aggregated buffs.',
     })
   } else if (hasTagSignal) {
     explanations.push({
@@ -161,8 +123,8 @@ function buildPlannerExplanations(
     })
   } else {
     explanations.push({
-      zh: `当前版本更偏向稳定的职业权重组合；${scenario.scenarioWarnings.length > 0 ? '场景限制仍需你手动复核。' : '后续再逐步补进技能联动和场景机制。'}`,
-      en: `This version still prefers stable role-weight combinations; ${scenario.scenarioWarnings.length > 0 ? 'scenario restrictions still need manual review.' : 'skill synergies and scenario mechanics will be layered in later.'}`,
+      zh: `当前版本按 carryDps 排序候选；${scenario.scenarioWarnings.length > 0 ? '场景限制仍需你手动复核。' : '后续再逐步补进技能联动和场景机制。'}`,
+      en: `This version ranks candidates by carryDps; ${scenario.scenarioWarnings.length > 0 ? 'scenario restrictions still need manual review.' : 'skill synergies and scenario mechanics will be layered in later.'}`,
     })
   }
 
@@ -219,6 +181,11 @@ export function buildPlannerRecommendation(
 
   const heroById = new Map(heroes.map((hero) => [hero.heroId, hero]))
   const heroSeats = Object.fromEntries(heroes.map((hero) => [hero.heroId, hero.seat]))
+  const heroLevels = new Map(
+    profileSnapshot.ownedHeroes
+      .filter((owned) => candidateIds.has(owned.heroId))
+      .map((owned) => [owned.heroId, owned.level]),
+  )
   const scenarioVariantRules: VariantRuleResult = {
     constraints: [
       ...(scenario.bannedHeroes.length > 0 ? [{ kind: 'banList' as const, heroIds: scenario.bannedHeroes }] : []),
@@ -242,19 +209,22 @@ export function buildPlannerRecommendation(
 
       if (!legality.legal) {
         return {
-          score: 0,
+          score: SCORE_ZERO,
           warnings: legality.violations.map(formatLegalityViolation),
           explanations: ['非法阵型已被过滤。'],
           carryHeroId: null,
+          objective: { value: SCORE_ZERO, breakdown: [] },
         }
       }
 
-      return scoreFormation({ placements, heroesById: heroById, scenario })
+      return scoreFormation({ placements, heroesById: heroById, scenario, heroLevels })
     },
   })
 
-  const top = results.find((result) => {
-    if (result.score <= 0) {
+  // 2.5: Top K（results 已按 carryDps 降序）；取首个合法结果作为主推荐。
+  const topK = results.slice(0, PLANNER_TOP_K)
+  const top = topK.find((result) => {
+    if (compareGameNumbers(result.score, SCORE_ZERO) <= 0) {
       return false
     }
 
@@ -287,6 +257,7 @@ export function buildPlannerRecommendation(
         placementEntries,
         heroById,
         top.carryHeroId,
+        top.score,
         top.explanations,
       ),
       warnings: [...new Set([...top.warnings, ...buildPlannerWarnings(scenario, profileSnapshot)])],

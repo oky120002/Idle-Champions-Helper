@@ -1,5 +1,18 @@
 import { describe, expect, it } from 'vitest'
+import Decimal from 'break_eternity.js'
 import { beamSearch } from '../../../../src/domain/planner/beamSearchRanking'
+import type { ScoringResult } from '../../../../src/domain/planner/steadyStateScoring'
+
+function makeResult(score: number, carryHeroId: string | null = null): ScoringResult {
+  const value = new Decimal(score)
+  return {
+    score: value,
+    warnings: [],
+    explanations: [],
+    carryHeroId,
+    objective: { value, breakdown: [] },
+  }
+}
 
 describe('beam search ranking', () => {
   const heroes = [
@@ -29,12 +42,12 @@ describe('beam search ranking', () => {
           if (heroId === 'bruenor') score *= 2.0
           if (heroId === 'jarlaxle') score *= 3.0
         }
-        return { score, warnings: [], explanations: [], carryHeroId: null }
+        return makeResult(score)
       },
     })
 
     expect(results.length).toBeGreaterThan(0)
-    expect(results[0]!.score).toBeGreaterThan(0)
+    expect(results[0]!.score.toNumber()).toBeGreaterThan(0)
   })
 
   it('beam width 限制候选扩展', () => {
@@ -43,26 +56,25 @@ describe('beam search ranking', () => {
       slots,
       adjacency,
       beamWidth: 1,
-      scoreFormation: (placements: Record<string, string>) => {
-        return { score: Object.keys(placements).length, warnings: [], explanations: [], carryHeroId: null }
-      },
+      scoreFormation: (placements: Record<string, string>) => makeResult(Object.keys(placements).length),
     })
 
-    // With beamWidth=1, should still produce results
     expect(results.length).toBeGreaterThan(0)
   })
 
   it('top results 包含 score、placements、explanations 和 warnings', () => {
+    const value = new Decimal(5)
     const results = beamSearch({
       heroes,
       slots,
       adjacency,
       beamWidth: 2,
       scoreFormation: () => ({
-        score: 5.0,
+        score: value,
         warnings: ['test warning'],
         explanations: ['test explanation'],
         carryHeroId: 'jarlaxle',
+        objective: { value, breakdown: [] },
       }),
     })
 

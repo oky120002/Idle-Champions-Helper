@@ -1,4 +1,6 @@
 import type { ScoringResult } from './steadyStateScoring'
+import type { GameNumberValue } from '../simulator/gameNumber'
+import { compareGameNumbers } from '../simulator/gameNumberArithmetic'
 
 export interface BeamSearchInput {
   heroes: Array<{ heroId: string; seat: number }>
@@ -9,7 +11,7 @@ export interface BeamSearchInput {
 }
 
 export interface BeamSearchResult {
-  score: number
+  score: GameNumberValue
   placements: Record<string, string>
   explanations: string[]
   warnings: string[]
@@ -51,7 +53,7 @@ export function beamSearch(input: BeamSearchInput): BeamSearchResult[] {
         candidate: c,
         result: scoreFormation(c.placements),
       }))
-      .sort((a, b) => b.result.score - a.result.score)
+      .sort((a, b) => compareGameNumbers(b.result.score, a.result.score))
 
     candidates = scored.slice(0, beamWidth).map((s) => s.candidate)
   }
@@ -68,5 +70,5 @@ export function beamSearch(input: BeamSearchInput): BeamSearchResult[] {
         carryHeroId: result.carryHeroId,
       }
     })
-    .sort((a, b) => b.score - a.score)
+    .sort((a, b) => compareGameNumbers(b.score, a.score))
 }

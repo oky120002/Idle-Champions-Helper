@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { scoreFormation } from '../../../../src/domain/planner/steadyStateScoring'
+import { compareGameNumbers } from '../../../../src/domain/simulator/gameNumberArithmetic'
 import type { OfficialPlannerHeroModel, OfficialPlannerScenarioModel } from '../../../../src/domain/planner/plannerModel'
 
 function createHero(heroId: string, overrides: Partial<OfficialPlannerHeroModel> = {}): OfficialPlannerHeroModel {
@@ -80,7 +81,7 @@ describe('steady state scoring', () => {
       scenario,
     })
 
-    expect(adjacentSupportScore.score).toBeGreaterThan(nonAdjacentScore.score)
+    expect(compareGameNumbers(adjacentSupportScore.score, nonAdjacentScore.score)).toBeGreaterThan(0)
   })
 
   it('global support 不受 adjacency 影响', () => {
@@ -89,6 +90,7 @@ describe('steady state scoring', () => {
       roles: ['dps'],
       isCarryViable: true,
       heuristicRoleMultiplier: 2,
+      baseDamage: 100,
     })
     const support = createHero('global-buffer', {
       seat: 2,
@@ -113,7 +115,7 @@ describe('steady state scoring', () => {
       scenario,
     })
 
-    expect(nearScore.score).toBe(farScore.score)
+    expect(compareGameNumbers(nearScore.score, farScore.score)).toBe(0)
     expect(nearScore.carryHeroId).toBe('carry')
   })
 
@@ -144,6 +146,7 @@ describe('steady state scoring', () => {
 
     expect(result.warnings.length).toBeGreaterThan(0)
     expect(result.warnings[0]).toContain('缺少 carry 目标标签')
-    expect(result.score).toBe(2)
+    // carryDps = baseDamage(1) × levelCurve(1, 1.06) × aggregate(1，tagged buff 未计分)
+    expect(result.score.toNumber()).toBeCloseTo(1.06, 5)
   })
 })

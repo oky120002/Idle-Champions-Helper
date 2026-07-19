@@ -6,6 +6,8 @@ import type {
   ResolvedPlannerScenarioModel,
 } from './plannerModel'
 import { matchesPlannerHeroQualifier } from './plannerModel'
+import type { HeroAbilityDimension } from '../abilities/abilityModel'
+import { DIMENSION_BY_KIND } from '../abilities/abilityModel'
 
 export interface PlacementFitScorePart {
   signalKind: PlannerEffectSignal['kind']
@@ -52,17 +54,28 @@ export interface PlacementFitScorePart {
   source: PlannerSignalSource
 }
 
-export interface PlacementFit {
+export interface AggregatedPool {
+  dimension: HeroAbilityDimension
+  multipliers: number[]
+  poolMultiplier: number
+}
+
+export interface PoolAggregateResult {
   heroId: string
   slotId: string
   carryHeroId: string
   carrySlotId: string
+  pools: AggregatedPool[]
+  totalMultiplier: number
   fitScore: number
   scoreBreakdown: PlacementFitScorePart[]
   reasonCodes: string[]
   warnings: string[]
   fallbackSources: PlannerSignalSource[]
 }
+
+/** 旧名兼容别名；新代码用 PoolAggregateResult。 */
+export type PlacementFit = PoolAggregateResult
 
 export interface EvaluatePlacementFitInput {
   carryHero: ResolvedPlannerHeroModel
@@ -72,6 +85,8 @@ export interface EvaluatePlacementFitInput {
   scenario: ResolvedPlannerScenarioModel
   placements?: Record<string, string>
   heroesById?: Map<string, ResolvedPlannerHeroModel>
+  /** 按 dimension 过滤；不传时聚合全部 damage 维度 signal。 */
+  dimension?: HeroAbilityDimension
 }
 
 function effectValueToMultiplier(value: number): number {
@@ -641,14 +656,24 @@ function collectSignals(input: EvaluatePlacementFitInput): PlannerEffectSignal[]
   return input.supportHero.supportSignals
 }
 
-export function evaluatePlacementFit(input: EvaluatePlacementFitInput): PlacementFit {
+export function evaluatePlacementFit(input: EvaluatePlacementFitInput): PoolAggregateResult {
   const scoreBreakdown: PlacementFitScorePart[] = []
   const reasonCodes: string[] = []
   const warnings: string[] = []
   const fallbackSources = new Set<PlannerSignalSource>()
+  const poolsByDimension = new Map<HeroAbilityDimension, AggregatedPool>()
   let fitScore = 1
 
+  const dimensionFilter = input.dimension ?? null
+
   for (const signal of collectSignals(input)) {
+    if (dimensionFilter) {
+      const signalDimension = DIMENSION_BY_KIND[signal.kind]
+      if (signalDimension !== dimensionFilter) {
+        continue
+      }
+    }
+
     if (!matchesPositionQualifier(input, signal)) {
       scoreBreakdown.push({
         signalKind: signal.kind,
@@ -714,6 +739,15 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): Placemen
     const reasonCode = resolveActiveReasonCode(signal, relation)
 
     fitScore *= multiplier
+    const signalDimension = DIMENSION_BY_KIND[signal.kind]
+    const pool = poolsByDimension.get(signalDimension) ?? {
+      dimension: signalDimension,
+      multipliers: [],
+      poolMultiplier: 1,
+    }
+    pool.multipliers.push(multiplier)
+    pool.poolMultiplier *= multiplier
+    poolsByDimension.set(signalDimension, pool)
     scoreBreakdown.push({
       signalKind: signal.kind,
       rawEffect: signal.rawEffect,
@@ -734,6 +768,8 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): Placemen
     slotId: input.supportSlotId,
     carryHeroId: input.carryHero.heroId,
     carrySlotId: input.carrySlotId,
+    pools: [...poolsByDimension.values()],
+    totalMultiplier: fitScore,
     fitScore,
     scoreBreakdown,
     reasonCodes,
