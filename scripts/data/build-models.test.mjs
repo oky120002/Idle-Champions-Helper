@@ -510,7 +510,12 @@ test('buildModels 产出 hero abilities / scenarios / semantic overrides', async
     { slotId: 's1', row: 1, column: 1, x: 40, y: 10, adjacentSlotIds: ['s2'] },
     { slotId: 's2', row: 1, column: 2, x: 20, y: 10, adjacentSlotIds: ['s1'] },
   ])
-  assert.equal(scenarioModels.items[0].scenarioWarnings.length, 1)
+  // 9.1: slot_escort mechanic 锁定前排槽位（column 降序首槽 = s2）。
+  assert.deepEqual(scenarioModels.items[0].lockedSlots, ['s2'])
+  assert.ok(
+    scenarioModels.items[0].scenarioWarnings.some((w) => w.includes('护送任务')),
+    `expected escort warning, got: ${JSON.stringify(scenarioModels.items[0].scenarioWarnings)}`,
+  )
   assert.deepEqual(semanticOverrides.items, [
     {
       heroId: '1',

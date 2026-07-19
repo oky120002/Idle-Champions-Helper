@@ -121,8 +121,45 @@ function findFormationForVariant(formations, variant) {
   }) ?? null
 }
 
+function projectMechanicsToScenario(variant, slotTopology) {
+  const mechanics = new Set(variant.mechanics ?? [])
+  const lockedSlots = []
+  const mechanicWarnings = []
+
+  const hasEscort = mechanics.has('slot_escort')
+    || mechanics.has('slot_escort_by_area')
+    || mechanics.has('slot_escort_wandering')
+
+  if (hasEscort) {
+    // ponytail: 官方数据未标注护送占用的具体槽位；按 column 降序锁前排首槽。
+    // 精确槽位需官方 formation 元数据或人工校准后替换此启发式。
+    const frontSlot = [...slotTopology].sort((a, b) => b.column - a.column || a.row - b.row)[0]
+    if (frontSlot) {
+      lockedSlots.push(frontSlot.slotId)
+    }
+    mechanicWarnings.push('当前场景含护送任务，前排一个槽位预留给护送目标，不参与英雄占位。')
+  }
+
+  if (mechanics.has('time_out') || mechanics.has('click_damage_area_limit')) {
+    mechanicWarnings.push('当前场景含计时或点击限制，攻速与持续输出价值提升。')
+  }
+
+  return { lockedSlots, mechanicWarnings }
+}
+
 function buildOfficialScenarioModel(variant, formations) {
   const formation = findFormationForVariant(formations, variant)
+  const slotTopology = formation
+    ? formation.slots.map((slot) => ({
+        slotId: slot.id,
+        row: slot.row,
+        column: slot.column,
+        x: slot.x,
+        y: slot.y,
+        adjacentSlotIds: slot.adjacentSlotIds ?? [],
+      }))
+    : []
+  const { lockedSlots, mechanicWarnings } = projectMechanicsToScenario(variant, slotTopology)
 
   return {
     variantId: variant.id,
@@ -130,22 +167,14 @@ function buildOfficialScenarioModel(variant, formations) {
     name: variant.name,
     formationLayoutId: formation?.id ?? null,
     objectiveArea: variant.objectiveArea ?? null,
-    slotTopology: formation
-      ? formation.slots.map((slot) => ({
-          slotId: slot.id,
-          row: slot.row,
-          column: slot.column,
-          x: slot.x,
-          y: slot.y,
-          adjacentSlotIds: slot.adjacentSlotIds ?? [],
-        }))
-      : [],
+    slotTopology,
     forcedHeroes: [],
     bannedHeroes: [],
-    lockedSlots: [],
+    lockedSlots,
     scenarioWarnings: [
-      ...(variant.restrictions.length > 0 || variant.mechanics.length > 0
-        ? ['当前推荐尚未解析场景限制与机制，只按已拥有英雄、seat 合法性和阵型槽位计算。']
+      ...mechanicWarnings,
+      ...(variant.restrictions.length > 0
+        ? ['当前场景 restrictions 为自由文本，尚未自动解析，请人工复核规则限制。']
         : []),
       ...(formation ? [] : ['当前场景没有匹配的阵型布局。']),
     ],
