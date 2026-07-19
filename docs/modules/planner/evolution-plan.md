@@ -151,7 +151,7 @@ hero_final_dps = base_dps
 **已确认改动面**：1.4 caller 5 处；1.5 caller 1 处；1.6 类型名替换影响 placementFit(~12)/steadyStateScoring/recommendationTypes/recommendationEngine；candidatePool/hypotheticalBaseline 不改；1.7 含 plannerOverridesStore；1.10 死代码零生产 caller。
 
 ### 1.0 基线快照
-- 记录 `shasum planner-{heroes,scenarios}.json` + fixture 推荐输出 + 测试通过数（332）。验证全绿。顺手建 `CLAUDE.md` 符号链接 + 修 TODO.md。
+- 记录 `shasum planner-{heroes,scenarios}.json` + fixture 推荐输出 + 测试通过数（332）。验证全绿。修 TODO.md。
 
 ### 1.1 建 abilities 目录 + README 骨架
 - 新建 `src/domain/abilities/README.md`（定位/入口/不变量/边界/依赖方向/函数名取舍）。
@@ -684,7 +684,6 @@ hero_final_dps = base_dps
 
 ## 后置
 
-- 建 `CLAUDE.md` 符号链接（1.0 顺手）。
 - 修 `TODO.md` 2 个 pre-existing 测试（1.0 顺手）。
 - 完成后总结"三层架构 + dimension 扩展位 + objective 真实目标量 + 全缺口阶段化"经验到仓库经验教训文档。
 
