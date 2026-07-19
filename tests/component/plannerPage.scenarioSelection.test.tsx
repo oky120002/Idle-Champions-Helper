@@ -123,8 +123,10 @@ describe('PlannerScenarioSelection', () => {
     await user.click(screen.getByRole('button', { name: /冰原推进/ }))
 
     // Formation summary should show objective area in the detail panel
+    // UI 渲染为「目标区」标签 + 「{area} 区完成」值（201a47b3 重构后格式）
     const detailPanel = screen.getByLabelText('选中场景详情')
-    expect(within(detailPanel).getByText(/目标区域：175/)).toBeInTheDocument()
+    expect(within(detailPanel).getByText('目标区')).toBeInTheDocument()
+    expect(within(detailPanel).getByText(/175 区完成/)).toBeInTheDocument()
 
     // Restrictions should be visible in the detail panel
     expect(within(detailPanel).getByText('前方有龙类敌人')).toBeInTheDocument()
