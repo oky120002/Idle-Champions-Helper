@@ -83,7 +83,7 @@ describe('placement fit', () => {
       scenario,
     })
 
-    expect(fit.fitScore).toBe(2)
+    expect(fit.totalMultiplier).toBe(2)
     expect(fit.scoreBreakdown[0]?.reasonCode).toBe('global-match')
   })
 
@@ -109,8 +109,8 @@ describe('placement fit', () => {
       scenario,
     })
 
-    expect(activeFit.fitScore).toBe(2)
-    expect(inactiveFit.fitScore).toBe(1)
+    expect(activeFit.totalMultiplier).toBe(2)
+    expect(inactiveFit.totalMultiplier).toBe(1)
     expect(inactiveFit.scoreBreakdown[0]?.reasonCode).toBe('position-mismatch')
   })
 
@@ -142,9 +142,9 @@ describe('placement fit', () => {
       scenario,
     })
 
-    expect(activeFit.fitScore).toBe(2)
+    expect(activeFit.totalMultiplier).toBe(2)
     expect(activeFit.scoreBreakdown[0]?.reasonCode).toBe('non-adjacent-match')
-    expect(inactiveFit.fitScore).toBe(1)
+    expect(inactiveFit.totalMultiplier).toBe(1)
     expect(inactiveFit.scoreBreakdown[0]?.reasonCode).toBe('position-mismatch')
   })
 
@@ -176,9 +176,9 @@ describe('placement fit', () => {
       scenario,
     })
 
-    expect(activeFit.fitScore).toBe(2)
+    expect(activeFit.totalMultiplier).toBe(2)
     expect(activeFit.scoreBreakdown[0]?.reasonCode).toBe('same-column-match')
-    expect(inactiveFit.fitScore).toBe(1)
+    expect(inactiveFit.totalMultiplier).toBe(1)
     expect(inactiveFit.scoreBreakdown[0]?.reasonCode).toBe('position-mismatch')
   })
 
@@ -228,11 +228,11 @@ describe('placement fit', () => {
       scenario,
     })
 
-    expect(aheadFit.fitScore).toBe(1.5)
+    expect(aheadFit.totalMultiplier).toBe(1.5)
     expect(aheadFit.scoreBreakdown[0]?.reasonCode).toBe('ahead-column-match')
-    expect(behindFit.fitScore).toBe(1.5)
+    expect(behindFit.totalMultiplier).toBe(1.5)
     expect(behindFit.scoreBreakdown[0]?.reasonCode).toBe('behind-column-match')
-    expect(mismatchFit.fitScore).toBe(1)
+    expect(mismatchFit.totalMultiplier).toBe(1)
   })
 
   it('two-column 与 behind-family 关系支持范围命中', () => {
@@ -622,7 +622,7 @@ describe('placement fit', () => {
       scenario,
     })
 
-    expect(fit.fitScore).toBe(2.5)
+    expect(fit.totalMultiplier).toBe(2.5)
     expect(fit.scoreBreakdown[0]?.reasonCode).toBe('carry-self-match')
   })
 
@@ -645,7 +645,7 @@ describe('placement fit', () => {
       scenario,
     })
 
-    expect(fit.fitScore).toBe(1.5)
+    expect(fit.totalMultiplier).toBe(1.5)
     expect(fit.scoreBreakdown[0]?.reasonCode).toBe('tag-match')
   })
 
@@ -662,7 +662,7 @@ describe('placement fit', () => {
       scenario,
     })
 
-    expect(fit.fitScore).toBe(1)
+    expect(fit.totalMultiplier).toBe(1)
     expect(fit.warnings[0]).toContain('缺少 carry 目标标签')
     expect(fit.scoreBreakdown[0]?.reasonCode).toBe('missing-target-qualifier')
   })
@@ -700,7 +700,7 @@ describe('placement fit', () => {
       heroesById,
     })
 
-    expect(fit.fitScore).toBeCloseTo(1.6)
+    expect(fit.totalMultiplier).toBeCloseTo(1.6)
   })
 
   it('multiplicative 计数效果按 count 乘方累乘', () => {
@@ -736,7 +736,7 @@ describe('placement fit', () => {
       heroesById,
     })
 
-    expect(fit.fitScore).toBeCloseTo(1.728)
+    expect(fit.totalMultiplier).toBeCloseTo(1.728)
   })
 
   it('position-scoped additive 计数效果按站位子集线性累加', () => {
@@ -769,7 +769,7 @@ describe('placement fit', () => {
       heroesById,
     })
 
-    expect(fit.fitScore).toBe(3)
+    expect(fit.totalMultiplier).toBe(3)
   })
 
   it('per_col_behind 按 carry 落后列数乘方累乘', () => {
@@ -793,7 +793,7 @@ describe('placement fit', () => {
       scenario: extendedScenario,
     })
 
-    expect(fit.fitScore).toBe(8)
+    expect(fit.totalMultiplier).toBe(8)
   })
 
   it('buff_upgrade 会按基础 buff 幅度折算增量收益', () => {
@@ -822,7 +822,7 @@ describe('placement fit', () => {
       scenario,
     })
 
-    expect(fit.fitScore).toBeCloseTo(1.4, 6)
+    expect(fit.totalMultiplier).toBeCloseTo(1.4, 6)
     expect(fit.scoreBreakdown[0]?.multiplier).toBeCloseTo(1.4, 6)
   })
 
@@ -883,7 +883,7 @@ describe('placement fit', () => {
       ]),
     })
 
-    expect(fit.fitScore).toBeCloseTo(9, 6)
+    expect(fit.totalMultiplier).toBeCloseTo(9, 6)
     expect(fit.scoreBreakdown[0]?.multiplier).toBeCloseTo(9, 6)
   })
 
@@ -915,7 +915,7 @@ describe('placement fit', () => {
       scenario: extendedScenario,
     })
 
-    expect(fit.fitScore).toBeCloseTo(125, 6)
+    expect(fit.totalMultiplier).toBeCloseTo(125, 6)
     expect(fit.scoreBreakdown[0]?.multiplier).toBeCloseTo(125, 6)
   })
 
@@ -938,7 +938,7 @@ describe('placement fit', () => {
       scenario,
     })
 
-    expect(fit.fitScore).toBe(1)
+    expect(fit.totalMultiplier).toBe(1)
     expect(fit.warnings[0]).toContain('手动触发')
   })
 
@@ -965,7 +965,7 @@ describe('placement fit', () => {
       scenario,
     })
 
-    expect(fit.fitScore).toBe(1.4)
+    expect(fit.totalMultiplier).toBe(1.4)
     expect(fit.scoreBreakdown[0]?.reasonCode).toBe('stat-match')
   })
 
@@ -1001,7 +1001,7 @@ describe('placement fit', () => {
       heroesById,
     })
 
-    expect(fit.fitScore).toBeCloseTo(1.331)
+    expect(fit.totalMultiplier).toBeCloseTo(1.331)
   })
 
   it('per_hero_attribute 支持简单 stat 表达式计数', () => {
@@ -1037,7 +1037,7 @@ describe('placement fit', () => {
       heroesById,
     })
 
-    expect(fit.fitScore).toBeCloseTo(1.3)
+    expect(fit.totalMultiplier).toBeCloseTo(1.3)
   })
 
   it('per_hero_attribute 支持基础攻击伤害类型计数', () => {
@@ -1073,7 +1073,63 @@ describe('placement fit', () => {
       heroesById,
     })
 
-    expect(fit.fitScore).toBeCloseTo(1.21)
+    expect(fit.totalMultiplier).toBeCloseTo(1.21)
+  })
+
+  it('同 pool 内多个 additive signal 按百分比相加（非累乘）', () => {
+    const fit = evaluatePlacementFit({
+      carryHero: createHero('carry'),
+      carrySlotId: 's2',
+      supportHero: createHero('support', {
+        supportSignals: [
+          { kind: 'globalDpsMultiplier', value: 100, rawEffect: 'global_dps_mult_a,100', source: 'official-parsed' },
+          { kind: 'globalDpsMultiplier', value: 100, rawEffect: 'global_dps_mult_b,100', source: 'official-parsed' },
+        ],
+      }),
+      supportSlotId: 's1',
+      scenario,
+    })
+
+    // 同属 damage:global pool，additive 百分比相加：1 + (100+100)/100 = 3（非 (1+1)*(1+1)=4）
+    expect(fit.totalMultiplier).toBe(3)
+  })
+
+  it('pool 间 global×hero 相乘，pool 内 additive 相加', () => {
+    const fit = evaluatePlacementFit({
+      carryHero: createHero('carry'),
+      carrySlotId: 's2',
+      supportHero: createHero('support', {
+        supportSignals: [
+          { kind: 'globalDpsMultiplier', value: 100, rawEffect: 'global_dps_mult_a,100', source: 'official-parsed' },
+          { kind: 'globalDpsMultiplier', value: 100, rawEffect: 'global_dps_mult_b,100', source: 'official-parsed' },
+          { kind: 'adjacentBuff', value: 100, rawEffect: 'adjacent_buff,100', source: 'official-parsed' },
+        ],
+      }),
+      supportSlotId: 's1',
+      scenario,
+    })
+
+    // global pool: 1+(100+100)/100=3；hero pool(adjacentBuff): 1+100/100=2；pool 间乘法 = 6
+    // 旧纯累乘为 2*2*2=8；lumped Σ 为 1+300/100=4——本断言区分两者
+    expect(fit.totalMultiplier).toBe(6)
+  })
+
+  it('multiplicative signal 在 pool 内相乘，与 additive pool 间相乘', () => {
+    const fit = evaluatePlacementFit({
+      carryHero: createHero('carry'),
+      carrySlotId: 's2',
+      supportHero: createHero('support', {
+        supportSignals: [
+          { kind: 'globalDpsMultiplier', value: 50, rawEffect: 'global_dps_mult_a,50', source: 'official-parsed' },
+          { kind: 'adjacentBuff', value: 200, rawEffect: 'adjacent_buff,200', source: 'official-parsed', amountFunc: 'mult' },
+        ],
+      }),
+      supportSlotId: 's1',
+      scenario,
+    })
+
+    // global pool add: 1+50/100=1.5；hero pool mult: (1+200/100)=3；间乘 = 4.5
+    expect(fit.totalMultiplier).toBeCloseTo(4.5, 6)
   })
 
   it('per_upgrade_targets 根据命中的目标数量累乘', () => {
@@ -1109,7 +1165,7 @@ describe('placement fit', () => {
       heroesById,
     })
 
-    expect(fit.fitScore).toBe(4)
+    expect(fit.totalMultiplier).toBe(4)
     expect(fit.scoreBreakdown[0]?.reasonCode).toBe('non-adjacent-match')
   })
 })

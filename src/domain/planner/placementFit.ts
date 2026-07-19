@@ -6,8 +6,8 @@ import type {
   ResolvedPlannerScenarioModel,
 } from './plannerModel'
 import { matchesPlannerHeroQualifier } from './plannerModel'
-import type { HeroAbilityDimension } from '../abilities/abilityModel'
-import { DIMENSION_BY_KIND } from '../abilities/abilityModel'
+import type { HeroAbilityDimension, HeroAbilityPoolScope } from '../abilities/abilityModel'
+import { DIMENSION_BY_KIND, POOL_SCOPE_BY_KIND } from '../abilities/abilityModel'
 
 export interface PlacementFitScorePart {
   signalKind: PlannerEffectSignal['kind']
@@ -56,7 +56,12 @@ export interface PlacementFitScorePart {
 
 export interface AggregatedPool {
   dimension: HeroAbilityDimension
-  multipliers: number[]
+  scope: HeroAbilityPoolScope
+  /** pool 内 additive 百分比之和（add/默认 amountFunc 的 signal 贡献）。 */
+  addPercent: number
+  /** pool 内 multiplicative 因子之积（amountFunc='mult' 的 signal 贡献）。 */
+  multFactor: number
+  /** (1 + addPercent/100) × multFactor。 */
   poolMultiplier: number
 }
 
@@ -66,16 +71,11 @@ export interface PoolAggregateResult {
   carryHeroId: string
   carrySlotId: string
   pools: AggregatedPool[]
+  /** Π(pools.poolMultiplier)；pool 间乘法。 */
   totalMultiplier: number
-  fitScore: number
   scoreBreakdown: PlacementFitScorePart[]
-  reasonCodes: string[]
   warnings: string[]
-  fallbackSources: PlannerSignalSource[]
 }
-
-/** 旧名兼容别名；新代码用 PoolAggregateResult。 */
-export type PlacementFit = PoolAggregateResult
 
 export interface EvaluatePlacementFitInput {
   carryHero: ResolvedPlannerHeroModel
@@ -658,11 +658,9 @@ function collectSignals(input: EvaluatePlacementFitInput): PlannerEffectSignal[]
 
 export function evaluatePlacementFit(input: EvaluatePlacementFitInput): PoolAggregateResult {
   const scoreBreakdown: PlacementFitScorePart[] = []
-  const reasonCodes: string[] = []
   const warnings: string[] = []
-  const fallbackSources = new Set<PlannerSignalSource>()
-  const poolsByDimension = new Map<HeroAbilityDimension, AggregatedPool>()
-  let fitScore = 1
+  // pool 聚合：key = `${dimension}:${scope}`；同一 pool 内 additive 累加百分比、multiplicative 累乘因子；pool 间乘法。
+  const poolsByKey = new Map<string, AggregatedPool>()
 
   const dimensionFilter = input.dimension ?? null
 
@@ -683,7 +681,6 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): PoolAggr
         reasonCode: 'position-mismatch',
         source: signal.source,
       })
-      reasonCodes.push('position-mismatch')
       continue
     }
 
@@ -701,7 +698,6 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): PoolAggr
         reasonCode: 'missing-target-qualifier',
         source: signal.source,
       })
-      reasonCodes.push('missing-target-qualifier')
       continue
     }
 
@@ -715,7 +711,6 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): PoolAggr
         reasonCode,
         source: signal.source,
       })
-      reasonCodes.push(reasonCode)
       continue
     }
 
@@ -730,24 +725,32 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): PoolAggr
         reasonCode: 'unsupported-composition',
         source: signal.source,
       })
-      reasonCodes.push('unsupported-composition')
       continue
     }
 
     const multiplier = multiplierResult.multiplier
     const relation = resolvePositionRelation(signal)
     const reasonCode = resolveActiveReasonCode(signal, relation)
+    const dimension = DIMENSION_BY_KIND[signal.kind]
+    const scope = POOL_SCOPE_BY_KIND[signal.kind]
+    const poolKey = `${dimension}:${scope}`
 
-    fitScore *= multiplier
-    const signalDimension = DIMENSION_BY_KIND[signal.kind]
-    const pool = poolsByDimension.get(signalDimension) ?? {
-      dimension: signalDimension,
-      multipliers: [],
+    const pool = poolsByKey.get(poolKey) ?? {
+      dimension,
+      scope,
+      addPercent: 0,
+      multFactor: 1,
       poolMultiplier: 1,
     }
-    pool.multipliers.push(multiplier)
-    pool.poolMultiplier *= multiplier
-    poolsByDimension.set(signalDimension, pool)
+    if (signal.amountFunc === 'mult') {
+      pool.multFactor *= multiplier
+    } else {
+      // add / unknown / 默认：把已折算倍率还原为百分比，同一 pool 内 additive 相加。
+      pool.addPercent += (multiplier - 1) * 100
+    }
+    pool.poolMultiplier = (1 + pool.addPercent / 100) * pool.multFactor
+    poolsByKey.set(poolKey, pool)
+
     scoreBreakdown.push({
       signalKind: signal.kind,
       rawEffect: signal.rawEffect,
@@ -756,11 +759,11 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): PoolAggr
       reasonCode,
       source: signal.source,
     })
-    reasonCodes.push(reasonCode)
+  }
 
-    if (signal.source === 'heuristic-fallback') {
-      fallbackSources.add(signal.source)
-    }
+  let totalMultiplier = 1
+  for (const pool of poolsByKey.values()) {
+    totalMultiplier *= pool.poolMultiplier
   }
 
   return {
@@ -768,12 +771,9 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): PoolAggr
     slotId: input.supportSlotId,
     carryHeroId: input.carryHero.heroId,
     carrySlotId: input.carrySlotId,
-    pools: [...poolsByDimension.values()],
-    totalMultiplier: fitScore,
-    fitScore,
+    pools: [...poolsByKey.values()],
+    totalMultiplier,
     scoreBreakdown,
-    reasonCodes,
     warnings,
-    fallbackSources: [...fallbackSources],
   }
 }
