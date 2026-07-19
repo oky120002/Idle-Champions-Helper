@@ -62,7 +62,7 @@ or stop after 40 turns
 - 阶段 10.1-10.3 + 11.1-11.4 + 12.1-12.3 + 13.1-13.4 + 14.1-14.3 全完成（[x]）。
 - 推图层数预估（BUD/carryDps vs monster_base_stats.dps_growth_rate_curve by area，结合 survival 约束）。
 - 全局加成 pool（patron-perks 解析 + blessings 若 11.1 确认可行；final_dps × global_buff_pool）。
-- restrictions 模板匹配（高频关键词中英，不 NLP）+ 手工补 planner-semantic-overrides.json。
+- restrictions 模板匹配（高频关键词中英，不 NLP）+ 手工补 semantic-overrides.json。
 - 装备/feat/传奇精细乘数接入 carryDps（替换 hypotheticalBaseline 近似）。
 - click damage 计算（BUD×click_seconds，辅助展示不纳入模拟）+ modron 辅助信息。
 - npm run test:run && typecheck && build 退出码 0。

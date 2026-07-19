@@ -39,7 +39,7 @@ scripts/private-user-data/*    本机开发私有抓取和泄漏扫描
 - `src/data/user-sync/`：官方只读 client、allowlist、同步状态、payload normalizer。
 - `src/data/user-profile-store/`：IndexedDB snapshot store 与可选 credential vault。
 - `public/data/v1/planner-*.json`：供推荐引擎直接消费的归一化 planner model。
-- `scripts/data/planner-semantic-overrides.json`：仓库跟踪的推荐语义补丁。
+- `scripts/data/semantic-overrides.json`：仓库跟踪的推荐语义补丁。
 - `src/domain/user-profile/`：`UserProfileSnapshot`、`OwnedChampionState`、`ImportedFormationSave`、装备、feat、传奇和 warning 类型。
 - `src/domain/simulator/`：`GameNumber`、最后专精基线、金币预算基线、英雄模拟 profile、effect parser、稳态评分。
 - `src/domain/planner/`：variant rule projection、候选池、假设英雄公平基线、阵型合法性、beam search 和结果模型。

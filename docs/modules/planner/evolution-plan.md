@@ -444,7 +444,7 @@ hero_final_dps = base_dps
 - **执行时机**：阶段 1 之后、2 之前。
 
 ### 9.2 championEligibility → banned + 手工 override
-- **改动**：从 championEligibility/patronEligibility 派生 banned；高价值变体用 `planner-semantic-overrides.json` 手工补 forced/banned。
+- **改动**：从 championEligibility/patronEligibility 派生 banned；高价值变体用 `semantic-overrides.json` 手工补 forced/banned。
 - **测试（先写）**：eligibility banned 生效；手工 override 生效。
 - **验证**：`npm run test:run`；planner-scenarios 部分变体 banned 非空。
 - **commit**：`feat(data): 9.2 eligibility→banned 与手工 override`。
@@ -533,7 +533,7 @@ hero_final_dps = base_dps
 - **commit**：`feat(data): 12.2 restrictions 模板匹配解析器`。
 
 ### 12.3 高频变体校验 + 手工补
-- **改动**：高频变体 rules 手工校验；低频的记录但手工补到 `planner-semantic-overrides.json`。
+- **改动**：高频变体 rules 手工校验；低频的记录但手工补到 `semantic-overrides.json`。
 - **测试**：校验通过。
 - **验证**：`npm run test:run`。
 - **commit**：`feat(data): 12.3 restrictions 校验与手工补`。
@@ -699,7 +699,7 @@ hero_final_dps = base_dps
 
 **一致性**：阶段 7/15/16 格式已统一为 ### 标题（原列表项）。
 
-**想象力**：dimension 枚举位 / scoringMode 多模式 / planner-semantic-overrides + 浏览器本地 override 均为未来扩展留位（新英雄/新 effect/用户自定义）。
+**想象力**：dimension 枚举位 / scoringMode 多模式 / semantic-overrides + 浏览器本地 override 均为未来扩展留位（新英雄/新 effect/用户自定义）。
 
 **可行性**：每步可执行；数据源未确认的有专门确认步骤（批判①）；BUD/crit 公式有 spike（2.0）+ 实测（7.5）兜底。
 

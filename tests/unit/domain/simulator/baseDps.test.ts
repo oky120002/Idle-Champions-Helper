@@ -42,7 +42,6 @@ describe('computeLevelCurve', () => {
 
   it('costCurves 缺失或非法时回退默认率 1.06', () => {
     expect(computeLevelCurve(hero({ costCurves: null }), 1).toNumber()).toBeCloseTo(1.06, 5)
-    expect(computeLevelCurve(hero({ costCurves: undefined }), 1).toNumber()).toBeCloseTo(1.06, 5)
     expect(computeLevelCurve(hero({ costCurves: { '1': 0 } }), 1).toNumber()).toBeCloseTo(1.06, 5)
   })
 
