@@ -6,6 +6,7 @@
 ## 当前演进规划（v5·执行入口）
 
 - **[`evolution-plan.md`](./evolution-plan.md)**：阵型模拟器三层架构演进规划（16 阶段全缺口 + TDD 硬约束 + 里程碑分组 + 命名修正 A1）。**这是当前执行的总规划**，自包含、可脱离上下文执行；新 session 读此文件 + 仓库代码即可按阶段执行（每阶段一个 session 避免上下文超标）。下方其他文档为历史/补充参考；命名以 v5 为准（通用符号去 Planner）。
+- **[`goal-prompts.md`](./goal-prompts.md)**：4 个里程碑 `/goal` 提示词（M1 核心引擎 / M2 数据补全 / M3 补强 / M4 UI），copy 到 Claude Code 即可按里程碑驱动执行（配合 evolution-plan.md 的 `[ ]`/`[x]` 进度追踪跨 session 衔接）。
 
 ## 先读哪篇
 
