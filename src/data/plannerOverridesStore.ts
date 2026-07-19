@@ -1,13 +1,13 @@
-import type { PlannerHeroOverridePatch } from '../domain/planner/plannerModel'
+import type { HeroAbilityOverridePatch } from '../domain/abilities/abilityModel'
 import { APP_STORE_NAMES, openAppDatabase, requestToPromise, waitForTransaction } from './localDatabase'
 
-export async function listPlannerHeroOverrides(): Promise<PlannerHeroOverridePatch[]> {
+export async function listPlannerHeroOverrides(): Promise<HeroAbilityOverridePatch[]> {
   const database = await openAppDatabase()
 
   try {
     const transaction = database.transaction(APP_STORE_NAMES.heroAbilityOverrides, 'readonly')
     const store = transaction.objectStore(APP_STORE_NAMES.heroAbilityOverrides)
-    const items = await requestToPromise(store.getAll() as IDBRequest<PlannerHeroOverridePatch[]>)
+    const items = await requestToPromise(store.getAll() as IDBRequest<HeroAbilityOverridePatch[]>)
     await waitForTransaction(transaction)
     return items
   } finally {
@@ -15,14 +15,14 @@ export async function listPlannerHeroOverrides(): Promise<PlannerHeroOverridePat
   }
 }
 
-export async function readPlannerHeroOverride(heroId: string): Promise<PlannerHeroOverridePatch | null> {
+export async function readPlannerHeroOverride(heroId: string): Promise<HeroAbilityOverridePatch | null> {
   const database = await openAppDatabase()
 
   try {
     const transaction = database.transaction(APP_STORE_NAMES.heroAbilityOverrides, 'readonly')
     const store = transaction.objectStore(APP_STORE_NAMES.heroAbilityOverrides)
     const override = await requestToPromise(
-      store.get(heroId) as IDBRequest<PlannerHeroOverridePatch | undefined>,
+      store.get(heroId) as IDBRequest<HeroAbilityOverridePatch | undefined>,
     )
     await waitForTransaction(transaction)
     return override ?? null
@@ -31,7 +31,7 @@ export async function readPlannerHeroOverride(heroId: string): Promise<PlannerHe
   }
 }
 
-export async function savePlannerHeroOverride(override: PlannerHeroOverridePatch): Promise<void> {
+export async function savePlannerHeroOverride(override: HeroAbilityOverridePatch): Promise<void> {
   const database = await openAppDatabase()
 
   try {

@@ -23,10 +23,8 @@ import {
   saveUserProfileSnapshot,
 } from '../../src/data/user-profile-store'
 import { resolveActiveNavigationItem } from '../../src/app/appNavigation'
-import type {
-  OfficialPlannerHeroModel,
-  OfficialPlannerScenarioModel,
-} from '../../src/domain/planner/plannerModel'
+import type { HeroAbilityProfile } from '../../src/domain/abilities/abilityModel'
+import type { OfficialPlannerScenarioModel } from '../../src/domain/planner/plannerModel'
 import type { Champion, DataCollection, LocalizedOption, LocalizedText, Variant } from '../../src/domain/types'
 import { createOwnedHero, createUserProfileSnapshot } from '../../src/domain/user-profile/fixtures'
 
@@ -91,7 +89,7 @@ const championsFixture: DataCollection<Champion> = {
   ],
 }
 
-const plannerHeroesFixture: DataCollection<OfficialPlannerHeroModel> = {
+const plannerHeroesFixture: DataCollection<HeroAbilityProfile> = {
   updatedAt: '2026-05-03T00:00:00.000Z',
   items: championsFixture.items.map((champion) => ({
     heroId: champion.id,

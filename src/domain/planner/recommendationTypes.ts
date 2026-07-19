@@ -1,5 +1,6 @@
 import type { ScenarioRef, Variant } from '../types'
-import type { ResolvedPlannerHeroModel, ResolvedPlannerScenarioModel } from './plannerModel'
+import type { ResolvedPlannerScenarioModel } from './plannerModel'
+import type { ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 
 export interface PlannerNarrativeLine {
   zh: string
@@ -24,7 +25,7 @@ export interface PlannerResult {
 
 export interface PlannerCollections {
   variants: Variant[]
-  plannerHeroes: ResolvedPlannerHeroModel[]
+  plannerHeroes: ResolvedHeroAbilityProfile[]
   plannerScenarios: ResolvedPlannerScenarioModel[]
 }
 

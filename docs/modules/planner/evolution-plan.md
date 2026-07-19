@@ -264,7 +264,7 @@ hero_final_dps = base_dps
 - **commit**：`feat(abilities): 3.1 扩展 gold 维度枚举`。
 
 ### 3.2 解析 gold effect
-- **改动**：`planner-effect-helpers.mjs:463 normalizePlannerEffectSignal` 加 gold 分支（`gold_multiplier_mult`→globalGoldMultiplier；`gold_mult_per_tagged_crusader_mult`→+stackFunc；`gold_mult_per_target_crusader`→参照 :524 模式）。
+- **改动**：`effect-helpers.mjs:463 normalizeEffectSignal` 加 gold 分支（`gold_multiplier_mult`→globalGoldMultiplier；`gold_mult_per_tagged_crusader_mult`→+stackFunc；`gold_mult_per_target_crusader`→参照 :524 模式）。
 - **测试（先写）**：`gold_multiplier_mult` 解析为 globalGoldMultiplier；带 stackFunc；非法仍 unsupported。
 - **验证**：`npm run test:run`；`npm run data:planner-coverage` 显示 gold 覆盖。
 - **commit**：`feat(data): 3.2 解析 gold multiplier effect`。
@@ -304,7 +304,7 @@ hero_final_dps = base_dps
 - **commit**：`feat(abilities): 4.1 扩展 crit 维度枚举`。
 
 ### 4.2 解析 crit effect
-- **改动**：`normalizePlannerEffectSignal` 加 crit 分支（`buff_base_crit_chance_add/mult`/`global_buff_base_crit_*`/`buff_base_crit_damage_*`/`critical_click_*`，~200 条）。
+- **改动**：`normalizeEffectSignal` 加 crit 分支（`buff_base_crit_chance_add/mult`/`global_buff_base_crit_*`/`buff_base_crit_damage_*`/`critical_click_*`，~200 条）。
 - **测试（先写）**：各 crit 子类解析正确；默认 chance=2.5%/damage=100% 来自 `default_crit_info`。
 - **验证**：`npm run test:run`；coverage 显示 crit 覆盖。
 - **commit**：`feat(data): 4.2 解析 crit effect`。
@@ -330,7 +330,7 @@ hero_final_dps = base_dps
 **风险**：IC 英雄大部分不死，独立模式价值有限。
 
 ### 5.1 解析 health/healing/damage_reduction effect
-- **改动**：`normalizePlannerEffectSignal` 加 health/healing/damage_reduction 分支（`health_mult`/`health_add`/`healing_mult`/`global_health_mult`，~580 条；`damage_reduction*` ~40）。
+- **改动**：`normalizeEffectSignal` 加 health/healing/damage_reduction 分支（`health_mult`/`health_add`/`healing_mult`/`global_health_mult`，~580 条；`damage_reduction*` ~40）。
 - **测试（先写）**：各子类解析正确。
 - **验证**：`npm run test:run`；coverage 显示 health 覆盖。
 - **commit**：`feat(data): 5.1 解析 health/healing/damage_reduction effect`。
@@ -361,7 +361,7 @@ hero_final_dps = base_dps
 - **commit**：`feat(abilities): 6.1 扩展 vulnerability 维度枚举`。
 
 ### 6.2 解析 vulnerability effect
-- **改动**：`normalizePlannerEffectSignal` 加 vulnerability 分支（`damage_increase`/`increase_damage_against_monster*`/`increase_armored_damage`/`bonus_armored_damage`，~150 条）。
+- **改动**：`normalizeEffectSignal` 加 vulnerability 分支（`damage_increase`/`increase_damage_against_monster*`/`increase_armored_damage`/`bonus_armored_damage`，~150 条）。
 - **测试（先写）**：各子类解析；保留目标怪物 tag 条件。
 - **验证**：`npm run test:run`；coverage 显示 vulnerability 覆盖。
 - **commit**：`feat(data): 6.2 解析 vulnerability effect`。
@@ -386,7 +386,7 @@ hero_final_dps = base_dps
 **风险**：依赖 2.0 spike 确认 hero_dps 是否含攻速（若含，speed 大部分可省）。
 
 ### 7.1 解析 speed effect
-- **改动**：`normalizePlannerEffectSignal` 加 speed 分支（`attack_speed_mult`/`reduce_attack_cooldown`/`reduce_ultimate_cooldown`/`ability_cooldown_reduction_mult`，~2000 条）。
+- **改动**：`normalizeEffectSignal` 加 speed 分支（`attack_speed_mult`/`reduce_attack_cooldown`/`reduce_ultimate_cooldown`/`ability_cooldown_reduction_mult`，~2000 条）。
 - **测试（先写）**：各 speed 子类解析正确；attack_interval 字段提取。
 - **验证**：`npm run test:run`；coverage 显示 speed 覆盖。
 - **commit**：`feat(data): 7.1 解析 speed effect`。

@@ -1,6 +1,7 @@
 import Decimal from 'break_eternity.js'
 
-import type { ResolvedPlannerHeroModel, ResolvedPlannerScenarioModel } from './plannerModel'
+import type { ResolvedPlannerScenarioModel } from './plannerModel'
+import type { ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import { evaluatePlacementFit, type AggregatedPool } from './placementFit'
 import type { ObjectiveResult } from './objectiveModel'
 import { computeCarryDps } from '../simulator/baseDps'
@@ -11,7 +12,7 @@ const DEFAULT_CARRY_LEVEL = 1
 
 export interface ScoringInput {
   placements: Record<string, string>
-  heroesById: Map<string, ResolvedPlannerHeroModel>
+  heroesById: Map<string, ResolvedHeroAbilityProfile>
   scenario: ResolvedPlannerScenarioModel
   heroLevels?: Map<string, number>
 }
@@ -32,7 +33,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
       const hero = input.heroesById.get(heroId)
       return hero ? { slotId, hero } : null
     })
-    .filter((entry): entry is { slotId: string; hero: ResolvedPlannerHeroModel } => Boolean(entry))
+    .filter((entry): entry is { slotId: string; hero: ResolvedHeroAbilityProfile } => Boolean(entry))
 
   if (placedEntries.length === 0) {
     return {

@@ -3,9 +3,9 @@ import { describe, expect, it } from 'vitest'
 import {
   findPlannerScenarioForVariant,
   resolvePlannerModel,
-  type OfficialPlannerHeroModel,
   type OfficialPlannerScenarioModel,
 } from '../../../../src/domain/planner/plannerModel'
+import type { HeroAbilityProfile } from '../../../../src/domain/abilities/abilityModel'
 import type { LocalizedOption, LocalizedText, Variant } from '../../../../src/domain/types'
 
 function text(original: string, display = original): LocalizedText {
@@ -40,7 +40,7 @@ function createVariant(id: string): Variant {
   }
 }
 
-function createHero(heroId: string): OfficialPlannerHeroModel {
+function createHero(heroId: string): HeroAbilityProfile {
   return {
     heroId,
     name: text(heroId, heroId),

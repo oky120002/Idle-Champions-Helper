@@ -8,11 +8,8 @@ import type { UserProfileSnapshot } from '../user-profile/types'
 import { beamSearch } from './beamSearchRanking'
 import { buildCandidatePool } from './candidatePool'
 import { checkFormationLegality, type LegalityViolation } from './formationLegality'
-import {
-  findPlannerScenarioForVariant,
-  type ResolvedPlannerHeroModel,
-  type ResolvedPlannerScenarioModel,
-} from './plannerModel'
+import { findPlannerScenarioForVariant, type ResolvedPlannerScenarioModel } from './plannerModel'
+import type { ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import {
   type PlannerCollections,
   type PlannerNarrativeLine,
@@ -55,7 +52,7 @@ function buildPlannerWarnings(scenario: ResolvedPlannerScenarioModel, snapshot: 
 function buildPlacementEntries(
   slots: string[],
   placements: Record<string, string>,
-  heroById: Map<string, ResolvedPlannerHeroModel>,
+  heroById: Map<string, ResolvedHeroAbilityProfile>,
 ): PlannerPlacementEntry[] {
   return slots
     .filter((slotId) => placements[slotId] !== undefined)
@@ -76,7 +73,7 @@ function buildPlacementEntries(
 function buildPlannerExplanations(
   scenario: ResolvedPlannerScenarioModel,
   placementEntries: PlannerPlacementEntry[],
-  heroById: Map<string, ResolvedPlannerHeroModel>,
+  heroById: Map<string, ResolvedHeroAbilityProfile>,
   carryHeroId: string | null,
   carryDps: GameNumberValue,
   rawExplanations: string[],
@@ -86,7 +83,7 @@ function buildPlannerExplanations(
     : null
   const supportChampions = placementEntries
     .map((entry) => heroById.get(entry.heroId))
-    .filter((hero): hero is ResolvedPlannerHeroModel => Boolean(hero) && hero!.heroId !== carryHeroId)
+    .filter((hero): hero is ResolvedHeroAbilityProfile => Boolean(hero) && hero!.heroId !== carryHeroId)
     .slice(0, 4)
     .map((hero) => hero.name.display)
 

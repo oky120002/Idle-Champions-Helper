@@ -24,7 +24,7 @@
 - 推荐引擎、模拟器和后续审查只读 merge 后的 resolved model，不再到处拼源数据。
 
 ## 3. 核心模型
-- `ResolvedPlannerHeroModel` 至少包含：`heroId`、`seat`、`roles`、`tags`、`age`、`abilityScores`、`baseDamage`、`costCurves`、`carrySignals`、`supportSignals`、`unsupportedSignals`、`sourceBreakdown`。其中 `targetQualifier`、`formationCountQualifier`、`positionQualifier`、`formationCountPositionQualifier` 位于每条 signal 上（单数），而非 hero 顶层。
+- `ResolvedHeroAbilityProfile` 至少包含：`heroId`、`seat`、`roles`、`tags`、`age`、`abilityScores`、`baseDamage`、`costCurves`、`carrySignals`、`supportSignals`、`unsupportedSignals`、`sourceBreakdown`。其中 `targetQualifier`、`formationCountQualifier`、`positionQualifier`、`formationCountPositionQualifier` 位于每条 signal 上（单数），而非 hero 顶层。
 - `HeroAbilitySignal` 当前允许带 `bonusScaleOfSignal`：它表示“当前 signal 是对另一条基础 signal 的效果增幅”。这主要服务 `buff_upgrade*` 家族，避免把“增强某个升级效果”误算成一条独立的新 buff。
 - `carrySignals`：英雄自身提高自己输出的规则。
 - `supportSignals`：该英雄如何提高别人输出，尤其是如何提高当前 C 位输出。

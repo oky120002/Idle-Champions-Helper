@@ -1,8 +1,7 @@
 /**
- * planner 推荐引擎模型入口（shim）。
- * 通用英雄能力类型与 signal semantics 已下沉到 src/domain/abilities/；
- * 此处在旧 Planner 前缀名下 re-export，保持推荐引擎与数据层调用方稳定。
- * 场景类型（scenario）是推荐引擎专属，留在此处。
+ * planner 推荐引擎模型入口。
+ * 通用英雄能力类型与 signal semantics 已下沉到 src/domain/abilities/；引擎直接引用 Hero* 名。
+ * 此处只保留推荐引擎专属的场景（scenario）类型与 resolver。
  */
 import type { LocalizedText, ScenarioRef, Variant } from '../types'
 import type {
@@ -11,41 +10,6 @@ import type {
   ResolvedHeroAbilityProfile,
 } from '../abilities/abilityModel'
 import { resolveHeroAbilityProfiles } from '../abilities/abilityModel'
-
-export type {
-  HeroAbilityKind as PlannerSignalKind,
-  HeroAbilitySource as PlannerSignalSource,
-  HeroAbilityMatchMode as PlannerTargetMatchMode,
-  HeroPositionRelation as PlannerPositionRelation,
-  HeroAbilityAmountFunc as PlannerSignalAmountFunc,
-  HeroComparisonOperator as PlannerComparisonOperator,
-  HeroStatKey as PlannerStatKey,
-  HeroStatQualifier as PlannerStatQualifier,
-  HeroQualifier as PlannerHeroQualifier,
-  HeroPositionQualifier as PlannerPositionQualifier,
-  HeroAbilityUnit as PlannerSignalUnit,
-  HeroAbilitySignal as PlannerEffectSignal,
-  HeroUnsupportedSignal as PlannerUnsupportedSignal,
-  HeroAbilitySourceBreakdown as PlannerSourceBreakdown,
-  HeroAbilityProfile as OfficialPlannerHeroModel,
-  HeroAbilityOverridePatch as PlannerHeroOverridePatch,
-  ResolvedHeroAbilityProfile as ResolvedPlannerHeroModel,
-  HeroAbilityOverrideCollection as PlannerHeroOverrideCollection,
-  HeroAbilityDimension,
-  DIMENSION_BY_KIND,
-} from '../abilities/abilityModel'
-
-export { applyHeroAbilityPatch as applyPlannerHeroPatch } from '../abilities/abilityModel'
-
-export {
-  matchesHeroQualifier as matchesPlannerHeroQualifier,
-  attachSignalSemantics as attachPlannerSignalSemantics,
-  normalizeSignalAmountFunc as normalizePlannerSignalAmountFunc,
-  normalizeExplicitTargeting as normalizePlannerExplicitTargeting,
-  normalizeTargetQualifier as normalizePlannerTargetQualifier,
-  normalizeStatQualifiers as normalizePlannerStatQualifiers,
-  parsePerHeroExpr as parsePlannerPerHeroExpr,
-} from '../abilities/signalSemantics.js'
 
 export interface PlannerScenarioSlot {
   slotId: string

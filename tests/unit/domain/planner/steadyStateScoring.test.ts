@@ -1,9 +1,10 @@
 import { describe, expect, it } from 'vitest'
 import { scoreFormation } from '../../../../src/domain/planner/steadyStateScoring'
 import { compareGameNumbers } from '../../../../src/domain/simulator/gameNumberArithmetic'
-import type { OfficialPlannerHeroModel, OfficialPlannerScenarioModel } from '../../../../src/domain/planner/plannerModel'
+import type { HeroAbilityProfile } from '../../../../src/domain/abilities/abilityModel'
+import type { OfficialPlannerScenarioModel } from '../../../../src/domain/planner/plannerModel'
 
-function createHero(heroId: string, overrides: Partial<OfficialPlannerHeroModel> = {}): OfficialPlannerHeroModel {
+function createHero(heroId: string, overrides: Partial<HeroAbilityProfile> = {}): HeroAbilityProfile {
   return {
     heroId,
     name: { original: heroId, display: heroId },

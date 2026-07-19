@@ -6,9 +6,9 @@ import {
   normalizeExplicitTargeting,
   parsePerHeroExpr,
 } from '../../../../src/domain/abilities/signalSemantics.js'
-import type { OfficialPlannerHeroModel } from '../../../../src/domain/planner/plannerModel'
+import type { HeroAbilityProfile } from '../../../../src/domain/abilities/abilityModel'
 
-function createHero(heroId: string, overrides: Partial<OfficialPlannerHeroModel> = {}): OfficialPlannerHeroModel {
+function createHero(heroId: string, overrides: Partial<HeroAbilityProfile> = {}): HeroAbilityProfile {
   return {
     heroId,
     name: { original: heroId, display: heroId },

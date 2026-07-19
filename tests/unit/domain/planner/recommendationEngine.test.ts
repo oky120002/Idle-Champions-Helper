@@ -2,10 +2,8 @@ import { describe, expect, it } from 'vitest'
 
 import type { Champion, LocalizedOption, LocalizedText, Variant } from '../../../../src/domain/types'
 import { buildPlannerRecommendation } from '../../../../src/domain/planner/recommendationEngine'
-import type {
-  OfficialPlannerHeroModel,
-  OfficialPlannerScenarioModel,
-} from '../../../../src/domain/planner/plannerModel'
+import type { HeroAbilityProfile } from '../../../../src/domain/abilities/abilityModel'
+import type { OfficialPlannerScenarioModel } from '../../../../src/domain/planner/plannerModel'
 import type { PlannerCollections } from '../../../../src/domain/planner/recommendationTypes'
 import { createOwnedHero, createUserProfileSnapshot } from '../../../../src/domain/user-profile/fixtures'
 
@@ -68,7 +66,7 @@ const champions: Champion[] = [
   { id: 'jarlaxle', name: text('Jarlaxle', '贾拉索'), seat: 4, roles: ['dps', 'gold'], affiliations: [], tags: [] },
 ]
 
-const plannerHeroes: OfficialPlannerHeroModel[] = champions.map((champion) => ({
+const plannerHeroes: HeroAbilityProfile[] = champions.map((champion) => ({
   heroId: champion.id,
   name: champion.name,
   seat: champion.seat,

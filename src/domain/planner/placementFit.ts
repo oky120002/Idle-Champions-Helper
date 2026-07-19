@@ -1,16 +1,17 @@
+import type { ResolvedPlannerScenarioModel } from './plannerModel'
 import type {
-  PlannerEffectSignal,
-  PlannerPositionRelation,
-  PlannerSignalSource,
-  ResolvedPlannerHeroModel,
-  ResolvedPlannerScenarioModel,
-} from './plannerModel'
-import { matchesPlannerHeroQualifier } from './plannerModel'
-import type { HeroAbilityDimension, HeroAbilityPoolScope } from '../abilities/abilityModel'
+  HeroAbilityDimension,
+  HeroAbilityPoolScope,
+  HeroAbilitySignal,
+  HeroAbilitySource,
+  HeroPositionRelation,
+  ResolvedHeroAbilityProfile,
+} from '../abilities/abilityModel'
 import { DIMENSION_BY_KIND, POOL_SCOPE_BY_KIND } from '../abilities/abilityModel'
+import { matchesHeroQualifier } from '../abilities/signalSemantics.js'
 
 export interface PlacementFitScorePart {
-  signalKind: PlannerEffectSignal['kind']
+  signalKind: HeroAbilitySignal['kind']
   rawEffect: string
   multiplier: number
   active: boolean
@@ -51,7 +52,7 @@ export interface PlacementFitScorePart {
     | 'position-mismatch'
     | 'missing-target-qualifier'
     | 'unsupported-composition'
-  source: PlannerSignalSource
+  source: HeroAbilitySource
 }
 
 export interface AggregatedPool {
@@ -78,13 +79,13 @@ export interface PoolAggregateResult {
 }
 
 export interface EvaluatePlacementFitInput {
-  carryHero: ResolvedPlannerHeroModel
+  carryHero: ResolvedHeroAbilityProfile
   carrySlotId: string
-  supportHero: ResolvedPlannerHeroModel
+  supportHero: ResolvedHeroAbilityProfile
   supportSlotId: string
   scenario: ResolvedPlannerScenarioModel
   placements?: Record<string, string>
-  heroesById?: Map<string, ResolvedPlannerHeroModel>
+  heroesById?: Map<string, ResolvedHeroAbilityProfile>
   /** 按 dimension 过滤；不传时聚合全部 damage 维度 signal。 */
   dimension?: HeroAbilityDimension
 }
@@ -109,7 +110,7 @@ function findScenarioSlot(scenario: ResolvedPlannerScenarioModel, slotId: string
   return scenario.slotTopology.find((slot) => slot.slotId === slotId)
 }
 
-function countQualifiedHeroes(input: EvaluatePlacementFitInput, signal: PlannerEffectSignal): number | null {
+function countQualifiedHeroes(input: EvaluatePlacementFitInput, signal: HeroAbilitySignal): number | null {
   if (!input.placements || !input.heroesById) {
     return null
   }
@@ -130,7 +131,7 @@ function countQualifiedHeroes(input: EvaluatePlacementFitInput, signal: PlannerE
       return count
     }
 
-    return matchesPlannerHeroQualifier(hero, signal.formationCountQualifier) ? count + 1 : count
+    return matchesHeroQualifier(hero, signal.formationCountQualifier) ? count + 1 : count
   }, 0)
 }
 
@@ -175,7 +176,7 @@ function matchesSlotRelation(
   scenario: ResolvedPlannerScenarioModel,
   sourceSlotId: string,
   targetSlotId: string,
-  relation: PlannerPositionRelation,
+  relation: HeroPositionRelation,
 ): boolean {
   if (relation === 'any') {
     return true
@@ -288,7 +289,7 @@ function matchesSlotRelation(
   }
 }
 
-function countUpgradeTargets(input: EvaluatePlacementFitInput, signal: PlannerEffectSignal): number | null {
+function countUpgradeTargets(input: EvaluatePlacementFitInput, signal: HeroAbilitySignal): number | null {
   if (!input.placements || !input.heroesById) {
     return null
   }
@@ -309,7 +310,7 @@ function countUpgradeTargets(input: EvaluatePlacementFitInput, signal: PlannerEf
       return count
     }
 
-    return matchesPlannerHeroQualifier(hero, signal.targetQualifier) ? count + 1 : count
+    return matchesHeroQualifier(hero, signal.targetQualifier) ? count + 1 : count
   }, 0)
 }
 
@@ -331,7 +332,7 @@ function countSlotDistanceFromSource(input: EvaluatePlacementFitInput): number |
 
 function resolveSignalMultiplier(
   input: EvaluatePlacementFitInput,
-  signal: PlannerEffectSignal,
+  signal: HeroAbilitySignal,
 ): { ok: true; multiplier: number } | { ok: false; warning: string } {
   if (signal.applyManually) {
     return {
@@ -541,7 +542,7 @@ function resolveSignalMultiplier(
   }
 }
 
-function resolvePositionRelation(signal: PlannerEffectSignal): PlannerPositionRelation {
+function resolvePositionRelation(signal: HeroAbilitySignal): HeroPositionRelation {
   if (signal.positionQualifier?.relation) {
     return signal.positionQualifier.relation
   }
@@ -557,7 +558,7 @@ function resolvePositionRelation(signal: PlannerEffectSignal): PlannerPositionRe
   return 'any'
 }
 
-function matchesPositionQualifier(input: EvaluatePlacementFitInput, signal: PlannerEffectSignal): boolean {
+function matchesPositionQualifier(input: EvaluatePlacementFitInput, signal: HeroAbilitySignal): boolean {
   const relation = resolvePositionRelation(signal)
 
   if (relation === 'any') {
@@ -571,7 +572,7 @@ function matchesPositionQualifier(input: EvaluatePlacementFitInput, signal: Plan
   return matchesSlotRelation(input.scenario, input.supportSlotId, input.carrySlotId, relation)
 }
 
-function resolveActiveReasonCode(signal: PlannerEffectSignal, relation: PlannerPositionRelation): PlacementFitScorePart['reasonCode'] {
+function resolveActiveReasonCode(signal: HeroAbilitySignal, relation: HeroPositionRelation): PlacementFitScorePart['reasonCode'] {
   if (signal.kind === 'globalDpsMultiplier') {
     return 'global-match'
   }
@@ -640,7 +641,7 @@ function resolveActiveReasonCode(signal: PlannerEffectSignal, relation: PlannerP
   }
 }
 
-function inferMismatchReason(signal: PlannerEffectSignal): 'tag-mismatch' | 'stat-mismatch' {
+function inferMismatchReason(signal: HeroAbilitySignal): 'tag-mismatch' | 'stat-mismatch' {
   if ((signal.targetQualifier?.requiredStats?.length ?? 0) > 0) {
     return 'stat-mismatch'
   }
@@ -648,7 +649,7 @@ function inferMismatchReason(signal: PlannerEffectSignal): 'tag-mismatch' | 'sta
   return 'tag-mismatch'
 }
 
-function collectSignals(input: EvaluatePlacementFitInput): PlannerEffectSignal[] {
+function collectSignals(input: EvaluatePlacementFitInput): HeroAbilitySignal[] {
   if (input.supportHero.heroId === input.carryHero.heroId) {
     return [...input.supportHero.carrySignals, ...input.supportHero.supportSignals]
   }
@@ -701,7 +702,7 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): PoolAggr
       continue
     }
 
-    if (!matchesPlannerHeroQualifier(input.carryHero, signal.targetQualifier)) {
+    if (!matchesHeroQualifier(input.carryHero, signal.targetQualifier)) {
       const reasonCode = inferMismatchReason(signal)
       scoreBreakdown.push({
         signalKind: signal.kind,
