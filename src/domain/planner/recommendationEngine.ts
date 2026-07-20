@@ -17,7 +17,7 @@ import {
   type PlannerRecommendation,
 } from './recommendationTypes'
 import { scoreFormation } from './steadyStateScoring'
-import type { VariantRuleResult } from './variantRuleProjection'
+import type { VariantRuleResult } from './variantConstraints'
 
 const PLANNER_TOP_K = 3
 const SCORE_ZERO: GameNumberValue = new Decimal(0)

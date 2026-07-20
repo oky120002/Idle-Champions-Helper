@@ -1,4 +1,4 @@
-import type { VariantRuleResult } from './variantRuleProjection'
+import type { VariantRuleResult } from './variantConstraints'
 
 export interface LegalityCheckInput {
   placements: Record<string, string>
