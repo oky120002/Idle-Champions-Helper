@@ -8,20 +8,32 @@ repair: rebuild
 -->
 ## Auto Todo
 
-- planner scenarioSelection 组件测试失败：组件与测试的详情文案不一致 <!-- auto-todo:id=atd_8019e19b24 -->
-  - 记录时间: `2026-07-18T16:51:22+08:00`
+- css/tsx 体量预算超限，4 文件需按业务边界拆 <!-- auto-todo:id=atd_5fbbb7ac36 -->
+  - 记录时间: `2026-07-20T11:43:52+08:00`
+  - 类型: optimization
+  - 位置: `src/styles/pages/champions.css:1`
+  - 备注: champions.css 647 行（>520 必须拆）、planner.css / shared/results/card.css / shared/workbench/toolbar.css 约 407 行（应拆）；PageWorkbenchShell.tsx 271、WorkbenchScaffold.tsx 266（应拆）
+    - 策略：下次触碰对应文件时按业务边界拆，不强制现在拆
+
+- deleteUserProfileData 未清 heroAbilityOverrides + generateCoverageReport 孤儿 <!-- auto-todo:id=atd_d15fc2acfd -->
+  - 记录时间: `2026-07-20T11:43:52+08:00`
+  - 类型: follow-up
+  - 位置: `src/data/user-profile-store/userProfileStore.ts:68`
+  - 备注: deleteUserProfileData 语义是删 profile snapshot（handleDelete 后 setSyncState no-snapshot），不清 heroAbilityOverrides；override 是否随 profile 删待产品决策
+    - generateCoverageReport：simulator-data-coverage.mjs 孤儿无 CLI 入口，保留作 M2/M3 definition-key 覆盖审计或删
+
+- formation-persistence validation 不校验 scenarioRef <!-- auto-todo:id=atd_c6d7b8b82a -->
+  - 记录时间: `2026-07-20T11:43:52+08:00`
+  - 类型: follow-up
+  - 位置: `src/data/formation-persistence/validation.ts`
+  - 备注: validation.ts 只校验 slotIds/championIds，不校验 scenarioRef.kind/id（文档已按代码事实修正）
+    - 处置：若产品需识别失效场景身份，再补 scenarioRef 校验
+
+- 9.1 escort 锁槽按 column 降序启发式，官方未标注具体槽位 <!-- auto-todo:id=atd_492b5b61bd -->
+  - 记录时间: `2026-07-20T11:43:52+08:00`
   - 类型: issue
-  - 备注: tests/component/plannerPage.scenarioSelection.test.tsx:127 期望详情面板出现 /目标区域：175/，但组件 PlannerScenarioSelection.tsx:359 实际渲染的是 "175 区完成"（t({zh:`{area} 区完成`})），不含 "目标区域：" 前缀。
-    - 性质：pre-existing 文案不一致（改了组件文案未同步测试，或反之），与本次 lint 清债、依赖升级均无关（stash 验证：无 lint 改动也失败）
-    - 影响：test:regression 的 test 阶段仍有 1 个失败（lint/typecheck/build/e2e 均绿）
-    - 处置：需 planner 特性作者确认详情面板应展示 "目标区域：{area}" 还是 "{area} 区完成"，再对齐组件或测试
-- userDataPage.syncFlow 组件测试在完整 test:run 下随机失败（flaky） <!-- auto-todo:id=atd_7c4b2e9a31 -->
-  - 记录时间: `2026-07-18T17:42:00+08:00`
-  - 类型: issue
-  - 备注: tests/component/userDataPage.syncFlow.test.tsx 单独运行 11/11 通过，但在完整 test:run 或 test:component 下随机有 1~4 个测试 waitFor 超时，每次失败的测试不同（如 "同步错误展示时不包含凭证"、"开发模式切换到本地开发快照时不会覆盖浏览器同步快照"）。
-    - 性质：pre-existing 测试隔离/时序问题。0e738403 基线 test:component 失败 4 个，HEAD 失败 2 个，与本次改动无关——范围内 user-sync 改动仅为类型标注（payload: unknown）+ eslint-disable 注释 + readInstanceId/toStringValue 严格化，均不触碰 fetch 错误路径（worktree 验证：0e738403 源码 + 当前依赖跑该文件 11/11 通过）。
-    - 可能根因：测试用 `vi.stubGlobal('fetch', ...)` 但 afterEach 只 `vi.restoreAllMocks()`（不清理 stubGlobal），vitest.config 也未配 `unstubGlobals`；叠加完整运行时时序压力，导致 stub 残留或 waitFor 超时。
-    - 影响：test:regression 的 test 阶段不稳定（lint/typecheck/build/e2e 不受影响）。
-    - 处置：修复需改范围外代码（vitest.config 加 `unstubGlobals: true`，或 syncFlow/userProfileSourceResolver 测试 afterEach 加 `vi.unstubAllGlobals()`）；建议先确认根因再实施。本任务约束（不修改 0e738403..HEAD 范围外代码）内未修复。
+  - 位置: `scripts/data/build-models.mjs`
+  - 备注: projectMechanicsToScenario 对 slot_escort* mechanic 按 column 降序锁前排首槽（启发式，官方未标注护送具体槽位）
+    - 处置：精确槽位需官方 formation 元数据或人工校准后替换
 
 <!-- auto-todo:end -->

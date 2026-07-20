@@ -81,7 +81,7 @@ BUD = 阵型近期最高单次伤害。- **阵型推荐（相对比较）**：�
 2. **受影响符号清单**：列出本里程碑改动涉及的字段 / 类型 / 函数 / 文件名 / JSON 产物 / IndexedDB key / scoring 概念。
 3. **全文档 grep 修正**：对清单中每个符号，在下列文档全量搜索，修正所有**当前态描述**与**未来步骤**中的陈旧引用：
    - `docs/modules/planner/`：README、development-design、development-design-data、development-design-simulator、recommendation-and-placement-design、goal-prompts、prd、auto-formation-planner-plan、signal-coverage-research、carry-dps-formula-spike、final-todo。
-   - `docs/todo.md`、根/目录 `README.md`、`AGENTS.md`/`CLAUDE.md`（如触及仓库级约束）。
+   - 根 `TODO.md`（`auto-todo` 技能维护）、根/目录 `README.md`、`AGENTS.md`/`CLAUDE.md`（如触及仓库级约束）。
 4. **保留历史记录**：改名决策记录（"A→B 改名"）、dated research 快照、显式改名说明注记可保留旧名作为历史；其余当前态描述与未来步骤必须用最新名。
 5. **测试覆盖**：本里程碑新增/改动的核心行为必须有测试覆盖（先写测试再实现），不得裸奔。
 6. **收口验证**：`npm run typecheck`、`npm run test:run`、相关 build 脚本测试退出码 0；commit 信息用中文 Conventional Commits。

@@ -10,7 +10,7 @@
 - TS / TSX 规范：`docs/product/ai-first-ts-tsx-guidelines.md`
 - CSS 规范：`docs/product/ai-first-css-guidelines.md`
 - 移动端硬约束：`docs/product/mobile-compatibility-guidelines.md`
-- 项目级顺手发现项：`docs/todo.md`
+- 项目级顺手发现项：根 `TODO.md`（`auto-todo` 技能维护）
 
 ## 低频主题再走索引
 

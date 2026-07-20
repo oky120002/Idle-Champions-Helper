@@ -18,7 +18,7 @@
 - 数据、隐私、存储和官方只读 client：`docs/modules/planner/development-design-data.md`
 - 数字层、基线、模拟器、搜索和 UI：`docs/modules/planner/development-design-simulator.md`
 - Ralph 执行任务、验收命令、提交约定：`docs/modules/planner/final-todo.md`
-- 主线外顺手发现项统一落库：`docs/todo.md`
+- 主线外顺手发现项统一落库：根 `TODO.md`（`auto-todo` 技能维护）
 - 单例验收设计：`.ralph/tasks/planner/acceptance-cases.md`
 
 ## 关联入口
