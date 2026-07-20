@@ -275,35 +275,101 @@ export function normalizeExplicitTargeting(effect) {
   }
 }
 
+// IC tags 字段是一个布尔表达式：| OR、^ AND、! NOT、() 分组。
+// 当前 HeroQualifier 是扁平结构（requiredTags + matchMode + excludedTags），只能表达
+// 简单 OR / 简单 AND / 排除；复合表达式（括号 或 |^ 混用）扁平结构表达不了，返回 null
+// 让调用方降级为保守不评分。完整布尔 AST 解析见 AGENTS.md「IC 英雄谓词表达式」技术债。
+function parseTagsExpression(tagsString) {
+  const trimmed = tagsString.trim()
+  if (!trimmed) {
+    return null
+  }
+
+  if (trimmed.includes('(') || (trimmed.includes('|') && trimmed.includes('^'))) {
+    return null
+  }
+
+  if (trimmed.includes('|')) {
+    return {
+      requiredTags: [...new Set(trimmed.split('|').map((tag) => tag.trim().toLowerCase()).filter(Boolean))],
+      matchMode: 'any',
+    }
+  }
+
+  if (trimmed.includes('^')) {
+    const required = []
+    const excluded = []
+    for (const part of trimmed.split('^')) {
+      const tag = part.trim()
+      if (!tag) continue
+      if (tag.startsWith('!')) {
+        excluded.push(tag.slice(1).trim().toLowerCase())
+      } else {
+        required.push(tag.toLowerCase())
+      }
+    }
+    const qualifier = {}
+    if (required.length > 0) {
+      qualifier.requiredTags = required
+      qualifier.matchMode = 'all'
+    }
+    if (excluded.length > 0) {
+      qualifier.excludedTags = excluded
+    }
+    return Object.keys(qualifier).length > 0 ? qualifier : null
+  }
+
+  if (trimmed.startsWith('!')) {
+    return { excludedTags: [trimmed.slice(1).trim().toLowerCase()] }
+  }
+
+  return { requiredTags: [trimmed.toLowerCase()], matchMode: 'any' }
+}
+
+// 复合布尔表达式当前结构表达不了时，用一个不存在的 tag + matchMode all 模拟永真假，
+// 让 effect 对所有英雄都不命中（保守不评分，避免错误拆分导致误匹配）。
+const UNSUPPORTED_TARGET_QUALIFIER = { requiredTags: ['__ic_unsupported_target_expr__'], matchMode: 'all' }
+
 export function normalizeTargetQualifier(effect) {
   const rawFilters = getRawFilters(effect).filter((filter) => filter && typeof filter === 'object')
-  const tagFilters = rawFilters
+  const tagFilterStrings = rawFilters
     .filter((filter) => filter.type === 'by_tags' || filter.type === 'tags')
     .map((filter) => filter.tags)
     .filter((tags) => typeof tags === 'string' && tags.length > 0)
-    // IC 数据源 tags 字段用 | 表示 OR（cleric|wizard|...= 任一匹配），不用逗号。
-    // 旧按逗号 split 会把整串当成 1 个不存在的 tag，matchesHeroQualifier 永远失败。
-    .flatMap((tags) => tags.split('|').map((tag) => tag.trim().toLowerCase()).filter(Boolean))
   const attackTypeFilters = rawFilters
     .filter((filter) => filter.type === 'attack_type')
     .map((filter) => (typeof filter.attack === 'string' ? filter.attack.toLowerCase().trim() : null))
     .filter(Boolean)
 
-  if (tagFilters.length === 0 && attackTypeFilters.length === 0) {
+  if (tagFilterStrings.length === 0 && attackTypeFilters.length === 0) {
     return null
   }
 
+  // 多个 tag filter 间为 AND；单个 filter 内 |/^/! 由 parseTagsExpression 解析。
+  // 任一 filter 解析失败（复合表达式）→ 整体降级为保守不评分。
+  let tagQualifier = null
+  for (const tagsString of tagFilterStrings) {
+    const parsed = parseTagsExpression(tagsString)
+    if (!parsed) {
+      tagQualifier = UNSUPPORTED_TARGET_QUALIFIER
+      break
+    }
+    tagQualifier = tagQualifier ? mergeHeroQualifiers(tagQualifier, parsed) : parsed
+    if (!tagQualifier) {
+      tagQualifier = UNSUPPORTED_TARGET_QUALIFIER
+      break
+    }
+  }
+
   return {
-    ...(tagFilters.length > 0
-      ? {
-          requiredTags: [...new Set(tagFilters)],
-          matchMode: 'any',
-        }
+    ...((tagQualifier?.requiredTags?.length ?? 0) > 0
+      ? { requiredTags: tagQualifier.requiredTags, matchMode: tagQualifier.matchMode ?? 'any' }
+      : {}),
+    ...((tagQualifier?.excludedTags?.length ?? 0) > 0
+      ? { excludedTags: tagQualifier.excludedTags }
       : {}),
     ...(attackTypeFilters.length > 0
-      ? {
-          requiredAttackDamageTypes: [...new Set(attackTypeFilters)],
-        }
+      ? { requiredAttackDamageTypes: [...new Set(attackTypeFilters)] }
       : {}),
   }
 }

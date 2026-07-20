@@ -45,6 +45,42 @@ describe('planner signal semantics', () => {
     expect(qualifier?.matchMode).toBe('any')
   })
 
+  it('normalizeTargetQualifier 把 ^ 分隔的多 tag 解析为 AND（IC AND 语义）', () => {
+    // IC tags 用 ^ 表示 AND（全部命中）：lawful^good = 守序且善良。
+    const qualifier = normalizeTargetQualifier({
+      targets: [{ type: 'tags', tags: 'lawful^good' }],
+    })
+    expect(qualifier?.requiredTags).toEqual(['lawful', 'good'])
+    expect(qualifier?.matchMode).toBe('all')
+  })
+
+  it('normalizeTargetQualifier 把 !tag^!tag 解析为多 tag 排除', () => {
+    // IC tags 用 ! 前缀表示 NOT，^ 连接多个排除项：!evil^!blackdicesociety = 排除这两 tag。
+    const qualifier = normalizeTargetQualifier({
+      targets: [{ type: 'tags', tags: '!evil^!blackdicesociety' }],
+    })
+    expect(qualifier?.excludedTags).toEqual(['evil', 'blackdicesociety'])
+    expect(qualifier?.requiredTags ?? []).toEqual([])
+  })
+
+  it('normalizeTargetQualifier 把单 !tag 解析为排除', () => {
+    const qualifier = normalizeTargetQualifier({
+      targets: [{ type: 'tags', tags: '!human' }],
+    })
+    expect(qualifier?.excludedTags).toEqual(['human'])
+  })
+
+  it('normalizeTargetQualifier 对复合表达式（括号/|^混用）降级为保守永真假', () => {
+    // IC tags 支持括号复合：((geneutral|evil)^dps)|(good^support)。
+    // HeroQualifier 扁平结构表达不了布尔树，降级为永真假 qualifier（保守不评分），
+    // 避免错误拆分导致误匹配。完整解析见 AGENTS.md「IC 英雄谓词表达式」技术债。
+    const qualifier = normalizeTargetQualifier({
+      targets: [{ type: 'tags', tags: '((geneutral|evil)^dps)|(good^support)' }],
+    })
+    expect(qualifier?.requiredTags).toEqual(['__ic_unsupported_target_expr__'])
+    expect(qualifier?.matchMode).toBe('all')
+  })
+
   it('parsePerHeroExpr 解析标签、属性和年龄限定', () => {
     expect(parsePerHeroExpr('HasTag(`female`) || HasTag(`evil`)')).toEqual({
       requiredTags: ['female', 'evil'],
