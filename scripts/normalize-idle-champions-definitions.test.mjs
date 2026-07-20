@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import os from 'node:os'
 import path from 'node:path'
 import { mkdtemp, readFile } from 'node:fs/promises'
-import { normalizeDefinitionsSnapshot } from './normalize-idle-champions-definitions.mjs'
+import { normalizeDefinitionsSnapshot, normalizeEffectReference } from './normalize-idle-champions-definitions.mjs'
 
 async function readJson(filePath) {
   return JSON.parse(await readFile(filePath, 'utf8'))
@@ -540,4 +540,26 @@ test('normalizeDefinitionsSnapshot 输出官方原文和中文展示双字段', 
 
   assert.ok(version.notes.some((note) => /language_id=7/.test(note)))
   assert.ok(version.notes.some((note) => /effect-reference\.json/.test(note)))
+})
+
+test('normalizeEffectReference 在归一化层提取 CNE effect 对象串的 effect_string', () => {
+  // CNE 数据源格式特性（见 AGENTS.md 1.3）：upgrade_defines.effect 有时是 JSON 对象串，
+  // 序列化不稳定（合法 JSON 与 effect_string 行末缺逗号的伪 JSON 混存）。
+  // 归一化层统一提取内部 effect_string，让下游消费方永远拿到干净的标准 effect 串。
+  // 合法 JSON 形态
+  assert.equal(
+    normalizeEffectReference('{"effect_string":"buff_upgrade,100,4","description":"x"}'),
+    'buff_upgrade,100,4',
+  )
+  // 伪 JSON（effect_string 行末缺逗号）
+  assert.equal(
+    normalizeEffectReference('{\n"effect_string":"buff_upgrades,100,4,5"\n"description":"missing comma"}'),
+    'buff_upgrades,100,4,5',
+  )
+  // 简单 effect 串原样返回
+  assert.equal(normalizeEffectReference('hero_dps_multiplier_mult,100'), 'hero_dps_multiplier_mult,100')
+  assert.equal(normalizeEffectReference('effect_def,1308'), 'effect_def,1308')
+  // 空/非串
+  assert.equal(normalizeEffectReference(null), null)
+  assert.equal(normalizeEffectReference('   '), null)
 })

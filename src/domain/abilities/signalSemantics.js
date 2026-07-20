@@ -281,7 +281,9 @@ export function normalizeTargetQualifier(effect) {
     .filter((filter) => filter.type === 'by_tags' || filter.type === 'tags')
     .map((filter) => filter.tags)
     .filter((tags) => typeof tags === 'string' && tags.length > 0)
-    .flatMap((tags) => tags.split(',').map((tag) => tag.trim()).filter(Boolean))
+    // IC 数据源 tags 字段用 | 表示 OR（cleric|wizard|...= 任一匹配），不用逗号。
+    // 旧按逗号 split 会把整串当成 1 个不存在的 tag，matchesHeroQualifier 永远失败。
+    .flatMap((tags) => tags.split('|').map((tag) => tag.trim().toLowerCase()).filter(Boolean))
   const attackTypeFilters = rawFilters
     .filter((filter) => filter.type === 'attack_type')
     .map((filter) => (typeof filter.attack === 'string' ? filter.attack.toLowerCase().trim() : null))

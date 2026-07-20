@@ -4,6 +4,7 @@ import {
   attachSignalSemantics,
   matchesHeroQualifier,
   normalizeExplicitTargeting,
+  normalizeTargetQualifier,
   parsePerHeroExpr,
 } from '../../../../src/domain/abilities/signalSemantics.js'
 import type { HeroAbilityProfile } from '../../../../src/domain/abilities/abilityModel'
@@ -32,6 +33,18 @@ function createHero(heroId: string, overrides: Partial<HeroAbilityProfile> = {})
 }
 
 describe('planner signal semantics', () => {
+  it('normalizeTargetQualifier 把 | 分隔的多 tag 拆成独立 tag（IC OR 语义）', () => {
+    // IC 数据源：effect_defines.targets 的 tags 字段用 | 表示 OR（任一匹配），
+    // 如 cleric|wizard|sorcerer|warlock = 目标是这四职业之一。
+    // 旧实现只按逗号 split，整串被当成 1 个不存在的"超级 tag"，
+    // matchesHeroQualifier 永远匹配失败 → buff 全部失效（521 条 signal 受影响）。
+    const qualifier = normalizeTargetQualifier({
+      targets: [{ type: 'tags', tags: 'cleric|wizard|sorcerer|warlock' }],
+    })
+    expect(qualifier?.requiredTags).toEqual(['cleric', 'wizard', 'sorcerer', 'warlock'])
+    expect(qualifier?.matchMode).toBe('any')
+  })
+
   it('parsePerHeroExpr 解析标签、属性和年龄限定', () => {
     expect(parsePerHeroExpr('HasTag(`female`) || HasTag(`evil`)')).toEqual({
       requiredTags: ['female', 'evil'],

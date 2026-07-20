@@ -86,6 +86,32 @@ function toText(value) {
   return null
 }
 
+/**
+ * 归一化 upgrade.effect 到标准 effect 引用串。
+ *
+ * CNE 数据源格式特性（非 bug，见 AGENTS.md 1.3）：upgrade_defines.effect 有时是
+ * JSON 对象串（'{"effect_string":"buff_upgrade,...","description":"..."}'），序列化
+ * 不稳定——357 条对象串中 19 条 effect_string 行末缺逗号为伪 JSON。内部 effect_string
+ * 才是真正的 effect 定义；在归一化层统一提取，让下游消费方永远拿到干净的标准串
+ * （'buff_upgrade,...'），不必各自处理伪 JSON。description / data 等元信息丢弃
+ * （当前无下游消费）。
+ */
+export function normalizeEffectReference(rawEffect) {
+  const text = toText(rawEffect)
+  if (!text) {
+    return null
+  }
+
+  if (text.startsWith('{')) {
+    const match = text.match(/"effect_string"\s*:\s*"([^"]+)"/)
+    if (match) {
+      return match[1]
+    }
+  }
+
+  return text
+}
+
 function compareLocalizedText(left, right) {
   return left.display.localeCompare(right.display) || left.original.localeCompare(right.original)
 }
@@ -1146,7 +1172,7 @@ function normalizeChampionUpgrade(
   effectDefinitionsById,
   localizedEffectDefinitionsById,
 ) {
-  const effectReference = toText(originalDefinition.effect)
+  const effectReference = normalizeEffectReference(originalDefinition.effect)
   const effectDefinitionId = parseEffectDefinitionId(effectReference)
 
   return {

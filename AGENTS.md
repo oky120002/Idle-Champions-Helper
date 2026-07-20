@@ -28,14 +28,13 @@
 - 任何会进入 git 的大体积资源、二进制产物或高频更新文件，都要优先控制数量、体积和改写频率；新增资源流程时，必须显式评估仓库总体大小、单文件大小和历史膨胀风险。
 - 非必要不新增会持续膨胀的资源副本、缓存镜像或重复格式导出；能复用现有事实源和稳定 manifest 的，不再额外复制第二份。
 
-### 1.3 数据源格式追溯（审计与开发硬约束）
+### 1.3 数据源格式追溯
 
-- 遇到上游数据格式异常（看似 malformed / 不一致 / 不合法 JSON、字段缺失、序列化不稳定），**禁止直接在消费层加"容错/兜底"了事**——必须先追溯 raw API 数据源（`tmp/idle-champions-api/definitions-*.json` 是 `master.idlechampions.com` 的原始响应快照）确认根因，区分两种情况：
-  - **数据源格式特性**：raw 就是这样（例：CNE `upgrade_defines.effect` 序列化不稳定，357 条对象串中 19 条 effect_string 行末缺逗号，是伪 JSON；游戏引擎用自己的 effect 解析器不走 `JSON.parse`，故能正常运行）→ 在消费层适配，代码注释和文档必须标记为"数据源格式特性"，**不得描述为"malformed / 数据损坏 / bug"**。
-  - **归一化 bug**：raw 正常但 normalize 后坏了 → 修 `normalize-idle-champions-definitions.mjs`，消费层无需改动。
-- **合理性校验判据**：游戏能正常线上运行 = 源数据大概率没坏。看到"游戏数据有 X 那游戏怎么跑"这种矛盾时，第一反应应是"我的解析假设错了或归一化弄坏了"，而非"游戏数据坏了"。在 raw 源头证实之前，不得下"数据源 bug"的结论。
-- 已确认的数据源格式特性清单（消费层已适配，新增同类时照此处理）：
-  - `upgrade_defines.effect`：部分是 JSON 对象串，序列化不稳定（合法 JSON 与 effect_string 行末缺逗号的伪 JSON 混存）；`src/domain/effects/effect-string.js` 的 `parseEffectPayload` 用 `"effect_string"` 正则统一提取，覆盖两种形态。
+- 上游数据格式异常（看似 malformed / 不合法 JSON / 字段缺失 / 分隔符异常）必须先追溯 raw API 源头（`tmp/idle-champions-api/definitions-*.json`）确认根因，区分「数据源格式特性」vs「归一化 bug」；禁止直接在消费层加兜底了事。
+- 合理性判据：游戏能正常线上运行 = 源数据大概率没坏。出现「数据有 X 那游戏怎么跑」的矛盾时优先怀疑自己的解析假设或 normalize 脚本，raw 证实前不得下"数据源 bug"结论。
+- 数据源格式特性优先在归一化层（`normalize-idle-champions-definitions.mjs`）适配，让消费层拿干净数据；无法在归一化层处理的才退到消费层防御。已确认特性：
+  - `upgrade_defines.effect`：有时是 JSON 对象串，CNE 序列化不稳定（合法 JSON 与 effect_string 行末缺逗号的伪 JSON 混存）；`normalizeEffectReference` 提取 effect_string。
+  - `effect_defines.targets.tags`：多 tag 用 `|` 分隔表示 OR（`cleric|wizard|sorcerer|warlock`），非逗号；`normalizeTargetQualifier` 按 `|` 拆分。
 
 ## 2. AI-first 根目标
 
@@ -100,7 +99,7 @@
 ## 8. 测试
 
 - 新增测试文件必须接入运行器，否则等于没测试：`tests/**` 由 vitest 覆盖；`scripts/data/*.test.mjs` 等 `node:test` 格式由 `npm run test:data` 覆盖（已纳入 `test:regression`）。新增其他 `node:test` 测试目录时，同步扩展 `test:data` glob。
-- 覆盖率/支持度等"派生统计"若维护一份与 scorer 平行的白名单（如支持的 stackFunc 列表），新增能力时必须同步两边，否则统计失真误导后续判断。两份列表无法合并到单一来源时（如跨 .ts scorer 与 .mjs 脚本边界），必须配一个比较两侧 keys 的同步守护测试（见 `tests/unit/planner/scoringSupportSync.test.ts`），让任一侧新增项时测试失败强制同步——手动同步已被多轮审计证明不可靠。
+- 覆盖率/支持度等"派生统计"若与 scorer 维护平行白名单，优先合并单一来源；跨边界（如 .ts scorer 与 .mjs 脚本）合不了时必须配 keys 同步守护测试（如 `scoringSupportSync.test.ts`）强制两侧一致。
 
 ## 9. 构建、预览与截图
 
