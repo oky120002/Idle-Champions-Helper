@@ -24,6 +24,5 @@
 - planner 9.1 锁槽启发式：`build-models.mjs projectMechanicsToScenario` 对 `slot_escort*` mechanic 按 column 降序锁前排首槽（启发式，官方未标注护送具体槽位）。精确槽位需官方 formation 元数据或人工校准后替换。
 - planner 未接线的孤立模块（疑似 M2+ 脚手架，仅有各自测试、无生产 caller，M2 启动时核实去留）：`simulator/gameNumberAddition.ts`（`addGameNumbers` 阈值加法，DPS/gold 链路纯乘法用不到）、`simulator/specializationBaseline.ts` 与 `simulator/goldBudgetBaseline.ts`（可负担等级基线，属阶段 3 金币基线）。
 - planner 2.5 PlannerRecommendationSet 未产出：`recommendationEngine` 只返回单一 `PlannerResult`，`results.slice(0, PLANNER_TOP_K)` 仅用于限缩首个合法结果搜索范围；`PlannerRecommendationSet`（carryRanking/topLineups/slotAlternatives/seatCompetition）目标合同待 M4 UI（15.2）消费时再落地。
-- planner explanation 字符串耦合：`buildPlannerExplanations`（`recommendationEngine.ts`）通过 `rawExplanations.some(line => line.includes('adjacentBuff'))` 等字符串匹配判断 active signal kind 选叙事文案，signal kind 改名会静默失效。建议 `ScoringResult` 暴露结构化 active signal kinds 供消费。
 - planner 设计文档残留：`recommendation-and-placement-design.md` §5 评分规则、§7 输出合同仍描述 pre-v4 的 `carryScore`/`PlannerRecommendationSet` 目标合同（文档自承未实现）；顶部已加指针指向 evolution-plan v4，正文字段级全量同步暂缓，待 §7 目标合同落地时一并修正。
 

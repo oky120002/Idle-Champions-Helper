@@ -3,6 +3,7 @@ import Decimal from 'break_eternity.js'
 import { beamSearch } from '../../../../src/domain/planner/beamSearchRanking'
 import type { ScoringResult } from '../../../../src/domain/planner/steadyStateScoring'
 import { compareGameNumbers } from '../../../../src/domain/simulator/gameNumberArithmetic'
+import type { HeroAbilityKind } from '../../../../src/domain/abilities/abilityModel'
 
 function makeResult(score: number, carryHeroId: string | null = null): ScoringResult {
   const value = new Decimal(score)
@@ -12,6 +13,7 @@ function makeResult(score: number, carryHeroId: string | null = null): ScoringRe
     explanations: [],
     carryHeroId,
     objective: { value, breakdown: [] },
+    activeSignalKinds: new Set<HeroAbilityKind>(),
   }
 }
 
@@ -67,6 +69,7 @@ describe('beam search ranking', () => {
         explanations: ['test explanation'],
         carryHeroId: 'jarlaxle',
         objective: { value, breakdown: [] },
+        activeSignalKinds: new Set<HeroAbilityKind>(),
       }),
     })
 

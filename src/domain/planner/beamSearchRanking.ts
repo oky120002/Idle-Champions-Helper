@@ -1,4 +1,5 @@
 import type { ScoringResult } from './steadyStateScoring'
+import type { HeroAbilityKind } from '../abilities/abilityModel'
 import type { GameNumberValue } from '../simulator/gameNumber'
 import { compareGameNumbers } from '../simulator/gameNumberArithmetic'
 
@@ -15,6 +16,7 @@ export interface BeamSearchResult {
   explanations: string[]
   warnings: string[]
   carryHeroId: string | null
+  activeSignalKinds: Set<HeroAbilityKind>
 }
 
 interface BeamCandidate {
@@ -68,6 +70,7 @@ export function beamSearch(input: BeamSearchInput): BeamSearchResult[] {
         explanations: result.explanations,
         warnings: result.warnings,
         carryHeroId: result.carryHeroId,
+        activeSignalKinds: result.activeSignalKinds,
       }
     })
     .sort((a, b) => compareGameNumbers(b.score, a.score))

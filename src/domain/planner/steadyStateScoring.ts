@@ -1,7 +1,7 @@
 import Decimal from 'break_eternity.js'
 
 import type { ResolvedPlannerScenarioModel } from './plannerModel'
-import type { ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
+import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import { evaluatePlacementFit, type AggregatedPool } from './placementFit'
 import type { ObjectiveResult } from './objectiveModel'
 import { computeCarryDps } from '../simulator/baseDps'
@@ -23,6 +23,8 @@ export interface ScoringResult {
   explanations: string[]
   carryHeroId: string | null
   objective: ObjectiveResult
+  /** best carry 的 active signal kind 集合，供叙事层结构化消费（避免字符串匹配）。 */
+  activeSignalKinds: Set<HeroAbilityKind>
 }
 
 const ZERO: GameNumberValue = new Decimal(0)
@@ -42,6 +44,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
       explanations: [],
       carryHeroId: null,
       objective: { value: ZERO, breakdown: [] },
+      activeSignalKinds: new Set(),
     }
   }
 
@@ -49,11 +52,13 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
   let bestWarnings: string[] = []
   let bestExplanations: string[] = []
   let bestCarryHeroId: string | null = null
+  let bestActiveKinds: Set<HeroAbilityKind> = new Set()
 
   for (const carryEntry of placedEntries) {
     const carryLevel = input.heroLevels?.get(carryEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL
     const warnings = [...carryEntry.hero.unsupportedSignals.map((signal) => `${signal.rawEffect}: ${signal.note}`)]
     const explanations: string[] = []
+    const activeKinds = new Set<HeroAbilityKind>()
     // pool 在整队层面聚合：同一 dimension:scope 的 pool 跨所有支持位合并
     // （addPercent 相加、multFactor 相乘），pool 间再相乘。
     // 不能按支持位独立 pool 乘积再相乘——那会把不同位向同一 pool 的 additive 贡献变成累乘。
@@ -77,6 +82,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
           continue
         }
 
+        activeKinds.add(part.signalKind)
         explanations.push(
           `${supportEntry.hero.heroId}: ${part.signalKind} x${part.multiplier.toFixed(2)} -> ${carryEntry.hero.heroId}`,
         )
@@ -110,6 +116,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
       bestWarnings = [...new Set(warnings)]
       bestExplanations = explanations
       bestCarryHeroId = carryEntry.hero.heroId
+      bestActiveKinds = activeKinds
     }
   }
 
@@ -118,6 +125,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     warnings: bestWarnings,
     explanations: bestExplanations,
     carryHeroId: bestCarryHeroId,
+    activeSignalKinds: bestActiveKinds,
     objective: {
       value: bestScore,
       breakdown: bestCarryHeroId

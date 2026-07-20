@@ -9,7 +9,7 @@ import { beamSearch } from './beamSearchRanking'
 import { buildCandidatePool } from './candidatePool'
 import { checkFormationLegality, type LegalityViolation } from './formationLegality'
 import { findPlannerScenarioForVariant, type ResolvedPlannerScenarioModel } from './plannerModel'
-import type { ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
+import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/abilityModel'
 import {
   type PlannerCollections,
   type PlannerNarrativeLine,
@@ -72,7 +72,7 @@ function buildPlannerExplanations(
   heroById: Map<string, ResolvedHeroAbilityProfile>,
   carryHeroId: string | null,
   carryDps: GameNumberValue,
-  rawExplanations: string[],
+  activeSignalKinds: Set<HeroAbilityKind>,
 ): PlannerNarrativeLine[] {
   const leadChampion = carryHeroId
     ? heroById.get(carryHeroId) ?? null
@@ -83,9 +83,9 @@ function buildPlannerExplanations(
     .slice(0, 4)
     .map((hero) => hero.name.display)
 
-  const hasAdjacentSignal = rawExplanations.some((line) => line.includes('adjacentBuff'))
-  const hasHeroSignal = rawExplanations.some((line) => line.includes('heroDpsMultiplier'))
-  const hasTagSignal = rawExplanations.some((line) => line.includes('taggedChampionBuff'))
+  const hasAdjacentSignal = activeSignalKinds.has('adjacentBuff')
+  const hasHeroSignal = activeSignalKinds.has('heroDpsMultiplier')
+  const hasTagSignal = activeSignalKinds.has('taggedChampionBuff')
 
   const explanations: PlannerNarrativeLine[] = [
     {
@@ -207,6 +207,7 @@ export function buildPlannerRecommendation(
           explanations: ['非法阵型已被过滤。'],
           carryHeroId: null,
           objective: { value: SCORE_ZERO, breakdown: [] },
+          activeSignalKinds: new Set<HeroAbilityKind>(),
         }
       }
 
@@ -242,7 +243,7 @@ export function buildPlannerRecommendation(
         heroById,
         top.carryHeroId,
         top.score,
-        top.explanations,
+        top.activeSignalKinds,
       ),
       warnings: [...new Set([...top.warnings, ...buildPlannerWarnings(scenario, profileSnapshot)])],
     },
