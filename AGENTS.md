@@ -34,7 +34,7 @@
 - 合理性判据：游戏能正常线上运行 = 源数据大概率没坏。出现「数据有 X 那游戏怎么跑」的矛盾时优先怀疑自己的解析假设或 normalize 脚本，raw 证实前不得下"数据源 bug"结论。
 - 数据源格式特性优先在归一化层（`normalize-idle-champions-definitions.mjs`）适配，让消费层拿干净数据；无法在归一化层处理的才退到消费层防御。已确认特性：
   - `upgrade_defines.effect`：有时是 JSON 对象串，CNE 序列化不稳定（合法 JSON 与 effect_string 行末缺逗号的伪 JSON 混存）；`normalizeEffectReference` 提取 effect_string。
-  - `effect_defines.targets.tags`：是**布尔表达式**（`|` OR、`^` AND、`!` NOT、`()` 分组），非简单分隔符列表；`normalizeTargetQualifier.parseTagsExpression` 支持简单 `\|`/`^`/`!`，复合表达式（括号/`\|^` 混用）降级保守不评分。完整统一布尔解析见 `TODO.md` atd_19e8bc990e。
+  - `effect_defines.targets.tags`：是**布尔表达式**（`|` OR、`^` AND、`!` NOT、`()` 分组），非简单分隔符列表；统一由 `parseHeroPredicate(expr, 'shorthand')` 解析为 `HeroPredicateAST`（`src/domain/abilities/heroPredicate.js`），支持任意嵌套复合表达式精确求值。`per_hero_expr` 布尔谓词（functional 语法 `||`/`&&`/`HasTag`/`GetStat`/`age`/`hero_id`/`HasAttackDamageType`）同经 `parseHeroPredicate(expr, 'functional')` 解析到同一 AST，由 `evalHeroPredicate` 统一求值；数值表达式（min/max/floor/GetUpgradeAmount 等）返回 null 归 stage 7 stack 计算。
 
 ## 2. AI-first 根目标
 

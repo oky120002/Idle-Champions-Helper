@@ -409,18 +409,15 @@ test('buildModels 产出 hero abilities / scenarios / semantic overrides', async
   assert.equal(perTaggedCarry?.amountFunc, 'mult')
   assert.equal(perTaggedCarry?.stackFunc, 'per_tagged_crusader_mult')
   assert.deepEqual(perTaggedCarry?.formationCountQualifier, {
-    requiredTags: ['companion'],
-    matchMode: 'any',
+    predicate: { op: 'tag', tag: 'companion' },
   })
   assert.equal(perTaggedBeforeCarry?.amountFunc, 'mult')
   assert.equal(perTaggedBeforeCarry?.stackFunc, 'per_tagged_crusader_mult')
   assert.deepEqual(perTaggedBeforeCarry?.formationCountQualifier, {
-    requiredTags: ['wafflecrew'],
-    matchMode: 'any',
+    predicate: { op: 'tag', tag: 'wafflecrew' },
   })
   assert.deepEqual(perTaggedBeforeCarry?.targetQualifier, {
-    requiredTags: ['wafflecrew'],
-    matchMode: 'any',
+    predicate: { op: 'tag', tag: 'wafflecrew' },
   })
   assert.equal(perTargetPrebonusSupport?.amountFunc, 'mult')
   assert.equal(perTargetPrebonusSupport?.stackFunc, 'per_target_crusader')
@@ -431,16 +428,15 @@ test('buildModels 产出 hero abilities / scenarios / semantic overrides', async
     relation: 'withinTwoSlots',
   })
   assert.deepEqual(perTargetPrebonusSupport?.targetQualifier, {
-    requiredStats: [{ stat: 'dex', operator: '>=', value: 15 }],
+    predicate: { op: 'stat', stat: 'dex', operator: '>=', value: 15 },
   })
   assert.equal(globalSupport?.kind, 'globalDpsMultiplier')
   assert.equal(taggedSupport?.amountFunc, 'add')
   assert.deepEqual(taggedSupport?.targetQualifier, {
-    requiredTags: ['female'],
-    matchMode: 'any',
+    predicate: { op: 'tag', tag: 'female' },
   })
   assert.deepEqual(statCountSupport?.formationCountQualifier, {
-    requiredStats: [{ stat: 'str', operator: '>=', value: 15 }],
+    predicate: { op: 'stat', stat: 'str', operator: '>=', value: 15 },
   })
   assert.equal(targetedHeroSupport?.kind, 'heroDpsMultiplier')
   assert.equal(targetedHeroSupport?.value, 100)
@@ -451,10 +447,10 @@ test('buildModels 产出 hero abilities / scenarios / semantic overrides', async
   assert.equal(attackTypeSupport?.amountFunc, 'mult')
   assert.equal(attackTypeSupport?.stackFunc, 'per_crusader')
   assert.deepEqual(attackTypeSupport?.targetQualifier, {
-    requiredAttackDamageTypes: ['magic'],
+    predicate: { op: 'attackType', attackType: 'magic', negate: false },
   })
   assert.deepEqual(attackTypeSupport?.formationCountQualifier, {
-    requiredAttackDamageTypes: ['magic'],
+    predicate: { op: 'attackType', attackType: 'magic', negate: false },
   })
   assert.equal(behindColumnSupport?.amountFunc, 'mult')
   assert.equal(behindColumnSupport?.stackFunc, 'per_col_behind')
@@ -471,12 +467,11 @@ test('buildModels 产出 hero abilities / scenarios / semantic overrides', async
   assert.equal(taggedBuffSupport?.amountFunc, 'mult')
   assert.equal(taggedBuffSupport?.stackFunc, 'per_tagged_crusader_mult')
   assert.deepEqual(taggedBuffSupport?.formationCountQualifier, {
-    requiredTags: ['evil'],
-    matchMode: 'any',
+    predicate: { op: 'tag', tag: 'evil' },
   })
   assert.equal(taggedBuffSupport?.bonusScaleOfSignal?.rawEffect, 'hero_dps_multiplier_mult,100')
   assert.deepEqual(taggedBuffSupport?.targetQualifier, {
-    requiredStats: [{ stat: 'int', operator: '<=', value: 12 }],
+    predicate: { op: 'stat', stat: 'int', operator: '<=', value: 12 },
   })
   assert.equal(whereBuffSupport?.kind, 'heroDpsMultiplier')
   assert.equal(whereBuffSupport?.value, 25)
@@ -484,10 +479,10 @@ test('buildModels 产出 hero abilities / scenarios / semantic overrides', async
   assert.equal(whereBuffSupport?.stackFunc, 'per_crusader')
   assert.equal(whereBuffSupport?.bonusScaleOfSignal?.rawEffect, 'hero_dps_multiplier_mult,60')
   assert.deepEqual(whereBuffSupport?.formationCountQualifier, {
-    requiredStats: [{ stat: 'int', operator: '>=', value: 15 }],
+    predicate: { op: 'stat', stat: 'int', operator: '>=', value: 15 },
   })
   assert.deepEqual(whereBuffSupport?.targetQualifier, {
-    requiredAttackDamageTypes: ['magic'],
+    predicate: { op: 'attackType', attackType: 'magic', negate: false },
   })
   assert.equal(distanceBuffSupport?.kind, 'heroDpsMultiplier')
   assert.equal(distanceBuffSupport?.value, 400)

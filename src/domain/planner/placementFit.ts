@@ -9,6 +9,7 @@ import type {
 } from '../abilities/abilityModel'
 import { DIMENSION_BY_KIND, POOL_SCOPE_BY_KIND } from '../abilities/abilityModel'
 import { matchesHeroQualifier } from '../abilities/signalSemantics.js'
+import { predicateHasNode } from '../abilities/heroPredicate.js'
 
 export interface PlacementFitScorePart {
   signalKind: HeroAbilitySignal['kind']
@@ -521,14 +522,14 @@ function resolveActiveReasonCode(signal: HeroAbilitySignal, relation: HeroPositi
     case 'thirdRearMostColumn':
       return 'third-rear-most-column-match'
     case 'any':
-      return (signal.targetQualifier?.requiredStats?.length ?? 0) > 0 ? 'stat-match' : 'tag-match'
+      return predicateHasNode(signal.targetQualifier?.predicate, 'stat') ? 'stat-match' : 'tag-match'
     default:
-      return (signal.targetQualifier?.requiredStats?.length ?? 0) > 0 ? 'stat-match' : 'tag-match'
+      return predicateHasNode(signal.targetQualifier?.predicate, 'stat') ? 'stat-match' : 'tag-match'
   }
 }
 
 function inferMismatchReason(signal: HeroAbilitySignal): 'tag-mismatch' | 'stat-mismatch' {
-  if ((signal.targetQualifier?.requiredStats?.length ?? 0) > 0) {
+  if (predicateHasNode(signal.targetQualifier?.predicate, 'stat')) {
     return 'stat-mismatch'
   }
 
@@ -573,8 +574,8 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): PoolAggr
 
     if (
       signal.kind === 'taggedChampionBuff'
-      && (signal.targetQualifier?.requiredTags?.length ?? 0) === 0
-      && (signal.targetQualifier?.requiredStats?.length ?? 0) === 0
+      && !predicateHasNode(signal.targetQualifier?.predicate, 'tag')
+      && !predicateHasNode(signal.targetQualifier?.predicate, 'stat')
     ) {
       warnings.push(`${signal.rawEffect} 缺少 carry 目标标签，当前不计分。`)
       scoreBreakdown.push({

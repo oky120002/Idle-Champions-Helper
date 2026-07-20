@@ -8,9 +8,11 @@ import {
   attachSignalSemantics,
   normalizeExplicitTargeting,
   normalizeStatQualifiers,
+  statQualifiersToNodes,
   normalizeTargetQualifier,
   parsePerHeroExpr,
 } from '../../src/domain/abilities/signalSemantics.js'
+import { parseHeroPredicate } from '../../src/domain/abilities/heroPredicate.js'
 
 function resolveNumericValue(effectValue, effectPayload, effectPayloads, upgradePayloadsById) {
   if (typeof effectPayload?.meta?.amount_expr === 'string') {
@@ -66,20 +68,8 @@ function parseTagQualifierFromArg(rawValue) {
   if (typeof rawValue !== 'string') {
     return null
   }
-
-  const requiredTags = rawValue
-    .split('|')
-    .map((tag) => tag.trim().toLowerCase())
-    .filter(Boolean)
-
-  if (requiredTags.length === 0) {
-    return null
-  }
-
-  return {
-    requiredTags: [...new Set(requiredTags)],
-    matchMode: 'any',
-  }
+  const predicate = parseHeroPredicate(rawValue, 'shorthand')
+  return predicate ? { predicate } : null
 }
 
 function buildEffectEntry({
@@ -165,7 +155,8 @@ function parseWhereQualifierFromArgs(compare, comparison, check) {
   const numericCheck = Number(check)
 
   if (normalizedCompare === 'age' || normalizedCompare === 'base_attack_cooldown') {
-    return parsePerHeroExpr(`${normalizedCompare}${normalizedComparison}${check}`)
+    const predicate = parsePerHeroExpr(`${normalizedCompare}${normalizedComparison}${check}`)
+    return predicate ? { predicate } : null
   }
 
   if (!Number.isFinite(numericCheck)) {
@@ -183,11 +174,12 @@ function parseWhereQualifierFromArgs(compare, comparison, check) {
     ],
   })
 
-  if (!requiredStats) {
+  if (!requiredStats || requiredStats.length === 0) {
     return null
   }
 
-  return { requiredStats }
+  const nodes = statQualifiersToNodes(requiredStats)
+  return { predicate: nodes.length === 1 ? nodes[0] : { op: 'and', children: nodes } }
 }
 
 function resolveBuffUpgradeSeed(entry) {

@@ -634,7 +634,7 @@ describe('placement fit', () => {
             value: 50,
             rawEffect: 'tag_dps,50',
             source: 'repo-semantic-patch',
-            targetQualifier: { requiredTags: ['female'], matchMode: 'any' },
+            targetQualifier: { predicate: { op: 'tag', tag: 'female' } },
           },
         ],
       }),
@@ -676,7 +676,7 @@ describe('placement fit', () => {
           source: 'official-parsed',
           amountFunc: 'add',
           stackFunc: 'per_crusader',
-          targetQualifier: { requiredTags: ['female'], matchMode: 'any' },
+          targetQualifier: { predicate: { op: 'tag', tag: 'female' } },
         },
       ],
     })
@@ -712,7 +712,7 @@ describe('placement fit', () => {
           source: 'official-parsed',
           amountFunc: 'mult',
           stackFunc: 'per_crusader',
-          targetQualifier: { requiredTags: ['female'], matchMode: 'any' },
+          targetQualifier: { predicate: { op: 'tag', tag: 'female' } },
         },
       ],
     })
@@ -835,11 +835,10 @@ describe('placement fit', () => {
           stackFunc: 'per_tagged_crusader_mult',
           positionQualifier: { relation: 'any' },
           formationCountQualifier: {
-            requiredTags: ['evil'],
-            matchMode: 'any',
+            predicate: { op: 'tag', tag: 'evil' },
           },
           targetQualifier: {
-            requiredStats: [{ stat: 'int', operator: '<=', value: 12 }],
+            predicate: { op: 'stat', stat: 'int', operator: '<=', value: 12 },
           },
           bonusScaleOfSignal: {
             kind: 'heroDpsMultiplier',
@@ -848,7 +847,7 @@ describe('placement fit', () => {
             source: 'official-parsed',
             positionQualifier: { relation: 'any' },
             targetQualifier: {
-              requiredStats: [{ stat: 'int', operator: '<=', value: 12 }],
+              predicate: { op: 'stat', stat: 'int', operator: '<=', value: 12 },
             },
           },
         },
@@ -953,7 +952,7 @@ describe('placement fit', () => {
             rawEffect: 'tag_dps,40',
             source: 'official-parsed',
             targetQualifier: {
-              requiredStats: [{ stat: 'cha', operator: '>=', value: 11 }],
+              predicate: { op: 'stat', stat: 'cha', operator: '>=', value: 11 },
             },
           },
         ],
@@ -978,7 +977,7 @@ describe('placement fit', () => {
           source: 'official-parsed',
           amountFunc: 'mult',
           stackFunc: 'per_hero_attribute',
-          formationCountQualifier: { requiredTags: ['evil'], matchMode: 'any' },
+          formationCountQualifier: { predicate: { op: 'tag', tag: 'evil' } },
         },
       ],
     })
@@ -1013,7 +1012,7 @@ describe('placement fit', () => {
           amountFunc: 'add',
           stackFunc: 'per_hero_attribute',
           formationCountQualifier: {
-            requiredStats: [{ stat: 'dex', operator: '>=', value: 16 }],
+            predicate: { op: 'stat', stat: 'dex', operator: '>=', value: 16 },
           },
         },
       ],
@@ -1049,7 +1048,7 @@ describe('placement fit', () => {
           amountFunc: 'mult',
           stackFunc: 'per_hero_attribute',
           formationCountQualifier: {
-            requiredAttackDamageTypes: ['magic'],
+            predicate: { op: 'attackType', attackType: 'magic', negate: false },
           },
         },
       ],
@@ -1141,7 +1140,7 @@ describe('placement fit', () => {
           amountFunc: 'mult',
           stackFunc: 'per_upgrade_targets',
           positionQualifier: { relation: 'nonAdjacent' },
-          targetQualifier: { requiredTags: ['female'], matchMode: 'any' },
+          targetQualifier: { predicate: { op: 'tag', tag: 'female' } },
         },
       ],
     })

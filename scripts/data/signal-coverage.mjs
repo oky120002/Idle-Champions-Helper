@@ -4,10 +4,9 @@ import { fileURLToPath } from 'node:url'
 
 import {
   attachSignalSemantics,
-  normalizeStatQualifiers,
-  normalizeTargetQualifier,
   parsePerHeroExpr,
 } from '../../src/domain/abilities/signalSemantics.js'
+import { predicateHasNode } from '../../src/domain/abilities/heroPredicate.js'
 import {
   analyzeBuffUpgradeWrappers,
   collectEffectEntries,
@@ -207,10 +206,10 @@ export function generateSignalCoverageReport(details) {
         manualSignals += 1
       }
 
-      if (signal.targetQualifier?.requiredTags?.length) {
+      if (predicateHasNode(signal.targetQualifier?.predicate, 'tag')) {
         signalsWithTagTargetQualifier += 1
       }
-      if (signal.targetQualifier?.requiredStats?.length) {
+      if (predicateHasNode(signal.targetQualifier?.predicate, 'stat')) {
         signalsWithStatTargetQualifier += 1
       }
 
@@ -221,16 +220,13 @@ export function generateSignalCoverageReport(details) {
         }
       }
 
-      if (signal.formationCountQualifier?.requiredTags?.length) {
+      if (predicateHasNode(signal.formationCountQualifier?.predicate, 'tag')) {
         signalsWithTagCountQualifier += 1
       }
-      if (signal.formationCountQualifier?.requiredStats?.length) {
+      if (predicateHasNode(signal.formationCountQualifier?.predicate, 'stat')) {
         signalsWithStatCountQualifier += 1
       }
-      if (
-        signal.formationCountQualifier?.minAge !== undefined
-        || signal.formationCountQualifier?.maxAge !== undefined
-      ) {
+      if (predicateHasNode(signal.formationCountQualifier?.predicate, 'age')) {
         signalsWithAgeCountQualifier += 1
       }
     }

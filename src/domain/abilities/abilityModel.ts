@@ -17,8 +17,6 @@ export type HeroAbilitySource =
   | 'browser-local-override'
   | 'heuristic-fallback'
 
-export type HeroAbilityMatchMode = 'any' | 'all'
-
 export type HeroPositionRelation =
   | 'any'
   | 'self'
@@ -60,22 +58,20 @@ export interface HeroStatQualifier {
   value: number
 }
 
+export type HeroPredicateAST =
+  | { op: 'or'; children: HeroPredicateAST[] }
+  | { op: 'and'; children: HeroPredicateAST[] }
+  | { op: 'not'; child: HeroPredicateAST }
+  | { op: 'tag'; tag: string }
+  | { op: 'stat'; stat: HeroStatKey; operator: HeroComparisonOperator; value: number }
+  | { op: 'age'; operator: HeroComparisonOperator; value: number; excludeHeroId?: string }
+  | { op: 'heroId'; heroId: string; negate: boolean }
+  | { op: 'attackType'; attackType: string; negate: boolean }
+  | { op: 'baseAttackCooldown'; operator: HeroComparisonOperator; value: number }
+  | { op: 'true' }
+
 export interface HeroQualifier {
-  requiredTags?: string[]
-  excludedTags?: string[]
-  matchMode?: HeroAbilityMatchMode
-  requiredStats?: HeroStatQualifier[]
-  requiredBaseAttackCooldown?: {
-    operator: HeroComparisonOperator
-    value: number
-  }
-  requiredAttackDamageTypes?: string[]
-  excludedAttackDamageTypes?: string[]
-  minAge?: number | null
-  minAgeOperator?: '>=' | '>'
-  maxAge?: number | null
-  maxAgeOperator?: '<=' | '<'
-  excludedHeroIds?: string[]
+  predicate: HeroPredicateAST
 }
 
 export interface HeroPositionQualifier {

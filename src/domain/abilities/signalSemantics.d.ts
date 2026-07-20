@@ -1,7 +1,9 @@
 import type {
   HeroAbilitySignal,
+  HeroPredicateAST,
   HeroQualifier,
   HeroPositionRelation,
+  HeroStatQualifier,
   ResolvedHeroAbilityProfile,
 } from './abilityModel'
 
@@ -35,9 +37,13 @@ export declare function normalizeTargetQualifier(effect: unknown): HeroQualifier
 
 export declare function normalizeStatQualifiers(
   effect: unknown,
-): NonNullable<HeroQualifier['requiredStats']> | null
+): HeroStatQualifier[] | null
 
-export declare function parsePerHeroExpr(expr: unknown): HeroQualifier | null
+export declare function statQualifiersToNodes(
+  statQualifiers: HeroStatQualifier[] | null,
+): HeroPredicateAST[]
+
+export declare function parsePerHeroExpr(expr: unknown): HeroPredicateAST | null
 
 export declare function attachSignalSemantics(
   signal: HeroAbilitySignal,

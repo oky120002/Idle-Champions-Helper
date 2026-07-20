@@ -33,124 +33,159 @@ function createHero(heroId: string, overrides: Partial<HeroAbilityProfile> = {})
 }
 
 describe('planner signal semantics', () => {
-  it('normalizeTargetQualifier 把 | 分隔的多 tag 拆成独立 tag（IC OR 语义）', () => {
-    // IC 数据源：effect_defines.targets 的 tags 字段用 | 表示 OR（任一匹配），
-    // 如 cleric|wizard|sorcerer|warlock = 目标是这四职业之一。
-    // 旧实现只按逗号 split，整串被当成 1 个不存在的"超级 tag"，
-    // matchesHeroQualifier 永远匹配失败 → buff 全部失效（521 条 signal 受影响）。
+  it('normalizeTargetQualifier 把 | 分隔的多 tag 解析为 OR 谓词（IC OR 语义）', () => {
+    // IC tags 用 | 表示 OR（任一匹配）：cleric|wizard|sorcerer|warlock = 目标是四职业之一。
     const qualifier = normalizeTargetQualifier({
       targets: [{ type: 'tags', tags: 'cleric|wizard|sorcerer|warlock' }],
     })
-    expect(qualifier?.requiredTags).toEqual(['cleric', 'wizard', 'sorcerer', 'warlock'])
-    expect(qualifier?.matchMode).toBe('any')
+    expect(qualifier?.predicate).toEqual({
+      op: 'or',
+      children: [
+        { op: 'tag', tag: 'cleric' },
+        { op: 'tag', tag: 'wizard' },
+        { op: 'tag', tag: 'sorcerer' },
+        { op: 'tag', tag: 'warlock' },
+      ],
+    })
   })
 
-  it('normalizeTargetQualifier 把 ^ 分隔的多 tag 解析为 AND（IC AND 语义）', () => {
+  it('normalizeTargetQualifier 把 ^ 分隔的多 tag 解析为 AND 谓词（IC AND 语义）', () => {
     // IC tags 用 ^ 表示 AND（全部命中）：lawful^good = 守序且善良。
     const qualifier = normalizeTargetQualifier({
       targets: [{ type: 'tags', tags: 'lawful^good' }],
     })
-    expect(qualifier?.requiredTags).toEqual(['lawful', 'good'])
-    expect(qualifier?.matchMode).toBe('all')
+    expect(qualifier?.predicate).toEqual({
+      op: 'and',
+      children: [{ op: 'tag', tag: 'lawful' }, { op: 'tag', tag: 'good' }],
+    })
   })
 
-  it('normalizeTargetQualifier 把 !tag^!tag 解析为多 tag 排除', () => {
-    // IC tags 用 ! 前缀表示 NOT，^ 连接多个排除项：!evil^!blackdicesociety = 排除这两 tag。
+  it('normalizeTargetQualifier 把 !tag^!tag 解析为 AND(NOT, NOT)', () => {
+    // ! 前缀 NOT，^ 连接：!evil^!blackdicesociety = 既非 evil 也非 blackdicesociety。
     const qualifier = normalizeTargetQualifier({
       targets: [{ type: 'tags', tags: '!evil^!blackdicesociety' }],
     })
-    expect(qualifier?.excludedTags).toEqual(['evil', 'blackdicesociety'])
-    expect(qualifier?.requiredTags ?? []).toEqual([])
+    expect(qualifier?.predicate).toEqual({
+      op: 'and',
+      children: [
+        { op: 'not', child: { op: 'tag', tag: 'evil' } },
+        { op: 'not', child: { op: 'tag', tag: 'blackdicesociety' } },
+      ],
+    })
   })
 
-  it('normalizeTargetQualifier 把单 !tag 解析为排除', () => {
+  it('normalizeTargetQualifier 把单 !tag 解析为 NOT', () => {
     const qualifier = normalizeTargetQualifier({
       targets: [{ type: 'tags', tags: '!human' }],
     })
-    expect(qualifier?.excludedTags).toEqual(['human'])
+    expect(qualifier?.predicate).toEqual({ op: 'not', child: { op: 'tag', tag: 'human' } })
   })
 
-  it('normalizeTargetQualifier 对复合表达式（括号/|^混用）降级为保守永真假', () => {
+  it('normalizeTargetQualifier 对复合表达式（括号/|^混用）解析为谓词树精确求值', () => {
     // IC tags 支持括号复合：((geneutral|evil)^dps)|(good^support)。
-    // HeroQualifier 扁平结构表达不了布尔树，降级为永真假 qualifier（保守不评分），
-    // 避免错误拆分导致误匹配。完整解析见 AGENTS.md「IC 英雄谓词表达式」技术债。
+    // 统一谓词树支持任意嵌套，精确求值，不再降级保守。
     const qualifier = normalizeTargetQualifier({
       targets: [{ type: 'tags', tags: '((geneutral|evil)^dps)|(good^support)' }],
     })
-    expect(qualifier?.requiredTags).toEqual(['__ic_unsupported_target_expr__'])
-    expect(qualifier?.matchMode).toBe('all')
+    expect(qualifier?.predicate).toEqual({
+      op: 'or',
+      children: [
+        {
+          op: 'and',
+          children: [
+            { op: 'or', children: [{ op: 'tag', tag: 'geneutral' }, { op: 'tag', tag: 'evil' }] },
+            { op: 'tag', tag: 'dps' },
+          ],
+        },
+        { op: 'and', children: [{ op: 'tag', tag: 'good' }, { op: 'tag', tag: 'support' }] },
+      ],
+    })
+    expect(matchesHeroQualifier(createHero('h', { tags: ['geneutral', 'dps'] }), qualifier)).toBe(true)
+    expect(matchesHeroQualifier(createHero('h', { tags: ['good', 'support'] }), qualifier)).toBe(true)
+    expect(matchesHeroQualifier(createHero('h', { tags: ['good'] }), qualifier)).toBe(false)
+    expect(matchesHeroQualifier(createHero('h', { tags: [] }), qualifier)).toBe(false)
   })
 
-  it('parsePerHeroExpr 解析标签、属性和年龄限定', () => {
+  it('parsePerHeroExpr 解析标签、属性、年龄、攻击类型与英雄 id 限定（functional 谓词）', () => {
     expect(parsePerHeroExpr('HasTag(`female`) || HasTag(`evil`)')).toEqual({
-      requiredTags: ['female', 'evil'],
-      matchMode: 'any',
+      op: 'or',
+      children: [{ op: 'tag', tag: 'female' }, { op: 'tag', tag: 'evil' }],
     })
 
-    expect(parsePerHeroExpr('is_undead')).toEqual({
-      requiredTags: ['undead'],
-      matchMode: 'any',
-    })
+    expect(parsePerHeroExpr('is_undead')).toEqual({ op: 'tag', tag: 'undead' })
 
     expect(parsePerHeroExpr('GetStat(`CHA`) >= 11')).toEqual({
-      requiredStats: [{ stat: 'cha', operator: '>=', value: 11 }],
+      op: 'stat',
+      stat: 'cha',
+      operator: '>=',
+      value: 11,
     })
 
     expect(parsePerHeroExpr('GetStat(`total_ability_score`) <= 78')).toEqual({
-      requiredStats: [{ stat: 'total_ability_score', operator: '<=', value: 78 }],
+      op: 'stat',
+      stat: 'total_ability_score',
+      operator: '<=',
+      value: 78,
     })
 
     expect(parsePerHeroExpr('age <= 20 && hero_id!=58')).toEqual({
-      maxAge: 20,
-      maxAgeOperator: '<=',
-      excludedHeroIds: ['58'],
+      op: 'and',
+      children: [
+        { op: 'age', operator: '<=', value: 20 },
+        { op: 'heroId', heroId: '58', negate: true },
+      ],
     })
 
     expect(parsePerHeroExpr('HasAttackDamageType(`magic`)')).toEqual({
-      requiredAttackDamageTypes: ['magic'],
+      op: 'attackType',
+      attackType: 'magic',
+      negate: false,
     })
 
     expect(parsePerHeroExpr('!HasAttackDamageType(`melee`)')).toEqual({
-      excludedAttackDamageTypes: ['melee'],
+      op: 'not',
+      child: { op: 'attackType', attackType: 'melee', negate: false },
     })
 
     expect(parsePerHeroExpr('!HasTag(`human`)')).toEqual({
-      excludedTags: ['human'],
+      op: 'not',
+      child: { op: 'tag', tag: 'human' },
     })
 
     expect(parsePerHeroExpr('(HasTag(`female`) || HasTag(`non_binary`)) && age<110')).toEqual({
-      requiredTags: ['female', 'non_binary'],
-      matchMode: 'any',
-      maxAge: 110,
-      maxAgeOperator: '<',
+      op: 'and',
+      children: [
+        { op: 'or', children: [{ op: 'tag', tag: 'female' }, { op: 'tag', tag: 'non_binary' }] },
+        { op: 'age', operator: '<', value: 110 },
+      ],
     })
 
     expect(parsePerHeroExpr('age <= 20 && hero_id != 146')).toEqual({
-      maxAge: 20,
-      maxAgeOperator: '<=',
-      excludedHeroIds: ['146'],
+      op: 'and',
+      children: [
+        { op: 'age', operator: '<=', value: 20 },
+        { op: 'heroId', heroId: '146', negate: true },
+      ],
     })
 
     expect(parsePerHeroExpr('as_int(!HasTag(`dps`))')).toEqual({
-      excludedTags: ['dps'],
+      op: 'not',
+      child: { op: 'tag', tag: 'dps' },
     })
 
-    expect(parsePerHeroExpr('as_int(HasTag(`dragonborn`))')).toEqual({
-      requiredTags: ['dragonborn'],
-      matchMode: 'any',
-    })
+    expect(parsePerHeroExpr('as_int(HasTag(`dragonborn`))')).toEqual({ op: 'tag', tag: 'dragonborn' })
 
     expect(parsePerHeroExpr('base_attack_cooldown<=4')).toEqual({
-      requiredBaseAttackCooldown: {
-        operator: '<=',
-        value: 4,
-      },
+      op: 'baseAttackCooldown',
+      operator: '<=',
+      value: 4,
     })
 
+    // 数值表达式（min_stat_value 是变量）返回 null，归 stage 7 stack 计算。
     expect(parsePerHeroExpr('as_int(GetStat(`int`) >= min_stat_value)')).toBeNull()
   })
 
-  it('matchesHeroQualifier 用统一规则判断标签、属性、年龄和排除英雄', () => {
+  it('matchesHeroQualifier 对谓词树递归求值标签、属性、年龄、攻击类型与英雄 id', () => {
     const hero = createHero('carry', {
       tags: ['female', 'evil', 'undead'],
       baseAttackDamageTypes: ['magic'],
@@ -160,54 +195,58 @@ describe('planner signal semantics', () => {
     })
 
     expect(matchesHeroQualifier(hero, {
-      requiredTags: ['female'],
-      requiredStats: [{ stat: 'cha', operator: '>=', value: 11 }],
-      maxAge: 20,
+      predicate: {
+        op: 'and',
+        children: [
+          { op: 'tag', tag: 'female' },
+          { op: 'stat', stat: 'cha', operator: '>=', value: 11 },
+          { op: 'age', operator: '<=', value: 20 },
+        ],
+      },
     })).toBe(true)
 
     expect(matchesHeroQualifier(hero, {
-      requiredStats: [{ stat: 'total_ability_score', operator: '<=', value: 90 }],
+      predicate: { op: 'stat', stat: 'total_ability_score', operator: '<=', value: 90 },
     })).toBe(true)
 
     expect(matchesHeroQualifier(hero, {
-      requiredStats: [{ stat: 'total_ability_score', operator: '>=', value: 100 }],
+      predicate: { op: 'stat', stat: 'total_ability_score', operator: '>=', value: 100 },
     })).toBe(false)
 
     expect(matchesHeroQualifier(hero, {
-      requiredTags: ['undead'],
+      predicate: { op: 'tag', tag: 'undead' },
     })).toBe(true)
 
     expect(matchesHeroQualifier(hero, {
-      excludedTags: ['human'],
+      predicate: { op: 'not', child: { op: 'tag', tag: 'human' } },
     })).toBe(true)
 
     expect(matchesHeroQualifier(hero, {
-      excludedTags: ['evil'],
+      predicate: { op: 'not', child: { op: 'tag', tag: 'evil' } },
     })).toBe(false)
 
     expect(matchesHeroQualifier(hero, {
-      maxAge: 19,
-      maxAgeOperator: '<',
+      predicate: { op: 'age', operator: '<', value: 19 },
     })).toBe(false)
 
     expect(matchesHeroQualifier(hero, {
-      excludedHeroIds: ['carry'],
+      predicate: { op: 'heroId', heroId: 'carry', negate: true },
     })).toBe(false)
 
     expect(matchesHeroQualifier(hero, {
-      requiredAttackDamageTypes: ['magic'],
+      predicate: { op: 'attackType', attackType: 'magic', negate: false },
     })).toBe(true)
 
     expect(matchesHeroQualifier(hero, {
-      excludedAttackDamageTypes: ['magic'],
+      predicate: { op: 'attackType', attackType: 'magic', negate: true },
     })).toBe(false)
 
     expect(matchesHeroQualifier(hero, {
-      requiredBaseAttackCooldown: { operator: '<=', value: 4.5 },
+      predicate: { op: 'baseAttackCooldown', operator: '<=', value: 4.5 },
     })).toBe(true)
 
     expect(matchesHeroQualifier(hero, {
-      requiredBaseAttackCooldown: { operator: '<', value: 4.5 },
+      predicate: { op: 'baseAttackCooldown', operator: '<', value: 4.5 },
     })).toBe(false)
   })
 
@@ -226,8 +265,7 @@ describe('planner signal semantics', () => {
     )
 
     expect(taggedSignal.targetQualifier).toEqual({
-      requiredTags: ['female'],
-      matchMode: 'any',
+      predicate: { op: 'tag', tag: 'female' },
     })
     expect(taggedSignal.formationCountQualifier).toBeNull()
     expect(taggedSignal.amountFunc).toBe('add')
@@ -248,7 +286,7 @@ describe('planner signal semantics', () => {
 
     expect(stackedSignal.targetQualifier).toBeNull()
     expect(stackedSignal.formationCountQualifier).toEqual({
-      requiredStats: [{ stat: 'str', operator: '>=', value: 15 }],
+      predicate: { op: 'stat', stat: 'str', operator: '>=', value: 15 },
     })
     expect(stackedSignal.stackFunc).toBe('per_hero_attribute')
     expect(stackedSignal.amountFunc).toBe('mult')
@@ -270,7 +308,7 @@ describe('planner signal semantics', () => {
     )
 
     expect(stackedSignal.formationCountQualifier).toEqual({
-      requiredAttackDamageTypes: ['ranged'],
+      predicate: { op: 'attackType', attackType: 'ranged', negate: false },
     })
   })
 
@@ -289,7 +327,7 @@ describe('planner signal semantics', () => {
     )
 
     expect(signal.targetQualifier).toEqual({
-      requiredAttackDamageTypes: ['magic'],
+      predicate: { op: 'attackType', attackType: 'magic', negate: false },
     })
     expect(signal.formationCountQualifier).toBeNull()
   })
@@ -326,7 +364,7 @@ describe('planner signal semantics', () => {
         amountFunc: 'add',
         stackFunc: 'per_target_crusader',
         formationCountPositionQualifier: { relation: 'adjacent' },
-        formationCountQualifier: { requiredTags: ['companion'], matchMode: 'any' },
+        formationCountQualifier: { predicate: { op: 'tag', tag: 'companion' } },
       },
       {
         targets: ['self'],
@@ -340,8 +378,7 @@ describe('planner signal semantics', () => {
       relation: 'adjacent',
     })
     expect(signal.formationCountQualifier).toEqual({
-      requiredTags: ['companion'],
-      matchMode: 'any',
+      predicate: { op: 'tag', tag: 'companion' },
     })
     expect(signal.amountFunc).toBe('add')
     expect(signal.stackFunc).toBe('per_target_crusader')
@@ -529,12 +566,10 @@ describe('planner signal semantics', () => {
 
     expect(signal.positionQualifier).toEqual({ relation: 'nonAdjacent' })
     expect(signal.targetQualifier).toEqual({
-      requiredTags: ['female'],
-      matchMode: 'any',
+      predicate: { op: 'tag', tag: 'female' },
     })
     expect(signal.formationCountQualifier).toEqual({
-      requiredTags: ['female'],
-      matchMode: 'any',
+      predicate: { op: 'tag', tag: 'female' },
     })
   })
 
@@ -554,8 +589,7 @@ describe('planner signal semantics', () => {
 
     expect(signal.positionQualifier).toBeNull()
     expect(signal.targetQualifier).toEqual({
-      requiredTags: ['female'],
-      matchMode: 'any',
+      predicate: { op: 'tag', tag: 'female' },
     })
     expect(signal.formationCountQualifier).toBeNull()
   })
