@@ -11,8 +11,6 @@
 
 ## 当前待办
 
-- planner scoring: 继续审查 `per_tagged_crusader_mult`、`per_crusader_mult`、`per_target_crusader` 是否还存在更多来源字段分支未统一，例如 `target_filters_or`、`targets` 内嵌过滤对象之外的变体。
-- planner qualifier audit: 审查官方过滤条件里除 `>= <= == > <` 外的比较符与别名写法，统一归一化，避免 stat / age / cooldown 条件静默失效。
 - planner targeting 覆盖缺口：14 个 `hero_dps_multiplier_mult` effect 因 `normalizeTargetRelation`（`signalSemantics.js`）不识别 targets 关系而整体进 unsupported，真实 DPS 加成被丢。未识别关系含位置类（`other`/`self_and_ahead`/`self_and_behind_and_ahead`/`middle_columns`/`tallest_column`/`top_row_of_each_column`/`bottom_row_of_each_column`/`col_and_back_x`/`cascade`）与特定机制类（`heroes[id]`/`bud_setter`/`snowflake`/`active_campaign`/`slot_if_expr`）。建议先补位置类（映射到现有 `HeroPositionRelation` 或扩枚举），特定机制类评估是否长期 unsupported。
 - planner unsupported audit: 针对仍然高频的 `buff_upgrade` / `buff_upgrades` 做自动化阵型价值审计，但范围收敛到“基础升级已可见、且直接影响 carry 输出”的剩余子族；优先看 `buff_upgrade_per_target_crusader_mult`、距离相关 wrapper 和少量 still-high-value base effect 缺口，不做泛化全铺。
 - planner unsupported audit: 重新审查 `effect_def` / `pre_stack_amount` 在 planner 里的价值边界，能复用共享 effect payload 解析的就下沉到公共层，避免 planner 单独维护第二套解释。
@@ -29,8 +27,6 @@
 - css/tsx 体量预算超限：`src/styles/pages/champions.css` 647 行（>520，必须拆）、`planner.css` / `shared/results/card.css` / `shared/workbench/toolbar.css` 约 407 行（应拆）；`src/components/workbench/PageWorkbenchShell.tsx` 271、`WorkbenchScaffold.tsx` 266（应拆）。下次触碰对应文件时按业务边界拆。
 - planner 候选池 / 模拟器实现缺口：`computeHypotheticalBaseline` 已实现但 `candidatePool` 的 all-hypothetical 分支未调用（未拥有英雄拿到空装备而非同 seat 中位数）；`SimulationChampionProfile` 字段不全（缺 seat/tags/roles/ability scores/localized name/specialization unlock）且 `projectChampionSimulationProfile` 无生产消费；`candidatePool` overrides 只有 level+equipment，缺 feat/specialization/legendary；`deleteUserProfileData` 未清 `heroAbilityOverrides`；`simulator-data-coverage.mjs` 的 `generateCoverageReport` 孤儿无调用。需连线或显式标注暂缓。
 - formation scenarioRef 失效校验缺口：`draft-persistence.md` / `storage-and-recovery.md` 原称恢复时校验 scenarioRef，实际 `src/data/formation-persistence/validation.ts` 不校验（文档已按代码事实修正）。若产品需识别失效场景身份，再补 `scenarioRef.kind/id` 校验。
-- planner beamSearch seat 冲突未在生成阶段过滤：`beamSearchRanking.ts` 只按 `usedHeroes` 去重，不按 seat 去重；同 seat 候选会被生成、`scoreFormation` 评分为零后仍占 beam 槽位，在 owned 集中同 seat 英雄较多时可能挤掉合法候选导致漏推。建议候选生成处加 `usedSeats` 跟踪跳过同 seat 英雄，`checkFormationLegality` 的 seat 分支退化为兜底。
-- planner beamSearch 弱测试：`BeamSearchInput.adjacency` 与 `BeamCandidate.slotIndex` 死参数已删（adjacency 语义由 slotTopology 在 placementFit 处理）；`beamSearchRanking.test.ts` 三条用例仍只断言 `length>0 / score>0`，未验证排序正确性与 beam 剪枝，下次触碰时补排序/剪枝断言。
 - planner 9.1 锁槽启发式：`build-models.mjs projectMechanicsToScenario` 对 `slot_escort*` mechanic 按 column 降序锁前排首槽（启发式，官方未标注护送具体槽位）。精确槽位需官方 formation 元数据或人工校准后替换。
 - planner 未接线的孤立模块（疑似 M2+ 脚手架，仅有各自测试、无生产 caller，M2 启动时核实去留）：`simulator/gameNumberAddition.ts`（`addGameNumbers` 阈值加法，DPS/gold 链路纯乘法用不到）、`simulator/specializationBaseline.ts` 与 `simulator/goldBudgetBaseline.ts`（可负担等级基线，属阶段 3 金币基线）、`planner/variantRuleProjection.ts` 的 `projectVariantRules`+`RULE_TYPE_MAP`（运行时规则投影，已被 build 期 `scenario.bannedHeroes/forcedHeroes` 取代；`VariantConstraint`/`VariantRuleResult` 类型仍被 `formationLegality`/`recommendationEngine` 使用，`allowList` 分支无人产生或校验）。
 - planner 2.5 PlannerRecommendationSet 未产出：`recommendationEngine` 只返回单一 `PlannerResult`，`results.slice(0, PLANNER_TOP_K)` 仅用于限缩首个合法结果搜索范围；`PlannerRecommendationSet`（carryRanking/topLineups/slotAlternatives/seatCompetition）目标合同待 M4 UI（15.2）消费时再落地。

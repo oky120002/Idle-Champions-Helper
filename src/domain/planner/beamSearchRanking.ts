@@ -20,13 +20,14 @@ export interface BeamSearchResult {
 interface BeamCandidate {
   placements: Record<string, string>
   usedHeroes: Set<string>
+  usedSeats: Set<number>
 }
 
 export function beamSearch(input: BeamSearchInput): BeamSearchResult[] {
   const { heroes, slots, beamWidth, scoreFormation } = input
 
   let candidates: BeamCandidate[] = [
-    { placements: {}, usedHeroes: new Set() },
+    { placements: {}, usedHeroes: new Set(), usedSeats: new Set() },
   ]
 
   for (const slot of slots) {
@@ -35,11 +36,13 @@ export function beamSearch(input: BeamSearchInput): BeamSearchResult[] {
     for (const candidate of candidates) {
       for (const hero of heroes) {
         if (candidate.usedHeroes.has(hero.heroId)) continue
+        if (candidate.usedSeats.has(hero.seat)) continue
 
         const nextPlacements = { ...candidate.placements, [slot]: hero.heroId }
         nextCandidates.push({
           placements: nextPlacements,
           usedHeroes: new Set([...candidate.usedHeroes, hero.heroId]),
+          usedSeats: new Set([...candidate.usedSeats, hero.seat]),
         })
       }
     }
