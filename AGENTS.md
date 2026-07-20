@@ -91,7 +91,7 @@
 ## 8. 测试
 
 - 新增测试文件必须接入运行器，否则等于没测试：`tests/**` 由 vitest 覆盖；`scripts/data/*.test.mjs` 等 `node:test` 格式由 `npm run test:data` 覆盖（已纳入 `test:regression`）。新增其他 `node:test` 测试目录时，同步扩展 `test:data` glob。
-- 覆盖率/支持度等"派生统计"若维护一份与 scorer 平行的白名单（如支持的 stackFunc 列表），新增能力时必须同步两边，否则统计失真误导后续判断。
+- 覆盖率/支持度等"派生统计"若维护一份与 scorer 平行的白名单（如支持的 stackFunc 列表），新增能力时必须同步两边，否则统计失真误导后续判断。两份列表无法合并到单一来源时（如跨 .ts scorer 与 .mjs 脚本边界），必须配一个比较两侧 keys 的同步守护测试（见 `tests/unit/planner/scoringSupportSync.test.ts`），让任一侧新增项时测试失败强制同步——手动同步已被多轮审计证明不可靠。
 
 ## 9. 构建、预览与截图
 
