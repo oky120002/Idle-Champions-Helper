@@ -718,11 +718,13 @@ test('amount_expr 跨 upgrade 引用按 upgrade id 解析目标 effect（非当�
   assert.equal(crossRefSignal?.value, 200, `跨 upgrade 引用应取 upgrade B 的 200，实际：${crossRefSignal?.value}`)
 })
 
-test('malformed JSON effectReference（字段缺逗号）通过正则兜底恢复 wrapper 信号', async () => {
-  // 真实数据（hero 61 Jaheira）：effectReference 是缺逗号的 malformed JSON，
-  // JSON.parse 失败 → parseEffectPayload 原返回 null → buff_upgrades wrapper 信号丢失。
-  // 正则兜底从 malformed JSON 中提取 effect_string，恢复 wrapper 派生链路。
-  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'idle-champions-malformed-effectref-'))
+test('CNE effect 字段串字段间缺逗号（伪 JSON）时正则兜底恢复 wrapper 信号', async () => {
+  // 数据源格式特性（非 bug，已对 raw upgrade_defines.effect 核实）：
+  // CNE 序列化 effect 对象串时不保证字段间逗号，357 条对象串中 19 条 effect_string
+  // 行末缺逗号，JSON.parse 失败 → parseEffectPayload 原返回 null → buff_upgrades wrapper
+  // 信号丢失。正则提取 effect_string 覆盖合法与伪 JSON 两种形态，恢复 wrapper 派生链路。
+  // 见 AGENTS.md「数据源格式追溯」守则。
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'idle-champions-cne-pseudo-json-'))
   const versionDir = path.join(tempDir, 'data')
   const detailDir = path.join(versionDir, 'champion-details')
 
@@ -750,7 +752,7 @@ test('malformed JSON effectReference（字段缺逗号）通过正则兜底恢�
         { id: '5', effectReference: 'hero_dps_multiplier_mult,50', effectDefinition: null },
         {
           id: '7',
-          // 注意：effect_string 与 description 之间缺逗号——复现真实 malformed JSON。
+          // 注意：effect_string 行末缺逗号——复现 CNE upgrade_defines.effect 的伪 JSON 格式。
           effectReference: '{\n"effect_string":"buff_upgrades,100,4,5"\n"description":"missing comma"}',
           effectDefinition: null,
         },
@@ -768,7 +770,7 @@ test('malformed JSON effectReference（字段缺逗号）通过正则兜底恢�
   assert.deepEqual(
     garbageUnsupported.map((signal) => signal.rawEffect),
     [],
-    `malformed JSON effectReference 不应产生垃圾 unsupported：${JSON.stringify(heroAbilities.items[0].unsupportedSignals)}`,
+    `CNE 伪 JSON effectReference 不应产生垃圾 unsupported：${JSON.stringify(heroAbilities.items[0].unsupportedSignals)}`,
   )
 
   // buff_upgrades wrapper（target ids 4,5）应派生 2 个信号，各指向对应 base。

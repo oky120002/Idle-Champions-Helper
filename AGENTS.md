@@ -28,6 +28,15 @@
 - 任何会进入 git 的大体积资源、二进制产物或高频更新文件，都要优先控制数量、体积和改写频率；新增资源流程时，必须显式评估仓库总体大小、单文件大小和历史膨胀风险。
 - 非必要不新增会持续膨胀的资源副本、缓存镜像或重复格式导出；能复用现有事实源和稳定 manifest 的，不再额外复制第二份。
 
+### 1.3 数据源格式追溯（审计与开发硬约束）
+
+- 遇到上游数据格式异常（看似 malformed / 不一致 / 不合法 JSON、字段缺失、序列化不稳定），**禁止直接在消费层加"容错/兜底"了事**——必须先追溯 raw API 数据源（`tmp/idle-champions-api/definitions-*.json` 是 `master.idlechampions.com` 的原始响应快照）确认根因，区分两种情况：
+  - **数据源格式特性**：raw 就是这样（例：CNE `upgrade_defines.effect` 序列化不稳定，357 条对象串中 19 条 effect_string 行末缺逗号，是伪 JSON；游戏引擎用自己的 effect 解析器不走 `JSON.parse`，故能正常运行）→ 在消费层适配，代码注释和文档必须标记为"数据源格式特性"，**不得描述为"malformed / 数据损坏 / bug"**。
+  - **归一化 bug**：raw 正常但 normalize 后坏了 → 修 `normalize-idle-champions-definitions.mjs`，消费层无需改动。
+- **合理性校验判据**：游戏能正常线上运行 = 源数据大概率没坏。看到"游戏数据有 X 那游戏怎么跑"这种矛盾时，第一反应应是"我的解析假设错了或归一化弄坏了"，而非"游戏数据坏了"。在 raw 源头证实之前，不得下"数据源 bug"的结论。
+- 已确认的数据源格式特性清单（消费层已适配，新增同类时照此处理）：
+  - `upgrade_defines.effect`：部分是 JSON 对象串，序列化不稳定（合法 JSON 与 effect_string 行末缺逗号的伪 JSON 混存）；`src/domain/effects/effect-string.js` 的 `parseEffectPayload` 用 `"effect_string"` 正则统一提取，覆盖两种形态。
+
 ## 2. AI-first 根目标
 
 - 第一目标不是“看起来更工程化”，而是让 100% AI 开发时每次任务读取更少、命中更快、误改更少。

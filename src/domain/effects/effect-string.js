@@ -30,11 +30,17 @@ function getPrimaryAmountToken(payload) {
 }
 
 /**
- * 从（可能 malformed 的）JSON 对象串中正则提取 effect_string 字段值。
- * 真实数据里 upgrade.effectReference 偶尔是字段间缺逗号的 malformed JSON，
- * JSON.parse 会失败。effect_string 字段值本身不含 `"`，可用简单正则兜底恢复，
- * 避免 buff_upgrade(s) wrapper 信号整条丢失。
- * ponytail: 只兜底 effect_string 一个字段；description / data 等其余字段放弃。
+ * 从 CNE effect 字段串中正则提取 effect_string 字段值。
+ *
+ * 数据源格式特性（非 bug）：CNE 官方 API 的 upgrade_defines.effect 有时是 JSON 对象串
+ * （如 '{"effect_string":"buff_upgrade,...","description":"..."}'）。其序列化不稳定——
+ * 357 条 effect 对象串中 338 条字段间有逗号（合法 JSON），19 条 effect_string 行末缺逗号
+ * （伪 JSON，JSON.parse 失败）。这是 CNE 游戏引擎用自己的 effect 解析器、不保证 JSON
+ * 合法性导致的；游戏照常运行，但 JSON.parse 会失败。
+ *
+ * effect_string 字段值本身不含 `"`，用正则直接提取即可同时覆盖合法与伪 JSON 两种形态，
+ * 避免 19 条 buff_upgrade(s) wrapper 信号因 JSON.parse 失败而整条丢失。
+ * ponytail: 只提取 effect_string 一个字段；description / data 等其余字段放弃。
  */
 function extractEffectStringFromJsonObject(raw) {
   const match = raw.match(/"effect_string"\s*:\s*"([^"]+)"/)

@@ -21,12 +21,14 @@ describe('parseEffectPayload', () => {
     expect(payload?.args).toEqual(['100', '4'])
   })
 
-  it('malformed JSON（字段间缺逗号）通过 effect_string 正则兜底恢复', () => {
-    // 真实数据（如 hero 61 Jaheira）：effectReference 是缺逗号的 malformed JSON，
-    // JSON.parse 失败。正则兜底提取 effect_string，避免信号丢失。
-    const malformed = '{"effect_string":"buff_upgrades,100,4,5"\n"description":"missing comma"}'
+  it('CNE effect 字段串字段间缺逗号（伪 JSON）时正则兜底恢复 effect_string', () => {
+    // 数据源格式特性（非 bug）：CNE 官方 API 的 upgrade_defines.effect 序列化不稳定，
+    // 357 条对象串中 19 条 effect_string 行末缺逗号，JSON.parse 失败。游戏引擎用自己的
+    // 解析器照常运行，但我们用 JSON.parse 会丢信号。正则直接提取 effect_string 覆盖两种形态。
+    // 见 AGENTS.md「数据源格式追溯」守则。
+    const cnePseudoJson = '{"effect_string":"buff_upgrades,100,4,5"\n"description":"missing comma"}'
 
-    const payload = parseEffectPayload(malformed)
+    const payload = parseEffectPayload(cnePseudoJson)
 
     expect(payload?.kind).toBe('buff_upgrades')
     expect(payload?.effectString).toBe('buff_upgrades,100,4,5')
