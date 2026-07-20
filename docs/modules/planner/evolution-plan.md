@@ -714,6 +714,11 @@ hero_final_dps = base_dps
 
 3. **BUD 的 attack_interval 数据源**：7.4 BUD 计算用 `attack_interval`，数据来自 `champion-details.attacks.base.cooldown`。**处理**：7.1 解析 speed effect 时一并提取 `attack_interval`（从 `attacks.base.cooldown`），供 7.4 使用。
 
+4. **M2 数据补全的已发现缺口**（M1 审计后落库，M2 执行时处理）：
+   - **targeting 覆盖**：`normalizeTargetRelation` 仍有 11 个 `hero_dps_multiplier_mult` effect 的 targets 关系未识别（位置类需扩 `HeroPositionRelation`：`other`/`self_and_behind_and_ahead`/`middle_columns`/`tallest_column`/`top_row_of_each_column`/`bottom_row_of_each_column`；机制类长期 unsupported：`heroes[id]`/`bud_setter`/`snowflake`/`active_campaign`/`slot_if_expr`）。每个 targeting 唯一对应 1 个 effect，整体 <0.1%，按需补。
+   - **effect_def / pre_stack_amount**：评估在 planner 的价值边界，能复用共享 effect payload 解析的就下沉公共层，避免 planner 单独维护第二套解释。
+   - **孤立基线模块去留**：`simulator/specializationBaseline.ts` + `goldBudgetBaseline.ts`（可负担等级基线）+ `gameNumberAddition.ts`（阈值加法）M2 启动时核实——金币链路若纯乘法则删 `gameNumberAddition`；基线模块按阶段 3 金币预算设计决定去留。
+
 **一致性**：阶段 7/15/16 格式已统一为 ### 标题（原列表项）。
 
 **想象力**：dimension 枚举位 / scoringMode 多模式 / semantic-overrides + 浏览器本地 override 均为未来扩展留位（新英雄/新 effect/用户自定义）。
@@ -728,3 +733,13 @@ hero_final_dps = base_dps
 - **Q2 levelCurve（已决定·A2 用户授权）**：MVP 简化（`costCurves` 派生），2.2 数据源确认。
 - **Q3 baseGold（已决定·A3 用户授权）**：`idle_gold_rate_v2 × monster_gold_by_area`（3.4）。
 - **Q4 拖拽（已决定·A4 用户授权）**：HTML5 原生 DnD，移动端 tap-target。
+
+## 长期扩展（超出 16 阶段·待产品规划立项）
+
+以下方向超出 v4 的 16 阶段，属产品级长期愿景，待产品规划立项后再进入 evolution-plan 阶段化：
+
+- **balanced scoring**：混合伤害/存活/速度/可获得性/解释复杂度的综合评分模式。
+- **step simulation**：逐区/击杀/时间窗口/动态堆叠的逐步模拟（替代当前 steady-state 近似）。
+- **多队伍 / Trials / Time Gate**：多队伍编排与长期成长路线。
+- **event / season / temporary buff 投影**：时效性 buff 的数据投影（modron/patron 已在阶段 11/14，此处指 event/season/temporary）。
+- **manual parameter panel**：用户手动覆盖金币预算/装备/feat/传奇/专精的控件（阶段 15.3 候选模式 + 16 拖拽之外的扩展）。
