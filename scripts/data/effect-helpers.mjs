@@ -12,9 +12,13 @@ import {
   parsePerHeroExpr,
 } from '../../src/domain/abilities/signalSemantics.js'
 
-function resolveNumericValue(effectValue, effectPayload, effectPayloads) {
+function resolveNumericValue(effectValue, effectPayload, effectPayloads, upgradePayloadsById) {
   if (typeof effectPayload?.meta?.amount_expr === 'string') {
-    const resolved = resolveEffectPayloadAmountToken(effectPayload, effectPayloads ?? [effectPayload])
+    const resolved = resolveEffectPayloadAmountToken(
+      effectPayload,
+      effectPayloads ?? [effectPayload],
+      upgradePayloadsById,
+    )
     const resolvedValue = resolved === null ? Number.NaN : parseFloat(String(resolved))
 
     if (Number.isFinite(resolvedValue)) {
@@ -87,6 +91,7 @@ function buildEffectEntry({
   upgradeId = null,
   signalPreset = null,
   bucketOverride = null,
+  upgradePayloadsById = null,
 }) {
   return {
     effectString,
@@ -97,6 +102,7 @@ function buildEffectEntry({
     upgradeId,
     signalPreset,
     bucketOverride,
+    upgradePayloadsById,
   }
 }
 
@@ -289,18 +295,26 @@ function resolveEntrySignal(entry) {
 function collectRawEffectEntries(detail) {
   const effectEntries = []
   const upgradeEffectEntriesById = new Map()
+  // upgrade id → 该 upgrade 的 effect_keys payloads；供 amount_expr='upgrade_amount(id,index)'
+  // 跨 upgrade 解析目标 effect 的 amount（真实数据有少量跨 upgrade 引用）。
+  const upgradePayloadsById = new Map()
 
   for (const upgrade of detail.upgrades ?? []) {
     const upgradeEntries = []
+    const upgradeId = String(upgrade.id ?? '')
 
     if (typeof upgrade.effectReference === 'string') {
+      const effectPayload = parseEffectPayload(upgrade.effectReference)
       const entry = buildEffectEntry({
-        effectString: upgrade.effectReference,
+        // effectReference 可能是 JSON 对象串（'{"effect_string":"...","description":"..."}'）；
+        // 取 parseEffectPayload 已提取的内部 effect_string，避免外层 JSON 串被
+        // splitEffectString 在内部逗号处切断产生垃圾 effectName。
+        effectString: effectPayload?.effectString ?? upgrade.effectReference,
         effect: upgrade,
-        effectPayload: parseEffectPayload(upgrade.effectReference),
+        effectPayload,
         effectPayloads: [],
         sourceBucket: 'upgrade',
-        upgradeId: String(upgrade.id ?? ''),
+        upgradeId,
       })
       effectEntries.push(entry)
       upgradeEntries.push(entry)
@@ -309,6 +323,9 @@ function collectRawEffectEntries(detail) {
     const effectKeys = upgrade.effectDefinition?.snapshots?.original?.effect_keys
     if (Array.isArray(effectKeys)) {
       const effectPayloads = effectKeys.map((effectKey) => buildEffectKeyPayload(effectKey))
+      if (upgradeId) {
+        upgradePayloadsById.set(upgradeId, effectPayloads)
+      }
       for (const [index, effectKey] of effectKeys.entries()) {
         if (typeof effectKey?.effect_string === 'string') {
           const entry = buildEffectEntry({
@@ -317,7 +334,7 @@ function collectRawEffectEntries(detail) {
             effectPayload: effectPayloads[index] ?? null,
             effectPayloads,
             sourceBucket: 'upgrade-effect-key',
-            upgradeId: String(upgrade.id ?? ''),
+            upgradeId,
           })
           effectEntries.push(entry)
           upgradeEntries.push(entry)
@@ -326,7 +343,7 @@ function collectRawEffectEntries(detail) {
     }
 
     if (upgradeEntries.length > 0) {
-      upgradeEffectEntriesById.set(String(upgrade.id ?? ''), upgradeEntries)
+      upgradeEffectEntriesById.set(upgradeId, upgradeEntries)
     }
   }
 
@@ -356,6 +373,11 @@ function collectRawEffectEntries(detail) {
         }))
       }
     }
+  }
+
+  // 附加 upgradePayloadsById 到所有 entry，使 resolveNumericValue 能跨 upgrade 解析 amount_expr。
+  for (const entry of effectEntries) {
+    entry.upgradePayloadsById = upgradePayloadsById
   }
 
   return { effectEntries, upgradeEffectEntriesById }
@@ -474,6 +496,7 @@ export function normalizeEffectSignal(effectName, effectValue, source, effectMet
     effectValue,
     effectMetadata.effectPayload,
     effectMetadata.effectPayloads,
+    effectMetadata.upgradePayloadsById,
   )
 
   if (!Number.isFinite(numericValue)) {
@@ -828,6 +851,7 @@ export function collectEffectEntries(detail) {
               entry.effectPayload?.args?.[0] ?? '',
               entry.effectPayload,
               entry.effectPayloads,
+              entry.upgradePayloadsById,
             ),
             bonusScaleOfSignal: targetSignal,
             amountFunc: buffSeed.amountFunc ?? null,

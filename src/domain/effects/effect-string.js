@@ -29,6 +29,18 @@ function getPrimaryAmountToken(payload) {
   return payload.args.find(isNumberishToken) ?? payload.args[0] ?? null
 }
 
+/**
+ * 从（可能 malformed 的）JSON 对象串中正则提取 effect_string 字段值。
+ * 真实数据里 upgrade.effectReference 偶尔是字段间缺逗号的 malformed JSON，
+ * JSON.parse 会失败。effect_string 字段值本身不含 `"`，可用简单正则兜底恢复，
+ * 避免 buff_upgrade(s) wrapper 信号整条丢失。
+ * ponytail: 只兜底 effect_string 一个字段；description / data 等其余字段放弃。
+ */
+function extractEffectStringFromJsonObject(raw) {
+  const match = raw.match(/"effect_string"\s*:\s*"([^"]+)"/)
+  return match ? match[1] : null
+}
+
 export function parseEffectPayload(value) {
   const trimmed = value.trim()
 
@@ -38,26 +50,29 @@ export function parseEffectPayload(value) {
 
   if (trimmed.startsWith('{')) {
     const parsed = parseInlineJsonValue(trimmed)
+    const effectString = typeof parsed?.effect_string === 'string'
+      ? parsed.effect_string
+      : extractEffectStringFromJsonObject(trimmed)
 
-    if (isJsonObject(parsed) && typeof parsed.effect_string === 'string') {
-      const [kind, ...args] = parsed.effect_string.split(',')
-
-      if (!kind || !/^[a-z_][a-z0-9_]*$/i.test(kind)) {
-        return null
-      }
-
-      return {
-        raw: trimmed,
-        effectString: parsed.effect_string,
-        description: typeof parsed.description === 'string' ? parsed.description : null,
-        data: parsed.data ?? null,
-        meta: parsed,
-        kind,
-        args,
-      }
+    if (!effectString) {
+      return null
     }
 
-    return null
+    const [kind, ...args] = effectString.split(',')
+
+    if (!kind || !/^[a-z_][a-z0-9_]*$/i.test(kind)) {
+      return null
+    }
+
+    return {
+      raw: trimmed,
+      effectString,
+      description: typeof parsed?.description === 'string' ? parsed.description : null,
+      data: parsed?.data ?? null,
+      meta: parsed,
+      kind,
+      args,
+    }
   }
 
   const [kind, ...args] = trimmed.split(',')
@@ -96,33 +111,37 @@ export function buildEffectKeyPayload(effectKey) {
   }
 }
 
-export function resolveSimpleAmountExpr(expr, payloads) {
+/**
+ * 解析 amount_expr 中的 upgrade_amount(id, index) 引用。
+ * resolveSourcePayload(upgradeId, effectIndex) 由调用方提供，按 upgrade id 跨 upgrade
+ * 查找目标 effect 的 payload——真实数据有少量跨 upgrade 引用（如 hero 106/141），
+ * 旧实现忽略 id 只取当前 upgrade 的 payloads[index] 会解析到错误 upgrade。
+ */
+export function resolveSimpleAmountExpr(expr, resolveSourcePayload) {
   const trimmed = expr.trim()
 
   if (!trimmed) {
     return null
   }
 
-  const upgradeAmountMatch = trimmed.match(/^upgrade_amount\((\d+),\s*(\d+)\)$/)
+  const match = trimmed.match(/^upgrade_amount\((\d+),\s*(\d+)\)$/)
 
-  if (!upgradeAmountMatch) {
+  if (!match) {
     return null
   }
 
-  const effectIndex = Number(upgradeAmountMatch[2])
-  const sourcePayload = payloads[effectIndex] ?? null
+  const sourcePayload = resolveSourcePayload(match[1], Number(match[2]))
 
-  if (!sourcePayload) {
-    return null
-  }
-
-  return getPrimaryAmountToken(sourcePayload)
+  return sourcePayload ? getPrimaryAmountToken(sourcePayload) : null
 }
 
-export function resolveEffectPayloadAmountToken(payload, payloads = [payload]) {
+export function resolveEffectPayloadAmountToken(payload, payloads = [payload], upgradePayloadsById) {
   const fromExpr =
     typeof payload.meta?.amount_expr === 'string'
-      ? resolveSimpleAmountExpr(payload.meta.amount_expr, payloads)
+      ? resolveSimpleAmountExpr(payload.meta.amount_expr, (upgradeId, effectIndex) =>
+        // 优先按 upgrade id 跨 upgrade 查找；map 缺失时回退当前 upgrade payloads[index]
+        //（兼容无 id upgrade 的自引用 / 引用缺失 upgrade 的边界）。
+        upgradePayloadsById?.get(upgradeId)?.[effectIndex] ?? payloads[effectIndex] ?? null)
       : null
 
   if (fromExpr) {

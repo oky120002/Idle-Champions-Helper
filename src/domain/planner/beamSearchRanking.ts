@@ -28,8 +28,16 @@ interface BeamCandidate {
 export function beamSearch(input: BeamSearchInput): BeamSearchResult[] {
   const { heroes, slots, beamWidth, scoreFormation } = input
 
-  let candidates: BeamCandidate[] = [
-    { placements: {}, usedHeroes: new Set(), usedSeats: new Set() },
+  const initialCandidate: BeamCandidate = {
+    placements: {},
+    usedHeroes: new Set(),
+    usedSeats: new Set(),
+  }
+  let candidates: BeamCandidate[] = [initialCandidate]
+  // scored 持有最近一轮评分结果；循环结束即最终候选的评分，收口直接复用，
+  // 不再对最后一轮已评分的候选重复跑 scoreFormation（每次全阵型 O(N²×signals)）。
+  let scored: Array<{ candidate: BeamCandidate; result: ScoringResult }> = [
+    { candidate: initialCandidate, result: scoreFormation({}) },
   ]
 
   for (const slot of slots) {
@@ -50,28 +58,25 @@ export function beamSearch(input: BeamSearchInput): BeamSearchResult[] {
     }
 
     // Score and prune to beam width
-    const scored = nextCandidates
+    scored = nextCandidates
       .map((c) => ({
         candidate: c,
         result: scoreFormation(c.placements),
       }))
       .sort((a, b) => compareGameNumbers(b.result.score, a.result.score))
+      .slice(0, beamWidth)
 
-    candidates = scored.slice(0, beamWidth).map((s) => s.candidate)
+    candidates = scored.map((s) => s.candidate)
   }
 
-  // Final scoring and ranking
-  return candidates
-    .map((c) => {
-      const result = scoreFormation(c.placements)
-      return {
-        score: result.score,
-        placements: c.placements,
-        explanations: result.explanations,
-        warnings: result.warnings,
-        carryHeroId: result.carryHeroId,
-        activeSignalKinds: result.activeSignalKinds,
-      }
-    })
+  return scored
+    .map((s) => ({
+      score: s.result.score,
+      placements: s.candidate.placements,
+      explanations: s.result.explanations,
+      warnings: s.result.warnings,
+      carryHeroId: s.result.carryHeroId,
+      activeSignalKinds: s.result.activeSignalKinds,
+    }))
     .sort((a, b) => compareGameNumbers(b.score, a.score))
 }

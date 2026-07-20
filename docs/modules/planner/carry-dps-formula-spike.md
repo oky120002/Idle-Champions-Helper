@@ -11,7 +11,7 @@ hero_final_dps = baseDamage × levelCurve(level) × Π(pool_multiplier)
 ```
 
 - `baseDamage`：来自 `champion-details.baseDamage`（字符串，已写入 hero-abilities.json）。
-- `levelCurve(level)`：MVP 用 `costCurves[seat] ^ level` 近似（ponytail: cost 曲线 ≈ DPS 增长曲线上界，绝对值偏高但相对比较保序）。
+- `levelCurve(level)`：MVP 用 `costCurves["1"] ^ level` 近似（ponytail: cost 曲线 ≈ DPS 增长曲线上界，绝对值偏高但相对比较保序）。官方 `champion-details.costCurves` 只暴露 key `"1"` 的单一曲线，与英雄 seat 无关。
 - `Π(pool_multiplier)`：placementFit pool 聚合结果。pool 间乘法；pool 内 add→Σ percent、mult→Π multiplier。**pool 在整队层面共享**：同一 `dimension:scope` 的 pool 跨所有支持位合并（`addPercent` 相加、`multFactor` 相乘）后再算 poolMultiplier——不能按支持位独立求 pool 乘积再在外层累乘，那会把不同位向同一 pool 的 additive 贡献变成乘法（2 位各 +100% 会得 4 而非 3）。聚合在 `steadyStateScoring.scoreFormation` 完成，`placementFit.evaluatePlacementFit` 只负责单支持位→carry 的 signal 解析。
 
 完整 DPS 链（后续阶段逐步补齐）：

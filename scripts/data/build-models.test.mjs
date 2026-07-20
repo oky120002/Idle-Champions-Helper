@@ -585,3 +585,196 @@ test('effectReference 直接引用 buff_upgrade wrapper 时不进 unsupportedSig
   assert.equal(derived?.kind, 'heroDpsMultiplier')
   assert.equal(derived?.bonusScaleOfSignal?.rawEffect, 'hero_dps_multiplier_mult,80')
 })
+
+test('JSON-string effectReference 提取内部 effect_string，不产生垃圾 unsupported', async () => {
+  // 真实数据模式（如 hero 101/102）：upgrade.effectReference 是 JSON 对象字符串
+  // '{"effect_string":"buff_upgrade,100,4","description":"..."}'，而非简单 effect 串。
+  // collectEffectEntries 必须用 effectPayload.effectString（parseEffectPayload 已提取），
+  // 不能用原始 JSON 串——否则 splitEffectString 在 JSON 内部逗号处切断，产生
+  // '{"effect_string":"buff_upgrade"' 这样的垃圾 effectName 进 unsupportedSignals。
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'idle-champions-json-effectref-'))
+  const versionDir = path.join(tempDir, 'data')
+  const detailDir = path.join(versionDir, 'champion-details')
+
+  await mkdir(detailDir, { recursive: true })
+  await writeFile(
+    path.join(versionDir, 'champions.json'),
+    JSON.stringify({
+      updatedAt: '2026-06-04',
+      items: [{ id: '1', name: { original: 'Bruenor', display: '布鲁诺' }, seat: 1, roles: ['support'], tags: ['dwarf'] }],
+    }),
+  )
+  await writeFile(
+    path.join(versionDir, 'variants.json'),
+    JSON.stringify({ updatedAt: '2026-06-04', items: [] }),
+  )
+  await writeFile(
+    path.join(versionDir, 'formations.json'),
+    JSON.stringify({ updatedAt: '2026-06-04', items: [] }),
+  )
+  await writeFile(
+    path.join(detailDir, '1.json'),
+    JSON.stringify({
+      upgrades: [
+        { id: '4', effectReference: 'hero_dps_multiplier_mult,80', effectDefinition: null },
+        {
+          id: '7',
+          effectReference: '{"effect_string":"buff_upgrade,100,4","description":"Increase base by 100%"}',
+          effectDefinition: null,
+        },
+      ],
+      loot: [],
+      legendaryEffects: [],
+    }),
+  )
+
+  await buildModels({ versionDir, semanticOverridesFile: path.join(tempDir, 'empty.json') })
+  const heroAbilities = await readJson(path.join(versionDir, 'hero-abilities.json'))
+
+  const garbageUnsupported = heroAbilities.items[0].unsupportedSignals
+    .filter((signal) => signal.rawEffect.startsWith('{'))
+  assert.deepEqual(
+    garbageUnsupported.map((signal) => signal.rawEffect),
+    [],
+    `JSON-string effectReference 不应产生垃圾 unsupported，实际：${JSON.stringify(heroAbilities.items[0].unsupportedSignals)}`,
+  )
+
+  // wrapper 派生信号仍由 effectPayload.kind 正确识别并生成。
+  const allSignals = [...heroAbilities.items[0].carrySignals, ...heroAbilities.items[0].supportSignals]
+  const derived = allSignals.find((signal) => signal.rawEffect === 'buff_upgrade,100,4')
+  assert.equal(derived?.kind, 'heroDpsMultiplier')
+  assert.equal(derived?.bonusScaleOfSignal?.rawEffect, 'hero_dps_multiplier_mult,80')
+})
+
+test('amount_expr 跨 upgrade 引用按 upgrade id 解析目标 effect（非当前 upgrade）', async () => {
+  // 真实数据（如 hero 106/141）：upgrade A 的 effect 用 amount_expr='upgrade_amount(B,0)'
+  // 引用 upgrade B 的 effect_keys[0]。旧 resolveSimpleAmountExpr 忽略 upgrade id，
+  // 错取当前 upgrade A 的 effect_keys[0]，得到错误 value。
+  // 正确：按 id=5 找到 upgrade B，取其 effect_keys[0] 的 amount。
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'idle-champions-cross-upgrade-expr-'))
+  const versionDir = path.join(tempDir, 'data')
+  const detailDir = path.join(versionDir, 'champion-details')
+
+  await mkdir(detailDir, { recursive: true })
+  await writeFile(
+    path.join(versionDir, 'champions.json'),
+    JSON.stringify({
+      updatedAt: '2026-06-04',
+      items: [{ id: '1', name: { original: 'Bruenor', display: '布鲁诺' }, seat: 1, roles: ['support'], tags: ['dwarf'] }],
+    }),
+  )
+  await writeFile(
+    path.join(versionDir, 'variants.json'),
+    JSON.stringify({ updatedAt: '2026-06-04', items: [] }),
+  )
+  await writeFile(
+    path.join(versionDir, 'formations.json'),
+    JSON.stringify({ updatedAt: '2026-06-04', items: [] }),
+  )
+  await writeFile(
+    path.join(detailDir, '1.json'),
+    JSON.stringify({
+      upgrades: [
+        {
+          // upgrade B（id=5）：被引用的目标，effect_keys[0] = hero_dps_multiplier_mult,200
+          id: '5',
+          effectReference: 'effect_def,base-b',
+          effectDefinition: {
+            snapshots: { original: { effect_keys: [{ effect_string: 'hero_dps_multiplier_mult,200', targets: ['self'] }] } },
+          },
+        },
+        {
+          // upgrade A（id=7）：effect_keys[0] 是干扰项 pre_stack_amount,50；
+          // effect_keys[1] 用 amount_expr='upgrade_amount(5,0)' 跨引用 upgrade B 的 effect_keys[0]。
+          id: '7',
+          effectReference: 'effect_def,base-a',
+          effectDefinition: {
+            snapshots: {
+              original: {
+                effect_keys: [
+                  { effect_string: 'pre_stack_amount,50' },
+                  {
+                    effect_string: 'hero_dps_multiplier_mult,0',
+                    amount_expr: 'upgrade_amount(5,0)',
+                    targets: ['self'],
+                  },
+                ],
+              },
+            },
+          },
+        },
+      ],
+      loot: [],
+      legendaryEffects: [],
+    }),
+  )
+
+  await buildModels({ versionDir, semanticOverridesFile: path.join(tempDir, 'empty.json') })
+  const heroAbilities = await readJson(path.join(versionDir, 'hero-abilities.json'))
+
+  // upgrade A 的 hero_dps_multiplier_mult，value 必须从 upgrade B 取（200），不是 upgrade A 的 pre_stack_amount（50）
+  const allSignals = [...heroAbilities.items[0].carrySignals, ...heroAbilities.items[0].supportSignals]
+  const crossRefSignal = allSignals.find((signal) => signal.rawEffect === 'hero_dps_multiplier_mult,0')
+  assert.equal(crossRefSignal?.value, 200, `跨 upgrade 引用应取 upgrade B 的 200，实际：${crossRefSignal?.value}`)
+})
+
+test('malformed JSON effectReference（字段缺逗号）通过正则兜底恢复 wrapper 信号', async () => {
+  // 真实数据（hero 61 Jaheira）：effectReference 是缺逗号的 malformed JSON，
+  // JSON.parse 失败 → parseEffectPayload 原返回 null → buff_upgrades wrapper 信号丢失。
+  // 正则兜底从 malformed JSON 中提取 effect_string，恢复 wrapper 派生链路。
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'idle-champions-malformed-effectref-'))
+  const versionDir = path.join(tempDir, 'data')
+  const detailDir = path.join(versionDir, 'champion-details')
+
+  await mkdir(detailDir, { recursive: true })
+  await writeFile(
+    path.join(versionDir, 'champions.json'),
+    JSON.stringify({
+      updatedAt: '2026-06-04',
+      items: [{ id: '1', name: { original: 'Bruenor', display: '布鲁诺' }, seat: 1, roles: ['support'], tags: ['dwarf'] }],
+    }),
+  )
+  await writeFile(
+    path.join(versionDir, 'variants.json'),
+    JSON.stringify({ updatedAt: '2026-06-04', items: [] }),
+  )
+  await writeFile(
+    path.join(versionDir, 'formations.json'),
+    JSON.stringify({ updatedAt: '2026-06-04', items: [] }),
+  )
+  await writeFile(
+    path.join(detailDir, '1.json'),
+    JSON.stringify({
+      upgrades: [
+        { id: '4', effectReference: 'hero_dps_multiplier_mult,80', effectDefinition: null },
+        { id: '5', effectReference: 'hero_dps_multiplier_mult,50', effectDefinition: null },
+        {
+          id: '7',
+          // 注意：effect_string 与 description 之间缺逗号——复现真实 malformed JSON。
+          effectReference: '{\n"effect_string":"buff_upgrades,100,4,5"\n"description":"missing comma"}',
+          effectDefinition: null,
+        },
+      ],
+      loot: [],
+      legendaryEffects: [],
+    }),
+  )
+
+  await buildModels({ versionDir, semanticOverridesFile: path.join(tempDir, 'empty.json') })
+  const heroAbilities = await readJson(path.join(versionDir, 'hero-abilities.json'))
+
+  const garbageUnsupported = heroAbilities.items[0].unsupportedSignals
+    .filter((signal) => signal.rawEffect.startsWith('{'))
+  assert.deepEqual(
+    garbageUnsupported.map((signal) => signal.rawEffect),
+    [],
+    `malformed JSON effectReference 不应产生垃圾 unsupported：${JSON.stringify(heroAbilities.items[0].unsupportedSignals)}`,
+  )
+
+  // buff_upgrades wrapper（target ids 4,5）应派生 2 个信号，各指向对应 base。
+  const allSignals = [...heroAbilities.items[0].carrySignals, ...heroAbilities.items[0].supportSignals]
+  const derived = allSignals.filter((signal) => signal.rawEffect === 'buff_upgrades,100,4,5')
+  assert.equal(derived.length, 2, `buff_upgrades 应派生 2 个信号（target 4 + 5），实际：${derived.length}`)
+  const baseRawEffects = derived.map((signal) => signal.bonusScaleOfSignal?.rawEffect).sort()
+  assert.deepEqual(baseRawEffects, ['hero_dps_multiplier_mult,50', 'hero_dps_multiplier_mult,80'])
+})

@@ -328,8 +328,12 @@ function countSlotDistanceFromSource(input: EvaluatePlacementFitInput): number |
   return computeSlotDistance(input.scenario, input.supportSlotId, input.carrySlotId)
 }
 
-/** 每种 stackFunc 对应的计数来源 + warning 用的上下文标签。 */
-const STACK_COUNT_RESOLVERS: Record<string, {
+/**
+ * 每种 stackFunc 对应的计数来源 + warning 用的上下文标签。
+ * keys 即 scorer 支持的 stackFunc 集合——signal-coverage 的覆盖率报告必须与此同步，
+ * 否则统计失真（见 tests/unit/planner/scoringSupportSync.test.ts 守护）。
+ */
+export const STACK_COUNT_RESOLVERS: Record<string, {
   count: (input: EvaluatePlacementFitInput, signal: HeroAbilitySignal) => number | null
   contextLabel: string
 }> = {

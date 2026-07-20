@@ -727,6 +727,16 @@ hero_final_dps = base_dps
      - `scoreFormation` 调用 `evaluatePlacementFit` 未显式传 `dimension: 'damage'`；M1 全员 damage 维度无影响，但 M2 引入 gold/crit 维度时必须显式过滤，否则非伤害 pool 会泄漏进 `carryDps`。
      - `resolveSignalMultiplier` 解析 `bonusScaleOfSignal` 时只取 base 的 multiplier，不重新校验 base 的 `positionQualifier` / `targetQualifier`；阶段 8 buff_upgrade 精细化时需评估 base 与外层 targeting 不一致场景。
 
+6. **M1 第四轮深度审计发现并修复的问题**（2026-07-20）：
+   - **JSON-string effectReference 产生垃圾 unsupported + 丢失 wrapper 信号（已修复）**：真实数据里 `upgrade.effectReference` 常是 JSON 对象串（`'{"effect_string":"buff_upgrade,...","description":"..."}'`），`collectRawEffectEntries` 原直接把它当 effectString，`splitEffectString` 在 JSON 内部逗号处切断，产生 352 条 `{"effect_string":"buff_upgrade` 垃圾 unsupported 条目；其中 19 条是字段缺逗号的 malformed JSON，`parseEffectPayload` 返回 null，buff_upgrades wrapper 信号整条丢失（如 hero 61 Jaheira 丢失 38 个 wrapper）。修复：`collectRawEffectEntries` 改用 `parseEffectPayload` 已提取的 `effectString`；`parseEffectPayload` 对 JSON.parse 失败的串加 `"effect_string"` 正则兜底恢复 malformed JSON。unsupported 从 3715→3394（垃圾清零），recognizedSignals 14221→14297。
+   - **stackFunc 白名单两份平行维护的 DRY 隐患（已修复）**：第三轮虽同步了 `classifyScoringSupport` 与 `STACK_COUNT_RESOLVERS` 的脱节，但根因（两份独立列表）仍在。修复：`placementFit` 导出 `STACK_COUNT_RESOLVERS`，`signal-coverage` 导出 `SCORING_SUPPORTED_STACK_FUNCS`，新增 `scoringSupportSync.test.ts` 守护两侧 keys 完全一致——任一侧新增 stackFunc 时测试失败强制同步。
+   - **跨 upgrade amount_expr 解析忽略 upgrade id（已修复）**：`resolveSimpleAmountExpr` 解析 `upgrade_amount(id,index)` 时只用 index 取当前 upgrade 的 `payloads[index]`，完全忽略 id。真实数据有 5 条跨 upgrade 引用（如 hero 141 upgrade 13278 引用 upgrade 13275 的 `hero_dps_multiplier_mult,100`），hero 141 的 heroDpsMultiplier 自增益 value 被错解为 0（+0%）而非 100（+100%）。修复：`collectRawEffectEntries` 构建 `upgradePayloadsById` 映射（upgrade id → effect_keys payloads），`resolveSimpleAmountExpr` 改用 resolver 回调按 id 跨 upgrade 查找，map 缺失时回退旧 `payloads[index]` 保兼容。
+   - **beamSearch 收口重复评分（已修复）**：`beamSearchRanking` 循环最后一轮已评分并剪枝到 beamWidth，但收口又对同批候选重跑 `scoreFormation`，每次全阵型 O(N²×signals)，浪费 beamWidth 次评分。修复：循环持有 `scored`，收口直接复用。
+   - **carry-dps-formula-spike 文档措辞漂移（已修复）**：line 14 写 `costCurves[seat]`，但实际官方数据 key 恒为 `"1"`、与 seat 无关（line 32 已澄清）。修正为 `costCurves["1"]`。
+   - **M2 待处理（本轮发现，未展开）**：
+     - **复合 amount_expr 未解析（20 条）**：真实数据有 `upgrade_amount(N,N)+max_upgrade_amount(N,N)` / `upgrade_amount(N,N)*upgrade_amount(N,N)*N.N` / `upgrade_amount(N,dps_update)` 等复合表达式（共 20 条），`resolveSimpleAmountExpr` 只匹配单一 `upgrade_amount(N,N)`，复合的回退 `getPrimaryAmountToken` 得 effect 自身 value（常为 0）。归 stage 8 effect_def / pre_stack_amount 精细化处理。
+     - **buff_upgrades wrapper 多稀有度同存（如 hero 61 Jaheira 168 条）**：同一 buff_upgrades 在不同稀有度/等级下有不同 magnitude（100/200/25/87.5/150/275），当前全部进 signal 列表，scoring 把它们当独立 signal 累加进 pool（游戏实际只取最高稀有度）。归 stage 8 buff_upgrade top-N / 稀有度去重处理。
+
 **一致性**：阶段 7/15/16 格式已统一为 ### 标题（原列表项）。
 
 **想象力**：dimension 枚举位 / scoringMode 多模式 / semantic-overrides + 浏览器本地 override 均为未来扩展留位（新英雄/新 effect/用户自定义）。

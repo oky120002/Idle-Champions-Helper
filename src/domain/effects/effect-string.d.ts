@@ -9,12 +9,13 @@ export declare function buildEffectKeyPayload(
 
 export declare function resolveSimpleAmountExpr(
   expr: string,
-  payloads: Array<ParsedEffectPayload | null | undefined>,
+  resolveSourcePayload: (upgradeId: string, effectIndex: number) => ParsedEffectPayload | null | undefined,
 ): string | null
 
 export declare function resolveEffectPayloadAmountToken(
   payload: ParsedEffectPayload,
   payloads?: Array<ParsedEffectPayload | null | undefined>,
+  upgradePayloadsById?: Map<string, Array<ParsedEffectPayload | null | undefined>> | null,
 ): string | null
 
 export declare function extractTargetIdsFromParsedEffectPayload(payload: ParsedEffectPayload): string[]

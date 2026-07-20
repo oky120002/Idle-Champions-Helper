@@ -62,6 +62,22 @@ function getRawFilters(effect) {
   ]
 }
 
+/**
+ * 覆盖率报告判定为 supported 的 stackFunc 集合。
+ * 必须与 placementFit.ts 的 STACK_COUNT_RESOLVERS keys 保持同步——
+ * scorer 新增 stackFunc 支持时，此处不同步会让覆盖率误报 unsupported-composition。
+ * 见 tests/unit/planner/scoringSupportSync.test.ts 守护测试。
+ */
+export const SCORING_SUPPORTED_STACK_FUNCS = new Set([
+  'per_crusader',
+  'per_tagged_crusader_mult',
+  'per_target_crusader',
+  'per_hero_attribute',
+  'per_upgrade_targets',
+  'per_col_behind',
+  'per_slot_distance_from_source',
+])
+
 function classifyScoringSupport(signal) {
   if (signal.applyManually) {
     return 'manual'
@@ -73,17 +89,10 @@ function classifyScoringSupport(signal) {
 
   const amountFunc = signal.amountFunc ?? null
   const supportsAddOrMult = amountFunc === 'add' || amountFunc === 'mult'
-  const supportedStackFunc = (
-    signal.stackFunc === 'per_crusader'
-    || signal.stackFunc === 'per_tagged_crusader_mult'
-    || signal.stackFunc === 'per_target_crusader'
-    || signal.stackFunc === 'per_hero_attribute'
-    || signal.stackFunc === 'per_upgrade_targets'
-    || signal.stackFunc === 'per_col_behind'
-    || signal.stackFunc === 'per_slot_distance_from_source'
-  )
 
-  return supportedStackFunc && supportsAddOrMult ? 'supported' : 'unsupported-composition'
+  return SCORING_SUPPORTED_STACK_FUNCS.has(signal.stackFunc) && supportsAddOrMult
+    ? 'supported'
+    : 'unsupported-composition'
 }
 
 export function generateSignalCoverageReport(details) {
