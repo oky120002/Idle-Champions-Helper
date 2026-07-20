@@ -246,9 +246,9 @@ hero_final_dps = base_dps
 
 ### 2.5 [x] 统一解释语义 + Top K
 - 删 `ROLE_PRIORITY`/`ROLE_LABELS`/`getRolePriorityScore`/`getChampionRoleSummary`。
-- `buildPlannerExplanations` 用 carryDps + breakdown。
-- `results.find(top)` → `slice(0, PLANNER_TOP_K)`（新建 `plannerConstants.ts`）。
-- 输出 `PlannerRecommendationSet`（carryRanking/topLineups/slotAlternatives/seatCompetition）。
+- `buildPlannerExplanations` 用 carryDps 叙事（breakdown 留 M4 UI 接通时落地）。
+- `results.find(top)` → `slice(0, PLANNER_TOP_K)`（`PLANNER_TOP_K` 内联于 `recommendationEngine.ts`，不为单常量建文件）。
+- `PlannerRecommendationSet`（carryRanking/topLineups/slotAlternatives/seatCompetition）目标合同**留 M4 15.2** UI 消费时落地；M1 引擎只产出单一最高分合法阵型（`results` 已按 carryDps 降序，首个 score>0 即主推荐）。
 
 ---
 

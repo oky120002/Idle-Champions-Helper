@@ -29,7 +29,7 @@ hero_final_dps = baseDamage
 ## 样本（hero 31 Ishi，dps/gold，seat 4）
 
 - `baseDamage = 12000`
-- `costCurves = {"1": 1.13}`（seat 1 的 cost 曲线；Ishi 在 seat 4，仓库暂存为单一曲线）
+- `costCurves = {"1": 1.13}`（官方 `champion-details.costCurves` 只暴露 key `"1"` 的单一曲线，与英雄 seat 无关；全部 163 个英雄均只有这一条曲线，rate 区间 1.06~1.28）
 - `levelCurve(500) = 1.13^500 ≈ 3.3e26`
 - `baseDamage × levelCurve(500) = 12000 × 3.3e26 ≈ 4.0e30`
 

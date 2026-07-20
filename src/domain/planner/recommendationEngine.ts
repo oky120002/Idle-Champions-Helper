@@ -28,10 +28,6 @@ function sortSlots(scenario: ResolvedPlannerScenarioModel): string[] {
     .map((slot) => slot.slotId)
 }
 
-function formatScore(score: GameNumberValue): string {
-  return formatGameNumber(score)
-}
-
 function formatLegalityViolation(violation: LegalityViolation): string {
   switch (violation.kind) {
     case 'seatConflict':
@@ -218,20 +214,11 @@ export function buildPlannerRecommendation(
     },
   })
 
-  // 2.5: Top K（results 已按 carryDps 降序）；取首个合法结果作为主推荐。
-  const topK = results.slice(0, PLANNER_TOP_K)
-  const top = topK.find((result) => {
-    if (compareGameNumbers(result.score, SCORE_ZERO) <= 0) {
-      return false
-    }
-
-    return checkFormationLegality({
-      placements: result.placements,
-      heroSeats,
-      variantRules: scenarioVariantRules,
-      lockedSlots: scenario.lockedSlots,
-    }).legal
-  })
+  // results 已按 carryDps 降序；scoreFormation 回调已把非法阵型置零，
+  // 故首个 score>0 即最高分合法阵型。slice(PLANNER_TOP_K) 为 M4 15.2 多阵型输出预留。
+  const top = results
+    .slice(0, PLANNER_TOP_K)
+    .find((result) => compareGameNumbers(result.score, SCORE_ZERO) > 0)
 
   if (!top) {
     return {
@@ -246,7 +233,7 @@ export function buildPlannerRecommendation(
 
   return {
     result: {
-      score: formatScore(top.score),
+      score: formatGameNumber(top.score),
       placements: top.placements,
       placementEntries,
       explanations: buildPlannerExplanations(
