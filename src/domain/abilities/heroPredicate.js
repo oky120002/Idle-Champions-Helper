@@ -109,7 +109,7 @@ function getHeroStatValue(hero, stat) {
   return hero.abilityScores[stat]
 }
 
-// functional 叶子：HasTag/GetStat/age/hero_id/HasAttackDamageType/base_attack_cooldown/is_undead/true/as_int。
+// functional 叶子：HasTag/GetStat/age/hero_id/HasAttackDamageType(+ has_base_attack_dmg_type_ 别名)/base_attack_cooldown/is_undead/true/as_int。
 // 非 boolean 叶子（min/max/floor 等数值表达式）返回 null。
 function matchFunctionalLeaf(expr) {
   if (expr === 'true') {
@@ -128,6 +128,13 @@ function matchFunctionalLeaf(expr) {
   const attackDamageTypeMatch = expr.match(/^HasAttackDamageType\(`([^`]+)`\)$/)
   if (attackDamageTypeMatch) {
     return { op: 'attackType', attackType: attackDamageTypeMatch[1].toLowerCase(), negate: false }
+  }
+
+  // has_base_attack_dmg_type_X 是 HasAttackDamageType(`X`) 的裸标识符别名
+  //（raw 23 处，magic/melee/ranged；泛化支持任意类型名，与 HasAttackDamageType 同语义）
+  const baseAttackDmgTypeMatch = expr.match(/^has_base_attack_dmg_type_([a-zA-Z_]+)$/)
+  if (baseAttackDmgTypeMatch) {
+    return { op: 'attackType', attackType: baseAttackDmgTypeMatch[1].toLowerCase(), negate: false }
   }
 
   const tagMatch = expr.match(/^HasTag\(`([^`]+)`\)$/)
@@ -235,13 +242,7 @@ function evalNode(ast, hero, tags, attackTypes) {
     case 'stat':
       return compareNumber(getHeroStatValue(hero, ast.stat), ast.operator, ast.value)
     case 'age':
-      if (!compareNumber(hero.age, ast.operator, ast.value)) {
-        return false
-      }
-      if (ast.excludeHeroId && String(hero.heroId) === ast.excludeHeroId) {
-        return false
-      }
-      return true
+      return compareNumber(hero.age, ast.operator, ast.value)
     case 'heroId': {
       const equal = String(hero.heroId) === ast.heroId
       return ast.negate ? !equal : equal

@@ -64,7 +64,7 @@ export type HeroPredicateAST =
   | { op: 'not'; child: HeroPredicateAST }
   | { op: 'tag'; tag: string }
   | { op: 'stat'; stat: HeroStatKey; operator: HeroComparisonOperator; value: number }
-  | { op: 'age'; operator: HeroComparisonOperator; value: number; excludeHeroId?: string }
+  | { op: 'age'; operator: HeroComparisonOperator; value: number }
   | { op: 'heroId'; heroId: string; negate: boolean }
   | { op: 'attackType'; attackType: string; negate: boolean }
   | { op: 'baseAttackCooldown'; operator: HeroComparisonOperator; value: number }

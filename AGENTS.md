@@ -11,19 +11,13 @@
 
 ### 1.1 私有用户数据硬边界
 
-- 生产模式是 GitHub Pages 静态站：真实用户数据只能由用户本人在浏览器内手动触发同步，前端直接请求官方只读接口，结果只保存到当前浏览器 `IndexedDB`。
-- 生产模式禁止把真实 `user_id`、`hash`、token、私有快照或任何可还原私人数据的内容发送到本项目后端、第三方后端或仓库内静态资源。
-- 生产模式禁止自动后台同步、自动刷新或隐式拉取私人数据；所有真实同步都必须有明确的前端触发入口和用户动作。
-- 本地开发允许使用开发者自己的私有 token / 凭证先抓取一份私有用户数据，用于本地功能开发、Vite `serve` 调试和浏览器内 mock 导入。
-- 本地开发保存的私有用户数据必须放在被忽略的本地路径，例如 `tmp/private-user-data/**` 或 `*.local` 约束路径；不得提交、不得进入 `public/`、不得进入生产构建产物。
-- 本地开发注入的私有用户数据结构必须与生产模式前端同步后写入 `IndexedDB` 的结构兼容；开发态可以复用它做 mock，但不能让生产站点读取这条开发专用链路。
-- 本地开发私有快照与浏览器真实同步快照必须分离：开发快照不得覆盖浏览器 `IndexedDB` 中的真实同步结果。
-- 本地开发下游页面读取用户画像时，必须经过显式的数据源选择或解析层；禁止依赖“最后一次导入/同步覆盖了同一个 current key”这种隐式约定。
+- 生产模式（GitHub Pages 静态站）：真实用户数据只能由用户本人在浏览器手动触发同步，前端直连官方只读接口，结果只存当前浏览器 `IndexedDB`；禁止把 `user_id`/`hash`/token/私有快照发到本项目或第三方后端，禁止自动后台同步/刷新/隐式拉取。
+- 本地开发：可用开发者自己的私有 token 抓一份用户数据，用于 Vite `serve` 调试和 mock；必须放在被忽略路径（`tmp/private-user-data/**` 或 `*.local`），不得提交、不得进 `public/` 或生产构建。
+- 本地与生产隔离：开发快照结构与生产 IndexedDB 兼容但必须分离（不得覆盖真实同步结果）；下游页面读用户画像须经显式数据源选择层，禁止依赖"最后一次导入覆盖同一 current key"的隐式约定。
 
 ### 1.2 资源更新与仓库体积硬边界
 
-- 公共资源同步默认必须做两层跳过判定：先看全局资源更新时间，再看单个资源的 `sourceGraphic / sourceVersion / path / 本地文件存在性`；只有确认官方资源确实变新时，才允许下载和覆盖。
-- `data:official` 这类全量流水线必须先读取既有资源更新时间，再与本次 definitions 的 `updatedAt` 比较；若未变新，默认整批跳过资源下载、覆盖和重生成。
+- 公共资源同步做两层跳过：先看全局资源更新时间，再看单个资源 `sourceGraphic / sourceVersion / path / 本地存在性`；`data:official` 等全量流水线先比 definitions `updatedAt`，未变新整批跳过下载、覆盖和重生成。
 - 单个资源脚本若有可持久化的 manifest / collection，就必须基于该元数据做增量复用；禁止无条件清空整个资源目录后全量重下。
 - 任何会进入 git 的大体积资源、二进制产物或高频更新文件，都要优先控制数量、体积和改写频率；新增资源流程时，必须显式评估仓库总体大小、单文件大小和历史膨胀风险。
 - 非必要不新增会持续膨胀的资源副本、缓存镜像或重复格式导出；能复用现有事实源和稳定 manifest 的，不再额外复制第二份。
@@ -34,7 +28,7 @@
 - 合理性判据：游戏能正常线上运行 = 源数据大概率没坏。出现「数据有 X 那游戏怎么跑」的矛盾时优先怀疑自己的解析假设或 normalize 脚本，raw 证实前不得下"数据源 bug"结论。
 - 数据源格式特性优先在归一化层（`normalize-idle-champions-definitions.mjs`）适配，让消费层拿干净数据；无法在归一化层处理的才退到消费层防御。已确认特性：
   - `upgrade_defines.effect`：有时是 JSON 对象串，CNE 序列化不稳定（合法 JSON 与 effect_string 行末缺逗号的伪 JSON 混存）；`normalizeEffectReference` 提取 effect_string。
-  - `effect_defines.targets.tags`：是**布尔表达式**（`|` OR、`^` AND、`!` NOT、`()` 分组），非简单分隔符列表；统一由 `parseHeroPredicate(expr, 'shorthand')` 解析为 `HeroPredicateAST`（`src/domain/abilities/heroPredicate.js`），支持任意嵌套复合表达式精确求值。`per_hero_expr` 布尔谓词（functional 语法 `||`/`&&`/`HasTag`/`GetStat`/`age`/`hero_id`/`HasAttackDamageType`）同经 `parseHeroPredicate(expr, 'functional')` 解析到同一 AST，由 `evalHeroPredicate` 统一求值；数值表达式（min/max/floor/GetUpgradeAmount 等）返回 null 归 stage 7 stack 计算。
+  - `effect_defines.targets.tags` 与 `per_hero_expr`：都是英雄布尔表达式（tags 用 shorthand `|`/`^`/`!`/`()`；per_hero_expr 用 functional `||`/`&&`/`HasTag`/`GetStat`/`age`/`hero_id`/`HasAttackDamageType`/`has_base_attack_dmg_type_*`），统一由 `parseHeroPredicate(expr, dialect)`（`src/domain/abilities/heroPredicate.js`）解析到同一 `HeroPredicateAST`，`evalHeroPredicate` 求值；数值表达式（min/max/floor/GetUpgradeAmount 等）返回 null，归 stage 7 stack 计算。
 
 ## 2. AI-first 根目标
 
@@ -90,8 +84,7 @@
 ## 7. 文档与发布
 
 - `AGENTS.md` 只写长期稳定硬约束；`README.md` 写项目概览和高频命令；`docs/README.md` 写总导航；细节只在叶子文档展开。
-- 根 `TODO.md`（由 `auto-todo` 技能维护 canonical 区块）是整个项目统一的顺手发现项落库位置：只记录“在推进当前主目标过程中顺手发现、但与当前主目标不一致、因此暂不展开处理”的问题、优化点、性能点和后续机会。写入用 `auto-todo` 技能，不维护 `docs/todo.md`。
-- 根 `TODO.md` 不是当前主目标的执行清单，不是 Ralph 任务队列，也不是某个模块私有 backlog；模块内任务文档只承载该模块自己的设计、验收和执行约束。
+- 根 `TODO.md`（`auto-todo` 技能维护 canonical 区块）只记录"推进主目标时顺手发现、但与主目标不一致、暂不展开"的问题/优化/性能点；不是主目标执行清单、不是 Ralph 队列、不是模块私有 backlog（模块内任务文档只承载该模块自己的设计/验收/执行约束）。不维护 `docs/todo.md`。
 - 技术路线、目录结构、部署、数据契约、页面范围或核心交互变化后，必须同步更新对应文档。
 - `main` 只承载已验证、可发布状态；日常开发必须在非 `main` 的 `codex/*` 分支和对应工作树完成。
 - 改动后至少做最小充分验证；无法验证时，要明确缺口、风险和建议的下一步验证。
@@ -103,6 +96,4 @@
 
 ## 9. 构建、预览与截图
 
-- `npm run preview:pages` 只读取当前 `dist/` 产物，不会自动反映源码最新改动；凡是依赖它做截图、人工验收或 Playwright 视觉检查，必须先重新执行 `npm run build`。
-- 代码改动后若继续使用已有预览进程，必须先确认它对应的是最新一次 build；拿不准时直接重启 preview，不能把旧 `dist` 画面当成“当前基线”或“修改后效果”。
-- 任何基于预览地址导出的截图、录屏或视觉结论，都要默认以“最新构建产物”作为前提；如果还没 build，就不能声称画面代表当前源码状态。
+- `npm run preview:pages` 只读当前 `dist/`，不反映源码最新改动：截图、人工验收、Playwright 视觉检查前必须先 `npm run build`；拿不准 preview 进程是否对应最新 build 时直接重启，不得把旧 `dist` 当"当前基线"或"修改后效果"，未 build 不得声称画面代表当前源码。

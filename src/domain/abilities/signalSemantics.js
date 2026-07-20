@@ -52,165 +52,91 @@ export function normalizeSignalAmountFunc(value) {
   return value ? 'unknown' : null
 }
 
+// 字符串 target → 位置关系（IC effect_defines.targets 的字符串简写）
+const STRING_RELATION_MAP = {
+  self: 'self',
+  adj: 'adjacent',
+  non_adj: 'nonAdjacent',
+  col: 'sameColumn',
+  ahead: 'allAheadColumns',
+  next_col: 'aheadColumn',
+  prev_col: 'behindColumn',
+  next_two_col: 'aheadTwoColumns',
+  prev_two_col: 'behindTwoColumns',
+  behind: 'allBehindColumns',
+  col_and_prev_col: 'sameOrBehindColumn',
+  col_and_behind: 'sameOrBehindColumns',
+  col_and_ahead: 'sameOrAheadColumns',
+  prev_and_next_col: 'adjacentColumns',
+  self_and_prev_two_col: 'selfAndBehindTwoColumns',
+  self_and_adj: 'adjacentOrSelf',
+  self_and_ahead: 'sameOrAheadColumns',
+  front_2_columns: 'frontTwoColumns',
+  back_2_columns: 'backTwoColumns',
+}
+
+const EXACTLY_BEHIND_COLUMNS = {
+  1: 'exactlyBehindOneColumn',
+  2: 'exactlyBehindTwoColumns',
+  3: 'exactlyBehindThreeColumns',
+}
+
+const COL_FROM_BACK_INDEX = {
+  0: 'rearMostColumn',
+  1: 'secondRearMostColumn',
+  2: 'thirdRearMostColumn',
+}
+
+// distance target：comparison + distance + self 组合 → 位置关系
+function resolveDistanceRelation(target) {
+  const distance = Number(target.distance)
+  const includeSelf = target.self === true
+  const comparison = typeof target.comparison === 'string' ? target.comparison : '<='
+  const exact = comparison === '=' || comparison === '=='
+
+  // distance=1：exact 或 <= 都映射 adjacent（含 self 变体）
+  if (distance === 1 && (exact || comparison === '<=')) {
+    return includeSelf ? 'adjacentOrSelf' : 'adjacent'
+  }
+  if (comparison === '<=' && distance === 2) {
+    return includeSelf ? 'withinTwoSlotsOrSelf' : 'withinTwoSlots'
+  }
+  if (comparison === '<=' && distance === 3) {
+    return includeSelf ? 'withinThreeSlotsOrSelf' : 'withinThreeSlots'
+  }
+  // distance=2/3 的 exact 无对应枚举
+  return null
+}
+
+function normalizeObjectRelation(target) {
+  switch (target.type) {
+    case 'exactly_x_behind':
+      return EXACTLY_BEHIND_COLUMNS[Number(target.num_columns)] ?? null
+    case 'col_num':
+      return target.start_from_back === true
+        ? (COL_FROM_BACK_INDEX[Number(target.column)] ?? null)
+        : null
+    case 'distance':
+      return resolveDistanceRelation(target)
+    case 'cascade':
+      return target.cascade_type === 'self_and_adj' ? 'adjacentOrSelf' : null
+    case 'col_and_back_x':
+      return Number(target.num_back_cols) === 1 ? 'sameOrBehindColumn' : null
+    default:
+      return null
+  }
+}
+
 function normalizeTargetRelation(target) {
-  if (target === 'all') {
+  if (target === 'all' || target === 'all_slots' || isFilterLikeTarget(target)) {
     return 'any'
   }
-
-  if (target === 'all_slots') {
-    return 'any'
+  if (typeof target === 'string') {
+    return STRING_RELATION_MAP[target] ?? null
   }
-
-  if (isFilterLikeTarget(target)) {
-    return 'any'
+  if (target && typeof target === 'object') {
+    return normalizeObjectRelation(target)
   }
-
-  if (target && typeof target === 'object' && target.type === 'exactly_x_behind') {
-    const columnsBehind = Number(target.num_columns)
-    if (columnsBehind === 1) {
-      return 'exactlyBehindOneColumn'
-    }
-    if (columnsBehind === 2) {
-      return 'exactlyBehindTwoColumns'
-    }
-    if (columnsBehind === 3) {
-      return 'exactlyBehindThreeColumns'
-    }
-  }
-
-  if (target && typeof target === 'object' && target.type === 'col_num' && target.start_from_back === true) {
-    const backIndex = Number(target.column)
-    if (backIndex === 0) {
-      return 'rearMostColumn'
-    }
-    if (backIndex === 1) {
-      return 'secondRearMostColumn'
-    }
-    if (backIndex === 2) {
-      return 'thirdRearMostColumn'
-    }
-  }
-
-  if (target && typeof target === 'object' && target.type === 'distance') {
-    const distance = Number(target.distance)
-    const includeSelf = target.self === true
-    const comparison = typeof target.comparison === 'string' ? target.comparison : '<='
-
-    if ((comparison === '=' || comparison === '==') && distance === 1) {
-      return includeSelf ? 'adjacentOrSelf' : 'adjacent'
-    }
-
-    if (comparison === '<=' && distance === 1) {
-      return includeSelf ? 'adjacentOrSelf' : 'adjacent'
-    }
-
-    if (comparison === '<=' && distance === 2) {
-      return includeSelf ? 'withinTwoSlotsOrSelf' : 'withinTwoSlots'
-    }
-
-    if (comparison === '<=' && distance === 3) {
-      return includeSelf ? 'withinThreeSlotsOrSelf' : 'withinThreeSlots'
-    }
-
-    if ((comparison === '=' || comparison === '==') && distance === 2) {
-      return null
-    }
-
-    if ((comparison === '=' || comparison === '==') && distance === 3) {
-      return null
-    }
-  }
-
-  if (target && typeof target === 'object' && target.type === 'cascade') {
-    if (target.cascade_type === 'self_and_adj') {
-      return 'adjacentOrSelf'
-    }
-    return null
-  }
-
-  if (target && typeof target === 'object' && target.type === 'col_and_back_x') {
-    if (Number(target.num_back_cols) === 1) {
-      return 'sameOrBehindColumn'
-    }
-    return null
-  }
-
-  if (target === 'self') {
-    return 'self'
-  }
-
-  if (target === 'adj') {
-    return 'adjacent'
-  }
-
-  if (target === 'non_adj') {
-    return 'nonAdjacent'
-  }
-
-  if (target === 'col') {
-    return 'sameColumn'
-  }
-
-  if (target === 'ahead') {
-    return 'allAheadColumns'
-  }
-
-  if (target === 'next_col') {
-    return 'aheadColumn'
-  }
-
-  if (target === 'prev_col') {
-    return 'behindColumn'
-  }
-
-  if (target === 'next_two_col') {
-    return 'aheadTwoColumns'
-  }
-
-  if (target === 'prev_two_col') {
-    return 'behindTwoColumns'
-  }
-
-  if (target === 'behind') {
-    return 'allBehindColumns'
-  }
-
-  if (target === 'col_and_prev_col') {
-    return 'sameOrBehindColumn'
-  }
-
-  if (target === 'col_and_behind') {
-    return 'sameOrBehindColumns'
-  }
-
-  if (target === 'col_and_ahead') {
-    return 'sameOrAheadColumns'
-  }
-
-  if (target === 'prev_and_next_col') {
-    return 'adjacentColumns'
-  }
-
-  if (target === 'self_and_prev_two_col') {
-    return 'selfAndBehindTwoColumns'
-  }
-
-  if (target === 'self_and_adj') {
-    return 'adjacentOrSelf'
-  }
-
-  if (target === 'self_and_ahead') {
-    return 'sameOrAheadColumns'
-  }
-
-  if (target === 'front_2_columns') {
-    return 'frontTwoColumns'
-  }
-
-  if (target === 'back_2_columns') {
-    return 'backTwoColumns'
-  }
-
   return null
 }
 
