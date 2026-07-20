@@ -21,10 +21,6 @@ async function writeJson(filePath, value) {
   await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
 }
 
-function shouldIgnoreUnsupportedEffect(entry, unsupported) {
-  return shouldIgnoreUnsupportedEffectEntry(entry, unsupported?.rawEffect ?? '')
-}
-
 function buildOfficialHeroModel(champion, detail) {
   const carrySignals = []
   const supportSignals = []
@@ -47,7 +43,7 @@ function buildOfficialHeroModel(champion, detail) {
         supportSignals.push(signal)
       }
     } else {
-      if (!shouldIgnoreUnsupportedEffect(entry, parsed.unsupported)) {
+      if (!shouldIgnoreUnsupportedEffectEntry(parsed.unsupported?.rawEffect ?? '')) {
         unsupportedSignals.push(parsed.unsupported)
       }
     }

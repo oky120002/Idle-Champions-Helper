@@ -524,3 +524,64 @@ test('buildModels 产出 hero abilities / scenarios / semantic overrides', async
     },
   ])
 })
+
+test('effectReference 直接引用 buff_upgrade wrapper 时不进 unsupportedSignals 噪声', async () => {
+  // 真实数据模式：upgrade.effectReference 直接是 'buff_upgrade,...'，
+  // effectDefinition 为 null（base effect 通过 upgrade id 引用，不在内联 effect_keys）。
+  // wrapper 的实际 signal 由 collectEffectEntries 派生；裸 wrapper 名不得进 unsupportedSignals。
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'idle-champions-buff-upgrade-noise-'))
+  const versionDir = path.join(tempDir, 'data')
+  const detailDir = path.join(versionDir, 'champion-details')
+
+  await mkdir(detailDir, { recursive: true })
+  await writeFile(
+    path.join(versionDir, 'champions.json'),
+    JSON.stringify({
+      updatedAt: '2026-06-04',
+      items: [{ id: '1', name: { original: 'Bruenor', display: '布鲁诺' }, seat: 1, roles: ['support'], tags: ['dwarf'] }],
+    }),
+  )
+  await writeFile(
+    path.join(versionDir, 'variants.json'),
+    JSON.stringify({ updatedAt: '2026-06-04', items: [] }),
+  )
+  await writeFile(
+    path.join(versionDir, 'formations.json'),
+    JSON.stringify({ updatedAt: '2026-06-04', items: [] }),
+  )
+  await writeFile(
+    path.join(detailDir, '1.json'),
+    JSON.stringify({
+      upgrades: [
+        {
+          id: '4',
+          effectReference: 'hero_dps_multiplier_mult,80',
+          effectDefinition: null,
+        },
+        {
+          id: '7',
+          effectReference: 'buff_upgrade,100,4',
+          effectDefinition: null,
+        },
+      ],
+      loot: [],
+      legendaryEffects: [],
+    }),
+  )
+
+  await buildModels({ versionDir, semanticOverridesFile: path.join(tempDir, 'empty.json') })
+  const heroAbilities = await readJson(path.join(versionDir, 'hero-abilities.json'))
+
+  const unsupportedRawEffects = heroAbilities.items[0].unsupportedSignals.map((signal) => signal.rawEffect)
+  assert.deepEqual(
+    unsupportedRawEffects.filter((rawEffect) => rawEffect === 'buff_upgrade'),
+    [],
+    `buff_upgrade wrapper 不应进入 unsupportedSignals，实际：${JSON.stringify(unsupportedRawEffects)}`,
+  )
+
+  // 派生信号仍应存在：wrapper 以 base 80% 折算 100% 增量，bonusScaleOfSignal 指向 base。
+  const allSignals = [...heroAbilities.items[0].carrySignals, ...heroAbilities.items[0].supportSignals]
+  const derived = allSignals.find((signal) => signal.rawEffect === 'buff_upgrade,100,4')
+  assert.equal(derived?.kind, 'heroDpsMultiplier')
+  assert.equal(derived?.bonusScaleOfSignal?.rawEffect, 'hero_dps_multiplier_mult,80')
+})

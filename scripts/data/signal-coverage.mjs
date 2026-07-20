@@ -76,8 +76,10 @@ function classifyScoringSupport(signal) {
   const supportedStackFunc = (
     signal.stackFunc === 'per_crusader'
     || signal.stackFunc === 'per_tagged_crusader_mult'
+    || signal.stackFunc === 'per_target_crusader'
     || signal.stackFunc === 'per_hero_attribute'
     || signal.stackFunc === 'per_upgrade_targets'
+    || signal.stackFunc === 'per_col_behind'
     || signal.stackFunc === 'per_slot_distance_from_source'
   )
 
@@ -174,7 +176,7 @@ export function generateSignalCoverageReport(details) {
 
       const parsed = normalizeEffectSignal(split.effectName, split.effectValue, 'official-parsed', entry)
       if (!parsed.ok) {
-        if (shouldIgnoreUnsupportedEffectEntry(entry, split.effectName)) {
+        if (shouldIgnoreUnsupportedEffectEntry(split.effectName)) {
           continue
         }
         unsupportedSignals += 1

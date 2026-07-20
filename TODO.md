@@ -36,4 +36,11 @@ repair: rebuild
   - 备注: projectMechanicsToScenario 对 slot_escort* mechanic 按 column 降序锁前排首槽（启发式，官方未标注护送具体槽位）
     - 处置：精确槽位需官方 formation 元数据或人工校准后替换
 
+- placementFit.ts 仍超体量预算（567 行，>480 必须拆） <!-- auto-todo:id=atd_f1c3d69582 -->
+  - 记录时间: `2026-07-20T12:52:00+08:00`
+  - 类型: optimization
+  - 位置: `src/domain/planner/placementFit.ts:1`
+  - 备注: 第三轮审计重构已减 213 行（消除 stackFunc 分支重复），但文件仍承载 pool 聚合 + 位置关系匹配 + stack 计数解析三职责。
+    - 处置: 下次触碰时按职责拆分（positionMatching / stackResolution / poolAggregation），不强制现在拆
+
 <!-- auto-todo:end -->

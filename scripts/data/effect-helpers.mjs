@@ -100,37 +100,37 @@ function buildEffectEntry({
   }
 }
 
+const BUFF_UPGRADE_WRAPPER_KINDS = new Set([
+  'buff_upgrade',
+  'buff_upgrades',
+  'buff_upgrade_per_any_tagged_crusader_mult',
+  'buff_upgrade_per_target_crusader',
+  'buff_upgrade_per_any_crusader_where_mult',
+  'buff_upgrade_mult_by_distance_from_source',
+  'buff_upgrade_mult_by_distance_from_source_mult',
+])
+
 function isAnyBuffUpgradeWrapperKind(kind) {
   return kind === 'buff_upgrades'
     || (typeof kind === 'string' && kind.startsWith('buff_upgrade'))
 }
 
 function isBuffUpgradeKind(kind) {
-  return kind === 'buff_upgrade'
-    || kind === 'buff_upgrades'
-    || kind === 'buff_upgrade_per_any_tagged_crusader_mult'
-    || kind === 'buff_upgrade_per_target_crusader'
-    || kind === 'buff_upgrade_per_any_crusader_where_mult'
-    || kind === 'buff_upgrade_mult_by_distance_from_source'
-    || kind === 'buff_upgrade_mult_by_distance_from_source_mult'
+  return typeof kind === 'string' && BUFF_UPGRADE_WRAPPER_KINDS.has(kind)
 }
 
-export function shouldIgnoreUnsupportedEffectEntry(entry, rawEffect) {
+/**
+ * buff_upgrade wrapper 家族的裸 effect 名是否应从 unsupportedSignals 中忽略。
+ * 这些 wrapper 的实际 signal 由 collectEffectEntries 派生（bonusScaleOfSignal = 目标 base）；
+ * 未派生的 wrapper 变体由 analyzeBuffUpgradeWrappers 独立审计。
+ * 故无论来自 effectReference（sourceBucket='upgrade'）还是 effect_keys（'upgrade-effect-key'）路径，
+ * 裸 wrapper 名都不进 unsupportedSignals——否则会产生数千条 "No parser for effect: buff_upgrade" 噪声。
+ */
+export function shouldIgnoreUnsupportedEffectEntry(rawEffect) {
   if (rawEffect === 'effect_def') {
     return true
   }
-
-  if (entry?.sourceBucket !== 'upgrade-effect-key') {
-    return false
-  }
-
-  return rawEffect === 'buff_upgrade'
-    || rawEffect === 'buff_upgrades'
-    || rawEffect === 'buff_upgrade_per_any_tagged_crusader_mult'
-    || rawEffect === 'buff_upgrade_per_target_crusader'
-    || rawEffect === 'buff_upgrade_per_any_crusader_where_mult'
-    || rawEffect === 'buff_upgrade_mult_by_distance_from_source'
-    || rawEffect === 'buff_upgrade_mult_by_distance_from_source_mult'
+  return isBuffUpgradeKind(rawEffect)
 }
 
 function resolveTargetUpgradeIds(payload) {
@@ -378,7 +378,7 @@ function summarizeBuffUpgradeBase(entry, targetEntries) {
       continue
     }
 
-    if (shouldIgnoreUnsupportedEffectEntry(targetEntry, split.effectName)) {
+    if (shouldIgnoreUnsupportedEffectEntry(split.effectName)) {
       ignoredBaseEffectNames.push(split.effectName)
       continue
     }

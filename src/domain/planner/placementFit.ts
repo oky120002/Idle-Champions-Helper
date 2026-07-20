@@ -90,16 +90,12 @@ export interface EvaluatePlacementFitInput {
   dimension?: HeroAbilityDimension
 }
 
-function effectValueToMultiplier(value: number): number {
-  return 1 + (value / 100)
-}
-
 function invertEffectMultiplier(multiplier: number): number | null {
   if (!Number.isFinite(multiplier) || multiplier <= 0) {
     return null
   }
 
-  return ((multiplier - 1) * 100)
+  return (multiplier - 1) * 100
 }
 
 function percentToMultiplier(percent: number): number {
@@ -314,7 +310,7 @@ function countUpgradeTargets(input: EvaluatePlacementFitInput, signal: HeroAbili
   }, 0)
 }
 
-function countColumnsBehindCarry(input: EvaluatePlacementFitInput): number | null {
+function countColumnsCarryBehindSupport(input: EvaluatePlacementFitInput): number | null {
   const supportSlot = findScenarioSlot(input.scenario, input.supportSlotId)
   const carrySlot = findScenarioSlot(input.scenario, input.carrySlotId)
 
@@ -322,12 +318,28 @@ function countColumnsBehindCarry(input: EvaluatePlacementFitInput): number | nul
     return null
   }
 
+  // column 约定：0 = 最后排（远离怪物），数值越大越靠前排。
+  // carry 落后 support 的列数 = support.column - carry.column（carry 在 support 身后时为正）。
   const columnDistance = supportSlot.column - carrySlot.column
   return columnDistance > 0 ? columnDistance : 0
 }
 
 function countSlotDistanceFromSource(input: EvaluatePlacementFitInput): number | null {
   return computeSlotDistance(input.scenario, input.supportSlotId, input.carrySlotId)
+}
+
+/** 每种 stackFunc 对应的计数来源 + warning 用的上下文标签。 */
+const STACK_COUNT_RESOLVERS: Record<string, {
+  count: (input: EvaluatePlacementFitInput, signal: HeroAbilitySignal) => number | null
+  contextLabel: string
+}> = {
+  per_crusader: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: '整队计数' },
+  per_tagged_crusader_mult: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: '整队计数' },
+  per_target_crusader: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: '整队目标计数' },
+  per_hero_attribute: { count: (input, signal) => countQualifiedHeroes(input, signal), contextLabel: '整队属性计数' },
+  per_upgrade_targets: { count: (input, signal) => countUpgradeTargets(input, signal), contextLabel: '整队目标' },
+  per_col_behind: { count: (input) => countColumnsCarryBehindSupport(input), contextLabel: '阵型列拓扑' },
+  per_slot_distance_from_source: { count: (input) => countSlotDistanceFromSource(input), contextLabel: '阵型槽位距离' },
 }
 
 function resolveSignalMultiplier(
@@ -341,7 +353,6 @@ function resolveSignalMultiplier(
     }
   }
 
-  const amountFunc = signal.amountFunc ?? null
   const stackFunc = signal.stackFunc ?? null
 
   const applySignalPercent = (
@@ -374,171 +385,42 @@ function resolveSignalMultiplier(
     return applySignalPercent(signal.value)
   }
 
-  if (stackFunc === 'per_crusader' || stackFunc === 'per_tagged_crusader_mult') {
-    const qualifiedCount = countQualifiedHeroes(input, signal)
-
-    if (qualifiedCount === null) {
-      return {
-        ok: false,
-        warning: `${signal.rawEffect} 需要整队计数上下文，当前不计分。`,
-      }
-    }
-
-    if (amountFunc === 'add') {
-      return applySignalPercent(signal.value * qualifiedCount)
-    }
-
-    if (amountFunc === 'mult') {
-      const multiplier = effectValueToMultiplier(signal.value) ** qualifiedCount
-      const percent = invertEffectMultiplier(multiplier)
-      if (percent === null) {
-        return {
-          ok: false,
-          warning: `${signal.rawEffect} 的乘算堆叠结果非法，当前不计分。`,
-        }
-      }
-      return applySignalPercent(percent)
+  const resolver = STACK_COUNT_RESOLVERS[stackFunc]
+  if (!resolver) {
+    return {
+      ok: false,
+      warning: `${signal.rawEffect} 的叠层方式(${signal.amountFunc ?? 'null'} / ${stackFunc}) 尚未稳定解析，当前不计分。`,
     }
   }
 
-  if (stackFunc === 'per_target_crusader') {
-    const qualifiedCount = countQualifiedHeroes(input, signal)
-
-    if (qualifiedCount === null) {
-      return {
-        ok: false,
-        warning: `${signal.rawEffect} 需要整队目标计数上下文，当前不计分。`,
-      }
-    }
-
-    if (amountFunc === 'add') {
-      return applySignalPercent(signal.value * qualifiedCount)
-    }
-
-    if (amountFunc === 'mult') {
-      const multiplier = effectValueToMultiplier(signal.value) ** qualifiedCount
-      const percent = invertEffectMultiplier(multiplier)
-      if (percent === null) {
-        return {
-          ok: false,
-          warning: `${signal.rawEffect} 的乘算堆叠结果非法，当前不计分。`,
-        }
-      }
-      return applySignalPercent(percent)
+  const count = resolver.count(input, signal)
+  if (count === null) {
+    return {
+      ok: false,
+      warning: `${signal.rawEffect} 需要${resolver.contextLabel}上下文，当前不计分。`,
     }
   }
 
-  if (stackFunc === 'per_hero_attribute') {
-    const qualifiedCount = countQualifiedHeroes(input, signal)
-
-    if (qualifiedCount === null) {
-      return {
-        ok: false,
-        warning: `${signal.rawEffect} 需要整队属性计数上下文，当前不计分。`,
-      }
-    }
-
-    if (amountFunc === 'mult') {
-      const multiplier = effectValueToMultiplier(signal.value) ** qualifiedCount
-      const percent = invertEffectMultiplier(multiplier)
-      if (percent === null) {
-        return {
-          ok: false,
-          warning: `${signal.rawEffect} 的乘算堆叠结果非法，当前不计分。`,
-        }
-      }
-      return applySignalPercent(percent)
-    }
-
-    if (amountFunc === 'add') {
-      return applySignalPercent(signal.value * qualifiedCount)
-    }
+  const amountFunc = signal.amountFunc ?? null
+  if (amountFunc === 'add') {
+    return applySignalPercent(signal.value * count)
   }
 
-  if (stackFunc === 'per_upgrade_targets') {
-    const qualifiedCount = countUpgradeTargets(input, signal)
-
-    if (qualifiedCount === null) {
+  if (amountFunc === 'mult') {
+    const multiplier = percentToMultiplier(signal.value) ** count
+    const percent = invertEffectMultiplier(multiplier)
+    if (percent === null) {
       return {
         ok: false,
-        warning: `${signal.rawEffect} 需要整队目标上下文，当前不计分。`,
+        warning: `${signal.rawEffect} 的乘算堆叠结果非法，当前不计分。`,
       }
     }
-
-    if (amountFunc === 'mult') {
-      const multiplier = effectValueToMultiplier(signal.value) ** qualifiedCount
-      const percent = invertEffectMultiplier(multiplier)
-      if (percent === null) {
-        return {
-          ok: false,
-          warning: `${signal.rawEffect} 的乘算堆叠结果非法，当前不计分。`,
-        }
-      }
-      return applySignalPercent(percent)
-    }
-
-    if (amountFunc === 'add') {
-      return applySignalPercent(signal.value * qualifiedCount)
-    }
-  }
-
-  if (stackFunc === 'per_col_behind') {
-    const columnCount = countColumnsBehindCarry(input)
-
-    if (columnCount === null) {
-      return {
-        ok: false,
-        warning: `${signal.rawEffect} 需要阵型列拓扑上下文，当前不计分。`,
-      }
-    }
-
-    if (amountFunc === 'add') {
-      return applySignalPercent(signal.value * columnCount)
-    }
-
-    if (amountFunc === 'mult') {
-      const multiplier = effectValueToMultiplier(signal.value) ** columnCount
-      const percent = invertEffectMultiplier(multiplier)
-      if (percent === null) {
-        return {
-          ok: false,
-          warning: `${signal.rawEffect} 的乘算堆叠结果非法，当前不计分。`,
-        }
-      }
-      return applySignalPercent(percent)
-    }
-  }
-
-  if (stackFunc === 'per_slot_distance_from_source') {
-    const slotDistance = countSlotDistanceFromSource(input)
-
-    if (slotDistance === null) {
-      return {
-        ok: false,
-        warning: `${signal.rawEffect} 需要阵型槽位距离上下文，当前不计分。`,
-      }
-    }
-
-    if (amountFunc === 'add') {
-      return applySignalPercent(signal.value * slotDistance)
-    }
-
-    if (amountFunc === 'mult') {
-      const multiplier = effectValueToMultiplier(signal.value) ** slotDistance
-      const percent = invertEffectMultiplier(multiplier)
-      if (percent === null) {
-        return {
-          ok: false,
-          warning: `${signal.rawEffect} 的乘算堆叠结果非法，当前不计分。`,
-        }
-      }
-      return applySignalPercent(percent)
-    }
+    return applySignalPercent(percent)
   }
 
   return {
     ok: false,
-    warning: `${signal.rawEffect} 的叠层方式(${amountFunc ?? 'null'} / ${stackFunc}) 尚未稳定解析，当前不计分。`,
+    warning: `${signal.rawEffect} 的叠层方式(${amountFunc} / ${stackFunc}) 尚未稳定解析，当前不计分。`,
   }
 }
 

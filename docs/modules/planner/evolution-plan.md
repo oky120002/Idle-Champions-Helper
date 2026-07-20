@@ -719,6 +719,14 @@ hero_final_dps = base_dps
    - **effect_def / pre_stack_amount**：评估在 planner 的价值边界，能复用共享 effect payload 解析的就下沉公共层，避免 planner 单独维护第二套解释。
    - **孤立基线模块去留**：`simulator/specializationBaseline.ts` + `goldBudgetBaseline.ts`（可负担等级基线）+ `gameNumberAddition.ts`（阈值加法）M2 启动时核实——金币链路若纯乘法则删 `gameNumberAddition`；基线模块按阶段 3 金币预算设计决定去留。
 
+5. **M1 第三轮深度审计发现并修复的问题**（2026-07-20）：
+   - **buff_upgrade wrapper 噪声（已修复）**：`shouldIgnoreUnsupportedEffectEntry` 原仅对 `sourceBucket === 'upgrade-effect-key'` 忽略 buff_upgrade 家族；真实数据里 upgrade 常用 `effectReference: 'buff_upgrade,...'`（`effectDefinition: null`，sourceBucket='upgrade'），导致 6165 条裸 wrapper 名进入 unsupportedSignals，污染 user-facing warnings 并虚高覆盖率 unsupported 计数。实际 signal 已由 `collectEffectEntries` 派生，wrapper 变体覆盖由 `analyzeBuffUpgradeWrappers` 独立审计。修复：忽略条件不再依赖 sourceBucket。
+   - **覆盖率 supported 列表与 scorer 脱节（已修复）**：`classifyScoringSupport` 漏列 `per_target_crusader` / `per_col_behind`，但 `placementFit` 实际支持——覆盖率报告误报为 unsupported-composition。修复：补齐列表。
+   - **数据脚本测试未接入运行器（已修复）**：`scripts/data/*.test.mjs`（6 个文件、24 测试，含 build-models/scenarios 覆盖）用 `node:test` 但 vitest 只含 `tests/unit/**`、CI 也未跑——buff_upgrade 噪声 bug 因此多轮未被抓到。修复：加 `npm run test:data` 并纳入 `test:regression`。
+   - **M2 待处理（本轮发现，未展开）**：
+     - `scoreFormation` 调用 `evaluatePlacementFit` 未显式传 `dimension: 'damage'`；M1 全员 damage 维度无影响，但 M2 引入 gold/crit 维度时必须显式过滤，否则非伤害 pool 会泄漏进 `carryDps`。
+     - `resolveSignalMultiplier` 解析 `bonusScaleOfSignal` 时只取 base 的 multiplier，不重新校验 base 的 `positionQualifier` / `targetQualifier`；阶段 8 buff_upgrade 精细化时需评估 base 与外层 targeting 不一致场景。
+
 **一致性**：阶段 7/15/16 格式已统一为 ### 标题（原列表项）。
 
 **想象力**：dimension 枚举位 / scoringMode 多模式 / semantic-overrides + 浏览器本地 override 均为未来扩展留位（新英雄/新 effect/用户自定义）。

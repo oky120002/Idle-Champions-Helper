@@ -88,7 +88,12 @@
 - `main` 只承载已验证、可发布状态；日常开发必须在非 `main` 的 `codex/*` 分支和对应工作树完成。
 - 改动后至少做最小充分验证；无法验证时，要明确缺口、风险和建议的下一步验证。
 
-## 8. 构建、预览与截图
+## 8. 测试
+
+- 新增测试文件必须接入运行器，否则等于没测试：`tests/**` 由 vitest 覆盖；`scripts/data/*.test.mjs` 等 `node:test` 格式由 `npm run test:data` 覆盖（已纳入 `test:regression`）。新增其他 `node:test` 测试目录时，同步扩展 `test:data` glob。
+- 覆盖率/支持度等"派生统计"若维护一份与 scorer 平行的白名单（如支持的 stackFunc 列表），新增能力时必须同步两边，否则统计失真误导后续判断。
+
+## 9. 构建、预览与截图
 
 - `npm run preview:pages` 只读取当前 `dist/` 产物，不会自动反映源码最新改动；凡是依赖它做截图、人工验收或 Playwright 视觉检查，必须先重新执行 `npm run build`。
 - 代码改动后若继续使用已有预览进程，必须先确认它对应的是最新一次 build；拿不准时直接重启 preview，不能把旧 `dist` 画面当成“当前基线”或“修改后效果”。

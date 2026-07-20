@@ -137,6 +137,30 @@ describe('signal coverage report', () => {
     expect(report.totals.signalsWithStatCountQualifier).toBe(1)
   })
 
+  it('placementFit 已支持的 per_target_crusader / per_col_behind 计为 supported（而非 unsupported-composition）', () => {
+    const report = generateSignalCoverageReport([
+      {
+        upgrades: [
+          {
+            effectReference: 'hero_dps_mult_per_target_crusader,100,adj',
+            amount_func: 'add',
+            stack_func: 'per_target_crusader',
+          },
+          {
+            effectReference: 'hero_dps_mult_per_col_behind,100',
+            amount_func: 'mult',
+            stack_func: 'per_col_behind',
+          },
+        ],
+        loot: [],
+        legendaryEffects: [],
+      },
+    ])
+
+    expect(report.scoringSupport.find((entry) => entry.key === 'supported')?.count).toBe(2)
+    expect(report.scoringSupport.find((entry) => entry.key === 'unsupported-composition')?.count).toBeUndefined()
+  })
+
   it('简单 tag && stat 组合进入已解析子集', () => {
     const report = generateSignalCoverageReport([
       {
