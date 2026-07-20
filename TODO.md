@@ -52,4 +52,11 @@ repair: rebuild
     - 证据：menuToggle.click 被 .app-shell--workbench intercepts pointer events；可能是 z-index/overlay/工作台 shell 在移动端视口下覆盖了 nav toggle
     - 排查方向：移动端视口下 .app-shell--workbench 与 .site-nav 的堆叠上下文与 pointer-events
 
+- userDataPage.syncFlow 全量 test:run 偶发失败（alert 找不到），疑测试隔离 flaky <!-- auto-todo:id=atd_086e9011a4 -->
+  - 记录时间: `2026-07-20T21:06:24+08:00`
+  - 类型: bug
+  - 位置: `tests/component/userDataPage.syncFlow.test.tsx:295`
+  - 备注:
+    - 排查方向：测试隔离/全局状态串扰（jsdom 环境共享、定时器、mock 泄漏）；alert findByRole 找不到说明渲染未达预期态
+
 <!-- auto-todo:end -->
