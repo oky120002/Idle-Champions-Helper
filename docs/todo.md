@@ -11,7 +11,7 @@
 
 ## 当前待办
 
-- planner targeting 覆盖缺口：14 个 `hero_dps_multiplier_mult` effect 因 `normalizeTargetRelation`（`signalSemantics.js`）不识别 targets 关系而整体进 unsupported，真实 DPS 加成被丢。未识别关系含位置类（`other`/`self_and_ahead`/`self_and_behind_and_ahead`/`middle_columns`/`tallest_column`/`top_row_of_each_column`/`bottom_row_of_each_column`/`col_and_back_x`/`cascade`）与特定机制类（`heroes[id]`/`bud_setter`/`snowflake`/`active_campaign`/`slot_if_expr`）。建议先补位置类（映射到现有 `HeroPositionRelation` 或扩枚举），特定机制类评估是否长期 unsupported。
+- planner targeting 覆盖缺口：11 个 `hero_dps_multiplier_mult` effect 因 `normalizeTargetRelation` 不识别 targets 关系而进 unsupported（已补 `cascade self_and_adj`/`col_and_back_x:1`/`self_and_ahead`，14→11）。剩余：位置类需扩 `HeroPositionRelation` 枚举（`other`/`self_and_behind_and_ahead`/`middle_columns`/`tallest_column`/`top_row_of_each_column`/`bottom_row_of_each_column`），特定机制类（`heroes[id]`/`bud_setter`/`snowflake`/`active_campaign`/`slot_if_expr`）长期 unsupported。每个 targeting 唯一对应 1 个 effect，整体覆盖率提升 <0.1%，按需补。
 - planner unsupported audit: 针对仍然高频的 `buff_upgrade` / `buff_upgrades` 做自动化阵型价值审计，但范围收敛到“基础升级已可见、且直接影响 carry 输出”的剩余子族；优先看 `buff_upgrade_per_target_crusader_mult`、距离相关 wrapper 和少量 still-high-value base effect 缺口，不做泛化全铺。
 - planner unsupported audit: 重新审查 `effect_def` / `pre_stack_amount` 在 planner 里的价值边界，能复用共享 effect payload 解析的就下沉到公共层，避免 planner 单独维护第二套解释。
 - planner base-effect gap: 评估 `paid_up_front_increase_dps` 是否值得进入 planner。它能解锁 Môrgæn 的 `buff_upgrade_per_target_crusader` 链路，但真实增量依赖金币数量级；在没有稳定静态基线前，不应为了打通 wrapper 而硬塞进主评分。

@@ -401,6 +401,25 @@ describe('planner signal semantics', () => {
       relation: 'sameOrAheadColumns',
     })
 
+    expect(normalizeExplicitTargeting({ targets: ['self_and_ahead'] })).toEqual({
+      status: 'supported',
+      relation: 'sameOrAheadColumns',
+    })
+
+    expect(normalizeExplicitTargeting({
+      targets: [{ type: 'cascade', cascade_type: 'self_and_adj' }],
+    })).toEqual({
+      status: 'supported',
+      relation: 'adjacentOrSelf',
+    })
+
+    expect(normalizeExplicitTargeting({
+      targets: [{ type: 'col_and_back_x', num_back_cols: 1 }],
+    })).toEqual({
+      status: 'supported',
+      relation: 'sameOrBehindColumn',
+    })
+
     expect(normalizeExplicitTargeting({ targets: ['prev_and_next_col'] })).toEqual({
       status: 'supported',
       relation: 'adjacentColumns',

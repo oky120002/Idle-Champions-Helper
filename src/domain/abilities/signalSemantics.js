@@ -159,6 +159,20 @@ function normalizeTargetRelation(target) {
     }
   }
 
+  if (target && typeof target === 'object' && target.type === 'cascade') {
+    if (target.cascade_type === 'self_and_adj') {
+      return 'adjacentOrSelf'
+    }
+    return null
+  }
+
+  if (target && typeof target === 'object' && target.type === 'col_and_back_x') {
+    if (Number(target.num_back_cols) === 1) {
+      return 'sameOrBehindColumn'
+    }
+    return null
+  }
+
   if (target === 'self') {
     return 'self'
   }
@@ -221,6 +235,10 @@ function normalizeTargetRelation(target) {
 
   if (target === 'self_and_adj') {
     return 'adjacentOrSelf'
+  }
+
+  if (target === 'self_and_ahead') {
+    return 'sameOrAheadColumns'
   }
 
   if (target === 'front_2_columns') {
