@@ -52,18 +52,23 @@ repair: rebuild
     - 证据：menuToggle.click 被 .app-shell--workbench intercepts pointer events；可能是 z-index/overlay/工作台 shell 在移动端视口下覆盖了 nav toggle
     - 排查方向：移动端视口下 .app-shell--workbench 与 .site-nav 的堆叠上下文与 pointer-events
 
-- IC 英雄谓词布尔表达式建统一解析器（tags/per_hero_expr 合一；复合表达式精确求值） <!-- auto-todo:id=atd_5ec6e216f0 -->
-  - 记录时间: `2026-07-20T15:46:32+08:00`
+- IC 英雄谓词布尔表达式建统一解析器（tags+per_hero_expr 完全合一） <!-- auto-todo:id=atd_c079723eeb -->
+  - 记录时间: `2026-07-20T16:07:10+08:00`
   - 类型: follow-up
   - 位置: `src/domain/abilities/signalSemantics.js:278`
-  - 备注: IC 数据有一个统一的「英雄谓词布尔表达式」语言，当前 4 个分散解析器各处理一部分，且 HeroQualifier 扁平结构表达不了布尔树（复合表达式 mergeTagRequirements 返回 null）。建议建统一布尔 AST 解析器，但只合语义同源字段，不强制全合一。
-    - 语法 spec：操作符 |（OR）、^（AND，IC 用 ^ 非 &&）、!（NOT）、() 分组；操作数两种 surface——简写裸 tag（tags 字段：cleric|wizard、lawful^good、!evil^!blackdicesociety）和函数式（per_hero_expr：HasTag(\`x\`)、GetStat(\`CHA\`)>=11、age<=20、is_undead、HasAttackDamageType、!HasTag）
-    - 字段×surface 实测（raw upgrade_defines/effect_defines）：tags 字段 |×112 ^×30（含复合 20）；per_hero_expr |×53 &×23（||/&&）；requirements |×111（属性比较 OR，如 Campaign3FreePlayHighestArea>=175|Champion14HighestAdventureArea>=250）；condition ^×25（UI 前缀式 not x^y，不影响评分）；effect_string args 内 |×17（多 tag 目标）
-    - 项目 4 解析器现状：① normalizeTargetQualifier（signalSemantics.js:278）处理 targets/filter_targets.tags，已支持 | OR + ^ AND + ! NOT + 复合保守（本轮修）；② parseTagQualifierFromArg（effect-helpers.mjs:61）处理 effect_string args tag，只 | split；③ parseTagDisjunction（qualifierParsing.js:83）处理 HasTag||HasTag 函数式 OR；④ parsePerHeroExpr（signalSemantics.js:345）处理 per_hero_expr 最全（HasTag/GetStat/age/&&/||/!/as_int/is_undead）但不含 ^ AND
+  - 备注: IC 数据有一个统一的「英雄谓词布尔表达式」语言，当前 4 个分散解析器各处理一部分，且 HeroQualifier 扁平结构表达不了布尔树（复合表达式 mergeTagRequirements 返回 null）。是否合一用纯技术两层标准判断（不按需求/归属）：① 语法同构——操作符集/操作数形式/中缀或前缀一致，同一 parser 能解析；② 求值同域——表达式对同一对象求值。两层都满→完全合一（parser+evaluator）；只语法同构→合 parser 分 evaluator；都不满→不合。
+    - 语法 spec：操作符 |（OR）、^（AND，IC 用 ^ 非 &&）、!（NOT）、()、||、&&；操作数两种 surface——简写裸 tag（tags 字段：cleric|wizard、lawful^good、!evil^!blackdicesociety）和函数式（per_hero_expr：HasTag(\`x\`)、GetStat(\`CHA\`)>=11、age<=20、is_undead、HasAttackDamageType、!HasTag）
+    - 字段×surface×技术分类实测（raw upgrade_defines/effect_defines）：
+    - tags 字段（|×112 ^×30 含复合 20）：语法=布尔中缀 + 裸 tag 操作数；求值=对英雄 tag 集 → 与 per_hero_expr 同域
+    - per_hero_expr（||×53 &&×23）：语法=布尔中缀 + 函数式/比较操作数（tag/stat/age/attack_type）；求值=对英雄 → 与 tags 同域
+    - requirements（|×111，如 Campaign3FreePlayHighestArea>=175|Champion14...）：语法=布尔中缀 + 属性比较（同构）；求值=对用户存档/战役进度（异域）
+    - condition（^×25，如 (not incoming_desc)^(upgrade_purchased 4912)）：语法=前缀 not + ^（与中缀 ! 不同构）；求值=对渲染上下文标志（异域）
+    - effect_string args（内 |×17）：语法=位置参数串（非布尔表达式，不同构）
+    - 合一判断（纯技术）：① tags + per_hero_expr 完全合一——语法同构（布尔中缀+比较）+ 求值同域（英雄谓词），统一到布尔 AST（or/and/not/leaf + tag/stat/age/attack_type 叶），parseTagsExpression（signalSemantics.js）是雏形，消除 parseTagDisjunction/parseTagsExpression/parsePerHeroExpr 三解析器重复；② requirements 只合 parser——语法同构可复用布尔 parser，但求值异域（用户存档）须分立 evaluator；③ condition 不合——语法异构（前缀 not）+ 求值异域；④ effect_string args 不合——语法异构（位置参数串），但其中 tag 列表 arg 的 | split 可复用 parseTagsExpression 的 tag 叶解析
+    - 项目 4 解析器现状：① normalizeTargetQualifier（signalSemantics.js:278）targets/filter_targets.tags，已支持 | OR + ^ AND + ! NOT + 复合保守（本轮修）；② parseTagQualifierFromArg（effect-helpers.mjs:61）effect_string args tag，只 | split；③ parseTagDisjunction（qualifierParsing.js:83）HasTag||HasTag 函数式 OR；④ parsePerHeroExpr（signalSemantics.js:345）per_hero_expr 最全（HasTag/GetStat/age/&&/||/!/as_int/is_undead）但不含 ^ AND
     - 架构限制：HeroQualifier 扁平（abilityModel.ts:63 的 requiredTags+matchMode+excludedTags），mergeTagRequirements（qualifierParsing.js:104）遇 (a|b)^c 复合返回 null；matchesHeroQualifier（signalSemantics.js:495）扁平求值，无布尔树
-    - 合一建议（合理才合）：合理合一——tags 字段简写（|/^/!）与 per_hero_expr 函数式同属英雄谓词，统一到布尔 AST（or/and/not/leaf），parseTagsExpression（signalSemantics.js）是雏形；不合适强合——requirements（战役进度属性比较，语义独立，归 stage 12 restrictions）、condition（UI 描述显示条件，不参与 effect 评分）、effect_string args（格式化串，parseTagQualifierFromArg 已独立处理，可后续并入但非必须）
-    - 方案：① Expr AST 节点 {op:'or'/'and'/'not'/'tag'/'stat'/'age'/'attack_type'}；② 统一 parser 把 tags 简写 + per_hero_expr 函数式都解析到 AST（复用 splitTopLevel/stripOuterParentheses，parseTagsExpression 扩展支持括号递归）；③ matchesHeroQualifier 改 AST 递归求值；④ HeroQualifier 新增 targetExpr?:Expr 字段或整体替换；⑤ 迁移 4 解析器到统一入口；⑥ 复合表达式从「保守永真假」升级精确求值（恢复 20 条 effect_keys 复合 + rules/game_changes 16 条归 stage 12）
-    - 已做过渡修复（本轮 commit）：normalizeTargetQualifier 补 ^ AND + ! NOT（parseTagsExpression），覆盖 10 条纯 ^ AND（8 排除型如 !evil^!blackdicesociety + 2 AND 型如 lawful^good）；复合表达式降级 UNSUPPORTED_TARGET_QUALIFIER（__ic_unsupported_target_expr__ 永真假）保守不评分。实测恢复：排除目标 6 条；复合标记覆盖 effect_keys.filter_targets 4 条
+    - 方案（针对 tags+per_hero_expr 完全合一）：① Expr AST 节点 {op:'or'/'and'/'not'/'tag'/'stat'/'age'/'attack_type', ...}；② 统一 parser 把 tags 简写 + per_hero_expr 函数式都解析到 AST（复用 splitTopLevel/stripOuterParentheses，parseTagsExpression 扩展括号递归）；③ matchesHeroQualifier 改 AST 递归求值；④ HeroQualifier 新增 targetExpr?:Expr 或整体替换；⑤ 迁移 4 解析器；⑥ 复合表达式从「保守永真假」升级精确求值（恢复 20 条 effect_keys 复合）
+    - 已做过渡修复（本轮 commit 4266a4c6）：normalizeTargetQualifier 补 ^ AND + ! NOT（parseTagsExpression），覆盖 10 条纯 ^ AND（8 排除 + 2 AND）；复合表达式降级 UNSUPPORTED_TARGET_QUALIFIER（__ic_unsupported_target_expr__ 永真假）保守不评分。实测恢复：排除目标 6 条；复合标记覆盖 effect_keys.filter_targets 4 条（其余 16 条在 rules/game_changes，求值域属 stage 12 restrictions，不合入）
     - 探索入口：raw 快照 tmp/idle-champions-api/definitions-*.json；关键文件 src/domain/abilities/{signalSemantics.js,qualifierParsing.js,abilityModel.ts} + scripts/data/effect-helpers.mjs；AGENTS.md 1.3 记 IC 布尔语法约定
 
 <!-- auto-todo:end -->
