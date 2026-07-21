@@ -1,4 +1,4 @@
-# 自动阵型计划器最终任务清单
+# Ralph 执行任务总览
 
 本清单是 Ralph 执行总览。详细单例验收以 `.ralph/tasks/planner/acceptance-cases.md` 为准，机器可读队列以 `.ralph/tasks/planner/prd.json` 为准。
 
