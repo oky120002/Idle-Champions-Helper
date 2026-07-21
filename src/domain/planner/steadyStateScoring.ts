@@ -8,6 +8,10 @@ import { computeCarryDps } from '../simulator/baseDps'
 import type { GameNumberValue } from '../simulator/gameNumber'
 import { compareGameNumbers } from '../simulator/gameNumberArithmetic'
 
+// 无 profile（用户未导入存档）或英雄不在 ownedHeroes 时 carryLevel 回退 1。
+// 此处 levelCurve = rate^1 = 英雄自身 costCurve rate（约 1.05–1.1），carryDps 仍含英雄间
+// 增长率差异但无法反映高等级 scale；属 MVP 近似（evolution-plan「BUD 对阵型模拟的价值」），
+// 精确化依赖 profile heroLevels + 阶段 7 官方 DPS 增长曲线。
 const DEFAULT_CARRY_LEVEL = 1
 
 export interface ScoringInput {
