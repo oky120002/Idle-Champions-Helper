@@ -1,0 +1,188 @@
+import 'fake-indexeddb/auto'
+
+import { screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+
+vi.mock('../../data/client', async () => {
+  const actual = await vi.importActual<typeof import('../../data/client')>('../../data/client')
+
+  return {
+    ...actual,
+    loadCollection: vi.fn(),
+    loadCollectionAtVersion: vi.fn(),
+    loadVersion: vi.fn(),
+  }
+})
+
+import { readRecentFormationDraft } from '../../data/formationDraftStore'
+import { listFormationPresets } from '../../data/formationPresetStore'
+import type { Champion, DataCollection, DataVersion, FormationLayout } from '../../domain/types'
+import {
+  mockFormationPageCollections,
+  mockedLoadCollection,
+  mockedLoadCollectionAtVersion,
+  mockedLoadVersion,
+  renderFormationPage,
+  resetFormationPageDatabase,
+} from './formationPageTestHarness'
+
+const versionFixture: DataVersion = {
+  current: 'v1',
+  updatedAt: '2026-04-13',
+  notes: [],
+}
+
+const formationsFixture: DataCollection<FormationLayout> = {
+  updatedAt: '2026-04-13',
+  items: [
+    {
+      id: 'layout-a',
+      name: {
+        original: 'Layout A',
+        display: '布局 A',
+      },
+      slots: [
+        { id: 'slot-1', row: 1, column: 1 },
+        { id: 'slot-2', row: 1, column: 2 },
+      ],
+    },
+  ],
+}
+
+const championsFixture: DataCollection<Champion> = {
+  updatedAt: '2026-04-13',
+  items: [
+    {
+      id: 'bruenor',
+      name: {
+        original: 'Bruenor',
+        display: '布鲁诺',
+      },
+      seat: 1,
+      roles: ['support'],
+      affiliations: [],
+      tags: [],
+      portrait: {
+        path: 'v1/champion-portraits/bruenor.png',
+        sourceGraphic: 'Portraits/Portrait_Bruenor',
+        sourceVersion: 7,
+      },
+    },
+    {
+      id: 'celeste',
+      name: {
+        original: 'Celeste',
+        display: '赛丽丝特',
+      },
+      seat: 2,
+      roles: ['healing'],
+      affiliations: [],
+      tags: [],
+      portrait: {
+        path: 'v1/champion-portraits/celeste.png',
+        sourceGraphic: 'Portraits/Portrait_Celeste',
+        sourceVersion: 7,
+      },
+    },
+  ],
+}
+
+beforeEach(async () => {
+  await resetFormationPageDatabase()
+  mockFormationPageCollections({
+    version: versionFixture,
+    formations: formationsFixture,
+    champions: championsFixture,
+  })
+})
+
+afterEach(async () => {
+  mockedLoadCollection.mockReset()
+  mockedLoadCollectionAtVersion.mockReset()
+  mockedLoadVersion.mockReset()
+  vi.useRealTimers()
+  await resetFormationPageDatabase()
+})
+
+describe('FormationPage persistence flow', () => {
+  it('检测到最近草稿后可以恢复到页面', async () => {
+    const { saveRecentFormationDraft } = await import('../../data/formationDraftStore')
+
+    await saveRecentFormationDraft({
+      schemaVersion: 1,
+      dataVersion: 'v1',
+      layoutId: 'layout-a',
+      scenarioRef: null,
+      placements: {
+        'slot-1': 'bruenor',
+      },
+      updatedAt: '2026-04-13T10:00:00.000Z',
+    })
+
+    const user = userEvent.setup()
+
+    renderFormationPage()
+
+    expect(await screen.findByText('检测到最近草稿，是否恢复？')).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: '布鲁诺头像' })).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: '恢复最近草稿' }))
+
+    expect(await screen.findByText('最近草稿已恢复')).toBeInTheDocument()
+    expect(screen.getByText('布鲁诺')).toBeInTheDocument()
+  })
+
+  it('编辑阵型后会自动保存最近草稿到 IndexedDB', async () => {
+    const user = userEvent.setup()
+
+    renderFormationPage()
+
+    const [select] = await screen.findAllByRole('combobox')
+
+    await user.selectOptions(select!, 'bruenor')
+
+    await waitFor(async () => {
+      await expect(readRecentFormationDraft()).resolves.toMatchObject({
+        dataVersion: 'v1',
+        layoutId: 'layout-a',
+        placements: {
+          'slot-1': 'bruenor',
+        },
+      })
+    }, { timeout: 2000 })
+
+    expect(await screen.findByText('最近草稿已自动保存')).toBeInTheDocument()
+    expect(screen.getAllByRole('img', { name: '布鲁诺头像' }).length).toBeGreaterThanOrEqual(2)
+  })
+
+  it('可以把当前阵型保存为命名方案', async () => {
+    const user = userEvent.setup()
+
+    renderFormationPage()
+
+    const [select] = await screen.findAllByRole('combobox')
+    await user.selectOptions(select!, 'bruenor')
+    await user.type(screen.getByLabelText('方案名称'), '推图常用队')
+    await user.type(screen.getByLabelText('方案备注'), '先拿来做组件测试')
+    await user.click(screen.getByRole('button', { name: '保存为方案' }))
+
+    await waitFor(async () => {
+      await expect(listFormationPresets()).resolves.toHaveLength(1)
+    })
+
+    const presets = await listFormationPresets()
+
+    expect(presets[0]).toMatchObject({
+      name: '推图常用队',
+      description: '先拿来做组件测试',
+      layoutId: 'layout-a',
+      dataVersion: 'v1',
+      placements: {
+        'slot-1': 'bruenor',
+      },
+    })
+
+    expect(screen.getByText('方案“推图常用队”已保存')).toBeInTheDocument()
+  })
+})

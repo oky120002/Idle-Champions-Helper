@@ -68,15 +68,6 @@ repair: rebuild
     - 处置：在 numericExpression（expression-evaluator-plan.md）落地前迁移，避免新模式扩散
     - 范围：约 11 处 import 后缀 .js→.ts（3 .mjs + 2 .ts + 3 测试），删 3 个 .d.ts
 
-- test:data glob 遗漏 scripts/ 根 9 个 .test.mjs + normalize affiliations 测试隔离 <!-- auto-todo:id=atd_c42fa8af4c -->
-  - 记录时间: `2026-07-21T10:17:41+08:00`
-  - 类型: bug
-  - 位置: `package.json:15`
-  - 备注: test:data = node --test scripts/data/*.test.mjs 只覆盖 scripts/data/；scripts/ 根 9 个 .test.mjs（normalize + 7 sync + audit）未接入，违反 CLAUDE.md「测试必须接入运行器」。
-    - 影响：normalizeEffectReference 守护（normalize-*.test:545）长期无 CI；已临时迁移关键守护到 build-models.test
-    - 阻塞：normalize-*.test:488 affiliations 套件隔离失败（values 顺序反转，单独跑过），需先修隔离
-    - 处置：修 affiliations 隔离后扩展 test:data glob 覆盖 scripts/**/*.test.mjs
-
 - per_hero_expr 存档依赖布尔谓词 17 个被整体丢弃（数据流缺口） <!-- auto-todo:id=atd_d957df0b59 -->
   - 记录时间: `2026-07-21T10:17:41+08:00`
   - 类型: follow-up

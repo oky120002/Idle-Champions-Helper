@@ -113,7 +113,10 @@ export function normalizeEffectReference(rawEffect) {
 }
 
 function compareLocalizedText(left, right) {
-  return left.display.localeCompare(right.display) || left.original.localeCompare(right.original)
+  // ponytail: 显式 'en' locale 让排序可复现；无 locale 参数时 localeCompare 依赖运行时 ICU/host locale，
+  // 不同机器/CI 上 affiliations 等 enum 与 champion.affiliations 顺序会漂移。中文 display 走 'en' collation
+  // 退化为码点序，确定性优先；如需拼音序需 full-icu + 'zh-Hans' { collation: 'pinyin' }，属独立产品决策。
+  return left.display.localeCompare(right.display, 'en') || left.original.localeCompare(right.original, 'en')
 }
 
 function normalizeLocalizedText(originalValue, displayValue, fallbackValue = '') {

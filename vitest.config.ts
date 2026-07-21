@@ -13,14 +13,14 @@ export default defineConfig({
         test: {
           name: 'unit',
           environment: 'node',
-          include: ['tests/unit/**/*.test.ts', 'tests/unit/**/*.test.mjs'],
+          include: ['src/**/*.test.ts', 'scripts/**/*.test.ts'],
         },
       },
       {
         test: {
           name: 'component',
           environment: 'jsdom',
-          include: ['tests/component/**/*.test.tsx'],
+          include: ['src/**/*.test.tsx'],
           setupFiles: ['./tests/setup/vitest.setup.ts'],
           // Node 25's experimental webstorage collides with jsdom teardown reads of localStorage.
           // Keep component workers on jsdom's storage implementation only.

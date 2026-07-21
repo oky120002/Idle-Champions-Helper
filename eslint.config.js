@@ -86,7 +86,16 @@ export default defineConfig([
     },
   },
   {
-    files: ['tests/**/*.{ts,tsx}'],
+    files: [
+      '**/*.test.{ts,tsx}',
+      '**/*.spec.{ts,tsx}',
+      '**/*TestHarness.{ts,tsx}',
+      '**/*TestData.{ts,tsx}',
+      '**/*TestUtils.{ts,tsx}',
+      '**/*Fixture.{ts,tsx}',
+      '**/*Fixtures.{ts,tsx}',
+      'tests/**/*.{ts,tsx}',
+    ],
     rules: {
       '@typescript-eslint/consistent-type-imports': 'off',
       '@typescript-eslint/require-await': 'off',

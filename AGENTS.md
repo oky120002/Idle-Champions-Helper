@@ -5,6 +5,7 @@
 - TS/TSX：`docs/product/ai-first-ts-tsx-guidelines.md`
 - CSS：`docs/product/ai-first-css-guidelines.md`
 - 文档：`docs/product/documentation-governance.md`
+- 测试：`docs/product/testing-conventions.md`
 - 整站视觉（深色战术台方向、克制原则、移动端与 Pages 适配）：`.impeccable.md`
 
 ## 1. 项目边界
@@ -39,6 +40,6 @@
 
 ## 4. 测试与构建
 
-- 新增测试必须接入运行器：`tests/**` 由 vitest 覆盖；`scripts/data/*.test.mjs` 等 `node:test` 由 `npm run test:data` 覆盖（已纳入 `test:regression`）；新增其他 `node:test` 目录时同步扩展 `test:data` glob。
+- 测试遵循 co-located 规范（`docs/product/testing-conventions.md`）：单测/组件/夹具就近放被测模块同目录，E2E 与全局 setup 集中 `tests/`；新增测试必须接入运行器（vitest 覆盖 `src/**/*.test.{ts,tsx}` 与 `scripts/**/*.test.ts`、node:test 覆盖 `scripts/**/*.test.mjs`、playwright 覆盖 `tests/e2e/`），新增测试目录同步扩展对应 glob，禁止游离。
 - 派生统计（覆盖率/支持度）若与 scorer 平行白名单，优先合并单一来源；跨边界（.ts scorer 与 .mjs 脚本）合不了时必须配 keys 同步守护测试（如 `scoringSupportSync.test.ts`）强制一致。
 - `npm run preview:pages` 只读当前 `dist/`，不反映源码最新改动：截图、验收、Playwright 视觉检查前必须先 `npm run build`；拿不准 preview 进程是否对应最新 build 时直接重启，不得把旧 `dist` 当"当前基线"或"修改后效果"。
