@@ -26,3 +26,27 @@
 - 统一处理：`parseHeroPredicate(expr, dialect)`（`src/domain/abilities/heroPredicate.js`）解析到同一 `HeroPredicateAST`，由 `evalHeroPredicate` 求值。三处载体在 `normalizeTargetQualifier`（tags/hero_expr）与 `parsePerHeroExpr`（per_hero_expr）汇入同一 `HeroQualifier.predicate`。
 - 数值表达式（`min` / `max` / `floor` / `GetUpgradeAmount` 等）不是布尔谓词，解析返回 `null`，交由 planner stage 7 stack 计算。
 - 实现权威：解析器语法以 `src/domain/abilities/heroPredicate.js` 为准；别名谓词或新载体扩展时同步更新本节。
+
+### `filter_targets[].type` 全量覆盖审计（第四轮·2026-07-21）
+
+`effect_defines[].effect_keys[].filter_targets[].type` 全量分布（377 处）与处理状态：
+
+- 已处理（`normalizeTargetQualifier` → `HeroQualifier.predicate`）：`by_tags` / `tags` / `hero_expr` / `stat` / `stat_score` / `attack_type`；`hero_ids` / `exclude_heroes`（本轮接入，复用 `heroId` AST 节点，与 `per_hero_expr` 的 `hero_id==N` 同节点）。
+- 未处理（阵型聚合，归 `expression-evaluator-plan.md` formationAggregate / step simulation）：`has_neighbour_with_tag` / `by_neighbours` / `dominant_affiliation` / `not_dominant_alignment` / `non_dominant_gender` / `by_seat` / `by_release_date` / `is_season_champion` / `target_has_tag`。
+- 未处理（存档依赖，归 conditionEvaluator）：`affected_by_upgrade`(27) / `not_affected_by_upgrade`(12)。
+- 未处理（叠加上限，归 buff_upgrade 精细 / step simulation）：`limit_effect_def_per_hero_attack` / `limit_per_effect`。
+
+未识别 type 经 `.filter(node => node !== null)` 静默丢弃（不进 unsupported、无统计）。新增 type 必须显式处理并登记本节。`hero_ids`/`exclude_heroes` 本轮已接入但当前对真实 carryDps 无输出变化：`hero_ids` 仅出现在 buff_upgrade wrapper（派生路径不处理 wrapper 自身 filter_targets，见下文）；`exclude_heroes` 的 base effect 多因 `targets:"other"` 未支持而进 unsupported。待上游瓶颈消除后自动生效。
+
+### effect_def 级 effect_key 与 upgrade.effectReference
+
+- `upgrade_defines.effect` 是裸 effect_string（如 `hero_dps_multiplier_mult,400`），不含 filter_targets/per_hero_expr 等修饰。仅 `effect_def,<id>` 格式（1418 处）经 `parseEffectDefinitionId` 关联 `effect_defines[<id>]`，其 `effect_keys[]`（含 filter_targets/per_hero_expr/amount_expr）经 normalize 保留到 `upgrade.effectDefinition.snapshots.original.effect_keys`。其余 ~90% upgrade 为纯 effect_string（简单 effect，本就无修饰字段，非丢失）。
+- 部分 effect_def 无任何 upgrade/ability 引用（孤立，如 effect_def 134/163 的 `hero_dps_multiplier_mult,400` + `hero_ids`），不进 carryDps，非丢失。
+
+### 未支持的 string target（`normalizeExplicitTargeting`）
+
+`effect_defines.targets` 字符串简写，`STRING_RELATION_MAP` 未覆盖的高频值：`other`(56) / `self_slot`(24) / `area`(12) / `active_campaign`(7) / `edge` / `middle_columns` / `front_column` / `bud_setter` / `non_col` / `self_and_behind_and_ahead` 等。未支持者进 unsupportedSignals（保守安全，不静默当作已算）。`other` 语义 = 全队除 source（如 effect_def 214「提高所有其他勇士的生命值」），关联的 carryDps effect 仅 2-3 处（`hero_dps_multiplier_mult` 等），其余多为 health/触发类（M1/M2 不处理）；`other` 精确支持需 `positionQualifier` 增强 excludeSelf 语义，归未来。
+
+### buff_upgrade wrapper 派生不处理 wrapper 自身 filter_targets
+
+`collectEffectEntries` 派生 buff_upgrade signal 时，preset 继承 base 的 targetQualifier（base effect 的 normalizeTargetQualifier 结果），不调 `normalizeTargetQualifier(wrapper effect)`，wrapper 自身的 filter_targets（如 `hero_ids`）丢失。归阶段 8.5「bonusScale targeting 复用评估」扩展（wrapper 层 targeting 合并语义需评估）。

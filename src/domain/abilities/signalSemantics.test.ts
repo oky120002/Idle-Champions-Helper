@@ -157,6 +157,58 @@ describe('normalizeTargetQualifier', () => {
     })
     expect(qualifier?.predicate).toEqual({ op: 'tag', tag: 'female' })
   })
+
+  it('hero_ids filter → 英雄白名单谓词（真实样本 effect_def 134/163）', () => {
+    // 真实样本：恩拉克"adj 位置 + hero_id=24 才 +400%"（effect_def 134）、
+    // 宾温"adj 位置 + hero_id=27 才 +400%"（effect_def 163）。
+    // 修复前 hero_ids 被静默丢弃 → targetQualifier=null → adj 全英雄吃 400%（高估 carryDps）。
+    const qualifier = normalizeTargetQualifier({
+      filter_targets: [{ type: 'hero_ids', hero_ids: [24] }],
+    })
+    expect(qualifier?.predicate).toEqual({ op: 'heroId', heroId: '24', negate: false })
+    expect(matchesHeroQualifier(createHero('24'), qualifier)).toBe(true)
+    expect(matchesHeroQualifier(createHero('27'), qualifier)).toBe(false)
+  })
+
+  it('hero_ids 多英雄 → OR', () => {
+    const qualifier = normalizeTargetQualifier({
+      filter_targets: [{ type: 'hero_ids', hero_ids: [24, 27] }],
+    })
+    expect(qualifier?.predicate).toEqual({
+      op: 'or',
+      children: [
+        { op: 'heroId', heroId: '24', negate: false },
+        { op: 'heroId', heroId: '27', negate: false },
+      ],
+    })
+  })
+
+  it('exclude_heroes filter → NOT 英雄黑名单', () => {
+    // exclude_heroes 排除特定英雄（NOT 语义）。当前关联多为减益（M1 不处理），
+    // 修复保证语义正确，防未来减益处理时再丢失限定（与 hero_ids 对称）。
+    const qualifier = normalizeTargetQualifier({
+      filter_targets: [{ type: 'exclude_heroes', hero_ids: [27] }],
+    })
+    expect(qualifier?.predicate).toEqual({ op: 'not', child: { op: 'heroId', heroId: '27', negate: false } })
+    expect(matchesHeroQualifier(createHero('24'), qualifier)).toBe(true)
+    expect(matchesHeroQualifier(createHero('27'), qualifier)).toBe(false)
+  })
+
+  it('hero_ids 与 by_tags 共存 → AND 合并', () => {
+    const qualifier = normalizeTargetQualifier({
+      filter_targets: [
+        { type: 'by_tags', tags: 'dwarf' },
+        { type: 'hero_ids', hero_ids: [24] },
+      ],
+    })
+    expect(qualifier?.predicate).toEqual({
+      op: 'and',
+      children: [
+        { op: 'tag', tag: 'dwarf' },
+        { op: 'heroId', heroId: '24', negate: false },
+      ],
+    })
+  })
 })
 
 describe('normalizeStatQualifiers', () => {

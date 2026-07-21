@@ -205,7 +205,7 @@
 
 - **完全重复去重（已完成·不再做）**：`collectEffectEntries` 的 `derivedSignalKey` 已对完全相同 derived signal 去重（IC 装备系统同 buff 多条 effect 完全相同 upgrade，recognized 15409→12253，-20%）。见 commit b7d750f。
 - **不同 magnitude 稀有度取最高（本步）**：同一 buff 不同稀有度有不同 magnitude（如 Jaheira `buff_upgrades,100/200/25/87.5/150/275/40/80,...`），游戏只生效最高稀有度；当前各 magnitude 全累加 → 高估。需按 `(英雄, base target, targetQualifier)` 分组，组内只保留最高 magnitude 的 wrapper。
-- **bonusScale targeting 复用（本步评估）**：`resolveSignalMultiplier` 解析 `bonusScaleOfSignal` 时只取 base 的 multiplier，不重新校验 base 的 `positionQualifier` / `targetQualifier`（见下方关注点）；评估 base 与外层 targeting 不一致场景，决定是否在派生时继承/校验 base targeting。
+- **bonusScale targeting 复用（本步评估）**：`resolveSignalMultiplier` 解析 `bonusScaleOfSignal` 时只取 base 的 multiplier，不重新校验 base 的 `positionQualifier` / `targetQualifier`（见下方关注点）；评估 base 与外层 targeting 不一致场景，决定是否在派生时继承/校验 base targeting。第四轮审计补充：`collectEffectEntries` 派生 buff_upgrade signal 时 preset 继承 base 的 targetQualifier，不调 `normalizeTargetQualifier(wrapper effect)`，**wrapper 自身的 filter_targets（如 `hero_ids` 白名单）丢失**；派生时应 AND 合并 wrapper 的 filter_targets（真实样本：hero 82 的 `buff_upgrades` + `hero_ids`）。
 
 - **测试（先写）**：同 base 不同 magnitude 的 wrapper 组只保留最高；bonusScale targeting 不一致场景分类与处理策略。
 - **验证**：`npm run test:run`；`data:signal-coverage` 确认稀有度高估消除（重点核对 Lucius/Regis/Halsin/Jaheira 等 wrapper 大户）。

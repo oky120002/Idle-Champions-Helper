@@ -166,8 +166,25 @@ export function normalizeExplicitTargeting(effect) {
   }
 }
 
+// hero_ids / exclude_heroes 的英雄 id 列表 → HeroPredicateAST。
+// 白名单（hero_ids）→ heroId 或 OR(heroId)；黑名单（exclude_heroes）→ NOT(...)。
+// 节点结构与 per_hero_expr 的 hero_id==N 一致（evalNode 按 String(hero.heroId) 比较）。
+function heroIdsToPredicate(heroIds, negate) {
+  const nodes = []
+  for (const id of Array.isArray(heroIds) ? heroIds : []) {
+    if (typeof id === 'number' || typeof id === 'string') {
+      nodes.push({ op: 'heroId', heroId: String(id), negate: false })
+    }
+  }
+  if (nodes.length === 0) {
+    return null
+  }
+  const inner = nodes.length === 1 ? nodes[0] : { op: 'or', children: nodes }
+  return negate ? { op: 'not', child: inner } : inner
+}
+
 // IC tags 字段是一个布尔表达式：| OR、^ AND、! NOT、() 分组。
-// effect 的 by_tags/tags/hero_expr/stat/attack_type filter 统一解析为 HeroQualifier.predicate。
+// effect 的 by_tags/tags/hero_expr/hero_ids/exclude_heroes/stat/attack_type filter 统一解析为 HeroQualifier.predicate。
 // tags 用 parseHeroPredicate('shorthand')，hero_expr 用 parseHeroPredicate('functional')
 //（与 per_hero_expr 同方言），支持括号 / 复合表达式精确求值；多 filter 间 AND。
 export function normalizeTargetQualifier(effect) {
@@ -186,13 +203,26 @@ export function normalizeTargetQualifier(effect) {
     .map((filter) => parseHeroPredicate(filter.hero_expr, 'functional'))
     .filter((node) => node !== null)
 
+  // hero_ids / exclude_heroes filter：按英雄 id 白名单/黑名单限定 effect 目标。
+  // 真实样本：effect_def 134（adj + hero_id=24 恩拉克 +400%）、163（adj + hero_id=27 宾温 +400%）。
+  // 复用 heroId AST 节点（与 per_hero_expr 的 hero_id==N 同节点），多 id → OR，exclude → NOT。
+  const heroIdAsts = rawFilters
+    .filter((filter) => filter.type === 'hero_ids')
+    .map((filter) => heroIdsToPredicate(filter.hero_ids, false))
+    .filter((node) => node !== null)
+
+  const excludeHeroAsts = rawFilters
+    .filter((filter) => filter.type === 'exclude_heroes')
+    .map((filter) => heroIdsToPredicate(filter.hero_ids, true))
+    .filter((node) => node !== null)
+
   const statAsts = statQualifiersToNodes(normalizeStatQualifiers(effect))
 
   const attackTypeAsts = rawFilters
     .filter((filter) => filter.type === 'attack_type' && typeof filter.attack === 'string')
     .map((filter) => ({ op: 'attackType', attackType: filter.attack.toLowerCase().trim(), negate: false }))
 
-  const children = [...tagAsts, ...heroExprAsts, ...statAsts, ...attackTypeAsts]
+  const children = [...tagAsts, ...heroExprAsts, ...heroIdAsts, ...excludeHeroAsts, ...statAsts, ...attackTypeAsts]
   if (children.length === 0) {
     return null
   }
