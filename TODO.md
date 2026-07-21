@@ -59,4 +59,39 @@ repair: rebuild
   - 备注:
     - 排查方向：测试隔离/全局状态串扰（jsdom 环境共享、定时器、mock 泄漏）；alert findByRole 找不到说明渲染未达预期态
 
+- abilities 层 .js+.d.ts 迁移到 .ts（消除手写声明双份维护） <!-- auto-todo:id=atd_23d46dc48e -->
+  - 记录时间: `2026-07-21T09:42:34+08:00`
+  - 类型: optimization
+  - 位置: `src/domain/abilities/heroPredicate.js`
+  - 备注: heroPredicate/signalSemantics/effect-string 三个 .js 被 Node .mjs 数据脚本与前端共享，故妥协成手写 .js+.d.ts；手写 .d.ts 与实现两份维护易漂移、失去编译期类型保护。
+    - 背景：Node v26 原生支持 type stripping，无需 tsx/ts-node，可零运行时依赖回归 .ts
+    - 处置：在 numericExpression（expression-evaluator-plan.md）落地前迁移，避免新模式扩散
+    - 范围：约 11 处 import 后缀 .js→.ts（3 .mjs + 2 .ts + 3 测试），删 3 个 .d.ts
+
+- test:data glob 遗漏 scripts/ 根 9 个 .test.mjs + normalize affiliations 测试隔离 <!-- auto-todo:id=atd_c42fa8af4c -->
+  - 记录时间: `2026-07-21T10:17:41+08:00`
+  - 类型: bug
+  - 位置: `package.json:15`
+  - 备注: test:data = node --test scripts/data/*.test.mjs 只覆盖 scripts/data/；scripts/ 根 9 个 .test.mjs（normalize + 7 sync + audit）未接入，违反 CLAUDE.md「测试必须接入运行器」。
+    - 影响：normalizeEffectReference 守护（normalize-*.test:545）长期无 CI；已临时迁移关键守护到 build-models.test
+    - 阻塞：normalize-*.test:488 affiliations 套件隔离失败（values 顺序反转，单独跑过），需先修隔离
+    - 处置：修 affiliations 隔离后扩展 test:data glob 覆盖 scripts/**/*.test.mjs
+
+- per_hero_expr 存档依赖布尔谓词 17 个被整体丢弃（数据流缺口） <!-- auto-todo:id=atd_d957df0b59 -->
+  - 记录时间: `2026-07-21T10:17:41+08:00`
+  - 类型: follow-up
+  - 位置: `src/domain/abilities/heroPredicate.js:114`
+  - 备注: parseHeroPredicate 对 HasEffect/GetUpgradeUnlocked/GetFeatEquipped/GetUpgradePurchased/NumEffectKey/EligibleForPatron/is_alive/DefHasTag 等存档依赖布尔谓词返回 null，含它们的 per_hero_expr 整体保守丢弃。
+    - 影响：这些 signal 的 formationCountQualifier 退化为 null/filterQualifier，stack 数量可能高估；raw 164 个去重 per_hero_expr 中 17 个（10.4%）受影响
+    - 关联：expression-evaluator-plan.md，需 profile context（装备/专长/effect 状态），属后续 milestone
+    - 处置：随 numericExpression 落地补存档依赖布尔节点 + profile context 求值
+
+- taggedChampionBuff 的 attackType targetQualifier 被误判 missing-target <!-- auto-todo:id=atd_b240ff7af0 -->
+  - 记录时间: `2026-07-21T10:17:41+08:00`
+  - 类型: issue
+  - 位置: `src/domain/planner/placementFit.ts:575`
+  - 备注: evaluatePlacementFit 对 taggedChampionBuff 检查 targetQualifier 是否含 tag/stat 节点，漏 attackType；纯 attackType 限定的 taggedChampionBuff 会被误判「缺少 carry 目标标签」不计分。
+    - 预存行为（本次只改结构 requiredStats→predicateHasNode），低概率（tag_ effect 通常带 tag filter）
+    - 处置：predicateHasNode 补 attackType 检查，或确认 raw 无此组合后忽略
+
 <!-- auto-todo:end -->
