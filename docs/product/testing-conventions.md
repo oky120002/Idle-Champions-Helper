@@ -5,7 +5,8 @@
 ## 1. Co-located
 
 - 单元测试、组件测试、测试夹具（harness/fixture/testData/testUtils）co-located 到被测模块的同目录。
-- 测试文件命名 = 被测文件名 + `.test.{ts,tsx}`（被测 `foo.ts` → `foo.test.ts`；被测 `ChampionAvatar.tsx` → `championAvatar.test.tsx` 或跟随被测命名）。
+- 测试文件命名 = 被测文件名（保留大小写）+ `.test.{ts,tsx}`：被测 `foo.ts` → `foo.test.ts`；被测 `ChampionAvatar.tsx` → `ChampionAvatar.test.tsx`。大小写必须与被测一致。
+- 多个测试覆盖同一被测时，用 `{被测名}.{主题}.test.{ext}` 区分；被测为逻辑页（无单一 Page 文件、经 `xxxPageTestHarness` 组装）时，主题前缀用 camelCase 页名（`championsPage.filters.test.tsx`）。
 - 测试跟随主被测模块：被测在 `src/` 还是 `scripts/`，测试就在那。
 - 删除模块时必须连同测试与夹具一起删除（零残留）。
 
