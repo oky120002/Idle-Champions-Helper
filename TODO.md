@@ -77,13 +77,12 @@ repair: rebuild
     - 关联：expression-evaluator-plan.md，需 profile context（装备/专长/effect 状态），属后续 milestone
     - 处置：随 numericExpression 落地补存档依赖布尔节点 + profile context 求值
 
-- taggedChampionBuff 的 attackType targetQualifier 被误判 missing-target <!-- auto-todo:id=atd_b240ff7af0 -->
+- taggedChampionBuff 的 attackType targetQualifier 误判（已确认 raw 0 组合，忽略） <!-- auto-todo:id=atd_b240ff7af0 -->
   - 记录时间: `2026-07-21T10:17:41+08:00`
   - 类型: issue
   - 位置: `src/domain/planner/placementFit.ts:575`
   - 备注: evaluatePlacementFit 对 taggedChampionBuff 检查 targetQualifier 是否含 tag/stat 节点，漏 attackType；纯 attackType 限定的 taggedChampionBuff 会被误判「缺少 carry 目标标签」不计分。
-    - 预存行为（本次只改结构 requiredStats→predicateHasNode），低概率（tag_ effect 通常带 tag filter）
-    - 处置：predicateHasNode 补 attackType 检查，或确认 raw 无此组合后忽略
+    - 第三轮审计全量核验 raw（被引用 effect_keys）：tag_ effect 中「只有 attack_type/hero_expr 限定、无 tag/stat」的组合 = **0 个**，不触发，保留现状不修。
 
 - effect_defines.effect_keys 非数组（CNE 单对象序列化）被消费层静默丢弃 <!-- auto-todo:id=atd_7c2a1e9b4d -->
   - 记录时间: `2026-07-21T16:10:00+08:00`

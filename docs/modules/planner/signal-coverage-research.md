@@ -6,15 +6,17 @@
 
 ## 核心结论
 
-- 当前共有 `164` 个英雄详情，扫描到 `26271` 条 effect entry。
-- 其中 `14376` 条已被 planner 识别成可消费 signal，`3417` 条属 unsupported（多为 M2 规划的金币/治疗/crit/ultimate 等 effect，非 bug）。
+- 当前共有 `164` 个英雄详情，扫描到 `29316` 条 effect entry。
+- 其中 `15409` 条已被 planner 识别成可消费 signal，`4138` 条属 unsupported（多为 M2 规划的金币/治疗/crit/ultimate 等 effect，非 bug）。
 - per_hero_expr：`291` 条，已解析 `219`（`75.3%`），未解析 `72`（几乎全为数值表达式属 M2 数值求值器规划，或 `HasEffect`/`GetUpgradeUnlocked` 等运行时状态）。
 - filter 限定：`hero_expr` filter（functional 谓词，第三种英雄谓词载体，见 `format-quirks.md`）已接入 `normalizeTargetQualifier`，目标英雄限定不再丢失。
+- signal 来源：`upgrade` 14266 / `upgrade-buffed-signal` 4919（buff_upgrade 派生）/ `loot` 4044 / `feat` 2554 / `upgrade-effect-key` 2549 / `legendary` 984。
 
 ## 上一轮修复（2026-07-21）
 
 - `filter_targets type:"hero_expr"` 此前被 `isFilterLikeTarget`/`normalizeTargetQualifier` 漏处理而静默丢弃：`hero_dps_multiplier_mult` 等 supported 效果的目标限定失效 → buff 误用到全部英雄。修复后 `signalsWithStatTargetQualifier` 340→426、`signalsWithTagTargetQualifier` 749→797（Diana/Sheila/Baldric 等英雄的 DEX/tag/race 限定恢复）。
 - `getRawFilters` 此前在 `signalSemantics.js`（生产，读 4 源）与 `signal-coverage.mjs`（报告，只读 2 源）各有一份且已漂移，覆盖率少统计 `target_filters_or`/`targets` 来源。已统一为 `signalSemantics.js` 单一来源，报告复用。
+- `collectRawEffectEntries` 此前漏遍历 `detail.feats`：feat（英雄专属固定能力，含 568 个 supported DPS signal）整体漏算，而同类的 loot/legendary 已进流。已加 feat 遍历（sourceBucket='feat'，与 loot/legendary 对称），recognized signals 14376→15409（+1033）。阶段 13「feat 精细乘数」指按玩家实际选择精算，不影响此处「全 feat 进理论最大基线」。
 
 ## 当前高频组合
 

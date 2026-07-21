@@ -366,6 +366,24 @@ function collectRawEffectEntries(detail) {
     }
   }
 
+  // feat effects（英雄专属固定能力）：与 loot/legendary 同结构（detail.feats[].effects[]），
+  // 同属 M1 理论最大 carryDps 基线；含 filter_targets/stack_func/per_hero_expr，由消费层
+  // attachSignalSemantics 统一处理。阶段 13「feat 精细乘数」指按玩家实际选择精算，
+  // 不影响此处「全 feat 进理论基线」。
+  for (const feat of detail.feats ?? []) {
+    for (const effect of feat.effects ?? []) {
+      if (typeof effect?.effect_string === 'string') {
+        effectEntries.push(buildEffectEntry({
+          effectString: effect.effect_string,
+          effect,
+          effectPayload: parseEffectPayload(effect.effect_string),
+          effectPayloads: [],
+          sourceBucket: 'feat',
+        }))
+      }
+    }
+  }
+
   // 附加 upgradePayloadsById 到所有 entry，使 resolveNumericValue 能跨 upgrade 解析 amount_expr。
   for (const entry of effectEntries) {
     entry.upgradePayloadsById = upgradePayloadsById

@@ -5,6 +5,7 @@ import path from 'node:path'
 import { mkdtemp, mkdir, readFile, writeFile } from 'node:fs/promises'
 
 import { buildModels } from './build-models.mjs'
+import { collectEffectEntries } from './effect-helpers.mjs'
 import { normalizeEffectReference } from '../normalize-idle-champions-definitions.mjs'
 
 async function readJson(filePath) {
@@ -767,4 +768,34 @@ test('normalizeEffectReference 提取 CNE effect 对象串的 effect_string（CI
   )
   assert.equal(normalizeEffectReference('hero_dps_multiplier_mult,100'), 'hero_dps_multiplier_mult,100')
   assert.equal(normalizeEffectReference(null), null)
+})
+
+test('collectEffectEntries 收集 feat effects（与 loot/legendary 对称，M1 理论最大基线）', () => {
+  // feat 是英雄专属固定能力（per-hero），其 global/hero_dps 加成应与 loot/legendary
+  // 一样进入 M1 理论最大 carryDps 基线；此前 collectRawEffectEntries 漏遍历 detail.feats，
+  // 全库 568 个 supported DPS signal 被整体漏算。
+  const detail = {
+    upgrades: [],
+    loot: [],
+    legendaryEffects: [],
+    feats: [
+      {
+        id: '1',
+        effects: [
+          { effect_string: 'global_dps_multiplier_mult,10' },
+          {
+            effect_string: 'hero_dps_multiplier_mult,100',
+            filter_targets: [{ type: 'hero_expr', hero_expr: 'HasTag(`dwarf`)' }],
+          },
+        ],
+      },
+    ],
+  }
+  const entries = collectEffectEntries(detail)
+  const featEntries = entries.filter((entry) => entry.sourceBucket === 'feat')
+  const effectStrings = featEntries.map((entry) => entry.effectString).sort()
+  assert.deepEqual(effectStrings, ['global_dps_multiplier_mult,10', 'hero_dps_multiplier_mult,100'])
+  // hero_expr 限定随 entry.effect 流入，消费层 attachSignalSemantics 正确处理。
+  const heroDpsEntry = featEntries.find((entry) => entry.effectString === 'hero_dps_multiplier_mult,100')
+  assert.deepEqual(heroDpsEntry.effect.filter_targets, [{ type: 'hero_expr', hero_expr: 'HasTag(`dwarf`)' }])
 })
