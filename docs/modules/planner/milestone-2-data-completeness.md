@@ -220,11 +220,17 @@
 
 > 9.1 mechanics→lockedSlots 投影已完成 [x]，提前到 M1。
 
-### 9.2 championEligibility → banned + 手工 override
-- **改动**：从 championEligibility/patronEligibility 派生 banned；高价值变体用 `semantic-overrides.json` 手工补 forced/banned。
-- **测试（先写）**：eligibility banned 生效；手工 override 生效。
-- **验证**：`npm run test:run`；planner-scenarios 部分变体 banned 非空。
-- **commit**：`feat(data): 9.2 eligibility→banned 与手工 override`。
+### 9.2 场景英雄限制（eligibility + game_change）→ forced/banned/allowed
+
+**背景**：第三轮审计（2026-07-21）发现 `projectMechanicsToScenario` 只处理 escort（→lockedSlots），忽略 829 个 variant 的英雄限制 `game_change`（原 9.2 只提 eligibility→banned，漏了 game_change）：
+- **force_use_heroes（327）**：`{hero_ids:[16]}` 强制使用 → 映射 `scenario.forcedHeroes`（下游 `forceInclude` 约束 recommendationEngine:186 已就绪）；但需 candidate pool 配合——强制英雄即使未拥有也纳入候选，否则用户无该英雄时该 variant 永远非法。
+- **only_allow_crusaders（502）**：`{by_ids:{ids:[...]}, by_tags:{tags:"druid|barbarian|ranger"|"evil"|"small|dwarf|..."}}` 白名单 → 需 `allowedHeroes`/`allowedQualifier` 字段 + candidate 过滤；`by_tags` 用 `|` OR 同 `targets.tags` shorthand 方言，可复用 `parseHeroPredicate('shorthand')`。
+- **slot_effects（91）/global_effects（296）**：场景级效果（weather damage / global dps reduce per area），不直接限英雄，归阶段 10 推图预估建模，本步不处理。
+
+- **改动**：`projectMechanicsToScenario` 解析 `force_use_heroes` → forcedHeroes、`only_allow_crusaders` → allowedQualifier（by_ids 集合 + by_tags 谓词）；candidate pool 配合强制/白名单；championEligibility/patronEligibility 派生 banned；高价值变体 `semantic-overrides.json` 手工补。
+- **测试（先写）**：force_use_heroes variant 的 forcedHeroes 非空且强制生效；only_allow_crusaders by_tags 白名单过滤候选；eligibility banned 生效；手工 override 生效。
+- **验证**：`npm run test:run`；planner-scenarios 部分变体 forced/allowed/banned 非空。
+- **commit**：`feat(data): 9.2 场景英雄限制 game_change 解析 + eligibility banned`。
 
 ### 9.3 champion-details zod schema + CI
 - **改动**：新建 `src/domain/types/champion-details-schema.ts`（zod，覆盖核心字段，raw 用 `z.unknown()`）；CI 加 `data:validate-schema`。
