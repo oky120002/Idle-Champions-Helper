@@ -23,7 +23,7 @@ node scripts/normalize-idle-champions-definitions.mjs \
   --versionFile tmp/idle-champions-audit-normalized/version.json
 ```
 
-现场 normalize 成功生成 `champions=163 / championVisuals=163 / championDetails=163 / adventures=516 / patrons=5 / variants=1393 / formations=159 / enums=5`。顶层返回包含 `51` 组 `_defines` 表。眼下更明显的问题不是“仓库快照滞后”或“接口换格式导致脚本失效”，而是“归一化覆盖面仍然有限”。
+现场 normalize 成功生成 `champions=164 / championVisuals=164 / championDetails=164 / adventures=521 / patrons=5 / variants=1405 / formations=160 / enums=5`。顶层返回包含 `51` 组 `_defines` 表。眼下更明显的问题不是“仓库快照滞后”或“接口换格式导致脚本失效”，而是“归一化覆盖面仍然有限”。
 
 ## 当前归一化保存到哪里
 
@@ -44,9 +44,9 @@ node scripts/normalize-idle-champions-definitions.mjs \
 - `public/data/v1/enums.json`
 - `public/data/v1/patrons.json`
 - `public/data/v1/pets.json`
-- `public/data/v1/planner-heroes.json`
-- `public/data/v1/planner-scenarios.json`
-- `public/data/v1/planner-semantic-overrides.json`
+- `public/data/v1/hero-abilities.json`
+- `public/data/v1/scenarios.json`
+- `public/data/v1/semantic-overrides.json`
 
 ### 顶层共享英雄合同偏薄
 
@@ -73,9 +73,9 @@ node scripts/normalize-idle-champions-definitions.mjs \
 
 `ability_defines / achievement_defines / card_sleeve_defines / changelog_defines / chest_type_defines / click_skin_defines / collection_quest_defines / collection_quest_set_defines / corrupted_gem_shop_item_defines / external_achievement_defines / familiar_skin_defines / language_defines / mastery_shop_item_defines / modron_core_defines / modron_tile_defines / music_album_defines / music_track_defines / news_defines / pigment_effect_defines / shop_category_defines / shop_display_defines / social_link_defines / sound_defines / text_defines / tutorial_state_defines / twitch_benefit_defines`
 
-其中 `music_*` / `sound_defines` / `social_link_defines` 等当前不该优先做。`ability_defines`（10 英雄 ult，id===hero_id）是例外——含 carryDps signal（如 Commander 全队 DPS x2），非"无关字典"；归阶段 14.4 处理（见 `docs/modules/planner/milestone-3-enhancement.md`）。
+其中 `music_*` / `sound_defines` / `social_link_defines` 等当前不该优先做。
 
-其余和阵型计算相关的顶层稳定字典已基本补上（`ability_defines` 例外）。下一步主战场不再是顶层效果字典，而是"已消费但尚未共享提升"的 effect / detail 事实。
+其余和阵型计算相关的顶层稳定字典已基本补上。下一步主战场不再是顶层效果字典，而是"已消费但尚未共享提升"的 effect / detail 事实。
 
 ## “未涉及就不归一化”体现在哪里
 
