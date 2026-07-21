@@ -16,7 +16,3 @@
 - 仓库里为什么现在能做动态动画：`docs/research/data/skin-illustration/implementation/runtime-animation-research.md`
 - 现在的构建 / 发布 / 回退逻辑是什么：`docs/research/data/skin-illustration/pipeline-overview.md`
 - 要复跑、验收或评估风险：`docs/research/data/skin-illustration/pipeline-operations/validation-and-risks.md`
-
-## 兼容入口
-
-- 旧路径只保留现仍存在的短入口页；历史已删除入口见 `docs/research/data/skin-illustration/legacy-entry-list.md`。

@@ -33,11 +33,10 @@
 
 ## 参考
 
-- `docs/research/data/champion-portrait-asset-research.md`
-- `docs/research/data/champion-visual-asset-research.md`
+- `docs/research/data/portrait-asset/README.md`
+- `docs/research/data/visual-asset/README.md`
 - `docs/research/data/champion-image-asset-sizing-research.md`
-- `docs/research/data/skin-illustration-assembly-research.md`
-- `docs/research/data/skin-illustration-render-pipeline-research.md`
+- `docs/research/data/skin-illustration/README.md`
 - `public/data/v1/champion-visuals.json`
 - `src/components/ChampionVisualWorkbench.tsx`
 - [GitHub Pages: What is GitHub Pages?](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)

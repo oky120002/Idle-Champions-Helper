@@ -19,7 +19,7 @@
 - 模块设计稿与局部交互方案：`docs/modules/README.md`
 - 运行、仓库、环境排查与验证：`docs/investigations/README.md`
 - 常见故障与可复用修复路径：`docs/troubleshooting/README.md`
-- 通用问题摘要台账：`docs/troubleshooting-log.md`
+- 通用问题摘要台账：`docs/troubleshooting/README.md`
 
 ## 放置规则
 

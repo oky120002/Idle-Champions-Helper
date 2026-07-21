@@ -37,5 +37,5 @@
 
 ## 依据
 
-- 仓库内：`docs/research/data/skin-illustration-assembly-research.md`、`docs/research/data/skin-illustration-render-pipeline-research.md`、`docs/research/deployment/static-hosting-research.md`、`docs/modules/champions/champion-illustration-page-design.md`、`scripts/sync-idle-champions-illustrations.mjs`、`public/data/v1/champion-illustrations.json`
+- 仓库内：`docs/research/deployment/static-hosting/README.md`、`docs/modules/champions/illustration/README.md`、`scripts/sync-idle-champions-illustrations.mjs`、`public/data/v1/champion-illustrations.json`
 - 浏览器兼容性：MDN `CanvasRenderingContext2D.drawImage()`、`HTMLImageElement.decode()`、`HTMLCanvasElement.toBlob()`、`Window.createImageBitmap()`、`OffscreenCanvas`、`Compression Streams API / DecompressionStream`

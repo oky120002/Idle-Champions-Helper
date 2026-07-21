@@ -8,7 +8,7 @@
 - 公共数据流水线：官方 definitions -> 保存原始快照 -> 归一化 -> 应用必要 overrides -> 构建 / 发布。
 - 个人数据流水线：用户导入 `Support URL` / `webRequestLog.txt` / `User ID + Hash` -> 浏览器本地解析凭证 -> 浏览器直接请求官方 `user details / campaign details` -> 写入 `IndexedDB` -> 供阵型、筛选、成长建议页面消费。
 - 最小可运行骨架：`scripts/fetch-idle-champions-definitions.mjs`、`scripts/normalize-idle-champions-definitions.mjs`、`scripts/build-idle-champions-data.mjs`、`scripts/data/manual-overrides.json`。
-- 中文补充说明：`language_id=7` 的官方中文链路已另文核实，优先用官方中文，再对缺口做人工补充，详见 `docs/research/data/language-id-7-chinese-definitions-research.md`。
+- 中文补充说明：`language_id=7` 的官方中文链路已另文核实，优先用官方中文，再对缺口做人工补充，详见 `docs/research/data/language-id-7/README.md`。
 
 ## 风险与边界
 

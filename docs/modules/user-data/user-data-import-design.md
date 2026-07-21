@@ -161,5 +161,5 @@ Vite serve 仅开发态暴露本地 dev endpoint
 - `src/data/user-sync/`（officialClient.ts、officialPlayServer.ts、userProfileNormalizer.ts、localDevPrivateSnapshot.ts）
 - `src/data/user-profile-store/`（userProfileSourceResolver.ts(+.prod.ts)、userProfileStore.ts）
 - `scripts/private-user-data/`（fetch-user-profile-payloads.mjs、private-user-profile-payloads.mjs、production-boundary-scanner.mjs 等）
-- `docs/research/data/game-data-source-investigation.md`
+- `docs/research/data/game-data-source/README.md`
 - 当前设计稿路径：`docs/modules/user-data/user-data-import-design.md`
