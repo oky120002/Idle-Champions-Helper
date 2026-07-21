@@ -137,6 +137,12 @@ function matchFunctionalLeaf(expr) {
     return { op: 'attackType', attackType: baseAttackDmgTypeMatch[1].toLowerCase(), negate: false }
   }
 
+  // has_tag_X 是 HasTag(`X`) 的裸标识符别名（raw has_tag_rivalswaterdeep/speed/acqinc/cteam）。
+  const hasTagAliasMatch = expr.match(/^has_tag_([a-zA-Z_]+)$/)
+  if (hasTagAliasMatch) {
+    return { op: 'tag', tag: hasTagAliasMatch[1].toLowerCase() }
+  }
+
   const tagMatch = expr.match(/^HasTag\(`([^`]+)`\)$/)
   if (tagMatch) {
     return { op: 'tag', tag: tagMatch[1].toLowerCase() }

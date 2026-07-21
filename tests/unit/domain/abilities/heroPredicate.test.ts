@@ -160,6 +160,16 @@ describe('parseHeroPredicate · functional dialect（per_hero_expr）', () => {
     })
   })
 
+  it('has_tag_X 是 HasTag(`X`) 的裸标识符别名（raw has_tag_rivalswaterdeep/speed）', () => {
+    expect(parseHeroPredicate('has_tag_rivalswaterdeep', 'functional')).toEqual({ op: 'tag', tag: 'rivalswaterdeep' })
+    expect(parseHeroPredicate('has_tag_speed', 'functional')).toEqual({ op: 'tag', tag: 'speed' })
+    // 含 has_tag_X 别名的 OR：旧实现因别名子句 null 导致整式 null。
+    expect(parseHeroPredicate('HasTag(`gold`) || has_tag_rivalswaterdeep', 'functional')).toEqual({
+      op: 'or',
+      children: [{ op: 'tag', tag: 'gold' }, { op: 'tag', tag: 'rivalswaterdeep' }],
+    })
+  })
+
   it('as_int 透传子表达式', () => {
     expect(parseHeroPredicate('as_int(HasTag(`dragonborn`))', 'functional')).toEqual({
       op: 'tag', tag: 'dragonborn',
@@ -197,6 +207,8 @@ describe('parseHeroPredicate · functional dialect（per_hero_expr）', () => {
     expect(parseHeroPredicate('as_int(GetStat(`int`) >= min_stat_value)', 'functional')).toBeNull()
     expect(parseHeroPredicate('min(floor(levels_past_softcap/num_levels_per_stack),1)', 'functional')).toBeNull()
     expect(parseHeroPredicate('has_non_standard_race', 'functional')).toBeNull()
+    // has_tag_X 在数值表达式（stack 数量）内作 0/1 变量，顶层 floor 仍归 stage 7 numericExpression
+    expect(parseHeroPredicate('floor(max(has_tag_acqinc,has_tag_cteam)*min(hero_level,hero_softcap))', 'functional')).toBeNull()
   })
 })
 
