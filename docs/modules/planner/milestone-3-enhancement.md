@@ -121,9 +121,9 @@
 
 ---
 
-# 阶段 14：click 辅助 + modron（click 不纳入计算·用户明确）
+# 阶段 14：click 辅助 + modron + ult buff（click 不纳入计算·用户明确）
 
-**目标**：click damage 作辅助参考值展示；modron 辅助信息。
+**目标**：click damage 作辅助参考值展示；modron 辅助信息；ult/主动技能 buff（ability_defines）按 modron uptime 折算进 pool。
 **边界**：click 不参与阵型模拟计算。
 
 ### 14.1 click damage 计算
@@ -143,3 +143,16 @@
 - **测试**：modron 信息展示。
 - **验证**：`npm run test:run`。
 - **commit**：`feat(planner): 14.3 modron 辅助信息展示`（阶段 15 执行）。
+
+### 14.4 ult/主动技能 buff（ability_defines）提取 + uptime 折算
+
+**背景**：第五轮数据流审计（2026-07-21）发现 `ability_defines`（10 英雄 ult/主动技能，id===hero_id）含 carryDps signal（Commander `global_dps_multiplier_mult,100` 全队 DPS x2、Pact Weapon `hero_dps_multiplier_mult,100`、Cunning Action `attack_speed_mult,100`、Channel Divinity `buff_upgrades` 等），但 normalize 层未提取到 champion-details，消费层无数据。raw 无字段引用 ability_defines，关联纯靠 id 对齐。详见 `docs/research/data/official-data-normalization-audit.md`「ability_defines」。
+
+- **改动**：
+  - normalize 层按 id 对齐 hero 提取 `ability_defines` 到 `champion-details.<id>.ability`（含 effect/base_cooldown/duration）。
+  - `collectRawEffectEntries` 新增第五源（sourceBucket='ability'）收集 `detail.ability.effects`。
+  - 按 modron 自动施放节奏折算 uptime：`uptime = duration / base_cooldown`（modron 满级自动施放）；ult buff 有效值 = `value × uptime`，进对应 pool（global_dps→globalDpsMultiplier、hero_dps→heroDpsMultiplier、attack_speed→阶段 7 speed pool）。
+  - 无 modron 或未满级时降级（ult 不自动施放 → uptime=0，ult buff 不进 pool，保守不计）。
+- **测试（先写）**：ability_defines 按 id 提取到 champion-details；ult buff 按 uptime 折算；modron 满级 vs 未满级差异；Commander 全队 DPS 加成正确。
+- **验证**：`npm run test:run`；`data:signal-coverage` 显示 ability 源 signal；Bruenor/Makos/Tyril/Jarlaxle 等 carryDps 含 ult buff。
+- **commit**：`feat(data): 14.4 ability_defines ult buff 提取 + modron uptime 折算`。

@@ -75,7 +75,7 @@ node scripts/normalize-idle-champions-definitions.mjs \
 
 其中 `music_*` / `sound_defines` / `social_link_defines` 等当前不该优先做。
 
-**`ability_defines`（10 个英雄 ult/主动技能，id 对应 hero 1-10）含 carryDps signal**：Commander（hero 1，`effect_def,28`=`global_dps_multiplier_mult,100` 全队 DPS x2）、Pact Weapon（hero 9，`hero_dps_multiplier_mult,100`）、Cunning Action（hero 4，`attack_speed_mult,100`）、Channel Divinity（hero 2，`buff_upgrades`）等。raw 无任何字段引用 `ability_defines`，关联纯靠 id 对齐（id===hero_id）。这些是 ult buff effect，有 `base_cooldown`/`duration`（uptime 低，如 Commander 30s/3600s），steady-state carryDps 不计入；归阶段 14 modron/ult 建模处理 uptime。当前 normalize 层未提取到 champion-details，消费层无数据可用——真实数据提取缺口，非"无关顶层字典"。
+**`ability_defines`（10 个英雄 ult/主动技能，id 对应 hero 1-10）含 carryDps signal**：Commander（hero 1，`effect_def,28`=`global_dps_multiplier_mult,100` 全队 DPS x2）、Pact Weapon（hero 9，`hero_dps_multiplier_mult,100`）、Cunning Action（hero 4，`attack_speed_mult,100`）、Channel Divinity（hero 2，`buff_upgrades`）等。raw 无任何字段引用 `ability_defines`，关联纯靠 id 对齐（id===hero_id）。这些是 ult buff effect，有 `base_cooldown`/`duration`（uptime 低，如 Commander 30s/3600s），steady-state carryDps 不计入；归阶段 14.4（modron uptime 折算 + 数据提取，见 `docs/modules/planner/milestone-3-enhancement.md`）。当前 normalize 层未提取到 champion-details，消费层无数据可用——真实数据提取缺口，非"无关顶层字典"。
 
 其余和阵型计算相关的顶层稳定字典已基本补上。下一步主战场不再是顶层效果字典，而是"已消费但尚未共享提升"的 effect / detail 事实。
 

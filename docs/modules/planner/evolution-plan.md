@@ -25,7 +25,7 @@
 - [ ] 11 全局加成（11.1-11.4）
 - [ ] 12 restrictions 解析（12.1-12.3）
 - [ ] 13 装备精细（13.1-13.4）
-- [ ] 14 click 辅助 + modron（14.1-14.3）
+- [ ] 14 click 辅助 + modron + ult buff（14.1-14.4）
 - [ ] 15 UI 接通（15.1-15.6·最后）
 - [ ] 16 拖拽（16.1-16.5·最后）
 
@@ -57,7 +57,7 @@ BUD = 阵型近期最高单次伤害。
 1 抽象层 → 2 加成聚合+objective+baseDPS（含 2.0 多英雄 spike）
   → 数据补全系列：3 金币 → 4 crit → 5 health → 6 vulnerability → 7 speed → 8 buff_upgrade
   → 9 scenario+schema
-  → 补强：10 推图预估 → 11 全局加成 → 12 restrictions → 13 装备精细 → 14 click+modron
+  → 补强：10 推图预估 → 11 全局加成 → 12 restrictions → 13 装备精细 → 14 click+modron+ult buff
   → 15 UI 接通（最后）→ 16 拖拽（最后）
 ```
 
@@ -180,7 +180,7 @@ hero_final_dps = base_dps
 以下方向超出 16 阶段，属产品级长期愿景，待产品规划立项后再进入演进规划阶段化：
 
 - **balanced scoring**：混合伤害/存活/速度/可获得性/解释复杂度的综合评分模式。
-- **step simulation**：逐区/击杀/时间窗口/动态堆叠的逐步模拟（替代当前 steady-state 近似）。含 ult/主动技能 buff effect（`ability_defines`，10 英雄 ult，如 Commander 全队 DPS x2）的 uptime 建模（duration/base_cooldown 折算）；normalize 层未提取该数据，缺口见 `docs/research/data/official-data-normalization-audit.md`「ability_defines」。
+- **step simulation**：逐区/击杀/时间窗口/动态堆叠的逐步模拟（替代当前 steady-state 近似）。含 ult/主动技能 buff（`ability_defines`）的精确时间窗口建模——14.4 用 modron uptime 近似（duration/base_cooldown 折算），step simulation 替代为逐窗口的实际 ult 激活状态。
 - **多队伍 / Trials / Time Gate**：多队伍编排与长期成长路线。
 - **event / season / temporary buff 投影**：时效性 buff 的数据投影（modron/patron 已在阶段 11/14，此处指 event/season/temporary）。
 - **manual parameter panel**：用户手动覆盖金币预算/装备/feat/传奇/专精的控件（阶段 15.3 候选模式 + 16 拖拽之外的扩展）。
