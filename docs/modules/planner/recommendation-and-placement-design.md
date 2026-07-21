@@ -3,7 +3,7 @@
 - 当前状态：仓库已有 `planner` 页面、候选池、合法性、beam search 与基础评分雏形，但当前推荐仍偏向角色权重拼队，不等于真正的 C 位驱动站位推荐。
 - 边界：本文只定义纯算法与数据模型，不展开视觉稿、交互稿或逐帧战斗模拟。
 
-> 本文为 v4 演进规划之前的推荐/站位设计。**评分与模型字段已演进**：原 `carryScore`/`fitScore`/`isCarryViable`/`PlacementFit` 在 [`evolution-plan.md`](./evolution-plan.md) v4 中改为 pool 聚合 + carryDps（淘汰 score/heuristicRoleMultiplier/isCarryViable）。当前模型字段以 `src/domain/abilities/abilityModel.ts` 与 `src/domain/planner/placementFit.ts` 代码为准；本文 §2 数据 merge、§3.2-3.7 条件匹配语义仍适用。
+> 推荐与站位设计。评分与模型字段以 `src/domain/abilities/abilityModel.ts` 与 `src/domain/planner/placementFit.ts` 代码为准（pool 聚合 + carryDps，无 score / heuristicRoleMultiplier / isCarryViable）；本文 §2 数据 merge、§3.2-3.7 条件匹配语义仍适用。
 
 ## 1. 核心结论
 - 推荐目标不是整队总 DPS，而是**单一 C 位英雄的最终输出代理值**。
@@ -117,7 +117,7 @@ scenario + layout
   -> 从 Top K 派生槽位替补和 seat 竞争
 ```
 - 手动模式：用户先锁定一个 C 位，系统只围绕它推荐。
-- 自动模式：系统枚举所有已放置英雄作为 C 位候选，由实际 `carryDps` 决定最优 C 位并产出 `carryRanking`（v4 已去除 `isCarryViable` 角色门控）。
+- 自动模式：系统枚举所有已放置英雄作为 C 位候选，由实际 `carryDps` 决定最优 C 位并产出 `carryRanking`（无 `isCarryViable` 角色门控）。
 - 无论手动还是自动，完整阵型搜索时都必须有且仅有一个主 C 位。
 - 引擎结构兼容 `owned-only / all-hypothetical / manual-override`，首期默认落地 `owned-only`。
 - 同 seat 冲突属于硬约束，在搜索前就生效。

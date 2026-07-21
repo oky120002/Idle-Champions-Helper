@@ -7,7 +7,7 @@
 
 # 阶段 1：Hero Ability 领域抽象层（纯重构）
 
-**目标**：英雄能力表达统一到 `src/domain/abilities/`，算法-英雄分离。纯重构，行为零变化（JSON 字节一致）。baseDamage 在此接入（v2.1①）。
+**目标**：英雄能力表达统一到 `src/domain/abilities/`，算法-英雄分离。纯重构，行为零变化（JSON 字节一致）。baseDamage 在此接入。
 
 **边界**：不改评分逻辑/UI/JSON 产出/功能。只 rename/move/delete/加枚举位 + baseDamage 接入 + isCarryViable 修正。
 
@@ -41,8 +41,7 @@
 ### 1.7 [x] 数据层迁移
 - `src/data/plannerModel.ts` + `plannerOverridesStore.ts:1`（`PlannerHeroOverridePatch→HeroAbilityOverridePatch`）。函数名保留。
 
-### 1.8 [x] build 脚本迁移 + baseDamage 提取（v2.1①）
-- 复核 3 脚本 import 路径 + **从 champion-details 读 baseDamage 写入 planner-heroes.json**。
+### 1.8 [x] build 脚本迁移 + baseDamage 提取- 复核 3 脚本 import 路径 + **从 champion-details 读 baseDamage 写入 planner-heroes.json**。
 
 ### 1.9 [x] build 验证 JSON 字节一致（baseDamage 除外）
 - shasum 比对（baseDamage 是新增字段，JSON 会变，除 baseDamage 外字节一致）。
@@ -56,7 +55,7 @@
 ### 1.12 [x] 补 README + 同步文档命名
 - abilities/README 完整化；planner/README；批量 replace `docs/modules/planner/*.md` 类型名。
 
-### 1.13 [x] 浏览器手验行为一致 + codegraph reindex（v2.1⑦）
+### 1.13 [x] 浏览器手验行为一致 + codegraph reindex
 - `/planner` fixture 推荐与 1.0 baseline 一致；`codegraph init` 重新索引。
 
 ---
@@ -87,7 +86,7 @@
 - placementFit 重构：按 kind 分 pool（global/hero）；pool 内 add→Σ/mult→Π；pool 间乘法；返回 `PoolAggregateResult`；加 `dimension` 入参；保留 bonusScaleOfSignal/stackFunc。
 - **测试（先写）**：pool 内 add 相加/mult 相乘/pool 间乘法/新结果≠旧 fitScore/dimension 过滤/嵌套+stack。
 
-### 2.4 [x] steadyStateScoring 改为 objective 驱动 + 去除 isCarryViable 限制（v2.1③）
+### 2.4 [x] steadyStateScoring 改为 objective 驱动 + 去除 isCarryViable 限制
 - 起步值 `heuristicRoleMultiplier` → `computeCarryDps`；score `number→GameNumberValue`；返回 `ObjectiveResult`；beamSearch 用 `compareGameNumbers`。
 - **去除 isCarryViable 的 dps 判定**：枚举所有已放置英雄作为 carry 候选（不限 isCarryViable），让 carryDps 决定。
 - 删 `build-planner-models.mjs:24/67/79/80` 的 `getRolePriorityMultiplier`/`heuristicRoleMultiplier`/`roles.has('dps')`。
@@ -102,7 +101,7 @@
 
 # 阶段 9.1：mechanics→lockedSlots 投影（提前到 M1·已完成）
 
-**目标**：scenario forced/banned/locked 从全空到部分填充。原属阶段 9，因 scenario 规则影响所有推荐而提前到阶段 1 之后、2 之前（v2.1②）。
+**目标**：scenario forced/banned/locked 从全空到部分填充。原属阶段 9，因 scenario 规则影响所有推荐而提前到阶段 1 之后、2 之前。
 
 ### 9.1 [x] mechanics→lockedSlots 投影
 - **改动**：`build-planner-models.mjs:121-150 buildOfficialPlannerScenarioModel` 从 mechanics（`slot_escort`/`boss`/`hits_based`）派生 lockedSlots/scenarioWarnings；去掉 :143-148 硬编码 warning。

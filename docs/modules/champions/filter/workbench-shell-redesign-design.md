@@ -2,7 +2,7 @@
 
 - 日期：2026-04-21
 - 作用：沉淀 `Champions` 页从“左筛选右列表”升级到“悬浮工作台”的结构方案、交互状态和实施边界。
-- 当前状态：本篇只记录 `Champions` 工作台的起源设计与局部状态约束；当前全站通用结构细节见 `docs/modules/shared-components/page-workbench-design.md`，推广与旧实现清退见 `docs/modules/shared-components/filter-workbench-rollout-plan.md`。
+- 作用：记录 `Champions` 工作台的局部状态约束；当前全站通用结构细节见 `docs/modules/shared-components/page-workbench-design.md`，推广与旧实现清退见 `docs/modules/shared-components/filter-workbench-rollout-plan.md`。
 
 ## 目标与非目标
 
@@ -35,7 +35,7 @@
 
 - 左抽屉主体、边框和残余 gutter 全部退场。
 - 只保留一个紧凑展开入口，不保留整条窄边轨。
-- 原先位于右工具栏左端的一组信息左移贴边，右端动作继续保持右对齐。
+- 展开态位于右工具栏左端的一组信息左移贴边，右端动作继续保持右对齐。
 
 ## 工具栏合并规则
 

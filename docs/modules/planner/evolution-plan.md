@@ -106,13 +106,13 @@ BUD = 阵型近期最高单次伤害。
 5. **死代码删除**：`effectParser.ts`/`championSimulationProfile.ts`。
 6. **三层架构**：能力表达/加成聚合/优化目标分层。
 7. **“评分”淘汰**：用真实数值（`carryDps = baseDamage × levelCurve × pool 聚合`）。
-8. **命名（v5·实事求是·用户明确 A1·不留历史包袱）**：**去掉不适合的 Planner 前缀**。原则：**通用符号（英雄能力/数据）去 Planner，专属模块（推荐引擎）保留**。
+8. **命名（实事求是·用户明确 A1·不留历史包袱）**：**去掉不适合的 Planner 前缀**。原则：**通用符号（英雄能力/数据）去 Planner，专属模块（推荐引擎）保留**。
    - **abilities 层全部去 Planner**：类型（`PlannerEffectSignal`→`HeroAbilitySignal` 等）、函数（`matchesPlannerHeroQualifier`→`matchesHeroQualifier`、`attachPlannerSignalSemantics`→`attachSignalSemantics`、`normalizePlannerEffectSignal`→`normalizeEffectSignal`、`resolvePlannerModel`→`resolveHeroAbilityProfiles`、`buildOfficialPlannerHeroModel`→`buildOfficialHeroAbilityProfile` 等；`getRolePriorityMultiplier` 随 heuristic 淘汰删除）、文件（`plannerSignalSemantics.js`→`signalSemantics.js`、`plannerQualifierParsing.js`→`qualifierParsing.js`、`planner-effect-helpers.mjs`→`effect-helpers.mjs`、`build-planner-models.mjs`→`build-models.mjs`、`planner-signal-coverage.mjs`→`signal-coverage.mjs`）。
    - **JSON 产物按通用性改名**：`planner-heroes.json`→`hero-abilities.json`、`planner-scenarios.json`→`scenarios.json`、`planner-semantic-overrides.json`→`semantic-overrides.json`；IndexedDB key（`plannerHeroOverrides`/`planner-heroes`/`planner-scenarios`）同步改名，旧 key 清理（用户本地数据因 schema 变化重建，可接受）。
    - **planner 推荐引擎模块保留**（`src/domain/planner/`：recommendationEngine/beamSearch/steadyStateScoring/candidatePool/placementFit 是“阵型推荐引擎”职责，`planner` 命名在此准确）；内部引用通用数据时用新名。
    - 执行时全面搜索 `Planner`/`planner` 残留，逐个评估：通用符号去前缀，专属模块保留。阶段 1 的 1.4-1.8/1.11 涵盖函数/文件/JSON 改名。
 
-## v2.1 设计修正（审查优化·已采纳）
+## 设计修正要点
 
 1. **baseDamage 在 1（抽象层）接入**：1.2 加字段 + 1.8 build 提取；2 只做 carryDps 计算。
 2. **9.1（scenario mechanics→lockedSlots）提前到 1 之后、2 之前**。

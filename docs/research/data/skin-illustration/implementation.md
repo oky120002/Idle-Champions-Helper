@@ -19,7 +19,7 @@
 
 ## 我们之前为什么不行
 
-仓库本来就有 `scripts/data/skelanim-codec.mjs`、`scripts/data/skelanim-renderer.mjs`、`scripts/sync-idle-champions-illustrations.mjs`，已经能解官方动画。但旧链路终点是 `champion-illustrations.json` + `*.png` + 页面 `<img>`，构建期读取 `SkelAnim` -> 选 sequence / frame -> 渲染单张 PNG -> 丢掉其余动画数据。根因不是“前端画不出来”，而是“数据合同不让它画”。
+仓库已有 `scripts/data/skelanim-codec.mjs`、`scripts/data/skelanim-renderer.mjs`、`scripts/sync-idle-champions-illustrations.mjs` 能解官方动画，但产物合同只允许静态图：构建期读取 `SkelAnim` -> 选 sequence / frame -> 渲染单张 PNG -> 丢掉其余动画数据，页面只能 `<img>` 展示。限制在数据合同，不在前端绘制能力。
 
 ## 方案比较
 
