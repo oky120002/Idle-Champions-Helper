@@ -28,7 +28,7 @@
 
 - 当前已实现：初始化读取最近草稿；三种恢复处理入口；`layoutId / placements / scenarioRef` 防抖写入 `IndexedDB`；优先按保存版本恢复；兼容恢复显式提示；清空空阵时自动清理最近草稿；从阵型页发起“保存为方案”。
 - 对应实现文件：`src/pages/FormationPage.tsx`、`src/data/formationDraftStore.ts`、`src/data/formationPersistence.ts`、`src/data/localDatabase.ts`、`src/data/client.ts`、`src/domain/types.ts`
-- 当前验证结果：`npm run build` 通过；`npm run lint` 通过；浏览器自动化验收已覆盖“放英雄 -> 最近草稿自动保存 -> 刷新恢复 -> 保存为方案 -> 方案恢复 -> 删除方案”主链路；受限会话 Playwright 边界见 `docs/investigations/runtime/playwright-browser-launch-verification.md`
+- 当前验证结果：`npm run build` 通过；`npm run lint` 通过；浏览器自动化验收已覆盖“放英雄 -> 最近草稿自动保存 -> 刷新恢复 -> 保存为方案 -> 方案恢复 -> 删除方案”主链路；受限会话 Playwright 边界见 `docs/investigations/runtime/playwright-browser-launch/README.md`
 
 ## 当前明确不做
 

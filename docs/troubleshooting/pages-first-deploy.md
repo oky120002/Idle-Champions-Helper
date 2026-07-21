@@ -7,4 +7,4 @@
 - 处理：重建 PAT、补齐 `repo + workflow` 权限、推送 workflow、启用 Pages 并改为 `GitHub Actions` 发布、重跑失败任务。
 - 验证：第二次运行中 `build` 与 `deploy` 成功；站点可访问 `https://oky120002.github.io/Idle-Champions-Helper/`。
 - 备注：`export GITHUB_TOKEN="ghp_xxx"` 这种 shell 写法通常不是主因；只有真实值里混入字面量引号、空格或换行才会导致认证异常。
-- 入口：`.github/workflows/deploy.yml`、`docs/research/deployment/static-hosting/README.md`、`docs/investigations/runtime/local-run-verification.md`
+- 入口：`.github/workflows/deploy.yml`、`docs/research/deployment/static-hosting/README.md`、`docs/investigations/runtime/local-run/README.md`

@@ -35,7 +35,7 @@
 
 - `docs/research/data/portrait-asset/README.md`
 - `docs/research/data/visual-asset/README.md`
-- `docs/research/data/champion-image-asset-sizing-research.md`
+- `docs/research/data/visual-asset/README.md`
 - `docs/research/data/skin-illustration/README.md`
 - `public/data/v1/champion-visuals.json`
 - `src/components/ChampionVisualWorkbench.tsx`
