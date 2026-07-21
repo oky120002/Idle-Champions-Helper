@@ -72,7 +72,7 @@ BUD = 阵型近期最高单次伤害。
 
 ## 文档同步硬约束（每个里程碑收口必须执行）
 
-每个里程碑的改动必须**全链路同步到所有引用了受影响概念的架构文档与说明文档**，不允许只勾选进度追踪的 `[x]` 就收口。M1 审计已发现：d22853d6 的 JSON/IndexedDB 改名、已删除的字段（`isCarryViable`/`heuristicRoleMultiplier` 等）在多个架构文档中长期残留旧名/旧概念，会直接误导后续 session 与智能体生成错误代码。
+每个里程碑的改动必须**全链路同步到所有引用了受影响概念的架构文档与说明文档**，不允许只勾选进度追踪的 `[x]` 就收口。**日常 commit 修改 effect targeting / signal 语义 / 数据流方法时同理**——同步 grep `docs/research/data/game-data-source/format-quirks.md` / `docs/modules/planner/milestone-*.md` / `TODO.md` 更新描述，不得等里程碑收口（第五轮审计发现 f389586b/146c4723 修复 wrapper filter_targets 合并后，format-quirks / milestone-2 / TODO 三处长期残留「未处理/漏处理」描述）。M1 审计已发现：d22853d6 的 JSON/IndexedDB 改名、已删除的字段（`isCarryViable`/`heuristicRoleMultiplier` 等）在多个架构文档中长期残留旧名/旧概念，会直接误导后续 session 与智能体生成错误代码。
 
 每个里程碑收口前必须完成：
 
