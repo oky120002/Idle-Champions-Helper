@@ -50,7 +50,9 @@ IC 的 `per_hero_expr` 字段承载两类语义：
 ### 范围边界与复杂度
 
 - `get_num_most_common_*` / `has_tag_*` / `is_most_common_race` 是**阵型聚合查询**（依赖整个 formation 的英雄构成），不是简单数值；这些节点求值要先算聚合（formation context），再代入数值表达式。复杂度最高，建议分阶段实现（先纯英雄/存档/常量节点，再阵型聚合）。
+- **filter_targets 的阵型聚合 type**（第四轮审计·2026-07-21）：`has_neighbour_with_tag` / `by_neighbours` / `dominant_affiliation` / `not_dominant_alignment` / `non_dominant_gender` / `by_seat` / `by_release_date` / `is_season_champion` / `target_has_tag` 共 ~13 处（raw effect_defines），当前 `normalizeTargetQualifier` 静默丢弃；归本节点，求值依赖 formation context（邻居 / 主导 tag·affiliation·alignment·gender / seat / 发布日期等阵型聚合）。
 - 存档依赖（`GetUpgradeAmount`/`GetUpgradeUnlocked`）需要 profile context；无 profile 时降级——未拥有英雄用同 seat 中位假设（见 `development-design-simulator.md`「候选池和公平假设」）。
+- **filter_targets 的存档依赖 type**（第四轮审计）：`affected_by_upgrade`(27) / `not_affected_by_upgrade`(12) 共 39 处，effect 只在玩家拥有 / 未拥有某 upgrade 时生效；与 `GetUpgradeUnlocked` 同类（检查 owned upgrades），归本节点（profile context）。
 - 数值表达式 per_hero_expr 的 dialect 与布尔谓词共享 functional 语法基础（`||`/`&&` 嵌套场景），但顶层是数值函数；parser 要区分「数值顶层」vs「布尔顶层」（布尔已由 parseHeroPredicate 处理，数值由 parseNumericExpr 处理，二者互斥：parseHeroPredicate 先试，null 再试 parseNumericExpr，或 effect 上下文决定）。
 - **null 语义双重（落地时修正）**：当前 `parseHeroPredicate` 对「数值表达式（不属于本 parser）」与「语法不认识的布尔（解析失败）」都返回 `null`，两者不可区分——覆盖率统计因此把"故意不处理"和"应处理但漏了"混算未解析。`parseNumericExpr` 落地时须显式区分二者（如返回 `{ kind: 'numeric' }` 标记"移交数值 parser" vs `null` 标记"真不认识"），让覆盖率统计与下游 warning 能区分口径。
 
