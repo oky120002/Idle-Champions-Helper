@@ -6,3 +6,4 @@
 
 - 核心决策、已核实事实与数据分层：`docs/research/data/game-data-source/source-decision.md`
 - 仓库实现建议、风险边界与最终建议：`docs/research/data/game-data-source/implementation-and-risks.md`
+- 已确认的上游数据格式特性与适配方式：`docs/research/data/game-data-source/format-quirks.md`
