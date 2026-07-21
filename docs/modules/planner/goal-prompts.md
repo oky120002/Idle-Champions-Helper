@@ -2,31 +2,9 @@
 
 按 `evolution-plan.md` 的 16 阶段拆成 4 个里程碑 goal。每个 goal 设置后 Claude 从该里程碑的第一个未完成阶段开始推进，40 turns 后未完成则 stop，用 `claude --resume <session>` 或 `--continue` 恢复继续（goal 会恢复，回合数重置）。`evolution-plan.md` 的 `[ ]`/`[x]` 进度追踪是跨 session 衔接的唯一事实源。
 
-**执行顺序**：M1 → M2 → M3 → M4（依赖链，不可跳）。每个 goal 复制对应代码块（含 `/goal`）粘贴到 Claude Code 即可。
+**执行顺序**：M2 → M3 → M4（M1 已完成；依赖链，不可跳）。每个 goal 复制对应代码块（含 `/goal`）粘贴到 Claude Code 即可。
 
 **文档同步硬约束**：每个里程碑收口必须按 `evolution-plan.md` 的『文档同步硬约束』执行——改动全链路同步到所有引用受影响概念的架构文档与说明文档（步骤级 `[x]` 勾选 + 全文档 grep 修正陈旧引用 + 测试覆盖 + 收口验证），不只勾 evolution-plan 的 `[x]`。
-
----
-
-## 里程碑 1·核心引擎（阶段 1 抽象层 + 9.1 + 阶段 2 加成聚合+objective+baseDPS）
-
-```
-/goal 按 docs/modules/planner/evolution-plan.md 执行里程碑 1·核心引擎（阶段 1.0-1.13 抽象层 + 9.1 mechanics→lockedSlots 提前 + 阶段 2.0-2.5 加成聚合+objective+baseDPS）。先展示 evolution-plan.md 的进度追踪（16 阶段 [ ] 清单）+ 阶段 1.0 基线。
-需要展示的证据：
-- 初始：16 阶段 [ ] 清单 + 1.0 基线（一个 fixture variant 的推荐输出 + 测试通过数）。
-- 阶段 1 完成：src/domain/abilities/ 建立 + rg 'Planner|planner' src/domain/abilities/ 无残留 + git ls-files 确认 effectParser/championSimulationProfile 死代码删除 + 同一 fixture 推荐输出与基线逐字一致。
-- 阶段 2 完成：placementFit pool 聚合（pool 内 add 相加/mult 相乘，pool 间乘法）+ carryDps（baseDamage×levelCurve×pool，GameNumber）+ 淘汰 heuristicRoleMultiplier + docs/modules/planner/carry-dps-formula-spike.md 对照社区数据。
-- 最终：M1 阶段全 [x] + npm run test:run && typecheck && build 输出。
-完成条件：
-- 阶段 1.0-1.13 + 9.1 + 2.0-2.5 全完成（evolution-plan.md 勾选 [x]）。
-- src/domain/abilities/ 建立（HeroAbility 类型/函数/文件，A1 去 Planner 前缀；JSON planner-heroes.json→hero-abilities.json 等改名；planner 推荐引擎模块 src/domain/planner/ 保留）。
-- placementFit 改为 pool 聚合（返回 PoolAggregateResult，dimension 入参）。
-- carryDps 真实数值（baseDamage×levelCurve×pool，淘汰 heuristicRoleMultiplier 假 score；score 类型 number→GameNumberValue）。
-- 2.0 spike：carryDps 对照 byteglow/kleho 社区数据，偏差 <30%。
-- npm run test:run && npm run typecheck && npm run build 退出码 0。
-约束：严格按 evolution-plan.md（A1 命名/TDD 硬约束/不动量）；阶段 1 纯重构行为零变化（fixture 推荐一致）；不削弱测试或用 ignore/type-ignore 绕过；每阶段单独 commit（中文 Conventional Commits）+ 勾选 evolution-plan.md 对应 [x]。
-or stop after 40 turns
-```
 
 ---
 

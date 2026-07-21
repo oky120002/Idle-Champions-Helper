@@ -1,7 +1,7 @@
 # 里程碑 2·数据补全
 
 - 作用：M2 执行步骤清单；产出所有 effect 类型进 pool。架构决策、16 阶段进度勾选、文档同步硬约束见 `evolution-plan.md` 总纲。
-- 状态：阶段 3-8、9.2 / 9.3 待做 [ ]；9.1 已完成（提前到 M1，见 `milestone-1-core-engine.md`）。
+- 状态：阶段 3-8、9.2 / 9.3 待做 [ ]；9.1 已完成（提前到 M1）。
 
 ---
 
@@ -206,7 +206,7 @@
 **目标**：scenario forced/banned/locked 从全空到部分填充；schema 防数据漂移。
 **风险**：restrictions 是自由文本（留阶段 12）。
 
-> 9.1 mechanics→lockedSlots 投影已完成 [x]，提前到 M1（见 `milestone-1-core-engine.md`）。
+> 9.1 mechanics→lockedSlots 投影已完成 [x]，提前到 M1。
 
 ### 9.2 championEligibility → banned + 手工 override
 - **改动**：从 championEligibility/patronEligibility 派生 banned；高价值变体用 `semantic-overrides.json` 手工补 forced/banned。
@@ -219,3 +219,14 @@
 - **测试（先写）**：schema 校验现有 163 文件通过；故意破坏字段被拦截。
 - **验证**：`npm run test:run`；schema 拦截破坏。
 - **commit**：`feat(data): 9.3 champion-details zod schema 校验`。
+
+---
+
+## M1 审计衍生的 M2 关注点
+
+- `scoreFormation` 调用 `evaluatePlacementFit` 未显式传 `dimension: 'damage'`；M1 全员 damage 维度无影响，但 M2 引入 gold / crit 维度时必须显式过滤，否则非伤害 pool 会泄漏进 `carryDps`。
+- `resolveSignalMultiplier` 解析 `bonusScaleOfSignal` 时只取 base 的 multiplier，不重新校验 base 的 `positionQualifier` / `targetQualifier`；阶段 8 buff_upgrade 精细化时需评估 base 与外层 targeting 不一致场景。
+- **复合 amount_expr 未解析（20 条）**：`upgrade_amount(N,N)+max_upgrade_amount(N,N)` 等复合表达式，`resolveSimpleAmountExpr` 只匹配单一 `upgrade_amount(N,N)`，复合的回退得 effect 自身 value（常为 0）。归阶段 8。
+- **buff_upgrades wrapper 多稀有度同存**（如 hero 61 Jaheira 168 条）：同一 buff_upgrades 不同稀有度有不同 magnitude，当前全部进 signal 累加（游戏实际只取最高稀有度）。归阶段 8 top-N / 稀有度去重。
+
+数据源格式坑（已在归一化层与代码处理，追源守则见 `AGENTS.md` §1.3）：`upgrade_defines.effect` 常是 JSON 对象串（含伪 JSON）；`effect_defines.targets.tags` 是布尔表达式（`|` / `^` / `!` / `()`）；`upgrade_amount(id,index)` 可跨 upgrade 引用；buff_upgrade wrapper 信号由 `collectEffectEntries` 派生；`STACK_COUNT_RESOLVERS` 与 `SCORING_SUPPORTED_STACK_FUNCS` 由 `scoringSupportSync.test.ts` 守护。

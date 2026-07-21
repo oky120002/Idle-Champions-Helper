@@ -1,6 +1,6 @@
 # 阵型模拟器演进规划（总纲）
 
-> 架构决策、进度追踪与全局约束。16 阶段详细执行步骤按里程碑拆分到 `milestone-1-core-engine.md` / `milestone-2-data-completeness.md` / `milestone-3-enhancement.md` / `milestone-4-ui.md`；M1 审计发现见 `m1-audit-findings.md`。
+> 架构决策、进度追踪与全局约束。16 阶段详细执行步骤按里程碑拆分到 `milestone-2-data-completeness.md` / `milestone-3-enhancement.md` / `milestone-4-ui.md`（M1 已完成）；M1 审计衍生的 M2 关注点见 `milestone-2-data-completeness.md` 末尾。
 
 ## Context
 
@@ -65,7 +65,7 @@ BUD = 阵型近期最高单次伤害。
 
 按依赖分 4 个里程碑，每个可独立验证、独立交付价值；里程碑之间可插入新阶段（如发现遗漏），不把 16 阶段限制死。
 
-- **里程碑 1·核心引擎**（阶段 1 + 9.1 + 2）：`milestone-1-core-engine.md`。产出真实 carryDps/BUD 计算能力。**已完成**。
+- **里程碑 1·核心引擎**（阶段 1 + 9.1 + 2）：**已完成**，产出真实 carryDps / BUD 计算能力（进度见上方追踪）。
 - **里程碑 2·数据补全**（阶段 3-8 + 9.2/9.3）：`milestone-2-data-completeness.md`。产出所有 effect 类型进 pool。
 - **里程碑 3·补强**（阶段 10-14）：`milestone-3-enhancement.md`。产出推荐准确 + 推图预估 + 辅助信息。
 - **里程碑 4·UI**（阶段 15-16）：`milestone-4-ui.md`。产出用户可见可用。
@@ -79,7 +79,7 @@ BUD = 阵型近期最高单次伤害。
 1. **步骤级勾选**：在该里程碑每个已完成步骤标题补 `[x]`（不只是阶段级 `[ ]`/`[x]`，见上方进度追踪说明）。
 2. **受影响符号清单**：列出本里程碑改动涉及的字段 / 类型 / 函数 / 文件名 / JSON 产物 / IndexedDB key / scoring 概念。
 3. **全文档 grep 修正**：对清单中每个符号，在下列文档全量搜索，修正所有**当前态描述**与**未来步骤**中的陈旧引用：
-   - `docs/modules/planner/`：README、evolution-plan、milestone-1..4、m1-audit-findings、development-design、development-design-data、development-design-simulator、recommendation-and-placement-design、goal-prompts、prd、auto-formation-planner-plan、signal-coverage-research、carry-dps-formula-spike、ralph-stories。
+   - `docs/modules/planner/`：README、evolution-plan、milestone-2..4、development-design、development-design-data、development-design-simulator、recommendation-and-placement-design、goal-prompts、prd、signal-coverage-research。
    - 根 `TODO.md`（`auto-todo` 技能维护）、根/目录 `README.md`、`AGENTS.md`/`CLAUDE.md`（如触及仓库级约束）。
 4. **保留历史记录**：改名决策记录（“A→B 改名”）、dated research 快照、显式改名说明注记可保留旧名作为历史；其余当前态描述与未来步骤必须用最新名。
 5. **测试覆盖**：本里程碑新增/改动的核心行为必须有测试覆盖（先写测试再实现），不得裸奔。
