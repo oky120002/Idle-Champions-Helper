@@ -36,7 +36,7 @@
 - 未处理（存档依赖，归 conditionEvaluator）：`affected_by_upgrade`(27) / `not_affected_by_upgrade`(12)。
 - 未处理（叠加上限，归 buff_upgrade 精细 / step simulation）：`limit_effect_def_per_hero_attack` / `limit_per_effect`。
 
-未识别 type 经 `.filter(node => node !== null)` 静默丢弃（不进 unsupported、无统计）。新增 type 必须显式处理并登记本节。`hero_ids`/`exclude_heroes` 本轮已接入但当前对真实 carryDps 无输出变化：`hero_ids` 仅出现在 buff_upgrade wrapper（派生路径不处理 wrapper 自身 filter_targets，见下文）；`exclude_heroes` 的 base effect 多因 `targets:"other"` 未支持而进 unsupported。待上游瓶颈消除后自动生效。
+未识别 type 经 `.filter(node => node !== null)` 静默丢弃（不进 unsupported、无统计）。新增 type 必须显式处理并登记本节。`hero_ids`/`exclude_heroes` 已接入：`hero_ids` 在 buff_upgrade wrapper 派生路径合并生效（`collectEffectEntries` 派生时 AND 合并 wrapper 自身 filter_targets，见下文）；`exclude_heroes` 的 base effect 多因 `targets:"other"` 未支持而进 unsupported，待 `positionQualifier` excludeSelf 增强后生效。
 
 ### effect_def 级 effect_key 与 upgrade.effectReference
 
@@ -45,8 +45,8 @@
 
 ### 未支持的 string target（`normalizeExplicitTargeting`）
 
-`effect_defines.targets` 字符串简写，`STRING_RELATION_MAP` 未覆盖的高频值：`other`(56) / `self_slot`(24) / `area`(12) / `active_campaign`(7) / `edge` / `middle_columns` / `front_column` / `bud_setter` / `non_col` / `self_and_behind_and_ahead` 等。未支持者进 unsupportedSignals（保守安全，不静默当作已算）。`other` 语义 = 全队除 source（如 effect_def 214「提高所有其他勇士的生命值」），关联的 carryDps effect 仅 2-3 处（`hero_dps_multiplier_mult` 等），其余多为 health/触发类（M1/M2 不处理）；`other` 精确支持需 `positionQualifier` 增强 excludeSelf 语义，归未来。
+`effect_defines.targets` 字符串简写，`STRING_RELATION_MAP` 未覆盖的高频值：`other`(56) / `self_slot`(24) / `area`(12) / `active_campaign`(7 effect_defines + 54 legendary) / `edge` / `middle_columns` / `front_column` / `bud_setter` / `non_col` / `self_and_behind_and_ahead` 等。未支持者进 unsupportedSignals（保守安全，不静默当作已算）。`other` 语义 = 全队除 source（如 effect_def 214「提高所有其他勇士的生命值」），关联的 carryDps effect 仅 2-3 处（`hero_dps_multiplier_mult` 等），其余多为 health/触发类（M1/M2 不处理）；`other` 精确支持需 `positionQualifier` 增强 excludeSelf 语义，归未来。`active_campaign` 语义 = 当前活跃 campaign 场景条件（steady-state 默认满足），位置上 = 全队；legendary 54 处全是 `global_dps_multiplier_mult`（该分支不检查 targets，未被阻塞），effect_defines 7 处中仅 1 个 `hero_dps_multiplier_mult` 被阻塞。
 
-### buff_upgrade wrapper 派生不处理 wrapper 自身 filter_targets
+### buff_upgrade wrapper 派生合并 wrapper 自身 filter_targets
 
-`collectEffectEntries` 派生 buff_upgrade signal 时，preset 继承 base 的 targetQualifier（base effect 的 normalizeTargetQualifier 结果），不调 `normalizeTargetQualifier(wrapper effect)`，wrapper 自身的 filter_targets（如 `hero_ids`）丢失。归阶段 8.5「bonusScale targeting 复用评估」扩展（wrapper 层 targeting 合并语义需评估）。
+`collectEffectEntries` 派生 buff_upgrade signal 时，preset 除继承 base 的 targetQualifier 外，还 AND 合并 `normalizeTargetQualifier(wrapper effect)`（经 `mergeHeroQualifiers`），避免 wrapper 层 filter_targets（如 `hero_ids` 白名单）丢失。真实样本：hero 82 的 `buff_upgrades` + `hero_ids:[82]`。剩余 `resolveSignalMultiplier` 解析 `bonusScaleOfSignal` 时只取 base multiplier、不重新校验 base targeting 的评估仍归阶段 8.5。

@@ -180,7 +180,7 @@ hero_final_dps = base_dps
 以下方向超出 16 阶段，属产品级长期愿景，待产品规划立项后再进入演进规划阶段化：
 
 - **balanced scoring**：混合伤害/存活/速度/可获得性/解释复杂度的综合评分模式。
-- **step simulation**：逐区/击杀/时间窗口/动态堆叠的逐步模拟（替代当前 steady-state 近似）。
+- **step simulation**：逐区/击杀/时间窗口/动态堆叠的逐步模拟（替代当前 steady-state 近似）。含 ult/主动技能 buff effect（`ability_defines`，10 英雄 ult，如 Commander 全队 DPS x2）的 uptime 建模（duration/base_cooldown 折算）；normalize 层未提取该数据，缺口见 `docs/research/data/official-data-normalization-audit.md`「ability_defines」。
 - **多队伍 / Trials / Time Gate**：多队伍编排与长期成长路线。
 - **event / season / temporary buff 投影**：时效性 buff 的数据投影（modron/patron 已在阶段 11/14，此处指 event/season/temporary）。
 - **manual parameter panel**：用户手动覆盖金币预算/装备/feat/传奇/专精的控件（阶段 15.3 候选模式 + 16 拖拽之外的扩展）。

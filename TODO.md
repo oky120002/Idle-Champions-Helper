@@ -92,14 +92,14 @@ repair: rebuild
     - 当前影响：0（6 个全是孤儿 effect_def，无 upgrade 引用）
     - 处置：若将来出现被引用的非数组 effect_keys，在消费层归一化 `非数组→[对象]`，或在 normalize 层 coerce；暂因 0 影响不修
 
-- 英雄 ID 定位（filter_targets exclude_heroes/hero_ids 与 targets heroes）未被消费 <!-- auto-todo:id=atd_3f8b5d17e2 -->
+- targets.type:heroes 英雄 ID 白名单未映射（filter_targets hero_ids/exclude_heroes 已处理） <!-- auto-todo:id=atd_3f8b5d17e2 -->
   - 记录时间: `2026-07-21T16:10:00+08:00`
   - 类型: follow-up
-  - 位置: `src/domain/abilities/signalSemantics.js:170`（normalizeTargetQualifier）/`signalSemantics.js:114`（normalizeObjectRelation）
-  - 备注: 两条路径的英雄 ID 定位都未被消费：
-    - filter_targets：exclude_heroes（3 处，`{hero_ids:[146]}`=排除）与 hero_ids（2 处，`{hero_ids:[82]}`=仅指定）——normalizeTargetQualifier 漏处理，退化为无 ID 限定（轻微过度应用）。
-    - targets：`{type:"heroes",hero_ids:[...]}` 走 normalizeObjectRelation position path，无映射 → normalizeExplicitTargeting unsupported → 整条 effect 丢弃（如 25 个 hero_dps_multiplier_mult base，保守少计）。
-    - affected_by_upgrade（16 处）是 upgrade_id 运行时依赖，保持丢弃合理。
-    - 处置：低频，M2+ 精化目标限定时统一补 heroId 节点（NOT/精确匹配）；filter_targets 路径过度应用、targets 路径少计，方向相反但都是边界精度问题。
+  - 位置: `src/domain/abilities/signalSemantics.js:114`（normalizeObjectRelation）
+  - 备注: 英雄 ID 定位两条路径的处理状态：
+    - filter_targets：exclude_heroes/hero_ids **已处理**（146c4723 normalizeTargetQualifier heroIdsToPredicate，heroId AST 节点）；wrapper 派生路径合并生效（f389586b，hero 82 等 +210 行）。
+    - targets：`{type:"heroes",hero_ids:[...]}`（raw 30 处）仍未处理——normalizeObjectRelation 无 type:heroes 映射 → normalizeExplicitTargeting unsupported → 整条 effect 丢弃。当前影响小（hero_dps_multiplier_mult 仅 10 处因 targets unsupported，其中 type:heroes 1 处，余为 other/active_campaign/slot_if_expr 等，多为孤立 effect_def）。
+    - affected_by_upgrade 是 upgrade_id 运行时依赖，保持丢弃合理。
+    - 处置：低频，归 M2+ 目标限定精化时补（normalizeObjectRelation 映射 type:heroes→relation='any' + hero_ids 提取到 targetQualifier）。
 
 <!-- auto-todo:end -->
