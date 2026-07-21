@@ -20,10 +20,10 @@
 ## 立绘与动画主线
 
 - 总入口：`docs/research/data/skin-illustration/README.md`
-- 为什么旧静态图会碎、字段边界在哪里：`docs/research/data/skin-illustration/problem/README.md`
+- 为什么旧静态图会碎、字段边界在哪里：`docs/research/data/skin-illustration/problem.md`
 - 官方运行时格式与二进制证据：`docs/research/data/skin-illustration/runtime-format.md`
-- 动画实现调研与 GitHub Pages 约束下的方案：`docs/research/data/skin-illustration/implementation/README.md`
-- 当前仓库动画 / 默认帧流水线：`docs/research/data/skin-illustration/pipeline-overview.md`
+- 动画实现调研与 GitHub Pages 约束下的方案：`docs/research/data/skin-illustration/implementation.md`
+- 当前仓库动画 / 默认帧流水线：`docs/research/data/skin-illustration/pipeline.md`
 
 ## 读取建议
 
