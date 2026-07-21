@@ -8,6 +8,7 @@
 
 - 数据源格式特性优先在归一化层（`scripts/normalize-idle-champions-definitions.mjs`）适配，让消费层拿干净数据。
 - 无法在归一化层处理的，才退到消费层防御。
+- 多态 `type` 字段（如 `filter_targets[].type` / `targets[].type`）：消费层只处理已知 type 子集时，未知 type 静默丢弃。新增 type 必须在消费层显式处理并登记到本文件「已确认特性」；审计时须对 raw（被引用子集）全量枚举 type 值，避免像 `hero_expr`（41 处在被引用 effect_keys）长期被吞。
 
 ## 已确认特性
 
