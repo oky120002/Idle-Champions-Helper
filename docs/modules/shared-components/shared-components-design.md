@@ -36,7 +36,7 @@
 
 ## 开发流程
 
-1. 先查 `docs/modules/shared-components/shared-components-catalog.md`
+1. 先查 `docs/modules/shared-components/component-list.md`
 2. 如果命中页面壳层或页面级布局，再查 `docs/modules/shared-components/page-workbench-design.md`
 3. 盘点重复点、语义一致性和故意不抽的部分
 4. 先写测试，再实现共享组件
