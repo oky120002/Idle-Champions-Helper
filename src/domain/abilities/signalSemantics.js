@@ -183,6 +183,22 @@ function heroIdsToPredicate(heroIds, negate) {
   return negate ? { op: 'not', child: inner } : inner
 }
 
+// 合并两个 HeroQualifier（AND 语义）：null 取另一个，同结构去重。
+// buff_upgrade wrapper 派生时合并 base 的 targetQualifier 与 wrapper 自身 filter_targets，
+// 避免 wrapper 层 targeting 丢失（第四轮审计：hero 82 buff_upgrades + hero_ids）。
+export function mergeHeroQualifiers(left, right) {
+  if (!left) {
+    return right ?? null
+  }
+  if (!right) {
+    return left
+  }
+  if (JSON.stringify(left.predicate) === JSON.stringify(right.predicate)) {
+    return left
+  }
+  return { predicate: { op: 'and', children: [left.predicate, right.predicate] } }
+}
+
 // IC tags 字段是一个布尔表达式：| OR、^ AND、! NOT、() 分组。
 // effect 的 by_tags/tags/hero_expr/hero_ids/exclude_heroes/stat/attack_type filter 统一解析为 HeroQualifier.predicate。
 // tags 用 parseHeroPredicate('shorthand')，hero_expr 用 parseHeroPredicate('functional')

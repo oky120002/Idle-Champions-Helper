@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest'
 import {
   attachSignalSemantics,
   matchesHeroQualifier,
+  mergeHeroQualifiers,
   normalizeExplicitTargeting,
   normalizeStatQualifiers,
   normalizeTargetQualifier,
@@ -371,5 +372,20 @@ describe('attachSignalSemantics', () => {
       { filter_targets: [{ type: 'hero_expr', hero_expr: 'GetStat(`dex`)>=15' }] },
     )
     expect(signal.targetQualifier).toEqual({ predicate: { op: 'stat', stat: 'dex', operator: '>=', value: 15 } })
+  })
+})
+
+describe('mergeHeroQualifiers', () => {
+  // buff_upgrade wrapper 派生时合并 base 与 wrapper 的 targetQualifier（AND）。
+  it('null 取另一个，同结构去重，不同则 AND 合并', () => {
+    const tag = { predicate: { op: 'tag', tag: 'dwarf' } }
+    const heroId = { predicate: { op: 'heroId', heroId: '82', negate: false } }
+    expect(mergeHeroQualifiers(null, tag)).toEqual(tag)
+    expect(mergeHeroQualifiers(tag, null)).toEqual(tag)
+    expect(mergeHeroQualifiers(null, null)).toBeNull()
+    expect(mergeHeroQualifiers(tag, { predicate: { op: 'tag', tag: 'dwarf' } })).toEqual(tag)
+    expect(mergeHeroQualifiers(tag, heroId)).toEqual({
+      predicate: { op: 'and', children: [{ op: 'tag', tag: 'dwarf' }, { op: 'heroId', heroId: '82', negate: false }] },
+    })
   })
 })

@@ -823,3 +823,39 @@ test('collectEffectEntries 对完全重复的 buff_upgrade wrapper 派生去重�
   assert.equal(derived.length, 1, `3 个重复 buff_upgrades wrapper 应去重为 1 个 derived，实际：${derived.length}`)
   assert.equal(derived[0].signalPreset.bonusScaleOfSignal.rawEffect, 'hero_dps_multiplier_mult,100')
 })
+
+test('collectEffectEntries 派生 buff_upgrade wrapper 时合并 wrapper 自身 filter_targets', () => {
+  // wrapper 自身的 filter_targets（如 hero_ids 白名单）限定 buff 只对特定英雄生效；
+  // 此前 preset 只继承 base 的 targetQualifier，wrapper 自身 filter_targets 丢失。
+  // 真实样本：hero 82 的 buff_upgrades + hero_ids:[82]（第四轮审计）。
+  const detail = {
+    upgrades: [
+      { id: '4', effectReference: 'hero_dps_multiplier_mult,100', effectDefinition: null },
+      {
+        id: '7',
+        effectDefinition: {
+          snapshots: {
+            original: {
+              effect_keys: [
+                {
+                  effect_string: 'buff_upgrades,100,4',
+                  filter_targets: [{ type: 'hero_ids', hero_ids: [82] }],
+                },
+              ],
+            },
+          },
+        },
+      },
+    ],
+    loot: [],
+    legendaryEffects: [],
+    feats: [],
+  }
+  const entries = collectEffectEntries(detail)
+  const derived = entries.filter((entry) => entry.sourceBucket === 'upgrade-buffed-signal')
+  assert.equal(derived.length, 1, `应派生 1 个 derived signal，实际：${derived.length}`)
+  // wrapper 的 hero_ids 限定合并到 derived signal 的 targetQualifier（base 无 filter → 直接取 wrapper 限定）。
+  assert.deepEqual(derived[0].signalPreset.targetQualifier, {
+    predicate: { op: 'heroId', heroId: '82', negate: false },
+  })
+})

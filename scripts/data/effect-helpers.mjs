@@ -6,6 +6,7 @@ import {
 } from '../../src/domain/effects/effect-string.js'
 import {
   attachSignalSemantics,
+  mergeHeroQualifiers,
   normalizeExplicitTargeting,
   normalizeStatQualifiers,
   statQualifiersToNodes,
@@ -864,8 +865,12 @@ export function collectEffectEntries(detail) {
         }
 
         const targetSignal = targetSignalResult.signal
+        // wrapper 自身的 filter_targets（如 hero_ids 白名单）限定 buff 只对特定英雄生效；
+        // 合并到 base 的 targetQualifier（AND），避免 wrapper 层 targeting 丢失（第四轮审计）。
+        const wrapperQualifier = normalizeTargetQualifier(entry.effect)
         const preset = {
           ...targetSignal,
+          targetQualifier: mergeHeroQualifiers(targetSignal.targetQualifier ?? null, wrapperQualifier),
           rawEffect: entry.effectString,
           value: resolveNumericValue(
             entry.effectPayload?.args?.[0] ?? '',
