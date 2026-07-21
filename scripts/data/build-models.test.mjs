@@ -799,3 +799,27 @@ test('collectEffectEntries 收集 feat effects（与 loot/legendary 对称，M1 
   const heroDpsEntry = featEntries.find((entry) => entry.effectString === 'hero_dps_multiplier_mult,100')
   assert.deepEqual(heroDpsEntry.effect.filter_targets, [{ type: 'hero_expr', hero_expr: 'HasTag(`dwarf`)' }])
 })
+
+test('collectEffectEntries 对完全重复的 buff_upgrade wrapper 派生去重（装备模板冗余）', () => {
+  // IC 装备系统在 definitions 里把同一 buff 按 装备槽/稀有度 展开成多条 effect 完全相同的
+  // upgrade（仅 id 不同，magnitude 相同=非稀有度差异）。如 Jaheira 38 条
+  // buff_upgrades,100,9714,9715,9716,9717，每条派生 4 base signal → 152 重复（91% 过度计算）。
+  // 游戏 buff 按 effect 逻辑去重（同 effect_key 不叠加），派生层须对完全相同的 derived signal 去重。
+  // （不同 magnitude 的稀有度取最高是另一问题，归阶段 8。）
+  const detail = {
+    upgrades: [
+      { id: '4', effectReference: 'hero_dps_multiplier_mult,100', effectDefinition: null },
+      { id: '7', effectReference: 'buff_upgrades,100,4', effectDefinition: null },
+      { id: '8', effectReference: 'buff_upgrades,100,4', effectDefinition: null },
+      { id: '9', effectReference: 'buff_upgrades,100,4', effectDefinition: null },
+    ],
+    loot: [],
+    legendaryEffects: [],
+    feats: [],
+  }
+  const entries = collectEffectEntries(detail)
+  const derived = entries.filter((entry) => entry.sourceBucket === 'upgrade-buffed-signal')
+  // 3 个相同 wrapper 指向同一 base 4 → 去重后只 1 个 derived signal。
+  assert.equal(derived.length, 1, `3 个重复 buff_upgrades wrapper 应去重为 1 个 derived，实际：${derived.length}`)
+  assert.equal(derived[0].signalPreset.bonusScaleOfSignal.rawEffect, 'hero_dps_multiplier_mult,100')
+})

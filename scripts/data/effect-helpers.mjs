@@ -820,10 +820,29 @@ export function splitEffectString(effectString) {
   return { effectName, effectValue }
 }
 
+// derived signal 去重 key：捕获所有影响 pool 聚合语义的字段。
+// IC 装备系统把同一 buff 按 装备槽/稀有度 展开成多条 effect 完全相同的 upgrade（仅 id 不同，
+// magnitude 相同），游戏 buff 按 effect 逻辑去重（同 effect 不叠加）。此处对完全相同的
+// derived signal 去重；不同 magnitude 的稀有度取最高归阶段 8。
+function derivedSignalKey(preset) {
+  return JSON.stringify({
+    kind: preset.kind,
+    rawEffect: preset.rawEffect,
+    value: preset.value,
+    amountFunc: preset.amountFunc,
+    stackFunc: preset.stackFunc,
+    bonusScaleRawEffect: preset.bonusScaleOfSignal?.rawEffect ?? null,
+    targetQualifier: preset.targetQualifier ?? null,
+    formationCountQualifier: preset.formationCountQualifier ?? null,
+    positionQualifier: preset.positionQualifier ?? null,
+    formationCountPositionQualifier: preset.formationCountPositionQualifier ?? null,
+  })
+}
+
 export function collectEffectEntries(detail) {
   const { effectEntries, upgradeEffectEntriesById } = collectRawEffectEntries(detail)
 
-  const derivedEntries = []
+  const derivedByKey = new Map()
 
   for (const entry of effectEntries) {
     if (!isBuffUpgradeKind(entry.effectPayload?.kind)) {
@@ -845,33 +864,38 @@ export function collectEffectEntries(detail) {
         }
 
         const targetSignal = targetSignalResult.signal
-        derivedEntries.push(buildEffectEntry({
-          effectString: entry.effectString,
-          effect: entry.effect,
-          effectPayload: entry.effectPayload,
-          effectPayloads: entry.effectPayloads,
-          sourceBucket: 'upgrade-buffed-signal',
-          upgradeId: entry.upgradeId,
-          bucketOverride: targetSignalResult.bucket,
-          signalPreset: {
-            ...targetSignal,
-            rawEffect: entry.effectString,
-            value: resolveNumericValue(
-              entry.effectPayload?.args?.[0] ?? '',
-              entry.effectPayload,
-              entry.effectPayloads,
-              entry.upgradePayloadsById,
-            ),
-            bonusScaleOfSignal: targetSignal,
-            amountFunc: buffSeed.amountFunc ?? null,
-            stackFunc: buffSeed.stackFunc ?? null,
-            formationCountQualifier: buffSeed.formationCountQualifier ?? null,
-            formationCountPositionQualifier: buffSeed.formationCountPositionQualifier ?? null,
-          },
-        }))
+        const preset = {
+          ...targetSignal,
+          rawEffect: entry.effectString,
+          value: resolveNumericValue(
+            entry.effectPayload?.args?.[0] ?? '',
+            entry.effectPayload,
+            entry.effectPayloads,
+            entry.upgradePayloadsById,
+          ),
+          bonusScaleOfSignal: targetSignal,
+          amountFunc: buffSeed.amountFunc ?? null,
+          stackFunc: buffSeed.stackFunc ?? null,
+          formationCountQualifier: buffSeed.formationCountQualifier ?? null,
+          formationCountPositionQualifier: buffSeed.formationCountPositionQualifier ?? null,
+        }
+
+        const key = derivedSignalKey(preset)
+        if (!derivedByKey.has(key)) {
+          derivedByKey.set(key, buildEffectEntry({
+            effectString: entry.effectString,
+            effect: entry.effect,
+            effectPayload: entry.effectPayload,
+            effectPayloads: entry.effectPayloads,
+            sourceBucket: 'upgrade-buffed-signal',
+            upgradeId: entry.upgradeId,
+            bucketOverride: targetSignalResult.bucket,
+            signalPreset: preset,
+          }))
+        }
       }
     }
   }
 
-  return [...effectEntries, ...derivedEntries]
+  return [...effectEntries, ...derivedByKey.values()]
 }

@@ -227,6 +227,6 @@
 - `scoreFormation` 调用 `evaluatePlacementFit` 未显式传 `dimension: 'damage'`；M1 全员 damage 维度无影响，但 M2 引入 gold / crit 维度时必须显式过滤，否则非伤害 pool 会泄漏进 `carryDps`。
 - `resolveSignalMultiplier` 解析 `bonusScaleOfSignal` 时只取 base 的 multiplier，不重新校验 base 的 `positionQualifier` / `targetQualifier`；阶段 8 buff_upgrade 精细化时需评估 base 与外层 targeting 不一致场景。
 - **复合 amount_expr 未解析（20 条）**：`upgrade_amount(N,N)+max_upgrade_amount(N,N)` 等复合表达式，`resolveSimpleAmountExpr` 只匹配单一 `upgrade_amount(N,N)`，复合的回退得 effect 自身 value（常为 0）。归阶段 8。
-- **buff_upgrades wrapper 多稀有度同存**（如 hero 61 Jaheira 168 条）：同一 buff_upgrades 不同稀有度有不同 magnitude，当前全部进 signal 累加（游戏实际只取最高稀有度）。归阶段 8 top-N / 稀有度去重。
+- **buff_upgrades wrapper 重复去重（已修）/ 稀有度取最高（阶段 8）**：IC 装备系统把同一 buff 按装备槽/稀有度展开成多条 effect 完全相同的 upgrade（仅 id 不同）。第三轮审计发现 Jaheira 38 条 `buff_upgrades,100,9714,9715,9716,9717`（magnitude 全相同=非稀有度差异），每条派生 4 base signal → 152 重复（91% 过度计算）。`collectEffectEntries` 已加 `derivedSignalKey` 对完全相同 derived signal 去重（全库 recognized 15409→12253，-20%）。剩余「同一 buff 不同 magnitude 的稀有度版本取最高」仍归阶段 8 top-N / 稀有度去重。
 
 数据源格式坑（已在归一化层与代码处理，追源守则见 `AGENTS.md` §1.3）：`upgrade_defines.effect` 常是 JSON 对象串（含伪 JSON）；`effect_defines.targets.tags` 是布尔表达式（`|` / `^` / `!` / `()`）；`upgrade_amount(id,index)` 可跨 upgrade 引用；buff_upgrade wrapper 信号由 `collectEffectEntries` 派生；`STACK_COUNT_RESOLVERS` 与 `SCORING_SUPPORTED_STACK_FUNCS` 由 `scoringSupportSync.test.ts` 守护。
