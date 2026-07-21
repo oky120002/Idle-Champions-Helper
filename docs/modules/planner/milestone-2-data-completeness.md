@@ -199,6 +199,18 @@
 - **验证**：wrapper 解析率 60% → >85%；JSON 结构校验。
 - **commit**：`chore(data): 8.4 重生成 planner model 含 buff_upgrade 展开`。
 
+### 8.5 wrapper 稀有度去重 + bonusScale targeting 复用
+
+**背景**：第三轮全链路审计（2026-07-21）发现两类 buff_upgrade 精细化缺口，前几轮审计只在关注点列表提"归阶段 8"但未落入执行步骤，本步补齐。
+
+- **完全重复去重（已完成·不再做）**：`collectEffectEntries` 的 `derivedSignalKey` 已对完全相同 derived signal 去重（IC 装备系统同 buff 多条 effect 完全相同 upgrade，recognized 15409→12253，-20%）。见 commit b7d750f。
+- **不同 magnitude 稀有度取最高（本步）**：同一 buff 不同稀有度有不同 magnitude（如 Jaheira `buff_upgrades,100/200/25/87.5/150/275/40/80,...`），游戏只生效最高稀有度；当前各 magnitude 全累加 → 高估。需按 `(英雄, base target, targetQualifier)` 分组，组内只保留最高 magnitude 的 wrapper。
+- **bonusScale targeting 复用（本步评估）**：`resolveSignalMultiplier` 解析 `bonusScaleOfSignal` 时只取 base 的 multiplier，不重新校验 base 的 `positionQualifier` / `targetQualifier`（见下方关注点）；评估 base 与外层 targeting 不一致场景，决定是否在派生时继承/校验 base targeting。
+
+- **测试（先写）**：同 base 不同 magnitude 的 wrapper 组只保留最高；bonusScale targeting 不一致场景分类与处理策略。
+- **验证**：`npm run test:run`；`data:signal-coverage` 确认稀有度高估消除（重点核对 Lucius/Regis/Halsin/Jaheira 等 wrapper 大户）。
+- **commit**：`fix(data): 8.5 wrapper 稀有度取最高 + bonusScale targeting 复用评估`。
+
 ---
 
 # 阶段 9：scenario 规则 + schema
@@ -226,7 +238,7 @@
 
 - `scoreFormation` 调用 `evaluatePlacementFit` 未显式传 `dimension: 'damage'`；M1 全员 damage 维度无影响，但 M2 引入 gold / crit 维度时必须显式过滤，否则非伤害 pool 会泄漏进 `carryDps`。
 - `resolveSignalMultiplier` 解析 `bonusScaleOfSignal` 时只取 base 的 multiplier，不重新校验 base 的 `positionQualifier` / `targetQualifier`；阶段 8 buff_upgrade 精细化时需评估 base 与外层 targeting 不一致场景。
-- **复合 amount_expr 未解析（20 条）**：`upgrade_amount(N,N)+max_upgrade_amount(N,N)` 等复合表达式，`resolveSimpleAmountExpr` 只匹配单一 `upgrade_amount(N,N)`，复合的回退得 effect 自身 value（常为 0）。归阶段 8。
+- **复合 amount_expr 未解析（20 条）**：`upgrade_amount(N,i)+upgrade_amount(N,i)+...`（5 条纯求和，Brig/Xerophon）、`max_upgrade_amount`/`mult_stack`/`feat_amount`/`upgrade_amount(N,dps_update)`（15 条运行时/命名 index）。全为 `hero_dps_multiplier_mult,0`，`resolveSimpleAmountExpr` 只匹配单一，复合回退得 effect 自身 value=0（低估，保守安全）。与 per_hero_expr 数值表达式同域，**归 `expression-evaluator-plan.md` 数值求值器**（`upgrade_amount` 与 `GetUpgradeAmount` 同类），不归本里程碑阶段 8。
 - **buff_upgrades wrapper 重复去重（已修）/ 稀有度取最高（阶段 8）**：IC 装备系统把同一 buff 按装备槽/稀有度展开成多条 effect 完全相同的 upgrade（仅 id 不同）。第三轮审计发现 Jaheira 38 条 `buff_upgrades,100,9714,9715,9716,9717`（magnitude 全相同=非稀有度差异），每条派生 4 base signal → 152 重复（91% 过度计算）。`collectEffectEntries` 已加 `derivedSignalKey` 对完全相同 derived signal 去重（全库 recognized 15409→12253，-20%）。剩余「同一 buff 不同 magnitude 的稀有度版本取最高」仍归阶段 8 top-N / 稀有度去重。
 
 数据源格式坑（已在归一化层与代码处理，追源守则见 `AGENTS.md` §1.3）：`upgrade_defines.effect` 常是 JSON 对象串（含伪 JSON）；`effect_defines.targets.tags` 是布尔表达式（`|` / `^` / `!` / `()`）；`upgrade_amount(id,index)` 可跨 upgrade 引用；buff_upgrade wrapper 信号由 `collectEffectEntries` 派生；`STACK_COUNT_RESOLVERS` 与 `SCORING_SUPPORTED_STACK_FUNCS` 由 `scoringSupportSync.test.ts` 守护。

@@ -24,6 +24,7 @@ IC 的 `per_hero_expr` 字段承载两类语义：
 - `parseHeroPredicate`（heroPredicate.js）：数值 per_hero_expr 返回 null（已标注归本规划）
 - `scripts/data/official-rule-helpers.mjs:258`：`TimeAvailable(\`days\`) > N*365` 单独正则（patron 时间规则）
 - `src/domain/planner/placementFit.ts` `STACK_COUNT_RESOLVERS`：stack 数量按 stackFunc 查表（`per_crusader` 数英雄 / `per_col_behind` 数列），不解析数值 per_hero_expr
+- `src/domain/effects/effect-string.js` `resolveSimpleAmountExpr`：只匹配单一 `upgrade_amount(N,i)`；20 条复合 amount_expr（`upgrade_amount(N,0)+...` 纯求和 5 条、`max_upgrade_amount`/`mult_stack`/`feat_amount`/`upgrade_amount(N,dps_update)` 15 条）回退得 effect value=0（低估）。`upgrade_amount` 与 `GetUpgradeAmount` 同类，归本规划统一。
 
 ### 设计骨架
 
@@ -38,6 +39,7 @@ IC 的 `per_hero_expr` 字段承载两类语义：
 
 - `placementFit.ts` 的 stack 数量计算：signal 的 per_hero_expr 是数值表达式时，用 `evalNumericExpr` 精确算 stack 数量，替代/补充 `STACK_COUNT_RESOLVERS` 查表
 - `official-rule-helpers.mjs` 的 TimeAvailable 正则：迁入 numericExpression（统一时间比较，不再单独正则）
+- `effect-string.js` 的 `resolveSimpleAmountExpr`：扩展支持复合 amount_expr（先做 5 条纯 `upgrade_amount` 求和，`upgradeLookup` 节点复用；`max_upgrade_amount`/命名 index 等 15 条随 formationAggregate/context 节点一起）
 
 ### TDD 硬约束
 
