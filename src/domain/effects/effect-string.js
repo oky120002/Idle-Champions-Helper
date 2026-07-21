@@ -1,21 +1,3 @@
-function parseInlineJsonValue(value) {
-  const trimmed = value.trim()
-
-  if (!trimmed || (!trimmed.startsWith('{') && !trimmed.startsWith('['))) {
-    return null
-  }
-
-  try {
-    return JSON.parse(trimmed)
-  } catch {
-    return null
-  }
-}
-
-function isJsonObject(value) {
-  return typeof value === 'object' && value !== null && !Array.isArray(value)
-}
-
 function isNumberishToken(value) {
   if (typeof value !== 'string') {
     return false
@@ -29,56 +11,14 @@ function getPrimaryAmountToken(payload) {
   return payload.args.find(isNumberishToken) ?? payload.args[0] ?? null
 }
 
-/**
- * 从 CNE effect 字段串中正则提取 effect_string 字段值。
- *
- * 数据源格式特性（非 bug）：CNE 官方 API 的 upgrade_defines.effect 有时是 JSON 对象串
- * （如 '{"effect_string":"buff_upgrade,...","description":"..."}'）。其序列化不稳定——
- * 357 条 effect 对象串中 338 条字段间有逗号（合法 JSON），19 条 effect_string 行末缺逗号
- * （伪 JSON，JSON.parse 失败）。这是 CNE 游戏引擎用自己的 effect 解析器、不保证 JSON
- * 合法性导致的；游戏照常运行，但 JSON.parse 会失败。
- *
- * effect_string 字段值本身不含 `"`，用正则直接提取即可同时覆盖合法与伪 JSON 两种形态，
- * 避免 19 条 buff_upgrade(s) wrapper 信号因 JSON.parse 失败而整条丢失。
- * ponytail: 只提取 effect_string 一个字段；description / data 等其余字段放弃。
- */
-function extractEffectStringFromJsonObject(raw) {
-  const match = raw.match(/"effect_string"\s*:\s*"([^"]+)"/)
-  return match ? match[1] : null
-}
-
+// 解析 effect_string 标准串 'kind,arg1,arg2,...'。JSON 对象串（CNE upgrade_defines.effect
+// 伪 JSON）已由 normalize 层 normalizeEffectReference 提前提取为干净标准串（见 AGENTS.md
+// 「数据源格式追溯」），消费层不再处理 JSON——所有 effect 字段经 normalize 后均非 `{` 开头。
 export function parseEffectPayload(value) {
   const trimmed = value.trim()
 
   if (!trimmed) {
     return null
-  }
-
-  if (trimmed.startsWith('{')) {
-    const parsed = parseInlineJsonValue(trimmed)
-    const effectString = typeof parsed?.effect_string === 'string'
-      ? parsed.effect_string
-      : extractEffectStringFromJsonObject(trimmed)
-
-    if (!effectString) {
-      return null
-    }
-
-    const [kind, ...args] = effectString.split(',')
-
-    if (!kind || !/^[a-z_][a-z0-9_]*$/i.test(kind)) {
-      return null
-    }
-
-    return {
-      raw: trimmed,
-      effectString,
-      description: typeof parsed?.description === 'string' ? parsed.description : null,
-      data: parsed?.data ?? null,
-      meta: parsed,
-      kind,
-      args,
-    }
   }
 
   const [kind, ...args] = trimmed.split(',')

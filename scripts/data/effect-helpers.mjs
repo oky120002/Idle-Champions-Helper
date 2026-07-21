@@ -298,10 +298,9 @@ function collectRawEffectEntries(detail) {
     if (typeof upgrade.effectReference === 'string') {
       const effectPayload = parseEffectPayload(upgrade.effectReference)
       const entry = buildEffectEntry({
-        // effectReference 可能是 JSON 对象串（'{"effect_string":"...","description":"..."}'）；
-        // 取 parseEffectPayload 已提取的内部 effect_string，避免外层 JSON 串被
-        // splitEffectString 在内部逗号处切断产生垃圾 effectName。
-        effectString: effectPayload?.effectString ?? upgrade.effectReference,
+        // effectReference 已由 normalize 层 normalizeEffectReference 提取为干净标准串，
+        // 直接用作 effectString；effectPayload 仅用于提取 kind/args。
+        effectString: upgrade.effectReference,
         effect: upgrade,
         effectPayload,
         effectPayloads: [],

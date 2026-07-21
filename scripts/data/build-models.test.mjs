@@ -5,6 +5,7 @@ import path from 'node:path'
 import { mkdtemp, mkdir, readFile, writeFile } from 'node:fs/promises'
 
 import { buildModels } from './build-models.mjs'
+import { normalizeEffectReference } from '../normalize-idle-champions-definitions.mjs'
 
 async function readJson(filePath) {
   return JSON.parse(await readFile(filePath, 'utf8'))
@@ -581,12 +582,10 @@ test('effectReference 直接引用 buff_upgrade wrapper 时不进 unsupportedSig
   assert.equal(derived?.bonusScaleOfSignal?.rawEffect, 'hero_dps_multiplier_mult,80')
 })
 
-test('JSON-string effectReference 提取内部 effect_string，不产生垃圾 unsupported', async () => {
-  // 真实数据模式（如 hero 101/102）：upgrade.effectReference 是 JSON 对象字符串
-  // '{"effect_string":"buff_upgrade,100,4","description":"..."}'，而非简单 effect 串。
-  // collectEffectEntries 必须用 effectPayload.effectString（parseEffectPayload 已提取），
-  // 不能用原始 JSON 串——否则 splitEffectString 在 JSON 内部逗号处切断，产生
-  // '{"effect_string":"buff_upgrade"' 这样的垃圾 effectName 进 unsupportedSignals。
+test('buff_upgrade wrapper 从标准 effectReference 派生 target base 信号', async () => {
+  // normalize 层 normalizeEffectReference 已把 CNE effect 对象串提取为干净标准串（如
+  // hero 101/102 的 effectReference 已是 'buff_upgrade,...'）；build-models 读 normalized
+  // data，effectReference 永远是标准串。此处验证 wrapper 派生 target base 链路。
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'idle-champions-json-effectref-'))
   const versionDir = path.join(tempDir, 'data')
   const detailDir = path.join(versionDir, 'champion-details')
@@ -614,7 +613,7 @@ test('JSON-string effectReference 提取内部 effect_string，不产生垃圾 u
         { id: '4', effectReference: 'hero_dps_multiplier_mult,80', effectDefinition: null },
         {
           id: '7',
-          effectReference: '{"effect_string":"buff_upgrade,100,4","description":"Increase base by 100%"}',
+          effectReference: 'buff_upgrade,100,4',
           effectDefinition: null,
         },
       ],
@@ -625,14 +624,6 @@ test('JSON-string effectReference 提取内部 effect_string，不产生垃圾 u
 
   await buildModels({ versionDir, semanticOverridesFile: path.join(tempDir, 'empty.json') })
   const heroAbilities = await readJson(path.join(versionDir, 'hero-abilities.json'))
-
-  const garbageUnsupported = heroAbilities.items[0].unsupportedSignals
-    .filter((signal) => signal.rawEffect.startsWith('{'))
-  assert.deepEqual(
-    garbageUnsupported.map((signal) => signal.rawEffect),
-    [],
-    `JSON-string effectReference 不应产生垃圾 unsupported，实际：${JSON.stringify(heroAbilities.items[0].unsupportedSignals)}`,
-  )
 
   // wrapper 派生信号仍由 effectPayload.kind 正确识别并生成。
   const allSignals = [...heroAbilities.items[0].carrySignals, ...heroAbilities.items[0].supportSignals]
@@ -713,12 +704,10 @@ test('amount_expr 跨 upgrade 引用按 upgrade id 解析目标 effect（非当�
   assert.equal(crossRefSignal?.value, 200, `跨 upgrade 引用应取 upgrade B 的 200，实际：${crossRefSignal?.value}`)
 })
 
-test('CNE effect 字段串字段间缺逗号（伪 JSON）时正则兜底恢复 wrapper 信号', async () => {
-  // 数据源格式特性（非 bug，已对 raw upgrade_defines.effect 核实）：
-  // CNE 序列化 effect 对象串时不保证字段间逗号，357 条对象串中 19 条 effect_string
-  // 行末缺逗号，JSON.parse 失败 → parseEffectPayload 原返回 null → buff_upgrades wrapper
-  // 信号丢失。正则提取 effect_string 覆盖合法与伪 JSON 两种形态，恢复 wrapper 派生链路。
-  // 见 AGENTS.md「数据源格式追溯」守则。
+test('buff_upgrades wrapper 从标准 effectReference 派生 target base 信号', async () => {
+  // normalize 层 normalizeEffectReference 已把 CNE effect 对象串（含伪 JSON）提取为干净
+  // 标准串（守护见 normalize 测试「提取 CNE effect 对象串的 effect_string」）；build-models
+  // 读 normalized data，effectReference 永远是标准串。此处验证 wrapper 派生 target base 链路。
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'idle-champions-cne-pseudo-json-'))
   const versionDir = path.join(tempDir, 'data')
   const detailDir = path.join(versionDir, 'champion-details')
@@ -747,8 +736,7 @@ test('CNE effect 字段串字段间缺逗号（伪 JSON）时正则兜底恢复 
         { id: '5', effectReference: 'hero_dps_multiplier_mult,50', effectDefinition: null },
         {
           id: '7',
-          // 注意：effect_string 行末缺逗号——复现 CNE upgrade_defines.effect 的伪 JSON 格式。
-          effectReference: '{\n"effect_string":"buff_upgrades,100,4,5"\n"description":"missing comma"}',
+          effectReference: 'buff_upgrades,100,4,5',
           effectDefinition: null,
         },
       ],
@@ -760,18 +748,23 @@ test('CNE effect 字段串字段间缺逗号（伪 JSON）时正则兜底恢复 
   await buildModels({ versionDir, semanticOverridesFile: path.join(tempDir, 'empty.json') })
   const heroAbilities = await readJson(path.join(versionDir, 'hero-abilities.json'))
 
-  const garbageUnsupported = heroAbilities.items[0].unsupportedSignals
-    .filter((signal) => signal.rawEffect.startsWith('{'))
-  assert.deepEqual(
-    garbageUnsupported.map((signal) => signal.rawEffect),
-    [],
-    `CNE 伪 JSON effectReference 不应产生垃圾 unsupported：${JSON.stringify(heroAbilities.items[0].unsupportedSignals)}`,
-  )
-
   // buff_upgrades wrapper（target ids 4,5）应派生 2 个信号，各指向对应 base。
   const allSignals = [...heroAbilities.items[0].carrySignals, ...heroAbilities.items[0].supportSignals]
   const derived = allSignals.filter((signal) => signal.rawEffect === 'buff_upgrades,100,4,5')
   assert.equal(derived.length, 2, `buff_upgrades 应派生 2 个信号（target 4 + 5），实际：${derived.length}`)
   const baseRawEffects = derived.map((signal) => signal.bonusScaleOfSignal?.rawEffect).sort()
   assert.deepEqual(baseRawEffects, ['hero_dps_multiplier_mult,50', 'hero_dps_multiplier_mult,80'])
+})
+
+test('normalizeEffectReference 提取 CNE effect 对象串的 effect_string（CI 守护）', () => {
+  // normalize 层是 CNE effect 伪 JSON 处理的 single source——消费层 parseEffectPayload 已不处理
+  // JSON（见 effect-string.js），依赖 normalize 产出干净标准串。此守护确保该链路有 CI 覆盖。
+  // 完整 normalize 守护见 normalize-*.test.mjs（待接入 test:data，受 affiliations 测试隔离阻塞）。
+  assert.equal(normalizeEffectReference('{"effect_string":"buff_upgrade,100,4","description":"x"}'), 'buff_upgrade,100,4')
+  assert.equal(
+    normalizeEffectReference('{\n"effect_string":"buff_upgrades,100,4,5"\n"description":"missing comma"}'),
+    'buff_upgrades,100,4,5',
+  )
+  assert.equal(normalizeEffectReference('hero_dps_multiplier_mult,100'), 'hero_dps_multiplier_mult,100')
+  assert.equal(normalizeEffectReference(null), null)
 })
