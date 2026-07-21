@@ -85,4 +85,22 @@ repair: rebuild
     - 预存行为（本次只改结构 requiredStats→predicateHasNode），低概率（tag_ effect 通常带 tag filter）
     - 处置：predicateHasNode 补 attackType 检查，或确认 raw 无此组合后忽略
 
+- effect_defines.effect_keys 非数组（CNE 单对象序列化）被消费层静默丢弃 <!-- auto-todo:id=atd_7c2a1e9b4d -->
+  - 记录时间: `2026-07-21T16:10:00+08:00`
+  - 类型: robustness
+  - 位置: `scripts/data/effect-helpers.mjs:314`
+  - 备注: collectRawEffectEntries 读 `effect_keys` 时只认 `Array.isArray`；raw 中 6 个 effect_def 的 effect_keys 是单对象/空串（CNE 单元素序列化为裸对象而非 1 元数组），非数组时整条 effect_key 静默丢弃。
+    - 当前影响：0（6 个全是孤儿 effect_def，无 upgrade 引用）
+    - 处置：若将来出现被引用的非数组 effect_keys，在消费层归一化 `非数组→[对象]`，或在 normalize 层 coerce；暂因 0 影响不修
+
+- 英雄 ID 定位（filter_targets exclude_heroes/hero_ids 与 targets heroes）未被消费 <!-- auto-todo:id=atd_3f8b5d17e2 -->
+  - 记录时间: `2026-07-21T16:10:00+08:00`
+  - 类型: follow-up
+  - 位置: `src/domain/abilities/signalSemantics.js:170`（normalizeTargetQualifier）/`signalSemantics.js:114`（normalizeObjectRelation）
+  - 备注: 两条路径的英雄 ID 定位都未被消费：
+    - filter_targets：exclude_heroes（3 处，`{hero_ids:[146]}`=排除）与 hero_ids（2 处，`{hero_ids:[82]}`=仅指定）——normalizeTargetQualifier 漏处理，退化为无 ID 限定（轻微过度应用）。
+    - targets：`{type:"heroes",hero_ids:[...]}` 走 normalizeObjectRelation position path，无映射 → normalizeExplicitTargeting unsupported → 整条 effect 丢弃（如 25 个 hero_dps_multiplier_mult base，保守少计）。
+    - affected_by_upgrade（16 处）是 upgrade_id 运行时依赖，保持丢弃合理。
+    - 处置：低频，M2+ 精化目标限定时统一补 heroId 节点（NOT/精确匹配）；filter_targets 路径过度应用、targets 路径少计，方向相反但都是边界精度问题。
+
 <!-- auto-todo:end -->

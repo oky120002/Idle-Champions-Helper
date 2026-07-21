@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url'
 
 import {
   attachSignalSemantics,
+  getRawFilters,
   parsePerHeroExpr,
 } from '../../src/domain/abilities/signalSemantics.js'
 import { predicateHasNode } from '../../src/domain/abilities/heroPredicate.js'
@@ -37,6 +38,10 @@ function describeFilter(filter) {
     return `${filter.type}:${filter.tags}`
   }
 
+  if (filter.type === 'hero_expr' && typeof filter.hero_expr === 'string') {
+    return `hero_expr:${filter.hero_expr}`
+  }
+
   if ((filter.type === 'stat' || filter.type === 'stat_score') && typeof filter.stat === 'string') {
     const operator = typeof filter.comparison === 'string'
       ? filter.comparison
@@ -52,13 +57,6 @@ function describeFilter(filter) {
   }
 
   return `type:${typeof filter.type === 'string' ? filter.type : 'unknown'}`
-}
-
-function getRawFilters(effect) {
-  return [
-    ...(Array.isArray(effect?.filter_targets) ? effect.filter_targets : []),
-    ...(Array.isArray(effect?.target_filters) ? effect.target_filters : []),
-  ]
 }
 
 /**

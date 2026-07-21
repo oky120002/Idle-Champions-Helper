@@ -12,7 +12,10 @@ function isFilterLikeTarget(target) {
     || target.type === 'stat_score'
 }
 
-function getRawFilters(effect) {
+// 单一来源：effect 上所有 filter-like 结构（filter_targets / target_filters /
+// target_filters_or / targets 中 filter-like 对象）。signal-coverage 等脚本复用，
+// 禁止另起副本——曾因副本漂移漏读 target_filters_or 与 targets 导致覆盖率失真。
+export function getRawFilters(effect) {
   return [
     ...(Array.isArray(effect?.filter_targets) ? effect.filter_targets : []),
     ...(Array.isArray(effect?.target_filters) ? effect.target_filters : []),
@@ -164,9 +167,9 @@ export function normalizeExplicitTargeting(effect) {
 }
 
 // IC tags 字段是一个布尔表达式：| OR、^ AND、! NOT、() 分组。
-// effect 的 by_tags/tags/stat/attack_type filter 统一解析为 HeroQualifier.predicate。
-// tags 用 parseHeroPredicate('shorthand')，支持括号 / |^ 混用复合表达式精确求值；
-// 多 filter 间 AND。
+// effect 的 by_tags/tags/hero_expr/stat/attack_type filter 统一解析为 HeroQualifier.predicate。
+// tags 用 parseHeroPredicate('shorthand')，hero_expr 用 parseHeroPredicate('functional')
+//（与 per_hero_expr 同方言），支持括号 / 复合表达式精确求值；多 filter 间 AND。
 export function normalizeTargetQualifier(effect) {
   const rawFilters = getRawFilters(effect).filter((filter) => filter && typeof filter === 'object')
 
@@ -175,13 +178,21 @@ export function normalizeTargetQualifier(effect) {
     .map((filter) => parseHeroPredicate(filter.tags, 'shorthand'))
     .filter((node) => node !== null)
 
+  // hero_expr filter（functional 谓词）：限定 effect 目标英雄，语义同 per_hero_expr。
+  // 真实样本：Diana/Sheila/Baldric 的 hero_dps_multiplier_mult 用 hero_expr 限定 DEX/tag/race。
+  // 不可解析（GetUpgradeUnlocked 等运行时叶子）→ null → 保守丢弃该 filter。
+  const heroExprAsts = rawFilters
+    .filter((filter) => filter.type === 'hero_expr' && typeof filter.hero_expr === 'string' && filter.hero_expr.length > 0)
+    .map((filter) => parseHeroPredicate(filter.hero_expr, 'functional'))
+    .filter((node) => node !== null)
+
   const statAsts = statQualifiersToNodes(normalizeStatQualifiers(effect))
 
   const attackTypeAsts = rawFilters
     .filter((filter) => filter.type === 'attack_type' && typeof filter.attack === 'string')
     .map((filter) => ({ op: 'attackType', attackType: filter.attack.toLowerCase().trim(), negate: false }))
 
-  const children = [...tagAsts, ...statAsts, ...attackTypeAsts]
+  const children = [...tagAsts, ...heroExprAsts, ...statAsts, ...attackTypeAsts]
   if (children.length === 0) {
     return null
   }

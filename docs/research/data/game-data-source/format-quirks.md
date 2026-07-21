@@ -16,11 +16,12 @@
 - 现象：有时是合法 JSON 对象串，有时是 `effect_string` 行末缺逗号的伪 JSON，两种形态混存。
 - 处理：归一化层 `normalizeEffectReference` 提取 `effect_string`，不依赖整串可解析。
 
-### `effect_defines.targets.tags` 与 `per_hero_expr`：同为英雄布尔表达式
+### `effect_defines.targets.tags` / `per_hero_expr` / `filter_targets.hero_expr`：三处英雄布尔表达式载体
 
-- 两个字段都是英雄布尔表达式，但用两种方言：
-  - `targets.tags`：shorthand，运算符 `|` / `^` / `!` / `()`。
-  - `per_hero_expr`：functional，运算符 / 函数 `||` / `&&` / `HasTag` / `GetStat` / `age` / `hero_id` / `HasAttackDamageType` / `has_base_attack_dmg_type_*` / `has_tag_*`。
-- 统一处理：`parseHeroPredicate(expr, dialect)`（`src/domain/abilities/heroPredicate.js`）解析到同一 `HeroPredicateAST`，由 `evalHeroPredicate` 求值。
+- 三处字段都是英雄布尔表达式，用两种方言：
+  - `targets.tags`（shorthand）：运算符 `|` / `^` / `!` / `()`。
+  - `per_hero_expr` 与 `filter_targets[].hero_expr`（functional）：运算符 / 函数 `||` / `&&` / `HasTag` / `GetStat` / `age` / `hero_id` / `HasAttackDamageType` / `has_base_attack_dmg_type_*` / `has_tag_*`。
+- `filter_targets` 的 `type:"hero_expr"` 与 `per_hero_expr` 同方言、同求值域（单个英雄），语义是「限定 effect 的目标英雄」（如 Diana `GetStat(\`dex\`)>=15`、Sheila `HasTag(\`good\`)`、Baldric `HasTag(\`dwarf\`)`）；真实数据 41 处（被引用 effect_keys）。
+- 统一处理：`parseHeroPredicate(expr, dialect)`（`src/domain/abilities/heroPredicate.js`）解析到同一 `HeroPredicateAST`，由 `evalHeroPredicate` 求值。三处载体在 `normalizeTargetQualifier`（tags/hero_expr）与 `parsePerHeroExpr`（per_hero_expr）汇入同一 `HeroQualifier.predicate`。
 - 数值表达式（`min` / `max` / `floor` / `GetUpgradeAmount` 等）不是布尔谓词，解析返回 `null`，交由 planner stage 7 stack 计算。
-- 实现权威：解析器语法以 `src/domain/abilities/heroPredicate.js` 为准；别名谓词扩展时同步更新本节。
+- 实现权威：解析器语法以 `src/domain/abilities/heroPredicate.js` 为准；别名谓词或新载体扩展时同步更新本节。

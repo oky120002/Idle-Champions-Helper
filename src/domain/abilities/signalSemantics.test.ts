@@ -108,6 +108,55 @@ describe('normalizeTargetQualifier', () => {
     })
     expect(qualifier?.predicate).toEqual({ op: 'attackType', attackType: 'magic', negate: false })
   })
+
+  it('hero_expr filter（functional 谓词）→ 对应 AST 节点', () => {
+    // IC filter_targets type:'hero_expr' 与 per_hero_expr 同方言（HasTag/GetStat/age/hero_id/HasAttackDamageType）。
+    // 真实样本：Diana "DEX>=15"、Sheila "Good tag"、Diana "age<=20 && hero_id!=146"。
+    expect(normalizeTargetQualifier({
+      filter_targets: [{ type: 'hero_expr', hero_expr: 'GetStat(`dex`)>=15' }],
+    })?.predicate).toEqual({ op: 'stat', stat: 'dex', operator: '>=', value: 15 })
+
+    expect(normalizeTargetQualifier({
+      filter_targets: [{ type: 'hero_expr', hero_expr: 'HasTag(`good`)' }],
+    })?.predicate).toEqual({ op: 'tag', tag: 'good' })
+
+    expect(normalizeTargetQualifier({
+      filter_targets: [{ type: 'hero_expr', hero_expr: 'age<=20&&hero_id!=146' }],
+    })?.predicate).toEqual({
+      op: 'and',
+      children: [
+        { op: 'age', operator: '<=', value: 20 },
+        { op: 'heroId', heroId: '146', negate: true },
+      ],
+    })
+  })
+
+  it('hero_expr 与 by_tags 共存 → AND 合并', () => {
+    const qualifier = normalizeTargetQualifier({
+      filter_targets: [
+        { type: 'by_tags', tags: 'dwarf' },
+        { type: 'hero_expr', hero_expr: 'HasAttackDamageType(`melee`)' },
+      ],
+    })
+    expect(qualifier?.predicate).toEqual({
+      op: 'and',
+      children: [
+        { op: 'tag', tag: 'dwarf' },
+        { op: 'attackType', attackType: 'melee', negate: false },
+      ],
+    })
+  })
+
+  it('hero_expr 不可解析（运行时变量）→ 保守丢弃该 filter，不影响其他 filter', () => {
+    // GetUpgradeUnlocked 等运行时叶子 parseHeroPredicate 返回 null，该 filter 不进 predicate。
+    const qualifier = normalizeTargetQualifier({
+      filter_targets: [
+        { type: 'by_tags', tags: 'female' },
+        { type: 'hero_expr', hero_expr: 'GetUpgradeUnlocked(19357)' },
+      ],
+    })
+    expect(qualifier?.predicate).toEqual({ op: 'tag', tag: 'female' })
+  })
 })
 
 describe('normalizeStatQualifiers', () => {
@@ -260,5 +309,15 @@ describe('attachSignalSemantics', () => {
     expect(signal.positionQualifier).toBeNull()
     expect(signal.targetQualifier).toEqual({ predicate: { op: 'tag', tag: 'female' } })
     expect(signal.formationCountQualifier).toBeNull()
+  })
+
+  it('hero_expr filter 限定 hero_dps_multiplier_mult 的目标英雄', () => {
+    // 真实样本：Diana hero_dps_multiplier_mult,100 + hero_expr:GetStat(`dex`)>=15。
+    // 修复前 hero_expr 被丢弃 → targetQualifier=null → buff 误用到全部英雄。
+    const signal = attachSignalSemantics(
+      { kind: 'heroDpsMultiplier', value: 100, rawEffect: 'hero_dps_multiplier_mult,100', source: 'official-parsed' },
+      { filter_targets: [{ type: 'hero_expr', hero_expr: 'GetStat(`dex`)>=15' }] },
+    )
+    expect(signal.targetQualifier).toEqual({ predicate: { op: 'stat', stat: 'dex', operator: '>=', value: 15 } })
   })
 })
