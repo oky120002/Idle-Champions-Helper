@@ -258,4 +258,32 @@ describe('steady state scoring', () => {
     // team-gold: gold pool=3 → team_gold_find = 3
     expect(goldMode.score.toNumber()).toBeCloseTo(3, 5)
   })
+
+  it('crit signal 进 crit_factor 提升 carryDps（4.3/4.4）', () => {
+    // crit_factor 基线归一化：无 crit signal 时 =1.0；含 base chance(2.5%)/damage(100%) 使 damage buff 有意义。
+    const base = createHero('base', { seat: 1, baseDamage: 10 })
+    const critBuffer = createHero('crit-buf', {
+      seat: 2,
+      supportSignals: [
+        { kind: 'globalCritDamage', value: 100, rawEffect: 'global_buff_base_crit_damage_add,100', source: 'official-parsed' },
+      ],
+    })
+    const plain = createHero('plain', { seat: 3, baseDamage: 1 })
+    const heroesById = new Map([
+      ['base', base],
+      ['crit-buf', critBuffer],
+      ['plain', plain],
+    ])
+
+    const withoutCrit = scoreFormation({ placements: { s1: 'base', s2: 'plain' }, heroesById, scenario })
+    const withCrit = scoreFormation({ placements: { s1: 'base', s2: 'crit-buf' }, heroesById, scenario })
+
+    // crit damage +100% → damage stat 200, total_damage_mult=1+200/100=3; chance base 2.5%
+    // raw_crit_factor = 1 + 0.025×(3-1) = 1.05；基线 1+0.025×(2-1)=1.025；归一 = 1.05/1.025
+    // withCrit carryDps = 10 × 1.06 × (1.05/1.025)；withoutCrit = 10 × 1.06 × 1.0
+    expect(withCrit.score.toNumber()).toBeGreaterThan(withoutCrit.score.toNumber())
+    expect(withCrit.score.toNumber()).toBeCloseTo(10 * 1.06 * (1.05 / 1.025), 4)
+    // crit signal kind 进 activeSignalKinds
+    expect(withCrit.activeSignalKinds.has('globalCritDamage')).toBe(true)
+  })
 })

@@ -1,5 +1,6 @@
 import type { ResolvedPlannerScenarioModel } from './plannerModel'
 import type {
+  HeroAbilityAmountFunc,
   HeroAbilityDimension,
   HeroAbilityPoolScope,
   HeroAbilitySignal,
@@ -54,6 +55,8 @@ export interface PlacementFitScorePart {
     | 'missing-target-qualifier'
     | 'unsupported-composition'
   source: HeroAbilitySource
+  /** signal 的聚合方式（add/mult）；消费层 crit_factor 等需区分时使用。 */
+  amountFunc?: HeroAbilityAmountFunc | null
 }
 
 export interface AggregatedPool {
@@ -646,6 +649,7 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): PoolAggr
       active: true,
       reasonCode,
       source: signal.source,
+      amountFunc: signal.amountFunc ?? null,
     })
   }
 
