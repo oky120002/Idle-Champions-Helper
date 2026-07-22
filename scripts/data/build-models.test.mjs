@@ -172,6 +172,21 @@ test('buildModels 产出 hero abilities / scenarios / semantic overrides', async
           },
         },
         {
+          effectReference: 'hero_dps_mult_per_target_crusader_mult,100,all_slots',
+          effectDefinition: {
+            snapshots: {
+              original: {
+                effect_keys: [
+                  {
+                    effect_string: 'hero_dps_mult_per_target_crusader_mult,100,all_slots',
+                    targets: ['self'],
+                  },
+                ],
+              },
+            },
+          },
+        },
+        {
           id: 'upgrade-base-plain',
           effectReference: 'effect_def,base-plain',
           effectDefinition: {
@@ -397,6 +412,7 @@ test('buildModels 产出 hero abilities / scenarios / semantic overrides', async
   const targetedHeroSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'hero_dps_multiplier_mult,0')
   const attackTypeSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_crusader_mult,100')
   const behindColumnSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_col_behind,100')
+  const perTargetAllSlotsCarry = heroAbilities.items[0].carrySignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_target_crusader_mult,100,all_slots')
   const plainBuffSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'buff_upgrade,50,upgrade-base-plain')
   const taggedBuffSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'buff_upgrade_per_any_tagged_crusader_mult,200,upgrade-base-tagged,evil')
   const whereBuffSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'buff_upgrade_per_any_crusader_where_mult,0,1001,int,>=,15')
@@ -458,6 +474,15 @@ test('buildModels 产出 hero abilities / scenarios / semantic overrides', async
   assert.equal(behindColumnSupport?.stackFunc, 'per_col_behind')
   assert.deepEqual(behindColumnSupport?.positionQualifier, {
     relation: 'allBehindColumns',
+  })
+  // all_slots / all 计数目标 = 全阵位计数（relation 'any'）；消费层 countQualifiedHeroes
+  // 已支持 'any'（不计位置，只按 formationCountQualifier 计数）。
+  // resolveCountRelation 曾因 relation==='any' 返回 null，导致全阵位 per_target_crusader
+  // effect 被静默丢弃——第六轮审计修复。
+  assert.equal(perTargetAllSlotsCarry?.kind, 'heroDpsMultiplier')
+  assert.equal(perTargetAllSlotsCarry?.stackFunc, 'per_target_crusader')
+  assert.deepEqual(perTargetAllSlotsCarry?.formationCountPositionQualifier, {
+    relation: 'any',
   })
   assert.equal(plainBuffSupport?.kind, 'heroDpsMultiplier')
   assert.equal(plainBuffSupport?.value, 50)

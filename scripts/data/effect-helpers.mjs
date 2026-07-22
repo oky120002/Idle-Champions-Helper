@@ -58,7 +58,10 @@ function resolveBucket(effect) {
 function resolveCountRelation(rawTarget) {
   const targeting = normalizeExplicitTargeting({ targets: [rawTarget] })
 
-  if (targeting.status !== 'supported' || targeting.relation === 'any') {
+  // 'all' / 'all_slots' → relation 'any' = 全阵位计数（不计位置，只按 formationCountQualifier
+  // 计数所有匹配英雄）。消费层 countQualifiedHeroes 已显式支持 'any'（跳过 matchesSlotRelation），
+  // 故此处放行；曾因 relation==='any' 返回 null，导致全阵位 per_target_crusader effect 被静默丢弃。
+  if (targeting.status !== 'supported') {
     return null
   }
 

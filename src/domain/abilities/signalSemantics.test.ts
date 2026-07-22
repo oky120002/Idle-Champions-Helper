@@ -8,7 +8,7 @@ import {
   normalizeStatQualifiers,
   normalizeTargetQualifier,
 } from './signalSemantics.js'
-import type { HeroAbilityProfile } from './abilityModel'
+import type { HeroAbilityProfile, HeroQualifier } from './abilityModel'
 
 function createHero(heroId: string, overrides: Partial<HeroAbilityProfile> = {}): HeroAbilityProfile {
   return {
@@ -378,8 +378,8 @@ describe('attachSignalSemantics', () => {
 describe('mergeHeroQualifiers', () => {
   // buff_upgrade wrapper 派生时合并 base 与 wrapper 的 targetQualifier（AND）。
   it('null 取另一个，同结构去重，不同则 AND 合并', () => {
-    const tag = { predicate: { op: 'tag', tag: 'dwarf' } }
-    const heroId = { predicate: { op: 'heroId', heroId: '82', negate: false } }
+    const tag = { predicate: { op: 'tag', tag: 'dwarf' } } satisfies HeroQualifier
+    const heroId = { predicate: { op: 'heroId', heroId: '82', negate: false } } satisfies HeroQualifier
     expect(mergeHeroQualifiers(null, tag)).toEqual(tag)
     expect(mergeHeroQualifiers(tag, null)).toEqual(tag)
     expect(mergeHeroQualifiers(null, null)).toBeNull()
