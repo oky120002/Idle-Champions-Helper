@@ -16,7 +16,7 @@ import {
   type PlannerPlacementEntry,
   type PlannerRecommendation,
 } from './recommendationTypes'
-import { scoreFormation } from './steadyStateScoring'
+import { scoreFormation, type ScoringMode } from './steadyStateScoring'
 import type { VariantRuleResult } from './variantConstraints'
 
 const PLANNER_TOP_K = 3
@@ -124,11 +124,18 @@ function buildPlannerExplanations(
   return explanations
 }
 
+export interface PlannerRecommendationOptions {
+  scoringMode?: ScoringMode
+}
+
 export function buildPlannerRecommendation(
   selectedVariant: Variant | null,
   collections: PlannerCollections,
   profileSnapshot: UserProfileSnapshot | null,
+  options: PlannerRecommendationOptions = {},
 ): PlannerRecommendation {
+  const scoringMode = options.scoringMode ?? 'carry-dps'
+
   if (!selectedVariant || collections.plannerHeroes.length === 0) {
     return { result: null, layoutId: null, scenarioRef: null, blocker: null }
   }
@@ -211,7 +218,7 @@ export function buildPlannerRecommendation(
         }
       }
 
-      return scoreFormation({ placements, heroesById: heroById, scenario, heroLevels })
+      return scoreFormation({ placements, heroesById: heroById, scenario, heroLevels, scoringMode })
     },
   })
 

@@ -5,8 +5,15 @@ import type { HeroAbilityKind, ResolvedHeroAbilityProfile } from '../abilities/a
 import { evaluatePlacementFit, type AggregatedPool } from './placementFit'
 import type { ObjectiveResult } from './objectiveModel'
 import { computeCarryDps } from '../simulator/baseDps'
+import { computeTeamGoldFind } from './goldObjective'
 import type { GameNumberValue } from '../simulator/gameNumber'
 import { compareGameNumbers } from '../simulator/gameNumberArithmetic'
+
+/**
+ * 推荐模式。carry-dps = 最大化单英雄 carryDps（默认）；team-gold = 最大化全队 team_gold_find。
+ * 不强枚举 ObjectiveKind（Ponytail）；新增模式扩展此联合类型。
+ */
+export type ScoringMode = 'carry-dps' | 'team-gold'
 
 // 无 profile（用户未导入存档）或英雄不在 ownedHeroes 时 carryLevel 回退 1。
 // 此处 levelCurve = rate^1 = 英雄自身 costCurve rate（约 1.05–1.1），carryDps 仍含英雄间
@@ -19,6 +26,7 @@ export interface ScoringInput {
   heroesById: Map<string, ResolvedHeroAbilityProfile>
   scenario: ResolvedPlannerScenarioModel
   heroLevels?: Map<string, number>
+  scoringMode?: ScoringMode
 }
 
 export interface ScoringResult {
@@ -32,6 +40,84 @@ export interface ScoringResult {
 }
 
 const ZERO: GameNumberValue = new Decimal(0)
+
+type PlacedEntry = { slotId: string; hero: ResolvedHeroAbilityProfile }
+
+/** 把一批 pool 合并进 sharedPools（同 dimension:scope 的 addPercent 相加、multFactor 相乘）。 */
+function mergePools(sharedPools: Map<string, AggregatedPool>, pools: AggregatedPool[]): void {
+  for (const pool of pools) {
+    const key = `${pool.dimension}:${pool.scope}`
+    const merged = sharedPools.get(key) ?? {
+      dimension: pool.dimension,
+      scope: pool.scope,
+      addPercent: 0,
+      multFactor: 1,
+      poolMultiplier: 1,
+    }
+    merged.addPercent += pool.addPercent
+    merged.multFactor *= pool.multFactor
+    merged.poolMultiplier = (1 + merged.addPercent / 100) * merged.multFactor
+    sharedPools.set(key, merged)
+  }
+}
+
+/** Π(poolMultiplier)：pool 间乘法。 */
+function productOfPoolMultipliers(pools: Map<string, AggregatedPool>): number {
+  let aggregate = 1
+  for (const pool of pools.values()) {
+    aggregate *= pool.poolMultiplier
+  }
+  return aggregate
+}
+
+/**
+ * team-gold 模式：全队聚合 gold signal（dimension:'gold'），无 carry 概念。
+ * 每个英雄作为自身 support（collectSignals 返回其 carry+support gold signal）；
+ * global-scope gold 不依赖位置/目标即生效，tagged gold 按 formation 计数。
+ */
+function scoreTeamGold(placedEntries: PlacedEntry[], input: ScoringInput): ScoringResult {
+  const warnings: string[] = []
+  const activeKinds = new Set<HeroAbilityKind>()
+  const sharedPools = new Map<string, AggregatedPool>()
+
+  for (const entry of placedEntries) {
+    warnings.push(...entry.hero.unsupportedSignals.map((signal) => `${signal.rawEffect}: ${signal.note}`))
+
+    const fit = evaluatePlacementFit({
+      carryHero: entry.hero,
+      carrySlotId: entry.slotId,
+      supportHero: entry.hero,
+      supportSlotId: entry.slotId,
+      scenario: input.scenario,
+      placements: input.placements,
+      heroesById: input.heroesById,
+      dimension: 'gold',
+    })
+
+    warnings.push(...fit.warnings)
+    for (const part of fit.scoreBreakdown) {
+      if (part.active) {
+        activeKinds.add(part.signalKind)
+      }
+    }
+    mergePools(sharedPools, fit.pools)
+  }
+
+  const aggregate = productOfPoolMultipliers(sharedPools)
+  const teamGold = computeTeamGoldFind(aggregate)
+
+  return {
+    score: teamGold,
+    warnings: [...new Set(warnings)],
+    explanations: [],
+    carryHeroId: null,
+    activeSignalKinds: activeKinds,
+    objective: {
+      value: teamGold,
+      breakdown: [{ label: 'teamGoldFind', value: teamGold }],
+    },
+  }
+}
 
 export function scoreFormation(input: ScoringInput): ScoringResult {
   const placedEntries = Object.entries(input.placements)
@@ -50,6 +136,10 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
       objective: { value: ZERO, breakdown: [] },
       activeSignalKinds: new Set(),
     }
+  }
+
+  if (input.scoringMode === 'team-gold') {
+    return scoreTeamGold(placedEntries, input)
   }
 
   let bestScore: GameNumberValue = ZERO
@@ -95,28 +185,10 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
         )
       }
 
-      for (const pool of fit.pools) {
-        const key = `${pool.dimension}:${pool.scope}`
-        const merged = sharedPools.get(key) ?? {
-          dimension: pool.dimension,
-          scope: pool.scope,
-          addPercent: 0,
-          multFactor: 1,
-          poolMultiplier: 1,
-        }
-        merged.addPercent += pool.addPercent
-        merged.multFactor *= pool.multFactor
-        merged.poolMultiplier = (1 + merged.addPercent / 100) * merged.multFactor
-        sharedPools.set(key, merged)
-      }
+      mergePools(sharedPools, fit.pools)
     }
 
-    let aggregate = 1
-    for (const pool of sharedPools.values()) {
-      aggregate *= pool.poolMultiplier
-    }
-
-    const carryDps = computeCarryDps(carryEntry.hero, carryLevel, aggregate)
+    const carryDps = computeCarryDps(carryEntry.hero, carryLevel, productOfPoolMultipliers(sharedPools))
 
     if (compareGameNumbers(carryDps, bestScore) > 0) {
       bestScore = carryDps

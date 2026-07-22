@@ -200,4 +200,62 @@ describe('steady state scoring', () => {
     expect(result.score.toNumber()).toBeCloseTo(1.06, 5)
     expect(result.activeSignalKinds.has('globalGoldMultiplier')).toBe(false)
   })
+
+  it('team-gold 模式聚合全队 gold signal，damage 维度不泄漏', () => {
+    // 3.4：金币 objective 全队聚合。gold signal 进 team_gold_find；damage signal 不影响。
+    const goldHero = createHero('gold', {
+      seat: 1,
+      baseDamage: 1,
+      supportSignals: [
+        { kind: 'globalGoldMultiplier', value: 200, rawEffect: 'gold_multiplier_mult,200', source: 'official-parsed' },
+      ],
+    })
+    const plain = createHero('plain', { seat: 2, baseDamage: 9999 })
+    const heroesById = new Map([
+      ['gold', goldHero],
+      ['plain', plain],
+    ])
+
+    const result = scoreFormation({
+      placements: { s1: 'gold', s2: 'plain' },
+      heroesById,
+      scenario,
+      scoringMode: 'team-gold',
+    })
+
+    // gold pool: 1 + 200/100 = 3；team_gold_find = base_gold(1) × 3 = 3
+    expect(result.score.toNumber()).toBeCloseTo(3, 5)
+    expect(result.carryHeroId).toBeNull()
+    expect(result.activeSignalKinds.has('globalGoldMultiplier')).toBe(true)
+    expect(result.activeSignalKinds.has('globalDpsMultiplier')).toBe(false)
+  })
+
+  it('同阵型 carry-dps 与 team-gold 目标量不同（scoringMode 分支）', () => {
+    const carry = createHero('carry', {
+      seat: 1,
+      baseDamage: 10,
+      carrySignals: [
+        { kind: 'heroDpsMultiplier', value: 100, rawEffect: 'hero_dps_multiplier_mult,100', source: 'official-parsed' },
+      ],
+    })
+    const gold = createHero('gold', {
+      seat: 2,
+      supportSignals: [
+        { kind: 'globalGoldMultiplier', value: 200, rawEffect: 'gold_multiplier_mult,200', source: 'official-parsed' },
+      ],
+    })
+    const heroesById = new Map([
+      ['carry', carry],
+      ['gold', gold],
+    ])
+    const placements = { s1: 'carry', s2: 'gold' }
+
+    const dpsMode = scoreFormation({ placements, heroesById, scenario, scoringMode: 'carry-dps' })
+    const goldMode = scoreFormation({ placements, heroesById, scenario, scoringMode: 'team-gold' })
+
+    // carry-dps: hero self-buff pool=2 → carryDps = 10 × 1.06 × 2 = 21.2
+    expect(dpsMode.score.toNumber()).toBeCloseTo(21.2, 4)
+    // team-gold: gold pool=3 → team_gold_find = 3
+    expect(goldMode.score.toNumber()).toBeCloseTo(3, 5)
+  })
 })

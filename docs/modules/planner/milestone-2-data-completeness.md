@@ -36,7 +36,7 @@
 - **验证**：coverage 报告 gold signal 数量（0 → ~40+）；JSON 结构校验。
 - **commit**：`chore(data): 3.3 重生成 planner model 含 gold signal`。
 
-### 3.4 金币 objective（全队聚合）+ scoringMode 分支
+### 3.4 金币 objective（全队聚合）+ scoringMode 分支 [x]
 - **改动**：新建 `src/domain/planner/goldObjective.ts`（`computeTeamGoldFind`）；`steadyStateScoring`/`recommendationEngine` 加 scoringMode 分支（'carry-dps' vs 'team-gold'）。
 - **测试（先写）**：金币模式 gold 参与/damage 跳过；team_gold_find 全队聚合；同阵型两模式不同。
 - **验证**：`npm run test:run`。
