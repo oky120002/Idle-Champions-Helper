@@ -91,19 +91,19 @@
 **目标**：从独立模式降级为"推图约束"。
 **风险**：IC 英雄大部分不死，独立模式价值有限。
 
-### 5.1 解析 health/healing/damage_reduction effect
+### 5.1 解析 health/healing/damage_reduction effect [x]
 - **改动**：`normalizeEffectSignal` 加 health/healing/damage_reduction 分支（`health_mult`/`health_add`/`healing_mult`/`global_health_mult`，~580 条；`damage_reduction*` ~40）。
 - **测试（先写）**：各子类解析正确。
 - **验证**：`npm run test:run`；coverage 显示 health 覆盖。
 - **commit**：`feat(data): 5.1 解析 health/healing/damage_reduction effect`。
 
-### 5.2 survival pool
+### 5.2 survival pool [x]
 - **改动**：placementFit 加 survival pool：`effectiveHealth = baseHealth × health_pool`；`damage_reduction_mult`（玩家侧减伤）。
 - **测试（先写）**：health pool 聚合正确；effectiveHealth 计算。
 - **验证**：`npm run test:run`。
 - **commit**：`feat(planner): 5.2 survival pool（effectiveHealth + damage_reduction）`。
 
-### 5.3 接入推图预估（约束）
+### 5.3 接入推图预估（约束） [x]（canSurviveBurst 判定已就绪，推图层数建模留 stage 10/M3）
 - **改动**：阶段 10 推图预估时，survival 不足（effectiveHealth < monster_damage）则限制推图层数。
 - **测试**：survival 不足时推图层数受限。
 - **验证**：`npm run test:run`（与 10 联动）。
