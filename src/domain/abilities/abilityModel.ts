@@ -10,6 +10,8 @@ export type HeroAbilityKind =
   | 'heroDpsMultiplier'
   | 'adjacentBuff'
   | 'taggedChampionBuff'
+  | 'globalGoldMultiplier'
+  | 'heroGoldMultiplier'
 
 export type HeroAbilitySource =
   | 'official-parsed'
@@ -162,6 +164,8 @@ export const DIMENSION_BY_KIND: Record<HeroAbilityKind, HeroAbilityDimension> = 
   heroDpsMultiplier: 'damage',
   adjacentBuff: 'damage',
   taggedChampionBuff: 'damage',
+  globalGoldMultiplier: 'gold',
+  heroGoldMultiplier: 'gold',
 }
 
 /**
@@ -177,6 +181,8 @@ export const POOL_SCOPE_BY_KIND: Record<HeroAbilityKind, HeroAbilityPoolScope> =
   heroDpsMultiplier: 'hero',
   adjacentBuff: 'hero',
   taggedChampionBuff: 'hero',
+  globalGoldMultiplier: 'global',
+  heroGoldMultiplier: 'hero',
 }
 
 export function applyHeroAbilityPatch(
