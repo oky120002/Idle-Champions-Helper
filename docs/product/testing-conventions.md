@@ -42,3 +42,9 @@
 ## 6. 守护测试
 
 - 跨边界一致性（如 `.ts` scorer 与 `.mjs` 脚本的平行白名单）无法合并为单一来源时，必须配 keys 同步守护测试，任一侧变更时强制失败。
+
+## 7. 类型检查门控
+
+- 所有测试入口（`test` / `test:run` / `test:unit` / `test:component` / `test:data`）必须先过 `npm run typecheck`（`test:regression` 经 `test:run` 间接覆盖，不重复显式调用）。
+- vitest 用 esbuild 转译、**不做类型检查**；测试绿不等于类型正确。曾因 `.d.ts` 漏声明（mergeHeroQualifiers）导致 `tsc` 长期红、却被 vitest 绿色掩盖。typecheck 增量 ~5s，相对测试本体（~20-50s）非瓶颈，任何入口都不得绕过。
+- 新增测试入口同样必须链 `npm run typecheck &&`。
