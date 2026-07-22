@@ -120,6 +120,20 @@ function isBuffUpgradeKind(kind) {
 }
 
 /**
+ * crit effect 名 → (kind, amountFunc) 映射。阶段 4.2。
+ * 默认暴击 chance/damage 由 crit_factor 公式（steadyStateScoring）应用，不在此处。
+ */
+const CRIT_KIND_BY_EFFECT = {
+  buff_base_crit_chance_add: { kind: 'heroCritChance', amountFunc: 'add' },
+  buff_base_crit_chance_mult: { kind: 'heroCritChance', amountFunc: 'mult' },
+  buff_base_crit_damage: { kind: 'heroCritDamage', amountFunc: 'add' },
+  buff_base_crit_damage_mult: { kind: 'heroCritDamage', amountFunc: 'mult' },
+  global_buff_base_crit_chance_add: { kind: 'globalCritChance', amountFunc: 'add' },
+  global_buff_base_crit_damage_add: { kind: 'globalCritDamage', amountFunc: 'add' },
+  global_buff_base_crit_damage_mult: { kind: 'globalCritDamage', amountFunc: 'mult' },
+}
+
+/**
  * buff_upgrade wrapper 家族的裸 effect 名是否应从 unsupportedSignals 中忽略。
  * 这些 wrapper 的实际 signal 由 collectEffectEntries 派生（bonusScaleOfSignal = 目标 base）；
  * 未派生的 wrapper 变体由 analyzeBuffUpgradeWrappers 独立审计。
@@ -829,6 +843,23 @@ export function normalizeEffectSignal(effectName, effectValue, source, effectMet
         amountFunc: 'mult',
         stackFunc: 'per_tagged_crusader_mult',
         formationCountQualifier,
+      },
+      bucket: 'supportSignals',
+    }
+  }
+
+  // 阶段 4.2：暴击（crit pool）。chance/damage 各 global/hero；默认 chance=2.5%/damage=100%
+  // 来自 default_crit_info（游戏全局），在 crit_factor 公式（阶段 4.3）应用，不在解析层。
+  const critMatch = CRIT_KIND_BY_EFFECT[effectName]
+  if (critMatch) {
+    return {
+      ok: true,
+      signal: {
+        kind: critMatch.kind,
+        value: numericValue,
+        rawEffect,
+        source,
+        ...(critMatch.amountFunc === 'mult' ? { amountFunc: 'mult' } : {}),
       },
       bucket: 'supportSignals',
     }

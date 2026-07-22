@@ -915,3 +915,41 @@ test('normalizeEffectSignal 解析 gold multiplier effect（阶段 3.2）', () =
   const bad = normalizeEffectSignal('gold_multiplier_mult', 'abc', 'official-parsed', {})
   assert.equal(bad.ok, false)
 })
+
+test('normalizeEffectSignal 解析 crit effect（阶段 4.2）', () => {
+  // chance add → heroCritChance
+  const chanceAdd = normalizeEffectSignal('buff_base_crit_chance_add', '35', 'official-parsed', {})
+  assert.equal(chanceAdd.ok, true)
+  assert.equal(chanceAdd.signal.kind, 'heroCritChance')
+  assert.equal(chanceAdd.signal.value, 35)
+  assert.equal(chanceAdd.bucket, 'supportSignals')
+
+  // chance mult → heroCritChance + amountFunc mult
+  const chanceMult = normalizeEffectSignal('buff_base_crit_chance_mult', '50', 'official-parsed', {})
+  assert.equal(chanceMult.signal.kind, 'heroCritChance')
+  assert.equal(chanceMult.signal.amountFunc, 'mult')
+
+  // damage add → heroCritDamage
+  const dmgAdd = normalizeEffectSignal('buff_base_crit_damage', '9', 'official-parsed', {})
+  assert.equal(dmgAdd.signal.kind, 'heroCritDamage')
+  assert.equal(dmgAdd.signal.amountFunc, undefined)
+
+  // damage mult → heroCritDamage mult
+  const dmgMult = normalizeEffectSignal('buff_base_crit_damage_mult', '15', 'official-parsed', {})
+  assert.equal(dmgMult.signal.kind, 'heroCritDamage')
+  assert.equal(dmgMult.signal.amountFunc, 'mult')
+
+  // global chance/damage
+  const gChance = normalizeEffectSignal('global_buff_base_crit_chance_add', '10', 'official-parsed', {})
+  assert.equal(gChance.signal.kind, 'globalCritChance')
+  const gDmgAdd = normalizeEffectSignal('global_buff_base_crit_damage_add', '12', 'official-parsed', {})
+  assert.equal(gDmgAdd.signal.kind, 'globalCritDamage')
+  assert.equal(gDmgAdd.signal.amountFunc, undefined)
+  const gDmgMult = normalizeEffectSignal('global_buff_base_crit_damage_mult', '20', 'official-parsed', {})
+  assert.equal(gDmgMult.signal.kind, 'globalCritDamage')
+  assert.equal(gDmgMult.signal.amountFunc, 'mult')
+
+  // 非法 value 仍 unsupported
+  const bad = normalizeEffectSignal('buff_base_crit_chance_add', 'xyz', 'official-parsed', {})
+  assert.equal(bad.ok, false)
+})
