@@ -9,8 +9,8 @@ import type {
   ResolvedHeroAbilityProfile,
 } from '../abilities/abilityModel'
 import { DIMENSION_BY_KIND, POOL_SCOPE_BY_KIND } from '../abilities/abilityModel'
-import { matchesHeroQualifier } from '../abilities/signalSemantics.js'
-import { predicateHasNode } from '../abilities/heroPredicate.js'
+import { matchesHeroQualifier } from '../abilities/signalSemantics'
+import { predicateHasNode } from '../abilities/heroPredicate'
 
 export interface PlacementFitScorePart {
   signalKind: HeroAbilitySignal['kind']
@@ -577,6 +577,10 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): PoolAggr
       continue
     }
 
+    // taggedChampionBuff 只检查 tag/stat 目标限定节点，漏 attackType：纯 attackType
+    // 限定的 taggedChampionBuff 会被误判「缺少 carry 目标标签」不计分。全量核验 raw
+    // （被引用 effect_keys）：「只有 attack_type/hero_expr 限定、无 tag/stat」的组合
+    // = 0 个，当前不触发，故不补 attackType 检查；若未来出现此类 effect 需 revisit。
     if (
       signal.kind === 'taggedChampionBuff'
       && !predicateHasNode(signal.targetQualifier?.predicate, 'tag')

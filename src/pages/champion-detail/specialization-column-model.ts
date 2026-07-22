@@ -1,5 +1,5 @@
 import type { ChampionDetail, ChampionUpgradeDetail } from '../../domain/types'
-import { extractTargetIdsFromEffectString } from '../../domain/effects/effect-string.js'
+import { extractTargetIdsFromEffectString } from '../../domain/effects/effect-string'
 import { isJsonObject } from './detail-json'
 import { buildUpgradePresentation, parseEffectPayload } from './effect-model'
 import type {

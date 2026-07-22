@@ -6,7 +6,7 @@ import { mkdtemp, mkdir, readFile, writeFile } from 'node:fs/promises'
 
 import { buildModels } from './build-models.mjs'
 import { collectEffectEntries, normalizeEffectSignal } from './effect-helpers.mjs'
-import { parseEffectPayload } from '../../src/domain/effects/effect-string.js'
+import { parseEffectPayload } from '../../src/domain/effects/effect-string.ts'
 import { normalizeEffectReference } from '../normalize-idle-champions-definitions.mjs'
 
 async function readJson(filePath) {
@@ -785,7 +785,7 @@ test('buff_upgrades wrapper 从标准 effectReference 派生 target base 信号'
 
 test('normalizeEffectReference 提取 CNE effect 对象串的 effect_string（CI 守护）', () => {
   // normalize 层是 CNE effect 伪 JSON 处理的 single source——消费层 parseEffectPayload 已不处理
-  // JSON（见 effect-string.js），依赖 normalize 产出干净标准串。此守护确保该链路有 CI 覆盖。
+  // JSON（见 effect-string.ts），依赖 normalize 产出干净标准串。此守护确保该链路有 CI 覆盖。
   // 完整 normalize 守护见 normalize-*.test.mjs（待接入 test:data，受 affiliations 测试隔离阻塞）。
   assert.equal(normalizeEffectReference('{"effect_string":"buff_upgrade,100,4","description":"x"}'), 'buff_upgrade,100,4')
   assert.equal(

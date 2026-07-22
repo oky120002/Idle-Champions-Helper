@@ -1,7 +1,7 @@
 import path from 'node:path'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { pathToFileURL } from 'node:url'
-import { attachSignalSemantics } from '../../src/domain/abilities/signalSemantics.js'
+import { attachSignalSemantics } from '../../src/domain/abilities/signalSemantics.ts'
 import {
   collectEffectEntries,
   normalizeEffectSignal,

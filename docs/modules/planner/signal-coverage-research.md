@@ -15,7 +15,7 @@
 ## 上一轮修复（2026-07-21）
 
 - `filter_targets type:"hero_expr"` 此前被 `isFilterLikeTarget`/`normalizeTargetQualifier` 漏处理而静默丢弃：`hero_dps_multiplier_mult` 等 supported 效果的目标限定失效 → buff 误用到全部英雄。修复后 `signalsWithStatTargetQualifier` 340→426、`signalsWithTagTargetQualifier` 749→797（Diana/Sheila/Baldric 等英雄的 DEX/tag/race 限定恢复）。
-- `getRawFilters` 此前在 `signalSemantics.js`（生产，读 4 源）与 `signal-coverage.mjs`（报告，只读 2 源）各有一份且已漂移，覆盖率少统计 `target_filters_or`/`targets` 来源。已统一为 `signalSemantics.js` 单一来源，报告复用。
+- `getRawFilters` 此前在 `signalSemantics.ts`（生产，读 4 源）与 `signal-coverage.mjs`（报告，只读 2 源）各有一份且已漂移，覆盖率少统计 `target_filters_or`/`targets` 来源。已统一为 `signalSemantics.ts` 单一来源，报告复用。
 - `collectRawEffectEntries` 此前漏遍历 `detail.feats`：feat（英雄专属固定能力，含 568 个 supported DPS signal）整体漏算，而同类的 loot/legendary 已进流。已加 feat 遍历（sourceBucket='feat'，与 loot/legendary 对称），recognized signals 14376→15409（+1033）。阶段 13「feat 精细乘数」指按玩家实际选择精算，不影响此处「全 feat 进理论最大基线」。
 - `collectEffectEntries` 此前对 buff_upgrade wrapper 派生不去重：IC 装备系统把同一 buff 按装备槽/稀有度展开成多条 effect 完全相同的 upgrade（仅 id 不同，magnitude 相同=非稀有度差异），每条各派生 base signal → 巨量完全相同 signal 累加（Jaheira 38 条同 wrapper 派生 152 重复，91% 过度计算）。已加 `derivedSignalKey` 对完全相同 derived signal 去重（recognized 15409→12253，-20%）。剩余「不同 magnitude 稀有度取最高」归阶段 8。
 

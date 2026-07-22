@@ -4,7 +4,7 @@ import {
   buildEffectKeyPayload,
   parseEffectPayload,
   resolveEffectPayloadAmountToken,
-} from '../../domain/effects/effect-string.js'
+} from '../../domain/effects/effect-string'
 import type { JsonValue } from '../../domain/types'
 import type { ParsedEffectPayload, EffectContext } from './types'
 import { formatNumberishToken, formatNullableText, isNumberishToken } from './detail-value-formatters'

@@ -6,8 +6,8 @@ import {
   attachSignalSemantics,
   getRawFilters,
   parsePerHeroExpr,
-} from '../../src/domain/abilities/signalSemantics.js'
-import { predicateHasNode } from '../../src/domain/abilities/heroPredicate.js'
+} from '../../src/domain/abilities/signalSemantics.ts'
+import { predicateHasNode } from '../../src/domain/abilities/heroPredicate.ts'
 import {
   analyzeBuffUpgradeWrappers,
   collectEffectEntries,

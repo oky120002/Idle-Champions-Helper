@@ -9,12 +9,21 @@
 // 数值表达式 per_hero_expr（min/max/floor/GetUpgradeAmount/levels_past_softcap）返回 number
 // 非 boolean，属 stack 计算（stage 7），不在本模块——parseHeroPredicate 对它们返回 null。
 
+import type {
+  HeroComparisonOperator,
+  HeroPredicateAST,
+  HeroStatKey,
+  ResolvedHeroAbilityProfile,
+} from './abilityModel'
+
+export type HeroPredicateDialect = 'shorthand' | 'functional'
+
 const SHORTHAND_OR = '|'
 const SHORTHAND_AND = '^'
 const FUNCTIONAL_OR = '||'
 const FUNCTIONAL_AND = '&&'
 
-function stripOuterParentheses(expr) {
+function stripOuterParentheses(expr: string): string {
   let current = expr.trim()
 
   while (current.startsWith('(') && current.endsWith(')')) {
@@ -49,8 +58,8 @@ function stripOuterParentheses(expr) {
   return current
 }
 
-function splitTopLevel(expr, delimiter) {
-  const parts = []
+function splitTopLevel(expr: string, delimiter: string): string[] {
+  const parts: string[] = []
   let depth = 0
   let lastIndex = 0
 
@@ -77,7 +86,7 @@ function splitTopLevel(expr, delimiter) {
   return parts.filter(Boolean)
 }
 
-function compareNumber(left, operator, right) {
+function compareNumber(left: number | null | undefined, operator: HeroComparisonOperator, right: number): boolean {
   if (typeof left !== 'number') {
     return false
   }
@@ -98,7 +107,7 @@ function compareNumber(left, operator, right) {
   }
 }
 
-function getHeroStatValue(hero, stat) {
+function getHeroStatValue(hero: ResolvedHeroAbilityProfile, stat: HeroStatKey): number | undefined {
   if (stat === 'total_ability_score') {
     return Object.values(hero.abilityScores ?? {}).reduce(
       (sum, value) => sum + (typeof value === 'number' ? value : 0),
@@ -111,7 +120,7 @@ function getHeroStatValue(hero, stat) {
 
 // functional 叶子：HasTag/GetStat/age/hero_id/HasAttackDamageType(+ has_base_attack_dmg_type_ 别名)/base_attack_cooldown/is_undead/true/as_int。
 // 非 boolean 叶子（min/max/floor 等数值表达式）返回 null。
-function matchFunctionalLeaf(expr) {
+function matchFunctionalLeaf(expr: string): HeroPredicateAST | null {
   if (expr === 'true') {
     return { op: 'true' }
   }
@@ -122,61 +131,70 @@ function matchFunctionalLeaf(expr) {
 
   const asIntMatch = expr.match(/^as_int\((.+)\)$/)
   if (asIntMatch) {
-    return parseHeroPredicate(asIntMatch[1], 'functional')
+    return parseHeroPredicate(asIntMatch[1]!, 'functional')
   }
 
   const attackDamageTypeMatch = expr.match(/^HasAttackDamageType\(`([^`]+)`\)$/)
   if (attackDamageTypeMatch) {
-    return { op: 'attackType', attackType: attackDamageTypeMatch[1].toLowerCase(), negate: false }
+    return { op: 'attackType', attackType: attackDamageTypeMatch[1]!.toLowerCase(), negate: false }
   }
 
   // has_base_attack_dmg_type_X 是 HasAttackDamageType(`X`) 的裸标识符别名
   //（raw 23 处，magic/melee/ranged；泛化支持任意类型名，与 HasAttackDamageType 同语义）
   const baseAttackDmgTypeMatch = expr.match(/^has_base_attack_dmg_type_([a-zA-Z_]+)$/)
   if (baseAttackDmgTypeMatch) {
-    return { op: 'attackType', attackType: baseAttackDmgTypeMatch[1].toLowerCase(), negate: false }
+    return { op: 'attackType', attackType: baseAttackDmgTypeMatch[1]!.toLowerCase(), negate: false }
   }
 
   // has_tag_X 是 HasTag(`X`) 的裸标识符别名（raw has_tag_rivalswaterdeep/speed/acqinc/cteam）。
   const hasTagAliasMatch = expr.match(/^has_tag_([a-zA-Z_]+)$/)
   if (hasTagAliasMatch) {
-    return { op: 'tag', tag: hasTagAliasMatch[1].toLowerCase() }
+    return { op: 'tag', tag: hasTagAliasMatch[1]!.toLowerCase() }
   }
 
   const tagMatch = expr.match(/^HasTag\(`([^`]+)`\)$/)
   if (tagMatch) {
-    return { op: 'tag', tag: tagMatch[1].toLowerCase() }
+    return { op: 'tag', tag: tagMatch[1]!.toLowerCase() }
   }
 
   const statMatch = expr.match(/^GetStat\(`([A-Za-z_]+)`\)\s*(>=|<=|>|<|==)\s*(\d+)$/)
   if (statMatch) {
-    return { op: 'stat', stat: statMatch[1].toLowerCase(), operator: statMatch[2], value: Number(statMatch[3]) }
+    return {
+      op: 'stat',
+      stat: statMatch[1]!.toLowerCase() as HeroStatKey,
+      operator: statMatch[2] as HeroComparisonOperator,
+      value: Number(statMatch[3]),
+    }
   }
 
   const baseAttackCooldownMatch = expr.match(/^base_attack_cooldown\s*(>=|<=|>|<|==)\s*(\d+(?:\.\d+)?)$/)
   if (baseAttackCooldownMatch) {
-    return { op: 'baseAttackCooldown', operator: baseAttackCooldownMatch[1], value: Number(baseAttackCooldownMatch[2]) }
+    return {
+      op: 'baseAttackCooldown',
+      operator: baseAttackCooldownMatch[1] as HeroComparisonOperator,
+      value: Number(baseAttackCooldownMatch[2]),
+    }
   }
 
   const ageMatch = expr.match(/^age\s*(>=|<=|>|<|==)\s*(\d+)$/)
   if (ageMatch) {
-    return { op: 'age', operator: ageMatch[1], value: Number(ageMatch[2]) }
+    return { op: 'age', operator: ageMatch[1] as HeroComparisonOperator, value: Number(ageMatch[2]) }
   }
 
   const heroIdEqMatch = expr.match(/^hero_id\s*==\s*([0-9]+)$/)
   if (heroIdEqMatch) {
-    return { op: 'heroId', heroId: heroIdEqMatch[1], negate: false }
+    return { op: 'heroId', heroId: heroIdEqMatch[1]!, negate: false }
   }
 
   const heroIdNeqMatch = expr.match(/^hero_id\s*!=\s*([0-9]+)$/)
   if (heroIdNeqMatch) {
-    return { op: 'heroId', heroId: heroIdNeqMatch[1], negate: true }
+    return { op: 'heroId', heroId: heroIdNeqMatch[1]!, negate: true }
   }
 
   return null
 }
 
-export function parseHeroPredicate(expr, dialect) {
+export function parseHeroPredicate(expr: unknown, dialect: HeroPredicateDialect): HeroPredicateAST | null {
   if (typeof expr !== 'string') {
     return null
   }
@@ -206,7 +224,8 @@ export function parseHeroPredicate(expr, dialect) {
     if (children.some((node) => node === null)) {
       return null
     }
-    return children.length === 1 ? children[0] : { op: 'or', children }
+    const nodes = children.filter((node): node is HeroPredicateAST => node !== null)
+    return nodes.length === 1 ? nodes[0]! : { op: 'or', children: nodes }
   }
 
   // AND。任一子句不可解析 → 整体 null（保守，避免丢弃导致放宽语义）。
@@ -217,7 +236,8 @@ export function parseHeroPredicate(expr, dialect) {
     if (children.some((node) => node === null)) {
       return null
     }
-    return children.length === 1 ? children[0] : { op: 'and', children }
+    const nodes = children.filter((node): node is HeroPredicateAST => node !== null)
+    return nodes.length === 1 ? nodes[0]! : { op: 'and', children: nodes }
   }
 
   // NOT（前缀 !）
@@ -235,7 +255,12 @@ export function parseHeroPredicate(expr, dialect) {
   return null
 }
 
-function evalNode(ast, hero, tags, attackTypes) {
+function evalNode(
+  ast: HeroPredicateAST,
+  hero: ResolvedHeroAbilityProfile,
+  tags: Set<string>,
+  attackTypes: Set<string>,
+): boolean {
   switch (ast.op) {
     case 'or':
       return ast.children.some((child) => evalNode(child, hero, tags, attackTypes))
@@ -266,7 +291,7 @@ function evalNode(ast, hero, tags, attackTypes) {
   }
 }
 
-export function evalHeroPredicate(ast, hero) {
+export function evalHeroPredicate(ast: HeroPredicateAST, hero: ResolvedHeroAbilityProfile): boolean {
   const tags = new Set(
     (hero.tags ?? [])
       .filter((tag) => typeof tag === 'string')
@@ -281,7 +306,10 @@ export function evalHeroPredicate(ast, hero) {
 }
 
 // 遍历 AST 判断是否含某类节点。覆盖率统计 / reasonCode 分类用。
-export function predicateHasNode(ast, op) {
+export function predicateHasNode(
+  ast: HeroPredicateAST | null | undefined,
+  op: HeroPredicateAST['op'],
+): boolean {
   if (!ast) {
     return false
   }

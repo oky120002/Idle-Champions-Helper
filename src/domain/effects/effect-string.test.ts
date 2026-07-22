@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { parseEffectPayload } from './effect-string.js'
+import { parseEffectPayload } from './effect-string'
 
 describe('parseEffectPayload', () => {
   it('非 JSON 串按逗号分割为 kind + args', () => {

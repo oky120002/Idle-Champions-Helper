@@ -4,7 +4,7 @@ import {
   evalHeroPredicate,
   parseHeroPredicate,
   predicateHasNode,
-} from './heroPredicate.js'
+} from './heroPredicate'
 import type { HeroAbilityProfile, HeroPredicateAST } from './abilityModel'
 
 function createHero(overrides: Partial<HeroAbilityProfile> = {}): HeroAbilityProfile {

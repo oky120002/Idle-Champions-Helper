@@ -3,7 +3,7 @@ import {
   extractTargetIdsFromParsedEffectPayload,
   parseEffectPayload,
   resolveEffectPayloadAmountToken,
-} from '../../src/domain/effects/effect-string.js'
+} from '../../src/domain/effects/effect-string.ts'
 import {
   attachSignalSemantics,
   mergeHeroQualifiers,
@@ -12,8 +12,8 @@ import {
   statQualifiersToNodes,
   normalizeTargetQualifier,
   parsePerHeroExpr,
-} from '../../src/domain/abilities/signalSemantics.js'
-import { parseHeroPredicate } from '../../src/domain/abilities/heroPredicate.js'
+} from '../../src/domain/abilities/signalSemantics.ts'
+import { parseHeroPredicate } from '../../src/domain/abilities/heroPredicate.ts'
 
 function resolveNumericValue(effectValue, effectPayload, effectPayloads, upgradePayloadsById) {
   if (typeof effectPayload?.meta?.amount_expr === 'string') {
@@ -414,6 +414,10 @@ function collectRawEffectEntries(detail) {
       upgradeEntries.push(entry)
     }
 
+    // effect_keys 只认数组：raw 中 6 个 effect_def 的 effect_keys 是单对象/空串
+    // （CNE 单元素序列化为裸对象而非 1 元数组），非数组时整条静默丢弃。当前影响 0
+    // （6 个全是孤儿 effect_def，无 upgrade 引用）；若将来出现被引用的非数组
+    // effect_keys，在消费层归一化「非数组→[对象]」或在 normalize 层 coerce。
     const effectKeys = upgrade.effectDefinition?.snapshots?.original?.effect_keys
     if (Array.isArray(effectKeys)) {
       const effectPayloads = effectKeys.map((effectKey) => buildEffectKeyPayload(effectKey))

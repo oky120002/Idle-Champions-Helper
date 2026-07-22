@@ -6,7 +6,7 @@
 ## 先读顺序
 
 - 类型与 resolver 先读 `abilityModel.ts`。
-- signal qualifier / per_hero_expr 受控解析读 `signalSemantics.js`（配 `signalSemantics.d.ts`）。
+- signal qualifier / per_hero_expr 受控解析读 `signalSemantics.ts`。
 - 表达式拆分辅助读 `qualifierParsing.js`（配 `qualifierParsing.d.ts`）。
 
 ## 不变量
