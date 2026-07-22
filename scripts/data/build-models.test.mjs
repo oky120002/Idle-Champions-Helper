@@ -5,7 +5,8 @@ import path from 'node:path'
 import { mkdtemp, mkdir, readFile, writeFile } from 'node:fs/promises'
 
 import { buildModels } from './build-models.mjs'
-import { collectEffectEntries } from './effect-helpers.mjs'
+import { collectEffectEntries, normalizeEffectSignal } from './effect-helpers.mjs'
+import { parseEffectPayload } from '../../src/domain/effects/effect-string.js'
 import { normalizeEffectReference } from '../normalize-idle-champions-definitions.mjs'
 
 async function readJson(filePath) {
@@ -883,4 +884,34 @@ test('collectEffectEntries 派生 buff_upgrade wrapper 时合并 wrapper 自身 
   assert.deepEqual(derived[0].signalPreset.targetQualifier, {
     predicate: { op: 'heroId', heroId: '82', negate: false },
   })
+})
+
+test('normalizeEffectSignal 解析 gold multiplier effect（阶段 3.2）', () => {
+  // gold_multiplier_mult → globalGoldMultiplier（全队金币池，supportSignals）
+  const plain = normalizeEffectSignal('gold_multiplier_mult', '200', 'official-parsed', {})
+  assert.equal(plain.ok, true)
+  assert.equal(plain.signal.kind, 'globalGoldMultiplier')
+  assert.equal(plain.signal.value, 200)
+  assert.equal(plain.bucket, 'supportSignals')
+
+  // gold_mult_per_tagged_crusader_mult → globalGoldMultiplier + per_tagged stackFunc
+  // 镜像 hero_dps_mult_per_tagged_crusader_mult 解析模式。
+  const taggedPayload = parseEffectPayload('gold_mult_per_tagged_crusader_mult,100,companion')
+  const tagged = normalizeEffectSignal(
+    'gold_mult_per_tagged_crusader_mult',
+    '100',
+    'official-parsed',
+    { effectPayload: taggedPayload, effect: {} },
+  )
+  assert.equal(tagged.ok, true)
+  assert.equal(tagged.signal.kind, 'globalGoldMultiplier')
+  assert.equal(tagged.signal.amountFunc, 'mult')
+  assert.equal(tagged.signal.stackFunc, 'per_tagged_crusader_mult')
+  assert.deepEqual(tagged.signal.formationCountQualifier, {
+    predicate: { op: 'tag', tag: 'companion' },
+  })
+
+  // 非法 value 仍 unsupported（不绕过数值守卫）
+  const bad = normalizeEffectSignal('gold_multiplier_mult', 'abc', 'official-parsed', {})
+  assert.equal(bad.ok, false)
 })
