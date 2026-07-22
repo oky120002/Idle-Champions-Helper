@@ -163,6 +163,21 @@ const VULNERABILITY_MONSTER_TAGS_BY_EFFECT = {
 }
 
 /**
+ * speed/cooldown effect 名 → (kind, amountFunc) 映射。阶段 7.1。
+ * attack_speed_mult/time_scale → attackSpeedMult（mult）；reduce_attack_cooldown → attackSpeedMult（add，
+ * 减少攻击冷却=提速）；reduce_ultimate_cooldown/ability_cooldown_reduction_mult → cooldownReduction。
+ */
+const SPEED_KIND_BY_EFFECT = {
+  base_attack_speed_mult: { kind: 'attackSpeedMult', amountFunc: 'mult' },
+  ult_attack_speed_mult: { kind: 'attackSpeedMult', amountFunc: 'mult' },
+  time_scale: { kind: 'attackSpeedMult', amountFunc: 'mult' },
+  time_scale_when_not_attacked: { kind: 'attackSpeedMult', amountFunc: 'mult' },
+  reduce_attack_cooldown: { kind: 'attackSpeedMult', amountFunc: 'add' },
+  reduce_ultimate_cooldown: { kind: 'cooldownReduction', amountFunc: 'add' },
+  ability_cooldown_reduction_mult: { kind: 'cooldownReduction', amountFunc: 'mult' },
+}
+
+/**
  * buff_upgrade wrapper 家族的裸 effect 名是否应从 unsupportedSignals 中忽略。
  * 这些 wrapper 的实际 signal 由 collectEffectEntries 派生（bonusScaleOfSignal = 目标 base）；
  * 未派生的 wrapper 变体由 analyzeBuffUpgradeWrappers 独立审计。
@@ -939,6 +954,23 @@ export function normalizeEffectSignal(effectName, effectValue, source, effectMet
         rawEffect,
         source,
         monsterTags: vulnMatch,
+      },
+      bucket: 'supportSignals',
+    }
+  }
+
+  // 阶段 7.1：speed/cooldown（解析进 pool 供覆盖率与未来 ult/step-simulation 消费；
+  // 7.2 决定：不进 carryDps——hero_dps 按秒模型，speed 精确建模依赖 BUD/cooldown，MVP 暂不应用）。
+  const speedMatch = SPEED_KIND_BY_EFFECT[effectName]
+  if (speedMatch) {
+    return {
+      ok: true,
+      signal: {
+        kind: speedMatch.kind,
+        value: numericValue,
+        rawEffect,
+        source,
+        ...(speedMatch.amountFunc === 'mult' ? { amountFunc: 'mult' } : {}),
       },
       bucket: 'supportSignals',
     }

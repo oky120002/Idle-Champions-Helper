@@ -20,6 +20,8 @@ export type HeroAbilityKind =
   | 'heroHealthMultiplier'
   | 'damageReduction'
   | 'enemyVulnerability'
+  | 'attackSpeedMult'
+  | 'cooldownReduction'
 
 export type HeroAbilitySource =
   | 'official-parsed'
@@ -194,6 +196,8 @@ export const DIMENSION_BY_KIND: Record<HeroAbilityKind, HeroAbilityDimension> = 
   heroHealthMultiplier: 'survival',
   damageReduction: 'survival',
   enemyVulnerability: 'vulnerability',
+  attackSpeedMult: 'speed',
+  cooldownReduction: 'cooldown',
 }
 
 /**
@@ -219,6 +223,8 @@ export const POOL_SCOPE_BY_KIND: Record<HeroAbilityKind, HeroAbilityPoolScope> =
   heroHealthMultiplier: 'hero',
   damageReduction: 'global',
   enemyVulnerability: 'global',
+  attackSpeedMult: 'hero',
+  cooldownReduction: 'global',
 }
 
 export function applyHeroAbilityPatch(

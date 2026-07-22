@@ -1011,3 +1011,22 @@ test('normalizeEffectSignal 解析 vulnerability effect（阶段 6.2）', () => 
   // 非法 value 仍 unsupported
   assert.equal(normalizeEffectSignal('damage_increase', 'bad', 'official-parsed', {}).ok, false)
 })
+
+test('normalizeEffectSignal 解析 speed/cooldown effect（阶段 7.1）', () => {
+  const atkSpeed = normalizeEffectSignal('base_attack_speed_mult', '20', 'official-parsed', {})
+  assert.equal(atkSpeed.signal.kind, 'attackSpeedMult')
+  assert.equal(atkSpeed.signal.amountFunc, 'mult')
+
+  const reduceAtk = normalizeEffectSignal('reduce_attack_cooldown', '15', 'official-parsed', {})
+  assert.equal(reduceAtk.signal.kind, 'attackSpeedMult')
+  assert.equal(reduceAtk.signal.amountFunc, undefined)
+
+  const reduceUlt = normalizeEffectSignal('reduce_ultimate_cooldown', '10', 'official-parsed', {})
+  assert.equal(reduceUlt.signal.kind, 'cooldownReduction')
+
+  const ablCd = normalizeEffectSignal('ability_cooldown_reduction_mult', '25', 'official-parsed', {})
+  assert.equal(ablCd.signal.kind, 'cooldownReduction')
+  assert.equal(ablCd.signal.amountFunc, 'mult')
+
+  assert.equal(normalizeEffectSignal('base_attack_speed_mult', 'bad', 'official-parsed', {}).ok, false)
+})
