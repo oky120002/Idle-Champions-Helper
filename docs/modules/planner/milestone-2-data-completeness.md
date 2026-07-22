@@ -10,7 +10,7 @@
 **目标**：赚金币阵型。`team_gold_find = base_gold × global_gold_pool × hero_gold_pool`（全队聚合，非单一 carry）。
 **风险**：金币模式评分结构（全队聚合）≠ C 位（单一 carry），需独立 scoring 分支。
 
-### 3.0 evaluatePlacementFit 显式 dimension 过滤（前置·防非伤害 pool 泄漏 carryDps）
+### 3.0 evaluatePlacementFit 显式 dimension 过滤（前置·防非伤害 pool 泄漏 carryDps） [x]
 
 **背景**：第六轮审计确认 `scoreFormation`（`steadyStateScoring.ts`）调 `evaluatePlacementFit` 未传 `dimension`，`aggregate` 无差别乘所有 pool。M1 全员 damage 维度无影响；**阶段 3 引入 gold、阶段 4 引入 crit 后，非伤害 pool 会泄漏进 carryDps**（同 typecheck masking 教训：绿色掩盖错误）。必须在 3.1 加 gold kind 之前先堵。`EvaluatePlacementFitInput.dimension` 参数 M1 已预留，接通即可。
 
@@ -19,7 +19,7 @@
 - **验证**：`npm run test:run`。
 - **commit**：`fix(planner): 3.0 evaluatePlacementFit 显式 dimension 过滤`。
 
-### 3.1 扩 kind 加 gold
+### 3.1 扩 kind 加 gold [x]
 - **改动**：`abilityModel.ts` 的 `HeroAbilityKind` 加 `globalGoldMultiplier`/`heroGoldMultiplier`；`DIMENSION_BY_KIND` 登记 `gold`。
 - **测试（先写）**：`DIMENSION_BY_KIND['globalGoldMultiplier'] === 'gold'`；类型级断言。
 - **验证**：`npm run typecheck`。

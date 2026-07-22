@@ -173,4 +173,31 @@ describe('steady state scoring', () => {
     // carryDps = baseDamage(1) × levelCurve(1, 1.06) × aggregate(1，tagged buff 未计分)
     expect(result.score.toNumber()).toBeCloseTo(1.06, 5)
   })
+
+  it('gold 维度 signal 不泄漏进 carryDps（dimension 过滤）', () => {
+    // 3.0 前置：scoreFormation 对 carryDps 聚合必须显式传 dimension:'damage'，
+    // 否则阶段 3 引入的 gold pool 会乘进 carryDps。global gold 是全队池，不作用于伤害。
+    const carry = createHero('carry', { seat: 1, baseDamage: 1 })
+    const goldSupport = createHero('gold-finder', {
+      seat: 2,
+      supportSignals: [
+        { kind: 'globalGoldMultiplier', value: 200, rawEffect: 'gold_multiplier_mult,200', source: 'official-parsed' },
+      ],
+    })
+    const heroesById = new Map([
+      ['carry', carry],
+      ['gold-finder', goldSupport],
+    ])
+
+    const result = scoreFormation({
+      placements: { s1: 'carry', s2: 'gold-finder' },
+      heroesById,
+      scenario,
+    })
+
+    // gold signal 被过滤，aggregate=1；carryDps = baseDamage(1) × levelCurve(1, 1.06) = 1.06
+    // 若 dimension 过滤失效，gold pool(=3) 会乘进 → 3.18，断言会失败。
+    expect(result.score.toNumber()).toBeCloseTo(1.06, 5)
+    expect(result.activeSignalKinds.has('globalGoldMultiplier')).toBe(false)
+  })
 })
