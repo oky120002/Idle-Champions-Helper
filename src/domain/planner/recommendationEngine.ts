@@ -165,8 +165,24 @@ export function buildPlannerRecommendation(
     allChampionIds: collections.plannerHeroes.map((hero) => hero.heroId),
   })
   const candidateIds = new Set(candidatePool.candidates.map((candidate) => candidate.heroId))
+  // 阶段 9.2：only_allow_crusaders 白名单（by_ids OR by_tags）；强制英雄即使未拥有也纳入候选。
+  const allowedHeroSet = new Set(scenario.allowedHeroes)
+  const allowedTagSet = new Set(scenario.allowedTags)
+  const hasAllowedRestriction = allowedHeroSet.size > 0 || allowedTagSet.size > 0
+  const forcedHeroSet = new Set(scenario.forcedHeroes)
   const heroes = collections.plannerHeroes
-    .filter((hero) => candidateIds.has(hero.heroId))
+    .filter((hero) => {
+      const isForceIncluded = forcedHeroSet.has(hero.heroId)
+      if (isForceIncluded) {
+        return true
+      }
+      if (!candidateIds.has(hero.heroId)) {
+        return false
+      }
+      return !hasAllowedRestriction
+        || allowedHeroSet.has(hero.heroId)
+        || hero.tags.some((tag) => allowedTagSet.has(tag))
+    })
     .sort((left, right) => left.seat - right.seat || left.heroId.localeCompare(right.heroId))
 
   const lockedSlotSet = new Set(scenario.lockedSlots)

@@ -33,6 +33,10 @@ export interface OfficialPlannerScenarioModel {
   scenarioWarnings: string[]
   /** 场景怪物类型（来自 variant.enemyTypes），供 vulnerability 条件性匹配（阶段 6）。 */
   enemyTypes: string[]
+  /** 白名单英雄 id（game_change only_allow_crusaders.by_ids；空=不限，阶段 9.2）。 */
+  allowedHeroes: string[]
+  /** 白名单英雄 tag（only_allow_crusaders.by_tags，| 为 OR；空=不限，阶段 9.2）。 */
+  allowedTags: string[]
 }
 
 export type ResolvedPlannerScenarioModel = OfficialPlannerScenarioModel

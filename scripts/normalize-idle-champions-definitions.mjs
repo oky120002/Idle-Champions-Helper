@@ -736,6 +736,61 @@ function collectEscortNames(gameChanges = []) {
   return uniqueStrings(names)
 }
 
+/**
+ * 从 game_changes 提取英雄限制（阶段 9.2）：
+ * - force_use_heroes（{hero_ids:[N]}）→ forcedHeroIds
+ * - only_allow_crusaders（{by_ids:{ids:[...]}, by_tags:{tags:"a|b"}}）→ allowedHeroIds + allowedTags（| 为 OR）
+ * allowedHeroIds/allowedTags 仅在该变体含 only_allow_crusaders 时非空（hasAllowed 语义）。
+ */
+function collectHeroRestrictions(gameChanges = []) {
+  const forcedHeroIds = new Set()
+  const allowedHeroIds = new Set()
+  const allowedTags = new Set()
+  let hasAllowed = false
+
+  for (const change of gameChanges) {
+    if (!change || typeof change !== 'object') {
+      continue
+    }
+    const type = typeof change.type === 'string' ? change.type : null
+
+    if (type === 'force_use_heroes' && Array.isArray(change.hero_ids)) {
+      for (const id of change.hero_ids) {
+        if (id !== undefined && id !== null) {
+          forcedHeroIds.add(String(id))
+        }
+      }
+    }
+
+    if (type === 'only_allow_crusaders') {
+      hasAllowed = true
+      const ids = change.by_ids?.ids
+      if (Array.isArray(ids)) {
+        for (const id of ids) {
+          if (id !== undefined && id !== null) {
+            allowedHeroIds.add(String(id))
+          }
+        }
+      }
+      const tags = change.by_tags?.tags
+      if (typeof tags === 'string') {
+        for (const tag of tags.split('|')) {
+          const trimmed = tag.trim()
+          if (trimmed) {
+            allowedTags.add(trimmed)
+          }
+        }
+      }
+    }
+  }
+
+  return {
+    forcedHeroIds: [...forcedHeroIds],
+    allowedHeroIds: hasAllowed ? [...allowedHeroIds] : [],
+    allowedTags: hasAllowed ? [...allowedTags] : [],
+  }
+}
+
 function buildAreaHighlightId(entry) {
   return [
     entry.kind,
@@ -975,6 +1030,7 @@ function buildVariantMetadataMap(originalDefinitions, localizedDefinitions, camp
       ]),
       mechanics,
       ...enemySummary,
+      ...collectHeroRestrictions(definition.game_changes ?? []),
     })
   }
 
@@ -1651,6 +1707,9 @@ function normalizeVariant(originalDefinition, localizedDefinition, campaignMap, 
     areaHighlights: metadata.areaHighlights ?? [],
     areaMilestones: metadata.areaMilestones ?? [],
     mechanics: metadata.mechanics ?? [],
+    forcedHeroIds: metadata.forcedHeroIds ?? [],
+    allowedHeroIds: metadata.allowedHeroIds ?? [],
+    allowedTags: metadata.allowedTags ?? [],
   }
 }
 

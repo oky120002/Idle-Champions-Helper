@@ -155,16 +155,21 @@ function buildOfficialScenarioModel(variant, formations) {
     formationLayoutId: formation?.id ?? null,
     objectiveArea: variant.objectiveArea ?? null,
     slotTopology,
-    forcedHeroes: [],
+    forcedHeroes: variant.forcedHeroIds ?? [],
     bannedHeroes: [],
     lockedSlots,
     enemyTypes: variant.enemyTypes ?? [],
+    allowedHeroes: variant.allowedHeroIds ?? [],
+    allowedTags: variant.allowedTags ?? [],
     scenarioWarnings: [
       ...mechanicWarnings,
       ...(variant.restrictions.length > 0
         ? ['当前场景 restrictions 为自由文本，尚未自动解析，请人工复核规则限制。']
         : []),
       ...(formation ? [] : ['当前场景没有匹配的阵型布局。']),
+      ...(variant.allowedHeroIds?.length || variant.allowedTags?.length
+        ? ['当前场景仅允许特定英雄（only_allow_crusaders），候选池已按白名单过滤。']
+        : []),
     ],
   }
 }

@@ -31,6 +31,9 @@ function createVariant(id: string): Variant {
     rewards: [],
     enemyCount: 0,
     enemyTypes: [],
+    forcedHeroIds: [],
+    allowedHeroIds: [],
+    allowedTags: [],
     attackMix: { melee: 0, ranged: 0, magic: 0, other: 0 },
     specialEnemyCount: 0,
     escortCount: 0,
@@ -147,6 +150,8 @@ describe('findPlannerScenarioForVariant', () => {
         bannedHeroes: [],
         lockedSlots: [],
         enemyTypes: [],
+        allowedHeroes: [],
+        allowedTags: [],
         scenarioWarnings: [],
       },
     ]

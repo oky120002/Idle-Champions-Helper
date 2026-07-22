@@ -43,6 +43,8 @@ const scenario: OfficialPlannerScenarioModel = {
   bannedHeroes: [],
   lockedSlots: [],
   enemyTypes: [],
+  allowedHeroes: [],
+  allowedTags: [],
   scenarioWarnings: [],
 }
 

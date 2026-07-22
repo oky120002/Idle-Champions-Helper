@@ -36,6 +36,9 @@ function createVariant(id: string, overrides: Partial<Variant> & Pick<Variant, '
     areaHighlights: overrides.areaHighlights ?? [],
     areaMilestones: overrides.areaMilestones ?? [],
     mechanics: overrides.mechanics ?? [],
+    forcedHeroIds: overrides.forcedHeroIds ?? [],
+    allowedHeroIds: overrides.allowedHeroIds ?? [],
+    allowedTags: overrides.allowedTags ?? [],
   }
 }
 
@@ -121,6 +124,8 @@ const plannerScenarios: OfficialPlannerScenarioModel[] = [
     bannedHeroes: [],
     lockedSlots: [],
     enemyTypes: [],
+    allowedHeroes: [],
+    allowedTags: [],
     scenarioWarnings: ['当前推荐尚未解析场景限制与机制，只按已拥有英雄、seat 合法性和阵型槽位计算。'],
   },
   {
@@ -139,6 +144,8 @@ const plannerScenarios: OfficialPlannerScenarioModel[] = [
     bannedHeroes: [],
     lockedSlots: ['s4'],
     enemyTypes: [],
+    allowedHeroes: [],
+    allowedTags: [],
     scenarioWarnings: ['当前场景含护送任务，前排一个槽位预留给护送目标，不参与英雄占位。'],
   },
 ]
@@ -200,5 +207,110 @@ describe('planner recommendation engine', () => {
     expect(recommendation.blocker).toBeNull()
     expect(recommendation.result?.placementEntries).toHaveLength(3)
     expect(recommendation.result?.placements.s4).toBeUndefined()
+  })
+
+  it('only_allow_crusaders 白名单过滤候选英雄，非白名单英雄不被推荐（9.2）', () => {
+    const allowedVariant = createVariant('variant-allowed', {
+      campaign,
+      name: text('Allowed Only', '仅限白名单'),
+      adventureId: 'adventure-allowed',
+      adventure: text('Allowed', '白名单'),
+      objectiveArea: 100,
+      allowedHeroIds: ['bruenor', 'celeste', 'nayeli', 'jarlaxle'],
+    })
+    const allowedScenario: OfficialPlannerScenarioModel = {
+      variantId: allowedVariant.id,
+      scenarioRef: { kind: 'variant', id: allowedVariant.id },
+      name: allowedVariant.name,
+      formationLayoutId: 'layout-catacombs',
+      objectiveArea: 100,
+      slotTopology: [
+        { slotId: 's1', row: 1, column: 1, adjacentSlotIds: ['s2'] },
+        { slotId: 's2', row: 1, column: 2, adjacentSlotIds: ['s1', 's3'] },
+        { slotId: 's3', row: 1, column: 3, adjacentSlotIds: ['s2', 's4'] },
+        { slotId: 's4', row: 1, column: 4, adjacentSlotIds: ['s3'] },
+      ],
+      forcedHeroes: [],
+      bannedHeroes: [],
+      lockedSlots: [],
+      enemyTypes: [],
+      allowedHeroes: ['bruenor', 'celeste', 'nayeli', 'jarlaxle'],
+      allowedTags: [],
+      scenarioWarnings: [],
+    }
+    const allowedCollections: PlannerCollections = {
+      variants: [allowedVariant],
+      plannerHeroes,
+      plannerScenarios: [allowedScenario],
+    }
+    const snapshot = createUserProfileSnapshot({
+      ownedHeroes: [
+        createOwnedHero({ heroId: 'bruenor', level: 500 }),
+        createOwnedHero({ heroId: 'asharra', level: 500 }),
+        createOwnedHero({ heroId: 'celeste', level: 500 }),
+        createOwnedHero({ heroId: 'nayeli', level: 500 }),
+        createOwnedHero({ heroId: 'jarlaxle', level: 500 }),
+      ],
+    })
+
+    const recommendation = buildPlannerRecommendation(allowedVariant, allowedCollections, snapshot)
+
+    expect(recommendation.blocker).toBeNull()
+    expect(recommendation.result).not.toBeNull()
+    const placedHeroIds = Object.values(recommendation.result?.placements ?? {})
+    // asharra 不在白名单（allowedHeroes），即使已拥有也不被推荐
+    expect(placedHeroIds).not.toContain('asharra')
+    expect(placedHeroIds).toContain('bruenor')
+  })
+
+  it('force_use_heroes 强制英雄即使未拥有也纳入候选并占位（9.2）', () => {
+    const forcedVariant = createVariant('variant-forced', {
+      campaign,
+      name: text('Forced Hero', '强制英雄'),
+      adventureId: 'adventure-forced',
+      adventure: text('Forced', '强制'),
+      objectiveArea: 100,
+      forcedHeroIds: ['nayeli'],
+    })
+    const forcedScenario: OfficialPlannerScenarioModel = {
+      variantId: forcedVariant.id,
+      scenarioRef: { kind: 'variant', id: forcedVariant.id },
+      name: forcedVariant.name,
+      formationLayoutId: 'layout-catacombs',
+      objectiveArea: 100,
+      slotTopology: [
+        { slotId: 's1', row: 1, column: 1, adjacentSlotIds: ['s2'] },
+        { slotId: 's2', row: 1, column: 2, adjacentSlotIds: ['s1', 's3'] },
+        { slotId: 's3', row: 1, column: 3, adjacentSlotIds: ['s2', 's4'] },
+        { slotId: 's4', row: 1, column: 4, adjacentSlotIds: ['s3'] },
+      ],
+      forcedHeroes: ['nayeli'],
+      bannedHeroes: [],
+      lockedSlots: [],
+      enemyTypes: [],
+      allowedHeroes: [],
+      allowedTags: [],
+      scenarioWarnings: [],
+    }
+    const forcedCollections: PlannerCollections = {
+      variants: [forcedVariant],
+      plannerHeroes,
+      plannerScenarios: [forcedScenario],
+    }
+    // 用户未拥有 nayeli，但 force_use_heroes 强制纳入
+    const snapshot = createUserProfileSnapshot({
+      ownedHeroes: [
+        createOwnedHero({ heroId: 'bruenor', level: 500 }),
+        createOwnedHero({ heroId: 'celeste', level: 500 }),
+        createOwnedHero({ heroId: 'jarlaxle', level: 500 }),
+      ],
+    })
+
+    const recommendation = buildPlannerRecommendation(forcedVariant, forcedCollections, snapshot)
+
+    expect(recommendation.blocker).toBeNull()
+    expect(recommendation.result).not.toBeNull()
+    const placedHeroIds = Object.values(recommendation.result?.placements ?? {})
+    expect(placedHeroIds).toContain('nayeli')
   })
 })

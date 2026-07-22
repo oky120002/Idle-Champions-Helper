@@ -97,6 +97,12 @@ export interface Variant {
   areaHighlights: VariantAreaHighlight[]
   areaMilestones: number[]
   mechanics: string[]
+  /** 强制使用英雄 id（game_change force_use_heroes，阶段 9.2）。 */
+  forcedHeroIds: string[]
+  /** 白名单英雄 id（game_change only_allow_crusaders.by_ids；空=无白名单）。 */
+  allowedHeroIds: string[]
+  /** 白名单英雄 tag（only_allow_crusaders.by_tags，| 为 OR；空=无 tag 白名单）。 */
+  allowedTags: string[]
 }
 
 export interface ScenarioRef {

@@ -39,6 +39,9 @@ function createVariant(
     areaHighlights: overrides.areaHighlights ?? [],
     areaMilestones: overrides.areaMilestones ?? [],
     mechanics: overrides.mechanics ?? [],
+    forcedHeroIds: overrides.forcedHeroIds ?? [],
+    allowedHeroIds: overrides.allowedHeroIds ?? [],
+    allowedTags: overrides.allowedTags ?? [],
   }
 }
 
