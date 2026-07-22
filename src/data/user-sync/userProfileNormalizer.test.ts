@@ -231,6 +231,29 @@ describe('user payload normalizer', () => {
         isFavorite: true,
       })
     })
+
+    it('variant scenario 与 isFavorite=false 正确解析', () => {
+      const result = normalizeFormationSaves({
+        formations: [
+          {
+            formation_id: 'fm-200',
+            layout_id: 'layout-3col',
+            scenario: { kind: 'variant', id: '42' },
+            placements: { s1: '12', s2: '24' },
+            specializations: { '12': 'dps-spec', '24': 'support-spec' },
+            feats: { '12': ['feat-dps-1', 'feat-dps-2'] },
+            familiars: {},
+            is_favorite: false,
+          },
+        ],
+      })
+
+      const save = result.formations[0]!
+      expect(save.scenarioRef).toEqual({ kind: 'variant', id: '42' })
+      expect(save.specializations['24']).toBe('support-spec')
+      expect(save.feats['12']).toHaveLength(2)
+      expect(save.isFavorite).toBe(false)
+    })
   })
 
   describe('buildUserProfileSnapshot', () => {
