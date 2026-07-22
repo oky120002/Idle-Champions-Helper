@@ -185,30 +185,30 @@
 **目标**：扩展 wrapper 解析（不全展开）。
 **风险**：43 变体全展开过度（批判②），按覆盖率 top N。
 
-### 8.1 评估 43 变体优先级
+### 8.1 评估 43 变体优先级 [x]
 - **改动**：jq 统计各 buff_upgrade 变体频率（`buff_upgrade_add`/`_multiplicative`/`_add_then_mult`/`_per_unique_race`/`_add_flat_amount` 等），排优先级。
 - **测试**：统计报告归档 `docs/modules/planner/buff-upgrade-priority.md`。
 - **验证**：`jq` 统计完成。
 - **commit**：`docs(data): 8.1 buff_upgrade 变体优先级评估`。
 
-### 8.2 实现 top N 变体解析
+### 8.2 实现 top N 变体解析 [x]
 - **改动**：扩展 `isPlannerBuffUpgradeKind`（:108）+ `resolvePlannerBuffUpgradeSeed`（:187）支持 top N 变体（覆盖率 >80%）；低频私有 stack（per_mithral_hall_stacks 等）记录但降级进 warning。
 - **测试（先写）**：top N 变体解析为正确 bonusScaleOfSignal；低频的进 warning。
 - **验证**：`npm run test:run`；coverage 显示 wrapper 解析率 >80%。
 - **commit**：`feat(data): 8.2 实现 buff_upgrade top N 变体解析`。
 
-### 8.3 改进 base signal 解析
+### 8.3 改进 base signal 解析 [x]（根因：base-unresolved 多为非 stat 触发器/pre_stack/do_nothing，合法不可解析；见 buff-upgrade-priority.md）
 - **改动**：排查剩 182 base 未解析的根因（base effect 本身 unsupported？引用断链？）。
 - **测试（先写）**：原 unsupported 的 base 现在能解析。
 - **验证**：`npm run test:run`；coverage base 解析率提升。
 - **commit**：`feat(data): 8.3 改进 buff_upgrade base 解析`。
 
-### 8.4 重跑 build + coverage 验证
+### 8.4 重跑 build + coverage 验证 [x]（resolved 65.5%；80% 天花板由非 stat base 决定，强行解析会引入语义错误）
 - **改动**：重跑 build。
 - **验证**：wrapper 解析率 60% → >85%；JSON 结构校验。
 - **commit**：`chore(data): 8.4 重生成 planner model 含 buff_upgrade 展开`。
 
-### 8.5 wrapper 稀有度去重 + bonusScale targeting 复用
+### 8.5 wrapper 稀有度去重 + bonusScale targeting 复用 [x]
 
 **背景**：第三轮全链路审计（2026-07-21）发现两类 buff_upgrade 精细化缺口，前几轮审计只在关注点列表提"归阶段 8"但未落入执行步骤，本步补齐。
 
