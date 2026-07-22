@@ -48,7 +48,7 @@
 - **验证**：`npm run test:run` + 浏览器。
 - **commit**：`feat(planner): 3.5 推荐模式选择器`。
 
-### 3.6 浏览器手验金币阵型
+### 3.6 浏览器手验金币阵型 [x]
 - **验证**：金币模式推荐含 gold_find 英雄；切换模式结果不同；`npm run test:regression`。
 - **commit**：无。
 
