@@ -12,6 +12,10 @@ export type HeroAbilityKind =
   | 'taggedChampionBuff'
   | 'globalGoldMultiplier'
   | 'heroGoldMultiplier'
+  | 'globalCritChance'
+  | 'heroCritChance'
+  | 'globalCritDamage'
+  | 'heroCritDamage'
 
 export type HeroAbilitySource =
   | 'official-parsed'
@@ -166,6 +170,10 @@ export const DIMENSION_BY_KIND: Record<HeroAbilityKind, HeroAbilityDimension> = 
   taggedChampionBuff: 'damage',
   globalGoldMultiplier: 'gold',
   heroGoldMultiplier: 'gold',
+  globalCritChance: 'crit',
+  heroCritChance: 'crit',
+  globalCritDamage: 'crit',
+  heroCritDamage: 'crit',
 }
 
 /**
@@ -183,6 +191,10 @@ export const POOL_SCOPE_BY_KIND: Record<HeroAbilityKind, HeroAbilityPoolScope> =
   taggedChampionBuff: 'hero',
   globalGoldMultiplier: 'global',
   heroGoldMultiplier: 'hero',
+  globalCritChance: 'global',
+  heroCritChance: 'hero',
+  globalCritDamage: 'global',
+  heroCritDamage: 'hero',
 }
 
 export function applyHeroAbilityPatch(
