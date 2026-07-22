@@ -25,13 +25,13 @@
 - **验证**：`npm run typecheck`。
 - **commit**：`feat(abilities): 3.1 扩展 gold 维度枚举`。
 
-### 3.2 解析 gold effect
+### 3.2 解析 gold effect [x]
 - **改动**：`effect-helpers.mjs:463 normalizeEffectSignal` 加 gold 分支（`gold_multiplier_mult`→globalGoldMultiplier；`gold_mult_per_tagged_crusader_mult`→+stackFunc；`gold_mult_per_target_crusader`→参照 :524 模式）。
 - **测试（先写）**：`gold_multiplier_mult` 解析为 globalGoldMultiplier；带 stackFunc；非法仍 unsupported。
 - **验证**：`npm run test:run`；`npm run data:planner-coverage` 显示 gold 覆盖。
 - **commit**：`feat(data): 3.2 解析 gold multiplier effect`。
 
-### 3.3 重跑 build + coverage 验证
+### 3.3 重跑 build + coverage 验证 [x]
 - **改动**：重跑 `npm run data:official`。
 - **验证**：coverage 报告 gold signal 数量（0 → ~40+）；JSON 结构校验。
 - **commit**：`chore(data): 3.3 重生成 planner model 含 gold signal`。
