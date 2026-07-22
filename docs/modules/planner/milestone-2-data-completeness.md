@@ -1,7 +1,7 @@
 # 里程碑 2·数据补全
 
 - 作用：M2 执行步骤清单；产出所有 effect 类型进 pool。架构决策、16 阶段进度勾选、文档同步硬约束见 `evolution-plan.md` 总纲。
-- 状态：阶段 3-8、9.2 / 9.3 待做 [ ]；9.1 已完成（提前到 M1）。
+- 状态：阶段 3-8、9.2 / 9.3 全部完成 [x]；9.1 已完成（提前到 M1）。
 
 ---
 
@@ -229,7 +229,7 @@
 
 > 9.1 mechanics→lockedSlots 投影已完成 [x]，提前到 M1。
 
-### 9.2 场景英雄限制（eligibility + game_change）→ forced/banned/allowed
+### 9.2 场景英雄限制（eligibility + game_change）→ forced/banned/allowed [x]
 
 **背景**：第三轮审计（2026-07-21）发现 `projectMechanicsToScenario` 只处理 escort（→lockedSlots），忽略 829 个 variant 的英雄限制 `game_change`（原 9.2 只提 eligibility→banned，漏了 game_change）：
 - **force_use_heroes（327）**：`{hero_ids:[16]}` 强制使用 → 映射 `scenario.forcedHeroes`（下游 `forceInclude` 约束 recommendationEngine:186 已就绪）；但需 candidate pool 配合——强制英雄即使未拥有也纳入候选，否则用户无该英雄时该 variant 永远非法。
@@ -241,7 +241,7 @@
 - **验证**：`npm run test:run`；planner-scenarios 部分变体 forced/allowed/banned 非空。
 - **commit**：`feat(data): 9.2 场景英雄限制 game_change 解析 + eligibility banned`。
 
-### 9.3 champion-details zod schema + CI
+### 9.3 champion-details zod schema + CI [x]
 - **改动**：新建 `src/domain/types/champion-details-schema.ts`（zod，覆盖核心字段，raw 用 `z.unknown()`）；CI 加 `data:validate-schema`。
 - **测试（先写）**：schema 校验现有 163 文件通过；故意破坏字段被拦截。
 - **验证**：`npm run test:run`；schema 拦截破坏。
