@@ -5,6 +5,7 @@ import { WorkbenchContentStack } from '../components/workbench/WorkbenchScaffold
 import { useI18n } from '../app/i18n'
 import { PlannerProfileState } from './planner/PlannerProfileState'
 import { PlannerResultCard } from './planner/PlannerResultCard'
+import { PlannerScoringMode } from './planner/PlannerScoringMode'
 import { PlannerSavePreset } from './planner/PlannerSavePreset'
 import { PlannerScenarioSelection } from './planner/PlannerScenarioSelection'
 import { usePlannerPageModel } from './planner/usePlannerPageModel'
@@ -54,8 +55,10 @@ export function PlannerPage() {
     loadError,
     loadState,
     plannerRecommendation,
+    scoringMode,
     selectedVariantId,
     selectVariantId,
+    selectScoringMode,
   } = usePlannerPageModel()
 
   return (
@@ -115,6 +118,7 @@ export function PlannerPage() {
                     selectedId={selectedVariantId}
                     onSelectedIdChange={selectVariantId}
                   />
+                  <PlannerScoringMode value={scoringMode} onChange={selectScoringMode} />
                 </div>
               </section>
 
@@ -139,7 +143,7 @@ export function PlannerPage() {
 
                 {plannerRecommendation.result ? (
                   <>
-                    <PlannerResultCard {...plannerRecommendation.result} />
+                    <PlannerResultCard {...plannerRecommendation.result} scoringMode={scoringMode} />
                     <PlannerSavePreset
                       result={plannerRecommendation.result}
                       layoutId={plannerRecommendation.layoutId}

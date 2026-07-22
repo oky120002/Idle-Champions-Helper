@@ -42,7 +42,7 @@
 - **验证**：`npm run test:run`。
 - **commit**：`feat(planner): 3.4 金币 objective 与 scoringMode 分支`。
 
-### 3.5 UI 推荐模式选择器
+### 3.5 UI 推荐模式选择器 [x]
 - **改动**：`usePlannerPageModel` 加 scoringMode state；`buildPlannerRecommendation` 加 options.scoringMode；新建 `PlannerScoringMode.tsx`；PlannerResultCard 适配两模式。
 - **测试**：模式切换改变结果；两模式 UI 正确。
 - **验证**：`npm run test:run` + 浏览器。

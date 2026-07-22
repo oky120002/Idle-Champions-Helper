@@ -384,4 +384,51 @@
       align-items: flex-start;
     }
   }
+
+  .planner-scoring-mode {
+    margin: 0;
+    border: none;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .planner-scoring-mode__legend {
+    color: rgba(201, 166, 124, 0.74);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0;
+  }
+
+  .planner-scoring-mode__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .planner-scoring-mode__option {
+    flex: 1 1 auto;
+    min-width: 8rem;
+    padding: 0.55rem 0.85rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(200, 167, 127, 0.18);
+    background: rgba(255, 255, 255, 0.02);
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    transition: border-color 160ms ease, background-color 160ms ease;
+  }
+
+  .planner-scoring-mode__option:hover {
+    border-color: rgba(200, 167, 127, 0.28);
+    background: rgba(255, 255, 255, 0.032);
+  }
+
+  .planner-scoring-mode__option[data-selected='true'] {
+    border-color: rgba(200, 167, 127, 0.42);
+    background:
+      radial-gradient(circle at top right, rgba(200, 167, 127, 0.14), transparent 42%),
+      rgba(255, 255, 255, 0.03);
+  }
 }

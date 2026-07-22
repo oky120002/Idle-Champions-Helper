@@ -4,6 +4,7 @@ import { loadCollection } from '../../data/client'
 import { loadResolvedPlannerModel } from '../../data/plannerModel'
 import { buildPlannerRecommendation } from '../../domain/planner/recommendationEngine'
 import type { PlannerCollections } from '../../domain/planner/recommendationTypes'
+import type { ScoringMode } from '../../domain/planner/steadyStateScoring'
 import { resolveUserProfileSnapshot } from '../../data/user-profile-store'
 import type { Variant } from '../../domain/types'
 import type { UserProfileSnapshot } from '../../domain/user-profile/types'
@@ -18,6 +19,7 @@ export function usePlannerPageModel() {
   })
   const [profileSnapshot, setProfileSnapshot] = useState<UserProfileSnapshot | null>(null)
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null)
+  const [scoringMode, setScoringMode] = useState<ScoringMode>('carry-dps')
   const [loadState, setLoadState] = useState<PlannerLoadState>('loading')
   const [loadError, setLoadError] = useState<string | null>(null)
 
@@ -64,11 +66,14 @@ export function usePlannerPageModel() {
     [collections.variants, selectedVariantId],
   )
   const plannerRecommendation = useMemo(
-    () => buildPlannerRecommendation(selectedVariant, collections, profileSnapshot),
-    [collections, profileSnapshot, selectedVariant],
+    () => buildPlannerRecommendation(selectedVariant, collections, profileSnapshot, { scoringMode }),
+    [collections, profileSnapshot, scoringMode, selectedVariant],
   )
   const selectVariantId = useCallback((variantId: string | null) => {
     setSelectedVariantId(variantId)
+  }, [])
+  const selectScoringMode = useCallback((mode: ScoringMode) => {
+    setScoringMode(mode)
   }, [])
 
   return {
@@ -76,7 +81,9 @@ export function usePlannerPageModel() {
     loadError,
     loadState,
     plannerRecommendation,
+    scoringMode,
     selectedVariantId,
     selectVariantId,
+    selectScoringMode,
   }
 }

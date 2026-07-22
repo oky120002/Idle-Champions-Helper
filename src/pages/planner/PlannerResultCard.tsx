@@ -1,7 +1,10 @@
 import type { PlannerResult } from '../../domain/planner/recommendationTypes'
+import type { ScoringMode } from '../../domain/planner/steadyStateScoring'
 import { useI18n } from '../../app/i18n'
 
-export type PlannerResultCardProps = PlannerResult
+export type PlannerResultCardProps = PlannerResult & {
+  scoringMode?: ScoringMode
+}
 
 export function PlannerResultCard({
   score,
@@ -9,8 +12,12 @@ export function PlannerResultCard({
   placementEntries,
   explanations,
   warnings,
+  scoringMode = 'carry-dps',
 }: PlannerResultCardProps) {
   const { t } = useI18n()
+  const scoreLabel = scoringMode === 'team-gold'
+    ? t({ zh: '金币收益', en: 'Team gold find' })
+    : t({ zh: 'carryDps', en: 'carryDps' })
   const fallbackPlacementEntries = Object.entries(placements).map(([slotId, heroId]) => ({
     slotId,
     slotLabel: slotId,
@@ -37,7 +44,7 @@ export function PlannerResultCard({
           </h3>
           <div className="planner-result-card__header-meta">
             <p className="planner-result-card__score">
-              <span>{t({ zh: '评分', en: 'Score' })}</span>
+              <span>{scoreLabel}</span>
               <strong>{score}</strong>
             </p>
             <p className="planner-result-card__slot-count">
