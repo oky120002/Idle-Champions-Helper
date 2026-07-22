@@ -18,7 +18,7 @@
 - [x] 4 crit（4.1-4.4）
 - [x] 5 health/survival（降级为推图约束，5.1-5.3）
 - [x] 6 vulnerability（6.1-6.4）
-- [ ] 7 speed（条件性，B0 后决定，7.1-7.3）
+- [x] 7 speed（条件性，B0 后决定，7.1-7.3）
 - [ ] 8 buff_upgrade 展开（top N，8.1-8.4）
 - [ ] 9 scenario+schema（9.1 ✅ / 9.2-9.3 待 M2）
 - [ ] 10 推图预估（10.1-10.3）

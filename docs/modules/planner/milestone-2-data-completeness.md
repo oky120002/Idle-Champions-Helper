@@ -147,32 +147,32 @@
 **目标**：攻速/冷却 + BUD 计算（用户决定要做）。
 **风险**：依赖 2.0 spike 确认 hero_dps 是否含攻速（若含，speed 大部分可省）。
 
-### 7.1 解析 speed effect
+### 7.1 解析 speed effect [x]
 - **改动**：`normalizeEffectSignal` 加 speed 分支（`attack_speed_mult`/`reduce_attack_cooldown`/`reduce_ultimate_cooldown`/`ability_cooldown_reduction_mult`，~2000 条）。
 - **测试（先写）**：各 speed 子类解析正确；attack_interval 字段提取。
 - **验证**：`npm run test:run`；coverage 显示 speed 覆盖。
 - **commit**：`feat(data): 7.1 解析 speed effect`。
 
-### 7.2 speed 进 DPS（条件性·B0 后决定）
+### 7.2 speed 进 DPS（条件性·B0 后决定） [x]（决定：不进 carryDps——hero_dps 按秒模型，speed 精确建模依赖 BUD/cooldown，MVP 暂不应用）
 - **改动**：按 2.0 spike 结论：若 hero_dps 含攻速，speed 已在 DPS，7.2 只做 cooldown（影响 ult，ult 也 dps_based，大部分可省）；若不含，speed 独立乘 DPS（`dps × attack_speed_mult`，`time_scale_cap.cap=10` 上限）。
 - **测试（先写）**：按结论验证 speed 对 DPS 的影响。
 - **验证**：`npm run test:run`。
 - **commit**：`feat(planner): 7.2 speed 进 DPS（按 B0 结论）`。
 
-### 7.3 speed 实现范围决定
+### 7.3 speed 实现范围决定 [x]（精简：speed 解析进 pool 但不进 carryDps；BUD 作为 speed 感知辅助指标）
 - **改动**：根据 7.2 结论，决定 speed 阶段最终实现范围（完整/精简/跳过）。
 - **测试**：结论归档。
 - **验证**：`npm run test:run`。
 - **commit**：`docs(planner): 7.3 speed 实现范围决定`。
 
-### 7.4 BUD 计算（用户决定要做）
+### 7.4 BUD 计算（用户决定要做） [x]
 - **改动**：新建 `src/domain/simulator/budCalculation.ts`。`BUD = max(各英雄单次伤害)`，单次伤害 = `hero_dps × attack_interval`（来自 7.1）；`ult_damage` 按 `ultimate_damage_params`（`dps_based:true`）派生。
 - **测试（先写）**：BUD 计算正确（慢攻击英雄 BUD 高）；ult_damage 派生。
 - **标注**：BUD 作为阵型主判断依据（IC 怪物血量按 BUD 缩放），DPS 辅助；两者都计算、都展示（阶段 15）。
 - **验证**：`npm run test:run`。
 - **commit**：`feat(simulator): 7.4 BUD 计算`。
 
-### 7.5 BUD 实测验证（用户配合游戏实测）
+### 7.5 BUD 实测验证（用户配合游戏实测） [x]（bud-verification.md 已建：公式+方法+局限；绝对值校准 pending 用户游戏内数据）
 - **改动**：拿英雄到游戏中看真实 BUD（游戏内显示），对照计算值，归档到 `docs/modules/planner/bud-verification.md`；偏差大则修正 BUD 公式。
 - **测试**：实测偏差可接受（如 <30%）。
 - **验证**：浏览器实测 + 文档归档。
