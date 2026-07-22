@@ -10,6 +10,15 @@
 **目标**：赚金币阵型。`team_gold_find = base_gold × global_gold_pool × hero_gold_pool`（全队聚合，非单一 carry）。
 **风险**：金币模式评分结构（全队聚合）≠ C 位（单一 carry），需独立 scoring 分支。
 
+### 3.0 evaluatePlacementFit 显式 dimension 过滤（前置·防非伤害 pool 泄漏 carryDps）
+
+**背景**：第六轮审计确认 `scoreFormation`（`steadyStateScoring.ts`）调 `evaluatePlacementFit` 未传 `dimension`，`aggregate` 无差别乘所有 pool。M1 全员 damage 维度无影响；**阶段 3 引入 gold、阶段 4 引入 crit 后，非伤害 pool 会泄漏进 carryDps**（同 typecheck masking 教训：绿色掩盖错误）。必须在 3.1 加 gold kind 之前先堵。`EvaluatePlacementFitInput.dimension` 参数 M1 已预留，接通即可。
+
+- **改动**：`collectSignals`/`evaluatePlacementFit` 按 `dimension` 过滤 signal（若尚未真正过滤）；`scoreFormation` 对 carryDps 聚合显式传 `dimension:'damage'`；3.4 gold objective 传 `dimension:'gold'`。
+- **测试（先写）**：gold/crit 维度 signal 不进 carryDps（aggregate 只含 damage pool）；damage signal 不进 team_gold_find。
+- **验证**：`npm run test:run`。
+- **commit**：`fix(planner): 3.0 evaluatePlacementFit 显式 dimension 过滤`。
+
 ### 3.1 扩 kind 加 gold
 - **改动**：`abilityModel.ts` 的 `HeroAbilityKind` 加 `globalGoldMultiplier`/`heroGoldMultiplier`；`DIMENSION_BY_KIND` 登记 `gold`。
 - **测试（先写）**：`DIMENSION_BY_KIND['globalGoldMultiplier'] === 'gold'`；类型级断言。
@@ -242,12 +251,16 @@
 
 ## M1 审计衍生的 M2 关注点
 
-- `scoreFormation` 调用 `evaluatePlacementFit` 未显式传 `dimension: 'damage'`；M1 全员 damage 维度无影响，但 M2 引入 gold / crit 维度时必须显式过滤，否则非伤害 pool 会泄漏进 `carryDps`。
+- ~~`scoreFormation` 调用 `evaluatePlacementFit` 未显式传 `dimension: 'damage'`~~ → **已落步骤 3.0**（第六轮审计提升为前置步骤，不再仅是关注点）。
 - `resolveSignalMultiplier` 解析 `bonusScaleOfSignal` 时只取 base 的 multiplier，不重新校验 base 的 `positionQualifier` / `targetQualifier`；阶段 8 buff_upgrade 精细化时需评估 base 与外层 targeting 不一致场景。
 - **复合 amount_expr 未解析（20 条）**：`upgrade_amount(N,i)+upgrade_amount(N,i)+...`（5 条纯求和，Brig/Xerophon）、`max_upgrade_amount`/`mult_stack`/`feat_amount`/`upgrade_amount(N,dps_update)`（15 条运行时/命名 index）。全为 `hero_dps_multiplier_mult,0`，`resolveSimpleAmountExpr` 只匹配单一，复合回退得 effect 自身 value=0（低估，保守安全）。与 per_hero_expr 数值表达式同域，**归 `expression-evaluator-plan.md` 数值求值器**（`upgrade_amount` 与 `GetUpgradeAmount` 同类），不归本里程碑阶段 8。
 - **buff_upgrades wrapper 重复去重（已修）/ 稀有度取最高（阶段 8）**：IC 装备系统把同一 buff 按装备槽/稀有度展开成多条 effect 完全相同的 upgrade（仅 id 不同）。第三轮审计发现 Jaheira 38 条 `buff_upgrades,100,9714,9715,9716,9717`（magnitude 全相同=非稀有度差异），每条派生 4 base signal → 152 重复（91% 过度计算）。`collectEffectEntries` 已加 `derivedSignalKey` 对完全相同 derived signal 去重（全库 recognized 15409→12253，-20%）。剩余「同一 buff 不同 magnitude 的稀有度版本取最高」仍归阶段 8 top-N / 稀有度去重。
 
 - **未支持的 string target（第四轮审计·2026-07-21）**：`normalizeExplicitTargeting` 的 `STRING_RELATION_MAP` 未覆盖 `other`(56) / `self_slot`(24) / `area`(12) / `active_campaign`(7) / `edge` / `middle_columns` / `front_column` / `bud_setter` / `non_col` / `self_and_behind_and_ahead` 等；未支持者进 unsupportedSignals（保守安全，不静默当作已算）。`other` 语义 = 全队除 source（如 effect_def 214「提高所有其他勇士的生命值」），关联 carryDps effect 仅 2-3 处（`hero_dps_multiplier_mult` 等，余为 health/触发类），精确支持需 `positionQualifier` 增强 excludeSelf 语义，归未来 targeting 精细化。
 - **filter_targets type 全量覆盖（第四轮审计）**：`normalizeTargetQualifier` 已接入 `hero_ids`/`exclude_heroes`（heroId AST，复用 `per_hero_expr` 的 `hero_id==N` 节点）；阵型聚合（`has_neighbour_with_tag`/`by_neighbours`/`dominant_affiliation` 等 ~13 处）+ 存档依赖（`affected_by_upgrade`/`not_affected_by_upgrade` 39 处）type 归 `expression-evaluator-plan.md` formationAggregate / 存档依赖节点；`limit_effect_def_per_hero_attack` / `limit_per_effect`（effect 叠加上限）归阶段 8 buff_upgrade 精细 / step simulation。当前 hero_ids 已在 wrapper 派生路径合并生效（f389586b，hero 82 等 wrapper 派生 signal +210 行带 heroId targetQualifier）；exclude_heroes 多因 base effect `targets:'other'` 进 unsupported，待 positionQualifier excludeSelf 增强后生效。全量登记见 `format-quirks.md`。
+
+- **`target_filters_or` 数组内 OR 语义未确认（第六轮审计·待游戏源码确认）**：`getRawFilters` 把 `target_filters_or` 与 `target_filters`/`filter_targets` 一起收集，`normalizeTargetQualifier` 统一按 AND 合并；字段名 `_or` 暗示数组内 OR（任一匹配）。当前零影响（已引用 effect_keys 中全为单 filter，AND=OR；唯一多 filter 样本 effect_def 225 孤立无引用）。保守保留 AND（比 OR 严格→低估=安全方向）。
+  - **触发条件**：raw 出现「被引用 + 2+ filter 的 target_filters_or」时，必须先拿 IC 源码/社区文档确认 OR 语义，再在 `normalizeTargetQualifier` 把 `target_filters_or` 单独按 OR 聚合后与其它 AND 组合并。
+  - **不确认前禁止改**（OR→高估 carryDps 风险）。详见 `format-quirks.md` 与 TODO `atd_9a3c7e1f02`。归阶段 8 targeting 精细或独立修复。
 
 数据源格式坑（已在归一化层与代码处理，追源守则见 `AGENTS.md` §1.3）：`upgrade_defines.effect` 常是 JSON 对象串（含伪 JSON）；`effect_defines.targets.tags` 是布尔表达式（`|` / `^` / `!` / `()`）；`upgrade_amount(id,index)` 可跨 upgrade 引用；buff_upgrade wrapper 信号由 `collectEffectEntries` 派生；`STACK_COUNT_RESOLVERS` 与 `SCORING_SUPPORTED_STACK_FUNCS` 由 `scoringSupportSync.test.ts` 守护。
