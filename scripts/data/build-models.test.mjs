@@ -850,6 +850,26 @@ test('collectEffectEntries 对完全重复的 buff_upgrade wrapper 派生去重�
   assert.equal(derived[0].signalPreset.bonusScaleOfSignal.rawEffect, 'hero_dps_multiplier_mult,100')
 })
 
+test('collectEffectEntries 同 base 不同 magnitude 的 wrapper 只保留最高（稀有度去重，阶段 8.5）', () => {
+  // IC 装备稀有度：同一 buff 不同稀有度有不同 magnitude，游戏只生效最高稀有度。
+  // 当前若全累加 → 高估。按 (kind, base target, qualifier) 分组，组内只保留最高 magnitude。
+  const detail = {
+    upgrades: [
+      { id: '4', effectReference: 'hero_dps_multiplier_mult,100', effectDefinition: null },
+      { id: '7', effectReference: 'buff_upgrades,100,4', effectDefinition: null },
+      { id: '8', effectReference: 'buff_upgrades,200,4', effectDefinition: null },
+      { id: '9', effectReference: 'buff_upgrades,150,4', effectDefinition: null },
+    ],
+    loot: [],
+    legendaryEffects: [],
+    feats: [],
+  }
+  const entries = collectEffectEntries(detail)
+  const derived = entries.filter((entry) => entry.sourceBucket === 'upgrade-buffed-signal')
+  assert.equal(derived.length, 1, `3 个不同 magnitude wrapper 应稀有度去重为 1 个，实际：${derived.length}`)
+  assert.equal(derived[0].signalPreset.value, 200, '应保留最高 magnitude 200')
+})
+
 test('collectEffectEntries 派生 buff_upgrade wrapper 时合并 wrapper 自身 filter_targets', () => {
   // wrapper 自身的 filter_targets（如 hero_ids 白名单）限定 buff 只对特定英雄生效；
   // 此前 preset 只继承 base 的 targetQualifier，wrapper 自身 filter_targets 丢失。

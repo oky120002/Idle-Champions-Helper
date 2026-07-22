@@ -108,6 +108,13 @@ const BUFF_UPGRADE_WRAPPER_KINDS = new Set([
   'buff_upgrade_per_any_crusader_where_mult',
   'buff_upgrade_mult_by_distance_from_source',
   'buff_upgrade_mult_by_distance_from_source_mult',
+  // 阶段 8.2 top N 变体（复用既有 seed 模式）：
+  'buff_upgrade_add_flat_amount',
+  'buff_upgrade_add_then_mult',
+  'buff_upgrade_per_any_tagged_crusader',
+  'buff_upgrade_by_tag_mult',
+  'buff_upgrade_by_target_tag_mult',
+  'buff_upgrade_per_crusader',
 ])
 
 function isAnyBuffUpgradeWrapperKind(kind) {
@@ -252,6 +259,40 @@ function resolveBuffUpgradeSeed(entry) {
 
   if (payload.kind === 'buff_upgrade' || payload.kind === 'buff_upgrades') {
     return {}
+  }
+
+  // 阶段 8.2：flat/add_then_mult 变体按 buff_upgrade 同构（magnitude 直接作用于 base）。
+  if (
+    payload.kind === 'buff_upgrade_add_flat_amount'
+    || payload.kind === 'buff_upgrade_add_then_mult'
+  ) {
+    return payload.kind === 'buff_upgrade_add_then_mult' ? { amountFunc: 'mult' } : {}
+  }
+
+  // per_tagged 变体（add/mult/by_tag/by_target_tag）：tag 取 args[2]，复用 per_tagged_crusader_mult 模式。
+  if (
+    payload.kind === 'buff_upgrade_per_any_tagged_crusader'
+    || payload.kind === 'buff_upgrade_by_tag_mult'
+    || payload.kind === 'buff_upgrade_by_target_tag_mult'
+  ) {
+    const formationCountQualifier = parseTagQualifierFromArg(payload.args[2] ?? null)
+    if (!formationCountQualifier) {
+      return null
+    }
+    const isMult = payload.kind !== 'buff_upgrade_per_any_tagged_crusader'
+    return {
+      amountFunc: isMult ? 'mult' : 'add',
+      stackFunc: 'per_tagged_crusader_mult',
+      formationCountQualifier,
+    }
+  }
+
+  // per_crusader 变体：复用 per_crusader stackFunc。
+  if (payload.kind === 'buff_upgrade_per_crusader') {
+    return {
+      amountFunc: 'add',
+      stackFunc: 'per_crusader',
+    }
   }
 
   if (payload.kind === 'buff_upgrade_per_any_tagged_crusader_mult') {
@@ -1004,15 +1045,13 @@ export function splitEffectString(effectString) {
   return { effectName, effectValue }
 }
 
-// derived signal 去重 key：捕获所有影响 pool 聚合语义的字段。
-// IC 装备系统把同一 buff 按 装备槽/稀有度 展开成多条 effect 完全相同的 upgrade（仅 id 不同，
-// magnitude 相同），游戏 buff 按 effect 逻辑去重（同 effect 不叠加）。此处对完全相同的
-// derived signal 去重；不同 magnitude 的稀有度取最高归阶段 8。
-function derivedSignalKey(preset) {
+// derived signal 稀有度去重 key：捕获影响 pool 聚合语义的字段，但排除 magnitude（value/rawEffect 的数值）。
+// IC 装备系统把同一 buff 按装备槽/稀有度展开成多条 upgrade（magnitude 不同），
+// 游戏只生效最高稀有度（同 group 不叠加）。group 内仅保留 |value| 最大者（阶段 8.5）。
+// 也覆盖完全相同的 derived signal 去重（magnitude 相同 → 同 group → 保留其一）。
+function rarityGroupKey(preset) {
   return JSON.stringify({
     kind: preset.kind,
-    rawEffect: preset.rawEffect,
-    value: preset.value,
     amountFunc: preset.amountFunc,
     stackFunc: preset.stackFunc,
     bonusScaleRawEffect: preset.bonusScaleOfSignal?.rawEffect ?? null,
@@ -1068,8 +1107,11 @@ export function collectEffectEntries(detail) {
           formationCountPositionQualifier: buffSeed.formationCountPositionQualifier ?? null,
         }
 
-        const key = derivedSignalKey(preset)
-        if (!derivedByKey.has(key)) {
+        const key = rarityGroupKey(preset)
+        const existing = derivedByKey.get(key)
+        // 稀有度去重（阶段 8.5）：同 group 保留 |value| 最大者（游戏只生效最高稀有度）。
+        // 完全相同的 derived signal（magnitude 相同）也归同 group，保留其一。
+        if (!existing || Math.abs(preset.value ?? 0) > Math.abs(existing.signalPreset.value ?? 0)) {
           derivedByKey.set(key, buildEffectEntry({
             effectString: entry.effectString,
             effect: entry.effect,
