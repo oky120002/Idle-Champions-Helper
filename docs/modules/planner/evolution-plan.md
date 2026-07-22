@@ -15,7 +15,7 @@
 - [x] 1 抽象层（1.0-1.13）
 - [x] 2 加成聚合+objective+baseDPS+spike（2.0-2.5）
 - [x] 3 金币（3.0 dimension 过滤前置 + 3.1-3.6）
-- [ ] 4 crit（4.1-4.4）
+- [x] 4 crit（4.1-4.4）
 - [ ] 5 health/survival（降级为推图约束，5.1-5.3）
 - [ ] 6 vulnerability（6.1-6.4）
 - [ ] 7 speed（条件性，B0 后决定，7.1-7.3）

@@ -59,26 +59,26 @@
 **目标**：暴击进 DPS。
 **风险**：crit 期望值近似在 BUD 机制下低估（批判③），MVP 可接受。
 
-### 4.1 扩 kind 加 crit
+### 4.1 扩 kind 加 crit [x]
 - **改动**：`HeroAbilityKind` 加 `globalCritChance`/`heroCritChance`/`globalCritDamage`/`heroCritDamage`；DIMENSION_BY_KIND 登记 `crit`。
 - **测试**：映射正确；类型级断言。
 - **验证**：`npm run typecheck`。
 - **commit**：`feat(abilities): 4.1 扩展 crit 维度枚举`。
 
-### 4.2 解析 crit effect
+### 4.2 解析 crit effect [x]
 - **改动**：`normalizeEffectSignal` 加 crit 分支（`buff_base_crit_chance_add/mult`/`global_buff_base_crit_*`/`buff_base_crit_damage_*`/`critical_click_*`，~200 条）。
 - **测试（先写）**：各 crit 子类解析正确；默认 chance=2.5%/damage=100% 来自 `default_crit_info`。
 - **验证**：`npm run test:run`；coverage 显示 crit 覆盖。
 - **commit**：`feat(data): 4.2 解析 crit effect`。
 
-### 4.3 crit pool 聚合
+### 4.3 crit pool 聚合 [x]
 - **改动**：placementFit 加 crit pool：`critChancePool`（Σ add_percent）/ `critDamagePool`；`crit_factor = 1 + total_chance × (total_damage_mult − 1)`。
 - **测试（先写）**：pool 内 add 相加；crit_factor 公式正确；默认值 fallback。
 - **标注**：BUD 机制下期望值低估 crit 对 BUD 贡献（批判③），MVP 可接受。
 - **验证**：`npm run test:run`。
 - **commit**：`feat(planner): 4.3 crit pool 聚合`。
 
-### 4.4 crit_factor 进 DPS
+### 4.4 crit_factor 进 DPS [x]
 - **改动**：`final_dps × crit_factor`；接入 steadyStateScoring 的 pool 链。
 - **测试**：含 crit 的 carryDps > 不含；crit signal 移除后 carryDps 降。
 - **验证**：`npm run test:run`。
