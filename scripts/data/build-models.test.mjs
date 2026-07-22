@@ -953,3 +953,30 @@ test('normalizeEffectSignal 解析 crit effect（阶段 4.2）', () => {
   const bad = normalizeEffectSignal('buff_base_crit_chance_add', 'xyz', 'official-parsed', {})
   assert.equal(bad.ok, false)
 })
+
+test('normalizeEffectSignal 解析 health/healing/damage_reduction effect（阶段 5.1）', () => {
+  const healthMult = normalizeEffectSignal('health_mult', '100', 'official-parsed', {})
+  assert.equal(healthMult.ok, true)
+  assert.equal(healthMult.signal.kind, 'heroHealthMultiplier')
+  assert.equal(healthMult.bucket, 'supportSignals')
+
+  const incHealth = normalizeEffectSignal('increase_health_by_source_percent', '50', 'official-parsed', {})
+  assert.equal(incHealth.signal.kind, 'heroHealthMultiplier')
+
+  const healing = normalizeEffectSignal('healing_mult', '30', 'official-parsed', {})
+  assert.equal(healing.signal.kind, 'heroHealthMultiplier')
+
+  const gHealing = normalizeEffectSignal('global_healing_mult', '20', 'official-parsed', {})
+  assert.equal(gHealing.signal.kind, 'globalHealthMultiplier')
+
+  const dmgRed = normalizeEffectSignal('damage_reduction', '15', 'official-parsed', {})
+  assert.equal(dmgRed.signal.kind, 'damageReduction')
+  assert.equal(dmgRed.signal.amountFunc, undefined)
+
+  const dmgRedMult = normalizeEffectSignal('trials_damage_reduction_mult', '25', 'official-parsed', {})
+  assert.equal(dmgRedMult.signal.kind, 'damageReduction')
+  assert.equal(dmgRedMult.signal.amountFunc, 'mult')
+
+  // 非法 value 仍 unsupported
+  assert.equal(normalizeEffectSignal('health_mult', 'bad', 'official-parsed', {}).ok, false)
+})

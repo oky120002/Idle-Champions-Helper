@@ -19,6 +19,7 @@ function createHero(overrides: Partial<HeroAbilityProfile> = {}): HeroAbilityPro
     age: overrides.age ?? null,
     abilityScores: overrides.abilityScores ?? {},
     baseDamage: overrides.baseDamage ?? 1,
+    baseHealth: overrides.baseHealth ?? 1,
     carrySignals: [],
     supportSignals: [],
     unsupportedSignals: [],

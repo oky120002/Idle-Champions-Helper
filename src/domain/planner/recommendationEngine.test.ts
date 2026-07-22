@@ -77,6 +77,7 @@ const plannerHeroes: HeroAbilityProfile[] = champions.map((champion) => ({
   age: null,
   abilityScores: {},
   baseDamage: 1,
+  baseHealth: 1,
   carrySignals: champion.id === 'asharra'
     ? [
         { kind: 'heroDpsMultiplier', value: 100, rawEffect: 'hero_dps_multiplier_mult,100', source: 'official-parsed' },

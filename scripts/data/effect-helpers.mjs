@@ -134,6 +134,23 @@ const CRIT_KIND_BY_EFFECT = {
 }
 
 /**
+ * survival effect 名 → (kind, amountFunc) 映射。阶段 5.1。
+ * health/healing 折入 health multiplier（MVP：healing 近似为生命加成，survival 软约束）；
+ * damage_reduction 单独 kind（玩家侧减伤，作用于 incoming damage）。
+ */
+const SURVIVAL_KIND_BY_EFFECT = {
+  health_mult: { kind: 'heroHealthMultiplier', amountFunc: 'add' },
+  increase_health_by_source_percent: { kind: 'heroHealthMultiplier', amountFunc: 'add' },
+  healing_mult: { kind: 'heroHealthMultiplier', amountFunc: 'add' },
+  global_healing_mult: { kind: 'globalHealthMultiplier', amountFunc: 'add' },
+  global_health_mult: { kind: 'globalHealthMultiplier', amountFunc: 'add' },
+  damage_reduction: { kind: 'damageReduction', amountFunc: 'add' },
+  damage_reduction_ranged: { kind: 'damageReduction', amountFunc: 'add' },
+  fixed_damage_reduction_all_enemy_attacks: { kind: 'damageReduction', amountFunc: 'add' },
+  trials_damage_reduction_mult: { kind: 'damageReduction', amountFunc: 'mult' },
+}
+
+/**
  * buff_upgrade wrapper 家族的裸 effect 名是否应从 unsupportedSignals 中忽略。
  * 这些 wrapper 的实际 signal 由 collectEffectEntries 派生（bonusScaleOfSignal = 目标 base）；
  * 未派生的 wrapper 变体由 analyzeBuffUpgradeWrappers 独立审计。
@@ -860,6 +877,22 @@ export function normalizeEffectSignal(effectName, effectValue, source, effectMet
         rawEffect,
         source,
         ...(critMatch.amountFunc === 'mult' ? { amountFunc: 'mult' } : {}),
+      },
+      bucket: 'supportSignals',
+    }
+  }
+
+  // 阶段 5.1：survival（health/healing/damage_reduction）。
+  const survivalMatch = SURVIVAL_KIND_BY_EFFECT[effectName]
+  if (survivalMatch) {
+    return {
+      ok: true,
+      signal: {
+        kind: survivalMatch.kind,
+        value: numericValue,
+        rawEffect,
+        source,
+        ...(survivalMatch.amountFunc === 'mult' ? { amountFunc: 'mult' } : {}),
       },
       bucket: 'supportSignals',
     }

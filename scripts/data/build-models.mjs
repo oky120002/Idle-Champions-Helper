@@ -52,6 +52,9 @@ function buildOfficialHeroModel(champion, detail) {
   const rawBaseDamage = Number(detail.baseDamage)
   const baseDamage = Number.isFinite(rawBaseDamage) ? rawBaseDamage : 0
   const costCurves = detail.costCurves && typeof detail.costCurves === 'object' ? detail.costCurves : null
+  const rawBaseHealth = Number(detail.baseHealth)
+  const baseHealth = Number.isFinite(rawBaseHealth) ? rawBaseHealth : 0
+  const healthCurves = detail.healthCurves && typeof detail.healthCurves === 'object' ? detail.healthCurves : null
 
   return {
     heroId: champion.id,
@@ -65,6 +68,8 @@ function buildOfficialHeroModel(champion, detail) {
     abilityScores: detail.characterSheet?.abilityScores ?? {},
     baseDamage,
     costCurves,
+    baseHealth,
+    healthCurves,
     carrySignals,
     supportSignals,
     unsupportedSignals,

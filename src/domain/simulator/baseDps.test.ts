@@ -15,6 +15,7 @@ function hero(overrides: Partial<ResolvedHeroAbilityProfile> = {}): ResolvedHero
     age: null,
     abilityScores: {},
     baseDamage: 1,
+    baseHealth: 1,
     costCurves: null,
     carrySignals: [],
     supportSignals: [],

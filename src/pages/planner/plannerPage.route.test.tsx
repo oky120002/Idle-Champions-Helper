@@ -102,6 +102,7 @@ const plannerHeroesFixture: DataCollection<HeroAbilityProfile> = {
     age: null,
     abilityScores: {},
     baseDamage: 1,
+    baseHealth: 1,
     carrySignals: [],
     supportSignals: [],
     unsupportedSignals: [],

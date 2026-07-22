@@ -16,6 +16,9 @@ export type HeroAbilityKind =
   | 'heroCritChance'
   | 'globalCritDamage'
   | 'heroCritDamage'
+  | 'globalHealthMultiplier'
+  | 'heroHealthMultiplier'
+  | 'damageReduction'
 
 export type HeroAbilitySource =
   | 'official-parsed'
@@ -134,6 +137,13 @@ export interface HeroAbilityProfile {
    * levelCurve(level) = rate^level 近似 DPS 增长上界（ponytail，阶段 7 BUD 精确化）。
    */
   costCurves?: Record<string, number> | null
+  /** 基础生命值（来自 champion-details.baseHealth）。effectiveHealth 计算用（阶段 5 survival）。 */
+  baseHealth: number
+  /**
+   * 生命值成长曲线（来自 champion-details.healthCurves，key 统一为 "1"）。
+   * healthLevelCurve(level) = rate^level 近似生命增长（阶段 5 survival，与 costCurves 同构）。
+   */
+  healthCurves?: Record<string, number> | null
   carrySignals: HeroAbilitySignal[]
   supportSignals: HeroAbilitySignal[]
   unsupportedSignals: HeroUnsupportedSignal[]
@@ -174,6 +184,9 @@ export const DIMENSION_BY_KIND: Record<HeroAbilityKind, HeroAbilityDimension> = 
   heroCritChance: 'crit',
   globalCritDamage: 'crit',
   heroCritDamage: 'crit',
+  globalHealthMultiplier: 'survival',
+  heroHealthMultiplier: 'survival',
+  damageReduction: 'survival',
 }
 
 /**
@@ -195,6 +208,9 @@ export const POOL_SCOPE_BY_KIND: Record<HeroAbilityKind, HeroAbilityPoolScope> =
   heroCritChance: 'hero',
   globalCritDamage: 'global',
   heroCritDamage: 'hero',
+  globalHealthMultiplier: 'global',
+  heroHealthMultiplier: 'hero',
+  damageReduction: 'global',
 }
 
 export function applyHeroAbilityPatch(
