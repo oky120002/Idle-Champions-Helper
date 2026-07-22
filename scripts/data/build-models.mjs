@@ -158,6 +158,7 @@ function buildOfficialScenarioModel(variant, formations) {
     forcedHeroes: [],
     bannedHeroes: [],
     lockedSlots,
+    enemyTypes: variant.enemyTypes ?? [],
     scenarioWarnings: [
       ...mechanicWarnings,
       ...(variant.restrictions.length > 0

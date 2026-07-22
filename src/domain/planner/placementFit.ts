@@ -57,6 +57,8 @@ export interface PlacementFitScorePart {
   source: HeroAbilitySource
   /** signal 的聚合方式（add/mult）；消费层 crit_factor 等需区分时使用。 */
   amountFunc?: HeroAbilityAmountFunc | null
+  /** vulnerability 信号的怪物 tag 条件；消费层按场景 enemyTypes 条件性匹配（阶段 6）。 */
+  monsterTags?: string[] | null
 }
 
 export interface AggregatedPool {
@@ -650,6 +652,7 @@ export function evaluatePlacementFit(input: EvaluatePlacementFitInput): PoolAggr
       reasonCode,
       source: signal.source,
       amountFunc: signal.amountFunc ?? null,
+      monsterTags: signal.monsterTags ?? null,
     })
   }
 

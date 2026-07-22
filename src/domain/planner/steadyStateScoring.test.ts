@@ -42,6 +42,7 @@ const scenario: OfficialPlannerScenarioModel = {
   forcedHeroes: [],
   bannedHeroes: [],
   lockedSlots: [],
+  enemyTypes: [],
   scenarioWarnings: [],
 }
 
@@ -286,5 +287,41 @@ describe('steady state scoring', () => {
     expect(withCrit.score.toNumber()).toBeCloseTo(10 * 1.06 * (1.05 / 1.025), 4)
     // crit signal kind 进 activeSignalKinds
     expect(withCrit.activeSignalKinds.has('globalCritDamage')).toBe(true)
+  })
+
+  it('vulnerability 条件性进 DPS（6.3/6.4：按怪物 tag 匹配）', () => {
+    const carry = createHero('carry', { seat: 1, baseDamage: 10 })
+    const vulnUndead = createHero('vuln-undead', {
+      seat: 2,
+      supportSignals: [
+        { kind: 'enemyVulnerability', value: 100, rawEffect: 'increase_damage_against_monster_tag,100,undead', source: 'official-parsed', monsterTags: ['undead'] },
+      ],
+    })
+    const vulnFiend = createHero('vuln-fiend', {
+      seat: 2,
+      supportSignals: [
+        { kind: 'enemyVulnerability', value: 100, rawEffect: 'increase_damage_against_monster_tag,100,fiend', source: 'official-parsed', monsterTags: ['fiend'] },
+      ],
+    })
+    const plain = createHero('plain', { seat: 3, baseDamage: 1 })
+    const undeadScenario = { ...scenario, enemyTypes: ['undead'] }
+
+    const withMatch = scoreFormation({
+      placements: { s1: 'carry', s2: 'vuln-undead' },
+      heroesById: new Map([['carry', carry], ['vuln-undead', vulnUndead], ['plain', plain]]),
+      scenario: undeadScenario,
+    })
+    const withoutMatch = scoreFormation({
+      placements: { s1: 'carry', s2: 'vuln-fiend' },
+      heroesById: new Map([['carry', carry], ['vuln-fiend', vulnFiend], ['plain', plain]]),
+      scenario: undeadScenario,
+    })
+
+    // 匹配 undead：vuln mult 2 → carryDps = 10 × 1.06 × 2 = 21.2
+    expect(withMatch.score.toNumber()).toBeCloseTo(10 * 1.06 * 2, 3)
+    expect(withMatch.activeSignalKinds.has('enemyVulnerability')).toBe(true)
+    // fiend 不在场景 → vuln 跳过 → carryDps = 10 × 1.06
+    expect(withoutMatch.score.toNumber()).toBeCloseTo(10 * 1.06, 3)
+    expect(withoutMatch.activeSignalKinds.has('enemyVulnerability')).toBe(false)
   })
 })

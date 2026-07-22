@@ -130,6 +130,21 @@ function computeCritFactor(parts: PlacementFitScorePart[]): number {
 }
 
 /**
+ * vulnerability factor（阶段 6.3/6.4）：已按场景怪物类型匹配的 vulnerability Π 进 DPS。
+ * 匹配筛选（monsterTags vs scenario.enemyTypes）在收集循环完成（批判③ 条件性匹配，保守跳过不匹配）；
+ * 此处仅对已匹配的 active 信号 Π 累乘（vulnerability 是受伤倍率，add/mult 都还原为乘数）。
+ */
+function computeVulnerabilityFactor(parts: PlacementFitScorePart[]): number {
+  let factor = 1
+  let hasVuln = false
+  for (const part of parts) {
+    factor *= part.multiplier
+    hasVuln = true
+  }
+  return hasVuln ? factor : 1
+}
+
+/**
  * team-gold 模式：全队聚合 gold signal（dimension:'gold'），无 carry 概念。
  * 每个英雄作为自身 support（collectSignals 返回其 carry+support gold signal）；
  * global-scope gold 不依赖位置/目标即生效，tagged gold 按 formation 计数。
@@ -207,6 +222,8 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
   let bestCarryHeroId: string | null = null
   let bestActiveKinds: Set<HeroAbilityKind> = new Set()
 
+  const enemyTypeSet = new Set(input.scenario.enemyTypes)
+
   for (const carryEntry of placedEntries) {
     const carryLevel = input.heroLevels?.get(carryEntry.hero.heroId) ?? DEFAULT_CARRY_LEVEL
     const warnings = [...carryEntry.hero.unsupportedSignals.map((signal) => `${signal.rawEffect}: ${signal.note}`)]
@@ -217,6 +234,7 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
     // 不能按支持位独立 pool 乘积再相乘——那会把不同位向同一 pool 的 additive 贡献变成累乘。
     const sharedPools = new Map<string, AggregatedPool>()
     const critParts: PlacementFitScorePart[] = []
+    const vulnParts: PlacementFitScorePart[] = []
 
     for (const supportEntry of placedEntries) {
       const fit = evaluatePlacementFit({
@@ -264,13 +282,38 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
         }
       }
       critParts.push(...critFit.scoreBreakdown)
+
+      // vulnerability 维度按场景怪物类型条件性匹配（阶段 6），进 vulnFactor。
+      const vulnFit = evaluatePlacementFit({
+        carryHero: carryEntry.hero,
+        carrySlotId: carryEntry.slotId,
+        supportHero: supportEntry.hero,
+        supportSlotId: supportEntry.slotId,
+        scenario: input.scenario,
+        placements: input.placements,
+        heroesById: input.heroesById,
+        dimension: 'vulnerability',
+      })
+      for (const part of vulnFit.scoreBreakdown) {
+        if (!part.active) {
+          continue
+        }
+        // 条件性匹配：monsterTags 非空时仅当任一 tag ∈ 场景 enemyTypes 才计入（批判③ 保守跳过不匹配）。
+        const tags = part.monsterTags
+        if (tags && tags.length > 0 && !tags.some((tag) => enemyTypeSet.has(tag))) {
+          continue
+        }
+        activeKinds.add(part.signalKind)
+        vulnParts.push(part)
+      }
     }
 
     const critFactor = computeCritFactor(critParts)
+    const vulnFactor = computeVulnerabilityFactor(vulnParts)
     const carryDps = computeCarryDps(
       carryEntry.hero,
       carryLevel,
-      productOfPoolMultipliers(sharedPools) * critFactor,
+      productOfPoolMultipliers(sharedPools) * critFactor * vulnFactor,
     )
 
     if (compareGameNumbers(carryDps, bestScore) > 0) {

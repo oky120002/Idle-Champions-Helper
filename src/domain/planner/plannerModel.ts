@@ -31,6 +31,8 @@ export interface OfficialPlannerScenarioModel {
   bannedHeroes: string[]
   lockedSlots: string[]
   scenarioWarnings: string[]
+  /** 场景怪物类型（来自 variant.enemyTypes），供 vulnerability 条件性匹配（阶段 6）。 */
+  enemyTypes: string[]
 }
 
 export type ResolvedPlannerScenarioModel = OfficialPlannerScenarioModel

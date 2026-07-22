@@ -146,6 +146,7 @@ describe('findPlannerScenarioForVariant', () => {
         forcedHeroes: [],
         bannedHeroes: [],
         lockedSlots: [],
+        enemyTypes: [],
         scenarioWarnings: [],
       },
     ]

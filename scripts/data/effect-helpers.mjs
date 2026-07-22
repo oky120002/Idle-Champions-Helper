@@ -151,6 +151,18 @@ const SURVIVAL_KIND_BY_EFFECT = {
 }
 
 /**
+ * vulnerability effect 名 → monsterTags 映射。阶段 6.2。
+ * null = 无条件（对任意怪物生效）；数组 = 仅当场景 enemyTypes 含其中任一 tag 时生效。
+ * increase_damage_against_monster_tag 的 tag 动态取自 args[1]，单独处理（| 为 OR，词表与 enemyTypes 一致）。
+ */
+const VULNERABILITY_MONSTER_TAGS_BY_EFFECT = {
+  damage_increase: null,
+  increase_damage_against_monster: null,
+  increase_armored_damage: ['armored'],
+  bonus_armored_damage: ['armored'],
+}
+
+/**
  * buff_upgrade wrapper 家族的裸 effect 名是否应从 unsupportedSignals 中忽略。
  * 这些 wrapper 的实际 signal 由 collectEffectEntries 派生（bonusScaleOfSignal = 目标 base）；
  * 未派生的 wrapper 变体由 analyzeBuffUpgradeWrappers 独立审计。
@@ -893,6 +905,40 @@ export function normalizeEffectSignal(effectName, effectValue, source, effectMet
         rawEffect,
         source,
         ...(survivalMatch.amountFunc === 'mult' ? { amountFunc: 'mult' } : {}),
+      },
+      bucket: 'supportSignals',
+    }
+  }
+
+  // 阶段 6.2：vulnerability（敌人侧受伤倍率，条件性按怪物 tag）。
+  if (effectName === 'increase_damage_against_monster_tag') {
+    const tagArg = effectMetadata.effectPayload?.args?.[1] ?? null
+    const monsterTags = typeof tagArg === 'string'
+      ? tagArg.split('|').map((tag) => tag.trim()).filter(Boolean)
+      : null
+    return {
+      ok: true,
+      signal: {
+        kind: 'enemyVulnerability',
+        value: numericValue,
+        rawEffect,
+        source,
+        monsterTags: monsterTags && monsterTags.length > 0 ? monsterTags : null,
+      },
+      bucket: 'supportSignals',
+    }
+  }
+
+  const vulnMatch = VULNERABILITY_MONSTER_TAGS_BY_EFFECT[effectName]
+  if (vulnMatch !== undefined) {
+    return {
+      ok: true,
+      signal: {
+        kind: 'enemyVulnerability',
+        value: numericValue,
+        rawEffect,
+        source,
+        monsterTags: vulnMatch,
       },
       bucket: 'supportSignals',
     }

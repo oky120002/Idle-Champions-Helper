@@ -120,6 +120,7 @@ const plannerScenarios: OfficialPlannerScenarioModel[] = [
     forcedHeroes: [],
     bannedHeroes: [],
     lockedSlots: [],
+    enemyTypes: [],
     scenarioWarnings: ['当前推荐尚未解析场景限制与机制，只按已拥有英雄、seat 合法性和阵型槽位计算。'],
   },
   {
@@ -137,6 +138,7 @@ const plannerScenarios: OfficialPlannerScenarioModel[] = [
     forcedHeroes: [],
     bannedHeroes: [],
     lockedSlots: ['s4'],
+    enemyTypes: [],
     scenarioWarnings: ['当前场景含护送任务，前排一个槽位预留给护送目标，不参与英雄占位。'],
   },
 ]

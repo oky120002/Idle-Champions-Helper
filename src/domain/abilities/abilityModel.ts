@@ -19,6 +19,7 @@ export type HeroAbilityKind =
   | 'globalHealthMultiplier'
   | 'heroHealthMultiplier'
   | 'damageReduction'
+  | 'enemyVulnerability'
 
 export type HeroAbilitySource =
   | 'official-parsed'
@@ -106,6 +107,11 @@ export interface HeroAbilitySignal {
   stacksMultiply?: boolean | null
   excludeSelf?: boolean
   unit?: HeroAbilityUnit
+  /**
+   * vulnerability 信号的怪物类型条件（阶段 6）：`|` OR 拆分后的怪物 tag 列表。
+   * null = 无条件（对任意怪物生效）；非空 = 仅当场景 enemyTypes 含其中任一 tag 时生效（批判③ 条件性匹配）。
+   */
+  monsterTags?: string[] | null
 }
 
 export interface HeroUnsupportedSignal {
@@ -187,6 +193,7 @@ export const DIMENSION_BY_KIND: Record<HeroAbilityKind, HeroAbilityDimension> = 
   globalHealthMultiplier: 'survival',
   heroHealthMultiplier: 'survival',
   damageReduction: 'survival',
+  enemyVulnerability: 'vulnerability',
 }
 
 /**
@@ -211,6 +218,7 @@ export const POOL_SCOPE_BY_KIND: Record<HeroAbilityKind, HeroAbilityPoolScope> =
   globalHealthMultiplier: 'global',
   heroHealthMultiplier: 'hero',
   damageReduction: 'global',
+  enemyVulnerability: 'global',
 }
 
 export function applyHeroAbilityPatch(

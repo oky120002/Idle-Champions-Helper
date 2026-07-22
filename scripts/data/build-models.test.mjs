@@ -980,3 +980,34 @@ test('normalizeEffectSignal 解析 health/healing/damage_reduction effect（阶�
   // 非法 value 仍 unsupported
   assert.equal(normalizeEffectSignal('health_mult', 'bad', 'official-parsed', {}).ok, false)
 })
+
+test('normalizeEffectSignal 解析 vulnerability effect（阶段 6.2）', () => {
+  // 无条件 vulnerability
+  const di = normalizeEffectSignal('damage_increase', '50', 'official-parsed', {})
+  assert.equal(di.ok, true)
+  assert.equal(di.signal.kind, 'enemyVulnerability')
+  assert.equal(di.signal.monsterTags ?? null, null)
+
+  const against = normalizeEffectSignal('increase_damage_against_monster', '30', 'official-parsed', {})
+  assert.equal(against.signal.kind, 'enemyVulnerability')
+  assert.equal(against.signal.monsterTags ?? null, null)
+
+  // 按 monster tag（词表与 variant.enemyTypes 一致，| 为 OR）
+  const tagPayload = parseEffectPayload('increase_damage_against_monster_tag,300,fiend')
+  const tag = normalizeEffectSignal('increase_damage_against_monster_tag', '300', 'official-parsed', { effectPayload: tagPayload, effect: {} })
+  assert.equal(tag.signal.kind, 'enemyVulnerability')
+  assert.deepEqual(tag.signal.monsterTags, ['fiend'])
+
+  // OR 列表
+  const tagPayload2 = parseEffectPayload('increase_damage_against_monster_tag,200,humanoid|beast|undead')
+  const tag2 = normalizeEffectSignal('increase_damage_against_monster_tag', '200', 'official-parsed', { effectPayload: tagPayload2, effect: {} })
+  assert.deepEqual(tag2.signal.monsterTags, ['humanoid', 'beast', 'undead'])
+
+  // armored 条件
+  const armored = normalizeEffectSignal('increase_armored_damage', '40', 'official-parsed', {})
+  assert.equal(armored.signal.kind, 'enemyVulnerability')
+  assert.deepEqual(armored.signal.monsterTags, ['armored'])
+
+  // 非法 value 仍 unsupported
+  assert.equal(normalizeEffectSignal('damage_increase', 'bad', 'official-parsed', {}).ok, false)
+})
