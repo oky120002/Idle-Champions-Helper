@@ -116,25 +116,25 @@
 **目标**：敌人侧受伤倍率进 DPS。
 **风险**：vulnerability 多是"对特定怪物 tag"的条件性 effect（批判③）。
 
-### 6.1 扩 kind 加 vulnerability
+### 6.1 扩 kind 加 vulnerability [x]
 - **改动**：`HeroAbilityKind` 加 `enemyVulnerability`/`damageIncrease`；DIMENSION_BY_KIND 登记 `vulnerability`。
 - **测试**：映射正确。
 - **验证**：`npm run typecheck`。
 - **commit**：`feat(abilities): 6.1 扩展 vulnerability 维度枚举`。
 
-### 6.2 解析 vulnerability effect
+### 6.2 解析 vulnerability effect [x]
 - **改动**：`normalizeEffectSignal` 加 vulnerability 分支（`damage_increase`/`increase_damage_against_monster*`/`increase_armored_damage`/`bonus_armored_damage`，~150 条）。
 - **测试（先写）**：各子类解析；保留目标怪物 tag 条件。
 - **验证**：`npm run test:run`；coverage 显示 vulnerability 覆盖。
 - **commit**：`feat(data): 6.2 解析 vulnerability effect`。
 
-### 6.3 条件性匹配（批判③）
+### 6.3 条件性匹配（批判③） [x]
 - **改动**：vulnerability 按场景怪物类型匹配（非简单全局 Π）；保留 monster tag qualifier。
 - **测试（先写）**：怪物 tag 匹配时 vulnerability 生效；不匹配时跳过。
 - **验证**：`npm run test:run`。
 - **commit**：`feat(planner): 6.3 vulnerability 条件性匹配`。
 
-### 6.4 vulnerability pool 进 DPS
+### 6.4 vulnerability pool 进 DPS [x]
 - **改动**：`final_dps × vulnerabilityPool`（匹配的 vulnerability Π）。
 - **测试**：含 vulnerability 的 carryDps > 不含；条件不满足时不变。
 - **验证**：`npm run test:run`。
