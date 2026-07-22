@@ -102,4 +102,12 @@ repair: rebuild
     - affected_by_upgrade 是 upgrade_id 运行时依赖，保持丢弃合理。
     - 处置：低频，归 M2+ 目标限定精化时补（normalizeObjectRelation 映射 type:heroes→relation='any' + hero_ids 提取到 targetQualifier）。
 
+- target_filters_or 数组内 OR 语义未确认（当前按 AND 合并） <!-- auto-todo:id=atd_9a3c7e1f02 -->
+  - 记录时间: `2026-07-22T10:30:00+08:00`
+  - 类型: follow-up
+  - 位置: `src/domain/abilities/signalSemantics.js:206`（normalizeTargetQualifier）
+  - 备注: `getRawFilters` 把 `target_filters_or` 与 `target_filters`/`filter_targets` 一起收集，`normalizeTargetQualifier` 统一按 AND 合并。字段名 `_or` 暗示数组内 OR（任一匹配），但缺游戏源码实锤。唯一多 filter 样本 effect_def 225（孤立无引用）；已引用 effect_keys 中 target_filters_or 全为单 filter（AND=OR）。
+    - 当前影响：0（单 filter 下 AND=OR；多 filter 孤立）
+    - 处置：保守保留 AND（比 OR 严格→低估，安全方向）。拿到 IC 源码/社区文档确认 OR 语义后，将 target_filters_or 单独按 OR 聚合再与其它 AND 组合并。确认前不改（避免 OR→高估风险）。详见 `docs/research/data/game-data-source/format-quirks.md`。
+
 <!-- auto-todo:end -->

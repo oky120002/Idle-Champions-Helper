@@ -38,6 +38,13 @@
 
 未识别 type 经 `.filter(node => node !== null)` 静默丢弃（不进 unsupported、无统计）。新增 type 必须显式处理并登记本节。`hero_ids`/`exclude_heroes` 已接入：`hero_ids` 在 buff_upgrade wrapper 派生路径合并生效（`collectEffectEntries` 派生时 AND 合并 wrapper 自身 filter_targets，见下文）；`exclude_heroes` 的 base effect 多因 `targets:"other"` 未支持而进 unsupported，待 `positionQualifier` excludeSelf 增强后生效。
 
+### `target_filters_or`：数组内 OR 语义（待游戏源码确认·第六轮审计）
+
+- `getRawFilters` 收集 `filter_targets` / `target_filters` / `target_filters_or` / `targets`(filter-like) 四个数组，`normalizeTargetQualifier` 统一按 **AND** 合并所有 filter。
+- 疑点：`target_filters_or` 字段名后缀 `_or` 暗示数组内 filter 间是 **OR**（任一匹配），区别于 `target_filters`（AND，全部匹配）。佐证：effect_def 1390（Solaak）同英雄同 effect 一处用 `target_filters_or`、一处用 `target_filters`，同为 `attack_type:ranged` 单 filter（单 filter 下 OR=AND，不构成判别）；真正能判别的多 filter 样本仅 effect_def 225（`hero_dps_mult_per_target_crusader_mult,100,all_slots` + `target_filters_or:[{str>=16},{tags:evil}]`，孤立无 upgrade 引用）。
+- 当前影响：零——已引用 effect_keys 中 `target_filters_or` 全为单 filter（hero 118/120/171），AND=OR；唯一多 filter 样本（225）孤立。故现状保守保留 AND 合并（AND 比 OR 更严格 → 低估，安全方向）。
+- 待办：拿到 IC 源码或社区文档确认 `target_filters_or` 语义后，若确为 OR，在 `normalizeTargetQualifier` 中将 `target_filters_or` 单独按 OR 聚合，再与其它 AND 组合并。确认前不改（避免 OR→高估风险）。
+
 ### effect_def 级 effect_key 与 upgrade.effectReference
 
 - `upgrade_defines.effect` 是裸 effect_string（如 `hero_dps_multiplier_mult,400`），不含 filter_targets/per_hero_expr 等修饰。仅 `effect_def,<id>` 格式（1418 处）经 `parseEffectDefinitionId` 关联 `effect_defines[<id>]`，其 `effect_keys[]`（含 filter_targets/per_hero_expr/amount_expr）经 normalize 保留到 `upgrade.effectDefinition.snapshots.original.effect_keys`。其余 ~90% upgrade 为纯 effect_string（简单 effect，本就无修饰字段，非丢失）。
@@ -46,6 +53,8 @@
 ### 未支持的 string target（`normalizeExplicitTargeting`）
 
 `effect_defines.targets` 字符串简写，`STRING_RELATION_MAP` 未覆盖的高频值：`other`(56) / `self_slot`(24) / `area`(12) / `active_campaign`(7 effect_defines + 54 legendary) / `edge` / `middle_columns` / `front_column` / `bud_setter` / `non_col` / `self_and_behind_and_ahead` 等。未支持者进 unsupportedSignals（保守安全，不静默当作已算）。`other` 语义 = 全队除 source（如 effect_def 214「提高所有其他勇士的生命值」），关联的 carryDps effect 仅 2-3 处（`hero_dps_multiplier_mult` 等），其余多为 health/触发类（M1/M2 不处理）；`other` 精确支持需 `positionQualifier` 增强 excludeSelf 语义，归未来。`active_campaign` 语义 = 当前活跃 campaign 场景条件（steady-state 默认满足），位置上 = 全队；legendary 54 处全是 `global_dps_multiplier_mult`（该分支不检查 targets，未被阻塞），effect_defines 7 处中仅 1 个 `hero_dps_multiplier_mult` 被阻塞。
+
+`all` / `all_slots` 在 `normalizeExplicitTargeting` 中映射为 `relation:'any'`（全阵位，status=supported）。第六轮审计发现 `resolveCountRelation` 曾因 `relation==='any'` 返回 null，导致 `hero_dps_mult_per_target_crusader*` 的 `all_slots` 计数目标（effect_def 225/394/442/594 等）在解析阶段被静默丢弃，到不了消费层 `countQualifiedHeroes`（后者已显式支持 `'any'`：跳过 `matchesSlotRelation`，只按 `formationCountQualifier` 计数全阵位匹配英雄）。已修复：`resolveCountRelation` 放行 `'any'`。当前零行为影响（上述 all_slots per_target_crusader 均为孤立 effect_def，无 upgrade 引用；被引用的 all_slots effect_def 505/509/519/527 是 Krull `hero_dps_mult_reduced_by_tag` / Artemis `observance` / Dragonbait `scent_*` 等其它 unsupported kind），修复消除潜在静默丢弃陷阱。
 
 ### buff_upgrade wrapper 派生合并 wrapper 自身 filter_targets
 
