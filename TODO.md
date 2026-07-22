@@ -43,15 +43,6 @@ repair: rebuild
   - 备注: 第三轮审计重构已减 213 行（消除 stackFunc 分支重复），但文件仍承载 pool 聚合 + 位置关系匹配 + stack 计数解析三职责。
     - 处置: 下次触碰时按职责拆分（positionMatching / stackResolution / poolAggregation），不强制现在拆
 
-- mobile-header-layout E2E 预存在失败：menuToggle.click 被 .app-shell--workbench 拦截 <!-- auto-todo:id=atd_3bd0ba66aa -->
-  - 记录时间: `2026-07-20T14:37:58+08:00`
-  - 类型: bug
-  - 位置: `tests/e2e/mobile-header-layout.spec.ts:68`
-  - 备注: M1 第四轮审计期间运行 test:regression 时发现；stash 改动后在干净 base（5b3fdd78）上同样失败，确认与 planner 攡动无关。
-    - 影响：test:regression 关卡的 test:e2e 步骤始终红，掩盖后续真实 E2E 回归
-    - 证据：menuToggle.click 被 .app-shell--workbench intercepts pointer events；可能是 z-index/overlay/工作台 shell 在移动端视口下覆盖了 nav toggle
-    - 排查方向：移动端视口下 .app-shell--workbench 与 .site-nav 的堆叠上下文与 pointer-events
-
 - userDataPage.syncFlow 全量 test:run 偶发失败（alert 找不到），疑测试隔离 flaky <!-- auto-todo:id=atd_086e9011a4 -->
   - 记录时间: `2026-07-20T21:06:24+08:00`
   - 类型: bug
@@ -59,55 +50,31 @@ repair: rebuild
   - 备注:
     - 排查方向：测试隔离/全局状态串扰（jsdom 环境共享、定时器、mock 泄漏）；alert findByRole 找不到说明渲染未达预期态
 
-- abilities 层 .js+.d.ts 迁移到 .ts（消除手写声明双份维护） <!-- auto-todo:id=atd_23d46dc48e -->
-  - 记录时间: `2026-07-21T09:42:34+08:00`
-  - 类型: optimization
-  - 位置: `src/domain/abilities/heroPredicate.js`
-  - 备注: heroPredicate/signalSemantics/effect-string 三个 .js 被 Node .mjs 数据脚本与前端共享，故妥协成手写 .js+.d.ts；手写 .d.ts 与实现两份维护易漂移、失去编译期类型保护。
-    - 背景：Node v26 原生支持 type stripping，无需 tsx/ts-node，可零运行时依赖回归 .ts
-    - 处置：在 numericExpression（expression-evaluator-plan.md）落地前迁移，避免新模式扩散
-    - 范围：约 11 处 import 后缀 .js→.ts（3 .mjs + 2 .ts + 3 测试），删 3 个 .d.ts
-
 - per_hero_expr 存档依赖布尔谓词 17 个被整体丢弃（数据流缺口） <!-- auto-todo:id=atd_d957df0b59 -->
   - 记录时间: `2026-07-21T10:17:41+08:00`
   - 类型: follow-up
-  - 位置: `src/domain/abilities/heroPredicate.js:114`
+  - 位置: `src/domain/abilities/heroPredicate.ts:114`
   - 备注: parseHeroPredicate 对 HasEffect/GetUpgradeUnlocked/GetFeatEquipped/GetUpgradePurchased/NumEffectKey/EligibleForPatron/is_alive/DefHasTag 等存档依赖布尔谓词返回 null，含它们的 per_hero_expr 整体保守丢弃。
     - 影响：这些 signal 的 formationCountQualifier 退化为 null/filterQualifier，stack 数量可能高估；raw 164 个去重 per_hero_expr 中 17 个（10.4%）受影响
     - 关联：expression-evaluator-plan.md，需 profile context（装备/专长/effect 状态），属后续 milestone
     - 处置：随 numericExpression 落地补存档依赖布尔节点 + profile context 求值
 
-- taggedChampionBuff 的 attackType targetQualifier 误判（已确认 raw 0 组合，忽略） <!-- auto-todo:id=atd_b240ff7af0 -->
-  - 记录时间: `2026-07-21T10:17:41+08:00`
-  - 类型: issue
-  - 位置: `src/domain/planner/placementFit.ts:575`
-  - 备注: evaluatePlacementFit 对 taggedChampionBuff 检查 targetQualifier 是否含 tag/stat 节点，漏 attackType；纯 attackType 限定的 taggedChampionBuff 会被误判「缺少 carry 目标标签」不计分。
-    - 第三轮审计全量核验 raw（被引用 effect_keys）：tag_ effect 中「只有 attack_type/hero_expr 限定、无 tag/stat」的组合 = **0 个**，不触发，保留现状不修。
-
-- effect_defines.effect_keys 非数组（CNE 单对象序列化）被消费层静默丢弃 <!-- auto-todo:id=atd_7c2a1e9b4d -->
-  - 记录时间: `2026-07-21T16:10:00+08:00`
-  - 类型: robustness
-  - 位置: `scripts/data/effect-helpers.mjs:314`
-  - 备注: collectRawEffectEntries 读 `effect_keys` 时只认 `Array.isArray`；raw 中 6 个 effect_def 的 effect_keys 是单对象/空串（CNE 单元素序列化为裸对象而非 1 元数组），非数组时整条 effect_key 静默丢弃。
-    - 当前影响：0（6 个全是孤儿 effect_def，无 upgrade 引用）
-    - 处置：若将来出现被引用的非数组 effect_keys，在消费层归一化 `非数组→[对象]`，或在 normalize 层 coerce；暂因 0 影响不修
-
 - targets.type:heroes 英雄 ID 白名单未映射（filter_targets hero_ids/exclude_heroes 已处理） <!-- auto-todo:id=atd_3f8b5d17e2 -->
   - 记录时间: `2026-07-21T16:10:00+08:00`
   - 类型: follow-up
-  - 位置: `src/domain/abilities/signalSemantics.js:114`（normalizeObjectRelation）
+  - 位置: `src/domain/abilities/signalSemantics.ts:114`
   - 备注: 英雄 ID 定位两条路径的处理状态：
     - filter_targets：exclude_heroes/hero_ids **已处理**（146c4723 normalizeTargetQualifier heroIdsToPredicate，heroId AST 节点）；wrapper 派生路径合并生效（f389586b，hero 82 等 +210 行）。
     - targets：`{type:"heroes",hero_ids:[...]}`（raw 30 处）仍未处理——normalizeObjectRelation 无 type:heroes 映射 → normalizeExplicitTargeting unsupported → 整条 effect 丢弃。当前影响小（hero_dps_multiplier_mult 仅 10 处因 targets unsupported，其中 type:heroes 1 处，余为 other/active_campaign/slot_if_expr 等，多为孤立 effect_def）。
     - affected_by_upgrade 是 upgrade_id 运行时依赖，保持丢弃合理。
     - 处置：低频，归 M2+ 目标限定精化时补（normalizeObjectRelation 映射 type:heroes→relation='any' + hero_ids 提取到 targetQualifier）。
 
-- target_filters_or 数组内 OR 语义未确认（当前按 AND 合并） <!-- auto-todo:id=atd_9a3c7e1f02 -->
-  - 记录时间: `2026-07-22T10:30:00+08:00`
-  - 类型: follow-up
-  - 位置: `src/domain/abilities/signalSemantics.js:206`（normalizeTargetQualifier）
-  - 备注: `getRawFilters` 把 `target_filters_or` 与 `target_filters`/`filter_targets` 一起收集，`normalizeTargetQualifier` 统一按 AND 合并。字段名 `_or` 暗示数组内 OR（任一匹配），但缺游戏源码实锤。唯一多 filter 样本 effect_def 225（孤立无引用）；已引用 effect_keys 中 target_filters_or 全为单 filter（AND=OR）。
-    - 当前影响：0（单 filter 下 AND=OR；多 filter 孤立）
-    - 处置：保守保留 AND（比 OR 严格→低估，安全方向）。拿到 IC 源码/社区文档确认 OR 语义后，将 target_filters_or 单独按 OR 聚合再与其它 AND 组合并。确认前不改（避免 OR→高估风险）。详见 `docs/research/data/game-data-source/format-quirks.md`。
+- mobile-header E2E：GlobalSearchBox 移动端未收缩挤占 menuToggle 溢出视口（修正原 z-index 误判） <!-- auto-todo:id=atd_8b07209bb2 -->
+  - 记录时间: `2026-07-22T20:37:45+08:00`
+  - 类型: bug
+  - 位置: `src/styles/app/site-header/search.css:1`
+  - 备注: menuToggle.click 失败真因（非 z-index）：390px 视口下 topbar-actions 含 GlobalSearchBox(~198px, search.css .global-search flex:1 1 14rem 无任何 @media 收缩规则) + menu-toggle(152px)；topbar 作为 .site-header grid item min-width:auto 不收缩，内容(506px)溢出 header 内宽(358px)，menuToggle 被推到 right=530(视口外)，中心(454,31)在视口外 → click 回退报 .app-shell--workbench intercepts。
+    - 证据：elementFromPoint(454,31)=null（视口外点）；topbar offsetW=506 > header clientW=358；global-search 无 @media 规则
+    - 修复方向：决定 GlobalSearchBox 移动端形态（隐藏/icon-only/缩窄 max-width），并给 .site-header__topbar 加 min-width:0 让 grid item 可收缩；需全断点(360/390/520/720/961/1080)视觉验证
 
 <!-- auto-todo:end -->
