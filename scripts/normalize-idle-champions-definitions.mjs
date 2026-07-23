@@ -2,7 +2,7 @@ import { mkdir } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
-import { readJson, readJsonIfExists, writeJson } from './data/io-utils.mjs'
+import { readJson, readJsonIfExists, writeJson } from './data/io-utils.ts'
 import {
   compareLocalizedText,
   normalizeJsonValue,

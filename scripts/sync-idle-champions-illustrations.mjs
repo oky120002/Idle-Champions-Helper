@@ -4,7 +4,7 @@ import {
   readJson,
   readJsonIfExists,
   runWithConcurrency,
-} from './data/io-utils.mjs'
+} from './data/io-utils.ts'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'

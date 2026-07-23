@@ -25,7 +25,7 @@ import {
   readJson,
   readJsonIfExists,
   runWithConcurrency,
-} from './data/io-utils.mjs'
+} from './data/io-utils.ts'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'

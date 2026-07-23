@@ -9,7 +9,7 @@ import {
   writeJson,
   runWithConcurrency,
   parseIdFilter,
-} from './io-utils.mjs'
+} from './io-utils.ts'
 
 async function withTempDir(callback) {
   const dir = await mkdtemp(path.join(tmpdir(), 'io-utils-'))

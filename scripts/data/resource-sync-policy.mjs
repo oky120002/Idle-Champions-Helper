@@ -1,6 +1,6 @@
 import { access, mkdir, readdir, rm } from 'node:fs/promises'
 import path from 'node:path'
-import { readJsonIfExists, writeJson } from './io-utils.mjs'
+import { readJsonIfExists, writeJson } from './io-utils.ts'
 
 function normalizeUpdatedAt(value) {
   if (typeof value !== 'string') {

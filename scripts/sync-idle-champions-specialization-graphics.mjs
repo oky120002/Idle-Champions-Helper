@@ -3,7 +3,7 @@ import {
   readJson,
   writeJson,
   runWithConcurrency,
-} from './data/io-utils.mjs'
+} from './data/io-utils.ts'
 import { cropOpaqueBounds, findOpaqueBounds } from './data/png-image-helpers.mjs'
 import path from 'node:path'
 import { parseArgs } from 'node:util'

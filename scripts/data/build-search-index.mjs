@@ -1,7 +1,7 @@
 import path from 'node:path'
 import { mkdir, writeFile } from 'node:fs/promises'
 import { pathToFileURL } from 'node:url'
-import { readJson, writeJson } from './io-utils.mjs'
+import { readJson, writeJson } from './io-utils.ts'
 
 const DEFAULT_VERSION_DIR = 'public/data/v1'
 

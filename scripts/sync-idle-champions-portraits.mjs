@@ -3,7 +3,7 @@ import {
   readJson,
   writeJson,
   runWithConcurrency,
-} from './data/io-utils.mjs'
+} from './data/io-utils.ts'
 import { findOpaqueBounds } from './data/png-image-helpers.mjs'
 import { findPngSignatureOffset, getPngDimensions, trimPngToIend } from './data/mobile-asset-codec.mjs'
 import path from 'node:path'

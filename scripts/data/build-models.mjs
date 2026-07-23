@@ -7,7 +7,7 @@ import {
   shouldIgnoreUnsupportedEffectEntry,
   splitEffectString,
 } from './effect-helpers.mjs'
-import { readJson, writeJson } from './io-utils.mjs'
+import { readJson, writeJson } from './io-utils.ts'
 
 const DEFAULT_VERSION_DIR = 'public/data/v1'
 const DEFAULT_SEMANTIC_OVERRIDES = 'scripts/data/semantic-overrides.json'

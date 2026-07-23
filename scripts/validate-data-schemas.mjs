@@ -1,7 +1,7 @@
 import { readdir } from 'node:fs/promises'
 import path from 'node:path'
 
-import { readJson } from './data/io-utils.mjs'
+import { readJson } from './data/io-utils.ts'
 import { championDetailsSchema } from './data/champion-details-schema.mjs'
 import {
   adventuresCollectionSchema,

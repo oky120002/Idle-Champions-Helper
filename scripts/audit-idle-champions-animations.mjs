@@ -1,5 +1,5 @@
 import { readFile, writeFile } from 'node:fs/promises'
-import { readJson, readJsonIfExists } from './data/io-utils.mjs'
+import { readJson, readJsonIfExists } from './data/io-utils.ts'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
