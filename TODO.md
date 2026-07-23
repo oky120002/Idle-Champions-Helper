@@ -103,4 +103,14 @@ repair: rebuild
     - 排查方向：userDataPage 该 test 的 waitFor 超时调宽，或 vitest 并发/隔离配置（pool/maxWorkers/isolate）
     - 属 src 边缘 flaky，非 scripts .mjs→.ts 转换本身的问题
 
+- docs 47 处 .mjs 文件名残留（TS 迁移后文档漂移·M2 审计顺手发现） <!-- auto-todo:id=atd_7f3a9c2e1b -->
+  - 记录时间: `2026-07-24T00:33:52+08:00`
+  - 类型: follow-up
+  - 位置: `docs/modules/planner/signal-coverage-research.md:18`
+  - 备注: M2 审计发现——TS 迁移批次（086106ee/78b547b0/265623a0 等）将 scripts/*.mjs→.ts，package.json 入口已同步（916db94），但 docs/ 下 47 处仍引用 .mjs（22 文件）。分类：
+    - 当前态脚本职责描述（应修）：`signal-coverage-research.md:18`「signal-coverage.mjs」、`skin-illustration/implementation|pipeline|strategy` 等「仓库已有 skelanim-codec.mjs」、`testing-conventions.md`、`modules/search` 等。
+    - 历史/改名记录（evolution-plan §84 可保留旧名作历史）：`evolution-plan.md:110` 文件改名 A→B、`:119` 设计修正要点、`milestone-2:29` 阶段步骤 commit 描述。
+    - 同源：与 916db94 同根（TS 迁移漏同步文档侧）。
+    - 处置：下次触碰相关文档时按分类处理（当前态描述 .mjs→.ts；历史记录保留）；非 M2 effect/DPS 数据正确性，不阻断质量门。
+
 <!-- auto-todo:end -->
