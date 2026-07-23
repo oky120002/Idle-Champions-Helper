@@ -1,6 +1,51 @@
+import type { SkelAnimCharacter, SkelAnimFrame, SkelAnimGraphic, SkelAnimSequence } from './skelanim-codec.ts'
 import { computeSkelAnimFrameBounds } from './skelanim-renderer.ts'
 
-function mergeBounds(base, next) {
+/** 合并后的 4 字段包围盒（不含 width/height/visiblePieceCount，区别于 SkelAnimFrameBounds）。 */
+interface WalkBounds {
+  minX: number
+  minY: number
+  maxX: number
+  maxY: number
+}
+
+interface WalkAnimationManifestSequence {
+  sequenceIndex: number
+  bounds: WalkBounds
+}
+
+interface WalkAnimationManifest {
+  sequences: WalkAnimationManifestSequence[]
+  defaultSequenceIndex: number
+  defaultFrameIndex: number
+}
+
+interface WalkSequenceMetrics {
+  sequence: SkelAnimSequence
+  bounds: WalkBounds | null
+  firstRenderableFrameIndex: number | null
+  frameCount: number
+  renderableFrameRatio: number
+  persistentPieceRatio: number
+  singleFramePieceRatio: number
+  averageVisiblePieceRatio: number
+  averageMotion: number
+  boundsArea: number
+}
+
+interface RenderableWalkMetric extends WalkSequenceMetrics {
+  boundsAreaRatio: number
+  motionRatio: number
+  frameCountRatio: number
+}
+
+interface WalkPosterPose {
+  sequenceIndex: number
+  frameIndex: number
+  viewportBounds: WalkBounds
+}
+
+function mergeBounds(base: WalkBounds | null, next: WalkBounds | null): WalkBounds | null {
   if (!next) {
     return base
   }
@@ -17,7 +62,7 @@ function mergeBounds(base, next) {
   }
 }
 
-function buildBoundsArea(bounds) {
+function buildBoundsArea(bounds: WalkBounds | null): number {
   if (!bounds) {
     return 0
   }
@@ -25,15 +70,15 @@ function buildBoundsArea(bounds) {
   return Math.max(0, bounds.maxX - bounds.minX) * Math.max(0, bounds.maxY - bounds.minY)
 }
 
-function buildBoundsWidth(bounds) {
+function buildBoundsWidth(bounds: WalkBounds): number {
   return bounds.maxX - bounds.minX
 }
 
-function buildBoundsHeight(bounds) {
+function buildBoundsHeight(bounds: WalkBounds): number {
   return bounds.maxY - bounds.minY
 }
 
-function buildWalkMotionScore(motionRatio) {
+function buildWalkMotionScore(motionRatio: number): number {
   if (!Number.isFinite(motionRatio) || motionRatio <= 0) {
     return 0
   }
@@ -43,11 +88,11 @@ function buildWalkMotionScore(motionRatio) {
   return Math.max(0, 1 - distance / 0.4)
 }
 
-function summarizeWalkSequenceMetrics(sequence) {
+function summarizeWalkSequenceMetrics(sequence: SkelAnimSequence): WalkSequenceMetrics {
   const frameCount = Math.max(1, sequence.length)
   const pieceCount = Math.max(1, sequence.pieces.length)
-  let bounds = null
-  let firstRenderableFrameIndex = null
+  let bounds: WalkBounds | null = null
+  let firstRenderableFrameIndex: number | null = null
   let renderableFrameCount = 0
   let totalVisibleFrames = 0
   let persistentPieceCount = 0
@@ -72,7 +117,7 @@ function summarizeWalkSequenceMetrics(sequence) {
 
   for (const piece of sequence.pieces) {
     let visibleCount = 0
-    let previousFrame = null
+    let previousFrame: SkelAnimFrame | null = null
 
     for (const frame of piece.frames) {
       if (!frame) {
@@ -122,7 +167,10 @@ function summarizeWalkSequenceMetrics(sequence) {
   }
 }
 
-function resolveRenderableMetrics(manifest, character) {
+function resolveRenderableMetrics(
+  manifest: WalkAnimationManifest,
+  character: SkelAnimCharacter | undefined,
+): RenderableWalkMetric[] {
   if (!character) {
     return []
   }
@@ -143,7 +191,7 @@ function resolveRenderableMetrics(manifest, character) {
   }))
 }
 
-function buildWalkCandidateScore(candidate, current) {
+function buildWalkCandidateScore(candidate: RenderableWalkMetric, current: RenderableWalkMetric): number {
   return (
     buildWalkMotionScore(candidate.motionRatio) * 3.5 +
     candidate.averageVisiblePieceRatio * 3 +
@@ -155,7 +203,7 @@ function buildWalkCandidateScore(candidate, current) {
   )
 }
 
-function isWalkCandidate(candidate, current) {
+function isWalkCandidate(candidate: RenderableWalkMetric, current: RenderableWalkMetric): boolean {
   return (
     candidate.sequence.sequenceIndex !== current.sequence.sequenceIndex &&
     candidate.frameCount > 1 &&
@@ -166,7 +214,11 @@ function isWalkCandidate(candidate, current) {
   )
 }
 
-function resolveWalkViewportBounds(sequence, startFrameIndex, fallbackBounds) {
+function resolveWalkViewportBounds(
+  sequence: SkelAnimSequence,
+  startFrameIndex: number,
+  fallbackBounds: WalkBounds,
+): WalkBounds {
   const startFrameBounds = computeSkelAnimFrameBounds(sequence, startFrameIndex)
 
   if (!startFrameBounds) {
@@ -196,7 +248,7 @@ function resolveWalkViewportBounds(sequence, startFrameIndex, fallbackBounds) {
   }
 }
 
-function resolveRenderableFrameIndex(sequence, preferredFrameIndex) {
+function resolveRenderableFrameIndex(sequence: SkelAnimSequence, preferredFrameIndex: number): number | null {
   if (
     Number.isInteger(preferredFrameIndex) &&
     preferredFrameIndex >= 0 &&
@@ -215,7 +267,11 @@ function resolveRenderableFrameIndex(sequence, preferredFrameIndex) {
   return null
 }
 
-function resolveWalkFallbackFrameIndex(manifest, sequence, firstRenderableFrameIndex) {
+function resolveWalkFallbackFrameIndex(
+  manifest: WalkAnimationManifest,
+  sequence: SkelAnimSequence,
+  firstRenderableFrameIndex: number,
+): number {
   if (sequence.sequenceIndex !== manifest.defaultSequenceIndex) {
     return firstRenderableFrameIndex
   }
@@ -223,7 +279,11 @@ function resolveWalkFallbackFrameIndex(manifest, sequence, firstRenderableFrameI
   return resolveRenderableFrameIndex(sequence, manifest.defaultFrameIndex) ?? firstRenderableFrameIndex
 }
 
-export function resolveWalkPosterPose(manifest, skelAnim, characterIndex = 0) {
+export function resolveWalkPosterPose(
+  manifest: WalkAnimationManifest,
+  skelAnim: SkelAnimGraphic,
+  characterIndex: number = 0,
+): WalkPosterPose | null {
   const character = skelAnim.characters[characterIndex]
   const renderableMetrics = resolveRenderableMetrics(manifest, character)
   const current =
@@ -254,11 +314,7 @@ export function resolveWalkPosterPose(manifest, skelAnim, characterIndex = 0) {
       current.sequence,
       current.firstRenderableFrameIndex,
     )
-    const viewportBounds = resolveWalkViewportBounds(
-      current.sequence,
-      fallbackFrameIndex,
-      current.bounds,
-    )
+    const viewportBounds = resolveWalkViewportBounds(current.sequence, fallbackFrameIndex, current.bounds)
 
     return {
       sequenceIndex: current.sequence.sequenceIndex,

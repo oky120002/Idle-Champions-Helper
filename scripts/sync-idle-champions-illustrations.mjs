@@ -10,7 +10,7 @@ import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.ts'
 import { renderSkelAnimPoseToPngBuffer } from './data/skelanim-renderer.ts'
-import { resolveWalkPosterPose } from './data/skelanim-walk-selection.mjs'
+import { resolveWalkPosterPose } from './data/skelanim-walk-selection.ts'
 import {
   fileExists,
   readExistingCollection,
