@@ -18,7 +18,7 @@ import {
   uniqueLocalizedTexts,
   uniqueNumbers,
   uniqueStrings,
-} from './data/normalize-text-utils.mjs'
+} from './data/normalize-text-utils.ts'
 import {
   normalizeChampion,
   normalizeChampionDetail,
@@ -46,7 +46,7 @@ import {
   collectChampionPortraitSources,
   isPlayableChampion,
   resolveGraphicAssetById,
-} from './data/champion-asset-helpers.mjs'
+} from './data/champion-asset-helpers.ts'
 import { extractOfficialFormations, looksLikeVariant } from './data/formation-layout-helpers.mjs'
 import {
   buildChampionPatronEligibility,

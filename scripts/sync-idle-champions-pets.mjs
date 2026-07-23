@@ -3,7 +3,7 @@ import {
   compareLocalizedText,
   normalizeLocalizedText,
   toText,
-} from './data/normalize-text-utils.mjs'
+} from './data/normalize-text-utils.ts'
 import { mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs, promisify } from 'node:util'
@@ -14,7 +14,7 @@ import {
   DEFAULT_MASTER_API_URL,
   buildRemoteGraphicAsset,
   buildGraphicMap,
-} from './data/champion-asset-helpers.mjs'
+} from './data/champion-asset-helpers.ts'
 import { extractWrappedPngBuffer } from './data/mobile-asset-codec.ts'
 import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.mjs'
 import {

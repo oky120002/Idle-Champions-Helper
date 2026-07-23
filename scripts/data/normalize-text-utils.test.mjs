@@ -14,7 +14,7 @@ import {
   toTextList,
   normalizeJsonValue,
   normalizeNumber,
-} from './normalize-text-utils.mjs'
+} from './normalize-text-utils.ts'
 
 test('toText 字符串去空白，空串返回 null', () => {
   assert.equal(toText('  x  '), 'x')

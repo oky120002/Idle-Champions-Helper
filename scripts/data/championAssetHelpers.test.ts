@@ -4,7 +4,7 @@ import {
   buildMobileAssetUrl,
   buildRemoteGraphicAsset,
   inferGraphicDelivery,
-} from './champion-asset-helpers.mjs'
+} from './champion-asset-helpers.ts'
 
 describe('champion asset helpers', () => {
   it('为 portrait 资源推断 wrapped-png 并生成远端地址', () => {

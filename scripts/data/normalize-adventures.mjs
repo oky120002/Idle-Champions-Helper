@@ -11,7 +11,7 @@ import {
   uniqueLocalizedTexts,
   uniqueNumbers,
   uniqueStrings,
-} from './normalize-text-utils.mjs'
+} from './normalize-text-utils.ts'
 import { looksLikeVariant } from './formation-layout-helpers.mjs'
 import {
   buildScenarioModeTags,

@@ -10,8 +10,8 @@ import {
   toText,
   uniqueLocalizedTexts,
   uniqueStrings,
-} from './normalize-text-utils.mjs'
-import { buildChampionPortraitPath, resolveGraphicAssetById } from './champion-asset-helpers.mjs'
+} from './normalize-text-utils.ts'
+import { buildChampionPortraitPath, resolveGraphicAssetById } from './champion-asset-helpers.ts'
 
 const ROLE_TAGS = new Set([
   'breaking',

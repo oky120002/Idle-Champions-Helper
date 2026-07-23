@@ -17,7 +17,7 @@ import {
   collectChampionConsolePortraitSources,
   encodeGraphicPath,
   ensureTrailingSlash,
-} from './data/champion-asset-helpers.mjs'
+} from './data/champion-asset-helpers.ts'
 import {
   canReuseGeneratedImage,
   fileExists,

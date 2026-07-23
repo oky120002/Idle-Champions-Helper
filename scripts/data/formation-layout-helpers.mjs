@@ -4,7 +4,7 @@ import {
   normalizeLocalizedText,
   toText,
   uniqueNumbers,
-} from './normalize-text-utils.mjs'
+} from './normalize-text-utils.ts'
 
 const CONTEXT_KIND_ORDER = {
   campaign: 0,

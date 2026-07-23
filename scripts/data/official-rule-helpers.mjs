@@ -4,7 +4,7 @@ import {
   normalizeLocalizedText,
   normalizeNumber,
   toText,
-} from './normalize-text-utils.mjs'
+} from './normalize-text-utils.ts'
 function normalizeBooleanFlag(value) {
   if (typeof value === 'boolean') {
     return value

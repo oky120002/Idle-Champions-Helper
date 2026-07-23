@@ -6,10 +6,12 @@
  * 缺 'en' locale 导致跨机器排序漂移等分歧），统一到此模块。
  */
 
+import type { JsonValue, LocalizedText } from '../../src/domain/types/common.ts'
+
 /**
  * 把标量收拢为非空字符串；NaN/Infinity 等非有限数返回 null（避免落盘成 "NaN"）。
  */
-export function toText(value) {
+export function toText(value: unknown): string | null {
   if (typeof value === 'string') {
     const trimmed = value.trim()
     return trimmed || null
@@ -28,14 +30,18 @@ export function toText(value) {
  * 这里走 'en' collation 退化为码点序，确定性优先。如需拼音序需 full-icu +
  * 'zh-Hans' { collation: 'pinyin' }，属独立产品决策。
  */
-export function compareLocalizedText(left, right) {
+export function compareLocalizedText(left: LocalizedText, right: LocalizedText): number {
   return (
     left.display.localeCompare(right.display, 'en') ||
     left.original.localeCompare(right.original, 'en')
   )
 }
 
-export function normalizeLocalizedText(originalValue, displayValue, fallbackValue = '') {
+export function normalizeLocalizedText(
+  originalValue: unknown,
+  displayValue: unknown,
+  fallbackValue: unknown = '',
+): LocalizedText | null {
   const fallback = toText(fallbackValue) ?? ''
   const original = toText(originalValue) ?? toText(displayValue) ?? fallback
   const display = toText(displayValue) ?? original
@@ -47,8 +53,11 @@ export function normalizeLocalizedText(originalValue, displayValue, fallbackValu
   return { original, display }
 }
 
-export function normalizeLocalizedTextList(originalValues, displayValues) {
-  const items = []
+export function normalizeLocalizedTextList(
+  originalValues: readonly unknown[],
+  displayValues: readonly unknown[],
+): LocalizedText[] {
+  const items: LocalizedText[] = []
   const maxLength = Math.max(originalValues.length, displayValues.length)
 
   for (let index = 0; index < maxLength; index += 1) {
@@ -62,11 +71,11 @@ export function normalizeLocalizedTextList(originalValues, displayValues) {
   return uniqueLocalizedTexts(items)
 }
 
-export function uniqueLocalizedTexts(values) {
-  const unique = new Map()
+export function uniqueLocalizedTexts(values: readonly (LocalizedText | null)[]): LocalizedText[] {
+  const unique = new Map<string, LocalizedText>()
 
   for (const value of values) {
-    if (!value?.original || !value?.display) {
+    if (!value || !value.original || !value.display) {
       continue
     }
 
@@ -76,7 +85,7 @@ export function uniqueLocalizedTexts(values) {
   return Array.from(unique.values())
 }
 
-export function toLocalizedOverrideList(value) {
+export function toLocalizedOverrideList(value: unknown): LocalizedText[] {
   if (Array.isArray(value)) {
     return value.flatMap((item) => toLocalizedOverrideList(item))
   }
@@ -87,31 +96,38 @@ export function toLocalizedOverrideList(value) {
   }
 
   if (typeof value === 'object' && value !== null) {
-    const item = normalizeLocalizedText(value.original, value.display)
+    const record = value as Record<string, unknown>
+    const item = normalizeLocalizedText(record.original, record.display)
     return item ? [item] : []
   }
 
   return []
 }
 
-export function uniqueStrings(values) {
-  return Array.from(new Set(values.filter((value) => typeof value === 'string' && value.trim())))
-}
-
-export function uniqueNumbers(values) {
+export function uniqueStrings(values: readonly unknown[]): string[] {
   return Array.from(
     new Set(
-      values.filter((value) => typeof value === 'number' && Number.isFinite(value) && value >= 0),
+      values.filter((value): value is string => typeof value === 'string' && value.trim() !== ''),
+    ),
+  )
+}
+
+export function uniqueNumbers(values: readonly unknown[]): number[] {
+  return Array.from(
+    new Set(
+      values.filter(
+        (value): value is number => typeof value === 'number' && Number.isFinite(value) && value >= 0,
+      ),
     ),
   ).sort((left, right) => left - right)
 }
 
-export function normalizeNumberList(value) {
+export function normalizeNumberList(value: unknown): number[] {
   if (!Array.isArray(value)) {
     return []
   }
 
-  const normalized = []
+  const normalized: number[] = []
 
   for (const item of value) {
     const next = normalizeNumber(item)
@@ -124,7 +140,7 @@ export function normalizeNumberList(value) {
   return normalized
 }
 
-export function toStringList(value) {
+export function toStringList(value: unknown): string[] {
   if (Array.isArray(value)) {
     return value.flatMap((item) => toStringList(item))
   }
@@ -160,7 +176,7 @@ export function toStringList(value) {
   return []
 }
 
-export function toTextList(value) {
+export function toTextList(value: unknown): string[] {
   if (Array.isArray(value)) {
     return value.flatMap((item) => toTextList(item))
   }
@@ -177,7 +193,7 @@ export function toTextList(value) {
   return []
 }
 
-export function normalizeJsonValue(value) {
+export function normalizeJsonValue(value: unknown): JsonValue {
   if (
     value === null ||
     typeof value === 'string' ||
@@ -204,11 +220,15 @@ export function normalizeJsonValue(value) {
   return toText(value)
 }
 
-export function normalizeOptionalLocalizedText(originalValue, displayValue, fallbackValue = '') {
+export function normalizeOptionalLocalizedText(
+  originalValue: unknown,
+  displayValue: unknown,
+  fallbackValue: unknown = '',
+): LocalizedText | null {
   return normalizeLocalizedText(originalValue, displayValue, fallbackValue)
 }
 
-export function normalizeNumber(value) {
+export function normalizeNumber(value: unknown): number | null {
   if (typeof value === 'number' && Number.isFinite(value)) {
     return value
   }
