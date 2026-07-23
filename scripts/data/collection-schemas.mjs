@@ -1,19 +1,22 @@
 import { z } from 'zod'
 
+import { localizedTextSchema, localizedOptionSchema } from '../../src/domain/types/common.ts'
+
 /**
  * collection 输出契约 schema：champions / adventures / patrons / variants。
  * 与 src/domain/types 对齐——DataCollection<T>（items+updatedAt）、LocalizedText、
  * LocalizedOption、Champion、Adventure、Patron、Variant、PatronObjectiveTier。
+ *
+ * LocalizedText / LocalizedOption 的 schema 单一来源在 src/domain/types/common.ts
+ * （z.infer 派生类型，本文件复用同一 schema 值做运行时校验）。其余子结构仍在此定义。
  *
  * 沿用 champion-details-schema 哲学：对象 passthrough 放行非核心字段，避免耦合上游
  * 字段增减；只钉死消费方（planner/simulator/限制筛选/展示）依赖的核心字段类型与必填性，
  * 拦截 normalize 层或上游 definitions 字段漂移。CI：scripts/validate-data-schemas.mjs。
  */
 
-const localizedText = z.object({ original: z.string(), display: z.string() }).passthrough()
-const localizedOption = z
-  .object({ id: z.string(), original: z.string(), display: z.string() })
-  .passthrough()
+const localizedText = localizedTextSchema
+const localizedOption = localizedOptionSchema
 
 const patronObjectiveTier = z
   .object({
