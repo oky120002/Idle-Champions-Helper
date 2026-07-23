@@ -8,7 +8,7 @@ import {
   getUpdatedAtFromDefinitions,
   shouldSkipResourceSync,
   writeUpdatedAtJsonFile,
-} from './resource-sync-policy.mjs'
+} from './resource-sync-policy.ts'
 
 test('compareUpdatedAt 按 YYYY-MM-DD 先后比较', () => {
   assert.equal(compareUpdatedAt('2026-02-02', '2026-02-02'), 0)

@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
-import { decodeRemoteGraphicBuffer, readPngDimensions } from './mobile-asset-codec.mjs'
+import { decodeRemoteGraphicBuffer, readPngDimensions } from './mobile-asset-codec.ts'
 import { decodeSkelAnimGraphicBuffer } from './skelanim-codec.mjs'
 import { renderSkelAnimPoseToPngBuffer } from './skelanim-renderer.mjs'
 

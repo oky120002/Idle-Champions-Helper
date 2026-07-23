@@ -5,7 +5,7 @@ import {
   runWithConcurrency,
 } from './data/io-utils.ts'
 import { findOpaqueBounds } from './data/png-image-helpers.ts'
-import { findPngSignatureOffset, getPngDimensions, trimPngToIend } from './data/mobile-asset-codec.mjs'
+import { findPngSignatureOffset, getPngDimensions, trimPngToIend } from './data/mobile-asset-codec.ts'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
@@ -25,7 +25,7 @@ import {
   readExistingCollection,
   removeUnexpectedFiles,
   shouldSkipResourceSync,
-} from './data/resource-sync-policy.mjs'
+} from './data/resource-sync-policy.ts'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CONCURRENCY = 8

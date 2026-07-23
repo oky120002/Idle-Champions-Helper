@@ -9,7 +9,7 @@ import {
   findPngSignatureOffset,
   getPngDimensions,
   readPngDimensions,
-} from './mobile-asset-codec.mjs'
+} from './mobile-asset-codec.ts'
 
 function makePngBuffer() {
   const png = new PNG({ width: 2, height: 2 })

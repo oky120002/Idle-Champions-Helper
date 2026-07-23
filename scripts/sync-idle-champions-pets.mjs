@@ -15,7 +15,7 @@ import {
   buildRemoteGraphicAsset,
   buildGraphicMap,
 } from './data/champion-asset-helpers.mjs'
-import { extractWrappedPngBuffer } from './data/mobile-asset-codec.mjs'
+import { extractWrappedPngBuffer } from './data/mobile-asset-codec.ts'
 import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.mjs'
 import {
   readJson,
@@ -32,7 +32,7 @@ import {
   readExistingCollection,
   removeUnexpectedFiles,
   shouldSkipResourceSync,
-} from './data/resource-sync-policy.mjs'
+} from './data/resource-sync-policy.ts'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'

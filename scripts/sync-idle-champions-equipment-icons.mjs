@@ -13,7 +13,7 @@ import {
   buildGraphicMap,
   resolveGraphicAssetById,
 } from './data/champion-asset-helpers.mjs'
-import { decodeGraphicBufferWithFallback, readPngDimensions } from './data/mobile-asset-codec.mjs'
+import { decodeGraphicBufferWithFallback, readPngDimensions } from './data/mobile-asset-codec.ts'
 import {
   canReuseGeneratedImage,
   fileExists,
@@ -21,7 +21,7 @@ import {
   readExistingCollection,
   removeUnexpectedFiles,
   shouldSkipResourceSync,
-} from './data/resource-sync-policy.mjs'
+} from './data/resource-sync-policy.ts'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'

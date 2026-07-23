@@ -16,7 +16,7 @@ import {
   readExistingCollection,
   removeUnexpectedFiles,
   shouldSkipResourceSync,
-} from './data/resource-sync-policy.mjs'
+} from './data/resource-sync-policy.ts'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'

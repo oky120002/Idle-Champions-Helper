@@ -19,7 +19,7 @@ import {
   fileExists,
   readExistingCollection,
   shouldSkipResourceSync,
-} from './data/resource-sync-policy.mjs'
+} from './data/resource-sync-policy.ts'
 import {
   parseIdFilter,
   readJson,

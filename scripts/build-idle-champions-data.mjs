@@ -16,7 +16,7 @@ import {
   readUpdatedAtFromJsonFile,
   shouldSkipResourceSync,
   writeUpdatedAtJsonFile,
-} from './data/resource-sync-policy.mjs'
+} from './data/resource-sync-policy.ts'
 
 const DEFAULT_VERSION_FILE = 'public/data/version.json'
 const DEFAULT_RESOURCE_SYNC_STATE_FILE = 'public/data/resource-sync-state.json'
