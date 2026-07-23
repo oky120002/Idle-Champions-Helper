@@ -1,36 +1,85 @@
 import zlib from 'node:zlib'
 
-function readUInt32LE(buffer, offsetRef) {
+interface OffsetRef {
+  offset: number
+}
+
+export interface SkelAnimTexture {
+  textureId: number
+  bytes: Buffer
+}
+
+export interface SkelAnimFrame {
+  depth: number
+  rotation: number
+  scaleX: number
+  scaleY: number
+  x: number
+  y: number
+}
+
+export interface SkelAnimPiece {
+  pieceIndex: number
+  textureId: number
+  sourceX: number
+  sourceY: number
+  sourceWidth: number
+  sourceHeight: number
+  centerX: number
+  centerY: number
+  frames: (SkelAnimFrame | null)[]
+}
+
+export interface SkelAnimSequence {
+  sequenceIndex: number
+  length: number
+  pieces: SkelAnimPiece[]
+}
+
+export interface SkelAnimCharacter {
+  characterIndex: number
+  name: string
+  sequences: SkelAnimSequence[]
+}
+
+export interface SkelAnimGraphic {
+  sheetWidth: number
+  sheetHeight: number
+  textures: SkelAnimTexture[]
+  characters: SkelAnimCharacter[]
+}
+
+function readUInt32LE(buffer: Buffer, offsetRef: OffsetRef): number {
   const value = buffer.readUInt32LE(offsetRef.offset)
   offsetRef.offset += 4
   return value
 }
 
-function readInt32LE(buffer, offsetRef) {
+function readInt32LE(buffer: Buffer, offsetRef: OffsetRef): number {
   const value = buffer.readInt32LE(offsetRef.offset)
   offsetRef.offset += 4
   return value
 }
 
-function readInt16LE(buffer, offsetRef) {
+function readInt16LE(buffer: Buffer, offsetRef: OffsetRef): number {
   const value = buffer.readInt16LE(offsetRef.offset)
   offsetRef.offset += 2
   return value
 }
 
-function readDoubleLE(buffer, offsetRef) {
+function readDoubleLE(buffer: Buffer, offsetRef: OffsetRef): number {
   const value = buffer.readDoubleLE(offsetRef.offset)
   offsetRef.offset += 8
   return value
 }
 
-function readBoolean(buffer, offsetRef) {
+function readBoolean(buffer: Buffer, offsetRef: OffsetRef): boolean {
   const value = buffer[offsetRef.offset] !== 0
   offsetRef.offset += 1
   return value
 }
 
-function readString(buffer, offsetRef) {
+function readString(buffer: Buffer, offsetRef: OffsetRef): string {
   const length = readInt16LE(buffer, offsetRef)
 
   if (length === 0) {
@@ -42,7 +91,7 @@ function readString(buffer, offsetRef) {
   return value
 }
 
-export function inflateGraphicContainerBuffer(asset, rawBuffer) {
+export function inflateGraphicContainerBuffer(asset: { delivery: string }, rawBuffer: Buffer): Buffer {
   if (asset.delivery === 'zlib-png') {
     return zlib.inflateSync(rawBuffer)
   }
@@ -54,12 +103,12 @@ export function inflateGraphicContainerBuffer(asset, rawBuffer) {
   throw new Error(`暂不支持解析 ${asset.delivery} 资源容器`)
 }
 
-export function parseSkelAnimBuffer(buffer) {
+export function parseSkelAnimBuffer(buffer: Buffer): SkelAnimGraphic {
   const offsetRef = { offset: 0 }
   const sheetWidth = readUInt32LE(buffer, offsetRef)
   const sheetHeight = readUInt32LE(buffer, offsetRef)
   const textureCount = readUInt32LE(buffer, offsetRef)
-  const textures = []
+  const textures: SkelAnimTexture[] = []
 
   for (let textureIndex = 0; textureIndex < textureCount; textureIndex += 1) {
     const bytesLength = readUInt32LE(buffer, offsetRef)
@@ -72,17 +121,17 @@ export function parseSkelAnimBuffer(buffer) {
   }
 
   const characterCount = readUInt32LE(buffer, offsetRef)
-  const characters = []
+  const characters: SkelAnimCharacter[] = []
 
   for (let characterIndex = 0; characterIndex < characterCount; characterIndex += 1) {
     const name = readString(buffer, offsetRef)
     const sequenceCount = readUInt32LE(buffer, offsetRef)
-    const sequences = []
+    const sequences: SkelAnimSequence[] = []
 
     for (let sequenceIndex = 0; sequenceIndex < sequenceCount; sequenceIndex += 1) {
       const length = readUInt32LE(buffer, offsetRef)
       const pieceCount = readUInt32LE(buffer, offsetRef)
-      const pieces = []
+      const pieces: SkelAnimPiece[] = []
 
       for (let pieceIndex = 0; pieceIndex < pieceCount; pieceIndex += 1) {
         const textureId = readUInt32LE(buffer, offsetRef)
@@ -92,7 +141,7 @@ export function parseSkelAnimBuffer(buffer) {
         const sourceHeight = readUInt32LE(buffer, offsetRef)
         const centerX = readInt32LE(buffer, offsetRef)
         const centerY = readInt32LE(buffer, offsetRef)
-        const frames = []
+        const frames: (SkelAnimFrame | null)[] = []
 
         for (let frameIndex = 0; frameIndex < length; frameIndex += 1) {
           if (!readBoolean(buffer, offsetRef)) {
@@ -152,6 +201,6 @@ export function parseSkelAnimBuffer(buffer) {
   }
 }
 
-export function decodeSkelAnimGraphicBuffer(asset, rawBuffer) {
+export function decodeSkelAnimGraphicBuffer(asset: { delivery: string }, rawBuffer: Buffer): SkelAnimGraphic {
   return parseSkelAnimBuffer(inflateGraphicContainerBuffer(asset, rawBuffer))
 }

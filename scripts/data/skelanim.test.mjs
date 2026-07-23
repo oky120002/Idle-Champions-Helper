@@ -2,7 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import zlib from 'node:zlib'
 import { PNG } from 'pngjs'
-import { decodeSkelAnimGraphicBuffer } from './skelanim-codec.mjs'
+import { decodeSkelAnimGraphicBuffer } from './skelanim-codec.ts'
 import {
   computeSkelAnimFrameBounds,
   renderSkelAnimPoseToPngBuffer,

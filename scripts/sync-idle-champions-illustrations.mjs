@@ -8,7 +8,7 @@ import {
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
-import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.mjs'
+import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.ts'
 import { renderSkelAnimPoseToPngBuffer } from './data/skelanim-renderer.mjs'
 import { resolveWalkPosterPose } from './data/skelanim-walk-selection.mjs'
 import {

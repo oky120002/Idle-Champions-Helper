@@ -3,7 +3,7 @@ import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import { createChampionGraphicResourceCache } from './data/champion-graphic-resource-cache.mjs'
-import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.mjs'
+import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.ts'
 import {
   resolvePreferredSequenceIndexes,
   scoreAnimationSequenceMetrics,

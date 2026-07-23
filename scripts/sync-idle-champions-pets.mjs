@@ -16,7 +16,7 @@ import {
   buildGraphicMap,
 } from './data/champion-asset-helpers.ts'
 import { extractWrappedPngBuffer } from './data/mobile-asset-codec.ts'
-import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.mjs'
+import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.ts'
 import {
   readJson,
   writeJson,
