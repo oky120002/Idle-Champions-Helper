@@ -4,7 +4,7 @@ import { z } from 'zod'
  * champion-details 核心 schema（阶段 9.3）。
  * 只校验 planner/simulator 依赖的核心字段；非核心字段用 passthrough 放行（防过度耦合上游字段增减）。
  * raw 上游原始对象用 z.unknown()（CNE 伪 JSON 结构多变，不强校验）。
- * CI 校验脚本：scripts/validate-champion-details.mjs；npm run data:validate-schema。
+ * CI 校验脚本：scripts/validate-data-schemas.mjs；npm run data:validate-schema。
  */
 const numericString = z.string().min(1)
 

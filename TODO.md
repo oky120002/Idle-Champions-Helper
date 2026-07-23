@@ -85,18 +85,13 @@ repair: rebuild
     - 可改用 scripts/data/io-utils.mjs 统一，消除测试侧重复。
     - 处置：测试隔离、低优先，下次批量触碰测试时顺带处理。
 
-- scripts .mjs 校验增强：zod 扩展优先于全量 ts 化（附调查结论） <!-- auto-todo:id=atd_31ec6c31d9 -->
-  - 记录时间: `2026-07-23T11:44:42+08:00`
+- collection 输出 zod 契约已接入 CI；z.infer 单源迁移（前端类型派生）未做 <!-- auto-todo:id=atd_bd064fc8e2 -->
+  - 记录时间: `2026-07-23T13:52:50+08:00`
   - 类型: optimization
-  - 位置: `scripts/`
-  - 备注: 调查结论（2026-07-23 讨论）：
-    - 事实1：scripts/**/*.mjs 不在任何 tsconfig include（app=src, node=配置+2个helper, test=*.test.ts），无 allowJs/checkJs 覆盖 .mjs → .mjs 零 tsc 检查 = 类型盲区。
-    - 事实2：现有运行时校验仅 champion-details-schema.mjs（zod）+ validate-champion-details CI；champions/adventures/patrons/variants 等输出无契约校验。
-    - 事实3：前端 src/domain/types 有 Champion/ChampionDetail 类型，脚本 .mjs 不共享 → 输出 JSON 形状靠人工对齐前端类型，无单一来源。
-    - 事实4：commit 历史是生存者偏差样本——src/.ts 的 TDD(typecheck) 消灭的类型 bug 不进 commit；.mjs 连 TDD 类型检查都没有，盲区更大。
-    - 结论：增强校验方向正确，但手段排序：
-    - (a) 全量 .mjs→.ts 非最优：strict 摩擦大(exactOptionalPropertyTypes/noUncheckedIndexedAccess)、上游 definitions JSON 形状靠运行时 schema 守更有效(JSON.parse 出 any)。
-    - (b) 优先扩 zod schema 覆盖到 champions/adventures/patrons/variants 输出——运行时校验+CI 拦截+z.infer 供前端单源。
-    - (c) 复杂核心(effect-helpers/normalize-champions/official-rule-helpers)局部 .ts 化收益较高(零覆盖→有覆盖)，且优先级因盲区确认而上调。
+  - 位置: `src/domain/types/formation.ts:40`
+  - 备注: 已完成：champions/adventures/patrons/variants collection schema（scripts/data/collection-schemas.mjs）接入 CI（validate-data-schemas.mjs + data:validate-schema），真实数据 168 目标 0 失败、坏数据被 15 个变异测试拦截；schema 与 src/domain/types 字段对齐。
+    - 剩余：zod schema 仍在 scripts/（mjs）侧，前端 src/domain/types 的 Champion/Adventure/Patron/Variant 仍是手写 interface，双源易漂移。
+    - 待办：z.infer 单源迁移——schema 提到 src/（ts），前端类型改 z.infer 派生。
+    - 处置：随前端类型下一轮触碰逐步迁移；schema 已字段对齐可平滑切换。
 
 <!-- auto-todo:end -->
