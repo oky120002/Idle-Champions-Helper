@@ -1,73 +1,10 @@
-function toText(value) {
-  if (typeof value === 'string') {
-    const trimmed = value.trim()
-    return trimmed || null
-  }
-
-  if (typeof value === 'number' && Number.isFinite(value)) {
-    return String(value)
-  }
-
-  return null
-}
-
-function normalizeNumber(value) {
-  if (typeof value === 'number' && Number.isFinite(value)) {
-    return value
-  }
-
-  const text = toText(value)
-  if (!text) {
-    return null
-  }
-
-  const parsed = Number(text)
-  return Number.isFinite(parsed) ? parsed : null
-}
-
-function normalizeLocalizedText(originalValue, displayValue, fallbackValue = '') {
-  const fallback = toText(fallbackValue) ?? ''
-  const original = toText(originalValue) ?? toText(displayValue) ?? fallback
-  const display = toText(displayValue) ?? original
-
-  if (!original || !display) {
-    return null
-  }
-
-  return { original, display }
-}
-
-function compareLocalizedText(left, right) {
-  return left.display.localeCompare(right.display) || left.original.localeCompare(right.original)
-}
-
-function normalizeJsonValue(value) {
-  if (
-    value === null ||
-    typeof value === 'string' ||
-    typeof value === 'number' ||
-    typeof value === 'boolean'
-  ) {
-    return value
-  }
-
-  if (value === undefined) {
-    return null
-  }
-
-  if (Array.isArray(value)) {
-    return value.map((item) => normalizeJsonValue(item))
-  }
-
-  if (typeof value === 'object') {
-    return Object.fromEntries(
-      Object.entries(value).map(([key, item]) => [key, normalizeJsonValue(item)]),
-    )
-  }
-
-  return toText(value)
-}
-
+import {
+  compareLocalizedText,
+  normalizeJsonValue,
+  normalizeLocalizedText,
+  normalizeNumber,
+  toText,
+} from './normalize-text-utils.mjs'
 function normalizeBooleanFlag(value) {
   if (typeof value === 'boolean') {
     return value

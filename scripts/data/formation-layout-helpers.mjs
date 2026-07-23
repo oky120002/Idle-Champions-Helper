@@ -1,37 +1,15 @@
 import { createHash } from 'node:crypto'
+import {
+  compareLocalizedText,
+  normalizeLocalizedText,
+  toText,
+  uniqueNumbers,
+} from './normalize-text-utils.mjs'
 
 const CONTEXT_KIND_ORDER = {
   campaign: 0,
   adventure: 1,
   variant: 2,
-}
-
-function toText(value) {
-  if (typeof value === 'string') {
-    const trimmed = value.trim()
-    return trimmed || null
-  }
-
-  if (typeof value === 'number') {
-    return String(value)
-  }
-
-  return null
-}
-
-function normalizeLocalizedText(originalValue, displayValue, fallbackValue = '') {
-  const fallback = toText(fallbackValue) ?? ''
-  const original = toText(originalValue) ?? toText(displayValue) ?? fallback
-  const display = toText(displayValue) ?? original
-
-  if (!original || !display) {
-    return null
-  }
-
-  return {
-    original,
-    display,
-  }
 }
 
 function getDefinitionName(definition = {}) {
@@ -42,20 +20,12 @@ function getContextOrder(kind) {
   return CONTEXT_KIND_ORDER[kind] ?? Number.MAX_SAFE_INTEGER
 }
 
-function compareLocalizedText(left, right) {
-  return left.display.localeCompare(right.display) || left.original.localeCompare(right.original)
-}
-
 function compareFormationContexts(left, right) {
   return (
     getContextOrder(left.kind) - getContextOrder(right.kind) ||
     compareLocalizedText(left.name, right.name) ||
     left.id.localeCompare(right.id)
   )
-}
-
-function uniqueNumbers(values) {
-  return Array.from(new Set(values)).sort((left, right) => left - right)
 }
 
 function toFiniteNumber(value, fallback = 0) {

@@ -4,6 +4,22 @@ import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import { readJson, readJsonIfExists, writeJson } from './data/io-utils.mjs'
 import {
+  compareLocalizedText,
+  normalizeJsonValue,
+  normalizeLocalizedText,
+  normalizeLocalizedTextList,
+  normalizeNumber,
+  normalizeNumberList,
+  normalizeOptionalLocalizedText,
+  toLocalizedOverrideList,
+  toText,
+  toTextList,
+  toStringList,
+  uniqueLocalizedTexts,
+  uniqueNumbers,
+  uniqueStrings,
+} from './data/normalize-text-utils.mjs'
+import {
   DEFAULT_MASTER_API_URL,
   buildChampionPortraitPath,
   buildGraphicMap,
@@ -74,19 +90,6 @@ const STRUCTURAL_VARIANT_GAME_CHANGES = new Set([
   'initial_formation',
 ])
 
-function toText(value) {
-  if (typeof value === 'string') {
-    const trimmed = value.trim()
-    return trimmed || null
-  }
-
-  if (typeof value === 'number') {
-    return String(value)
-  }
-
-  return null
-}
-
 /**
  * 归一化 upgrade.effect 到标准 effect 引用串。
  *
@@ -113,162 +116,8 @@ export function normalizeEffectReference(rawEffect) {
   return text
 }
 
-function compareLocalizedText(left, right) {
-  // ponytail: 显式 'en' locale 让排序可复现；无 locale 参数时 localeCompare 依赖运行时 ICU/host locale，
-  // 不同机器/CI 上 affiliations 等 enum 与 champion.affiliations 顺序会漂移。中文 display 走 'en' collation
-  // 退化为码点序，确定性优先；如需拼音序需 full-icu + 'zh-Hans' { collation: 'pinyin' }，属独立产品决策。
-  return left.display.localeCompare(right.display, 'en') || left.original.localeCompare(right.original, 'en')
-}
-
-function normalizeLocalizedText(originalValue, displayValue, fallbackValue = '') {
-  const fallback = toText(fallbackValue) ?? ''
-  const original = toText(originalValue) ?? toText(displayValue) ?? fallback
-  const display = toText(displayValue) ?? original
-
-  if (!original || !display) {
-    return null
-  }
-
-  return {
-    original,
-    display,
-  }
-}
-
-function normalizeLocalizedTextList(originalValues, displayValues) {
-  const items = []
-  const maxLength = Math.max(originalValues.length, displayValues.length)
-
-  for (let index = 0; index < maxLength; index += 1) {
-    const item = normalizeLocalizedText(originalValues[index], displayValues[index])
-
-    if (item) {
-      items.push(item)
-    }
-  }
-
-  return uniqueLocalizedTexts(items)
-}
-
-function uniqueLocalizedTexts(values) {
-  const unique = new Map()
-
-  for (const value of values) {
-    if (!value?.original || !value?.display) {
-      continue
-    }
-
-    unique.set(`${value.original}\u0000${value.display}`, value)
-  }
-
-  return Array.from(unique.values())
-}
-
-function toLocalizedOverrideList(value) {
-  if (Array.isArray(value)) {
-    return value.flatMap((item) => toLocalizedOverrideList(item))
-  }
-
-  if (typeof value === 'string' || typeof value === 'number') {
-    const text = toText(value)
-    return text ? [{ original: text, display: text }] : []
-  }
-
-  if (typeof value === 'object' && value !== null) {
-    const item = normalizeLocalizedText(value.original, value.display)
-    return item ? [item] : []
-  }
-
-  return []
-}
-
 function getDefinitionName(definition = {}) {
   return definition.name ?? definition.label ?? definition.campaign_name
-}
-
-function uniqueStrings(values) {
-  return Array.from(new Set(values.filter((value) => typeof value === 'string' && value.trim())))
-}
-
-function uniqueNumbers(values) {
-  return Array.from(
-    new Set(
-      values.filter(
-        (value) => typeof value === 'number' && Number.isFinite(value) && value >= 0,
-      ),
-    ),
-  ).sort((left, right) => left - right)
-}
-
-function normalizeNumberList(value) {
-  if (!Array.isArray(value)) {
-    return []
-  }
-
-  const normalized = []
-
-  for (const item of value) {
-    const next = normalizeNumber(item)
-
-    if (next !== null && next >= 0) {
-      normalized.push(next)
-    }
-  }
-
-  return normalized
-}
-
-function toStringList(value) {
-  if (Array.isArray(value)) {
-    return value.flatMap((item) => toStringList(item))
-  }
-
-  if (typeof value === 'string') {
-    const trimmed = value.trim()
-
-    if (!trimmed) {
-      return []
-    }
-
-    if (trimmed.includes(',')) {
-      return trimmed
-        .split(',')
-        .map((item) => item.trim())
-        .filter(Boolean)
-    }
-
-    if (trimmed.includes('|')) {
-      return trimmed
-        .split('|')
-        .map((item) => item.trim())
-        .filter(Boolean)
-    }
-
-    return [trimmed]
-  }
-
-  if (typeof value === 'number') {
-    return [String(value)]
-  }
-
-  return []
-}
-
-function toTextList(value) {
-  if (Array.isArray(value)) {
-    return value.flatMap((item) => toTextList(item))
-  }
-
-  if (typeof value === 'string') {
-    const trimmed = value.trim()
-    return trimmed ? [trimmed] : []
-  }
-
-  if (typeof value === 'number') {
-    return [String(value)]
-  }
-
-  return []
 }
 
 function getUpdatedAt(rawDefinitions) {
@@ -384,52 +233,6 @@ function getAffiliationTags(definition, affiliationMap) {
     ...toStringList(definition.affiliation_tags),
     ...toStringList(definition.tags).filter((tag) => affiliationMap.has(tag)),
   ])
-}
-
-function normalizeJsonValue(value) {
-  if (
-    value === null ||
-    typeof value === 'string' ||
-    typeof value === 'number' ||
-    typeof value === 'boolean'
-  ) {
-    return value
-  }
-
-  if (value === undefined) {
-    return null
-  }
-
-  if (Array.isArray(value)) {
-    return value.map((item) => normalizeJsonValue(item))
-  }
-
-  if (typeof value === 'object') {
-    return Object.fromEntries(
-      Object.entries(value).map(([key, item]) => [key, normalizeJsonValue(item)]),
-    )
-  }
-
-  return toText(value)
-}
-
-function normalizeOptionalLocalizedText(originalValue, displayValue, fallbackValue = '') {
-  return normalizeLocalizedText(originalValue, displayValue, fallbackValue)
-}
-
-function normalizeNumber(value) {
-  if (typeof value === 'number' && Number.isFinite(value)) {
-    return value
-  }
-
-  const text = toText(value)
-
-  if (!text) {
-    return null
-  }
-
-  const parsed = Number(text)
-  return Number.isFinite(parsed) ? parsed : null
 }
 
 function buildIdMap(definitions = []) {

@@ -1,4 +1,9 @@
 import { execFile } from 'node:child_process'
+import {
+  compareLocalizedText,
+  normalizeLocalizedText,
+  toText,
+} from './data/normalize-text-utils.mjs'
 import { mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs, promisify } from 'node:util'
@@ -45,19 +50,6 @@ function buildPetAnimationAssetPath(currentVersion, petId) {
   return `${currentVersion}/${PET_ANIMATION_DIR_NAME}/illustrations/${petId}.bin`
 }
 
-function toText(value) {
-  if (typeof value === 'string') {
-    const trimmed = value.trim()
-    return trimmed || null
-  }
-
-  if (typeof value === 'number' && Number.isFinite(value)) {
-    return String(value)
-  }
-
-  return null
-}
-
 function toNonZeroText(value) {
   const text = toText(value)
 
@@ -85,25 +77,6 @@ function toNumber(value) {
   }
 
   return null
-}
-
-function normalizeLocalizedText(originalValue, displayValue, fallbackValue = '') {
-  const fallback = toText(fallbackValue) ?? ''
-  const original = toText(originalValue) ?? toText(displayValue) ?? fallback
-  const display = toText(displayValue) ?? original
-
-  if (!original || !display) {
-    return null
-  }
-
-  return {
-    original,
-    display,
-  }
-}
-
-function compareLocalizedText(left, right) {
-  return left.display.localeCompare(right.display) || left.original.localeCompare(right.original)
 }
 
 function buildIdMap(definitions = []) {
