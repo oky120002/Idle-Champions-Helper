@@ -26,7 +26,7 @@ import { findOpaqueBounds } from './data/png-image-helpers.ts'
 import {
   computeSkelAnimFrameBounds,
   renderSkelAnimPoseToPngBuffer,
-} from './data/skelanim-renderer.mjs'
+} from './data/skelanim-renderer.ts'
 import {
   fileExists,
   readExistingCollection,

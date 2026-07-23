@@ -1,6 +1,35 @@
 import { createCanvas, loadImage } from '@napi-rs/canvas'
+import type {
+  SkelAnimCharacter,
+  SkelAnimFrame,
+  SkelAnimGraphic,
+  SkelAnimPiece,
+  SkelAnimSequence,
+  SkelAnimTexture,
+} from './skelanim-codec.ts'
 
-function buildAffineTransform(frame) {
+interface AffineTransform {
+  a: number
+  b: number
+  c: number
+  d: number
+  e: number
+  f: number
+}
+
+interface Point {
+  x: number
+  y: number
+}
+
+interface VisiblePiece {
+  piece: SkelAnimPiece
+  frame: SkelAnimFrame
+}
+
+type TextureImage = Awaited<ReturnType<typeof loadImage>>
+
+function buildAffineTransform(frame: SkelAnimFrame): AffineTransform {
   const angle = frame.rotation
   const cos = Math.cos(angle)
   const sin = Math.sin(angle)
@@ -15,26 +44,29 @@ function buildAffineTransform(frame) {
   }
 }
 
-function applyTransform(transform, x, y) {
+function applyTransform(transform: AffineTransform, x: number, y: number): Point {
   return {
     x: transform.a * x + transform.c * y + transform.e,
     y: transform.b * x + transform.d * y + transform.f,
   }
 }
 
-function listVisiblePieces(sequence, frameIndex) {
+function listVisiblePieces(sequence: SkelAnimSequence, frameIndex: number): VisiblePiece[] {
   return sequence.pieces
     .map((piece) => ({
       piece,
       frame: piece.frames[frameIndex] ?? null,
     }))
-    .filter((entry) => entry.frame)
+    .filter((entry): entry is VisiblePiece => entry.frame !== null)
 }
 
-function resolveSequenceOrder(character, preferredSequenceIndexes = []) {
+function resolveSequenceOrder(
+  character: SkelAnimCharacter,
+  preferredSequenceIndexes: readonly number[] = [],
+): SkelAnimSequence[] {
   const sequenceByIndex = new Map(character.sequences.map((sequence) => [sequence.sequenceIndex, sequence]))
-  const ordered = []
-  const seen = new Set()
+  const ordered: SkelAnimSequence[] = []
+  const seen = new Set<number>()
 
   for (const index of preferredSequenceIndexes) {
     const sequence = sequenceByIndex.get(index)
@@ -59,9 +91,12 @@ function resolveSequenceOrder(character, preferredSequenceIndexes = []) {
   return ordered
 }
 
-function resolveFrameOrder(sequence, preferredFrameIndexes = []) {
-  const ordered = []
-  const seen = new Set()
+function resolveFrameOrder(
+  sequence: SkelAnimSequence,
+  preferredFrameIndexes: readonly number[] = [],
+): number[] {
+  const ordered: number[] = []
+  const seen = new Set<number>()
 
   for (const index of preferredFrameIndexes) {
     if (!Number.isInteger(index) || index < 0 || index >= sequence.length || seen.has(index)) {
@@ -84,7 +119,20 @@ function resolveFrameOrder(sequence, preferredFrameIndexes = []) {
   return ordered
 }
 
-export function computeSkelAnimFrameBounds(sequence, frameIndex) {
+export interface SkelAnimFrameBounds {
+  minX: number
+  minY: number
+  maxX: number
+  maxY: number
+  width: number
+  height: number
+  visiblePieceCount: number
+}
+
+export function computeSkelAnimFrameBounds(
+  sequence: SkelAnimSequence,
+  frameIndex: number,
+): SkelAnimFrameBounds | null {
   const visiblePieces = listVisiblePieces(sequence, frameIndex)
 
   if (visiblePieces.length === 0) {
@@ -131,7 +179,27 @@ export function computeSkelAnimFrameBounds(sequence, frameIndex) {
   }
 }
 
-export function selectBestSkelAnimPose(character, options = {}) {
+export interface SkelAnimPose {
+  sequenceIndex: number
+  sequenceLength: number
+  frameIndex: number
+  visiblePieceCount: number
+  width: number
+  height: number
+  area: number
+  bounds: SkelAnimFrameBounds
+}
+
+export interface SkelAnimPoseOptions {
+  maxCanvasEdge?: number
+  preferredSequenceIndexes?: readonly number[]
+  preferredFrameIndexes?: readonly number[]
+}
+
+export function selectBestSkelAnimPose(
+  character: SkelAnimCharacter,
+  options: SkelAnimPoseOptions = {},
+): SkelAnimPose {
   const maxCanvasEdge = Math.max(4096, Number(options.maxCanvasEdge ?? 4096))
   const sequences = resolveSequenceOrder(character, options.preferredSequenceIndexes ?? [])
 
@@ -167,7 +235,9 @@ export function selectBestSkelAnimPose(character, options = {}) {
   throw new Error(`角色 ${character.name} 没有可渲染的 pose`)
 }
 
-async function loadTextureImages(textures) {
+async function loadTextureImages(
+  textures: readonly SkelAnimTexture[],
+): Promise<{ textureId: number; image: TextureImage }[]> {
   return Promise.all(
     textures.map(async (texture) => ({
       textureId: texture.textureId,
@@ -176,38 +246,72 @@ async function loadTextureImages(textures) {
   )
 }
 
-export async function renderSkelAnimPoseToPngBuffer(skelAnim, options = {}) {
+export interface RenderSkelAnimPoseOptions extends SkelAnimPoseOptions {
+  characterIndex?: number
+  sequenceIndex?: number
+  frameIndex?: number
+  viewportBounds?: SkelAnimFrameBounds
+  rasterScale?: number
+}
+
+export interface RenderedSkelAnimPose {
+  bytes: Buffer
+  width: number
+  height: number
+  render: {
+    sequenceIndex: number
+    sequenceLength: number
+    isStaticPose: boolean
+    frameIndex: number
+    bounds: { minX: number; minY: number; maxX: number; maxY: number }
+    visiblePieceCount: number
+  }
+}
+
+export async function renderSkelAnimPoseToPngBuffer(
+  skelAnim: SkelAnimGraphic,
+  options: RenderSkelAnimPoseOptions = {},
+): Promise<RenderedSkelAnimPose> {
   const character = skelAnim.characters[options.characterIndex ?? 0]
 
   if (!character) {
     throw new Error('SkelAnim 中没有可用角色')
   }
 
-  const pose =
-    options.sequenceIndex != null && options.frameIndex != null
+  const explicitSequenceIndex = options.sequenceIndex
+  const explicitFrameIndex = options.frameIndex
+  const pose: { sequenceIndex: number; sequenceLength: number; frameIndex: number; bounds: SkelAnimFrameBounds } =
+    explicitSequenceIndex != null && explicitFrameIndex != null
       ? (() => {
-          const sequence = character.sequences.find((item) => item.sequenceIndex === options.sequenceIndex)
+          const sequence = character.sequences.find((item) => item.sequenceIndex === explicitSequenceIndex)
 
           if (!sequence) {
-            throw new Error(`角色 ${character.name} 不存在 sequence ${options.sequenceIndex}`)
+            throw new Error(`角色 ${character.name} 不存在 sequence ${explicitSequenceIndex}`)
           }
 
-          const bounds = computeSkelAnimFrameBounds(sequence, options.frameIndex)
+          const bounds = computeSkelAnimFrameBounds(sequence, explicitFrameIndex)
 
           if (!bounds) {
-            throw new Error(`角色 ${character.name} 的 sequence ${options.sequenceIndex} frame ${options.frameIndex} 不可渲染`)
+            throw new Error(
+              `角色 ${character.name} 的 sequence ${explicitSequenceIndex} frame ${explicitFrameIndex} 不可渲染`,
+            )
           }
 
           return {
             sequenceIndex: sequence.sequenceIndex,
             sequenceLength: sequence.length,
-            frameIndex: options.frameIndex,
+            frameIndex: explicitFrameIndex,
             bounds,
           }
         })()
       : selectBestSkelAnimPose(character, options)
 
   const sequence = character.sequences.find((item) => item.sequenceIndex === pose.sequenceIndex)
+
+  if (!sequence) {
+    throw new Error(`角色 ${character.name} 不存在 sequence ${pose.sequenceIndex}`)
+  }
+
   const textureImages = await loadTextureImages(skelAnim.textures)
   const textureImageById = new Map(textureImages.map((item) => [item.textureId, item.image]))
   const viewportBounds = options.viewportBounds ?? pose.bounds
@@ -218,7 +322,9 @@ export async function renderSkelAnimPoseToPngBuffer(skelAnim, options = {}) {
   const height = Math.max(1, Math.ceil(logicalHeight * rasterScale))
   const canvas = createCanvas(width, height)
   const context = canvas.getContext('2d')
-  const visiblePieces = listVisiblePieces(sequence, pose.frameIndex).sort((left, right) => left.frame.depth - right.frame.depth)
+  const visiblePieces = listVisiblePieces(sequence, pose.frameIndex).sort(
+    (left, right) => left.frame.depth - right.frame.depth,
+  )
 
   context.setTransform(rasterScale, 0, 0, rasterScale, 0, 0)
   context.imageSmoothingEnabled = false

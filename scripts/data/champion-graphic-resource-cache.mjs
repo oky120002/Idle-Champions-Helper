@@ -3,7 +3,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { decodeRemoteGraphicBuffer, readPngDimensions } from './mobile-asset-codec.ts'
 import { decodeSkelAnimGraphicBuffer } from './skelanim-codec.ts'
-import { renderSkelAnimPoseToPngBuffer } from './skelanim-renderer.mjs'
+import { renderSkelAnimPoseToPngBuffer } from './skelanim-renderer.ts'
 
 export const DEFAULT_GRAPHIC_CACHE_DIR = 'tmp/idle-champions-graphic-cache'
 

@@ -1,4 +1,4 @@
-import { computeSkelAnimFrameBounds } from './skelanim-renderer.mjs'
+import { computeSkelAnimFrameBounds } from './skelanim-renderer.ts'
 
 function mergeBounds(base, next) {
   if (!next) {

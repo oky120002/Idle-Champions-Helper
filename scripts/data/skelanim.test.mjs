@@ -7,7 +7,7 @@ import {
   computeSkelAnimFrameBounds,
   renderSkelAnimPoseToPngBuffer,
   selectBestSkelAnimPose,
-} from './skelanim-renderer.mjs'
+} from './skelanim-renderer.ts'
 
 function createSolidTexture(width, height, colorByPixel) {
   const png = new PNG({ width, height })
