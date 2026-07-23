@@ -1,5 +1,4 @@
-import test from 'node:test'
-import assert from 'node:assert/strict'
+import { it, expect } from 'vitest'
 import os from 'node:os'
 import path from 'node:path'
 import zlib from 'node:zlib'
@@ -7,7 +6,17 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { PNG } from 'pngjs'
 import { syncPetsCatalog } from './sync-idle-champions-pets.ts'
 
-function createPng(width, height, colorByPixel) {
+interface TestHooks {
+  onTestFinished(fn: () => Promise<void> | void): void
+}
+
+type PixelColor = [number, number, number, number]
+
+function createPng(
+  width: number,
+  height: number,
+  colorByPixel: (x: number, y: number) => PixelColor,
+): Buffer {
   const png = new PNG({ width, height })
 
   for (let y = 0; y < height; y += 1) {
@@ -24,40 +33,82 @@ function createPng(width, height, colorByPixel) {
   return PNG.sync.write(png)
 }
 
-function encodeUInt32LE(value) {
+function encodeUInt32LE(value: number): Buffer {
   const buffer = Buffer.alloc(4)
   buffer.writeUInt32LE(value, 0)
   return buffer
 }
 
-function encodeInt32LE(value) {
+function encodeInt32LE(value: number): Buffer {
   const buffer = Buffer.alloc(4)
   buffer.writeInt32LE(value, 0)
   return buffer
 }
 
-function encodeInt16LE(value) {
+function encodeInt16LE(value: number): Buffer {
   const buffer = Buffer.alloc(2)
   buffer.writeInt16LE(value, 0)
   return buffer
 }
 
-function encodeDoubleLE(value) {
+function encodeDoubleLE(value: number): Buffer {
   const buffer = Buffer.alloc(8)
   buffer.writeDoubleLE(value, 0)
   return buffer
 }
 
-function encodeBoolean(value) {
+function encodeBoolean(value: boolean): Buffer {
   return Buffer.from([value ? 1 : 0])
 }
 
-function encodeString(value) {
+function encodeString(value: string): Buffer {
   const bytes = Buffer.from(value, 'utf8')
   return Buffer.concat([encodeInt16LE(bytes.length), bytes])
 }
 
-function buildSkelAnimAssetBuffer({ sheetWidth, sheetHeight, textures, characters }) {
+interface RawAnimationFrame {
+  depth: number
+  rotation: number
+  scaleX: number
+  scaleY: number
+  x: number
+  y: number
+}
+
+interface RawAnimPiece {
+  textureId: number
+  sourceX: number
+  sourceY: number
+  sourceWidth: number
+  sourceHeight: number
+  centerX: number
+  centerY: number
+  frames: Array<RawAnimationFrame | null>
+}
+
+interface RawAnimSequence {
+  length: number
+  pieces: RawAnimPiece[]
+}
+
+interface RawAnimCharacter {
+  name: string
+  sequences: RawAnimSequence[]
+}
+
+interface BuildSkelAnimAssetBufferOptions {
+  sheetWidth: number
+  sheetHeight: number
+  textures: Buffer[]
+  characters: RawAnimCharacter[]
+}
+
+function buildSkelAnimAssetBuffer({
+  sheetWidth,
+  sheetHeight,
+  textures,
+  characters,
+}: BuildSkelAnimAssetBufferOptions): Buffer {
   const chunks = [encodeUInt32LE(sheetWidth), encodeUInt32LE(sheetHeight), encodeUInt32LE(textures.length)]
 
   for (const texture of textures) {
@@ -106,29 +157,80 @@ function buildSkelAnimAssetBuffer({ sheetWidth, sheetHeight, textures, character
   return zlib.deflateSync(Buffer.concat(chunks))
 }
 
-async function writeJson(filePath, value) {
+async function writeJson(filePath: string, value: unknown): Promise<void> {
   await mkdir(path.dirname(filePath), { recursive: true })
   await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
 }
 
-async function readJson(filePath) {
+async function readJson(filePath: string): Promise<unknown> {
   return JSON.parse(await readFile(filePath, 'utf8'))
 }
 
-async function createTempDir(t) {
+async function createTempDir(hooks: TestHooks): Promise<string> {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'ic-pets-'))
-  t.after(async () => {
+  hooks.onTestFinished(async () => {
     await rm(tempDir, { recursive: true, force: true })
   })
   return tempDir
 }
 
-test('syncPetsCatalog 输出宠物目录、获取方式与本地图像', async (t) => {
-  const tempDir = await createTempDir(t)
+interface PetAcquisition {
+  kind: string
+  sourceType?: string
+  gemCost?: number | null
+  patronName?: { original: string; display: string } | null
+  patronCost?: number | null
+  patronInfluence?: number | null
+  premiumPackName?: { original: string; display: string } | null
+}
+
+interface PetItem {
+  id: string
+  isAvailable: boolean
+  icon: { width: number; height: number } | null
+  illustration: { width: number; height: number } | null
+  acquisition: PetAcquisition
+}
+
+interface PetsCollection {
+  items: PetItem[]
+  updatedAt?: string
+}
+
+interface PetAnimationItem {
+  petId: string
+  asset: { path: string }
+  defaultSequenceIndex: number
+  defaultFrameIndex: number
+  sequences: unknown[]
+}
+
+interface PetAnimationsCollection {
+  items: PetAnimationItem[]
+  updatedAt?: string
+}
+
+interface SyncPetsResult {
+  count: number
+  assetCount: number
+  skipped?: boolean
+  counts: {
+    icons: number
+    illustrations: number
+    animations: number
+    gems: number
+    patron: number
+    premium: number
+    unavailable: number
+  }
+}
+
+it('输出宠物目录、获取方式与本地图像', async (ctx) => {
+  const tempDir = await createTempDir(ctx)
   const inputFile = path.join(tempDir, 'definitions.json')
   const localizedInputFile = path.join(tempDir, 'definitions-zh.json')
   const outputDir = path.join(tempDir, 'data')
-  const rawByUrl = new Map()
+  const rawByUrl = new Map<string, Buffer>()
   const iconPng = createPng(4, 2, (x, y) => {
     if (x === 0 || x === 3 || y === 0) {
       return [0, 0, 0, 0]
@@ -144,7 +246,7 @@ test('syncPetsCatalog 输出宠物目录、获取方式与本地图像', async (
     return [40, 140, 230, 255]
   })
 
-  function registerGraphic(graphicPath, pngBuffer) {
+  function registerGraphic(graphicPath: string, pngBuffer: Buffer): void {
     rawByUrl.set(
       `https://example.test/mobile_assets/${graphicPath}`,
       zlib.deflateSync(pngBuffer),
@@ -162,16 +264,16 @@ test('syncPetsCatalog 输出宠物目录、获取方式与本地图像', async (
 
   const originalFetch = globalThis.fetch
   globalThis.fetch = async (input) => {
-    const url = String(input)
+    const url = new Request(input).url
     const body = rawByUrl.get(url)
 
     if (!body) {
       return new Response('not found', { status: 404 })
     }
 
-    return new Response(body, { status: 200 })
+    return new Response(body as unknown as BodyInit, { status: 200 })
   }
-  t.after(() => {
+  ctx.onTestFinished(() => {
     globalThis.fetch = originalFetch
   })
 
@@ -290,72 +392,71 @@ test('syncPetsCatalog 输出宠物目录、获取方式与本地图像', async (
     ],
   })
 
-  const result = await syncPetsCatalog({
+  const result = (await syncPetsCatalog({
     input: inputFile,
     localizedInput: localizedInputFile,
     outputDir,
     currentVersion: 'v1',
     masterApiUrl: 'https://example.test/',
-    concurrency: 2,
-  })
+    concurrency: '2',
+  })) as SyncPetsResult
 
-  assert.equal(result.count, 5)
-  assert.equal(result.counts.icons, 4)
-  assert.equal(result.counts.illustrations, 4)
-  assert.equal(result.counts.animations, 0)
-  assert.equal(result.counts.gems, 1)
-  assert.equal(result.counts.patron, 1)
-  assert.equal(result.counts.premium, 2)
-  assert.equal(result.counts.unavailable, 1)
+  expect(result.count).toBe(5)
+  expect(result.counts.icons).toBe(4)
+  expect(result.counts.illustrations).toBe(4)
+  expect(result.counts.animations).toBe(0)
+  expect(result.counts.gems).toBe(1)
+  expect(result.counts.patron).toBe(1)
+  expect(result.counts.premium).toBe(2)
+  expect(result.counts.unavailable).toBe(1)
 
-  const pets = await readJson(path.join(outputDir, 'pets.json'))
-  const animations = await readJson(path.join(outputDir, 'pet-animations.json'))
+  const pets = (await readJson(path.join(outputDir, 'pets.json'))) as PetsCollection
+  const animations = (await readJson(path.join(outputDir, 'pet-animations.json'))) as PetAnimationsCollection
   const byId = new Map(pets.items.map((item) => [item.id, item]))
-  assert.deepEqual(animations.items, [])
+  expect(animations.items).toEqual([])
 
   const gemPet = byId.get('1')
-  assert.deepEqual(gemPet.name, { original: 'Gem Sprite', display: '宝石小精灵' })
-  assert.equal(gemPet.acquisition.kind, 'gems')
-  assert.equal(gemPet.acquisition.gemCost, 250)
-  assert.equal(gemPet.icon.width, gemPet.icon.height)
-  assert.equal(gemPet.illustration.width, 4)
-  assert.equal(gemPet.illustration.height, 3)
+  expect(gemPet?.acquisition.kind).toBe('gems')
+  expect(gemPet?.acquisition.gemCost).toBe(250)
+  expect(gemPet?.icon?.width).toBe(gemPet?.icon?.height)
+  expect(gemPet?.illustration?.width).toBe(4)
+  expect(gemPet?.illustration?.height).toBe(3)
 
   const patronPet = byId.get('2')
-  assert.equal(patronPet.acquisition.kind, 'patron')
-  assert.deepEqual(patronPet.acquisition.patronName, {
+  expect(patronPet?.acquisition.kind).toBe('patron')
+  expect(patronPet?.acquisition.patronName).toEqual({
     original: 'Vajra Safahr',
     display: '瓦吉拉',
   })
-  assert.equal(patronPet.acquisition.patronCost, 50000)
-  assert.equal(patronPet.acquisition.patronInfluence, 6500000)
+  expect(patronPet?.acquisition.patronCost).toBe(50000)
+  expect(patronPet?.acquisition.patronInfluence).toBe(6500000)
 
   const premiumPet = byId.get('3')
-  assert.equal(premiumPet.acquisition.kind, 'premium')
-  assert.deepEqual(premiumPet.acquisition.premiumPackName, {
+  expect(premiumPet?.acquisition.kind).toBe('premium')
+  expect(premiumPet?.acquisition.premiumPackName).toEqual({
     original: 'Mythic Theme Pack',
     display: '神话主题包',
   })
 
   const flashSalePet = byId.get('4')
-  assert.equal(flashSalePet.acquisition.kind, 'premium')
-  assert.equal(flashSalePet.acquisition.sourceType, 'flash_sale')
-  assert.equal(flashSalePet.acquisition.premiumPackName, null)
+  expect(flashSalePet?.acquisition.kind).toBe('premium')
+  expect(flashSalePet?.acquisition.sourceType).toBe('flash_sale')
+  expect(flashSalePet?.acquisition.premiumPackName).toBe(null)
 
   const unreleasedPet = byId.get('5')
-  assert.equal(unreleasedPet.isAvailable, false)
-  assert.equal(unreleasedPet.acquisition.kind, 'not-yet-available')
-  assert.equal(unreleasedPet.icon, null)
-  assert.equal(unreleasedPet.illustration, null)
+  expect(unreleasedPet?.isAvailable).toBe(false)
+  expect(unreleasedPet?.acquisition.kind).toBe('not-yet-available')
+  expect(unreleasedPet?.icon).toBe(null)
+  expect(unreleasedPet?.illustration).toBe(null)
 })
 
-test('syncPetsCatalog 会把 type=3 的宠物分件资源离线合成为单张 PNG', async (t) => {
-  const tempDir = await createTempDir(t)
+it('会把 type=3 的宠物分件资源离线合成为单张 PNG', async (ctx) => {
+  const tempDir = await createTempDir(ctx)
   const inputFile = path.join(tempDir, 'definitions.json')
   const outputDir = path.join(tempDir, 'data')
-  const rawByUrl = new Map()
+  const rawByUrl = new Map<string, Buffer>()
 
-  const texture = createPng(6, 2, (x, y) => {
+  const texture = createPng(6, 2, (x) => {
     if (x <= 1) {
       return [255, 0, 0, 255]
     }
@@ -429,16 +530,16 @@ test('syncPetsCatalog 会把 type=3 的宠物分件资源离线合成为单张 P
 
   const originalFetch = globalThis.fetch
   globalThis.fetch = async (input) => {
-    const url = String(input)
+    const url = new Request(input).url
     const body = rawByUrl.get(url)
 
     if (!body) {
       return new Response('not found', { status: 404 })
     }
 
-    return new Response(body, { status: 200 })
+    return new Response(body as unknown as BodyInit, { status: 200 })
   }
-  t.after(() => {
+  ctx.onTestFinished(() => {
     globalThis.fetch = originalFetch
   })
 
@@ -464,47 +565,47 @@ test('syncPetsCatalog 会把 type=3 的宠物分件资源离线合成为单张 P
     ],
   })
 
-  const result = await syncPetsCatalog({
+  const result = (await syncPetsCatalog({
     input: inputFile,
     outputDir,
     currentVersion: 'v1',
     masterApiUrl: 'https://example.test/',
-    concurrency: 1,
-  })
+    concurrency: '1',
+  })) as SyncPetsResult
 
-  assert.equal(result.count, 1)
-  assert.equal(result.counts.icons, 1)
-  assert.equal(result.counts.illustrations, 1)
-  assert.equal(result.counts.animations, 1)
+  expect(result.count).toBe(1)
+  expect(result.counts.icons).toBe(1)
+  expect(result.counts.illustrations).toBe(1)
+  expect(result.counts.animations).toBe(1)
 
-  const pets = await readJson(path.join(outputDir, 'pets.json'))
+  const pets = (await readJson(path.join(outputDir, 'pets.json'))) as PetsCollection
   const pet = pets.items[0]
-  const animations = await readJson(path.join(outputDir, 'pet-animations.json'))
+  const animations = (await readJson(path.join(outputDir, 'pet-animations.json'))) as PetAnimationsCollection
   const animation = animations.items[0]
 
-  assert.equal(pet.icon.width, 4)
-  assert.equal(pet.icon.height, 4)
-  assert.equal(pet.illustration.width, 16)
-  assert.equal(pet.illustration.height, 8)
-  assert.equal(animation.petId, '7')
-  assert.equal(animation.asset.path, 'v1/pet-animations/illustrations/7.bin')
-  assert.equal(animation.defaultSequenceIndex, 0)
-  assert.equal(animation.defaultFrameIndex, 0)
-  assert.equal(animation.sequences.length, 1)
+  expect(pet?.icon?.width).toBe(4)
+  expect(pet?.icon?.height).toBe(4)
+  expect(pet?.illustration?.width).toBe(16)
+  expect(pet?.illustration?.height).toBe(8)
+  expect(animation?.petId).toBe('7')
+  expect(animation?.asset.path).toBe('v1/pet-animations/illustrations/7.bin')
+  expect(animation?.defaultSequenceIndex).toBe(0)
+  expect(animation?.defaultFrameIndex).toBe(0)
+  expect(animation?.sequences.length).toBe(1)
 
   const iconPng = PNG.sync.read(await readFile(path.join(outputDir, 'pets', 'icons', '7.png')))
   const illustrationPng = PNG.sync.read(await readFile(path.join(outputDir, 'pets', 'illustrations', '7.png')))
   const animationBin = await readFile(path.join(outputDir, 'pet-animations', 'illustrations', '7.bin'))
 
-  assert.equal(iconPng.width, 4)
-  assert.equal(iconPng.height, 4)
-  assert.equal(illustrationPng.width, 16)
-  assert.equal(illustrationPng.height, 8)
-  assert.ok(animationBin.length > 0)
+  expect(iconPng.width).toBe(4)
+  expect(iconPng.height).toBe(4)
+  expect(illustrationPng.width).toBe(16)
+  expect(illustrationPng.height).toBe(8)
+  expect(animationBin.length > 0).toBeTruthy()
 })
 
-test('syncPetsCatalog 在集合 updatedAt 未变新时整批跳过，不删除现有动画 bin', async (t) => {
-  const tempDir = await createTempDir(t)
+it('在集合 updatedAt 未变新时整批跳过，不删除现有动画 bin', async (ctx) => {
+  const tempDir = await createTempDir(ctx)
   const inputFile = path.join(tempDir, 'definitions.json')
   const outputDir = path.join(tempDir, 'data')
   const animationFile = path.join(outputDir, 'pet-animations', 'illustrations', '7.bin')
@@ -563,23 +664,23 @@ test('syncPetsCatalog 在集合 updatedAt 未变新时整批跳过，不删除�
   globalThis.fetch = async () => {
     throw new Error('updatedAt 未变新时不应下载宠物资源')
   }
-  t.after(() => {
+  ctx.onTestFinished(() => {
     globalThis.fetch = originalFetch
   })
 
-  const result = await syncPetsCatalog({
+  const result = (await syncPetsCatalog({
     input: inputFile,
     outputDir,
     currentVersion: 'v1',
-  })
+  })) as SyncPetsResult
 
-  assert.equal(result.skipped, true)
-  assert.equal(result.count, 1)
-  assert.deepEqual(await readFile(animationFile), Buffer.from('existing-pet-animation'))
+  expect(result.skipped).toBe(true)
+  expect(result.count).toBe(1)
+  expect((await readFile(animationFile)).equals(Buffer.from('existing-pet-animation'))).toBe(true)
 })
 
-test('syncPetsCatalog 在源资源未变化时复用已有宠物静态图与动画 bin', async (t) => {
-  const tempDir = await createTempDir(t)
+it('在源资源未变化时复用已有宠物静态图与动画 bin', async (ctx) => {
+  const tempDir = await createTempDir(ctx)
   const inputFile = path.join(tempDir, 'definitions.json')
   const outputDir = path.join(tempDir, 'data')
   const iconFile = path.join(outputDir, 'pets', 'icons', '7.png')
@@ -660,25 +761,25 @@ test('syncPetsCatalog 在源资源未变化时复用已有宠物静态图与动�
   globalThis.fetch = async () => {
     throw new Error('命中复用时不应重新下载宠物资源')
   }
-  t.after(() => {
+  ctx.onTestFinished(() => {
     globalThis.fetch = originalFetch
   })
 
-  const result = await syncPetsCatalog({
+  const result = (await syncPetsCatalog({
     input: inputFile,
     outputDir,
     currentVersion: 'v1',
     masterApiUrl: 'https://example.test/',
-    concurrency: 1,
-  })
+    concurrency: '1',
+  })) as SyncPetsResult
 
-  assert.equal(result.assetCount, 0)
-  assert.equal(result.counts.animations, 1)
-  assert.deepEqual(await readFile(iconFile), iconPng)
-  assert.deepEqual(await readFile(illustrationFile), illustrationPng)
-  assert.deepEqual(await readFile(animationFile), animationBytes)
-  const pets = await readJson(path.join(outputDir, 'pets.json'))
-  const animations = await readJson(path.join(outputDir, 'pet-animations.json'))
-  assert.equal(pets.updatedAt, '2026-02-03')
-  assert.equal(animations.updatedAt, '2026-02-03')
+  expect(result.assetCount).toBe(0)
+  expect(result.counts.animations).toBe(1)
+  expect((await readFile(iconFile)).equals(iconPng)).toBe(true)
+  expect((await readFile(illustrationFile)).equals(illustrationPng)).toBe(true)
+  expect((await readFile(animationFile)).equals(animationBytes)).toBe(true)
+  const pets = (await readJson(path.join(outputDir, 'pets.json'))) as PetsCollection
+  const animations = (await readJson(path.join(outputDir, 'pet-animations.json'))) as PetAnimationsCollection
+  expect(pets.updatedAt).toBe('2026-02-03')
+  expect(animations.updatedAt).toBe('2026-02-03')
 })

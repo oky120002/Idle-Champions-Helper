@@ -1,5 +1,4 @@
-import test from 'node:test'
-import assert from 'node:assert/strict'
+import { it, expect } from 'vitest'
 
 import { championDetailsSchema } from './champion-details-schema.ts'
 
@@ -13,32 +12,32 @@ const validDetail = {
   upgrades: [],
 }
 
-test('championDetailsSchema 接受合法核心字段（阶段 9.3）', () => {
-  assert.equal(championDetailsSchema.safeParse(validDetail).success, true)
+it('championDetailsSchema 接受合法核心字段（阶段 9.3）', () => {
+  expect(championDetailsSchema.safeParse(validDetail).success).toBe(true)
 })
 
-test('championDetailsSchema 拦截 baseDamage 类型错误', () => {
+it('championDetailsSchema 拦截 baseDamage 类型错误', () => {
   const result = championDetailsSchema.safeParse({ ...validDetail, baseDamage: 123 })
-  assert.equal(result.success, false)
+  expect(result.success).toBe(false)
 })
 
-test('championDetailsSchema 拦截 attacks.base.cooldown 缺失', () => {
+it('championDetailsSchema 拦截 attacks.base.cooldown 缺失', () => {
   const result = championDetailsSchema.safeParse({
     ...validDetail,
     attacks: { base: { damageTypes: ['melee'] } },
   })
-  assert.equal(result.success, false)
+  expect(result.success).toBe(false)
 })
 
-test('characterSheet.age=null 合法（真实数据含 null age）', () => {
+it('characterSheet.age=null 合法（真实数据含 null age）', () => {
   const result = championDetailsSchema.safeParse({
     ...validDetail,
     characterSheet: { age: null, abilityScores: {} },
   })
-  assert.equal(result.success, true)
+  expect(result.success).toBe(true)
 })
 
-test('非核心字段 passthrough 放行（不耦合上游字段增减）', () => {
+it('非核心字段 passthrough 放行（不耦合上游字段增减）', () => {
   const result = championDetailsSchema.safeParse({ ...validDetail, extraField: 'whatever', skins: [] })
-  assert.equal(result.success, true)
+  expect(result.success).toBe(true)
 })

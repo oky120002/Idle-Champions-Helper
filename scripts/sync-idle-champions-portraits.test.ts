@@ -1,12 +1,19 @@
-import test from 'node:test'
-import assert from 'node:assert/strict'
+import { it, expect } from 'vitest'
 import os from 'node:os'
 import path from 'node:path'
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { PNG } from 'pngjs'
 import { syncChampionPortraits } from './sync-idle-champions-portraits.ts'
 
-function createPng(width, height, colorByPixel) {
+interface TestHooks {
+  onTestFinished(fn: () => Promise<void> | void): void
+}
+
+function createPng(
+  width: number,
+  height: number,
+  colorByPixel: (x: number, y: number) => [number, number, number, number],
+): Buffer {
   const png = new PNG({ width, height })
 
   for (let y = 0; y < height; y += 1) {
@@ -23,29 +30,29 @@ function createPng(width, height, colorByPixel) {
   return PNG.sync.write(png)
 }
 
-function createWrappedPngBody(pngBuffer) {
+function createWrappedPngBody(pngBuffer: Buffer): Buffer {
   return Buffer.concat([Buffer.from([1, 2, 3, 4]), pngBuffer])
 }
 
-async function writeJson(filePath, value) {
+async function writeJson(filePath: string, value: unknown): Promise<void> {
   await mkdir(path.dirname(filePath), { recursive: true })
   await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
 }
 
-async function readJson(filePath) {
+async function readJson(filePath: string): Promise<unknown> {
   return JSON.parse(await readFile(filePath, 'utf8'))
 }
 
-async function createTempDir(t) {
+async function createTempDir(hooks: TestHooks): Promise<string> {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'ic-portraits-'))
-  t.after(async () => {
+  hooks.onTestFinished(async () => {
     await rm(tempDir, { recursive: true, force: true })
   })
   return tempDir
 }
 
-test('syncChampionPortraits 会生成头像文件与同步 manifest', async (t) => {
-  const tempDir = await createTempDir(t)
+it('syncChampionPortraits 会生成头像文件与同步 manifest', async (ctx) => {
+  const tempDir = await createTempDir(ctx)
   const inputFile = path.join(tempDir, 'definitions.json')
   const outputDir = path.join(tempDir, 'data')
   const portraitPng = createPng(6, 4, (x, y) => {
@@ -57,8 +64,8 @@ test('syncChampionPortraits 会生成头像文件与同步 manifest', async (t) 
   })
   const originalFetch = globalThis.fetch
 
-  globalThis.fetch = async () => new Response(createWrappedPngBody(portraitPng), { status: 200 })
-  t.after(() => {
+  globalThis.fetch = async () => new Response(createWrappedPngBody(portraitPng) as unknown as BodyInit, { status: 200 })
+  ctx.onTestFinished(() => {
     globalThis.fetch = originalFetch
   })
 
@@ -74,18 +81,21 @@ test('syncChampionPortraits 会生成头像文件与同步 manifest', async (t) 
     masterApiUrl: 'https://example.test/',
   })
 
-  assert.equal(result.count, 1)
-  const manifest = await readJson(path.join(outputDir, 'champion-portraits.manifest.json'))
-  assert.equal(manifest.updatedAt, '2026-02-02')
-  assert.equal(manifest.items[0].sourceGraphic, 'Portraits/Hero_101')
-  assert.equal(manifest.items[0].image.path, 'v1/champion-portraits/101.png')
+  expect(result.count).toBe(1)
+  const manifest = (await readJson(path.join(outputDir, 'champion-portraits.manifest.json'))) as {
+    updatedAt: string
+    items: Array<{ sourceGraphic: string; image: { path: string } }>
+  }
+  expect(manifest.updatedAt).toBe('2026-02-02')
+  expect(manifest.items[0]?.sourceGraphic).toBe('Portraits/Hero_101')
+  expect(manifest.items[0]?.image.path).toBe('v1/champion-portraits/101.png')
   const writtenPng = PNG.sync.read(await readFile(path.join(outputDir, 'champion-portraits', '101.png')))
-  assert.equal(writtenPng.width, 4)
-  assert.equal(writtenPng.height, 4)
+  expect(writtenPng.width).toBe(4)
+  expect(writtenPng.height).toBe(4)
 })
 
-test('syncChampionPortraits 在资源未更新时整批跳过', async (t) => {
-  const tempDir = await createTempDir(t)
+it('syncChampionPortraits 在资源未更新时整批跳过', async (ctx) => {
+  const tempDir = await createTempDir(ctx)
   const inputFile = path.join(tempDir, 'definitions.json')
   const outputDir = path.join(tempDir, 'data')
   const assetDir = path.join(outputDir, 'champion-portraits')
@@ -119,7 +129,7 @@ test('syncChampionPortraits 在资源未更新时整批跳过', async (t) => {
   globalThis.fetch = async () => {
     throw new Error('不应触发下载')
   }
-  t.after(() => {
+  ctx.onTestFinished(() => {
     globalThis.fetch = originalFetch
   })
 
@@ -128,13 +138,13 @@ test('syncChampionPortraits 在资源未更新时整批跳过', async (t) => {
     outputDir,
   })
 
-  assert.equal(result.skipped, true)
-  assert.equal(result.count, 1)
-  assert.deepEqual(await readFile(path.join(assetDir, '101.png')), Buffer.from('existing-portrait'))
+  expect(result.skipped).toBe(true)
+  expect(result.count).toBe(1)
+  expect(await readFile(path.join(assetDir, '101.png'))).toEqual(Buffer.from('existing-portrait'))
 })
 
-test('syncChampionPortraits 在单头像 source 未变化时复用已有 PNG', async (t) => {
-  const tempDir = await createTempDir(t)
+it('syncChampionPortraits 在单头像 source 未变化时复用已有 PNG', async (ctx) => {
+  const tempDir = await createTempDir(ctx)
   const inputFile = path.join(tempDir, 'definitions.json')
   const outputDir = path.join(tempDir, 'data')
   const assetDir = path.join(outputDir, 'champion-portraits')
@@ -169,7 +179,7 @@ test('syncChampionPortraits 在单头像 source 未变化时复用已有 PNG', a
   globalThis.fetch = async () => {
     throw new Error('命中单头像复用时不应重新下载')
   }
-  t.after(() => {
+  ctx.onTestFinished(() => {
     globalThis.fetch = originalFetch
   })
 
@@ -179,9 +189,12 @@ test('syncChampionPortraits 在单头像 source 未变化时复用已有 PNG', a
     masterApiUrl: 'https://example.test/',
   })
 
-  assert.equal(result.count, 1)
-  assert.deepEqual(await readFile(path.join(assetDir, '101.png')), existingPng)
-  const manifest = await readJson(path.join(outputDir, 'champion-portraits.manifest.json'))
-  assert.equal(manifest.updatedAt, '2026-02-03')
-  assert.equal(manifest.items[0].image.path, 'v1/champion-portraits/101.png')
+  expect(result.count).toBe(1)
+  expect(await readFile(path.join(assetDir, '101.png'))).toEqual(existingPng)
+  const manifest = (await readJson(path.join(outputDir, 'champion-portraits.manifest.json'))) as {
+    updatedAt: string
+    items: Array<{ image: { path: string } }>
+  }
+  expect(manifest.updatedAt).toBe('2026-02-03')
+  expect(manifest.items[0]?.image.path).toBe('v1/champion-portraits/101.png')
 })

@@ -1,11 +1,33 @@
-import test from 'node:test'
-import assert from 'node:assert/strict'
+import { expect, it } from 'vitest'
 import {
   listAnimationIdleCandidateMetrics,
   selectAnimationIdleDefaultMetrics,
 } from './champion-animation-idle-selection.ts'
 
-function createMetrics(overrides) {
+interface TestMetrics {
+  sequenceIndex: number
+  frameIndex: number
+  frameCount: number
+  pieceCount: number
+  renderableFrameCount: number
+  renderableFrameRatio: number
+  persistentPieceCount: number
+  persistentPieceRatio: number
+  singleFramePieceCount: number
+  singleFramePieceRatio: number
+  averageVisiblePieceRatio: number
+  nullPieceRatio: number
+  bounds: { minX: number; minY: number; maxX: number; maxY: number }
+  boundsArea: number
+  averageMotion: number
+  pieceCoverageRatio: number
+  boundsAreaRatio: number
+  motionRatio: number
+  motionScore: number
+  score: number
+}
+
+function createMetrics(overrides: Partial<TestMetrics> = {}): TestMetrics {
   return {
     sequenceIndex: 0,
     frameIndex: 0,
@@ -31,7 +53,7 @@ function createMetrics(overrides) {
   }
 }
 
-test('selectAnimationIdleDefaultMetrics 会拒绝只靠大轮廓撑高分但更碎的 sequence', () => {
+it('selectAnimationIdleDefaultMetrics 会拒绝只靠大轮廓撑高分但更碎的 sequence', () => {
   const current = createMetrics({
     sequenceIndex: 0,
     score: 8.2,
@@ -55,10 +77,10 @@ test('selectAnimationIdleDefaultMetrics 会拒绝只靠大轮廓撑高分但更�
     preferredSequenceIndexes: [0],
   })
 
-  assert.equal(selected?.sequenceIndex, 0)
+  expect(selected?.sequenceIndex).toBe(0)
 })
 
-test('selectAnimationIdleDefaultMetrics 尊重 fixedSequenceIndex 覆写', () => {
+it('selectAnimationIdleDefaultMetrics 尊重 fixedSequenceIndex 覆写', () => {
   const current = createMetrics({ sequenceIndex: 0, score: 8.2 })
   const better = createMetrics({ sequenceIndex: 2, score: 9.4, pieceCoverageRatio: 0.95, boundsAreaRatio: 0.9 })
 
@@ -68,10 +90,10 @@ test('selectAnimationIdleDefaultMetrics 尊重 fixedSequenceIndex 覆写', () =>
     fixedSequenceIndex: 0,
   })
 
-  assert.equal(selected?.sequenceIndex, 0)
+  expect(selected?.sequenceIndex).toBe(0)
 })
 
-test('listAnimationIdleCandidateMetrics 不再推荐已被人工封禁的 sequence', () => {
+it('listAnimationIdleCandidateMetrics 不再推荐已被人工封禁的 sequence', () => {
   const current = createMetrics({ sequenceIndex: 0, score: 8.2 })
   const blocked = createMetrics({
     sequenceIndex: 4,
@@ -97,8 +119,7 @@ test('listAnimationIdleCandidateMetrics 不再推荐已被人工封禁的 sequen
     maxCandidates: 3,
   })
 
-  assert.deepEqual(
+  expect(
     candidates.map((item) => item.sequenceIndex),
-    [1],
-  )
+  ).toEqual([1])
 })

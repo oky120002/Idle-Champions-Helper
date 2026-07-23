@@ -1,5 +1,4 @@
-import test from 'node:test'
-import assert from 'node:assert/strict'
+import { it, expect } from 'vitest'
 import os from 'node:os'
 import path from 'node:path'
 import zlib from 'node:zlib'
@@ -7,7 +6,17 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { PNG } from 'pngjs'
 import { syncChampionIllustrations } from './sync-idle-champions-illustrations.ts'
 
-function createSolidTexture(width, height, colorByPixel) {
+interface TestHooks {
+  onTestFinished(fn: () => Promise<void> | void): void
+}
+
+type PixelColor = [number, number, number, number]
+
+function createSolidTexture(
+  width: number,
+  height: number,
+  colorByPixel: (x: number, y: number) => PixelColor,
+): Buffer {
   const png = new PNG({ width, height })
 
   for (let y = 0; y < height; y += 1) {
@@ -24,40 +33,82 @@ function createSolidTexture(width, height, colorByPixel) {
   return PNG.sync.write(png)
 }
 
-function encodeUInt32LE(value) {
+function encodeUInt32LE(value: number): Buffer {
   const buffer = Buffer.alloc(4)
   buffer.writeUInt32LE(value, 0)
   return buffer
 }
 
-function encodeInt32LE(value) {
+function encodeInt32LE(value: number): Buffer {
   const buffer = Buffer.alloc(4)
   buffer.writeInt32LE(value, 0)
   return buffer
 }
 
-function encodeInt16LE(value) {
+function encodeInt16LE(value: number): Buffer {
   const buffer = Buffer.alloc(2)
   buffer.writeInt16LE(value, 0)
   return buffer
 }
 
-function encodeDoubleLE(value) {
+function encodeDoubleLE(value: number): Buffer {
   const buffer = Buffer.alloc(8)
   buffer.writeDoubleLE(value, 0)
   return buffer
 }
 
-function encodeBoolean(value) {
+function encodeBoolean(value: boolean): Buffer {
   return Buffer.from([value ? 1 : 0])
 }
 
-function encodeString(value) {
+function encodeString(value: string): Buffer {
   const bytes = Buffer.from(value, 'utf8')
   return Buffer.concat([encodeInt16LE(bytes.length), bytes])
 }
 
-function buildSkelAnimAssetBuffer({ sheetWidth, sheetHeight, textures, characters }) {
+interface RawAnimationFrame {
+  depth: number
+  rotation: number
+  scaleX: number
+  scaleY: number
+  x: number
+  y: number
+}
+
+interface RawAnimPiece {
+  textureId: number
+  sourceX: number
+  sourceY: number
+  sourceWidth: number
+  sourceHeight: number
+  centerX: number
+  centerY: number
+  frames: Array<RawAnimationFrame | null>
+}
+
+interface RawAnimSequence {
+  length: number
+  pieces: RawAnimPiece[]
+}
+
+interface RawAnimCharacter {
+  name: string
+  sequences: RawAnimSequence[]
+}
+
+interface BuildSkelAnimAssetBufferOptions {
+  sheetWidth: number
+  sheetHeight: number
+  textures: Buffer[]
+  characters: RawAnimCharacter[]
+}
+
+function buildSkelAnimAssetBuffer({
+  sheetWidth,
+  sheetHeight,
+  textures,
+  characters,
+}: BuildSkelAnimAssetBufferOptions): Buffer {
   const chunks = [encodeUInt32LE(sheetWidth), encodeUInt32LE(sheetHeight), encodeUInt32LE(textures.length)]
 
   for (const texture of textures) {
@@ -106,16 +157,23 @@ function buildSkelAnimAssetBuffer({ sheetWidth, sheetHeight, textures, character
   return zlib.deflateSync(Buffer.concat(chunks))
 }
 
-function toDataUrl(buffer, mimeType = 'application/octet-stream') {
+function toDataUrl(buffer: Buffer, mimeType = 'application/octet-stream'): string {
   return `data:${mimeType};base64,${buffer.toString('base64')}`
 }
 
-async function writeJson(filePath, value) {
+async function writeJson(filePath: string, value: unknown): Promise<void> {
   await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
 }
 
-function createDecodedPngAsset({ graphicId, sourceGraphic, color, remotePath }) {
-  const png = createSolidTexture(1, 1, () => [...color, 255])
+interface DecodedPngAssetOptions {
+  graphicId: string
+  sourceGraphic: string
+  color: [number, number, number]
+  remotePath: string
+}
+
+function createDecodedPngAsset({ graphicId, sourceGraphic, color, remotePath }: DecodedPngAssetOptions) {
+  const png = createSolidTexture(1, 1, () => [...color, 255] as PixelColor)
 
   return {
     graphicId,
@@ -128,7 +186,7 @@ function createDecodedPngAsset({ graphicId, sourceGraphic, color, remotePath }) 
   }
 }
 
-function createSkelAnimRawBuffer() {
+function createSkelAnimRawBuffer(): Buffer {
   const texture = createSolidTexture(2, 2, (x, y) => {
     if (x === 0 && y === 0) {
       return [255, 0, 0, 255]
@@ -228,7 +286,7 @@ function createSkelAnimRawBuffer() {
   })
 }
 
-function createWalkPosterRawBuffer() {
+function createWalkPosterRawBuffer(): Buffer {
   const texture = createSolidTexture(2, 1, (x) => (x === 0 ? [255, 0, 0, 255] : [0, 255, 0, 255]))
 
   return buildSkelAnimAssetBuffer({
@@ -285,6 +343,48 @@ function createWalkPosterRawBuffer() {
   })
 }
 
+interface AnimationSequence {
+  sequenceIndex: number
+  frameCount: number
+  pieceCount: number
+  firstRenderableFrameIndex: number
+  bounds: { minX: number; minY: number; maxX: number; maxY: number }
+}
+
+interface AnimationManifestItem {
+  id: string
+  championId: string
+  skinId: string | null
+  kind: string
+  seat: number
+  championName: { original: string; display: string }
+  illustrationName: { original: string; display: string }
+  sourceSlot: string
+  sourceGraphicId: string
+  sourceGraphic: string
+  sourceVersion: number
+  fps: number
+  defaultSequenceIndex: number
+  defaultFrameIndex: number
+  asset: { path: string; bytes: number; format: string }
+  sequences: AnimationSequence[]
+}
+
+interface CreateSkinAnimationManifestItemOptions {
+  championId: string
+  skinId: string
+  seat: number
+  championName: { original: string; display: string }
+  illustrationName: { original: string; display: string }
+  sourceSlot?: string
+  sourceGraphicId?: string
+  sourceGraphic?: string
+  sourceVersion?: number
+  defaultSequenceIndex?: number
+  defaultFrameIndex?: number
+  assetBytes: number
+}
+
 function createSkinAnimationManifestItem({
   championId,
   skinId,
@@ -298,7 +398,7 @@ function createSkinAnimationManifestItem({
   defaultSequenceIndex = 1,
   defaultFrameIndex = 1,
   assetBytes,
-}) {
+}: CreateSkinAnimationManifestItemOptions): AnimationManifestItem {
   return {
     id: `skin:${skinId}`,
     championId,
@@ -338,6 +438,18 @@ function createSkinAnimationManifestItem({
   }
 }
 
+interface CreateHeroAnimationManifestItemOptions {
+  championId: string
+  seat: number
+  championName: { original: string; display: string }
+  sourceGraphicId?: string
+  sourceGraphic?: string
+  sourceVersion?: number
+  defaultSequenceIndex?: number
+  defaultFrameIndex?: number
+  assetBytes: number
+}
+
 function createHeroAnimationManifestItem({
   championId,
   seat,
@@ -348,7 +460,7 @@ function createHeroAnimationManifestItem({
   defaultSequenceIndex = 1,
   defaultFrameIndex = 1,
   assetBytes,
-}) {
+}: CreateHeroAnimationManifestItemOptions): AnimationManifestItem {
   return {
     id: `hero:${championId}`,
     championId,
@@ -388,13 +500,17 @@ function createHeroAnimationManifestItem({
   }
 }
 
-async function writeAnimationCollection(tempDir, items, rawBuffer = createSkelAnimRawBuffer()) {
+async function writeAnimationCollection(
+  tempDir: string,
+  items: AnimationManifestItem[],
+  rawBuffer: Buffer = createSkelAnimRawBuffer(),
+): Promise<Buffer> {
   await mkdir(path.join(tempDir, 'champion-animations', 'heroes'), { recursive: true })
   await mkdir(path.join(tempDir, 'champion-animations', 'skins'), { recursive: true })
 
   for (const item of items) {
     const group = item.kind === 'hero-base' ? 'heroes' : 'skins'
-    const fileId = item.kind === 'hero-base' ? item.championId : item.skinId
+    const fileId = item.kind === 'hero-base' ? item.championId : (item.skinId ?? '')
     await writeFile(path.join(tempDir, 'champion-animations', group, `${fileId}.bin`), rawBuffer)
   }
 
@@ -412,16 +528,32 @@ async function writeAnimationCollection(tempDir, items, rawBuffer = createSkelAn
   return rawBuffer
 }
 
-async function createTempDir(t) {
+async function createTempDir(hooks: TestHooks): Promise<string> {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'ic-illustrations-'))
-  t.after(async () => {
+  hooks.onTestFinished(async () => {
     await rm(tempDir, { recursive: true, force: true })
   })
   return tempDir
 }
 
-test('syncChampionIllustrations 的皮肤与 hero-base 静态图会复用动画链路生成 poster', async (t) => {
-  const tempDir = await createTempDir(t)
+interface IllustrationCollectionItem {
+  id: string
+  sourceGraphicId: string
+  sourceSlot: string
+  render: {
+    sequenceIndex: number | null
+    frameIndex: number | null
+    bounds?: { minX: number; minY: number; maxX: number; maxY: number } | null
+  }
+  image: { width: number; height: number }
+}
+
+interface IllustrationCollection {
+  items: IllustrationCollectionItem[]
+}
+
+it('皮肤与 hero-base 静态图会复用动画链路生成 poster', async (ctx) => {
+  const tempDir = await createTempDir(ctx)
   const visualsFile = path.join(tempDir, 'champion-visuals.json')
   const championName = { original: 'Animation Hero', display: '动画像英雄' }
   const skinName = { original: 'Preferred Animation Frame', display: '动画默认帧' }
@@ -484,34 +616,36 @@ test('syncChampionIllustrations 的皮肤与 hero-base 静态图会复用动画�
     currentVersion: 'v1',
   })
 
-  const output = JSON.parse(await readFile(path.join(tempDir, 'champion-illustrations.json'), 'utf8'))
+  const output = (await JSON.parse(
+    await readFile(path.join(tempDir, 'champion-illustrations.json'), 'utf8'),
+  )) as IllustrationCollection
   const heroIllustration = output.items.find((item) => item.id === 'hero:101')
   const skinIllustration = output.items.find((item) => item.id === 'skin:501')
   const heroPng = PNG.sync.read(await readFile(path.join(tempDir, 'champion-illustrations', 'heroes', '101.png')))
   const skinPng = PNG.sync.read(await readFile(path.join(tempDir, 'champion-illustrations', 'skins', '501.png')))
 
-  assert.ok(heroIllustration)
-  assert.ok(skinIllustration)
-  assert.equal(heroIllustration.sourceGraphicId, 'hero-101-anim')
-  assert.equal(heroIllustration.render.sequenceIndex, 1)
-  assert.equal(heroIllustration.render.frameIndex, 1)
-  assert.equal(heroIllustration.sourceSlot, 'base')
-  assert.equal(skinIllustration.sourceGraphicId, 'g-xl')
-  assert.equal(skinIllustration.render.sequenceIndex, 1)
-  assert.equal(skinIllustration.render.frameIndex, 1)
-  assert.equal(skinIllustration.sourceSlot, 'xl')
-  assert.equal(heroIllustration.image.width, 2)
-  assert.equal(heroIllustration.image.height, 2)
-  assert.equal(skinIllustration.image.width, 2)
-  assert.equal(skinIllustration.image.height, 2)
-  assert.equal(heroPng.data[3], 255)
-  assert.equal(skinPng.data[3], 255)
-  assert.ok(heroPng.data[0] > 0 || heroPng.data[1] > 0 || heroPng.data[2] > 0)
-  assert.ok(skinPng.data[0] > 0 || skinPng.data[1] > 0 || skinPng.data[2] > 0)
+  expect(heroIllustration).toBeTruthy()
+  expect(skinIllustration).toBeTruthy()
+  expect(heroIllustration?.sourceGraphicId).toBe('hero-101-anim')
+  expect(heroIllustration?.render.sequenceIndex).toBe(1)
+  expect(heroIllustration?.render.frameIndex).toBe(1)
+  expect(heroIllustration?.sourceSlot).toBe('base')
+  expect(skinIllustration?.sourceGraphicId).toBe('g-xl')
+  expect(skinIllustration?.render.sequenceIndex).toBe(1)
+  expect(skinIllustration?.render.frameIndex).toBe(1)
+  expect(skinIllustration?.sourceSlot).toBe('xl')
+  expect(heroIllustration?.image.width).toBe(2)
+  expect(heroIllustration?.image.height).toBe(2)
+  expect(skinIllustration?.image.width).toBe(2)
+  expect(skinIllustration?.image.height).toBe(2)
+  expect(heroPng.data[3]).toBe(255)
+  expect(skinPng.data[3]).toBe(255)
+  expect(Number(heroPng.data[0]) > 0 || Number(heroPng.data[1]) > 0 || Number(heroPng.data[2]) > 0).toBeTruthy()
+  expect(Number(skinPng.data[0]) > 0 || Number(skinPng.data[1]) > 0 || Number(skinPng.data[2]) > 0).toBeTruthy()
 })
 
-test('syncChampionIllustrations 会把 walk-like 动效首帧渲染成与 hover 一致的 poster', async (t) => {
-  const tempDir = await createTempDir(t)
+it('会把 walk-like 动效首帧渲染成与 hover 一致的 poster', async (ctx) => {
+  const tempDir = await createTempDir(ctx)
   const visualsFile = path.join(tempDir, 'champion-visuals.json')
   const championName = { original: 'Walk Poster Hero', display: '步行动效海报' }
   const rawBuffer = createWalkPosterRawBuffer()
@@ -569,25 +703,27 @@ test('syncChampionIllustrations 会把 walk-like 动效首帧渲染成与 hover 
     currentVersion: 'v1',
   })
 
-  const output = JSON.parse(await readFile(path.join(tempDir, 'champion-illustrations.json'), 'utf8'))
+  const output = (await JSON.parse(
+    await readFile(path.join(tempDir, 'champion-illustrations.json'), 'utf8'),
+  )) as IllustrationCollection
   const heroIllustration = output.items.find((item) => item.id === 'hero:301')
   const heroPng = PNG.sync.read(await readFile(path.join(tempDir, 'champion-illustrations', 'heroes', '301.png')))
 
-  assert.ok(heroIllustration)
-  assert.equal(heroIllustration.render.sequenceIndex, 1)
-  assert.equal(heroIllustration.render.frameIndex, 0)
-  assert.deepEqual(heroIllustration.render.bounds, { minX: 0, minY: 0, maxX: 3, maxY: 1 })
-  assert.equal(heroIllustration.image.width, 6)
-  assert.equal(heroIllustration.image.height, 2)
-  assert.ok(heroPng.data[1] > heroPng.data[0])
-  assert.equal(heroPng.data[3], 255)
-  assert.ok(heroPng.data[5] > heroPng.data[4])
-  assert.equal(heroPng.data[7], 255)
-  assert.deepEqual(Array.from(heroPng.data.subarray(8, 12)), [0, 0, 0, 0])
+  expect(heroIllustration).toBeTruthy()
+  expect(heroIllustration?.render.sequenceIndex).toBe(1)
+  expect(heroIllustration?.render.frameIndex).toBe(0)
+  expect(heroIllustration?.render.bounds).toEqual({ minX: 0, minY: 0, maxX: 3, maxY: 1 })
+  expect(heroIllustration?.image.width).toBe(6)
+  expect(heroIllustration?.image.height).toBe(2)
+  expect(Number(heroPng.data[1]) > Number(heroPng.data[0])).toBeTruthy()
+  expect(heroPng.data[3]).toBe(255)
+  expect(Number(heroPng.data[5]) > Number(heroPng.data[4])).toBeTruthy()
+  expect(heroPng.data[7]).toBe(255)
+  expect(Array.from(heroPng.data.subarray(8, 12))).toEqual([0, 0, 0, 0])
 })
 
-test('syncChampionIllustrations 在 hero-base 没有动画包时直接报错，不再回退静态渲染', async (t) => {
-  const tempDir = await createTempDir(t)
+it('在 hero-base 没有动画包时直接报错，不再回退静态渲染', async (ctx) => {
+  const tempDir = await createTempDir(ctx)
   const visualsFile = path.join(tempDir, 'champion-visuals.json')
 
   await writeJson(visualsFile, {
@@ -613,19 +749,17 @@ test('syncChampionIllustrations 在 hero-base 没有动画包时直接报错，�
     items: [],
   })
 
-  await assert.rejects(
-    () =>
-      syncChampionIllustrations({
-        visualsFile,
-        outputDir: tempDir,
-        currentVersion: 'v1',
-      }),
-    /以下英雄缺少本地动画清单，请先同步 champion-animations：201/,
-  )
+  await expect(
+    syncChampionIllustrations({
+      visualsFile,
+      outputDir: tempDir,
+      currentVersion: 'v1',
+    }),
+  ).rejects.toThrow(/以下英雄缺少本地动画清单，请先同步 champion-animations：201/)
 })
 
-test('syncChampionIllustrations 在集合 updatedAt 未变新时整批跳过，不重渲染 PNG', async (t) => {
-  const tempDir = await createTempDir(t)
+it('在集合 updatedAt 未变新时整批跳过，不重渲染 PNG', async (ctx) => {
+  const tempDir = await createTempDir(ctx)
   const visualsFile = path.join(tempDir, 'champion-visuals.json')
 
   await writeJson(visualsFile, {
@@ -670,14 +804,14 @@ test('syncChampionIllustrations 在集合 updatedAt 未变新时整批跳过，�
     currentVersion: 'v1',
   })
 
-  assert.equal(result.skipped, true)
-  assert.equal(result.renderedCount, 0)
-  assert.equal(result.reusedCount, 1)
-  assert.equal(result.counts.totalIllustrations, 1)
+  expect(result.skipped).toBe(true)
+  expect(result.renderedCount).toBe(0)
+  expect(result.reusedCount).toBe(1)
+  expect(result.counts.totalIllustrations).toBe(1)
 })
 
-test('syncChampionIllustrations 在源动画未变化且输出 PNG 相同时复用已有文件', async (t) => {
-  const tempDir = await createTempDir(t)
+it('在源动画未变化且输出 PNG 相同时复用已有文件', async (ctx) => {
+  const tempDir = await createTempDir(ctx)
   const visualsFile = path.join(tempDir, 'champion-visuals.json')
   const championName = { original: 'Reuse Hero', display: '复用英雄' }
   const heroItem = createHeroAnimationManifestItem({
@@ -765,13 +899,13 @@ test('syncChampionIllustrations 在源动画未变化且输出 PNG 相同时复�
   })
 
   const secondBytes = await readFile(path.join(tempDir, 'champion-illustrations', 'heroes', '101.png'))
-  assert.deepEqual(secondBytes, firstBytes)
-  assert.equal(result.renderedCount, 0)
-  assert.equal(result.reusedCount, 1)
+  expect(secondBytes.equals(firstBytes)).toBe(true)
+  expect(result.renderedCount).toBe(0)
+  expect(result.reusedCount).toBe(1)
 })
 
-test('syncChampionIllustrations 在 skinIds 局部重渲染时保留既有清单与图片', async (t) => {
-  const tempDir = await createTempDir(t)
+it('在 skinIds 局部重渲染时保留既有清单与图片', async (ctx) => {
+  const tempDir = await createTempDir(ctx)
   const visualsFile = path.join(tempDir, 'champion-visuals.json')
   const illustrationRoot = path.join(tempDir, 'champion-illustrations')
   const rawBuffer = createSkelAnimRawBuffer()
@@ -917,15 +1051,17 @@ test('syncChampionIllustrations 在 skinIds 局部重渲染时保留既有清单
     skinIds: '501',
   })
 
-  const output = JSON.parse(await readFile(path.join(tempDir, 'champion-illustrations.json'), 'utf8'))
+  const output = (await JSON.parse(
+    await readFile(path.join(tempDir, 'champion-illustrations.json'), 'utf8'),
+  )) as IllustrationCollection
   const ids = output.items.map((item) => item.id)
   const updatedSkin = output.items.find((item) => item.id === 'skin:501')
 
-  assert.deepEqual(ids, ['skin:501', 'skin:601', 'hero:999'])
-  assert.ok(updatedSkin)
-  assert.equal(updatedSkin.sourceGraphicId, 'skin-501-anim')
-  assert.equal(updatedSkin.render.sequenceIndex, 1)
-  assert.equal(updatedSkin.render.frameIndex, 1)
-  assert.deepEqual(await readFile(path.join(illustrationRoot, 'heroes', '999.png')), Buffer.from('keep-hero'))
-  assert.deepEqual(await readFile(path.join(illustrationRoot, 'skins', '601.png')), Buffer.from('keep-skin'))
+  expect(ids).toEqual(['skin:501', 'skin:601', 'hero:999'])
+  expect(updatedSkin).toBeTruthy()
+  expect(updatedSkin?.sourceGraphicId).toBe('skin-501-anim')
+  expect(updatedSkin?.render.sequenceIndex).toBe(1)
+  expect(updatedSkin?.render.frameIndex).toBe(1)
+  expect((await readFile(path.join(illustrationRoot, 'heroes', '999.png'))).equals(Buffer.from('keep-hero'))).toBe(true)
+  expect((await readFile(path.join(illustrationRoot, 'skins', '601.png'))).equals(Buffer.from('keep-skin'))).toBe(true)
 })

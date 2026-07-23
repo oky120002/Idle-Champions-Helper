@@ -1,5 +1,4 @@
-import test from 'node:test'
-import assert from 'node:assert/strict'
+import { it, expect } from 'vitest'
 
 import {
   adventuresCollectionSchema,
@@ -72,109 +71,111 @@ const validPatron = {
   evaluationStatus: 'complete',
 }
 
-test('championsCollectionSchema 接受合法 collection', () => {
+it('championsCollectionSchema 接受合法 collection', () => {
   const result = championsCollectionSchema.safeParse({ items: [validChampion], updatedAt: updated })
-  assert.equal(result.success, true)
+  expect(result.success).toBe(true)
 })
 
-test('championsCollectionSchema 拦截 seat 类型错误', () => {
+it('championsCollectionSchema 拦截 seat 类型错误', () => {
   const result = championsCollectionSchema.safeParse({
     items: [{ ...validChampion, seat: '1' }],
     updatedAt: updated,
   })
-  assert.equal(result.success, false)
+  expect(result.success).toBe(false)
 })
 
-test('championsCollectionSchema 拦截 items 非数组', () => {
+it('championsCollectionSchema 拦截 items 非数组', () => {
   const result = championsCollectionSchema.safeParse({ items: {}, updatedAt: updated })
-  assert.equal(result.success, false)
+  expect(result.success).toBe(false)
 })
 
-test('championsCollectionSchema 拦截 updatedAt 缺失', () => {
+it('championsCollectionSchema 拦截 updatedAt 缺失', () => {
   const result = championsCollectionSchema.safeParse({ items: [validChampion] })
-  assert.equal(result.success, false)
+  expect(result.success).toBe(false)
 })
 
-test('championsCollectionSchema 拦截 name 缺失（核心字段必填）', () => {
+it('championsCollectionSchema 拦截 name 缺失（核心字段必填）', () => {
   const { name, ...withoutName } = validChampion
   const result = championsCollectionSchema.safeParse({ items: [withoutName], updatedAt: updated })
-  assert.equal(name, name) // 防 unused 警告
-  assert.equal(result.success, false)
+  expect(name).toBe(name) // 防 unused 警告
+  expect(result.success).toBe(false)
 })
 
-test('adventuresCollectionSchema 接受合法 collection', () => {
+it('adventuresCollectionSchema 接受合法 collection', () => {
   const result = adventuresCollectionSchema.safeParse({ items: [validAdventure], updatedAt: updated })
-  assert.equal(result.success, true)
+  expect(result.success).toBe(true)
 })
 
-test('adventuresCollectionSchema 拦截 scenarioKind 非 adventure', () => {
+it('adventuresCollectionSchema 拦截 scenarioKind 非 adventure', () => {
   const result = adventuresCollectionSchema.safeParse({
     items: [{ ...validAdventure, scenarioKind: 'variant' }],
     updatedAt: updated,
   })
-  assert.equal(result.success, false)
+  expect(result.success).toBe(false)
 })
 
-test('adventuresCollectionSchema 拦截 objectiveArea 类型错误', () => {
+it('adventuresCollectionSchema 拦截 objectiveArea 类型错误', () => {
   const result = adventuresCollectionSchema.safeParse({
     items: [{ ...validAdventure, objectiveArea: '25' }],
     updatedAt: updated,
   })
-  assert.equal(result.success, false)
+  expect(result.success).toBe(false)
 })
 
-test('variantsCollectionSchema 接受合法 collection', () => {
+it('variantsCollectionSchema 接受合法 collection', () => {
   const result = variantsCollectionSchema.safeParse({ items: [validVariant], updatedAt: updated })
-  assert.equal(result.success, true)
+  expect(result.success).toBe(true)
 })
 
-test('variantsCollectionSchema 接受 nullable 字段为 null', () => {
+it('variantsCollectionSchema 接受 nullable 字段为 null', () => {
   const result = variantsCollectionSchema.safeParse({
-    items: [{
-      ...validVariant,
-      adventureId: null,
-      adventure: null,
-      scene: null,
-      objectiveArea: null,
-    }],
+    items: [
+      {
+        ...validVariant,
+        adventureId: null,
+        adventure: null,
+        scene: null,
+        objectiveArea: null,
+      },
+    ],
     updatedAt: updated,
   })
-  assert.equal(result.success, true)
+  expect(result.success).toBe(true)
 })
 
-test('variantsCollectionSchema 拦截 restrictions 非 LocalizedText 数组', () => {
+it('variantsCollectionSchema 拦截 restrictions 非 LocalizedText 数组', () => {
   const result = variantsCollectionSchema.safeParse({
     items: [{ ...validVariant, restrictions: [{ original: 'x' }] }],
     updatedAt: updated,
   })
-  assert.equal(result.success, false)
+  expect(result.success).toBe(false)
 })
 
-test('patronsCollectionSchema 接受合法 collection', () => {
+it('patronsCollectionSchema 接受合法 collection', () => {
   const result = patronsCollectionSchema.safeParse({ items: [validPatron], updatedAt: updated })
-  assert.equal(result.success, true)
+  expect(result.success).toBe(true)
 })
 
-test('patronsCollectionSchema 拦截 evaluationStatus 非法枚举', () => {
+it('patronsCollectionSchema 拦截 evaluationStatus 非法枚举', () => {
   const result = patronsCollectionSchema.safeParse({
     items: [{ ...validPatron, evaluationStatus: 'unknown' }],
     updatedAt: updated,
   })
-  assert.equal(result.success, false)
+  expect(result.success).toBe(false)
 })
 
-test('patronsCollectionSchema 拦截 eligibilityRules 缺 supported', () => {
+it('patronsCollectionSchema 拦截 eligibilityRules 缺 supported', () => {
   const result = patronsCollectionSchema.safeParse({
     items: [{ ...validPatron, eligibilityRules: [{ type: 'tags' }] }],
     updatedAt: updated,
   })
-  assert.equal(result.success, false)
+  expect(result.success).toBe(false)
 })
 
-test('非核心字段 passthrough 放行（不耦合上游字段增减）', () => {
+it('非核心字段 passthrough 放行（不耦合上游字段增减）', () => {
   const result = championsCollectionSchema.safeParse({
     items: [{ ...validChampion, extraField: 'whatever', newCoreFlag: true }],
     updatedAt: updated,
   })
-  assert.equal(result.success, true)
+  expect(result.success).toBe(true)
 })

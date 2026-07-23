@@ -1,45 +1,90 @@
-import test from 'node:test'
-import assert from 'node:assert/strict'
+import { it, expect } from 'vitest'
 import os from 'node:os'
 import path from 'node:path'
 import zlib from 'node:zlib'
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { syncChampionAnimations } from './sync-idle-champions-animations.ts'
 
-function encodeUInt32LE(value) {
+interface TestHooks {
+  onTestFinished(fn: () => Promise<void> | void): void
+}
+
+function encodeUInt32LE(value: number): Buffer {
   const buffer = Buffer.alloc(4)
   buffer.writeUInt32LE(value, 0)
   return buffer
 }
 
-function encodeInt32LE(value) {
+function encodeInt32LE(value: number): Buffer {
   const buffer = Buffer.alloc(4)
   buffer.writeInt32LE(value, 0)
   return buffer
 }
 
-function encodeInt16LE(value) {
+function encodeInt16LE(value: number): Buffer {
   const buffer = Buffer.alloc(2)
   buffer.writeInt16LE(value, 0)
   return buffer
 }
 
-function encodeDoubleLE(value) {
+function encodeDoubleLE(value: number): Buffer {
   const buffer = Buffer.alloc(8)
   buffer.writeDoubleLE(value, 0)
   return buffer
 }
 
-function encodeBoolean(value) {
+function encodeBoolean(value: boolean): Buffer {
   return Buffer.from([value ? 1 : 0])
 }
 
-function encodeString(value) {
+function encodeString(value: string): Buffer {
   const bytes = Buffer.from(value, 'utf8')
   return Buffer.concat([encodeInt16LE(bytes.length), bytes])
 }
 
-function buildSkelAnimAssetBuffer({ sheetWidth, sheetHeight, textures, characters }) {
+interface RawAnimationFrame {
+  depth: number
+  rotation: number
+  scaleX: number
+  scaleY: number
+  x: number
+  y: number
+}
+
+interface RawAnimPiece {
+  textureId: number
+  sourceX: number
+  sourceY: number
+  sourceWidth: number
+  sourceHeight: number
+  centerX: number
+  centerY: number
+  frames: Array<RawAnimationFrame | null>
+}
+
+interface RawAnimSequence {
+  length: number
+  pieces: RawAnimPiece[]
+}
+
+interface RawAnimCharacter {
+  name: string
+  sequences: RawAnimSequence[]
+}
+
+interface BuildSkelAnimAssetBufferOptions {
+  sheetWidth: number
+  sheetHeight: number
+  textures: Buffer[]
+  characters: RawAnimCharacter[]
+}
+
+function buildSkelAnimAssetBuffer({
+  sheetWidth,
+  sheetHeight,
+  textures,
+  characters,
+}: BuildSkelAnimAssetBufferOptions): Buffer {
   const chunks = [encodeUInt32LE(sheetWidth), encodeUInt32LE(sheetHeight), encodeUInt32LE(textures.length)]
 
   for (const texture of textures) {
@@ -88,23 +133,23 @@ function buildSkelAnimAssetBuffer({ sheetWidth, sheetHeight, textures, character
   return zlib.deflateSync(Buffer.concat(chunks))
 }
 
-function toDataUrl(buffer) {
+function toDataUrl(buffer: Buffer): string {
   return `data:application/octet-stream;base64,${buffer.toString('base64')}`
 }
 
-async function writeJson(filePath, value) {
+async function writeJson(filePath: string, value: unknown): Promise<void> {
   await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
 }
 
-async function createTempDir(t) {
+async function createTempDir(hooks: TestHooks): Promise<string> {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'ic-animations-'))
-  t.after(async () => {
+  hooks.onTestFinished(async () => {
     await rm(tempDir, { recursive: true, force: true })
   })
   return tempDir
 }
 
-function createRawBuffer() {
+function createRawBuffer(): Buffer {
   return buildSkelAnimAssetBuffer({
     sheetWidth: 2,
     sheetHeight: 2,
@@ -151,8 +196,18 @@ function createRawBuffer() {
   })
 }
 
-test('syncChampionAnimations 输出 hero-base 与 skin 原始动画包和清单', async (t) => {
-  const tempDir = await createTempDir(t)
+interface AnimationCollectionItem {
+  id: string
+  kind: string
+  skinId: string | null
+  sourceSlot: string
+  asset: { path: string }
+  defaultSequenceIndex: number
+  defaultFrameIndex: number
+}
+
+it('syncChampionAnimations 输出 hero-base 与 skin 原始动画包和清单', async (ctx) => {
+  const tempDir = await createTempDir(ctx)
   const visualsFile = path.join(tempDir, 'champion-visuals.json')
   const definitionsFile = path.join(tempDir, 'definitions.json')
   const heroRawBuffer = createRawBuffer()
@@ -223,34 +278,36 @@ test('syncChampionAnimations 输出 hero-base 与 skin 原始动画包和清单'
     currentVersion: 'v1',
   })
 
-  const collection = JSON.parse(await readFile(path.join(tempDir, 'champion-animations.json'), 'utf8'))
+  const collection = (await JSON.parse(
+    await readFile(path.join(tempDir, 'champion-animations.json'), 'utf8'),
+  )) as { items: AnimationCollectionItem[] }
   const heroAnimation = collection.items.find((item) => item.id === 'hero:23')
   const skinAnimation = collection.items.find((item) => item.id === 'skin:340')
   const writtenHeroBuffer = await readFile(path.join(tempDir, 'champion-animations', 'heroes', '23.bin'))
   const writtenSkinBuffer = await readFile(path.join(tempDir, 'champion-animations', 'skins', '340.bin'))
 
-  assert.equal(result.heroCount, 1)
-  assert.equal(result.skinCount, 1)
-  assert.ok(heroAnimation)
-  assert.ok(skinAnimation)
-  assert.equal(heroAnimation.kind, 'hero-base')
-  assert.equal(heroAnimation.skinId, null)
-  assert.equal(heroAnimation.sourceSlot, 'base')
-  assert.equal(heroAnimation.asset.path, 'v1/champion-animations/heroes/23.bin')
-  assert.equal(heroAnimation.defaultSequenceIndex, 0)
-  assert.equal(heroAnimation.defaultFrameIndex, 0)
-  assert.equal(skinAnimation.kind, 'skin')
-  assert.equal(skinAnimation.skinId, '340')
-  assert.equal(skinAnimation.sourceSlot, 'xl')
-  assert.equal(skinAnimation.asset.path, 'v1/champion-animations/skins/340.bin')
-  assert.equal(skinAnimation.defaultSequenceIndex, 0)
-  assert.equal(skinAnimation.defaultFrameIndex, 0)
-  assert.deepEqual(writtenHeroBuffer, heroRawBuffer)
-  assert.deepEqual(writtenSkinBuffer, skinRawBuffer)
+  expect(result.heroCount).toBe(1)
+  expect(result.skinCount).toBe(1)
+  expect(heroAnimation).toBeTruthy()
+  expect(skinAnimation).toBeTruthy()
+  expect(heroAnimation?.kind).toBe('hero-base')
+  expect(heroAnimation?.skinId).toBe(null)
+  expect(heroAnimation?.sourceSlot).toBe('base')
+  expect(heroAnimation?.asset.path).toBe('v1/champion-animations/heroes/23.bin')
+  expect(heroAnimation?.defaultSequenceIndex).toBe(0)
+  expect(heroAnimation?.defaultFrameIndex).toBe(0)
+  expect(skinAnimation?.kind).toBe('skin')
+  expect(skinAnimation?.skinId).toBe('340')
+  expect(skinAnimation?.sourceSlot).toBe('xl')
+  expect(skinAnimation?.asset.path).toBe('v1/champion-animations/skins/340.bin')
+  expect(skinAnimation?.defaultSequenceIndex).toBe(0)
+  expect(skinAnimation?.defaultFrameIndex).toBe(0)
+  expect(writtenHeroBuffer.equals(heroRawBuffer)).toBe(true)
+  expect(writtenSkinBuffer.equals(skinRawBuffer)).toBe(true)
 })
 
-test('syncChampionAnimations 命中同版本已发布 bin 时直接复用本地 hero-base 与 skin 资源', async (t) => {
-  const tempDir = await createTempDir(t)
+it('命中同版本已发布 bin 时直接复用本地 hero-base 与 skin 资源', async (ctx) => {
+  const tempDir = await createTempDir(ctx)
   const visualsFile = path.join(tempDir, 'champion-visuals.json')
   const definitionsFile = path.join(tempDir, 'definitions.json')
   const collectionFile = path.join(tempDir, 'champion-animations.json')
@@ -403,7 +460,7 @@ test('syncChampionAnimations 命中同版本已发布 bin 时直接复用本地 
     fetchCalled = true
     throw new Error('should not fetch when local bin can be reused')
   }
-  t.after(() => {
+  ctx.onTestFinished(() => {
     globalThis.fetch = originalFetch
   })
 
@@ -414,15 +471,15 @@ test('syncChampionAnimations 命中同版本已发布 bin 时直接复用本地 
     currentVersion: 'v1',
   })
 
-  assert.equal(fetchCalled, false)
-  assert.equal(result.downloadedCount, 0)
-  assert.equal(result.reusedCount, 2)
-  assert.equal(result.heroCount, 1)
-  assert.equal(result.skinCount, 1)
+  expect(fetchCalled).toBe(false)
+  expect(result.downloadedCount).toBe(0)
+  expect(result.reusedCount).toBe(2)
+  expect(result.heroCount).toBe(1)
+  expect(result.skinCount).toBe(1)
 })
 
-test('syncChampionAnimations 在集合 updatedAt 未变新时整批跳过，不重下也不重写 bin', async (t) => {
-  const tempDir = await createTempDir(t)
+it('在集合 updatedAt 未变新时整批跳过，不重下也不重写 bin', async (ctx) => {
+  const tempDir = await createTempDir(ctx)
   const visualsFile = path.join(tempDir, 'champion-visuals.json')
   const collectionFile = path.join(tempDir, 'champion-animations.json')
 
@@ -462,7 +519,7 @@ test('syncChampionAnimations 在集合 updatedAt 未变新时整批跳过，不�
   globalThis.fetch = async () => {
     throw new Error('updatedAt 未变新时不应触发下载')
   }
-  t.after(() => {
+  ctx.onTestFinished(() => {
     globalThis.fetch = originalFetch
   })
 
@@ -472,8 +529,8 @@ test('syncChampionAnimations 在集合 updatedAt 未变新时整批跳过，不�
     currentVersion: 'v1',
   })
 
-  assert.equal(result.skipped, true)
-  assert.equal(result.downloadedCount, 0)
-  assert.equal(result.reusedCount, 1)
-  assert.equal(result.count, 1)
+  expect(result.skipped).toBe(true)
+  expect(result.downloadedCount).toBe(0)
+  expect(result.reusedCount).toBe(1)
+  expect(result.count).toBe(1)
 })

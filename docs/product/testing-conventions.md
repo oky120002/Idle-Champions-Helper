@@ -22,7 +22,6 @@
 |---|---|---|
 | 单元（node） | vitest `unit` | `src/**/*.test.ts`、`scripts/**/*.test.ts` |
 | 组件（jsdom） | vitest `component` | `src/**/*.test.tsx` |
-| 数据脚本 | `node:test` | `scripts/**/*.test.mjs`（`npm run test:data`）|
 | E2E | playwright | `tests/e2e/**` |
 
 新增测试目录必须同步扩展对应运行器 glob；测试存在但不被任何运行器扫到 = 游离，禁止。
@@ -54,4 +53,4 @@
 - 职责分工：zod 守**外来数据**（运行时形状校验 + CI 拦截），TS 守**内部代码逻辑**（编译期类型）；外来 JSON 经 `JSON.parse` 为 `any`，形状漂移只能由 zod 运行时守门，TS 不替代 zod（Node 原生剥类型使 `scripts/**/*.ts` 可被 `.mjs` 直接 import，但类型正确性仍由 `tsc` 把关）。
 - 外部游戏数据（CNE definitions 归一化产物：`champions`/`adventures`/`patrons`/`variants`/`champion-details` 等）→ 对象 `.passthrough()`，只钉消费方依赖的核心字段，透传其余字段，不耦合上游字段增减。
 - 项目自著内部数据（`semantic-overrides`/`manual-overrides`/`champion-animation-idle-overrides`/`resource-sync-state`/`version` 等）→ `.strict()`，白名单校验，未知字段即报错，防内部契约漂移。
-- schema 放 `scripts/data/*-schema.mjs`，co-located 测试 `*-schema.test.mjs`（合法样本 + 类型/枚举/必填/nullable 变异拦截）；CI 经 `npm run data:validate-schema`（`validate-data-schemas.mjs`）在真实产物上校验，坏数据非零退出。
+- schema 放 `scripts/data/*-schema.ts`，co-located 测试 `*-schema.test.ts`（合法样本 + 类型/枚举/必填/nullable 变异拦截）；CI 经 `npm run data:validate-schema`（`validate-data-schemas.ts`）在真实产物上校验，坏数据非零退出。

@@ -1,17 +1,16 @@
-import test from 'node:test'
-import assert from 'node:assert/strict'
+import { it, expect } from 'vitest'
 import os from 'node:os'
 import path from 'node:path'
 import { mkdtemp, mkdir, readFile, writeFile } from 'node:fs/promises'
 
 import { buildSearchIndex, cleanText } from './build-search-index.ts'
 
-async function readJson(filePath) {
+async function readJson(filePath: string): Promise<unknown> {
   return JSON.parse(await readFile(filePath, 'utf8'))
 }
 
-test('cleanText 剥离全部占位符形态 + 数据 bug + 换行 markup，保留正文与 $# 字面量', () => {
-  const cases = [
+it('cleanText 剥离全部占位符形态 + 数据 bug + 换行 markup，保留正文与 $# 字面量', () => {
+  const cases: Array<[string, string]> = [
     ['Increase the damage of $target by $amount% for each adjacent Champion', 'Increase the damage of by % for each adjacent Champion'],
     ['$target每与一名勇士同列，即提升 $amount% 伤害', '每与一名勇士同列，即提升 % 伤害'],
     ['Dwarf Champions by $(amount)%', 'Dwarf Champions by %'],
@@ -24,11 +23,26 @@ test('cleanText 剥离全部占位符形态 + 数据 bug + 换行 markup，保�
     ['%$#& yes!', '%$#& yes!'],
   ]
   for (const [input, expected] of cases) {
-    assert.equal(cleanText(input), expected, `cleanText(${JSON.stringify(input)})`)
+    expect(cleanText(input)).toBe(expected)
   }
 })
 
-test('buildSearchIndex 抽取全部文本桶并正确清洗/去重/排噪', async () => {
+interface SearchDocumentOutput {
+  championId: string
+  name: { display: string }
+  seat: unknown
+  portrait: { path: string }
+  title: { en: string; zh: string }
+  body: { en: string; zh: string }
+  meta: { en: string; zh: string }
+}
+
+interface SearchIndexOutput {
+  updatedAt: string
+  items: SearchDocumentOutput[]
+}
+
+it('buildSearchIndex 抽取全部文本桶并正确清洗/去重/排噪', async () => {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'idle-champions-search-index-'))
   const versionDir = path.join(tempDir, 'data')
   const detailDir = path.join(versionDir, 'champion-details')
@@ -154,63 +168,64 @@ test('buildSearchIndex 抽取全部文本桶并正确清洗/去重/排噪', asyn
   )
 
   const result = await buildSearchIndex({ versionDir })
-  const output = await readJson(path.join(versionDir, 'search', 'search-documents.json'))
+  const output = (await readJson(path.join(versionDir, 'search', 'search-documents.json'))) as SearchIndexOutput
 
   // 基本字段
-  assert.equal(result.heroCount, 1)
-  assert.equal(output.updatedAt, '2026-06-09')
+  expect(result.heroCount).toBe(1)
+  expect(output.updatedAt).toBe('2026-06-09')
   const doc = output.items[0]
-  assert.equal(doc.championId, '1')
-  assert.equal(doc.name.display, '布鲁诺')
-  assert.equal(doc.seat, 1)
-  assert.equal(doc.portrait.path, 'v1/champion-portraits/1.png')
+  if (!doc) throw new Error('expected doc')
+  expect(doc.championId).toBe('1')
+  expect(doc.name.display).toBe('布鲁诺')
+  expect(doc.seat).toBe(1)
+  expect(doc.portrait.path).toBe('v1/champion-portraits/1.png')
 
   // title：英雄名（来自 champions.json）+ 全名
-  assert.match(doc.title.en, /Bruenor/)
-  assert.match(doc.title.en, /Bruenor Battlehammer/)
-  assert.match(doc.title.zh, /布鲁诺/)
-  assert.match(doc.title.zh, /布鲁诺·战锤/)
+  expect(doc.title.en).toMatch(/Bruenor/)
+  expect(doc.title.en).toMatch(/Bruenor Battlehammer/)
+  expect(doc.title.zh).toMatch(/布鲁诺/)
+  expect(doc.title.zh).toMatch(/布鲁诺·战锤/)
 
   // body：背景故事 + 技能 desc（已清洗占位符）+ 条件 desc + 传奇效果
-  assert.match(doc.body.en, /Bruenor leads Clan Battlehammer/)
-  assert.match(doc.body.en, /Increase damage of by % for each adjacent Champion/)
-  assert.match(doc.body.en, /Only when is alive/) // $source 已剥
-  assert.match(doc.body.en, /Increases damage of Dwarf Champions by %/) // legendaryEffects，$(amount) 已剥
-  assert.match(doc.body.zh, /布鲁诺领导战锤氏族/)
-  assert.match(doc.body.zh, /每与一名勇士同列，即提升 % 伤害/)
-  assert.match(doc.body.zh, /仅当 存活时/)
+  expect(doc.body.en).toMatch(/Bruenor leads Clan Battlehammer/)
+  expect(doc.body.en).toMatch(/Increase damage of by % for each adjacent Champion/)
+  expect(doc.body.en).toMatch(/Only when is alive/) // $source 已剥
+  expect(doc.body.en).toMatch(/Increases damage of Dwarf Champions by %/) // legendaryEffects，$(amount) 已剥
+  expect(doc.body.zh).toMatch(/布鲁诺领导战锤氏族/)
+  expect(doc.body.zh).toMatch(/每与一名勇士同列，即提升 % 伤害/)
+  expect(doc.body.zh).toMatch(/仅当 存活时/)
 
   // meta：职业/种族/阵营/事件名/各名称 + tags/roles/affiliations（来自 champions.json）
-  assert.match(doc.meta.en, /Fighter/)
-  assert.match(doc.meta.en, /Dwarf/)
-  assert.match(doc.meta.en, /Neutral Good/)
-  assert.match(doc.meta.en, /Some Event/) // display:null 仍索引 original
-  assert.match(doc.meta.en, /Slice/)
-  assert.match(doc.meta.en, /dwarf/)
-  assert.match(doc.meta.en, /support/)
-  assert.match(doc.meta.en, /Companions of the Hall/)
-  assert.match(doc.meta.zh, /战士/)
-  assert.match(doc.meta.zh, /矮人/)
-  assert.match(doc.meta.zh, /秘银五侠/)
+  expect(doc.meta.en).toMatch(/Fighter/)
+  expect(doc.meta.en).toMatch(/Dwarf/)
+  expect(doc.meta.en).toMatch(/Neutral Good/)
+  expect(doc.meta.en).toMatch(/Some Event/) // display:null 仍索引 original
+  expect(doc.meta.en).toMatch(/Slice/)
+  expect(doc.meta.en).toMatch(/dwarf/)
+  expect(doc.meta.en).toMatch(/support/)
+  expect(doc.meta.en).toMatch(/Companions of the Hall/)
+  expect(doc.meta.zh).toMatch(/战士/)
+  expect(doc.meta.zh).toMatch(/矮人/)
+  expect(doc.meta.zh).toMatch(/秘银五侠/)
 
   // 占位符清洗：全文档无残留 $-占位符
   const blob = JSON.stringify(doc)
-  assert.equal(blob.includes('$target'), false)
-  assert.equal(blob.includes('$amount'), false)
-  assert.equal(blob.includes('$('), false)
-  assert.equal(blob.includes('$source'), false)
+  expect(blob.includes('$target')).toBe(false)
+  expect(blob.includes('$amount')).toBe(false)
+  expect(blob.includes('$(')).toBe(false)
+  expect(blob.includes('$source')).toBe(false)
 
   // raw 镜像已跳过
-  assert.equal(blob.includes('RAW DUPLICATE'), false)
-  assert.equal(blob.includes('RAW 不应出现'), false)
+  expect(blob.includes('RAW DUPLICATE')).toBe(false)
+  expect(blob.includes('RAW 不应出现')).toBe(false)
 
   // 代码型字符串已排除
-  assert.equal(blob.includes('hero_dps_mult_per_target_crusader'), false)
-  assert.equal(blob.includes('tag_dps,40'), false)
+  expect(blob.includes('hero_dps_mult_per_target_crusader')).toBe(false)
+  expect(blob.includes('tag_dps,40')).toBe(false)
 
   // override_key_desc（body）与 stack_title（meta）这类信封容器内纯字符串已抓取
-  assert.match(doc.body.en, /Adjacent buff/)
-  assert.match(doc.body.zh, /相邻增益/)
-  assert.match(doc.meta.en, /Total Adjacent Stacks/)
-  assert.match(doc.meta.zh, /相邻总计/)
+  expect(doc.body.en).toMatch(/Adjacent buff/)
+  expect(doc.body.zh).toMatch(/相邻增益/)
+  expect(doc.meta.en).toMatch(/Total Adjacent Stacks/)
+  expect(doc.meta.zh).toMatch(/相邻总计/)
 })

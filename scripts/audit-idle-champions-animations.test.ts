@@ -1,45 +1,106 @@
-import test from 'node:test'
-import assert from 'node:assert/strict'
+import { afterEach, expect, it } from 'vitest'
 import os from 'node:os'
 import path from 'node:path'
 import zlib from 'node:zlib'
 import { mkdtemp, readFile, rm, writeFile, mkdir } from 'node:fs/promises'
 import { auditChampionAnimations } from './audit-idle-champions-animations.ts'
 
-function encodeUInt32LE(value) {
+interface SkelAnimTestFrame {
+  depth: number
+  rotation: number
+  scaleX: number
+  scaleY: number
+  x: number
+  y: number
+}
+
+interface SkelAnimTestPiece {
+  textureId: number
+  sourceX: number
+  sourceY: number
+  sourceWidth: number
+  sourceHeight: number
+  centerX: number
+  centerY: number
+  frames: (SkelAnimTestFrame | null)[]
+}
+
+interface SkelAnimTestSequence {
+  length: number
+  pieces: SkelAnimTestPiece[]
+}
+
+interface SkelAnimTestCharacter {
+  name: string
+  sequences: SkelAnimTestSequence[]
+}
+
+interface FrameOptions {
+  x?: number
+  y?: number
+  rotation?: number
+  scaleX?: number
+  scaleY?: number
+  depth?: number
+}
+
+interface SkelAnimTestAssetConfig {
+  sheetWidth: number
+  sheetHeight: number
+  textures: Buffer[]
+  characters: SkelAnimTestCharacter[]
+}
+
+const createdTempDirs: string[] = []
+
+afterEach(async () => {
+  while (createdTempDirs.length > 0) {
+    const dir = createdTempDirs.pop()
+    if (dir) {
+      await rm(dir, { recursive: true, force: true })
+    }
+  }
+})
+
+function encodeUInt32LE(value: number): Buffer {
   const buffer = Buffer.alloc(4)
   buffer.writeUInt32LE(value, 0)
   return buffer
 }
 
-function encodeInt32LE(value) {
+function encodeInt32LE(value: number): Buffer {
   const buffer = Buffer.alloc(4)
   buffer.writeInt32LE(value, 0)
   return buffer
 }
 
-function encodeInt16LE(value) {
+function encodeInt16LE(value: number): Buffer {
   const buffer = Buffer.alloc(2)
   buffer.writeInt16LE(value, 0)
   return buffer
 }
 
-function encodeDoubleLE(value) {
+function encodeDoubleLE(value: number): Buffer {
   const buffer = Buffer.alloc(8)
   buffer.writeDoubleLE(value, 0)
   return buffer
 }
 
-function encodeBoolean(value) {
+function encodeBoolean(value: boolean): Buffer {
   return Buffer.from([value ? 1 : 0])
 }
 
-function encodeString(value) {
+function encodeString(value: string): Buffer {
   const bytes = Buffer.from(value, 'utf8')
   return Buffer.concat([encodeInt16LE(bytes.length), bytes])
 }
 
-function buildSkelAnimAssetBuffer({ sheetWidth, sheetHeight, textures, characters }) {
+function buildSkelAnimAssetBuffer({
+  sheetWidth,
+  sheetHeight,
+  textures,
+  characters,
+}: SkelAnimTestAssetConfig): Buffer {
   const chunks = [encodeUInt32LE(sheetWidth), encodeUInt32LE(sheetHeight), encodeUInt32LE(textures.length)]
 
   for (const texture of textures) {
@@ -88,23 +149,21 @@ function buildSkelAnimAssetBuffer({ sheetWidth, sheetHeight, textures, character
   return zlib.deflateSync(Buffer.concat(chunks))
 }
 
-async function writeJson(filePath, value) {
+async function writeJson(filePath: string, value: unknown): Promise<void> {
   await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
 }
 
-async function createTempDir(t) {
+async function createTempDir(): Promise<string> {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'ic-animation-audit-'))
-  t.after(async () => {
-    await rm(tempDir, { recursive: true, force: true })
-  })
+  createdTempDirs.push(tempDir)
   return tempDir
 }
 
-function buildFrame({ x = 0, y = 0, rotation = 0, scaleX = 1, scaleY = 1, depth = 0 } = {}) {
+function buildFrame({ x = 0, y = 0, rotation = 0, scaleX = 1, scaleY = 1, depth = 0 }: FrameOptions = {}): SkelAnimTestFrame {
   return { depth, rotation, scaleX, scaleY, x, y }
 }
 
-function createAuditFixtureBuffer() {
+function createAuditFixtureBuffer(): Buffer {
   return buildSkelAnimAssetBuffer({
     sheetWidth: 16,
     sheetHeight: 16,
@@ -179,8 +238,8 @@ function createAuditFixtureBuffer() {
   })
 }
 
-test('auditChampionAnimations 为可疑默认 sequence 产出推荐候选', async (t) => {
-  const tempDir = await createTempDir(t)
+it('auditChampionAnimations 为可疑默认 sequence 产出推荐候选', async () => {
+  const tempDir = await createTempDir()
   const outputDir = path.join(tempDir, 'public', 'data', 'v1')
   const heroDir = path.join(outputDir, 'champion-animations', 'heroes')
   const rawBuffer = createAuditFixtureBuffer()
@@ -231,22 +290,31 @@ test('auditChampionAnimations 为可疑默认 sequence 产出推荐候选', asyn
   })
 
   const result = await auditChampionAnimations({ outputDir, currentVersion: 'v1' })
-  const auditCollection = JSON.parse(await readFile(path.join(outputDir, 'champion-animation-audit.json'), 'utf8'))
-  const entry = auditCollection.items[0]
+  const auditCollection = JSON.parse(await readFile(path.join(outputDir, 'champion-animation-audit.json'), 'utf8')) as {
+    items: Array<{
+      id: string
+      current: { sequenceIndex: number }
+      recommended: { sequenceIndex: number }
+      suspicionLevel: string
+      suspicionSignals: string[]
+      candidates: Array<{ sequenceIndex: number }>
+    }>
+  }
+  const entry = auditCollection.items[0]!
 
-  assert.equal(result.count, 1)
-  assert.equal(result.reviewedCount, 1)
-  assert.equal(entry.id, 'hero:23')
-  assert.equal(entry.current.sequenceIndex, 0)
-  assert.equal(entry.recommended.sequenceIndex, 1)
-  assert.equal(entry.suspicionLevel, 'high')
-  assert.ok(entry.suspicionSignals.includes('visibility_gap'))
-  assert.ok(entry.suspicionSignals.includes('persistent_gap'))
-  assert.equal(entry.candidates[0].sequenceIndex, 1)
+  expect(result.count).toBe(1)
+  expect(result.reviewedCount).toBe(1)
+  expect(entry.id).toBe('hero:23')
+  expect(entry.current.sequenceIndex).toBe(0)
+  expect(entry.recommended.sequenceIndex).toBe(1)
+  expect(entry.suspicionLevel).toBe('high')
+  expect(entry.suspicionSignals.includes('visibility_gap')).toBe(true)
+  expect(entry.suspicionSignals.includes('persistent_gap')).toBe(true)
+  expect(entry.candidates[0]!.sequenceIndex).toBe(1)
 })
 
-test('auditChampionAnimations 在局部更新时保留未命中的既有条目', async (t) => {
-  const tempDir = await createTempDir(t)
+it('auditChampionAnimations 在局部更新时保留未命中的既有条目', async () => {
+  const tempDir = await createTempDir()
   const outputDir = path.join(tempDir, 'public', 'data', 'v1')
   const heroDir = path.join(outputDir, 'champion-animations', 'heroes')
   const rawBuffer = createAuditFixtureBuffer()
@@ -362,8 +430,10 @@ test('auditChampionAnimations 在局部更新时保留未命中的既有条目',
   })
 
   await auditChampionAnimations({ outputDir, currentVersion: 'v1', championIds: '23' })
-  const auditCollection = JSON.parse(await readFile(path.join(outputDir, 'champion-animation-audit.json'), 'utf8'))
+  const auditCollection = JSON.parse(await readFile(path.join(outputDir, 'champion-animation-audit.json'), 'utf8')) as {
+    items: Array<{ id: string }>
+  }
   const ids = auditCollection.items.map((item) => item.id)
 
-  assert.deepEqual(ids.sort(), ['hero:23', 'hero:99'])
+  expect([...ids].sort()).toEqual(['hero:23', 'hero:99'])
 })

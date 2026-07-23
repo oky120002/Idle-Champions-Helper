@@ -1,5 +1,4 @@
-import test from 'node:test'
-import assert from 'node:assert/strict'
+import { it, expect } from 'vitest'
 import os from 'node:os'
 import path from 'node:path'
 import zlib from 'node:zlib'
@@ -7,7 +6,15 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { PNG } from 'pngjs'
 import { syncChampionEquipmentIcons } from './sync-idle-champions-equipment-icons.ts'
 
-function createPng(width, height, colorByPixel) {
+interface TestHooks {
+  onTestFinished(fn: () => Promise<void> | void): void
+}
+
+function createPng(
+  width: number,
+  height: number,
+  colorByPixel: (x: number, y: number) => [number, number, number, number],
+): Buffer {
   const png = new PNG({ width, height })
 
   for (let y = 0; y < height; y += 1) {
@@ -24,25 +31,25 @@ function createPng(width, height, colorByPixel) {
   return PNG.sync.write(png)
 }
 
-async function writeJson(filePath, value) {
+async function writeJson(filePath: string, value: unknown): Promise<void> {
   await mkdir(path.dirname(filePath), { recursive: true })
   await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
 }
 
-async function readJson(filePath) {
+async function readJson(filePath: string): Promise<unknown> {
   return JSON.parse(await readFile(filePath, 'utf8'))
 }
 
-async function createTempDir(t) {
+async function createTempDir(hooks: TestHooks): Promise<string> {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'ic-equipment-icons-'))
-  t.after(async () => {
+  hooks.onTestFinished(async () => {
     await rm(tempDir, { recursive: true, force: true })
   })
   return tempDir
 }
 
-test('syncChampionEquipmentIcons 会从 champion-details 收集装备 graphicId 并输出本地图标清单', async (t) => {
-  const tempDir = await createTempDir(t)
+it('syncChampionEquipmentIcons 会从 champion-details 收集装备 graphicId 并输出本地图标清单', async (ctx) => {
+  const tempDir = await createTempDir(ctx)
   const inputFile = path.join(tempDir, 'definitions.json')
   const outputDir = path.join(tempDir, 'data')
   const detailDir = path.join(outputDir, 'champion-details')
@@ -53,7 +60,7 @@ test('syncChampionEquipmentIcons 会从 champion-details 收集装备 graphicId 
 
     return [235, 189, 92, 255]
   })
-  const rawByUrl = new Map([
+  const rawByUrl = new Map<string, Buffer>([
     [
       'https://example.test/mobile_assets/Items/HeroLoot/SwordEpic',
       zlib.deflateSync(iconPng),
@@ -62,17 +69,17 @@ test('syncChampionEquipmentIcons 会从 champion-details 收集装备 graphicId 
   const originalFetch = globalThis.fetch
 
   globalThis.fetch = async (input) => {
-    const url = String(input)
+    const url = typeof input === 'string' ? input : input instanceof URL ? input.href : input.url
     const body = rawByUrl.get(url)
 
     if (!body) {
       return new Response('not found', { status: 404 })
     }
 
-    return new Response(body, { status: 200 })
+    return new Response(body as unknown as BodyInit, { status: 200 })
   }
 
-  t.after(() => {
+  ctx.onTestFinished(() => {
     globalThis.fetch = originalFetch
   })
 
@@ -101,24 +108,26 @@ test('syncChampionEquipmentIcons 会从 champion-details 收集装备 graphicId 
     detailDir,
     currentVersion: 'v1',
     masterApiUrl: 'https://example.test/',
-    concurrency: 1,
+    concurrency: '1',
   })
 
-  assert.equal(result.count, 1)
-  assert.equal(result.outputDir, outputDir)
+  expect(result.count).toBe(1)
+  expect(result.outputDir).toBe(outputDir)
 
-  const collection = await readJson(path.join(outputDir, 'champion-equipment-icons.json'))
-  assert.equal(collection.items.length, 1)
-  assert.equal(collection.items[0].graphicId, '1002')
-  assert.equal(collection.items[0].image.path, 'v1/champion-equipment-icons/1002.png')
+  const collection = (await readJson(path.join(outputDir, 'champion-equipment-icons.json'))) as {
+    items: Array<{ graphicId: string; image: { path: string } }>
+  }
+  expect(collection.items.length).toBe(1)
+  expect(collection.items[0]?.graphicId).toBe('1002')
+  expect(collection.items[0]?.image.path).toBe('v1/champion-equipment-icons/1002.png')
 
   const writtenPng = PNG.sync.read(await readFile(path.join(outputDir, 'champion-equipment-icons', '1002.png')))
-  assert.equal(writtenPng.width, 4)
-  assert.equal(writtenPng.height, 4)
+  expect(writtenPng.width).toBe(4)
+  expect(writtenPng.height).toBe(4)
 })
 
-test('syncChampionEquipmentIcons 在集合 updatedAt 未变新时整批跳过，不清目录也不发下载', async (t) => {
-  const tempDir = await createTempDir(t)
+it('syncChampionEquipmentIcons 在集合 updatedAt 未变新时整批跳过，不清目录也不发下载', async (ctx) => {
+  const tempDir = await createTempDir(ctx)
   const inputFile = path.join(tempDir, 'definitions.json')
   const outputDir = path.join(tempDir, 'data')
   const assetDir = path.join(outputDir, 'champion-equipment-icons')
@@ -151,7 +160,7 @@ test('syncChampionEquipmentIcons 在集合 updatedAt 未变新时整批跳过，
   globalThis.fetch = async () => {
     throw new Error('不应触发下载')
   }
-  t.after(() => {
+  ctx.onTestFinished(() => {
     globalThis.fetch = originalFetch
   })
 
@@ -161,13 +170,13 @@ test('syncChampionEquipmentIcons 在集合 updatedAt 未变新时整批跳过，
     detailDir: path.join(outputDir, 'missing-details'),
   })
 
-  assert.equal(result.skipped, true)
-  assert.equal(result.count, 1)
-  assert.deepEqual(await readFile(path.join(assetDir, '1002.png')), Buffer.from('existing-icon'))
+  expect(result.skipped).toBe(true)
+  expect(result.count).toBe(1)
+  expect(await readFile(path.join(assetDir, '1002.png'))).toEqual(Buffer.from('existing-icon'))
 })
 
-test('syncChampionEquipmentIcons 在 definitions 更新时间变新但单资源 source 未变化时复用本地文件', async (t) => {
-  const tempDir = await createTempDir(t)
+it('syncChampionEquipmentIcons 在 definitions 更新时间变新但单资源 source 未变化时复用本地文件', async (ctx) => {
+  const tempDir = await createTempDir(ctx)
   const inputFile = path.join(tempDir, 'definitions.json')
   const outputDir = path.join(tempDir, 'data')
   const detailDir = path.join(outputDir, 'champion-details')
@@ -216,7 +225,7 @@ test('syncChampionEquipmentIcons 在 definitions 更新时间变新但单资源 
   globalThis.fetch = async () => {
     throw new Error('命中单资源复用时不应重新下载')
   }
-  t.after(() => {
+  ctx.onTestFinished(() => {
     globalThis.fetch = originalFetch
   })
 
@@ -228,10 +237,13 @@ test('syncChampionEquipmentIcons 在 definitions 更新时间变新但单资源 
     masterApiUrl: 'https://example.test/',
   })
 
-  assert.equal(result.skipped, undefined)
-  assert.equal(result.count, 1)
-  assert.deepEqual(await readFile(path.join(assetDir, '1002.png')), existingPng)
-  const collection = await readJson(path.join(outputDir, 'champion-equipment-icons.json'))
-  assert.equal(collection.updatedAt, '2026-02-03')
-  assert.equal(collection.items[0].image.path, 'v1/champion-equipment-icons/1002.png')
+  expect(result.skipped).toBe(undefined)
+  expect(result.count).toBe(1)
+  expect(await readFile(path.join(assetDir, '1002.png'))).toEqual(existingPng)
+  const collection = (await readJson(path.join(outputDir, 'champion-equipment-icons.json'))) as {
+    updatedAt: string
+    items: Array<{ image: { path: string } }>
+  }
+  expect(collection.updatedAt).toBe('2026-02-03')
+  expect(collection.items[0]?.image.path).toBe('v1/champion-equipment-icons/1002.png')
 })

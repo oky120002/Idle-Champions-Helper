@@ -1,5 +1,4 @@
-import test from 'node:test'
-import assert from 'node:assert/strict'
+import { it, expect } from 'vitest'
 import os from 'node:os'
 import path from 'node:path'
 import zlib from 'node:zlib'
@@ -7,7 +6,15 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { PNG } from 'pngjs'
 import { syncChampionSpecializationGraphics } from './sync-idle-champions-specialization-graphics.ts'
 
-function createPng(width, height, colorByPixel) {
+interface TestHooks {
+  onTestFinished(fn: () => Promise<void> | void): void
+}
+
+function createPng(
+  width: number,
+  height: number,
+  colorByPixel: (x: number, y: number) => [number, number, number, number],
+): Buffer {
   const png = new PNG({ width, height })
 
   for (let y = 0; y < height; y += 1) {
@@ -24,25 +31,25 @@ function createPng(width, height, colorByPixel) {
   return PNG.sync.write(png)
 }
 
-async function writeJson(filePath, value) {
+async function writeJson(filePath: string, value: unknown): Promise<void> {
   await mkdir(path.dirname(filePath), { recursive: true })
   await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
 }
 
-async function readJson(filePath) {
+async function readJson(filePath: string): Promise<unknown> {
   return JSON.parse(await readFile(filePath, 'utf8'))
 }
 
-async function createTempDir(t) {
+async function createTempDir(hooks: TestHooks): Promise<string> {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'ic-specialization-graphics-'))
-  t.after(async () => {
+  hooks.onTestFinished(async () => {
     await rm(tempDir, { recursive: true, force: true })
   })
   return tempDir
 }
 
-test('syncChampionSpecializationGraphics 会输出专精图集合与裁剪后的 PNG', async (t) => {
-  const tempDir = await createTempDir(t)
+it('syncChampionSpecializationGraphics 会输出专精图集合与裁剪后的 PNG', async (ctx) => {
+  const tempDir = await createTempDir(ctx)
   const inputFile = path.join(tempDir, 'definitions.json')
   const outputDir = path.join(tempDir, 'data')
   const detailDir = path.join(outputDir, 'champion-details')
@@ -56,7 +63,7 @@ test('syncChampionSpecializationGraphics 会输出专精图集合与裁剪后的
   const originalFetch = globalThis.fetch
 
   globalThis.fetch = async () => new Response(zlib.deflateSync(graphicPng), { status: 200 })
-  t.after(() => {
+  ctx.onTestFinished(() => {
     globalThis.fetch = originalFetch
   })
 
@@ -84,19 +91,22 @@ test('syncChampionSpecializationGraphics 会输出专精图集合与裁剪后的
     masterApiUrl: 'https://example.test/',
   })
 
-  assert.equal(result.count, 1)
-  const collection = await readJson(path.join(outputDir, 'champion-specialization-graphics.json'))
-  assert.equal(collection.updatedAt, '2026-02-02')
-  assert.equal(collection.items[0].graphicId, '2001')
+  expect(result.count).toBe(1)
+  const collection = (await readJson(path.join(outputDir, 'champion-specialization-graphics.json'))) as {
+    updatedAt: string
+    items: Array<{ graphicId: string }>
+  }
+  expect(collection.updatedAt).toBe('2026-02-02')
+  expect(collection.items[0]?.graphicId).toBe('2001')
   const writtenPng = PNG.sync.read(
     await readFile(path.join(outputDir, 'champion-specialization-graphics', '2001.png')),
   )
-  assert.equal(writtenPng.width, 4)
-  assert.equal(writtenPng.height, 4)
+  expect(writtenPng.width).toBe(4)
+  expect(writtenPng.height).toBe(4)
 })
 
-test('syncChampionSpecializationGraphics 在集合 updatedAt 未变新时整批跳过', async (t) => {
-  const tempDir = await createTempDir(t)
+it('syncChampionSpecializationGraphics 在集合 updatedAt 未变新时整批跳过', async (ctx) => {
+  const tempDir = await createTempDir(ctx)
   const inputFile = path.join(tempDir, 'definitions.json')
   const outputDir = path.join(tempDir, 'data')
   const assetDir = path.join(outputDir, 'champion-specialization-graphics')
@@ -129,7 +139,7 @@ test('syncChampionSpecializationGraphics 在集合 updatedAt 未变新时整批�
   globalThis.fetch = async () => {
     throw new Error('不应触发下载')
   }
-  t.after(() => {
+  ctx.onTestFinished(() => {
     globalThis.fetch = originalFetch
   })
 
@@ -139,16 +149,15 @@ test('syncChampionSpecializationGraphics 在集合 updatedAt 未变新时整批�
     detailDir: path.join(outputDir, 'missing-details'),
   })
 
-  assert.equal(result.skipped, true)
-  assert.equal(result.count, 1)
-  assert.deepEqual(
-    await readFile(path.join(assetDir, '2001.png')),
+  expect(result.skipped).toBe(true)
+  expect(result.count).toBe(1)
+  expect(await readFile(path.join(assetDir, '2001.png'))).toEqual(
     Buffer.from('existing-specialization'),
   )
 })
 
-test('syncChampionSpecializationGraphics 在资源 source 未变化时复用已有 PNG', async (t) => {
-  const tempDir = await createTempDir(t)
+it('syncChampionSpecializationGraphics 在资源 source 未变化时复用已有 PNG', async (ctx) => {
+  const tempDir = await createTempDir(ctx)
   const inputFile = path.join(tempDir, 'definitions.json')
   const outputDir = path.join(tempDir, 'data')
   const detailDir = path.join(outputDir, 'champion-details')
@@ -198,7 +207,7 @@ test('syncChampionSpecializationGraphics 在资源 source 未变化时复用已�
   globalThis.fetch = async () => {
     throw new Error('命中单资源复用时不应重新下载')
   }
-  t.after(() => {
+  ctx.onTestFinished(() => {
     globalThis.fetch = originalFetch
   })
 
@@ -210,9 +219,12 @@ test('syncChampionSpecializationGraphics 在资源 source 未变化时复用已�
     masterApiUrl: 'https://example.test/',
   })
 
-  assert.equal(result.count, 1)
-  assert.deepEqual(await readFile(path.join(assetDir, '2001.png')), existingPng)
-  const collection = await readJson(path.join(outputDir, 'champion-specialization-graphics.json'))
-  assert.equal(collection.updatedAt, '2026-02-03')
-  assert.equal(collection.items[0].image.path, 'v1/champion-specialization-graphics/2001.png')
+  expect(result.count).toBe(1)
+  expect(await readFile(path.join(assetDir, '2001.png'))).toEqual(existingPng)
+  const collection = (await readJson(path.join(outputDir, 'champion-specialization-graphics.json'))) as {
+    updatedAt: string
+    items: Array<{ image: { path: string } }>
+  }
+  expect(collection.updatedAt).toBe('2026-02-03')
+  expect(collection.items[0]?.image.path).toBe('v1/champion-specialization-graphics/2001.png')
 })

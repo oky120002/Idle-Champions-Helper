@@ -1,5 +1,4 @@
-import test from 'node:test'
-import assert from 'node:assert/strict'
+import { expect, it } from 'vitest'
 import zlib from 'node:zlib'
 import { PNG } from 'pngjs'
 import { decodeSkelAnimGraphicBuffer } from './skelanim-codec.ts'
@@ -9,7 +8,48 @@ import {
   selectBestSkelAnimPose,
 } from './skelanim-renderer.ts'
 
-function createSolidTexture(width, height, colorByPixel) {
+interface SkelAnimTestFrame {
+  depth: number
+  rotation: number
+  scaleX: number
+  scaleY: number
+  x: number
+  y: number
+}
+
+interface SkelAnimTestPiece {
+  textureId: number
+  sourceX: number
+  sourceY: number
+  sourceWidth: number
+  sourceHeight: number
+  centerX: number
+  centerY: number
+  frames: (SkelAnimTestFrame | null)[]
+}
+
+interface SkelAnimTestSequence {
+  length: number
+  pieces: SkelAnimTestPiece[]
+}
+
+interface SkelAnimTestCharacter {
+  name: string
+  sequences: SkelAnimTestSequence[]
+}
+
+interface SkelAnimTestAssetConfig {
+  sheetWidth: number
+  sheetHeight: number
+  textures: Buffer[]
+  characters: SkelAnimTestCharacter[]
+}
+
+function createSolidTexture(
+  width: number,
+  height: number,
+  colorByPixel: (x: number, y: number) => [number, number, number, number],
+): Buffer {
   const png = new PNG({ width, height })
 
   for (let y = 0; y < height; y += 1) {
@@ -26,40 +66,45 @@ function createSolidTexture(width, height, colorByPixel) {
   return PNG.sync.write(png)
 }
 
-function encodeUInt32LE(value) {
+function encodeUInt32LE(value: number): Buffer {
   const buffer = Buffer.alloc(4)
   buffer.writeUInt32LE(value, 0)
   return buffer
 }
 
-function encodeInt32LE(value) {
+function encodeInt32LE(value: number): Buffer {
   const buffer = Buffer.alloc(4)
   buffer.writeInt32LE(value, 0)
   return buffer
 }
 
-function encodeInt16LE(value) {
+function encodeInt16LE(value: number): Buffer {
   const buffer = Buffer.alloc(2)
   buffer.writeInt16LE(value, 0)
   return buffer
 }
 
-function encodeDoubleLE(value) {
+function encodeDoubleLE(value: number): Buffer {
   const buffer = Buffer.alloc(8)
   buffer.writeDoubleLE(value, 0)
   return buffer
 }
 
-function encodeBoolean(value) {
+function encodeBoolean(value: boolean): Buffer {
   return Buffer.from([value ? 1 : 0])
 }
 
-function encodeString(value) {
+function encodeString(value: string): Buffer {
   const bytes = Buffer.from(value, 'utf8')
   return Buffer.concat([encodeInt16LE(bytes.length), bytes])
 }
 
-function buildSkelAnimAssetBuffer({ sheetWidth, sheetHeight, textures, characters }) {
+function buildSkelAnimAssetBuffer({
+  sheetWidth,
+  sheetHeight,
+  textures,
+  characters,
+}: SkelAnimTestAssetConfig): Buffer {
   const chunks = [encodeUInt32LE(sheetWidth), encodeUInt32LE(sheetHeight), encodeUInt32LE(textures.length)]
 
   for (const texture of textures) {
@@ -112,7 +157,7 @@ const testAsset = {
   delivery: 'zlib-png',
 }
 
-test('decodeSkelAnimGraphicBuffer 解析 frame 字段顺序与 piece 数据', () => {
+it('decodeSkelAnimGraphicBuffer 解析 frame 字段顺序与 piece 数据', () => {
   const texture = createSolidTexture(2, 2, () => [255, 0, 0, 255])
   const rawBuffer = buildSkelAnimAssetBuffer({
     sheetWidth: 16,
@@ -151,13 +196,13 @@ test('decodeSkelAnimGraphicBuffer 解析 frame 字段顺序与 piece 数据', ()
     ],
   })
   const decoded = decodeSkelAnimGraphicBuffer(testAsset, rawBuffer)
-  const frame = decoded.characters[0].sequences[0].pieces[0].frames[0]
+  const frame = decoded.characters[0]!.sequences[0]!.pieces[0]!.frames[0]
 
-  assert.equal(decoded.sheetWidth, 16)
-  assert.equal(decoded.sheetHeight, 16)
-  assert.equal(decoded.textures.length, 1)
-  assert.equal(decoded.characters[0].name, 'TestHero')
-  assert.deepEqual(decoded.characters[0].sequences[0].pieces[0], {
+  expect(decoded.sheetWidth).toBe(16)
+  expect(decoded.sheetHeight).toBe(16)
+  expect(decoded.textures.length).toBe(1)
+  expect(decoded.characters[0]!.name).toBe('TestHero')
+  expect(decoded.characters[0]!.sequences[0]!.pieces[0]!).toEqual({
     pieceIndex: 0,
     textureId: 0,
     sourceX: 3,
@@ -168,7 +213,7 @@ test('decodeSkelAnimGraphicBuffer 解析 frame 字段顺序与 piece 数据', ()
     centerY: 8,
     frames: [frame],
   })
-  assert.deepEqual(frame, {
+  expect(frame).toEqual({
     depth: 9,
     rotation: 0.25,
     scaleX: 1.5,
@@ -178,7 +223,7 @@ test('decodeSkelAnimGraphicBuffer 解析 frame 字段顺序与 piece 数据', ()
   })
 })
 
-test('renderSkelAnimPoseToPngBuffer 按 depth 覆盖 piece 并输出正确尺寸', async () => {
+it('renderSkelAnimPoseToPngBuffer 按 depth 覆盖 piece 并输出正确尺寸', async () => {
   const texture = createSolidTexture(4, 2, (x) => (x < 2 ? [255, 0, 0, 255] : [0, 0, 255, 255]))
   const rawBuffer = buildSkelAnimAssetBuffer({
     sheetWidth: 4,
@@ -242,18 +287,18 @@ test('renderSkelAnimPoseToPngBuffer 按 depth 覆盖 piece 并输出正确尺寸
   })
   const png = PNG.sync.read(rendered.bytes)
 
-  assert.equal(rendered.width, 2)
-  assert.equal(rendered.height, 2)
+  expect(rendered.width).toBe(2)
+  expect(rendered.height).toBe(2)
 
   for (let index = 0; index < png.data.length; index += 4) {
-    assert.equal(png.data[index], 0)
-    assert.equal(png.data[index + 1], 0)
-    assert.equal(png.data[index + 2], 255)
-    assert.equal(png.data[index + 3], 255)
+    expect(png.data[index]).toBe(0)
+    expect(png.data[index + 1]).toBe(0)
+    expect(png.data[index + 2]).toBe(255)
+    expect(png.data[index + 3]).toBe(255)
   }
 })
 
-test('renderSkelAnimPoseToPngBuffer 以正 y 向下堆叠 piece', async () => {
+it('renderSkelAnimPoseToPngBuffer 以正 y 向下堆叠 piece', async () => {
   const texture = createSolidTexture(2, 1, (x) => (x === 0 ? [255, 0, 0, 255] : [0, 0, 255, 255]))
   const rawBuffer = buildSkelAnimAssetBuffer({
     sheetWidth: 2,
@@ -317,19 +362,19 @@ test('renderSkelAnimPoseToPngBuffer 以正 y 向下堆叠 piece', async () => {
   })
   const png = PNG.sync.read(rendered.bytes)
 
-  assert.equal(rendered.width, 1)
-  assert.equal(rendered.height, 3)
+  expect(rendered.width).toBe(1)
+  expect(rendered.height).toBe(3)
 
   const topPixel = png.data.subarray(0, 4)
   const middlePixel = png.data.subarray(4, 8)
   const bottomPixel = png.data.subarray(8, 12)
 
-  assert.deepEqual(Array.from(topPixel), [255, 0, 0, 255])
-  assert.deepEqual(Array.from(middlePixel), [0, 0, 0, 0])
-  assert.deepEqual(Array.from(bottomPixel), [0, 0, 255, 255])
+  expect(Array.from(topPixel)).toEqual([255, 0, 0, 255])
+  expect(Array.from(middlePixel)).toEqual([0, 0, 0, 0])
+  expect(Array.from(bottomPixel)).toEqual([0, 0, 255, 255])
 })
 
-test('renderSkelAnimPoseToPngBuffer 支持用更大的 viewport 输出首帧 poster', async () => {
+it('renderSkelAnimPoseToPngBuffer 支持用更大的 viewport 输出首帧 poster', async () => {
   const texture = createSolidTexture(1, 1, () => [0, 255, 0, 255])
   const rawBuffer = buildSkelAnimAssetBuffer({
     sheetWidth: 1,
@@ -371,19 +416,19 @@ test('renderSkelAnimPoseToPngBuffer 支持用更大的 viewport 输出首帧 pos
   const rendered = await renderSkelAnimPoseToPngBuffer(decoded, {
     sequenceIndex: 0,
     frameIndex: 0,
-    viewportBounds: { minX: 0, minY: 0, maxX: 3, maxY: 1 },
+    viewportBounds: { minX: 0, minY: 0, maxX: 3, maxY: 1, width: 3, height: 1, visiblePieceCount: 1 },
   })
   const png = PNG.sync.read(rendered.bytes)
 
-  assert.equal(rendered.width, 3)
-  assert.equal(rendered.height, 1)
-  assert.deepEqual(rendered.render.bounds, { minX: 0, minY: 0, maxX: 3, maxY: 1 })
-  assert.deepEqual(Array.from(png.data.subarray(0, 4)), [0, 0, 0, 0])
-  assert.deepEqual(Array.from(png.data.subarray(4, 8)), [0, 255, 0, 255])
-  assert.deepEqual(Array.from(png.data.subarray(8, 12)), [0, 0, 0, 0])
+  expect(rendered.width).toBe(3)
+  expect(rendered.height).toBe(1)
+  expect(rendered.render.bounds).toEqual({ minX: 0, minY: 0, maxX: 3, maxY: 1 })
+  expect(Array.from(png.data.subarray(0, 4))).toEqual([0, 0, 0, 0])
+  expect(Array.from(png.data.subarray(4, 8))).toEqual([0, 255, 0, 255])
+  expect(Array.from(png.data.subarray(8, 12))).toEqual([0, 0, 0, 0])
 })
 
-test('SkelAnim 几何遵循 kleho 的正 rotation 与先 scale 后 rotate', async () => {
+it('SkelAnim 几何遵循 kleho 的正 rotation 与先 scale 后 rotate', async () => {
   const texture = createSolidTexture(1, 1, () => [255, 0, 0, 255])
   const rawBuffer = buildSkelAnimAssetBuffer({
     sheetWidth: 1,
@@ -422,28 +467,28 @@ test('SkelAnim 几何遵循 kleho 的正 rotation 与先 scale 后 rotate', asyn
     ],
   })
   const decoded = decodeSkelAnimGraphicBuffer(testAsset, rawBuffer)
-  const bounds = computeSkelAnimFrameBounds(decoded.characters[0].sequences[0], 0)
+  const bounds = computeSkelAnimFrameBounds(decoded.characters[0]!.sequences[0]!, 0)
   const rendered = await renderSkelAnimPoseToPngBuffer(decoded, {
     sequenceIndex: 0,
     frameIndex: 0,
   })
   const png = PNG.sync.read(rendered.bytes)
 
-  assert.ok(bounds)
-  assert.ok(Math.abs(bounds.minX + 2) < 1e-9)
-  assert.ok(Math.abs(bounds.minY) < 1e-9)
-  assert.ok(Math.abs(bounds.maxX) < 1e-9)
-  assert.ok(Math.abs(bounds.maxY - 1) < 1e-9)
-  assert.equal(bounds.width, 2)
-  assert.equal(bounds.height, 1)
-  assert.equal(bounds.visiblePieceCount, 1)
-  assert.equal(rendered.width, 2)
-  assert.equal(rendered.height, 1)
-  assert.deepEqual(Array.from(png.data.subarray(0, 4)), [255, 0, 0, 255])
-  assert.deepEqual(Array.from(png.data.subarray(4, 8)), [255, 0, 0, 255])
+  expect(bounds).toBeTruthy()
+  expect(Math.abs(bounds!.minX + 2)).toBeLessThan(1e-9)
+  expect(Math.abs(bounds!.minY)).toBeLessThan(1e-9)
+  expect(Math.abs(bounds!.maxX)).toBeLessThan(1e-9)
+  expect(Math.abs(bounds!.maxY - 1)).toBeLessThan(1e-9)
+  expect(bounds!.width).toBe(2)
+  expect(bounds!.height).toBe(1)
+  expect(bounds!.visiblePieceCount).toBe(1)
+  expect(rendered.width).toBe(2)
+  expect(rendered.height).toBe(1)
+  expect(Array.from(png.data.subarray(0, 4))).toEqual([255, 0, 0, 255])
+  expect(Array.from(png.data.subarray(4, 8))).toEqual([255, 0, 0, 255])
 })
 
-test('selectBestSkelAnimPose 默认选择第一个 sequence 的首帧', () => {
+it('selectBestSkelAnimPose 默认选择第一个 sequence 的首帧', () => {
   const texture = createSolidTexture(2, 2, () => [255, 255, 255, 255])
   const rawBuffer = buildSkelAnimAssetBuffer({
     sheetWidth: 2,
@@ -514,15 +559,15 @@ test('selectBestSkelAnimPose 默认选择第一个 sequence 的首帧', () => {
     ],
   })
   const decoded = decodeSkelAnimGraphicBuffer(testAsset, rawBuffer)
-  const pose = selectBestSkelAnimPose(decoded.characters[0])
+  const pose = selectBestSkelAnimPose(decoded.characters[0]!)
 
-  assert.equal(pose.sequenceIndex, 0)
-  assert.equal(pose.frameIndex, 0)
-  assert.equal(Math.round(pose.width), 2)
-  assert.equal(Math.round(pose.height), 2)
+  expect(pose.sequenceIndex).toBe(0)
+  expect(pose.frameIndex).toBe(0)
+  expect(Math.round(pose.width)).toBe(2)
+  expect(Math.round(pose.height)).toBe(2)
 })
 
-test('selectBestSkelAnimPose 跳过不可渲染首帧并继续找同 sequence 的后续帧', () => {
+it('selectBestSkelAnimPose 跳过不可渲染首帧并继续找同 sequence 的后续帧', () => {
   const texture = createSolidTexture(2, 2, () => [255, 255, 255, 255])
   const rawBuffer = buildSkelAnimAssetBuffer({
     sheetWidth: 2,
@@ -586,13 +631,13 @@ test('selectBestSkelAnimPose 跳过不可渲染首帧并继续找同 sequence �
     ],
   })
   const decoded = decodeSkelAnimGraphicBuffer(testAsset, rawBuffer)
-  const pose = selectBestSkelAnimPose(decoded.characters[0])
+  const pose = selectBestSkelAnimPose(decoded.characters[0]!)
 
-  assert.equal(pose.sequenceIndex, 0)
-  assert.equal(pose.frameIndex, 1)
+  expect(pose.sequenceIndex).toBe(0)
+  expect(pose.frameIndex).toBe(1)
 })
 
-test('selectBestSkelAnimPose 按 preferredSequenceIndexes 与 preferredFrameIndexes 优先选 pose', () => {
+it('selectBestSkelAnimPose 按 preferredSequenceIndexes 与 preferredFrameIndexes 优先选 pose', () => {
   const texture = createSolidTexture(2, 2, () => [255, 255, 255, 255])
   const rawBuffer = buildSkelAnimAssetBuffer({
     sheetWidth: 2,
@@ -663,13 +708,13 @@ test('selectBestSkelAnimPose 按 preferredSequenceIndexes 与 preferredFrameInde
     ],
   })
   const decoded = decodeSkelAnimGraphicBuffer(testAsset, rawBuffer)
-  const pose = selectBestSkelAnimPose(decoded.characters[0], {
+  const pose = selectBestSkelAnimPose(decoded.characters[0]!, {
     preferredSequenceIndexes: [1, 0],
     preferredFrameIndexes: [0],
   })
 
-  assert.equal(pose.sequenceIndex, 1)
-  assert.equal(pose.frameIndex, 0)
-  assert.equal(Math.round(pose.width), 6)
-  assert.equal(Math.round(pose.height), 6)
+  expect(pose.sequenceIndex).toBe(1)
+  expect(pose.frameIndex).toBe(0)
+  expect(Math.round(pose.width)).toBe(6)
+  expect(Math.round(pose.height)).toBe(6)
 })

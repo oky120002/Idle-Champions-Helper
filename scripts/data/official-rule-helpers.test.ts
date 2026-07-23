@@ -1,5 +1,4 @@
-import test from 'node:test'
-import assert from 'node:assert/strict'
+import { expect, it } from 'vitest'
 
 import {
   buildChampionPatronEligibility,
@@ -18,7 +17,7 @@ import {
   normalizeTrialsRoleDefinition,
 } from './official-rule-helpers.ts'
 
-test('normalizePatronDefinition 结构化提取 patron 限制规则', () => {
+it('normalizePatronDefinition 结构化提取 patron 限制规则', () => {
   const patron = normalizePatronDefinition(
     {
       id: 5,
@@ -57,14 +56,17 @@ test('normalizePatronDefinition 结构化提取 patron 限制规则', () => {
     },
   )
 
-  assert.deepEqual(patron.name, {
+  expect(patron).not.toBeNull()
+  if (!patron) throw new Error('expected patron to be defined')
+
+  expect(patron.name).toEqual({
     original: 'Elminster',
     display: '艾尔明斯特',
   })
-  assert.equal(patron.shortName, 'Elminster')
-  assert.deepEqual(patron.forceAllowedHeroIds, ['58'])
-  assert.equal(patron.evaluationStatus, 'complete')
-  assert.deepEqual(patron.eligibilityRules, [
+  expect(patron.shortName).toBe('Elminster')
+  expect(patron.forceAllowedHeroIds).toEqual(['58'])
+  expect(patron.evaluationStatus).toBe('complete')
+  expect(patron.eligibilityRules).toEqual([
     {
       type: 'time_available_days',
       rawExpression: 'TimeAvailable(`days`) > (365 * 3)',
@@ -74,7 +76,7 @@ test('normalizePatronDefinition 结构化提取 patron 限制规则', () => {
   ])
 })
 
-test('buildChampionPatronEligibility 评估 tag/stat/time-available 与 force allow', () => {
+it('buildChampionPatronEligibility 评估 tag/stat/time-available 与 force allow', () => {
   const patrons = [
     normalizePatronDefinition(
       {
@@ -90,7 +92,7 @@ test('buildChampionPatronEligibility 评估 tag/stat/time-available 与 force al
         },
       },
       { name: '米尔特' },
-    ),
+    )!,
     normalizePatronDefinition(
       {
         id: 2,
@@ -107,7 +109,7 @@ test('buildChampionPatronEligibility 评估 tag/stat/time-available 与 force al
         },
       },
       { name: '瓦吉拉' },
-    ),
+    )!,
     normalizePatronDefinition(
       {
         id: 5,
@@ -126,7 +128,7 @@ test('buildChampionPatronEligibility 评估 tag/stat/time-available 与 force al
         },
       },
       { name: '艾尔明斯特' },
-    ),
+    )!,
   ]
 
   const bruenor = buildChampionPatronEligibility(
@@ -159,13 +161,13 @@ test('buildChampionPatronEligibility 评估 tag/stat/time-available 与 force al
     '2026-04-11',
   )
 
-  assert.deepEqual(bruenor, {
+  expect(bruenor).toEqual({
     eligiblePatronIds: ['1', '2', '5'],
     ruleQualifiedPatronIds: ['1', '2', '5'],
     forcedEligiblePatronIds: [],
     unsupportedPatronIds: [],
   })
-  assert.deepEqual(hewMaan, {
+  expect(hewMaan).toEqual({
     eligiblePatronIds: ['5'],
     ruleQualifiedPatronIds: [],
     forcedEligiblePatronIds: ['5'],
@@ -173,7 +175,7 @@ test('buildChampionPatronEligibility 评估 tag/stat/time-available 与 force al
   })
 })
 
-test('normalizePatronObjectiveTiers 与 scenario mode tags 输出稳定结构', () => {
+it('normalizePatronObjectiveTiers 与 scenario mode tags 输出稳定结构', () => {
   const tiers = normalizePatronObjectiveTiers({
     2: {
       1: [{ condition: 'complete_area', area: '275' }],
@@ -183,7 +185,7 @@ test('normalizePatronObjectiveTiers 与 scenario mode tags 输出稳定结构', 
     },
   })
 
-  assert.deepEqual(tiers, [
+  expect(tiers).toEqual([
     {
       patronId: '1',
       tierId: '1',
@@ -197,11 +199,11 @@ test('normalizePatronObjectiveTiers 与 scenario mode tags 输出稳定结构', 
       objectives: [{ condition: 'complete_area', area: '275' }],
     },
   ])
-  assert.equal(buildScenarioRuleContextId('variant', '101'), 'variant:101')
-  assert.deepEqual(buildScenarioModeTags('adventure', true, tiers), ['adventure', 'free_play', 'patron'])
+  expect(buildScenarioRuleContextId('variant', '101')).toBe('variant:101')
+  expect(buildScenarioModeTags('adventure', true, tiers)).toEqual(['adventure', 'free_play', 'patron'])
 })
 
-test('规则 / patron perk / trials 辅助归一化输出稳定结构', () => {
+it('规则 / patron perk / trials 辅助归一化输出稳定结构', () => {
   const gameRule = normalizeOfficialGameRuleDefinition({
     id: 1,
     rule_name: 'role_tags_v2',
@@ -308,7 +310,7 @@ test('规则 / patron perk / trials 辅助归一化输出稳定结构', () => {
     },
   )
 
-  assert.deepEqual(gameRule, {
+  expect(gameRule).toEqual({
     id: '1',
     ruleName: 'role_tags_v2',
     topLevelKeys: ['enabled', 'tags'],
@@ -317,7 +319,7 @@ test('规则 / patron perk / trials 辅助归一化输出稳定结构', () => {
       enabled: true,
     },
   })
-  assert.deepEqual(perkTier, {
+  expect(perkTier).toEqual({
     id: '2',
     patronId: '1',
     tierId: '2',
@@ -330,7 +332,7 @@ test('规则 / patron perk / trials 辅助归一化输出稳定结构', () => {
       },
     ],
   })
-  assert.deepEqual(perk, {
+  expect(perk).toEqual({
     id: '4',
     patronId: '1',
     tierId: '2',
@@ -358,7 +360,7 @@ test('规则 / patron perk / trials 辅助归一化输出稳定结构', () => {
     effectDefinitionIds: ['453'],
     properties: [],
   })
-  assert.deepEqual(trialsRole, {
+  expect(trialsRole).toEqual({
     id: '1',
     name: {
       original: 'Forest - Balance the Forest',
@@ -392,7 +394,7 @@ test('规则 / patron perk / trials 辅助归一化输出稳定结构', () => {
       y: 518,
     },
   })
-  assert.deepEqual(difficulty, {
+  expect(difficulty).toEqual({
     id: '2',
     name: {
       original: 'Heroic',
@@ -418,7 +420,7 @@ test('规则 / patron perk / trials 辅助归一化输出稳定结构', () => {
   })
 })
 
-test('stat / buff / effect key 辅助归一化输出稳定结构', () => {
+it('stat / buff / effect key 辅助归一化输出稳定结构', () => {
   const stat = normalizeOfficialStatDefinition({
     id: 7,
     name: 'hero_level',
@@ -473,13 +475,13 @@ test('stat / buff / effect key 辅助归一化输出稳定结构', () => {
     },
   )
 
-  assert.deepEqual(normalizeEffectStringReference('effect_def,453'), {
+  expect(normalizeEffectStringReference('effect_def,453')).toEqual({
     effectString: 'effect_def,453',
     key: 'effect_def',
     args: ['453'],
     effectDefinitionId: '453',
   })
-  assert.deepEqual(stat, {
+  expect(stat).toEqual({
     id: '7',
     name: 'hero_level',
     multiKey: false,
@@ -488,7 +490,7 @@ test('stat / buff / effect key 辅助归一化输出稳定结构', () => {
     readOnly: true,
     properties: null,
   })
-  assert.deepEqual(buff, {
+  expect(buff).toEqual({
     id: '11',
     name: {
       original: "Small Potion of Giant's Strength",
@@ -517,7 +519,7 @@ test('stat / buff / effect key 辅助归一化输出稳定结构', () => {
     tags: ['dps', 'duration', 'potion'],
     properties: null,
   })
-  assert.deepEqual(effectKey, {
+  expect(effectKey).toEqual({
     id: '199',
     key: 'hero_dps_multiplier_if_attack_cooldown',
     owner: null,

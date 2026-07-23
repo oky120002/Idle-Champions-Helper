@@ -1,5 +1,4 @@
-import test from 'node:test'
-import assert from 'node:assert/strict'
+import { it, expect } from 'vitest'
 import os from 'node:os'
 import path from 'node:path'
 import { mkdtemp, mkdir, readFile, writeFile } from 'node:fs/promises'
@@ -9,11 +8,86 @@ import { collectEffectEntries, normalizeEffectSignal } from './effect-helpers.ts
 import { parseEffectPayload } from '../../src/domain/effects/effect-string.ts'
 import { normalizeEffectReference } from './normalize-champions.ts'
 
-async function readJson(filePath) {
+async function readJson(filePath: string): Promise<unknown> {
   return JSON.parse(await readFile(filePath, 'utf8'))
 }
 
-test('buildModels 产出 hero abilities / scenarios / semantic overrides', async () => {
+interface HeroSignal {
+  rawEffect: string
+  kind?: string
+  value?: number
+  amountFunc?: string | undefined
+  stackFunc?: string | undefined
+  formationCountQualifier?: unknown
+  formationCountPositionQualifier?: unknown
+  positionQualifier?: unknown
+  targetQualifier?: unknown
+  monsterTags?: string[] | undefined
+  bonusScaleOfSignal?: { rawEffect: string } | undefined
+}
+
+interface HeroAbilityItem {
+  heroId: string
+  baseAttackDamageTypes: string[]
+  baseAttackCooldown: number
+  age: number
+  abilityScores: { str: number; dex: number; con: number; int: number; wis: number; cha: number }
+  carrySignals: HeroSignal[]
+  supportSignals: HeroSignal[]
+  unsupportedSignals: HeroSignal[]
+}
+
+interface HeroAbilities {
+  updatedAt: string
+  items: HeroAbilityItem[]
+}
+
+interface ScenarioItem {
+  formationLayoutId: string
+  slotTopology: Array<{
+    slotId: string
+    row: number
+    column: number
+    x: number
+    y: number
+    adjacentSlotIds: string[]
+  }>
+  lockedSlots: string[]
+  scenarioWarnings: string[]
+}
+
+interface ScenarioModels {
+  items: ScenarioItem[]
+}
+
+interface SemanticOverrideItem {
+  heroId: string
+  supportSignals: Array<{ kind: string; value: number; rawEffect: string }>
+}
+
+interface SemanticOverrides {
+  items: SemanticOverrideItem[]
+}
+
+interface BuildModelsResult {
+  heroCount: number
+  scenarioCount: number
+}
+
+interface EffectEntryLike {
+  effectString: string
+  sourceBucket: string
+  effect: { filter_targets?: unknown[] } & Record<string, unknown>
+  signalPreset: HeroSignal & { value?: number | undefined; targetQualifier?: unknown }
+}
+
+interface EffectSignalResultLike {
+  ok: boolean
+  signal: HeroSignal
+  bucket: string
+}
+
+it('buildModels 产出 hero abilities / scenarios / semantic overrides', async () => {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'idle-champions-hero-ability-models-'))
   const versionDir = path.join(tempDir, 'data')
   const detailDir = path.join(versionDir, 'champion-details')
@@ -389,156 +463,155 @@ test('buildModels 产出 hero abilities / scenarios / semantic overrides', async
     }),
   )
 
-  const result = await buildModels({ versionDir, semanticOverridesFile })
-  const heroAbilities = await readJson(path.join(versionDir, 'hero-abilities.json'))
-  const scenarioModels = await readJson(path.join(versionDir, 'scenarios.json'))
-  const semanticOverrides = await readJson(path.join(versionDir, 'semantic-overrides.json'))
+  const result = (await buildModels({ versionDir, semanticOverridesFile })) as BuildModelsResult
+  const heroAbilities = (await readJson(path.join(versionDir, 'hero-abilities.json'))) as HeroAbilities
+  const scenarioModels = (await readJson(path.join(versionDir, 'scenarios.json'))) as ScenarioModels
+  const semanticOverrides = (await readJson(path.join(versionDir, 'semantic-overrides.json'))) as SemanticOverrides
 
-  assert.equal(result.heroCount, 1)
-  assert.equal(result.scenarioCount, 1)
-  assert.equal(heroAbilities.updatedAt, '2026-06-04')
-  assert.equal(heroAbilities.items[0].heroId, '1')
-  assert.deepEqual(heroAbilities.items[0].baseAttackDamageTypes, ['magic'])
-  assert.equal(heroAbilities.items[0].baseAttackCooldown, 4.5)
-  assert.equal(heroAbilities.items[0].age, 40)
-  assert.equal(heroAbilities.items[0].abilityScores.str, 15)
-  assert.equal(heroAbilities.items[0].carrySignals[0].kind, 'heroDpsMultiplier')
-  const perTargetCarry = heroAbilities.items[0].carrySignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_target_crusader,100,adj')
-  const perTaggedCarry = heroAbilities.items[0].carrySignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_tagged_crusader_mult,200,companion')
-  const perTaggedBeforeCarry = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_tagged_crusader_mult_amount_before,150,wafflecrew')
-  const perTargetPrebonusSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_target_crusader_prebonus_mult,100,adj')
-  const globalSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'global_dps_multiplier_mult,65')
-  const taggedSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'tag_dps,40')
-  const statCountSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'global_dps_multiplier_mult,20')
-  const targetedHeroSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'hero_dps_multiplier_mult,0')
-  const attackTypeSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_crusader_mult,100')
-  const behindColumnSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_col_behind,100')
-  const perTargetAllSlotsCarry = heroAbilities.items[0].carrySignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_target_crusader_mult,100,all_slots')
-  const plainBuffSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'buff_upgrade,50,upgrade-base-plain')
-  const taggedBuffSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'buff_upgrade_per_any_tagged_crusader_mult,200,upgrade-base-tagged,evil')
-  const whereBuffSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'buff_upgrade_per_any_crusader_where_mult,0,1001,int,>=,15')
-  const distanceBuffSupport = heroAbilities.items[0].supportSignals.find((signal) => signal.rawEffect === 'buff_upgrade_mult_by_distance_from_source_mult,400,1003')
+  const first = heroAbilities.items[0]
+  expect(result.heroCount).toBe(1)
+  expect(result.scenarioCount).toBe(1)
+  expect(heroAbilities.updatedAt).toBe('2026-06-04')
+  expect(first?.heroId).toBe('1')
+  expect(first?.baseAttackDamageTypes).toEqual(['magic'])
+  expect(first?.baseAttackCooldown).toBe(4.5)
+  expect(first?.age).toBe(40)
+  expect(first?.abilityScores.str).toBe(15)
+  expect(first?.carrySignals[0]?.kind).toBe('heroDpsMultiplier')
+  const perTargetCarry = first?.carrySignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_target_crusader,100,adj')
+  const perTaggedCarry = first?.carrySignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_tagged_crusader_mult,200,companion')
+  const perTaggedBeforeCarry = first?.supportSignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_tagged_crusader_mult_amount_before,150,wafflecrew')
+  const perTargetPrebonusSupport = first?.supportSignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_target_crusader_prebonus_mult,100,adj')
+  const globalSupport = first?.supportSignals.find((signal) => signal.rawEffect === 'global_dps_multiplier_mult,65')
+  const taggedSupport = first?.supportSignals.find((signal) => signal.rawEffect === 'tag_dps,40')
+  const statCountSupport = first?.supportSignals.find((signal) => signal.rawEffect === 'global_dps_multiplier_mult,20')
+  const targetedHeroSupport = first?.supportSignals.find((signal) => signal.rawEffect === 'hero_dps_multiplier_mult,0')
+  const attackTypeSupport = first?.supportSignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_crusader_mult,100')
+  const behindColumnSupport = first?.supportSignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_col_behind,100')
+  const perTargetAllSlotsCarry = first?.carrySignals.find((signal) => signal.rawEffect === 'hero_dps_mult_per_target_crusader_mult,100,all_slots')
+  const plainBuffSupport = first?.supportSignals.find((signal) => signal.rawEffect === 'buff_upgrade,50,upgrade-base-plain')
+  const taggedBuffSupport = first?.supportSignals.find((signal) => signal.rawEffect === 'buff_upgrade_per_any_tagged_crusader_mult,200,upgrade-base-tagged,evil')
+  const whereBuffSupport = first?.supportSignals.find((signal) => signal.rawEffect === 'buff_upgrade_per_any_crusader_where_mult,0,1001,int,>=,15')
+  const distanceBuffSupport = first?.supportSignals.find((signal) => signal.rawEffect === 'buff_upgrade_mult_by_distance_from_source_mult,400,1003')
 
-  assert.equal(perTargetCarry?.kind, 'heroDpsMultiplier')
-  assert.equal(perTargetCarry?.amountFunc, 'add')
-  assert.equal(perTargetCarry?.stackFunc, 'per_target_crusader')
-  assert.deepEqual(perTargetCarry?.formationCountPositionQualifier, {
+  expect(perTargetCarry?.kind).toBe('heroDpsMultiplier')
+  expect(perTargetCarry?.amountFunc).toBe('add')
+  expect(perTargetCarry?.stackFunc).toBe('per_target_crusader')
+  expect(perTargetCarry?.formationCountPositionQualifier).toEqual({
     relation: 'adjacent',
   })
-  assert.equal(perTaggedCarry?.amountFunc, 'mult')
-  assert.equal(perTaggedCarry?.stackFunc, 'per_tagged_crusader_mult')
-  assert.deepEqual(perTaggedCarry?.formationCountQualifier, {
+  expect(perTaggedCarry?.amountFunc).toBe('mult')
+  expect(perTaggedCarry?.stackFunc).toBe('per_tagged_crusader_mult')
+  expect(perTaggedCarry?.formationCountQualifier).toEqual({
     predicate: { op: 'tag', tag: 'companion' },
   })
-  assert.equal(perTaggedBeforeCarry?.amountFunc, 'mult')
-  assert.equal(perTaggedBeforeCarry?.stackFunc, 'per_tagged_crusader_mult')
-  assert.deepEqual(perTaggedBeforeCarry?.formationCountQualifier, {
+  expect(perTaggedBeforeCarry?.amountFunc).toBe('mult')
+  expect(perTaggedBeforeCarry?.stackFunc).toBe('per_tagged_crusader_mult')
+  expect(perTaggedBeforeCarry?.formationCountQualifier).toEqual({
     predicate: { op: 'tag', tag: 'wafflecrew' },
   })
-  assert.deepEqual(perTaggedBeforeCarry?.targetQualifier, {
+  expect(perTaggedBeforeCarry?.targetQualifier).toEqual({
     predicate: { op: 'tag', tag: 'wafflecrew' },
   })
-  assert.equal(perTargetPrebonusSupport?.amountFunc, 'mult')
-  assert.equal(perTargetPrebonusSupport?.stackFunc, 'per_target_crusader')
-  assert.deepEqual(perTargetPrebonusSupport?.formationCountPositionQualifier, {
+  expect(perTargetPrebonusSupport?.amountFunc).toBe('mult')
+  expect(perTargetPrebonusSupport?.stackFunc).toBe('per_target_crusader')
+  expect(perTargetPrebonusSupport?.formationCountPositionQualifier).toEqual({
     relation: 'adjacent',
   })
-  assert.deepEqual(perTargetPrebonusSupport?.positionQualifier, {
+  expect(perTargetPrebonusSupport?.positionQualifier).toEqual({
     relation: 'withinTwoSlots',
   })
-  assert.deepEqual(perTargetPrebonusSupport?.targetQualifier, {
+  expect(perTargetPrebonusSupport?.targetQualifier).toEqual({
     predicate: { op: 'stat', stat: 'dex', operator: '>=', value: 15 },
   })
-  assert.equal(globalSupport?.kind, 'globalDpsMultiplier')
-  assert.equal(taggedSupport?.amountFunc, 'add')
-  assert.deepEqual(taggedSupport?.targetQualifier, {
+  expect(globalSupport?.kind).toBe('globalDpsMultiplier')
+  expect(taggedSupport?.amountFunc).toBe('add')
+  expect(taggedSupport?.targetQualifier).toEqual({
     predicate: { op: 'tag', tag: 'female' },
   })
-  assert.deepEqual(statCountSupport?.formationCountQualifier, {
+  expect(statCountSupport?.formationCountQualifier).toEqual({
     predicate: { op: 'stat', stat: 'str', operator: '>=', value: 15 },
   })
-  assert.equal(targetedHeroSupport?.kind, 'heroDpsMultiplier')
-  assert.equal(targetedHeroSupport?.value, 100)
-  assert.equal(targetedHeroSupport?.stackFunc, 'per_upgrade_targets')
-  assert.deepEqual(targetedHeroSupport?.positionQualifier, {
+  expect(targetedHeroSupport?.kind).toBe('heroDpsMultiplier')
+  expect(targetedHeroSupport?.value).toBe(100)
+  expect(targetedHeroSupport?.stackFunc).toBe('per_upgrade_targets')
+  expect(targetedHeroSupport?.positionQualifier).toEqual({
     relation: 'nonAdjacent',
   })
-  assert.equal(attackTypeSupport?.amountFunc, 'mult')
-  assert.equal(attackTypeSupport?.stackFunc, 'per_crusader')
-  assert.deepEqual(attackTypeSupport?.targetQualifier, {
+  expect(attackTypeSupport?.amountFunc).toBe('mult')
+  expect(attackTypeSupport?.stackFunc).toBe('per_crusader')
+  expect(attackTypeSupport?.targetQualifier).toEqual({
     predicate: { op: 'attackType', attackType: 'magic', negate: false },
   })
-  assert.deepEqual(attackTypeSupport?.formationCountQualifier, {
+  expect(attackTypeSupport?.formationCountQualifier).toEqual({
     predicate: { op: 'attackType', attackType: 'magic', negate: false },
   })
-  assert.equal(behindColumnSupport?.amountFunc, 'mult')
-  assert.equal(behindColumnSupport?.stackFunc, 'per_col_behind')
-  assert.deepEqual(behindColumnSupport?.positionQualifier, {
+  expect(behindColumnSupport?.amountFunc).toBe('mult')
+  expect(behindColumnSupport?.stackFunc).toBe('per_col_behind')
+  expect(behindColumnSupport?.positionQualifier).toEqual({
     relation: 'allBehindColumns',
   })
   // all_slots / all 计数目标 = 全阵位计数（relation 'any'）；消费层 countQualifiedHeroes
   // 已支持 'any'（不计位置，只按 formationCountQualifier 计数）。
   // resolveCountRelation 曾因 relation==='any' 返回 null，导致全阵位 per_target_crusader
   // effect 被静默丢弃——第六轮审计修复。
-  assert.equal(perTargetAllSlotsCarry?.kind, 'heroDpsMultiplier')
-  assert.equal(perTargetAllSlotsCarry?.stackFunc, 'per_target_crusader')
-  assert.deepEqual(perTargetAllSlotsCarry?.formationCountPositionQualifier, {
+  expect(perTargetAllSlotsCarry?.kind).toBe('heroDpsMultiplier')
+  expect(perTargetAllSlotsCarry?.stackFunc).toBe('per_target_crusader')
+  expect(perTargetAllSlotsCarry?.formationCountPositionQualifier).toEqual({
     relation: 'any',
   })
-  assert.equal(plainBuffSupport?.kind, 'heroDpsMultiplier')
-  assert.equal(plainBuffSupport?.value, 50)
-  assert.equal(plainBuffSupport?.bonusScaleOfSignal?.rawEffect, 'hero_dps_multiplier_mult,80')
-  assert.deepEqual(plainBuffSupport?.positionQualifier, {
+  expect(plainBuffSupport?.kind).toBe('heroDpsMultiplier')
+  expect(plainBuffSupport?.value).toBe(50)
+  expect(plainBuffSupport?.bonusScaleOfSignal?.rawEffect).toBe('hero_dps_multiplier_mult,80')
+  expect(plainBuffSupport?.positionQualifier).toEqual({
     relation: 'adjacent',
   })
-  assert.equal(taggedBuffSupport?.kind, 'heroDpsMultiplier')
-  assert.equal(taggedBuffSupport?.amountFunc, 'mult')
-  assert.equal(taggedBuffSupport?.stackFunc, 'per_tagged_crusader_mult')
-  assert.deepEqual(taggedBuffSupport?.formationCountQualifier, {
+  expect(taggedBuffSupport?.kind).toBe('heroDpsMultiplier')
+  expect(taggedBuffSupport?.amountFunc).toBe('mult')
+  expect(taggedBuffSupport?.stackFunc).toBe('per_tagged_crusader_mult')
+  expect(taggedBuffSupport?.formationCountQualifier).toEqual({
     predicate: { op: 'tag', tag: 'evil' },
   })
-  assert.equal(taggedBuffSupport?.bonusScaleOfSignal?.rawEffect, 'hero_dps_multiplier_mult,100')
-  assert.deepEqual(taggedBuffSupport?.targetQualifier, {
+  expect(taggedBuffSupport?.bonusScaleOfSignal?.rawEffect).toBe('hero_dps_multiplier_mult,100')
+  expect(taggedBuffSupport?.targetQualifier).toEqual({
     predicate: { op: 'stat', stat: 'int', operator: '<=', value: 12 },
   })
-  assert.equal(whereBuffSupport?.kind, 'heroDpsMultiplier')
-  assert.equal(whereBuffSupport?.value, 25)
-  assert.equal(whereBuffSupport?.amountFunc, 'mult')
-  assert.equal(whereBuffSupport?.stackFunc, 'per_crusader')
-  assert.equal(whereBuffSupport?.bonusScaleOfSignal?.rawEffect, 'hero_dps_multiplier_mult,60')
-  assert.deepEqual(whereBuffSupport?.formationCountQualifier, {
+  expect(whereBuffSupport?.kind).toBe('heroDpsMultiplier')
+  expect(whereBuffSupport?.value).toBe(25)
+  expect(whereBuffSupport?.amountFunc).toBe('mult')
+  expect(whereBuffSupport?.stackFunc).toBe('per_crusader')
+  expect(whereBuffSupport?.bonusScaleOfSignal?.rawEffect).toBe('hero_dps_multiplier_mult,60')
+  expect(whereBuffSupport?.formationCountQualifier).toEqual({
     predicate: { op: 'stat', stat: 'int', operator: '>=', value: 15 },
   })
-  assert.deepEqual(whereBuffSupport?.targetQualifier, {
+  expect(whereBuffSupport?.targetQualifier).toEqual({
     predicate: { op: 'attackType', attackType: 'magic', negate: false },
   })
-  assert.equal(distanceBuffSupport?.kind, 'heroDpsMultiplier')
-  assert.equal(distanceBuffSupport?.value, 400)
-  assert.equal(distanceBuffSupport?.amountFunc, 'mult')
-  assert.equal(distanceBuffSupport?.stackFunc, 'per_slot_distance_from_source')
-  assert.equal(distanceBuffSupport?.bonusScaleOfSignal?.rawEffect, 'hero_dps_multiplier_mult,0')
-  assert.deepEqual(distanceBuffSupport?.positionQualifier, {
+  expect(distanceBuffSupport?.kind).toBe('heroDpsMultiplier')
+  expect(distanceBuffSupport?.value).toBe(400)
+  expect(distanceBuffSupport?.amountFunc).toBe('mult')
+  expect(distanceBuffSupport?.stackFunc).toBe('per_slot_distance_from_source')
+  expect(distanceBuffSupport?.bonusScaleOfSignal?.rawEffect).toBe('hero_dps_multiplier_mult,0')
+  expect(distanceBuffSupport?.positionQualifier).toEqual({
     relation: 'nonAdjacent',
   })
-  assert.equal(distanceBuffSupport?.targetQualifier ?? null, null)
-  assert.deepEqual(
-    heroAbilities.items[0].unsupportedSignals
+  expect(distanceBuffSupport?.targetQualifier ?? null).toBe(null)
+  expect(
+    first?.unsupportedSignals
       .map((signal) => signal.rawEffect)
       .filter((rawEffect) => rawEffect !== 'effect_def'),
-    ['pre_stack_amount', 'pre_stack_amount', 'pre_stack_amount'],
-  )
-  assert.equal(scenarioModels.items[0].formationLayoutId, 'layout-a')
-  assert.deepEqual(scenarioModels.items[0].slotTopology, [
+  ).toEqual(['pre_stack_amount', 'pre_stack_amount', 'pre_stack_amount'])
+  expect(scenarioModels.items[0]?.formationLayoutId).toBe('layout-a')
+  expect(scenarioModels.items[0]?.slotTopology).toEqual([
     { slotId: 's1', row: 1, column: 1, x: 40, y: 10, adjacentSlotIds: ['s2'] },
     { slotId: 's2', row: 1, column: 2, x: 20, y: 10, adjacentSlotIds: ['s1'] },
   ])
   // 9.1: slot_escort mechanic 锁定前排槽位（column 降序首槽 = s2）。
-  assert.deepEqual(scenarioModels.items[0].lockedSlots, ['s2'])
-  assert.ok(
-    scenarioModels.items[0].scenarioWarnings.some((w) => w.includes('护送任务')),
-    `expected escort warning, got: ${JSON.stringify(scenarioModels.items[0].scenarioWarnings)}`,
-  )
-  assert.deepEqual(semanticOverrides.items, [
+  expect(scenarioModels.items[0]?.lockedSlots).toEqual(['s2'])
+  expect(
+    scenarioModels.items[0]?.scenarioWarnings.some((w) => w.includes('护送任务')),
+  ).toBeTruthy()
+  expect(semanticOverrides.items).toEqual([
     {
       heroId: '1',
       supportSignals: [
@@ -548,7 +621,7 @@ test('buildModels 产出 hero abilities / scenarios / semantic overrides', async
   ])
 })
 
-test('effectReference 直接引用 buff_upgrade wrapper 时不进 unsupportedSignals 噪声', async () => {
+it('effectReference 直接引用 buff_upgrade wrapper 时不进 unsupportedSignals 噪声', async () => {
   // 真实数据模式：upgrade.effectReference 直接是 'buff_upgrade,...'，
   // effectDefinition 为 null（base effect 通过 upgrade id 引用，不在内联 effect_keys）。
   // wrapper 的实际 signal 由 collectEffectEntries 派生；裸 wrapper 名不得进 unsupportedSignals。
@@ -593,23 +666,22 @@ test('effectReference 直接引用 buff_upgrade wrapper 时不进 unsupportedSig
   )
 
   await buildModels({ versionDir, semanticOverridesFile: path.join(tempDir, 'empty.json') })
-  const heroAbilities = await readJson(path.join(versionDir, 'hero-abilities.json'))
+  const heroAbilities = (await readJson(path.join(versionDir, 'hero-abilities.json'))) as HeroAbilities
 
-  const unsupportedRawEffects = heroAbilities.items[0].unsupportedSignals.map((signal) => signal.rawEffect)
-  assert.deepEqual(
+  const unsupportedRawEffects = heroAbilities.items[0]?.unsupportedSignals.map((signal) => signal.rawEffect) ?? []
+  expect(
     unsupportedRawEffects.filter((rawEffect) => rawEffect === 'buff_upgrade'),
-    [],
-    `buff_upgrade wrapper 不应进入 unsupportedSignals，实际：${JSON.stringify(unsupportedRawEffects)}`,
-  )
+  ).toEqual([])
 
   // 派生信号仍应存在：wrapper 以 base 80% 折算 100% 增量，bonusScaleOfSignal 指向 base。
-  const allSignals = [...heroAbilities.items[0].carrySignals, ...heroAbilities.items[0].supportSignals]
+  const first = heroAbilities.items[0]
+  const allSignals = [...(first?.carrySignals ?? []), ...(first?.supportSignals ?? [])]
   const derived = allSignals.find((signal) => signal.rawEffect === 'buff_upgrade,100,4')
-  assert.equal(derived?.kind, 'heroDpsMultiplier')
-  assert.equal(derived?.bonusScaleOfSignal?.rawEffect, 'hero_dps_multiplier_mult,80')
+  expect(derived?.kind).toBe('heroDpsMultiplier')
+  expect(derived?.bonusScaleOfSignal?.rawEffect).toBe('hero_dps_multiplier_mult,80')
 })
 
-test('buff_upgrade wrapper 从标准 effectReference 派生 target base 信号', async () => {
+it('buff_upgrade wrapper 从标准 effectReference 派生 target base 信号', async () => {
   // normalize 层 normalizeEffectReference 已把 CNE effect 对象串提取为干净标准串（如
   // hero 101/102 的 effectReference 已是 'buff_upgrade,...'）；build-models 读 normalized
   // data，effectReference 永远是标准串。此处验证 wrapper 派生 target base 链路。
@@ -650,16 +722,17 @@ test('buff_upgrade wrapper 从标准 effectReference 派生 target base 信号',
   )
 
   await buildModels({ versionDir, semanticOverridesFile: path.join(tempDir, 'empty.json') })
-  const heroAbilities = await readJson(path.join(versionDir, 'hero-abilities.json'))
+  const heroAbilities = (await readJson(path.join(versionDir, 'hero-abilities.json'))) as HeroAbilities
 
   // wrapper 派生信号仍由 effectPayload.kind 正确识别并生成。
-  const allSignals = [...heroAbilities.items[0].carrySignals, ...heroAbilities.items[0].supportSignals]
+  const first = heroAbilities.items[0]
+  const allSignals = [...(first?.carrySignals ?? []), ...(first?.supportSignals ?? [])]
   const derived = allSignals.find((signal) => signal.rawEffect === 'buff_upgrade,100,4')
-  assert.equal(derived?.kind, 'heroDpsMultiplier')
-  assert.equal(derived?.bonusScaleOfSignal?.rawEffect, 'hero_dps_multiplier_mult,80')
+  expect(derived?.kind).toBe('heroDpsMultiplier')
+  expect(derived?.bonusScaleOfSignal?.rawEffect).toBe('hero_dps_multiplier_mult,80')
 })
 
-test('amount_expr 跨 upgrade 引用按 upgrade id 解析目标 effect（非当前 upgrade）', async () => {
+it('amount_expr 跨 upgrade 引用按 upgrade id 解析目标 effect（非当前 upgrade）', async () => {
   // 真实数据（如 hero 106/141）：upgrade A 的 effect 用 amount_expr='upgrade_amount(B,0)'
   // 引用 upgrade B 的 effect_keys[0]。旧 resolveSimpleAmountExpr 忽略 upgrade id，
   // 错取当前 upgrade A 的 effect_keys[0]，得到错误 value。
@@ -723,15 +796,16 @@ test('amount_expr 跨 upgrade 引用按 upgrade id 解析目标 effect（非当�
   )
 
   await buildModels({ versionDir, semanticOverridesFile: path.join(tempDir, 'empty.json') })
-  const heroAbilities = await readJson(path.join(versionDir, 'hero-abilities.json'))
+  const heroAbilities = (await readJson(path.join(versionDir, 'hero-abilities.json'))) as HeroAbilities
 
   // upgrade A 的 hero_dps_multiplier_mult，value 必须从 upgrade B 取（200），不是 upgrade A 的 pre_stack_amount（50）
-  const allSignals = [...heroAbilities.items[0].carrySignals, ...heroAbilities.items[0].supportSignals]
+  const first = heroAbilities.items[0]
+  const allSignals = [...(first?.carrySignals ?? []), ...(first?.supportSignals ?? [])]
   const crossRefSignal = allSignals.find((signal) => signal.rawEffect === 'hero_dps_multiplier_mult,0')
-  assert.equal(crossRefSignal?.value, 200, `跨 upgrade 引用应取 upgrade B 的 200，实际：${crossRefSignal?.value}`)
+  expect(crossRefSignal?.value).toBe(200)
 })
 
-test('buff_upgrades wrapper 从标准 effectReference 派生 target base 信号', async () => {
+it('buff_upgrades wrapper 从标准 effectReference 派生 target base 信号', async () => {
   // normalize 层 normalizeEffectReference 已把 CNE effect 对象串（含伪 JSON）提取为干净
   // 标准串（守护见 normalize 测试「提取 CNE effect 对象串的 effect_string」）；build-models
   // 读 normalized data，effectReference 永远是标准串。此处验证 wrapper 派生 target base 链路。
@@ -773,30 +847,30 @@ test('buff_upgrades wrapper 从标准 effectReference 派生 target base 信号'
   )
 
   await buildModels({ versionDir, semanticOverridesFile: path.join(tempDir, 'empty.json') })
-  const heroAbilities = await readJson(path.join(versionDir, 'hero-abilities.json'))
+  const heroAbilities = (await readJson(path.join(versionDir, 'hero-abilities.json'))) as HeroAbilities
 
   // buff_upgrades wrapper（target ids 4,5）应派生 2 个信号，各指向对应 base。
-  const allSignals = [...heroAbilities.items[0].carrySignals, ...heroAbilities.items[0].supportSignals]
+  const first = heroAbilities.items[0]
+  const allSignals = [...(first?.carrySignals ?? []), ...(first?.supportSignals ?? [])]
   const derived = allSignals.filter((signal) => signal.rawEffect === 'buff_upgrades,100,4,5')
-  assert.equal(derived.length, 2, `buff_upgrades 应派生 2 个信号（target 4 + 5），实际：${derived.length}`)
+  expect(derived.length).toBe(2)
   const baseRawEffects = derived.map((signal) => signal.bonusScaleOfSignal?.rawEffect).sort()
-  assert.deepEqual(baseRawEffects, ['hero_dps_multiplier_mult,50', 'hero_dps_multiplier_mult,80'])
+  expect(baseRawEffects).toEqual(['hero_dps_multiplier_mult,50', 'hero_dps_multiplier_mult,80'])
 })
 
-test('normalizeEffectReference 提取 CNE effect 对象串的 effect_string（CI 守护）', () => {
+it('normalizeEffectReference 提取 CNE effect 对象串的 effect_string（CI 守护）', () => {
   // normalize 层是 CNE effect 伪 JSON 处理的 single source——消费层 parseEffectPayload 已不处理
   // JSON（见 effect-string.ts），依赖 normalize 产出干净标准串。此守护确保该链路有 CI 覆盖。
   // 完整 normalize 守护见 normalize-*.test.mjs（待接入 test:data，受 affiliations 测试隔离阻塞）。
-  assert.equal(normalizeEffectReference('{"effect_string":"buff_upgrade,100,4","description":"x"}'), 'buff_upgrade,100,4')
-  assert.equal(
+  expect(normalizeEffectReference('{"effect_string":"buff_upgrade,100,4","description":"x"}')).toBe('buff_upgrade,100,4')
+  expect(
     normalizeEffectReference('{\n"effect_string":"buff_upgrades,100,4,5"\n"description":"missing comma"}'),
-    'buff_upgrades,100,4,5',
-  )
-  assert.equal(normalizeEffectReference('hero_dps_multiplier_mult,100'), 'hero_dps_multiplier_mult,100')
-  assert.equal(normalizeEffectReference(null), null)
+  ).toBe('buff_upgrades,100,4,5')
+  expect(normalizeEffectReference('hero_dps_multiplier_mult,100')).toBe('hero_dps_multiplier_mult,100')
+  expect(normalizeEffectReference(null)).toBe(null)
 })
 
-test('collectEffectEntries 收集 feat effects（与 loot/legendary 对称，M1 理论最大基线）', () => {
+it('collectEffectEntries 收集 feat effects（与 loot/legendary 对称，M1 理论最大基线）', () => {
   // feat 是英雄专属固定能力（per-hero），其 global/hero_dps 加成应与 loot/legendary
   // 一样进入 M1 理论最大 carryDps 基线；此前 collectRawEffectEntries 漏遍历 detail.feats，
   // 全库 568 个 supported DPS signal 被整体漏算。
@@ -817,16 +891,16 @@ test('collectEffectEntries 收集 feat effects（与 loot/legendary 对称，M1 
       },
     ],
   }
-  const entries = collectEffectEntries(detail)
+  const entries = collectEffectEntries(detail) as EffectEntryLike[]
   const featEntries = entries.filter((entry) => entry.sourceBucket === 'feat')
   const effectStrings = featEntries.map((entry) => entry.effectString).sort()
-  assert.deepEqual(effectStrings, ['global_dps_multiplier_mult,10', 'hero_dps_multiplier_mult,100'])
+  expect(effectStrings).toEqual(['global_dps_multiplier_mult,10', 'hero_dps_multiplier_mult,100'])
   // hero_expr 限定随 entry.effect 流入，消费层 attachSignalSemantics 正确处理。
   const heroDpsEntry = featEntries.find((entry) => entry.effectString === 'hero_dps_multiplier_mult,100')
-  assert.deepEqual(heroDpsEntry.effect.filter_targets, [{ type: 'hero_expr', hero_expr: 'HasTag(`dwarf`)' }])
+  expect(heroDpsEntry?.effect.filter_targets).toEqual([{ type: 'hero_expr', hero_expr: 'HasTag(`dwarf`)' }])
 })
 
-test('collectEffectEntries 对完全重复的 buff_upgrade wrapper 派生去重（装备模板冗余）', () => {
+it('collectEffectEntries 对完全重复的 buff_upgrade wrapper 派生去重（装备模板冗余）', () => {
   // IC 装备系统在 definitions 里把同一 buff 按 装备槽/稀有度 展开成多条 effect 完全相同的
   // upgrade（仅 id 不同，magnitude 相同=非稀有度差异）。如 Jaheira 38 条
   // buff_upgrades,100,9714,9715,9716,9717，每条派生 4 base signal → 152 重复（91% 过度计算）。
@@ -843,14 +917,14 @@ test('collectEffectEntries 对完全重复的 buff_upgrade wrapper 派生去重�
     legendaryEffects: [],
     feats: [],
   }
-  const entries = collectEffectEntries(detail)
+  const entries = collectEffectEntries(detail) as EffectEntryLike[]
   const derived = entries.filter((entry) => entry.sourceBucket === 'upgrade-buffed-signal')
   // 3 个相同 wrapper 指向同一 base 4 → 去重后只 1 个 derived signal。
-  assert.equal(derived.length, 1, `3 个重复 buff_upgrades wrapper 应去重为 1 个 derived，实际：${derived.length}`)
-  assert.equal(derived[0].signalPreset.bonusScaleOfSignal.rawEffect, 'hero_dps_multiplier_mult,100')
+  expect(derived.length).toBe(1)
+  expect(derived[0]?.signalPreset.bonusScaleOfSignal?.rawEffect).toBe('hero_dps_multiplier_mult,100')
 })
 
-test('collectEffectEntries 同 base 不同 magnitude 的 wrapper 只保留最高（稀有度去重，阶段 8.5）', () => {
+it('collectEffectEntries 同 base 不同 magnitude 的 wrapper 只保留最高（稀有度去重，阶段 8.5）', () => {
   // IC 装备稀有度：同一 buff 不同稀有度有不同 magnitude，游戏只生效最高稀有度。
   // 当前若全累加 → 高估。按 (kind, base target, qualifier) 分组，组内只保留最高 magnitude。
   const detail = {
@@ -864,13 +938,13 @@ test('collectEffectEntries 同 base 不同 magnitude 的 wrapper 只保留最高
     legendaryEffects: [],
     feats: [],
   }
-  const entries = collectEffectEntries(detail)
+  const entries = collectEffectEntries(detail) as EffectEntryLike[]
   const derived = entries.filter((entry) => entry.sourceBucket === 'upgrade-buffed-signal')
-  assert.equal(derived.length, 1, `3 个不同 magnitude wrapper 应稀有度去重为 1 个，实际：${derived.length}`)
-  assert.equal(derived[0].signalPreset.value, 200, '应保留最高 magnitude 200')
+  expect(derived.length).toBe(1)
+  expect(derived[0]?.signalPreset.value).toBe(200)
 })
 
-test('collectEffectEntries 派生 buff_upgrade wrapper 时合并 wrapper 自身 filter_targets', () => {
+it('collectEffectEntries 派生 buff_upgrade wrapper 时合并 wrapper 自身 filter_targets', () => {
   // wrapper 自身的 filter_targets（如 hero_ids 白名单）限定 buff 只对特定英雄生效；
   // 此前 preset 只继承 base 的 targetQualifier，wrapper 自身 filter_targets 丢失。
   // 真实样本：hero 82 的 buff_upgrades + hero_ids:[82]（第四轮审计）。
@@ -897,22 +971,22 @@ test('collectEffectEntries 派生 buff_upgrade wrapper 时合并 wrapper 自身 
     legendaryEffects: [],
     feats: [],
   }
-  const entries = collectEffectEntries(detail)
+  const entries = collectEffectEntries(detail) as EffectEntryLike[]
   const derived = entries.filter((entry) => entry.sourceBucket === 'upgrade-buffed-signal')
-  assert.equal(derived.length, 1, `应派生 1 个 derived signal，实际：${derived.length}`)
+  expect(derived.length).toBe(1)
   // wrapper 的 hero_ids 限定合并到 derived signal 的 targetQualifier（base 无 filter → 直接取 wrapper 限定）。
-  assert.deepEqual(derived[0].signalPreset.targetQualifier, {
+  expect(derived[0]?.signalPreset.targetQualifier).toEqual({
     predicate: { op: 'heroId', heroId: '82', negate: false },
   })
 })
 
-test('normalizeEffectSignal 解析 gold multiplier effect（阶段 3.2）', () => {
+it('normalizeEffectSignal 解析 gold multiplier effect（阶段 3.2）', () => {
   // gold_multiplier_mult → globalGoldMultiplier（全队金币池，supportSignals）
-  const plain = normalizeEffectSignal('gold_multiplier_mult', '200', 'official-parsed', {})
-  assert.equal(plain.ok, true)
-  assert.equal(plain.signal.kind, 'globalGoldMultiplier')
-  assert.equal(plain.signal.value, 200)
-  assert.equal(plain.bucket, 'supportSignals')
+  const plain = normalizeEffectSignal('gold_multiplier_mult', '200', 'official-parsed', {}) as EffectSignalResultLike
+  expect(plain.ok).toBe(true)
+  expect(plain.signal.kind).toBe('globalGoldMultiplier')
+  expect(plain.signal.value).toBe(200)
+  expect(plain.bucket).toBe('supportSignals')
 
   // gold_mult_per_tagged_crusader_mult → globalGoldMultiplier + per_tagged stackFunc
   // 镜像 hero_dps_mult_per_tagged_crusader_mult 解析模式。
@@ -922,131 +996,131 @@ test('normalizeEffectSignal 解析 gold multiplier effect（阶段 3.2）', () =
     '100',
     'official-parsed',
     { effectPayload: taggedPayload, effect: {} },
-  )
-  assert.equal(tagged.ok, true)
-  assert.equal(tagged.signal.kind, 'globalGoldMultiplier')
-  assert.equal(tagged.signal.amountFunc, 'mult')
-  assert.equal(tagged.signal.stackFunc, 'per_tagged_crusader_mult')
-  assert.deepEqual(tagged.signal.formationCountQualifier, {
+  ) as EffectSignalResultLike
+  expect(tagged.ok).toBe(true)
+  expect(tagged.signal.kind).toBe('globalGoldMultiplier')
+  expect(tagged.signal.amountFunc).toBe('mult')
+  expect(tagged.signal.stackFunc).toBe('per_tagged_crusader_mult')
+  expect(tagged.signal.formationCountQualifier).toEqual({
     predicate: { op: 'tag', tag: 'companion' },
   })
 
   // 非法 value 仍 unsupported（不绕过数值守卫）
-  const bad = normalizeEffectSignal('gold_multiplier_mult', 'abc', 'official-parsed', {})
-  assert.equal(bad.ok, false)
+  const bad = normalizeEffectSignal('gold_multiplier_mult', 'abc', 'official-parsed', {}) as EffectSignalResultLike
+  expect(bad.ok).toBe(false)
 })
 
-test('normalizeEffectSignal 解析 crit effect（阶段 4.2）', () => {
+it('normalizeEffectSignal 解析 crit effect（阶段 4.2）', () => {
   // chance add → heroCritChance
-  const chanceAdd = normalizeEffectSignal('buff_base_crit_chance_add', '35', 'official-parsed', {})
-  assert.equal(chanceAdd.ok, true)
-  assert.equal(chanceAdd.signal.kind, 'heroCritChance')
-  assert.equal(chanceAdd.signal.value, 35)
-  assert.equal(chanceAdd.bucket, 'supportSignals')
+  const chanceAdd = normalizeEffectSignal('buff_base_crit_chance_add', '35', 'official-parsed', {}) as EffectSignalResultLike
+  expect(chanceAdd.ok).toBe(true)
+  expect(chanceAdd.signal.kind).toBe('heroCritChance')
+  expect(chanceAdd.signal.value).toBe(35)
+  expect(chanceAdd.bucket).toBe('supportSignals')
 
   // chance mult → heroCritChance + amountFunc mult
-  const chanceMult = normalizeEffectSignal('buff_base_crit_chance_mult', '50', 'official-parsed', {})
-  assert.equal(chanceMult.signal.kind, 'heroCritChance')
-  assert.equal(chanceMult.signal.amountFunc, 'mult')
+  const chanceMult = normalizeEffectSignal('buff_base_crit_chance_mult', '50', 'official-parsed', {}) as EffectSignalResultLike
+  expect(chanceMult.signal.kind).toBe('heroCritChance')
+  expect(chanceMult.signal.amountFunc).toBe('mult')
 
   // damage add → heroCritDamage
-  const dmgAdd = normalizeEffectSignal('buff_base_crit_damage', '9', 'official-parsed', {})
-  assert.equal(dmgAdd.signal.kind, 'heroCritDamage')
-  assert.equal(dmgAdd.signal.amountFunc, undefined)
+  const dmgAdd = normalizeEffectSignal('buff_base_crit_damage', '9', 'official-parsed', {}) as EffectSignalResultLike
+  expect(dmgAdd.signal.kind).toBe('heroCritDamage')
+  expect(dmgAdd.signal.amountFunc).toBe(undefined)
 
   // damage mult → heroCritDamage mult
-  const dmgMult = normalizeEffectSignal('buff_base_crit_damage_mult', '15', 'official-parsed', {})
-  assert.equal(dmgMult.signal.kind, 'heroCritDamage')
-  assert.equal(dmgMult.signal.amountFunc, 'mult')
+  const dmgMult = normalizeEffectSignal('buff_base_crit_damage_mult', '15', 'official-parsed', {}) as EffectSignalResultLike
+  expect(dmgMult.signal.kind).toBe('heroCritDamage')
+  expect(dmgMult.signal.amountFunc).toBe('mult')
 
   // global chance/damage
-  const gChance = normalizeEffectSignal('global_buff_base_crit_chance_add', '10', 'official-parsed', {})
-  assert.equal(gChance.signal.kind, 'globalCritChance')
-  const gDmgAdd = normalizeEffectSignal('global_buff_base_crit_damage_add', '12', 'official-parsed', {})
-  assert.equal(gDmgAdd.signal.kind, 'globalCritDamage')
-  assert.equal(gDmgAdd.signal.amountFunc, undefined)
-  const gDmgMult = normalizeEffectSignal('global_buff_base_crit_damage_mult', '20', 'official-parsed', {})
-  assert.equal(gDmgMult.signal.kind, 'globalCritDamage')
-  assert.equal(gDmgMult.signal.amountFunc, 'mult')
+  const gChance = normalizeEffectSignal('global_buff_base_crit_chance_add', '10', 'official-parsed', {}) as EffectSignalResultLike
+  expect(gChance.signal.kind).toBe('globalCritChance')
+  const gDmgAdd = normalizeEffectSignal('global_buff_base_crit_damage_add', '12', 'official-parsed', {}) as EffectSignalResultLike
+  expect(gDmgAdd.signal.kind).toBe('globalCritDamage')
+  expect(gDmgAdd.signal.amountFunc).toBe(undefined)
+  const gDmgMult = normalizeEffectSignal('global_buff_base_crit_damage_mult', '20', 'official-parsed', {}) as EffectSignalResultLike
+  expect(gDmgMult.signal.kind).toBe('globalCritDamage')
+  expect(gDmgMult.signal.amountFunc).toBe('mult')
 
   // 非法 value 仍 unsupported
-  const bad = normalizeEffectSignal('buff_base_crit_chance_add', 'xyz', 'official-parsed', {})
-  assert.equal(bad.ok, false)
+  const bad = normalizeEffectSignal('buff_base_crit_chance_add', 'xyz', 'official-parsed', {}) as EffectSignalResultLike
+  expect(bad.ok).toBe(false)
 })
 
-test('normalizeEffectSignal 解析 health/healing/damage_reduction effect（阶段 5.1）', () => {
-  const healthMult = normalizeEffectSignal('health_mult', '100', 'official-parsed', {})
-  assert.equal(healthMult.ok, true)
-  assert.equal(healthMult.signal.kind, 'heroHealthMultiplier')
-  assert.equal(healthMult.bucket, 'supportSignals')
+it('normalizeEffectSignal 解析 health/healing/damage_reduction effect（阶段 5.1）', () => {
+  const healthMult = normalizeEffectSignal('health_mult', '100', 'official-parsed', {}) as EffectSignalResultLike
+  expect(healthMult.ok).toBe(true)
+  expect(healthMult.signal.kind).toBe('heroHealthMultiplier')
+  expect(healthMult.bucket).toBe('supportSignals')
 
-  const incHealth = normalizeEffectSignal('increase_health_by_source_percent', '50', 'official-parsed', {})
-  assert.equal(incHealth.signal.kind, 'heroHealthMultiplier')
+  const incHealth = normalizeEffectSignal('increase_health_by_source_percent', '50', 'official-parsed', {}) as EffectSignalResultLike
+  expect(incHealth.signal.kind).toBe('heroHealthMultiplier')
 
-  const healing = normalizeEffectSignal('healing_mult', '30', 'official-parsed', {})
-  assert.equal(healing.signal.kind, 'heroHealthMultiplier')
+  const healing = normalizeEffectSignal('healing_mult', '30', 'official-parsed', {}) as EffectSignalResultLike
+  expect(healing.signal.kind).toBe('heroHealthMultiplier')
 
-  const gHealing = normalizeEffectSignal('global_healing_mult', '20', 'official-parsed', {})
-  assert.equal(gHealing.signal.kind, 'globalHealthMultiplier')
+  const gHealing = normalizeEffectSignal('global_healing_mult', '20', 'official-parsed', {}) as EffectSignalResultLike
+  expect(gHealing.signal.kind).toBe('globalHealthMultiplier')
 
-  const dmgRed = normalizeEffectSignal('damage_reduction', '15', 'official-parsed', {})
-  assert.equal(dmgRed.signal.kind, 'damageReduction')
-  assert.equal(dmgRed.signal.amountFunc, undefined)
+  const dmgRed = normalizeEffectSignal('damage_reduction', '15', 'official-parsed', {}) as EffectSignalResultLike
+  expect(dmgRed.signal.kind).toBe('damageReduction')
+  expect(dmgRed.signal.amountFunc).toBe(undefined)
 
-  const dmgRedMult = normalizeEffectSignal('trials_damage_reduction_mult', '25', 'official-parsed', {})
-  assert.equal(dmgRedMult.signal.kind, 'damageReduction')
-  assert.equal(dmgRedMult.signal.amountFunc, 'mult')
+  const dmgRedMult = normalizeEffectSignal('trials_damage_reduction_mult', '25', 'official-parsed', {}) as EffectSignalResultLike
+  expect(dmgRedMult.signal.kind).toBe('damageReduction')
+  expect(dmgRedMult.signal.amountFunc).toBe('mult')
 
   // 非法 value 仍 unsupported
-  assert.equal(normalizeEffectSignal('health_mult', 'bad', 'official-parsed', {}).ok, false)
+  expect((normalizeEffectSignal('health_mult', 'bad', 'official-parsed', {}) as EffectSignalResultLike).ok).toBe(false)
 })
 
-test('normalizeEffectSignal 解析 vulnerability effect（阶段 6.2）', () => {
+it('normalizeEffectSignal 解析 vulnerability effect（阶段 6.2）', () => {
   // 无条件 vulnerability
-  const di = normalizeEffectSignal('damage_increase', '50', 'official-parsed', {})
-  assert.equal(di.ok, true)
-  assert.equal(di.signal.kind, 'enemyVulnerability')
-  assert.equal(di.signal.monsterTags ?? null, null)
+  const di = normalizeEffectSignal('damage_increase', '50', 'official-parsed', {}) as EffectSignalResultLike
+  expect(di.ok).toBe(true)
+  expect(di.signal.kind).toBe('enemyVulnerability')
+  expect(di.signal.monsterTags ?? null).toBe(null)
 
-  const against = normalizeEffectSignal('increase_damage_against_monster', '30', 'official-parsed', {})
-  assert.equal(against.signal.kind, 'enemyVulnerability')
-  assert.equal(against.signal.monsterTags ?? null, null)
+  const against = normalizeEffectSignal('increase_damage_against_monster', '30', 'official-parsed', {}) as EffectSignalResultLike
+  expect(against.signal.kind).toBe('enemyVulnerability')
+  expect(against.signal.monsterTags ?? null).toBe(null)
 
   // 按 monster tag（词表与 variant.enemyTypes 一致，| 为 OR）
   const tagPayload = parseEffectPayload('increase_damage_against_monster_tag,300,fiend')
-  const tag = normalizeEffectSignal('increase_damage_against_monster_tag', '300', 'official-parsed', { effectPayload: tagPayload, effect: {} })
-  assert.equal(tag.signal.kind, 'enemyVulnerability')
-  assert.deepEqual(tag.signal.monsterTags, ['fiend'])
+  const tag = normalizeEffectSignal('increase_damage_against_monster_tag', '300', 'official-parsed', { effectPayload: tagPayload, effect: {} }) as EffectSignalResultLike
+  expect(tag.signal.kind).toBe('enemyVulnerability')
+  expect(tag.signal.monsterTags).toEqual(['fiend'])
 
   // OR 列表
   const tagPayload2 = parseEffectPayload('increase_damage_against_monster_tag,200,humanoid|beast|undead')
-  const tag2 = normalizeEffectSignal('increase_damage_against_monster_tag', '200', 'official-parsed', { effectPayload: tagPayload2, effect: {} })
-  assert.deepEqual(tag2.signal.monsterTags, ['humanoid', 'beast', 'undead'])
+  const tag2 = normalizeEffectSignal('increase_damage_against_monster_tag', '200', 'official-parsed', { effectPayload: tagPayload2, effect: {} }) as EffectSignalResultLike
+  expect(tag2.signal.monsterTags).toEqual(['humanoid', 'beast', 'undead'])
 
   // armored 条件
-  const armored = normalizeEffectSignal('increase_armored_damage', '40', 'official-parsed', {})
-  assert.equal(armored.signal.kind, 'enemyVulnerability')
-  assert.deepEqual(armored.signal.monsterTags, ['armored'])
+  const armored = normalizeEffectSignal('increase_armored_damage', '40', 'official-parsed', {}) as EffectSignalResultLike
+  expect(armored.signal.kind).toBe('enemyVulnerability')
+  expect(armored.signal.monsterTags).toEqual(['armored'])
 
   // 非法 value 仍 unsupported
-  assert.equal(normalizeEffectSignal('damage_increase', 'bad', 'official-parsed', {}).ok, false)
+  expect((normalizeEffectSignal('damage_increase', 'bad', 'official-parsed', {}) as EffectSignalResultLike).ok).toBe(false)
 })
 
-test('normalizeEffectSignal 解析 speed/cooldown effect（阶段 7.1）', () => {
-  const atkSpeed = normalizeEffectSignal('base_attack_speed_mult', '20', 'official-parsed', {})
-  assert.equal(atkSpeed.signal.kind, 'attackSpeedMult')
-  assert.equal(atkSpeed.signal.amountFunc, 'mult')
+it('normalizeEffectSignal 解析 speed/cooldown effect（阶段 7.1）', () => {
+  const atkSpeed = normalizeEffectSignal('base_attack_speed_mult', '20', 'official-parsed', {}) as EffectSignalResultLike
+  expect(atkSpeed.signal.kind).toBe('attackSpeedMult')
+  expect(atkSpeed.signal.amountFunc).toBe('mult')
 
-  const reduceAtk = normalizeEffectSignal('reduce_attack_cooldown', '15', 'official-parsed', {})
-  assert.equal(reduceAtk.signal.kind, 'attackSpeedMult')
-  assert.equal(reduceAtk.signal.amountFunc, undefined)
+  const reduceAtk = normalizeEffectSignal('reduce_attack_cooldown', '15', 'official-parsed', {}) as EffectSignalResultLike
+  expect(reduceAtk.signal.kind).toBe('attackSpeedMult')
+  expect(reduceAtk.signal.amountFunc).toBe(undefined)
 
-  const reduceUlt = normalizeEffectSignal('reduce_ultimate_cooldown', '10', 'official-parsed', {})
-  assert.equal(reduceUlt.signal.kind, 'cooldownReduction')
+  const reduceUlt = normalizeEffectSignal('reduce_ultimate_cooldown', '10', 'official-parsed', {}) as EffectSignalResultLike
+  expect(reduceUlt.signal.kind).toBe('cooldownReduction')
 
-  const ablCd = normalizeEffectSignal('ability_cooldown_reduction_mult', '25', 'official-parsed', {})
-  assert.equal(ablCd.signal.kind, 'cooldownReduction')
-  assert.equal(ablCd.signal.amountFunc, 'mult')
+  const ablCd = normalizeEffectSignal('ability_cooldown_reduction_mult', '25', 'official-parsed', {}) as EffectSignalResultLike
+  expect(ablCd.signal.kind).toBe('cooldownReduction')
+  expect(ablCd.signal.amountFunc).toBe('mult')
 
-  assert.equal(normalizeEffectSignal('base_attack_speed_mult', 'bad', 'official-parsed', {}).ok, false)
+  expect((normalizeEffectSignal('base_attack_speed_mult', 'bad', 'official-parsed', {}) as EffectSignalResultLike).ok).toBe(false)
 })
