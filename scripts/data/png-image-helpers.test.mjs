@@ -1,7 +1,7 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { PNG } from 'pngjs'
-import { findOpaqueBounds, cropOpaqueBounds } from './png-image-helpers.mjs'
+import { findOpaqueBounds, cropOpaqueBounds } from './png-image-helpers.ts'
 
 function makePng(width, height, painter) {
   const png = new PNG({ width, height })

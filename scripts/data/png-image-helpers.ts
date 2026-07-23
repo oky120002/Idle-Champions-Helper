@@ -2,14 +2,29 @@ import { PNG } from 'pngjs'
 
 /**
  * PNG 不透明区域定位与裁剪。
- * 多个 sync 脚本（头像、装备图标、专精图、宠物、主机头像）各自复制了相同实现，
- * 统一在此维护。
+ * 多个 sync 脚本（头像、装备图标、专精图、宠物、主机头像）各自复制了相同实现，统一在此维护。
  */
+
+export interface OpaqueBounds {
+  left: number
+  top: number
+  right: number
+  bottom: number
+  width: number
+  height: number
+}
+
+export interface CroppedPng {
+  pngBuffer: Buffer
+  width: number
+  height: number
+  cropped: boolean
+}
 
 /**
  * 扫描 pngjs PNG 对象，返回最外层非透明像素包围盒；全透明返回 null。
  */
-export function findOpaqueBounds(png) {
+export function findOpaqueBounds(png: PNG): OpaqueBounds | null {
   let left = png.width
   let top = png.height
   let right = -1
@@ -47,7 +62,7 @@ export function findOpaqueBounds(png) {
 /**
  * 裁剪 PNG buffer 到不透明包围盒；无可见像素时原样返回。
  */
-export function cropOpaqueBounds(pngBuffer) {
+export function cropOpaqueBounds(pngBuffer: Buffer): CroppedPng {
   const source = PNG.sync.read(pngBuffer)
   const bounds = findOpaqueBounds(source)
 
@@ -67,10 +82,12 @@ export function cropOpaqueBounds(pngBuffer) {
       const sourceIndex = ((bounds.top + y) * source.width + (bounds.left + x)) * 4
       const outputIndex = (y * output.width + x) * 4
 
-      output.data[outputIndex] = source.data[sourceIndex]
-      output.data[outputIndex + 1] = source.data[sourceIndex + 1]
-      output.data[outputIndex + 2] = source.data[sourceIndex + 2]
-      output.data[outputIndex + 3] = source.data[sourceIndex + 3]
+      // 索引在 source 尺寸内，noUncheckedIndexedAccess 下 data[i] 为 number|undefined，
+      // 读侧用 ! 断言（循环边界保证在范围内）。
+      output.data[outputIndex] = source.data[sourceIndex]!
+      output.data[outputIndex + 1] = source.data[sourceIndex + 1]!
+      output.data[outputIndex + 2] = source.data[sourceIndex + 2]!
+      output.data[outputIndex + 3] = source.data[sourceIndex + 3]!
     }
   }
 

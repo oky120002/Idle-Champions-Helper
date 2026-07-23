@@ -22,7 +22,7 @@ import {
   writeJson,
   runWithConcurrency,
 } from './data/io-utils.ts'
-import { findOpaqueBounds } from './data/png-image-helpers.mjs'
+import { findOpaqueBounds } from './data/png-image-helpers.ts'
 import {
   computeSkelAnimFrameBounds,
   renderSkelAnimPoseToPngBuffer,

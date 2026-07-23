@@ -4,7 +4,7 @@ import {
   writeJson,
   runWithConcurrency,
 } from './data/io-utils.ts'
-import { findOpaqueBounds } from './data/png-image-helpers.mjs'
+import { findOpaqueBounds } from './data/png-image-helpers.ts'
 import { findPngSignatureOffset, getPngDimensions, trimPngToIend } from './data/mobile-asset-codec.mjs'
 import path from 'node:path'
 import { parseArgs } from 'node:util'

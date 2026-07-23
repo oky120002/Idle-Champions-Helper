@@ -4,7 +4,7 @@ import {
   writeJson,
   runWithConcurrency,
 } from './data/io-utils.ts'
-import { cropOpaqueBounds, findOpaqueBounds } from './data/png-image-helpers.mjs'
+import { cropOpaqueBounds, findOpaqueBounds } from './data/png-image-helpers.ts'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
