@@ -1,6 +1,6 @@
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
-import { fetchDefinitionsSnapshot } from './fetch-idle-champions-definitions.mjs'
+import { fetchDefinitionsSnapshot } from './fetch-idle-champions-definitions.ts'
 import { normalizeDefinitionsSnapshot } from './normalize-idle-champions-definitions.mjs'
 import { auditChampionAnimations } from './audit-idle-champions-animations.mjs'
 import { syncChampionAnimations } from './sync-idle-champions-animations.mjs'

@@ -2,7 +2,7 @@ import { mkdir, readFile, readdir, unlink, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
-import { createChampionGraphicResourceCache } from './data/champion-graphic-resource-cache.mjs'
+import { createChampionGraphicResourceCache } from './data/champion-graphic-resource-cache.ts'
 import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.ts'
 import {
   resolvePreferredSequenceIndexes,

@@ -3,24 +3,54 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { decodeRemoteGraphicBuffer, readPngDimensions } from './mobile-asset-codec.ts'
 import { decodeSkelAnimGraphicBuffer } from './skelanim-codec.ts'
+import type { SkelAnimGraphic } from './skelanim-codec.ts'
 import { renderSkelAnimPoseToPngBuffer } from './skelanim-renderer.ts'
+import type { RemoteGraphicAsset } from './champion-asset-helpers.ts'
 
 export const DEFAULT_GRAPHIC_CACHE_DIR = 'tmp/idle-champions-graphic-cache'
 
-function buildAssetCacheKey(asset) {
+type GraphicDefMap = Map<string, Record<string, unknown>>
+
+interface RenderedCandidateRender {
+  pipeline: 'skelanim' | 'decoded-png'
+  sequenceIndex: number | null
+  sequenceLength: number | null
+  isStaticPose: boolean | null
+  frameIndex: number | null
+  visiblePieceCount: number | null
+  bounds: { minX: number; minY: number; maxX: number; maxY: number } | null
+}
+
+export interface RenderedCandidate {
+  asset: RemoteGraphicAsset
+  bytes: Buffer
+  width: number
+  height: number
+  render: RenderedCandidateRender
+}
+
+export interface IllustrationCandidate {
+  asset: RemoteGraphicAsset
+}
+
+function buildAssetCacheKey(asset: RemoteGraphicAsset): string {
   return `${asset.graphicId}:${asset.sourceVersion ?? 'na'}:${asset.remotePath}`
 }
 
-function buildAssetCacheFileName(asset) {
+function buildAssetCacheFileName(asset: RemoteGraphicAsset): string {
   const digest = createHash('sha1').update(asset.remotePath).digest('hex').slice(0, 12)
   return `${asset.graphicId}-${asset.sourceVersion ?? 'na'}-${digest}.bin`
 }
 
-async function readBufferIfExists(filePath) {
+async function readBufferExists(filePath: string): Promise<Buffer | null> {
   try {
     return await readFile(filePath)
   } catch (error) {
-    if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
+    if (
+      typeof error === 'object' &&
+      error !== null &&
+      (error as { code?: string }).code === 'ENOENT'
+    ) {
       return null
     }
 
@@ -28,12 +58,14 @@ async function readBufferIfExists(filePath) {
   }
 }
 
-export function isSkelAnimAsset(asset) {
+export function isSkelAnimAsset(asset: RemoteGraphicAsset): boolean {
   return asset.remotePath.includes('/Characters/')
 }
 
-export function resolvePreferredSequenceIndexes(asset, graphicDefById) {
-  const graphicDef = graphicDefById.get(String(asset.graphicId))
+export function resolvePreferredSequenceIndexes(asset: RemoteGraphicAsset, graphicDefById: GraphicDefMap): number[] {
+  const graphicDef = graphicDefById.get(asset.graphicId) as
+    | { export_params?: { sequence_override?: unknown[] } }
+    | undefined
   const sequenceOverride = graphicDef?.export_params?.sequence_override
 
   if (!Array.isArray(sequenceOverride) || sequenceOverride.length === 0) {
@@ -45,16 +77,31 @@ export function resolvePreferredSequenceIndexes(asset, graphicDefById) {
     .filter((value) => Number.isInteger(value) && value >= 0)
 }
 
-export function createChampionGraphicResourceCache(options = {}) {
-  const cacheDir = path.resolve(options.cacheDir ?? DEFAULT_GRAPHIC_CACHE_DIR)
-  const graphicDefById = options.graphicDefById ?? new Map()
-  const rawBufferCache = new Map()
-  const decodedPngCache = new Map()
-  const skelAnimCache = new Map()
-  const renderedPoseCache = new Map()
-  let cacheDirPromise = null
+export interface ChampionGraphicResourceCacheOptions {
+  cacheDir?: string
+  graphicDefById?: GraphicDefMap
+}
 
-  async function ensureCacheDir() {
+export interface ChampionGraphicResourceCache {
+  cacheDir: string
+  readRawGraphicBuffer: (asset: RemoteGraphicAsset) => Promise<Buffer>
+  readDecodedPngBuffer: (asset: RemoteGraphicAsset) => Promise<Buffer>
+  readSkelAnimGraphic: (asset: RemoteGraphicAsset) => Promise<SkelAnimGraphic>
+  renderIllustrationCandidate: (candidate: IllustrationCandidate) => Promise<RenderedCandidate>
+}
+
+export function createChampionGraphicResourceCache(
+  options: ChampionGraphicResourceCacheOptions = {},
+): ChampionGraphicResourceCache {
+  const cacheDir = path.resolve(options.cacheDir ?? DEFAULT_GRAPHIC_CACHE_DIR)
+  const graphicDefById = options.graphicDefById ?? new Map<string, Record<string, unknown>>()
+  const rawBufferCache = new Map<string, Promise<Buffer>>()
+  const decodedPngCache = new Map<string, Promise<Buffer>>()
+  const skelAnimCache = new Map<string, Promise<SkelAnimGraphic>>()
+  const renderedPoseCache = new Map<string, Promise<RenderedCandidate>>()
+  let cacheDirPromise: Promise<unknown> | null = null
+
+  async function ensureCacheDir(): Promise<void> {
     if (!cacheDirPromise) {
       cacheDirPromise = mkdir(cacheDir, { recursive: true })
     }
@@ -62,7 +109,7 @@ export function createChampionGraphicResourceCache(options = {}) {
     await cacheDirPromise
   }
 
-  async function readRawGraphicBuffer(asset) {
+  async function readRawGraphicBuffer(asset: RemoteGraphicAsset): Promise<Buffer> {
     const cacheKey = buildAssetCacheKey(asset)
     const cached = rawBufferCache.get(cacheKey)
 
@@ -72,7 +119,7 @@ export function createChampionGraphicResourceCache(options = {}) {
 
     const pending = (async () => {
       const cacheFile = path.join(cacheDir, buildAssetCacheFileName(asset))
-      const existing = await readBufferIfExists(cacheFile)
+      const existing = await readBufferExists(cacheFile)
 
       if (existing) {
         return existing
@@ -94,7 +141,7 @@ export function createChampionGraphicResourceCache(options = {}) {
     return pending
   }
 
-  async function readDecodedPngBuffer(asset) {
+  async function readDecodedPngBuffer(asset: RemoteGraphicAsset): Promise<Buffer> {
     if (isSkelAnimAsset(asset)) {
       throw new Error(`资源 ${asset.graphicId} 是 SkelAnim，不能按静态 PNG 解码`)
     }
@@ -111,7 +158,7 @@ export function createChampionGraphicResourceCache(options = {}) {
     return pending
   }
 
-  async function readSkelAnimGraphic(asset) {
+  async function readSkelAnimGraphic(asset: RemoteGraphicAsset): Promise<SkelAnimGraphic> {
     if (!isSkelAnimAsset(asset)) {
       throw new Error(`资源 ${asset.graphicId} 不是 SkelAnim`)
     }
@@ -128,7 +175,7 @@ export function createChampionGraphicResourceCache(options = {}) {
     return pending
   }
 
-  async function renderIllustrationCandidate(candidate) {
+  async function renderIllustrationCandidate(candidate: IllustrationCandidate): Promise<RenderedCandidate> {
     const { asset } = candidate
 
     if (isSkelAnimAsset(asset)) {
@@ -140,27 +187,27 @@ export function createChampionGraphicResourceCache(options = {}) {
         return cached
       }
 
-      const pending = readSkelAnimGraphic(asset).then((skelAnim) => renderSkelAnimPoseToPngBuffer(skelAnim, {
-        preferredSequenceIndexes,
-      }))
+      // 缓存命中需与首次返回同一 RenderedCandidate 形状（含 asset/pipeline），
+      // 故 pending 直接产出 RenderedCandidate，而非中间的 RenderedSkelAnimPose。
+      const pending: Promise<RenderedCandidate> = readSkelAnimGraphic(asset)
+        .then((skelAnim) => renderSkelAnimPoseToPngBuffer(skelAnim, { preferredSequenceIndexes }))
+        .then((rendered) => ({
+          asset,
+          bytes: rendered.bytes,
+          width: rendered.width,
+          height: rendered.height,
+          render: {
+            pipeline: 'skelanim',
+            sequenceIndex: rendered.render.sequenceIndex,
+            sequenceLength: rendered.render.sequenceLength,
+            isStaticPose: rendered.render.isStaticPose,
+            frameIndex: rendered.render.frameIndex,
+            visiblePieceCount: rendered.render.visiblePieceCount,
+            bounds: rendered.render.bounds,
+          },
+        }))
       renderedPoseCache.set(renderCacheKey, pending)
-      const rendered = await pending
-
-      return {
-        asset,
-        bytes: rendered.bytes,
-        width: rendered.width,
-        height: rendered.height,
-        render: {
-          pipeline: 'skelanim',
-          sequenceIndex: rendered.render.sequenceIndex,
-          sequenceLength: rendered.render.sequenceLength,
-          isStaticPose: rendered.render.isStaticPose,
-          frameIndex: rendered.render.frameIndex,
-          visiblePieceCount: rendered.render.visiblePieceCount,
-          bounds: rendered.render.bounds,
-        },
-      }
+      return pending
     }
 
     const decodedBuffer = await readDecodedPngBuffer(asset)

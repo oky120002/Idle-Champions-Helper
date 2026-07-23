@@ -8,12 +8,14 @@ const DEFAULT_MASTER_API_URL = 'https://master.idlechampions.com/~idledragons/'
 const DEFAULT_PLAYSERVER_CLIENT_VERSION = '999'
 const DEFAULT_DEFINITIONS_CLIENT_VERSION = '99999'
 
-function ensureTrailingSlash(value) {
+function ensureTrailingSlash(value: string): string {
   return value.endsWith('/') ? value : `${value}/`
 }
 
-function buildFileSuffix(languageId, fileLabel) {
-  const rawValue = fileLabel ?? (languageId ? `lang-${languageId}` : '')
+function buildFileSuffix(languageId: unknown, fileLabel?: string): string {
+  const langText = typeof languageId === 'string' || typeof languageId === 'number' ? languageId : null
+  const langPart = langText ? `lang-${langText}` : ''
+  const rawValue = fileLabel ?? langPart
   const normalized = String(rawValue)
     .trim()
     .toLowerCase()
@@ -23,11 +25,11 @@ function buildFileSuffix(languageId, fileLabel) {
   return normalized ? `-${normalized}` : ''
 }
 
-function buildTimestampLabel(date) {
+function buildTimestampLabel(date: Date): string {
   return date.toISOString().replaceAll(':', '-')
 }
 
-async function fetchJson(url) {
+async function fetchJson(url: string): Promise<unknown> {
   const response = await fetch(url)
 
   if (!response.ok) {
@@ -37,7 +39,37 @@ async function fetchJson(url) {
   return response.json()
 }
 
-export async function fetchDefinitionsPayload(options = {}) {
+export interface FetchDefinitionsOptions {
+  masterApiUrl?: string
+  playserverClientVersion?: string | number
+  definitionsClientVersion?: string | number
+  languageId?: string | number
+  fileLabel?: string
+  outDir?: string
+}
+
+export interface FetchDefinitionsMeta {
+  fetchedAt: string
+  discoveryUrl: string
+  definitionsUrl: string
+  playServer: string
+  playserverClientVersion: string
+  definitionsClientVersion: string
+  languageId: string | null
+}
+
+export interface FetchDefinitionsPayloadResult {
+  definitionsPayload: unknown
+  meta: FetchDefinitionsMeta
+  playServer: string
+  fetchedAt: string
+  discoveryUrl: string
+  definitionsUrl: string
+}
+
+export async function fetchDefinitionsPayload(
+  options: FetchDefinitionsOptions = {},
+): Promise<FetchDefinitionsPayloadResult> {
   const masterApiUrl = ensureTrailingSlash(options.masterApiUrl ?? DEFAULT_MASTER_API_URL)
   const playserverClientVersion = String(
     options.playserverClientVersion ?? DEFAULT_PLAYSERVER_CLIENT_VERSION,
@@ -46,7 +78,6 @@ export async function fetchDefinitionsPayload(options = {}) {
     options.definitionsClientVersion ?? DEFAULT_DEFINITIONS_CLIENT_VERSION,
   )
   const languageId = options.languageId ? String(options.languageId) : null
-  const fileSuffix = buildFileSuffix(languageId, options.fileLabel)
 
   const discoveryQuery = new URLSearchParams({
     call: 'getPlayServerForDefinitions',
@@ -55,7 +86,8 @@ export async function fetchDefinitionsPayload(options = {}) {
   })
   const discoveryUrl = `${masterApiUrl}post.php?${discoveryQuery.toString()}`
   const discoveryPayload = await fetchJson(discoveryUrl)
-  const playServer = ensureTrailingSlash(discoveryPayload.play_server ?? '')
+  const playServerRaw = (discoveryPayload as Record<string, unknown>).play_server
+  const playServer = ensureTrailingSlash(typeof playServerRaw === 'string' ? playServerRaw : '')
 
   if (!playServer) {
     throw new Error('未从 getPlayServerForDefinitions 返回中拿到 play_server')
@@ -74,7 +106,7 @@ export async function fetchDefinitionsPayload(options = {}) {
   const definitionsUrl = `${playServer}post.php?${definitionsQuery.toString()}`
   const definitionsPayload = await fetchJson(definitionsUrl)
   const fetchedAt = new Date()
-  const meta = {
+  const meta: FetchDefinitionsMeta = {
     fetchedAt: fetchedAt.toISOString(),
     discoveryUrl,
     definitionsUrl,
@@ -94,7 +126,18 @@ export async function fetchDefinitionsPayload(options = {}) {
   }
 }
 
-export async function fetchDefinitionsSnapshot(options = {}) {
+export interface FetchDefinitionsSnapshotResult {
+  rawFile: string
+  metaFile: string
+  playServer: string
+  fetchedAt: string
+  discoveryUrl: string
+  definitionsUrl: string
+}
+
+export async function fetchDefinitionsSnapshot(
+  options: FetchDefinitionsOptions = {},
+): Promise<FetchDefinitionsSnapshotResult> {
   const outDir = path.resolve(options.outDir ?? DEFAULT_OUT_DIR)
   const fileSuffix = buildFileSuffix(options.languageId, options.fileLabel)
   const fetched = await fetchDefinitionsPayload(options)
@@ -119,7 +162,7 @@ export async function fetchDefinitionsSnapshot(options = {}) {
   }
 }
 
-function printUsage() {
+function printUsage(): void {
   console.log(`用法：
   node scripts/fetch-idle-champions-definitions.mjs [--outDir <dir>] [--masterApiUrl <url>]
 
@@ -134,7 +177,7 @@ function printUsage() {
 `)
 }
 
-async function main() {
+async function main(): Promise<void> {
   const { values } = parseArgs({
     options: {
       outDir: { type: 'string' },
@@ -160,9 +203,9 @@ async function main() {
   console.log(`- Play server: ${result.playServer}`)
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
-  main().catch((error) => {
-    console.error(`抓取 definitions 失败：${error.message}`)
+if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+  main().catch((error: unknown) => {
+    console.error(`抓取 definitions 失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1
   })
 }
