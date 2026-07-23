@@ -7,7 +7,7 @@ import { mkdtemp, mkdir, readFile, writeFile } from 'node:fs/promises'
 import { buildModels } from './build-models.mjs'
 import { collectEffectEntries, normalizeEffectSignal } from './effect-helpers.mjs'
 import { parseEffectPayload } from '../../src/domain/effects/effect-string.ts'
-import { normalizeEffectReference } from '../normalize-idle-champions-definitions.mjs'
+import { normalizeEffectReference } from './normalize-champions.mjs'
 
 async function readJson(filePath) {
   return JSON.parse(await readFile(filePath, 'utf8'))
