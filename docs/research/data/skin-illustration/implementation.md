@@ -70,7 +70,7 @@
 
 已发布的 `public/data/v1/champion-animations/skins/*.bin` 也作为持久缓存：同步脚本优先读现有 manifest，若 `sourceGraphicId / sourceGraphic / sourceVersion / sourceSlot` 与当前 definitions 一致且本地 `.bin` 存在，直接复用；只有资源版本或定位变化才重新下载。默认行为已是“按 definitions 变化增量刷新”，而非全量重拉。
 
-`scripts/build-idle-champions-data.mjs` 已改为：`npm run data:official` 默认生成全量皮肤动画；`--animationChampionIds` / `--animationSkinIds` 仅作局部重建参数保留。
+`scripts/build-idle-champions-data.ts` 已改为：`npm run data:official` 默认生成全量皮肤动画；`--animationChampionIds` / `--animationSkinIds` 仅作局部重建参数保留。
 
 ### 前端层
 

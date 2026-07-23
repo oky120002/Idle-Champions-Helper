@@ -28,7 +28,7 @@
 | 层 | 文件 |
 | --- | --- |
 | 构建 | `scripts/data/build-search-index.mjs`、`scripts/data/build-search-index.test.mjs` |
-| 编排 | `scripts/build-idle-champions-data.mjs`（接入 `buildSearchIndex`） |
+| 编排 | `scripts/build-idle-champions-data.ts`（接入 `buildSearchIndex`） |
 | 产物 | `public/data/v1/search/search-documents.json` |
 | 引擎 | `src/features/search/searchEngine.ts`、`searchTokenizer.ts`、`searchTypes.ts` |
 | 高亮 | `src/features/search/searchHighlight.ts` |

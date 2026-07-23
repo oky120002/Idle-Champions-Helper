@@ -35,7 +35,7 @@ type SuspicionLevel = ReturnType<typeof buildSuspicionLevel>
 interface AnimationAsset {
   path: string
   bytes?: number
-  format?: string
+  format?: string | undefined
 }
 
 interface AnimationItem {
@@ -80,13 +80,13 @@ interface AuditEntry {
 }
 
 interface AuditChampionAnimationsOptions {
-  outputDir?: string
-  currentVersion?: string
-  animationsFile?: string
-  auditFile?: string
-  idleOverridesFile?: string
-  championIds?: string
-  skinIds?: string
+  outputDir?: string | undefined
+  currentVersion?: string | undefined
+  animationsFile?: string | undefined
+  auditFile?: string | undefined
+  idleOverridesFile?: string | undefined
+  championIds?: string | undefined
+  skinIds?: string | undefined
 }
 
 interface AuditChampionAnimationsResult {

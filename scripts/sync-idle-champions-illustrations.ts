@@ -151,13 +151,13 @@ interface RenderedAnimation {
 }
 
 interface SyncChampionIllustrationsOptions {
-  outputDir?: string
-  currentVersion?: string
-  visualsFile?: string
-  animationsFile?: string
-  concurrency?: string
-  championIds?: string
-  skinIds?: string
+  outputDir?: string | undefined
+  currentVersion?: string | undefined
+  visualsFile?: string | undefined
+  animationsFile?: string | undefined
+  concurrency?: string | undefined
+  championIds?: string | undefined
+  skinIds?: string | undefined
 }
 
 interface SyncChampionIllustrationsResult {

@@ -40,12 +40,12 @@ async function fetchJson(url: string): Promise<unknown> {
 }
 
 export interface FetchDefinitionsOptions {
-  masterApiUrl?: string
-  playserverClientVersion?: string | number
-  definitionsClientVersion?: string | number
-  languageId?: string | number
-  fileLabel?: string
-  outDir?: string
+  masterApiUrl?: string | undefined
+  playserverClientVersion?: string | number | undefined
+  definitionsClientVersion?: string | number | undefined
+  languageId?: string | number | undefined
+  fileLabel?: string | undefined
+  outDir?: string | undefined
 }
 
 export interface FetchDefinitionsMeta {

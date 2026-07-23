@@ -71,11 +71,11 @@ interface DownloadOptions {
 }
 
 interface SyncConsolePortraitsOptions {
-  input?: string
-  outputDir?: string
-  masterApiUrl?: string
-  currentVersion?: string
-  concurrency?: string
+  input?: string | undefined
+  outputDir?: string | undefined
+  masterApiUrl?: string | undefined
+  currentVersion?: string | undefined
+  concurrency?: string | undefined
 }
 
 interface DimensionEntry {

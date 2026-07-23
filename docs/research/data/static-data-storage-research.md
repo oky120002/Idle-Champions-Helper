@@ -42,7 +42,7 @@ public/
 ## 更新工作流
 
 - 预期链路：抓官方 definitions 原始快照 -> 归一化 -> 应用必要 overrides -> 写入 `public/data/v1/*.json` -> 运行校验 / 构建 -> 提交并发布。
-- 相关脚本：`scripts/fetch-idle-champions-definitions.mjs`、`scripts/normalize-idle-champions-definitions.mjs`、`scripts/build-idle-champions-data.mjs`。
+- 相关脚本：`scripts/fetch-idle-champions-definitions.ts`、`scripts/normalize-idle-champions-definitions.ts`、`scripts/build-idle-champions-data.ts`。
 - 覆写数据：`scripts/data/manual-overrides.json`；它与抓取 / 归一化结果分层存放，不混进脚本实现细节。
 - 对外只记一个统一入口：`npm run data:official`。
 

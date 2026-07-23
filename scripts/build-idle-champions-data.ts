@@ -1,7 +1,7 @@
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import { fetchDefinitionsSnapshot } from './fetch-idle-champions-definitions.ts'
-import { normalizeDefinitionsSnapshot } from './normalize-idle-champions-definitions.mjs'
+import { normalizeDefinitionsSnapshot } from './normalize-idle-champions-definitions.ts'
 import { auditChampionAnimations } from './audit-idle-champions-animations.ts'
 import { syncChampionAnimations } from './sync-idle-champions-animations.ts'
 import { syncChampionIllustrations } from './sync-idle-champions-illustrations.ts'
@@ -21,7 +21,7 @@ import {
 const DEFAULT_VERSION_FILE = 'public/data/version.json'
 const DEFAULT_RESOURCE_SYNC_STATE_FILE = 'public/data/resource-sync-state.json'
 
-async function main() {
+async function main(): Promise<void> {
   const { values } = parseArgs({
     options: {
       outDir: { type: 'string' },
@@ -44,7 +44,7 @@ async function main() {
 
   if (values.help) {
     console.log(`用法：
-  node scripts/build-idle-champions-data.mjs [--outDir <raw-dir>] [--outputDir <data-dir>]
+  node scripts/build-idle-champions-data.ts [--outDir <raw-dir>] [--outputDir <data-dir>]
 
 说明：
   一次拉取当前所有可公开获取的官方基座数据：
@@ -76,12 +76,18 @@ async function main() {
   const resourceSyncStateFile = values.resourceSyncStateFile ?? DEFAULT_RESOURCE_SYNC_STATE_FILE
   const previousResourceUpdatedAt = await readUpdatedAtFromJsonFile(resourceSyncStateFile)
   const fetched = await fetchDefinitionsSnapshot({
-    ...values,
+    outDir: values.outDir,
+    masterApiUrl: values.masterApiUrl,
+    playserverClientVersion: values.playserverClientVersion,
+    definitionsClientVersion: values.definitionsClientVersion,
     languageId: sourceLanguageId,
     fileLabel: `lang-${sourceLanguageId}-source`,
   })
   const localizedFetched = await fetchDefinitionsSnapshot({
-    ...values,
+    outDir: values.outDir,
+    masterApiUrl: values.masterApiUrl,
+    playserverClientVersion: values.playserverClientVersion,
+    definitionsClientVersion: values.definitionsClientVersion,
     languageId: displayLanguageId,
     fileLabel: `lang-${displayLanguageId}-display`,
   })
@@ -155,6 +161,7 @@ async function main() {
     currentVersion: values.currentVersion,
     championIds: values.animationChampionIds,
     skinIds: values.animationSkinIds,
+    idleOverridesFile: values.idleOverridesFile,
   })
   const illustrations = await syncChampionIllustrations({
     outputDir: values.outputDir,
@@ -202,9 +209,9 @@ async function main() {
   console.log(`- resource sync state: ${resourceSyncStateFile}`)
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
-  main().catch((error) => {
-    console.error(`构建公共数据失败：${error.message}`)
+if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+  main().catch((error: unknown) => {
+    console.error(`构建公共数据失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1
   })
 }

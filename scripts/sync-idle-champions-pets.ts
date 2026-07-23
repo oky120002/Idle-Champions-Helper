@@ -158,12 +158,12 @@ interface PetCatalogItem extends Pet {
 }
 
 interface SyncPetsCatalogOptions {
-  input?: string
-  localizedInput?: string
-  outputDir?: string
-  currentVersion?: string
-  masterApiUrl?: string
-  concurrency?: string
+  input?: string | undefined
+  localizedInput?: string | undefined
+  outputDir?: string | undefined
+  currentVersion?: string | undefined
+  masterApiUrl?: string | undefined
+  concurrency?: string | undefined
 }
 
 interface SyncPetsCatalogCounts {

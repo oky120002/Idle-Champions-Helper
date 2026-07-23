@@ -68,12 +68,12 @@ interface DownloadOptions {
 }
 
 interface SyncSpecializationGraphicsOptions {
-  input?: string
-  outputDir?: string
-  currentVersion?: string
-  detailDir?: string
-  masterApiUrl?: string
-  concurrency?: string
+  input?: string | undefined
+  outputDir?: string | undefined
+  currentVersion?: string | undefined
+  detailDir?: string | undefined
+  masterApiUrl?: string | undefined
+  concurrency?: string | undefined
 }
 
 interface SpecializationSyncResult {

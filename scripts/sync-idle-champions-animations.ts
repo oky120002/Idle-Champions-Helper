@@ -128,14 +128,14 @@ interface AnimationTask {
 }
 
 interface SyncChampionAnimationsOptions {
-  outputDir?: string
-  currentVersion?: string
-  visualsFile?: string
-  input?: string
-  idleOverridesFile?: string
-  concurrency?: string
-  championIds?: string
-  skinIds?: string
+  outputDir?: string | undefined
+  currentVersion?: string | undefined
+  visualsFile?: string | undefined
+  input?: string | undefined
+  idleOverridesFile?: string | undefined
+  concurrency?: string | undefined
+  championIds?: string | undefined
+  skinIds?: string | undefined
 }
 
 interface SyncChampionAnimationsResult {

@@ -3,27 +3,13 @@ import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import { readJson, readJsonIfExists, writeJson } from './data/io-utils.ts'
-import {
-  compareLocalizedText,
-  normalizeJsonValue,
-  normalizeLocalizedText,
-  normalizeLocalizedTextList,
-  normalizeNumber,
-  normalizeNumberList,
-  normalizeOptionalLocalizedText,
-  toLocalizedOverrideList,
-  toText,
-  toTextList,
-  toStringList,
-  uniqueLocalizedTexts,
-  uniqueNumbers,
-  uniqueStrings,
-} from './data/normalize-text-utils.ts'
+import { compareLocalizedText, uniqueLocalizedTexts, uniqueStrings } from './data/normalize-text-utils.ts'
 import {
   normalizeChampion,
   normalizeChampionDetail,
   normalizeChampionVisual,
   normalizeChampionVisualSkin,
+  type NormalizedChampion,
 } from './data/normalize-champions.ts'
 import {
   buildAdventureMap,
@@ -38,36 +24,96 @@ import {
   normalizeManualFormations,
   normalizePatrons,
   normalizeVariant,
+  type NormalizedAdventure,
+  type NormalizedVariant,
 } from './data/normalize-adventures.ts'
 import {
   DEFAULT_MASTER_API_URL,
-  buildChampionPortraitPath,
   buildGraphicMap,
   collectChampionPortraitSources,
   isPlayableChampion,
-  resolveGraphicAssetById,
 } from './data/champion-asset-helpers.ts'
 import { extractOfficialFormations, looksLikeVariant } from './data/formation-layout-helpers.ts'
 import {
   buildChampionPatronEligibility,
-  buildScenarioModeTags,
-  buildScenarioRuleContextId,
   normalizeOfficialBuffDefinition,
   normalizeOfficialEffectKeyDefinition,
   normalizeOfficialGameRuleDefinition,
   normalizeOfficialStatDefinition,
   normalizePatronPerkDefinition,
-  normalizePatronDefinition,
   normalizePatronPerkTierDefinition,
-  normalizePatronObjectiveTiers,
   normalizeTrialsDifficultyDefinition,
   normalizeTrialsRoleDefinition,
+  type PatronDefinition,
 } from './data/official-rule-helpers.ts'
+import type { LocalizedText } from '../src/domain/types/common.ts'
+
+/**
+ * definitions 归一化编排：把官方原始 definitions 快照拆成 champions / adventures /
+ * variants / patrons / game-rules / effect-reference / patron-perks / trials /
+ * formations / enums / champion-visuals / champion-details 集合。
+ */
+
+type RawDefinition = Record<string, unknown>
+
+// ponytail: String() on unknown 触发 no-base-to-string；统一经此 helper 收口，对齐 .mjs 原始的 String() 行为。
+function toStr(value: unknown): string {
+  return String(value)
+}
+
+function asRawArray(value: unknown): RawDefinition[] {
+  return Array.isArray(value) ? (value as RawDefinition[]) : []
+}
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_VERSION_FILE = 'public/data/version.json'
 const DEFAULT_MANUAL_OVERRIDES = 'scripts/data/manual-overrides.json'
 const DEFAULT_CURRENT_VERSION = 'v1'
+
+interface ManualOverrides {
+  readonly championOverrides: Readonly<Record<string, Readonly<Record<string, unknown>>>>
+  // manual-overrides.json 的 variants 字段运行时形状与 NormalizedVariant 对齐（手工覆写层）。
+  readonly variants: readonly NormalizedVariant[]
+  readonly formations: readonly RawDefinition[]
+}
+
+interface EnumEntry {
+  id: string
+  values: readonly unknown[]
+}
+
+interface MergedFormation {
+  id: string
+  slots: readonly unknown[]
+  applicableContexts?: readonly unknown[] | undefined
+  sourceContexts?: readonly unknown[] | undefined
+}
+
+export interface NormalizeDefinitionsOptions {
+  input?: string | undefined
+  localizedInput?: string | undefined
+  outputDir?: string | undefined
+  versionFile?: string | undefined
+  currentVersion?: string | undefined
+  manualOverrides?: string | undefined
+  masterApiUrl?: string | undefined
+}
+
+export interface NormalizeDefinitionsResult {
+  outputDir: string
+  versionFile: string
+  updatedAt: string
+  counts: {
+    champions: number
+    championVisuals: number
+    championDetails: number
+    adventures: number
+    patrons: number
+    variants: number
+    formations: number
+    enums: number
+  }
+}
 
 /**
  * 归一化 upgrade.effect 到标准 effect 引用串。
@@ -80,15 +126,13 @@ const DEFAULT_CURRENT_VERSION = 'v1'
  * （当前无下游消费）。
  */
 
-
-function getUpdatedAt(rawDefinitions) {
+function getUpdatedAt(rawDefinitions: RawDefinition): string {
   if (typeof rawDefinitions.current_time === 'number') {
     return new Date(rawDefinitions.current_time * 1000).toISOString().slice(0, 10)
   }
 
   return new Date().toISOString().slice(0, 10)
 }
-
 
 /**
  * 从 game_changes 提取英雄限制（阶段 9.2）：
@@ -97,18 +141,19 @@ function getUpdatedAt(rawDefinitions) {
  * allowedHeroIds/allowedTags 仅在该变体含 only_allow_crusaders 时非空（hasAllowed 语义）。
  */
 
-
-function groupDefinitionsByHeroId(definitions = []) {
-  const result = new Map()
+function groupDefinitionsByHeroId(
+  definitions: readonly RawDefinition[] = [],
+): Map<string, RawDefinition[]> {
+  const result = new Map<string, RawDefinition[]>()
 
   for (const definition of definitions) {
-    const heroId = definition?.hero_id
+    const heroId = definition.hero_id
 
     if (heroId === undefined) {
       continue
     }
 
-    const key = String(heroId)
+    const key = toStr(heroId)
     const existing = result.get(key) ?? []
     existing.push(definition)
     result.set(key, existing)
@@ -117,9 +162,13 @@ function groupDefinitionsByHeroId(definitions = []) {
   return result
 }
 
-
-function mergeFormations(autoFormations, manualFormations) {
-  const merged = new Map(autoFormations.map((formation) => [formation.id, formation]))
+function mergeFormations(
+  autoFormations: readonly MergedFormation[],
+  manualFormations: readonly MergedFormation[],
+): MergedFormation[] {
+  const merged = new Map<string, MergedFormation>(
+    autoFormations.map((formation) => [formation.id, formation]),
+  )
 
   for (const formation of manualFormations) {
     const existing = merged.get(formation.id)
@@ -137,7 +186,14 @@ function mergeFormations(autoFormations, manualFormations) {
   return Array.from(merged.values())
 }
 
-function normalizeEnums(champions, affiliationMap, campaignMap, patrons, adventures, variants) {
+function normalizeEnums(
+  champions: readonly NormalizedChampion[],
+  affiliationMap: Map<string, LocalizedText>,
+  campaignMap: Map<string, { id: string; original: string; display: string }>,
+  patrons: readonly PatronDefinition[],
+  adventures: readonly NormalizedAdventure[],
+  variants: readonly NormalizedVariant[],
+): EnumEntry[] {
   const campaigns = Array.from(campaignMap.entries())
     .map(([, value]) => value)
     .sort((left, right) => Number(left.id) - Number(right.id))
@@ -176,13 +232,18 @@ function normalizeEnums(champions, affiliationMap, campaignMap, patrons, adventu
   ]
 }
 
-async function readManualOverrides(filePath) {
+async function readManualOverrides(filePath: string): Promise<ManualOverrides> {
   // 文件可选：缺失（ENOENT）返回空默认；但 JSON 损坏必须抛错，避免静默丢失手工 override。
-  const overrides = await readJsonIfExists(filePath)
-  return overrides ?? { championOverrides: {}, variants: [], formations: [] }
+  return ((await readJsonIfExists(filePath)) as ManualOverrides | null) ?? {
+    championOverrides: {},
+    variants: [],
+    formations: [],
+  }
 }
 
-export async function normalizeDefinitionsSnapshot(options = {}) {
+export async function normalizeDefinitionsSnapshot(
+  options: NormalizeDefinitionsOptions = {},
+): Promise<NormalizeDefinitionsResult> {
   if (!options.input) {
     throw new Error('缺少 --input，无法归一化原始 definitions 快照')
   }
@@ -195,157 +256,159 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
     options.manualOverrides ?? DEFAULT_MANUAL_OVERRIDES,
   )
 
-  const rawDefinitions = await readJson(input)
+  const rawDefinitions = (await readJson(input)) as RawDefinition
   const localizedDefinitions = options.localizedInput
-    ? await readJson(path.resolve(options.localizedInput))
+    ? ((await readJson(path.resolve(options.localizedInput))) as RawDefinition)
     : rawDefinitions
   const masterApiUrl = options.masterApiUrl ?? DEFAULT_MASTER_API_URL
   const manualOverrides = await readManualOverrides(manualOverridesFile)
   const updatedAt = getUpdatedAt(rawDefinitions)
   const affiliationMap = buildAffiliationMap(
-    rawDefinitions.affiliation_defines,
-    localizedDefinitions.affiliation_defines,
+    asRawArray(rawDefinitions.affiliation_defines),
+    asRawArray(localizedDefinitions.affiliation_defines),
   )
   const campaignMap = buildCampaignMap(
-    rawDefinitions.campaign_defines,
-    localizedDefinitions.campaign_defines,
+    asRawArray(rawDefinitions.campaign_defines),
+    asRawArray(localizedDefinitions.campaign_defines),
   )
   const adventureMap = buildAdventureMap(
-    rawDefinitions.adventure_defines ?? [],
-    localizedDefinitions.adventure_defines ?? [],
+    asRawArray(rawDefinitions.adventure_defines),
+    asRawArray(localizedDefinitions.adventure_defines),
     campaignMap,
   )
   const sceneMap = buildSceneMap(adventureMap)
   const localizedChampionsById = new Map(
-    (localizedDefinitions.hero_defines ?? []).map((definition) => [String(definition.id), definition]),
+    asRawArray(localizedDefinitions.hero_defines).map((definition) => [toStr(definition.id), definition]),
   )
   const localizedVariantsById = new Map(
-    (localizedDefinitions.adventure_defines ?? []).map((definition) => [String(definition.id), definition]),
+    asRawArray(localizedDefinitions.adventure_defines).map((definition) => [toStr(definition.id), definition]),
   )
   const patrons = normalizePatrons(
-    rawDefinitions.patron_defines ?? [],
-    localizedDefinitions.patron_defines ?? [],
+    asRawArray(rawDefinitions.patron_defines),
+    asRawArray(localizedDefinitions.patron_defines),
   )
-  const localizedPatronPerksById = buildIdMap(localizedDefinitions.patron_perk_defines)
-  const localizedTrialsRolesById = buildIdMap(localizedDefinitions.trials_role_defines)
-  const localizedTrialsDifficultiesById = buildIdMap(localizedDefinitions.trials_difficulty_defines)
-  const localizedBuffsById = buildIdMap(localizedDefinitions.buff_defines)
-  const localizedEffectKeysById = buildIdMap(localizedDefinitions.effect_key_defines)
-  const attackDefinitionsById = buildIdMap(rawDefinitions.attack_defines)
-  const localizedAttackDefinitionsById = buildIdMap(localizedDefinitions.attack_defines)
-  const upgradesByHeroId = groupDefinitionsByHeroId(rawDefinitions.upgrade_defines)
-  const localizedUpgradesById = buildIdMap(localizedDefinitions.upgrade_defines)
-  const effectDefinitionsById = buildIdMap(rawDefinitions.effect_defines)
-  const localizedEffectDefinitionsById = buildIdMap(localizedDefinitions.effect_defines)
-  const featsByHeroId = groupDefinitionsByHeroId(rawDefinitions.hero_feat_defines)
-  const localizedFeatsById = buildIdMap(localizedDefinitions.hero_feat_defines)
-  const skinsByHeroId = groupDefinitionsByHeroId(rawDefinitions.hero_skin_defines)
-  const localizedSkinsById = buildIdMap(localizedDefinitions.hero_skin_defines)
-  const lootByHeroId = groupDefinitionsByHeroId(rawDefinitions.loot_defines)
-  const localizedLootById = buildIdMap(localizedDefinitions.loot_defines)
-  const legendaryEffectDefinitionsById = buildIdMap(rawDefinitions.legendary_effect_defines)
-  const localizedLegendaryEffectDefinitionsById = buildIdMap(localizedDefinitions.legendary_effect_defines)
+  const localizedPatronPerksById = buildIdMap(asRawArray(localizedDefinitions.patron_perk_defines))
+  const localizedTrialsRolesById = buildIdMap(asRawArray(localizedDefinitions.trials_role_defines))
+  const localizedTrialsDifficultiesById = buildIdMap(asRawArray(localizedDefinitions.trials_difficulty_defines))
+  const localizedBuffsById = buildIdMap(asRawArray(localizedDefinitions.buff_defines))
+  const localizedEffectKeysById = buildIdMap(asRawArray(localizedDefinitions.effect_key_defines))
+  const attackDefinitionsById = buildIdMap(asRawArray(rawDefinitions.attack_defines))
+  const localizedAttackDefinitionsById = buildIdMap(asRawArray(localizedDefinitions.attack_defines))
+  const upgradesByHeroId = groupDefinitionsByHeroId(asRawArray(rawDefinitions.upgrade_defines))
+  const localizedUpgradesById = buildIdMap(asRawArray(localizedDefinitions.upgrade_defines))
+  const effectDefinitionsById = buildIdMap(asRawArray(rawDefinitions.effect_defines))
+  const localizedEffectDefinitionsById = buildIdMap(asRawArray(localizedDefinitions.effect_defines))
+  const featsByHeroId = groupDefinitionsByHeroId(asRawArray(rawDefinitions.hero_feat_defines))
+  const localizedFeatsById = buildIdMap(asRawArray(localizedDefinitions.hero_feat_defines))
+  const skinsByHeroId = groupDefinitionsByHeroId(asRawArray(rawDefinitions.hero_skin_defines))
+  const localizedSkinsById = buildIdMap(asRawArray(localizedDefinitions.hero_skin_defines))
+  const lootByHeroId = groupDefinitionsByHeroId(asRawArray(rawDefinitions.loot_defines))
+  const localizedLootById = buildIdMap(asRawArray(localizedDefinitions.loot_defines))
+  const legendaryEffectDefinitionsById = buildIdMap(asRawArray(rawDefinitions.legendary_effect_defines))
+  const localizedLegendaryEffectDefinitionsById = buildIdMap(
+    asRawArray(localizedDefinitions.legendary_effect_defines),
+  )
   const monsterCatalog = buildMonsterCatalog(rawDefinitions, attackDefinitionsById)
   const variantMetadataById = buildVariantMetadataMap(
-    rawDefinitions.adventure_defines ?? [],
-    localizedDefinitions.adventure_defines ?? [],
+    asRawArray(rawDefinitions.adventure_defines),
+    asRawArray(localizedDefinitions.adventure_defines),
     campaignMap,
     monsterCatalog,
   )
-  const graphicMap = buildGraphicMap(rawDefinitions.graphic_defines)
+  const graphicMap = buildGraphicMap(asRawArray(rawDefinitions.graphic_defines))
   const portraitSourcesByChampionId = new Map(
     collectChampionPortraitSources(rawDefinitions, masterApiUrl).map((source) => [source.championId, source]),
   )
-  const playableChampionDefinitions = (rawDefinitions.hero_defines ?? []).filter((definition) =>
+  const playableChampionDefinitions = asRawArray(rawDefinitions.hero_defines).filter((definition) =>
     isPlayableChampion(definition),
   )
   const patronEligibilityByChampionId = new Map(
     playableChampionDefinitions.map((definition) => [
-      String(definition.id),
+      toStr(definition.id),
       buildChampionPatronEligibility(definition, patrons, updatedAt),
     ]),
   )
-  const gameRules = (rawDefinitions.game_rule_defines ?? [])
+  const gameRules = asRawArray(rawDefinitions.game_rule_defines)
     .map((definition) => normalizeOfficialGameRuleDefinition(definition))
-    .filter(Boolean)
+    .filter((value): value is NonNullable<typeof value> => value !== null)
     .sort((left, right) => Number(left.id) - Number(right.id))
   const effectReference = {
-    stats: (rawDefinitions.stat_defines ?? [])
+    stats: asRawArray(rawDefinitions.stat_defines)
       .map((definition) => normalizeOfficialStatDefinition(definition))
-      .filter(Boolean)
+      .filter((value): value is NonNullable<typeof value> => value !== null)
       .sort((left, right) => Number(left.id) - Number(right.id)),
-    buffs: (rawDefinitions.buff_defines ?? [])
+    buffs: asRawArray(rawDefinitions.buff_defines)
       .map((definition) =>
         normalizeOfficialBuffDefinition(
           definition,
-          localizedBuffsById.get(String(definition.id)) ?? definition,
+          localizedBuffsById.get(toStr(definition.id)) ?? definition,
         ),
       )
-      .filter(Boolean)
+      .filter((value): value is NonNullable<typeof value> => value !== null)
       .sort((left, right) => Number(left.id) - Number(right.id)),
-    effectKeys: (rawDefinitions.effect_key_defines ?? [])
+    effectKeys: asRawArray(rawDefinitions.effect_key_defines)
       .map((definition) =>
         normalizeOfficialEffectKeyDefinition(
           definition,
-          localizedEffectKeysById.get(String(definition.id)) ?? definition,
+          localizedEffectKeysById.get(toStr(definition.id)) ?? definition,
         ),
       )
-      .filter(Boolean)
+      .filter((value): value is NonNullable<typeof value> => value !== null)
       .sort((left, right) => Number(left.id) - Number(right.id)),
   }
-  const patronPerkTiers = (rawDefinitions.patron_perk_tier_defines ?? [])
+  const patronPerkTiers = asRawArray(rawDefinitions.patron_perk_tier_defines)
     .map((definition) => normalizePatronPerkTierDefinition(definition))
-    .filter(Boolean)
+    .filter((value): value is NonNullable<typeof value> => value !== null)
     .sort(
       (left, right) =>
         Number(left.patronId) - Number(right.patronId) ||
         Number(left.tierId) - Number(right.tierId) ||
         Number(left.id) - Number(right.id),
     )
-  const patronPerks = (rawDefinitions.patron_perk_defines ?? [])
+  const patronPerks = asRawArray(rawDefinitions.patron_perk_defines)
     .map((definition) =>
       normalizePatronPerkDefinition(
         definition,
-        localizedPatronPerksById.get(String(definition.id)) ?? definition,
+        localizedPatronPerksById.get(toStr(definition.id)) ?? definition,
       ),
     )
-    .filter(Boolean)
+    .filter((value): value is NonNullable<typeof value> => value !== null)
     .sort(
       (left, right) =>
         Number(left.patronId) - Number(right.patronId) ||
         Number(left.tierId) - Number(right.tierId) ||
         Number(left.id) - Number(right.id),
     )
-  const trialsRoles = (rawDefinitions.trials_role_defines ?? [])
+  const trialsRoles = asRawArray(rawDefinitions.trials_role_defines)
     .map((definition) =>
       normalizeTrialsRoleDefinition(
         definition,
-        localizedTrialsRolesById.get(String(definition.id)) ?? definition,
-        adventureMap.get(String(definition.adventure_id ?? '')) ?? null,
+        localizedTrialsRolesById.get(toStr(definition.id)) ?? definition,
+        adventureMap.get(toStr(definition.adventure_id ?? '')) ?? null,
       ),
     )
-    .filter(Boolean)
+    .filter((value): value is NonNullable<typeof value> => value !== null)
     .sort((left, right) => Number(left.id) - Number(right.id))
-  const trialsDifficulties = (rawDefinitions.trials_difficulty_defines ?? [])
+  const trialsDifficulties = asRawArray(rawDefinitions.trials_difficulty_defines)
     .map((definition) =>
       normalizeTrialsDifficultyDefinition(
         definition,
-        localizedTrialsDifficultiesById.get(String(definition.id)) ?? definition,
+        localizedTrialsDifficultiesById.get(toStr(definition.id)) ?? definition,
       ),
     )
-    .filter(Boolean)
+    .filter((value): value is NonNullable<typeof value> => value !== null)
     .sort((left, right) => Number(left.id) - Number(right.id))
 
   const champions = playableChampionDefinitions
     .map((definition) =>
       normalizeChampion(
         definition,
-        localizedChampionsById.get(String(definition.id)),
+        localizedChampionsById.get(toStr(definition.id)),
         affiliationMap,
         currentVersion,
-        portraitSourcesByChampionId.get(String(definition.id)) ?? null,
-        patronEligibilityByChampionId.get(String(definition.id)),
-        manualOverrides.championOverrides?.[String(definition.id)] ?? {},
+        portraitSourcesByChampionId.get(toStr(definition.id)) ?? null,
+        patronEligibilityByChampionId.get(toStr(definition.id)),
+        manualOverrides.championOverrides?.[toStr(definition.id)] ?? {},
       ),
     )
     .sort(
@@ -355,12 +418,12 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
         Number(left.id) - Number(right.id),
     )
   const championDefinitionsById = new Map(
-    playableChampionDefinitions.map((definition) => [String(definition.id), definition]),
+    playableChampionDefinitions.map((definition) => [toStr(definition.id), definition]),
   )
   const championDetails = champions.map((champion) =>
     normalizeChampionDetail(
       champion,
-      championDefinitionsById.get(champion.id),
+      championDefinitionsById.get(champion.id) ?? {},
       localizedChampionsById.get(champion.id),
       updatedAt,
       attackDefinitionsById,
@@ -377,13 +440,13 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
       localizedLootById,
       legendaryEffectDefinitionsById,
       localizedLegendaryEffectDefinitionsById,
-      ),
-    )
+    ),
+  )
 
-  const adventures = (rawDefinitions.adventure_defines ?? [])
+  const adventures = asRawArray(rawDefinitions.adventure_defines)
     .filter((definition) => !looksLikeVariant(definition))
     .map((definition) => {
-      const normalizedAdventure = adventureMap.get(String(definition.id))
+      const normalizedAdventure = adventureMap.get(toStr(definition.id))
       const sceneKey =
         normalizedAdventure?.locationId
           ? `${normalizedAdventure.campaign.id}:${normalizedAdventure.locationId}`
@@ -391,39 +454,40 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
 
       return normalizeAdventure(
         definition,
-        localizedVariantsById.get(String(definition.id)),
-        normalizedAdventure,
+        localizedVariantsById.get(toStr(definition.id)),
+        normalizedAdventure!,
         sceneKey ? sceneMap.get(sceneKey) ?? null : null,
       )
     })
     .sort((left, right) => Number(left.id) - Number(right.id))
 
-  const autoVariants = (rawDefinitions.adventure_defines ?? [])
+  const autoVariants = asRawArray(rawDefinitions.adventure_defines)
     .filter((definition) => looksLikeVariant(definition))
     .map((definition) =>
       normalizeVariant(
         definition,
-        localizedVariantsById.get(String(definition.id)),
+        localizedVariantsById.get(toStr(definition.id)),
         campaignMap,
         variantMetadataById,
       ),
     )
 
+  // manualOverrides.variants 来自 manual-overrides.json，运行时形状与 NormalizedVariant 对齐（手工覆写层）。
   const variants = mergeVariants(autoVariants, manualOverrides.variants ?? [])
   const officialFormations = extractOfficialFormations(rawDefinitions, localizedDefinitions)
   const formations = mergeFormations(
     officialFormations,
-    normalizeManualFormations(manualOverrides.formations ?? []),
+    normalizeManualFormations([...(manualOverrides.formations ?? [])]),
   )
   const enums = normalizeEnums(champions, affiliationMap, campaignMap, patrons, adventures, variants)
   const championVisuals = playableChampionDefinitions
     .map((definition) => {
-      const championId = String(definition.id)
+      const championId = toStr(definition.id)
       const skins = (skinsByHeroId.get(championId) ?? [])
         .map((skinDefinition) =>
           normalizeChampionVisualSkin(
             skinDefinition,
-            localizedSkinsById.get(String(skinDefinition.id)),
+            localizedSkinsById.get(toStr(skinDefinition.id)),
             graphicMap,
             masterApiUrl,
           ),
@@ -539,9 +603,9 @@ export async function normalizeDefinitionsSnapshot(options = {}) {
   }
 }
 
-function printUsage() {
+function printUsage(): void {
   console.log(`用法：
-  node scripts/normalize-idle-champions-definitions.mjs --input <raw-json>
+  node scripts/normalize-idle-champions-definitions.ts --input <raw-json>
 
 可选参数：
   --input <file>             官方原文 definitions 快照 JSON
@@ -555,7 +619,7 @@ function printUsage() {
 `)
 }
 
-async function main() {
+async function main(): Promise<void> {
   const { values } = parseArgs({
     options: {
       input: { type: 'string' },
@@ -585,11 +649,9 @@ async function main() {
   )
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
-  main().catch((error) => {
-    console.error(`归一化 definitions 失败：${error.message}`)
+if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+  main().catch((error: unknown) => {
+    console.error(`归一化 definitions 失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1
   })
 }
-
-

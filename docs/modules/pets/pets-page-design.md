@@ -58,4 +58,4 @@
 - 类型：`src/domain/types/champions.ts`（Pet/PetAcquisition/PetAcquisitionKind）、`src/domain/types/assets.ts`（PetImage/PetAnimation）
 - 样式：`src/styles/global.css`
 - 数据脚本：`scripts/sync-idle-champions-pets.mjs`
-- 构建入口：`scripts/build-idle-champions-data.mjs`
+- 构建入口：`scripts/build-idle-champions-data.ts`

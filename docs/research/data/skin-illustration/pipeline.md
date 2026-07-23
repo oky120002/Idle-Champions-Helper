@@ -7,7 +7,7 @@
 
 | 步骤 | 文件 / 产物 | 作用 |
 | --- | --- | --- |
-| 1 | `scripts/build-idle-champions-data.mjs` | 统一调度 definitions、头像、动画、静态立绘等公共数据同步 |
+| 1 | `scripts/build-idle-champions-data.ts` | 统一调度 definitions、头像、动画、静态立绘等公共数据同步 |
 | 2 | `scripts/sync-idle-champions-animations.mjs` | 基于 `champion-visuals.json` 发布 hero-base / skin 的本地 `.bin` 与摘要清单 |
 | 3 | `public/data/v1/champion-animations/heroes/*.bin`、`public/data/v1/champion-animations/skins/*.bin` | 保存站内动画原始包，供默认帧渲染与前端 canvas 播放复用 |
 | 4 | `public/data/v1/champion-animations.json` | 保存轻量 manifest：默认 sequence / frame、bounds、bytes、fps、sourceVersion |

@@ -23,7 +23,7 @@
 ## 关键依据
 
 - `public/data/v1/champions.json`
-- `scripts/fetch-idle-champions-definitions.mjs`
-- `scripts/normalize-idle-champions-definitions.mjs`
+- `scripts/fetch-idle-champions-definitions.ts`
+- `scripts/normalize-idle-champions-definitions.ts`
 - 本次抓取的 source / localized definitions 快照
 - 用户提供的参考链接

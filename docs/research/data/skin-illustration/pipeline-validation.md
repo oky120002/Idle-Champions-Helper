@@ -33,7 +33,7 @@ npm run data:official
 ### 局部重建动画与关联静态图
 
 ```bash
-node scripts/build-idle-champions-data.mjs   --animationChampionIds 124   --animationSkinIds 332,416
+node scripts/build-idle-champions-data.ts   --animationChampionIds 124   --animationSkinIds 332,416
 ```
 
 ## 当前剩余风险

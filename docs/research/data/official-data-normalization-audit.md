@@ -14,9 +14,9 @@
 重新拉实时官方数据现场过一次 normalize（英文 `language_id=1` + 中文 `language_id=7`），确认当前脚本与官方接口顶层格式仍匹配：
 
 ```bash
-node scripts/fetch-idle-champions-definitions.mjs --outDir tmp/idle-champions-audit-live --languageId 1 --fileLabel audit-source
-node scripts/fetch-idle-champions-definitions.mjs --outDir tmp/idle-champions-audit-live --languageId 7 --fileLabel audit-zh
-node scripts/normalize-idle-champions-definitions.mjs \
+node scripts/fetch-idle-champions-definitions.ts --outDir tmp/idle-champions-audit-live --languageId 1 --fileLabel audit-source
+node scripts/fetch-idle-champions-definitions.ts --outDir tmp/idle-champions-audit-live --languageId 7 --fileLabel audit-zh
+node scripts/normalize-idle-champions-definitions.ts \
   --input tmp/idle-champions-audit-live/definitions-...-audit-source.json \
   --localizedInput tmp/idle-champions-audit-live/definitions-...-audit-zh.json \
   --outputDir tmp/idle-champions-audit-normalized \
