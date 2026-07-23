@@ -77,4 +77,20 @@ repair: rebuild
     - 证据：elementFromPoint(454,31)=null（视口外点）；topbar offsetW=506 > header clientW=358；global-search 无 @media 规则
     - 修复方向：决定 GlobalSearchBox 移动端形态（隐藏/icon-only/缩窄 max-width），并给 .site-header__topbar 加 min-width:0 让 grid item 可收缩；需全断点(360/390/520/720/961/1080)视觉验证
 
+- normalizeEffectSignal 单函数约440行需内部分解 <!-- auto-todo:id=atd_031cc6d761 -->
+  - 记录时间: `2026-07-23T10:25:30+08:00`
+  - 类型: optimization
+  - 位置: `scripts/data/effect-helpers.mjs:601`
+  - 备注: effect-helpers.mjs:601 的 normalizeEffectSignal 是 effect 语义分派主体，单函数约440行（601-1042），属真实代码异味。
+    - 文件本身 1135 行高内聚（全为 effect 解析），文件级拆分不划算；但该单函数内部分解为按 effect 类型分派的子函数可提升可读性。
+    - 处置：下次触碰时拆，需充分理解 effect 语义，不强制现在拆。
+
+- scripts *.test.mjs 仍各自复制 readJson/writeJson <!-- auto-todo:id=atd_3c34cb36b0 -->
+  - 记录时间: `2026-07-23T10:26:07+08:00`
+  - 类型: optimization
+  - 位置: `scripts/normalize-idle-champions-definitions.test.mjs:8`
+  - 备注: 约9个 .test.mjs 测试文件各自定义本地 readJson/writeJson（Phase 1 去重时未覆盖测试文件）。
+    - 可改用 scripts/data/io-utils.mjs 统一，消除测试侧重复。
+    - 处置：测试隔离、低优先，下次批量触碰测试时顺带处理。
+
 <!-- auto-todo:end -->
