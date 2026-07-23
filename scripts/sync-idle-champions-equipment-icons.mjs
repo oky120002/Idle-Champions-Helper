@@ -13,7 +13,7 @@ import {
   buildGraphicMap,
   resolveGraphicAssetById,
 } from './data/champion-asset-helpers.mjs'
-import { decodeRemoteGraphicBuffer, readPngDimensions } from './data/mobile-asset-codec.mjs'
+import { decodeGraphicBufferWithFallback, readPngDimensions } from './data/mobile-asset-codec.mjs'
 import {
   canReuseGeneratedImage,
   fileExists,
@@ -34,29 +34,6 @@ function sortByGraphicId(left, right) {
 
 function buildChampionEquipmentIconPath(currentVersion, graphicId) {
   return `${currentVersion}/${EQUIPMENT_ICONS_DIR_NAME}/${graphicId}.png`
-}
-
-function decodeEquipmentIconBuffer(asset, rawBuffer) {
-  const deliveryCandidates = Array.from(
-    new Set([
-      asset.delivery,
-      'wrapped-png',
-      'zlib-png',
-    ]),
-  )
-
-  for (const delivery of deliveryCandidates) {
-    try {
-      return {
-        delivery,
-        buffer: decodeRemoteGraphicBuffer({ ...asset, delivery }, rawBuffer),
-      }
-    } catch {
-      // Some loot graphics are not labeled consistently; fall through to the next decoder.
-    }
-  }
-
-  throw new Error(`无法解析 graphic ${asset.graphicId}`)
 }
 
 function collectGraphicId(ids, graphicId) {
@@ -133,7 +110,7 @@ async function downloadEquipmentIcon(graphicId, graphicMap, options) {
 
   try {
     const rawBuffer = Buffer.from(await response.arrayBuffer())
-    const decoded = decodeEquipmentIconBuffer(asset, rawBuffer)
+    const decoded = decodeGraphicBufferWithFallback(asset, rawBuffer)
     const cropped = cropOpaqueBounds(decoded.buffer)
     const dimensions = readPngDimensions(cropped.pngBuffer)
     const outputFile = path.join(options.outputDir, EQUIPMENT_ICONS_DIR_NAME, `${graphicId}.png`)

@@ -13,7 +13,7 @@ import {
   buildGraphicMap,
   resolveGraphicAssetById,
 } from './data/champion-asset-helpers.mjs'
-import { decodeRemoteGraphicBuffer, readPngDimensions } from './data/mobile-asset-codec.mjs'
+import { decodeGraphicBufferWithFallback, readPngDimensions } from './data/mobile-asset-codec.mjs'
 import {
   canReuseGeneratedImage,
   fileExists,
@@ -34,29 +34,6 @@ function buildSpecializationGraphicPath(currentVersion, graphicId) {
 
 function sortByGraphicId(left, right) {
   return Number(left.graphicId) - Number(right.graphicId) || left.graphicId.localeCompare(right.graphicId)
-}
-
-function decodeSpecializationGraphicBuffer(asset, rawBuffer) {
-  const deliveryCandidates = Array.from(
-    new Set([
-      asset.delivery,
-      'wrapped-png',
-      'zlib-png',
-    ]),
-  )
-
-  for (const delivery of deliveryCandidates) {
-    try {
-      return {
-        delivery,
-        buffer: decodeRemoteGraphicBuffer({ ...asset, delivery }, rawBuffer),
-      }
-    } catch {
-      // Try the next known transport. Some UI graphics are not tagged consistently in uses.
-    }
-  }
-
-  throw new Error(`无法解析 graphic ${asset.graphicId}`)
 }
 
 function collectGraphicId(ids, graphicId) {
@@ -135,7 +112,7 @@ async function downloadSpecializationGraphic(graphicId, graphicMap, options) {
 
   try {
     const rawBuffer = Buffer.from(await response.arrayBuffer())
-    const decoded = decodeSpecializationGraphicBuffer(asset, rawBuffer)
+    const decoded = decodeGraphicBufferWithFallback(asset, rawBuffer)
     const cropped = cropOpaqueBounds(decoded.buffer)
     const dimensions = readPngDimensions(cropped.pngBuffer)
     const outputFile = path.join(options.outputDir, SPECIALIZATION_GRAPHICS_DIR_NAME, `${graphicId}.png`)

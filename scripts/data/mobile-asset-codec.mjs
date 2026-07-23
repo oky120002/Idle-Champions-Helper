@@ -66,6 +66,26 @@ export function decodeRemoteGraphicBuffer(asset, rawBuffer) {
   throw new Error(`暂不支持解析 ${asset.delivery} 资源`)
 }
 
+const GRAPHIC_DELIVERY_FALLBACKS = ['wrapped-png', 'zlib-png']
+
+/**
+ * 按标注 delivery 优先、再回退已知传输格式尝试解码；返回命中的 delivery 与 buffer。
+ * 部分装备/专精图上游标注与实际格式不一致，需要逐个回退。
+ */
+export function decodeGraphicBufferWithFallback(asset, rawBuffer) {
+  const deliveryCandidates = Array.from(new Set([asset.delivery, ...GRAPHIC_DELIVERY_FALLBACKS]))
+
+  for (const delivery of deliveryCandidates) {
+    try {
+      return { delivery, buffer: decodeRemoteGraphicBuffer({ ...asset, delivery }, rawBuffer) }
+    } catch {
+      // 标注不一致时回退到下一种已知传输格式
+    }
+  }
+
+  throw new Error(`无法解析 graphic ${asset.graphicId}`)
+}
+
 export function readPngDimensions(buffer) {
   if (buffer.length < 24 || findPngSignatureOffset(buffer) !== 0) {
     throw new Error('输入数据不是可识别的 PNG')
