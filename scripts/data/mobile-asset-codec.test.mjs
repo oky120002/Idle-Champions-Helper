@@ -7,6 +7,8 @@ import {
   decodeGraphicBufferWithFallback,
   extractWrappedPngBuffer,
   findPngSignatureOffset,
+  getPngDimensions,
+  readPngDimensions,
 } from './mobile-asset-codec.mjs'
 
 function makePngBuffer() {
@@ -50,6 +52,20 @@ test('decodeRemoteGraphicBuffer 处理 wrapped-png 与 zlib-png', () => {
 
 test('decodeRemoteGraphicBuffer 不支持的 delivery 抛错', () => {
   assert.throws(() => decodeRemoteGraphicBuffer({ delivery: 'unknown' }, Buffer.alloc(4)), /暂不支持解析/)
+})
+
+test('readPngDimensions 读取偏移 0 的 PNG 尺寸，非 PNG 抛错', () => {
+  const png = makePngBuffer()
+  assert.deepEqual(readPngDimensions(png), { width: 2, height: 2 })
+  assert.throws(() => readPngDimensions(Buffer.alloc(24)), /不是可识别的 PNG/)
+})
+
+test('getPngDimensions 按偏移读取 wrapped PNG 尺寸，越界返回 null', () => {
+  const png = makePngBuffer()
+  const wrapped = wrapWithPrefix(png, 6)
+  assert.deepEqual(getPngDimensions(wrapped, 6), { width: 2, height: 2 })
+  assert.equal(getPngDimensions(wrapped, -1), null)
+  assert.equal(getPngDimensions(wrapped, wrapped.length - 5), null)
 })
 
 test('decodeGraphicBufferWithFallback 标注正确时直接命中', () => {

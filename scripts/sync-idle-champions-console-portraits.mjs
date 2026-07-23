@@ -5,6 +5,7 @@ import {
   runWithConcurrency,
 } from './data/io-utils.mjs'
 import { findOpaqueBounds } from './data/png-image-helpers.mjs'
+import { findPngSignatureOffset, getPngDimensions, trimPngToIend } from './data/mobile-asset-codec.mjs'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
@@ -29,58 +30,6 @@ import {
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CONCURRENCY = 8
 const CONSOLE_PORTRAIT_MANIFEST_FILE_NAME = 'champion-console-portraits.manifest.json'
-
-function findPngSignatureOffset(buffer) {
-  for (let index = 0; index <= buffer.length - 8; index += 1) {
-    if (
-      buffer[index] === 0x89 &&
-      buffer[index + 1] === 0x50 &&
-      buffer[index + 2] === 0x4e &&
-      buffer[index + 3] === 0x47 &&
-      buffer[index + 4] === 0x0d &&
-      buffer[index + 5] === 0x0a &&
-      buffer[index + 6] === 0x1a &&
-      buffer[index + 7] === 0x0a
-    ) {
-      return index
-    }
-  }
-
-  return -1
-}
-
-function getPngDimensions(buffer, offset) {
-  if (offset < 0 || offset + 24 > buffer.length) {
-    return null
-  }
-
-  return {
-    width: buffer.readUInt32BE(offset + 16),
-    height: buffer.readUInt32BE(offset + 20),
-  }
-}
-
-function trimPngToIend(buffer) {
-  let cursor = 8
-
-  while (cursor + 12 <= buffer.length) {
-    const chunkLength = buffer.readUInt32BE(cursor)
-    const chunkType = buffer.subarray(cursor + 4, cursor + 8).toString('ascii')
-    const nextCursor = cursor + 12 + chunkLength
-
-    if (nextCursor > buffer.length) {
-      return buffer
-    }
-
-    cursor = nextCursor
-
-    if (chunkType === 'IEND') {
-      return buffer.subarray(0, cursor)
-    }
-  }
-
-  return buffer
-}
 
 function trimTransparentArea(pngBuffer) {
   const normalizedPngBuffer = trimPngToIend(pngBuffer)

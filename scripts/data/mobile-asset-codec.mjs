@@ -96,3 +96,18 @@ export function readPngDimensions(buffer) {
     height: buffer.readUInt32BE(20),
   }
 }
+
+/**
+ * 读取 buffer 指定偏移处的 PNG 尺寸（用于 wrapped 缓冲：先 findPngSignatureOffset 再读）。
+ * 与 readPngDimensions 的区别：不要求 PNG 在偏移 0、越界返回 null 而非抛错。
+ */
+export function getPngDimensions(buffer, offset) {
+  if (offset < 0 || offset + 24 > buffer.length) {
+    return null
+  }
+
+  return {
+    width: buffer.readUInt32BE(offset + 16),
+    height: buffer.readUInt32BE(offset + 20),
+  }
+}
