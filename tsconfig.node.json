@@ -23,9 +23,11 @@
   },
   "include": [
     "vite.config.ts",
-    "vite.config.d.ts",
     "vitest.config.ts",
     "playwright.config.ts",
-    "scripts/private-user-data/private-user-profile-payloads.d.ts"
+    "scripts/**/*.ts"
+  ],
+  "exclude": [
+    "scripts/**/*.test.ts"
   ]
 }

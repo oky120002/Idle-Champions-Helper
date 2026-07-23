@@ -6,7 +6,7 @@ import react from '@vitejs/plugin-react'
 import {
   DEFAULT_PRIVATE_PAYLOAD_FILENAME,
   fetchAndStorePrivateUserProfilePayloads,
-} from './scripts/private-user-data/privateUserProfilePayloadHelpers'
+} from './scripts/private-user-data/private-user-profile-payloads.ts'
 
 const repoName = 'Idle-Champions-Helper'
 const localDevPrivateSnapshotEndpoint = '/__dev/private-user-data/user-profile-payloads'
