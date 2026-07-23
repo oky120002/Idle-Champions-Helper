@@ -2,7 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import os from 'node:os'
 import path from 'node:path'
-import { mkdtemp, readFile } from 'node:fs/promises'
+import { mkdtemp, readFile, writeFile } from 'node:fs/promises'
 import { normalizeDefinitionsSnapshot, normalizeEffectReference } from './normalize-idle-champions-definitions.mjs'
 
 async function readJson(filePath) {
@@ -562,4 +562,33 @@ test('normalizeEffectReference 在归一化层提取 CNE effect 对象串的 eff
   // 空/非串
   assert.equal(normalizeEffectReference(null), null)
   assert.equal(normalizeEffectReference('   '), null)
+})
+
+test('normalizeDefinitionsSnapshot 在 manualOverrides 文件损坏时抛错而非静默丢失', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'idle-champions-normalize-'))
+  const malformedOverrides = path.join(tempDir, 'bad-overrides.json')
+  await writeFile(malformedOverrides, '{ not valid json', 'utf8')
+
+  await assert.rejects(
+    normalizeDefinitionsSnapshot({
+      input: path.resolve('scripts/fixtures/mock-definitions.json'),
+      localizedInput: path.resolve('scripts/fixtures/mock-definitions-zh.json'),
+      outputDir: path.join(tempDir, 'out'),
+      versionFile: path.join(tempDir, 'version.json'),
+      manualOverrides: malformedOverrides,
+    }),
+  )
+})
+
+test('normalizeDefinitionsSnapshot 在 manualOverrides 缺失时回退空默认', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'idle-champions-normalize-'))
+
+  // 文件不存在应回退空默认，不抛错
+  await normalizeDefinitionsSnapshot({
+    input: path.resolve('scripts/fixtures/mock-definitions.json'),
+    localizedInput: path.resolve('scripts/fixtures/mock-definitions-zh.json'),
+    outputDir: path.join(tempDir, 'out'),
+    versionFile: path.join(tempDir, 'version.json'),
+    manualOverrides: path.join(tempDir, 'does-not-exist.json'),
+  })
 })

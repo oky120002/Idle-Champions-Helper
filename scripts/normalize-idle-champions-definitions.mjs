@@ -1,7 +1,8 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { mkdir } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
+import { readJson, readJsonIfExists, writeJson } from './data/io-utils.mjs'
 import {
   DEFAULT_MASTER_API_URL,
   buildChampionPortraitPath,
@@ -183,15 +184,6 @@ function toLocalizedOverrideList(value) {
 
 function getDefinitionName(definition = {}) {
   return definition.name ?? definition.label ?? definition.campaign_name
-}
-
-async function readJson(filePath) {
-  return JSON.parse(await readFile(filePath, 'utf8'))
-}
-
-async function writeJson(filePath, value) {
-  await mkdir(path.dirname(filePath), { recursive: true })
-  await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
 }
 
 function uniqueStrings(values) {
@@ -1868,15 +1860,9 @@ function normalizeEnums(champions, affiliationMap, campaignMap, patrons, adventu
 }
 
 async function readManualOverrides(filePath) {
-  try {
-    return await readJson(filePath)
-  } catch {
-    return {
-      championOverrides: {},
-      variants: [],
-      formations: [],
-    }
-  }
+  // 文件可选：缺失（ENOENT）返回空默认；但 JSON 损坏必须抛错，避免静默丢失手工 override。
+  const overrides = await readJsonIfExists(filePath)
+  return overrides ?? { championOverrides: {}, variants: [], formations: [] }
 }
 
 export async function normalizeDefinitionsSnapshot(options = {}) {
