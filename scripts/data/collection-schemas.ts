@@ -107,7 +107,7 @@ export const patronSchema = z
   })
   .passthrough()
 
-const collection = (itemSchema) =>
+const collection = (itemSchema: z.ZodTypeAny) =>
   z.object({ items: z.array(itemSchema), updatedAt: z.string() }).passthrough()
 
 export const championsCollectionSchema = collection(championSchema)

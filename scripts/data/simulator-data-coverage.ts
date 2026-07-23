@@ -3,9 +3,22 @@
  * by the simulator and which need further normalization work.
  */
 
-/** @typedef {{key: string, status: 'covered' | 'uncovered', usefulness: string, currentOutput: string, nextAction: string, reviewNeeded?: boolean}} CoverageEntry */
+interface CoverageEntry {
+  key: string
+  status: 'covered' | 'uncovered'
+  usefulness: string
+  currentOutput: string
+  nextAction: string
+  reviewNeeded?: boolean
+}
 
-const KNOWN_USEFUL_KEYS = {
+interface KnownUsefulKey {
+  usefulness: string
+  currentOutput: string
+  nextAction: string
+}
+
+const KNOWN_USEFUL_KEYS: Record<string, KnownUsefulKey> = {
   hero_id: { usefulness: 'high', currentOutput: 'hero id string', nextAction: 'used in owned hero projection' },
   level: { usefulness: 'high', currentOutput: 'hero level number', nextAction: 'used in level baseline' },
   upgrades: { usefulness: 'high', currentOutput: 'upgrade array', nextAction: 'extract specialization levels' },
@@ -18,13 +31,12 @@ const KNOWN_USEFUL_KEYS = {
 
 /**
  * Generate a coverage report for simulator data keys.
- *
- * @param {string[]} definitionKeys - All keys found in the definition data.
- * @param {Set<string>} coveredKeys - Keys that the simulator already uses.
- * @returns {CoverageEntry[]}
  */
-export function generateCoverageReport(definitionKeys, coveredKeys) {
-  return definitionKeys.map((key) => {
+export function generateCoverageReport(
+  definitionKeys: string[],
+  coveredKeys: Set<string>,
+): CoverageEntry[] {
+  return definitionKeys.map((key): CoverageEntry => {
     const known = KNOWN_USEFUL_KEYS[key]
 
     if (coveredKeys.has(key)) {

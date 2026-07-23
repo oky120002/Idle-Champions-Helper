@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 
-import { championDetailsSchema } from './champion-details-schema.mjs'
+import { championDetailsSchema } from './champion-details-schema.ts'
 
 const validDetail = {
   attacks: { base: { cooldown: 4, damageTypes: ['melee'] } },

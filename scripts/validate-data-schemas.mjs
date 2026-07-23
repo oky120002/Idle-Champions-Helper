@@ -2,13 +2,13 @@ import { readdir } from 'node:fs/promises'
 import path from 'node:path'
 
 import { readJson } from './data/io-utils.ts'
-import { championDetailsSchema } from './data/champion-details-schema.mjs'
+import { championDetailsSchema } from './data/champion-details-schema.ts'
 import {
   adventuresCollectionSchema,
   championsCollectionSchema,
   patronsCollectionSchema,
   variantsCollectionSchema,
-} from './data/collection-schemas.mjs'
+} from './data/collection-schemas.ts'
 
 const DEFAULT_DATA_DIR = 'public/data/v1'
 

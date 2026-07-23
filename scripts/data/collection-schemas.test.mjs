@@ -6,7 +6,7 @@ import {
   championsCollectionSchema,
   patronsCollectionSchema,
   variantsCollectionSchema,
-} from './collection-schemas.mjs'
+} from './collection-schemas.ts'
 
 const updated = '2026-07-20'
 

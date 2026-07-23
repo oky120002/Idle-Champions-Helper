@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { generateCoverageReport } from './simulator-data-coverage.mjs'
+import { generateCoverageReport } from './simulator-data-coverage.ts'
 
 describe('simulator data coverage report', () => {
   it('把已知有用 key 标记为 covered 或 uncovered', () => {
