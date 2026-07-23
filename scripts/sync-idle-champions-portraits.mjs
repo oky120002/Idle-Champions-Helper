@@ -15,7 +15,7 @@ import {
   collectChampionPortraitSources,
   encodeGraphicPath,
   ensureTrailingSlash,
-} from './data/champion-portrait-helpers.mjs'
+} from './data/champion-asset-helpers.mjs'
 import {
   canReuseGeneratedImage,
   fileExists,

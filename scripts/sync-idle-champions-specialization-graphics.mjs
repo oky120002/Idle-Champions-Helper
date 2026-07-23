@@ -12,7 +12,7 @@ import {
   DEFAULT_MASTER_API_URL,
   buildGraphicMap,
   resolveGraphicAssetById,
-} from './data/champion-portrait-helpers.mjs'
+} from './data/champion-asset-helpers.mjs'
 import { decodeRemoteGraphicBuffer, readPngDimensions } from './data/mobile-asset-codec.mjs'
 import {
   canReuseGeneratedImage,

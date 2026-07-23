@@ -9,7 +9,7 @@ import {
   collectChampionPortraitSources,
   isPlayableChampion,
   resolveGraphicAssetById,
-} from './data/champion-portrait-helpers.mjs'
+} from './data/champion-asset-helpers.mjs'
 import { extractOfficialFormations, looksLikeVariant } from './data/formation-layout-helpers.mjs'
 import {
   buildChampionPatronEligibility,
