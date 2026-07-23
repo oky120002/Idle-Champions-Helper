@@ -22,6 +22,8 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
     selectedAcquisitions: model.selectedAcquisitions,
     selectedMechanics: model.selectedMechanics,
   })
+  const roleKey = champion.roles.join('|')
+  const attributeKeys = attributePills.map((pill) => pill.key).join('|')
   const heroIllustration = heroIllustrationByChampionId.get(champion.id) ?? null
   const seatLabel = t({ zh: `${champion.seat}位`, en: `Seat ${champion.seat}` })
   const affiliationText =
@@ -104,7 +106,7 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
 
       resizeObserver.disconnect()
     }
-  }, [champion.id, champion.roles.join('|'), locale])
+  }, [champion.id, roleKey, locale])
 
   useLayoutEffect(() => {
     const element = attributeTrailRef.current
@@ -184,7 +186,7 @@ export function ChampionResultCard({ champion, model }: ChampionResultCardProps)
 
       resizeObserver.disconnect()
     }
-  }, [attributePills.map((pill) => pill.key).join('|'), champion.id, locale])
+  }, [attributeKeys, champion.id, locale])
 
   return (
     <article

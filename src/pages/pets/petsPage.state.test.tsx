@@ -1,4 +1,3 @@
-/* eslint-disable max-lines -- Fixture-heavy state coverage stays in one file so the URL/share/randomize scenarios remain readable together. */
 import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createElement, Fragment } from 'react'

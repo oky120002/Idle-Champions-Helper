@@ -80,6 +80,22 @@ export default defineConfig([
     },
   },
   {
+    // 批处理脚本、测试、夹具天然较长，行数限制只会逼出无意义拆分；产品源码仍受上面 300/250 约束。
+    files: [
+      'scripts/**/*.{ts,tsx}',
+      '**/*.test.{ts,tsx}',
+      '**/*.spec.{ts,tsx}',
+      '**/*TestHarness.{ts,tsx}',
+      '**/*TestData.{ts,tsx}',
+      '**/*TestUtils.{ts,tsx}',
+      '**/*Fixture.{ts,tsx}',
+      '**/*Fixtures.{ts,tsx}',
+    ],
+    rules: {
+      'max-lines': 'off',
+    },
+  },
+  {
     files: ['vite.config.ts', 'vitest.config.ts', 'playwright.config.ts'],
     languageOptions: {
       globals: globals.node,

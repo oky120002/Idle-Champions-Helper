@@ -2,46 +2,21 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useI18n } from '../../app/i18n'
 import { getPrimaryLocalizedText } from '../../domain/localizedText'
 import type { Variant } from '../../domain/types'
+import { PlannerScenarioDetail } from './PlannerScenarioDetail'
+import { PlannerScenarioListItem } from './PlannerScenarioListItem'
+import {
+  DEFAULT_VISIBLE_RESULTS,
+  type PlannerScenarioRecord,
+  buildCampaignOptions,
+  getQueryTokens,
+  getScenarioSortWeight,
+  normalizeSearchText,
+} from './plannerScenarioModel'
 
 interface PlannerScenarioSelectionProps {
   variants: Variant[]
   selectedId?: string | null
   onSelectedIdChange?: (variantId: string | null) => void
-}
-
-interface PlannerScenarioRecord {
-  id: string
-  name: string
-  campaignId: string
-  campaign: string
-  adventure: string
-  scene: string
-  objectiveArea: number | null
-  restrictions: string[]
-  rewards: string[]
-  mechanics: string[]
-  enemyCount: number
-  searchText: string
-}
-
-const DEFAULT_VISIBLE_RESULTS = 12
-
-function normalizeSearchText(value: string): string {
-  return value
-    .normalize('NFKC')
-    .toLowerCase()
-    .replace(/[^\p{L}\p{N}]+/gu, ' ')
-    .trim()
-}
-
-function getQueryTokens(value: string): string[] {
-  return normalizeSearchText(value)
-    .split(/\s+/u)
-    .filter(Boolean)
-}
-
-function getScenarioSortWeight(record: PlannerScenarioRecord, selectedId: string | null): number {
-  return record.id === selectedId ? -1 : 0
 }
 
 export function PlannerScenarioSelection({
@@ -101,31 +76,7 @@ export function PlannerScenarioSelection({
     [locale, variants],
   )
   const queryTokens = useMemo(() => getQueryTokens(search), [search])
-  const campaignOptions = useMemo(() => {
-    const counts = new Map<string, { id: string, label: string, count: number }>()
-
-    for (const record of records) {
-      const existing = counts.get(record.campaignId)
-      if (existing) {
-        existing.count += 1
-      } else {
-        counts.set(record.campaignId, {
-          id: record.campaignId,
-          label: record.campaign,
-          count: 1,
-        })
-      }
-    }
-
-    return [
-      {
-        id: 'all' as const,
-        label: t({ zh: '全部战役', en: 'All campaigns' }),
-        count: records.length,
-      },
-      ...[...counts.values()].sort((left, right) => left.label.localeCompare(right.label, locale)),
-    ]
-  }, [locale, records, t])
+  const campaignOptions = useMemo(() => buildCampaignOptions(records, locale, t), [locale, records, t])
   const filteredRecords = useMemo(() => {
     const base = records.filter((record) => (
       (activeCampaignId === 'all' || record.campaignId === activeCampaignId)
@@ -273,40 +224,14 @@ export function PlannerScenarioSelection({
             role="listbox"
             aria-label={t({ zh: '场景列表', en: 'Scenario list' })}
           >
-            {visibleRecords.map((record) => {
-              const isSelected = record.id === selectedId
-
-              return (
-                <li key={record.id} role="option" aria-selected={isSelected}>
-                  <button
-                    type="button"
-                    className={`planner-scenario-selection__item${isSelected ? ' planner-scenario-selection__item--selected' : ''}`}
-                    onClick={() => updateSelectedId(record.id)}
-                  >
-                    <span className="planner-scenario-selection__item-topline">
-                      <span className="planner-scenario-selection__item-name">{record.name}</span>
-                      <span className="planner-scenario-selection__item-area">
-                        {record.objectiveArea !== null
-                          ? t({
-                              zh: `${record.objectiveArea} 区`,
-                              en: `Area ${record.objectiveArea}`,
-                            })
-                          : t({ zh: '自由游戏', en: 'Free play' })}
-                      </span>
-                    </span>
-                    <span className="planner-scenario-selection__item-meta">
-                      <span>{record.campaign}</span>
-                      {record.adventure ? <span>{record.adventure}</span> : null}
-                      {record.scene ? <span>{record.scene}</span> : null}
-                    </span>
-                    <span className="planner-scenario-selection__item-tags">
-                      <span>{t({ zh: `${record.restrictions.length} 条限制`, en: `${record.restrictions.length} restrictions` })}</span>
-                      <span>{t({ zh: `${record.enemyCount} 敌人`, en: `${record.enemyCount} enemies` })}</span>
-                    </span>
-                  </button>
-                </li>
-              )
-            })}
+            {visibleRecords.map((record) => (
+              <PlannerScenarioListItem
+                key={record.id}
+                record={record}
+                isSelected={record.id === selectedId}
+                onSelect={updateSelectedId}
+              />
+            ))}
           </ul>
 
           {filteredRecords.length === 0 ? (
@@ -337,86 +262,7 @@ export function PlannerScenarioSelection({
           ) : null}
         </div>
 
-        <aside
-          className="planner-scenario-selection__detail"
-          aria-label={t({ zh: '选中场景详情', en: 'Selected scenario details' })}
-        >
-          {selectedRecord ? (
-            <>
-              <div className="planner-scenario-selection__detail-hero">
-                <p className="planner-scenario-selection__detail-kicker">{selectedRecord.campaign}</p>
-                <h4 className="planner-scenario-selection__detail-title">{selectedRecord.name}</h4>
-                <p className="planner-scenario-selection__detail-subtitle">
-                  {selectedRecord.adventure || t({ zh: '未绑定具体冒险名', en: 'No mapped adventure name' })}
-                </p>
-              </div>
-
-              <dl className="planner-scenario-selection__detail-grid">
-                <div>
-                  <dt>{t({ zh: '目标区', en: 'Objective' })}</dt>
-                  <dd>
-                    {selectedRecord.objectiveArea !== null
-                      ? t({ zh: `${selectedRecord.objectiveArea} 区完成`, en: `Finish at area ${selectedRecord.objectiveArea}` })
-                      : t({ zh: '自由游戏', en: 'Free play' })}
-                  </dd>
-                </div>
-                <div>
-                  <dt>{t({ zh: '场景', en: 'Scene' })}</dt>
-                  <dd>{selectedRecord.scene || t({ zh: '未记录', en: 'Not recorded' })}</dd>
-                </div>
-                <div>
-                  <dt>{t({ zh: '限制数', en: 'Restrictions' })}</dt>
-                  <dd>{selectedRecord.restrictions.length}</dd>
-                </div>
-                <div>
-                  <dt>{t({ zh: '敌人数', en: 'Enemies' })}</dt>
-                  <dd>{selectedRecord.enemyCount}</dd>
-                </div>
-              </dl>
-
-              <section className="planner-scenario-selection__detail-group">
-                <h5>{t({ zh: '限制条件', en: 'Restrictions' })}</h5>
-                {selectedRecord.restrictions.length > 0 ? (
-                  <ul className="planner-scenario-selection__pill-list">
-                    {selectedRecord.restrictions.map((restriction) => (
-                      <li key={restriction}>{restriction}</li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="supporting-text">{t({ zh: '无额外限制。', en: 'No additional restrictions.' })}</p>
-                )}
-              </section>
-
-              <section className="planner-scenario-selection__detail-group">
-                <h5>{t({ zh: '奖励与机制', en: 'Rewards and mechanics' })}</h5>
-                <div className="planner-scenario-selection__detail-stack">
-                  {selectedRecord.rewards.length > 0 ? (
-                    <ul className="planner-scenario-selection__pill-list">
-                      {selectedRecord.rewards.map((reward) => (
-                        <li key={reward}>{reward}</li>
-                      ))}
-                    </ul>
-                  ) : null}
-                  {selectedRecord.mechanics.length > 0 ? (
-                    <ul className="planner-scenario-selection__pill-list">
-                      {selectedRecord.mechanics.map((mechanic) => (
-                        <li key={mechanic}>{mechanic}</li>
-                      ))}
-                    </ul>
-                  ) : null}
-                  {selectedRecord.rewards.length === 0 && selectedRecord.mechanics.length === 0 ? (
-                    <p className="supporting-text">{t({ zh: '当前公共数据还没有补齐奖励或机制描述。', en: 'Public data does not yet include reward or mechanic details here.' })}</p>
-                  ) : null}
-                </div>
-              </section>
-            </>
-          ) : (
-            <div className="planner-scenario-selection__empty" role="status">
-              <strong>{t({ zh: '还没有选中场景', en: 'No scenario selected' })}</strong>
-              <p>{t({ zh: '先从左侧列表里选一个更接近目标的关卡。', en: 'Choose a scenario from the catalog to inspect its details.' })}</p>
-            </div>
-          )}
-        </aside>
+        <PlannerScenarioDetail record={selectedRecord} />
       </div>
     </div>
   )
