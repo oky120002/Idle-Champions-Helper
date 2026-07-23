@@ -2,12 +2,21 @@
 
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
-import { scanBuildContent } from './production-boundary-scanner.mjs'
+import { scanBuildContent } from './production-boundary-scanner.ts'
 
 const DIST_DIR = 'dist'
-const IGNORE_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.gif', '.svg', '.ico', '.woff', '.woff2'])
+const IGNORE_EXTENSIONS: ReadonlySet<string> = new Set([
+  '.png',
+  '.jpg',
+  '.jpeg',
+  '.gif',
+  '.svg',
+  '.ico',
+  '.woff',
+  '.woff2',
+])
 
-function* walkDir(dir) {
+function* walkDir(dir: string): Generator<string> {
   if (!existsSync(dir)) return
 
   for (const entry of readdirSync(dir)) {
@@ -30,7 +39,7 @@ function* walkDir(dir) {
   }
 }
 
-function runScan() {
+function runScan(): void {
   if (!existsSync(DIST_DIR)) {
     console.error('Production boundary scan requires an existing dist/. Run `npm run build` first.')
     process.exit(1)

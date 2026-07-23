@@ -1,4 +1,4 @@
-// 检索文档与命中类型。文档由 scripts/data/build-search-index.mjs 产出，
+// 检索文档与命中类型。文档由 scripts/data/build-search-index.ts 产出，
 // 三桶（title/body/meta）各自带 en/zh 两份清洗后文本，MiniSearch 索引时合并以兼容双语检索。
 
 export type SearchBucket = 'title' | 'body' | 'meta'

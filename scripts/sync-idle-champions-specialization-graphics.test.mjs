@@ -5,7 +5,7 @@ import path from 'node:path'
 import zlib from 'node:zlib'
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { PNG } from 'pngjs'
-import { syncChampionSpecializationGraphics } from './sync-idle-champions-specialization-graphics.mjs'
+import { syncChampionSpecializationGraphics } from './sync-idle-champions-specialization-graphics.ts'
 
 function createPng(width, height, colorByPixel) {
   const png = new PNG({ width, height })

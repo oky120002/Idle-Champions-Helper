@@ -4,10 +4,10 @@ import os from 'node:os'
 import path from 'node:path'
 import { mkdtemp, mkdir, readFile, writeFile } from 'node:fs/promises'
 
-import { buildModels } from './build-models.mjs'
-import { collectEffectEntries, normalizeEffectSignal } from './effect-helpers.mjs'
+import { buildModels } from './build-models.ts'
+import { collectEffectEntries, normalizeEffectSignal } from './effect-helpers.ts'
 import { parseEffectPayload } from '../../src/domain/effects/effect-string.ts'
-import { normalizeEffectReference } from './normalize-champions.mjs'
+import { normalizeEffectReference } from './normalize-champions.ts'
 
 async function readJson(filePath) {
   return JSON.parse(await readFile(filePath, 'utf8'))

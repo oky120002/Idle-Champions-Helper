@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { generateSignalCoverageReport } from './signal-coverage.mjs'
+import { generateSignalCoverageReport } from './signal-coverage.ts'
 
 describe('signal coverage report', () => {
   it('统计已识别 signal、叠层组合和 unsupported effect', () => {

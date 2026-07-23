@@ -1,6 +1,78 @@
+import type { SkelAnimFrame, SkelAnimSequence } from './skelanim-codec.ts'
 import { computeSkelAnimFrameBounds } from './skelanim-renderer.ts'
 
-function mergeBounds(base, next) {
+// ponytail: skelanim-codec 未导出 SkelAnimBounds 命名，这里在本地补一个与 renderer bounds 形状一致的别名，
+// 避免上游 renderer 的 SkelAnimFrameBounds 漂移到本模块。SkelAnimFrameBounds 字段更全（含 width/height/visiblePieceCount），
+// 本模块只需 min/max 部分，故独立声明。
+interface AnimationBounds {
+  minX: number
+  minY: number
+  maxX: number
+  maxY: number
+}
+
+interface AnimationSequenceSummary {
+  sequenceIndex: number
+  frameCount: number
+  pieceCount: number
+  firstRenderableFrameIndex: number | null
+  bounds: AnimationBounds | null
+}
+
+interface AnimationSequenceMetrics {
+  sequenceIndex: number
+  frameIndex: number | null
+  frameCount: number
+  pieceCount: number
+  renderableFrameCount: number
+  renderableFrameRatio: number
+  persistentPieceCount: number
+  persistentPieceRatio: number
+  singleFramePieceCount: number
+  singleFramePieceRatio: number
+  averageVisiblePieceRatio: number
+  nullPieceRatio: number
+  bounds: AnimationBounds | null
+  boundsArea: number
+  averageMotion: number
+}
+
+interface ScoredAnimationSequenceMetrics extends AnimationSequenceMetrics {
+  pieceCoverageRatio: number
+  boundsAreaRatio: number
+  motionRatio: number
+  motionScore: number
+  score: number
+}
+
+interface SelectIdleDefaultOptions {
+  scoredMetrics: readonly ScoredAnimationSequenceMetrics[]
+  preferredSequenceIndexes?: readonly number[]
+  blockedSequenceIndexes?: readonly number[]
+  fixedSequenceIndex?: number | null
+}
+
+interface ListIdleCandidateOptions {
+  scoredMetrics: readonly ScoredAnimationSequenceMetrics[]
+  currentSequenceIndex: number
+  blockedSequenceIndexes?: readonly number[]
+  fixedSequenceIndex?: number | null
+  maxCandidates?: number
+}
+
+type SuspicionSignal =
+  | 'score_gap'
+  | 'visibility_gap'
+  | 'persistent_gap'
+  | 'coverage_gap'
+  | 'motion_gap'
+  | 'sparse_default'
+
+type SuspicionLevel = 'none' | 'low' | 'medium' | 'high'
+
+type GraphicDefinition = Record<string, unknown>
+
+function mergeBounds(base: AnimationBounds | null, next: AnimationBounds | null): AnimationBounds | null {
   if (!next) {
     return base
   }
@@ -22,7 +94,7 @@ function mergeBounds(base, next) {
   }
 }
 
-function buildBoundsArea(bounds) {
+function buildBoundsArea(bounds: AnimationBounds | null): number {
   if (!bounds) {
     return 0
   }
@@ -30,7 +102,7 @@ function buildBoundsArea(bounds) {
   return Math.max(0, bounds.maxX - bounds.minX) * Math.max(0, bounds.maxY - bounds.minY)
 }
 
-function buildMotionScore(motionRatio) {
+function buildMotionScore(motionRatio: number): number {
   if (!Number.isFinite(motionRatio) || motionRatio <= 0) {
     return 0.35
   }
@@ -40,11 +112,14 @@ function buildMotionScore(motionRatio) {
   return Math.max(0, 1 - distance / 0.45)
 }
 
-function isRenderableMetrics(metrics) {
-  return typeof metrics.frameIndex === 'number' && metrics.frameIndex >= 0
+function isRenderableMetrics(metrics: ScoredAnimationSequenceMetrics): boolean {
+  return metrics.frameIndex !== null && metrics.frameIndex >= 0
 }
 
-function isUnsafeIdlePromotion(currentMetrics, candidateMetrics) {
+function isUnsafeIdlePromotion(
+  currentMetrics: ScoredAnimationSequenceMetrics,
+  candidateMetrics: ScoredAnimationSequenceMetrics,
+): boolean {
   if (candidateMetrics.sequenceIndex === currentMetrics.sequenceIndex) {
     return false
   }
@@ -96,8 +171,12 @@ function isUnsafeIdlePromotion(currentMetrics, candidateMetrics) {
   return false
 }
 
-export function resolvePreferredSequenceIndexes(graphicDefinition) {
-  const sequenceOverride = graphicDefinition?.export_params?.sequence_override
+export function resolvePreferredSequenceIndexes(graphicDefinition: GraphicDefinition = {}): number[] {
+  const exportParams = graphicDefinition.export_params
+  if (!exportParams || typeof exportParams !== 'object') {
+    return []
+  }
+  const sequenceOverride = (exportParams as Record<string, unknown>).sequence_override
 
   if (!Array.isArray(sequenceOverride) || sequenceOverride.length === 0) {
     return []
@@ -108,9 +187,9 @@ export function resolvePreferredSequenceIndexes(graphicDefinition) {
     .filter((value) => Number.isInteger(value) && value >= 0)
 }
 
-export function summarizeAnimationSequence(sequence) {
-  let bounds = null
-  let firstRenderableFrameIndex = null
+export function summarizeAnimationSequence(sequence: SkelAnimSequence): AnimationSequenceSummary {
+  let bounds: AnimationBounds | null = null
+  let firstRenderableFrameIndex: number | null = null
 
   for (let frameIndex = 0; frameIndex < sequence.length; frameIndex += 1) {
     const frameBounds = computeSkelAnimFrameBounds(sequence, frameIndex)
@@ -123,7 +202,12 @@ export function summarizeAnimationSequence(sequence) {
       firstRenderableFrameIndex = frameIndex
     }
 
-    bounds = mergeBounds(bounds, frameBounds)
+    bounds = mergeBounds(bounds, {
+      minX: frameBounds.minX,
+      minY: frameBounds.minY,
+      maxX: frameBounds.maxX,
+      maxY: frameBounds.maxY,
+    })
   }
 
   return {
@@ -135,7 +219,20 @@ export function summarizeAnimationSequence(sequence) {
   }
 }
 
-export function summarizeAnimationSequenceMetrics(sequence, sequenceSummary) {
+function computePieceFrameMotion(frame: SkelAnimFrame, previousFrame: SkelAnimFrame): number {
+  return (
+    Math.abs(frame.x - previousFrame.x) +
+    Math.abs(frame.y - previousFrame.y) +
+    Math.abs(frame.rotation - previousFrame.rotation) * 12 +
+    Math.abs(frame.scaleX - previousFrame.scaleX) * 40 +
+    Math.abs(frame.scaleY - previousFrame.scaleY) * 40
+  )
+}
+
+export function summarizeAnimationSequenceMetrics(
+  sequence: SkelAnimSequence,
+  sequenceSummary: AnimationSequenceSummary | null,
+): AnimationSequenceMetrics {
   const frameCount = Math.max(1, sequence.length)
   const pieceCount = Math.max(1, sequence.pieces.length)
   let totalVisibleFrames = 0
@@ -162,7 +259,7 @@ export function summarizeAnimationSequenceMetrics(sequence, sequenceSummary) {
 
   for (const piece of sequence.pieces) {
     let visibleCount = 0
-    let previousFrame = null
+    let previousFrame: SkelAnimFrame | null = null
 
     for (const frame of piece.frames) {
       if (!frame) {
@@ -172,12 +269,7 @@ export function summarizeAnimationSequenceMetrics(sequence, sequenceSummary) {
       visibleCount += 1
 
       if (previousFrame) {
-        motionTotal +=
-          Math.abs(frame.x - previousFrame.x) +
-          Math.abs(frame.y - previousFrame.y) +
-          Math.abs(frame.rotation - previousFrame.rotation) * 12 +
-          Math.abs(frame.scaleX - previousFrame.scaleX) * 40 +
-          Math.abs(frame.scaleY - previousFrame.scaleY) * 40
+        motionTotal += computePieceFrameMotion(frame, previousFrame)
         motionPairCount += 1
       }
 
@@ -196,13 +288,16 @@ export function summarizeAnimationSequenceMetrics(sequence, sequenceSummary) {
   }
 
   const averageVisiblePieceRatio = totalVisibleFrames / (pieceCount * frameCount)
+  const firstRenderable =
+    sequenceSummary?.firstRenderableFrameIndex !== null &&
+    typeof sequenceSummary?.firstRenderableFrameIndex === 'number' &&
+    sequenceSummary.firstRenderableFrameIndex >= 0
+      ? sequenceSummary.firstRenderableFrameIndex
+      : null
 
   return {
     sequenceIndex: sequence.sequenceIndex,
-    frameIndex:
-      typeof sequenceSummary?.firstRenderableFrameIndex === 'number' && sequenceSummary.firstRenderableFrameIndex >= 0
-        ? sequenceSummary.firstRenderableFrameIndex
-        : null,
+    frameIndex: firstRenderable,
     frameCount: sequence.length,
     pieceCount: sequence.pieces.length,
     renderableFrameCount,
@@ -219,7 +314,9 @@ export function summarizeAnimationSequenceMetrics(sequence, sequenceSummary) {
   }
 }
 
-export function scoreAnimationSequenceMetrics(rawMetrics) {
+export function scoreAnimationSequenceMetrics(
+  rawMetrics: readonly AnimationSequenceMetrics[],
+): ScoredAnimationSequenceMetrics[] {
   const maxPieceCount = Math.max(1, ...rawMetrics.map((item) => item.pieceCount))
   const maxBoundsArea = Math.max(1, ...rawMetrics.map((item) => item.boundsArea))
   const maxMotion = Math.max(1, ...rawMetrics.map((item) => item.averageMotion))
@@ -249,7 +346,10 @@ export function scoreAnimationSequenceMetrics(rawMetrics) {
   })
 }
 
-export function compareAnimationSequenceMetrics(left, right) {
+export function compareAnimationSequenceMetrics(
+  left: ScoredAnimationSequenceMetrics,
+  right: ScoredAnimationSequenceMetrics,
+): number {
   return (
     right.score - left.score ||
     right.boundsAreaRatio - left.boundsAreaRatio ||
@@ -259,7 +359,10 @@ export function compareAnimationSequenceMetrics(left, right) {
   )
 }
 
-export function resolveLegacyDefaultMetrics(scoredMetrics, preferredSequenceIndexes = []) {
+export function resolveLegacyDefaultMetrics(
+  scoredMetrics: readonly ScoredAnimationSequenceMetrics[],
+  preferredSequenceIndexes: readonly number[] = [],
+): ScoredAnimationSequenceMetrics | null {
   const renderableMetrics = scoredMetrics.filter(isRenderableMetrics)
   const metricsByIndex = new Map(renderableMetrics.map((item) => [item.sequenceIndex, item]))
 
@@ -274,16 +377,15 @@ export function resolveLegacyDefaultMetrics(scoredMetrics, preferredSequenceInde
   return renderableMetrics[0] ?? null
 }
 
-export function selectAnimationIdleDefaultMetrics({
-  scoredMetrics,
-  preferredSequenceIndexes = [],
-  blockedSequenceIndexes = [],
-  fixedSequenceIndex = null,
-}) {
+export function selectAnimationIdleDefaultMetrics(
+  options: SelectIdleDefaultOptions,
+): ScoredAnimationSequenceMetrics | null {
+  const { scoredMetrics, preferredSequenceIndexes = [], blockedSequenceIndexes = [], fixedSequenceIndex = null } =
+    options
   const renderableMetrics = scoredMetrics.filter(isRenderableMetrics)
   const metricsByIndex = new Map(renderableMetrics.map((item) => [item.sequenceIndex, item]))
 
-  if (Number.isInteger(fixedSequenceIndex) && fixedSequenceIndex >= 0) {
+  if (Number.isInteger(fixedSequenceIndex) && fixedSequenceIndex !== null && fixedSequenceIndex >= 0) {
     return metricsByIndex.get(fixedSequenceIndex) ?? null
   }
 
@@ -303,7 +405,7 @@ export function selectAnimationIdleDefaultMetrics({
   }
 
   if (blocked.has(currentMetrics.sequenceIndex)) {
-    return candidatePool[0]
+    return candidatePool[0] ?? currentMetrics
   }
 
   const safeCandidate =
@@ -319,13 +421,17 @@ export function selectAnimationIdleDefaultMetrics({
   return safeCandidate
 }
 
-export function listAnimationIdleCandidateMetrics({
-  scoredMetrics,
-  currentSequenceIndex,
-  blockedSequenceIndexes = [],
-  fixedSequenceIndex = null,
-  maxCandidates = 3,
-}) {
+export function listAnimationIdleCandidateMetrics(
+  options: ListIdleCandidateOptions,
+): ScoredAnimationSequenceMetrics[] {
+  const {
+    scoredMetrics,
+    currentSequenceIndex,
+    blockedSequenceIndexes = [],
+    fixedSequenceIndex = null,
+    maxCandidates = 3,
+  } = options
+
   if (Number.isInteger(fixedSequenceIndex) && fixedSequenceIndex === currentSequenceIndex) {
     return []
   }
@@ -353,8 +459,11 @@ export function listAnimationIdleCandidateMetrics({
     .slice(0, maxCandidates)
 }
 
-export function buildSuspicionSignals(currentMetrics, recommendedMetrics) {
-  const signals = []
+export function buildSuspicionSignals(
+  currentMetrics: ScoredAnimationSequenceMetrics,
+  recommendedMetrics: ScoredAnimationSequenceMetrics,
+): SuspicionSignal[] {
+  const signals: SuspicionSignal[] = []
 
   if (recommendedMetrics.sequenceIndex === currentMetrics.sequenceIndex) {
     return signals
@@ -387,7 +496,11 @@ export function buildSuspicionSignals(currentMetrics, recommendedMetrics) {
   return signals
 }
 
-export function buildSuspicionLevel(currentMetrics, recommendedMetrics, signals) {
+export function buildSuspicionLevel(
+  currentMetrics: ScoredAnimationSequenceMetrics,
+  recommendedMetrics: ScoredAnimationSequenceMetrics,
+  signals: readonly SuspicionSignal[],
+): SuspicionLevel {
   if (recommendedMetrics.sequenceIndex === currentMetrics.sequenceIndex) {
     return 'none'
   }
@@ -404,3 +517,6 @@ export function buildSuspicionLevel(currentMetrics, recommendedMetrics, signals)
 
   return 'low'
 }
+
+// ponytail: 本地 AnimationBounds 只取 min/max；renderer 的 SkelAnimFrameBounds 含更多字段，
+// 此处只搬必须的部分，避免上游 renderer 字段漂移到本模块。

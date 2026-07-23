@@ -1,17 +1,26 @@
+#!/usr/bin/env node
+
 import {
   DEFAULT_PRIVATE_ENV_FILE,
   DEFAULT_PRIVATE_LATEST_DIR,
   fetchAndStorePrivateUserProfilePayloads,
-} from './private-user-profile-payloads.mjs'
+} from './private-user-profile-payloads.ts'
 
-function parseArgs(argv) {
-  const args = {
+interface ParsedArgs {
+  envFile: string
+  latestDir: string
+  baseUrl?: string
+  help?: boolean
+}
+
+function parseArgs(argv: readonly string[]): ParsedArgs {
+  const args: ParsedArgs = {
     envFile: DEFAULT_PRIVATE_ENV_FILE,
     latestDir: DEFAULT_PRIVATE_LATEST_DIR,
   }
 
   for (let index = 0; index < argv.length; index += 1) {
-    const token = argv[index]
+    const token = argv[index]!
 
     if (token === '--env-file') {
       args.envFile = argv[index + 1] ?? args.envFile
@@ -20,7 +29,10 @@ function parseArgs(argv) {
     }
 
     if (token === '--base-url') {
-      args.baseUrl = argv[index + 1] ?? args.baseUrl
+      const next = argv[index + 1]
+      if (next !== undefined) {
+        args.baseUrl = next
+      }
       index += 1
       continue
     }
@@ -39,10 +51,10 @@ function parseArgs(argv) {
   return args
 }
 
-function printHelp() {
+function printHelp(): void {
   console.log(`
 Usage:
-  node scripts/private-user-data/fetch-user-profile-payloads.mjs [options]
+  node scripts/private-user-data/fetch-user-profile-payloads.ts [options]
 
 Options:
   --env-file <path>     Read ignored local credentials from this file. Default: ${DEFAULT_PRIVATE_ENV_FILE}
@@ -52,7 +64,7 @@ Options:
 `.trim())
 }
 
-async function main() {
+async function main(): Promise<void> {
   const args = parseArgs(process.argv.slice(2))
   if (args.help) {
     printHelp()
@@ -61,15 +73,15 @@ async function main() {
 
   const result = await fetchAndStorePrivateUserProfilePayloads({
     envFile: args.envFile,
-    baseUrl: args.baseUrl,
     latestDir: args.latestDir,
+    ...(args.baseUrl !== undefined ? { baseUrl: args.baseUrl } : {}),
   })
 
   console.log(`Private user payloads saved to ${result.manifest.outputDir} and ${args.latestDir}.`)
   console.log(`Masked credentials: ${result.manifest.maskedUserId} / ${result.manifest.maskedHash}`)
 }
 
-main().catch((error) => {
+main().catch((error: unknown) => {
   const message = error instanceof Error ? error.message : String(error)
   console.error(`Failed to fetch private user payloads: ${message}`)
   process.exitCode = 1

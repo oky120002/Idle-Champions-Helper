@@ -1,5 +1,14 @@
 import type { JsonValue } from '../types'
-import type { ParsedEffectPayload } from '../../pages/champion-detail/types'
+
+export interface ParsedEffectPayload {
+  raw: string
+  effectString: string
+  description: string | null
+  data: JsonValue | null
+  meta: Record<string, JsonValue> | null
+  kind: string
+  args: string[]
+}
 
 function isNumberishToken(value: unknown): boolean {
   if (typeof value !== 'string') {

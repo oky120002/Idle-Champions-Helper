@@ -1,56 +1,86 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { loadPrivateCredentials, parseLocalEnvFile } from './private-env-loader.mjs'
+import { loadPrivateCredentials, parseLocalEnvFile } from './private-env-loader.ts'
 import {
   createReadonlyFetchOptions,
-  DEFAULT_PRIVATE_BASE_URL,
   DEFAULT_PRIVATE_MOBILE_CLIENT_VERSION,
   normalizeOfficialPlayServerBaseUrl,
-  PRIVATE_PLAY_SERVER_FALLBACK_BASE_URLS,
   PRIVATE_PLAY_SERVER_SWITCH_LIMIT,
   readSwitchPlayServer,
   resolveOfficialPlayServerBaseUrls,
-} from './official-play-server.mjs'
-import { createManifest, writeManifest } from './private-snapshot-manifest.mjs'
+} from './official-play-server.ts'
+import {
+  createManifest,
+  writeManifest,
+  type PrivateSnapshotManifest,
+} from './private-snapshot-manifest.ts'
 
 export {
   createReadonlyFetchOptions,
   DEFAULT_PRIVATE_BASE_URL,
   DEFAULT_PRIVATE_MOBILE_CLIENT_VERSION,
   PRIVATE_PLAY_SERVER_FALLBACK_BASE_URLS,
-} from './official-play-server.mjs'
+} from './official-play-server.ts'
 
-export const DEFAULT_PRIVATE_ENV_FILE = '.env.private-user.local'
-export const DEFAULT_PRIVATE_LATEST_DIR = 'tmp/private-user-data/latest'
-export const DEFAULT_PRIVATE_PAYLOAD_FILENAME = 'user-profile-payloads.json'
+export const DEFAULT_PRIVATE_ENV_FILE: string = '.env.private-user.local'
+export const DEFAULT_PRIVATE_LATEST_DIR: string = 'tmp/private-user-data/latest'
+export const DEFAULT_PRIVATE_PAYLOAD_FILENAME: string = 'user-profile-payloads.json'
 
-const ALLOWED_ENDPOINTS = new Set([
+const ALLOWED_ENDPOINTS: ReadonlySet<string> = new Set([
   'getuserdetails',
   'getcampaigndetails',
   'getallformationsaves',
 ])
 
-/**
- * @typedef {{
- *   credentials: { userId: string, hash: string }
- *   baseUrl?: string
- *   fetchImpl?: typeof fetch
- * }} FetchPrivateUserProfilePayloadsOptions
- */
+export interface PrivateCredentials {
+  userId: string
+  hash: string
+}
 
-/**
- * @typedef {{
- *   envFile?: string
- *   baseUrl?: string
- *   latestDir?: string
- *   payloadFilename?: string
- *   env?: Record<string, string | undefined>
- *   fetchImpl?: typeof fetch
- *   cwd?: string
- * }} FetchAndStorePrivateUserProfilePayloadsOptions
- */
+export type OfficialUrlParams = Record<string, string | number | boolean | null | undefined>
 
-async function readOptionalEnvFile(envFilePath) {
+export interface BuildOfficialUrlOptions {
+  endpoint: string
+  credentials: PrivateCredentials
+  baseUrl: string
+  params?: OfficialUrlParams
+}
+
+export interface FetchPrivateUserProfilePayloadsOptions {
+  credentials: PrivateCredentials
+  baseUrl?: string
+  fetchImpl?: typeof fetch
+}
+
+export interface FetchAndStorePrivateUserProfilePayloadsOptions {
+  envFile?: string
+  baseUrl?: string
+  latestDir?: string
+  payloadFilename?: string
+  env?: Record<string, string | undefined>
+  fetchImpl?: typeof fetch
+  cwd?: string
+}
+
+export interface UserProfilePayloads {
+  userDetails: unknown
+  campaignDetails: unknown
+  formationSaves: unknown
+}
+
+export interface FetchAndStoreResult {
+  manifest: PrivateSnapshotManifest
+  payloads: UserProfilePayloads
+  timestampDir: string
+  latestDir: string
+}
+
+interface FetchReadonlyJsonFollowingSwitchResult {
+  payload: unknown
+  baseUrl: string
+}
+
+async function readOptionalEnvFile(envFilePath: string): Promise<string | null> {
   try {
     return await fs.readFile(envFilePath, 'utf8')
   } catch (error) {
@@ -61,7 +91,13 @@ async function readOptionalEnvFile(envFilePath) {
     throw error
   }
 }
-export function buildOfficialUrl({ endpoint, credentials, baseUrl, params = {} }) {
+
+export function buildOfficialUrl({
+  endpoint,
+  credentials,
+  baseUrl,
+  params = {},
+}: BuildOfficialUrlOptions): string {
   if (!ALLOWED_ENDPOINTS.has(endpoint)) {
     throw new Error(`Endpoint "${endpoint}" is not allowed for private dev fetches.`)
   }
@@ -73,14 +109,31 @@ export function buildOfficialUrl({ endpoint, credentials, baseUrl, params = {} }
   url.searchParams.set('mobile_client_version', DEFAULT_PRIVATE_MOBILE_CLIENT_VERSION)
 
   for (const [key, value] of Object.entries(params)) {
-    if (value !== null && value !== undefined && value !== '') {
-      url.searchParams.set(key, String(value))
+    if (typeof value !== 'string' && typeof value !== 'number' && typeof value !== 'boolean') {
+      continue
     }
+    if (value === '') {
+      continue
+    }
+    url.searchParams.set(key, String(value))
   }
 
   return url.toString()
 }
-async function fetchReadonlyJson({ endpoint, credentials, baseUrl, params, fetchImpl }) {
+
+async function fetchReadonlyJson({
+  endpoint,
+  credentials,
+  baseUrl,
+  params,
+  fetchImpl,
+}: {
+  endpoint: string
+  credentials: PrivateCredentials
+  baseUrl: string
+  params: OfficialUrlParams
+  fetchImpl: typeof fetch
+}): Promise<unknown> {
   const response = await fetchImpl(
     buildOfficialUrl({ endpoint, credentials, baseUrl, params }),
     createReadonlyFetchOptions(),
@@ -93,11 +146,11 @@ async function fetchReadonlyJson({ endpoint, credentials, baseUrl, params, fetch
   return response.json()
 }
 
-function hasPayloadValue(payload, key) {
+function hasPayloadValue(payload: unknown, key: string): boolean {
   return Boolean(payload && typeof payload === 'object' && key in payload)
 }
 
-function isPayloadReady(endpoint, payload) {
+function isPayloadReady(endpoint: string, payload: unknown): boolean {
   switch (endpoint) {
     case 'getuserdetails':
       return hasPayloadValue(payload, 'details')
@@ -116,7 +169,13 @@ async function fetchReadonlyJsonFollowingPlayServerSwitch({
   baseUrl,
   params,
   fetchImpl,
-}) {
+}: {
+  endpoint: string
+  credentials: PrivateCredentials
+  baseUrl: string
+  params: OfficialUrlParams
+  fetchImpl: typeof fetch
+}): Promise<FetchReadonlyJsonFollowingSwitchResult> {
   let currentBaseUrl = baseUrl
   let switchCount = 0
 
@@ -151,24 +210,35 @@ async function fetchReadonlyJsonFollowingPlayServerSwitch({
   }
 }
 
-function readInstanceId(userDetails) {
+function readInstanceId(userDetails: unknown): string | null {
   if (!userDetails || typeof userDetails !== 'object') {
     return null
   }
 
-  const root = /** @type {Record<string, unknown>} */ (userDetails)
-  const details = root.details && typeof root.details === 'object'
-    ? /** @type {Record<string, unknown>} */ (root.details)
+  const root = userDetails as Record<string, unknown>
+  const detailsRaw = root.details
+  const details = detailsRaw && typeof detailsRaw === 'object'
+    ? (detailsRaw as Record<string, unknown>)
     : null
-  const value = details?.instance_id ?? root.instance_id
-  return value === null || value === undefined || value === '' ? null : String(value)
+  const value: unknown = details?.instance_id ?? root.instance_id
+  if (value === null || value === undefined || value === '') {
+    return null
+  }
+  if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+    return String(value)
+  }
+  return null
 }
 
 async function fetchPrivateUserProfilePayloadsFromBaseUrl({
   credentials,
   baseUrl,
   fetchImpl = fetch,
-}) {
+}: {
+  credentials: PrivateCredentials
+  baseUrl: string
+  fetchImpl?: typeof fetch
+}): Promise<UserProfilePayloads> {
   const userDetailsResult = await fetchReadonlyJsonFollowingPlayServerSwitch({
     endpoint: 'getuserdetails',
     credentials,
@@ -198,13 +268,15 @@ async function fetchPrivateUserProfilePayloadsFromBaseUrl({
   }
 }
 
-/** @param {FetchPrivateUserProfilePayloadsOptions} options */
 export async function fetchPrivateUserProfilePayloads({
   credentials,
   baseUrl,
   fetchImpl = fetch,
-}) {
-  const baseUrls = await resolveOfficialPlayServerBaseUrls({ fetchImpl, baseUrl })
+}: FetchPrivateUserProfilePayloadsOptions): Promise<UserProfilePayloads> {
+  const baseUrls = await resolveOfficialPlayServerBaseUrls({
+    fetchImpl,
+    ...(baseUrl !== undefined ? { baseUrl } : {}),
+  })
 
   for (const candidateBaseUrl of baseUrls) {
     try {
@@ -221,12 +293,11 @@ export async function fetchPrivateUserProfilePayloads({
   throw new Error('All official play server mirrors failed.')
 }
 
-async function writeJson(targetPath, value) {
+async function writeJson(targetPath: string, value: unknown): Promise<void> {
   await fs.mkdir(path.dirname(targetPath), { recursive: true })
   await fs.writeFile(targetPath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
 }
 
-/** @param {FetchAndStorePrivateUserProfilePayloadsOptions} [options] */
 export async function fetchAndStorePrivateUserProfilePayloads({
   envFile = DEFAULT_PRIVATE_ENV_FILE,
   baseUrl,
@@ -235,7 +306,7 @@ export async function fetchAndStorePrivateUserProfilePayloads({
   env = process.env,
   fetchImpl = fetch,
   cwd = process.cwd(),
-} = {}) {
+}: FetchAndStorePrivateUserProfilePayloadsOptions = {}): Promise<FetchAndStoreResult> {
   const envFilePath = path.resolve(cwd, envFile)
   const envFileContent = await readOptionalEnvFile(envFilePath)
   const fileEnv = envFileContent ? parseLocalEnvFile(envFileContent) : {}
@@ -246,17 +317,15 @@ export async function fetchAndStorePrivateUserProfilePayloads({
     },
   })
 
-  if (credentialsResult.error || !credentialsResult.userId || !credentialsResult.hash) {
-    throw new Error(credentialsResult.error ?? 'Missing private credentials.')
+  const { error, userId, hash } = credentialsResult
+  if (error || !userId || !hash) {
+    throw new Error(error ?? 'Missing private credentials.')
   }
 
-  const credentials = {
-    userId: credentialsResult.userId,
-    hash: credentialsResult.hash,
-  }
+  const credentials: PrivateCredentials = { userId, hash }
   const payloads = await fetchPrivateUserProfilePayloads({
     credentials,
-    baseUrl,
+    ...(baseUrl !== undefined ? { baseUrl } : {}),
     fetchImpl,
   })
 

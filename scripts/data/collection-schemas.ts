@@ -12,7 +12,7 @@ import { localizedTextSchema, localizedOptionSchema } from '../../src/domain/typ
  *
  * 沿用 champion-details-schema 哲学：对象 passthrough 放行非核心字段，避免耦合上游
  * 字段增减；只钉死消费方（planner/simulator/限制筛选/展示）依赖的核心字段类型与必填性，
- * 拦截 normalize 层或上游 definitions 字段漂移。CI：scripts/validate-data-schemas.mjs。
+ * 拦截 normalize 层或上游 definitions 字段漂移。CI：scripts/validate-data-schemas.ts。
  */
 
 const localizedText = localizedTextSchema

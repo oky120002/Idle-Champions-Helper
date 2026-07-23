@@ -3,13 +3,38 @@
  * never appear in production build output.
  */
 
-/** @typedef {'dev-endpoint-reference' | 'dev-source-reference' | 'private-path-reference' | 'dev-command-reference'} ProductionBoundaryFindingKind */
+export type ProductionBoundaryFindingKind =
+  | 'dev-endpoint-reference'
+  | 'dev-source-reference'
+  | 'private-path-reference'
+  | 'dev-command-reference'
 
-/** @typedef {{kind: ProductionBoundaryFindingKind, filePath: string, line: number, match: string, description: string}} ProductionBoundaryFinding */
+export interface ProductionBoundaryFinding {
+  kind: ProductionBoundaryFindingKind
+  filePath: string
+  line: number
+  match: string
+  description: string
+}
 
-/** @typedef {{filePath: string, findings: ProductionBoundaryFinding[], hasFindings: boolean}} ProductionBoundaryScanResult */
+export interface ProductionBoundaryScanResult {
+  filePath: string
+  findings: ProductionBoundaryFinding[]
+  hasFindings: boolean
+}
 
-const FORBIDDEN_BUILD_MARKERS = [
+export interface ProductionBoundaryInputFile {
+  content: string
+  filePath: string
+}
+
+interface ForbiddenBuildMarker {
+  kind: ProductionBoundaryFindingKind
+  pattern: RegExp
+  description: string
+}
+
+const FORBIDDEN_BUILD_MARKERS: readonly ForbiddenBuildMarker[] = [
   {
     kind: 'dev-endpoint-reference',
     pattern: /__dev\/private-user-data\/[a-z-]+/gu,
@@ -44,18 +69,16 @@ const FORBIDDEN_BUILD_MARKERS = [
 
 /**
  * Scan built content for production boundary violations.
- *
- * @param {string} content
- * @param {string} filePath
- * @returns {ProductionBoundaryScanResult}
  */
-export function scanBuildContent(content, filePath) {
-  /** @type {ProductionBoundaryFinding[]} */
-  const findings = []
+export function scanBuildContent(
+  content: string,
+  filePath: string,
+): ProductionBoundaryScanResult {
+  const findings: ProductionBoundaryFinding[] = []
   const lines = content.split('\n')
 
   for (let index = 0; index < lines.length; index += 1) {
-    const line = lines[index]
+    const line = lines[index]!
     const lineNumber = index + 1
 
     for (const marker of FORBIDDEN_BUILD_MARKERS) {
@@ -74,10 +97,8 @@ export function scanBuildContent(content, filePath) {
   return { filePath, findings, hasFindings: findings.length > 0 }
 }
 
-/**
- * @param {{content: string, filePath: string}[]} files
- * @returns {ProductionBoundaryScanResult[]}
- */
-export function scanBuildFiles(files) {
+export function scanBuildFiles(
+  files: readonly ProductionBoundaryInputFile[],
+): ProductionBoundaryScanResult[] {
   return files.map(({ content, filePath }) => scanBuildContent(content, filePath))
 }

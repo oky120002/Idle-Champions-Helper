@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import {
   type SensitiveFinding,
   scanContent,
-} from './sensitive-output-scanner.mjs'
+} from './sensitive-output-scanner.ts'
 
 describe('sensitive output scanner', () => {
   it('检测假的数字 user id 和 32 位 hash', () => {

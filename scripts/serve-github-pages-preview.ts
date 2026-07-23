@@ -1,9 +1,9 @@
-import { createServer } from 'node:http'
+import { createServer, type IncomingMessage, type Server, type ServerResponse } from 'node:http'
 import { access, readFile, stat } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-const MIME_TYPES = {
+const MIME_TYPES: Record<string, string> = {
   '.css': 'text/css; charset=utf-8',
   '.html': 'text/html; charset=utf-8',
   '.ico': 'image/x-icon',
@@ -20,21 +20,40 @@ const BASE_PATH = `/${REPO_NAME}/`
 const DEFAULT_HOST = '127.0.0.1'
 const DEFAULT_PORT = 4173
 
-function parseArgs(argv) {
-  const options = {}
+interface PreviewOptions {
+  host?: string
+  port?: number
+}
+
+interface ResolveRedirect {
+  redirect: string
+}
+
+type ResolveFilePathResult = ResolveRedirect | string | false | null
+
+interface ServedFile {
+  body: Buffer
+  contentType: string
+}
+
+function parseArgs(argv: readonly string[]): PreviewOptions {
+  const options: PreviewOptions = {}
 
   for (let index = 0; index < argv.length; index += 1) {
     const current = argv[index]
     const next = argv[index + 1]
 
-    if ((current === '--host' || current === '-H') && next) {
+    if (next !== undefined && (current === '--host' || current === '-H')) {
       options.host = next
       index += 1
       continue
     }
 
-    if ((current === '--port' || current === '-p') && next) {
-      options.port = Number.parseInt(next, 10)
+    if (next !== undefined && (current === '--port' || current === '-p')) {
+      const parsed = Number.parseInt(next, 10)
+      if (Number.isInteger(parsed)) {
+        options.port = parsed
+      }
       index += 1
     }
   }
@@ -42,12 +61,17 @@ function parseArgs(argv) {
   return options
 }
 
-function sendResponse(response, statusCode, body, headers = {}) {
+function sendResponse(
+  response: ServerResponse,
+  statusCode: number,
+  body: string | Buffer | undefined,
+  headers: Record<string, string> = {},
+): void {
   response.writeHead(statusCode, headers)
   response.end(body)
 }
 
-function resolveFilePath(distDirectory, pathname) {
+function resolveFilePath(distDirectory: string, pathname: string): ResolveFilePathResult {
   if (pathname === '/' || pathname === BASE_PATH.slice(0, -1)) {
     return { redirect: BASE_PATH }
   }
@@ -67,7 +91,7 @@ function resolveFilePath(distDirectory, pathname) {
   return targetPath
 }
 
-async function tryReadFile(filePath) {
+async function tryReadFile(filePath: string): Promise<ServedFile | null> {
   try {
     const fileStats = await stat(filePath)
 
@@ -91,15 +115,13 @@ async function tryReadFile(filePath) {
   }
 }
 
-const options = parseArgs(process.argv.slice(2))
-const host = options.host ?? DEFAULT_HOST
-const port = options.port ?? DEFAULT_PORT
-const currentDirectory = path.dirname(fileURLToPath(import.meta.url))
-const distDirectory = path.resolve(currentDirectory, '../dist')
-
-await access(distDirectory)
-
-const server = createServer(async (request, response) => {
+async function handleRequest(
+  request: IncomingMessage,
+  response: ServerResponse,
+  distDirectory: string,
+  host: string,
+  port: number,
+): Promise<void> {
   if (!request.url) {
     sendResponse(response, 400, 'Bad Request', { 'Content-Type': 'text/plain; charset=utf-8' })
     return
@@ -113,7 +135,8 @@ const server = createServer(async (request, response) => {
     return
   }
 
-  const url = new URL(request.url, `http://${request.headers.host ?? `${host}:${port}`}`)
+  const hostHeader = typeof request.headers.host === 'string' ? request.headers.host : `${host}:${port}`
+  const url = new URL(request.url, `http://${hostHeader}`)
   const pathname = decodeURIComponent(url.pathname)
   const resolvedPath = resolveFilePath(distDirectory, pathname)
 
@@ -136,10 +159,15 @@ const server = createServer(async (request, response) => {
   const directFile = await tryReadFile(resolvedPath)
 
   if (directFile) {
-    sendResponse(response, 200, request.method === 'HEAD' ? undefined : directFile.body, {
-      'Content-Type': directFile.contentType,
-      'Cache-Control': 'no-cache',
-    })
+    sendResponse(
+      response,
+      200,
+      request.method === 'HEAD' ? undefined : directFile.body,
+      {
+        'Content-Type': directFile.contentType,
+        'Cache-Control': 'no-cache',
+      },
+    )
     return
   }
 
@@ -147,15 +175,33 @@ const server = createServer(async (request, response) => {
     const fallbackFile = await tryReadFile(path.resolve(distDirectory, 'index.html'))
 
     if (fallbackFile) {
-      sendResponse(response, 200, request.method === 'HEAD' ? undefined : fallbackFile.body, {
-        'Content-Type': fallbackFile.contentType,
-        'Cache-Control': 'no-cache',
-      })
+      sendResponse(
+        response,
+        200,
+        request.method === 'HEAD' ? undefined : fallbackFile.body,
+        {
+          'Content-Type': fallbackFile.contentType,
+          'Cache-Control': 'no-cache',
+        },
+      )
       return
     }
   }
 
   sendResponse(response, 404, 'Not Found', { 'Content-Type': 'text/plain; charset=utf-8' })
+}
+
+const options = parseArgs(process.argv.slice(2))
+const host = options.host ?? DEFAULT_HOST
+const port = options.port ?? DEFAULT_PORT
+const currentDirectory = path.dirname(fileURLToPath(import.meta.url))
+const distDirectory = path.resolve(currentDirectory, '../dist')
+
+await access(distDirectory)
+
+const server: Server = createServer((request, response) => {
+  // ponytail: 沿用 .mjs 的 async handler；未处理异常由 node 默认行为接管，不画蛇添足加 500 兜底。
+  void handleRequest(request, response, distDirectory, host, port)
 })
 
 server.listen(port, host, () => {

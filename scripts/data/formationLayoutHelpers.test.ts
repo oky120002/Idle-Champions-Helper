@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import {
   extractOfficialFormations,
   normalizeOfficialFormationSlots,
-} from './formation-layout-helpers.mjs'
+} from './formation-layout-helpers.ts'
 
 describe('formation layout helpers', () => {
   it('按官方坐标归一化槽位，并把邻接关系改写成稳定 slot id', () => {

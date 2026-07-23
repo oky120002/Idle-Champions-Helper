@@ -5,7 +5,7 @@ import path from 'node:path'
 import zlib from 'node:zlib'
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { PNG } from 'pngjs'
-import { syncChampionIllustrations } from './sync-idle-champions-illustrations.mjs'
+import { syncChampionIllustrations } from './sync-idle-champions-illustrations.ts'
 
 function createSolidTexture(width, height, colorByPixel) {
   const png = new PNG({ width, height })

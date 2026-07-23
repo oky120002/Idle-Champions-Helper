@@ -12,13 +12,13 @@ import {
   uniqueNumbers,
   uniqueStrings,
 } from './normalize-text-utils.ts'
-import { looksLikeVariant } from './formation-layout-helpers.mjs'
+import { looksLikeVariant } from './formation-layout-helpers.ts'
 import {
   buildScenarioModeTags,
   buildScenarioRuleContextId,
   normalizePatronDefinition,
   normalizePatronObjectiveTiers,
-} from './official-rule-helpers.mjs'
+} from './official-rule-helpers.ts'
 
 /**
  * 场景/冒险域：affiliation/campaign/adventure/scene map + adventure/variant 归一化 +

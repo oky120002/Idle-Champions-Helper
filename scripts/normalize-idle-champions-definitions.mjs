@@ -24,7 +24,7 @@ import {
   normalizeChampionDetail,
   normalizeChampionVisual,
   normalizeChampionVisualSkin,
-} from './data/normalize-champions.mjs'
+} from './data/normalize-champions.ts'
 import {
   buildAdventureMap,
   buildAffiliationMap,
@@ -47,7 +47,7 @@ import {
   isPlayableChampion,
   resolveGraphicAssetById,
 } from './data/champion-asset-helpers.ts'
-import { extractOfficialFormations, looksLikeVariant } from './data/formation-layout-helpers.mjs'
+import { extractOfficialFormations, looksLikeVariant } from './data/formation-layout-helpers.ts'
 import {
   buildChampionPatronEligibility,
   buildScenarioModeTags,
@@ -62,7 +62,7 @@ import {
   normalizePatronObjectiveTiers,
   normalizeTrialsDifficultyDefinition,
   normalizeTrialsRoleDefinition,
-} from './data/official-rule-helpers.mjs'
+} from './data/official-rule-helpers.ts'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_VERSION_FILE = 'public/data/version.json'

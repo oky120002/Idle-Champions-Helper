@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import {
   scanBuildContent,
   scanBuildFiles,
-} from './production-boundary-scanner.mjs'
+} from './production-boundary-scanner.ts'
 
 describe('production boundary scanner', () => {
   it('检测 dev-only endpoint 泄露到生产产物', () => {

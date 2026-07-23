@@ -6,7 +6,6 @@ import type {
   ChampionFeatDetail,
   ChampionUpgradeDetail,
   ChampionSpecializationGraphic,
-  JsonValue,
 } from '../../domain/types'
 
 export const DETAIL_SECTION_IDS = [
@@ -102,15 +101,7 @@ export interface EffectContext {
   upgradeLabelById: Map<string, string>
 }
 
-export interface ParsedEffectPayload {
-  raw: string
-  effectString: string
-  description: string | null
-  data: JsonValue | null
-  meta: Record<string, JsonValue> | null
-  kind: string
-  args: string[]
-}
+export type { ParsedEffectPayload } from '../../domain/effects/effect-string'
 
 export interface EffectDescriptor {
   categoryLabel: string

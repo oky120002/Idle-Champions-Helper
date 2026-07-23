@@ -11,7 +11,7 @@ import {
   listAnimationIdleCandidateMetrics,
   scoreAnimationSequenceMetrics,
   summarizeAnimationSequenceMetrics,
-} from './data/champion-animation-idle-selection.mjs'
+} from './data/champion-animation-idle-selection.ts'
 import {
   DEFAULT_CHAMPION_ANIMATION_IDLE_OVERRIDES_FILE,
   readChampionAnimationIdleOverrides,

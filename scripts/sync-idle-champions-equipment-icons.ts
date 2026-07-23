@@ -4,7 +4,7 @@ import {
   writeJson,
   runWithConcurrency,
 } from './data/io-utils.ts'
-import { cropOpaqueBounds, findOpaqueBounds } from './data/png-image-helpers.ts'
+import { cropOpaqueBounds } from './data/png-image-helpers.ts'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
@@ -28,15 +28,70 @@ const DEFAULT_CURRENT_VERSION = 'v1'
 const DEFAULT_CONCURRENCY = 8
 const EQUIPMENT_ICONS_DIR_NAME = 'champion-equipment-icons'
 
-function sortByGraphicId(left, right) {
+interface EquipmentGraphicImage {
+  path: string
+  width: number
+  height: number
+  bytes: number
+  format: 'png'
+}
+
+interface EquipmentGraphicItem {
+  graphicId: string
+  sourceGraphic: string
+  sourceVersion: number | null
+  remotePath: string
+  remoteUrl: string
+  delivery: string
+  uses: string[]
+  image: EquipmentGraphicImage
+}
+
+interface DownloadReadyResult {
+  status: 'ready'
+  item: EquipmentGraphicItem
+}
+
+interface DownloadMissingResult {
+  status: 'missing'
+  graphicId: string
+  message: string
+}
+
+type DownloadResult = DownloadReadyResult | DownloadMissingResult
+
+interface DownloadOptions {
+  outputDir: string
+  currentVersion: string
+  masterApiUrl: string | undefined
+  existingItemsByGraphicId: Map<string, EquipmentGraphicItem>
+}
+
+interface SyncEquipmentIconsOptions {
+  input?: string
+  outputDir?: string
+  currentVersion?: string
+  detailDir?: string
+  masterApiUrl?: string
+  concurrency?: string
+}
+
+interface EquipmentSyncResult {
+  count: number
+  outputDir: string
+  missingCount: number
+  skipped?: boolean
+}
+
+function sortByGraphicId(left: EquipmentGraphicItem, right: EquipmentGraphicItem): number {
   return Number(left.graphicId) - Number(right.graphicId) || left.graphicId.localeCompare(right.graphicId)
 }
 
-function buildChampionEquipmentIconPath(currentVersion, graphicId) {
+function buildChampionEquipmentIconPath(currentVersion: string, graphicId: string): string {
   return `${currentVersion}/${EQUIPMENT_ICONS_DIR_NAME}/${graphicId}.png`
 }
 
-function collectGraphicId(ids, graphicId) {
+function collectGraphicId(ids: Set<string>, graphicId: unknown): void {
   const normalizedGraphicId = typeof graphicId === 'string' || typeof graphicId === 'number'
     ? String(graphicId).trim()
     : null
@@ -46,9 +101,9 @@ function collectGraphicId(ids, graphicId) {
   }
 }
 
-async function collectEquipmentGraphicIds(detailDir) {
+async function collectEquipmentGraphicIds(detailDir: string): Promise<string[]> {
   const entries = await readdir(detailDir, { withFileTypes: true })
-  const ids = new Set()
+  const ids = new Set<string>()
 
   for (const entry of entries) {
     if (!entry.isFile() || !entry.name.endsWith('.json')) {
@@ -56,16 +111,23 @@ async function collectEquipmentGraphicIds(detailDir) {
     }
 
     const detail = await readJson(path.join(detailDir, entry.name))
+    const detailRecord = detail as Record<string, unknown> | null
+    const lootRaw = detailRecord?.loot
+    const loot = Array.isArray(lootRaw) ? lootRaw : []
 
-    for (const loot of detail.loot ?? []) {
-      collectGraphicId(ids, loot.graphicId)
+    for (const lootItem of loot) {
+      collectGraphicId(ids, (lootItem as Record<string, unknown> | null)?.graphicId)
     }
   }
 
   return Array.from(ids).sort((left, right) => Number(left) - Number(right) || left.localeCompare(right))
 }
 
-async function downloadEquipmentIcon(graphicId, graphicMap, options) {
+async function downloadEquipmentIcon(
+  graphicId: string,
+  graphicMap: Map<string, Record<string, unknown>>,
+  options: DownloadOptions,
+): Promise<DownloadResult> {
   const asset = resolveGraphicAssetById(graphicMap, graphicId, options.masterApiUrl ?? DEFAULT_MASTER_API_URL)
 
   if (!asset) {
@@ -76,12 +138,12 @@ async function downloadEquipmentIcon(graphicId, graphicMap, options) {
     }
   }
 
-  const existingItem = options.existingItemsByGraphicId?.get(String(graphicId)) ?? null
+  const existingItem = options.existingItemsByGraphicId.get(String(graphicId)) ?? null
   const nextImagePath = buildChampionEquipmentIconPath(options.currentVersion, graphicId)
 
   if (
-    existingItem &&
-    canReuseGeneratedImage({
+    existingItem
+    && canReuseGeneratedImage({
       existingItem,
       nextSourceGraphic: asset.sourceGraphic,
       nextSourceVersion: asset.sourceVersion,
@@ -145,7 +207,9 @@ async function downloadEquipmentIcon(graphicId, graphicMap, options) {
   }
 }
 
-export async function syncChampionEquipmentIcons(options = {}) {
+export async function syncChampionEquipmentIcons(
+  options: SyncEquipmentIconsOptions = {},
+): Promise<EquipmentSyncResult> {
   if (!options.input) {
     throw new Error('缺少 --input，无法根据 definitions 快照同步装备 icon')
   }
@@ -156,7 +220,8 @@ export async function syncChampionEquipmentIcons(options = {}) {
   const detailDir = path.resolve(options.detailDir ?? path.join(outputDir, 'champion-details'))
   const concurrency = Math.max(1, Number(options.concurrency ?? DEFAULT_CONCURRENCY))
   const rawDefinitions = await readJson(input)
-  const updatedAt = getUpdatedAtFromDefinitions(rawDefinitions)
+  const rawDefinitionsRecord = rawDefinitions as Record<string, unknown> | null
+  const updatedAt = getUpdatedAtFromDefinitions(rawDefinitionsRecord)
   const collectionFile = path.join(outputDir, `${EQUIPMENT_ICONS_DIR_NAME}.json`)
   const existingCollection = await readExistingCollection(collectionFile)
   const assetDir = path.join(outputDir, EQUIPMENT_ICONS_DIR_NAME)
@@ -168,18 +233,24 @@ export async function syncChampionEquipmentIcons(options = {}) {
     })
   ) {
     return {
-      count: existingCollection?.items?.length ?? 0,
+      count: existingCollection?.items.length ?? 0,
       outputDir,
       missingCount: 0,
       skipped: true,
     }
   }
 
-  const graphicMap = buildGraphicMap(rawDefinitions.graphic_defines)
+  const graphicDefinesRaw = rawDefinitionsRecord?.graphic_defines
+  const graphicMap = buildGraphicMap(Array.isArray(graphicDefinesRaw) ? graphicDefinesRaw : [])
   const equipmentGraphicIds = await collectEquipmentGraphicIds(detailDir)
   await mkdir(assetDir, { recursive: true })
-  const existingItemsByGraphicId = new Map(
-    (existingCollection?.items ?? []).map((item) => [String(item.graphicId), item]),
+  const existingItemsByGraphicId = new Map<string, EquipmentGraphicItem>(
+    (existingCollection?.items ?? []).map(
+      (item): [string, EquipmentGraphicItem] => [
+        String((item as EquipmentGraphicItem).graphicId),
+        item as EquipmentGraphicItem,
+      ],
+    ),
   )
 
   const results = await runWithConcurrency(
@@ -195,11 +266,16 @@ export async function syncChampionEquipmentIcons(options = {}) {
   )
 
   const items = results
-    .filter((result) => result.status === 'ready')
+    .filter((result): result is DownloadReadyResult => result.status === 'ready')
     .map((result) => result.item)
     .sort(sortByGraphicId)
-  const missing = results.filter((result) => result.status === 'missing')
-  await removeUnexpectedFiles(assetDir, new Set(items.map((item) => path.basename(item.image.path))))
+  const missing = results.filter(
+    (result): result is DownloadMissingResult => result.status === 'missing',
+  )
+  await removeUnexpectedFiles(
+    assetDir,
+    new Set(items.map((item) => path.basename(item.image.path))),
+  )
 
   await writeJson(collectionFile, {
     items,
@@ -214,7 +290,7 @@ export async function syncChampionEquipmentIcons(options = {}) {
   }
 }
 
-async function main() {
+async function main(): Promise<void> {
   const { values } = parseArgs({
     options: {
       input: { type: 'string' },
@@ -229,7 +305,7 @@ async function main() {
 
   if (values.help) {
     console.log(`用法：
-  node scripts/sync-idle-champions-equipment-icons.mjs --input <definitions.json> [--outputDir <dir>]
+  node scripts/sync-idle-champions-equipment-icons.ts --input <definitions.json> [--outputDir <dir>]
 
 说明：
   根据 public/data/v1/champion-details/*.json 中出现的 loot graphicId，
@@ -243,9 +319,9 @@ async function main() {
   console.log(`装备 icon 同步完成：${result.count} 项 -> ${result.outputDir}`)
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
-  main().catch((error) => {
-    console.error(`同步装备 icon 失败：${error.message}`)
+if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+  main().catch((error: unknown) => {
+    console.error(`同步装备 icon 失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1
   })
 }

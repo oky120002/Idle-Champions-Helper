@@ -17,6 +17,7 @@ import {
   collectChampionConsolePortraitSources,
   encodeGraphicPath,
   ensureTrailingSlash,
+  type ChampionConsolePortraitSource,
 } from './data/champion-asset-helpers.ts'
 import {
   canReuseGeneratedImage,
@@ -31,7 +32,66 @@ const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CONCURRENCY = 8
 const CONSOLE_PORTRAIT_MANIFEST_FILE_NAME = 'champion-console-portraits.manifest.json'
 
-function trimTransparentArea(pngBuffer) {
+interface TrimmedPng {
+  pngBuffer: Buffer
+  width: number
+  height: number
+  trimmed: boolean
+}
+
+interface ConsolePortraitImage {
+  path: string
+  width: number
+  height: number
+  bytes: number
+  format: 'png'
+}
+
+interface ConsolePortraitItem {
+  championId: string
+  consolePortraitGraphicId: string
+  sourceGraphic: string
+  sourceVersion: number | null
+  width: number
+  height: number
+  sourceWidth: number | null
+  sourceHeight: number | null
+  trimmed: boolean
+  wrappedBytes: number
+  bytes: number
+  sourceUrl: string
+  image: ConsolePortraitImage
+}
+
+interface DownloadOptions {
+  outputDir: string
+  currentVersion: string
+  masterApiUrl: string | undefined
+  existingItemsByChampionId: Map<string, ConsolePortraitItem>
+}
+
+interface SyncConsolePortraitsOptions {
+  input?: string
+  outputDir?: string
+  masterApiUrl?: string
+  currentVersion?: string
+  concurrency?: string
+}
+
+interface DimensionEntry {
+  size: string
+  count: number
+}
+
+interface ConsolePortraitSyncResult {
+  outputDir: string
+  count: number
+  portraits: ConsolePortraitItem[]
+  dimensions: DimensionEntry[]
+  skipped?: boolean
+}
+
+function trimTransparentArea(pngBuffer: Buffer): TrimmedPng {
   const normalizedPngBuffer = trimPngToIend(pngBuffer)
   const source = PNG.sync.read(normalizedPngBuffer)
   const bounds = findOpaqueBounds(source)
@@ -49,14 +109,13 @@ function trimTransparentArea(pngBuffer) {
 
   for (let y = 0; y < bounds.height; y += 1) {
     for (let x = 0; x < bounds.width; x += 1) {
-      const sourceIndex =
-        ((bounds.top + y) * source.width + (bounds.left + x)) * 4
+      const sourceIndex = ((bounds.top + y) * source.width + (bounds.left + x)) * 4
       const outputIndex = (y * output.width + x) * 4
 
-      output.data[outputIndex] = source.data[sourceIndex]
-      output.data[outputIndex + 1] = source.data[sourceIndex + 1]
-      output.data[outputIndex + 2] = source.data[sourceIndex + 2]
-      output.data[outputIndex + 3] = source.data[sourceIndex + 3]
+      output.data[outputIndex] = source.data[sourceIndex]!
+      output.data[outputIndex + 1] = source.data[sourceIndex + 1]!
+      output.data[outputIndex + 2] = source.data[sourceIndex + 2]!
+      output.data[outputIndex + 3] = source.data[sourceIndex + 3]!
     }
   }
 
@@ -64,17 +123,24 @@ function trimTransparentArea(pngBuffer) {
     pngBuffer: PNG.sync.write(output),
     width: output.width,
     height: output.height,
-    trimmed: bounds.width !== source.width || bounds.height !== source.height || bounds.left > 0 || bounds.top > 0,
+    trimmed:
+      bounds.width !== source.width
+      || bounds.height !== source.height
+      || bounds.left > 0
+      || bounds.top > 0,
   }
 }
 
-async function downloadChampionConsolePortrait(task, options) {
-  const existingItem = options.existingItemsByChampionId?.get(String(task.championId)) ?? null
+async function downloadChampionConsolePortrait(
+  task: ChampionConsolePortraitSource,
+  options: DownloadOptions,
+): Promise<ConsolePortraitItem> {
+  const existingItem = options.existingItemsByChampionId.get(String(task.championId)) ?? null
   const nextImagePath = buildChampionConsolePortraitPath(options.currentVersion, task.championId)
 
   if (
-    existingItem &&
-    canReuseGeneratedImage({
+    existingItem
+    && canReuseGeneratedImage({
       existingItem,
       nextSourceGraphic: task.graphic,
       nextSourceVersion: task.version,
@@ -140,7 +206,9 @@ async function downloadChampionConsolePortrait(task, options) {
   }
 }
 
-export async function syncChampionConsolePortraits(options = {}) {
+export async function syncChampionConsolePortraits(
+  options: SyncConsolePortraitsOptions = {},
+): Promise<ConsolePortraitSyncResult> {
   if (!options.input) {
     throw new Error('缺少 --input，无法根据 definitions 快照同步英雄正面图')
   }
@@ -149,7 +217,8 @@ export async function syncChampionConsolePortraits(options = {}) {
   const outputDir = path.resolve(options.outputDir ?? DEFAULT_OUTPUT_DIR)
   const concurrency = Math.max(1, Number(options.concurrency ?? DEFAULT_CONCURRENCY))
   const rawDefinitions = await readJson(input)
-  const updatedAt = getUpdatedAtFromDefinitions(rawDefinitions)
+  const rawDefinitionsRecord = rawDefinitions as Record<string, unknown>
+  const updatedAt = getUpdatedAtFromDefinitions(rawDefinitionsRecord)
   const manifestFile = path.join(outputDir, CONSOLE_PORTRAIT_MANIFEST_FILE_NAME)
   const existingManifest = await readExistingCollection(manifestFile)
 
@@ -161,16 +230,21 @@ export async function syncChampionConsolePortraits(options = {}) {
   ) {
     return {
       outputDir: path.join(outputDir, CHAMPION_CONSOLE_PORTRAIT_DIR_NAME),
-      count: existingManifest?.items?.length ?? 0,
-      portraits: existingManifest?.items ?? [],
+      count: existingManifest?.items.length ?? 0,
+      portraits: (existingManifest?.items ?? []) as ConsolePortraitItem[],
       dimensions: [],
       skipped: true,
     }
   }
 
-  const tasks = collectChampionConsolePortraitSources(rawDefinitions, options.masterApiUrl)
-  const existingItemsByChampionId = new Map(
-    (existingManifest?.items ?? []).map((item) => [String(item.championId), item]),
+  const tasks = collectChampionConsolePortraitSources(rawDefinitionsRecord, options.masterApiUrl)
+  const existingItemsByChampionId = new Map<string, ConsolePortraitItem>(
+    (existingManifest?.items ?? []).map(
+      (item): [string, ConsolePortraitItem] => [
+        String((item as ConsolePortraitItem).championId),
+        item as ConsolePortraitItem,
+      ],
+    ),
   )
 
   await mkdir(path.join(outputDir, CHAMPION_CONSOLE_PORTRAIT_DIR_NAME), { recursive: true })
@@ -194,7 +268,7 @@ export async function syncChampionConsolePortraits(options = {}) {
     updatedAt,
   })
 
-  const dimensionSummary = new Map()
+  const dimensionSummary = new Map<string, number>()
 
   portraits.forEach((portrait) => {
     const dimensionKey =
@@ -212,9 +286,9 @@ export async function syncChampionConsolePortraits(options = {}) {
   }
 }
 
-function printUsage() {
+function printUsage(): void {
   console.log(`用法：
-  node scripts/sync-idle-champions-console-portraits.mjs --input <raw-json>
+  node scripts/sync-idle-champions-console-portraits.ts --input <raw-json>
 
 可选参数：
   --input <file>             官方 definitions 快照 JSON
@@ -225,7 +299,7 @@ function printUsage() {
 `)
 }
 
-async function main() {
+async function main(): Promise<void> {
   const { values } = parseArgs({
     options: {
       input: { type: 'string' },
@@ -251,9 +325,9 @@ async function main() {
   )
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
-  main().catch((error) => {
-    console.error(`同步英雄正面图失败：${error.message}`)
+if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+  main().catch((error: unknown) => {
+    console.error(`同步英雄正面图失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1
   })
 }

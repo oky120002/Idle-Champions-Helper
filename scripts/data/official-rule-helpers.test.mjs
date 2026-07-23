@@ -16,7 +16,7 @@ import {
   normalizePatronObjectiveTiers,
   normalizeTrialsDifficultyDefinition,
   normalizeTrialsRoleDefinition,
-} from './official-rule-helpers.mjs'
+} from './official-rule-helpers.ts'
 
 test('normalizePatronDefinition 结构化提取 patron 限制规则', () => {
   const patron = normalizePatronDefinition(

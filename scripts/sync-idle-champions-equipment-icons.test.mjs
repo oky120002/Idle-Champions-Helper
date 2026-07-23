@@ -5,7 +5,7 @@ import path from 'node:path'
 import zlib from 'node:zlib'
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { PNG } from 'pngjs'
-import { syncChampionEquipmentIcons } from './sync-idle-champions-equipment-icons.mjs'
+import { syncChampionEquipmentIcons } from './sync-idle-champions-equipment-icons.ts'
 
 function createPng(width, height, colorByPixel) {
   const png = new PNG({ width, height })

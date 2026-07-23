@@ -3,11 +3,26 @@
  * path references that should never appear in committed source or build output.
  */
 
-/** @typedef {'numeric-user-id' | 'hex-hash' | 'private-path-reference'} FindingKind */
+export type FindingKind = 'numeric-user-id' | 'hex-hash' | 'private-path-reference'
 
-/** @typedef {{kind: FindingKind, filePath: string, line: number, match: string, description: string}} SensitiveFinding */
+export interface SensitiveFinding {
+  kind: FindingKind
+  filePath: string
+  line: number
+  match: string
+  description: string
+}
 
-/** @typedef {{filePath: string, findings: SensitiveFinding[], hasFindings: boolean}} SensitiveScanResult */
+export interface SensitiveScanResult {
+  filePath: string
+  findings: SensitiveFinding[]
+  hasFindings: boolean
+}
+
+export interface SensitiveInputFile {
+  content: string
+  filePath: string
+}
 
 // 32-char lowercase hex string (MD5-style)
 const HEX_HASH_RE = /\b[0-9a-f]{32}\b/gu
@@ -19,60 +34,54 @@ const CREDENTIAL_VALUE_RE = /(?:user[_\s-]?id|hash|user_id|ic_private)\s*[:=]\s*
 const PRIVATE_PATH_RE = /tmp[/\\]private-user-data/gu
 
 // Known desensitized sample values used in UI components
-const KNOWN_SAMPLE_VALUES = new Set([
+const KNOWN_SAMPLE_VALUES: ReadonlySet<string> = new Set([
   '123456789',
   'abcdef1234567890abcdef1234567890',
 ])
 
 /**
  * Scan file content for sensitive data patterns.
- *
- * @param {string} content - File content to scan.
- * @param {string} filePath - Logical file path (for reporting).
- * @returns {SensitiveScanResult}
  */
-export function scanContent(content, filePath) {
-  /** @type {SensitiveFinding[]} */
-  const findings = []
-
+export function scanContent(content: string, filePath: string): SensitiveScanResult {
+  const findings: SensitiveFinding[] = []
   const lines = content.split('\n')
 
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i]
+  for (let i = 0; i < lines.length; i += 1) {
+    const line = lines[i]!
     const lineNum = i + 1
 
-    // Check for credential-like numeric values
     for (const match of line.matchAll(CREDENTIAL_VALUE_RE)) {
-      if (KNOWN_SAMPLE_VALUES.has(match[1])) continue
+      const credential = match[1]!
+      if (KNOWN_SAMPLE_VALUES.has(credential)) continue
       findings.push({
         kind: 'numeric-user-id',
         filePath,
         line: lineNum,
-        match: match[1],
-        description: `Numeric credential value "${match[1]}" appears to be a real user ID or hash`,
+        match: credential,
+        description: `Numeric credential value "${credential}" appears to be a real user ID or hash`,
       })
     }
 
-    // Check for 32-char hex hashes
     for (const match of line.matchAll(HEX_HASH_RE)) {
-      if (KNOWN_SAMPLE_VALUES.has(match[0])) continue
+      const hexHash = match[0]
+      if (KNOWN_SAMPLE_VALUES.has(hexHash)) continue
       findings.push({
         kind: 'hex-hash',
         filePath,
         line: lineNum,
-        match: match[0],
-        description: `32-character hex hash "${match[0]}" looks like a real credential hash`,
+        match: hexHash,
+        description: `32-character hex hash "${hexHash}" looks like a real credential hash`,
       })
     }
 
-    // Check for private data path references
     for (const match of line.matchAll(PRIVATE_PATH_RE)) {
+      const pathRef = match[0]
       findings.push({
         kind: 'private-path-reference',
         filePath,
         line: lineNum,
-        match: match[0],
-        description: `Reference to private data path "${match[0]}" should not appear in committed source`,
+        match: pathRef,
+        description: `Reference to private data path "${pathRef}" should not appear in committed source`,
       })
     }
   }
@@ -82,10 +91,7 @@ export function scanContent(content, filePath) {
 
 /**
  * Scan multiple file contents.
- *
- * @param {{content: string, filePath: string}[]} files
- * @returns {SensitiveScanResult[]}
  */
-export function scanFiles(files) {
+export function scanFiles(files: readonly SensitiveInputFile[]): SensitiveScanResult[] {
   return files.map(({ content, filePath }) => scanContent(content, filePath))
 }

@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import {
   loadPrivateCredentials,
   parseLocalEnvFile,
-} from './private-env-loader.mjs'
+} from './private-env-loader.ts'
 
 describe('private env loader', () => {
   it('从 process env 读取 IC_PRIVATE_USER_ID 和 IC_PRIVATE_HASH', () => {

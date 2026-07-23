@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { scanContent } from './sensitive-output-scanner.mjs'
+import { scanContent } from './sensitive-output-scanner.ts'
 
 describe('privacy scan script', () => {
   it('对 fixture secrets 抱怨', () => {

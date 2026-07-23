@@ -2,7 +2,13 @@ import { describe, expect, it } from 'vitest'
 import {
   createManifest,
   writeManifest,
-} from './private-snapshot-manifest.mjs'
+} from './private-snapshot-manifest.ts'
+
+const stubManifest = createManifest({
+  payloadName: 'x',
+  userId: '12345678',
+  hash: 'abc123def456789abc123def456789ab',
+})
 
 describe('private snapshot manifest', () => {
   it('输出路径位于 tmp/private-user-data/<timestamp>/', () => {
@@ -35,7 +41,7 @@ describe('private snapshot manifest', () => {
     expect(() =>
       writeManifest({
         targetDir: 'src/data/snapshots',
-        manifest: {},
+        manifest: stubManifest,
       }),
     ).toThrow(/tmp[/\\]private-user-data/)
   })
@@ -44,7 +50,7 @@ describe('private snapshot manifest', () => {
     expect(() =>
       writeManifest({
         targetDir: '',
-        manifest: {},
+        manifest: stubManifest,
       }),
     ).toThrow()
   })

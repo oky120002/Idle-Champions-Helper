@@ -1,4 +1,4 @@
-declare module './scripts/private-user-data/private-user-profile-payloads.mjs' {
+declare module './scripts/private-user-data/private-user-profile-payloads.ts' {
   export const DEFAULT_PRIVATE_ENV_FILE: string
   export const DEFAULT_PRIVATE_BASE_URL: string
   export const DEFAULT_PRIVATE_MOBILE_CLIENT_VERSION: string

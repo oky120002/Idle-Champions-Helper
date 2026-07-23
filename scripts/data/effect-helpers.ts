@@ -3,6 +3,7 @@ import {
   extractTargetIdsFromParsedEffectPayload,
   parseEffectPayload,
   resolveEffectPayloadAmountToken,
+  type ParsedEffectPayload,
 } from '../../src/domain/effects/effect-string.ts'
 import {
   attachSignalSemantics,
@@ -14,9 +15,105 @@ import {
   parsePerHeroExpr,
 } from '../../src/domain/abilities/signalSemantics.ts'
 import { parseHeroPredicate } from '../../src/domain/abilities/heroPredicate.ts'
+import type { JsonValue } from '../../src/domain/types'
+import type {
+  HeroAbilityAmountFunc,
+  HeroAbilityKind,
+  HeroAbilitySignal,
+  HeroAbilitySource,
+  HeroPositionQualifier,
+  HeroPositionRelation,
+  HeroQualifier,
+  HeroUnsupportedSignal,
+} from '../../src/domain/abilities/abilityModel'
 
-function resolveNumericValue(effectValue, effectPayload, effectPayloads, upgradePayloadsById) {
-  if (typeof effectPayload?.meta?.amount_expr === 'string') {
+// === Internal types ===
+
+type SignalBucket = 'supportSignals' | 'carrySignals'
+
+interface EffectEntry {
+  effectString: string
+  effect: Record<string, unknown>
+  effectPayload: ParsedEffectPayload | null
+  effectPayloads: Array<ParsedEffectPayload | null | undefined>
+  sourceBucket: string
+  upgradeId: string | null
+  signalPreset: HeroAbilitySignal | null
+  bucketOverride: SignalBucket | null
+  upgradePayloadsById: Map<string, Array<ParsedEffectPayload | null | undefined>> | null
+}
+
+// normalizeEffectSignal 接收的 metadata：所有字段可选（默认 {}），
+// 调用方通常传完整 EffectEntry，但也允许空对象走 fallback 路径。
+interface EffectSignalMetadata {
+  signalPreset?: HeroAbilitySignal | null
+  bucketOverride?: SignalBucket | null
+  effectPayload?: ParsedEffectPayload | null
+  effectPayloads?: Array<ParsedEffectPayload | null | undefined>
+  upgradePayloadsById?: Map<string, Array<ParsedEffectPayload | null | undefined>> | null
+  effect?: unknown
+}
+
+type EffectSignalResult =
+  | { ok: true; signal: HeroAbilitySignal; bucket: SignalBucket }
+  | { ok: false; unsupported: HeroUnsupportedSignal }
+
+interface EffectResolveContext {
+  effectName: string
+  effectValue: string
+  source: HeroAbilitySource
+  numericValue: number
+  rawEffect: string
+  effectMetadata: EffectSignalMetadata
+}
+
+interface BuffUpgradeSeed {
+  amountFunc?: HeroAbilityAmountFunc
+  stackFunc?: string
+  formationCountQualifier?: HeroQualifier
+  formationCountPositionQualifier?: HeroPositionQualifier
+}
+
+interface ResolvedEntrySignal {
+  ok: true
+  signal: HeroAbilitySignal
+  bucket: SignalBucket
+}
+
+interface BuffUpgradeBaseSummary {
+  status: 'wrapper-supported-base-resolved' | 'wrapper-supported-base-unresolved'
+  resolvedSignals: ResolvedEntrySignal[]
+  unresolvedBaseEffectNames: string[]
+  ignoredBaseEffectNames: string[]
+  unresolvedReason: string | null
+}
+
+interface BuffUpgradeWrapperAuditEntry {
+  wrapperKind: string
+  wrapperEffectString: string
+  status: 'wrapper-supported-base-resolved' | 'wrapper-supported-base-unresolved' | 'wrapper-family-unsupported'
+  targetUpgradeIds: string[]
+  unresolvedReason: string | null
+  unresolvedBaseEffectNames: string[]
+  ignoredBaseEffectNames: string[]
+}
+
+// raw JSON 收窄辅助：把 unknown 安全收成 Record<string, unknown>（null 安全）。
+function asRecord(value: unknown): Record<string, JsonValue> | null {
+  return value !== null && typeof value === "object" ? (value as Record<string, JsonValue>) : null
+}
+
+function asUnknownArray(value: unknown): unknown[] {
+  return Array.isArray(value) ? value : []
+}
+
+function resolveNumericValue(
+  effectValue: string,
+  effectPayload: ParsedEffectPayload | null | undefined,
+  effectPayloads: Array<ParsedEffectPayload | null | undefined> | null | undefined,
+  upgradePayloadsById: Map<string, Array<ParsedEffectPayload | null | undefined>> | null | undefined,
+): number {
+  if (effectPayload && typeof effectPayload.meta?.amount_expr === 'string') {
     const resolved = resolveEffectPayloadAmountToken(
       effectPayload,
       effectPayloads ?? [effectPayload],
@@ -32,11 +129,15 @@ function resolveNumericValue(effectValue, effectPayload, effectPayloads, upgrade
   return parseFloat(effectValue)
 }
 
-function buildRawEffect(effectName, effectValue, effectPayload) {
+function buildRawEffect(
+  effectName: string,
+  effectValue: string,
+  effectPayload: ParsedEffectPayload | null | undefined,
+): string {
   return effectPayload?.effectString ?? `${effectName},${effectValue}`
 }
 
-function resolveBucket(effect) {
+function resolveBucket(effect: unknown): { ok: true; bucket: SignalBucket } | { ok: false; note: string } {
   const explicitTargeting = normalizeExplicitTargeting(effect)
 
   if (explicitTargeting.status === 'unsupported') {
@@ -55,7 +156,7 @@ function resolveBucket(effect) {
   }
 }
 
-function resolveCountRelation(rawTarget) {
+function resolveCountRelation(rawTarget: unknown): HeroPositionRelation | null {
   const targeting = normalizeExplicitTargeting({ targets: [rawTarget] })
 
   // 'all' / 'all_slots' → relation 'any' = 全阵位计数（不计位置，只按 formationCountQualifier
@@ -68,7 +169,7 @@ function resolveCountRelation(rawTarget) {
   return targeting.relation
 }
 
-function parseTagQualifierFromArg(rawValue) {
+function parseTagQualifierFromArg(rawValue: unknown): HeroQualifier | null {
   if (typeof rawValue !== 'string') {
     return null
   }
@@ -76,31 +177,33 @@ function parseTagQualifierFromArg(rawValue) {
   return predicate ? { predicate } : null
 }
 
-function buildEffectEntry({
-  effectString,
-  effect,
-  effectPayload,
-  effectPayloads = [],
-  sourceBucket,
-  upgradeId = null,
-  signalPreset = null,
-  bucketOverride = null,
-  upgradePayloadsById = null,
-}) {
+type EffectEntryInit = {
+  effectString: string
+  effect: Record<string, unknown>
+  effectPayload: ParsedEffectPayload | null
+  effectPayloads?: Array<ParsedEffectPayload | null | undefined>
+  sourceBucket: string
+  upgradeId?: string | null
+  signalPreset?: HeroAbilitySignal | null
+  bucketOverride?: SignalBucket | null
+  upgradePayloadsById?: Map<string, Array<ParsedEffectPayload | null | undefined>> | null
+}
+
+function buildEffectEntry(init: EffectEntryInit): EffectEntry {
   return {
-    effectString,
-    effect,
-    effectPayload,
-    effectPayloads,
-    sourceBucket,
-    upgradeId,
-    signalPreset,
-    bucketOverride,
-    upgradePayloadsById,
+    effectString: init.effectString,
+    effect: init.effect,
+    effectPayload: init.effectPayload,
+    effectPayloads: init.effectPayloads ?? [],
+    sourceBucket: init.sourceBucket,
+    upgradeId: init.upgradeId ?? null,
+    signalPreset: init.signalPreset ?? null,
+    bucketOverride: init.bucketOverride ?? null,
+    upgradePayloadsById: init.upgradePayloadsById ?? null,
   }
 }
 
-const BUFF_UPGRADE_WRAPPER_KINDS = new Set([
+const BUFF_UPGRADE_WRAPPER_KINDS = new Set<string>([
   'buff_upgrade',
   'buff_upgrades',
   'buff_upgrade_per_any_tagged_crusader_mult',
@@ -117,12 +220,12 @@ const BUFF_UPGRADE_WRAPPER_KINDS = new Set([
   'buff_upgrade_per_crusader',
 ])
 
-function isAnyBuffUpgradeWrapperKind(kind) {
+function isAnyBuffUpgradeWrapperKind(kind: unknown): boolean {
   return kind === 'buff_upgrades'
     || (typeof kind === 'string' && kind.startsWith('buff_upgrade'))
 }
 
-function isBuffUpgradeKind(kind) {
+function isBuffUpgradeKind(kind: unknown): kind is string {
   return typeof kind === 'string' && BUFF_UPGRADE_WRAPPER_KINDS.has(kind)
 }
 
@@ -130,7 +233,7 @@ function isBuffUpgradeKind(kind) {
  * crit effect 名 → (kind, amountFunc) 映射。阶段 4.2。
  * 默认暴击 chance/damage 由 crit_factor 公式（steadyStateScoring）应用，不在此处。
  */
-const CRIT_KIND_BY_EFFECT = {
+const CRIT_KIND_BY_EFFECT: Record<string, { kind: HeroAbilityKind; amountFunc: HeroAbilityAmountFunc }> = {
   buff_base_crit_chance_add: { kind: 'heroCritChance', amountFunc: 'add' },
   buff_base_crit_chance_mult: { kind: 'heroCritChance', amountFunc: 'mult' },
   buff_base_crit_damage: { kind: 'heroCritDamage', amountFunc: 'add' },
@@ -145,7 +248,7 @@ const CRIT_KIND_BY_EFFECT = {
  * health/healing 折入 health multiplier（MVP：healing 近似为生命加成，survival 软约束）；
  * damage_reduction 单独 kind（玩家侧减伤，作用于 incoming damage）。
  */
-const SURVIVAL_KIND_BY_EFFECT = {
+const SURVIVAL_KIND_BY_EFFECT: Record<string, { kind: HeroAbilityKind; amountFunc: HeroAbilityAmountFunc }> = {
   health_mult: { kind: 'heroHealthMultiplier', amountFunc: 'add' },
   increase_health_by_source_percent: { kind: 'heroHealthMultiplier', amountFunc: 'add' },
   healing_mult: { kind: 'heroHealthMultiplier', amountFunc: 'add' },
@@ -162,7 +265,7 @@ const SURVIVAL_KIND_BY_EFFECT = {
  * null = 无条件（对任意怪物生效）；数组 = 仅当场景 enemyTypes 含其中任一 tag 时生效。
  * increase_damage_against_monster_tag 的 tag 动态取自 args[1]，单独处理（| 为 OR，词表与 enemyTypes 一致）。
  */
-const VULNERABILITY_MONSTER_TAGS_BY_EFFECT = {
+const VULNERABILITY_MONSTER_TAGS_BY_EFFECT: Record<string, string[] | null> = {
   damage_increase: null,
   increase_damage_against_monster: null,
   increase_armored_damage: ['armored'],
@@ -174,7 +277,7 @@ const VULNERABILITY_MONSTER_TAGS_BY_EFFECT = {
  * attack_speed_mult/time_scale → attackSpeedMult（mult）；reduce_attack_cooldown → attackSpeedMult（add，
  * 减少攻击冷却=提速）；reduce_ultimate_cooldown/ability_cooldown_reduction_mult → cooldownReduction。
  */
-const SPEED_KIND_BY_EFFECT = {
+const SPEED_KIND_BY_EFFECT: Record<string, { kind: HeroAbilityKind; amountFunc: HeroAbilityAmountFunc }> = {
   base_attack_speed_mult: { kind: 'attackSpeedMult', amountFunc: 'mult' },
   ult_attack_speed_mult: { kind: 'attackSpeedMult', amountFunc: 'mult' },
   time_scale: { kind: 'attackSpeedMult', amountFunc: 'mult' },
@@ -191,26 +294,30 @@ const SPEED_KIND_BY_EFFECT = {
  * 故无论来自 effectReference（sourceBucket='upgrade'）还是 effect_keys（'upgrade-effect-key'）路径，
  * 裸 wrapper 名都不进 unsupportedSignals——否则会产生数千条 "No parser for effect: buff_upgrade" 噪声。
  */
-export function shouldIgnoreUnsupportedEffectEntry(rawEffect) {
+export function shouldIgnoreUnsupportedEffectEntry(rawEffect: string): boolean {
   if (rawEffect === 'effect_def') {
     return true
   }
   return isBuffUpgradeKind(rawEffect)
 }
 
-function resolveTargetUpgradeIds(payload) {
+function resolveTargetUpgradeIds(payload: ParsedEffectPayload | null): string[] {
   if (!payload) {
     return []
   }
 
   if (payload.kind === 'buff_upgrade_per_target_crusader') {
-    return [payload.args[1]].filter(Boolean)
+    return [payload.args[1] ?? undefined].filter((id): id is string => Boolean(id))
   }
 
   return extractTargetIdsFromParsedEffectPayload(payload)
 }
 
-function parseWhereQualifierFromArgs(compare, comparison, check) {
+function parseWhereQualifierFromArgs(
+  compare: unknown,
+  comparison: unknown,
+  check: unknown,
+): HeroQualifier | null {
   if (
     typeof compare !== 'string'
     || typeof comparison !== 'string'
@@ -248,10 +355,10 @@ function parseWhereQualifierFromArgs(compare, comparison, check) {
   }
 
   const nodes = statQualifiersToNodes(requiredStats)
-  return { predicate: nodes.length === 1 ? nodes[0] : { op: 'and', children: nodes } }
+  return { predicate: nodes.length === 1 ? nodes[0]! : { op: 'and', children: nodes } }
 }
 
-function resolveBuffUpgradeSeed(entry) {
+function resolveBuffUpgradeSeed(entry: EffectEntry): BuffUpgradeSeed | null {
   const payload = entry.effectPayload
   if (!payload) {
     return null
@@ -355,7 +462,7 @@ function resolveBuffUpgradeSeed(entry) {
   return null
 }
 
-function resolveEntrySignal(entry) {
+function resolveEntrySignal(entry: EffectEntry): EffectSignalResult | null {
   if (entry.signalPreset) {
     return {
       ok: true,
@@ -387,16 +494,24 @@ function resolveEntrySignal(entry) {
   }
 }
 
-function collectRawEffectEntries(detail) {
-  const effectEntries = []
-  const upgradeEffectEntriesById = new Map()
+function collectRawEffectEntries(detail: unknown): {
+  effectEntries: EffectEntry[]
+  upgradeEffectEntriesById: Map<string, EffectEntry[]>
+} {
+  const detailRecord = asRecord(detail)
+  const effectEntries: EffectEntry[] = []
+  const upgradeEffectEntriesById = new Map<string, EffectEntry[]>()
   // upgrade id → 该 upgrade 的 effect_keys payloads；供 amount_expr='upgrade_amount(id,index)'
   // 跨 upgrade 解析目标 effect 的 amount（真实数据有少量跨 upgrade 引用）。
-  const upgradePayloadsById = new Map()
+  const upgradePayloadsById = new Map<string, Array<ParsedEffectPayload | null | undefined>>()
 
-  for (const upgrade of detail.upgrades ?? []) {
-    const upgradeEntries = []
-    const upgradeId = String(upgrade.id ?? '')
+  for (const upgradeRaw of asUnknownArray(detailRecord?.upgrades)) {
+    const upgrade = asRecord(upgradeRaw)
+    if (!upgrade) continue
+    const upgradeEntries: EffectEntry[] = []
+    const upgradeId = typeof upgrade.id === 'string' || typeof upgrade.id === 'number'
+      ? String(upgrade.id)
+      : ''
 
     if (typeof upgrade.effectReference === 'string') {
       const effectPayload = parseEffectPayload(upgrade.effectReference)
@@ -418,14 +533,21 @@ function collectRawEffectEntries(detail) {
     // （CNE 单元素序列化为裸对象而非 1 元数组），非数组时整条静默丢弃。当前影响 0
     // （6 个全是孤儿 effect_def，无 upgrade 引用）；若将来出现被引用的非数组
     // effect_keys，在消费层归一化「非数组→[对象]」或在 normalize 层 coerce。
-    const effectKeys = upgrade.effectDefinition?.snapshots?.original?.effect_keys
-    if (Array.isArray(effectKeys)) {
-      const effectPayloads = effectKeys.map((effectKey) => buildEffectKeyPayload(effectKey))
+    const effectDefinition = asRecord(upgrade.effectDefinition)
+    const snapshots = asRecord(effectDefinition?.snapshots)
+    const original = asRecord(snapshots?.original)
+    const effectKeys = asUnknownArray(original?.effect_keys)
+    if (effectKeys.length > 0) {
+      const effectPayloads = effectKeys.map((effectKey) => {
+        const record = asRecord(effectKey)
+        return record ? buildEffectKeyPayload(record) : null
+      })
       if (upgradeId) {
         upgradePayloadsById.set(upgradeId, effectPayloads)
       }
-      for (const [index, effectKey] of effectKeys.entries()) {
-        if (typeof effectKey?.effect_string === 'string') {
+      effectKeys.forEach((effectKeyRaw, index) => {
+        const effectKey = asRecord(effectKeyRaw)
+        if (effectKey && typeof effectKey.effect_string === 'string') {
           const entry = buildEffectEntry({
             effectString: effectKey.effect_string,
             effect: effectKey,
@@ -437,7 +559,7 @@ function collectRawEffectEntries(detail) {
           effectEntries.push(entry)
           upgradeEntries.push(entry)
         }
-      }
+      })
     }
 
     if (upgradeEntries.length > 0) {
@@ -445,9 +567,12 @@ function collectRawEffectEntries(detail) {
     }
   }
 
-  for (const lootItem of detail.loot ?? []) {
-    for (const effect of lootItem.effects ?? []) {
-      if (typeof effect?.effect_string === 'string') {
+  for (const lootItemRaw of asUnknownArray(detailRecord?.loot)) {
+    const lootItem = asRecord(lootItemRaw)
+    if (!lootItem) continue
+    for (const effectRaw of asUnknownArray(lootItem.effects)) {
+      const effect = asRecord(effectRaw)
+      if (effect && typeof effect.effect_string === 'string') {
         effectEntries.push(buildEffectEntry({
           effectString: effect.effect_string,
           effect,
@@ -459,9 +584,12 @@ function collectRawEffectEntries(detail) {
     }
   }
 
-  for (const legendaryEffect of detail.legendaryEffects ?? []) {
-    for (const effect of legendaryEffect.effects ?? []) {
-      if (typeof effect?.effect_string === 'string') {
+  for (const legendaryEffectRaw of asUnknownArray(detailRecord?.legendaryEffects)) {
+    const legendaryEffect = asRecord(legendaryEffectRaw)
+    if (!legendaryEffect) continue
+    for (const effectRaw of asUnknownArray(legendaryEffect.effects)) {
+      const effect = asRecord(effectRaw)
+      if (effect && typeof effect.effect_string === 'string') {
         effectEntries.push(buildEffectEntry({
           effectString: effect.effect_string,
           effect,
@@ -477,9 +605,12 @@ function collectRawEffectEntries(detail) {
   // 同属 M1 理论最大 carryDps 基线；含 filter_targets/stack_func/per_hero_expr，由消费层
   // attachSignalSemantics 统一处理。阶段 13「feat 精细乘数」指按玩家实际选择精算，
   // 不影响此处「全 feat 进理论基线」。
-  for (const feat of detail.feats ?? []) {
-    for (const effect of feat.effects ?? []) {
-      if (typeof effect?.effect_string === 'string') {
+  for (const featRaw of asUnknownArray(detailRecord?.feats)) {
+    const feat = asRecord(featRaw)
+    if (!feat) continue
+    for (const effectRaw of asUnknownArray(feat.effects)) {
+      const effect = asRecord(effectRaw)
+      if (effect && typeof effect.effect_string === 'string') {
         effectEntries.push(buildEffectEntry({
           effectString: effect.effect_string,
           effect,
@@ -499,14 +630,16 @@ function collectRawEffectEntries(detail) {
   return { effectEntries, upgradeEffectEntriesById }
 }
 
-function summarizeBuffUpgradeBase(entry, targetEntries) {
-  const unresolvedBaseEffectNames = []
-  const ignoredBaseEffectNames = []
-  const resolvedSignals = []
+function summarizeBuffUpgradeBase(
+  targetEntries: EffectEntry[],
+): BuffUpgradeBaseSummary {
+  const unresolvedBaseEffectNames: string[] = []
+  const ignoredBaseEffectNames: string[] = []
+  const resolvedSignals: ResolvedEntrySignal[] = []
 
   for (const targetEntry of targetEntries) {
     const targetSignalResult = resolveEntrySignal(targetEntry)
-    if (targetSignalResult?.ok) {
+    if (targetSignalResult && targetSignalResult.ok) {
       resolvedSignals.push(targetSignalResult)
       continue
     }
@@ -552,9 +685,9 @@ function summarizeBuffUpgradeBase(entry, targetEntries) {
   }
 }
 
-export function analyzeBuffUpgradeWrappers(detail) {
+export function analyzeBuffUpgradeWrappers(detail: unknown): BuffUpgradeWrapperAuditEntry[] {
   const { effectEntries, upgradeEffectEntriesById } = collectRawEffectEntries(detail)
-  const auditEntries = []
+  const auditEntries: BuffUpgradeWrapperAuditEntry[] = []
 
   for (const entry of effectEntries) {
     const kind = entry.effectPayload?.kind
@@ -562,13 +695,14 @@ export function analyzeBuffUpgradeWrappers(detail) {
       continue
     }
 
+    const wrapperKind = typeof kind === 'string' ? kind : ''
     const targetUpgradeIds = resolveTargetUpgradeIds(entry.effectPayload)
     const wrapperSupported = isBuffUpgradeKind(kind)
     const buffSeed = wrapperSupported ? resolveBuffUpgradeSeed(entry) : null
 
     if (!wrapperSupported || !buffSeed) {
       auditEntries.push({
-        wrapperKind: kind,
+        wrapperKind,
         wrapperEffectString: entry.effectString,
         status: 'wrapper-family-unsupported',
         targetUpgradeIds,
@@ -582,10 +716,10 @@ export function analyzeBuffUpgradeWrappers(detail) {
     const allTargetEntries = targetUpgradeIds.flatMap((targetUpgradeId) =>
       upgradeEffectEntriesById.get(String(targetUpgradeId)) ?? [],
     )
-    const summary = summarizeBuffUpgradeBase(entry, allTargetEntries)
+    const summary = summarizeBuffUpgradeBase(allTargetEntries)
 
     auditEntries.push({
-      wrapperKind: kind,
+      wrapperKind,
       wrapperEffectString: entry.effectString,
       status: summary.status,
       targetUpgradeIds,
@@ -599,7 +733,12 @@ export function analyzeBuffUpgradeWrappers(detail) {
 }
 
 // 构造 unsupported 结果。normalizeEffectSignal 各分支共用，集中此处避免重复。
-function makeUnsupported(effectName, effectValue, note, source) {
+function makeUnsupported(
+  effectName: string,
+  effectValue: string,
+  note: string,
+  source: HeroAbilitySource,
+): EffectSignalResult {
   return {
     ok: false,
     unsupported: { rawEffect: effectName, rawValue: effectValue, note, source },
@@ -607,14 +746,19 @@ function makeUnsupported(effectName, effectValue, note, source) {
 }
 
 // crit/survival/speed 三个 map 派发池共用信号形状：kind + value + 可选 amountFunc=mult。
-function buildSimplePoolSignal({ numericValue, rawEffect, source }, kind, amountFunc, bucket) {
+function buildSimplePoolSignal(
+  ctx: Pick<EffectResolveContext, 'numericValue' | 'rawEffect' | 'source'>,
+  kind: HeroAbilityKind,
+  amountFunc: HeroAbilityAmountFunc,
+  bucket: SignalBucket,
+): EffectSignalResult {
   return {
     ok: true,
     signal: {
       kind,
-      value: numericValue,
-      rawEffect,
-      source,
+      value: ctx.numericValue,
+      rawEffect: ctx.rawEffect,
+      source: ctx.source,
       ...(amountFunc === 'mult' ? { amountFunc: 'mult' } : {}),
     },
     bucket,
@@ -623,7 +767,7 @@ function buildSimplePoolSignal({ numericValue, rawEffect, source }, kind, amount
 
 // hero_dps_mult_per_target_crusader[_mult|_prebonus_mult]：按位置计数目标。
 // add（单数名）/ mult（_mult、_prebonus_mult）仅 amountFunc 不同，其余逻辑一致。
-function resolveHeroDpsPerTarget(ctx, amountFunc) {
+function resolveHeroDpsPerTarget(ctx: EffectResolveContext, amountFunc: HeroAbilityAmountFunc): EffectSignalResult {
   const { effectName, effectValue, source, numericValue, rawEffect, effectMetadata } = ctx
   const bucketResult = resolveBucket(effectMetadata.effect)
   if (!bucketResult.ok) {
@@ -656,7 +800,7 @@ function resolveHeroDpsPerTarget(ctx, amountFunc) {
 }
 
 // hero_dps_mult_per_tagged_crusader_mult[_amount_before]：按 tag 计数。两个 effect 逻辑完全一致。
-function resolveHeroDpsPerTagged(ctx) {
+function resolveHeroDpsPerTagged(ctx: EffectResolveContext): EffectSignalResult {
   const { effectName, effectValue, source, numericValue, rawEffect, effectMetadata } = ctx
   const bucketResult = resolveBucket(effectMetadata.effect)
   if (!bucketResult.ok) {
@@ -689,7 +833,7 @@ function resolveHeroDpsPerTagged(ctx) {
 }
 
 // 阶段 2：DPS 池。global_dps_multiplier_mult → 全队；hero_dps_* → 英雄侧（carry/support 按 targeting）。
-function resolveDpsSignal(ctx) {
+function resolveDpsSignal(ctx: EffectResolveContext): EffectSignalResult | null {
   const { effectName, effectValue, source, numericValue, rawEffect, effectMetadata } = ctx
 
   if (effectName === 'global_dps_multiplier_mult') {
@@ -783,7 +927,8 @@ function resolveDpsSignal(ctx) {
 }
 
 // adjacent_* 前缀 → 邻位 buff。
-function resolveAdjacentSignal({ effectName, numericValue, rawEffect, source }) {
+function resolveAdjacentSignal(ctx: Pick<EffectResolveContext, 'effectName' | 'numericValue' | 'rawEffect' | 'source'>): EffectSignalResult | null {
+  const { effectName, numericValue, rawEffect, source } = ctx
   if (!effectName.startsWith('adjacent_')) {
     return null
   }
@@ -795,7 +940,7 @@ function resolveAdjacentSignal({ effectName, numericValue, rawEffect, source }) 
 }
 
 // 阶段 3.2：金币池（gold find 全队聚合 stat → globalGoldMultiplier）。
-function resolveGoldSignal(ctx) {
+function resolveGoldSignal(ctx: EffectResolveContext): EffectSignalResult | null {
   const { effectName, effectValue, source, numericValue, rawEffect, effectMetadata } = ctx
 
   if (effectName === 'gold_multiplier_mult') {
@@ -836,19 +981,19 @@ function resolveGoldSignal(ctx) {
 }
 
 // 阶段 4.2：暴击池（chance/damage 各 global/hero；默认值来自 default_crit_info，在 crit_factor 公式应用，不在解析层）。
-function resolveCritSignal(ctx) {
+function resolveCritSignal(ctx: EffectResolveContext): EffectSignalResult | null {
   const match = CRIT_KIND_BY_EFFECT[ctx.effectName]
   return match ? buildSimplePoolSignal(ctx, match.kind, match.amountFunc, 'supportSignals') : null
 }
 
 // 阶段 5.1：survival 池（health/healing/damage_reduction）。
-function resolveSurvivalSignal(ctx) {
+function resolveSurvivalSignal(ctx: EffectResolveContext): EffectSignalResult | null {
   const match = SURVIVAL_KIND_BY_EFFECT[ctx.effectName]
   return match ? buildSimplePoolSignal(ctx, match.kind, match.amountFunc, 'supportSignals') : null
 }
 
 // 阶段 6.2：vulnerability 池（敌人侧受伤倍率，条件性按怪物 tag）。
-function resolveVulnerabilitySignal(ctx) {
+function resolveVulnerabilitySignal(ctx: EffectResolveContext): EffectSignalResult | null {
   const { effectName, source, numericValue, rawEffect, effectMetadata } = ctx
 
   if (effectName === 'increase_damage_against_monster_tag') {
@@ -889,13 +1034,14 @@ function resolveVulnerabilitySignal(ctx) {
 
 // 阶段 7.1：speed/cooldown 池（进 pool 供覆盖率与未来 ult/step-simulation 消费；7.2 决定不进 carryDps——
 // hero_dps 按秒模型，speed 精确建模依赖 BUD/cooldown，MVP 暂不应用）。
-function resolveSpeedSignal(ctx) {
+function resolveSpeedSignal(ctx: EffectResolveContext): EffectSignalResult | null {
   const match = SPEED_KIND_BY_EFFECT[ctx.effectName]
   return match ? buildSimplePoolSignal(ctx, match.kind, match.amountFunc, 'supportSignals') : null
 }
 
 // tag_* 前缀 → tagged champion buff。
-function resolveTagSignal({ effectName, numericValue, rawEffect, source }) {
+function resolveTagSignal(ctx: Pick<EffectResolveContext, 'effectName' | 'numericValue' | 'rawEffect' | 'source'>): EffectSignalResult | null {
+  const { effectName, numericValue, rawEffect, source } = ctx
   if (!effectName.startsWith('tag_')) {
     return null
   }
@@ -906,7 +1052,12 @@ function resolveTagSignal({ effectName, numericValue, rawEffect, source }) {
   }
 }
 
-export function normalizeEffectSignal(effectName, effectValue, source, effectMetadata = {}) {
+export function normalizeEffectSignal(
+  effectName: string,
+  effectValue: string,
+  source: HeroAbilitySource,
+  effectMetadata: EffectSignalMetadata = {},
+): EffectSignalResult {
   if (effectMetadata.signalPreset) {
     return {
       ok: true,
@@ -927,7 +1078,7 @@ export function normalizeEffectSignal(effectName, effectValue, source, effectMet
     return makeUnsupported(effectName, effectValue, `Effect value is not numeric: ${effectValue}`, source)
   }
 
-  const ctx = { effectName, effectValue, source, numericValue, rawEffect, effectMetadata }
+  const ctx: EffectResolveContext = { effectName, effectValue, source, numericValue, rawEffect, effectMetadata }
 
   return (
     resolveDpsSignal(ctx)
@@ -942,20 +1093,20 @@ export function normalizeEffectSignal(effectName, effectValue, source, effectMet
   )
 }
 
-export function splitEffectString(effectString) {
+export function splitEffectString(effectString: unknown): { effectName: string; effectValue: string } | null {
   if (typeof effectString !== 'string' || effectString.trim().length === 0) {
     return null
   }
 
   const [effectName, effectValue = '1'] = effectString.split(',', 2)
-  return { effectName, effectValue }
+  return { effectName: effectName ?? '', effectValue }
 }
 
 // derived signal 稀有度去重 key：捕获影响 pool 聚合语义的字段，但排除 magnitude（value/rawEffect 的数值）。
 // IC 装备系统把同一 buff 按装备槽/稀有度展开成多条 upgrade（magnitude 不同），
 // 游戏只生效最高稀有度（同 group 不叠加）。group 内仅保留 |value| 最大者（阶段 8.5）。
 // 也覆盖完全相同的 derived signal 去重（magnitude 相同 → 同 group → 保留其一）。
-function rarityGroupKey(preset) {
+function rarityGroupKey(preset: HeroAbilitySignal): string {
   return JSON.stringify({
     kind: preset.kind,
     amountFunc: preset.amountFunc,
@@ -968,10 +1119,10 @@ function rarityGroupKey(preset) {
   })
 }
 
-export function collectEffectEntries(detail) {
+export function collectEffectEntries(detail: unknown): EffectEntry[] {
   const { effectEntries, upgradeEffectEntriesById } = collectRawEffectEntries(detail)
 
-  const derivedByKey = new Map()
+  const derivedByKey = new Map<string, EffectEntry>()
 
   for (const entry of effectEntries) {
     if (!isBuffUpgradeKind(entry.effectPayload?.kind)) {
@@ -988,7 +1139,7 @@ export function collectEffectEntries(detail) {
       const targetEntries = upgradeEffectEntriesById.get(String(targetUpgradeId)) ?? []
       for (const targetEntry of targetEntries) {
         const targetSignalResult = resolveEntrySignal(targetEntry)
-        if (!targetSignalResult?.ok) {
+        if (!targetSignalResult || !targetSignalResult.ok) {
           continue
         }
 
@@ -996,7 +1147,7 @@ export function collectEffectEntries(detail) {
         // wrapper 自身的 filter_targets（如 hero_ids 白名单）限定 buff 只对特定英雄生效；
         // 合并到 base 的 targetQualifier（AND），避免 wrapper 层 targeting 丢失（第四轮审计）。
         const wrapperQualifier = normalizeTargetQualifier(entry.effect)
-        const preset = {
+        const preset: HeroAbilitySignal = {
           ...targetSignal,
           targetQualifier: mergeHeroQualifiers(targetSignal.targetQualifier ?? null, wrapperQualifier),
           rawEffect: entry.effectString,
@@ -1017,7 +1168,7 @@ export function collectEffectEntries(detail) {
         const existing = derivedByKey.get(key)
         // 稀有度去重（阶段 8.5）：同 group 保留 |value| 最大者（游戏只生效最高稀有度）。
         // 完全相同的 derived signal（magnitude 相同）也归同 group，保留其一。
-        if (!existing || Math.abs(preset.value ?? 0) > Math.abs(existing.signalPreset.value ?? 0)) {
+        if (!existing || Math.abs(preset.value ?? 0) > Math.abs(existing.signalPreset?.value ?? 0)) {
           derivedByKey.set(key, buildEffectEntry({
             effectString: entry.effectString,
             effect: entry.effect,

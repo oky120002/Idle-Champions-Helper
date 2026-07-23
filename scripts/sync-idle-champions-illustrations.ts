@@ -9,7 +9,7 @@ import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.ts'
-import { renderSkelAnimPoseToPngBuffer } from './data/skelanim-renderer.ts'
+import { renderSkelAnimPoseToPngBuffer, type SkelAnimFrameBounds } from './data/skelanim-renderer.ts'
 import { resolveWalkPosterPose } from './data/skelanim-walk-selection.ts'
 import {
   fileExists,
@@ -17,6 +17,7 @@ import {
   removeUnexpectedFiles,
   shouldSkipResourceSync,
 } from './data/resource-sync-policy.ts'
+import type { LocalizedText } from '../src/domain/types/common.ts'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'
@@ -25,11 +26,169 @@ const DEFAULT_ANIMATIONS_FILE = 'champion-animations.json'
 const DEFAULT_CONCURRENCY = 6
 const CHAMPION_ILLUSTRATION_DIR_NAME = 'champion-illustrations'
 
-function buildIllustrationImagePath(currentVersion, group, id) {
+interface IllustrationBounds {
+  minX: number
+  minY: number
+  maxX: number
+  maxY: number
+}
+
+interface AnimationSequenceSummary {
+  sequenceIndex: number
+  frameCount: number
+  pieceCount: number
+  firstRenderableFrameIndex: number | null
+  bounds: IllustrationBounds | null
+}
+
+interface AnimationAsset {
+  path: string
+  bytes: number
+  format: 'skelanim-zlib'
+}
+
+interface AnimationItem {
+  id: string
+  sequences: AnimationSequenceSummary[]
+  defaultSequenceIndex: number
+  defaultFrameIndex: number
+  asset: AnimationAsset
+  sourceSlot: string
+  sourceGraphicId: string
+  sourceGraphic: string
+  sourceVersion: number | null
+}
+
+interface AnimationCollection {
+  items: AnimationItem[]
+  updatedAt?: unknown
+}
+
+interface VisualsFilters {
+  championIds: string | null
+  skinIds: string | null
+}
+
+interface ChampionVisualsCollection {
+  items?: ChampionVisualEntry[]
+  updatedAt: string
+  filters?: VisualsFilters | null
+}
+
+interface ChampionVisualEntry {
+  championId: string
+  seat: number
+  name: LocalizedText
+  portrait?: { localPath: string } | null
+  skins?: SkinVisualEntry[]
+}
+
+interface SkinVisualEntry {
+  id: string
+  name: LocalizedText
+}
+
+type IllustrationKind = 'hero-base' | 'skin'
+
+interface IllustrationImage {
+  path: string
+  width: number
+  height: number
+  bytes: number
+  format: 'png'
+}
+
+interface IllustrationRender {
+  pipeline: 'skelanim'
+  sequenceIndex: number
+  sequenceLength: number
+  isStaticPose: boolean
+  frameIndex: number
+  visiblePieceCount: number
+  bounds: IllustrationBounds
+}
+
+interface ChampionIllustrationEntry {
+  id: string
+  championId: string
+  skinId: string | null
+  kind: IllustrationKind
+  seat: number
+  championName: LocalizedText
+  illustrationName: LocalizedText
+  portraitPath: string | null
+  sourceSlot: string
+  sourceGraphicId: string
+  sourceGraphic: string
+  sourceVersion: number | null
+  render: IllustrationRender
+  image: IllustrationImage
+}
+
+interface IllustrationTask {
+  id: string
+  championId: string
+  skinId: string | null
+  kind: IllustrationKind
+  seat: number
+  championName: LocalizedText
+  illustrationName: LocalizedText
+  portraitPath: string | null
+  outputGroup: 'heroes' | 'skins'
+  outputFileName: string
+  animation: AnimationItem
+}
+
+interface RenderedAnimation {
+  sourceSlot: string
+  sourceGraphicId: string
+  sourceGraphic: string
+  sourceVersion: number | null
+  bytes: Buffer
+  width: number
+  height: number
+  render: IllustrationRender
+}
+
+interface SyncChampionIllustrationsOptions {
+  outputDir?: string
+  currentVersion?: string
+  visualsFile?: string
+  animationsFile?: string
+  concurrency?: string
+  championIds?: string
+  skinIds?: string
+}
+
+interface SyncChampionIllustrationsResult {
+  outputDir: string
+  visualsFile: string
+  animationsFile: string
+  currentVersion: string
+  totalBytes: number
+  counts: {
+    heroIllustrations: number
+    skinIllustrations: number
+    totalIllustrations: number
+  }
+  renderedCount: number
+  reusedCount: number
+  skipped?: boolean
+}
+
+// resolveWalkPosterPose 的 manifest 参数要求 sequences[].bounds 非空，实际数据可能为 null；
+// walk-selection 内部通过 ?? item.bounds fallback 处理了 null bounds。
+type WalkManifestLike = {
+  sequences: { sequenceIndex: number; bounds: IllustrationBounds }[]
+  defaultSequenceIndex: number
+  defaultFrameIndex: number
+}
+
+function buildIllustrationImagePath(currentVersion: string, group: string, id: string): string {
   return `${currentVersion}/${CHAMPION_ILLUSTRATION_DIR_NAME}/${group}/${id}.png`
 }
 
-function sortIllustrations(left, right) {
+function sortIllustrations(left: ChampionIllustrationEntry, right: ChampionIllustrationEntry): number {
   return (
     left.seat - right.seat ||
     left.championName.display.localeCompare(right.championName.display) ||
@@ -41,16 +200,21 @@ function sortIllustrations(left, right) {
   )
 }
 
-function buildAnimationMap(animationCollection) {
+function buildAnimationMap(
+  animationCollection: AnimationCollection | null | undefined,
+): Map<string, AnimationItem> {
   return new Map((animationCollection?.items ?? []).map((item) => [item.id, item]))
 }
 
-function buildHeroIllustrationTasks(visuals, animationCollection) {
-  const championIdFilter = parseIdFilter(visuals.filters?.championIds ?? null)
-  const skinIdFilter = parseIdFilter(visuals.filters?.skinIds ?? null)
+function buildHeroIllustrationTasks(
+  visuals: ChampionVisualsCollection,
+  animationCollection: AnimationCollection | null,
+): IllustrationTask[] {
+  const championIdFilter = parseIdFilter(visuals.filters?.championIds ?? undefined)
+  const skinIdFilter = parseIdFilter(visuals.filters?.skinIds ?? undefined)
   const animationById = buildAnimationMap(animationCollection)
-  const tasks = []
-  const missingHeroIds = []
+  const tasks: IllustrationTask[] = []
+  const missingHeroIds: string[] = []
 
   if (skinIdFilter && !championIdFilter) {
     return tasks
@@ -90,12 +254,15 @@ function buildHeroIllustrationTasks(visuals, animationCollection) {
   return tasks
 }
 
-function buildSkinIllustrationTasks(visuals, animationCollection) {
-  const championIdFilter = parseIdFilter(visuals.filters?.championIds ?? null)
-  const skinIdFilter = parseIdFilter(visuals.filters?.skinIds ?? null)
+function buildSkinIllustrationTasks(
+  visuals: ChampionVisualsCollection,
+  animationCollection: AnimationCollection | null,
+): IllustrationTask[] {
+  const championIdFilter = parseIdFilter(visuals.filters?.championIds ?? undefined)
+  const skinIdFilter = parseIdFilter(visuals.filters?.skinIds ?? undefined)
   const animationById = buildAnimationMap(animationCollection)
-  const tasks = []
-  const missingSkinIds = []
+  const tasks: IllustrationTask[] = []
+  const missingSkinIds: string[] = []
 
   for (const visual of visuals.items ?? []) {
     if (championIdFilter && !championIdFilter.has(visual.championId)) {
@@ -137,7 +304,7 @@ function buildSkinIllustrationTasks(visuals, animationCollection) {
   return tasks
 }
 
-function resolvePublishedAssetFile(outputDir, currentVersion, assetPath) {
+function resolvePublishedAssetFile(outputDir: string, currentVersion: string, assetPath: string): string {
   if (!assetPath) {
     throw new Error('动画资源缺少 asset.path')
   }
@@ -151,7 +318,10 @@ function resolvePublishedAssetFile(outputDir, currentVersion, assetPath) {
   return path.join(outputDir, relativePath)
 }
 
-function normalizeAnimationIndexes(animation, taskId) {
+function normalizeAnimationIndexes(animation: AnimationItem, taskId: string): {
+  sequenceIndex: number
+  frameIndex: number
+} {
   const sequenceIndex = Number(animation.defaultSequenceIndex)
   const frameIndex = Number(animation.defaultFrameIndex)
 
@@ -166,7 +336,7 @@ function normalizeAnimationIndexes(animation, taskId) {
   return { sequenceIndex, frameIndex }
 }
 
-function resolveIllustrationRasterScale(viewportBounds) {
+function resolveIllustrationRasterScale(viewportBounds: IllustrationBounds): number {
   const width = Math.max(1, Math.ceil(viewportBounds.maxX - viewportBounds.minX))
   const height = Math.max(1, Math.ceil(viewportBounds.maxY - viewportBounds.minY))
   const maxEdge = Math.max(width, height)
@@ -178,7 +348,11 @@ function resolveIllustrationRasterScale(viewportBounds) {
   return 2
 }
 
-async function renderAnimationIllustrationTask(task, outputDir, currentVersion) {
+async function renderAnimationIllustrationTask(
+  task: IllustrationTask,
+  outputDir: string,
+  currentVersion: string,
+): Promise<RenderedAnimation> {
   if (task.animation.asset?.format !== 'skelanim-zlib') {
     throw new Error(`${task.id} 的动画资源格式不是 skelanim-zlib`)
   }
@@ -186,24 +360,28 @@ async function renderAnimationIllustrationTask(task, outputDir, currentVersion) 
   const animationFile = resolvePublishedAssetFile(outputDir, currentVersion, task.animation.asset.path)
   const rawBuffer = await readFile(animationFile)
   const { sequenceIndex, frameIndex } = normalizeAnimationIndexes(task.animation, task.id)
-  const skelAnim = decodeSkelAnimGraphicBuffer(
-    {
-      graphicId: task.animation.sourceGraphicId,
-      sourceGraphic: task.animation.sourceGraphic,
-      sourceVersion: task.animation.sourceVersion,
-      remotePath: task.animation.asset.path,
-      delivery: 'zlib-png',
-    },
-    rawBuffer,
-  )
-  const walkPosterPose = resolveWalkPosterPose(task.animation, skelAnim)
+  // decodeSkelAnimGraphicBuffer 只读 delivery；其余字段保留给下游断点审查
+  const skelAnimSource = {
+    graphicId: task.animation.sourceGraphicId,
+    sourceGraphic: task.animation.sourceGraphic,
+    sourceVersion: task.animation.sourceVersion,
+    remotePath: task.animation.asset.path,
+    delivery: 'zlib-png',
+  }
+  const skelAnim = decodeSkelAnimGraphicBuffer(skelAnimSource, rawBuffer)
+  const walkPosterPose = resolveWalkPosterPose(task.animation as WalkManifestLike, skelAnim)
+  const viewportBounds = walkPosterPose?.viewportBounds
+  // renderer 只读 viewportBounds.minX/minY/maxX/maxY；WalkBounds 缺少 width/height/visiblePieceCount
+  // 但 renderer 不读这些字段，as SkelAnimFrameBounds 是安全的。
   const rendered = await renderSkelAnimPoseToPngBuffer(skelAnim, {
     sequenceIndex: walkPosterPose?.sequenceIndex ?? sequenceIndex,
     frameIndex: walkPosterPose?.frameIndex ?? frameIndex,
-    viewportBounds: walkPosterPose?.viewportBounds ?? undefined,
-    rasterScale: walkPosterPose?.viewportBounds
-      ? resolveIllustrationRasterScale(walkPosterPose.viewportBounds)
-      : 1,
+    ...(viewportBounds
+      ? {
+          viewportBounds: viewportBounds as SkelAnimFrameBounds,
+          rasterScale: resolveIllustrationRasterScale(viewportBounds),
+        }
+      : { rasterScale: 1 }),
   })
 
   return {
@@ -226,7 +404,11 @@ async function renderAnimationIllustrationTask(task, outputDir, currentVersion) 
   }
 }
 
-function canReuseIllustrationMetadata(task, existingIllustration, currentVersion) {
+function canReuseIllustrationMetadata(
+  task: IllustrationTask,
+  existingIllustration: ChampionIllustrationEntry | undefined,
+  currentVersion: string,
+): existingIllustration is ChampionIllustrationEntry {
   if (!existingIllustration) {
     return false
   }
@@ -249,18 +431,22 @@ function canReuseIllustrationMetadata(task, existingIllustration, currentVersion
   )
 }
 
-export async function syncChampionIllustrations(options = {}) {
+export async function syncChampionIllustrations(
+  options: SyncChampionIllustrationsOptions = {},
+): Promise<SyncChampionIllustrationsResult> {
   const outputDir = path.resolve(options.outputDir ?? DEFAULT_OUTPUT_DIR)
   const currentVersion = options.currentVersion ?? DEFAULT_CURRENT_VERSION
   const visualsFile = path.resolve(options.visualsFile ?? path.join(outputDir, DEFAULT_VISUALS_FILE))
-  const animationsFile = path.resolve(options.animationsFile ?? path.join(outputDir, DEFAULT_ANIMATIONS_FILE))
+  const animationsFile = path.resolve(
+    options.animationsFile ?? path.join(outputDir, DEFAULT_ANIMATIONS_FILE),
+  )
   const concurrency = Math.max(1, Number(options.concurrency ?? DEFAULT_CONCURRENCY))
-  const championIdFilter = parseIdFilter(options.championIds ?? null)
-  const skinIdFilter = parseIdFilter(options.skinIds ?? null)
+  const championIdFilter = parseIdFilter(options.championIds ?? undefined)
+  const skinIdFilter = parseIdFilter(options.skinIds ?? undefined)
   const hasSelectionFilters = Boolean(championIdFilter || skinIdFilter)
-  const visuals = await readJson(visualsFile)
-  const animations = await readJsonIfExists(animationsFile)
-  const filteredVisuals = {
+  const visuals = (await readJson(visualsFile)) as ChampionVisualsCollection
+  const animations = (await readJsonIfExists(animationsFile)) as AnimationCollection | null
+  const filteredVisuals: ChampionVisualsCollection = {
     ...visuals,
     filters: {
       championIds: options.championIds ?? null,
@@ -283,7 +469,7 @@ export async function syncChampionIllustrations(options = {}) {
       nextUpdatedAt: animations?.updatedAt ?? visuals.updatedAt,
     })
   ) {
-    const existingItems = baseCollection?.items ?? []
+    const existingItems = (baseCollection?.items ?? []) as ChampionIllustrationEntry[]
     return {
       outputDir,
       visualsFile,
@@ -303,12 +489,17 @@ export async function syncChampionIllustrations(options = {}) {
 
   await mkdir(path.join(illustrationRoot, 'heroes'), { recursive: true })
   await mkdir(path.join(illustrationRoot, 'skins'), { recursive: true })
-  const existingIllustrationMap = new Map((baseCollection?.items ?? []).map((item) => [item.id, item]))
+  const existingIllustrationMap = new Map<string, ChampionIllustrationEntry>(
+    (baseCollection?.items ?? []).map((item) => {
+      const entry = item as ChampionIllustrationEntry
+      return [entry.id, entry]
+    }),
+  )
 
   const writtenIllustrations = await runWithConcurrency(tasks, concurrency, async (task) => {
     const rendered = await renderAnimationIllustrationTask(task, outputDir, currentVersion)
     const outputFile = path.join(illustrationRoot, task.outputGroup, task.outputFileName)
-    const nextIllustration = {
+    const nextIllustration: ChampionIllustrationEntry = {
       id: task.id,
       championId: task.championId,
       skinId: task.skinId,
@@ -340,7 +531,7 @@ export async function syncChampionIllustrations(options = {}) {
 
       if (Buffer.compare(existingBytes, rendered.bytes) === 0) {
         return {
-          mode: 'reused',
+          mode: 'reused' as const,
           item: existingIllustration,
         }
       }
@@ -349,11 +540,16 @@ export async function syncChampionIllustrations(options = {}) {
     await writeFile(outputFile, rendered.bytes)
 
     return {
-      mode: 'rendered',
+      mode: 'rendered' as const,
       item: nextIllustration,
     }
   })
-  const illustrationMap = new Map((hasSelectionFilters ? baseCollection?.items ?? [] : []).map((item) => [item.id, item]))
+  const illustrationMap = new Map<string, ChampionIllustrationEntry>(
+    (hasSelectionFilters ? (baseCollection?.items ?? []) : []).map((item) => {
+      const entry = item as ChampionIllustrationEntry
+      return [entry.id, entry]
+    }),
+  )
 
   for (const entry of writtenIllustrations) {
     const illustration = entry.item
@@ -379,7 +575,11 @@ export async function syncChampionIllustrations(options = {}) {
   )
   await writeFile(
     collectionFile,
-    `${JSON.stringify({ items: sortedIllustrations, updatedAt: animations?.updatedAt ?? visuals.updatedAt }, null, 2)}\n`,
+    `${JSON.stringify(
+      { items: sortedIllustrations, updatedAt: animations?.updatedAt ?? visuals.updatedAt },
+      null,
+      2,
+    )}\n`,
   )
 
   const totalBytes = sortedIllustrations.reduce((sum, item) => sum + item.image.bytes, 0)
@@ -404,16 +604,16 @@ export async function syncChampionIllustrations(options = {}) {
   }
 }
 
-function printUsage() {
+function printUsage(): void {
   console.log(`用法：
-  node scripts/sync-idle-champions-illustrations.mjs [--visualsFile <file>] [--animationsFile <file>] [--outputDir <dir>] [--championIds <ids>] [--skinIds <ids>]
+  node scripts/sync-idle-champions-illustrations.ts [--visualsFile <file>] [--animationsFile <file>] [--outputDir <dir>] [--championIds <ids>] [--skinIds <ids>]
 
 说明：
   统一复用本地 champion-animations 清单中的默认 sequence/frame，把 hero-base / skin 的本地 .bin 渲染为站内静态 PNG；缺少动画包会直接报错，不再回退官方静态图。
 `)
 }
 
-async function main() {
+async function main(): Promise<void> {
   const { values } = parseArgs({
     options: {
       visualsFile: { type: 'string' },
@@ -444,9 +644,9 @@ async function main() {
   console.log(`- total bytes: ${result.totalBytes}`)
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
-  main().catch((error) => {
-    console.error(`同步立绘资源失败：${error.message}`)
+if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+  main().catch((error: unknown) => {
+    console.error(`同步立绘资源失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1
   })
 }

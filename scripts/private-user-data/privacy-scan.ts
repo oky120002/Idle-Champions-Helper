@@ -10,17 +10,26 @@
 
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
-import { scanContent } from './sensitive-output-scanner.mjs'
+import { scanContent } from './sensitive-output-scanner.ts'
 
-const SCAN_DIRS = ['src']
-const IGNORE_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.gif', '.svg', '.ico', '.woff', '.woff2'])
-const IGNORE_PATH_PARTS = ['node_modules', 'dist', 'public/data']
+const SCAN_DIRS: readonly string[] = ['src']
+const IGNORE_EXTENSIONS: ReadonlySet<string> = new Set([
+  '.png',
+  '.jpg',
+  '.jpeg',
+  '.gif',
+  '.svg',
+  '.ico',
+  '.woff',
+  '.woff2',
+])
+const IGNORE_PATH_PARTS: readonly string[] = ['node_modules', 'dist', 'public/data']
 
-function shouldSkipPath(fullPath) {
+function shouldSkipPath(fullPath: string): boolean {
   return IGNORE_PATH_PARTS.some((part) => fullPath.includes(part))
 }
 
-function* walkDir(dir) {
+function* walkDir(dir: string): Generator<string> {
   if (!existsSync(dir)) return
 
   for (const entry of readdirSync(dir)) {
@@ -41,7 +50,7 @@ function* walkDir(dir) {
   }
 }
 
-function runScan() {
+function runScan(): void {
   let totalFindings = 0
 
   for (const dir of SCAN_DIRS) {
@@ -53,7 +62,7 @@ function runScan() {
         if (result.hasFindings) {
           for (const finding of result.findings) {
             console.error(`[PRIVACY] ${finding.filePath}:${finding.line} — ${finding.description}`)
-            totalFindings++
+            totalFindings += 1
           }
         }
       } catch {

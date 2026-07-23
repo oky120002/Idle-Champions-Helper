@@ -4,7 +4,7 @@ import os from 'node:os'
 import path from 'node:path'
 import { mkdtemp, readFile, writeFile } from 'node:fs/promises'
 import { normalizeDefinitionsSnapshot } from './normalize-idle-champions-definitions.mjs'
-import { normalizeEffectReference } from './data/normalize-champions.mjs'
+import { normalizeEffectReference } from './data/normalize-champions.ts'
 
 async function readJson(filePath) {
   return JSON.parse(await readFile(filePath, 'utf8'))

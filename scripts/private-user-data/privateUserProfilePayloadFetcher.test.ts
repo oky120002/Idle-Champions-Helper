@@ -6,7 +6,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
   fetchAndStorePrivateUserProfilePayloads,
   PRIVATE_PLAY_SERVER_FALLBACK_BASE_URLS,
-} from './private-user-profile-payloads.mjs'
+} from './private-user-profile-payloads.ts'
 
 const TEST_HASH = 'abcdef1234567890abcdef1234567890'
 

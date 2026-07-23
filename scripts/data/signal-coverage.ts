@@ -14,49 +14,99 @@ import {
   normalizeEffectSignal,
   shouldIgnoreUnsupportedEffectEntry,
   splitEffectString,
-} from './effect-helpers.mjs'
+} from './effect-helpers.ts'
 
 const DEFAULT_VERSION_DIR = 'public/data/v1'
 
-function incrementCounter(counter, key) {
+interface CounterEntry {
+  key: string
+  count: number
+}
+
+interface CoverageTotals {
+  totalHeroes: number
+  totalEffectEntries: number
+  recognizedSignals: number
+  unsupportedSignals: number
+  manualSignals: number
+  stackedSignals: number
+  stackedSignalsWithQualifier: number
+  stackedSignalsWithoutQualifier: number
+  perHeroExprTotal: number
+  parsedPerHeroExprTotal: number
+  unparsedPerHeroExprTotal: number
+  signalsWithTagTargetQualifier: number
+  signalsWithStatTargetQualifier: number
+  signalsWithTagCountQualifier: number
+  signalsWithStatCountQualifier: number
+  signalsWithAgeCountQualifier: number
+  buffUpgradeWrapperTotal: number
+  buffUpgradeWrapperSupportedBaseResolved: number
+  buffUpgradeWrapperSupportedBaseUnresolved: number
+  buffUpgradeWrapperFamilyUnsupported: number
+}
+
+interface SignalCoverageReport {
+  totals: CoverageTotals
+  topEffectNames: CounterEntry[]
+  topUnsupportedEffectNames: CounterEntry[]
+  stackFunctions: CounterEntry[]
+  amountFunctions: CounterEntry[]
+  amountStackCombos: CounterEntry[]
+  scoringSupport: CounterEntry[]
+  sourceBuckets: CounterEntry[]
+  topRawFilters: CounterEntry[]
+  topPerHeroExpr: CounterEntry[]
+  topUnparsedPerHeroExpr: CounterEntry[]
+  buffUpgradeWrapperStatus: CounterEntry[]
+  topBuffUpgradeWrapperKinds: CounterEntry[]
+  buffUpgradeWrapperUnresolvedReasons: CounterEntry[]
+  topBuffUpgradeMissingBaseEffects: CounterEntry[]
+}
+
+type ScoringSupportClassification = 'supported' | 'unsupported-composition' | 'manual'
+
+function incrementCounter(counter: Map<string, number>, key: string): void {
   counter.set(key, (counter.get(key) ?? 0) + 1)
 }
 
-function sortCounter(counter, limit = Infinity) {
+function sortCounter(counter: Map<string, number>, limit: number = Infinity): CounterEntry[] {
   return [...counter.entries()]
     .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))
     .slice(0, limit)
     .map(([key, count]) => ({ key, count }))
 }
 
-function describeFilter(filter) {
+function describeFilter(filter: unknown): string {
   if (!filter || typeof filter !== 'object') {
     return 'unknown-filter'
   }
 
-  if ((filter.type === 'by_tags' || filter.type === 'tags') && typeof filter.tags === 'string') {
-    return `${filter.type}:${filter.tags}`
+  const f = filter as Record<string, unknown>
+
+  if ((f.type === 'by_tags' || f.type === 'tags') && typeof f.tags === 'string') {
+    return `${f.type}:${f.tags}`
   }
 
-  if (filter.type === 'hero_expr' && typeof filter.hero_expr === 'string') {
-    return `hero_expr:${filter.hero_expr}`
+  if (f.type === 'hero_expr' && typeof f.hero_expr === 'string') {
+    return `hero_expr:${f.hero_expr}`
   }
 
-  if ((filter.type === 'stat' || filter.type === 'stat_score') && typeof filter.stat === 'string') {
-    const operator = typeof filter.comparison === 'string'
-      ? filter.comparison
-      : typeof filter.check === 'string'
-        ? filter.check
+  if ((f.type === 'stat' || f.type === 'stat_score') && typeof f.stat === 'string') {
+    const operator = typeof f.comparison === 'string'
+      ? f.comparison
+      : typeof f.check === 'string'
+        ? f.check
         : '>='
-    const value = typeof filter.score === 'number'
-      ? filter.score
-      : typeof filter.check === 'number'
-        ? filter.check
+    const value = typeof f.score === 'number'
+      ? f.score
+      : typeof f.check === 'number'
+        ? f.check
         : '?'
-    return `${filter.type}:${filter.stat.toLowerCase()}${operator}${value}`
+    return `${f.type}:${f.stat.toLowerCase()}${operator}${value}`
   }
 
-  return `type:${typeof filter.type === 'string' ? filter.type : 'unknown'}`
+  return `type:${typeof f.type === 'string' ? f.type : 'unknown'}`
 }
 
 /**
@@ -65,7 +115,7 @@ function describeFilter(filter) {
  * scorer 新增 stackFunc 支持时，此处不同步会让覆盖率误报 unsupported-composition。
  * 见 tests/unit/planner/scoringSupportSync.test.ts 守护测试。
  */
-export const SCORING_SUPPORTED_STACK_FUNCS = new Set([
+export const SCORING_SUPPORTED_STACK_FUNCS = new Set<string>([
   'per_crusader',
   'per_tagged_crusader_mult',
   'per_target_crusader',
@@ -75,7 +125,11 @@ export const SCORING_SUPPORTED_STACK_FUNCS = new Set([
   'per_slot_distance_from_source',
 ])
 
-function classifyScoringSupport(signal) {
+function classifyScoringSupport(signal: {
+  applyManually?: boolean
+  stackFunc?: string | null
+  amountFunc?: string | null
+}): ScoringSupportClassification {
   if (signal.applyManually) {
     return 'manual'
   }
@@ -92,21 +146,21 @@ function classifyScoringSupport(signal) {
     : 'unsupported-composition'
 }
 
-export function generateSignalCoverageReport(details) {
-  const effectNameCounts = new Map()
-  const unsupportedEffectNameCounts = new Map()
-  const stackFuncCounts = new Map()
-  const amountFuncCounts = new Map()
-  const amountStackComboCounts = new Map()
-  const rawFilterCounts = new Map()
-  const perHeroExprCounts = new Map()
-  const unparsedPerHeroExprCounts = new Map()
-  const scoreSupportCounts = new Map()
-  const sourceBucketCounts = new Map()
-  const buffUpgradeWrapperStatusCounts = new Map()
-  const buffUpgradeWrapperKindCounts = new Map()
-  const buffUpgradeWrapperUnresolvedReasonCounts = new Map()
-  const buffUpgradeMissingBaseEffectCounts = new Map()
+export function generateSignalCoverageReport(details: unknown[]): SignalCoverageReport {
+  const effectNameCounts = new Map<string, number>()
+  const unsupportedEffectNameCounts = new Map<string, number>()
+  const stackFuncCounts = new Map<string, number>()
+  const amountFuncCounts = new Map<string, number>()
+  const amountStackComboCounts = new Map<string, number>()
+  const rawFilterCounts = new Map<string, number>()
+  const perHeroExprCounts = new Map<string, number>()
+  const unparsedPerHeroExprCounts = new Map<string, number>()
+  const scoreSupportCounts = new Map<string, number>()
+  const sourceBucketCounts = new Map<string, number>()
+  const buffUpgradeWrapperStatusCounts = new Map<string, number>()
+  const buffUpgradeWrapperKindCounts = new Map<string, number>()
+  const buffUpgradeWrapperUnresolvedReasonCounts = new Map<string, number>()
+  const buffUpgradeMissingBaseEffectCounts = new Map<string, number>()
 
   let totalHeroes = 0
   let totalEffectEntries = 0
@@ -167,9 +221,8 @@ export function generateSignalCoverageReport(details) {
         incrementCounter(rawFilterCounts, describeFilter(filter))
       }
 
-      const perHeroExpr = typeof entry.effect?.per_hero_expr === 'string'
-        ? entry.effect.per_hero_expr.trim()
-        : null
+      const perHeroExprRaw = entry.effect.per_hero_expr
+      const perHeroExpr = typeof perHeroExprRaw === 'string' ? perHeroExprRaw.trim() : null
       if (perHeroExpr) {
         perHeroExprTotal += 1
         incrementCounter(perHeroExprCounts, perHeroExpr)
@@ -270,7 +323,7 @@ export function generateSignalCoverageReport(details) {
   }
 }
 
-export async function loadChampionDetails(versionDir = DEFAULT_VERSION_DIR) {
+export async function loadChampionDetails(versionDir: string = DEFAULT_VERSION_DIR): Promise<unknown[]> {
   const detailDir = path.resolve(versionDir, 'champion-details')
   const filenames = (await readdir(detailDir))
     .filter((name) => name.endsWith('.json'))
@@ -279,17 +332,19 @@ export async function loadChampionDetails(versionDir = DEFAULT_VERSION_DIR) {
   return Promise.all(
     filenames.map(async (filename) => {
       const filePath = path.join(detailDir, filename)
-      return JSON.parse(await readFile(filePath, 'utf8'))
+      return JSON.parse(await readFile(filePath, 'utf8')) as unknown
     }),
   )
 }
 
-export async function generateSignalCoverageFromVersionDir(versionDir = DEFAULT_VERSION_DIR) {
+export async function generateSignalCoverageFromVersionDir(
+  versionDir: string = DEFAULT_VERSION_DIR,
+): Promise<SignalCoverageReport> {
   const details = await loadChampionDetails(versionDir)
   return generateSignalCoverageReport(details)
 }
 
-async function main() {
+async function main(): Promise<void> {
   const versionDir = process.argv[2] ?? DEFAULT_VERSION_DIR
   const report = await generateSignalCoverageFromVersionDir(versionDir)
   process.stdout.write(`${JSON.stringify(report, null, 2)}\n`)

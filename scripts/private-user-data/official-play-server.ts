@@ -1,25 +1,27 @@
 const OFFICIAL_PLAY_SERVER_HOSTNAME_PATTERN = /^ps\d+\.idlechampions\.com$/i
 const OFFICIAL_PLAY_SERVER_PATHNAME = '/~idledragons/'
 
-const OFFICIAL_PLAY_SERVER_NUMBERS = [28, 29, 30, 27]
+const OFFICIAL_PLAY_SERVER_NUMBERS: readonly number[] = [28, 29, 30, 27]
 
-export const DEFAULT_PRIVATE_MOBILE_CLIENT_VERSION = '999'
-export const PRIVATE_MASTER_API_BASE_URL = 'https://master.idlechampions.com/~idledragons/'
-export const PRIVATE_PLAY_SERVER_SWITCH_LIMIT = 2
-export const DEFAULT_PRIVATE_BASE_URL = buildOfficialPlayServerBaseUrl(OFFICIAL_PLAY_SERVER_NUMBERS[0])
-export const PRIVATE_PLAY_SERVER_FALLBACK_BASE_URLS = OFFICIAL_PLAY_SERVER_NUMBERS.map(
+export const DEFAULT_PRIVATE_MOBILE_CLIENT_VERSION: string = '999'
+export const PRIVATE_MASTER_API_BASE_URL: string = 'https://master.idlechampions.com/~idledragons/'
+export const PRIVATE_PLAY_SERVER_SWITCH_LIMIT: number = 2
+export const DEFAULT_PRIVATE_BASE_URL: string = buildOfficialPlayServerBaseUrl(
+  OFFICIAL_PLAY_SERVER_NUMBERS[0]!,
+)
+export const PRIVATE_PLAY_SERVER_FALLBACK_BASE_URLS: string[] = OFFICIAL_PLAY_SERVER_NUMBERS.map(
   (serverNumber) => buildOfficialPlayServerBaseUrl(serverNumber),
 )
 
-function ensureTrailingSlash(value) {
+function ensureTrailingSlash(value: string): string {
   return value.endsWith('/') ? value : `${value}/`
 }
 
-export function buildOfficialPlayServerBaseUrl(serverNumber) {
+export function buildOfficialPlayServerBaseUrl(serverNumber: number): string {
   return `https://ps${serverNumber}.idlechampions.com${OFFICIAL_PLAY_SERVER_PATHNAME}`
 }
 
-export function createReadonlyFetchOptions() {
+export function createReadonlyFetchOptions(): RequestInit {
   return {
     credentials: 'omit',
     cache: 'no-store',
@@ -27,7 +29,7 @@ export function createReadonlyFetchOptions() {
   }
 }
 
-export function normalizeOfficialPlayServerBaseUrl(value) {
+export function normalizeOfficialPlayServerBaseUrl(value: string): string {
   const normalized = ensureTrailingSlash(new URL(value).toString())
   const url = new URL(normalized)
 
@@ -41,16 +43,16 @@ export function normalizeOfficialPlayServerBaseUrl(value) {
   return normalized
 }
 
-export function readSwitchPlayServer(payload) {
+export function readSwitchPlayServer(payload: unknown): string | null {
   if (!payload || typeof payload !== 'object') {
     return null
   }
 
-  const value = payload.switch_play_server
+  const value = (payload as Record<string, unknown>).switch_play_server
   return typeof value === 'string' && value.trim() !== '' ? value : null
 }
 
-function buildPlayServerDiscoveryUrl() {
+function buildPlayServerDiscoveryUrl(): string {
   const query = new URLSearchParams({
     call: 'getPlayServerForDefinitions',
     mobile_client_version: DEFAULT_PRIVATE_MOBILE_CLIENT_VERSION,
@@ -60,7 +62,9 @@ function buildPlayServerDiscoveryUrl() {
   return `${PRIVATE_MASTER_API_BASE_URL}post.php?${query.toString()}`
 }
 
-export async function discoverOfficialPlayServer(fetchImpl = fetch) {
+export async function discoverOfficialPlayServer(
+  fetchImpl: typeof fetch = fetch,
+): Promise<string> {
   const response = await fetchImpl(
     buildPlayServerDiscoveryUrl(),
     createReadonlyFetchOptions(),
@@ -70,8 +74,10 @@ export async function discoverOfficialPlayServer(fetchImpl = fetch) {
     throw new Error(`Official play server discovery returned HTTP ${response.status}`)
   }
 
-  const payload = await response.json()
-  const playServer = payload && typeof payload === 'object' ? payload.play_server : null
+  const payload: unknown = await response.json()
+  const playServer = payload && typeof payload === 'object'
+    ? (payload as Record<string, unknown>).play_server
+    : null
 
   if (typeof playServer !== 'string' || playServer.trim() === '') {
     throw new Error('Official play server discovery returned no play_server value.')
@@ -80,7 +86,7 @@ export async function discoverOfficialPlayServer(fetchImpl = fetch) {
   return normalizeOfficialPlayServerBaseUrl(playServer)
 }
 
-function pushUniqueBaseUrl(baseUrls, candidateBaseUrl) {
+function pushUniqueBaseUrl(baseUrls: string[], candidateBaseUrl: string): void {
   const normalizedBaseUrl = normalizeOfficialPlayServerBaseUrl(candidateBaseUrl)
 
   if (!baseUrls.includes(normalizedBaseUrl)) {
@@ -88,12 +94,19 @@ function pushUniqueBaseUrl(baseUrls, candidateBaseUrl) {
   }
 }
 
-export async function resolveOfficialPlayServerBaseUrls({ fetchImpl = fetch, baseUrl } = {}) {
+export interface ResolveOfficialPlayServerBaseUrlsOptions {
+  fetchImpl?: typeof fetch
+  baseUrl?: string
+}
+
+export async function resolveOfficialPlayServerBaseUrls(
+  { fetchImpl = fetch, baseUrl }: ResolveOfficialPlayServerBaseUrlsOptions = {},
+): Promise<string[]> {
   if (baseUrl) {
     return [normalizeOfficialPlayServerBaseUrl(baseUrl)]
   }
 
-  const baseUrls = []
+  const baseUrls: string[] = []
 
   try {
     pushUniqueBaseUrl(baseUrls, await discoverOfficialPlayServer(fetchImpl))

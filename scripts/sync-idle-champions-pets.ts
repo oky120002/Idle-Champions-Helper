@@ -17,15 +17,17 @@ import {
 } from './data/champion-asset-helpers.ts'
 import { extractWrappedPngBuffer } from './data/mobile-asset-codec.ts'
 import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.ts'
+import type { SkelAnimSequence } from './data/skelanim-codec.ts'
 import {
   readJson,
   writeJson,
   runWithConcurrency,
 } from './data/io-utils.ts'
-import { findOpaqueBounds } from './data/png-image-helpers.ts'
+import { findOpaqueBounds, type OpaqueBounds } from './data/png-image-helpers.ts'
 import {
   computeSkelAnimFrameBounds,
   renderSkelAnimPoseToPngBuffer,
+  type SkelAnimFrameBounds,
 } from './data/skelanim-renderer.ts'
 import {
   fileExists,
@@ -33,6 +35,9 @@ import {
   removeUnexpectedFiles,
   shouldSkipResourceSync,
 } from './data/resource-sync-policy.ts'
+import type { LocalizedText } from '../src/domain/types/common.ts'
+import type { PetImage } from '../src/domain/types/assets.ts'
+import type { Pet, PetAcquisition, PetAcquisitionKind } from '../src/domain/types/champions.ts'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'
@@ -46,11 +51,146 @@ const PET_ILLUSTRATION_TARGET_EDGE = 320
 const PET_ILLUSTRATION_MAX_RASTER_SCALE = 4
 const execFileAsync = promisify(execFile)
 
-function buildPetAnimationAssetPath(currentVersion, petId) {
+// 把 unknown 运行时收窄为 Record；定义 JSON 字段访问的统一边界。
+function asRecord(value: unknown): Record<string, unknown> | undefined {
+  return typeof value === 'object' && value !== null ? (value as Record<string, unknown>) : undefined
+}
+
+interface GameDefinitions {
+  current_time?: unknown
+  graphic_defines?: unknown[]
+  familiar_defines?: Record<string, unknown>[]
+  premium_item_defines?: Record<string, unknown>[]
+  patron_shop_item_defines?: Record<string, unknown>[]
+  patron_defines?: Record<string, unknown>[]
+}
+
+interface DefinitionRef {
+  raw: Record<string, unknown>
+  localized: Record<string, unknown>
+}
+
+type PremiumRef = DefinitionRef
+type PatronRef = DefinitionRef
+
+interface AnimationBounds {
+  minX: number
+  minY: number
+  maxX: number
+  maxY: number
+}
+
+interface SequenceSummary {
+  sequenceIndex: number
+  frameCount: number
+  pieceCount: number
+  firstRenderableFrameIndex: number | null
+  bounds: AnimationBounds | null
+}
+
+interface PetAnimationAssetEntry {
+  path: string
+  bytes: number
+  format: 'skelanim-zlib'
+}
+
+interface PetAnimationItem {
+  id: string
+  petId: string
+  name: LocalizedText
+  sourceSlot: 'illustration'
+  sourceGraphicId: string
+  sourceGraphic: string
+  sourceVersion: number | null
+  fps: number
+  defaultSequenceIndex: number
+  defaultFrameIndex: number
+  asset: PetAnimationAssetEntry
+  sequences: SequenceSummary[]
+}
+
+interface DownloadedPetAnimation extends PetAnimationItem {
+  mode: 'downloaded'
+}
+
+type PetVariant = 'icon' | 'illustration'
+type PetRenderMode = 'skelanim' | 'decoded-png'
+
+interface PetAssetTask {
+  petId: string
+  variant: PetVariant
+  asset: { graphicId: string; sourceGraphic: string; sourceVersion: number | null; remotePath: string; remoteUrl: string; delivery: string; uses: string[] }
+  renderMode: PetRenderMode
+  preferredSequenceIndexes: number[]
+  remoteUrl: string
+  outputFile: string
+  outputPath: string
+}
+
+interface PetAnimationTask {
+  petId: string
+  name: LocalizedText
+  asset: { graphicId: string; sourceGraphic: string; sourceVersion: number | null; remotePath: string; remoteUrl: string; delivery: string; uses: string[] }
+  preferredSequenceIndexes: number[]
+  outputFile: string
+  outputPath: string
+}
+
+interface DownloadedPetAsset {
+  mode: 'downloaded'
+  petId: string
+  variant: PetVariant
+  image: PetImage
+}
+
+interface ProcessedPng {
+  pngBuffer: Buffer
+  width: number
+  height: number
+  bytes: number
+}
+
+interface PetCatalogItem extends Pet {
+  iconSourceGraphic: string | null
+  iconSourceVersion: number | null
+  illustrationSourceGraphic: string | null
+  illustrationSourceVersion: number | null
+}
+
+interface SyncPetsCatalogOptions {
+  input?: string
+  localizedInput?: string
+  outputDir?: string
+  currentVersion?: string
+  masterApiUrl?: string
+  concurrency?: string
+}
+
+interface SyncPetsCatalogCounts {
+  icons: number
+  illustrations: number
+  animations: number
+  gems: number
+  premium: number
+  patron: number
+  unavailable: number
+  unknown: number
+}
+
+interface SyncPetsCatalogResult {
+  outputDir: string
+  updatedAt: string
+  count: number
+  assetCount: number
+  counts: SyncPetsCatalogCounts
+  skipped?: boolean
+}
+
+function buildPetAnimationAssetPath(currentVersion: string, petId: string): string {
   return `${currentVersion}/${PET_ANIMATION_DIR_NAME}/illustrations/${petId}.bin`
 }
 
-function toNonZeroText(value) {
+function toNonZeroText(value: unknown): string | null {
   const text = toText(value)
 
   if (!text || text === '0') {
@@ -60,7 +200,7 @@ function toNonZeroText(value) {
   return text
 }
 
-function toNumber(value) {
+function toNumber(value: unknown): number | null {
   if (typeof value === 'number' && Number.isFinite(value)) {
     return value
   }
@@ -79,15 +219,18 @@ function toNumber(value) {
   return null
 }
 
-function buildIdMap(definitions = []) {
+function buildIdMap(
+  definitions?: readonly Record<string, unknown>[],
+): Map<string, Record<string, unknown>> {
+  const defs = definitions ?? []
   return new Map(
-    definitions
-      .filter((definition) => definition?.id !== undefined && definition?.id !== null)
+    defs
+      .filter((definition) => definition.id !== undefined && definition.id !== null)
       .map((definition) => [String(definition.id), definition]),
   )
 }
 
-function getUpdatedAt(rawDefinitions) {
+function getUpdatedAt(rawDefinitions: GameDefinitions): string {
   if (typeof rawDefinitions.current_time === 'number') {
     return new Date(rawDefinitions.current_time * 1000).toISOString().slice(0, 10)
   }
@@ -95,14 +238,14 @@ function getUpdatedAt(rawDefinitions) {
   return new Date().toISOString().slice(0, 10)
 }
 
-function canReusePetImage(existingImage, expectedPath) {
-  return (
-    existingImage?.path === expectedPath &&
-    existingImage?.format === 'png'
-  )
+function canReusePetImage(existingImage: PetImage | null | undefined, expectedPath: string): boolean {
+  return existingImage?.path === expectedPath && existingImage?.format === 'png'
 }
 
-function canReusePetAnimation(existingAnimation, task) {
+function canReusePetAnimation(
+  existingAnimation: PetAnimationItem | null | undefined,
+  task: PetAnimationTask,
+): existingAnimation is PetAnimationItem {
   if (!existingAnimation) {
     return false
   }
@@ -119,17 +262,22 @@ function canReusePetAnimation(existingAnimation, task) {
   )
 }
 
-function buildPremiumRefsByFamiliarId(rawDefinitions, localizedDefinitions) {
+function buildPremiumRefsByFamiliarId(
+  rawDefinitions: readonly Record<string, unknown>[] | undefined,
+  localizedDefinitions: readonly Record<string, unknown>[],
+): Map<string, PremiumRef[]> {
   const localizedById = buildIdMap(localizedDefinitions)
-  const refsByFamiliarId = new Map()
+  const refsByFamiliarId = new Map<string, PremiumRef[]>()
 
   for (const premiumItem of rawDefinitions ?? []) {
-    for (const effect of premiumItem.effect ?? []) {
-      if (effect?.type !== 'familiar' || effect.familiar_id === undefined || effect.familiar_id === null) {
+    const effectList = Array.isArray(premiumItem.effect) ? premiumItem.effect : []
+    for (const rawEffect of effectList) {
+      const effect = asRecord(rawEffect)
+      if (!effect || effect.type !== 'familiar' || effect.familiar_id === undefined || effect.familiar_id === null) {
         continue
       }
 
-      const familiarId = String(effect.familiar_id)
+      const familiarId = toText(effect.familiar_id) ?? ''
       const refs = refsByFamiliarId.get(familiarId) ?? []
       refs.push({
         raw: premiumItem,
@@ -142,17 +290,22 @@ function buildPremiumRefsByFamiliarId(rawDefinitions, localizedDefinitions) {
   return refsByFamiliarId
 }
 
-function buildPatronRefsByFamiliarId(rawDefinitions, localizedDefinitions) {
+function buildPatronRefsByFamiliarId(
+  rawDefinitions: readonly Record<string, unknown>[] | undefined,
+  localizedDefinitions: readonly Record<string, unknown>[],
+): Map<string, PatronRef> {
   const localizedById = buildIdMap(localizedDefinitions)
-  const refsByFamiliarId = new Map()
+  const refsByFamiliarId = new Map<string, PatronRef>()
 
   for (const patronItem of rawDefinitions ?? []) {
-    for (const effect of patronItem.effects ?? []) {
-      if (effect?.type !== 'familiar' || effect.familiar_id === undefined || effect.familiar_id === null) {
+    const effectList = Array.isArray(patronItem.effects) ? patronItem.effects : []
+    for (const rawEffect of effectList) {
+      const effect = asRecord(rawEffect)
+      if (!effect || effect.type !== 'familiar' || effect.familiar_id === undefined || effect.familiar_id === null) {
         continue
       }
 
-      refsByFamiliarId.set(String(effect.familiar_id), {
+      refsByFamiliarId.set(toText(effect.familiar_id) ?? '', {
         raw: patronItem,
         localized: localizedById.get(String(patronItem.id)) ?? patronItem,
       })
@@ -162,30 +315,21 @@ function buildPatronRefsByFamiliarId(rawDefinitions, localizedDefinitions) {
   return refsByFamiliarId
 }
 
-function pickBestPremiumRef(familiarDefinition, refs = []) {
+function pickBestPremiumRef(
+  familiarDefinition: Record<string, unknown>,
+  refs: readonly PremiumRef[] = [],
+): PremiumRef | null {
   if (refs.length === 0) {
     return null
   }
 
-  const premiumItemId = toNonZeroText(familiarDefinition.cost?.premium_item)
-  const sourceItemId = toNonZeroText(familiarDefinition.collections_source?.item_id)
-  const familiarName = String(familiarDefinition.name ?? '').trim().toLowerCase()
+  const premiumItemId = toNonZeroText(asRecord(familiarDefinition.cost)?.premium_item)
+  const sourceItemId = toNonZeroText(asRecord(familiarDefinition.collections_source)?.item_id)
+  const familiarName = (toText(familiarDefinition.name) ?? '').trim().toLowerCase()
 
-  return [...refs]
-    .sort((left, right) => {
-      const leftScore = scorePremiumRef(left)
-      const rightScore = scorePremiumRef(right)
-
-      if (rightScore !== leftScore) {
-        return rightScore - leftScore
-      }
-
-      return Number(right.raw.id ?? 0) - Number(left.raw.id ?? 0)
-    })[0]
-
-  function scorePremiumRef(ref) {
+  function scorePremiumRef(ref: PremiumRef): number {
     const rawId = toNonZeroText(ref.raw.id)
-    const rawName = String(ref.raw.name ?? '').trim().toLowerCase()
+    const rawName = (toText(ref.raw.name) ?? '').trim().toLowerCase()
     let score = 0
 
     if (premiumItemId && rawId === premiumItemId) {
@@ -212,16 +356,28 @@ function pickBestPremiumRef(familiarDefinition, refs = []) {
       score -= 20
     }
 
-    if (ref.raw.properties?.retired !== true) {
+    if (asRecord(ref.raw.properties)?.retired !== true) {
       score += 10
     }
 
     return score
   }
+
+  return [...refs].sort((left, right) => {
+    const leftScore = scorePremiumRef(left)
+    const rightScore = scorePremiumRef(right)
+
+    if (rightScore !== leftScore) {
+      return rightScore - leftScore
+    }
+
+    return Number(right.raw.id ?? 0) - Number(left.raw.id ?? 0)
+  })[0] ?? null
 }
 
-function readPatronInfluenceRequirement(requirements = []) {
-  for (const requirement of requirements) {
+function readPatronInfluenceRequirement(requirements: readonly unknown[] = []): number | null {
+  for (const rawRequirement of requirements) {
+    const requirement = asRecord(rawRequirement)
     if (requirement?.condition === 'patron_total_influence') {
       return toNumber(requirement.influence)
     }
@@ -230,7 +386,11 @@ function readPatronInfluenceRequirement(requirements = []) {
   return null
 }
 
-function resolveAcquisitionKind(sourceType, premiumRef, patronRef) {
+function resolveAcquisitionKind(
+  sourceType: string | null,
+  premiumRef: PremiumRef | null,
+  patronRef: PatronRef | null,
+): PetAcquisitionKind {
   if (sourceType === 'gems') {
     return 'gems'
   }
@@ -250,47 +410,62 @@ function resolveAcquisitionKind(sourceType, premiumRef, patronRef) {
   return 'unknown'
 }
 
-function buildAcquisition(definition, premiumRef, patronRef, patronsById, localizedPatronsById) {
-  const sourceType = toText(definition.collections_source?.type)
+function buildAcquisition(
+  definition: Record<string, unknown>,
+  premiumRef: PremiumRef | null,
+  patronRef: PatronRef | null,
+  patronsById: Map<string, Record<string, unknown>>,
+  localizedPatronsById: Map<string, Record<string, unknown>>,
+): PetAcquisition {
+  const sourceRecord = asRecord(definition.collections_source)
+  const costRecord = asRecord(definition.cost)
+  const sourceType = toText(sourceRecord?.type)
   const kind = resolveAcquisitionKind(sourceType, premiumRef, patronRef)
   const gemCost = sourceType === 'gems'
-    ? toNumber(definition.collections_source?.cost ?? definition.cost?.soft_currency)
+    ? toNumber(sourceRecord?.cost ?? costRecord?.soft_currency)
     : null
 
-  const patronId = toNonZeroText(definition.collections_source?.patron_id ?? patronRef?.raw?.patron_id)
-  const patronDefinition = patronId ? patronsById.get(patronId) ?? null : null
+  const patronId = toNonZeroText(sourceRecord?.patron_id ?? asRecord(patronRef?.raw)?.patron_id)
+  const patronDefinition = patronId ? (patronsById.get(patronId) ?? null) : null
   const localizedPatronDefinition = patronId
-    ? localizedPatronsById.get(patronId) ?? patronDefinition
+    ? (localizedPatronsById.get(patronId) ?? patronDefinition)
     : null
   const patronName = patronDefinition
     ? normalizeLocalizedText(
-        patronDefinition.name,
-        localizedPatronDefinition?.name,
-        `Patron ${patronId}`,
-      )
+      patronDefinition.name,
+      localizedPatronDefinition?.name,
+      `Patron ${patronId}`,
+    )
     : null
   const patronCurrency = patronDefinition
     ? normalizeLocalizedText(
-        patronDefinition.currency_name_plural ?? patronDefinition.currency_name,
-        localizedPatronDefinition?.currency_name_plural ?? localizedPatronDefinition?.currency_name,
-        patronDefinition.currency_name_plural ?? patronDefinition.currency_name ?? 'Patron currency',
-      )
+      asRecord(patronDefinition)?.currency_name_plural
+        ?? asRecord(patronDefinition)?.currency_name,
+      asRecord(localizedPatronDefinition)?.currency_name_plural
+        ?? asRecord(localizedPatronDefinition)?.currency_name,
+      asRecord(patronDefinition)?.currency_name_plural
+        ?? asRecord(patronDefinition)?.currency_name ?? 'Patron currency',
+    )
     : null
-  const patronCost = patronRef ? toNumber(patronRef.raw.cost?.patron_currency) : null
-  const patronInfluence = patronRef ? readPatronInfluenceRequirement(patronRef.raw.requirements ?? []) : null
+  const patronCost = patronRef ? toNumber(asRecord(patronRef.raw.cost)?.patron_currency) : null
+  const patronInfluence = patronRef
+    ? readPatronInfluenceRequirement(
+      Array.isArray(patronRef.raw.requirements) ? patronRef.raw.requirements : [],
+    )
+    : null
   const premiumPackName = premiumRef
     ? normalizeLocalizedText(
-        premiumRef.raw.name,
-        premiumRef.localized?.name,
-        `Premium item ${premiumRef.raw.id}`,
-      )
+      premiumRef.raw.name,
+      premiumRef.localized?.name,
+      `Premium item ${String(premiumRef.raw.id)}`,
+    )
     : null
   const premiumPackDescription = premiumRef
     ? normalizeLocalizedText(
-        premiumRef.raw.description,
-        premiumRef.localized?.description,
-        premiumRef.raw.description ?? premiumRef.raw.name ?? '',
-      )
+      premiumRef.raw.description,
+      premiumRef.localized?.description,
+      premiumRef.raw.description ?? premiumRef.raw.name ?? '',
+    )
     : null
 
   return {
@@ -306,14 +481,14 @@ function buildAcquisition(definition, premiumRef, patronRef, patronsById, locali
   }
 }
 
-function decodeGraphicBuffer(rawBuffer) {
-  const decoders = [
+function decodeGraphicBuffer(rawBuffer: Buffer): Buffer {
+  const decoders: (() => Buffer)[] = [
     () => extractWrappedPngBuffer(rawBuffer),
     () => extractWrappedPngBuffer(inflateSync(rawBuffer)),
     () => extractWrappedPngBuffer(inflateRawSync(rawBuffer)),
     () => extractWrappedPngBuffer(unzipSync(rawBuffer)),
   ]
-  const errors = []
+  const errors: string[] = []
 
   for (const decode of decoders) {
     try {
@@ -328,11 +503,14 @@ function decodeGraphicBuffer(rawBuffer) {
   throw new Error(errors.join(' | '))
 }
 
-function isSkelAnimGraphicDefinition(graphicDefinition) {
+function isSkelAnimGraphicDefinition(graphicDefinition: Record<string, unknown> | null | undefined): boolean {
   return Number(graphicDefinition?.type ?? 0) === 3
 }
 
-function buildPetGraphicAsset(graphicDefinition, baseUrl = DEFAULT_MASTER_API_URL) {
+function buildPetGraphicAsset(
+  graphicDefinition: Record<string, unknown>,
+  baseUrl: string = DEFAULT_MASTER_API_URL,
+): ReturnType<typeof buildRemoteGraphicAsset> {
   const asset = buildRemoteGraphicAsset(graphicDefinition, baseUrl)
 
   if (!asset) {
@@ -349,8 +527,10 @@ function buildPetGraphicAsset(graphicDefinition, baseUrl = DEFAULT_MASTER_API_UR
   }
 }
 
-function resolvePreferredSequenceIndexes(graphicDefinition) {
-  const sequenceOverride = graphicDefinition?.export_params?.sequence_override
+function resolvePreferredSequenceIndexes(
+  graphicDefinition: Record<string, unknown> | null | undefined,
+): number[] {
+  const sequenceOverride = asRecord(graphicDefinition?.export_params)?.sequence_override
 
   if (!Array.isArray(sequenceOverride) || sequenceOverride.length === 0) {
     return []
@@ -361,7 +541,7 @@ function resolvePreferredSequenceIndexes(graphicDefinition) {
     .filter((value) => Number.isInteger(value) && value >= 0)
 }
 
-function mergeBounds(base, next) {
+function mergeBounds(base: AnimationBounds | null, next: SkelAnimFrameBounds | null): AnimationBounds | null {
   if (!next) {
     return base
   }
@@ -383,9 +563,9 @@ function mergeBounds(base, next) {
   }
 }
 
-function summarizeSequence(sequence) {
-  let bounds = null
-  let firstRenderableFrameIndex = null
+function summarizeSequence(sequence: SkelAnimSequence): SequenceSummary {
+  let bounds: AnimationBounds | null = null
+  let firstRenderableFrameIndex: number | null = null
 
   for (let frameIndex = 0; frameIndex < sequence.length; frameIndex += 1) {
     const frameBounds = computeSkelAnimFrameBounds(sequence, frameIndex)
@@ -410,21 +590,24 @@ function summarizeSequence(sequence) {
   }
 }
 
-function resolveDefaultSequence(sequenceSummaries, preferredSequenceIndexes) {
+function resolveDefaultSequence(
+  sequenceSummaries: readonly SequenceSummary[],
+  preferredSequenceIndexes: readonly number[],
+): SequenceSummary | null {
   const sequenceByIndex = new Map(sequenceSummaries.map((summary) => [summary.sequenceIndex, summary]))
 
   for (const preferredIndex of preferredSequenceIndexes) {
     const summary = sequenceByIndex.get(preferredIndex)
 
     if (summary?.firstRenderableFrameIndex !== null) {
-      return summary
+      return summary ?? null
     }
   }
 
   return sequenceSummaries.find((summary) => summary.firstRenderableFrameIndex !== null) ?? null
 }
 
-function resolvePetIllustrationRasterScale(bounds) {
+function resolvePetIllustrationRasterScale(bounds: AnimationBounds): number {
   const width = Math.max(1, Math.ceil(bounds.maxX - bounds.minX))
   const height = Math.max(1, Math.ceil(bounds.maxY - bounds.minY))
   const maxEdge = Math.max(width, height)
@@ -435,7 +618,7 @@ function resolvePetIllustrationRasterScale(bounds) {
   )
 }
 
-async function renderPetSkelAnimPng(task, rawBuffer) {
+async function renderPetSkelAnimPng(task: PetAssetTask, rawBuffer: Buffer): Promise<Buffer> {
   const skelAnim = decodeSkelAnimGraphicBuffer(task.asset, rawBuffer)
 
   if (task.variant !== 'illustration') {
@@ -455,35 +638,43 @@ async function renderPetSkelAnimPng(task, rawBuffer) {
   const sequences = character.sequences.map(summarizeSequence)
   const defaultSequence = resolveDefaultSequence(sequences, task.preferredSequenceIndexes)
 
-  if (!defaultSequence?.bounds) {
+  if (!defaultSequence || !defaultSequence.bounds) {
     throw new Error('没有可渲染的 illustration sequence')
   }
 
+  // renderer 只读 viewportBounds 的 minX/minY/maxX/maxY；AnimationBounds 缺少 width/height/visiblePieceCount，
+  // 但 renderer 不读这些字段，as SkelAnimFrameBounds 是安全的。
   return (
     await renderSkelAnimPoseToPngBuffer(skelAnim, {
       sequenceIndex: defaultSequence.sequenceIndex,
       frameIndex: defaultSequence.firstRenderableFrameIndex ?? 0,
-      viewportBounds: defaultSequence.bounds,
+      viewportBounds: defaultSequence.bounds as SkelAnimFrameBounds,
       rasterScale: resolvePetIllustrationRasterScale(defaultSequence.bounds),
     })
   ).bytes
 }
 
-function copyOpaqueRegion(source, bounds, target, offsetX, offsetY) {
+function copyOpaqueRegion(
+  source: PNG,
+  bounds: OpaqueBounds,
+  target: PNG,
+  offsetX: number,
+  offsetY: number,
+): void {
   for (let y = 0; y < bounds.height; y += 1) {
     for (let x = 0; x < bounds.width; x += 1) {
       const sourceIndex = ((bounds.top + y) * source.width + (bounds.left + x)) * 4
       const targetIndex = ((offsetY + y) * target.width + (offsetX + x)) * 4
 
-      target.data[targetIndex] = source.data[sourceIndex]
-      target.data[targetIndex + 1] = source.data[sourceIndex + 1]
-      target.data[targetIndex + 2] = source.data[sourceIndex + 2]
-      target.data[targetIndex + 3] = source.data[sourceIndex + 3]
+      target.data[targetIndex] = source.data[sourceIndex]!
+      target.data[targetIndex + 1] = source.data[sourceIndex + 1]!
+      target.data[targetIndex + 2] = source.data[sourceIndex + 2]!
+      target.data[targetIndex + 3] = source.data[sourceIndex + 3]!
     }
   }
 }
 
-function processIconPng(pngBuffer) {
+function processIconPng(pngBuffer: Buffer): ProcessedPng {
   const source = PNG.sync.read(pngBuffer)
   const bounds = findOpaqueBounds(source)
 
@@ -512,7 +703,7 @@ function processIconPng(pngBuffer) {
   }
 }
 
-function processIllustrationPng(pngBuffer) {
+function processIllustrationPng(pngBuffer: Buffer): ProcessedPng {
   const source = PNG.sync.read(pngBuffer)
   const bounds = findOpaqueBounds(source)
 
@@ -537,7 +728,7 @@ function processIllustrationPng(pngBuffer) {
   }
 }
 
-async function downloadRawAsset(task) {
+async function downloadRawAsset(task: { remoteUrl: string }): Promise<Buffer> {
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS)
 
@@ -568,21 +759,21 @@ async function downloadRawAsset(task) {
       return Buffer.from(stdout)
     } catch (curlError) {
       const curlMessage = curlError instanceof Error ? curlError.message : String(curlError)
-      throw new Error(`fetch=${fetchMessage} | curl=${curlMessage}`)
+      throw new Error(`fetch=${fetchMessage} | curl=${curlMessage}`, { cause: curlError })
     }
   } finally {
     clearTimeout(timer)
   }
 }
 
-async function downloadPetAsset(task) {
+async function downloadPetAsset(task: PetAssetTask): Promise<DownloadedPetAsset> {
   try {
     const rawBuffer = await downloadRawAsset(task)
     const decodedPng =
       task.renderMode === 'skelanim'
         ? await renderPetSkelAnimPng(task, rawBuffer)
         : decodeGraphicBuffer(rawBuffer)
-    const processed =
+    const processed: ProcessedPng =
       task.variant === 'icon' ? processIconPng(decodedPng) : processIllustrationPng(decodedPng)
 
     await writeFile(task.outputFile, processed.pngBuffer)
@@ -602,11 +793,12 @@ async function downloadPetAsset(task) {
   } catch (error) {
     throw new Error(
       `解析 pet=${task.petId} variant=${task.variant} 失败 (${task.remoteUrl}): ${error instanceof Error ? error.message : String(error)}`,
+      { cause: error },
     )
   }
 }
 
-async function downloadPetAnimation(task) {
+async function downloadPetAnimation(task: PetAnimationTask): Promise<DownloadedPetAnimation> {
   try {
     const rawBuffer = await downloadRawAsset({ remoteUrl: task.asset.remoteUrl })
     const decoded = decodeSkelAnimGraphicBuffer(task.asset, rawBuffer)
@@ -647,11 +839,31 @@ async function downloadPetAnimation(task) {
   } catch (error) {
     throw new Error(
       `解析 pet=${task.petId} animation 失败 (${task.asset.remoteUrl}): ${error instanceof Error ? error.message : String(error)}`,
+      { cause: error },
     )
   }
 }
 
-export async function syncPetsCatalog(options = {}) {
+function countAcquisitionKind(pets: readonly PetCatalogItem[], kind: PetAcquisitionKind): number {
+  return pets.filter((pet) => pet.acquisition.kind === kind).length
+}
+
+function buildSyncCounts(pets: readonly PetCatalogItem[], animations: number): SyncPetsCatalogCounts {
+  return {
+    icons: pets.filter((pet) => Boolean(pet.icon)).length,
+    illustrations: pets.filter((pet) => Boolean(pet.illustration)).length,
+    animations,
+    gems: countAcquisitionKind(pets, 'gems'),
+    premium: countAcquisitionKind(pets, 'premium'),
+    patron: countAcquisitionKind(pets, 'patron'),
+    unavailable: countAcquisitionKind(pets, 'not-yet-available'),
+    unknown: countAcquisitionKind(pets, 'unknown'),
+  }
+}
+
+export async function syncPetsCatalog(
+  options: SyncPetsCatalogOptions = {},
+): Promise<SyncPetsCatalogResult> {
   if (!options.input) {
     throw new Error('缺少 --input，无法根据 definitions 快照同步宠物目录')
   }
@@ -660,9 +872,9 @@ export async function syncPetsCatalog(options = {}) {
   const outputDir = path.resolve(options.outputDir ?? DEFAULT_OUTPUT_DIR)
   const currentVersion = options.currentVersion ?? DEFAULT_CURRENT_VERSION
   const concurrency = Math.max(1, Number(options.concurrency ?? DEFAULT_CONCURRENCY))
-  const rawDefinitions = await readJson(input)
+  const rawDefinitions = (await readJson(input)) as GameDefinitions
   const localizedDefinitions = options.localizedInput
-    ? await readJson(path.resolve(options.localizedInput))
+    ? ((await readJson(path.resolve(options.localizedInput))) as GameDefinitions)
     : rawDefinitions
   const updatedAt = getUpdatedAt(rawDefinitions)
   const petsCollectionFile = path.join(outputDir, 'pets.json')
@@ -679,24 +891,15 @@ export async function syncPetsCatalog(options = {}) {
       nextUpdatedAt: updatedAt,
     })
   ) {
-    const existingPets = existingPetsCollection?.items ?? []
-    const existingAnimations = existingAnimationsCollection?.items ?? []
+    const existingPets = (existingPetsCollection?.items ?? []) as PetCatalogItem[]
+    const existingAnimations = (existingAnimationsCollection?.items ?? []) as PetAnimationItem[]
     return {
       outputDir,
       updatedAt,
       count: existingPets.length,
       assetCount: 0,
+      counts: buildSyncCounts(existingPets, existingAnimations.length),
       skipped: true,
-      counts: {
-        icons: existingPets.filter((pet) => Boolean(pet.icon)).length,
-        illustrations: existingPets.filter((pet) => Boolean(pet.illustration)).length,
-        animations: existingAnimations.length,
-        gems: existingPets.filter((pet) => pet.acquisition.kind === 'gems').length,
-        premium: existingPets.filter((pet) => pet.acquisition.kind === 'premium').length,
-        patron: existingPets.filter((pet) => pet.acquisition.kind === 'patron').length,
-        unavailable: existingPets.filter((pet) => pet.acquisition.kind === 'not-yet-available').length,
-        unknown: existingPets.filter((pet) => pet.acquisition.kind === 'unknown').length,
-      },
     }
   }
   const graphicMap = buildGraphicMap(rawDefinitions.graphic_defines)
@@ -706,11 +909,11 @@ export async function syncPetsCatalog(options = {}) {
   const localizedPatronsById = buildIdMap(localizedDefinitions.patron_defines)
   const premiumRefsByFamiliarId = buildPremiumRefsByFamiliarId(
     rawDefinitions.premium_item_defines,
-    localizedDefinitions.premium_item_defines,
+    localizedDefinitions.premium_item_defines ?? [],
   )
   const patronRefsByFamiliarId = buildPatronRefsByFamiliarId(
     rawDefinitions.patron_shop_item_defines,
-    localizedDefinitions.patron_shop_item_defines,
+    localizedDefinitions.patron_shop_item_defines ?? [],
   )
 
   const iconDir = path.join(outputDir, 'pets', 'icons')
@@ -720,38 +923,48 @@ export async function syncPetsCatalog(options = {}) {
   await mkdir(illustrationDir, { recursive: true })
   await mkdir(animationDir, { recursive: true })
 
-  const pets = []
-  const tasks = []
-  const animationTasks = []
-  const existingPetById = new Map((existingPetsCollection?.items ?? []).map((item) => [item.id, item]))
-  const existingAnimationByPetId = new Map(
-    (existingAnimationsCollection?.items ?? []).map((item) => [item.petId, item]),
+  const pets: PetCatalogItem[] = []
+  const tasks: PetAssetTask[] = []
+  const animationTasks: PetAnimationTask[] = []
+  const existingPetById = new Map<string, PetCatalogItem>(
+    (existingPetsCollection?.items ?? []).map((item) => {
+      const pet = item as PetCatalogItem
+      return [pet.id, pet]
+    }),
   )
-  const reusedAnimations = []
+  const existingAnimationByPetId = new Map<string, PetAnimationItem>(
+    (existingAnimationsCollection?.items ?? []).map((item) => {
+      const animation = item as PetAnimationItem
+      return [animation.petId, animation]
+    }),
+  )
+  const reusedAnimations: PetAnimationItem[] = []
 
   for (const definition of rawDefinitions.familiar_defines ?? []) {
     const petId = String(definition.id)
     const localizedDefinition = localizedFamiliarsById.get(petId) ?? definition
     const premiumRef = pickBestPremiumRef(definition, premiumRefsByFamiliarId.get(petId) ?? [])
     const patronRef = patronRefsByFamiliarId.get(petId) ?? null
-    const sourceType = toText(definition.collections_source?.type)
+    const sourceRecord = asRecord(definition.collections_source)
+    const propertiesRecord = asRecord(definition.properties)
+    const sourceType = toText(sourceRecord?.type)
     const isAvailable =
       sourceType !== 'not_yet_available' &&
-      Boolean(definition.is_available ?? definition.properties?.is_available ?? false)
+      Boolean(definition.is_available ?? propertiesRecord?.is_available ?? false)
     const iconGraphicId = toNonZeroText(definition.graphic_id)
-    const illustrationGraphicId = toNonZeroText(definition.properties?.xl_graphic_id)
-    const iconGraphic = iconGraphicId ? graphicMap.get(iconGraphicId) ?? null : null
-    const illustrationGraphic = illustrationGraphicId ? graphicMap.get(illustrationGraphicId) ?? null : null
+    const illustrationGraphicId = toNonZeroText(propertiesRecord?.xl_graphic_id)
+    const iconGraphic = iconGraphicId ? (graphicMap.get(iconGraphicId) ?? null) : null
+    const illustrationGraphic = illustrationGraphicId ? (graphicMap.get(illustrationGraphicId) ?? null) : null
     const iconAsset = iconGraphic ? buildPetGraphicAsset(iconGraphic, assetBaseUrl) : null
     const illustrationAsset = illustrationGraphic ? buildPetGraphicAsset(illustrationGraphic, assetBaseUrl) : null
 
-    const pet = {
+    const pet: PetCatalogItem = {
       id: petId,
       name: normalizeLocalizedText(
         definition.name,
         localizedDefinition?.name,
         `Pet ${petId}`,
-      ),
+      ) ?? { original: `Pet ${petId}`, display: `Pet ${petId}` },
       description: normalizeLocalizedText(
         definition.description,
         localizedDefinition?.description,
@@ -818,10 +1031,7 @@ export async function syncPetsCatalog(options = {}) {
       pet.illustration = existingPet.illustration
     }
 
-    if (
-      illustrationAsset?.sourceGraphic &&
-      !pet.illustration
-    ) {
+    if (illustrationAsset?.sourceGraphic && !pet.illustration) {
       tasks.push({
         petId,
         variant: 'illustration',
@@ -835,7 +1045,7 @@ export async function syncPetsCatalog(options = {}) {
     }
 
     if (illustrationAsset?.sourceGraphic && isSkelAnimGraphicDefinition(illustrationGraphic)) {
-      const animationTask = {
+      const animationTask: PetAnimationTask = {
         petId,
         name: pet.name,
         asset: illustrationAsset,
@@ -857,7 +1067,10 @@ export async function syncPetsCatalog(options = {}) {
 
   const downloadedAssets = await runWithConcurrency(tasks, concurrency, downloadPetAsset)
   const downloadedAnimations = await runWithConcurrency(animationTasks, concurrency, downloadPetAnimation)
-  const animations = [...reusedAnimations, ...downloadedAnimations.map((item) => item)]
+  const animations: (PetAnimationItem | DownloadedPetAnimation)[] = [
+    ...reusedAnimations,
+    ...downloadedAnimations,
+  ]
   const petById = new Map(pets.map((pet) => [pet.id, pet]))
 
   for (const asset of downloadedAssets) {
@@ -901,22 +1114,13 @@ export async function syncPetsCatalog(options = {}) {
     updatedAt,
     count: sortedPets.length,
     assetCount: downloadedAssets.length,
-    counts: {
-      icons: sortedPets.filter((pet) => Boolean(pet.icon)).length,
-      illustrations: sortedPets.filter((pet) => Boolean(pet.illustration)).length,
-      animations: sortedAnimations.length,
-      gems: sortedPets.filter((pet) => pet.acquisition.kind === 'gems').length,
-      premium: sortedPets.filter((pet) => pet.acquisition.kind === 'premium').length,
-      patron: sortedPets.filter((pet) => pet.acquisition.kind === 'patron').length,
-      unavailable: sortedPets.filter((pet) => pet.acquisition.kind === 'not-yet-available').length,
-      unknown: sortedPets.filter((pet) => pet.acquisition.kind === 'unknown').length,
-    },
+    counts: buildSyncCounts(sortedPets, sortedAnimations.length),
   }
 }
 
-function printUsage() {
+function printUsage(): void {
   console.log(`用法：
-  node scripts/sync-idle-champions-pets.mjs --input <raw-json>
+  node scripts/sync-idle-champions-pets.ts --input <raw-json>
 
 可选参数：
   --input <file>             官方原文 definitions 快照 JSON
@@ -929,7 +1133,7 @@ function printUsage() {
 `)
 }
 
-async function main() {
+async function main(): Promise<void> {
   const { values } = parseArgs({
     options: {
       input: { type: 'string' },
@@ -962,9 +1166,9 @@ async function main() {
   console.log(`- unknown: ${result.counts.unknown}`)
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
-  main().catch((error) => {
-    console.error(`同步宠物目录失败：${error.message}`)
+if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+  main().catch((error: unknown) => {
+    console.error(`同步宠物目录失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1
   })
 }

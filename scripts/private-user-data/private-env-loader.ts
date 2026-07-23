@@ -5,18 +5,25 @@
 
 const USER_ID_KEY = 'IC_PRIVATE_USER_ID'
 const HASH_KEY = 'IC_PRIVATE_HASH'
-const FORBIDDEN_VITE_KEYS = new Set([
+const FORBIDDEN_VITE_KEYS: ReadonlySet<string> = new Set([
   `VITE_${USER_ID_KEY}`,
   `VITE_${HASH_KEY}`,
 ])
 
+export interface PrivateEnvSource {
+  env: Record<string, string | undefined>
+}
+
+export interface PrivateCredentialsResult {
+  userId?: string
+  hash?: string
+  error?: string
+}
+
 /**
  * Load private credentials from a provided env object.
- *
- * @param {{env: Record<string, string | undefined>}} options
- * @returns {{userId?: string, hash?: string, error?: string}}
  */
-export function loadPrivateCredentials({ env }) {
+export function loadPrivateCredentials({ env }: PrivateEnvSource): PrivateCredentialsResult {
   const viteKeys = Object.keys(env).filter((key) => FORBIDDEN_VITE_KEYS.has(key))
   if (viteKeys.length > 0) {
     return {
@@ -28,7 +35,7 @@ export function loadPrivateCredentials({ env }) {
   const hash = env[HASH_KEY]
 
   if (!userId || !hash) {
-    const missing = []
+    const missing: string[] = []
     if (!userId) missing.push(USER_ID_KEY)
     if (!hash) missing.push(HASH_KEY)
     return {
@@ -41,13 +48,9 @@ export function loadPrivateCredentials({ env }) {
 
 /**
  * Parse .env-style file content into a flat key-value map.
- *
- * @param {string} content
- * @returns {Record<string, string>}
  */
-export function parseLocalEnvFile(content) {
-  /** @type {Record<string, string>} */
-  const result = {}
+export function parseLocalEnvFile(content: string): Record<string, string> {
+  const result: Record<string, string> = {}
 
   for (const line of content.split('\n')) {
     const trimmed = line.trim()
@@ -61,8 +64,8 @@ export function parseLocalEnvFile(content) {
 
     // Strip surrounding quotes
     if (
-      (value.startsWith('"') && value.endsWith('"')) ||
-      (value.startsWith("'") && value.endsWith("'"))
+      (value.startsWith('"') && value.endsWith('"'))
+      || (value.startsWith("'") && value.endsWith("'"))
     ) {
       value = value.slice(1, -1)
     }

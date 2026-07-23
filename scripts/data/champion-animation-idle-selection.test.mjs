@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import {
   listAnimationIdleCandidateMetrics,
   selectAnimationIdleDefaultMetrics,
-} from './champion-animation-idle-selection.mjs'
+} from './champion-animation-idle-selection.ts'
 
 function createMetrics(overrides) {
   return {
