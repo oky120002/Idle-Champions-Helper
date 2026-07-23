@@ -4,7 +4,7 @@ import os from 'node:os'
 import path from 'node:path'
 import zlib from 'node:zlib'
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
-import { syncChampionAnimations } from './sync-idle-champions-animations.mjs'
+import { syncChampionAnimations } from './sync-idle-champions-animations.ts'
 
 function encodeUInt32LE(value) {
   const buffer = Buffer.alloc(4)

@@ -16,6 +16,8 @@ import {
   DEFAULT_CHAMPION_ANIMATION_IDLE_OVERRIDES_FILE,
   readChampionAnimationIdleOverrides,
 } from './data/champion-animation-idle-overrides.ts'
+import type { ChampionAnimationIdleOverride } from './data/champion-animation-idle-overrides.ts'
+import type { LocalizedText } from '../src/domain/types/common.ts'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'
@@ -23,7 +25,82 @@ const DEFAULT_ANIMATIONS_FILE = 'champion-animations.json'
 const DEFAULT_AUDIT_FILE = 'champion-animation-audit.json'
 const MAX_CANDIDATES = 3
 
-function parseIdFilter(rawValue) {
+// 派生自家函数签名/返回类型；champion-animation-idle-selection 的内部 interface 未导出，
+// 用 Parameters/ReturnType 跟随上游形状，避免重复声明。
+type ScoredAnimationMetrics = ReturnType<typeof scoreAnimationSequenceMetrics>[number]
+type AnimationSequenceSummary = NonNullable<Parameters<typeof summarizeAnimationSequenceMetrics>[1]>
+type SuspicionSignal = ReturnType<typeof buildSuspicionSignals>[number]
+type SuspicionLevel = ReturnType<typeof buildSuspicionLevel>
+
+interface AnimationAsset {
+  path: string
+  bytes?: number
+  format?: string
+}
+
+interface AnimationItem {
+  id: string
+  championId: string
+  skinId: string | null
+  kind: string
+  seat: number
+  championName: LocalizedText
+  illustrationName: LocalizedText
+  sourceGraphicId: string
+  sourceGraphic: string
+  sourceVersion: number | null
+  defaultSequenceIndex: number
+  defaultFrameIndex: number
+  asset: AnimationAsset
+  sequences: AnimationSequenceSummary[]
+}
+
+interface AnimationCollection {
+  items: AnimationItem[]
+  updatedAt: string
+}
+
+interface AuditEntry {
+  id: string
+  championId: string
+  skinId: string | null
+  kind: string
+  seat: number
+  championName: LocalizedText
+  illustrationName: LocalizedText
+  currentSequenceIndex: number
+  currentFrameIndex: number
+  sequenceCount: number
+  suspicionLevel: SuspicionLevel
+  suspicionScore: number
+  suspicionSignals: SuspicionSignal[]
+  current: ScoredAnimationMetrics
+  recommended: ScoredAnimationMetrics
+  candidates: ScoredAnimationMetrics[]
+}
+
+interface AuditChampionAnimationsOptions {
+  outputDir?: string
+  currentVersion?: string
+  animationsFile?: string
+  auditFile?: string
+  idleOverridesFile?: string
+  championIds?: string
+  skinIds?: string
+}
+
+interface AuditChampionAnimationsResult {
+  outputDir: string
+  animationsFile: string
+  auditFile: string
+  count: number
+  reviewedCount: number
+  highCount: number
+  mediumCount: number
+  lowCount: number
+}
+
+function parseIdFilter(rawValue: string | undefined | null): Set<string> | null {
   if (!rawValue) {
     return null
   }
@@ -36,7 +113,10 @@ function parseIdFilter(rawValue) {
   return ids.length > 0 ? new Set(ids) : null
 }
 
-function buildAnimationFilter(championIds, skinIds) {
+function buildAnimationFilter(
+  championIds: Set<string> | null,
+  skinIds: Set<string> | null,
+): (animation: AnimationItem) => boolean {
   return (animation) => {
     if (!championIds && !skinIds) {
       return true
@@ -54,7 +134,11 @@ function buildAnimationFilter(championIds, skinIds) {
   }
 }
 
-function resolvePublishedAssetFile(outputDir, currentVersion, assetPath) {
+function resolvePublishedAssetFile(
+  outputDir: string,
+  currentVersion: string,
+  assetPath: string | undefined,
+): string {
   if (!assetPath) {
     throw new Error('动画资源缺少 asset.path')
   }
@@ -68,7 +152,11 @@ function resolvePublishedAssetFile(outputDir, currentVersion, assetPath) {
   return path.join(outputDir, relativePath)
 }
 
-function buildAuditEntry(animation, scoredMetrics, animationIdleOverride) {
+function buildAuditEntry(
+  animation: AnimationItem,
+  scoredMetrics: ScoredAnimationMetrics[],
+  animationIdleOverride: ChampionAnimationIdleOverride | undefined,
+): AuditEntry {
   const sortedMetrics = [...scoredMetrics].sort(compareAnimationSequenceMetrics)
   const currentMetrics =
     scoredMetrics.find((item) => item.sequenceIndex === animation.defaultSequenceIndex) ?? sortedMetrics[0]
@@ -109,16 +197,16 @@ function buildAuditEntry(animation, scoredMetrics, animationIdleOverride) {
   }
 }
 
-function sortAuditEntries(left, right) {
-  const suspicionOrder = {
-    high: 0,
-    medium: 1,
-    low: 2,
-    none: 3,
-  }
+const SUSPICION_ORDER: Record<SuspicionLevel, number> = {
+  high: 0,
+  medium: 1,
+  low: 2,
+  none: 3,
+}
 
+function sortAuditEntries(left: AuditEntry, right: AuditEntry): number {
   return (
-    (suspicionOrder[left.suspicionLevel] ?? 99) - (suspicionOrder[right.suspicionLevel] ?? 99) ||
+    SUSPICION_ORDER[left.suspicionLevel] - SUSPICION_ORDER[right.suspicionLevel] ||
     right.suspicionScore - left.suspicionScore ||
     left.seat - right.seat ||
     left.championName.display.localeCompare(right.championName.display) ||
@@ -127,7 +215,9 @@ function sortAuditEntries(left, right) {
   )
 }
 
-export async function auditChampionAnimations(options = {}) {
+export async function auditChampionAnimations(
+  options: AuditChampionAnimationsOptions = {},
+): Promise<AuditChampionAnimationsResult> {
   const outputDir = path.resolve(options.outputDir ?? DEFAULT_OUTPUT_DIR)
   const currentVersion = options.currentVersion ?? DEFAULT_CURRENT_VERSION
   const animationsFile = path.resolve(options.animationsFile ?? path.join(outputDir, DEFAULT_ANIMATIONS_FILE))
@@ -138,24 +228,21 @@ export async function auditChampionAnimations(options = {}) {
   const championIds = parseIdFilter(options.championIds ?? null)
   const skinIds = parseIdFilter(options.skinIds ?? null)
   const hasSelectionFilters = Boolean(championIds || skinIds)
-  const animationCollection = await readJson(animationsFile)
+  const animationCollection = (await readJson(animationsFile)) as AnimationCollection
   const idleOverrides = await readChampionAnimationIdleOverrides(idleOverridesFile)
   const filterAnimation = buildAnimationFilter(championIds, skinIds)
   const selectedAnimations = animationCollection.items.filter(filterAnimation)
-  const baseCollection = hasSelectionFilters ? await readJsonIfExists(auditFile) : null
-  const nextEntries = []
+  const baseCollection = hasSelectionFilters
+    ? ((await readJsonIfExists(auditFile)) as { items?: AuditEntry[]; updatedAt?: string } | null)
+    : null
+  const nextEntries: AuditEntry[] = []
 
   for (const animation of selectedAnimations) {
     const assetFile = resolvePublishedAssetFile(outputDir, currentVersion, animation.asset.path)
     const rawBuffer = await readFile(assetFile)
     const skelAnim = decodeSkelAnimGraphicBuffer(
-      {
-        graphicId: animation.sourceGraphicId,
-        sourceGraphic: animation.sourceGraphic,
-        sourceVersion: animation.sourceVersion,
-        remotePath: animation.asset.path,
-        delivery: 'zlib-png',
-      },
+      // decodeSkelAnimGraphicBuffer 只读 delivery；其余字段原 .mjs 传入但未使用，TS strict 下省略。
+      { delivery: 'zlib-png' },
       rawBuffer,
     )
     const character = skelAnim.characters[0]
@@ -164,7 +251,9 @@ export async function auditChampionAnimations(options = {}) {
       throw new Error(`${animation.id} 缺少可用角色数据`)
     }
 
-    const sequenceSummaryByIndex = new Map(animation.sequences.map((item) => [item.sequenceIndex, item]))
+    const sequenceSummaryByIndex = new Map(
+      animation.sequences.map((item) => [item.sequenceIndex, item]),
+    )
     const rawMetrics = character.sequences.map((sequence) =>
       summarizeAnimationSequenceMetrics(
         sequence,
@@ -172,12 +261,12 @@ export async function auditChampionAnimations(options = {}) {
       ),
     )
     const scoredMetrics = scoreAnimationSequenceMetrics(rawMetrics)
-    nextEntries.push(buildAuditEntry(animation, scoredMetrics, idleOverrides.get(animation.id) ?? null))
+    nextEntries.push(buildAuditEntry(animation, scoredMetrics, idleOverrides.get(animation.id) ?? undefined))
   }
 
   const auditMap = hasSelectionFilters
     ? new Map((baseCollection?.items ?? []).map((item) => [item.id, item]))
-    : new Map()
+    : new Map<string, AuditEntry>()
 
   for (const entry of nextEntries) {
     auditMap.set(entry.id, entry)
@@ -202,16 +291,16 @@ export async function auditChampionAnimations(options = {}) {
   }
 }
 
-function printUsage() {
+function printUsage(): void {
   console.log(`用法：
-  node scripts/audit-idle-champions-animations.mjs [--outputDir <dir>] [--animationsFile <file>] [--idleOverridesFile <file>] [--championIds <ids>] [--skinIds <ids>]
+  node scripts/audit-idle-champions-animations.ts [--outputDir <dir>] [--animationsFile <file>] [--idleOverridesFile <file>] [--championIds <ids>] [--skinIds <ids>]
 
 说明：
   读取站内已发布的 champion-animations 清单与 .bin，给每个 hero-base / skin 产出本地 idle 候选审计结果，供人工比对页消费。
 `)
 }
 
-async function main() {
+async function main(): Promise<void> {
   const { values } = parseArgs({
     options: {
       outputDir: { type: 'string' },
@@ -240,9 +329,9 @@ async function main() {
   console.log(`- low: ${result.lowCount}`)
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
-  main().catch((error) => {
-    console.error(`生成动图审计失败：${error.message}`)
+if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+  main().catch((error: unknown) => {
+    console.error(`生成动图审计失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1
   })
 }

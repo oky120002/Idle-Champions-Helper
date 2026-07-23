@@ -38,7 +38,7 @@ import {
   normalizeManualFormations,
   normalizePatrons,
   normalizeVariant,
-} from './data/normalize-adventures.mjs'
+} from './data/normalize-adventures.ts'
 import {
   DEFAULT_MASTER_API_URL,
   buildChampionPortraitPath,

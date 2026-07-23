@@ -30,7 +30,7 @@
   - 导出 payload 组装
 - `scripts/data/champion-animation-idle-overrides.json`
   - 审片后确认的 fixed / blocked sequence 覆写
-  - 被 `sync-idle-champions-animations.mjs` 和 `audit-idle-champions-animations.mjs` 共同消费
+  - 被 `sync-idle-champions-animations.ts` 和 `audit-idle-champions-animations.ts` 共同消费
 - `AnimationAuditComparisonRow.tsx`
   - 单行标题、信号、三栏对比与播放器
 - `AnimationAuditRowFeedback.tsx`

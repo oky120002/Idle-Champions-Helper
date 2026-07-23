@@ -3,6 +3,7 @@ import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
 import { createChampionGraphicResourceCache } from './data/champion-graphic-resource-cache.ts'
+import type { ChampionGraphicResourceCache } from './data/champion-graphic-resource-cache.ts'
 import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.ts'
 import {
   resolvePreferredSequenceIndexes,
@@ -15,6 +16,7 @@ import {
   DEFAULT_CHAMPION_ANIMATION_IDLE_OVERRIDES_FILE,
   readChampionAnimationIdleOverrides,
 } from './data/champion-animation-idle-overrides.ts'
+import type { ChampionAnimationIdleOverride } from './data/champion-animation-idle-overrides.ts'
 import {
   fileExists,
   readExistingCollection,
@@ -23,9 +25,10 @@ import {
 import {
   parseIdFilter,
   readJson,
-  readJsonIfExists,
   runWithConcurrency,
 } from './data/io-utils.ts'
+import type { RemoteGraphicAsset } from './data/champion-asset-helpers.ts'
+import type { LocalizedText } from '../src/domain/types/common.ts'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'
@@ -34,20 +37,134 @@ const DEFAULT_CONCURRENCY = 6
 const DEFAULT_FPS = 24
 const CHAMPION_ANIMATION_DIR_NAME = 'champion-animations'
 
-function buildAnimationAssetPath(currentVersion, group, id) {
+// 派生自家函数返回类型，避免重复声明 metrics/summary 结构（champion-animation-idle-selection
+// 的内部 interface 未导出，用 ReturnType 跟随上游形状）。
+type AnimationSequenceSummary = ReturnType<typeof summarizeAnimationSequence>
+type SelectedAnimationMetrics = NonNullable<ReturnType<typeof selectAnimationIdleDefaultMetrics>>
+
+interface AnimationAsset {
+  path: string
+  bytes: number
+  format: 'skelanim-zlib'
+}
+
+interface AnimationItem {
+  id: string
+  championId: string
+  skinId: string | null
+  kind: 'hero-base' | 'skin'
+  seat: number
+  championName: LocalizedText
+  illustrationName: LocalizedText
+  sourceSlot: string
+  sourceGraphicId: string
+  sourceGraphic: string
+  sourceVersion: number | null
+  fps: number
+  defaultSequenceIndex: number
+  defaultFrameIndex: number
+  asset: AnimationAsset
+  sequences: AnimationSequenceSummary[]
+}
+
+// 既有清单条目，允许 asset/sourceVersion 等字段缺省以兼容历史写入。
+interface ExistingAnimation {
+  id: string
+  kind: string
+  championId: string
+  skinId: string | null
+  sourceSlot: string
+  sourceGraphicId: string
+  sourceGraphic: string
+  sourceVersion: number | null
+  fps: number
+  asset: { path?: string; bytes?: number; format?: string } | null
+}
+
+interface VisualsFilters {
+  championIds: string | null
+  skinIds: string | null
+}
+
+interface ChampionVisualsCollection {
+  items?: ChampionVisualEntry[]
+  updatedAt: string
+  filters?: VisualsFilters | null
+}
+
+interface ChampionVisualEntry {
+  championId: string
+  seat: number
+  name: LocalizedText
+  base?: RemoteGraphicAsset | null
+  skins?: SkinVisualEntry[]
+}
+
+interface SkinVisualEntry {
+  id: string
+  name: LocalizedText
+  xl?: RemoteGraphicAsset | null
+  large?: RemoteGraphicAsset | null
+  base?: RemoteGraphicAsset | null
+}
+
+type GraphicDefMap = Map<string, Record<string, unknown>>
+
+type AnimationKind = 'hero-base' | 'skin'
+
+interface AnimationTask {
+  id: string
+  championId: string
+  skinId: string | null
+  kind: AnimationKind
+  seat: number
+  championName: LocalizedText
+  illustrationName: LocalizedText
+  outputGroup: 'heroes' | 'skins'
+  outputId: string
+  sourceSlot: string
+  asset: RemoteGraphicAsset
+  graphicDefinition: Record<string, unknown> | null
+}
+
+interface SyncChampionAnimationsOptions {
+  outputDir?: string
+  currentVersion?: string
+  visualsFile?: string
+  input?: string
+  idleOverridesFile?: string
+  concurrency?: string
+  championIds?: string
+  skinIds?: string
+}
+
+interface SyncChampionAnimationsResult {
+  outputDir: string
+  visualsFile: string
+  currentVersion: string
+  totalBytes: number
+  count: number
+  heroCount: number
+  skinCount: number
+  downloadedCount: number
+  reusedCount: number
+  skipped?: boolean
+}
+
+function buildAnimationAssetPath(currentVersion: string, group: string, id: string): string {
   return `${currentVersion}/${CHAMPION_ANIMATION_DIR_NAME}/${group}/${id}.bin`
 }
 
-function isSkelAnimGraphicDefinition(graphicDefinition) {
+function isSkelAnimGraphicDefinition(graphicDefinition: Record<string, unknown> | undefined): boolean {
   return Number(graphicDefinition?.type) === 3
 }
 
-function isSkelAnimAsset(asset, graphicDefById) {
+function isSkelAnimAsset(asset: RemoteGraphicAsset, graphicDefById: GraphicDefMap): boolean {
   const graphicDefinition = graphicDefById.get(String(asset.graphicId))
   return isSkelAnimGraphicDefinition(graphicDefinition) || asset.remotePath.includes('/Characters/')
 }
 
-function sortAnimations(left, right) {
+function sortAnimations(left: AnimationItem, right: AnimationItem): number {
   return (
     left.seat - right.seat ||
     left.championName.display.localeCompare(right.championName.display) ||
@@ -59,10 +176,13 @@ function sortAnimations(left, right) {
   )
 }
 
-function buildHeroAnimationTasks(visuals, graphicDefById) {
-  const championIdFilter = parseIdFilter(visuals.filters?.championIds ?? null)
-  const skinIdFilter = parseIdFilter(visuals.filters?.skinIds ?? null)
-  const tasks = []
+function buildHeroAnimationTasks(
+  visuals: ChampionVisualsCollection,
+  graphicDefById: GraphicDefMap,
+): AnimationTask[] {
+  const championIdFilter = parseIdFilter(visuals.filters?.championIds ?? undefined)
+  const skinIdFilter = parseIdFilter(visuals.filters?.skinIds ?? undefined)
+  const tasks: AnimationTask[] = []
 
   if (skinIdFilter && !championIdFilter) {
     return tasks
@@ -96,10 +216,13 @@ function buildHeroAnimationTasks(visuals, graphicDefById) {
   return tasks
 }
 
-function buildSkinAnimationTasks(visuals, graphicDefById) {
-  const championIdFilter = parseIdFilter(visuals.filters?.championIds ?? null)
-  const skinIdFilter = parseIdFilter(visuals.filters?.skinIds ?? null)
-  const tasks = []
+function buildSkinAnimationTasks(
+  visuals: ChampionVisualsCollection,
+  graphicDefById: GraphicDefMap,
+): AnimationTask[] {
+  const championIdFilter = parseIdFilter(visuals.filters?.championIds ?? undefined)
+  const skinIdFilter = parseIdFilter(visuals.filters?.skinIds ?? undefined)
+  const tasks: AnimationTask[] = []
 
   for (const visual of visuals.items ?? []) {
     if (championIdFilter && !championIdFilter.has(visual.championId)) {
@@ -111,13 +234,12 @@ function buildSkinAnimationTasks(visuals, graphicDefById) {
         continue
       }
 
-      const selected = [
+      const candidates: ReadonlyArray<readonly [string, RemoteGraphicAsset | null | undefined]> = [
         ['xl', skin.xl],
         ['large', skin.large],
         ['base', skin.base],
-      ].find((candidate) => {
-        const asset = candidate[1]
-
+      ]
+      const selected = candidates.find(([, asset]) => {
         if (!asset) {
           return false
         }
@@ -130,6 +252,10 @@ function buildSkinAnimationTasks(visuals, graphicDefById) {
       }
 
       const [slot, asset] = selected
+      if (!asset) {
+        continue
+      }
+
       tasks.push({
         id: `skin:${skin.id}`,
         championId: visual.championId,
@@ -150,7 +276,11 @@ function buildSkinAnimationTasks(visuals, graphicDefById) {
   return tasks
 }
 
-function canReuseExistingAnimation(task, existingAnimation, currentVersion) {
+function canReuseExistingAnimation(
+  task: AnimationTask,
+  existingAnimation: ExistingAnimation | undefined,
+  currentVersion: string,
+): boolean {
   if (!existingAnimation) {
     return false
   }
@@ -169,21 +299,17 @@ function canReuseExistingAnimation(task, existingAnimation, currentVersion) {
   )
 }
 
-function decodeAnimationGraphic(task, rawBuffer) {
-  return decodeSkelAnimGraphicBuffer(
-    {
-      graphicId: task.asset.graphicId,
-      sourceGraphic: task.asset.sourceGraphic,
-      sourceVersion: task.asset.sourceVersion,
-      remotePath: task.asset.remotePath,
-      delivery: task.asset.delivery,
-    },
-    rawBuffer,
-  )
+function decodeAnimationGraphic(task: AnimationTask, rawBuffer: Buffer) {
+  // decodeSkelAnimGraphicBuffer 只读 delivery；其余字段原 .mjs 传入但未使用，TS strict 下省略。
+  return decodeSkelAnimGraphicBuffer(task.asset, rawBuffer)
 }
 
-function selectDefaultSequenceForTask(task, character, animationIdleOverride) {
-  const preferredSequenceIndexes = resolvePreferredSequenceIndexes(task.graphicDefinition)
+function selectDefaultSequenceForTask(
+  task: AnimationTask,
+  character: { sequences: ReadonlyArray<Parameters<typeof summarizeAnimationSequenceMetrics>[0]> },
+  animationIdleOverride: ChampionAnimationIdleOverride | undefined,
+): { selectedMetrics: SelectedAnimationMetrics; sequenceSummaries: AnimationSequenceSummary[] } {
+  const preferredSequenceIndexes = resolvePreferredSequenceIndexes(task.graphicDefinition ?? {})
   const sequenceSummaries = character.sequences.map(summarizeAnimationSequence)
   const sequenceSummaryByIndex = new Map(sequenceSummaries.map((item) => [item.sequenceIndex, item]))
   const scoredMetrics = scoreAnimationSequenceMetrics(
@@ -208,7 +334,7 @@ function selectDefaultSequenceForTask(task, character, animationIdleOverride) {
   }
 }
 
-async function cleanupAnimationDir(dirPath, expectedFiles) {
+async function cleanupAnimationDir(dirPath: string, expectedFiles: Set<string>): Promise<void> {
   await mkdir(dirPath, { recursive: true })
 
   for (const fileName of await readdir(dirPath)) {
@@ -220,7 +346,9 @@ async function cleanupAnimationDir(dirPath, expectedFiles) {
   }
 }
 
-export async function syncChampionAnimations(options = {}) {
+export async function syncChampionAnimations(
+  options: SyncChampionAnimationsOptions = {},
+): Promise<SyncChampionAnimationsResult> {
   const outputDir = path.resolve(options.outputDir ?? DEFAULT_OUTPUT_DIR)
   const currentVersion = options.currentVersion ?? DEFAULT_CURRENT_VERSION
   const visualsFile = path.resolve(options.visualsFile ?? path.join(outputDir, DEFAULT_VISUALS_FILE))
@@ -229,20 +357,27 @@ export async function syncChampionAnimations(options = {}) {
     options.idleOverridesFile ?? DEFAULT_CHAMPION_ANIMATION_IDLE_OVERRIDES_FILE,
   )
   const concurrency = Math.max(1, Number(options.concurrency ?? DEFAULT_CONCURRENCY))
-  const championIdFilter = parseIdFilter(options.championIds ?? null)
-  const skinIdFilter = parseIdFilter(options.skinIds ?? null)
+  const championIdFilter = parseIdFilter(options.championIds ?? undefined)
+  const skinIdFilter = parseIdFilter(options.skinIds ?? undefined)
   const hasSelectionFilters = Boolean(championIdFilter || skinIdFilter)
-  const visuals = await readJson(visualsFile)
+  const visuals = (await readJson(visualsFile)) as ChampionVisualsCollection
   const definitions = definitionsInput ? await readJson(definitionsInput) : null
-  const graphicDefById = new Map((definitions?.graphic_defines ?? []).map((item) => [String(item.id), item]))
-  const filteredVisuals = {
+  const rawGraphicDefines =
+    (definitions as { graphic_defines?: unknown[] } | null)?.graphic_defines ?? []
+  const graphicDefById: GraphicDefMap = new Map(
+    rawGraphicDefines.map((item) => [
+      String((item as Record<string, unknown>).id),
+      item as Record<string, unknown>,
+    ]),
+  )
+  const filteredVisuals: ChampionVisualsCollection = {
     ...visuals,
     filters: {
       championIds: options.championIds ?? null,
       skinIds: options.skinIds ?? null,
     },
   }
-  const graphicCache = createChampionGraphicResourceCache()
+  const graphicCache: ChampionGraphicResourceCache = createChampionGraphicResourceCache()
   const animationRoot = path.join(outputDir, CHAMPION_ANIMATION_DIR_NAME)
   const collectionFile = path.join(outputDir, 'champion-animations.json')
   const tasks = [
@@ -250,7 +385,8 @@ export async function syncChampionAnimations(options = {}) {
     ...buildSkinAnimationTasks(filteredVisuals, graphicDefById),
   ]
   const baseCollection = await readExistingCollection(collectionFile)
-  const existingAnimationMap = new Map((baseCollection?.items ?? []).map((item) => [item.id, item]))
+  const existingItems = (baseCollection?.items ?? []) as ExistingAnimation[]
+  const existingAnimationMap = new Map(existingItems.map((item) => [item.id, item]))
   const idleOverrides = await readChampionAnimationIdleOverrides(idleOverridesFile)
 
   if (
@@ -260,7 +396,6 @@ export async function syncChampionAnimations(options = {}) {
       nextUpdatedAt: visuals.updatedAt,
     })
   ) {
-    const existingItems = baseCollection?.items ?? []
     return {
       outputDir,
       visualsFile,
@@ -294,45 +429,47 @@ export async function syncChampionAnimations(options = {}) {
     const { selectedMetrics, sequenceSummaries } = selectDefaultSequenceForTask(
       task,
       character,
-      idleOverrides.get(task.id) ?? null,
+      idleOverrides.get(task.id) ?? undefined,
     )
 
     if (!canReuse) {
       await writeFile(outputFile, rawBuffer)
     }
 
-    return {
-      mode: canReuse ? 'reused' : 'downloaded',
-      item: {
-        id: task.id,
-        championId: task.championId,
-        skinId: task.skinId,
-        kind: task.kind,
-        seat: task.seat,
-        championName: task.championName,
-        illustrationName: task.illustrationName,
-        sourceSlot: task.sourceSlot,
-        sourceGraphicId: task.asset.graphicId,
-        sourceGraphic: task.asset.sourceGraphic,
-        sourceVersion: task.asset.sourceVersion,
-        fps: existingAnimation?.fps ?? DEFAULT_FPS,
-        defaultSequenceIndex: selectedMetrics.sequenceIndex,
-        defaultFrameIndex: selectedMetrics.frameIndex ?? 0,
-        asset: {
-          path: buildAnimationAssetPath(currentVersion, task.outputGroup, task.outputId),
-          bytes: canReuse ? (existingAnimation?.asset?.bytes ?? rawBuffer.length) : rawBuffer.length,
-          format: 'skelanim-zlib',
-        },
-        sequences: sequenceSummaries,
+    const item: AnimationItem = {
+      id: task.id,
+      championId: task.championId,
+      skinId: task.skinId,
+      kind: task.kind,
+      seat: task.seat,
+      championName: task.championName,
+      illustrationName: task.illustrationName,
+      sourceSlot: task.sourceSlot,
+      sourceGraphicId: task.asset.graphicId,
+      sourceGraphic: task.asset.sourceGraphic,
+      sourceVersion: task.asset.sourceVersion,
+      fps: existingAnimation?.fps ?? DEFAULT_FPS,
+      defaultSequenceIndex: selectedMetrics.sequenceIndex,
+      defaultFrameIndex: selectedMetrics.frameIndex ?? 0,
+      asset: {
+        path: buildAnimationAssetPath(currentVersion, task.outputGroup, task.outputId),
+        bytes: canReuse ? (existingAnimation?.asset?.bytes ?? rawBuffer.length) : rawBuffer.length,
+        format: 'skelanim-zlib',
       },
+      sequences: sequenceSummaries,
+    }
+
+    return {
+      mode: canReuse ? 'reused' : 'downloaded' as const,
+      item,
     }
   })
   const downloadedCount = writtenAnimations.filter((entry) => entry.mode === 'downloaded').length
   const reusedCount = writtenAnimations.length - downloadedCount
-  const nextAnimations = writtenAnimations.map((entry) => entry.item)
+  const nextAnimations: AnimationItem[] = writtenAnimations.map((entry) => entry.item)
   const animationMap = hasSelectionFilters
-    ? new Map((baseCollection?.items ?? []).map((item) => [item.id, item]))
-    : new Map()
+    ? new Map(existingItems.map((item) => [item.id, item as AnimationItem]))
+    : new Map<string, AnimationItem>()
 
   for (const animation of nextAnimations) {
     animationMap.set(animation.id, animation)
@@ -371,16 +508,16 @@ export async function syncChampionAnimations(options = {}) {
   }
 }
 
-function printUsage() {
+function printUsage(): void {
   console.log(`用法：
-  node scripts/sync-idle-champions-animations.mjs [--input <definitions.json>] [--visualsFile <file>] [--outputDir <dir>] [--idleOverridesFile <file>] [--championIds <ids>] [--skinIds <ids>]
+  node scripts/sync-idle-champions-animations.ts [--input <definitions.json>] [--visualsFile <file>] [--outputDir <dir>] [--idleOverridesFile <file>] [--championIds <ids>] [--skinIds <ids>]
 
 说明：
   基于 champion-visuals.json 选择可播放的 hero-base / skin SkelAnim 原始资源，输出供前端 canvas 动画播放和静态默认帧渲染复用的本地二进制资源与索引清单。
 `)
 }
 
-async function main() {
+async function main(): Promise<void> {
   const { values } = parseArgs({
     options: {
       input: { type: 'string' },
@@ -411,9 +548,9 @@ async function main() {
   console.log(`- reused: ${result.reusedCount}`)
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
-  main().catch((error) => {
-    console.error(`同步动画资源失败：${error.message}`)
+if (import.meta.url === pathToFileURL(process.argv[1]!).href) {
+  main().catch((error: unknown) => {
+    console.error(`同步动画资源失败：${error instanceof Error ? error.message : String(error)}`)
     process.exitCode = 1
   })
 }
