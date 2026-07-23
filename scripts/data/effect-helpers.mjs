@@ -598,34 +598,99 @@ export function analyzeBuffUpgradeWrappers(detail) {
   return auditEntries
 }
 
-export function normalizeEffectSignal(effectName, effectValue, source, effectMetadata = {}) {
-  if (effectMetadata.signalPreset) {
-    return {
-      ok: true,
-      signal: effectMetadata.signalPreset,
-      bucket: effectMetadata.bucketOverride ?? 'supportSignals',
-    }
+// 构造 unsupported 结果。normalizeEffectSignal 各分支共用，集中此处避免重复。
+function makeUnsupported(effectName, effectValue, note, source) {
+  return {
+    ok: false,
+    unsupported: { rawEffect: effectName, rawValue: effectValue, note, source },
+  }
+}
+
+// crit/survival/speed 三个 map 派发池共用信号形状：kind + value + 可选 amountFunc=mult。
+function buildSimplePoolSignal({ numericValue, rawEffect, source }, kind, amountFunc, bucket) {
+  return {
+    ok: true,
+    signal: {
+      kind,
+      value: numericValue,
+      rawEffect,
+      source,
+      ...(amountFunc === 'mult' ? { amountFunc: 'mult' } : {}),
+    },
+    bucket,
+  }
+}
+
+// hero_dps_mult_per_target_crusader[_mult|_prebonus_mult]：按位置计数目标。
+// add（单数名）/ mult（_mult、_prebonus_mult）仅 amountFunc 不同，其余逻辑一致。
+function resolveHeroDpsPerTarget(ctx, amountFunc) {
+  const { effectName, effectValue, source, numericValue, rawEffect, effectMetadata } = ctx
+  const bucketResult = resolveBucket(effectMetadata.effect)
+  if (!bucketResult.ok) {
+    return makeUnsupported(effectName, effectValue, bucketResult.note, source)
   }
 
-  const rawEffect = buildRawEffect(effectName, effectValue, effectMetadata.effectPayload)
-  const numericValue = resolveNumericValue(
-    effectValue,
-    effectMetadata.effectPayload,
-    effectMetadata.effectPayloads,
-    effectMetadata.upgradePayloadsById,
-  )
-
-  if (!Number.isFinite(numericValue)) {
-    return {
-      ok: false,
-        unsupported: {
-          rawEffect: effectName,
-          rawValue: effectValue,
-          note: `Effect value is not numeric: ${effectValue}`,
-          source,
-      },
-    }
+  const countRelation = resolveCountRelation(effectMetadata.effectPayload?.args?.[1] ?? null)
+  if (!countRelation) {
+    return makeUnsupported(
+      effectName,
+      effectValue,
+      `Unsupported per-target count relation: ${JSON.stringify(effectMetadata.effectPayload?.args?.[1] ?? null)}`,
+      source,
+    )
   }
+
+  return {
+    ok: true,
+    signal: {
+      kind: 'heroDpsMultiplier',
+      value: numericValue,
+      rawEffect,
+      source,
+      amountFunc,
+      stackFunc: 'per_target_crusader',
+      formationCountPositionQualifier: { relation: countRelation },
+    },
+    bucket: bucketResult.bucket,
+  }
+}
+
+// hero_dps_mult_per_tagged_crusader_mult[_amount_before]：按 tag 计数。两个 effect 逻辑完全一致。
+function resolveHeroDpsPerTagged(ctx) {
+  const { effectName, effectValue, source, numericValue, rawEffect, effectMetadata } = ctx
+  const bucketResult = resolveBucket(effectMetadata.effect)
+  if (!bucketResult.ok) {
+    return makeUnsupported(effectName, effectValue, bucketResult.note, source)
+  }
+
+  const formationCountQualifier = parseTagQualifierFromArg(effectMetadata.effectPayload?.args?.[1] ?? null)
+  if (!formationCountQualifier) {
+    return makeUnsupported(
+      effectName,
+      effectValue,
+      `Unsupported tagged count qualifier: ${JSON.stringify(effectMetadata.effectPayload?.args?.[1] ?? null)}`,
+      source,
+    )
+  }
+
+  return {
+    ok: true,
+    signal: {
+      kind: 'heroDpsMultiplier',
+      value: numericValue,
+      rawEffect,
+      source,
+      amountFunc: 'mult',
+      stackFunc: 'per_tagged_crusader_mult',
+      formationCountQualifier,
+    },
+    bucket: bucketResult.bucket,
+  }
+}
+
+// 阶段 2：DPS 池。global_dps_multiplier_mult → 全队；hero_dps_* → 英雄侧（carry/support 按 targeting）。
+function resolveDpsSignal(ctx) {
+  const { effectName, effectValue, source, numericValue, rawEffect, effectMetadata } = ctx
 
   if (effectName === 'global_dps_multiplier_mult') {
     return {
@@ -639,15 +704,7 @@ export function normalizeEffectSignal(effectName, effectValue, source, effectMet
     const explicitTargeting = normalizeExplicitTargeting(effectMetadata.effect)
 
     if (explicitTargeting.status === 'unsupported') {
-      return {
-        ok: false,
-        unsupported: {
-          rawEffect: effectName,
-          rawValue: effectValue,
-          note: explicitTargeting.note,
-          source,
-        },
-      }
+      return makeUnsupported(effectName, effectValue, explicitTargeting.note, source)
     }
 
     return {
@@ -661,188 +718,27 @@ export function normalizeEffectSignal(effectName, effectValue, source, effectMet
   }
 
   if (effectName === 'hero_dps_mult_per_target_crusader') {
-    const bucketResult = resolveBucket(effectMetadata.effect)
-    if (!bucketResult.ok) {
-      return {
-        ok: false,
-        unsupported: {
-          rawEffect: effectName,
-          rawValue: effectValue,
-          note: bucketResult.note,
-          source,
-        },
-      }
-    }
-
-    const countRelation = resolveCountRelation(effectMetadata.effectPayload?.args?.[1] ?? null)
-    if (!countRelation) {
-      return {
-        ok: false,
-        unsupported: {
-          rawEffect: effectName,
-          rawValue: effectValue,
-          note: `Unsupported per-target count relation: ${JSON.stringify(effectMetadata.effectPayload?.args?.[1] ?? null)}`,
-          source,
-        },
-      }
-    }
-
-    return {
-      ok: true,
-      signal: {
-        kind: 'heroDpsMultiplier',
-        value: numericValue,
-        rawEffect,
-        source,
-        amountFunc: 'add',
-        stackFunc: 'per_target_crusader',
-        formationCountPositionQualifier: { relation: countRelation },
-      },
-      bucket: bucketResult.bucket,
-    }
+    return resolveHeroDpsPerTarget(ctx, 'add')
   }
 
   if (
     effectName === 'hero_dps_mult_per_target_crusader_mult'
     || effectName === 'hero_dps_mult_per_target_crusader_prebonus_mult'
   ) {
-    const bucketResult = resolveBucket(effectMetadata.effect)
-    if (!bucketResult.ok) {
-      return {
-        ok: false,
-        unsupported: {
-          rawEffect: effectName,
-          rawValue: effectValue,
-          note: bucketResult.note,
-          source,
-        },
-      }
-    }
-
-    const countRelation = resolveCountRelation(effectMetadata.effectPayload?.args?.[1] ?? null)
-    if (!countRelation) {
-      return {
-        ok: false,
-        unsupported: {
-          rawEffect: effectName,
-          rawValue: effectValue,
-          note: `Unsupported per-target count relation: ${JSON.stringify(effectMetadata.effectPayload?.args?.[1] ?? null)}`,
-          source,
-        },
-      }
-    }
-
-    return {
-      ok: true,
-      signal: {
-        kind: 'heroDpsMultiplier',
-        value: numericValue,
-        rawEffect,
-        source,
-        amountFunc: 'mult',
-        stackFunc: 'per_target_crusader',
-        formationCountPositionQualifier: { relation: countRelation },
-      },
-      bucket: bucketResult.bucket,
-    }
+    return resolveHeroDpsPerTarget(ctx, 'mult')
   }
 
-  if (effectName === 'hero_dps_mult_per_tagged_crusader_mult') {
-    const bucketResult = resolveBucket(effectMetadata.effect)
-    if (!bucketResult.ok) {
-      return {
-        ok: false,
-        unsupported: {
-          rawEffect: effectName,
-          rawValue: effectValue,
-          note: bucketResult.note,
-          source,
-        },
-      }
-    }
-
-    const formationCountQualifier = parseTagQualifierFromArg(effectMetadata.effectPayload?.args?.[1] ?? null)
-    if (!formationCountQualifier) {
-      return {
-        ok: false,
-        unsupported: {
-          rawEffect: effectName,
-          rawValue: effectValue,
-          note: `Unsupported tagged count qualifier: ${JSON.stringify(effectMetadata.effectPayload?.args?.[1] ?? null)}`,
-          source,
-        },
-      }
-    }
-
-    return {
-      ok: true,
-      signal: {
-        kind: 'heroDpsMultiplier',
-        value: numericValue,
-        rawEffect,
-        source,
-        amountFunc: 'mult',
-        stackFunc: 'per_tagged_crusader_mult',
-        formationCountQualifier,
-      },
-      bucket: bucketResult.bucket,
-    }
-  }
-
-  if (effectName === 'hero_dps_mult_per_tagged_crusader_mult_amount_before') {
-    const bucketResult = resolveBucket(effectMetadata.effect)
-    if (!bucketResult.ok) {
-      return {
-        ok: false,
-        unsupported: {
-          rawEffect: effectName,
-          rawValue: effectValue,
-          note: bucketResult.note,
-          source,
-        },
-      }
-    }
-
-    const formationCountQualifier = parseTagQualifierFromArg(effectMetadata.effectPayload?.args?.[1] ?? null)
-    if (!formationCountQualifier) {
-      return {
-        ok: false,
-        unsupported: {
-          rawEffect: effectName,
-          rawValue: effectValue,
-          note: `Unsupported tagged count qualifier: ${JSON.stringify(effectMetadata.effectPayload?.args?.[1] ?? null)}`,
-          source,
-        },
-      }
-    }
-
-    return {
-      ok: true,
-      signal: {
-        kind: 'heroDpsMultiplier',
-        value: numericValue,
-        rawEffect,
-        source,
-        amountFunc: 'mult',
-        stackFunc: 'per_tagged_crusader_mult',
-        formationCountQualifier,
-      },
-      bucket: bucketResult.bucket,
-    }
+  if (
+    effectName === 'hero_dps_mult_per_tagged_crusader_mult'
+    || effectName === 'hero_dps_mult_per_tagged_crusader_mult_amount_before'
+  ) {
+    return resolveHeroDpsPerTagged(ctx)
   }
 
   if (effectName === 'hero_dps_mult_per_crusader_mult') {
     const bucketResult = resolveBucket(effectMetadata.effect)
     if (!bucketResult.ok) {
-      return {
-        ok: false,
-        unsupported: {
-          rawEffect: effectName,
-          rawValue: effectValue,
-          note: bucketResult.note,
-          source,
-        },
-      }
+      return makeUnsupported(effectName, effectValue, bucketResult.note, source)
     }
 
     const targetQualifier = normalizeTargetQualifier(effectMetadata.effect)
@@ -866,15 +762,7 @@ export function normalizeEffectSignal(effectName, effectValue, source, effectMet
   if (effectName === 'hero_dps_mult_per_col_behind') {
     const bucketResult = resolveBucket(effectMetadata.effect)
     if (!bucketResult.ok) {
-      return {
-        ok: false,
-        unsupported: {
-          rawEffect: effectName,
-          rawValue: effectValue,
-          note: bucketResult.note,
-          source,
-        },
-      }
+      return makeUnsupported(effectName, effectValue, bucketResult.note, source)
     }
 
     return {
@@ -891,15 +779,25 @@ export function normalizeEffectSignal(effectName, effectValue, source, effectMet
     }
   }
 
-  if (effectName.startsWith('adjacent_')) {
-    return {
-      ok: true,
-      signal: { kind: 'adjacentBuff', value: numericValue, rawEffect, source },
-      bucket: 'supportSignals',
-    }
-  }
+  return null
+}
 
-  // 阶段 3.2：金币（gold pool）。gold find 是全队聚合 stat → globalGoldMultiplier。
+// adjacent_* 前缀 → 邻位 buff。
+function resolveAdjacentSignal({ effectName, numericValue, rawEffect, source }) {
+  if (!effectName.startsWith('adjacent_')) {
+    return null
+  }
+  return {
+    ok: true,
+    signal: { kind: 'adjacentBuff', value: numericValue, rawEffect, source },
+    bucket: 'supportSignals',
+  }
+}
+
+// 阶段 3.2：金币池（gold find 全队聚合 stat → globalGoldMultiplier）。
+function resolveGoldSignal(ctx) {
+  const { effectName, effectValue, source, numericValue, rawEffect, effectMetadata } = ctx
+
   if (effectName === 'gold_multiplier_mult') {
     return {
       ok: true,
@@ -911,15 +809,12 @@ export function normalizeEffectSignal(effectName, effectValue, source, effectMet
   if (effectName === 'gold_mult_per_tagged_crusader_mult') {
     const formationCountQualifier = parseTagQualifierFromArg(effectMetadata.effectPayload?.args?.[1] ?? null)
     if (!formationCountQualifier) {
-      return {
-        ok: false,
-        unsupported: {
-          rawEffect: effectName,
-          rawValue: effectValue,
-          note: `Unsupported tagged count qualifier: ${JSON.stringify(effectMetadata.effectPayload?.args?.[1] ?? null)}`,
-          source,
-        },
-      }
+      return makeUnsupported(
+        effectName,
+        effectValue,
+        `Unsupported tagged count qualifier: ${JSON.stringify(effectMetadata.effectPayload?.args?.[1] ?? null)}`,
+        source,
+      )
     }
 
     return {
@@ -937,40 +832,25 @@ export function normalizeEffectSignal(effectName, effectValue, source, effectMet
     }
   }
 
-  // 阶段 4.2：暴击（crit pool）。chance/damage 各 global/hero；默认 chance=2.5%/damage=100%
-  // 来自 default_crit_info（游戏全局），在 crit_factor 公式（阶段 4.3）应用，不在解析层。
-  const critMatch = CRIT_KIND_BY_EFFECT[effectName]
-  if (critMatch) {
-    return {
-      ok: true,
-      signal: {
-        kind: critMatch.kind,
-        value: numericValue,
-        rawEffect,
-        source,
-        ...(critMatch.amountFunc === 'mult' ? { amountFunc: 'mult' } : {}),
-      },
-      bucket: 'supportSignals',
-    }
-  }
+  return null
+}
 
-  // 阶段 5.1：survival（health/healing/damage_reduction）。
-  const survivalMatch = SURVIVAL_KIND_BY_EFFECT[effectName]
-  if (survivalMatch) {
-    return {
-      ok: true,
-      signal: {
-        kind: survivalMatch.kind,
-        value: numericValue,
-        rawEffect,
-        source,
-        ...(survivalMatch.amountFunc === 'mult' ? { amountFunc: 'mult' } : {}),
-      },
-      bucket: 'supportSignals',
-    }
-  }
+// 阶段 4.2：暴击池（chance/damage 各 global/hero；默认值来自 default_crit_info，在 crit_factor 公式应用，不在解析层）。
+function resolveCritSignal(ctx) {
+  const match = CRIT_KIND_BY_EFFECT[ctx.effectName]
+  return match ? buildSimplePoolSignal(ctx, match.kind, match.amountFunc, 'supportSignals') : null
+}
 
-  // 阶段 6.2：vulnerability（敌人侧受伤倍率，条件性按怪物 tag）。
+// 阶段 5.1：survival 池（health/healing/damage_reduction）。
+function resolveSurvivalSignal(ctx) {
+  const match = SURVIVAL_KIND_BY_EFFECT[ctx.effectName]
+  return match ? buildSimplePoolSignal(ctx, match.kind, match.amountFunc, 'supportSignals') : null
+}
+
+// 阶段 6.2：vulnerability 池（敌人侧受伤倍率，条件性按怪物 tag）。
+function resolveVulnerabilitySignal(ctx) {
+  const { effectName, source, numericValue, rawEffect, effectMetadata } = ctx
+
   if (effectName === 'increase_damage_against_monster_tag') {
     const tagArg = effectMetadata.effectPayload?.args?.[1] ?? null
     const monsterTags = typeof tagArg === 'string'
@@ -1004,40 +884,62 @@ export function normalizeEffectSignal(effectName, effectValue, source, effectMet
     }
   }
 
-  // 阶段 7.1：speed/cooldown（解析进 pool 供覆盖率与未来 ult/step-simulation 消费；
-  // 7.2 决定：不进 carryDps——hero_dps 按秒模型，speed 精确建模依赖 BUD/cooldown，MVP 暂不应用）。
-  const speedMatch = SPEED_KIND_BY_EFFECT[effectName]
-  if (speedMatch) {
-    return {
-      ok: true,
-      signal: {
-        kind: speedMatch.kind,
-        value: numericValue,
-        rawEffect,
-        source,
-        ...(speedMatch.amountFunc === 'mult' ? { amountFunc: 'mult' } : {}),
-      },
-      bucket: 'supportSignals',
-    }
-  }
+  return null
+}
 
-  if (effectName.startsWith('tag_')) {
-    return {
-      ok: true,
-      signal: { kind: 'taggedChampionBuff', value: numericValue, rawEffect, source },
-      bucket: 'supportSignals',
-    }
-  }
+// 阶段 7.1：speed/cooldown 池（进 pool 供覆盖率与未来 ult/step-simulation 消费；7.2 决定不进 carryDps——
+// hero_dps 按秒模型，speed 精确建模依赖 BUD/cooldown，MVP 暂不应用）。
+function resolveSpeedSignal(ctx) {
+  const match = SPEED_KIND_BY_EFFECT[ctx.effectName]
+  return match ? buildSimplePoolSignal(ctx, match.kind, match.amountFunc, 'supportSignals') : null
+}
 
+// tag_* 前缀 → tagged champion buff。
+function resolveTagSignal({ effectName, numericValue, rawEffect, source }) {
+  if (!effectName.startsWith('tag_')) {
+    return null
+  }
   return {
-    ok: false,
-    unsupported: {
-      rawEffect: effectName,
-      rawValue: effectValue,
-      note: `No parser for effect: ${effectName}`,
-      source,
-    },
+    ok: true,
+    signal: { kind: 'taggedChampionBuff', value: numericValue, rawEffect, source },
+    bucket: 'supportSignals',
   }
+}
+
+export function normalizeEffectSignal(effectName, effectValue, source, effectMetadata = {}) {
+  if (effectMetadata.signalPreset) {
+    return {
+      ok: true,
+      signal: effectMetadata.signalPreset,
+      bucket: effectMetadata.bucketOverride ?? 'supportSignals',
+    }
+  }
+
+  const rawEffect = buildRawEffect(effectName, effectValue, effectMetadata.effectPayload)
+  const numericValue = resolveNumericValue(
+    effectValue,
+    effectMetadata.effectPayload,
+    effectMetadata.effectPayloads,
+    effectMetadata.upgradePayloadsById,
+  )
+
+  if (!Number.isFinite(numericValue)) {
+    return makeUnsupported(effectName, effectValue, `Effect value is not numeric: ${effectValue}`, source)
+  }
+
+  const ctx = { effectName, effectValue, source, numericValue, rawEffect, effectMetadata }
+
+  return (
+    resolveDpsSignal(ctx)
+    ?? resolveAdjacentSignal(ctx)
+    ?? resolveGoldSignal(ctx)
+    ?? resolveCritSignal(ctx)
+    ?? resolveSurvivalSignal(ctx)
+    ?? resolveVulnerabilitySignal(ctx)
+    ?? resolveSpeedSignal(ctx)
+    ?? resolveTagSignal(ctx)
+    ?? makeUnsupported(effectName, effectValue, `No parser for effect: ${effectName}`, source)
+  )
 }
 
 export function splitEffectString(effectString) {
