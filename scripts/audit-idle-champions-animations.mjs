@@ -1,4 +1,5 @@
 import { readFile, writeFile } from 'node:fs/promises'
+import { readJson, readJsonIfExists } from './data/io-utils.mjs'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
@@ -33,22 +34,6 @@ function parseIdFilter(rawValue) {
     .filter(Boolean)
 
   return ids.length > 0 ? new Set(ids) : null
-}
-
-async function readJson(filePath) {
-  return JSON.parse(await readFile(filePath, 'utf8'))
-}
-
-async function readJsonIfExists(filePath) {
-  try {
-    return await readJson(filePath)
-  } catch (error) {
-    if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
-      return null
-    }
-
-    throw error
-  }
 }
 
 function buildAnimationFilter(championIds, skinIds) {

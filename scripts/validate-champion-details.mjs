@@ -1,13 +1,10 @@
-import { readdir, readFile } from 'node:fs/promises'
+import { readdir } from 'node:fs/promises'
 import path from 'node:path'
 
+import { readJson } from './data/io-utils.mjs'
 import { championDetailsSchema } from './data/champion-details-schema.mjs'
 
 const DEFAULT_DETAILS_DIR = 'public/data/v1/champion-details'
-
-async function readJson(filePath) {
-  return JSON.parse(await readFile(filePath, 'utf8'))
-}
 
 /**
  * CI 校验：所有 champion-details/*.json 必须通过 championDetailsSchema（阶段 9.3）。
