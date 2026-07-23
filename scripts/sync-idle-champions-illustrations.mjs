@@ -1,4 +1,10 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import {
+  parseIdFilter,
+  readJson,
+  readJsonIfExists,
+  runWithConcurrency,
+} from './data/io-utils.mjs'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
@@ -23,35 +29,6 @@ function buildIllustrationImagePath(currentVersion, group, id) {
   return `${currentVersion}/${CHAMPION_ILLUSTRATION_DIR_NAME}/${group}/${id}.png`
 }
 
-async function readJson(filePath) {
-  return JSON.parse(await readFile(filePath, 'utf8'))
-}
-
-async function readJsonIfExists(filePath) {
-  try {
-    return await readJson(filePath)
-  } catch (error) {
-    if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
-      return null
-    }
-
-    throw error
-  }
-}
-
-function parseIdFilter(rawValue) {
-  if (!rawValue) {
-    return null
-  }
-
-  const ids = rawValue
-    .split(',')
-    .map((value) => value.trim())
-    .filter(Boolean)
-
-  return ids.length > 0 ? new Set(ids) : null
-}
-
 function sortIllustrations(left, right) {
   return (
     left.seat - right.seat ||
@@ -62,25 +39,6 @@ function sortIllustrations(left, right) {
     left.illustrationName.original.localeCompare(right.illustrationName.original) ||
     left.id.localeCompare(right.id)
   )
-}
-
-async function runWithConcurrency(items, concurrency, worker) {
-  const results = new Array(items.length)
-  let cursor = 0
-
-  async function consume() {
-    while (cursor < items.length) {
-      const currentIndex = cursor
-      cursor += 1
-      results[currentIndex] = await worker(items[currentIndex], currentIndex)
-    }
-  }
-
-  await Promise.all(
-    Array.from({ length: Math.max(1, Math.min(concurrency, items.length)) }, () => consume()),
-  )
-
-  return results
 }
 
 function buildAnimationMap(animationCollection) {

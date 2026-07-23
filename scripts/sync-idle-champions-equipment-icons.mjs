@@ -1,4 +1,9 @@
-import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises'
+import { mkdir, readdir, writeFile } from 'node:fs/promises'
+import {
+  readJson,
+  writeJson,
+  runWithConcurrency,
+} from './data/io-utils.mjs'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
@@ -22,34 +27,6 @@ const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'
 const DEFAULT_CONCURRENCY = 8
 const EQUIPMENT_ICONS_DIR_NAME = 'champion-equipment-icons'
-
-async function readJson(filePath) {
-  return JSON.parse(await readFile(filePath, 'utf8'))
-}
-
-async function writeJson(filePath, value) {
-  await mkdir(path.dirname(filePath), { recursive: true })
-  await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
-}
-
-async function runWithConcurrency(items, concurrency, worker) {
-  const results = new Array(items.length)
-  let cursor = 0
-
-  async function consume() {
-    while (cursor < items.length) {
-      const currentIndex = cursor
-      cursor += 1
-      results[currentIndex] = await worker(items[currentIndex], currentIndex)
-    }
-  }
-
-  await Promise.all(
-    Array.from({ length: Math.max(1, Math.min(concurrency, items.length)) }, () => consume()),
-  )
-
-  return results
-}
 
 function sortByGraphicId(left, right) {
   return Number(left.graphicId) - Number(right.graphicId) || left.graphicId.localeCompare(right.graphicId)

@@ -1,4 +1,9 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { mkdir, writeFile } from 'node:fs/promises'
+import {
+  readJson,
+  writeJson,
+  runWithConcurrency,
+} from './data/io-utils.mjs'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
@@ -155,15 +160,6 @@ function trimTransparentAreaAndCenter(pngBuffer) {
   }
 }
 
-async function readJson(filePath) {
-  return JSON.parse(await readFile(filePath, 'utf8'))
-}
-
-async function writeJson(filePath, value) {
-  await mkdir(path.dirname(filePath), { recursive: true })
-  await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
-}
-
 async function downloadChampionPortrait(task, options) {
   const existingItem = options.existingItemsByChampionId?.get(String(task.championId)) ?? null
   const nextImagePath = buildChampionPortraitPath(options.currentVersion, task.championId)
@@ -228,25 +224,6 @@ async function downloadChampionPortrait(task, options) {
       format: 'png',
     },
   }
-}
-
-async function runWithConcurrency(items, concurrency, worker) {
-  const results = new Array(items.length)
-  let cursor = 0
-
-  async function consume() {
-    while (cursor < items.length) {
-      const currentIndex = cursor
-      cursor += 1
-      results[currentIndex] = await worker(items[currentIndex], currentIndex)
-    }
-  }
-
-  await Promise.all(
-    Array.from({ length: Math.max(1, Math.min(concurrency, items.length)) }, () => consume()),
-  )
-
-  return results
 }
 
 export async function syncChampionPortraits(options = {}) {

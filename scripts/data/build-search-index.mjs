@@ -1,6 +1,7 @@
 import path from 'node:path'
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { mkdir, writeFile } from 'node:fs/promises'
 import { pathToFileURL } from 'node:url'
+import { readJson, writeJson } from './io-utils.mjs'
 
 const DEFAULT_VERSION_DIR = 'public/data/v1'
 
@@ -36,15 +37,6 @@ const BODY_LEAVES = new Set([
   'description',
   'longDescription',
 ])
-
-async function readJson(filePath) {
-  return JSON.parse(await readFile(filePath, 'utf8'))
-}
-
-async function writeJson(filePath, value) {
-  await mkdir(path.dirname(filePath), { recursive: true })
-  await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
-}
 
 // 业界 char-filter 做法：分词前把模板占位符剥成空格。替换值运行时才确定（stacks/area/BUD/buff 多层放大），
 // 静态数据拿不到，故不求值替换，只剥除（见计划"决策二"）。$# 是脏话字面量、非占位符，保留。

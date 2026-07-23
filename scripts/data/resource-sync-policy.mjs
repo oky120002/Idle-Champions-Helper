@@ -1,17 +1,6 @@
-import { access, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises'
+import { access, mkdir, readdir, rm } from 'node:fs/promises'
 import path from 'node:path'
-
-async function readJsonIfExists(filePath) {
-  try {
-    return JSON.parse(await readFile(filePath, 'utf8'))
-  } catch (error) {
-    if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
-      return null
-    }
-
-    throw error
-  }
-}
+import { readJsonIfExists, writeJson } from './io-utils.mjs'
 
 function normalizeUpdatedAt(value) {
   if (typeof value !== 'string') {
@@ -86,8 +75,7 @@ export async function readUpdatedAtFromJsonFile(filePath) {
 }
 
 export async function writeUpdatedAtJsonFile(filePath, value) {
-  await mkdir(path.dirname(filePath), { recursive: true })
-  await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
+  await writeJson(filePath, value)
 }
 
 export async function fileExists(filePath) {

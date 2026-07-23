@@ -1,4 +1,4 @@
-import { access, mkdir, readFile, readdir, unlink, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, readdir, unlink, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
@@ -16,9 +16,16 @@ import {
   readChampionAnimationIdleOverrides,
 } from './data/champion-animation-idle-overrides.mjs'
 import {
+  fileExists,
   readExistingCollection,
   shouldSkipResourceSync,
 } from './data/resource-sync-policy.mjs'
+import {
+  parseIdFilter,
+  readJson,
+  readJsonIfExists,
+  runWithConcurrency,
+} from './data/io-utils.mjs'
 
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_CURRENT_VERSION = 'v1'
@@ -29,67 +36,6 @@ const CHAMPION_ANIMATION_DIR_NAME = 'champion-animations'
 
 function buildAnimationAssetPath(currentVersion, group, id) {
   return `${currentVersion}/${CHAMPION_ANIMATION_DIR_NAME}/${group}/${id}.bin`
-}
-
-async function readJson(filePath) {
-  return JSON.parse(await readFile(filePath, 'utf8'))
-}
-
-async function readJsonIfExists(filePath) {
-  try {
-    return await readJson(filePath)
-  } catch (error) {
-    if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
-      return null
-    }
-
-    throw error
-  }
-}
-
-async function pathExists(filePath) {
-  try {
-    await access(filePath)
-    return true
-  } catch (error) {
-    if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
-      return false
-    }
-
-    throw error
-  }
-}
-
-function parseIdFilter(rawValue) {
-  if (!rawValue) {
-    return null
-  }
-
-  const ids = rawValue
-    .split(',')
-    .map((value) => value.trim())
-    .filter(Boolean)
-
-  return ids.length > 0 ? new Set(ids) : null
-}
-
-async function runWithConcurrency(items, concurrency, worker) {
-  const results = new Array(items.length)
-  let cursor = 0
-
-  async function consume() {
-    while (cursor < items.length) {
-      const currentIndex = cursor
-      cursor += 1
-      results[currentIndex] = await worker(items[currentIndex], currentIndex)
-    }
-  }
-
-  await Promise.all(
-    Array.from({ length: Math.max(1, Math.min(concurrency, items.length)) }, () => consume()),
-  )
-
-  return results
 }
 
 function isSkelAnimGraphicDefinition(graphicDefinition) {
@@ -336,7 +282,7 @@ export async function syncChampionAnimations(options = {}) {
     const outputFile = path.join(animationRoot, task.outputGroup, `${task.outputId}.bin`)
     const existingAnimation = existingAnimationMap.get(task.id)
     const canReuse =
-      canReuseExistingAnimation(task, existingAnimation, currentVersion) && (await pathExists(outputFile))
+      canReuseExistingAnimation(task, existingAnimation, currentVersion) && (await fileExists(outputFile))
     const rawBuffer = canReuse ? await readFile(outputFile) : await graphicCache.readRawGraphicBuffer(task.asset)
     const decoded = decodeAnimationGraphic(task, rawBuffer)
     const character = decoded.characters[0]

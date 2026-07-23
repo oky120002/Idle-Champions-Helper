@@ -1,5 +1,4 @@
 import path from 'node:path'
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { pathToFileURL } from 'node:url'
 import { attachSignalSemantics } from '../../src/domain/abilities/signalSemantics.ts'
 import {
@@ -8,18 +7,10 @@ import {
   shouldIgnoreUnsupportedEffectEntry,
   splitEffectString,
 } from './effect-helpers.mjs'
+import { readJson, writeJson } from './io-utils.mjs'
 
 const DEFAULT_VERSION_DIR = 'public/data/v1'
 const DEFAULT_SEMANTIC_OVERRIDES = 'scripts/data/semantic-overrides.json'
-
-async function readJson(filePath) {
-  return JSON.parse(await readFile(filePath, 'utf8'))
-}
-
-async function writeJson(filePath, value) {
-  await mkdir(path.dirname(filePath), { recursive: true })
-  await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
-}
 
 function buildOfficialHeroModel(champion, detail) {
   const carrySignals = []

@@ -1,5 +1,5 @@
 import { execFile } from 'node:child_process'
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { parseArgs, promisify } from 'node:util'
 import { pathToFileURL } from 'node:url'
@@ -12,6 +12,11 @@ import {
 } from './data/champion-asset-helpers.mjs'
 import { extractWrappedPngBuffer } from './data/mobile-asset-codec.mjs'
 import { decodeSkelAnimGraphicBuffer } from './data/skelanim-codec.mjs'
+import {
+  readJson,
+  writeJson,
+  runWithConcurrency,
+} from './data/io-utils.mjs'
 import {
   computeSkelAnimFrameBounds,
   renderSkelAnimPoseToPngBuffer,
@@ -114,15 +119,6 @@ function getUpdatedAt(rawDefinitions) {
   }
 
   return new Date().toISOString().slice(0, 10)
-}
-
-async function readJson(filePath) {
-  return JSON.parse(await readFile(filePath, 'utf8'))
-}
-
-async function writeJson(filePath, value) {
-  await mkdir(path.dirname(filePath), { recursive: true })
-  await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
 }
 
 function canReusePetImage(existingImage, expectedPath) {
@@ -598,25 +594,6 @@ function processIllustrationPng(pngBuffer) {
     height: output.height,
     bytes: normalized.length,
   }
-}
-
-async function runWithConcurrency(items, concurrency, worker) {
-  const results = new Array(items.length)
-  let cursor = 0
-
-  async function consume() {
-    while (cursor < items.length) {
-      const currentIndex = cursor
-      cursor += 1
-      results[currentIndex] = await worker(items[currentIndex], currentIndex)
-    }
-  }
-
-  await Promise.all(
-    Array.from({ length: Math.max(1, Math.min(concurrency, items.length || 1)) }, () => consume()),
-  )
-
-  return results
 }
 
 async function downloadRawAsset(task) {

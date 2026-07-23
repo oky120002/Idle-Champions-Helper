@@ -1,13 +1,9 @@
-import { readFile } from 'node:fs/promises'
+import { readJson } from './io-utils.mjs'
 import path from 'node:path'
 
 export const DEFAULT_CHAMPION_ANIMATION_IDLE_OVERRIDES_FILE = path.resolve(
   'scripts/data/champion-animation-idle-overrides.json',
 )
-
-async function readJson(filePath) {
-  return JSON.parse(await readFile(filePath, 'utf8'))
-}
 
 function normalizeSequenceIndexes(value) {
   if (!Array.isArray(value)) {
