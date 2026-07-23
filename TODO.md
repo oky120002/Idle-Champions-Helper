@@ -94,4 +94,13 @@ repair: rebuild
     - 待办：z.infer 单源迁移——schema 提到 src/（ts），前端类型改 z.infer 派生。
     - 处置：随前端类型下一轮触碰逐步迁移；schema 已字段对齐可平滑切换。
 
+- userDataPage.syncFlow 全量 vitest flaky timeout（scripts test 加入后并发压力暴露） <!-- auto-todo:id=atd_9aa293dcfe -->
+  - 记录时间: `2026-07-23T20:50:44+08:00`
+  - 类型: follow-up
+  - 位置: `src/pages/user-data/userDataPage.syncFlow.test.tsx:279`
+  - 备注: 「本地开发快照读取失败时不会清空既有浏览器同步快照」test 全量 vitest（src+scripts）1 failed/647，但 vitest run src/ 单独全过（116 files/478 tests）。
+    - 根因：scripts .test.mjs→.test.ts 后 31 个 scripts test 加入 vitest 全量，并发压力上升，间接暴露该 marginal waitFor timeout
+    - 排查方向：userDataPage 该 test 的 waitFor 超时调宽，或 vitest 并发/隔离配置（pool/maxWorkers/isolate）
+    - 属 src 边缘 flaky，非 scripts .mjs→.ts 转换本身的问题
+
 <!-- auto-todo:end -->
