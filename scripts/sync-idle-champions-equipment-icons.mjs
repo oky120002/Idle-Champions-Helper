@@ -4,10 +4,10 @@ import {
   writeJson,
   runWithConcurrency,
 } from './data/io-utils.mjs'
+import { cropOpaqueBounds, findOpaqueBounds } from './data/png-image-helpers.mjs'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 import { pathToFileURL } from 'node:url'
-import { PNG } from 'pngjs'
 import {
   DEFAULT_MASTER_API_URL,
   buildGraphicMap,
@@ -34,80 +34,6 @@ function sortByGraphicId(left, right) {
 
 function buildChampionEquipmentIconPath(currentVersion, graphicId) {
   return `${currentVersion}/${EQUIPMENT_ICONS_DIR_NAME}/${graphicId}.png`
-}
-
-function findOpaqueBounds(png) {
-  let left = png.width
-  let top = png.height
-  let right = -1
-  let bottom = -1
-
-  for (let y = 0; y < png.height; y += 1) {
-    for (let x = 0; x < png.width; x += 1) {
-      const alpha = png.data[(png.width * y + x) * 4 + 3]
-
-      if (alpha === 0) {
-        continue
-      }
-
-      left = Math.min(left, x)
-      top = Math.min(top, y)
-      right = Math.max(right, x)
-      bottom = Math.max(bottom, y)
-    }
-  }
-
-  if (right < left || bottom < top) {
-    return null
-  }
-
-  return {
-    left,
-    top,
-    right,
-    bottom,
-    width: right - left + 1,
-    height: bottom - top + 1,
-  }
-}
-
-function cropOpaqueBounds(pngBuffer) {
-  const source = PNG.sync.read(pngBuffer)
-  const bounds = findOpaqueBounds(source)
-
-  if (!bounds) {
-    return {
-      pngBuffer,
-      width: source.width,
-      height: source.height,
-      cropped: false,
-    }
-  }
-
-  const output = new PNG({ width: bounds.width, height: bounds.height })
-
-  for (let y = 0; y < bounds.height; y += 1) {
-    for (let x = 0; x < bounds.width; x += 1) {
-      const sourceIndex = ((bounds.top + y) * source.width + (bounds.left + x)) * 4
-      const outputIndex = (y * output.width + x) * 4
-
-      output.data[outputIndex] = source.data[sourceIndex]
-      output.data[outputIndex + 1] = source.data[sourceIndex + 1]
-      output.data[outputIndex + 2] = source.data[sourceIndex + 2]
-      output.data[outputIndex + 3] = source.data[sourceIndex + 3]
-    }
-  }
-
-  return {
-    pngBuffer: PNG.sync.write(output),
-    width: output.width,
-    height: output.height,
-    cropped:
-      bounds.width !== source.width ||
-      bounds.height !== source.height ||
-      bounds.left > 0 ||
-      bounds.top > 0,
-  }
 }
 
 function decodeEquipmentIconBuffer(asset, rawBuffer) {

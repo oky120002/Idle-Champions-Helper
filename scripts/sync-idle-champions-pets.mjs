@@ -17,6 +17,7 @@ import {
   writeJson,
   runWithConcurrency,
 } from './data/io-utils.mjs'
+import { findOpaqueBounds } from './data/png-image-helpers.mjs'
 import {
   computeSkelAnimFrameBounds,
   renderSkelAnimPoseToPngBuffer,
@@ -493,39 +494,6 @@ async function renderPetSkelAnimPng(task, rawBuffer) {
       rasterScale: resolvePetIllustrationRasterScale(defaultSequence.bounds),
     })
   ).bytes
-}
-
-function findOpaqueBounds(png) {
-  let left = png.width
-  let top = png.height
-  let right = -1
-  let bottom = -1
-
-  for (let y = 0; y < png.height; y += 1) {
-    for (let x = 0; x < png.width; x += 1) {
-      const alpha = png.data[(png.width * y + x) * 4 + 3]
-
-      if (alpha === 0) {
-        continue
-      }
-
-      left = Math.min(left, x)
-      top = Math.min(top, y)
-      right = Math.max(right, x)
-      bottom = Math.max(bottom, y)
-    }
-  }
-
-  if (right < left || bottom < top) {
-    return null
-  }
-
-  return {
-    left,
-    top,
-    width: right - left + 1,
-    height: bottom - top + 1,
-  }
 }
 
 function copyOpaqueRegion(source, bounds, target, offsetX, offsetY) {
