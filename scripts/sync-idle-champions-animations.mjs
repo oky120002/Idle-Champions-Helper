@@ -14,7 +14,7 @@ import {
 import {
   DEFAULT_CHAMPION_ANIMATION_IDLE_OVERRIDES_FILE,
   readChampionAnimationIdleOverrides,
-} from './data/champion-animation-idle-overrides.mjs'
+} from './data/champion-animation-idle-overrides.ts'
 import {
   fileExists,
   readExistingCollection,
