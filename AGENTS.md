@@ -6,6 +6,7 @@
 - CSS：`docs/product/ai-first-css-guidelines.md`
 - 文档：`docs/product/documentation-governance.md`
 - 测试：`docs/product/testing-conventions.md`
+- 数据归一化管线：`docs/product/data-normalization-guidelines.md`
 - 整站视觉（深色战术台方向、克制原则、移动端与 Pages 适配）：`.impeccable.md`
 
 ## 1. 项目边界
