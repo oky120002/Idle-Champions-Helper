@@ -76,4 +76,14 @@ repair: rebuild
     - 处置：统一脚本导入风格为带 .ts 扩展，或为 data 脚本引入 tsx/loader
     - 关联：非 M3 引入，pre-existing 基础设施问题，第九轮 M3 审计时顺手发现
 
+- equipmentAdjustment 结构性局限（stage 15 接线前需重审） <!-- auto-todo:id=atd_4410248f38 -->
+  - 记录时间: `2026-07-24T22:10:04+08:00`
+  - 类型: follow-up
+  - 位置: `src/domain/planner/steadyStateScoring.ts:335`
+  - 备注: 当前 equipmentAdjustmentByHero 按 carryId 取调整比（ownedEquipMult/theoreticalLootMult）乘进整个 carryDps，但支持位 loot 贡献未调整且只收 global_dps
+    - 影响①：carryDps 的 sharedPools 聚合所有英雄 global_dps loot，支持位装备贡献从不缩放
+    - 影响②：theoreticalLootMult/ownedEquipMult 只收 global_dps_multiplier_mult（692 条），不收 hero_dps（160）和 buff_upgrade（2088）loot，而 M1 collectRawEffectEntries 全部进 damage pool → carry 自己的 hero_dps loot 停在 M1 理论上界
+    - 处置：stage 15 UI 接线 owned 装备前决定是否重构 damage pool 按 owned loot 逐英雄裁剪（替换 per-carry 整体缩放近似）
+    - 当前死码（?? 1 默认）无运行时影响；关联 milestone-3-enhancement.md §13.1/§13.4（hero_dps 缺口已部分文档化，支持位未调整后果未显式记录）
+
 <!-- auto-todo:end -->
