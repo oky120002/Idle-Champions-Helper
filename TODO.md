@@ -48,15 +48,6 @@ repair: rebuild
   - 备注: deleteUserProfileData 语义是删 profile snapshot（handleDelete 后 setSyncState no-snapshot），不清 heroAbilityOverrides；override 是否随 profile 删待产品决策
     - 原 generateCoverageReport 孤学子项已于 2026-07-24 删除（simulator-data-coverage.ts + simulatorDataCoverage.test.ts，无调用方、无文档计划），本条仅剩 heroAbilityOverrides
 
-- scoreFormation 三重 evaluatePlacementFit 重复计算 position/hero 限定检查 <!-- auto-todo:id=atd_3cc0113de7 -->
-  - 记录时间: `2026-07-24T13:20:40+08:00`
-  - 类型: optimization
-  - 位置: `src/domain/planner/steadyStateScoring.ts:239`
-  - 备注: 每个 (carry,support) 对对 damage/crit/vulnerability 各调一次 evaluatePlacementFit，但 position/hero 限定检查（matchesPositionQualifier/matchesHeroQualifier）与 dimension 无关，被重复计算 3×。
-    - 影响：阵型评分热路径 3× 冗余，N² 对 × 3 次 × 全信号遍历
-    - 修复方向：单次无 dimension 调用 + 按 DIMENSION_BY_KIND[part.signalKind] 分区 scoreBreakdown
-    - 证据：steadyStateScoring.ts:240/269/287 三处 evaluatePlacementFit 调用
-
 - crit/vuln 维度的 evaluatePlacementFit pools 是死代码（计算后从不消费） <!-- auto-todo:id=atd_6badc71012 -->
   - 记录时间: `2026-07-24T13:20:44+08:00`
   - 类型: optimization
@@ -86,35 +77,6 @@ repair: rebuild
     - 处置：stage 15 UI 接线 owned 装备前决定是否重构 damage pool 按 owned loot 逐英雄裁剪（替换 per-carry 整体缩放近似）
     - 当前死码（?? 1 默认）无运行时影响；关联 milestone-3-enhancement.md §13.1/§13.4（hero_dps 缺口已部分文档化，支持位未调整后果未显式记录）
 
-- slot_escort 无 hero_ids：v80 Drizzt/v181/v186 Azaka/v232 Nordom 英雄占格未进 forcedHeroIds <!-- auto-todo:id=atd_143c278834 -->
-  - 记录时间: `2026-07-24T22:41:35+08:00`
-  - 类型: issue
-  - 位置: `scripts/data/normalize-adventures.ts:715`
-  - 备注: 数据源格式特性（非 bug），M2 normalize-adventures 范围。M3 第十一轮审计发现。
-    - 根因：forcedHeroIds 来自 force_use_heroes 的 hero_ids（normalize-adventures.ts:715），但 raw slot_escort game_change 无 hero_ids，这些英雄的占格只在 restrictions 文本（Drizzt takes up a slot 等）。
-    - 影响：① 英雄不参与阵型 buff（carryDps 贡献丢失）；② restrictions-parser 把英雄占格当 NPC occupiedSlotCount（v80 occ=1）。
-    - 对比：v510 Beadle / v1269 Antrius 正确进了 forcedHeroIds（其 force_use_heroes 有 hero_ids）。
-    - 修复方向需评估：从 restrictions 文本推断 forcedHeroes（NLP 名称匹配不可靠）或接受 occ 近似。
-
-- variants.json/scenarios.json 停留 M2 9.2 快照，normalize 层修复未重生生效 <!-- auto-todo:id=atd_e3c3377a64 -->
-  - 记录时间: `2026-07-24T23:15:45+08:00`
-  - 类型: follow-up
-  - 位置: `public/data/v1/variants.json`
-  - 备注: M3 改 normalize-adventures（第十一轮 null byte dedup + 第十二轮 boss enemyTypes）后未重跑数据重生，发布数据停留在 M2 9.2 快照
-    - 影响：boss vulnerability 修复（GENERIC_MONSTER_TAGS 移除 boss）代码已改+单测过，但 variants.json/scenarios.json 未含，运行时不生效；null byte dedup 修复同理
-    - 根因：data-normalization-guidelines §2 只覆盖 build 层 hero-abilities 新鲜度，normalize 层 variants.json 无对应守护
-    - 阻塞：忠实重生需同快照(2026-04-13)的 ZH(lang-7) raw，本地仅缓存 source(lang-1)，API 现服更新版会引入无关 diff
-    - 处置：下次 npm run data:official 拉双 raw 时一并生效；可扩展 §2 guideline 覆盖 normalize 层产物新鲜度
-
-- game-rules.json 发布但运行时零消费，常量与 monsterStats/modronInfo 硬编码双源 <!-- auto-todo:id=atd_4b9b6d71ea -->
-  - 记录时间: `2026-07-24T23:15:52+08:00`
-  - 类型: follow-up
-  - 位置: `public/data/v1/game-rules.json`
-  - 备注: game-rules.json(41KB) 运行时零消费方，但 max_area/max_modron_auto_reset_area/monster_base_stats 常量在 monsterStats.ts/modronInfo.ts 硬编码了一份
-    - 双源：game-rules.json 是 M2(c6619373) 引入的 pre-existing 孤岛，M3 新增硬编码加剧；当前值已逐值核对一致（base_health=10/base_dps=1/health_growth_rate_curve 三段/49 处 boss spike/2451=1e10/max_area=2501/modron=2500），但单边改动会静默漂移
-    - 矛盾：monsterStats.ts 注释声称「直接内联而非把 game-rules.json 发布到 runtime」，实际 game-rules.json 已发布且无人读
-    - 处置：要么运行时读 game-rules.json 单源（已发布，读取零额外成本），要么停止发布该孤岛文件
-
 - computeGlobalBuffMultiplier 不按 kind 过滤，混入非 patronPerkMult 信号会双计 <!-- auto-todo:id=atd_a254e749d5 -->
   - 记录时间: `2026-07-24T23:15:56+08:00`
   - 类型: follow-up
@@ -123,5 +85,23 @@ repair: rebuild
     - 风险：调用方混入 globalDpsMultiplier 等非 patronPerkMult 信号会重复计入 global buff pool（与 damage pool 双计，方向上高估 carryDps）
     - 现状：无调用方（孤岛，待 stage 15 UI 接入），暂无实际影响
     - 处置：stage 15 接线时加 .filter(kind==='patronPerkMult') 或收窄入参类型为 patronPerkMult 信号子集
+
+- scoreFormation 三重 evaluatePlacementFit 调用（实际冗余小，非 3× position 检查） <!-- auto-todo:id=atd_d71dd2a7d8 -->
+  - 记录时间: `2026-07-25T00:05:30+08:00`
+  - 类型: optimization
+  - 位置: `src/domain/planner/steadyStateScoring.ts:260`
+  - 备注: 第十二轮审计复核修正原描述：dimension filter 在 matchesPositionQualifier/matchesHeroQualifier 之前（placementFit.ts:218-223），每个信号只在自己维度的调用里做 position/hero 检查一次——原「position/hero 检查 3×」是事实错误。
+    - 实际冗余：collectSignals 跑 3 次（廉价 array spread）+ for-loop 3 次（每信号 dimension check 跑 3 次但 position/hero/pool 只 1 次）+ crit/vuln pool 聚合后被丢弃（见 atd_6badc71012）。
+    - 量级：crit/vuln 活跃信号通常 0-2 个，pool 聚合是廉价 Map op；整体浪费可忽略（H² 对 × 少量 op）。
+    - 处置：不优先优化（ponytail：无实测性能需求不重构热路径；scoring core 改动风险 > 收益）。若 profiling 显示 scoreFormation 是瓶颈再统一调用 + 按 dimension 分区。
+
+- slot_escort 英雄占格：仅 v80 有干净 hero_id，v232 需 name 解析，v181/v186 是 NPC <!-- auto-todo:id=atd_aca5040e39 -->
+  - 记录时间: `2026-07-25T00:05:44+08:00`
+  - 类型: issue
+  - 位置: `scripts/data/normalize-adventures.ts:706`
+  - 备注: 第十二轮审计复核修正原范围：全库仅 1 个 slot_escort 带 hero_id（v80 Drizzt=hero 18，确认为可玩英雄）；auto-todo 原列的 v181/v186 Azaka 实为 slot_escort_by_area + names:["Azaka's Corpse"]（NPC 尸体，非英雄，正确不进 forcedHeroIds）；v232 Nordom 是 {name:"Nordom"}（英雄但无 hero_id，需 name→hero 解析）。
+    - 三种数据形态：① v80 hero_id（干净，可直接提取）；② v181/v186 NPC names（非英雄）；③ v232 hero by name（脆弱，本地化敏感）。
+    - 语义疑点：slot_escort hero_id 是「force-include（玩家须含该英雄）」还是「slot-occupied-by-hero（预占特定槽位）」？forcedHeroes 是 slot 无关的，不捕捉 slot_id=4 的槽位锁定。
+    - 处置：影响面极小（1 variant 干净 + 1 variant 需 name 解析），语义需确认；不优先。若修，hero_id 路径在 collectHeroRestrictions 加 slot_escort.hero_id → forcedHeroIds（NPC 天然排除）。
 
 <!-- auto-todo:end -->
