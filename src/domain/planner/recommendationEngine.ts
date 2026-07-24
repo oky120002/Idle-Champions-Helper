@@ -126,6 +126,12 @@ function buildPlannerExplanations(
 
 export interface PlannerRecommendationOptions {
   scoringMode?: ScoringMode
+  /**
+   * 全局 buff pool 乘数（阶段 11.4：patron-perk）。
+   * 由调用方按玩家选择 patron 从 `global-buffs.json` 经 computeGlobalBuffMultiplier 解析后传入；
+   * 默认 1（无全局加成）。UI 接入（patron 选择）在阶段 15。
+   */
+  globalBuffMultiplier?: number
 }
 
 export function buildPlannerRecommendation(
@@ -135,6 +141,7 @@ export function buildPlannerRecommendation(
   options: PlannerRecommendationOptions = {},
 ): PlannerRecommendation {
   const scoringMode = options.scoringMode ?? 'carry-dps'
+  const globalBuffMultiplier = options.globalBuffMultiplier ?? 1
 
   if (!selectedVariant || collections.plannerHeroes.length === 0) {
     return { result: null, layoutId: null, scenarioRef: null, blocker: null }
@@ -234,7 +241,7 @@ export function buildPlannerRecommendation(
         }
       }
 
-      return scoreFormation({ placements, heroesById: heroById, scenario, heroLevels, scoringMode })
+      return scoreFormation({ placements, heroesById: heroById, scenario, heroLevels, scoringMode, globalBuffMultiplier })
     },
   })
 

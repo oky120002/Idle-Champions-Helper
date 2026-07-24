@@ -356,4 +356,28 @@ describe('steady state scoring', () => {
     // 累乘 bug 会得 10 × 1.06 × 4 = 42.4
     expect(result.score.toNumber()).toBeCloseTo(10 * 1.06 * 3, 4)
   })
+
+  it('global buff pool（patron-perk）乘进 carryDps（11.4）', () => {
+    // 含全局加成（patronPerkMult pool ×2）的 carryDps 应 > 不含。
+    const carry = createHero('carry', { seat: 1, baseDamage: 10 })
+    const heroesById = new Map([['carry', carry]])
+
+    const withoutGlobalBuff = scoreFormation({
+      placements: { s1: 'carry' },
+      heroesById,
+      scenario,
+    })
+    const withGlobalBuff = scoreFormation({
+      placements: { s1: 'carry' },
+      heroesById,
+      scenario,
+      globalBuffMultiplier: 2,
+    })
+
+    // 无全局加成：carryDps = 10 × 1.06 × 1（无 pool）= 10.6
+    expect(withoutGlobalBuff.score.toNumber()).toBeCloseTo(10.6, 4)
+    // 含 ×2 全局加成：10.6 × 2 = 21.2
+    expect(withGlobalBuff.score.toNumber()).toBeCloseTo(21.2, 4)
+    expect(compareGameNumbers(withGlobalBuff.score, withoutGlobalBuff.score)).toBeGreaterThan(0)
+  })
 })

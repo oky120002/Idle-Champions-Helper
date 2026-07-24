@@ -27,6 +27,12 @@ export interface ScoringInput {
   scenario: ResolvedPlannerScenarioModel
   heroLevels?: Map<string, number>
   scoringMode?: ScoringMode
+  /**
+   * 全局 buff pool 乘数（阶段 11.4：patron-perk 等）。
+   * 由调用方按玩家选择 patron 从 `global-buffs.json` 经 computeGlobalBuffMultiplier 解析后传入。
+   * 默认 1（无全局加成）；乘进 carryDps：baseDps × levelCurve × damagePool × crit × vuln × globalBuff。
+   */
+  globalBuffMultiplier?: number
 }
 
 export interface ScoringResult {
@@ -319,10 +325,11 @@ export function scoreFormation(input: ScoringInput): ScoringResult {
 
     const critFactor = computeCritFactor(critParts)
     const vulnFactor = computeVulnerabilityFactor(vulnParts)
+    const globalBuff = input.globalBuffMultiplier ?? 1
     const carryDps = computeCarryDps(
       carryEntry.hero,
       carryLevel,
-      productOfPoolMultipliers(sharedPools) * critFactor * vulnFactor,
+      productOfPoolMultipliers(sharedPools) * critFactor * vulnFactor * globalBuff,
     )
 
     if (compareGameNumbers(carryDps, bestScore) > 0) {

@@ -69,7 +69,9 @@
 - **验证**：`npm run test:run`；coverage 显示 global-buff。
 - **commit**：`feat(data): 11.3 解析 patron-perks/blessings effect`。
 
-### 11.4 全局 pool 进 DPS
+### 11.4 全局 pool 进 DPS [x]
+
+> 实现：`ScoringInput` 加 `globalBuffMultiplier`，`carryDps = baseDps × levelCurve × damagePool × crit × vuln × globalBuff`；`PlannerRecommendationOptions` 透传。调用方按玩家选择 patron 从 `global-buffs.json` 经 `computeGlobalBuffMultiplier` 解析后传入（UI patron 选择在阶段 15）。
 - **改动**：`final_dps × global_buff_pool`；接入 pool 链。
 - **测试**：含全局加成的 carryDps > 不含。
 - **验证**：`npm run test:run`。
