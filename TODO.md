@@ -66,4 +66,14 @@ repair: rebuild
     - 修复方向：evaluatePlacementFit 支持只产 scoreBreakdown（跳过 pool 聚合），或合并到三重调用消除方案
     - 证据：steadyStateScoring.ts 只 mergePools 了 damage 的 fit.pools（:266），critFit.pools/vulnFit.pools 无引用
 
+- data:official 等 node scripts 经 buildModels 传递导入 src/ 在裸 node 下 ERR_MODULE_NOT_FOUND <!-- auto-todo:id=atd_7154d0480e -->
+  - 记录时间: `2026-07-24T21:16:19+08:00`
+  - 类型: follow-up
+  - 位置: `package.json:scripts.data:official`
+  - 备注: package.json 的 data:official（node scripts/build-idle-champions-data.ts）及任何经 buildModels 传递导入 src/ 的数据脚本，在裸 node v26 下因 src/domain/abilities/*.ts 使用 extensionless 相对导入（signalSemantics.ts → './heroTargetingRelation'）而抛 ERR_MODULE_NOT_FOUND。
+    - 影响：整个数据管线（normalize→buildModels→searchIndex）无法用文档记载的 node scripts/*.ts 方式重跑；当前只能经 vitest（build-models.test.ts）或 npx tsx 运行
+    - 证据：node scripts/build-idle-champions-data.ts 直接报 Cannot find module '.../src/domain/abilities/heroTargetingRelation' imported from signalSemantics.ts
+    - 处置：统一脚本导入风格为带 .ts 扩展，或为 data 脚本引入 tsx/loader
+    - 关联：非 M3 引入，pre-existing 基础设施问题，第九轮 M3 审计时顺手发现
+
 <!-- auto-todo:end -->
