@@ -381,4 +381,26 @@ describe('steady state scoring', () => {
     expect(withGlobalBuff.score.toNumber()).toBeCloseTo(21.2, 4)
     expect(compareGameNumbers(withGlobalBuff.score, withoutGlobalBuff.score)).toBeGreaterThan(0)
   })
+
+  it('装备调整比缩放 carryDps（13.4：owned rarity < max → 下调）', () => {
+    const carry = createHero('carry', { seat: 1, baseDamage: 10 })
+    const heroesById = new Map([['carry', carry]])
+
+    const theoretical = scoreFormation({
+      placements: { s1: 'carry' },
+      heroesById,
+      scenario,
+    })
+    const adjusted = scoreFormation({
+      placements: { s1: 'carry' },
+      heroesById,
+      scenario,
+      equipmentAdjustmentByHero: new Map([['carry', 0.5]]),
+    })
+
+    // 理论 10.6；调整比 0.5 → 5.3（owned 装备弱于理论最大）
+    expect(theoretical.score.toNumber()).toBeCloseTo(10.6, 4)
+    expect(adjusted.score.toNumber()).toBeCloseTo(5.3, 4)
+    expect(compareGameNumbers(adjusted.score, theoretical.score)).toBeLessThan(0)
+  })
 })

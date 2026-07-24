@@ -124,19 +124,26 @@
 - **验证**：jq loot/game-rules 找曲线。
 - **commit**：`docs(data): 13.1 equipment 曲线数据源确认`。
 
-### 13.2 提取真实 equipment/feat/legendary/specialization/form
+### 13.2 提取真实 equipment/feat/legendary/specialization/form [x]
+
+> 实现：normalize 新增 `loot-catalog.json`（从 raw loot_defines 保留 slot_id，3968 条），供按 owned rarity 选取装备效果（补 champion-details.loot slot_id 丢失缺口）。owned 装备数据已在 `UserProfileSnapshot.ownedHeroes[].lootBySlot`（slotId→rarity/gild/enchant）。
+> **已知缺口（第八轮审计，需更深管线工作，本轮记留）**：① spec 裁剪——specialization 用 `required_upgrade_id:9999` sentinel + name 模式（"Spec N"），无干净 spec tag，需 upgrade DAG 分析；② `permanent_effects` 形态 effects（73 hero，如 Nahara `form_of_dread`）——collectRawEffectEntries 不收 properties，需 normalize 补 + 按激活形态裁剪；③ feat/legendary 按 `activeFeats`/`legendaryBySlot.level` 裁剪。三者均需 upgrade/properties 层工作，风险高，本轮聚焦 equipment multiplier 主干。
 - **改动**：从 `UserProfileSnapshot.ownedChampions` 提取 equipment（slot/rarity/ilvl）/feats/legendaryLevels；**按 `UserProfileSnapshot.specializations[heroId]` 裁剪专精**（第八轮审计：M1 理论基线把所有 spec upgrade 都算入，实际只生效玩家选的一个 spec；只保留该 spec 的 upgrade effects，其余 spec 降级）；**纳入 `champion-details.properties.permanent_effects` 的形态 effects**（第八轮审计：73 hero 含 `<形态>_effets`，如 Nahara `form_of_dread_effets` / Egbert `la_vache_mauve_effets` 的 `hero_dps_multiplier_mult,1000`，选形态后生效；当前 `collectRawEffectEntries` 不收 properties → 形态 buff 缺失），按玩家激活形态裁剪纳入。
 - **测试（先写）**：提取字段完整；选 spec A 时只保留 spec A 的 upgrade effects。
 - **验证**：`npm run test:run`。
 - **commit**：`feat(data): 13.2 提取真实装备数据 + 专精裁剪`。
 
-### 13.3 multiplier 计算
+### 13.3 装备/feat/传奇 multiplier 计算 [x]
+
+> 实现：`src/domain/simulator/equipmentMult.ts`——`computeEquipmentMult`（owned rarity 选取，`1+Σ(DPS effect)/100`）+ `computeTheoreticalLootMult`（M1 全 rarity 累加）+ `computeEquipmentAdjustment`（owned/theoretical 比）。MVP 只算 DPS 类 effect（`global_dps_multiplier_mult`）；非 DPS（cooldown/buff_upgrade）与 gild/enchant（无曲线）留缺口。9 测试。
 - **改动**：新建 `src/domain/simulator/equipmentMult.ts`：equipment/feat/legendary multiplier（按 13.1 曲线）。
 - **测试（先写）**：multiplier 计算正确（高 ilvl > 低 ilvl）。
 - **验证**：`npm run test:run`。
 - **commit**：`feat(simulator): 13.3 装备/feat/传奇 multiplier 计算`。
 
-### 13.4 接入 carryDps
+### 13.4 装备乘数接入 carryDps [x]
+
+> 实现：`ScoringInput.equipmentAdjustmentByHero`（carryId→调整比），`carryDps × equipmentAdjustment`。采用非侵入调整比（`ownedEquipMult / theoreticalLootMult`）缩放 M1 理论基线到玩家实际装备，避免重构 damage pool。测试：调整比 0.5 → carryDps 减半。调用方从 loot-catalog.json + owned loot 解析（UI 阶段 15）。
 - **改动**：`carryDps = baseDamage × levelCurve × equipment_mult × feat_mult × legendary_mult × pool`；替换 hypotheticalBaseline 近似。
 - **测试**：真实装备的 carryDps ≠ 中位近似。
 - **验证**：`npm run test:run` + 对照真实游戏（用户配合）。

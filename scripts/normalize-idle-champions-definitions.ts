@@ -65,6 +65,32 @@ function asRawArray(value: unknown): RawDefinition[] {
   return Array.isArray(value) ? (value as RawDefinition[]) : []
 }
 
+/**
+ * 阶段 13：构建 loot-catalog（heroId, slotId, rarity → effectString）。
+ * 直接从 raw loot_defines 提取（champion-details.loot normalize 后 slot_id 丢失）。
+ * 供 equipmentMult 按玩家 owned rarity 选取装备效果，替代 M1 全 rarity 累加的理论上界。
+ */
+function buildLootCatalog(lootDefines: RawDefinition[]): Array<{
+  heroId: string
+  slotId: string
+  rarity: string
+  effectString: string
+}> {
+  const catalog: Array<{ heroId: string; slotId: string; rarity: string; effectString: string }> = []
+  for (const loot of lootDefines) {
+    const heroId = toStr(loot.hero_id)
+    const slotId = toStr(loot.slot_id)
+    const rarity = toStr(loot.rarity)
+    const effects = asRawArray(loot.effects)
+    for (const effect of effects) {
+      const effectString = typeof effect.effect_string === 'string' ? effect.effect_string : ''
+      if (!effectString) continue
+      catalog.push({ heroId, slotId, rarity, effectString })
+    }
+  }
+  return catalog
+}
+
 const DEFAULT_OUTPUT_DIR = 'public/data/v1'
 const DEFAULT_VERSION_FILE = 'public/data/version.json'
 const DEFAULT_MANUAL_OVERRIDES = 'scripts/data/manual-overrides.json'
@@ -563,6 +589,13 @@ export async function normalizeDefinitionsSnapshot(
   })
   await writeJson(path.join(outputDir, 'formations.json'), {
     items: formations,
+    updatedAt,
+  })
+  // 阶段 13：loot-catalog（heroId, slotId, rarity → effect），供 equipmentMult 按玩家 owned rarity 选取装备效果。
+  // champion-details.loot normalize 后 slot_id 丢失，此处直接从 raw loot_defines 保留 slot_id。
+  const lootCatalog = buildLootCatalog(asRawArray(rawDefinitions.loot_defines))
+  await writeJson(path.join(outputDir, 'loot-catalog.json'), {
+    items: lootCatalog,
     updatedAt,
   })
   await writeJson(path.join(outputDir, 'enums.json'), {
