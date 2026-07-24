@@ -2,6 +2,7 @@ import { it, expect } from 'vitest'
 import os from 'node:os'
 import path from 'node:path'
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
+import { readJson, writeJson } from './data/io-utils.ts'
 import { PNG } from 'pngjs'
 import { syncChampionPortraits } from './sync-idle-champions-portraits.ts'
 
@@ -32,15 +33,6 @@ function createPng(
 
 function createWrappedPngBody(pngBuffer: Buffer): Buffer {
   return Buffer.concat([Buffer.from([1, 2, 3, 4]), pngBuffer])
-}
-
-async function writeJson(filePath: string, value: unknown): Promise<void> {
-  await mkdir(path.dirname(filePath), { recursive: true })
-  await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
-}
-
-async function readJson(filePath: string): Promise<unknown> {
-  return JSON.parse(await readFile(filePath, 'utf8'))
 }
 
 async function createTempDir(hooks: TestHooks): Promise<string> {

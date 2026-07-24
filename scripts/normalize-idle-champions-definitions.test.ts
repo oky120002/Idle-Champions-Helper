@@ -1,13 +1,10 @@
 import { describe, expect, it } from 'vitest'
 import os from 'node:os'
 import path from 'node:path'
-import { mkdtemp, readFile, writeFile } from 'node:fs/promises'
+import { mkdtemp, writeFile } from 'node:fs/promises'
+import { readJson } from './data/io-utils.ts'
 import { normalizeDefinitionsSnapshot } from './normalize-idle-champions-definitions.ts'
 import { normalizeEffectReference } from './data/normalize-champions.ts'
-
-async function readJson(filePath: string): Promise<unknown> {
-  return JSON.parse(await readFile(filePath, 'utf8'))
-}
 
 describe('normalize-idle-champions-definitions', () => {
   it('输出官方原文和中文展示双字段', async () => {

@@ -3,6 +3,7 @@ import os from 'node:os'
 import path from 'node:path'
 import zlib from 'node:zlib'
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
+import { writeJson } from './data/io-utils.ts'
 import { PNG } from 'pngjs'
 import { syncChampionIllustrations } from './sync-idle-champions-illustrations.ts'
 
@@ -159,10 +160,6 @@ function buildSkelAnimAssetBuffer({
 
 function toDataUrl(buffer: Buffer, mimeType = 'application/octet-stream'): string {
   return `data:${mimeType};base64,${buffer.toString('base64')}`
-}
-
-async function writeJson(filePath: string, value: unknown): Promise<void> {
-  await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
 }
 
 interface DecodedPngAssetOptions {

@@ -1,13 +1,10 @@
 import { it, expect } from 'vitest'
 import os from 'node:os'
 import path from 'node:path'
-import { mkdtemp, mkdir, readFile, writeFile } from 'node:fs/promises'
+import { mkdtemp, mkdir, writeFile } from 'node:fs/promises'
+import { readJson } from './io-utils.ts'
 
 import { buildSearchIndex, cleanText } from './build-search-index.ts'
-
-async function readJson(filePath: string): Promise<unknown> {
-  return JSON.parse(await readFile(filePath, 'utf8'))
-}
 
 it('cleanText 剥离全部占位符形态 + 数据 bug + 换行 markup，保留正文与 $# 字面量', () => {
   const cases: Array<[string, string]> = [

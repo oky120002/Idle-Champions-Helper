@@ -3,6 +3,7 @@ import os from 'node:os'
 import path from 'node:path'
 import zlib from 'node:zlib'
 import { mkdtemp, readFile, rm, writeFile, mkdir } from 'node:fs/promises'
+import { writeJson } from './data/io-utils.ts'
 import { auditChampionAnimations } from './audit-idle-champions-animations.ts'
 
 interface SkelAnimTestFrame {
@@ -147,10 +148,6 @@ function buildSkelAnimAssetBuffer({
   }
 
   return zlib.deflateSync(Buffer.concat(chunks))
-}
-
-async function writeJson(filePath: string, value: unknown): Promise<void> {
-  await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
 }
 
 async function createTempDir(): Promise<string> {

@@ -3,6 +3,7 @@ import os from 'node:os'
 import path from 'node:path'
 import zlib from 'node:zlib'
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
+import { writeJson } from './data/io-utils.ts'
 import { syncChampionAnimations } from './sync-idle-champions-animations.ts'
 
 interface TestHooks {
@@ -135,10 +136,6 @@ function buildSkelAnimAssetBuffer({
 
 function toDataUrl(buffer: Buffer): string {
   return `data:application/octet-stream;base64,${buffer.toString('base64')}`
-}
-
-async function writeJson(filePath: string, value: unknown): Promise<void> {
-  await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8')
 }
 
 async function createTempDir(hooks: TestHooks): Promise<string> {
