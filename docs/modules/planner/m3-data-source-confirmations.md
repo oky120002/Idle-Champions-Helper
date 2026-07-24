@@ -149,4 +149,37 @@ restrictions 绝大多数是**独特 flavor 文本**（描述特殊冒险机制�
 - **flavor 文本不解析**：特殊冒险机制（疯牛/暗影等）不映射阵型约束，进 warning 提示「含特殊机制，请人工评估」。
 - 不用 NLP（批判③），纯关键词模板 + 手工 semantic-overrides。
 
+---
+
+## 13.1 equipment 曲线数据源确认
+
+**结论：无独立 ilvl/rarity 乘数曲线——装备效果直接按 (hero, slot, rarity) 编码在 `loot_defines` / `champion-details.loot`。**
+
+### 数据结构
+
+- `loot_defines`（4176 条）：每条 = 一个 (hero_id, slot_id, rarity) 组合，含 `effects: [{effect_string}]`。
+  - 例：hero 1 slot 1：rarity 1 → `global_dps_multiplier_mult,10`；rarity 2 → `65`；rarity 3 → `120`；rarity 4 → `230`。
+  - rarity 共 4 档（1-4），slot 共 4 槽（slot_id 1-4）。每 hero 约 16-24 条 loot（不同 slot/rarity/效果类型）。
+- `champion-details.<id>.loot`（normalize 后）：**包含该 hero 的全部 (slot, rarity) 组合**（hero 1 = 24 条），无 slot_id（normalize 时丢失，见已知缺口）。
+- 效果类型：绝大多数 `global_dps_multiplier_mult`（按 rarity 递增），少量 `reduce_ultimate_cooldown` / `buff_upgrade` / `buff_ultimate`。
+
+### M1 理论基线现状（over-count）
+
+`collectRawEffectEntries`（`effect-helpers.ts:584`）遍历 `detail.loot` **全部条目**收 effect → 进入 hero profile 的 supportSignals → 消费层全量累加进 damage pool。即 M1 把**所有 rarity × 所有 slot** 的 loot 效果全部相加，等同「玩家每个槽位同时拥有全部 rarity」（不可能，玩家每槽只有一个 rarity）→ **理论上界高估**。
+
+### 阶段 13 精细化策略
+
+装备「曲线」实为**按 owned rarity 选取对应 loot effect**（不是连续曲线函数）：
+
+1. **数据**：`UserProfileSnapshot.ownedHeroes[].lootBySlot: Record<slotId, {rarity, gild, enchant, ...}>` = 玩家每槽实际 rarity。
+2. **映射**：按 (hero, slot, ownedRarity) 从 loot_defines 取该 loot 的 effect_string（而非全 rarity 求和）。
+3. **multiplier**：`equipmentMult = Π(1 + ownedLootEffect/100)`（每槽一件，进 globalDpsMultiplier pool）。
+
+### 已知缺口
+
+- **slot_id 丢失**：`champion-details.loot` normalize 后 `slot_id=null`（normalize-champions 未保留），无法按槽对应 owned loot。需 13.2 从 loot_defines 补 slot_id 映射，或在 normalize 层保留。
+- **gild / enchant 无曲线**：`game_rule_defines` 无 gilding/enchant 缩放曲线（服务端公式）。`OwnedHeroLootSlot.gild/enchant` 暂不建模，记缺口。
+- **feat / legendary**：同 loot 结构（`detail.feats` / `detail.legendaryEffects`），M1 已全量进基线；13.2 按玩家实际选择的 feat（`OwnedHero.activeFeats`）和传奇等级（`OwnedHeroLegendarySlot.level`）裁剪。
+
+
 

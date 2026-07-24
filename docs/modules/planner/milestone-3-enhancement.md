@@ -116,7 +116,9 @@
 
 > **基线澄清（第三轮审计 2026-07-21）**：`loot`/`legendary`/`feat` 三类效果**已在 M1 进入理论最大基线**——`collectEffectEntries` 遍历 `detail.loot`/`detail.legendaryEffects`/`detail.feats`，所有 global/hero_dps 加成已进 `hero-abilities.json`（feat 由 commit 4bca0459 补齐）。本阶段 13 不是"让 feat 进基线"，而是**按玩家实际拥有的装备/选择的 feat/传奇等级精算**（替换"全 loot/全 feat/全 legendary 都生效"的理论近似）。即 M1 = 理论上界，阶段 13 = 按存档裁剪到真实值。
 
-### 13.1（数据源确认）equipment 曲线
+### 13.1（数据源确认）equipment 曲线 [x]
+
+> 报告：`m3-data-source-confirmations.md` §13.1。结论：无独立 ilvl 曲线，效果按 (hero,slot,rarity) 直接编码在 loot_defines；M1 全 rarity 累加 = 理论上界高估；13 精细化 = 按 owned rarity 选取。
 - **改动**：确认 ilvl/rarity 乘数曲线数据源（loot 数据？game-rules？effect-reference？）。
 - **测试**：确认报告。
 - **验证**：jq loot/game-rules 找曲线。
