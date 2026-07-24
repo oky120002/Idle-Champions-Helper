@@ -176,6 +176,18 @@ hero_final_dps = base_dps
 - **Q3 baseGold（已决定·A3 用户授权）**：`idle_gold_rate_v2 × monster_gold_by_area`（3.4）。
 - **Q4 拖拽（已决定·A4 用户授权）**：HTML5 原生 DnD，移动端 tap-target。
 
+## 数据流审计经验教训（第八轮·2026-07-24）
+
+M2 第八轮深审（raw → normalize → collect → resolve → consume 全链路）沉淀的通用经验：
+
+1. **amountFunc 约定：解析层 add 不设字段（默认 null=add），消费层必须 `=== 'mult' ? mult : add` 分流**。`buildSimplePoolSignal` 对 add 省略 amountFunc 字段；任何新维度的消费侧聚合若一律累乘（如原 `computeVulnerabilityFactor`），会把 add 类信号高估（两个 +100% 易伤算成 4 而非 3）。新增维度时核对消费侧分流与解析层约定一致，并写「多 signal 叠加」测试（单 signal 时累乘与 add 同果，漏覆盖）。
+
+2. **build 层代码改动后必须重跑 `buildModels` 同步 `hero-abilities.json` 产物**。8.5 真叠加修正（9b2bbb41）、static_dps_mult fallback（8a26d567）等改动长期未重跑 build，产物停留在旧逻辑（signal 总数 12163→18893、字段补全后才同步）。build 层 commit 后跟一次 `buildModels` 重跑（不需 fetch/资源，直接从 normalized champion-details 生成），或 CI 守护产物新鲜度。
+
+3. **条件性匹配前核对字段值域**。vulnerability `monsterTags`（boss/fiend）与 `scenario.enemyTypes`（怪物种族 beast/humanoid/…）是不同维度——boss 是怪物等级 `is_boss`，不在 enemyTypes，导致 3 个 boss vulnerability 静默失效。匹配前全量枚举两端值域（jq unique），发现不交即定位缺口。
+
+4. **evolution-plan 公式的每个乘区/pool 都要有实现 + 测试**。`Π(static_dps_mults)` 公式写了但 `upgrade.static_dps_mult` 字段长期未读，35 个复杂 effect upgrade 的 dps 丢失。文档公式与实现定期核对，避免「设计了但没做」；formula_quirks / 加成调研里的特殊 pool 尤其易漏。
+
 ## 长期扩展（超出 16 阶段·待产品规划立项）
 
 以下方向超出 16 阶段，属产品级长期愿景，待产品规划立项后再进入演进规划阶段化：
