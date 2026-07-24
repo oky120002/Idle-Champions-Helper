@@ -14,13 +14,18 @@
 - **绝对值未验**：推图层数预估的"第 X 层"是绝对量，**依赖 7.5 BUD 实测校准**才能采信；7.5 完成前，10.2 的预估结果仅供方向参考，必须向用户标注"未校准"。
 - 阶段 7.5 拿真实游戏 BUD 对照计算值修正公式后，10.2 才算闭环。
 
-### 10.1（数据源确认）怪物 stats 数据源
+### 10.1（数据源确认）怪物 stats 数据源 [x]
+
+> 报告归档：`docs/modules/planner/m3-data-source-confirmations.md` §10.1。
 - **改动**：确认 `monster_base_stats` 的 health 字段（若有）或 monster properties；确认 `dps_growth_rate_curve` 用法。
 - **测试**：数据源确认报告归档。
 - **验证**：`jq monster_base_stats` 确认 health/血量字段。
 - **commit**：`docs(data): 10.1 怪物 stats 数据源确认`。
 
-### 10.2 推图预估算法
+### 10.2 推图预估算法 [x]
+
+> 实现：`src/domain/planner/areaEstimation.ts` + `src/domain/simulator/monsterStats.ts`（怪物 stats 缩放）。
+> 已知精度缺口：survival kind 映射只收 `health_mult`（百分比），未收 `health_add`（flat，~413 条）——effectiveHealth 的 flat 加成未纳入 pool（pool 模型当前纯百分比）。flat health 相对指数级 levelCurve 贡献极小，且整体绝对值本就未校准（7.5 边界），留作后续精度增强（需 pool 模型支持 flat-to-base 加法）。
 - **改动**：新建 `src/domain/planner/areaEstimation.ts`：二分查找 `max area where BUD（或 carryDps）>= monster_stat(area)`（stat 按 10.1 确认）；结合 survival 约束（阶段 5）——`effectiveHealth=(baseHealth+Σhealth_add flat)×health_pool`（`health_add` 413 条 flat 在 5.1 留到本阶段聚合），不足 monster_damage 时限制推图层数；**boss vulnerability 匹配**（第八轮审计：3 个 `monsterTags:['boss']` 的 vulnerability 因 `scenario.enemyTypes` 不含 boss 静默失效，需 scenario/adventure 标记 boss 怪后接通 `is_boss` 判断）。
 - **测试（先写）**：高 BUD 阵型预估层数 > 低 BUD；survival 不足时受限。
 - **标注**：基于 BUD（7.4）预估更准；若 BUD 未做完用 DPS 近似（标注偏差）。
