@@ -22,7 +22,7 @@
 ### A：构建期预合成的可行性与代价
 
 - 已有调研已证明 SkelAnim 可解析，piece / frame / pivot / depth 数据真实存在。
-- 仓库本来就依赖构建期脚本同步官方数据；把 `scripts/sync-idle-champions-illustrations.mjs` 从“下载 -> 解包 atlas”升级为“下载 -> 解析 -> 合成 -> 输出最终图”即可成立。
+- 仓库本来就依赖构建期脚本同步官方数据；把 `scripts/sync-idle-champions-illustrations.ts` 从“下载 -> 解包 atlas”升级为“下载 -> 解析 -> 合成 -> 输出最终图”即可成立。
 - 当前展示单元是 `833` 张：`161` 个英雄本体 + `672` 个皮肤；构建成本发生在离线阶段，不在每个终端重复支付。
 - 已核到的复杂度样例：`Hero_Evandra_Plushie_2xup` 单序列 `28` 个 piece，`Hero_BBEG_Modron_2xup` `56` 个，`Hero_Evelyn_Spelljammer` 某些序列 `173` 个；这说明重活更该放构建侧。
 
@@ -54,7 +54,7 @@
 
 ## 落地顺序
 
-1. 先把正确的静态图做出来：扩展 `scripts/sync-idle-champions-illustrations.mjs`，输出 `thumb`、`display` 与 `renderSequence / renderFrame / renderBounds / sourceGraphic`。
+1. 先把正确的静态图做出来：扩展 `scripts/sync-idle-champions-illustrations.ts`，输出 `thumb`、`display` 与 `renderSequence / renderFrame / renderBounds / sourceGraphic`。
 2. 再保留前端增强入口：必要时额外产出 `runtime/<id>.json` 与 `runtime/<id>-atlas-0.png`，但页面默认仍显示预合成图。
 3. 如果一定要做前端合成，至少遵守这些底线：只依赖 `HTMLCanvasElement + CanvasRenderingContext2D`；`OffscreenCanvas`、`createImageBitmap()` 仅做可选优化；不在浏览器里解析原始 SkelAnim 二进制；一次只合成当前打开的一张图；缩略图仍用构建期产物；移动端按 DPR 或容器尺寸降档；失败时随时回退静态图。
 
@@ -66,5 +66,5 @@
 
 ## 依据
 
-- 仓库内：`docs/research/deployment/static-hosting/README.md`、`docs/modules/champions/illustration/README.md`、`scripts/sync-idle-champions-illustrations.mjs`、`public/data/v1/champion-illustrations.json`
+- 仓库内：`docs/research/deployment/static-hosting/README.md`、`docs/modules/champions/illustration/README.md`、`scripts/sync-idle-champions-illustrations.ts`、`public/data/v1/champion-illustrations.json`
 - 浏览器兼容性：MDN `CanvasRenderingContext2D.drawImage()`、`HTMLImageElement.decode()`、`HTMLCanvasElement.toBlob()`、`Window.createImageBitmap()`、`OffscreenCanvas`、`Compression Streams API / DecompressionStream`

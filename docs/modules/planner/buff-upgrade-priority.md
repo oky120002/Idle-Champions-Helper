@@ -2,7 +2,7 @@
 
 > 作用：统计 buff_upgrade wrapper 变体频率、评估 top N 支持范围、记录 base 未解析根因。
 > wrapper 派生机制：`collectEffectEntries` 把 `buff_upgrade,SCALE,TARGET` 派生为以 TARGET base 为 `bonusScaleOfSignal` 的 derived signal。
-> 实现见 `scripts/data/effect-helpers.mjs`；覆盖率见 `npm run data:signal-coverage`。
+> 实现见 `scripts/data/effect-helpers.ts`；覆盖率见 `npm run data:signal-coverage`。
 
 ## 变体频率（top，按 wrapper 出现数）
 

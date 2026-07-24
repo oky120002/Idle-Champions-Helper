@@ -11,11 +11,11 @@
 
 ## 仓库内来源
 
-- `scripts/sync-idle-champions-animations.mjs`
-- `scripts/sync-idle-champions-illustrations.mjs`
-- `scripts/data/champion-graphic-resource-cache.mjs`
-- `scripts/data/skelanim-codec.mjs`
-- `scripts/data/skelanim-renderer.mjs`
+- `scripts/sync-idle-champions-animations.ts`
+- `scripts/sync-idle-champions-illustrations.ts`
+- `scripts/data/champion-graphic-resource-cache.ts`
+- `scripts/data/skelanim-codec.ts`
+- `scripts/data/skelanim-renderer.ts`
 - `src/features/skelanim-player/SkelAnimCanvas.tsx`
 - `public/data/v1/champion-animations.json`
 - `public/data/v1/champion-illustrations.json`

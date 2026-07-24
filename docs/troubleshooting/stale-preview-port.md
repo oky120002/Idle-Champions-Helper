@@ -6,4 +6,4 @@
 - 排查：发现 `#/champions/7` 落回首页且 DOM 不符后，检查 `4173` 端口监听，确认占用者来自另一条工作树。
 - 处理：先用 `lsof -nP -iTCP:4173 -sTCP:LISTEN` 确认进程，再关闭旧服务，随后在当前工作树重新执行 `npm run build` 与 Playwright 回归。
 - 验证：关闭旧服务后，`tests/e2e/smoke/navigation.spec.ts` 与 `tests/e2e/smoke/champion-detail.spec.ts` 均能在当前工作树产物上通过。
-- 入口：`playwright.config.ts`、`scripts/serve-github-pages-preview.mjs`
+- 入口：`playwright.config.ts`、`scripts/serve-github-pages-preview.ts`

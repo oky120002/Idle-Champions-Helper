@@ -28,7 +28,7 @@
 ## 本次验证依据
 
 - `package.json`
-- `scripts/serve-github-pages-preview.mjs`
+- `scripts/serve-github-pages-preview.ts`
 - `vite.config.ts`
 - `src/app/App.tsx`
 - `src/pages/HomePage.tsx`

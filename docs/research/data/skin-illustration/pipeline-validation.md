@@ -8,7 +8,7 @@
 ### 脚本测试
 
 ```bash
-node --test scripts/sync-idle-champions-animations.test.mjs scripts/sync-idle-champions-illustrations.test.mjs
+npx vitest run scripts/sync-idle-champions-animations.test.ts scripts/sync-idle-champions-illustrations.test.ts
 ```
 
 ### 类型与风格校验

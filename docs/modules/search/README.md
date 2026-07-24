@@ -13,7 +13,7 @@
 
 构建 → 静态产物 → 引擎 → UI：
 
-1. 构建（`scripts/data/build-search-index.mjs`）：遍历 `champions.json` + `champion-details/*.json`，抽取全部人类可读文本，按 title/body/meta × en/zh 分桶清洗，产出 `public/data/v1/search/search-documents.json`。
+1. 构建（`scripts/data/build-search-index.ts`）：遍历 `champions.json` + `champion-details/*.json`，抽取全部人类可读文本，按 title/body/meta × en/zh 分桶清洗，产出 `public/data/v1/search/search-documents.json`。
 2. 传输：索引文件随静态站发布，运行期经 `src/data/client.ts` 的 `loadSearchDocuments()` 首次拉取并内存缓存。
 3. 引擎（`src/features/search/searchEngine.ts`）：用 MiniSearch 对三桶建索引，双语合并、prefix + 模糊匹配、桶权重排序。
 4. UI：顶栏 `GlobalSearchBox` 下拉即搜；`/search` 页提供完整结果列表与 URL 同步。
@@ -27,7 +27,7 @@
 
 | 层 | 文件 |
 | --- | --- |
-| 构建 | `scripts/data/build-search-index.mjs`、`scripts/data/build-search-index.test.mjs` |
+| 构建 | `scripts/data/build-search-index.ts`、`scripts/data/build-search-index.test.ts` |
 | 编排 | `scripts/build-idle-champions-data.ts`（接入 `buildSearchIndex`） |
 | 产物 | `public/data/v1/search/search-documents.json` |
 | 引擎 | `src/features/search/searchEngine.ts`、`searchTokenizer.ts`、`searchTypes.ts` |

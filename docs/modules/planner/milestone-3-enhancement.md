@@ -79,7 +79,7 @@
 - **commit**：`docs(data): 12.1 restrictions 高频模式评估`。
 
 ### 12.2 模板匹配解析器（不 NLP）
-- **改动**：新建 `scripts/data/restrictions-parser.mjs`：高频关键词模板匹配（中英）→ forced/banned/locked；**不用 NLP**。
+- **改动**：新建 `scripts/data/restrictions-parser.ts`：高频关键词模板匹配（中英）→ forced/banned/locked；**不用 NLP**。
 - **测试（先写）**：高频模式（如"四格被小鸡占据"→ lockedSlots 4）匹配正确；无法匹配的进 warning。
 - **验证**：`npm run test:run`。
 - **commit**：`feat(data): 12.2 restrictions 模板匹配解析器`。

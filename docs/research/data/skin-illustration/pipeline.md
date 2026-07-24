@@ -8,10 +8,10 @@
 | 步骤 | 文件 / 产物 | 作用 |
 | --- | --- | --- |
 | 1 | `scripts/build-idle-champions-data.ts` | 统一调度 definitions、头像、动画、静态立绘等公共数据同步 |
-| 2 | `scripts/sync-idle-champions-animations.mjs` | 基于 `champion-visuals.json` 发布 hero-base / skin 的本地 `.bin` 与摘要清单 |
+| 2 | `scripts/sync-idle-champions-animations.ts` | 基于 `champion-visuals.json` 发布 hero-base / skin 的本地 `.bin` 与摘要清单 |
 | 3 | `public/data/v1/champion-animations/heroes/*.bin`、`public/data/v1/champion-animations/skins/*.bin` | 保存站内动画原始包，供默认帧渲染与前端 canvas 播放复用 |
 | 4 | `public/data/v1/champion-animations.json` | 保存轻量 manifest：默认 sequence / frame、bounds、bytes、fps、sourceVersion |
-| 5 | `scripts/sync-idle-champions-illustrations.mjs` | 统一用本地动画 manifest 的默认帧渲染 hero-base / skin 静态 PNG；缺动画直接报错 |
+| 5 | `scripts/sync-idle-champions-illustrations.ts` | 统一用本地动画 manifest 的默认帧渲染 hero-base / skin 静态 PNG；缺动画直接报错 |
 | 6 | `public/data/v1/champion-illustrations/heroes/*.png`、`public/data/v1/champion-illustrations/skins/*.png` | 页面稳定展示用静态图；全部来源于本地动画默认帧，不再回退官方静态立绘 |
 | 7 | `src/features/skelanim-player/*`、`src/pages/champion-detail/SkinArtworkDialog.tsx` | 详情弹层按需读取本地 `.bin`，浏览器端解码后用 `canvas` 播放 |
 
@@ -29,10 +29,10 @@
 
 | 文件 | 当前职责 | 关键结论 |
 | --- | --- | --- |
-| `scripts/sync-idle-champions-animations.mjs` | 选择 hero-base / skin 动画源，写出 `.bin` 与 manifest | 现已支持全量 hero-base + skin 发布，并按 source 元数据增量复用 |
-| `scripts/sync-idle-champions-illustrations.mjs` | 读取本地动画 manifest，截默认帧生成静态 PNG | skin 与 hero-base 不再维护独立 pose 决策链路，也不再回退官方静态图 |
-| `scripts/data/skelanim-codec.mjs` | 解压并解析 `SkelAnim` | 前后端共享同一套二进制格式假设 |
-| `scripts/data/skelanim-renderer.mjs` | 计算 bounds、选择 frame、渲染静态 PNG | 默认帧裁切规则集中在这里 |
+| `scripts/sync-idle-champions-animations.ts` | 选择 hero-base / skin 动画源，写出 `.bin` 与 manifest | 现已支持全量 hero-base + skin 发布，并按 source 元数据增量复用 |
+| `scripts/sync-idle-champions-illustrations.ts` | 读取本地动画 manifest，截默认帧生成静态 PNG | skin 与 hero-base 不再维护独立 pose 决策链路，也不再回退官方静态图 |
+| `scripts/data/skelanim-codec.ts` | 解压并解析 `SkelAnim` | 前后端共享同一套二进制格式假设 |
+| `scripts/data/skelanim-renderer.ts` | 计算 bounds、选择 frame、渲染静态 PNG | 默认帧裁切规则集中在这里 |
 | `src/features/skelanim-player/browser-codec.ts` | 浏览器端解压 / 解码 `.bin` | 让 GitHub Pages 站点在不依赖上游的前提下播放动画 |
 | `src/pages/champion-detail/useChampionDetailResources.ts` | 详情页加载 skin 动画资源 | 页面只消费本地 `kind === 'skin'` 动画集合 |
 

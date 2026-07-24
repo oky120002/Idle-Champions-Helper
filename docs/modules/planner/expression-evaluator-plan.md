@@ -22,7 +22,7 @@ IC 的 `per_hero_expr` 字段承载两类语义：
 ### 现状散落点（审计）
 
 - `parseHeroPredicate`（heroPredicate.ts）：数值 per_hero_expr 返回 null（已标注归本规划）
-- `scripts/data/official-rule-helpers.mjs:258`：`TimeAvailable(\`days\`) > N*365` 单独正则（patron 时间规则）
+- `scripts/data/official-rule-helpers.ts:258`：`TimeAvailable(\`days\`) > N*365` 单独正则（patron 时间规则）
 - `src/domain/planner/placementFit.ts` `STACK_COUNT_RESOLVERS`：stack 数量按 stackFunc 查表（`per_crusader` 数英雄 / `per_col_behind` 数列），不解析数值 per_hero_expr
 - `src/domain/effects/effect-string.ts` `resolveSimpleAmountExpr`：只匹配单一 `upgrade_amount(N,i)`；20 条复合 amount_expr（`upgrade_amount(N,0)+...` 纯求和 5 条、`max_upgrade_amount`/`mult_stack`/`feat_amount`/`upgrade_amount(N,dps_update)` 15 条）回退得 effect value=0（低估）。`upgrade_amount` 与 `GetUpgradeAmount` 同类，归本规划统一。
 
@@ -38,7 +38,7 @@ IC 的 `per_hero_expr` 字段承载两类语义：
 ### 接入点
 
 - `placementFit.ts` 的 stack 数量计算：signal 的 per_hero_expr 是数值表达式时，用 `evalNumericExpr` 精确算 stack 数量，替代/补充 `STACK_COUNT_RESOLVERS` 查表
-- `official-rule-helpers.mjs` 的 TimeAvailable 正则：迁入 numericExpression（统一时间比较，不再单独正则）
+- `official-rule-helpers.ts` 的 TimeAvailable 正则：迁入 numericExpression（统一时间比较，不再单独正则）
 - `effect-string.ts` 的 `resolveSimpleAmountExpr`：扩展支持复合 amount_expr（先做 5 条纯 `upgrade_amount` 求和，`upgradeLookup` 节点复用；`max_upgrade_amount`/命名 index 等 15 条随 formationAggregate/context 节点一起）
 
 ### TDD 硬约束
@@ -64,7 +64,7 @@ IC 的 `per_hero_expr` 字段承载两类语义：
 
 - **结构**：`LocalizedText[]`（显示文本）+ patron 条件（`condition: complete_area` / `patron_perks_purchased` / `patron_total_influence`）
 - **求值域**：用户存档（是否完成 area、购买 perk、积累 influence）
-- **现状**：`official-rule-helpers.mjs` 各 condition 类型单独逻辑（`extractPurchasedPerkRequirementCount` 等）
+- **现状**：`official-rule-helpers.ts` 各 condition 类型单独逻辑（`extractPurchasedPerkRequirementCount` 等）
 - **抽象可行性**：**低**。每类型语义不同（area 完成 vs perk 购买 vs influence 累积），无统一语法。但可抽 **conditionEvaluator 接口**（`evalRequirement(requirement, profile) → boolean`，每类型一个 evaluator），当类型增多时再做。
 - **结论**：不强制。若 patron/variant 解锁条件类型扩散到 >5 种，再抽 conditionEvaluator。
 
@@ -83,6 +83,6 @@ IC 的 `per_hero_expr` 字段承载两类语义：
 
 1. **数值求值器核心**（TDD）：建 `numericExpression.js` + `NumericExprAST` + `parseNumericExpr` + `evalNumericExpr` + 单元测试（18 条 raw 样本）。先做纯英雄/存档/常量节点，`formationAggregate` 留后。
 2. **接入 stack 计算**：`placementFit.ts` 的 stack 数量计算用 `evalNumericExpr` 精确求值，替代 `STACK_COUNT_RESOLVERS` 中靠查表的分支。
-3. **迁移 TimeAvailable**：`official-rule-helpers.mjs` 的 TimeAvailable 正则迁入 numericExpression，消除散落。
+3. **迁移 TimeAvailable**：`official-rule-helpers.ts` 的 TimeAvailable 正则迁入 numericExpression，消除散落。
 4. **formationAggregate 节点**：`get_num_most_common_*` 等阵型聚合查询，依赖 formation context，分阶段实现并接入。
 5. **conditionEvaluator**（可选，触发式）：仅当 patron/variant 解锁条件类型扩散时，按本文件第 2 节审计结论抽象。

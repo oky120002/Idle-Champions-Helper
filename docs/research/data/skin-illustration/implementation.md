@@ -19,7 +19,7 @@
 
 ## 我们之前为什么不行
 
-仓库已有 `scripts/data/skelanim-codec.mjs`、`scripts/data/skelanim-renderer.mjs`、`scripts/sync-idle-champions-illustrations.mjs` 能解官方动画，但产物合同只允许静态图：构建期读取 `SkelAnim` -> 选 sequence / frame -> 渲染单张 PNG -> 丢掉其余动画数据，页面只能 `<img>` 展示。限制在数据合同，不在前端绘制能力。
+仓库已有 `scripts/data/skelanim-codec.ts`、`scripts/data/skelanim-renderer.ts`、`scripts/sync-idle-champions-illustrations.ts` 能解官方动画，但产物合同只允许静态图：构建期读取 `SkelAnim` -> 选 sequence / frame -> 渲染单张 PNG -> 丢掉其余动画数据，页面只能 `<img>` 展示。限制在数据合同，不在前端绘制能力。
 
 ## 方案比较
 
@@ -46,8 +46,8 @@
 ### 当前方案
 
 - 保留 `public/data/v1/champion-visuals.json` 作为官方资源定位基座。
-- 新增 `scripts/sync-idle-champions-animations.mjs`，把 hero-base / skin 的官方 `SkelAnim` 原始包发布到 `public/data/v1/champion-animations/**/*.bin`。
-- `scripts/sync-idle-champions-illustrations.mjs` 不再为 skin 维护独立 pose 决策，而是统一读取 `champion-animations.json` 的默认 `sequence / frame` 生成静态 PNG。
+- 新增 `scripts/sync-idle-champions-animations.ts`，把 hero-base / skin 的官方 `SkelAnim` 原始包发布到 `public/data/v1/champion-animations/**/*.bin`。
+- `scripts/sync-idle-champions-illustrations.ts` 不再为 skin 维护独立 pose 决策，而是统一读取 `champion-animations.json` 的默认 `sequence / frame` 生成静态 PNG。
 - 页面层保留静态图展示，同时在详情弹层按需加载本地 `.bin` 做 canvas 动画播放。
 
 主链已经从“构建期合一张静态图”升级到“构建期发布原始动画包 + 默认帧 PNG，运行时按需播放”。hero-base 与 skin 已确认共用同一条动画主线（`161 / 161` 个英雄本体都能映射到 `SkelAnim` 动画资源）。
@@ -55,7 +55,7 @@
 ### 建议流水线
 
 1. 拉取最新 definitions，重建 `champion-visuals.json`
-2. 用 `scripts/sync-idle-champions-animations.mjs` 选择 hero-base / skin 动画源并发布 `.bin`
+2. 用 `scripts/sync-idle-champions-animations.ts` 选择 hero-base / skin 动画源并发布 `.bin`
 3. 预计算每个 sequence 摘要，写入 `champion-animations.json`
 4. 用同一份 manifest 的默认帧生成 `champion-illustrations/**/*.png`
 5. 前端详情弹层按需读取本地 `.bin`，浏览器解码后用 `canvas` 播放
@@ -66,7 +66,7 @@
 
 ### 构建层
 
-`scripts/sync-idle-champions-animations.mjs`（+ `.test.mjs`）职责：读 `champion-visuals.json` -> 为皮肤按 `xl -> large -> base` 选动画源 -> 命中 `tmp/idle-champions-graphic-cache` 否则下载官方原始资产 -> 写出 `.bin` -> 预计算可播放摘要写入 `champion-animations.json`。
+`scripts/sync-idle-champions-animations.ts`（+ `.test.ts`）职责：读 `champion-visuals.json` -> 为皮肤按 `xl -> large -> base` 选动画源 -> 命中 `tmp/idle-champions-graphic-cache` 否则下载官方原始资产 -> 写出 `.bin` -> 预计算可播放摘要写入 `champion-animations.json`。
 
 已发布的 `public/data/v1/champion-animations/skins/*.bin` 也作为持久缓存：同步脚本优先读现有 manifest，若 `sourceGraphicId / sourceGraphic / sourceVersion / sourceSlot` 与当前 definitions 一致且本地 `.bin` 存在，直接复用；只有资源版本或定位变化才重新下载。默认行为已是“按 definitions 变化增量刷新”，而非全量重拉。
 

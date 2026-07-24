@@ -26,7 +26,7 @@
 - 现有脚本：`lint`、`typecheck`、`test:run`、`test:unit`、`test:component`、`test:e2e`、`test:regression`、`build`
 - 关键源码：`src/app/App.tsx`、`src/data/client.ts`、`src/data/userImport.ts`、`src/rules/seat.ts`
 - 当前部署链路：`.github/workflows/deploy.yml` 已是“完整回归与构建 -> 上传 Pages artifact -> 部署”
-- 环境约束：本地预览与 GitHub Pages `base` 路径不同，页面回归和产物验收优先走 `npm run preview:pages` 与 `scripts/serve-github-pages-preview.mjs`
+- 环境约束：本地预览与 GitHub Pages `base` 路径不同，页面回归和产物验收优先走 `npm run preview:pages` 与 `scripts/serve-github-pages-preview.ts`
 
 ## `main` 完整回归定义
 
