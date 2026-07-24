@@ -83,10 +83,16 @@ export function parsePatronPerkSignals(perks: readonly RawPerk[]): PatronPerkSig
 /**
  * 全局 buff pool 聚合（阶段 11.4）：`1 + Σ(value/100)`（add 语义，与 damage pool 同构）。
  * 用于 final_dps × global_buff_pool。
+ *
+ * 只聚合 patronPerkMult 信号——HeroAbilitySignal 是宽联合类型，混入 globalDpsMultiplier
+ * 等其它 kind 会把它们重复计入 global buff pool（这些已进 damage pool，双计会高估 carryDps）。
  */
 export function computeGlobalBuffMultiplier(signals: readonly HeroAbilitySignal[]): number {
   let addPercent = 0
   for (const signal of signals) {
+    if (signal.kind !== 'patronPerkMult') {
+      continue
+    }
     addPercent += signal.value
   }
   return 1 + addPercent / 100
