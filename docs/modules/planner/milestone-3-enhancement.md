@@ -21,7 +21,7 @@
 - **commit**：`docs(data): 10.1 怪物 stats 数据源确认`。
 
 ### 10.2 推图预估算法
-- **改动**：新建 `src/domain/planner/areaEstimation.ts`：二分查找 `max area where BUD（或 carryDps）>= monster_stat(area)`（stat 按 10.1 确认）；结合 survival 约束（阶段 5）——`effectiveHealth=(baseHealth+Σhealth_add flat)×health_pool`（`health_add` 413 条 flat 在 5.1 留到本阶段聚合），不足 monster_damage 时限制推图层数。
+- **改动**：新建 `src/domain/planner/areaEstimation.ts`：二分查找 `max area where BUD（或 carryDps）>= monster_stat(area)`（stat 按 10.1 确认）；结合 survival 约束（阶段 5）——`effectiveHealth=(baseHealth+Σhealth_add flat)×health_pool`（`health_add` 413 条 flat 在 5.1 留到本阶段聚合），不足 monster_damage 时限制推图层数；**boss vulnerability 匹配**（第八轮审计：3 个 `monsterTags:['boss']` 的 vulnerability 因 `scenario.enemyTypes` 不含 boss 静默失效，需 scenario/adventure 标记 boss 怪后接通 `is_boss` 判断）。
 - **测试（先写）**：高 BUD 阵型预估层数 > 低 BUD；survival 不足时受限。
 - **标注**：基于 BUD（7.4）预估更准；若 BUD 未做完用 DPS 近似（标注偏差）。
 - **验证**：`npm run test:run`。
@@ -105,8 +105,8 @@
 - **验证**：jq loot/game-rules 找曲线。
 - **commit**：`docs(data): 13.1 equipment 曲线数据源确认`。
 
-### 13.2 提取真实 equipment/feat/legendary/specialization
-- **改动**：从 `UserProfileSnapshot.ownedChampions` 提取 equipment（slot/rarity/ilvl）/feats/legendaryLevels；**按 `UserProfileSnapshot.specializations[heroId]` 裁剪专精**（第八轮审计：M1 理论基线把所有 spec upgrade 都算入，实际只生效玩家选的一个 spec；只保留该 spec 的 upgrade effects，其余 spec 降级）。
+### 13.2 提取真实 equipment/feat/legendary/specialization/form
+- **改动**：从 `UserProfileSnapshot.ownedChampions` 提取 equipment（slot/rarity/ilvl）/feats/legendaryLevels；**按 `UserProfileSnapshot.specializations[heroId]` 裁剪专精**（第八轮审计：M1 理论基线把所有 spec upgrade 都算入，实际只生效玩家选的一个 spec；只保留该 spec 的 upgrade effects，其余 spec 降级）；**纳入 `champion-details.properties.permanent_effects` 的形态 effects**（第八轮审计：73 hero 含 `<形态>_effets`，如 Nahara `form_of_dread_effets` / Egbert `la_vache_mauve_effets` 的 `hero_dps_multiplier_mult,1000`，选形态后生效；当前 `collectRawEffectEntries` 不收 properties → 形态 buff 缺失），按玩家激活形态裁剪纳入。
 - **测试（先写）**：提取字段完整；选 spec A 时只保留 spec A 的 upgrade effects。
 - **验证**：`npm run test:run`。
 - **commit**：`feat(data): 13.2 提取真实装备数据 + 专精裁剪`。
