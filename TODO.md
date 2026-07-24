@@ -86,4 +86,14 @@ repair: rebuild
     - 处置：stage 15 UI 接线 owned 装备前决定是否重构 damage pool 按 owned loot 逐英雄裁剪（替换 per-carry 整体缩放近似）
     - 当前死码（?? 1 默认）无运行时影响；关联 milestone-3-enhancement.md §13.1/§13.4（hero_dps 缺口已部分文档化，支持位未调整后果未显式记录）
 
+- slot_escort 无 hero_ids：v80 Drizzt/v181/v186 Azaka/v232 Nordom 英雄占格未进 forcedHeroIds <!-- auto-todo:id=atd_143c278834 -->
+  - 记录时间: `2026-07-24T22:41:35+08:00`
+  - 类型: issue
+  - 位置: `scripts/data/normalize-adventures.ts:715`
+  - 备注: 数据源格式特性（非 bug），M2 normalize-adventures 范围。M3 第十一轮审计发现。
+    - 根因：forcedHeroIds 来自 force_use_heroes 的 hero_ids（normalize-adventures.ts:715），但 raw slot_escort game_change 无 hero_ids，这些英雄的占格只在 restrictions 文本（Drizzt takes up a slot 等）。
+    - 影响：① 英雄不参与阵型 buff（carryDps 贡献丢失）；② restrictions-parser 把英雄占格当 NPC occupiedSlotCount（v80 occ=1）。
+    - 对比：v510 Beadle / v1269 Antrius 正确进了 forcedHeroIds（其 force_use_heroes 有 hero_ids）。
+    - 修复方向需评估：从 restrictions 文本推断 forcedHeroes（NLP 名称匹配不可靠）或接受 occ 近似。
+
 <!-- auto-todo:end -->
