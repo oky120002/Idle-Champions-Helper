@@ -1,6 +1,6 @@
 import type { z } from 'zod'
 
-import { adventureSchema, patronObjectiveTierSchema } from './collection-schemas'
+import type { adventureSchema, patronObjectiveTierSchema } from './collection-schemas'
 import type { LocalizedOption, LocalizedText } from './common'
 
 export interface VariantAreaHighlight {
