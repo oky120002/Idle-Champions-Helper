@@ -159,4 +159,16 @@ describe('parseRestrictions — ZH 变量递增占格排除（第十轮审计）
     const result = parseRestrictions([r('Two Quasits join your formation taking up two slots. Every 25 areas, they move to different slots.', '两只夸塞魔加入你的阵型，占用你阵型中的两格，每经过 25 个区域后会改变位置。')])
     expect(result.lockedSlotCount).toBe(2)
   })
+
+  // 回归（第十一轮审计）：v296「守望者...无法被移动或移除」是 forcedHeroes 英雄锁定，
+  // 不是 NPC 换位置。孤立「移动」曾把变量递增（每 50 区域 +1 格）误判为位置轮换，
+  // 跳过排除、误产 occ=1。修复后 ZH_POSITION_ROTATION_RE 只收明确位置变化短语。
+  it('ZH 英雄锁定「无法被移动」不误判位置轮换 → 变量递增正确排除（v296）', () => {
+    const result = parseRestrictions([r(
+      'Warden starts in the formation. He can\'t be moved or removed. Every 50 areas a creeping Eldritch Horror takes over a slot in the formation.',
+      '守望者初始位于阵型中。他无法被移动或移除。每经过 50 个区域，一个诡异的奥法恐怖会占据阵型中的一格。',
+    )])
+    expect(result.lockedSlotCount).toBe(0)
+    expect(result.warnings.length).toBeGreaterThan(0)
+  })
 })

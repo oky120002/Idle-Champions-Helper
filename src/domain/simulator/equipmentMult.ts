@@ -11,6 +11,13 @@
  *
  * MVP 范围：只算 DPS 类 effect（`global_dps_multiplier_mult`，add 进 global pool）。
  * 非 DPS（reduce_ultimate_cooldown / buff_upgrade 等）与 gild/enchant（无曲线）留缺口。
+ *
+ * 近似局限（第十一轮审计，当前 UI 未接入 → equipmentAdjustmentByHero 无调用方，暂无实际影响）：
+ * adjustment 作整体乘数缩放整个 carryDps（含 crit/vuln/globalBuff 与 support 英雄的 global_dps buff），
+ * 而非只替换 globalDpsPool 中的 loot 部分。当 globalDpsPool 含非 loot 加成时，比率会连带缩放
+ * support buff（方向上低估 carryDps）；且只调 carry 自身 loot，support 英雄 loot 的 over-count 未触及。
+ * 精确修复需 loot 按 owned 进 damage pool（重构 collect/evaluatePlacementFit 区分 loot 与非 loot 源），
+ * 风险高且依赖 UI 传入 owned 数据 → 留阶段 15 UI 接入时一并评估（见 milestone-3-enhancement §13.4）。
  */
 
 export interface LootCatalogEntry {

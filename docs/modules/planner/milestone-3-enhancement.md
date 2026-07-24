@@ -146,6 +146,7 @@
 ### 13.4 装备乘数接入 carryDps [x]
 
 > 实现：`ScoringInput.equipmentAdjustmentByHero`（carryId→调整比），`carryDps × equipmentAdjustment`。采用非侵入调整比（`ownedEquipMult / theoreticalLootMult`）缩放 M1 理论基线到玩家实际装备，避免重构 damage pool。测试：调整比 0.5 → carryDps 减半。调用方从 loot-catalog.json + owned loot 解析（UI 阶段 15）。
+> **近似局限（第十一轮审计）**：调整比作整体乘数缩放整个 carryDps（含 crit/vuln/globalBuff + support 英雄的 global_dps buff），而非只替换 globalDpsPool 的 loot 部分。当 globalDpsPool 含非 loot 加成时，比率会连带缩放 support buff（方向上低估 carryDps）；且只调 carry 自身 loot，support 英雄 loot 的 over-count 未触及。当前 `equipmentAdjustmentByHero` 无调用方（UI 未接入），暂无实际影响。精确修复需 loot 按 owned 进 damage pool（重构 collect/evaluatePlacementFit 区分 loot/非 loot 源），风险高且依赖 UI 传入 owned 数据 → 留阶段 15 UI 接入时一并评估。
 - **改动**：`carryDps = baseDamage × levelCurve × equipment_mult × feat_mult × legendary_mult × pool`；替换 hypotheticalBaseline 近似。
 - **测试**：真实装备的 carryDps ≠ 中位近似。
 - **验证**：`npm run test:run` + 对照真实游戏（用户配合）。

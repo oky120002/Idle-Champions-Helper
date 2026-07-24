@@ -968,7 +968,7 @@ export function buildMonsterCatalog(
 }
 
 function getMonsterIdentityKey(monster: MonsterIdentity): string {
-  return `${monster.name} ${monster.attackType} ${monster.tags.join('|')}`
+  return `${monster.name}\x00${monster.attackType}\x00${monster.tags.join('|')}`
 }
 
 function collectMonsterIdsFromGameChange(
