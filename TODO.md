@@ -57,16 +57,6 @@ repair: rebuild
     - 修复方向：evaluatePlacementFit 支持只产 scoreBreakdown（跳过 pool 聚合），或合并到三重调用消除方案
     - 证据：steadyStateScoring.ts 只 mergePools 了 damage 的 fit.pools（:266），critFit.pools/vulnFit.pools 无引用
 
-- data:official 等 node scripts 经 buildModels 传递导入 src/ 在裸 node 下 ERR_MODULE_NOT_FOUND <!-- auto-todo:id=atd_7154d0480e -->
-  - 记录时间: `2026-07-24T21:16:19+08:00`
-  - 类型: follow-up
-  - 位置: `package.json:scripts.data:official`
-  - 备注: package.json 的 data:official（node scripts/build-idle-champions-data.ts）及任何经 buildModels 传递导入 src/ 的数据脚本，在裸 node v26 下因 src/domain/abilities/*.ts 使用 extensionless 相对导入（signalSemantics.ts → './heroTargetingRelation'）而抛 ERR_MODULE_NOT_FOUND。
-    - 影响：整个数据管线（normalize→buildModels→searchIndex）无法用文档记载的 node scripts/*.ts 方式重跑；当前只能经 vitest（build-models.test.ts）或 npx tsx 运行
-    - 证据：node scripts/build-idle-champions-data.ts 直接报 Cannot find module '.../src/domain/abilities/heroTargetingRelation' imported from signalSemantics.ts
-    - 处置：统一脚本导入风格为带 .ts 扩展，或为 data 脚本引入 tsx/loader
-    - 关联：非 M3 引入，pre-existing 基础设施问题，第九轮 M3 审计时顺手发现
-
 - equipmentAdjustment 结构性局限（stage 15 接线前需重审） <!-- auto-todo:id=atd_4410248f38 -->
   - 记录时间: `2026-07-24T22:10:04+08:00`
   - 类型: follow-up
@@ -76,15 +66,6 @@ repair: rebuild
     - 影响②：theoreticalLootMult/ownedEquipMult 只收 global_dps_multiplier_mult（692 条），不收 hero_dps（160）和 buff_upgrade（2088）loot，而 M1 collectRawEffectEntries 全部进 damage pool → carry 自己的 hero_dps loot 停在 M1 理论上界
     - 处置：stage 15 UI 接线 owned 装备前决定是否重构 damage pool 按 owned loot 逐英雄裁剪（替换 per-carry 整体缩放近似）
     - 当前死码（?? 1 默认）无运行时影响；关联 milestone-3-enhancement.md §13.1/§13.4（hero_dps 缺口已部分文档化，支持位未调整后果未显式记录）
-
-- computeGlobalBuffMultiplier 不按 kind 过滤，混入非 patronPerkMult 信号会双计 <!-- auto-todo:id=atd_a254e749d5 -->
-  - 记录时间: `2026-07-24T23:15:56+08:00`
-  - 类型: follow-up
-  - 位置: `scripts/data/patron-perk-signals.ts:87`
-  - 备注: computeGlobalBuffMultiplier 收 HeroAbilitySignal[] 直接 Σ signal.value，不按 kind 过滤
-    - 风险：调用方混入 globalDpsMultiplier 等非 patronPerkMult 信号会重复计入 global buff pool（与 damage pool 双计，方向上高估 carryDps）
-    - 现状：无调用方（孤岛，待 stage 15 UI 接入），暂无实际影响
-    - 处置：stage 15 接线时加 .filter(kind==='patronPerkMult') 或收窄入参类型为 patronPerkMult 信号子集
 
 - scoreFormation 三重 evaluatePlacementFit 调用（实际冗余小，非 3× position 检查） <!-- auto-todo:id=atd_d71dd2a7d8 -->
   - 记录时间: `2026-07-25T00:05:30+08:00`
