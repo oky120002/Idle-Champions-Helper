@@ -39,3 +39,11 @@ restrictions-parser 的「take up slots → 取首个数词」回退原对**整�
 ## 9. 派生数据产物与既有归一化字段同源双路径时，记录漂移风险并优先单源派生
 
 `loot-catalog.json`（`buildLootCatalog` 从 raw `loot_defines`）与 `champion-details.loot`（`normalizeChampionLoot` 亦从 raw `loot_defines`）数据完全一致（hero 1 两边均 24 条 (slot,rarity,effect)），属两套代码路径从同一 raw 派生同一结构——当前一致，但单边改动会静默漂移。新增派生产物前先确认既有归一化字段是否已含该数据（本案 `champion-details.loot` 已保留 `slotId`+`rarity`，原注释却声称「slot_id 丢失」，注释错误掩盖了真实复用关系）；若必须另出产物（如运行时需 flat 跨 hero 索引而不载 per-hero 文件），注释须说明真实依据，并在 `m3-data-source-confirmations.md` 等归档标注双路径漂移风险。
+
+## 10. 文本模板解析器漏匹配时走 override，不拓宽 regex；override 子串须全量核爆半径扫描
+
+restrictions 文本模板（"数字 + slots + occupy 动词"）对动词变位（takes/taking up 不含 take up 子串）、number 与 slots 间插修饰词（three formation slots）、同义词（take up space/spots）、ZH 量词位置（三只黑猫 / 三个阵型格子，数字不在格上）等措辞**双侧漏匹配**——这些是可定数的真实占格数据被静默丢弃。**根因修复走 `RESTRICTION_OVERRIDES` 手工补，不拓宽 regex**：拓宽 number-slot 间距或加 space 同义词会引入 variant 430 式数词误抓与假阳性（详见 §8），精度损失 > 召回收益。模板 + override 是既定的精度/召回拆分——模板保守保精度，漏匹配的低频模式进 override（显式、可逐条核对、零假阳性风险）。
+
+override 用 `includes` 子串匹配，**一条 match 可能命中多个 variant**（"barovian wedding" 同时命中 v414 宾客与 v682 婚礼客、"bronze dragon joins the formation" 同时命中 v1261 三格与 v1629 两格）。新增 override 时必须全量扫整个语料核对每条 match 的命中 variant 列表：① 具名专属串（"rudolph van richten and his ally"）排在泛化串（"barovian wedding"）前——`matchOverride` 取首个命中；② 区分 NPC 占格 vs 英雄 forcedHeroes（v682 Rudolph+Ireena 是 NPC→2 格，v1977/78/79 Rudolph 是 forcedHeroes 英雄→0，泛化串 "rudolph van richten" 会把后者误判为 2）。
+
+**歧义标记须用二级标记消歧**：排除「变量递增占格」时，"每经过 N 区域" 既可表计数递增（每周期 +1 格）也可表位置轮换（固定 N 格换位置）甚至无关机制（气味/伤害改变）。必须先用位置轮换标记（移动/改变位置/变换位置）放行再判递增——否则固定 N 格换位置的 variant（v241 两格换位置）被 "每经过" 误清零。任何"看起来有规律"的排除标记都要 raw 全量核对两类语义后再生效。

@@ -22,9 +22,9 @@
 | `dps_growth_rate_curve` | `{1:1, 50:1.75, 51:1, 100:1.75, ...}` | boss 层（50/100/151 起 每 50 层）1.75× spike，高层（2001-2401 每 50 层）升至 4，2451 层 1e10（max_area 墙） |
 | `base_speed` | `50` | 怪物速度参数（语义未确认，见下方 dps 量纲缺口） |
 | `speed_growth_rate` | `1` | 速度不随层数增长 |
-| `health_gold_ratio` | `0.65` | 生命/金币比基准（阶段 3 baseGold 已用） |
-| `health_gold_ratio_curve` | `{1:0.65, 42:0.62, ...}` | 比率随层数衰减 |
-| `gold_overrides` | `{1:.., 2:..}` | 按层的金币覆写 |
+| `health_gold_ratio` | `0.65` | 生命/金币比基准（**当前未消费**——`goldObjective.ts` MVP 硬编码 `BASE_GOLD=1` 做相对比较；绝对值校准需接入此字段） |
+| `health_gold_ratio_curve` | `{1:0.65, 42:0.62, ...}` | 比率随层数衰减（**当前未消费**，同上） |
+| `gold_overrides` | `{1:.., 2:..}` | 按层的金币覆写（**当前未消费**，同上） |
 | `power_boost_time` / `power_boost_growth_rate` / `power_boost_multiplicative` | `10` / `1` / `false` | 怪物 power boost 机制（rate=1，当前无实际增长贡献） |
 
 ### 缩放公式（实现采用）
@@ -155,6 +155,26 @@ restrictions 绝大多数是**独特 flavor 文本**（描述特殊冒险机制�
 - **champion-tag 不重复解析**：已由 mechanics 覆盖。
 - **flavor 文本不解析**：特殊冒险机制（疯牛/暗影等）不映射阵型约束，进 warning 提示「含特殊机制，请人工评估」。
 - 不用 NLP（批判③），纯关键词模板 + 手工 semantic-overrides。
+
+### 模板盲区与 override 扩展（第十轮审计）
+
+全量回扫发现 EN/ZH 模板对以下措辞**双侧漏匹配**（非英雄占格、可定数，但超出模板语法）：
+
+| 漏匹配模式 | 原因 | 典型 variant |
+|---|---|---|
+| `takes/taking up slots`（动词变位） | `EN_TAKE_UP_SLOTS_RE` 只匹配 `take/took up`；"takes/taking" 不含 "take up" 子串 | v682/v481 |
+| `three formation slots`（number 与 slots 间插修饰词） | `EN_NUMBER_SLOTS_RE` 要求数字紧邻 slots | v1124 |
+| `take up space`（space 非 slots） | occupy 关键词与数词提取均绑 slots | v414/v444/v1589 |
+| `takes up two spots`（spots 非 slots） | 同上，且 "takes up" 动词变位 | v1629 |
+| ZH `三个阵型格子`（量词/修饰词在数词与格间） | ZH regex 要求数字紧贴格 | v1124 ZH |
+| ZH 数字在实体上（`三只黑猫`、`两个粉丝`） | ZH regex 只找格前的数词 | v1589/v444 ZH |
+| 具名实体无数词（Rudolph + Ireena、无知向导） | 无显式数词可提取 | v682/v96 |
+
+**不拓宽模板**（拓宽 number-slot 间距 / 加 space 同义词会引入 variant 430 式数词误抓与假阳性），**走 `RESTRICTION_OVERRIDES` 手工补**（12.3 既定机制）：每条 override 的 match 子串须全量扫 1405 variant 核爆半径，具名专属串排在泛化串前（排序约定见 `restrictions-parser.ts` 注释）。
+
+**ZH 变量递增 vs 位置轮换**：「每经过 N 区域」既可表计数递增（v70/v116/v127/v296/v461：每周期 +1 格）也可表位置轮换（v241/v419/v137：固定 N 格换位置）甚至无关机制（v384 气味改变）。`ZH_AREA_INCREMENT_RE` 排除前须先经 `ZH_POSITION_ROTATION_RE`（移动/改变位置/变换位置）放行——位置轮换计数不变，正常取数。
+
+
 
 ---
 

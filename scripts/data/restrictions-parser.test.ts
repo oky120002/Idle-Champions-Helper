@@ -83,3 +83,80 @@ describe('parseRestrictions — 非模板匹配进 warning', () => {
     expect(result.lockedSlotCount).toBe(2)
   })
 })
+
+// 第十轮审计：模板漏匹配的非英雄占格 variant（EN/ZH 双侧均漏）手工补 override。
+// 这些 variant 的占格数在文本中可定（龙 3 格 / 宾客 2 / 粉丝 2 / 猫 3 / NPC 2 / 向导 1），
+// 但措辞超出模板（动词变位 takes/taking up、number 与 slots 间插 formation、
+// "take up space" 无 slots、ZH 数字在实体/量词上不在格上）→ 进 override。
+describe('parseRestrictions — 漏匹配 variant 手工补 override（第十轮审计）', () => {
+  it('v1124 Young Bronze Dragon 占三格 → 3', () => {
+    const result = parseRestrictions([r('A Young Bronze Dragon takes up three formation slots at the back of the formation.')])
+    expect(result.lockedSlotCount).toBe(3)
+  })
+
+  it('v1629 Bronze Dragon 占两格 → 2', () => {
+    const result = parseRestrictions([r('A Bronze Dragon joins the formation. It takes up two spots in the formation, but doesn\'t do much else.')])
+    expect(result.lockedSlotCount).toBe(2)
+  })
+
+  it('v1261 Bronze Dragon escort 占三格 → 3（区分 v1629 两格）', () => {
+    const result = parseRestrictions([r('A Bronze Dragon joins the formation as an escort. It takes up three spots in the formation, but doesn\'t do much else.')])
+    expect(result.lockedSlotCount).toBe(3)
+  })
+
+  it('v414 两名婚礼宾客占格 → 2', () => {
+    const result = parseRestrictions([r('Barovian wedding "guests" have filled the castle. Two of them take up space in the formation.')])
+    expect(result.lockedSlotCount).toBe(2)
+  })
+
+  it('v444 两名粉丝占格 → 2', () => {
+    const result = parseRestrictions([r('Two costumed fans join the formation! Unfortunately they\'re not Champions, so they just take up space.')])
+    expect(result.lockedSlotCount).toBe(2)
+  })
+
+  it('v1589 三只黑猫占格 → 3', () => {
+    const result = parseRestrictions([r('Three black cats join the formation. They adorably just take up space.')])
+    expect(result.lockedSlotCount).toBe(3)
+  })
+
+  it('v682 Rudolph + Ireena 两名 NPC 占格 → 2', () => {
+    const result = parseRestrictions([r('Rudolph van Richten and his ally Ireena Kolyana accompany the Champions taking up slots in the formation.')])
+    expect(result.lockedSlotCount).toBe(2)
+  })
+
+  it('v96 无知向导占中央一格 → 1', () => {
+    const result = parseRestrictions([r('An ill-informed guide takes up the formation\'s central slot.')])
+    expect(result.lockedSlotCount).toBe(1)
+  })
+})
+
+// 第十轮审计：ZH 变量递增占格（"每经过 N 区域额外一格"）原被 "一格" 直配 regex 误判为固定 1。
+// EN 侧有 VARIABLE_PATTERNS 排除，ZH 侧缺失——补齐对称的变量排除。
+describe('parseRestrictions — ZH 变量递增占格排除（第十轮审计）', () => {
+  it('ZH "每经过 50 区域额外一格" 不产生固定格数 → 0 + warning', () => {
+    // v70：起始 1 格，每 50 区域 +1，最多 6 格——计数随区域递增，非固定值。
+    const result = parseRestrictions([r('Starting in area 11, and every 50 areas one more slot is taken up by a wagon.', '从区域 11 开始，每经过 50 个区域，就会有额外一格被大篷车占据。')])
+    expect(result.lockedSlotCount).toBe(0)
+    expect(result.warnings.length).toBeGreaterThan(0)
+  })
+
+  it('ZH "每经过 50 区域一格" 不产生固定格数 → 0 + warning', () => {
+    // v116：每 50 区域 +1 格（猎人），计数随区域递增。
+    const result = parseRestrictions([r('Every 50 areas a slot is taken up by a hunter.', '每经过 50 个区域，阵型中的一格会被一位猎人占据。')])
+    expect(result.lockedSlotCount).toBe(0)
+    expect(result.warnings.length).toBeGreaterThan(0)
+  })
+
+  it('ZH "每 15 秒换格"（固定 N 格轮换位置）不算变量 → 仍取 N', () => {
+    // v6：两个随机格子被诅咒，每 15 秒换位置——计数固定 2，只是位置轮换。
+    const result = parseRestrictions([r('Two random slots are cursed.', '你阵型中的两个随机格子被诅咒，诅咒每 15 秒改变位置。')])
+    expect(result.lockedSlotCount).toBe(2)
+  })
+
+  it('ZH 固定 N 格 + 位置轮换（每经过 N 区域改变位置）不被误判为变量 → 仍取 N', () => {
+    // 回归（第十轮审计）：v241「占用两格，每经过 25 区域后改变位置」——2 只夸塞魔固定占 2 格，
+    // 仅位置随区域轮换。初版「每经过」无差别排除致固定计数被清零（occupied 2→0 回归）。
+    const result = parseRestrictions([r('Two Quasits join your formation taking up two slots. Every 25 areas, they move to different slots.', '两只夸塞魔加入你的阵型，占用你阵型中的两格，每经过 25 个区域后会改变位置。')])
+    expect(result.lockedSlotCount).toBe(2)
+  })
+})

@@ -81,12 +81,29 @@ function tokenToNumber(token: string): number | null {
  * 手工补：模板漏匹配但格数确定的 restriction（具名列表 / "of the" 间隔 / "additional" 等）。
  * 阶段 12.3——低频变体手工校验后补录；新增条目时核对 in-game 占格数。
  * key = original 文本的唯一子串（大小写不敏感）；value = 占格数。
+ *
+ * 排序约定：更具体的 match 排前——matchOverride 取首个命中，泛化子串须排在特化子串之后，
+ * 否则会被同含该子串的其它 variant 抢先命中（如 v682 "Rudolph..." 与 v414 都含 "barovian wedding"，
+ * v682 须先命中专属的 "rudolph van richten"）。
  */
 const RESTRICTION_OVERRIDES: ReadonlyArray<{ match: string; count: number }> = [
   { match: 'nat, squiddly, and jenks', count: 3 }, // 3 名具名英雄各占 1 格
   { match: 'two frightened villagers', count: 2 }, // 文本 "take up additional slots"，非 "up slots" 紧邻，回退不触发
   { match: 'two of the slots in your formation are cursed', count: 2 },
   { match: 'a monodrone and a duodrone', count: 2 }, // variant 430：具名实体无显式数词，回退无匹配
+  // 第十轮审计：模板漏匹配的非英雄占格（措辞超出模板：动词变位 takes/taking up、
+  // number 与 slots 间插 formation、"take up space" 无 slots、具名实体无数词）。
+  // 注意区分 NPC 占格（本块）vs 英雄 forcedHeroes（不在此计）：
+  //   - v682 Rudolph + Ireena 是 NPC（forcedHeroes 空）→ 2；v1977/78/79 Rudolph 是英雄（forcedHeroes=[177]）→ 不匹配。
+  //   - v1261 Bronze Dragon 是 NPC（3 格）；v1629 Bronze Dragon 是 NPC（2 格），按 "as an escort" 区分。
+  { match: 'rudolph van richten and his ally', count: 2 }, // v682：Rudolph + Ireena 两名 NPC
+  { match: 'young bronze dragon', count: 3 }, // v1124：Young Bronze Dragon 占后三格
+  { match: 'bronze dragon joins the formation as an escort', count: 3 }, // v1261：Bronze Dragon escort 占三格
+  { match: 'bronze dragon joins the formation', count: 2 }, // v1629：Bronze Dragon 占两格（须排在 v1261 后）
+  { match: 'barovian wedding', count: 2 }, // v414：两名婚礼宾客 take up space
+  { match: 'two costumed fans', count: 2 }, // v444：两名粉丝 take up space
+  { match: 'three black cats', count: 3 }, // v1589：三只黑猫 take up space
+  { match: 'ill-informed guide', count: 1 }, // v96：无知向导占中央一格
 ]
 
 function matchOverride(original: string): number | null {
@@ -104,6 +121,13 @@ const ZH_DIGITS: Record<string, number> = {
   '一': 1, '二': 2, '两': 2, '三': 3, '四': 4, '五': 5, '六': 6, '七': 7, '八': 8, '九': 9,
 }
 
+// 位置轮换标记：固定 N 格，仅位置随区域/时间变化（计数不变）→ 非变量，正常取数。
+// 如 v241「两格...每经过 25 区域后改变位置」= 2 格换位置，不是递增。
+const ZH_POSITION_ROTATION_RE = /移动|改变位置|变换位置|换位置|换格/
+// 区域递增占格标记：「每经过 N 区域」「每 N 个区域」「额外 N 格」——计数随区域增长。
+// 注意：「每 N 秒换格」是固定 N 格轮换位置（计数不变），不在此列（无区域递增标记）。
+const ZH_AREA_INCREMENT_RE = /每经过|每\s*\d+\s*个?区域|额外\s*[一二两三四五六七八九\d]/
+
 function zhSlotOccupyCount(text: string): number | null {
   // 先判定 slot-occupy 语义：含「格」+「占据/占用/被...占」。
   if (!text.includes('格')) {
@@ -111,6 +135,12 @@ function zhSlotOccupyCount(text: string): number | null {
   }
   const hasOccupy = text.includes('占据') || text.includes('占用') || /被.{0,6}占/.test(text)
   if (!hasOccupy) {
+    return null
+  }
+  // 变量递增版（随区域重复占据新格，计数增长）不产生确定格数（保守交手工补）。
+  // 须先排除位置轮换（固定 N 格换位置，计数不变）——否则 v241「两格...每经过 N 区域改变位置」
+  // 会被「每经过」误判为递增（第十轮审计：初版仅匹配每经过致 v241/v419/v137 固定计数被误清零）。
+  if (ZH_AREA_INCREMENT_RE.test(text) && !ZH_POSITION_ROTATION_RE.test(text)) {
     return null
   }
   // 提取紧邻「格」前的中文数词或数字。
