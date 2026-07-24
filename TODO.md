@@ -48,4 +48,22 @@ repair: rebuild
   - 备注: deleteUserProfileData 语义是删 profile snapshot（handleDelete 后 setSyncState no-snapshot），不清 heroAbilityOverrides；override 是否随 profile 删待产品决策
     - 原 generateCoverageReport 孤学子项已于 2026-07-24 删除（simulator-data-coverage.ts + simulatorDataCoverage.test.ts，无调用方、无文档计划），本条仅剩 heroAbilityOverrides
 
+- scoreFormation 三重 evaluatePlacementFit 重复计算 position/hero 限定检查 <!-- auto-todo:id=atd_3cc0113de7 -->
+  - 记录时间: `2026-07-24T13:20:40+08:00`
+  - 类型: optimization
+  - 位置: `src/domain/planner/steadyStateScoring.ts:239`
+  - 备注: 每个 (carry,support) 对对 damage/crit/vulnerability 各调一次 evaluatePlacementFit，但 position/hero 限定检查（matchesPositionQualifier/matchesHeroQualifier）与 dimension 无关，被重复计算 3×。
+    - 影响：阵型评分热路径 3× 冗余，N² 对 × 3 次 × 全信号遍历
+    - 修复方向：单次无 dimension 调用 + 按 DIMENSION_BY_KIND[part.signalKind] 分区 scoreBreakdown
+    - 证据：steadyStateScoring.ts:240/269/287 三处 evaluatePlacementFit 调用
+
+- crit/vuln 维度的 evaluatePlacementFit pools 是死代码（计算后从不消费） <!-- auto-todo:id=atd_6badc71012 -->
+  - 记录时间: `2026-07-24T13:20:44+08:00`
+  - 类型: optimization
+  - 位置: `src/domain/planner/steadyStateScoring.ts:269`
+  - 备注: scoreFormation 对 dimension='crit'/'vulnerability' 调 evaluatePlacementFit，但其返回的 fit.pools（addPercent/multFactor 聚合）从不被读取——只用 scoreBreakdown 喂给 computeCritFactor/computeVulnerabilityFactor。
+    - 影响：2/3 pool 聚合计算被丢弃，热路径无谓开销
+    - 修复方向：evaluatePlacementFit 支持只产 scoreBreakdown（跳过 pool 聚合），或合并到三重调用消除方案
+    - 证据：steadyStateScoring.ts 只 mergePools 了 damage 的 fit.pools（:266），critFit.pools/vulnFit.pools 无引用
+
 <!-- auto-todo:end -->

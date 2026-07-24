@@ -242,6 +242,8 @@
 - **验证**：`npm run test:run`；planner-scenarios 部分变体 forced/allowed/banned 非空。
 - **commit**：`feat(data): 9.2 场景英雄限制 game_change 解析 + eligibility banned`。
 
+> **第七轮审计覆盖范围核对（2026-07-24）**：真实数据（definitions 2026-04-13 快照）确认解析与 raw 一致——`force_use_heroes` 301 个全部投影为 forcedHeroes；`only_allow_crusaders` 的 `by_ids`(9)/`by_tags`(114) 投影为 allowedHeroes/allowedTags（共 129 场景）。但 `only_allow_crusaders` 还有大量**未自动解析的子结构**：`by_stat`(142)/`by_expr`(129)/`by_attack_types`(21)/`by_edge_stat`(17)/`by_seat`(9)/`by_attack_cooldown`(6) 等共 ~343 个。这些不进 candidate 过滤（allowed 为空），但均有对应 `restrictions_text`（如「Only Champions with 14 or more Strength」）→ 归一化进 `restrictions` 自由文本 → 触发「restrictions 为自由文本，尚未自动解析」warning，**非静默**（用户可见、需人工复核）。`by_expr` 归 `expression-evaluator-plan.md`；`by_stat`/`by_attack_types`/`by_seat` 等结构化门槛的自动 enforce 归未来 stat/属性 candidate 过滤步骤（消费层候选模型目前只支持 id/tag 白名单）。
+
 ### 9.3 champion-details zod schema + CI [x]
 - **改动**：新建 `src/domain/types/champion-details-schema.ts`（zod，覆盖核心字段，raw 用 `z.unknown()`）；CI 加 `data:validate-schema`。
 - **测试（先写）**：schema 校验现有 163 文件通过；故意破坏字段被拦截。
