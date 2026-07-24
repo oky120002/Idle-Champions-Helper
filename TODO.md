@@ -96,4 +96,32 @@ repair: rebuild
     - 对比：v510 Beadle / v1269 Antrius 正确进了 forcedHeroIds（其 force_use_heroes 有 hero_ids）。
     - 修复方向需评估：从 restrictions 文本推断 forcedHeroes（NLP 名称匹配不可靠）或接受 occ 近似。
 
+- variants.json/scenarios.json 停留 M2 9.2 快照，normalize 层修复未重生生效 <!-- auto-todo:id=atd_e3c3377a64 -->
+  - 记录时间: `2026-07-24T23:15:45+08:00`
+  - 类型: follow-up
+  - 位置: `public/data/v1/variants.json`
+  - 备注: M3 改 normalize-adventures（第十一轮 null byte dedup + 第十二轮 boss enemyTypes）后未重跑数据重生，发布数据停留在 M2 9.2 快照
+    - 影响：boss vulnerability 修复（GENERIC_MONSTER_TAGS 移除 boss）代码已改+单测过，但 variants.json/scenarios.json 未含，运行时不生效；null byte dedup 修复同理
+    - 根因：data-normalization-guidelines §2 只覆盖 build 层 hero-abilities 新鲜度，normalize 层 variants.json 无对应守护
+    - 阻塞：忠实重生需同快照(2026-04-13)的 ZH(lang-7) raw，本地仅缓存 source(lang-1)，API 现服更新版会引入无关 diff
+    - 处置：下次 npm run data:official 拉双 raw 时一并生效；可扩展 §2 guideline 覆盖 normalize 层产物新鲜度
+
+- game-rules.json 发布但运行时零消费，常量与 monsterStats/modronInfo 硬编码双源 <!-- auto-todo:id=atd_4b9b6d71ea -->
+  - 记录时间: `2026-07-24T23:15:52+08:00`
+  - 类型: follow-up
+  - 位置: `public/data/v1/game-rules.json`
+  - 备注: game-rules.json(41KB) 运行时零消费方，但 max_area/max_modron_auto_reset_area/monster_base_stats 常量在 monsterStats.ts/modronInfo.ts 硬编码了一份
+    - 双源：game-rules.json 是 M2(c6619373) 引入的 pre-existing 孤岛，M3 新增硬编码加剧；当前值已逐值核对一致（base_health=10/base_dps=1/health_growth_rate_curve 三段/49 处 boss spike/2451=1e10/max_area=2501/modron=2500），但单边改动会静默漂移
+    - 矛盾：monsterStats.ts 注释声称「直接内联而非把 game-rules.json 发布到 runtime」，实际 game-rules.json 已发布且无人读
+    - 处置：要么运行时读 game-rules.json 单源（已发布，读取零额外成本），要么停止发布该孤岛文件
+
+- computeGlobalBuffMultiplier 不按 kind 过滤，混入非 patronPerkMult 信号会双计 <!-- auto-todo:id=atd_a254e749d5 -->
+  - 记录时间: `2026-07-24T23:15:56+08:00`
+  - 类型: follow-up
+  - 位置: `scripts/data/patron-perk-signals.ts:87`
+  - 备注: computeGlobalBuffMultiplier 收 HeroAbilitySignal[] 直接 Σ signal.value，不按 kind 过滤
+    - 风险：调用方混入 globalDpsMultiplier 等非 patronPerkMult 信号会重复计入 global buff pool（与 damage pool 双计，方向上高估 carryDps）
+    - 现状：无调用方（孤岛，待 stage 15 UI 接入），暂无实际影响
+    - 处置：stage 15 接线时加 .filter(kind==='patronPerkMult') 或收窄入参类型为 patronPerkMult 信号子集
+
 <!-- auto-todo:end -->
