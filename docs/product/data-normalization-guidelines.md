@@ -12,9 +12,9 @@
 
 build 层（effect-helpers / signalSemantics 等）改动长期未重跑 build 时，产物停留在旧逻辑（signal 总数 12163→18893、字段补全后才同步）。build 层 commit 后跟一次 `buildModels` 重跑（不需 fetch/资源，直接从 normalized champion-details 生成；裸 `node` 无法解析 src/ extensionless 导入，经 `npx tsx` 或 vitest 运行），或 CI 守护产物新鲜度。
 
-## 3. 条件性匹配前核对字段值域
+## 3. 条件性匹配前核对字段值域，排除集须与消费词表对齐
 
-vulnerability `monsterTags`（boss/fiend）与 `scenario.enemyTypes`（怪物种族 beast/humanoid/…）是不同维度——boss 是怪物等级 `is_boss`，不在 enemyTypes，导致 3 个 boss vulnerability 静默失效。匹配前全量枚举两端值域（jq unique），发现不交即定位缺口。
+vulnerability `monsterTags`（boss/fiend）与 `scenario.enemyTypes`（怪物种族 beast/humanoid/…）做条件性匹配时，两端值域必须相交。第十二轮审计修正原误判：曾以为 boss 是独立 `is_boss` 维度、不该进 enemyTypes——实际 raw `monster_defines` 用 `tags:["boss"]` 标记 boss（808/2326 怪），与 fiend 同维；boss 不在 enemyTypes 的真因是 `GENERIC_MONSTER_TAGS` 把 boss 当"非类型通用 tag"排除了（与 melee/ranged 同列），而 vulnerability 词表含 boss → 3 个 boss vulnerability 信号在 `steadyStateScoring` 永远命中不了。修复：从 `GENERIC_MONSTER_TAGS` 移除 boss（melee/ranged 由 attackMix 承载、hits_based/armor_based/static/flying 不在 vulnerability 词表，仍排除）。规则：enemyTypes 的排除集不得包含任何出现在 `monsterTags` 里的 tag——全量枚举两端值域（jq unique）取交集，排除集 ∩ vulnerability 词表 必须为空。
 
 ## 4. 设计文档里的每个公式 / pool / 乘区都要有实现 + 测试
 
