@@ -45,19 +45,25 @@
 **目标**：全局 pool 进 DPS。
 **风险**：blessings 数据可能缺失（批判①）；patron-perks effect 结构未确认。
 
-### 11.1（数据源确认）blessings 调查
+### 11.1（数据源确认）blessings 调查 [x]
+
+> 报告：`m3-data-source-confirmations.md` §11.1。结论：不可做（definitions 无 blessing 效果定义 + snapshot 丢弃 favor/blessings）。阶段 11 只做 patron-perks。
 - **改动**：检查 `UserProfileSnapshot` 有无 blessings；campaign/adventure 有无 favor；`blessings.json` 缺失确认。
 - **测试**：调查报告归档。
 - **验证**：`jq UserProfileSnapshot` + campaign 数据。
 - **commit**：`docs(data): 11.1 blessings 数据源调查`。
 
-### 11.2（数据源确认）patron-perks effect 结构
+### 11.2（数据源确认）patron-perks effect 结构 [x]
+
+> 报告：`m3-data-source-confirmations.md` §11.2。effect_string + per_level + $replace；全局 DPS 直接进 globalDpsMultiplier pool，tag 限定 effect_def 引用按需扩展。
 - **改动**：确认 patron-perks 的 effect 结构（perk 怎么给 DPS 加成？看 `patron-perks.json` 的 effect 字段）。
 - **测试**：结构确认报告。
 - **验证**：`jq patron-perks` 确认 effect。
 - **commit**：`docs(data): 11.2 patron-perks effect 结构确认`。
 
-### 11.3 扩 kind + 解析
+### 11.3 扩 kind + 解析 [x]
+
+> 实现：`HeroAbilityKind` 加 `patronPerkMult`（dimension `global-buff`、scope `global`）；`scripts/data/patron-perk-signals.ts` 解析 `global_dps_multiplier_mult,$replace` → per-patron `patronPerkMult` signals（value=perLevel×maxLevels）；build-models 产 `public/data/v1/global-buffs.json`。MVP 范围：无条件全局 DPS（13 perks）；area_tags / effect_def tag 限定版留后续。
 - **改动**：`HeroAbilityKind` 加 `blessingMult`/`patronPerkMult`；dimension `global-buff`；解析 patron-perks（+ blessings 若 11.1 可行）。
 - **测试（先写）**：解析正确。
 - **验证**：`npm run test:run`；coverage 显示 global-buff。

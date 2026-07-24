@@ -8,6 +8,7 @@ import {
   splitEffectString,
 } from './effect-helpers.ts'
 import { readJson, writeJson } from './io-utils.ts'
+import { parsePatronPerkSignals } from './patron-perk-signals.ts'
 import type {
   HeroAbilityProfile,
   HeroAbilitySignal,
@@ -324,6 +325,25 @@ export async function buildModels(options: BuildModelsOptions = {}): Promise<Bui
   })
   await writeJson(path.join(versionDir, 'scenarios.json'), {
     items: scenarioModels,
+    updatedAt,
+  })
+
+  // 阶段 11.3：patron-perk 全局加成 → global-buffs.json（per-patron patronPerkMult signals）
+  const patronPerksRaw = await readJson(path.join(versionDir, 'patron-perks.json')).catch(() => ({ perks: [] }))
+  const patronPerksRecord = asRecord(patronPerksRaw) ?? {}
+  const patronPerkItems = asArray(patronPerksRecord.perks) as Array<Record<string, unknown>>
+  const patronPerkSignals = parsePatronPerkSignals(patronPerkItems)
+  const globalBuffsByPatron: Record<string, HeroAbilitySignal[]> = {}
+  for (const entry of patronPerkSignals) {
+    const list = globalBuffsByPatron[entry.patronId]
+    if (list) {
+      list.push(entry.signal)
+    } else {
+      globalBuffsByPatron[entry.patronId] = [entry.signal]
+    }
+  }
+  await writeJson(path.join(versionDir, 'global-buffs.json'), {
+    buffsByPatron: globalBuffsByPatron,
     updatedAt,
   })
   await writeJson(

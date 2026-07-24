@@ -52,3 +52,65 @@ stat(area) = base × Π_{a=2..area} curve_lookup(a)
 - `max_modron_auto_reset_area: {area: 2500}` — modron 自动重置层数上限（阶段 14.3）。
 - `click_damage_settings: {base_power:1, power_curve:2.031, base_cost:50, cost_curve:1.7}` — click damage 按层缩放曲线与怪物生命同构（阶段 14.1）。
 - `ultimate_damage_params: {dps_based:true, ...}` — ult 伤害派生自 DPS/BUD（阶段 14.4）。
+
+---
+
+## 11.1 blessings 数据源调查
+
+**结论：blessings 在 M3 不可做——只做 patron-perks（阶段 11.3/11.4）。**
+
+证据链：
+
+1. **definitions 无 blessing 效果定义**：top-level keys 全量枚举无 `blessing_defines` / `blessing_defines`；`patron_defines` / `campaign_defines` 的 properties 不含 blessing 树。effect_defines 中仅 634/646 含 `luck_of_yondalla_blessing`（Yondalla 特例机制，非通用 patron blessings 系统）、1439 含 `behind` tag 的 hero_dps（非 blessing）。
+2. **raw user save 有 favor + blessings 计数**：`scripts/data/user-sync/userProfileNormalizer.ts` 的 `CampaignPayload` 读 `favor` / `blessings`，`normalizeCampaignDetails` 产出 `{campaignId, favor, blessings: Record<string,number>}`（blessing_id → 已购数量/等级）。
+3. **但 `UserProfileSnapshot` 丢弃该数据**：`buildUserProfileSnapshot` 调 `normalizeCampaignDetails` 只为产 warning（`campaign details imported: N`），favor/blessings 不进 snapshot 字段（`src/domain/user-profile/types.ts` 的 `UserProfileSnapshot` 无 favor/blessings）。
+
+**含义**：即便把 favor/blessings 计数接回 snapshot，**没有 blessing 效果定义**就无法知道每个 blessing_id 给多少 DPS/金币加成——blessing 树定义不在当前 definitions 快照（可能属游戏服务端或未抓取的独立端点）。阶段 11 按 milestone 条件「11.1 确认 blessings 不可做 → 只做 patron-perks」执行。
+
+**后续若要补 blessings**：①确认 blessing 树定义的上游端点并抓取；②`UserProfileSnapshot` 加 `campaigns: {campaignId, favor, blessings}[]`；③blessing 效果按 patron-perks 同构解析（effect_def 引用 + per_level 缩放）。
+
+---
+
+## 11.2 patron-perks effect 结构确认
+
+**结论：数据源结构清晰，可解析。**
+
+来源：`patron_perk_defines`（110 条，type 1/2 各 55——type 区分 perk 类别，effect 结构同构）。结构：
+
+```jsonc
+{
+  "id": 1, "name": "Mirt's Mirth", "patron_id": 1, "tier_id": 1, "type": 1,
+  "cost": { "base_cost": 5000, "scaling": 1.05 },
+  "levels": 10,                  // 最大等级
+  "effects": [
+    { "effect_string": "global_dps_multiplier_mult,$replace", "per_level": 100 }
+  ]
+}
+```
+
+### effect 形态
+
+- `effect_string` + `per_level`（每级加成值）。
+- `$replace` 语义：perk 效果按当前等级 **替换**（非叠加），有效值 = `per_level × currentLevel`。`levels` 上限封顶。
+- 两类载体：
+  1. **裸 effect_string**（如 `global_dps_multiplier_mult,$replace` / `gold_multiplier_mult,$replace`）——直接全局加成。
+  2. **`effect_def,<id>` 引用**——指向 `effect_defines[<id>]`，含 `effect_keys[]`（带 `filter_targets` tag 限定，如 effect_def 454 `hero_dps_multiplier_mult` + `by_tags:good`）。
+
+### effect_string 分布（110 perks）
+
+| effect_string | 数量 | 加成类型 |
+|---|---|---|
+| `global_dps_multiplier_mult,$replace` | 13 | 全局 DPS（进 globalDpsMultiplier pool） |
+| `gold_multiplier_mult,$replace` | 2 | 全局金币 |
+| `global_dps_multiplier_mult_area_tags,$replace,<tag>` | 3 | 场景 tag 条件全局 DPS（underground/hellish） |
+| `effect_def,<id>`（453-460 / 609-613 / 828-833 等） | ~80 | tag 限定 hero_dps / healing / vulnerability 等 |
+| `monster_health_reduce,$replace` / `health_mult,$replace` / `monster_with_tag_more_damage` 等 | 少量 | 非全局，按需评估 |
+
+### 接入策略（阶段 11.3/11.4）
+
+- **全局 DPS 进 global pool**：`global_dps_multiplier_mult,$replace`（13 条）+ area_tags 条件版（3 条，按场景 tag 匹配）直接进 `globalDpsMultiplier` pool（mult，amountFunc='mult'，value = per_level × level）。
+- **tag 限定 hero_dps**（effect_def 引用，~80 条）：按 `filter_targets` tag 匹配英雄，进 `heroDpsMultiplier` pool。MVP 可先接全局 DPS（最高频、最直接），tag 限定版按需扩展（复用现有 `HeroQualifier` tag 解析）。
+- **perk 等级来源**：patron perks 的已购等级属用户存档（类似 blessings，需 `UserProfileSnapshot` 暴露 patron perk levels）。snapshot 当前未暴露 → MVP 取**满级理论值**（per_level × levels），标注「理论最大」，按存档裁剪留阶段 13 精细化（与装备/feat 同批）。
+
+> **perk 等级数据缺口**：`UserProfileSnapshot` 未暴露 patron perk 已购等级（同 11.1 blessings 缺口）。raw user save 是否含 perk levels 待 13.2 提取阶段一并确认；MVP 先用满级理论值进 pool。
+

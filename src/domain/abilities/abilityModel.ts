@@ -22,6 +22,7 @@ export type HeroAbilityKind =
   | 'enemyVulnerability'
   | 'attackSpeedMult'
   | 'cooldownReduction'
+  | 'patronPerkMult'
 
 export type HeroAbilitySource =
   | 'official-parsed'
@@ -198,6 +199,7 @@ export const DIMENSION_BY_KIND: Record<HeroAbilityKind, HeroAbilityDimension> = 
   enemyVulnerability: 'vulnerability',
   attackSpeedMult: 'speed',
   cooldownReduction: 'cooldown',
+  patronPerkMult: 'global-buff',
 }
 
 /**
@@ -225,6 +227,7 @@ export const POOL_SCOPE_BY_KIND: Record<HeroAbilityKind, HeroAbilityPoolScope> =
   enemyVulnerability: 'global',
   attackSpeedMult: 'hero',
   cooldownReduction: 'global',
+  patronPerkMult: 'global',
 }
 
 export function applyHeroAbilityPatch(
