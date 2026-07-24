@@ -1,3 +1,6 @@
+import type { z } from 'zod'
+
+import { adventureSchema, patronObjectiveTierSchema } from './collection-schemas'
 import type { LocalizedOption, LocalizedText } from './common'
 
 export interface VariantAreaHighlight {
@@ -16,12 +19,7 @@ export interface VariantAttackMix {
   other: number
 }
 
-export interface PatronObjectiveTier {
-  patronId: string
-  tierId: string
-  objectiveArea: number | null
-  objectives: unknown[]
-}
+export type PatronObjectiveTier = z.infer<typeof patronObjectiveTierSchema>
 
 export interface PatronEligibilityRule {
   type: 'tags' | 'stats' | 'time_available_days'
@@ -51,25 +49,7 @@ export interface Patron {
   evaluationStatus: 'complete' | 'partial'
 }
 
-export interface Adventure {
-  id: string
-  ruleContextId: string
-  scenarioKind: 'adventure'
-  name: LocalizedText
-  campaign: LocalizedOption
-  description: LocalizedText | null
-  objectiveArea: number | null
-  locationId: string | null
-  areaSetId: string | null
-  scene: LocalizedOption | null
-  requirements: LocalizedText[]
-  restrictions: LocalizedText[]
-  rewards: LocalizedText[]
-  repeatable: boolean
-  patronObjectiveTiers: PatronObjectiveTier[]
-  modeTags: string[]
-  mechanics: string[]
-}
+export type Adventure = z.infer<typeof adventureSchema>
 
 export interface Variant {
   id: string

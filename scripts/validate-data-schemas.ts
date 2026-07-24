@@ -9,7 +9,7 @@ import {
   championsCollectionSchema,
   patronsCollectionSchema,
   variantsCollectionSchema,
-} from './data/collection-schemas.ts'
+} from '../src/domain/types/collection-schemas.ts'
 
 const DEFAULT_DATA_DIR = 'public/data/v1'
 

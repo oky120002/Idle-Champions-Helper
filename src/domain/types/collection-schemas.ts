@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { localizedTextSchema, localizedOptionSchema } from '../../src/domain/types/common.ts'
+import { localizedTextSchema, localizedOptionSchema } from './common.ts'
 
 /**
  * collection 输出契约 schema：champions / adventures / patrons / variants。
@@ -18,7 +18,7 @@ import { localizedTextSchema, localizedOptionSchema } from '../../src/domain/typ
 const localizedText = localizedTextSchema
 const localizedOption = localizedOptionSchema
 
-const patronObjectiveTier = z
+export const patronObjectiveTierSchema = z
   .object({
     patronId: z.string(),
     tierId: z.string(),
@@ -66,7 +66,7 @@ export const adventureSchema = z
     restrictions: z.array(localizedText),
     rewards: z.array(localizedText),
     repeatable: z.boolean(),
-    patronObjectiveTiers: z.array(patronObjectiveTier),
+    patronObjectiveTiers: z.array(patronObjectiveTierSchema),
     modeTags: z.array(z.string()),
     mechanics: z.array(z.string()),
   })
