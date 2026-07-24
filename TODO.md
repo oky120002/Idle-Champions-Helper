@@ -41,15 +41,6 @@ repair: rebuild
     - affected_by_upgrade 是 upgrade_id 运行时依赖，保持丢弃合理。
     - 处置：低频，归 M2+ 目标限定精化时补（normalizeObjectRelation 映射 type:heroes→relation='any' + hero_ids 提取到 targetQualifier）。
 
-- collection 输出 zod 契约已接入 CI；z.infer 单源迁移（前端类型派生）未做 <!-- auto-todo:id=atd_bd064fc8e2 -->
-  - 记录时间: `2026-07-23T13:52:50+08:00`
-  - 类型: optimization
-  - 位置: `src/domain/types/formation.ts:40`
-  - 备注: 已完成：champions/adventures/patrons/variants collection schema（scripts/data/collection-schemas.ts）接入 CI（validate-data-schemas + data:validate-schema），真实数据 168 目标 0 失败、坏数据被 15 个变异测试拦截；schema 与 src/domain/types 字段对齐。
-    - 剩余：zod schema 仍在 scripts/ 侧，前端 src/domain/types 的 Champion/Adventure/Patron/Variant 仍是手写 interface，双源易漂移。
-    - 待办：z.infer 单源迁移——schema 提到 src/，前端类型改 z.infer 派生。
-    - 处置：随前端类型下一轮触碰逐步迁移；schema 已字段对齐可平滑切换。
-
 - deleteUserProfileData 未清 heroAbilityOverrides，override 是否随 profile 删待产品决策 <!-- auto-todo:id=atd_218690060f -->
   - 记录时间: `2026-07-24T10:59:06+08:00`
   - 类型: follow-up
