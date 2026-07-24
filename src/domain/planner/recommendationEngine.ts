@@ -132,6 +132,12 @@ export interface PlannerRecommendationOptions {
    * 默认 1（无全局加成）。UI 接入（patron 选择）在阶段 15。
    */
   globalBuffMultiplier?: number
+  /**
+   * 装备调整比（阶段 13.4）：carryId → adjustment（ownedEquipMult / theoreticalLootMult）。
+   * 由调用方从 `loot-catalog.json` + owned loot 经 computeEquipmentAdjustment 解析后传入；
+   * 默认无（=1，保持 M1 理论 loot 基线）。UI 接入（owned 装备读取）在阶段 15。
+   */
+  equipmentAdjustmentByHero?: Map<string, number>
 }
 
 export function buildPlannerRecommendation(
@@ -253,7 +259,17 @@ export function buildPlannerRecommendation(
         }
       }
 
-      return scoreFormation({ placements, heroesById: heroById, scenario, heroLevels, scoringMode, globalBuffMultiplier })
+      return scoreFormation({
+        placements,
+        heroesById: heroById,
+        scenario,
+        heroLevels,
+        scoringMode,
+        globalBuffMultiplier,
+        ...(options.equipmentAdjustmentByHero
+          ? { equipmentAdjustmentByHero: options.equipmentAdjustmentByHero }
+          : {}),
+      })
     },
   })
 

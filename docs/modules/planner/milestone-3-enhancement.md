@@ -101,7 +101,8 @@
 
 ### 12.3 高频变体校验 + 手工补 [x]
 
-> 全量校验（1405 variant）：62 slot-occupying 模板匹配 + 3 手工补 override（具名列表 / "of the" 间隔）= 65 scenario 产 `occupiedSlotCount`；其余 flavor 文本进 warning。`RESTRICTION_OVERRIDES` 提供手工补机制（`restrictions-parser.ts`）。wired 进 `buildOfficialScenarioModel` → `scenario.occupiedSlotCount` + 具体 warning 替代原「自由文本未解析」。
+> 全量校验（1405 variant）：61 slot-occupying 模板匹配 + 4 手工补 override（具名列表 / "of the" 间隔 / Monodrone+Duodrone）= 65 scenario 产 `occupiedSlotCount`；其余 flavor 文本进 warning。`RESTRICTION_OVERRIDES` 提供手工补机制（`restrictions-parser.ts`）。wired 进 `buildOfficialScenarioModel` → `scenario.occupiedSlotCount` + 具体 warning 替代原「自由文本未解析」。
+> **第九轮审计修正**：variant 430 "A Monodrone and a Duodrone take up slots ... CHA of 14" 原被回退路径误抓后文「14」→ occupiedSlotCount=14（> 阵型总槽位，该 variant 永不可推荐）。根因修复：回退数词搜索限定到「take up slots」之前 + override 补 2。另移除被模板回退遮蔽的死 override `two reflections of antrius`（variant 1269 由回退返回 2）。
 - **改动**：高频变体 rules 手工校验；低频的记录但手工补到 `semantic-overrides.json`。
 - **测试**：校验通过。
 - **验证**：`npm run test:run`。

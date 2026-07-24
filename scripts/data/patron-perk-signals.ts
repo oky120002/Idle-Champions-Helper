@@ -9,7 +9,7 @@ import type { HeroAbilitySignal } from '../../src/domain/abilities/abilityModel'
  * patron-perks 是阵型无关的全局 buff（per-patron，玩家选择 patron 后生效），
  * 不走 champion-details effect 管线（`$replace` + `per_level` 语义独立）。
  *
- * MVP 范围：只接 `global_dps_multiplier_mult,$replace`（13 条，无条件全局 DPS）。
+ * MVP 范围：只接 `global_dps_multiplier_mult,$replace`（21 条，无条件全局 DPS）。
  * - value = perLevel × maxLevels（满级理论值；存档裁剪留阶段 13）。
  * - amountFunc 缺省 = add（与 hero globalDpsMultiplier 同构：1 + Σ(value/100)）。
  * - `global_dps_multiplier_mult_area_tags,$replace,<tag>` 需场景 tag 匹配，留后续扩展。

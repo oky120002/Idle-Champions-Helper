@@ -67,8 +67,10 @@ function asRawArray(value: unknown): RawDefinition[] {
 
 /**
  * 阶段 13：构建 loot-catalog（heroId, slotId, rarity → effectString）。
- * 直接从 raw loot_defines 提取（champion-details.loot normalize 后 slot_id 丢失）。
- * 供 equipmentMult 按玩家 owned rarity 选取装备效果，替代 M1 全 rarity 累加的理论上界。
+ * 从 raw loot_defines 提取 flat 跨 hero 索引——hero-abilities.json 的 loot signal 不携带
+ * (slotId, rarity)，而 equipmentMult 需按 owned (slot, rarity) 选取；planner 运行时只载
+ * hero-abilities，故另出单文件 catalog 供消费。champion-details.loot 同样保留 slotId/rarity，
+ * 此处不依赖它（避免运行时遍历 per-hero 文件）。
  */
 function buildLootCatalog(lootDefines: RawDefinition[]): Array<{
   heroId: string
@@ -592,7 +594,7 @@ export async function normalizeDefinitionsSnapshot(
     updatedAt,
   })
   // 阶段 13：loot-catalog（heroId, slotId, rarity → effect），供 equipmentMult 按玩家 owned rarity 选取装备效果。
-  // champion-details.loot normalize 后 slot_id 丢失，此处直接从 raw loot_defines 保留 slot_id。
+  // hero-abilities signal 不带 (slotId, rarity)，此处从 raw loot_defines 建 flat 跨 hero 索引（见 buildLootCatalog 注释）。
   const lootCatalog = buildLootCatalog(asRawArray(rawDefinitions.loot_defines))
   await writeJson(path.join(outputDir, 'loot-catalog.json'), {
     items: lootCatalog,

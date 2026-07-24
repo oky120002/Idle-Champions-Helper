@@ -19,7 +19,7 @@
 | `health_growth_rate_curve` | `{1:2.031, 2001:3.031, 2251:4.531}` | 按层数分档的生命增长率（stepped curve） |
 | `base_dps` | `1` | 怪物 area 1 基础秒伤 |
 | `dps_growth_rate` | `1` | 默认每层 dps 增长率 |
-| `dps_growth_rate_curve` | `{1:1, 50:1.75, 51:1, 100:1.75, ...}` | boss 层（每 50 层）1.75× spike，高层（2301+）升至 4，2451 层 1e10（max_area 墙） |
+| `dps_growth_rate_curve` | `{1:1, 50:1.75, 51:1, 100:1.75, ...}` | boss 层（50/100/151 起 每 50 层）1.75× spike，高层（2001-2401 每 50 层）升至 4，2451 层 1e10（max_area 墙） |
 | `base_speed` | `50` | 怪物速度参数（语义未确认，见下方 dps 量纲缺口） |
 | `speed_growth_rate` | `1` | 速度不随层数增长 |
 | `health_gold_ratio` | `0.65` | 生命/金币比基准（阶段 3 baseGold 已用） |
@@ -36,7 +36,7 @@ stat(area) = base × Π_{a=2..area} curve_lookup(a)
 ```
 
 - **生命**（area ≤ 2000）：`health(A) = 10 × 2.031^(A-1)`。area 2001+ 增长率升至 3.031、2251+ 升至 4.531（高层加速）。
-- **dps**：增长率常态为 1（不增长），仅 boss 层（50/100/150…）×1.75；即 `dps(A) = 1.75^(boss 层数)`。
+- **dps**：增长率常态为 1（不增长），仅 boss 层（50/100/151/201…，第 3 个起 = 151 + 50k）×1.75；即 `dps(A) = 1.75^(boss 层数)`。
 
 **数值合理性核对**（佐证 per-area 复合解释正确）：
 - `health(50) = 10 × 2.031^49 ≈ 10^16`，`health(100) ≈ 10^31`，`health(1000) ≈ 10^308`（恰逼近 double 上界），`health(2000) ≈ 10^616`（超出 float → 必须用 break_eternity，本仓库 `GameNumberValue` 已是 `break_eternity.js`）。
@@ -167,7 +167,8 @@ restrictions 绝大多数是**独特 flavor 文本**（描述特殊冒险机制�
 - `loot_defines`（4176 条）：每条 = 一个 (hero_id, slot_id, rarity) 组合，含 `effects: [{effect_string}]`。
   - 例：hero 1 slot 1：rarity 1 → `global_dps_multiplier_mult,10`；rarity 2 → `65`；rarity 3 → `120`；rarity 4 → `230`。
   - rarity 共 4 档（1-4），slot 共 4 槽（slot_id 1-4）。每 hero 约 16-24 条 loot（不同 slot/rarity/效果类型）。
-- `champion-details.<id>.loot`（normalize 后）：**包含该 hero 的全部 (slot, rarity) 组合**（hero 1 = 24 条），无 slot_id（normalize 时丢失，见已知缺口）。
+- `champion-details.<id>.loot`（normalize 后）：**包含该 hero 的全部 (slot, rarity) 组合**（hero 1 = 24 条），保留 `slotId` + `rarity`（`normalizeChampionLoot` 读 `slot_id`/`rarity`）。
+- `hero-abilities.json` 的 loot signal **不携带 (slotId, rarity)**——`collectRawEffectEntries` 把 `detail.loot[].effects[]` 展平成 signal，丢失槽位/稀有度配对。`equipmentMult` 需按 owned (slot, rarity) 选取，故 normalize 另建 flat `loot-catalog.json`（跨 hero 单文件索引，planner 运行时只载 hero-abilities，不载 champion-details）。
 - 效果类型：绝大多数 `global_dps_multiplier_mult`（按 rarity 递增），少量 `reduce_ultimate_cooldown` / `buff_upgrade` / `buff_ultimate`。
 
 ### M1 理论基线现状（over-count）
@@ -184,7 +185,8 @@ restrictions 绝大多数是**独特 flavor 文本**（描述特殊冒险机制�
 
 ### 已知缺口
 
-- **slot_id 丢失**：`champion-details.loot` normalize 后 `slot_id=null`（normalize-champions 未保留），无法按槽对应 owned loot。需 13.2 从 loot_defines 补 slot_id 映射，或在 normalize 层保留。
+- **loot-catalog 与 champion-details.loot 同源双路径**：`buildLootCatalog`（normalize-idle-champions-definitions）与 `normalizeChampionLoot`（normalize-champions）各自从 raw `loot_defines` 读取 (slot, rarity, effect)，当前数据一致（hero 1 两边均 24 条），但属两套代码路径，未来单边改动有漂移风险；理想态从 champion-details.loot 单源派生 catalog。
+- **MVP 只算 global_dps**：`equipmentMult` / `theoreticalLootMult` 只计 `global_dps_multiplier_mult`；`hero_dps_multiplier_mult`（160 条，对 carry 自身 DPS 同为乘子）、`buff_upgrade` 等未纳入调整比。owned 装备若以 hero_dps 为主，调整比近似为 1（不下调），M1 hero_dps loot over-count 残留。留后续按 effect 维度分组精算。
 - **gild / enchant 无曲线**：`game_rule_defines` 无 gilding/enchant 缩放曲线（服务端公式）。`OwnedHeroLootSlot.gild/enchant` 暂不建模，记缺口。
 - **feat / legendary**：同 loot 结构（`detail.feats` / `detail.legendaryEffects`），M1 已全量进基线；13.2 按玩家实际选择的 feat（`OwnedHero.activeFeats`）和传奇等级（`OwnedHeroLegendarySlot.level`）裁剪。
 

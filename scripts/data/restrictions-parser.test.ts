@@ -75,4 +75,11 @@ describe('parseRestrictions — 非模板匹配进 warning', () => {
     const result = parseRestrictions([r('Two of the slots in your formation are cursed due to an unseen force!')])
     expect(result.lockedSlotCount).toBe(2)
   })
+
+  // 回归（第九轮审计）：variant 430 "A Monodrone and a Duodrone take up slots ... CHA of 14"
+  // 回退路径曾抓取后文无关数字 14（魅力要求），把占格数误判为 14（> 阵型总槽位 → 该 variant 永不可推荐）。
+  it('回退不抓取 "take up slots" 后文的无关数字（variant 430 CHA of 14）→ 走 override = 2', () => {
+    const result = parseRestrictions([r('A Monodrone and a Duodrone take up slots in the formation. They\'re interesting, but they don\'t do much else. Only Champions with CHA of 14 or lower can be used.')])
+    expect(result.lockedSlotCount).toBe(2)
+  })
 })

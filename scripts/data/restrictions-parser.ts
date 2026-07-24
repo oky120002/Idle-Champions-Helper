@@ -59,8 +59,11 @@ function enSlotOccupyCount(text: string): number | null {
     return tokenToNumber(adjMatch[1]!)
   }
   // 回退：「take up slots」（复数 occupy）取首个数词（实体数 = 格数）。
-  if (EN_TAKE_UP_SLOTS_RE.test(text)) {
-    const first = EN_FIRST_NUMBER_RE.exec(text)
+  // 搜索范围限定到「take up slots」之前——占格实体数词总在动词前（"Three imps take up slots"）；
+  // 否则长文本后文的无关数字会被误抓（variant 430 "CHA of 14" 被当成 14 格 → 超过阵型总槽位）。
+  const takeUpMatch = EN_TAKE_UP_SLOTS_RE.exec(text)
+  if (takeUpMatch) {
+    const first = EN_FIRST_NUMBER_RE.exec(text.slice(0, takeUpMatch.index))
     if (first) {
       return tokenToNumber(first[1]!)
     }
@@ -81,9 +84,9 @@ function tokenToNumber(token: string): number | null {
  */
 const RESTRICTION_OVERRIDES: ReadonlyArray<{ match: string; count: number }> = [
   { match: 'nat, squiddly, and jenks', count: 3 }, // 3 名具名英雄各占 1 格
-  { match: 'two reflections of antrius', count: 2 },
-  { match: 'two frightened villagers', count: 2 },
+  { match: 'two frightened villagers', count: 2 }, // 文本 "take up additional slots"，非 "up slots" 紧邻，回退不触发
   { match: 'two of the slots in your formation are cursed', count: 2 },
+  { match: 'a monodrone and a duodrone', count: 2 }, // variant 430：具名实体无显式数词，回退无匹配
 ]
 
 function matchOverride(original: string): number | null {

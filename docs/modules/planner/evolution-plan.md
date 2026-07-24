@@ -196,6 +196,12 @@ M3 阶段 10-14 审计补充：
 
 7. **注释/文档声称的数据源必须真实存在**。clickDamage 注释声称来源 `click_damage_seconds_global_dps`，但 raw `click_damage_settings` 只有 `{base_power, base_cost, cost_curve, power_curve}`，该字段在 definitions 快照不存在。引用 raw 字段/effect 时先 jq 确认存在，避免「注释声称有据、实为猜测」。
 
+第九轮 M3 阶段 10-14 深审补充（2026-07-24）：
+
+8. **文本解析的回退/兜底路径必须限定在语义锚点范围内，禁止全文本扫描取值**。restrictions-parser 的「take up slots → 取首个数词」回退原对**整段文本**取首个数字，把 variant 430 后文「Only Champions with CHA of **14** or lower」的 14 当成占格数 → occupiedSlotCount=14（> 阵型总槽位 9，该 variant availableCapacity=0 永不可推荐）。长 flavor 文本里属性要求/等级/cost/层数等无关数字必然存在，全文本「取首个数字」类兜底必然误抓。修复：搜索范围限定到语义短语窗口（占格实体数词总在动词前 → 只搜「take up slots」之前）；无匹配走 override 或 warning，宁可保守不可误判。回归测试须覆盖「含无关数字的长文本」。
+
+9. **派生数据产物与既有归一化字段同源双路径时，记录漂移风险并优先单源派生**。`loot-catalog.json`（`buildLootCatalog` 从 raw `loot_defines`）与 `champion-details.loot`（`normalizeChampionLoot` 亦从 raw `loot_defines`）数据完全一致（hero 1 两边均 24 条 (slot,rarity,effect)），属两套代码路径从同一 raw 派生同一结构——当前一致，但单边改动会静默漂移。新增派生产物前先确认既有归一化字段是否已含该数据（本案 `champion-details.loot` 已保留 `slotId`+`rarity`，原注释却声称「slot_id 丢失」，注释错误掩盖了真实复用关系）；若必须另出产物（如运行时需 flat 跨 hero 索引而不载 per-hero 文件），注释须说明真实依据，并在文档标注双路径漂移风险。
+
 ## 长期扩展（超出 16 阶段·待产品规划立项）
 
 以下方向超出 16 阶段，属产品级长期愿景，待产品规划立项后再进入演进规划阶段化：
