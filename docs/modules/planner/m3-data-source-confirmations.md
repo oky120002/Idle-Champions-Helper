@@ -181,5 +181,36 @@ restrictions 绝大多数是**独特 flavor 文本**（描述特殊冒险机制�
 - **gild / enchant 无曲线**：`game_rule_defines` 无 gilding/enchant 缩放曲线（服务端公式）。`OwnedHeroLootSlot.gild/enchant` 暂不建模，记缺口。
 - **feat / legendary**：同 loot 结构（`detail.feats` / `detail.legendaryEffects`），M1 已全量进基线；13.2 按玩家实际选择的 feat（`OwnedHero.activeFeats`）和传奇等级（`OwnedHeroLegendarySlot.level`）裁剪。
 
+---
+
+## 14.4 ability_defines ult buff（uptime 核心 + pipeline 集成方案）
+
+### 数据源（已确认）
+
+`ability_defines`（10 条），结构 `{id, hero_ids, base_cooldown, duration, effect}`：
+- 对齐：**id === hero_id**（`hero_ids` 数组为空，关联纯靠 id；`raw 无字段引用 ability_defines`）。
+- `effect`：裸 effect_string（`effect_def,28`）或 JSON 串（`{"effect_string":"attack_speed_mult,100",...}`）。
+- cooldown/duration：base_cooldown 900-7200 秒，duration 0-30 秒。
+- DPS-relevant 信号（经 effect_def 展开）：Commander `global_dps_multiplier_mult,100`（全队 ×2）、Pact Weapon `hero_dps_multiplier_mult,100`、Cunning Action `attack_speed_mult,100`、Channel Divinity `buff_upgrades` 等。
+
+### uptime 折算（已实现·纯函数）
+
+`src/domain/simulator/ultUptime.ts`：
+- `computeUltUptime(duration, baseCooldown, modronActive)` = `duration / base_cooldown`（modron 满级自动施放），上限 1；modron 未激活 / 参数非法 → 0（保守不计）。
+- `foldUltBuffValue(value, uptime)` = `value × uptime`（steady-state 长期平均覆盖率）。
+- 边界：steady-state 近似；step simulation（长期扩展）用逐窗口实际激活状态替代。7 测试。
+
+### pipeline 集成方案（待执行·记留）
+
+完整接入需三层数据流改动（风险高，本轮聚焦 uptime 核心，pipeline 集成留后续）：
+
+1. **normalize 层**：`scripts/data/normalize-champions.ts` 按 id 对齐提取 `ability_defines[id]` → `champion-details.<id>.ability`（含 `effect` / `base_cooldown` / `duration`）。注意 `effect` 双形态（裸 string vs JSON 串），需 `normalizeEffectReference` 统一提取 `effect_string`。
+2. **collect 层**：`scripts/data/effect-helpers.ts` 的 `collectRawEffectEntries` 新增第五源 `sourceBucket='ability'`，收集 `detail.ability` 的 effect_keys（经 effect_def 引用展开，复用现有 effect_def 解析）。
+3. **uptime 折算**：build 层按 modron 节奏折算——`ultSignal.value = foldUltBuffValue(rawValue, computeUltUptime(duration, baseCooldown, modronActive))`，进对应 pool（global_dps→globalDpsMultiplier、hero_dps→heroDpsMultiplier、attack_speed→speed pool）。
+4. **modron gating**：modron 未满级 → uptime=0 → ult buff 不进 pool（保守）。`modronActive` 由调用方按玩家 modron 状态传入。
+
+执行前提：确认 ability id↔hero_id 对齐无歧义（10 条，可逐条核对 effect 与英雄 ult 名称）；接入后重跑 buildModels 同步 hero-abilities.json 产物；`data:signal-coverage` 验证 ability 源 signal 产出。
+
+
 
 
