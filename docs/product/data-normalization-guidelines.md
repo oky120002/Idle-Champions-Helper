@@ -8,9 +8,11 @@
 
 `buildSimplePoolSignal` 对 add 省略 amountFunc 字段；任何新维度的消费侧聚合若一律累乘（如原 `computeVulnerabilityFactor`），会把 add 类信号高估（两个 +100% 易伤算成 4 而非 3）。新增维度时核对消费侧分流与解析层约定一致，并写「多 signal 叠加」测试（单 signal 时累乘与 add 同果，漏覆盖）。
 
-## 2. build 层代码改动后必须重跑 `buildModels` 同步 `hero-abilities.json` 产物
+## 2. script 层（normalize + build）改动后必须重跑对应产物，否则修复停留在脚本层不生效
 
 build 层（effect-helpers / signalSemantics 等）改动长期未重跑 build 时，产物停留在旧逻辑（signal 总数 12163→18893、字段补全后才同步）。build 层 commit 后跟一次 `buildModels` 重跑（不需 fetch/资源，直接从 normalized champion-details 生成；裸 `node` 无法解析 src/ extensionless 导入，经 `npx tsx` 或 vitest 运行），或 CI 守护产物新鲜度。
+
+normalize 层（normalize-adventures 等）同理：改动后必须重跑 normalize 同步 `variants.json`，否则下游 `scenarios.json`（build 层读 `variant.enemyTypes`）继承旧值。第十二轮审计发现 `variants.json` 停留 M2 9.2 快照，第十一轮 null byte dedup 修复与第十二轮 boss enemyTypes 修复都停留在脚本层、运行时不生效。normalize 层重跑需同快照的 source + ZH(lang-7) 双 raw，本地缺失 ZH raw 时无法忠实重生（API 现服更新版会引入无关 diff），须在拉取双 raw 的完整 `npm run data:official` 周期一并生效。
 
 ## 3. 条件性匹配前核对字段值域，排除集须与消费词表对齐
 
