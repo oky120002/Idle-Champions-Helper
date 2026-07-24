@@ -63,7 +63,7 @@
 
 ### 11.3 扩 kind + 解析 [x]
 
-> 实现：`HeroAbilityKind` 加 `patronPerkMult`（dimension `global-buff`、scope `global`）；`scripts/data/patron-perk-signals.ts` 解析 `global_dps_multiplier_mult,$replace` → per-patron `patronPerkMult` signals（value=perLevel×maxLevels）；build-models 产 `public/data/v1/global-buffs.json`。MVP 范围：无条件全局 DPS（13 perks）；area_tags / effect_def tag 限定版留后续。
+> 实现：`HeroAbilityKind` 加 `patronPerkMult`（dimension `global-buff`、scope `global`）；`scripts/data/patron-perk-signals.ts` 解析 `global_dps_multiplier_mult,$replace` → per-patron `patronPerkMult` signals（value=perLevel×maxLevels）；build-models 产 `public/data/v1/global-buffs.json`。MVP 范围：无条件全局 DPS（21 perks，产出 21 signals）；area_tags / per_ge_pair / per_enemy / per_tagged 计数版 / effect_def tag 限定版留后续。
 - **改动**：`HeroAbilityKind` 加 `blessingMult`/`patronPerkMult`；dimension `global-buff`；解析 patron-perks（+ blessings 若 11.1 可行）。
 - **测试（先写）**：解析正确。
 - **验证**：`npm run test:run`；coverage 显示 global-buff。
@@ -157,7 +157,7 @@
 **边界**：click 不参与阵型模拟计算。
 
 ### 14.1 click damage 计算
-- **改动**：新建 `src/domain/simulator/clickDamage.ts`：`click_damage = BUD × click_seconds`（派生自 BUD/DPS，`click_damage_seconds_global_dps`）。
+- **改动**：新建 `src/domain/simulator/clickDamage.ts`：`click_damage = BUD × click_seconds`（派生自 BUD，MVP 近似；click_seconds 换算关系在当前 definitions 未找到，见 clickDamage.ts 数据源缺口）。
 - **测试（先写）**：click damage 计算正确。
 - **验证**：`npm run test:run`。
 - **commit**：`feat(simulator): 14.1 click damage 计算`。

@@ -20,7 +20,7 @@
 | `base_dps` | `1` | 怪物 area 1 基础秒伤 |
 | `dps_growth_rate` | `1` | 默认每层 dps 增长率 |
 | `dps_growth_rate_curve` | `{1:1, 50:1.75, 51:1, 100:1.75, ...}` | boss 层（每 50 层）1.75× spike，高层（2301+）升至 4，2451 层 1e10（max_area 墙） |
-| `base_speed` | `50` | 怪物基础攻击间隔（相关单位） |
+| `base_speed` | `50` | 怪物速度参数（语义未确认，见下方 dps 量纲缺口） |
 | `speed_growth_rate` | `1` | 速度不随层数增长 |
 | `health_gold_ratio` | `0.65` | 生命/金币比基准（阶段 3 baseGold 已用） |
 | `health_gold_ratio_curve` | `{1:0.65, 42:0.62, ...}` | 比率随层数衰减 |
@@ -45,6 +45,10 @@ stat(area) = base × Π_{a=2..area} curve_lookup(a)
 ### 绝对值校准边界（继承第六轮审计）
 
 公式**结构**来自官方数据，但**绝对值未与真实游戏实测对照**。阶段 10.2 预估结果必须向用户标注「未校准」，待阶段 7.5 BUD 实测校准后才闭环。相对比较（高 BUD 阵型预估层数 > 低 BUD）不受影响。
+
+### dps 量纲缺口（第八轮审计）
+
+`base_dps` / `dps_growth_rate_curve` 字段名为 dps，但 `base_speed`(=50) 语义未确认（per-second vs per-hit）。areaEstimation 的 survival 约束（effectiveHealth ≥ monsterDpsAt）当前以「怪物伤害随层数缩放」近似——`survivalCalculation.canSurviveBurst` 的正确判据是单次伤害（incomingDamagePerHit）。精确的单次伤害判据需 base_speed 语义确认后派生 monsterDamagePerHitAt，留后续。
 
 ### 相关 game rules（阶段 14 复用）
 
@@ -100,15 +104,18 @@ stat(area) = base × Π_{a=2..area} curve_lookup(a)
 
 | effect_string | 数量 | 加成类型 |
 |---|---|---|
-| `global_dps_multiplier_mult,$replace` | 13 | 全局 DPS（进 globalDpsMultiplier pool） |
+| `global_dps_multiplier_mult,$replace` | 21 | 无条件全局 DPS（进 patronPerkMult pool） |
 | `gold_multiplier_mult,$replace` | 2 | 全局金币 |
-| `global_dps_multiplier_mult_area_tags,$replace,<tag>` | 3 | 场景 tag 条件全局 DPS（underground/hellish） |
+| `global_dps_multiplier_mult_area_tags,$replace,<tag>` | 3 | 场景 tag 条件全局 DPS（hellish 2 / underground 1） |
+| `global_dps_multiplier_mult_per_ge_pair,$replace` | 1 | 条件全局 DPS（按 GE 对计数，MVP 未接入） |
+| `global_dps_multiplier_mult_per_enemy,$replace` | 1 | 条件全局 DPS（按敌人数计数，MVP 未接入） |
+| `global_dps_mult_per_tagged_crusader_mult,$replace,gold` | 1 | 条件全局 DPS（按 gold tag 英雄计数，MVP 未接入） |
 | `effect_def,<id>`（453-460 / 609-613 / 828-833 等） | ~80 | tag 限定 hero_dps / healing / vulnerability 等 |
 | `monster_health_reduce,$replace` / `health_mult,$replace` / `monster_with_tag_more_damage` 等 | 少量 | 非全局，按需评估 |
 
 ### 接入策略（阶段 11.3/11.4）
 
-- **全局 DPS 进 global pool**：`global_dps_multiplier_mult,$replace`（13 条）+ area_tags 条件版（3 条，按场景 tag 匹配）直接进 `globalDpsMultiplier` pool（mult，amountFunc='mult'，value = per_level × level）。
+- **全局 DPS 进 global pool**：`global_dps_multiplier_mult,$replace`（21 条）直接进 `patronPerkMult` pool（add 语义，value = per_level × maxLevels）；global-buffs.json 实际产出 21 signals（per-patron 4/5/6/4/2）。area_tags 条件版（3 条）+ per_ge_pair/per_enemy/per_tagged 计数版（3 条）需条件匹配，留后续扩展。
 - **tag 限定 hero_dps**（effect_def 引用，~80 条）：按 `filter_targets` tag 匹配英雄，进 `heroDpsMultiplier` pool。MVP 可先接全局 DPS（最高频、最直接），tag 限定版按需扩展（复用现有 `HeroQualifier` tag 解析）。
 - **perk 等级来源**：patron perks 的已购等级属用户存档（类似 blessings，需 `UserProfileSnapshot` 暴露 patron perk levels）。snapshot 当前未暴露 → MVP 取**满级理论值**（per_level × levels），标注「理论最大」，按存档裁剪留阶段 13 精细化（与装备/feat 同批）。
 

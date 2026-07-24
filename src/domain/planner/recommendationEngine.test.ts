@@ -211,6 +211,57 @@ describe('planner recommendation engine', () => {
     expect(recommendation.result?.placements.s4).toBeUndefined()
   })
 
+  it('occupiedSlotCount 扣减可用容量，推荐只填剩余槽位（12.3 restrictions）', () => {
+    // 4 格阵型 − occupiedSlotCount 2 = 2 可用；推荐只填 2 个英雄（修复前会填满 4 格高估 carryDps）。
+    const occupiedVariant = createVariant('variant-occupied', {
+      campaign,
+      name: text('Cursed Slots', '诅咒之格'),
+      adventureId: 'adventure-occupied',
+      adventure: text('Cursed', '诅咒'),
+      objectiveArea: 100,
+    })
+    const occupiedScenario: OfficialPlannerScenarioModel = {
+      variantId: occupiedVariant.id,
+      scenarioRef: { kind: 'variant', id: occupiedVariant.id },
+      name: occupiedVariant.name,
+      formationLayoutId: 'layout-catacombs',
+      objectiveArea: 100,
+      slotTopology: [
+        { slotId: 's1', row: 1, column: 1, adjacentSlotIds: ['s2'] },
+        { slotId: 's2', row: 1, column: 2, adjacentSlotIds: ['s1', 's3'] },
+        { slotId: 's3', row: 1, column: 3, adjacentSlotIds: ['s2', 's4'] },
+        { slotId: 's4', row: 1, column: 4, adjacentSlotIds: ['s3'] },
+      ],
+      forcedHeroes: [],
+      bannedHeroes: [],
+      lockedSlots: [],
+      enemyTypes: [],
+      allowedHeroes: [],
+      allowedTags: [],
+      occupiedSlotCount: 2,
+      scenarioWarnings: ['当前场景有 2 个槽位被非英雄实体占据，不参与英雄占位。'],
+    }
+    const occupiedCollections: PlannerCollections = {
+      variants: [occupiedVariant],
+      plannerHeroes,
+      plannerScenarios: [occupiedScenario],
+    }
+    const snapshot = createUserProfileSnapshot({
+      ownedHeroes: [
+        createOwnedHero({ heroId: 'bruenor', level: 500 }),
+        createOwnedHero({ heroId: 'asharra', level: 500 }),
+        createOwnedHero({ heroId: 'celeste', level: 500 }),
+        createOwnedHero({ heroId: 'nayeli', level: 500 }),
+        createOwnedHero({ heroId: 'jarlaxle', level: 500 }),
+      ],
+    })
+
+    const recommendation = buildPlannerRecommendation(occupiedVariant, occupiedCollections, snapshot)
+
+    expect(recommendation.blocker).toBeNull()
+    expect(recommendation.result?.placementEntries).toHaveLength(2)
+  })
+
   it('only_allow_crusaders 白名单过滤候选英雄，非白名单英雄不被推荐（9.2）', () => {
     const allowedVariant = createVariant('variant-allowed', {
       campaign,

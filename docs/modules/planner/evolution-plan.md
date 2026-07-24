@@ -188,6 +188,14 @@ M2 第八轮深审（raw → normalize → collect → resolve → consume 全�
 
 4. **evolution-plan 公式的每个乘区/pool 都要有实现 + 测试**。`Π(static_dps_mults)` 公式写了但 `upgrade.static_dps_mult` 字段长期未读，35 个复杂 effect upgrade 的 dps 丢失。文档公式与实现定期核对，避免「设计了但没做」；formula_quirks / 加成调研里的特殊 pool 尤其易漏。
 
+M3 阶段 10-14 审计补充：
+
+5. **硬编码的 raw 派生常量必须逐值核对，不能假设序列规律**。monsterStats 的 dps boss spike 假设「50,100,150,200...每 50 层」，但 raw `dps_growth_rate_curve` 第 3 个 spike 在 **151**（非 150），从第 3 个起整体 +1 偏移（差值集合 {50,51}）。stepped curve / 枚举型常量（非连续函数）必须 dump 全量 key 逐个比对；「看起来有规律」的假设要 raw 证实，交叉验证用 per-area 复合 log 对比。
+
+6. **新增数据字段必须同步接入消费层，否则是数据孤岛**。`occupiedSlotCount` 在 build-models 产出、plannerModel 定义、注释承诺「可用容量 = total − occupiedSlotCount」，但 recommendationEngine 只过滤 mechanics `lockedSlots`，未扣减 occupiedSlotCount，65 个 scenario 推荐多填被占格高估 carryDps。字段新增时核对「产出→定义→消费」全链路，注释承诺的行为必须有测试覆盖。
+
+7. **注释/文档声称的数据源必须真实存在**。clickDamage 注释声称来源 `click_damage_seconds_global_dps`，但 raw `click_damage_settings` 只有 `{base_power, base_cost, cost_curve, power_curve}`，该字段在 definitions 快照不存在。引用 raw 字段/effect 时先 jq 确认存在，避免「注释声称有据、实为猜测」。
+
 ## 长期扩展（超出 16 阶段·待产品规划立项）
 
 以下方向超出 16 阶段，属产品级长期愿景，待产品规划立项后再进入演进规划阶段化：

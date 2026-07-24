@@ -30,19 +30,30 @@ const HEALTH_GROWTH_SEGMENTS: ReadonlyArray<{ fromArea: number; rate: number }> 
 
 /**
  * dps_growth_rate_curve 中 value≠1 的 boss spike 层（非 boss 层增长率为 1，不贡献）。
- * area 50..1951 每 50 层 ×1.75（39 处）；2001..2401 ×4（9 处）；2451 ×1e10（max_area 墙，1 处）。
+ * 低层 50,100,151,201,...,1951 ×1.75（39 处）；高层 2001..2401 ×4（9 处）；2451 ×1e10（max_area 墙，1 处）。
  * 排序后预累积乘积，dps(A) = base_dps × Π_{boss≤A} spike。
+ *
+ * 注意低层第 3 个 boss spike 在 151（非 150）——raw dps_growth_rate_curve 精确序列：
+ * 50, 100, 然后 151 起每 50 层（100→151 间距 51，其余 50）。不是简单的 50n。
  */
 const DPS_BOSS_SPIKES: ReadonlyArray<{ area: number; mult: number }> = buildDpsBossSpikes()
 
 function buildDpsBossSpikes(): ReadonlyArray<{ area: number; mult: number }> {
   const spikes: Array<{ area: number; mult: number }> = []
-  for (let area = 50; area <= 1951; area += 50) {
+  // 低层 boss spike（×1.75）：raw 序列 50, 100, 151, 201, ..., 1951（39 处）。
+  // 第 3 个起 = 151 + 50k（非 150 + 50k）。
+  const lowBossAreas: number[] = [50, 100]
+  for (let area = 151; area <= 1951; area += 50) {
+    lowBossAreas.push(area)
+  }
+  for (const area of lowBossAreas) {
     spikes.push({ area, mult: 1.75 })
   }
+  // 高层 boss spike（×4）：2001..2401 每 50 层（9 处）。
   for (let area = 2001; area <= 2401; area += 50) {
     spikes.push({ area, mult: 4 })
   }
+  // max_area 墙（×1e10）：2451（1 处）。
   spikes.push({ area: 2451, mult: 1e10 })
   return spikes
 }
@@ -90,8 +101,12 @@ export function monsterHealthAt(area: number): GameNumberValue {
 }
 
 /**
- * 怪物 dps（按层数缩放）：`base_dps × Π_{boss area ≤ area} spike`。
- * 非 boss 层增长率为 1（不贡献），仅 boss 层（每 50 层）累乘 spike。
+ * 怪物伤害（按层数缩放）：`base_dps × Π_{boss area ≤ area} spike`。
+ * 非 boss 层增长率为 1（不贡献），仅 boss 层累乘 spike。
+ *
+ * 量纲缺口（第八轮审计）：raw 字段名为 `base_dps`/`dps_growth_rate_curve`，但 `base_speed`(=50)
+ * 语义未确认（per-second vs per-hit）。areaEstimation 的 survival 约束以此作为「怪物伤害随层数缩放」
+ * 近似；精确单次伤害判据需 base_speed 语义确认后派生 monsterDamagePerHitAt。
  */
 export function monsterDpsAt(area: number): GameNumberValue {
   const a = Math.max(1, Math.floor(area))

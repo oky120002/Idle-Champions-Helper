@@ -39,7 +39,8 @@ export interface OfficialPlannerScenarioModel {
   allowedTags: string[]
   /**
    * 被非英雄实体（小鸡/小鬼/护送等）占据的格数（restrictions 文本解析，阶段 12）。
-   * 这些槽位不参与英雄占位；formation 搜索可用容量 = slotTopology.length − occupiedSlotCount。
+   * 与 mechanics lockedSlots 是两个来源描述同一批被占格子；formation 搜索可用容量 =
+   * slotTopology.length − max(occupiedSlotCount, lockedSlots.length)（见 recommendationEngine）。
    */
   occupiedSlotCount: number
 }

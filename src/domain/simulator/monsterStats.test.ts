@@ -63,6 +63,16 @@ describe('monsterDpsAt', () => {
     expect(ratio).toBeCloseTo(1, 10)
   })
 
+  test('低层第 3 个 boss spike 在 151（非 150）：raw dps_growth_rate_curve 精确序列', () => {
+    // raw 序列 50,100,151,201,...——area 150 只过 2 个 spike（1.75²），151 才过第 3 个（1.75³）。
+    const dps150 = monsterDpsAt(150)
+    const dps151 = monsterDpsAt(151)
+    expect(dps150.div(new Decimal(1.75).pow(2)).toNumber()).toBeCloseTo(1, 10)
+    expect(dps151.div(new Decimal(1.75).pow(3)).toNumber()).toBeCloseTo(1, 10)
+    // 150→151 正好在 boss spike 处跳 ×1.75
+    expect(dps151.div(dps150).toNumber()).toBeCloseTo(1.75, 10)
+  })
+
   test('area 2451 includes the 1e10 wall', () => {
     const dps = monsterDpsAt(2451)
     // 1e10 wall at 2451: dps must be enormous

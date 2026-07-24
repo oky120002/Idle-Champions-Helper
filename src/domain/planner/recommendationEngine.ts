@@ -193,7 +193,19 @@ export function buildPlannerRecommendation(
     .sort((left, right) => left.seat - right.seat || left.heroId.localeCompare(right.heroId))
 
   const lockedSlotSet = new Set(scenario.lockedSlots)
-  const slots = sortSlots(scenario).filter((slotId) => !lockedSlotSet.has(slotId))
+  // 可用容量扣减被占格 = slotTopology.length − max(occupiedSlotCount, lockedSlots.length)。
+  // lockedSlots（mechanics slot_escort 等锁的具体槽位）与 occupiedSlotCount（restrictions
+  // 解析的被占格数）描述同一批被占格子，取 max 作更完整估计：restrictions 可能漏解析
+  // （occupiedSlotCount=0 但 mechanics 锁了）；反之 restrictions 给完整数而 mechanics 只锁 1 格。
+  // 被占格具体位置不可知（诅咒「每 15 秒换格」等动态场景），无法精确过滤 slotId，
+  // 取 sortSlots 前 availableCapacity 个近似——英雄数量正确，避免多填被占格高估 carryDps。
+  const availableCapacity = Math.max(
+    0,
+    scenario.slotTopology.length - Math.max(scenario.occupiedSlotCount, scenario.lockedSlots.length),
+  )
+  const slots = sortSlots(scenario)
+    .filter((slotId) => !lockedSlotSet.has(slotId))
+    .slice(0, availableCapacity)
   if (heroes.length < slots.length) {
     return {
       result: null,
