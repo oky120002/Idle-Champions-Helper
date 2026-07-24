@@ -897,18 +897,16 @@ it('collectEffectEntries 收集 feat effects（与 loot/legendary 对称，M1 �
   expect(heroDpsEntry?.effect.filter_targets).toEqual([{ type: 'hero_expr', hero_expr: 'HasTag(`dwarf`)' }])
 })
 
-it('collectEffectEntries 对完全重复的 buff_upgrade wrapper 派生去重（装备模板冗余）', () => {
-  // IC 装备系统在 definitions 里把同一 buff 按 装备槽/稀有度 展开成多条 effect 完全相同的
-  // upgrade（仅 id 不同，magnitude 相同=非稀有度差异）。如 Jaheira 38 条
-  // buff_upgrades,100,9714,9715,9716,9717，每条派生 4 base signal → 152 重复（91% 过度计算）。
-  // 游戏 buff 按 effect 逻辑去重（同 effect_key 不叠加），派生层须对完全相同的 derived signal 去重。
-  // （不同 magnitude 的稀有度取最高是另一问题，归阶段 8。）
+it('collectEffectEntries sentinel（required_level>=9999）完全相同副本去重（CNE 数据展开产物）', () => {
+  // CNE 把非可购（required_level=9999）的逻辑 buff 序列化成多条完全相同 upgrade（仅 id 不同，
+  // magnitude 相同）。如 Jaheira 38 条 buff_upgrades,100,9714,...，只生效一次。
+  // 这类 sentinel 产物按信号位去重；真升级（required_level<9999）不走此路径（见下述测试）。
   const detail = {
     upgrades: [
-      { id: '4', effectReference: 'hero_dps_multiplier_mult,100', effectDefinition: null },
-      { id: '7', effectReference: 'buff_upgrades,100,4', effectDefinition: null },
-      { id: '8', effectReference: 'buff_upgrades,100,4', effectDefinition: null },
-      { id: '9', effectReference: 'buff_upgrades,100,4', effectDefinition: null },
+      { id: '4', requiredLevel: 50, effectReference: 'hero_dps_multiplier_mult,100', effectDefinition: null },
+      { id: '7', requiredLevel: 9999, effectReference: 'buff_upgrades,100,4', effectDefinition: null },
+      { id: '8', requiredLevel: 9999, effectReference: 'buff_upgrades,100,4', effectDefinition: null },
+      { id: '9', requiredLevel: 9999, effectReference: 'buff_upgrades,100,4', effectDefinition: null },
     ],
     loot: [],
     legendaryEffects: [],
@@ -916,20 +914,21 @@ it('collectEffectEntries 对完全重复的 buff_upgrade wrapper 派生去重（
   }
   const entries = collectEffectEntries(detail) as EffectEntryLike[]
   const derived = entries.filter((entry) => entry.sourceBucket === 'upgrade-buffed-signal')
-  // 3 个相同 wrapper 指向同一 base 4 → 去重后只 1 个 derived signal。
+  // 3 个相同 sentinel 副本指向同一 base 4 → 去重后只 1 个 derived signal。
   expect(derived.length).toBe(1)
   expect(derived[0]?.signalPreset.bonusScaleOfSignal?.rawEffect).toBe('hero_dps_multiplier_mult,100')
 })
 
-it('collectEffectEntries 同 base 不同 magnitude 的 wrapper 只保留最高（稀有度去重，阶段 8.5）', () => {
-  // IC 装备稀有度：同一 buff 不同稀有度有不同 magnitude，游戏只生效最高稀有度。
-  // 当前若全累加 → 高估。按 (kind, base target, qualifier) 分组，组内只保留最高 magnitude。
+it('collectEffectEntries sentinel 同 base 不同 magnitude 取最高（稀有度互斥保守策略）', () => {
+  // required_level=9999 的 sentinel 产物：若同信号位出现不同 magnitude，按现有保守策略取最高
+  // （IC 稀有度互斥语义；全库仅 3 个真实数据组为此形态，语义待 IC 源码最终确认）。
+  // 真升级（required_level<9999）不同 magnitude 全保留叠加，见专属测试。
   const detail = {
     upgrades: [
-      { id: '4', effectReference: 'hero_dps_multiplier_mult,100', effectDefinition: null },
-      { id: '7', effectReference: 'buff_upgrades,100,4', effectDefinition: null },
-      { id: '8', effectReference: 'buff_upgrades,200,4', effectDefinition: null },
-      { id: '9', effectReference: 'buff_upgrades,150,4', effectDefinition: null },
+      { id: '4', requiredLevel: 50, effectReference: 'hero_dps_multiplier_mult,100', effectDefinition: null },
+      { id: '7', requiredLevel: 9999, effectReference: 'buff_upgrades,100,4', effectDefinition: null },
+      { id: '8', requiredLevel: 9999, effectReference: 'buff_upgrades,200,4', effectDefinition: null },
+      { id: '9', requiredLevel: 9999, effectReference: 'buff_upgrades,150,4', effectDefinition: null },
     ],
     loot: [],
     legendaryEffects: [],
@@ -939,6 +938,49 @@ it('collectEffectEntries 同 base 不同 magnitude 的 wrapper 只保留最高�
   const derived = entries.filter((entry) => entry.sourceBucket === 'upgrade-buffed-signal')
   expect(derived.length).toBe(1)
   expect(derived[0]?.signalPreset.value).toBe(200)
+})
+
+it('collectEffectEntries 真升级（required_level<9999）同 base 不同 magnitude 全保留叠加', () => {
+  // IC 装备/ILvl 升级链：同一 base 在不同 required_level（150/300/500…）有独立 buff_upgrade，
+  // 均为可购永久升级，游戏中全部叠加生效（如 Bruenor Rally 15 条 magnitude 100~300）。
+  // 8.5「取最高 magnitude」曾把这些折叠成 1 条，严重低估。修正：真升级各自独立，不去重。
+  const detail = {
+    upgrades: [
+      { id: '4', requiredLevel: 50, effectReference: 'hero_dps_multiplier_mult,100', effectDefinition: null },
+      { id: '7', requiredLevel: 150, effectReference: 'buff_upgrade,100,4', effectDefinition: null },
+      { id: '12', requiredLevel: 300, effectReference: 'buff_upgrade,300,4', effectDefinition: null },
+      { id: '15', requiredLevel: 500, effectReference: 'buff_upgrade,200,4', effectDefinition: null },
+    ],
+    loot: [],
+    legendaryEffects: [],
+    feats: [],
+  }
+  const entries = collectEffectEntries(detail) as EffectEntryLike[]
+  const derived = entries.filter((entry) => entry.sourceBucket === 'upgrade-buffed-signal')
+  // 3 个真升级全保留（各自叠加），不取最高。
+  expect(derived.length).toBe(3)
+  const values = derived.map((entry) => entry.signalPreset.value ?? 0).sort((a, b) => a - b)
+  expect(values).toEqual([100, 200, 300])
+})
+
+it('collectEffectEntries 真升级同 base 同 magnitude 也全保留（独立升级不互斥）', () => {
+  // Bruenor 式：多个 level milestone 偶然 magnitude 相同（如 9 条 mag=100），仍各自叠加。
+  // 同 magnitude 不能当作重复去重——它们是不同 upgrade id 的独立可购升级。
+  const detail = {
+    upgrades: [
+      { id: '4', requiredLevel: 50, effectReference: 'hero_dps_multiplier_mult,100', effectDefinition: null },
+      { id: '7', requiredLevel: 150, effectReference: 'buff_upgrade,100,4', effectDefinition: null },
+      { id: '236', requiredLevel: 900, effectReference: 'buff_upgrade,100,4', effectDefinition: null },
+      { id: '1284', requiredLevel: 1560, effectReference: 'buff_upgrade,100,4', effectDefinition: null },
+    ],
+    loot: [],
+    legendaryEffects: [],
+    feats: [],
+  }
+  const entries = collectEffectEntries(detail) as EffectEntryLike[]
+  const derived = entries.filter((entry) => entry.sourceBucket === 'upgrade-buffed-signal')
+  // 3 条同 magnitude 真升级全保留（不同 upgrade id，各自叠加）。
+  expect(derived.length).toBe(3)
 })
 
 it('collectEffectEntries 派生 buff_upgrade wrapper 时合并 wrapper 自身 filter_targets', () => {

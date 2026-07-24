@@ -208,17 +208,18 @@
 - **验证**：wrapper 解析率 60% → >85%；JSON 结构校验。
 - **commit**：`chore(data): 8.4 重生成 planner model 含 buff_upgrade 展开`。
 
-### 8.5 wrapper 稀有度去重 + bonusScale targeting 复用 [x]
+### 8.5 wrapper 去重（sentinel 产物）+ bonusScale targeting 复用 [x]
 
-**背景**：第三轮全链路审计（2026-07-21）发现两类 buff_upgrade 精细化缺口，前几轮审计只在关注点列表提"归阶段 8"但未落入执行步骤，本步补齐。
+**背景**：第三轮全链路审计（2026-07-21）发现两类 buff_upgrade 精细化缺口，前几轮审计只在关注点列表提"归阶段 8"但未落入执行步骤，本步补齐。第七轮审计（2026-07-24）修正了「不同 magnitude 取最高」的错误前提——见下。
 
-- **完全重复去重（已完成·不再做）**：`collectEffectEntries` 的 `derivedSignalKey` 已对完全相同 derived signal 去重（IC 装备系统同 buff 多条 effect 完全相同 upgrade，recognized 15409→12253，-20%）。见 commit b7d750f。
-- **不同 magnitude 稀有度取最高（本步）**：同一 buff 不同稀有度有不同 magnitude（如 Jaheira `buff_upgrades,100/200/25/87.5/150/275/40/80,...`），游戏只生效最高稀有度；当前各 magnitude 全累加 → 高估。需按 `(英雄, base target, targetQualifier)` 分组，组内只保留最高 magnitude 的 wrapper。
-- **bonusScale targeting 复用（本步评估）**：`resolveSignalMultiplier` 解析 `bonusScaleOfSignal` 时只取 base 的 multiplier，不重新校验 base 的 `positionQualifier` / `targetQualifier`（见下方关注点）；评估 base 与外层 targeting 不一致场景，决定是否在派生时继承/校验 base targeting。wrapper 自身 filter_targets 合并已实现（第四轮→f389586b）：`collectEffectEntries` 派生时 AND 合并 `normalizeTargetQualifier(wrapper effect)` 到 base targetQualifier（`mergeHeroQualifiers`），wrapper 的 `hero_ids` 白名单等不再丢失（真实样本：hero 82 `buff_upgrades` + `hero_ids:[82]`）。
+- **sentinel 产物去重**：`collectEffectEntries` 按 `rarityGroupKey`（kind/amountFunc/stackFunc/base targeting，排除 magnitude）识别「同一信号位」。`required_level>=9999` 的 sentinel 条目是 CNE 数据展开产物（如 Jaheira 38 条 `buff_upgrades,100,...` 完全相同，只生效一次），按信号位去重，同组不同 magnitude 取最高（保守；全库仅 3 个真实数据组为此形态，语义待 IC 源码确认）。
+- **真升级各自叠加（第七轮修正·原「取最高」为 bug）**：`required_level<9999` 的 buff_upgrade 是各自可购的永久升级，对同一 base 的多条**全部叠加**（如 Bruenor Rally 有 15 条 magnitude 100~300 分布在 level 150~3130，全部叠加）。原 8.5「同 group 取最高 magnitude」把这些折叠成 1 条，严重低估（Bruenor Rally 实际 +2150% 被算成 +300%）。修正：真升级的去重 key 追加 `upgradeId`，同 magnitude 多条也各自保留（不同 upgrade id = 独立升级）。全库 299 个真升级组受此修正影响。消费侧 `evaluatePlacementFit` 的 pool `addPercent` 本就累加同 pool 信号，修正后 buff 正确叠加。
+- **完全重复去重（历史·已并入 sentinel 路径）**：早期 `derivedSignalKey` 对完全相同 derived signal 去重（commit b7d750f，recognized 15409→12253）。现统一归 sentinel 路径——完全相同 = 同 rarityGroupKey = 去重；真升级不复走此路径。
+- **bonusScale targeting 复用**：`resolveSignalMultiplier` 解析 `bonusScaleOfSignal` 时取 base 的 multiplier 折算（`(basePercent × wrapperMag)/100`），不重新校验 base 的 `positionQualifier` / `targetQualifier`（见下方关注点）。wrapper 自身 filter_targets 合并已实现（第四轮→f389586b）：`collectEffectEntries` 派生时 AND 合并 `normalizeTargetQualifier(wrapper effect)` 到 base targetQualifier（`mergeHeroQualifiers`），wrapper 的 `hero_ids` 白名单等不再丢失（真实样本：hero 82 `buff_upgrades` + `hero_ids:[82]`）。
 
-- **测试（先写）**：同 base 不同 magnitude 的 wrapper 组只保留最高；bonusScale targeting 不一致场景分类与处理策略。
-- **验证**：`npm run test:run`；`data:signal-coverage` 确认稀有度高估消除（重点核对 Lucius/Regis/Halsin/Jaheira 等 wrapper 大户）。
-- **commit**：`fix(data): 8.5 wrapper 稀有度取最高 + bonusScale targeting 复用评估`。
+- **测试**：真升级同 base 不同 magnitude 全保留叠加；真升级同 base 同 magnitude 也全保留；sentinel 完全相同副本去重；sentinel 不同 magnitude 取最高。
+- **验证**：`npm run test:run`（17/17 通过）。
+- **commit**：`fix(data): 8.5 真叠加上级不再误并 + sentinel 产物才去重`。
 
 ---
 
@@ -254,7 +255,7 @@
 - ~~`scoreFormation` 调用 `evaluatePlacementFit` 未显式传 `dimension: 'damage'`~~ → **已落步骤 3.0**（第六轮审计提升为前置步骤，不再仅是关注点）。
 - `resolveSignalMultiplier` 解析 `bonusScaleOfSignal` 时只取 base 的 multiplier，不重新校验 base 的 `positionQualifier` / `targetQualifier`；阶段 8 buff_upgrade 精细化时需评估 base 与外层 targeting 不一致场景。
 - **复合 amount_expr 未解析（20 条）**：`upgrade_amount(N,i)+upgrade_amount(N,i)+...`（5 条纯求和，Brig/Xerophon）、`max_upgrade_amount`/`mult_stack`/`feat_amount`/`upgrade_amount(N,dps_update)`（15 条运行时/命名 index）。全为 `hero_dps_multiplier_mult,0`，`resolveSimpleAmountExpr` 只匹配单一，复合回退得 effect 自身 value=0（低估，保守安全）。与 per_hero_expr 数值表达式同域，**归 `expression-evaluator-plan.md` 数值求值器**（`upgrade_amount` 与 `GetUpgradeAmount` 同类），不归本里程碑阶段 8。
-- **buff_upgrades wrapper 重复去重（已修）/ 稀有度取最高（阶段 8）**：IC 装备系统把同一 buff 按装备槽/稀有度展开成多条 effect 完全相同的 upgrade（仅 id 不同）。第三轮审计发现 Jaheira 38 条 `buff_upgrades,100,9714,9715,9716,9717`（magnitude 全相同=非稀有度差异），每条派生 4 base signal → 152 重复（91% 过度计算）。`collectEffectEntries` 已加 `derivedSignalKey` 对完全相同 derived signal 去重（全库 recognized 15409→12253，-20%）。剩余「同一 buff 不同 magnitude 的稀有度版本取最高」仍归阶段 8 top-N / 稀有度去重。
+- **buff_upgrades wrapper 去重（已修）**：IC 数据中 `required_level>=9999` 的 sentinel 条目被 CNE 展开成完全相同副本（如 Jaheira 38 条 `buff_upgrades,100,9714,...`），只生效一次，按 `rarityGroupKey` 去重。**真升级（`required_level<9999`）对同一 base 的多条全部叠加**（如 Bruenor Rally 15 条 magnitude 100~300），第七轮审计修正原「取最高」bug——真升级 key 追加 upgradeId，同/异 magnitude 多条均各自保留。详见阶段 8.5。
 
 - **未支持的 string target（第四轮审计·2026-07-21）**：`normalizeExplicitTargeting` 的 `STRING_RELATION_MAP` 未覆盖 `other`(56) / `self_slot`(24) / `area`(12) / `active_campaign`(7) / `edge` / `middle_columns` / `front_column` / `bud_setter` / `non_col` / `self_and_behind_and_ahead` 等；未支持者进 unsupportedSignals（保守安全，不静默当作已算）。`other` 语义 = 全队除 source（如 effect_def 214「提高所有其他勇士的生命值」），关联 carryDps effect 仅 2-3 处（`hero_dps_multiplier_mult` 等，余为 health/触发类），精确支持需 `positionQualifier` 增强 excludeSelf 语义，归未来 targeting 精细化。
 - **filter_targets type 全量覆盖（第四轮审计）**：`normalizeTargetQualifier` 已接入 `hero_ids`/`exclude_heroes`（heroId AST，复用 `per_hero_expr` 的 `hero_id==N` 节点）；阵型聚合（`has_neighbour_with_tag`/`by_neighbours`/`dominant_affiliation` 等 ~13 处）+ 存档依赖（`affected_by_upgrade`/`not_affected_by_upgrade` 39 处）type 归 `expression-evaluator-plan.md` formationAggregate / 存档依赖节点；`limit_effect_def_per_hero_attack` / `limit_per_effect`（effect 叠加上限）归阶段 8 buff_upgrade 精细 / step simulation。当前 hero_ids 已在 wrapper 派生路径合并生效（f389586b，hero 82 等 wrapper 派生 signal +210 行带 heroId targetQualifier）；exclude_heroes 多因 base effect `targets:'other'` 进 unsupported，待 positionQualifier excludeSelf 增强后生效。全量登记见 `format-quirks.md`。

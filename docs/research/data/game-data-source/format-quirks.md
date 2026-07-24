@@ -56,6 +56,12 @@
 
 `all` / `all_slots` 在 `normalizeExplicitTargeting` 中映射为 `relation:'any'`（全阵位，status=supported）。第六轮审计发现 `resolveCountRelation` 曾因 `relation==='any'` 返回 null，导致 `hero_dps_mult_per_target_crusader*` 的 `all_slots` 计数目标（effect_def 225/394/442/594 等）在解析阶段被静默丢弃，到不了消费层 `countQualifiedHeroes`（后者已显式支持 `'any'`：跳过 `matchesSlotRelation`，只按 `formationCountQualifier` 计数全阵位匹配英雄）。已修复：`resolveCountRelation` 放行 `'any'`。当前零行为影响（上述 all_slots per_target_crusader 均为孤立 effect_def，无 upgrade 引用；被引用的 all_slots effect_def 505/509/519/527 是 Krull `hero_dps_mult_reduced_by_tag` / Artemis `observance` / Dragonbait `scent_*` 等其它 unsupported kind），修复消除潜在静默丢弃陷阱。
 
-### buff_upgrade wrapper 派生合并 wrapper 自身 filter_targets
+### buff_upgrade wrapper 派生：真升级叠加 vs sentinel 产物去重
 
-`collectEffectEntries` 派生 buff_upgrade signal 时，preset 除继承 base 的 targetQualifier 外，还 AND 合并 `normalizeTargetQualifier(wrapper effect)`（经 `mergeHeroQualifiers`），避免 wrapper 层 filter_targets（如 `hero_ids` 白名单）丢失。真实样本：hero 82 的 `buff_upgrades` + `hero_ids:[82]`。剩余 `resolveSignalMultiplier` 解析 `bonusScaleOfSignal` 时只取 base multiplier、不重新校验 base targeting 的评估仍归阶段 8.5。
+`collectEffectEntries` 派生 buff_upgrade signal 时：
+
+- preset 继承 base 的 targetQualifier，并 AND 合并 `normalizeTargetQualifier(wrapper effect)`（经 `mergeHeroQualifiers`），避免 wrapper 层 filter_targets（如 `hero_ids` 白名单）丢失。真实样本：hero 82 的 `buff_upgrades` + `hero_ids:[82]`。
+- **去重按 `required_level` 区分**（第七轮审计·2026-07-24 修正）：
+  - 真升级（`required_level<9999`）：各自可购的永久升级，对同一 base 的多条**全部叠加**（如 Bruenor Rally 15 条 magnitude 100~300 分布在 level 150~3130）。去重 key 追加 `upgradeId`，同/异 magnitude 多条均各自保留。原「同 group 取最高 magnitude」是 bug——把 299 个真升级组的叠加链折叠成单条，严重低估。
+  - sentinel 产物（`required_level>=9999`）：CNE 把非可购逻辑 buff 展开成完全相同副本（如 Jaheira 38 条 `buff_upgrades,100,...`），只生效一次，按 `rarityGroupKey`（kind/amountFunc/stackFunc/base targeting，排除 magnitude）去重，同组不同 magnitude 取最高（保守，全库仅 3 组）。
+- 消费侧 `evaluatePlacementFit` 的 pool `addPercent` 累加同 pool 信号，修正后真升级 buff 正确叠加（base + Σ(basePercent × mag_i)/100）。

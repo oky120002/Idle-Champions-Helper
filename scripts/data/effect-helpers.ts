@@ -1102,10 +1102,23 @@ export function splitEffectString(effectString: unknown): { effectName: string; 
   return { effectName: effectName ?? '', effectValue }
 }
 
-// derived signal 稀有度去重 key：捕获影响 pool 聚合语义的字段，但排除 magnitude（value/rawEffect 的数值）。
-// IC 装备系统把同一 buff 按装备槽/稀有度展开成多条 upgrade（magnitude 不同），
-// 游戏只生效最高稀有度（同 group 不叠加）。group 内仅保留 |value| 最大者（阶段 8.5）。
-// 也覆盖完全相同的 derived signal 去重（magnitude 相同 → 同 group → 保留其一）。
+// IC upgrade_defines.required_level 的 sentinel：>= 此值表示非正常可购升级
+// （CNE 数据展开产物/模板，如 Jaheira 38 条 required_level=9999 的 buff_upgrades,100,... 完全相同）。
+// 真升级（required_level<9999）是各自可购的永久升级，对同一 base 的多条全部叠加生效。
+const SENTINEL_REQUIRED_LEVEL = 9999
+
+function readRequiredLevel(effect: unknown): number | null {
+  const value = asRecord(effect)?.requiredLevel
+  return typeof value === 'number' && Number.isFinite(value) ? value : null
+}
+
+// derived signal 身份 key：捕获影响 pool 聚合语义的字段（kind/amountFunc/stackFunc/base targeting），
+// 排除 magnitude（value）。用于识别「同一信号位」。
+// 去重策略（collectEffectEntries）：
+// - sentinel 产物（required_level>=9999）：CNE 把同一逻辑 buff 序列化成多条完全相同副本，只生效一次；
+//   按 rarityGroupKey 去重，同组不同 magnitude 取最高（保守，仅 3 个真实数据组，语义待 IC 源码确认）。
+// - 真升级（required_level<9999）：各自独立叠加，key 追加 upgradeId 防止互斥折叠
+//   （Bruenor Rally 15 条 magnitude 100~300 在不同 level，全叠加；同 magnitude 的多条也各自叠加）。
 function rarityGroupKey(preset: HeroAbilitySignal): string {
   return JSON.stringify({
     kind: preset.kind,
@@ -1164,11 +1177,18 @@ export function collectEffectEntries(detail: unknown): EffectEntry[] {
           formationCountPositionQualifier: buffSeed.formationCountPositionQualifier ?? null,
         }
 
-        const key = rarityGroupKey(preset)
+        const requiredLevel = readRequiredLevel(entry.effect)
+        const isSentinel = requiredLevel !== null && requiredLevel >= SENTINEL_REQUIRED_LEVEL
+        // 真升级各自叠加：key 追加 upgradeId 防止同 base 多条被折叠。
+        // sentinel 产物按信号位去重（CNE 展开副本只生效一次），同组不同 magnitude 取最高。
+        const key = isSentinel
+          ? rarityGroupKey(preset)
+          : `${rarityGroupKey(preset)}@${entry.upgradeId ?? '?'}`
         const existing = derivedByKey.get(key)
-        // 稀有度去重（阶段 8.5）：同 group 保留 |value| 最大者（游戏只生效最高稀有度）。
-        // 完全相同的 derived signal（magnitude 相同）也归同 group，保留其一。
-        if (!existing || Math.abs(preset.value ?? 0) > Math.abs(existing.signalPreset?.value ?? 0)) {
+        if (
+          !existing
+          || (isSentinel && Math.abs(preset.value ?? 0) > Math.abs(existing.signalPreset?.value ?? 0))
+        ) {
           derivedByKey.set(key, buildEffectEntry({
             effectString: entry.effectString,
             effect: entry.effect,
