@@ -1,0 +1,119 @@
+.champion-roster {
+  position: relative;
+}
+
+.champion-roster__panel {
+  gap: 1rem;
+}
+
+.champion-roster__status-note {
+  margin: 0;
+  padding: 0.76rem 0.88rem;
+  border-radius: 14px;
+  border: 1px solid rgba(227, 214, 193, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 0.74rem;
+  line-height: 1.55;
+  color: rgba(242, 239, 230, 0.72);
+}
+
+.champion-roster__columns {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(5.6rem, 1fr));
+  gap: 0.72rem;
+  align-items: start;
+  overflow-x: auto;
+  padding-bottom: 0.35rem;
+}
+
+.champion-roster__column {
+  display: grid;
+  gap: 0.62rem;
+  min-width: 5.6rem;
+}
+
+.champion-roster__column-header {
+  display: grid;
+  gap: 0.22rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid rgba(227, 214, 193, 0.12);
+}
+
+.champion-roster__column-eyebrow {
+  margin: 0;
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(198, 181, 157, 0.72);
+}
+
+.champion-roster__column-title {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.05;
+  color: #f7efe3;
+}
+
+.champion-roster__column-count {
+  font-size: 0.74rem;
+  color: rgba(242, 239, 230, 0.56);
+}
+
+.champion-roster__tile-list {
+  display: grid;
+  gap: 0.42rem;
+}
+
+.champion-roster-tile {
+  position: relative;
+  display: grid;
+  gap: 0.26rem;
+  justify-items: center;
+  padding: 0.44rem 0.36rem 0.46rem;
+  border: 1px solid rgba(227, 214, 193, 0.12);
+  border-radius: 14px;
+  background: rgba(13, 18, 26, 0.68);
+  color: #f7efe3;
+  cursor: pointer;
+  transition: border-color 140ms ease, transform 140ms ease, opacity 140ms ease, filter 140ms ease;
+}
+
+.champion-roster-tile:hover {
+  transform: translateY(-1px);
+  border-color: rgba(200, 167, 127, 0.34);
+}
+
+.champion-roster-tile--match {
+  background:
+    radial-gradient(circle at top, rgba(200, 167, 127, 0.18), transparent 56%),
+    linear-gradient(180deg, rgba(27, 20, 13, 0.92), rgba(12, 17, 24, 0.9));
+}
+
+.champion-roster-tile--dim-owned {
+  opacity: 0.6;
+  filter: saturate(0.48);
+}
+
+.champion-roster-tile--dim-unowned {
+  opacity: 0.52;
+  filter: grayscale(1) saturate(0);
+}
+
+.champion-roster-tile--open {
+  border-color: rgba(200, 167, 127, 0.48);
+  box-shadow: 0 0 0 1px rgba(200, 167, 127, 0.18);
+}
+
+.champion-roster-tile__name {
+  display: block;
+  width: 100%;
+  font-size: 0.76rem;
+  line-height: 1.08;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.champion-roster-tile__meta {
+  font-size: 0.65rem;
+  color: rgba(242, 239, 230, 0.6);
+}

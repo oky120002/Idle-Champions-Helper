@@ -1,0 +1,60 @@
+.workbench-page__toolbar-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.workbench-page__toolbar-lead-status-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.56rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.workbench-page__toolbar-lead-status-mark {
+  flex: 0 0 auto;
+}
+
+.workbench-page__toolbar-mark-dot {
+  width: 0.46rem;
+  height: 0.46rem;
+  border-radius: 999px;
+  background: var(--workbench-page-accent, var(--color-copper));
+  box-shadow: 0 0 0 0.14rem color-mix(in oklch, var(--workbench-page-accent, var(--color-copper)) 16%, transparent);
+}
+
+.workbench-page__toolbar-mark-label,
+.workbench-page__toolbar-kicker {
+  color: rgba(255, 243, 223, 0.68);
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.workbench-page__toolbar-lead-status {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 10.5rem;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 1.58rem;
+  padding: 0.16rem 0.54rem 0.18rem;
+  border: 1px solid rgba(227, 214, 193, 0.08);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.024), rgba(255, 255, 255, 0)),
+    rgba(9, 14, 20, 0.16);
+  color: rgba(255, 248, 237, 0.76);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: inset 0 1px 0 rgba(255, 243, 223, 0.02);
+}

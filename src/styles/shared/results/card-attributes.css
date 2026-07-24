@@ -1,0 +1,82 @@
+.result-card__attributes {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  margin-top: 0.58rem;
+  padding-right: 0;
+  align-self: start;
+}
+
+.result-card__attribute-trail {
+  --champion-card-attribute-scale: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  width: 100%;
+  max-height: calc((1.62rem * 3) + (0.3rem * 2));
+  gap: calc(0.3rem * var(--champion-card-attribute-scale));
+  overflow: hidden;
+}
+
+.result-card__attributes-empty {
+  margin: 0;
+  min-height: 100%;
+  padding: 0.18rem 0 0;
+  color: rgba(242, 239, 230, 0.56);
+}
+
+.result-card__attribute-pill {
+  flex: 0 0 auto;
+  min-height: calc(1.62rem * var(--champion-card-attribute-scale));
+  max-width: 100%;
+  padding: calc(0.18rem * var(--champion-card-attribute-scale)) calc(0.5rem * var(--champion-card-attribute-scale));
+  font-size: calc(0.72rem * var(--champion-card-attribute-scale));
+  white-space: normal;
+  line-height: 1.12;
+  border-color: var(--result-card-attribute-border, rgba(227, 214, 193, 0.08));
+  background: var(--result-card-attribute-fill, rgba(255, 255, 255, 0.026));
+  color: var(--result-card-attribute-text, rgba(242, 239, 230, 0.82));
+  box-shadow: none;
+}
+
+.result-card__attribute-pill--race {
+  --result-card-attribute-fill: rgba(74, 112, 139, 0.16);
+  --result-card-attribute-border: rgba(129, 171, 198, 0.18);
+  --result-card-attribute-text: rgba(218, 235, 245, 0.88);
+}
+
+.result-card__attribute-pill--gender {
+  --result-card-attribute-fill: rgba(108, 80, 103, 0.16);
+  --result-card-attribute-border: rgba(166, 128, 159, 0.18);
+  --result-card-attribute-text: rgba(239, 223, 236, 0.84);
+}
+
+.result-card__attribute-pill--alignment {
+  --result-card-attribute-fill: rgba(120, 97, 56, 0.17);
+  --result-card-attribute-border: rgba(191, 159, 102, 0.18);
+  --result-card-attribute-text: rgba(249, 234, 202, 0.86);
+}
+
+.result-card__attribute-pill--profession {
+  --result-card-attribute-fill: rgba(76, 102, 92, 0.18);
+  --result-card-attribute-border: rgba(124, 160, 142, 0.18);
+  --result-card-attribute-text: rgba(220, 239, 230, 0.86);
+}
+
+.result-card__attribute-pill--acquisition {
+  --result-card-attribute-fill: rgba(84, 102, 126, 0.18);
+  --result-card-attribute-border: rgba(140, 165, 192, 0.18);
+  --result-card-attribute-text: rgba(222, 234, 247, 0.86);
+}
+
+.result-card__attribute-pill--mechanics {
+  --result-card-attribute-fill: rgba(86, 109, 115, 0.18);
+  --result-card-attribute-border: rgba(134, 169, 175, 0.18);
+  --result-card-attribute-text: rgba(221, 241, 243, 0.86);
+}
+
+.result-card__attribute-pill--other {
+  --result-card-attribute-fill: rgba(255, 255, 255, 0.04);
+  --result-card-attribute-border: rgba(227, 214, 193, 0.08);
+  --result-card-attribute-text: rgba(242, 239, 230, 0.78);
+}

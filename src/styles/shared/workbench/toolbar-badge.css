@@ -1,0 +1,33 @@
+.workbench-page__toolbar-badge {
+  position: relative;
+  overflow: clip;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.34rem;
+  min-height: var(--workbench-chip-min-height);
+  padding: var(--workbench-chip-padding);
+  border: 1px solid var(--workbench-chip-border-color);
+  border-radius: var(--workbench-chip-radius);
+  background: var(--workbench-chip-background);
+  color: var(--workbench-chip-text);
+  font-size: var(--workbench-chip-font-size);
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+  box-shadow: var(--workbench-chip-shadow);
+}
+
+.workbench-page__toolbar-badge::before {
+  content: none;
+}
+
+.workbench-page__toolbar-badge.filter-sidebar-panel__badge {
+  min-height: 1.64rem;
+  padding: 0.2rem 0.56rem 0.22rem;
+  border-color: rgba(227, 214, 193, 0.08);
+  background: var(--workbench-chip-background-muted);
+  color: rgba(255, 248, 237, 0.82);
+}
+
+.workbench-page__toolbar-badge--muted {
+  color: var(--workbench-chip-text-muted);
+}

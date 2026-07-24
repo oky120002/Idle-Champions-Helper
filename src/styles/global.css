@@ -18,7 +18,11 @@
 @import './shared/filters/active-filter-bar.css' layer(shared.filters);
 @import './shared/filters/sidebar.css' layer(shared.filters);
 @import './shared/workbench/scaffold.css' layer(shared.workbench);
-@import './shared/workbench/toolbar.css' layer(shared.workbench);
+@import './shared/workbench/toolbar-mark.css' layer(shared.workbench);
+@import './shared/workbench/toolbar-tabs.css' layer(shared.workbench);
+@import './shared/workbench/toolbar-badge.css' layer(shared.workbench);
+@import './shared/workbench/toolbar-actions.css' layer(shared.workbench);
+@import './shared/workbench/toolbar-responsive.css' layer(shared.workbench);
 @import './shared/workbench/filter-header.css' layer(shared.workbench);
 @import './shared/workbench/shell.css' layer(shared.workbench);
 @import './shared/workbench/toggle.css' layer(shared.workbench);
@@ -30,6 +34,7 @@
 @import './shared/results/layout.css' layer(shared.results);
 @import './shared/results/avatar.css' layer(shared.results);
 @import './shared/results/card.css' layer(shared.results);
+@import './shared/results/card-attributes.css' layer(shared.results);
 @import './shared/results/responsive.css' layer(shared.results);
 @import './shared/formation/library.css' layer(shared.formation);
 @import './shared/formation/board.css' layer(shared.formation);
@@ -41,7 +46,11 @@
 @import './components/visual-workbench-resources.css' layer(components.visual-workbench);
 @import './components/visual-workbench-responsive.css' layer(components.visual-workbench);
 @import './components/skelanim-player.css' layer(components.skelanim-player);
-@import './pages/champions.css' layer(pages.champions);
+@import './pages/champions/roster.css' layer(pages.champions);
+@import './pages/champions/summary.css' layer(pages.champions);
+@import './pages/champions/flyout.css' layer(pages.champions);
+@import './pages/champions/slot.css' layer(pages.champions);
+@import './pages/champions/responsive.css' layer(pages.champions);
 @import './pages/champion-detail/shell.css' layer(pages.champion-detail.shell);
 @import './pages/champion-detail/toolbar.css' layer(pages.champion-detail.toolbar);
 @import './pages/champion-detail/dossier.css' layer(pages.champion-detail.dossier);

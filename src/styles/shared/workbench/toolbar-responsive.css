@@ -1,0 +1,90 @@
+@media (min-width: 1080px) {
+  .workbench-page__toolbar-copy {
+    align-items: baseline;
+    grid-template-columns: auto auto minmax(0, 1fr);
+    column-gap: 0.62rem;
+  }
+}
+
+@media (max-width: 1360px) and (min-width: 1080px) {
+  .workbench-page__toolbar-detail {
+    display: none;
+  }
+}
+
+@media (max-width: 1079.98px) {
+  .workbench-page__toolbar-copy {
+    gap: 0.16rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .workbench-page__toolbar-title {
+    font-size: 0.92rem;
+  }
+
+  .workbench-page__toolbar-tablist {
+    flex-wrap: wrap;
+    gap: 0.34rem;
+  }
+
+  .workbench-page__toolbar-group {
+    flex-wrap: wrap;
+    gap: 0.42rem;
+  }
+
+  .workbench-page__toolbar-tab {
+    flex: 1 1 auto;
+    min-height: 2.34rem;
+    padding-inline: 0.62rem;
+    font-size: 0.82rem;
+  }
+
+  .workbench-page__toolbar-lead-status-group {
+    gap: 0.42rem;
+  }
+
+  .workbench-page__toolbar-lead-status {
+    max-width: 8.2rem;
+    padding-inline: 0.46rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+  }
+
+  .workbench-page__toolbar-action-cluster {
+    gap: 0.28rem;
+  }
+
+  .workbench-page__toolbar-action {
+    min-height: 1.54rem;
+    padding-inline: 0.58rem;
+    font-size: 0.72rem;
+  }
+
+  .workbench-page .workbench-page__toolbar-action.workbench-page__toolbar-action--icon-only {
+    width: 2.08rem;
+    min-width: 2.08rem;
+    padding-inline: 0;
+  }
+
+  .workbench-page__toolbar-action .action-button__icon svg {
+    width: 1.04rem;
+    height: 1.04rem;
+  }
+
+  .workbench-page .workbench-page__toolbar-action.workbench-page__toolbar-action--share.workbench-page__toolbar-action--icon-only {
+    width: 2.08rem;
+    min-width: 2.08rem;
+    min-height: 2.08rem;
+    padding: 0;
+  }
+
+  .workbench-page .workbench-page__toolbar-action.workbench-page__toolbar-action--icon-only .action-button__icon svg {
+    width: 1.08rem;
+    height: 1.08rem;
+  }
+
+  .workbench-page__toolbar-detail {
+    font-size: 0.76rem;
+  }
+}
