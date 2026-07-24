@@ -497,10 +497,14 @@ function resolveEntrySignal(entry: EffectEntry): EffectSignalResult | null {
 function collectRawEffectEntries(detail: unknown): {
   effectEntries: EffectEntry[]
   upgradeEffectEntriesById: Map<string, EffectEntry[]>
+  staticDpsMults: Map<string, number>
 } {
   const detailRecord = asRecord(detail)
   const effectEntries: EffectEntry[] = []
   const upgradeEffectEntriesById = new Map<string, EffectEntry[]>()
+  // upgrade id → static_dps_mult（CNE 静态 dps 乘数近似 1.25–5）；其 effect 多为复杂机制
+  // （target_attacking_monsters_hero_dps_mult 等）进 unsupported，static_dps_mult 作 fallback。
+  const staticDpsMults = new Map<string, number>()
   // upgrade id → 该 upgrade 的 effect_keys payloads；供 amount_expr='upgrade_amount(id,index)'
   // 跨 upgrade 解析目标 effect 的 amount（真实数据有少量跨 upgrade 引用）。
   const upgradePayloadsById = new Map<string, Array<ParsedEffectPayload | null | undefined>>()
@@ -512,6 +516,16 @@ function collectRawEffectEntries(detail: unknown): {
     const upgradeId = typeof upgrade.id === 'string' || typeof upgrade.id === 'number'
       ? String(upgrade.id)
       : ''
+
+    const staticDpsMultRaw = upgrade.staticDpsMult
+    const staticDpsMult = typeof staticDpsMultRaw === 'number'
+      ? staticDpsMultRaw
+      : typeof staticDpsMultRaw === 'string' && staticDpsMultRaw !== ''
+        ? Number.parseFloat(staticDpsMultRaw)
+        : NaN
+    if (Number.isFinite(staticDpsMult) && staticDpsMult > 1 && upgradeId) {
+      staticDpsMults.set(upgradeId, staticDpsMult)
+    }
 
     if (typeof upgrade.effectReference === 'string') {
       const effectPayload = parseEffectPayload(upgrade.effectReference)
@@ -627,7 +641,7 @@ function collectRawEffectEntries(detail: unknown): {
     entry.upgradePayloadsById = upgradePayloadsById
   }
 
-  return { effectEntries, upgradeEffectEntriesById }
+  return { effectEntries, upgradeEffectEntriesById, staticDpsMults }
 }
 
 function summarizeBuffUpgradeBase(
@@ -1133,7 +1147,7 @@ function rarityGroupKey(preset: HeroAbilitySignal): string {
 }
 
 export function collectEffectEntries(detail: unknown): EffectEntry[] {
-  const { effectEntries, upgradeEffectEntriesById } = collectRawEffectEntries(detail)
+  const { effectEntries, upgradeEffectEntriesById, staticDpsMults } = collectRawEffectEntries(detail)
 
   const derivedByKey = new Map<string, EffectEntry>()
 
@@ -1204,5 +1218,45 @@ export function collectEffectEntries(detail: unknown): EffectEntry[] {
     }
   }
 
-  return [...effectEntries, ...derivedByKey.values()]
+  const allEntries = [...effectEntries, ...derivedByKey.values()]
+
+  // static_dps_mult fallback（evolution-plan Π(static_dps_mults)）：upgrade 带 static_dps_mult
+  // （CNE 静态 dps 乘数近似）且其 effect 未产出可解析 signal（复杂机制 effect 进 unsupported）时，
+  // 生成一个 mult signal 作为静态近似，避免 dps 贡献丢失。防重复：该 upgrade 已有可解析
+  // signal（含 wrapper 派生的 signalPreset entry）时不 fallback。
+  if (staticDpsMults.size > 0) {
+    const upgradesWithSignal = new Set<string>()
+    for (const entry of allEntries) {
+      if (!entry.upgradeId) continue
+      if (entry.signalPreset) {
+        upgradesWithSignal.add(entry.upgradeId)
+        continue
+      }
+      const result = resolveEntrySignal(entry)
+      if (result?.ok) {
+        upgradesWithSignal.add(entry.upgradeId)
+      }
+    }
+    for (const [upgradeId, mult] of staticDpsMults) {
+      if (upgradesWithSignal.has(upgradeId)) continue
+      allEntries.push(buildEffectEntry({
+        effectString: `static_dps_mult,${mult}`,
+        effect: {},
+        effectPayload: null,
+        effectPayloads: [],
+        sourceBucket: 'static-dps',
+        upgradeId,
+        bucketOverride: 'carrySignals',
+        signalPreset: {
+          kind: 'heroDpsMultiplier',
+          value: (mult - 1) * 100,
+          rawEffect: `static_dps_mult,${mult}`,
+          source: 'official-parsed',
+          amountFunc: 'mult',
+        },
+      }))
+    }
+  }
+
+  return allEntries
 }

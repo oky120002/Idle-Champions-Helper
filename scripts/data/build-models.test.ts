@@ -983,6 +983,56 @@ it('collectEffectEntries 真升级同 base 同 magnitude 也全保留（独立�
   expect(derived.length).toBe(3)
 })
 
+it('collectEffectEntries static_dps_mult fallback：复杂 effect 进 unsupported 时用 CNE 静态近似', () => {
+  // upgrade 带 static_dps_mult（CNE 静态 dps 乘数近似），其 effect 是复杂机制
+  // （target_attacking_monsters_hero_dps_mult 等）resolveDpsSignal 无 parser → 进 unsupported；
+  // static_dps_mult 接管，生成 heroDpsMultiplier mult signal（carryDps self-buff），避免 dps 丢失。
+  // 第八轮审计：35 个 upgrade 受此影响（evolution-plan Π(static_dps_mults) 数据源）。
+  const detail = {
+    upgrades: [
+      {
+        id: '10',
+        staticDpsMult: '4',
+        effectReference: 'target_attacking_monsters_hero_dps_mult,100,10',
+        effectDefinition: null,
+      },
+    ],
+    loot: [],
+    legendaryEffects: [],
+    feats: [],
+  }
+  const entries = collectEffectEntries(detail) as EffectEntryLike[]
+  const fallback = entries.filter((entry) => entry.sourceBucket === 'static-dps')
+  expect(fallback.length).toBe(1)
+  expect(fallback[0]?.signalPreset.kind).toBe('heroDpsMultiplier')
+  expect(fallback[0]?.signalPreset.value).toBe(300) // (4-1)*100 → mult 后 =4×
+  expect(fallback[0]?.signalPreset.amountFunc).toBe('mult')
+})
+
+it('collectEffectEntries static_dps_mult 不与可解析 effect 重复（防双重计算）', () => {
+  // upgrade 的 effect 可解析（hero_dps_multiplier_mult,100）时，static_dps_mult 不 fallback，
+  // 否则 effect signal + static_dps_mult signal 双重计算（高估）。
+  const detail = {
+    upgrades: [
+      {
+        id: '11',
+        staticDpsMult: '4',
+        effectReference: 'hero_dps_multiplier_mult,100',
+        effectDefinition: null,
+      },
+    ],
+    loot: [],
+    legendaryEffects: [],
+    feats: [],
+  }
+  const entries = collectEffectEntries(detail) as EffectEntryLike[]
+  const fallback = entries.filter((entry) => entry.sourceBucket === 'static-dps')
+  expect(fallback.length).toBe(0)
+  // effect signal 仍在（可解析，未丢失）
+  const dps = entries.filter((entry) => entry.effectString === 'hero_dps_multiplier_mult,100')
+  expect(dps.length).toBe(1)
+})
+
 it('collectEffectEntries 派生 buff_upgrade wrapper 时合并 wrapper 自身 filter_targets', () => {
   // wrapper 自身的 filter_targets（如 hero_ids 白名单）限定 buff 只对特定英雄生效；
   // 此前 preset 只继承 base 的 targetQualifier，wrapper 自身 filter_targets 丢失。
