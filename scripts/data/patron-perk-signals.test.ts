@@ -68,7 +68,7 @@ describe('parsePatronPerkSignals', () => {
 
   test('levels 缺失默认 1（防御）', () => {
     const signals = parsePatronPerkSignals([
-      { patronId: '1', levels: undefined, effects: [{ effectString: 'global_dps_multiplier_mult,$replace', perLevel: 100 }] } as unknown as RawPerk,
+      { patronId: '1', levels: undefined, effects: [{ effectString: 'global_dps_multiplier_mult,$replace', perLevel: 100 }] },
     ])
     expect(signals[0]!.signal.value).toBe(100)
   })
