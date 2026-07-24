@@ -66,4 +66,15 @@ repair: rebuild
     - 修复方向：evaluatePlacementFit 支持只产 scoreBreakdown（跳过 pool 聚合），或合并到三重调用消除方案
     - 证据：steadyStateScoring.ts 只 mergePools 了 damage 的 fit.pools（:266），critFit.pools/vulnFit.pools 无引用
 
+- upgrade.static_dps_mult 35 个未读取，复杂 effect 进 unsupported 丢失 dps（Π(static_dps_mults) 未实现） <!-- auto-todo:id=atd_b4fdf0c986 -->
+  - 记录时间: `2026-07-24T14:02:27+08:00`
+  - 类型: follow-up
+  - 位置: `scripts/data/effect-helpers.ts:508`
+  - 备注: upgrade.static_dps_mult（CNE 静态 dps 乘数近似 1.25–5）标记 35 个 upgrade，其 effectReference 指向复杂机制 effect（target_attacking_monsters_hero_dps_mult/hero_dps_multiplier_from_temp_hp/hero_dps_mult_per_target_unique_attacker/change_base_attack_per_num_attacking/storm_aura_storm_soul），resolveDpsSignal 无 parser → 全进 unsupportedSignals
+    - 影响：35 个 upgrade 的 dps 贡献丢失，低估 carryDps
+    - 证据：collectRawEffectEntries 只看 effectReference/effect_keys，不读 upgrade.static_dps_mult
+    - 关联：evolution-plan 加成调研 static_dps_only 特殊 pool + 真实 DPS 公式 Π(static_dps_mults)
+    - 处置：static_dps pool 需 proper 设计（独立乘区 Π，非百分比 add）+ effect 进 unsupported 才 fallback（防重复），归 M2 加成聚合补强
+    - 详见：milestone-2-data-completeness.md 关注点（第八轮审计）
+
 <!-- auto-todo:end -->

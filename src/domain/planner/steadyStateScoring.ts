@@ -130,18 +130,27 @@ function computeCritFactor(parts: PlacementFitScorePart[]): number {
 }
 
 /**
- * vulnerability factor（阶段 6.3/6.4）：已按场景怪物类型匹配的 vulnerability Π 进 DPS。
- * 匹配筛选（monsterTags vs scenario.enemyTypes）在收集循环完成（批判③ 条件性匹配，保守跳过不匹配）；
- * 此处仅对已匹配的 active 信号 Π 累乘（vulnerability 是受伤倍率，add/mult 都还原为乘数）。
+ * vulnerability factor（阶段 6.3/6.4）：已按场景怪物类型匹配的 vulnerability 进 DPS。
+ * 匹配筛选（monsterTags vs scenario.enemyTypes）在收集循环完成（批判③ 条件性匹配，保守跳过不匹配）。
+ * 聚合与 damage/gold pool 一致：add 类（amountFunc 缺省）同 pool 百分比相加 (1+Σadd/100)，
+ * mult 类独立累乘；pool 内 (1+Σadd/100)×Πmult。原一律 Π 累乘把两个 +100% 易伤算成 4（正确 3）。
  */
 function computeVulnerabilityFactor(parts: PlacementFitScorePart[]): number {
-  let factor = 1
+  let addPercent = 0
+  let multFactor = 1
   let hasVuln = false
   for (const part of parts) {
-    factor *= part.multiplier
+    if (part.amountFunc === 'mult') {
+      multFactor *= part.multiplier
+    } else {
+      addPercent += (part.multiplier - 1) * 100
+    }
     hasVuln = true
   }
-  return hasVuln ? factor : 1
+  if (!hasVuln) {
+    return 1
+  }
+  return (1 + addPercent / 100) * multFactor
 }
 
 /**

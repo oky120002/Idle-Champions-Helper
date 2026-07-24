@@ -326,4 +326,34 @@ describe('steady state scoring', () => {
     expect(withoutMatch.score.toNumber()).toBeCloseTo(10 * 1.06, 3)
     expect(withoutMatch.activeSignalKinds.has('enemyVulnerability')).toBe(false)
   })
+
+  it('多个 add 类 vulnerability 同 pool 相加而非累乘（6.4 pool 语义）', () => {
+    // 回归（第八轮审计）：vulnerability 的 add 类信号（amountFunc 缺省=add）必须同 pool
+    // 相加 (1+Σadd/100)，与 damage/gold/health pool 聚合一致。原 computeVulnerabilityFactor
+    // 一律 Π 累乘，把两个 +100% 易伤算成 2×2=4（正确 1+(100+100)/100=3），高估 carryDps。
+    const carry = createHero('carry', { seat: 1, baseDamage: 10 })
+    const vulnA = createHero('vuln-a', {
+      seat: 2,
+      supportSignals: [
+        { kind: 'enemyVulnerability', value: 100, rawEffect: 'damage_increase,100', source: 'official-parsed', monsterTags: null },
+      ],
+    })
+    const vulnB = createHero('vuln-b', {
+      seat: 3,
+      supportSignals: [
+        { kind: 'enemyVulnerability', value: 100, rawEffect: 'damage_increase,100', source: 'official-parsed', monsterTags: null },
+      ],
+    })
+    const heroesById = new Map([['carry', carry], ['vuln-a', vulnA], ['vuln-b', vulnB]])
+
+    const result = scoreFormation({
+      placements: { s1: 'vuln-a', s2: 'carry', s3: 'vuln-b' },
+      heroesById,
+      scenario,
+    })
+
+    // add pool: 1 + (100+100)/100 = 3；carryDps = 10 × 1.06 × 3 = 31.8
+    // 累乘 bug 会得 10 × 1.06 × 4 = 42.4
+    expect(result.score.toNumber()).toBeCloseTo(10 * 1.06 * 3, 4)
+  })
 })

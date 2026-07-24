@@ -132,6 +132,7 @@ BUD = 阵型近期最高单次伤害。
 - **pool 内 add/mult**（`amountFunc`）：add/默认 → Σ percent；mult → Π multiplier。
 - **pool 间乘法**。
 - **特殊 pool**：`formation_effect`/`static_dps_only`/`manual_bonus_calc`/`not_buffable`。
+  - **`static_dps_only` 未实现（第八轮审计·2026-07-24）**：35 个 upgrade 带 `static_dps_mult`（CNE 静态 dps 乘数 1.25–5），其 effect_string 是复杂机制（`target_attacking_monsters_hero_dps_mult`/`hero_dps_multiplier_from_temp_hp`/`hero_dps_mult_per_target_unique_attacker`/`change_base_attack_per_num_attacking`），`resolveDpsSignal` 无 parser → 进 unsupported；`upgrade.static_dps_mult` 字段未被 `collectRawEffectEntries` 读取，35 个 upgrade 的 dps 贡献丢失。实现路径：读 `static_dps_mult`，effect 进 unsupported 时 fallback 生成 mult signal（独立乘区 Π，`value=(staticDpsMult−1)×100`），需防 effect 可解析时重复。详见 milestone-2 关注点。
 - mult 只占 2.8%（209/7535），add 是主体。
 
 ### 真实 DPS 公式（阶段 2 目标）
@@ -142,7 +143,7 @@ hero_final_dps = base_dps
   × Π(formation_effects)
   × Π(static_dps_mults)
   × crit_factor            // 1 + Σ(crit_chance)·(crit_damage_mult−1)   [阶段 4]
-  × Π(enemy_vulnerability) // [阶段 6]
+  × enemy_vulnerability_pool // Σ(add) → Π(mult)，按怪物 tag 条件匹配 [阶段 6]
 ```
 
 ### unit 字段

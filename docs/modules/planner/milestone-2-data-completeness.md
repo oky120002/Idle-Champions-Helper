@@ -92,7 +92,8 @@
 **风险**：IC 英雄大部分不死，独立模式价值有限。
 
 ### 5.1 解析 health/healing/damage_reduction effect [x]
-- **改动**：`normalizeEffectSignal` 加 health/healing/damage_reduction 分支（`health_mult`/`health_add`/`healing_mult`/`global_health_mult`，~580 条；`damage_reduction*` ~40）。
+- **改动**：`normalizeEffectSignal` 加 health/healing/damage_reduction 分支（`health_mult`/`healing_mult`/`global_healing_mult`/`global_health_mult`/`increase_health_by_source_percent`，~270 条百分比；`damage_reduction*` ~40）。
+- **`health_add` 留 stage 10（第八轮审计修正）**：`health_add`（413 条）是 **flat 固定生命值**（value 0–90000，如 `health_add,500`=+500HP），非百分比；进当前百分比 survival pool 会把 +500HP 误算成 +500%。survival 维度整体不消费（5.3 留 stage 10），`health_add` 的 flat 聚合（`effectiveHealth=(base+Σflat)×health_pool`）与 survival 消费一并实现，当前进 unsupportedSignals（非静默，有 note）。原 5.1 文案「health_add…~580 条」把 flat 误归百分比，已修正。
 - **测试（先写）**：各子类解析正确。
 - **验证**：`npm run test:run`；coverage 显示 health 覆盖。
 - **commit**：`feat(data): 5.1 解析 health/healing/damage_reduction effect`。
@@ -129,13 +130,14 @@
 - **commit**：`feat(data): 6.2 解析 vulnerability effect`。
 
 ### 6.3 条件性匹配（批判③） [x]
-- **改动**：vulnerability 按场景怪物类型匹配（非简单全局 Π）；保留 monster tag qualifier。
+- **改动**：vulnerability 按场景怪物类型条件性匹配（monsterTags vs scenario.enemyTypes）；保留 monster tag qualifier。
 - **测试（先写）**：怪物 tag 匹配时 vulnerability 生效；不匹配时跳过。
 - **验证**：`npm run test:run`。
 - **commit**：`feat(planner): 6.3 vulnerability 条件性匹配`。
 
 ### 6.4 vulnerability pool 进 DPS [x]
-- **改动**：`final_dps × vulnerabilityPool`（匹配的 vulnerability Π）。
+- **改动**：`final_dps × vulnerabilityPool`（匹配的 vulnerability add 类同 pool 相加 (1+Σadd/100)、mult 类累乘，与 damage pool 聚合一致）。
+> **第八轮审计修正（2026-07-24）**：原描述「匹配的 vulnerability Π 累乘」错误——`computeVulnerabilityFactor` 对所有 vuln part 一律累乘，而真实数据 16/20 是 add 类（`damage_increase`/`increase_*`/`bonus_*`），被累乘后两个 +100% 易伤算成 2×2=4（正确 1+(100+100)/100=3），高估 carryDps。修正为 add/mult 分流聚合，与 damage/gold pool 一致；测试补「多个 add 类 vuln 同 pool 相加」。
 - **测试**：含 vulnerability 的 carryDps > 不含；条件不满足时不变。
 - **验证**：`npm run test:run`。
 - **commit**：`feat(planner): 6.4 vulnerability 进 DPS`。
@@ -265,5 +267,8 @@
 - **`target_filters_or` 数组内 OR 语义未确认（第六轮审计·待游戏源码确认）**：`getRawFilters` 把 `target_filters_or` 与 `target_filters`/`filter_targets` 一起收集，`normalizeTargetQualifier` 统一按 AND 合并；字段名 `_or` 暗示数组内 OR（任一匹配）。当前零影响（已引用 effect_keys 中全为单 filter，AND=OR；唯一多 filter 样本 effect_def 225 孤立无引用）。保守保留 AND（比 OR 严格→低估=安全方向）。
   - **触发条件**：raw 出现「被引用 + 2+ filter 的 target_filters_or」时，必须先拿 IC 源码/社区文档确认 OR 语义，再在 `normalizeTargetQualifier` 把 `target_filters_or` 单独按 OR 聚合后与其它 AND 组合并。
   - **不确认前禁止改**（OR→高估 carryDps 风险）。详见 `format-quirks.md` 与 TODO `atd_9a3c7e1f02`。归阶段 8 targeting 精细或独立修复。
+
+- **`static_dps_mult` 字段未接入（第八轮审计·2026-07-24·evolution-plan `Π(static_dps_mults)` 未实现）**：`upgrade.static_dps_mult`（CNE 静态 dps 乘数近似，值 1.25–5）标记 35 个 upgrade，其 `effectReference` 指向复杂机制 effect（`target_attacking_monsters_hero_dps_mult`/`hero_dps_multiplier_from_temp_hp`/`hero_dps_mult_per_target_unique_attacker`/`change_base_attack_per_num_attacking`/`storm_aura_storm_soul` 等），`resolveDpsSignal` 无 parser → 全进 unsupportedSignals；`static_dps_mult` 字段未被 `collectRawEffectEntries` 读取，这 35 个 upgrade 的 dps 贡献完全丢失（低估 carryDps）。这是 evolution-plan 加成调研「特殊 pool：static_dps_only」+ 真实 DPS 公式 `Π(static_dps_mults)` 的数据源，M1/M2 未实现该 pool。**不本轮修**：static_dps pool 需 proper 设计（独立乘区 Π，非百分比 add），且需「effect 进 unsupported 才 fallback 用 staticDpsMult、effect 可解析时不重复」的判断；仓促接入风险。归 M2 加成聚合补强（建议新增阶段或并入阶段 8 buff_upgrade 精细）。
+- **专精（specialization）effects 已进理论最大基线，stage 13 缺裁剪（第八轮审计）**：IC 专精不在独立表——`upgrade` 带 `specializationName`/`specializationDescription`/`specializationGraphicId` 字段，专精选项是 upgrade 子集；`collectRawEffectEntries` 遍历所有 upgrade，**所有专精选项的 effects 同时进理论最大基线**（M1 设计可接受）。但 milestone-3 阶段 13「按存档精算」只提 equipment/feat/legendary，**漏了「按玩家选择的专精裁剪」**——实际只能选一个 spec，理论基线把多 spec effects 叠加，高估。归 M3 stage 13 补 `specializationName` 过滤（按 `UserProfileSnapshot.specializations[heroId]` 选 spec，只保留该 spec upgrade）。
 
 数据源格式坑（已在归一化层与代码处理，追源守则见 `AGENTS.md` §1.3）：`upgrade_defines.effect` 常是 JSON 对象串（含伪 JSON）；`effect_defines.targets.tags` 是布尔表达式（`|` / `^` / `!` / `()`）；`upgrade_amount(id,index)` 可跨 upgrade 引用；buff_upgrade wrapper 信号由 `collectEffectEntries` 派生；`STACK_COUNT_RESOLVERS` 与 `SCORING_SUPPORTED_STACK_FUNCS` 由 `scoringSupportSync.test.ts` 守护。

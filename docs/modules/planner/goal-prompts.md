@@ -23,7 +23,7 @@
 - BUD 计算（7.4）+ 实测验证（7.5，偏差 <30%）。
 - 9.2 championEligibility→banned + 手工 override；9.3 champion-details zod schema + CI 校验。
 - npm run test:run && typecheck && build 退出码 0。
-约束：按 evolution-plan.md（A1 命名/TDD/不动量）；不跳过任何 effect 类型；crit 期望值近似标注 BUD 局限；vulnerability 条件性匹配（非全局 Π）；restrictions 留 M3；不削弱测试；每阶段 commit + [x]。
+约束：按 evolution-plan.md（A1 命名/TDD/不动量）；不跳过任何 effect 类型；crit 期望值近似标注 BUD 局限；vulnerability 按怪物 tag 条件匹配（非全局无条件，add 类同 pool 相加）；restrictions 留 M3；不削弱测试；每阶段 commit + [x]。
 or stop after 40 turns
 ```
 
